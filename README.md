@@ -42,6 +42,9 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
+## Contributing
+Want to contribute? Check out our [contributing](./CONTRIBUTING) guide.
+
 ## Links
 - [All versions of this documentation](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
 - [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
@@ -51,7 +54,6 @@ $ npm install -D @sap-cloud-sdk/test-util
 - [Community Call for SAP Cloud SDK](https://blogs.sap.com/2019/06/26/sap-cloud-sdk-new-format-of-the-update-call-for-sap-community/)
 
 ## License
-
 Copyright (c) 2020 SAP SE or an SAP affiliate company.
 All rights reserved.
 This file is licensed under the Apache Software License, v. 2 except as noted otherwise in the [LICENSE file](LICENSE).

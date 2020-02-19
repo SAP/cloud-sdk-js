@@ -2,7 +2,7 @@
 Thank you for taking your time to contribute to the SAP Cloud SDK!
 
 ## Project Structure
-This project containes multiple packages, that are managed using `lerna`.  Productive packages are located in the `packages` directory, test packages are located in the `test-packages` directory.
+This project containes multiple packages, that are managed using [lerna](https://github.com/lerna/lerna).  Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
 All dependencies of the packages are hoisted into the root project. Some of the packages are interdependent, therefore `npm install` won't work from within those packages. Run `npm install` in the root directory instead.
 
 ## Testing
@@ -27,7 +27,7 @@ $ npm run test:unit
 ```
 
 ### Integration Tests
-Integration tests shall test how modules behave in combination. The integration tests are located in `test-packages-integration-tests`.
+Integration tests shall test how modules behave in combination. The integration tests are located in [`test-packages/integration-tests`](./test-packages/integration-tests).
 
 To run the integration tests, execute:
 ```sh-session
@@ -36,7 +36,7 @@ $ npm run test:integration
 
 ### Type Tests
 As this project is written in TypeScript, it shall be consumable by other TypeScript projects. We use `dtslint` to test that our resulting API meets our expectations.
-The type tests are located at `test-packages/type-tests`.
+The type tests are located at [`test-packages/type-tests`](./test-packages/type-tests).
 
 To run the integration tests, execute:
 ```sh-session
@@ -44,12 +44,12 @@ $ npm run test:type
 ```
 
 ### Test Services
-To simplify testing we are using tests services. The specifications for those can be found in `test-resources`.
+To simplify testing we are using tests services. The specifications for those can be found in [`test-resources`](./test-resources).
 They are used from different tests on different levels.
 The service specifications are directly used by the unit tests of the `generator`.
 From the specifications, we generate two OData clients.
 First, we generate type script sources, that are generated into the test-utils of the `core`, where we replace all references to the `@sap-cloud-sdk/core` with a reference to the local sources. The resulting test service is used in the unit tests of the `core` package.
-Second, we generate a transpiled version of a non-modified OData client based on the specifications, that is located at `test-packages/test-services`. This is used in the  integration tests and type tests.
+Second, we generate a transpiled version of a non-modified OData client based on the specifications, that is located at [`test-packages/test-services`](./test-packages/test-services). This is used in the  integration tests and type tests.
 
 If you need to extend the existing services, run the following to regenerate the OData clients.
 ```sh-session

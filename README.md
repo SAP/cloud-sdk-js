@@ -48,7 +48,7 @@ $ npm install -D @sap-cloud-sdk/test-util
 Want to contribute? Check out our [contributing](./CONTRIBUTING) guide.
 
 ## Links
-- [All versions of this documentation](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
+- [SAP Help Page on SAP Cloud SDK](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
 - [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
 - [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
 - [Example Applications using the SAP Cloud SDK](https://github.com/SAP/cloud-s4-sdk-examples)

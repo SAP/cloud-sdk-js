@@ -1,6 +1,9 @@
 # Contributing
-
 Thank you for taking your time to contribute to the SAP Cloud SDK!
+
+## Project Structure
+This project containes multiple packages, that are managed using `lerna`.  Productive packages are located in the `packages` directory, test packages are located in the `test-packages` directory.
+All dependencies of the packages are hoisted into the root project. Some of the packages are interdependent, therefore `npm install` won't work from within those packages. Run `npm install` in the root directory instead.
 
 ## Testing
 In order to run all tests, execute:

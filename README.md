@@ -17,7 +17,7 @@ Then run:
 $ npm install @sap/-cloud-sdk/core
 ```
 
-## Modules
+## Packages
 This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna).
 
 ### @sap-cloud-sdk/core
@@ -44,7 +44,6 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
-## Feedback
 ## Contributing
 Want to contribute? Check out our [contributing](./CONTRIBUTING) guide.
 

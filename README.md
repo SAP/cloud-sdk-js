@@ -3,6 +3,19 @@
 # SAP Cloud SDK
 An SDK to reduce development effort when building applications on SAP Cloud Platform that communicate with SAP solutions and services such as SAP S/4HANA Cloud, SAP SuccessFactors, and many others.
 
+<!-- TOC -->
+- [SAP Cloud SDK](#sap-cloud-sdk)
+  - [Related Projects](#related-projects)
+    - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
+    - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
+  - [Packages](#packages)
+    - [@sap-cloud-sdk/core](#sap-cloud-sdkcore)
+    - [@sap-cloud-sdk/generator](#sap-cloud-sdkgenerator)
+    - [@sap-cloud-sdk/test-util](#sap-cloud-sdktest-util)
+  - [Contributing](#contributing)
+  - [Links](#links)
+  - [License](#license)autoauto<!-- /TOC -->
+
 ## Related Projects
 
 ### SAP Cloud SDK CLI

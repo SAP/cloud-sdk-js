@@ -30,7 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var MultiSchemaTestEntityRequestBuilder_1 = require("./MultiSchemaTestEntityRequestBuilder");
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
  */
@@ -44,7 +44,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntity.builder = function () {
-        return cloud_sdk_core_1.Entity.entityBuilder(MultiSchemaTestEntity);
+        return core_1.Entity.entityBuilder(MultiSchemaTestEntity);
     };
     /**
      * Returns a request builder to construct requests for operations on the `MultiSchemaTestEntity` entity type.
@@ -59,7 +59,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntity.customField = function (fieldName) {
-        return cloud_sdk_core_1.Entity.customFieldSelector(fieldName, MultiSchemaTestEntity);
+        return core_1.Entity.customFieldSelector(fieldName, MultiSchemaTestEntity);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -82,14 +82,14 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      */
     MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
     return MultiSchemaTestEntity;
-}(cloud_sdk_core_1.Entity));
+}(core_1.Entity));
 exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
 (function (MultiSchemaTestEntity) {
     /**
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    MultiSchemaTestEntity.KEY_PROPERTY = new cloud_sdk_core_1.StringField('KeyProperty', MultiSchemaTestEntity, 'Edm.String');
+    MultiSchemaTestEntity.KEY_PROPERTY = new core_1.StringField('KeyProperty', MultiSchemaTestEntity, 'Edm.String');
     /**
      * All fields of the MultiSchemaTestEntity entity.
      */
@@ -99,7 +99,7 @@ exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
     /**
      * All fields selector.
      */
-    MultiSchemaTestEntity.ALL_FIELDS = new cloud_sdk_core_1.AllFields('*', MultiSchemaTestEntity);
+    MultiSchemaTestEntity.ALL_FIELDS = new core_1.AllFields('*', MultiSchemaTestEntity);
     /**
      * All key fields of the MultiSchemaTestEntity entity.
      */

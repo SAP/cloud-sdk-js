@@ -3,14 +3,26 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
-import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
-import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
+import { Moment } from 'moment';
+import { BigNumber } from 'bignumber.js';
+import { TestComplexType, TestComplexTypeField } from './TestComplexType';
+import {
+  AllFields,
+  BigNumberField,
+  BooleanField,
+  CustomField,
+  DateField,
+  Entity,
+  EntityBuilderType,
+  Link,
+  NumberField,
+  OneToOneLink,
+  Selectable,
+  StringField,
+  Time,
+  TimeField
+} from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
@@ -153,6 +165,9 @@ export declare class TestEntity extends Entity implements TestEntityType {
     [key: string]: any;
   };
 }
+import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
+import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
+import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
 export interface TestEntityType {
   keyPropertyGuid: string;
   keyPropertyString: string;

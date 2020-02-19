@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 var index_1 = require("./index");
 /**
  * Batch builder for operations supported on the Test Service.
@@ -17,7 +17,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new cloud_sdk_core_1.ODataBatchRequestBuilder(exports.defaultTestServicePath, requests, map);
+    return new core_1.ODataBatchRequestBuilder(exports.defaultTestServicePath, requests, map);
 }
 exports.batch = batch;
 /**
@@ -30,7 +30,7 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new cloud_sdk_core_1.ODataBatchChangeSet(requests);
+    return new core_1.ODataBatchChangeSet(requests);
 }
 exports.changeset = changeset;
 exports.defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

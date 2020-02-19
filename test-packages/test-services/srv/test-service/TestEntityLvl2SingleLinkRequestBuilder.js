@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 var TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");
 /**
  * Request builder class for operations supported on the [[TestEntityLvl2SingleLink]] entity.
@@ -34,14 +34,14 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntityLvl2SingleLink` entity based on its keys.
      */
     TestEntityLvl2SingleLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new cloud_sdk_core_1.GetByKeyRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityLvl2SingleLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityLvl2SingleLink` entities.
      */
     TestEntityLvl2SingleLinkRequestBuilder.prototype.getAll = function () {
-        return new cloud_sdk_core_1.GetAllRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink);
+        return new core_1.GetAllRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink);
     };
     /**
      * Returns a request builder for creating a `TestEntityLvl2SingleLink` entity.
@@ -49,7 +49,7 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntityLvl2SingleLink`.
      */
     TestEntityLvl2SingleLinkRequestBuilder.prototype.create = function (entity) {
-        return new cloud_sdk_core_1.CreateRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, entity);
+        return new core_1.CreateRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityLvl2SingleLink`.
@@ -57,12 +57,12 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntityLvl2SingleLink`.
      */
     TestEntityLvl2SingleLinkRequestBuilder.prototype.update = function (entity) {
-        return new cloud_sdk_core_1.UpdateRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, entity);
+        return new core_1.UpdateRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, entity);
     };
     TestEntityLvl2SingleLinkRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new cloud_sdk_core_1.DeleteRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, keyPropertyOrEntity instanceof TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink, keyPropertyOrEntity instanceof TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityLvl2SingleLinkRequestBuilder;
-}(cloud_sdk_core_1.RequestBuilder));
+}(core_1.RequestBuilder));
 exports.TestEntityLvl2SingleLinkRequestBuilder = TestEntityLvl2SingleLinkRequestBuilder;
 //# sourceMappingURL=TestEntityLvl2SingleLinkRequestBuilder.js.map

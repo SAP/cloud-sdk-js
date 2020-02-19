@@ -30,7 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityOtherMultiLinkRequestBuilder_1 = require("./TestEntityOtherMultiLinkRequestBuilder");
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
@@ -44,7 +44,7 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLink.builder = function () {
-        return cloud_sdk_core_1.Entity.entityBuilder(TestEntityOtherMultiLink);
+        return core_1.Entity.entityBuilder(TestEntityOtherMultiLink);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityOtherMultiLink` entity type.
@@ -59,7 +59,7 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLink.customField = function (fieldName) {
-        return cloud_sdk_core_1.Entity.customFieldSelector(fieldName, TestEntityOtherMultiLink);
+        return core_1.Entity.customFieldSelector(fieldName, TestEntityOtherMultiLink);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -82,14 +82,14 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
      */
     TestEntityOtherMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityOtherMultiLink;
-}(cloud_sdk_core_1.Entity));
+}(core_1.Entity));
 exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
 (function (TestEntityOtherMultiLink) {
     /**
      * Static representation of the [[keyPropertyString]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityOtherMultiLink.KEY_PROPERTY_STRING = new cloud_sdk_core_1.StringField('KeyPropertyString', TestEntityOtherMultiLink, 'Edm.String');
+    TestEntityOtherMultiLink.KEY_PROPERTY_STRING = new core_1.StringField('KeyPropertyString', TestEntityOtherMultiLink, 'Edm.String');
     /**
      * All fields of the TestEntityOtherMultiLink entity.
      */
@@ -99,7 +99,7 @@ exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
     /**
      * All fields selector.
      */
-    TestEntityOtherMultiLink.ALL_FIELDS = new cloud_sdk_core_1.AllFields('*', TestEntityOtherMultiLink);
+    TestEntityOtherMultiLink.ALL_FIELDS = new core_1.AllFields('*', TestEntityOtherMultiLink);
     /**
      * All key fields of the TestEntityOtherMultiLink entity.
      */

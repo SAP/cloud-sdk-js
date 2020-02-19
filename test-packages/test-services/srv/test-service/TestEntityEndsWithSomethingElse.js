@@ -30,7 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityEndsWithSomethingElseRequestBuilder_1 = require("./TestEntityEndsWithSomethingElseRequestBuilder");
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
@@ -44,7 +44,7 @@ var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
      */
     TestEntityEndsWithSomethingElse.builder = function () {
-        return cloud_sdk_core_1.Entity.entityBuilder(TestEntityEndsWithSomethingElse);
+        return core_1.Entity.entityBuilder(TestEntityEndsWithSomethingElse);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityEndsWithSomethingElse` entity type.
@@ -59,7 +59,7 @@ var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
      */
     TestEntityEndsWithSomethingElse.customField = function (fieldName) {
-        return cloud_sdk_core_1.Entity.customFieldSelector(fieldName, TestEntityEndsWithSomethingElse);
+        return core_1.Entity.customFieldSelector(fieldName, TestEntityEndsWithSomethingElse);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -82,14 +82,14 @@ var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
      */
     TestEntityEndsWithSomethingElse._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityEndsWithSomethingElse;
-}(cloud_sdk_core_1.Entity));
+}(core_1.Entity));
 exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
 (function (TestEntityEndsWithSomethingElse) {
     /**
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityEndsWithSomethingElse.KEY_PROPERTY = new cloud_sdk_core_1.StringField('KeyProperty', TestEntityEndsWithSomethingElse, 'Edm.String');
+    TestEntityEndsWithSomethingElse.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityEndsWithSomethingElse, 'Edm.String');
     /**
      * All fields of the TestEntityEndsWithSomethingElse entity.
      */
@@ -99,7 +99,7 @@ exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
     /**
      * All fields selector.
      */
-    TestEntityEndsWithSomethingElse.ALL_FIELDS = new cloud_sdk_core_1.AllFields('*', TestEntityEndsWithSomethingElse);
+    TestEntityEndsWithSomethingElse.ALL_FIELDS = new core_1.AllFields('*', TestEntityEndsWithSomethingElse);
     /**
      * All key fields of the TestEntityEndsWithSomethingElse entity.
      */

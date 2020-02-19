@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
 /**
  * Request builder class for operations supported on the [[TestEntityCircularLinkChild]] entity.
@@ -34,14 +34,14 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (_super)
      * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new cloud_sdk_core_1.GetByKeyRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityCircularLinkChild` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkChild` entities.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.getAll = function () {
-        return new cloud_sdk_core_1.GetAllRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
+        return new core_1.GetAllRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
     };
     /**
      * Returns a request builder for creating a `TestEntityCircularLinkChild` entity.
@@ -49,7 +49,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (_super)
      * @returns A request builder for creating requests that create an entity of type `TestEntityCircularLinkChild`.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.create = function (entity) {
-        return new cloud_sdk_core_1.CreateRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
+        return new core_1.CreateRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityCircularLinkChild`.
@@ -57,12 +57,12 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (_super)
      * @returns A request builder for creating requests that update an entity of type `TestEntityCircularLinkChild`.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.update = function (entity) {
-        return new cloud_sdk_core_1.UpdateRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
+        return new core_1.UpdateRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
     };
     TestEntityCircularLinkChildRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new cloud_sdk_core_1.DeleteRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, keyPropertyOrEntity instanceof TestEntityCircularLinkChild_1.TestEntityCircularLinkChild ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, keyPropertyOrEntity instanceof TestEntityCircularLinkChild_1.TestEntityCircularLinkChild ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityCircularLinkChildRequestBuilder;
-}(cloud_sdk_core_1.RequestBuilder));
+}(core_1.RequestBuilder));
 exports.TestEntityCircularLinkChildRequestBuilder = TestEntityCircularLinkChildRequestBuilder;
 //# sourceMappingURL=TestEntityCircularLinkChildRequestBuilder.js.map

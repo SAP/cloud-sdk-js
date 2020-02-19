@@ -3,9 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { AllFields, CustomField, Entity, EntityBuilderType, Link, Selectable, StringField } from '@sap-cloud-sdk/core';
-import { TestEntityCircularLinkChild, TestEntityCircularLinkChildType } from './TestEntityCircularLinkChild';
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
+import { AllFields, CustomField, Entity, EntityBuilderType, Link, Selectable, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
@@ -67,6 +66,7 @@ export class TestEntityCircularLinkParent extends Entity implements TestEntityCi
   }
 }
 
+import { TestEntityCircularLinkChild, TestEntityCircularLinkChildType } from './TestEntityCircularLinkChild';
 
 export interface TestEntityCircularLinkParentType {
   keyProperty: string;

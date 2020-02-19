@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 var MultiSchemaTestEntity_1 = require("./MultiSchemaTestEntity");
 /**
  * Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity.
@@ -34,14 +34,14 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
      */
     MultiSchemaTestEntityRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new cloud_sdk_core_1.GetByKeyRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `MultiSchemaTestEntity` entities.
      * @returns A request builder for creating requests to retrieve all `MultiSchemaTestEntity` entities.
      */
     MultiSchemaTestEntityRequestBuilder.prototype.getAll = function () {
-        return new cloud_sdk_core_1.GetAllRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity);
+        return new core_1.GetAllRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity);
     };
     /**
      * Returns a request builder for creating a `MultiSchemaTestEntity` entity.
@@ -49,7 +49,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntityRequestBuilder.prototype.create = function (entity) {
-        return new cloud_sdk_core_1.CreateRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, entity);
+        return new core_1.CreateRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `MultiSchemaTestEntity`.
@@ -57,12 +57,12 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntityRequestBuilder.prototype.update = function (entity) {
-        return new cloud_sdk_core_1.UpdateRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, entity);
+        return new core_1.UpdateRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, entity);
     };
     MultiSchemaTestEntityRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new cloud_sdk_core_1.DeleteRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, keyPropertyOrEntity instanceof MultiSchemaTestEntity_1.MultiSchemaTestEntity ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, keyPropertyOrEntity instanceof MultiSchemaTestEntity_1.MultiSchemaTestEntity ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return MultiSchemaTestEntityRequestBuilder;
-}(cloud_sdk_core_1.RequestBuilder));
+}(core_1.RequestBuilder));
 exports.MultiSchemaTestEntityRequestBuilder = MultiSchemaTestEntityRequestBuilder;
 //# sourceMappingURL=MultiSchemaTestEntityRequestBuilder.js.map

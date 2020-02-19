@@ -10,8 +10,7 @@
     "url": "https://github.wdf.sap.corp/MA/sdk-js"
   },
   "scripts": {
-    "test": "npx dtslint test --expectOnly --localTs ../../node_modules/typescript/lib",
-    "version": "node ../../after-version-update.js"
+    "test": "npx dtslint test --expectOnly --localTs ../../node_modules/typescript/lib"
   },
   "devDependencies": {
     "dtslint": "^2.0.2"

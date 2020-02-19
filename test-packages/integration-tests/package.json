@@ -14,8 +14,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
     "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
     "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
-    "tslint:fix": "npm run tslint -- --fix",
-    "version": "node ../../after-version-update.js"
+    "tslint:fix": "npm run tslint -- --fix"
   },
   "dependencies": {
     "@sap-cloud-sdk/test-services": "^1.17.3",

@@ -30,7 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityCircularLinkParentRequestBuilder_1 = require("./TestEntityCircularLinkParentRequestBuilder");
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */
@@ -44,7 +44,7 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
      */
     TestEntityCircularLinkParent.builder = function () {
-        return cloud_sdk_core_1.Entity.entityBuilder(TestEntityCircularLinkParent);
+        return core_1.Entity.entityBuilder(TestEntityCircularLinkParent);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityCircularLinkParent` entity type.
@@ -59,7 +59,7 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
      */
     TestEntityCircularLinkParent.customField = function (fieldName) {
-        return cloud_sdk_core_1.Entity.customFieldSelector(fieldName, TestEntityCircularLinkParent);
+        return core_1.Entity.customFieldSelector(fieldName, TestEntityCircularLinkParent);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -82,7 +82,7 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      */
     TestEntityCircularLinkParent._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityCircularLinkParent;
-}(cloud_sdk_core_1.Entity));
+}(core_1.Entity));
 exports.TestEntityCircularLinkParent = TestEntityCircularLinkParent;
 var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
 (function (TestEntityCircularLinkParent) {
@@ -90,12 +90,12 @@ var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityCircularLinkParent.KEY_PROPERTY = new cloud_sdk_core_1.StringField('KeyProperty', TestEntityCircularLinkParent, 'Edm.String');
+    TestEntityCircularLinkParent.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityCircularLinkParent, 'Edm.String');
     /**
      * Static representation of the one-to-many navigation property [[toChild]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityCircularLinkParent.TO_CHILD = new cloud_sdk_core_1.Link('to_Child', TestEntityCircularLinkParent, TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
+    TestEntityCircularLinkParent.TO_CHILD = new core_1.Link('to_Child', TestEntityCircularLinkParent, TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
     /**
      * All fields of the TestEntityCircularLinkParent entity.
      */
@@ -106,7 +106,7 @@ var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
     /**
      * All fields selector.
      */
-    TestEntityCircularLinkParent.ALL_FIELDS = new cloud_sdk_core_1.AllFields('*', TestEntityCircularLinkParent);
+    TestEntityCircularLinkParent.ALL_FIELDS = new core_1.AllFields('*', TestEntityCircularLinkParent);
     /**
      * All key fields of the TestEntityCircularLinkParent entity.
      */

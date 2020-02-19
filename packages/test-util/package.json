@@ -25,9 +25,7 @@
     "test:local": "npx jest --config ./jest-local.json",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
     "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
-    "tslint:fix": "npm run tslint -- --fix",
-    "doc": "rm -rf \"../../documentation/test-util\" && npx typedoc --options ../../typedoc.json --out ../../documentation/test-util src/",
-    "version": "node ../../after-version-update.js"
+    "tslint:fix": "npm run tslint -- --fix"
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.17.3",

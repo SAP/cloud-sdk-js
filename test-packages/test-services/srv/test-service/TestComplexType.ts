@@ -3,10 +3,23 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, createComplexType, edmToTs, Entity, FieldType, Time } from '@sap-cloud-sdk/core';
-import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
+import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
+import {
+  ComplexTypeBigNumberPropertyField,
+  ComplexTypeBooleanPropertyField,
+  ComplexTypeDatePropertyField,
+  ComplexTypeField,
+  ComplexTypeNumberPropertyField,
+  ComplexTypeStringPropertyField,
+  ComplexTypeTimePropertyField,
+  Entity,
+  FieldType,
+  Time,
+  createComplexType,
+  edmToTs
+} from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexType

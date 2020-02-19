@@ -24,9 +24,9 @@
     "test": "npx jest --coverage",
     "test:local": "npx jest --config ./jest-local.json",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
     "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
-    "tslint:fix": "npm run tslint -- --fix",
-    "doc": "rm -rf \"../../documentation/util\" && npx typedoc --options ../../typedoc.json --out ../../documentation/util src/"
+    "tslint:fix": "npm run tslint -- --fix"
   },
   "dependencies": {
     "chalk": "^2.4.2",

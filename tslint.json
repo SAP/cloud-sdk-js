@@ -62,6 +62,7 @@
     "object-literal-sort-keys": false,
     "object-literal-key-quotes": false,
     "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
+    "ordered-imports": true,
     "prefer-const": true,
     "quotemark": [true, "single", "avoid-escape", "avoid-template"],
     "radix": false,

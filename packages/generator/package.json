@@ -28,7 +28,6 @@
     "test:local": "npx jest --config ./jest-local.json",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
     "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
-    "version": "node ../../after-version-update.js",
     "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
     "tslint:fix": "npm run tslint -- --fix"
   },

@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var cloud_sdk_core_1 = require("@sap-cloud-sdk/core");
+var core_1 = require("@sap-cloud-sdk/core");
 var TestEntityMultiLink_1 = require("./TestEntityMultiLink");
 /**
  * Request builder class for operations supported on the [[TestEntityMultiLink]] entity.
@@ -34,14 +34,14 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
      */
     TestEntityMultiLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new cloud_sdk_core_1.GetByKeyRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityMultiLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityMultiLink` entities.
      */
     TestEntityMultiLinkRequestBuilder.prototype.getAll = function () {
-        return new cloud_sdk_core_1.GetAllRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink);
+        return new core_1.GetAllRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink);
     };
     /**
      * Returns a request builder for creating a `TestEntityMultiLink` entity.
@@ -49,7 +49,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntityMultiLink`.
      */
     TestEntityMultiLinkRequestBuilder.prototype.create = function (entity) {
-        return new cloud_sdk_core_1.CreateRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, entity);
+        return new core_1.CreateRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityMultiLink`.
@@ -57,12 +57,12 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntityMultiLink`.
      */
     TestEntityMultiLinkRequestBuilder.prototype.update = function (entity) {
-        return new cloud_sdk_core_1.UpdateRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, entity);
+        return new core_1.UpdateRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, entity);
     };
     TestEntityMultiLinkRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new cloud_sdk_core_1.DeleteRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, keyPropertyOrEntity instanceof TestEntityMultiLink_1.TestEntityMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntityMultiLink_1.TestEntityMultiLink, keyPropertyOrEntity instanceof TestEntityMultiLink_1.TestEntityMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityMultiLinkRequestBuilder;
-}(cloud_sdk_core_1.RequestBuilder));
+}(core_1.RequestBuilder));
 exports.TestEntityMultiLinkRequestBuilder = TestEntityMultiLinkRequestBuilder;
 //# sourceMappingURL=TestEntityMultiLinkRequestBuilder.js.map

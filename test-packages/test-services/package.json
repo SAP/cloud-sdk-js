@@ -1,0 +1,23 @@
+{
+  "name": "@sap-cloud-sdk/test-services",
+  "version": "1.17.3",
+  "description": "Custom Services for testing",
+  "files": [
+    "srv/**/*.js",
+    "srv/**/*.js.map",
+    "srv/**/*.d.ts",
+    "srv/**/d.ts.map",
+    "srv/**/*-csn.json"
+  ],
+  "private": true,
+  "publishConfig": {
+    "access": "restricted",
+    "directory": "srv"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sap-cloud-sdk/core": "^1.17.3"
+  }
+}

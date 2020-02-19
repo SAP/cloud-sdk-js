@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`get resource path throws error if keys are nullish 1`] = `"Cannot get resource path for entity A_TestEntity. The following keys have nullish values, but are not nullable: KeyPropertyGuid, KeyPropertyString"`;
+
+exports[`get resource path throws error if no keys set 1`] = `"Cannot get resource path for entity A_TestEntity. The following keys are missing: KeyPropertyGuid, KeyPropertyString"`;
+
+exports[`get resource path throws error if not all keys are set 1`] = `"Cannot get resource path for entity A_TestEntity. The following keys are missing: KeyPropertyString"`;

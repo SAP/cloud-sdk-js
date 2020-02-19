@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GetAllRequestBuilder execute throws an error when request execution fails 1`] = `
+"get request to /testination/sap/opu/odata/sap/API_TEST_SRV failed! 
+\\"ERROR\\""
+`;
+
+exports[`GetAllRequestBuilder execute throws an error when the destination cannot be found 1`] = `"Could not find a destination with name \\"NonExistentDestination\\"! Unable to execute request."`;

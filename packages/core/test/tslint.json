@@ -1,0 +1,10 @@
+{
+  "extends": ["../../../tslint.json"],
+  "linterOptions": {
+    "exclude": ["test-util/test-services/**/*.ts"]
+  },
+  "rules": {
+    "file-header": false,
+    "no-submodule-imports": [true, "@sap-cloud-sdk/test-services"]
+  }
+}

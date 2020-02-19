@@ -1,0 +1,62 @@
+{
+  "name": "@sap-cloud-sdk/core",
+  "version": "1.17.3",
+  "description": "SAP Cloud SDK for JavaScript core",
+  "homepage": "https://www.sap.com/cloud-sdk",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "usage-analytics.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "compile": "npx tsc",
+    "prepare": "npm run compile",
+    "postinstall": "node usage-analytics.js",
+    "test": "npx jest --coverage",
+    "test:local": "npx jest --config ./jest-local.json",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
+    "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --config jest-local.json --runInBand --testNamePattern=\"$PATTERN\"",
+    "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\" -e \"**/test-services/**\"",
+    "tslint:fix": "npm run tslint -- --fix",
+    "version": "node ../../after-version-update.js"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/analytics": "^1.17.3",
+    "@sap-cloud-sdk/util": "^1.17.3",
+    "@sap/xsenv": "2.2.0",
+    "@types/http-proxy-agent": "^2.0.2",
+    "axios": "0.19.0",
+    "bignumber.js": "8.1.1",
+    "http-proxy-agent": "3.0.0",
+    "https-proxy-agent": "4.0.0",
+    "jsonwebtoken": "8.5.1",
+    "moment": "2.24.0",
+    "opossum": "4.0.0",
+    "rambda": "2.14.5",
+    "uuid": "3.3.2",
+    "voca": "1.4.0"
+  },
+  "devDependencies": {
+    "@sap-cloud-sdk/test-services": "latest",
+    "@types/jest": "^24.0.25",
+    "@types/jsonwebtoken": "^8.3.6",
+    "@types/lolex": "^3.1.1",
+    "@types/nock": "^9.3.1",
+    "jest": "^24.9.0",
+    "jest-junit": "^6.4.0",
+    "lolex": "^4.2.0",
+    "nock": "^10.0.6",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "3.7.4"
+  }
+}

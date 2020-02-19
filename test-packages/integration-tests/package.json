@@ -1,0 +1,38 @@
+{
+  "name": "@sap-cloud-sdk/integration-tests",
+  "version": "1.17.3",
+  "description": "SAP Cloud SDK for JavaScript integration tests",
+  "homepage": "https://www.sap.com/cloud-sdk",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.wdf.sap.corp/MA/sdk-js"
+  },
+  "scripts": {
+    "test": "npx jest --coverage",
+    "test:local": "npx jest --config ./jest-local.json",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
+    "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
+    "tslint:fix": "npm run tslint -- --fix",
+    "version": "node ../../after-version-update.js"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/test-services": "^1.17.3",
+    "@sap-cloud-sdk/analytics": "^1.17.3",
+    "@sap-cloud-sdk/core": "^1.17.3",
+    "@sap-cloud-sdk/test-util": "^1.17.3",
+    "@sap-cloud-sdk/util": "^1.17.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "@types/nock": "^9.3.1",
+    "jest": "^24.9.0",
+    "jest-junit": "^6.4.0",
+    "mockserver-node": "5.8.1",
+    "nock": "^10.0.6",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "3.7.4"
+  }
+}

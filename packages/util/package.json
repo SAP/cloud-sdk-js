@@ -1,0 +1,42 @@
+{
+  "name": "@sap-cloud-sdk/util",
+  "version": "1.17.3",
+  "description": "SAP Cloud SDK for JavaScript general utilities",
+  "homepage": "https://sap.com/cloud-sdk",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "compile": "npx tsc",
+    "prepare": "npm run compile",
+    "test": "npx jest --coverage",
+    "test:local": "npx jest --config ./jest-local.json",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
+    "tslint:fix": "npm run tslint -- --fix",
+    "doc": "rm -rf \"../../documentation/util\" && npx typedoc --options ../../typedoc.json --out ../../documentation/util src/"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "rambda": "2.14.5",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "@types/node": "^11.13.5",
+    "jest": "^24.9.0",
+    "jest-junit": "^6.4.0",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "3.7.4"
+  }
+}

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Complex types should fail when passing unknown proerties to the builder 1`] = `"converters[jsonKey] is not a function"`;

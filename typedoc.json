@@ -1,0 +1,29 @@
+{
+  "mode": "modules",
+  "out": "documentation",
+  "exclude": [
+    "*.ts",
+    "**/*.d.ts",
+    "**/*.spec.ts",
+    "**/node_modules/**/*",
+    "**/dist/**/*",
+    "**/test/**/*",
+    "test-packages/**/*"
+  ],
+  "name": "SAP Cloud SDK for JavaScript / TypeScript",
+  "readme": "DOCUMENTATION.md",
+  "theme": "default",
+  "ignoreCompilerErrors": true,
+  "hideGenerator": true,
+  "excludePrivate": true,
+  "excludeNotExported": true,
+  "target": "ES5",
+  "moduleResolution": "node",
+  "module": "commonjs",
+  "listInvalidSymbolLinks": true,
+  "lernaExclude": [
+    "@sap-cloud-sdk/integration-tests",
+    "@sap-cloud-sdk/test-services",
+    "@sap-cloud-sdk/type-tests"
+  ]
+}

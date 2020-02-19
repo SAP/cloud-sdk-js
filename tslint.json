@@ -1,0 +1,113 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest"],
+  "jsRules": {},
+  "rulesDirectory": [
+    "node_modules/tslint-eslint-rules/dist/rules",
+    "node_modules/tslint-plugin-blank-line/rules"
+  ],
+  "linterOptions": {
+    "exclude": ["node_modules/**/*", "**/dist/**/*"]
+  },
+  "rules": {
+    "arrow-parens": [false, "as-needed"],
+    "arrow-return-shorthand": true,
+    "blank-line": [true, "ignore-imports"],
+    "callable-types": true,
+    "class-name": false,
+    "interface-name": false,
+    "comment-format": [true, "check-space"],
+    "curly": true,
+    "eofline": true,
+    "forin": false,
+    "import-blacklist": [true, "../", "./"],
+    "import-spacing": true,
+    "interface-over-type-literal": true,
+    "indent": [true, "spaces", 2],
+    "label-position": true,
+    "max-line-length": false,
+    "member-access": false,
+    "member-ordering": [
+      true,
+      {
+        "order": "statics-first"
+      }
+    ],
+    "no-submodule-imports": [true, "simple-git/promise"],
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-consecutive-blank-lines": true,
+    "no-console": true,
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-variable": true,
+    "no-empty": true,
+    "no-empty-interface": true,
+    "no-eval": true,
+    "no-implicit-dependencies": false,
+    "no-inferrable-types": [true, "ignore-params"],
+    "no-misused-new": true,
+    "no-namespace": false,
+    "no-non-null-assertion": false,
+    "no-object-literal-type-assertion": false,
+    "no-shadowed-variable": true,
+    "no-string-literal": false,
+    "no-string-throw": true,
+    "no-switch-case-fall-through": true,
+    "no-trailing-whitespace": true,
+    "no-irregular-whitespace": true,
+    "no-unnecessary-initializer": true,
+    "no-var-keyword": true,
+    "object-curly-spacing": [true, "always"],
+    "object-literal-sort-keys": false,
+    "object-literal-key-quotes": false,
+    "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
+    "prefer-const": true,
+    "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+    "radix": false,
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "space-within-parens": true,
+    "ter-padded-blocks": [true, "never"],
+    "trailing-comma": [
+      false,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ],
+    "triple-equals": [true, "allow-null-check"],
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "unified-signatures": true,
+    "valid-jsdoc": [
+      true,
+      {
+        "requireReturn": false,
+        "requireReturnType": false,
+        "requireParamType": false,
+        "prefer": {
+          "return": "returns"
+        }
+      }
+    ],
+    "variable-name": false,
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
+    "file-header": [
+      true,
+      {
+        "match": "Copyright \\(c\\) \\d{4} SAP SE or an SAP affiliate company. All rights reserved.",
+        "allow-single-line-comments": false,
+        "default": "Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.",
+        "enforce-trailing-newline": false
+      }
+    ]
+  }
+}

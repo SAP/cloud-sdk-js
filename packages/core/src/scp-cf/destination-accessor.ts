@@ -102,32 +102,6 @@ export async function getDestination(name: string, options: DestinationOptions =
   return destination;
 }
 
-// function newGetDestinationFromDestinationService(name: string, options?: DestinationOptions): Promise<Destination | null> {
-//   // TODO: Promise<Destination | null> is not a good type
-//   // step 1: fix the options
-//   const defaultOptions: DestinationOptions = {
-//     useCache: true,
-//     cacheVerificationKeys: true,
-//     enableCircuitBreaker: true,
-//     isolationStrategy: IsolationStrategy.Tenant,
-//     selectionStrategy: subscriberFirst,
-//     userJwt: undefined // wow this feels awkward. either there is one or there is none
-//   };
-
-// // TODO: for non-system user principal propagation, the default isolation strategy should always be Tenant_User. only tenant will lead to critical errors (also consider the On-Premise case here (that is not yet implemented))
-
-//   // step 2: check the cache
-
-//   // step 3: if the destination isn't cached OR it's a principal prop destination, go get it again
-
-//   // step 4: cache it
-// }
-
-// function destinationFromCache(name: string, options?: DestinationOptions): Destination | undefined {
-//   if (destinationCache.retrieveDestinationFromCache(options.userJwt, name, options.isolationStrategy)) {
-//   }
-// }
-
 /**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
  * Returns null if no destination can be found.
@@ -144,7 +118,6 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
-  // TODO: default options are missing. for example caching is deactivated by default...
   const decodedUserJwt = options.userJwt ? await verifyJwt(options.userJwt, options) : options.iss ? { iss: options.iss } : undefined;
   const isolation = options.isolationStrategy ? options.isolationStrategy : IsolationStrategy.Tenant; // TODO: should be part of options
   const selectionStrategy = options.selectionStrategy ? options.selectionStrategy : subscriberFirst; // TODO: should be part of options

@@ -56,7 +56,7 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
-## Contributing
+## Contribute
 Want to contribute? Check out our [contributing](./CONTRIBUTING) guide.
 
 ## Links

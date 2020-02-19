@@ -10,7 +10,6 @@ import { nonEnumerable } from './util';
 import { toPropertyFormat } from './util/name-converter';
 
 export type EntityBuilderType<EntityT extends Entity, EntityTypeForceMandatoryT> = {
-  // e.g., BusinessPartnerTypeForceMandatory containing the same properties as BusinessPartnerType, force define the types of the properties as mandatory.
   [property in keyof EntityTypeForceMandatoryT]: (
     value: EntityTypeForceMandatoryT[property]
   ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;

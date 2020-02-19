@@ -9,6 +9,7 @@ import { DestinationsByType } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
 
 // TODO: make class, deprecate function, check if I correctly see this as user
+// ? ? ?  What do you mean - git blame does not work
 const DestinationCache = (cache: Cache<Destination>) => ({
   retrieveDestinationFromCache: (decodedJwt: MapType<any>, name: string, isolation: IsolationStrategy): Destination | undefined => {
     return cache.get(getDestinationCacheKey(decodedJwt, name, isolation));

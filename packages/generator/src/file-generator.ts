@@ -17,6 +17,7 @@ export function sourceFile(directory: Directory, relativePath: string, content: 
     overwrite
   });
   // TODO: check performance
+  // Also not a good TODO
   file.formatText({ insertSpaceAfterCommaDelimiter: true });
   return file;
 }

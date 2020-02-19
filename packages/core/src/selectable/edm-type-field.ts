@@ -14,6 +14,7 @@ import { Field, FieldType } from './field';
  * `EdmTypeField`s are used as static properties of entities and are generated from the metadata, i.e. for each property of
  * an OData entity, that has an Edm type, there exists one static instance of `EdmTypeField` (or rather one of its subclasses) in the corresponding generated class file.
  * `EdmTypeField`s are used to represent the domain of more or less primitive values that can be used in select, filter and order by functions.
+ * //Makes this example sense now?
  * For example, when constructing a query on the BusinessPartner entity, an instance of `EdmTypeField<BusinessPartner, string>`
  * can be supplied as argument to the select function, e.g. `BusinessPartner.FIRST_NAME`.
  *

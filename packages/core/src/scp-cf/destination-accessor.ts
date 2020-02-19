@@ -102,6 +102,7 @@ export async function getDestination(name: string, options: DestinationOptions =
   return destination;
 }
 
+//Remove it for OSS
 // function newGetDestinationFromDestinationService(name: string, options?: DestinationOptions): Promise<Destination | null> {
 //   // TODO: Promise<Destination | null> is not a good type
 //   // step 1: fix the options
@@ -114,6 +115,7 @@ export async function getDestination(name: string, options: DestinationOptions =
 //     userJwt: undefined // wow this feels awkward. either there is one or there is none
 //   };
 
+//Perhaps an issue instead having this in the code-base
 // // TODO: for non-system user principal propagation, the default isolation strategy should always be Tenant_User. only tenant will lead to critical errors (also consider the On-Premise case here (that is not yet implemented))
 
 //   // step 2: check the cache
@@ -144,6 +146,7 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
+  //Perhasps an issue instead this TODO in the code?
   // TODO: default options are missing. for example caching is deactivated by default...
   const decodedUserJwt = options.userJwt ? await verifyJwt(options.userJwt, options) : options.iss ? { iss: options.iss } : undefined;
   const isolation = options.isolationStrategy ? options.isolationStrategy : IsolationStrategy.Tenant; // TODO: should be part of options

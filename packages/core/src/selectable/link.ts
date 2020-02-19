@@ -10,6 +10,7 @@ import { Selectable } from './selectable';
  * Represents a navigation property of an OData entity.
  *
  * OData is a relational data model, i.e. entities can be related to one another.
+ * //Makes this example sense now?
  * For example, BusinessPartner is in a 1:n relation with BusinessPartnerAddress and in a 1:1 relation with Customer.
  * Like normal properties, navigation properties can be used for selecting (expanding) and filtering.
  * For example, when constructing a query on the BusinessPartner entity, an instance of `Link<BusinessPartner, Customer>`

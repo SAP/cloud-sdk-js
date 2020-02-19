@@ -57,6 +57,7 @@ export function complexTypeImportDeclarations(properties: VdmProperty[]): Import
 
 // only supports named imports
 // TODO refactor this
+// Very generic TODO
 export function mergeImportDeclarations(importDeclarations: ImportDeclarationStructure[]) {
   return importDeclarations
     .reduce((mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {

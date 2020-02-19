@@ -33,15 +33,17 @@ describe('usage analytics', () => {
 
     const swaCall = nock('http://example.com')
       .get('/mockedUrl')
-      .query(q => isSubQuery(q, {
-        action_name: 'SAP S/4HANA Cloud SDK',
-        url: 'https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/',
-        idsite: 'b67a7f90-dc52-72f0-cbac-18bf4147456a',
-        idsitesub: 'test-jssdk',
-        event_type: 'test_event',
-        custom1: 'project_id',
-        e_a: hashedProjectIdentifierWithSalt
-      }))
+      .query(q =>
+        isSubQuery(q, {
+          action_name: 'SAP S/4HANA Cloud SDK',
+          url: 'https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/',
+          idsite: 'b67a7f90-dc52-72f0-cbac-18bf4147456a',
+          idsitesub: 'test-jssdk',
+          event_type: 'test_event',
+          custom1: 'project_id',
+          e_a: hashedProjectIdentifierWithSalt
+        })
+      )
       .reply(204);
 
     const options = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };
@@ -56,9 +58,11 @@ describe('usage analytics', () => {
   it('should not send usage data if analytics are disabled', async () => {
     const swaCall = nock('http://example.com')
       .get('/mockedUrl')
-      .query(q => isSubQuery(q, {
-        action_name: 'SAP S/4HANA Cloud SDK'
-      }))
+      .query(q =>
+        isSubQuery(q, {
+          action_name: 'SAP S/4HANA Cloud SDK'
+        })
+      )
       .reply(204);
 
     writeFileSync(rootConfigPath, JSON.stringify({ enabled: false, salt }), 'utf8');
@@ -73,9 +77,11 @@ describe('usage analytics', () => {
   it('should not send usage data if no config can be found', async () => {
     const swaCall = nock('http://example.com')
       .get('/mockedUrl')
-      .query(q => isSubQuery(q, {
-        action_name: 'SAP S/4HANA Cloud SDK'
-      }))
+      .query(q =>
+        isSubQuery(q, {
+          action_name: 'SAP S/4HANA Cloud SDK'
+        })
+      )
       .reply(204);
 
     const callerPath = '/node_modules'; // pretend that we're a dependency
@@ -88,15 +94,17 @@ describe('usage analytics', () => {
 
     const swaCall = nock('http://example.com')
       .get('/mockedUrl')
-      .query(q => isSubQuery(q, {
-        action_name: 'SAP S/4HANA Cloud SDK',
-        url: 'https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/',
-        idsite: 'b67a7f90-dc52-72f0-cbac-18bf4147456a',
-        idsitesub: 'test-jssdk',
-        event_type: 'test_event',
-        custom1: 'project_id',
-        e_a: hashedProjectIdentifierWithSalt
-      }))
+      .query(q =>
+        isSubQuery(q, {
+          action_name: 'SAP S/4HANA Cloud SDK',
+          url: 'https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/',
+          idsite: 'b67a7f90-dc52-72f0-cbac-18bf4147456a',
+          idsitesub: 'test-jssdk',
+          event_type: 'test_event',
+          custom1: 'project_id',
+          e_a: hashedProjectIdentifierWithSalt
+        })
+      )
       .reply(500);
 
     const options = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };

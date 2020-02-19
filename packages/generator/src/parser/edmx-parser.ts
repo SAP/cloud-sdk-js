@@ -7,7 +7,15 @@ import { parse } from 'fast-xml-parser';
 import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
 import { forceArray } from '../generator-utils';
-import { EdmxAssociation, EdmxAssociationSet, EdmxComplexType, EdmxEntitySet, EdmxEntityType, EdmxFunctionImport, EdmxMetadata } from './parser-types';
+import {
+  EdmxAssociation,
+  EdmxAssociationSet,
+  EdmxComplexType,
+  EdmxEntitySet,
+  EdmxEntityType,
+  EdmxFunctionImport,
+  EdmxMetadata
+} from './parser-types';
 
 const logger = createLogger({
   package: 'generator',

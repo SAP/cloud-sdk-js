@@ -21,3 +21,4 @@ junit.xml
 
 # Jetty mock server
 packages/**/*.jar
+*.jar

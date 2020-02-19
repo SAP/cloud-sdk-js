@@ -1,7 +1,15 @@
 import { Destination, ErrorResponse } from '@sap-cloud-sdk/core';
 import { batch, changeset } from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';
-import { createAsChildOfRequest, createRequest, deleteRequest, getAllRequest, getByKeyRequest, patchRequest, putRequest } from './test-data/batch-sub-requests';
+import {
+  createAsChildOfRequest,
+  createRequest,
+  deleteRequest,
+  getAllRequest,
+  getByKeyRequest,
+  patchRequest,
+  putRequest
+} from './test-data/batch-sub-requests';
 import { mixedBatchRequest, mixedErrorRequest, multiChangesetBatchRequest, multiRetrieveRequest } from './test-data/batch/requests';
 import { mixedBatchResponse, mixedErrorResponse, multiChangesetBatchResponse, multiRetrieveResponse } from './test-data/batch/responses';
 import { basicCredentials } from './test-util/destination-encoder';

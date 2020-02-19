@@ -4,7 +4,14 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { assoc, pipe } from 'rambda';
-import { AuthenticationType, Destination, DestinationAuthToken, DestinationCertificate, DestinationNameAndJwt, isDestinationNameAndJwt } from './destination-service-types';
+import {
+  AuthenticationType,
+  Destination,
+  DestinationAuthToken,
+  DestinationCertificate,
+  DestinationNameAndJwt,
+  isDestinationNameAndJwt
+} from './destination-service-types';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.

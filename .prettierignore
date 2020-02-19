@@ -1,1 +1,3 @@
-dist/
+node_modules
+dist
+test-packages/test-services

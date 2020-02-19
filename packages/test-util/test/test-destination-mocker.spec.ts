@@ -4,7 +4,13 @@
 
 import { Destination } from '@sap-cloud-sdk/core';
 import { unlinkSync, writeFileSync } from 'fs';
-import { mockAllTestDestinations, mockTestDestination, setTestDestination, unmockAllTestDestinations, unmockTestDestination } from '../src/test-destination-mocker';
+import {
+  mockAllTestDestinations,
+  mockTestDestination,
+  setTestDestination,
+  unmockAllTestDestinations,
+  unmockTestDestination
+} from '../src/test-destination-mocker';
 import { credentials, systems } from './test-util/test-destinations';
 
 describe('setTestDestinationInEnv', () => {

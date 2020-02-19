@@ -7,15 +7,54 @@ import { createLogger, propertyExists, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk
 import { last } from 'rambda';
 import voca from 'voca';
 import { GeneratorOptions } from '../generator-options';
-import { edmToComplexPropertyType, edmToFieldType, edmToTsType, endWithDot, ensureString, isCreatable, isDeletable, isNullableParameter, isNullableProperty, isUpdatable, npmCompliantName } from '../generator-utils';
+import {
+  edmToComplexPropertyType,
+  edmToFieldType,
+  edmToTsType,
+  endWithDot,
+  ensureString,
+  isCreatable,
+  isDeletable,
+  isNullableParameter,
+  isNullableProperty,
+  isUpdatable,
+  npmCompliantName
+} from '../generator-utils';
 import { GlobalNameFormatter } from '../global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from '../input-path-provider';
 import { applyPrefixOnJsConfictParam } from '../name-formatting-strategies';
 import { readServiceMapping, ServiceMapping, VdmMapping } from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
-import { ApiBusinessHubMetadata, VdmComplexType, VdmEntity, VdmFunctionImport, VdmFunctionImportReturnType, VdmFunctionImportReturnTypeCategory, VdmNavigationProperty, VdmProperty, VdmServiceMetadata } from '../vdm-types';
+import {
+  ApiBusinessHubMetadata,
+  VdmComplexType,
+  VdmEntity,
+  VdmFunctionImport,
+  VdmFunctionImportReturnType,
+  VdmFunctionImportReturnTypeCategory,
+  VdmNavigationProperty,
+  VdmProperty,
+  VdmServiceMetadata
+} from '../vdm-types';
 import { parseEdmxFromPath } from './edmx-parser';
-import { EdmxAssociation, EdmxAssociationSet, EdmxComplexType, EdmxDocumented, EdmxEntitySet, EdmxEntityType, EdmxParameter, EdmxProperty, EdmxPropertyRef, ParsedServiceMetadata, SwaggerDescribed, SwaggerEntity, SwaggerMetadata, SwaggerPath, SwaggerPathParameter, SwaggerProperty } from './parser-types';
+import {
+  EdmxAssociation,
+  EdmxAssociationSet,
+  EdmxComplexType,
+  EdmxDocumented,
+  EdmxEntitySet,
+  EdmxEntityType,
+  EdmxParameter,
+  EdmxProperty,
+  EdmxPropertyRef,
+  ParsedServiceMetadata,
+  SwaggerDescribed,
+  SwaggerEntity,
+  SwaggerMetadata,
+  SwaggerPath,
+  SwaggerPathParameter,
+  SwaggerProperty
+} from './parser-types';
 import { parseSwaggerFromPath } from './swagger-parser';
 
 const logger = createLogger({

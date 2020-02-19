@@ -14,9 +14,7 @@
     "access": "restricted",
     "directory": "srv"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.17.3"
   }

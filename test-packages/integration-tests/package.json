@@ -3,6 +3,7 @@
   "version": "1.17.3",
   "description": "SAP Cloud SDK for JavaScript integration tests",
   "homepage": "https://www.sap.com/cloud-sdk",
+  "license": "Apache-2.0",
   "private": true,
   "repository": {
     "type": "git",

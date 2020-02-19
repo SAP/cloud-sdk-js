@@ -3,10 +3,12 @@
 # SAP Cloud SDK
 An SDK to reduce development effort when building applications on SAP Cloud Platform that communicate with SAP solutions and services such as SAP S/4HANA Cloud, SAP SuccessFactors, and many others.
 
-## SAP Cloud SDK CLI
+## Related Projects
+
+### SAP Cloud SDK CLI
 To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Cloud Platform.
 
-## Virtual Data Model (VDM)
+### Virtual Data Model (VDM)
 In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the whitelisted OData services of SAP S/4HANA under the SAP Developer licence. Those are not included in this project, but rely on modules from this project.
 
 To install an OData client for an SAP S/4HANA service, make sure you have an `.npmrc` in the root of your project, that contains a reference to the the SAP npm registry: `@sap:registry=https://npm.sap.com`.
@@ -42,6 +44,7 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
+## Feedback
 ## Contributing
 Want to contribute? Check out our [contributing](./CONTRIBUTING) guide.
 

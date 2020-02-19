@@ -3,6 +3,13 @@
   "version": "1.17.3",
   "description": "SAP Cloud SDK for JavaScript test utilities",
   "homepage": "https://www.sap.com/cloud-sdk",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sap-cloud-sdk",
+    "cloud-sdk",
+    "sap-cloud-platform",
+    "test-util"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "publishConfig": {

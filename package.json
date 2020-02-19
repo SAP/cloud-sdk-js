@@ -3,6 +3,13 @@
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
+  "homepage": "https://www.sap.com/cloud-sdk",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sap-cloud-sdk",
+    "cloud-sdk",
+    "sap-cloud-platform"
+  ],
   "repository": {
     "type": "git",
     "url": ""

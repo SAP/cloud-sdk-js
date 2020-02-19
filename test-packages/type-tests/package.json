@@ -3,6 +3,7 @@
   "version": "1.17.3",
   "description": "Tests to ensure correct types in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://www.sap.com/cloud-sdk",
+  "license": "Apache-2.0",
   "private": true,
   "types": "types",
   "repository": {

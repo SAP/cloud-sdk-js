@@ -7,7 +7,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.wdf.sap.corp/MA/sdk-js"
+    "url": "https://github.com/sap/cloud-sdk"
   },
   "scripts": {
     "test": "npx jest --coverage",

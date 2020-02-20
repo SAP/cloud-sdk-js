@@ -119,8 +119,8 @@ export async function getDestinationFromDestinationService(
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
   const decodedUserJwt = options.userJwt ? await verifyJwt(options.userJwt, options) : options.iss ? { iss: options.iss } : undefined;
-  const isolation = options.isolationStrategy ? options.isolationStrategy : IsolationStrategy.Tenant; // TODO: should be part of options
-  const selectionStrategy = options.selectionStrategy ? options.selectionStrategy : subscriberFirst; // TODO: should be part of options
+  const isolation = options.isolationStrategy ? options.isolationStrategy : IsolationStrategy.Tenant;
+  const selectionStrategy = options.selectionStrategy ? options.selectionStrategy : subscriberFirst;
   let providerDestinationCache;
 
   if (options.useCache && options.userJwt && subscriberDestinationIsSelected(selectionStrategy)) {

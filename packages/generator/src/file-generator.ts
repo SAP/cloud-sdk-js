@@ -16,7 +16,7 @@ export function sourceFile(directory: Directory, relativePath: string, content: 
   const file = directory.createSourceFile(`${relativePath}.ts`, addFileComment(content), {
     overwrite
   });
-  // TODO: check performance
+
   file.formatText({ insertSpaceAfterCommaDelimiter: true });
   return file;
 }

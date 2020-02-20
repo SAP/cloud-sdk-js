@@ -49,7 +49,7 @@ $ npm install @sap-cloud-sdk/generator
 ```
 
 ### @sap-cloud-sdk/test-util
-The test-util package makes writing tests for your SAP Cloud Platform application more convenient:
+The test-util package makes writing tests for your SAP Cloud Platform application more convenient.
 
 To install the SAP Cloud SDK test-util as development dependencies in your project, run:
 ```sh-session

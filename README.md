@@ -1,7 +1,7 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 
 # SAP Cloud SDK
-The SAP Cloud SDK reduces your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA Cloud, SAP SuccessFactors, and many others.
+The SAP Cloud SDK reduces your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
 ### Table of Contents
 - [Related Projects](#related-projects)
@@ -21,7 +21,7 @@ The SAP Cloud SDK reduces your development effort when building side-by-side ext
 To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Cloud Platform.
 
 ### Virtual Data Model (VDM)
-In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer licence. Those are not included in this project, but rely on modules from this project.
+In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the latest versions of the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer licence. Those are not included in this project, but rely on modules from this project.
 
 To install an OData client for an SAP S/4HANA service, make sure you have an `.npmrc` in the root of your project, that contains a reference to the the SAP npm registry: `@sap:registry=https://npm.sap.com`.
 Then run:

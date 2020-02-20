@@ -1,7 +1,7 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 
 # SAP Cloud SDK
-The SAP Cloud SDK reduces your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
+An SDK to reduce your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
 ### Table of Contents
 - [Related Projects](#related-projects)
@@ -33,7 +33,7 @@ $ npm install @sap-cloud-sdk/core
 This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna).
 
 ### @sap-cloud-sdk/core
-The core is the heart of the SAP Cloud SDK and contains the functionality that is essential to every project. Any OData client built by the SAP Cloud SDK, be it the VDM or clients built by the generator are using the core. We recommend to install this in addition to your clients.
+The core is the heart of the SAP Cloud SDK and contains the functionality that is essential to every project powered by the SDK. Any OData client built by the SAP Cloud SDK, be it the VDM or clients built by the generator are using the core. We recommend to install this in addition to your clients.
 
 To install the SAP Cloud SDK core in your project, run:
 ```sh-session

@@ -33,7 +33,7 @@ export class ServiceNameFormatter {
   private instancePropertyNamesCache: { [entitySetOrComplexTypeName: string]: string[] } = {};
 
   constructor(entitySetNames: string[], complexTypeNames: string[], functionImportNames: string[]) {
-    // TODO: here we assume that entitysets and complextypes cannot have the same original name
+    // here we assume that entitysets and complextypes cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(entitySetOrComplexTypeName => {
       this.staticPropertyNamesCache[entitySetOrComplexTypeName] = [];
       this.instancePropertyNamesCache[entitySetOrComplexTypeName] = [];

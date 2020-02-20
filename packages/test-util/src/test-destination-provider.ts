@@ -167,7 +167,7 @@ function toDestinations(systemsAndCredentials): Destination[] {
 
 function findFileSearchingUpwards(dir: string, fileName: string): string | null {
   const files = readdirSync(dir);
-  // TODO use util method to find proper project root instead of the overall root
+  // TODO: use util method to find proper project root instead of the overall root
   const rootPath = parse(process.cwd()).root;
 
   if (files.includes(fileName)) {

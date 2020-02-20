@@ -7,11 +7,11 @@ import { headerForClientCredentials } from './xsuaa-service';
 import { ClientCredentials, ClientCredentialsResponse } from './xsuaa-service-types';
 
 const ClientCredentialsTokenCache = (cache: Cache<ClientCredentialsResponse>) => ({
-  // TODO: this method name can be shortened significantly
+  // TODO: this method name can be shortened
   getGrantTokenFromCache: (url, credentials: ClientCredentials): ClientCredentialsResponse | undefined => {
     return cache.get(getGrantTokenCacheKey(url, credentials));
   },
-  // TODO: this one probably as well
+  // TODO: this method name can be shortened
   cacheRetrievedToken: (url, credentials: ClientCredentials, token: ClientCredentialsResponse): void => {
     cache.set(getGrantTokenCacheKey(url, credentials), token, token.expires_in);
   },

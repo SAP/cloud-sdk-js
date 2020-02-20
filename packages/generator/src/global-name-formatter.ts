@@ -7,7 +7,6 @@ import { pipe } from 'rambda';
 import { applySuffixOnConflictDash } from './name-formatting-strategies';
 import { ServiceMapping, VdmMapping } from './service-mapping';
 
-// TODO: for future reference: given that the "Formatter" knows the mapping to keep consumers from checking that itself, this is not a pure "Formatter" anymore...
 export class GlobalNameFormatter {
   private directoryNamesCache: string[] = [];
   private npmPackageNamesCache: string[] = [];

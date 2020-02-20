@@ -12,7 +12,6 @@ const potentialExternalImportDeclarations = [
   ['bignumber.js', 'BigNumber']
 ];
 
-// TODO: get the potentials from somewhere else
 export function externalImportDeclarations(properties: VdmMappedEdmType[]): ImportDeclarationStructure[] {
   return potentialExternalImportDeclarations
     .map(([moduleSpecifier, ...namedImports]) => externalImportDeclaration(properties, moduleSpecifier, namedImports))
@@ -56,7 +55,6 @@ export function complexTypeImportDeclarations(properties: VdmProperty[]): Import
 }
 
 // only supports named imports
-// TODO refactor this
 export function mergeImportDeclarations(importDeclarations: ImportDeclarationStructure[]) {
   return importDeclarations
     .reduce((mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {

@@ -57,7 +57,7 @@ $ npm install -D @sap-cloud-sdk/test-util
 ```
 
 ## Contributing
-Want to contribute? Check out our [contributing](./CONTRIBUTING) guide.
+Want to contribute? Check out our [contributing](./CONTRIBUTING.md) guide.
 
 ## Links
 - [SAP Help Page on SAP Cloud SDK](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)

@@ -26,7 +26,7 @@ In addition to the Open Source parts of this project, we also publish the SAP Cl
 To install an OData client for an SAP S/4HANA service, make sure you have an `.npmrc` in the root of your project, that contains a reference to the the SAP npm registry: `@sap:registry=https://npm.sap.com`.
 Then run:
 ```sh-session
-$ npm install @sap/-cloud-sdk/core
+$ npm install @sap/cloud-sdk-core
 ```
 
 ## Packages

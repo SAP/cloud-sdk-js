@@ -4,33 +4,21 @@
 An SDK to reduce your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
 ### Table of Contents
-- [Related Projects](#related-projects)
-  - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
-  - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
 - [Packages](#packages)
   - [@sap-cloud-sdk/core](#sap-cloud-sdkcore)
   - [@sap-cloud-sdk/generator](#sap-cloud-sdkgenerator)
   - [@sap-cloud-sdk/test-util](#sap-cloud-sdktest-util)
-- [Contributing](#contributing)
+- [Related Projects](#related-projects)
+  - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
+  - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
+- [Feedback](#feedback)
+- [Contribute](#contribute)
 - [Links](#links)
 - [License](#license)
 
-## Related Projects
-
-### SAP Cloud SDK CLI
-To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Cloud Platform.
-
-### Virtual Data Model (VDM)
-In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the latest versions of the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer licence. Those are not included in this project, but rely on modules from this project.
-
-To install an OData client for an SAP S/4HANA service, make sure you have an `.npmrc` in the root of your project, that contains a reference to the the SAP npm registry: `@sap:registry=https://npm.sap.com`.
-Then run:
-```sh-session
-$ npm install @sap-cloud-sdk/core
-```
-
 ## Packages
-This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna).
+This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna). To install any of the packages make sure you have an `.npmrc` in your project, that references the `@sap` npm registry like this: `@sap:registry=https://npm.sap.com`.
+To use the SDK in your project, we recommend using our [commandline interface](#sap-cloud-sdk-cli).
 
 ### @sap-cloud-sdk/core
 The core is the heart of the SAP Cloud SDK and contains the functionality that is essential to every project powered by the SDK. Any OData client built by the SAP Cloud SDK, be it the VDM or clients built by the generator are using the core. We recommend to install this in addition to your clients.
@@ -55,6 +43,24 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 ```sh-session
 $ npm install -D @sap-cloud-sdk/test-util
 ```
+
+## Related Projects
+
+### SAP Cloud SDK CLI
+To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Cloud Platform.
+
+### Virtual Data Model (VDM)
+In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the latest versions of the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer licence. Those are not included in this project, but rely on modules from this project.
+
+To install an OData client for an SAP S/4HANA service, make sure you have an `.npmrc` in the root of your project, that contains a reference to the the SAP npm registry: `@sap:registry=https://npm.sap.com`.
+
+Then run:
+```sh-session
+$ npm install @sap-cloud-sdk/core
+```
+
+## Feedback
+Feel free to leave your feedback in form of GitHub issues for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.
 
 ## Contribute
 Want to contribute? Check out our [contributing](./CONTRIBUTING.md) guide.

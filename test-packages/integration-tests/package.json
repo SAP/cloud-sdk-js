@@ -6,8 +6,7 @@
   "license": "Apache-2.0",
   "private": true,
   "repository": {
-    "type": "git",
-    "url": "https://github.wdf.sap.corp/MA/sdk-js"
+    "type": "git"
   },
   "scripts": {
     "test": "npx jest --coverage",

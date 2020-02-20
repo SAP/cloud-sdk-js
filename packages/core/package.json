@@ -22,10 +22,7 @@
     "dist/**/*.d.ts.map",
     "usage-analytics.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
+  "repository": "https://github.com/SAP/cloud-sdk",
   "scripts": {
     "compile": "npx tsc",
     "prepare": "npm run compile",

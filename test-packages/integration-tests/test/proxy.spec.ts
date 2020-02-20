@@ -21,7 +21,7 @@ describe('proxy', () => {
 
   beforeAll(async () => {
     await startProxyServer(proxyPort);
-  });
+  }, 10000);
 
   afterAll(async () => {
     await mockserver.stop_mockserver({ serverPort: proxyPort });
@@ -50,7 +50,7 @@ describe('proxy', () => {
   it('should use the http proxy with http-execute.', async () => {
     await checkProxyServerLogsClean();
 
-    const response = await executeHttpRequest(destination, {
+    await executeHttpRequest(destination, {
       method: HttpMethod.GET
     });
 

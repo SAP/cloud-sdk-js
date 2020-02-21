@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: build
 
 on:
   pull_request: ~

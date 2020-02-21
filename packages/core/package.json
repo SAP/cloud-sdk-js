@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/core",
-  "version": "1.17.3",
+  "version": "1.17.2",
   "description": "SAP Cloud SDK for JavaScript core",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -39,8 +39,8 @@
     "tslint:fix": "npm run tslint -- --fix"
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.17.3",
-    "@sap-cloud-sdk/util": "^1.17.3",
+    "@sap-cloud-sdk/analytics": "^1.17.2",
+    "@sap-cloud-sdk/util": "^1.17.2",
     "@sap/xsenv": "2.2.0",
     "@types/http-proxy-agent": "^2.0.2",
     "axios": "0.19.0",

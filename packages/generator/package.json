@@ -24,10 +24,7 @@
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SAP/cloud-sdk"
-  },
+  "repository": "github:SAP/cloud-sdk",
   "scripts": {
     "compile": "npx tsc",
     "prepare": "npm run compile",

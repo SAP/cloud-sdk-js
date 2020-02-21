@@ -10,20 +10,17 @@
     "cloud-sdk",
     "sap-cloud-platform"
   ],
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
+  "repository": "github:SAP/cloud-sdk",
   "scripts": {
     "test": "npm run test:unit && npm run test:integration && npm run test:type",
     "test:unit": "npx lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\"",
     "test:integration": "npx lerna run test --scope \"@sap-cloud-sdk/integration-tests\"",
     "test:type": "npx lerna run test --scope \"@sap-cloud-sdk/type-tests\"",
-    "postinstall": "npx lerna bootstrap --hoist --force-local --strict",
     "generate:test-services": "npx ts-node generate-test-services.ts && npm run lint:fix && lerna link --force-local",
     "compile": "npx lerna run compile",
     "lint": "npm run tslint && npm run prettier",
     "lint:fix": "npm run tslint:fix && npm run prettier:fix",
+    "postinstall": "npx lerna bootstrap --hoist --force-local --strict",
     "prettier": "prettier -l \"**/*.ts\"",
     "prettier:fix": "prettier --write \"**/*.ts\"",
     "tslint": "npx lerna run tslint",

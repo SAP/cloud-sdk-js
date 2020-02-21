@@ -7,44 +7,43 @@ on:
       - master
 
 jobs:
-  # tests:
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       os: [macos-latest, ubuntu-latest]
-  #       node-version: [10.x, 11.x, 12.x]
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #     - run: npm ci
-  #     - run: npm run test
-  # checks:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '12.x'
-  #     - run: npm ci
-  #     - run: npm run lint
-  #       name: Static Code Check
-  #     - run: npm run check:vulnerability
-  #       name: Dependency Vulnerability Check
-  #     - run: npm run check:license
-  #       name: License Check
-  canary-release:
-    # if: github.event_name != 'pull_request'
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+        node-version: [10.x, 11.x, 12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run test
+  checks:
     runs-on: ubuntu-latest
-    # needs: [tests, checks]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
       - run: npm ci
-      - run: git status
+      - run: npm run lint
+        name: Static Code Check
+      - run: npm run check:vulnerability
+        name: Dependency Vulnerability Check
+      - run: npm run check:license
+        name: License Check
+  canary-release:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    needs: [tests, checks]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
       - name: Canary Release
         run: |
           git update-index --assume-unchanged .npmrc

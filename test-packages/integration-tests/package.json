@@ -5,10 +5,7 @@
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sap/cloud-sdk"
-  },
+  "repository": "github:SAP/cloud-sdk",
   "scripts": {
     "test": "npx jest --coverage",
     "test:local": "npx jest --config ./jest-local.json",

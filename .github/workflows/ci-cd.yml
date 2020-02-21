@@ -7,16 +7,30 @@ on:
       - master
 
 jobs:
-  tests:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest]
-        node-version: [10.x, 11.x, 12.x]
+#  tests:
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os: [macos-latest, ubuntu-latest]
+#        node-version: [10.x, 11.x, 12.x]
+#    steps:
+#      - uses: actions/checkout@v1
+#      - uses: actions/setup-node@v1
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#      - run: npm ci
+#      - run: npm run test
+  checks:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '12.x'
       - run: npm ci
-      - run: npm run test
+      - run: npm run lint
+        name: Static Code Check
+      - run: npx license-checker --onlyAllow "MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense"
+        name: License Check
+      - run: npm audit-ci -m
+        name: Dependency Vulnerability Check

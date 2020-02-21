@@ -12,6 +12,7 @@ An SDK to reduce your development effort when building side-by-side extension ap
 - [Related Projects](#related-projects)
   - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
   - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
+  - [Project "Piper"](#project-piper)
 - [Feedback](#feedback)
 - [Contribute](#contribute)
 - [Links](#links)

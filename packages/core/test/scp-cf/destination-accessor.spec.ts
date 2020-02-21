@@ -90,7 +90,7 @@ describe('destination-accessor', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination(destinationName, { userJwt: subscriberUserJwt });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(false));
     });
 
     it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, provider tenant', async () => {

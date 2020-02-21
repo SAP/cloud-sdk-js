@@ -30,7 +30,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
         name: Static Code Check
-      - run: npm run check:license
-        name: License Check
       - run: npm audit-ci -m
         name: Dependency Vulnerability Check
+      - run: npm run check:license
+        name: License Check

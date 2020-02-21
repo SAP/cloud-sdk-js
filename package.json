@@ -28,7 +28,9 @@
     "prettier:fix": "prettier --write \"**/*.ts\"",
     "tslint": "npx lerna run tslint",
     "tslint:fix": "npx lerna run tslint:fix",
-    "doc": "node generate-docs.js"
+    "doc": "node generate-docs.js",
+    "check:license": "npx license-checker -direct --excludePackages \"@sap/edm-converters@1.0.19;@sap/xsenv@2.2.0;weak-map@1.0.5\" --onlyAllow \"MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense\"",
+    "check:vulnerability": "npx audit-ci -m"
   },
   "dependencies": {
     "@sap/edm-converters": "1.0.19",
@@ -52,10 +54,12 @@
     "@types/rewire": "^2.5.28",
     "@types/voca": "^1.4.0",
     "@types/yargs": "^13.0.2",
+    "audit-ci": "^2.5.1",
     "dtslint": "^2.0.2",
     "eclint": "^2.8.1",
     "glob": "^7.1.4",
     "lerna": "^3.16.4",
+    "license-checker": "^25.0.1",
     "lolex": "^4.2.0",
     "nock": "^10.0.6",
     "pkginfo": "^0.4.1",

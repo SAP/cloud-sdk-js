@@ -62,7 +62,6 @@ $ npm install @sap-cloud-sdk/core
 ```
 
 ### Project "Piper"
-
 Continuous delivery is a method to develop software with short feedback cycles.
 It is applicable to projects both for SAP Cloud Platform and SAP on-premise platforms.
 SAP implements tooling for continuous delivery in the open-source [project "Piper"](https://sap.github.io/jenkins-library/).

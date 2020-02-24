@@ -67,7 +67,7 @@ It is applicable to projects both for SAP Cloud Platform and SAP on-premise plat
 SAP implements tooling for continuous delivery in the open-source [project "Piper"](https://sap.github.io/jenkins-library/).
 The goal of project "Piper" is to substantially ease setting up continuous delivery in your project using SAP technologies.
 
-Part of project "Piper" is [SAP Cloud SDK Pipeline](https://sap.github.io/jenkins-library/pipelines/cloud-sdk/introduction/) which is tailor-made to deliver high-quality applications on SAP Cloud Platform using SAP Cloud SDK for Java and for JavaScript.
+Part of project "Piper" is the [SAP Cloud SDK Pipeline](https://sap.github.io/jenkins-library/pipelines/cloud-sdk/introduction/) which is tailor-made to deliver high-quality applications on SAP Cloud Platform using the SAP Cloud SDK for Java and for JavaScript.
 
 ## Feedback
 Feel free to leave your feedback in form of GitHub issues for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.

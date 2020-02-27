@@ -129,7 +129,12 @@ export async function generateSourcesForService(service: VdmServiceMetadata, pro
     otherFile(
       serviceDir,
       'package.json',
-      packgeJson(service.npmPackageName, options.versionInPackageJson || version(), serviceDescription(service, options), options.sdkAfterVersionScript),
+      packgeJson(
+        service.npmPackageName,
+        options.versionInPackageJson || version(),
+        serviceDescription(service, options),
+        options.sdkAfterVersionScript
+      ),
       options.forceOverwrite
     );
   }

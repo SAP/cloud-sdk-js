@@ -8,13 +8,13 @@ describe('generator-cli', () => {
   const inputDir = path.resolve(process.cwd(), '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx');
   const outputDir = path.resolve(process.cwd(), 'test/generator-test-output');
 
-  beforeAll(() => {
+  beforeEach(() => {
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
   });
 
-  afterAll(() => {
+  afterEach(() => {
     fs.removeSync(outputDir);
   });
 

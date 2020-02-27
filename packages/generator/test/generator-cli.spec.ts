@@ -34,4 +34,13 @@ describe('generator-cli', () => {
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('package.json');
   }, 60000);
+
+  it('should generate package.json with version specified in as the parameter', async () => {
+    const versionInPackageJson = '2.0.0';
+    await execa('npx', ['ts-node', pathToGenerator, '-i', inputDir, '-o', outputDir, '--versionInPackageJson', versionInPackageJson]);
+    const services = fs.readdirSync(outputDir);
+    expect(services.length).toBeGreaterThan(0);
+    const packageJson = fs.readFileSync(path.resolve(outputDir, services[0], 'package.json'));
+    expect(JSON.parse(packageJson).version).toEqual(versionInPackageJson);
+  }, 60000);
 });

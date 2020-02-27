@@ -33,33 +33,24 @@ blog:
 
 # 1.17.2
 
-release-date:
-docs:
-blog:
+release-date: February 27, 2020
+docs: https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/index.html
+blog: https://blogs.sap.com/?p=1053508
 
 ## knownIssues
 
-- Using destinations with authentication type "PrincipalPropagation" and proxy type "OnPremise" will currently throw errors. This can be worked around by setting the authentication type to "NoAuthentication" instead.
-
-## compatibilityNotes
-
--
-
-## newFunctionality
-
--
+- Using destinations with authentication type `PrincipalPropagation` and proxy type `OnPremise` (as configured in the SAP Cloud Platform cockpit) will currently throw errors. This can be worked around by setting the authentication type to `NoAuthentication` instead.
 
 ## improvements
 
--
+- Make the retrieval of constructors for batch responses more reliable.
 
 ## fixedIssues
-- Proxy environment variables are considered if destination is built from VCAP service bindings (e.g. when using SAP Extension Factory). Previously, requests against such destinations may have failed if proxy environment variables (`HTTP_PROXY`, `HTTPS_PROXY`, `http_proxy`, `https_proxy`) have been set.
 
-- Fix the generation of complex types, where nested ComplexTypes were referenced by wrong type names.
-- Fix the retrieval of constructors for batch responses to be more reliable.
+- Consider proxy environment variables (`HTTP_PROXY`, `HTTPS_PROXY`, `http_proxy`, `https_proxy`) for destinations configured in VCAP service bindings (e.g. when using SAP Extension Factory).
+- _OData client generator_ Fix a generation issue, where wrong type names were generated for nested complex types in certain circumstances.
 - Fix the return value of OData DELETE requests. It now returns a Promise<void> as indicated by the type instead of the full Axios response.
-- Fix the return type of `asc` and `desc` function to be more specialized (`Order` as opposed to `Orderable`).
+- Fix the return type of the functions [`asc`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#asc) and [`desc`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#desc) to be more specific, now returning [`Order`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/classes/_sap_cloud_sdk_core.order.html) insteaf of [`Orderable`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#orderable).
 
 # 1.17.0
 

@@ -25,7 +25,7 @@ blog:
 
 ## improvements
 
-- The VDM package version can be specified now from the parameter of the generator CLI, while the generator version is used before.
+- When generating OData client code using the `generator` package, the version that is put in the generated `package.json` can now be supplied as argument (`versionInPackageJson`). Call `generate-odata-client help` for more details.
 
 ## fixedIssues
 

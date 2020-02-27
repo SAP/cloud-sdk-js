@@ -25,7 +25,7 @@ blog:
 
 ## improvements
 
--
+- The VDM package version can be specified now from the parameter of the generator CLI, while the generator version is used before.
 
 ## fixedIssues
 

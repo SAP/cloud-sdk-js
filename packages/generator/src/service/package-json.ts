@@ -2,7 +2,13 @@
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
-export function packageJson(npmPackageName: string, versionInPackageJson: string|undefined, generatorVersion: string, description: string, sdkAfterVersionScript: boolean): string {
+export function packageJson(
+  npmPackageName: string,
+  versionInPackageJson: string | undefined,
+  generatorVersion: string,
+  description: string,
+  sdkAfterVersionScript: boolean
+): string {
   return (
     JSON.stringify(
       {

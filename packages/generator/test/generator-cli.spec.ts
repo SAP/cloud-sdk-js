@@ -35,16 +35,4 @@ describe('generator-cli', () => {
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('package.json');
   }, 60000);
-
-  it('should generate package.json with version specified in as the parameter', async () => {
-    const versionInPackageJson = '2.0.0';
-    await execa('npx', ['ts-node', pathToGenerator, '-i', inputDir, '-o', outputDir, '--versionInPackageJson', versionInPackageJson]);
-    const services = fs.readdirSync(outputDir);
-    expect(services.length).toBeGreaterThan(0);
-    const servicePackageJson = JSON.parse(fs.readFileSync(path.resolve(outputDir, services[0], 'package.json')));
-    expect(servicePackageJson.version).toEqual(versionInPackageJson);
-
-    const generatorPackageJson = JSON.parse(fs.readFileSync(pathToGeneratorPackageJson));
-    expect(servicePackageJson.dependencies['@sap-cloud-sdk/core']).toEqual(`^${generatorPackageJson.version}`);
-  }, 60000);
 });

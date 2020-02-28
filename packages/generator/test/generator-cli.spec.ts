@@ -7,6 +7,7 @@ describe('generator-cli', () => {
   const pathToGenerator = path.resolve(process.cwd(), 'src/generator-cli.ts');
   const inputDir = path.resolve(process.cwd(), '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx');
   const outputDir = path.resolve(process.cwd(), 'test/generator-test-output');
+  const pathToGeneratorPackageJson = path.resolve(process.cwd(), 'package.json');
 
   beforeEach(() => {
     if (!fs.existsSync(outputDir)) {
@@ -33,14 +34,5 @@ describe('generator-cli', () => {
     const entities = fs.readdirSync(path.resolve(outputDir, services[0]));
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('package.json');
-  }, 60000);
-
-  it('should generate package.json with version specified in as the parameter', async () => {
-    const versionInPackageJson = '2.0.0';
-    await execa('npx', ['ts-node', pathToGenerator, '-i', inputDir, '-o', outputDir, '--versionInPackageJson', versionInPackageJson]);
-    const services = fs.readdirSync(outputDir);
-    expect(services.length).toBeGreaterThan(0);
-    const packageJson = fs.readFileSync(path.resolve(outputDir, services[0], 'package.json'));
-    expect(JSON.parse(packageJson).version).toEqual(versionInPackageJson);
   }, 60000);
 });

@@ -5,12 +5,13 @@ describe('package-json', () => {
     const actual = packageJson(
       '@sap/cloud-sdk-vdm',
       ['@sap/cloud-sdk-vdm-business-area-service', '@sap/cloud-sdk-vdm-business-partner-service'],
-      '1.5.0'
+      '2.0.0',
+      '1.17.4-alpha.8'
     );
     const expected =
       '{\n' +
       '  "name": "@sap/cloud-sdk-vdm",\n' +
-      '  "version": "1.5.0",\n' +
+      '  "version": "2.0.0",\n' +
       '  "description": "SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)",\n' +
       '  "homepage": "https://www.sap.com/cloud-sdk",\n' +
       '  "repository": {\n' +
@@ -21,11 +22,11 @@ describe('package-json', () => {
       '    "version": "node ../../../after-version-update.js"\n' +
       '  },\n' +
       '  "dependencies": {\n' +
-      '    "@sap/cloud-sdk-vdm-business-area-service": "^1.5.0",\n' +
-      '    "@sap/cloud-sdk-vdm-business-partner-service": "^1.5.0"\n' +
+      '    "@sap/cloud-sdk-vdm-business-area-service": "^1.17.4-alpha.8",\n' +
+      '    "@sap/cloud-sdk-vdm-business-partner-service": "^1.17.4-alpha.8"\n' +
       '  },\n' +
       '  "peerDependencies": {\n' +
-      '    "@sap-cloud-sdk/core": "^1.5.0"\n' +
+      '    "@sap-cloud-sdk/core": "^1.17.4-alpha.8"\n' +
       '  }\n' +
       '}\n';
     expect(actual).toEqual(expected);

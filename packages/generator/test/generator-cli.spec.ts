@@ -7,6 +7,7 @@ describe('generator-cli', () => {
   const pathToGenerator = path.resolve(process.cwd(), 'src/generator-cli.ts');
   const inputDir = path.resolve(process.cwd(), '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx');
   const outputDir = path.resolve(process.cwd(), 'test/generator-test-output');
+  const pathToGeneratorPackageJson = path.resolve(process.cwd(), 'package.json');
 
   beforeEach(() => {
     if (!fs.existsSync(outputDir)) {
@@ -40,7 +41,10 @@ describe('generator-cli', () => {
     await execa('npx', ['ts-node', pathToGenerator, '-i', inputDir, '-o', outputDir, '--versionInPackageJson', versionInPackageJson]);
     const services = fs.readdirSync(outputDir);
     expect(services.length).toBeGreaterThan(0);
-    const packageJson = fs.readFileSync(path.resolve(outputDir, services[0], 'package.json'));
-    expect(JSON.parse(packageJson).version).toEqual(versionInPackageJson);
+    const servicePackageJson = JSON.parse(fs.readFileSync(path.resolve(outputDir, services[0], 'package.json')));
+    expect(servicePackageJson.version).toEqual(versionInPackageJson);
+
+    const generatorPackageJson = JSON.parse(fs.readFileSync(pathToGeneratorPackageJson));
+    expect(servicePackageJson.dependencies['@sap-cloud-sdk/core']).toEqual(`^${generatorPackageJson.version}`);
   }, 60000);
 });

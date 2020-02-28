@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - master
+  release:
+    types:
+      - created
 
 jobs:
   tests:
@@ -52,5 +55,22 @@ jobs:
           git update-index --assume-unchanged .npmrc
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           npx lerna publish --force-publish --canary -y
+        env:
+          NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
+  stable-release:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    needs: [tests, checks]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.16.1'
+      - run: npm ci
+      - name: Stable Release
+        run: |
+          git update-index --assume-unchanged .npmrc
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
+          npx lerna publish from-git --yes
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

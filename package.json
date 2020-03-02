@@ -32,7 +32,7 @@
   "dependencies": {
     "@sap/edm-converters": "1.0.19",
     "@sap/xsenv": "2.2.0",
-    "axios": "0.19.0",
+    "axios": "0.19.2",
     "bignumber.js": "8.1.1",
     "chalk": "^2.4.2",
     "jsonwebtoken": "8.5.1",
@@ -54,7 +54,7 @@
     "audit-ci": "^2.5.1",
     "dtslint": "^2.0.2",
     "eclint": "^2.8.1",
-    "glob": "^7.1.4",
+    "glob": "^7.1.6",
     "lerna": "^3.16.4",
     "license-checker": "^25.0.1",
     "lolex": "^4.2.0",

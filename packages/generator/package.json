@@ -51,7 +51,7 @@
     "@sap-cloud-sdk/test-services": "^1.17.3",
     "@types/jest": "^24.0.25",
     "@types/yargs": "^13.0.2",
-    "jest": "^24.9.0",
+    "jest": "^25.1.0",
     "jest-junit": "^6.4.0",
     "ts-jest": "^24.0.2",
     "ts-loader": "^5.3.3",

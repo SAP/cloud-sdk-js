@@ -25,7 +25,33 @@ blog:
 
 ## improvements
 
-- When generating OData client code using the `generator` package, the version that is put in the generated `package.json` can now be supplied as argument (`versionInPackageJson`). Call `generate-odata-client help` for more details.
+-
+
+## fixedIssues
+
+-
+
+# 1.18.0
+
+release-date:
+docs:
+blog:
+
+## knownIssues
+
+-
+
+## compatibilityNotes
+
+-
+
+## newFunctionality
+
+-
+
+## improvements
+
+- When generating an OData client using the `generator` package, the version that is put in the generated `package.json` can now be supplied as argument (`versionInPackageJson`). Call `generate-odata-client help` for more details.
 
 ## fixedIssues
 

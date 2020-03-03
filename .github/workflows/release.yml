@@ -7,7 +7,6 @@ on:
 jobs:
   stable-release:
     runs-on: ubuntu-latest
-    needs: [tests, checks]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/analytics",
-  "version": "1.17.3",
+  "version": "1.18.0",
   "description": "SAP Cloud SDK Analytics Usage",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -32,7 +32,7 @@
     "tslint:fix": "npm run tslint -- --fix"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^1.17.3",
+    "@sap-cloud-sdk/util": "^1.18.0",
     "axios": "0.19.2"
   },
   "devDependencies": {

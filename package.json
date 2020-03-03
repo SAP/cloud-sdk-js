@@ -27,7 +27,9 @@
     "tslint:fix": "npx lerna run tslint:fix",
     "doc": "node generate-docs.js",
     "check:license": "npx license-checker -direct --excludePackages \"@sap/edm-converters@1.0.19;@sap/xsenv@2.2.0;weak-map@1.0.5\" --onlyAllow \"MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense\"",
-    "check:vulnerability": "npx audit-ci -m"
+    "check:vulnerability": "npx audit-ci -m",
+    "bump:patch": "npx lerna version patch --force-publish -y",
+    "bump:minor": "npx lerna version minor --force-publish -y"
   },
   "dependencies": {
     "@sap/edm-converters": "1.0.19",

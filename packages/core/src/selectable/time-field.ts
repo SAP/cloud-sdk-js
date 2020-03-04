@@ -7,6 +7,7 @@ import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
 import { Filter } from '../filter';
 import { Time } from '../time';
+import { ComplexTypeField } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
 
 // tslint:disable: max-classes-per-file
@@ -76,12 +77,11 @@ export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFi
   /**
    * Creates an instance of ComplexTypeTimePropertyField.
    * @param fieldName Actual name of the field used in the OData request
-   * @param entityConstructor Constructor type of the entity the field belongs to
-   * @param parentTypeName Name of the parent complex type
+   *  @param parentComplexField  Parent complex field
    * @param edmType Type of the field according to the metadata description
    */
-  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, readonly parentTypeName: string, edmType: EdmType) {
-    super(fieldName, entityConstructor, edmType);
+  constructor(fieldName: string, readonly parentComplexField: ComplexTypeField<EntityT>, edmType: EdmType) {
+    super(fieldName, parentComplexField._entityConstructor, edmType);
   }
 
   /**
@@ -90,6 +90,6 @@ export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFi
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {
-    return `${this.parentTypeName}/${this._fieldName}`;
+    return `${this.parentComplexField.pathToRootComplex}/${this._fieldName}`;
   }
 }

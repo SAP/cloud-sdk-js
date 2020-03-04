@@ -28,7 +28,7 @@ describe('Complex types', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$filter=(A_TestComplexType/StringProperty%20eq%20%27someComplexTypeProperty%27)`)
+      .get(`${servicePath}/${entityName}?$format=json&$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`)
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()
@@ -47,7 +47,7 @@ describe('Complex types', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$orderby=A_TestComplexType/StringProperty%20asc`)
+      .get(`${servicePath}/${entityName}?$format=json&$orderby=ComplexTypeProperty/StringProperty%20asc`)
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()

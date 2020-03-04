@@ -21,14 +21,18 @@ import { Field } from './field';
  * @typeparam EntityT Type of the entity the field belongs to
  */
 export abstract class ComplexTypeField<EntityT extends Entity> extends Field<EntityT> {
+  readonly pathToRootComplex;
+
   /**
    * Creates an instance of ComplexTypeField.
    *
    * @param fieldName Actual name of the field used in the OData request
-   * @param entityConstructor Constructor type of the entity the field belongs to
+   * @param rootEntityOrParentComplexField If the complex field is on root level of entity it is the entity otherwise the parent complex field
    * @param complexTypeName Type of the field according to the metadata description
    */
-  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, readonly complexTypeName: string) {
-    super(fieldName, entityConstructor);
+  constructor(fieldName: string, rootEntityOrParentComplexField: Constructable<Entity> | ComplexTypeField<EntityT>) {
+    super(fieldName, (rootEntityOrParentComplexField as ComplexTypeField<EntityT>)._entityConstructor || rootEntityOrParentComplexField);
+    const pathToRoot = (rootEntityOrParentComplexField as ComplexTypeField<EntityT>).pathToRootComplex;
+    this.pathToRootComplex = pathToRoot ? `${pathToRoot}/${fieldName}` : fieldName;
   }
 }

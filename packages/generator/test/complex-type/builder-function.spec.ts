@@ -10,9 +10,9 @@ describe('builder-function', () => {
       name: 'createComplexMeal',
       isExported: true,
       parameters: [{ name: 'json', type: 'any' }],
-      returnType: 'ComplexMeal',
-      statements: 'return ComplexMeal.build(json);',
-      docs: ['@deprecated since v1.6.0. Use [[ComplexMeal.build]] instead.']
+      returnType: 'ComplexMealType',
+      statements: 'return ComplexMealType.build(json);',
+      docs: ['@deprecated since v1.6.0. Use [[ComplexMealType.build]] instead.']
     });
   });
 
@@ -23,9 +23,9 @@ describe('builder-function', () => {
       name: 'createComplexMealWithDesert',
       isExported: true,
       parameters: [{ name: 'json', type: 'any' }],
-      returnType: 'ComplexMealWithDesert',
-      statements: 'return ComplexMealWithDesert.build(json);',
-      docs: ['@deprecated since v1.6.0. Use [[ComplexMealWithDesert.build]] instead.']
+      returnType: 'ComplexMealWithDesertType',
+      statements: 'return ComplexMealWithDesertType.build(json);',
+      docs: ['@deprecated since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.']
     });
   });
 });

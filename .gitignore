@@ -9,8 +9,6 @@ lerna-debug.log
 .idea
 .nyc_output
 documentation
-packages/**/package-lock.json
-test-packages/**/package-lock.json
 
 test-results.xml
 test-packages/type-tests/report.*.json

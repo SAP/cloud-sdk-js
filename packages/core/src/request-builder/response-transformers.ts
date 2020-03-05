@@ -6,6 +6,12 @@ import { Constructable } from '../constructable';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 
+export function transformReturnValueForPromiseVoid<ReturnT>(data: any, builderFn: (data: any) => ReturnT) {
+  return new Promise<void>(resolve => {
+    resolve();
+  });
+}
+
 export function transformReturnValueForEntity<ReturnT extends Entity>(data: any, entityConstructor: Constructable<ReturnT>): ReturnT {
   return deserializeEntity(data.d, entityConstructor).setOrInitializeRemoteState() as ReturnT;
 }

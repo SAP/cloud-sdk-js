@@ -244,6 +244,14 @@ function transformComplexTypes(complexTypes: EdmxComplexType[], formatter: Servi
 }
 
 function parseReturnType(returnType: string, entities: VdmEntity[], complexTypes: VdmComplexType[]): VdmFunctionImportReturnType {
+  if (!returnType) {
+    return {
+      returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
+      returnType: 'Promise<void>',
+      builderFunction: '(val) => val',
+      isMulti: false
+    };
+  }
   const isMulti = isMultiReturnType(returnType);
   if (isMulti) {
     returnType = returnType.replace('Collection(', '').replace(')', '');

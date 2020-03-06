@@ -6,10 +6,8 @@ import { Constructable } from '../constructable';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 
-export function transformReturnValueForPromiseVoid<ReturnT>(data: any, builderFn: (data: any) => ReturnT) {
-  return new Promise<void>(resolve => {
-    resolve();
-  });
+export async function transformReturnValueForPromiseVoid<ReturnT>(data: any, builderFn: (data: any) => ReturnT) {
+  return builderFn(data);
 }
 
 export function transformReturnValueForEntity<ReturnT extends Entity>(data: any, entityConstructor: Constructable<ReturnT>): ReturnT {

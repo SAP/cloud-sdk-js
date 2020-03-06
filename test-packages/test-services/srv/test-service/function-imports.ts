@@ -38,7 +38,7 @@ export function testFunctionImportNoReturnType(
     'post',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportNoReturnType',
-    data => transformReturnValueForPromiseVoid(data, val => val),
+    data => transformReturnValueForPromiseVoid(data, val => undefined),
     params
   );
 }

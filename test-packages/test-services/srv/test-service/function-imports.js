@@ -16,7 +16,7 @@ var TestComplexType_1 = require("./TestComplexType");
  */
 function testFunctionImportNoReturnType(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNoReturnType', function (data) { return core_1.transformReturnValueForPromiseVoid(data, function (val) { return val; }); }, params);
+    return new core_1.FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNoReturnType', function (data) { return core_1.transformReturnValueForPromiseVoid(data, function (val) { return undefined; }); }, params);
 }
 exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
 /**

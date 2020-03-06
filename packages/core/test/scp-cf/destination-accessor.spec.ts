@@ -240,7 +240,9 @@ describe('destination-accessor', () => {
         xsuaa: [mockXsuaaBinding]
       });
 
-      await expect(getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false })).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false })
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
 
     it('throws an error when the provide userJwt is invalid', async () => {

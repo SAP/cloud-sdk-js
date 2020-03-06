@@ -38,24 +38,24 @@
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.18.0",
     "@sap-cloud-sdk/util": "^1.18.0",
-    "@sap/edm-converters": "1.0.19",
-    "fast-xml-parser": "3.12.14",
+    "@sap/edm-converters": "^1.0.21",
+    "fast-xml-parser": "^3.16.0",
     "fs-extra": "^8.1.0",
-    "rambda": "2.14.5",
-    "ts-morph": "4.0.1",
-    "typescript": "3.7.4",
-    "voca": "1.4.0",
-    "yargs": "14.0.0"
+    "rambda": "^4.6.0",
+    "ts-morph": "^7.0.0",
+    "typescript": "^3.8.3",
+    "voca": "^1.4.0",
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services": "^1.18.0",
     "@types/jest": "^25.1.3",
-    "@types/yargs": "^13.0.2",
+    "@types/yargs": "^15.0.4",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "ts-jest": "^25.2.1",
-    "ts-loader": "^5.3.3",
-    "tslint": "5.20.1",
-    "typescript": "3.7.4"
+    "ts-loader": "^6.2.1",
+    "tslint": "^6.0.0",
+    "typescript": "^3.8.3"
   }
 }

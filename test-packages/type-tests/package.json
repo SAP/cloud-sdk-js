@@ -11,7 +11,7 @@
     "test": "npx dtslint test --expectOnly --localTs ../../node_modules/typescript/lib"
   },
   "devDependencies": {
-    "dtslint": "^2.0.2"
+    "dtslint": "^3.3.0"
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.18.0",

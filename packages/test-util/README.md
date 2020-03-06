@@ -11,4 +11,3 @@ Package that contains utility functions for testing, like loading credentials or
 - [All versions of this documentation](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
 - [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
 - [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
-- [Example Applications using the SAP Cloud SDK](https://github.com/SAP/cloud-s4-sdk-examples)

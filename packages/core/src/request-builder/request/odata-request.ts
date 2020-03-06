@@ -17,14 +17,6 @@ import { ODataRequestConfig } from './odata-request-config';
  * @typeparam EntityT Type of the entity to setup a request for
  */
 export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
-  set destination(dest: Destination | undefined) {
-    this._destination = dest && sanitizeDestination(dest);
-  }
-
-  get destination(): Destination | undefined {
-    return this._destination;
-  }
-
   /**
    * Creates an instance of ODataRequest.
    *
@@ -32,7 +24,16 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @param _destination Destination to setup the request against
    * @memberof ODataRequest
    */
+
   constructor(public config: RequestConfigT, private _destination?: Destination | undefined) {}
+
+  set destination(dest: Destination | undefined) {
+    this._destination = dest && sanitizeDestination(dest);
+  }
+
+  get destination(): Destination | undefined {
+    return this._destination;
+  }
 
   /**
    * Constructs the url for the request at hand.

@@ -35,7 +35,7 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity> im
    * @param link Linked entity to be used in the filter
    * @param filters List of filterables for the linked entity
    */
-  constructor(public link: Link<EntityT, LinkedEntityT>, public filters: Array<Filterable<LinkedEntityT>>) {}
+  constructor(public link: Link<EntityT, LinkedEntityT>, public filters: Filterable<LinkedEntityT>[]) {}
 }
 
 export function isFilterLink<EntityT extends Entity, LinkedT extends Entity>(

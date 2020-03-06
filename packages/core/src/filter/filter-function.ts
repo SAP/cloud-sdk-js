@@ -23,7 +23,7 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
    * @param functionName Name of the function
    * @param parameters Representation of the parameters passed to the filter function
    */
-  constructor(public functionName: string, public parameters: Array<FilterFunctionParameterType<EntityT>>) {}
+  constructor(public functionName: string, public parameters: FilterFunctionParameterType<EntityT>[]) {}
 
   /**
    * Serializes the filter function into a string

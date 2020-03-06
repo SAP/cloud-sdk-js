@@ -40,11 +40,11 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
    */
   constructor(
     readonly defaultServicePath: string,
-    readonly requests: Array<
+    readonly requests: (
       | ODataBatchChangeSet<CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>
       | GetAllRequestBuilder<Entity>
       | GetByKeyRequestBuilder<Entity>
-    >,
+    )[],
     readonly entityToConstructorMap: MapType<Constructable<Entity>>
   ) {
     super(new ODataBatchConfig(defaultServicePath, uuid()));
@@ -98,11 +98,11 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
  * @returns {string} The generated payload.
  */
 function getPayload(
-  requests: Array<
+  requests: (
     | ODataBatchChangeSet<CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>
     | GetAllRequestBuilder<Entity>
     | GetByKeyRequestBuilder<Entity>
-  >,
+  )[],
   requestConfig: ODataBatchConfig
 ): string {
   const payloads = requests.map(toRequestBody).filter(b => !!b);

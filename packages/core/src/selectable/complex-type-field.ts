@@ -3,6 +3,7 @@
  */
 
 import { Constructable } from '../constructable';
+import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
 import { Field } from './field';
 
@@ -21,18 +22,63 @@ import { Field } from './field';
  * @typeparam EntityT Type of the entity the field belongs to
  */
 export abstract class ComplexTypeField<EntityT extends Entity> extends Field<EntityT> {
-  readonly pathToRootComplex;
+  /**
+   * Convinience method to return the entity constructor in the complex extensions of the normal fields e.g. ComplexTypeStringPropertyField
+   * @param arg Contains either the entity containing the complex field or a complex field in case of nested fields.
+   * @returns Constructable
+   */
+  static getEntityConstructor<EntityT extends Entity>(arg: Constructable<EntityT> | ComplexTypeField<EntityT>): Constructable<EntityT> {
+    return arg instanceof ComplexTypeField ? arg._entityConstructor : arg;
+  }
+
+  /**
+   * Convinience method to return the EDM type for the overloaed constructor e.g. ComplexTypeStringPropertyField
+   * @param arg1 Contains either the type name or the EdmType
+   * @param arg2 Contains either the EdmType or undefined
+   * @returns EdmType
+   */
+  static getEdmType(arg1: string | EdmType, arg2: EdmType | undefined): EdmType {
+    if ((arg1 as string).includes('Edm.') && !arg2) {
+      return arg1 as EdmType;
+    }
+    if (typeof arg1 === 'string' && arg2 && (arg2 as string).includes('Edm.')) {
+      return arg2 as EdmType;
+    }
+    throw new Error('Illegal argument exception!');
+  }
+
+  /**
+   * The constructor of the entity or the complex type this field belongs to
+   */
+  readonly fieldOf: ConstructorOrField<EntityT>;
 
   /**
    * Creates an instance of ComplexTypeField.
    *
    * @param fieldName Actual name of the field used in the OData request
-   * @param rootEntityOrParentComplexField If the complex field is on root level of entity it is the entity otherwise the parent complex field
+   * @param fieldOf If the complex field is on root level of entity it is the entity otherwise the parent complex field
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
+  /**
+   * @deprecated since verision 1.19.0
+   *
+   * Creates an instance of ComplexTypeField.
+   *
+   * @param fieldName Actual name of the field used in the OData request
+   * @param entityConstructor Constructor type of the entity the field belongs to
    * @param complexTypeName Type of the field according to the metadata description
    */
-  constructor(fieldName: string, rootEntityOrParentComplexField: Constructable<Entity> | ComplexTypeField<EntityT>) {
-    super(fieldName, (rootEntityOrParentComplexField as ComplexTypeField<EntityT>)._entityConstructor || rootEntityOrParentComplexField);
-    const pathToRoot = (rootEntityOrParentComplexField as ComplexTypeField<EntityT>).pathToRootComplex;
-    this.pathToRootComplex = pathToRoot ? `${pathToRoot}/${fieldName}` : fieldName;
+  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, complexTypeName: string);
+
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, complexTypeName?: string) {
+    super(fieldName, ComplexTypeField.getEntityConstructor(fieldOf));
+    this.fieldOf = fieldOf;
+  }
+
+  fieldPath(): string {
+    const value = this.fieldOf instanceof ComplexTypeField ? `${this.fieldOf.fieldPath()}/${this._fieldName}` : this._fieldName;
+    return value;
   }
 }
+
+export type ConstructorOrField<EntityT extends Entity> = Constructable<EntityT> | ComplexTypeField<EntityT>;

@@ -48,8 +48,8 @@
     "tslint": "6.0.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-plugin-blank-line": "^0.0.9",
-    "typedoc": "^0.15.0",
-    "typedoc-plugin-lerna-packages": "^0.2.2",
+    "typedoc": "^0.16.11",
+    "typedoc-plugin-lerna-packages": "^0.3.0",
     "typescript": "^3.7.4"
   }
 }

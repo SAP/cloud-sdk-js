@@ -36,7 +36,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
     }
   })
     .get(servicePath)
-    .reply(200, null, {
+    .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
     });

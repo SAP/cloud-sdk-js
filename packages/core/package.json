@@ -64,6 +64,6 @@
     "ts-jest": "^25.2.1",
     "ts-loader": "^5.3.3",
     "tslint": "5.20.1",
-    "typescript": "3.7.4"
+    "typescript": "^3.7.4"
   }
 }

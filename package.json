@@ -31,21 +31,6 @@
     "bump:patch": "npx lerna version patch --force-publish -y",
     "bump:minor": "npx lerna version minor --force-publish -y"
   },
-  "dependencies": {
-    "@sap/edm-converters": "1.0.19",
-    "@sap/xsenv": "2.2.0",
-    "axios": "0.19.2",
-    "bignumber.js": "8.1.1",
-    "chalk": "^2.4.2",
-    "jsonwebtoken": "8.5.1",
-    "moment": "2.24.0",
-    "opossum": "4.0.0",
-    "rambda": "2.14.5",
-    "ts-morph": "4.0.1",
-    "voca": "1.4.0",
-    "winston": "^3.2.1",
-    "yargs": "14.0.0"
-  },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.3.6",
     "@types/lolex": "^3.1.1",

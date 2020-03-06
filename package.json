@@ -50,6 +50,6 @@
     "tslint-plugin-blank-line": "^0.0.9",
     "typedoc": "^0.16.11",
     "typedoc-plugin-lerna-packages": "^0.3.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.8.3"
   }
 }

@@ -5,7 +5,7 @@
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
-import { ComplexTypeField, ConstructorOrField } from './complex-type-field';
+import { ComplexTypeField, ConstructorOrField, getEdmType, getEntityConstructor } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
 // tslint:disable: max-classes-per-file
@@ -57,9 +57,9 @@ export class ComplexTypeStringPropertyField<EntityT extends Entity> extends Stri
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
 
-  constructor(fieldName: string, fieldOF: ConstructorOrField<EntityT>, arg3: string | EdmType, arg4?: EdmType) {
-    super(fieldName, ComplexTypeField.getEntityConstructor(fieldOF), ComplexTypeField.getEdmType(arg3, arg4));
-    this.fieldOf = fieldOF;
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, arg3: string | EdmType, arg4?: EdmType) {
+    super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
+    this.fieldOf = fieldOf;
   }
 
   /**

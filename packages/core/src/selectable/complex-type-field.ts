@@ -23,31 +23,6 @@ import { Field } from './field';
  */
 export abstract class ComplexTypeField<EntityT extends Entity> extends Field<EntityT> {
   /**
-   * Convinience method to return the entity constructor in the complex extensions of the normal fields e.g. ComplexTypeStringPropertyField
-   * @param arg Contains either the entity containing the complex field or a complex field in case of nested fields.
-   * @returns Constructable
-   */
-  static getEntityConstructor<EntityT extends Entity>(arg: Constructable<EntityT> | ComplexTypeField<EntityT>): Constructable<EntityT> {
-    return arg instanceof ComplexTypeField ? arg._entityConstructor : arg;
-  }
-
-  /**
-   * Convinience method to return the EDM type for the overloaed constructor e.g. ComplexTypeStringPropertyField
-   * @param arg1 Contains either the type name or the EdmType
-   * @param arg2 Contains either the EdmType or undefined
-   * @returns EdmType
-   */
-  static getEdmType(arg1: string | EdmType, arg2: EdmType | undefined): EdmType {
-    if ((arg1 as string).includes('Edm.') && !arg2) {
-      return arg1 as EdmType;
-    }
-    if (typeof arg1 === 'string' && arg2 && (arg2 as string).includes('Edm.')) {
-      return arg2 as EdmType;
-    }
-    throw new Error('Illegal argument exception!');
-  }
-
-  /**
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT>;
@@ -71,7 +46,7 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, complexTypeName: string);
 
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, complexTypeName?: string) {
-    super(fieldName, ComplexTypeField.getEntityConstructor(fieldOf));
+    super(fieldName, getEntityConstructor(fieldOf));
     this.fieldOf = fieldOf;
   }
 
@@ -82,3 +57,28 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
 }
 
 export type ConstructorOrField<EntityT extends Entity> = Constructable<EntityT> | ComplexTypeField<EntityT>;
+
+/**
+ * Convenience method to return the entity constructor in the complex extensions of the normal fields e.g. ComplexTypeStringPropertyField
+ * @param arg Contains either the entity containing the complex field or a complex field in case of nested fields.
+ * @returns Constructable
+ */
+export function getEntityConstructor<EntityT extends Entity>(arg: Constructable<EntityT> | ComplexTypeField<EntityT>): Constructable<EntityT> {
+  return arg instanceof ComplexTypeField ? arg._entityConstructor : arg;
+}
+
+/**
+ * Convenience method to return the EDM type for the overloaed constructor e.g. ComplexTypeStringPropertyField
+ * @param arg1 Contains either the type name or the EdmType
+ * @param arg2 Contains either the EdmType or undefined
+ * @returns EdmType
+ */
+export function getEdmType(arg1: string | EdmType, arg2: EdmType | undefined): EdmType {
+  if ((arg1 as string).includes('Edm.') && !arg2) {
+    return arg1 as EdmType;
+  }
+  if (typeof arg1 === 'string' && arg2 && (arg2 as string).includes('Edm.')) {
+    return arg2 as EdmType;
+  }
+  throw new Error('Illegal argument exception!');
+}

@@ -16,7 +16,7 @@ import { SimpleTypeFields } from './simple-type-fields';
  */
 
 export type Selectable<EntityT extends Entity> =
-  | SimpleTypeFields<EntityT>
+   | SimpleTypeFields<EntityT>
   | Link<EntityT, any>
   | ComplexTypeField<EntityT>
   | CustomField<EntityT>

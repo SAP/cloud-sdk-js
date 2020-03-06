@@ -17,6 +17,7 @@
     "test:integration": "npx lerna run test --scope \"@sap-cloud-sdk/integration-tests\"",
     "test:type": "npx lerna run test --scope \"@sap-cloud-sdk/type-tests\"",
     "generate:test-services": "npx ts-node generate-test-services.ts && npm run lint:fix && lerna link --force-local",
+    "megacleaninstall": "rm -f package-lock.json && find . -name \"node_modules\" -exec rm -rf '{}' + && find . -name \"dist\" -exec rm -rf '{}' + && find . -name \"tsconfig.tsbuildinfo\" -exec rm -rf '{}' + && npm i",
     "compile": "npx lerna run compile",
     "lint": "npm run tslint && npm run prettier",
     "lint:fix": "npm run tslint:fix && npm run prettier:fix",

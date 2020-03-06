@@ -35,7 +35,6 @@
     "@types/jsonwebtoken": "^8.3.8",
     "@types/rewire": "^2.5.28",
     "@types/voca": "^1.4.0",
-    "@types/yargs": "^13.0.2",
     "audit-ci": "^2.5.1",
     "eclint": "^2.8.1",
     "glob": "^7.1.6",

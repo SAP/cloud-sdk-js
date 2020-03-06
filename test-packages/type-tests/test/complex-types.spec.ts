@@ -1,5 +1,6 @@
 import { and, asc, desc, or } from '@sap-cloud-sdk/core';
-import { TestComplexType, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
+// import { TestComplexType, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
+import { TestComplexType, TestEntity } from '../../test-services/srv/test-service'
 
 // $ExpectType TestComplexTypeField<TestEntity>
 TestEntity.COMPLEX_TYPE_PROPERTY;

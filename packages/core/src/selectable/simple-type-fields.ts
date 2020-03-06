@@ -20,5 +20,5 @@ export type SimpleTypeFields<EntityT extends Entity> =
   | BooleanField<EntityT>
   | DateField<EntityT>
   | NumberField<EntityT>
-  // | StringField<EntityT>
+  | StringField<EntityT>
   | TimeField<EntityT>;

@@ -6,8 +6,8 @@
  * Therefore, the following typescript specific syntax has to be used.
  * https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
  */
-import HttpProxyAgent = require('http-proxy-agent');
-import HttpsProxyAgent = require('https-proxy-agent');
+import createHttpProxyAgent = require('http-proxy-agent');
+import createHttpsProxyAgent = require('https-proxy-agent');
 
 import { createLogger } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
@@ -217,9 +217,9 @@ export function proxyAgent(destination: Destination): HttpAgentConfig | HttpsAge
 
   switch (targetProtocol) {
     case Protocol.HTTP:
-      return { httpAgent: new HttpProxyAgent(`${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}`) };
+      return { httpAgent: createHttpProxyAgent(`${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}`) };
     case Protocol.HTTPS:
-      return { httpsAgent: new HttpsProxyAgent(`${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}`) };
+      return { httpsAgent: createHttpsProxyAgent(`${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}`) };
   }
 }
 

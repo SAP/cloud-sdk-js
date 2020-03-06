@@ -76,7 +76,7 @@ function loadServiceBindings(): ServiceBinding[] {
 
 const transformServiceBindings = pipe(inlineServiceTypes, flattenServiceBindings);
 
-function flattenServiceBindings(vcapServices: MapType<any>): Array<MapType<any>> {
+function flattenServiceBindings(vcapServices: MapType<any>): MapType<any>[] {
   return flatten(Object.values(vcapServices));
 }
 
@@ -120,7 +120,7 @@ function serviceTypeNotSupportedError(serviceType: string): Error {
   destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });`);
 }
 
-function noServiceBindingFoundError(serviceBindings: Array<MapType<any>>, serviceInstanceName: string): Error {
+function noServiceBindingFoundError(serviceBindings: MapType<any>[], serviceInstanceName: string): Error {
   return Error(
     `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
       .map(s => s.name)

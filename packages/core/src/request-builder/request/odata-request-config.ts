@@ -18,15 +18,6 @@ export abstract class ODataRequestConfig {
   payload: MapType<any> | string;
   customServicePath: string;
 
-  set customHeaders(headers: MapType<string>) {
-    this._customHeaders = {};
-    this.addCustomHeaders(headers);
-  }
-
-  get customHeaders(): MapType<string> {
-    return this._customHeaders;
-  }
-
   private _customHeaders: MapType<string> = {};
 
   /**
@@ -40,6 +31,15 @@ export abstract class ODataRequestConfig {
     if (defaultServicePath === VALUE_IS_UNDEFINED) {
       logger.warn('The service path is undefined in "_defaultServicePath".');
     }
+  }
+
+  set customHeaders(headers: MapType<string>) {
+    this._customHeaders = {};
+    this.addCustomHeaders(headers);
+  }
+
+  get customHeaders(): MapType<string> {
+    return this._customHeaders;
   }
 
   /**

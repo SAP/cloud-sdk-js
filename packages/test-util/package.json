@@ -41,7 +41,7 @@
     "jest-junit": "^10.0.0",
     "ts-jest": "^25.2.1",
     "ts-loader": "^5.3.3",
-    "tslint": "5.20.1",
+    "tslint": "6.0.0",
     "typescript": "^3.7.4"
   }
 }

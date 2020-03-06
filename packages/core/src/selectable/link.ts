@@ -41,7 +41,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implemen
   /**
    * List of selectables on the linked entity.
    */
-  selects: Array<Selectable<LinkedEntityT>> = [];
+  selects: Selectable<LinkedEntityT>[] = [];
 
   /**
    * Creates an instance of Link.
@@ -64,7 +64,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implemen
    * @param selects Selection of fields or links on a linked entity
    * @returns The link itself, to facilitate method chaining
    */
-  select(...selects: Array<Selectable<LinkedEntityT>>): Link<EntityT, LinkedEntityT> {
+  select(...selects: Selectable<LinkedEntityT>[]): Link<EntityT, LinkedEntityT> {
     const link = Link.clone(this);
     link.selects = selects;
     return link;

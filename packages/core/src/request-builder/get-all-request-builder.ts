@@ -39,7 +39,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param selects Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Array<Selectable<EntityT>>): this {
+  select(...selects: Selectable<EntityT>[]): this {
     this.requestConfig.selects = selects;
     return this;
   }
@@ -50,7 +50,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param expressions Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(...expressions: Array<Filterable<EntityT>>): this {
+  filter(...expressions: Filterable<EntityT>[]): this {
     this.requestConfig.filter = and(...expressions);
     return this;
   }
@@ -61,7 +61,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param orderBy OrderBy statements to order the response by
    * @returns The request builder itself, to facilitate method chaining
    */
-  orderBy(...orderBy: Array<Orderable<EntityT>>): this {
+  orderBy(...orderBy: Orderable<EntityT>[]): this {
     this.requestConfig.orderBy = orderBy;
     return this;
   }

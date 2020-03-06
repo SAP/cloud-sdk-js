@@ -13,8 +13,8 @@ export interface Constructable<EntityT extends Entity, EntityTypeForceMandatoryT
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
-  _allFields: Array<Selectable<EntityT>>;
-  _keyFields: Array<Selectable<EntityT>>;
+  _allFields: Selectable<EntityT>[];
+  _keyFields: Selectable<EntityT>[];
   _keys: { [keys: string]: Selectable<EntityT> };
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;

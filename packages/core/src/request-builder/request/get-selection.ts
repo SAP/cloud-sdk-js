@@ -18,9 +18,7 @@ interface SelectionQueryParameters {
  * @param selects The list of selectables to be transformed to query parameters
  * @returns {Partial<SelectionQueryParameters>} An object containing the query parameters or an empty object
  */
-export function getQueryParametersForSelection<EntityT extends Entity>(
-  selects: Array<Selectable<EntityT>>
-): Partial<{ select: string; expand: string }> {
+export function getQueryParametersForSelection<EntityT extends Entity>(selects: Selectable<EntityT>[]): Partial<{ select: string; expand: string }> {
   const queryParameters: Partial<SelectionQueryParameters> = {};
 
   if (selects && selects.length) {
@@ -52,7 +50,7 @@ function filterSelects(selects: string[]): string[] {
 }
 
 function combineSelection<EntityT extends Entity>(
-  selects: Array<Selectable<EntityT>>,
+  selects: Selectable<EntityT>[],
   initialCombination: SelectionCombination = {
     selects: [],
     expands: []

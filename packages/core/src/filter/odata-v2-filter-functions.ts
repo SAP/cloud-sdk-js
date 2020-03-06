@@ -49,19 +49,19 @@ export function length<EntityT extends Entity>(p0: string | Field<EntityT> | Str
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean',
-  ...parameters: Array<FilterFunctionParameterType<EntityT>>
+  ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
-  ...parameters: Array<FilterFunctionParameterType<EntityT>>
+  ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'string',
-  ...parameters: Array<FilterFunctionParameterType<EntityT>>
+  ...parameters: FilterFunctionParameterType<EntityT>[]
 ): StringFilterFunction<EntityT>;
 
 /**
@@ -74,7 +74,7 @@ export function filterFunction<EntityT extends Entity>(
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean' | 'int' | 'double' | 'decimal' | 'string',
-  ...parameters: Array<FilterFunctionParameterType<EntityT>>
+  ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT> | NumberFilterFunction<EntityT> | StringFilterFunction<EntityT> {
   if (returnType === 'boolean') {
     return new BooleanFilterFunction(functionName, parameters);

@@ -8,7 +8,7 @@
   "types": "types",
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
-    "test": "npx dtslint test --expectOnly --localTs ../../node_modules/typescript/lib"
+    "test": "npx dtslint test --expectOnly --onlyTestTsNext"
   },
   "devDependencies": {
     "dtslint": "^3.3.0"

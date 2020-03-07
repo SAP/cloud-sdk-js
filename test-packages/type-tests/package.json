@@ -10,11 +10,11 @@
   "scripts": {
     "test": "npx dtslint test --expectOnly --onlyTestTsNext"
   },
-  "devDependencies": {
-    "dtslint": "^3.3.0"
-  },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.18.0",
     "@sap-cloud-sdk/test-services": "^1.18.0"
+  },
+  "devDependencies": {
+    "dtslint": "^3.3.0"
   }
 }

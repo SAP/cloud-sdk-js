@@ -10,11 +10,11 @@
   "scripts": {
     "test": "npx dtslint test --expectOnly --localTs ../../node_modules/typescript/lib"
   },
-  "devDependencies": {
-    "dtslint": "^2.0.2"
-  },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.18.0",
     "@sap-cloud-sdk/test-services": "^1.18.0"
+  },
+  "devDependencies": {
+    "dtslint": "^3.3.0"
   }
 }

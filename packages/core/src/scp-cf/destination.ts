@@ -121,8 +121,8 @@ function getAuthenticationType(destinationConfig: MapType<any>): AuthenticationT
 
 interface DestinationJSON {
   destinationConfiguration: DestinationConfiguration;
-  authTokens?: Array<MapType<string>>;
-  certificates?: Array<MapType<string>>;
+  authTokens?: MapType<string>[];
+  certificates?: MapType<string>[];
 }
 
 interface DestinationConfiguration {

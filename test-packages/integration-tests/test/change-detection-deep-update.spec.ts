@@ -10,7 +10,7 @@ function mockCsrfTokenRequest(host: string, authHeader: string, csrfToken: strin
     }
   })
     .get(TestEntity._defaultServicePath)
-    .reply(200, null, {
+    .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
     });

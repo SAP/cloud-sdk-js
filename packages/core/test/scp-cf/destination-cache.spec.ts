@@ -1,4 +1,4 @@
-import { install } from 'lolex';
+import { install } from '@sinonjs/fake-timers';
 import { AuthenticationType, Destination, destinationCache, IsolationStrategy } from '../../src/scp-cf';
 
 const destinationOne: Destination = {

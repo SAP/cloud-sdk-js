@@ -36,7 +36,7 @@ export type Filterable<EntityT extends Entity> = Filter<EntityT, FieldType> | Fi
  * @param expressions Filterables to be combined with logical `and`
  * @returns The newly created FilterList
  */
-export function and<EntityT extends Entity>(...expressions: Array<Filterable<EntityT>>): FilterList<EntityT> {
+export function and<EntityT extends Entity>(...expressions: Filterable<EntityT>[]): FilterList<EntityT> {
   return new FilterList(expressions);
 }
 
@@ -54,7 +54,7 @@ export function and<EntityT extends Entity>(...expressions: Array<Filterable<Ent
  * @param expressions Filterables to be combined with logical `or`
  * @returns The newly created FilterList
  */
-export function or<EntityT extends Entity>(...expressions: Array<Filterable<EntityT>>): FilterList<EntityT> {
+export function or<EntityT extends Entity>(...expressions: Filterable<EntityT>[]): FilterList<EntityT> {
   return new FilterList([], expressions);
 }
 

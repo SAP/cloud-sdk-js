@@ -19,7 +19,7 @@ export interface WithKeys {
  * @hidden
  */
 export interface WithSelection<EntityT extends Entity> {
-  selects: Array<Selectable<EntityT>>;
+  selects: Selectable<EntityT>[];
 }
 
 /**
@@ -29,5 +29,5 @@ export interface WithGetAllRestrictions<EntityT extends Entity> extends WithSele
   top: number;
   skip: number;
   filter: Filterable<EntityT>;
-  orderBy: Array<Orderable<EntityT>>;
+  orderBy: Orderable<EntityT>[];
 }

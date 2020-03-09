@@ -80,7 +80,7 @@ describe('Environment Accessor', () => {
 
     it('get a credentials list from "destination"', () => {
       const destinations = services.destination;
-      const expected: Array<Partial<DestinationServiceCredentials>> = [];
+      const expected: Partial<DestinationServiceCredentials>[] = [];
 
       for (const dest of destinations) {
         expected.push(dest.credentials);

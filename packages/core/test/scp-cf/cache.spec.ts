@@ -1,4 +1,4 @@
-import { install } from 'lolex';
+import { install } from '@sinonjs/fake-timers';
 import { AuthenticationType, ClientCredentialsResponse, clientCredentialsTokenCache, Destination, destinationCache } from '../../src/scp-cf';
 import { Cache } from '../../src/scp-cf/cache';
 

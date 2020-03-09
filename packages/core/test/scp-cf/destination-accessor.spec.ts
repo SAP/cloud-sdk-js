@@ -240,24 +240,16 @@ describe('destination-accessor', () => {
         xsuaa: [mockXsuaaBinding]
       });
 
-      try {
-        await getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false });
-        fail();
-      } catch (error) {
-        expect(error.message).toBeDefined();
-      }
+      await expect(
+        getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false })
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
 
     it('throws an error when the provide userJwt is invalid', async () => {
       mockServiceBindings();
       mockVerifyJwt();
 
-      try {
-        await getDestination(destinationName, { userJwt: 'fails', cacheVerificationKeys: false });
-        fail();
-      } catch (error) {
-        expect(error.message).toBe('JwtError: The given jwt payload does not encode valid JSON.');
-      }
+      await expect(getDestination(destinationName, { userJwt: 'fails', cacheVerificationKeys: false })).rejects.toThrowErrorMatchingSnapshot();
     });
 
     it('throws an error if the subaccount/instance destinations call fails', async () => {

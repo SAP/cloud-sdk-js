@@ -14,7 +14,7 @@ export class StringFilterFunction<EntityT extends Entity> extends FilterFunction
    * @param functionName Name of the function that returns a string value
    * @param parameters Representation of the parameters passed to the filter function
    */
-  constructor(functionName: string, parameters: Array<FilterFunctionParameterType<EntityT>>) {
+  constructor(functionName: string, parameters: FilterFunctionParameterType<EntityT>[]) {
     super(functionName, parameters);
     this.edmType = 'Edm.String';
   }

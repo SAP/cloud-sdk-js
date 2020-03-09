@@ -154,7 +154,7 @@ function deleteRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   };
 }
 
-function deleteRequestBuilderParameters(entity: VdmEntity): Array<OptionalKind<ParameterDeclarationStructure>> {
+function deleteRequestBuilderParameters(entity: VdmEntity): OptionalKind<ParameterDeclarationStructure>[] {
   if (entity.keys.length) {
     return entity.keys.map((key, index) => {
       if (index === 0) {

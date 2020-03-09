@@ -26,6 +26,7 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT>;
+  readonly complexTypeName: string|undefined;
 
   /**
    * Creates an instance of ComplexTypeField.
@@ -48,6 +49,7 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, complexTypeName?: string) {
     super(fieldName, getEntityConstructor(fieldOf));
     this.fieldOf = fieldOf;
+    this.complexTypeName = complexTypeName;
   }
 
   fieldPath(): string {

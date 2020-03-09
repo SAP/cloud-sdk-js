@@ -35,7 +35,7 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
    * List of criteria of the linked entity to order the given entity by with descending priority.
    *
    */
-  orderBys: Array<Order<LinkedEntityT>> = [];
+  orderBys: Order<LinkedEntityT>[] = [];
 
   /**
    * Filterables to apply to the given entity based on the linked entity.
@@ -55,7 +55,7 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
    * @param orderBy Criteria to order by
    * @returns Newly created order link
    */
-  orderBy(...orderBy: Array<Orderable<LinkedEntityT>>): OrderLink<EntityT, LinkedEntityT> {
+  orderBy(...orderBy: Orderable<LinkedEntityT>[]): OrderLink<EntityT, LinkedEntityT> {
     return new OrderLink(this, orderBy);
   }
 
@@ -65,7 +65,7 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
    * @param filters Filters based on the linked entity
    * @returns Newly created Filterlink
    */
-  filter(...filters: Array<Filterable<LinkedEntityT>>): FilterLink<EntityT, LinkedEntityT> {
+  filter(...filters: Filterable<LinkedEntityT>[]): FilterLink<EntityT, LinkedEntityT> {
     return new FilterLink(this, filters);
   }
 }

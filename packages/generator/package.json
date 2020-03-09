@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "1.17.3",
+  "version": "1.18.0",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -36,8 +36,8 @@
     "tslint:fix": "npm run tslint -- --fix"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.17.3",
-    "@sap-cloud-sdk/util": "^1.17.3",
+    "@sap-cloud-sdk/core": "^1.18.0",
+    "@sap-cloud-sdk/util": "^1.18.0",
     "@sap/edm-converters": "1.0.19",
     "fast-xml-parser": "3.12.14",
     "fs-extra": "^8.1.0",
@@ -48,14 +48,13 @@
     "yargs": "14.0.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services": "^1.17.3",
-    "@types/jest": "^24.0.25",
-    "@types/yargs": "^13.0.2",
-    "jest": "^24.9.0",
-    "jest-junit": "^6.4.0",
-    "ts-jest": "^24.0.2",
-    "ts-loader": "^5.3.3",
-    "tslint": "5.20.1",
+    "@sap-cloud-sdk/test-services": "^1.18.0",
+    "@types/jest": "^25.1.4",
+    "@types/yargs": "^15.0.4",
+    "jest": "^25.1.0",
+    "jest-junit": "^10.0.0",
+    "ts-jest": "^25.2.1",
+    "tslint": "6.0.0",
     "typescript": "3.7.4"
   }
 }

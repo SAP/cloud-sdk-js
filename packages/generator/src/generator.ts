@@ -24,7 +24,7 @@ import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
 import { indexFile } from './service/index-file';
 import { npmrc } from './service/npmrc';
-import { packgeJson } from './service/package-json';
+import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { typedocJson } from './service/typedoc-json';
@@ -105,7 +105,8 @@ function generateAggregatorPackage(services: VdmServiceMetadata[], options: Gene
       aggregatorPackageJson(
         cloudSdkVdmHack(npmCompliantName(options.aggregatorNpmPackageName)),
         services.map(service => service.npmPackageName),
-        version()
+        options.versionInPackageJson,
+        getGeneratorVersion()
       ),
       options.forceOverwrite
     );
@@ -129,7 +130,13 @@ export async function generateSourcesForService(service: VdmServiceMetadata, pro
     otherFile(
       serviceDir,
       'package.json',
-      packgeJson(service.npmPackageName, version(), serviceDescription(service, options), options.sdkAfterVersionScript),
+      packageJson(
+        service.npmPackageName,
+        options.versionInPackageJson,
+        getGeneratorVersion(),
+        serviceDescription(service, options),
+        options.sdkAfterVersionScript
+      ),
       options.forceOverwrite
     );
   }
@@ -216,7 +223,7 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   return options;
 }
 
-function version(): string {
+function getGeneratorVersion(): string {
   return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8')).version;
 }
 

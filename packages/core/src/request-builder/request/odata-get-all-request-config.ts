@@ -23,8 +23,8 @@ export class ODataGetAllRequestConfig<EntityT extends Entity> extends ODataReque
   top: number;
   skip: number;
   filter: Filterable<EntityT>;
-  orderBy: Array<Orderable<EntityT>>;
-  selects: Array<Selectable<EntityT>>;
+  orderBy: Orderable<EntityT>[];
+  selects: Selectable<EntityT>[];
 
   /**
    * Creates an instance of ODataGetAllRequestConfig.

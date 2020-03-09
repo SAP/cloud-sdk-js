@@ -2,12 +2,18 @@
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
-export function packgeJson(npmPackageName: string, version: string, description: string, sdkAfterVersionScript: boolean): string {
+export function packageJson(
+  npmPackageName: string,
+  versionInPackageJson: string | undefined,
+  generatorVersion: string,
+  description: string,
+  sdkAfterVersionScript: boolean
+): string {
   return (
     JSON.stringify(
       {
         name: npmPackageName,
-        version,
+        version: versionInPackageJson || generatorVersion,
         description,
         homepage: 'https://www.sap.com/cloud-sdk',
         main: './index.js',
@@ -26,13 +32,12 @@ export function packgeJson(npmPackageName: string, version: string, description:
           ...(sdkAfterVersionScript ? { version: 'node ../../../after-version-update.js' } : {})
         },
         dependencies: {
-          '@sap-cloud-sdk/core': `^${version}`
+          '@sap-cloud-sdk/core': `^${generatorVersion}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${version}`
+          '@sap-cloud-sdk/core': `^${generatorVersion}`
         },
         devDependencies: {
-          '@types/node': '^11.13.5',
           typedoc: '^0.15.0',
           typescript: '3.7.4'
         }

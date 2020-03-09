@@ -23,7 +23,7 @@ export class FilterList<EntityT extends Entity> implements EntityIdentifiable<En
    * @param andFilters Filters to be combined by logical conjunction (`and`)
    * @param orFilters Filters to be combined by logical disjunction (`or`)
    */
-  constructor(public andFilters: Array<Filterable<EntityT>> = [], public orFilters: Array<Filterable<EntityT>> = []) {}
+  constructor(public andFilters: Filterable<EntityT>[] = [], public orFilters: Filterable<EntityT>[] = []) {}
 
   /**
    * Flattens `andFilters` and `orFilters` as far as possible while staying logically equivalent.

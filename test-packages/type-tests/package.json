@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/type-tests",
-  "version": "1.17.3",
+  "version": "1.18.0",
   "description": "Tests to ensure correct types in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -10,11 +10,11 @@
   "scripts": {
     "test": "npx dtslint test --expectOnly --localTs ../../node_modules/typescript/lib"
   },
-  "devDependencies": {
-    "dtslint": "^2.0.2"
-  },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.17.3",
-    "@sap-cloud-sdk/test-services": "^1.17.3"
+    "@sap-cloud-sdk/core": "^1.18.0",
+    "@sap-cloud-sdk/test-services": "^1.18.0"
+  },
+  "devDependencies": {
+    "dtslint": "^3.3.0"
   }
 }

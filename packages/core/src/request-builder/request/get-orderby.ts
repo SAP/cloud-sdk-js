@@ -12,7 +12,7 @@ import { Order, Orderable, OrderLink } from '../../order';
  * @param orderBy A list of orderables to get the query parameters for
  * @returns {Partial<{ orderby: string; }>} An object containing the query parameter or an empty object
  */
-export function getQueryParametersForOrderBy<EntityT extends Entity>(orderBy: Array<Orderable<EntityT>>): Partial<{ orderby: string }> {
+export function getQueryParametersForOrderBy<EntityT extends Entity>(orderBy: Orderable<EntityT>[]): Partial<{ orderby: string }> {
   if (typeof orderBy !== 'undefined' && orderBy.length) {
     return {
       orderby: getODataOrderByExpressions(orderBy).join(',')
@@ -21,10 +21,7 @@ export function getQueryParametersForOrderBy<EntityT extends Entity>(orderBy: Ar
   return {};
 }
 
-function getODataOrderByExpressions<OrderByEntityT extends Entity>(
-  orderBys: Array<Orderable<OrderByEntityT>>,
-  parentFieldNames: string[] = []
-): string[] {
+function getODataOrderByExpressions<OrderByEntityT extends Entity>(orderBys: Orderable<OrderByEntityT>[], parentFieldNames: string[] = []): string[] {
   return orderBys.reduce((expressions: string[], orderBy: Orderable<OrderByEntityT>) => {
     if (orderBy instanceof OrderLink) {
       return [...expressions, getOrderByExpressionForOrderLink(orderBy, [...parentFieldNames])];

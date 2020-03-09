@@ -231,31 +231,27 @@ function selectXsuaaInstance(token?: DecodedJWT): XsuaaServiceCredentials {
   return head(selected)!.credentials;
 }
 
-function applyStrategiesInOrder(
-  selectionStrategies: SelectionStrategyFn[],
-  xsuaaInstances: Array<MapType<any>>,
-  token?: DecodedJWT
-): Array<MapType<any>> {
+function applyStrategiesInOrder(selectionStrategies: SelectionStrategyFn[], xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
   return selectionStrategies.reduce((result, strategy) => (result.length ? result : strategy(xsuaaInstances, token)), []);
 }
 
-type SelectionStrategyFn = (xsuaaInstances: Array<MapType<any>>, token?: DecodedJWT) => Array<MapType<any>>;
+type SelectionStrategyFn = (xsuaaInstances: MapType<any>[], token?: DecodedJWT) => MapType<any>[];
 
-function matchingClientId(xsuaaInstances: Array<MapType<any>>, token?: DecodedJWT): Array<MapType<any>> {
+function matchingClientId(xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
   if (!token) {
     return [];
   }
   return xsuaaInstances.filter(xsuaa => xsuaa.credentials.clientid === token.client_id);
 }
 
-function matchingAudience(xsuaaInstances: Array<MapType<any>>, token?: DecodedJWT): Array<MapType<any>> {
+function matchingAudience(xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
   if (!token) {
     return [];
   }
   return xsuaaInstances.filter(xsuaa => audiences(token).has(xsuaa.credentials.xsappname));
 }
 
-function takeFirstAndWarn(xsuaaInstances: Array<MapType<any>>, token?: DecodedJWT): Array<MapType<any>> {
+function takeFirstAndWarn(xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
   logger.warn(
     `Unable to match a specific XSUAA service instance to the given JWT. The following XSUAA instances are bound: ${xsuaaInstances.map(
       x => x.credentials.xsappname

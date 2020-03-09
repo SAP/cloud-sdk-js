@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-util",
-  "version": "1.17.3",
+  "version": "1.18.0",
   "description": "SAP Cloud SDK for JavaScript test utilities",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -32,16 +32,15 @@
     "tslint:fix": "npm run tslint -- --fix"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.17.3",
-    "@sap-cloud-sdk/util": "^1.17.3"
+    "@sap-cloud-sdk/core": "^1.18.0",
+    "@sap-cloud-sdk/util": "^1.18.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.25",
-    "jest": "^24.9.0",
-    "jest-junit": "^6.4.0",
-    "ts-jest": "^24.0.2",
-    "ts-loader": "^5.3.3",
-    "tslint": "5.20.1",
+    "@types/jest": "^25.1.4",
+    "jest": "^25.1.0",
+    "jest-junit": "^10.0.0",
+    "ts-jest": "^25.2.1",
+    "tslint": "6.0.0",
     "typescript": "3.7.4"
   }
 }

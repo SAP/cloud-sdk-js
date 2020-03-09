@@ -23,6 +23,7 @@ export interface GeneratorOptions {
   generateNpmrc: boolean;
   generateTypedocJson: boolean;
   generatePackageJson: boolean;
+  versionInPackageJson?: string;
   generateJs: boolean;
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;
@@ -123,6 +124,11 @@ export const generatorOptionsCli: KeysToOptions = {
       'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
     type: 'boolean',
     default: true
+  },
+  versionInPackageJson: {
+    describe:
+      'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
+    type: 'string'
   },
   generateJs: {
     describe:

@@ -1,4 +1,4 @@
-import { install } from 'lolex';
+import { install } from '@sinonjs/fake-timers';
 import { clientCredentialsTokenCache } from '../../src/scp-cf';
 
 describe('ClientCredentialsTokenCache', () => {

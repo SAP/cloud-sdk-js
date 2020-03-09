@@ -16,7 +16,7 @@ export class NumberFilterFunction<EntityT extends Entity> extends FilterFunction
    * @param parameters Representation of the parameters passed to the filter function
    * @param edmType Type of the returned numeric value. This influences the formatting of the returned value.
    */
-  constructor(functionName: string, parameters: Array<FilterFunctionParameterType<EntityT>>, edmType: 'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal') {
+  constructor(functionName: string, parameters: FilterFunctionParameterType<EntityT>[], edmType: 'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal') {
     super(functionName, parameters);
     this.edmType = edmType;
   }

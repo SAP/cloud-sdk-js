@@ -99,7 +99,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param fields Enumeration of the fields to be required
    * @returns The entity itself, to facilitate method chaining
    */
-  requiredFields(...fields: Array<Selectable<EntityT>>): this {
+  requiredFields(...fields: Selectable<EntityT>[]): this {
     this.required = this.toSet(...fields);
     return this;
   }
@@ -110,7 +110,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param fields Enumeration of the fields to be ignored
    * @returns The entity itself, to facilitate method chaining
    */
-  ignoredFields(...fields: Array<Selectable<EntityT>>): this {
+  ignoredFields(...fields: Selectable<EntityT>[]): this {
     this.ignored = this.toSet(...fields);
     return this;
   }
@@ -180,7 +180,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
     return Object.keys(this._entityConstructor._keys);
   }
 
-  private toSet(...fields: Array<Selectable<EntityT>>) {
+  private toSet(...fields: Selectable<EntityT>[]) {
     const set = new Set<string>();
     Object.values(fields).forEach(field => {
       set.add(field._fieldName);

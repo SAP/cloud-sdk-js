@@ -39,7 +39,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity> extends MethodReques
    * @param selects Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Array<Selectable<EntityT>>): this {
+  select(...selects: Selectable<EntityT>[]): this {
     this.requestConfig.selects = selects;
     return this;
   }

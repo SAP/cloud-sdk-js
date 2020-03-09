@@ -33,29 +33,13 @@ blog:
 
 # 1.18.0
 
-release-date:
-docs:
-blog:
-
-## knownIssues
-
--
-
-## compatibilityNotes
-
--
-
-## newFunctionality
-
--
+release-date: March 12, 2020
+docs: https://help.sap.com/doc/69202ef7e0a64767833782132648b855/1.0/en-US/index.html
+blog: https://blogs.sap.com/?p=1060707
 
 ## improvements
 
-- When generating an OData client using the `generator` package, the version that is put in the generated `package.json` can now be supplied as argument (`versionInPackageJson`). Call `generate-odata-client help` for more details.
-
-## fixedIssues
-
--
+- Allow the definition of a custom version for the gerated `package.json` by passing the desired version to the generator as an argument `versionInPackageJson`.
 
 # 1.17.2
 

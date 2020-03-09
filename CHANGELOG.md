@@ -29,7 +29,7 @@ blog:
 
 ## fixedIssues
 
--
+- Fix ordering for complex properties including nested complex properties.
 
 # 1.18.0
 

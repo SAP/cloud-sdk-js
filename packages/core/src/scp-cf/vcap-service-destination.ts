@@ -118,7 +118,6 @@ function noVcapServicesError(): Error {
 function serviceTypeNotSupportedError(serviceType: string): Error {
   return Error(`Service of type ${serviceType} is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
   destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });`);
-
 }
 
 function noServiceBindingFoundError(serviceBindings: Array<MapType<any>>, serviceInstanceName: string): Error {

@@ -26,6 +26,10 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT>;
+  /**
+   * Note that this property is crucial, although not really used.
+   * If it is removed this class becomes structural equivalent to e.g. ComplexTypeStringPropertyField which leads to unexpected behavior on the `selectable` list of objects.
+   */
   readonly complexTypeName: string|undefined;
 
   /**

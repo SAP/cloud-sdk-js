@@ -41,8 +41,8 @@ Add any other context about the problem here.
 - [ ] Have you provided detailed description about your issue?
 - [ ] Have you shared all the necessary information to help the cloud-sdk developer reproduce the issue?
 - [ ] Have you provided the expected behaviour?
-- [ ] Have you attach some useful screenshots?
+- [ ] Have you attached some useful screenshots?
 - [ ] Have you provided the node/npm/cloud-sdk versions?
 - [ ] Have you shared your code snippets as a minial example?
 - [ ] Have you provided you log file or related error messages?
-- [ ] Have you search for related issue on [Stackoverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk)?
+- [ ] Have you searched for related issues on [Stackoverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk) or [answers.sap.com](https://answers.sap.com/tags/73555000100800000895)?

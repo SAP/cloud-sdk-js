@@ -90,7 +90,8 @@ export interface VdmFunctionImportReturnType {
 export enum VdmFunctionImportReturnTypeCategory {
   ENTITY,
   COMPLEX_TYPE,
-  EDM_TYPE
+  EDM_TYPE,
+  VOID
 }
 
 export interface VdmParameter extends VdmMappedEdmType {

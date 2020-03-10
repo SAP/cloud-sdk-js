@@ -9,6 +9,17 @@ var core_1 = require("@sap-cloud-sdk/core");
 var TestEntity_1 = require("./TestEntity");
 var TestComplexType_1 = require("./TestComplexType");
 /**
+ * Test Function Import No Return Type.
+ *
+ * @param parameters Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+function testFunctionImportNoReturnType(parameters) {
+    var params = {};
+    return new core_1.FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNoReturnType', function (data) { return core_1.transformReturnValueForPromiseVoid(data, function (val) { return undefined; }); }, params);
+}
+exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
+/**
  * Test Function Import Edm Return Type.
  *
  * @param parameters Object containing all parameters for the function import.
@@ -137,6 +148,7 @@ function fContinue(parameters) {
 }
 exports.fContinue = fContinue;
 exports.functionImports = {
+    testFunctionImportNoReturnType: testFunctionImportNoReturnType,
     testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
     testFunctionImportEdmReturnTypeCollection: testFunctionImportEdmReturnTypeCollection,
     testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,

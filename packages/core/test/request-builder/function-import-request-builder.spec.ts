@@ -1,5 +1,7 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
+import { basicCredentials } from '../../../../test-packages/integration-tests/test/test-util/destination-encoder';
+import { functionImports } from '../../../../test-packages/test-services/srv/test-service';
 import { defaultDestination, defaultHost } from '../test-util/request-mocker';
 import {
   TestEntity,
@@ -10,6 +12,7 @@ import {
   testFunctionImportEntityReturnTypeCollection,
   testFunctionImportGet,
   testFunctionImportMultipleParams,
+  testFunctionImportNoReturnType,
   testFunctionImportPost
 } from '../test-util/test-services/test-service';
 
@@ -137,6 +140,21 @@ describe('FunctionImportRequestBuilder', () => {
 
     const returnValue = await requestBuilder.execute(defaultDestination);
     expect(returnValue).toEqual(expected);
+  });
+
+  it('return undefined or throw in failure case', async () => {
+    nock(defaultHost)
+      .post(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
+      .reply(200);
+
+    const response = await testFunctionImportNoReturnType({}).execute(defaultDestination);
+    expect(response).toBe(undefined);
+
+    nock(defaultHost)
+      .post(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
+      .reply(400);
+
+    await expect(testFunctionImportNoReturnType({}).execute(defaultDestination)).rejects.toThrow();
   });
 });
 

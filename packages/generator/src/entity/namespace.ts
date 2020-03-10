@@ -31,7 +31,7 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
 
 function property(prop: VdmProperty, entity: VdmEntity): VariableStatementStructure {
   const type = `'${prop.edmType.startsWith('Edm') ? prop.edmType : prop.edmType.split('.').pop()}'`;
-  const initilizer = prop.isComplex
+  const initializer = prop.isComplex
     ? `new ${prop.fieldType}('${prop.originalName}', ${entity.className})`
     : `new ${prop.fieldType}('${prop.originalName}', ${entity.className}, ${type})`;
   return {

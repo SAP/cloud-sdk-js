@@ -2,7 +2,6 @@
 
 exports[`vcap-service-destination throws an error if no service binding can be found for the given name 1`] = `
 "Unable to find a service binding for given name \\"non-existent-service\\"! Found the following bindings: my-business-logging, my-custom-service, S4_SYSTEM.
-      If you're not using SAP Extension Factory, you can ignore this warning.
       "
 `;
 

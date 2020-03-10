@@ -212,6 +212,7 @@ function tryDestinationForServiceBinding(name: string): Destination | undefined 
     return destinationForServiceBinding(name);
   } catch (error) {
     logger.warn(error.message);
+    logger.warn("If you're not using SAP Extension Factory, you can ignore this warning.");
     return undefined;
   }
 }

@@ -44,9 +44,9 @@ export async function useOrFetchDestination(
 ): Promise<Destination | null> {
   return isDestinationNameAndJwt(destination)
     ? getDestination(destination.destinationName, {
-        userJwt: destination.jwt,
-        ...options
-      })
+      userJwt: destination.jwt,
+      ...options
+    })
     : sanitizeDestination(destination);
 }
 
@@ -212,6 +212,7 @@ function tryDestinationForServiceBinding(name: string): Destination | undefined 
     return destinationForServiceBinding(name);
   } catch (error) {
     logger.warn(error.message);
+    logger.warn("If you're not using SAP Extension Factory, you can ignore this warning.");
     return undefined;
   }
 }
@@ -220,8 +221,8 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
   if (getDestinationsEnvVariable()) {
     logger.warn(
       "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
-        'This is discouraged for a productive application! ' +
-        'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
+      'This is discouraged for a productive application! ' +
+      'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
     );
 
     return getDestinationFromEnvByName(name) || undefined;

@@ -117,8 +117,7 @@ function noVcapServicesError(): Error {
 
 function serviceTypeNotSupportedError(serviceType: string): Error {
   return Error(`Service of type ${serviceType} is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
-  destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });
-  If you're not using SAP Extension Factory, you can ignore this warning.`);
+  destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });`);
 
 }
 
@@ -127,7 +126,6 @@ function noServiceBindingFoundError(serviceBindings: Array<MapType<any>>, servic
     `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
       .map(s => s.name)
       .join(', ')}.
-      If you're not using SAP Extension Factory, you can ignore this warning.
       `
   );
 }

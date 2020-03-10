@@ -7,6 +7,19 @@ import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 /**
+ * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
+ */
+export interface TestFunctionImportNoReturnTypeParameters {}
+/**
+ * Test Function Import No Return Type.
+ *
+ * @param parameters Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export declare function testFunctionImportNoReturnType(
+  parameters: TestFunctionImportNoReturnTypeParameters
+): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, Promise<void>>;
+/**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */
 export interface TestFunctionImportEdmReturnTypeParameters {}
@@ -167,6 +180,7 @@ export interface FContinueParameters {}
  */
 export declare function fContinue(parameters: FContinueParameters): FunctionImportRequestBuilder<FContinueParameters, boolean>;
 export declare const functionImports: {
+  testFunctionImportNoReturnType: typeof testFunctionImportNoReturnType;
   testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;
   testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;
   testFunctionImportEntityReturnType: typeof testFunctionImportEntityReturnType;

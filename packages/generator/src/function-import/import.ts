@@ -28,6 +28,7 @@ function returnTypeImports(returnTypes: VdmFunctionImportReturnType[]): ImportDe
   return mergeImportDeclarations(
     returnTypes
       .filter(returnType => returnType.returnTypeCategory !== VdmFunctionImportReturnTypeCategory.EDM_TYPE)
+      .filter(returnType => returnType.returnTypeCategory !== VdmFunctionImportReturnTypeCategory.VOID)
       .map(returnType => returnTypeImport(returnType))
   );
 }

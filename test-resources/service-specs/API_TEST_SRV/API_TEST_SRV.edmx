@@ -252,6 +252,9 @@
           <End EntitySet="A_TestEntityCircularLinkChild" Role="ToRole_assoc_TestEntityCircularLink"/>
         </AssociationSet>
 
+        <FunctionImport Name="TestFunctionImportNoReturnType" m:HttpMethod="POST">
+        </FunctionImport>
+
         <FunctionImport Name="TestFunctionImportEdmReturnType" ReturnType="Edm.Boolean" m:HttpMethod="GET">
         </FunctionImport>
 

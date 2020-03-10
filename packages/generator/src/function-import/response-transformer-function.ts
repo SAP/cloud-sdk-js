@@ -11,6 +11,8 @@ export function responseTransformerFunctionName(returnType: VdmFunctionImportRet
 
 function singleTransformationFunction(returnType: VdmFunctionImportReturnType): string {
   switch (returnType.returnTypeCategory) {
+    case VdmFunctionImportReturnTypeCategory.VOID:
+      return 'transformReturnValueForPromiseVoid';
     case VdmFunctionImportReturnTypeCategory.ENTITY:
       return 'transformReturnValueForEntity';
     case VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE:

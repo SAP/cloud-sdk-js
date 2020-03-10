@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  transformReturnValueForPromiseVoid,
   transformReturnValueForEdmType,
   transformReturnValueForEdmTypeList,
   transformReturnValueForEntity,
@@ -16,6 +17,31 @@ import {
 } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
+
+/**
+ * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
+ */
+export interface TestFunctionImportNoReturnTypeParameters {}
+
+/**
+ * Test Function Import No Return Type.
+ *
+ * @param parameters Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function testFunctionImportNoReturnType(
+  parameters: TestFunctionImportNoReturnTypeParameters
+): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, Promise<void>> {
+  const params = {};
+
+  return new FunctionImportRequestBuilder(
+    'post',
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestFunctionImportNoReturnType',
+    data => transformReturnValueForPromiseVoid(data, val => undefined),
+    params
+  );
+}
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
@@ -317,6 +343,7 @@ export function fContinue(parameters: FContinueParameters): FunctionImportReques
 }
 
 export const functionImports = {
+  testFunctionImportNoReturnType,
   testFunctionImportEdmReturnType,
   testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType,

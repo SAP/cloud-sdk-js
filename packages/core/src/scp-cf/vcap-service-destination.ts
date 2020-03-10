@@ -125,7 +125,6 @@ function noServiceBindingFoundError(serviceBindings: MapType<any>[], serviceInst
     `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
       .map(s => s.name)
       .join(', ')}.
-      If you're not using SAP Extension Factory, you can ignore this warning.
       `
   );
 }

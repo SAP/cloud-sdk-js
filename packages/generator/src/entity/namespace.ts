@@ -41,7 +41,7 @@ function property(prop: VdmProperty, entity: VdmEntity): VariableStatementStruct
       {
         name: prop.staticPropertyName,
         type: `${prop.fieldType}<${entity.className}>`,
-        initializer: initilizer
+        initializer
       }
     ],
     docs: [getStaticPropertyDescription(prop)],

@@ -98,7 +98,9 @@ export class ComplexTypeBigNumberPropertyField<EntityT extends Entity> extends B
    * @param edmType Type of the field according to the metadata description
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
-
+  /*
+   * Union of the two possible constructors.
+   */
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, arg3: string | EdmType, arg4?: EdmType) {
     super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
     this.fieldOf = fieldOf;

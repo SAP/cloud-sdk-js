@@ -49,6 +49,7 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
    * @param complexTypeName Type of the field according to the metadata description
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, complexTypeName: string);
+
   /*
    * Union of the two possible constructors.
    */

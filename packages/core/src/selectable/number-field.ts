@@ -97,6 +97,7 @@ export class ComplexTypeNumberPropertyField<EntityT extends Entity> extends Numb
    * @param edmType Type of the field according to the metadata description
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
+
   /*
    * Union of the two possible constructors.
    */

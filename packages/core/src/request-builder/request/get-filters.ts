@@ -93,7 +93,7 @@ function retrieveField<FilterEntityT extends Entity>(filterField: string, target
   const field = targetEntityConstructor[toStaticPropertyFormat(fieldName)];
   if (field instanceof ComplexTypeField) {
     return Object.values(field)
-      .filter(pField => pField.fieldPath) // filter for ComplexTypePropertyFields only
+      .filter(pField => pField?.fieldPath) // filter for ComplexTypePropertyFields only
       .find((pField: ComplexTypePropertyFields<FilterEntityT>) => pField.fieldPath() === filterField);
   }
   // In case of custom field we infer then the returned field from the filter edmType property

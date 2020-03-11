@@ -97,8 +97,8 @@ export const foodService: VdmServiceMetadata = {
 };
 
 export const complexMeal: VdmComplexType = {
-  originalName: 'ComplexMeal',
-  typeName: 'ComplexMeal',
+  originalName: 'ComplexMealName',
+  typeName: 'ComplexMealType',
   fieldType: 'ComplexMealField',
   factoryName: 'createComplexMeal',
   properties: [
@@ -159,8 +159,8 @@ export const complexDesert: VdmComplexType = {
 };
 
 export const complexMealWithDesert: VdmComplexType = {
-  originalName: 'ComplexMealWithDesert',
-  typeName: 'ComplexMealWithDesert',
+  originalName: 'ComplexMealWithDesertName',
+  typeName: 'ComplexMealWithDesertType',
   fieldType: 'ComplexMealWithDesertField',
   factoryName: 'createComplexMealWithDesert',
   properties: [

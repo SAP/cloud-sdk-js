@@ -16,18 +16,18 @@ describe('field-type-class', () => {
           kind: StructureKind.Property,
           name: 'complexity',
           type: 'ComplexTypeStringPropertyField<EntityT>',
-          initializer: "new ComplexTypeStringPropertyField('Complexity', this._entityConstructor, 'ComplexMeal','Edm.String')",
+          initializer: "new ComplexTypeStringPropertyField('Complexity', this, 'Edm.String')",
           docs: [
-            "Representation of the [[ComplexMeal.complexity]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            "Representation of the [[ComplexMealType.complexity]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         },
         {
           kind: StructureKind.Property,
           name: 'amount',
           type: 'ComplexTypeNumberPropertyField<EntityT>',
-          initializer: "new ComplexTypeNumberPropertyField('Amount', this._entityConstructor, 'ComplexMeal','Edm.Int16')",
+          initializer: "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
           docs: [
-            "Representation of the [[ComplexMeal.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            "Representation of the [[ComplexMealType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         }
       ],
@@ -47,18 +47,18 @@ describe('field-type-class', () => {
           kind: StructureKind.Property,
           name: 'complexDesert',
           type: 'ComplexDesertField<EntityT>',
-          initializer: "new ComplexDesertField('ComplexDesert', this._entityConstructor, 'ComplexMealWithDesert')",
+          initializer: "new ComplexDesertField('ComplexDesert', this)",
           docs: [
-            "Representation of the [[ComplexMealWithDesert.complexDesert]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            "Representation of the [[ComplexMealWithDesertType.complexDesert]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         },
         {
           kind: StructureKind.Property,
           name: 'amount',
           type: 'ComplexTypeNumberPropertyField<EntityT>',
-          initializer: "new ComplexTypeNumberPropertyField('Amount', this._entityConstructor, 'ComplexMealWithDesert','Edm.Int16')",
+          initializer: "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
           docs: [
-            "Representation of the [[ComplexMealWithDesert.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            "Representation of the [[ComplexMealWithDesertType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         }
       ],

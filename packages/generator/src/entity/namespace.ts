@@ -31,6 +31,9 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
 
 function property(prop: VdmProperty, entity: VdmEntity): VariableStatementStructure {
   const type = `'${prop.edmType.startsWith('Edm') ? prop.edmType : prop.edmType.split('.').pop()}'`;
+  const initializer = prop.isComplex
+    ? `new ${prop.fieldType}('${prop.originalName}', ${entity.className})`
+    : `new ${prop.fieldType}('${prop.originalName}', ${entity.className}, ${type})`;
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,
@@ -38,7 +41,7 @@ function property(prop: VdmProperty, entity: VdmEntity): VariableStatementStruct
       {
         name: prop.staticPropertyName,
         type: `${prop.fieldType}<${entity.className}>`,
-        initializer: `new ${prop.fieldType}('${prop.originalName}', ${entity.className}, ${type})`
+        initializer
       }
     ],
     docs: [getStaticPropertyDescription(prop)],

@@ -21,8 +21,7 @@ export const testFilterBoolean = {
 
 export const testFilterComplexType = {
   filter: TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
-  // odataStr: "ComplexTypeProperty/StringProperty eq 'test'"
-  odataStr: "A_TestComplexType/StringProperty eq 'test'"
+  odataStr: "ComplexTypeProperty/StringProperty eq 'test'"
 };
 
 const id = uuid();

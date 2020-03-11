@@ -7,6 +7,7 @@ import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
 import { Filter } from '../filter';
 import { Time } from '../time';
+import { ComplexTypeField, ConstructorOrField, getEdmType, getEntityConstructor } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
 
 // tslint:disable: max-classes-per-file
@@ -74,14 +75,36 @@ export class TimeField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
  */
 export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
   /**
-   * Creates an instance of ComplexTypeTimePropertyField.
+   * The constructor of the entity or the complex type this field belongs to
+   */
+  readonly fieldOf: ConstructorOrField<EntityT>;
+
+  /**
+   * Creates an instance of ComplexTypeBigNumberPropertyField.
+   *
+   * @param fieldName Actual name of the field used in the OData request
+   * @param fieldOf The constructor of the entity or the complex type this field belongs to
+   * @param edmType Type of the field according to the metadata description
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, edmType: EdmType);
+  /**
+   * @deprecated since verision 1.19.0
+   *
+   * Creates an instance of ComplexTypeBigNumberPropertyField.
+   *
    * @param fieldName Actual name of the field used in the OData request
    * @param entityConstructor Constructor type of the entity the field belongs to
    * @param parentTypeName Name of the parent complex type
    * @param edmType Type of the field according to the metadata description
    */
-  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, readonly parentTypeName: string, edmType: EdmType) {
-    super(fieldName, entityConstructor, edmType);
+  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
+
+  /*
+   * Union of the two possible constructors.
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, arg3: string | EdmType, arg4?: EdmType) {
+    super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
+    this.fieldOf = fieldOf;
   }
 
   /**
@@ -90,6 +113,6 @@ export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFi
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {
-    return `${this.parentTypeName}/${this._fieldName}`;
+    return this.fieldOf instanceof ComplexTypeField ? `${this.fieldOf.fieldPath()}/${this._fieldName}` : this._fieldName;
   }
 }

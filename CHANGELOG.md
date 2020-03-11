@@ -29,10 +29,10 @@ blog:
 
 ## fixedIssues
 
+- Fix ordering for complex properties including nested complex properties.
 - Fix the generator crashing for services containing function modules without a return type.
 Now the generator will handle these cases and use  `Promise<void>` as return type.
 
--
 
 # 1.18.0
 

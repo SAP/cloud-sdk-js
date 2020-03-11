@@ -20,11 +20,32 @@ const isHtmlFile = fileName => fileName.endsWith('.html');
 
 const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
 
+/*
+GitHub pages have special requirement for links, so additional adjustment is necessary. See examples below:
+https://username.github.io/repo/modules/sap_cloud_sdk_analytics works
+https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html not
+https://username.github.io/repo/modules/_sap_cloud_sdk_analytics not
+https://username.github.io/repo/modules/_sap_cloud_sdk_analytics.html not
+ */
 function adjustmentForGitHubPages() {
   const paths = flatten(readDir('./documentation')).filter(isHtmlFile);
+  paths.forEach(path => replaceSearchbar(path));
   paths.forEach(path => replaceUnderlinePrefixAndHtmlSuffixFromLinks(path));
   paths.forEach(path => removeUnderlinePrefixFromFileName(path));
 
+}
+
+function replaceSearchbar(path) {
+  const labelEl = '<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>';
+  const inputEl = '<input id="tsd-search-field" type="text" />';
+
+  const html = fs.readFileSync(path, { encoding: 'utf8' });
+  if (html.includes(labelEl) && html.includes(inputEl)) {
+    const replaced = html.replace(labelEl, '').replace(inputEl, '');
+    fs.writeFileSync(path, replaced, { encoding: 'utf8' });
+  } else {
+    throw Error('Searchbar could not be hidden. Label and input tags are not defined.');
+  }
 }
 
 function replaceUnderlinePrefixAndHtmlSuffixFromLinks(path){

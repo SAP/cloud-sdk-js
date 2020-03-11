@@ -20,9 +20,19 @@ const isHtmlFile = fileName => fileName.endsWith('.html');
 
 const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
 
-function hideSearchbar() {
+/*
+GitHub pages have special requirement for links, so additional adjustment is necessary. See examples below:
+https://username.github.io/repo/modules/sap_cloud_sdk_analytics works
+https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html not
+https://username.github.io/repo/modules/_sap_cloud_sdk_analytics not
+https://username.github.io/repo/modules/_sap_cloud_sdk_analytics.html not
+ */
+function adjustmentForGitHubPages() {
   const paths = flatten(readDir('./documentation')).filter(isHtmlFile);
   paths.forEach(path => replaceSearchbar(path));
+  paths.forEach(path => replaceUnderlinePrefixAndHtmlSuffixFromLinks(path));
+  paths.forEach(path => removeUnderlinePrefixFromFileName(path));
+
 }
 
 function replaceSearchbar(path) {
@@ -36,6 +46,25 @@ function replaceSearchbar(path) {
   } else {
     throw Error('Searchbar could not be hidden. Label and input tags are not defined.');
   }
+}
+
+function replaceUnderlinePrefixAndHtmlSuffixFromLinks(path){
+  const html = fs.readFileSync(path, { encoding: 'utf8' });
+  const replaced = html.replace(/<a href="[^>]*_[^>]*.html">/gi, removeUnderlinePrefixAndHtmlSuffixFromLink);
+  fs.writeFileSync(path, replaced, { encoding: 'utf8' });
+}
+
+function removeUnderlinePrefixAndHtmlSuffixFromLink(aHref) {
+  const i = aHref.indexOf('_');
+  // remove the first `_` and `.html`
+  return aHref.substring(0, i) +  aHref.substring( i+1, aHref.length - 7 ) + '\">'
+}
+
+function removeUnderlinePrefixFromFileName(path){
+  const newPath = path.replace(/_.*.html/gi, function (x) {
+    return x.substring(1)
+  });
+  fs.rename(path, newPath, ()=>{});
 }
 
 const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
@@ -65,6 +94,6 @@ const [_, invalidLinks] = relevantLogs.split(invalidLinksMessage);
 if (invalidLinks) {
   throw Error(`Error: ${invalidLinksMessage}\n${invalidLinks}`);
 }
-hideSearchbar();
+adjustmentForGitHubPages();
 addCopyrightNotice();
 execSync(zipDocs);

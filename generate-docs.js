@@ -56,7 +56,9 @@ function replaceUnderlinePrefixAndHtmlSuffixFromLinks(path){
 
 function removeUnderlinePrefixAndHtmlSuffixFromLink(aHref) {
   const i = aHref.indexOf('_');
-  const firstUnderlineRemoved = aHref.substring(0, i) +  aHref.substring( i + 1);
+  // remove the first `_`
+  const firstUnderlineRemoved = aHref.substring(0, i) +  aHref.substring(i + 1);
+  // remove `.html`
   return firstUnderlineRemoved.replace('.html', '');
 }
 

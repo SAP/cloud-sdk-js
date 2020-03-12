@@ -1,10 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '../../../../src';
+import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
 
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
@@ -133,9 +129,11 @@ export namespace TestEntityLvl2SingleLink {
   /**
    * All fields of the TestEntityLvl2SingleLink entity.
    */
-  export const _allFields: Array<
-    StringField<TestEntityLvl2SingleLink> | BooleanField<TestEntityLvl2SingleLink> | NumberField<TestEntityLvl2SingleLink>
-  > = [
+  export const _allFields: (
+    | StringField<TestEntityLvl2SingleLink>
+    | BooleanField<TestEntityLvl2SingleLink>
+    | NumberField<TestEntityLvl2SingleLink>
+  )[] = [
     TestEntityLvl2SingleLink.KEY_PROPERTY,
     TestEntityLvl2SingleLink.STRING_PROPERTY,
     TestEntityLvl2SingleLink.BOOLEAN_PROPERTY,
@@ -149,7 +147,7 @@ export namespace TestEntityLvl2SingleLink {
   /**
    * All key fields of the TestEntityLvl2SingleLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityLvl2SingleLink>> = [TestEntityLvl2SingleLink.KEY_PROPERTY];
+  export const _keyFields: Selectable<TestEntityLvl2SingleLink>[] = [TestEntityLvl2SingleLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
    */

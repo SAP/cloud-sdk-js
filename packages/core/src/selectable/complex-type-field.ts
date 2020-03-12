@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
@@ -26,6 +24,7 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT>;
+
   /**
    * Note that this property is crucial, although not really used.
    * If it is removed this class becomes structural equivalent to e.g. ComplexTypeStringPropertyField which leads to unexpected behavior on the `selectable` list of objects.
@@ -39,6 +38,7 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
    * @param fieldOf - If the complex field is on root level of entity it is the entity otherwise the parent complex field
    */
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
+
   /**
    * @deprecated since verision 1.19.0
    *

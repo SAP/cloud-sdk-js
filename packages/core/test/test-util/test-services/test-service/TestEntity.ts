@@ -1,12 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import {
   AllFields,
   BigNumberField,
@@ -23,6 +17,8 @@ import {
   Time,
   TimeField
 } from '../../../../src';
+import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
+import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -338,7 +334,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<
+  export const _allFields: (
     | StringField<TestEntity>
     | BooleanField<TestEntity>
     | NumberField<TestEntity>
@@ -349,7 +345,7 @@ export namespace TestEntity {
     | Link<TestEntity, TestEntityMultiLink>
     | Link<TestEntity, TestEntityOtherMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>
-  > = [
+  )[] = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -379,7 +375,7 @@ export namespace TestEntity {
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Selectable<TestEntity>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
+  export const _keyFields: Selectable<TestEntity>[] = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */

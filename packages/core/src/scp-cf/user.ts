@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { pipe } from 'rambda';
 import {
@@ -66,7 +64,7 @@ export interface Scope {
   name: string;
 }
 
-// type ExtractStringType = (decodedJwt: DecodedJWT) => string;
+// Type ExtractStringType = (decodedJwt: DecodedJWT) => string;
 type hasScopeType = (s: Scope) => boolean;
 
 function hasScopeWrapper(scopes: Scope[]): hasScopeType {

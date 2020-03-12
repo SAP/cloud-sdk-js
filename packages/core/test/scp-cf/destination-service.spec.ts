@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { fetchDestination, fetchInstanceDestinations, fetchSubaccountDestinations } from '../../src/scp-cf/destination-service';
 import { Destination } from '../../src/scp-cf/destination-service-types';

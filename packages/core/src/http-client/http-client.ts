@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
 import * as http from 'http';
 import * as https from 'https';
+import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import axios, { AxiosRequestConfig } from 'axios';
 import { buildHeadersForDestination, getAgentConfig } from '../request-builder';
 import { Destination, DestinationNameAndJwt, toDestinationNameUrl, useOrFetchDestination } from '../scp-cf';
 import { DestinationHttpRequestConfig, ExecuteHttpRequestFn, HttpRequest, HttpRequestConfig, HttpResponse } from './http-client-types';

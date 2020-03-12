@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
@@ -19,6 +17,7 @@ export class ODataCreateRequestConfig<EntityT extends Entity> extends ODataReque
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
    */
   parentKeys: MapType<any>;
+
   /**
    * Field that links the parent entity class to the child entity class.
    */

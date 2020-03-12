@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { flatten, pipe } from 'rambda';
@@ -61,9 +59,9 @@ export interface DestinationForServiceBindingsOptions {
  * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
  */
 export interface ServiceBinding {
+  [key: string]: any;
   name: string;
   type: string;
-  [key: string]: any;
 }
 
 function loadServiceBindings(): ServiceBinding[] {

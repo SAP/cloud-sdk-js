@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
@@ -37,7 +35,6 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implemen
     clonedLink.selects = link.selects;
     return clonedLink;
   }
-
   /**
    * List of selectables on the linked entity.
    */

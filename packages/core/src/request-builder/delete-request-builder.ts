@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../constructable';
@@ -43,7 +41,7 @@ export class DeleteRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * Add ETag version identifier in the delete request header.
    *
    * @param etag - The version identifier of the entity
-   * @returns {this} The builder itself, to facilitate method chaining
+   * @returns The builder itself, to facilitate method chaining
    */
   setVersionIdentifier(etag: string): this {
     if (etag) {
@@ -55,7 +53,7 @@ export class DeleteRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Instructs the request to force an overwrite of the entity by sending an 'If-Match: *' header instead of sending the ETag version identifier.
    *
-   * @returns {this} this The request itself to ease chaining while executing the request
+   * @returns this The request itself to ease chaining while executing the request
    */
   ignoreVersionIdentifier(): this {
     this.requestConfig.versionIdentifierIgnored = true;

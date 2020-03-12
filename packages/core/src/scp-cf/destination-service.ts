@@ -1,6 +1,5 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
 import { getAxiosConfigWithDefaults } from '../http-client';
@@ -9,8 +8,8 @@ import { parseDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { circuitBreakerDefaultOptions, ResilienceOptions } from './resilience-options';
 
-// for some inexplicable reason, the equivalent import statement does not work
-// tslint:disable-next-line: no-var-requires
+// For some reason, the equivalent import statement does not work
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const CircuitBreaker = require('opossum');
 
 /**
@@ -81,13 +80,11 @@ function callDestinationService(uri: string, jwt: string, options: ResilienceOpt
   const config: AxiosRequestConfig = { ...getAxiosConfigWithDefaults(), url: uri, headers: wrapJwtInHeader(jwt).headers };
 
   if (options.enableCircuitBreaker || options.enableCircuitBreaker === undefined) {
-    let destinationCircuitBreaker;
-    destinationCircuitBreaker = getInstanceCircuitBreaker(destinationCircuitBreaker);
-    return destinationCircuitBreaker!.fire(uri, config);
+    return getInstanceCircuitBreaker().fire(uri, config);
   }
   return axios.request(config);
 }
 
-function getInstanceCircuitBreaker(breaker: any | undefined): any {
+function getInstanceCircuitBreaker(breaker?: any): any {
   return typeof breaker === 'undefined' ? new CircuitBreaker(axios.get, circuitBreakerDefaultOptions) : breaker;
 }

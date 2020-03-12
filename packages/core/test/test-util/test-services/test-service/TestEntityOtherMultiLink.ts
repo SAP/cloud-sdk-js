@@ -1,10 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '../../../../src';
+import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
 
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
@@ -83,7 +79,7 @@ export namespace TestEntityOtherMultiLink {
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
-  export const _allFields: Array<StringField<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
+  export const _allFields: StringField<TestEntityOtherMultiLink>[] = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
   /**
    * All fields selector.
    */
@@ -91,7 +87,7 @@ export namespace TestEntityOtherMultiLink {
   /**
    * All key fields of the TestEntityOtherMultiLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
+  export const _keyFields: Selectable<TestEntityOtherMultiLink>[] = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { assocSome, asyncPipe, MapType, mergeSome } from '@sap-cloud-sdk/util';
 import { assoc, ifElse, path } from 'rambda';
@@ -16,8 +14,8 @@ import { addCsrfTokenAndCookies } from './csrf-token-header';
  * Create object containing all headers, including custom headers for a given  OData request configuration and destination.
  * Custom headers override duplicate headers.
  *
- * @typeparam EntityT - Type of the entity the headers are built for
- * @param {ODataRequest<RequestT>} request OData request configuration to create headers for
+ * @typeparam RequestT - Type of the request the headers are built for
+ * @param request - OData request configuration to create headers for
  * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
  */
 export function buildHeaders<RequestT extends ODataRequestConfig>(request: ODataRequest<RequestT>): Promise<MapType<string>> {

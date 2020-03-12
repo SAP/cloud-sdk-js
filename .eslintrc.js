@@ -5,13 +5,15 @@ module.exports = {
         "project": "tsconfig.json",
         "sourceType": "module"
     },
+    "ignorePatterns": [
+        "dist",
+        "packages/core/test/test-util/test-services"
+    ],
     "plugins": [
         "@typescript-eslint",
         "header",
         "import",
-        "prefer-arrow",
-        "prettier",
-        "tsdoc"
+        "prettier"
     ],
     "rules": {
         "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -26,19 +28,19 @@ module.exports = {
                 "accessibility": "explicit"
             }
         ],
-        "@typescript-eslint/indent": [
-            "error",
-            2,
-            {
-                "ObjectExpression": "first",
-                "FunctionDeclaration": {
-                    "parameters": "first"
-                },
-                "FunctionExpression": {
-                    "parameters": "first"
-                }
-            }
-        ],
+        // "@typescript-eslint/indent": [
+        //     "error",
+        //     2,
+        //     {
+        //         "ObjectExpression": "first",
+        //         "FunctionDeclaration": {
+        //             "parameters": "first"
+        //         },
+        //         "FunctionExpression": {
+        //             "parameters": "first"
+        //         }
+        //     }
+        // ],
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/member-delimiter-style": [
             "error",
@@ -53,7 +55,44 @@ module.exports = {
                 }
             }
         ],
-        "@typescript-eslint/member-ordering": "error",
+        "@typescript-eslint/member-ordering": [
+            "error",
+            {
+                "default": [
+                    // Index signature
+                    'signature',
+
+                    // Static
+                    'public-static-field',
+                    'protected-static-field',
+                    'private-static-field',
+                    'public-static-method',
+                    'protected-static-method',
+                    'private-static-method',
+
+                    // Fields
+                    'public-instance-field',
+                    'protected-instance-field',
+                    'private-instance-field',
+                    'public-abstract-field',
+                    'protected-abstract-field',
+                    'private-abstract-field',
+
+                    // Constructors
+                    'public-constructor',
+                    'protected-constructor',
+                    'private-constructor',
+
+                    // Methods
+                    'public-instance-method',
+                    'protected-instance-method',
+                    'private-instance-method',
+                    'public-abstract-method',
+                    'protected-abstract-method',
+                    'private-abstract-method',
+                  ]
+            }
+        ],
         "@typescript-eslint/no-empty-function": "error",
         "@typescript-eslint/no-empty-interface": "error",
         "@typescript-eslint/no-explicit-any": "off",
@@ -115,21 +154,23 @@ module.exports = {
         "import/no-extraneous-dependencies": "off",
         "import/no-internal-modules": "error",
         "import/order": "error",
-        "lines-around-comment": [
-            "error",
-            {
-                "beforeBlockComment": true,
-                "beforeLineComment": true,
-                "allowBlockStart": true,
-                "allowBlockEnd": true,
-                "allowObjectStart": true,
-                "allowObjectEnd": true,
-                "allowArrayStart": true,
-                "allowArrayEnd": true,
-                "allowClassStart": true,
-                "allowClassEnd": true
-            }
-        ],
+        "indent": "off",
+        // Does not work for typescript yet
+        // "lines-around-comment": [
+        //     "error",
+        //     {
+        //         "beforeBlockComment": true,
+        //         "beforeLineComment": true,
+        //         "allowBlockStart": true,
+        //         "allowBlockEnd": true,
+        //         "allowObjectStart": true,
+        //         "allowObjectEnd": true,
+        //         "allowArrayStart": true,
+        //         "allowArrayEnd": true,
+        //         "allowClassStart": true,
+        //         "allowClassEnd": true
+        //     }
+        // ],
         "max-classes-per-file": [
             "error",
             1
@@ -197,7 +238,6 @@ module.exports = {
             { "blankLine": "always", "prev": "*", "next": "block" },
             { "blankLine": "never", "prev": "import", "next": "import" }
         ],
-        "prefer-arrow/prefer-arrow-functions": "error",
         "prefer-const": "error",
         "prefer-object-spread": "error",
         "prettier/prettier": "error",
@@ -208,8 +248,18 @@ module.exports = {
             "never"
         ],
         "spaced-comment": "error",
-        "tsdoc/syntax": "error",
         "use-isnan": "error",
+        "valid-jsdoc": [
+            "error",
+            {
+              "requireReturn": false,
+              "requireReturnType": false,
+              "requireParamType": false,
+              "prefer": {
+                "return": "returns"
+              }
+            }
+        ],
         "valid-typeof": "off"
     }
 };

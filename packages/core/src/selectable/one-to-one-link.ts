@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from '../entity';
 import { Filterable, FilterLink } from '../filter';
@@ -33,13 +31,11 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
 
   /**
    * List of criteria of the linked entity to order the given entity by with descending priority.
-   *
    */
   orderBys: Order<LinkedEntityT>[] = [];
 
   /**
    * Filterables to apply to the given entity based on the linked entity.
-   *
    */
   filters: Filterable<LinkedEntityT>;
 

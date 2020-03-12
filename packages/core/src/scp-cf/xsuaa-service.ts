@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType, renameKeys } from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
@@ -8,8 +6,8 @@ import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { circuitBreakerDefaultOptions, ResilienceOptions } from './resilience-options';
 import { ClientCredentials, ClientCredentialsResponse, TokenKey, UserTokenResponse } from './xsuaa-service-types';
 
-// for some inexplicable reason, the equivalent import statement does not work
-// tslint:disable-next-line: no-var-requires
+// For some reason, the equivalent import statement does not work
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const CircuitBreaker = require('opossum');
 
 /**
@@ -94,6 +92,7 @@ export function refreshTokenGrant(
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(xsuaaCredentials: XsuaaServiceCredentials): Promise<TokenKey[]>;
+
 /**
  * Fetches verification keys from the XSUAA service for the given URL, with the given pair of credentials.
  *

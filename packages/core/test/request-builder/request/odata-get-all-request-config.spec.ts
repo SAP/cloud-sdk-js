@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc } from '../../../src';
 import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config';
 import { testFilterString } from '../../test-util/filter-factory';

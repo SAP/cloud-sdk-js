@@ -1,10 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '../../../../src';
+import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
@@ -79,7 +75,7 @@ export namespace TestEntityEndsWith {
   /**
    * All fields of the TestEntityEndsWith entity.
    */
-  export const _allFields: Array<StringField<TestEntityEndsWith>> = [TestEntityEndsWith.KEY_PROPERTY];
+  export const _allFields: StringField<TestEntityEndsWith>[] = [TestEntityEndsWith.KEY_PROPERTY];
   /**
    * All fields selector.
    */
@@ -87,7 +83,7 @@ export namespace TestEntityEndsWith {
   /**
    * All key fields of the TestEntityEndsWith entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityEndsWith>> = [TestEntityEndsWith.KEY_PROPERTY];
+  export const _keyFields: Selectable<TestEntityEndsWith>[] = [TestEntityEndsWith.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWith.
    */

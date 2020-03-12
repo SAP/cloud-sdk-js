@@ -1,10 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '../../../../src';
+import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
@@ -79,7 +75,7 @@ export namespace MultiSchemaTestEntity {
   /**
    * All fields of the MultiSchemaTestEntity entity.
    */
-  export const _allFields: Array<StringField<MultiSchemaTestEntity>> = [MultiSchemaTestEntity.KEY_PROPERTY];
+  export const _allFields: StringField<MultiSchemaTestEntity>[] = [MultiSchemaTestEntity.KEY_PROPERTY];
   /**
    * All fields selector.
    */
@@ -87,7 +83,7 @@ export namespace MultiSchemaTestEntity {
   /**
    * All key fields of the MultiSchemaTestEntity entity.
    */
-  export const _keyFields: Array<Selectable<MultiSchemaTestEntity>> = [MultiSchemaTestEntity.KEY_PROPERTY];
+  export const _keyFields: Selectable<MultiSchemaTestEntity>[] = [MultiSchemaTestEntity.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */

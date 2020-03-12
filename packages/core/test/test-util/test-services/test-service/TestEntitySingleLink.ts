@@ -1,9 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
   AllFields,
   BooleanField,
@@ -16,6 +11,7 @@ import {
   Selectable,
   StringField
 } from '../../../../src';
+import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
@@ -173,13 +169,13 @@ export namespace TestEntitySingleLink {
   /**
    * All fields of the TestEntitySingleLink entity.
    */
-  export const _allFields: Array<
+  export const _allFields: (
     | StringField<TestEntitySingleLink>
     | BooleanField<TestEntitySingleLink>
     | NumberField<TestEntitySingleLink>
     | Link<TestEntitySingleLink, TestEntityLvl2MultiLink>
     | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>
-  > = [
+  )[] = [
     TestEntitySingleLink.KEY_PROPERTY,
     TestEntitySingleLink.STRING_PROPERTY,
     TestEntitySingleLink.BOOLEAN_PROPERTY,
@@ -195,7 +191,7 @@ export namespace TestEntitySingleLink {
   /**
    * All key fields of the TestEntitySingleLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntitySingleLink>> = [TestEntitySingleLink.KEY_PROPERTY];
+  export const _keyFields: Selectable<TestEntitySingleLink>[] = [TestEntitySingleLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntitySingleLink.
    */

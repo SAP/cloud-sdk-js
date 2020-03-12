@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType, propertyExists } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -37,7 +35,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Constructs the url for the request at hand.
    *
-   * @returns {string} The url for the request
+   * @returns The url for the request
    */
   url(): string {
     return `${removeTrailingSlashes(this.resourceUrl())}${this.query()}`;
@@ -46,7 +44,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Constructs the relative url for the batch request.
    *
-   * @returns {string} The relative url for the batch request
+   * @returns The relative url for the batch request
    */
   relativeUrl(): string {
     return `${removeTrailingSlashes(this.relativeResourceUrl())}${this.query()}`;
@@ -55,7 +53,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Specifies whether the destination needs a specific authentication or not.
    *
-   * @returns {boolean} A boolean value that specifies whether the destination needs authentication or not
+   * @returns A boolean value that specifies whether the destination needs authentication or not
    * @memberof ODataRequest
    */
   needsAuthentication(): boolean {
@@ -65,7 +63,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Returns the service URL for a given OData request.
    *
-   * @returns {string} The URL of the service the given entity belongs to
+   * @returns The URL of the service the given entity belongs to
    */
   serviceUrl(): string {
     if (!this.destination) {
@@ -79,7 +77,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Returns the relative service URL for a given OData request.
    *
-   * @returns {string} The relative URL of the service the given entity belongs to
+   * @returns The relative URL of the service the given entity belongs to
    */
   relativeServiceUrl(): string {
     const servicePath = typeof this.config.customServicePath === 'undefined' ? this.config.defaultServicePath : this.config.customServicePath;
@@ -89,7 +87,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Returns the URL to a specific OData resource, i.e. the entity collection.
    *
-   * @returns {string} The URL of the resource
+   * @returns The URL of the resource
    */
   resourceUrl(): string {
     return `${removeTrailingSlashes(this.serviceUrl())}/${this.config.resourcePath()}`;
@@ -98,7 +96,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Returns the relative URL to a specific OData resource.
    *
-   * @returns {string} The relative URL of the resource
+   * @returns The relative URL of the resource
    */
   relativeResourceUrl(): string {
     return `${removeTrailingSlashes(this.relativeServiceUrl())}/${this.config.resourcePath()}`;
@@ -107,7 +105,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Get query parameters as string. Leads with `?` if  there are parameters to return.
    *
-   * @returns {string} Query parameter string
+   * @returns Query parameter string
    */
   query(): string {
     const queryParameters = this.config.queryParameters();
@@ -121,7 +119,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Create object containing all headers, including custom headers for the given request.
    *
-   * @returns {Promise<MapType<string>>} Key-value pairs where the key is the name of a header property and the value is the respective value
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   async headers(): Promise<MapType<string>> {
     return buildHeaders(this).catch(error => Promise.reject(errorWithCause('Constructing headers for OData request failed!', error)));
@@ -130,7 +128,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Execute the given request and return the according promise.
    *
-   * @returns {Promise<any>} Promise resolving to the requested data
+   * @returns Promise resolving to the requested data
    */
   async execute(): Promise<AxiosResponse> {
     if (!this._destination) {

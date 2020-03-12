@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from '../../entity';
 import { Link, Selectable } from '../../selectable';
@@ -16,7 +14,7 @@ interface SelectionQueryParameters {
  *
  * @typeparam EntityT - Type of the entity to get the selection for
  * @param selects - The list of selectables to be transformed to query parameters
- * @returns {Partial<SelectionQueryParameters>} An object containing the query parameters or an empty object
+ * @returns An object containing the query parameters or an empty object
  */
 export function getQueryParametersForSelection<EntityT extends Entity>(selects: Selectable<EntityT>[]): Partial<{ select: string; expand: string }> {
   const queryParameters: Partial<SelectionQueryParameters> = {};

@@ -1,10 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { AllFields, CustomField, Entity, EntityBuilderType, Link, Selectable, StringField } from '../../../../src';
+import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
@@ -96,7 +92,7 @@ export namespace TestEntityCircularLinkParent {
   /**
    * All fields of the TestEntityCircularLinkParent entity.
    */
-  export const _allFields: Array<StringField<TestEntityCircularLinkParent> | Link<TestEntityCircularLinkParent, TestEntityCircularLinkChild>> = [
+  export const _allFields: (StringField<TestEntityCircularLinkParent> | Link<TestEntityCircularLinkParent, TestEntityCircularLinkChild>)[] = [
     TestEntityCircularLinkParent.KEY_PROPERTY,
     TestEntityCircularLinkParent.TO_CHILD
   ];
@@ -107,7 +103,7 @@ export namespace TestEntityCircularLinkParent {
   /**
    * All key fields of the TestEntityCircularLinkParent entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityCircularLinkParent>> = [TestEntityCircularLinkParent.KEY_PROPERTY];
+  export const _keyFields: Selectable<TestEntityCircularLinkParent>[] = [TestEntityCircularLinkParent.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityCircularLinkParent.
    */

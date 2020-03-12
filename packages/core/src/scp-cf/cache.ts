@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import moment, { Moment, MomentInputObject } from 'moment';
@@ -34,6 +32,7 @@ export interface CachingOptions {
    * A boolean value that indicates whether to read destinations from cache.
    */
   useCache?: boolean;
+
   /**
    * The isolation strategy used for caching destinations. For the available options, see [[IsolationStrategy]].
    * By default, IsolationStrategy.Tenant is set.
@@ -50,6 +49,7 @@ export class Cache<T> implements CacheInterface<T> {
    * Object that stores all cached entries.
    */
   private cache: MapType<CacheEntry<T>>;
+
   /**
    * Default validity period for each entry in cache.
    * If undefined, all cached entries will be valid indefinitely.

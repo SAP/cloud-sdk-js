@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { DestinationOptions } from '../scp-cf';
 import { Destination, DestinationNameAndJwt } from '../scp-cf/destination-service-types';

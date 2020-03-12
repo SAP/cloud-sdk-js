@@ -1,8 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
   CreateRequestBuilder,
   DeleteRequestBuilder,
@@ -20,7 +16,7 @@ import { MultiSchemaTestEntity } from './index';
  * @returns A request builder for batch.
  */
 export function batch(
-  ...requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>
+  ...requests: (ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>)[]
 ): ODataBatchRequestBuilder {
   return new ODataBatchRequestBuilder(defaultMultipleSchemasServicePath, requests, map);
 }
@@ -35,7 +31,7 @@ export function changeset(...requests: WriteMultipleSchemasServiceRequestBuilder
 }
 
 export const defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/SCHEMA_DATA';
-const map = { MultiSchemaTestEntity: MultiSchemaTestEntity };
+const map = { MultiSchemaTestEntity };
 export type ReadMultipleSchemasServiceRequestBuilder = GetAllRequestBuilder<MultiSchemaTestEntity> | GetByKeyRequestBuilder<MultiSchemaTestEntity>;
 export type WriteMultipleSchemasServiceRequestBuilder =
   | CreateRequestBuilder<MultiSchemaTestEntity>

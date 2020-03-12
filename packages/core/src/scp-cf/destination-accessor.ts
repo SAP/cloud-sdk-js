@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger } from '@sap-cloud-sdk/util';
 import { DecodedJWT, decodeJwt, isIdenticalTenant, verifyJwt, VerifyJwtOptions } from '../util/jwt';
@@ -55,6 +53,7 @@ export interface DestinationAccessorOptions {
    * Method that implements the selection strategy of the retrieved destination. Uses [[subscriberFirst]] per default. Use the selector helper [[DestinationSelectionStrategies]] to select the appropriate selection strategy.
    */
   selectionStrategy?: DestinationSelectionStrategy;
+
   /**
    * The user token of the current request.
    */

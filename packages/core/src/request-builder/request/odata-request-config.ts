@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 
@@ -49,9 +47,16 @@ export abstract class ODataRequestConfig {
    */
   addCustomHeaders(headers: MapType<string>): void {
     Object.entries(headers).forEach(([key, value]) => {
-      // enforce lower case as HTTP headers are case-insensitive
+      // Enforce lower case as HTTP headers are case-insensitive
       this.customHeaders[key.toLowerCase()] = value;
     });
+  }
+
+  protected prependDollarToQueryParameters(params: MapType<any>): MapType<any> {
+    return Object.entries(params).reduce((newParams, [key, value]) => {
+      newParams[`$${key}`] = value;
+      return newParams;
+    }, {});
   }
 
   /**
@@ -63,11 +68,4 @@ export abstract class ODataRequestConfig {
    * @hidden
    */
   abstract queryParameters(): MapType<any>;
-
-  protected prependDollarToQueryParameters(params: MapType<any>): MapType<any> {
-    return Object.entries(params).reduce((newParams, [key, value]) => {
-      newParams[`$${key}`] = value;
-      return newParams;
-    }, {});
-  }
 }

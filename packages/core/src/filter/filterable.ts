@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from '../entity';
 import { FieldType } from '../selectable';
@@ -59,6 +57,6 @@ export function or<EntityT extends Entity>(...expressions: Filterable<EntityT>[]
 }
 
 // TODO:
-// export function not<EntityT extends Entity>(expression: Filterable<EntityT>): Filterable<EntityT> {
-//   return new FilterList([], expressions);
+// Export function not<EntityT extends Entity>(expression: Filterable<EntityT>): Filterable<EntityT> {
+//   Return new FilterList([], expressions);
 // }

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Protocol } from '../request-builder';
 
@@ -20,14 +18,17 @@ export interface ProxyConfiguration {
    * The host of the proxy.
    */
   host: string;
+
   /**
    * The port of the proxy.
    */
   port: number;
+
   /**
    * The protocol used by the proxy
    */
   protocol: Protocol;
+
   /**
    * HTTP headers to be added to a request if tunneled through the proxy.
    * If the request is going to an OnPremise system via the connectivity proxy, the header contains the 'Proxy-Authorization' and

@@ -1,9 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
   AllFields,
   BooleanField,
@@ -16,6 +11,7 @@ import {
   Selectable,
   StringField
 } from '../../../../src';
+import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
@@ -173,13 +169,13 @@ export namespace TestEntityMultiLink {
   /**
    * All fields of the TestEntityMultiLink entity.
    */
-  export const _allFields: Array<
+  export const _allFields: (
     | StringField<TestEntityMultiLink>
     | BooleanField<TestEntityMultiLink>
     | NumberField<TestEntityMultiLink>
     | Link<TestEntityMultiLink, TestEntityLvl2MultiLink>
     | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>
-  > = [
+  )[] = [
     TestEntityMultiLink.KEY_PROPERTY,
     TestEntityMultiLink.STRING_PROPERTY,
     TestEntityMultiLink.BOOLEAN_PROPERTY,
@@ -195,7 +191,7 @@ export namespace TestEntityMultiLink {
   /**
    * All key fields of the TestEntityMultiLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityMultiLink>> = [TestEntityMultiLink.KEY_PROPERTY];
+  export const _keyFields: Selectable<TestEntityMultiLink>[] = [TestEntityMultiLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityMultiLink.
    */

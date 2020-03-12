@@ -12,7 +12,7 @@
     "sourceMap": true,                        /* Generates corresponding '.map' file. */
     "declaration": true,                      /* Generates corresponding '.d.ts' file. */
     "declarationMap": true,                   /* Generates a sourcemap for each corresponding '.d.ts' file. */
-    "diagnostics": true,
+    // "diagnostics": true,
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
     // "outDir": "dist",                      /* Redirect output structure to the directory. */
     // "rootDir": "./packages",               /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */

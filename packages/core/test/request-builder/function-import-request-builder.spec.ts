@@ -1,7 +1,7 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { basicCredentials } from '../../../../test-packages/integration-tests/test/test-util/destination-encoder';
-import { functionImports } from '../../../../test-packages/test-services/srv/test-service';
 import { defaultDestination, defaultHost } from '../test-util/request-mocker';
 import {
   TestEntity,

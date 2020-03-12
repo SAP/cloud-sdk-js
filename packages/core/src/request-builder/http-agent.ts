@@ -1,10 +1,8 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import * as http from 'http';
 import * as https from 'https';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { assoc, last, pipe } from 'rambda';
 import { Destination, DestinationCertificate } from '../scp-cf';
 import { proxyAgent } from '../util/proxy-util';
@@ -132,7 +130,7 @@ function createDefaultAgent(destination: Destination): HttpAgentConfig | HttpsAg
  *
  * @param destination - URL of this destination is parsed
  * @throws Error in case a unsupported protocol is given in the destination URL like rfc://example.com.
- * @returns The protocol either https or http.
+ * @returns The protocol, either https or http.
  */
 export function getProtocolOrDefault(destination: Destination): Protocol {
   const protocol = destination?.url?.toLowerCase()?.split('://');
@@ -165,12 +163,21 @@ export function getUrlProtocol(destination: Destination): Protocol | undefined {
   }
 }
 
+/**
+ * Protocol enumeration, either 'http' or 'https'.
+ */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'
 }
 
+/* eslint-disable-next-line no-redeclare */
 export namespace Protocol {
+  /**
+   * Get [[Protocol]] from its string representation.
+   * @param protocol Protocol as string, either 'http' or 'https'.
+   * @returns Either the matching protocol or undefined
+   */
   export function of(protocol: string): Protocol | undefined {
     if (protocol.toLowerCase() === Protocol.HTTP) {
       return Protocol.HTTP;

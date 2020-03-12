@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from '../../entity';
 import { Order, Orderable, OrderLink } from '../../order';
@@ -10,7 +8,7 @@ import { Order, Orderable, OrderLink } from '../../order';
  *
  * @typeparam EntityT - Type of the entity to order
  * @param orderBy - A list of orderables to get the query parameters for
- * @returns {Partial<{ orderby: string; }>} An object containing the query parameter or an empty object
+ * @returns An object containing the query parameter or an empty object
  */
 export function getQueryParametersForOrderBy<EntityT extends Entity>(orderBy: Orderable<EntityT>[]): Partial<{ orderby: string }> {
   if (typeof orderBy !== 'undefined' && orderBy.length) {

@@ -1,6 +1,5 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+/* eslint-disable max-classes-per-file */
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
@@ -9,8 +8,6 @@ import { Filter } from '../filter';
 import { Time } from '../time';
 import { ComplexTypeField, ConstructorOrField, getEdmType, getEntityConstructor } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
-
-// tslint:disable: max-classes-per-file
 
 /**
  * Represents a property with a time value.
@@ -87,6 +84,7 @@ export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFi
    * @param edmType - Type of the field according to the metadata description
    */
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, edmType: EdmType);
+
   /**
    * @deprecated since verision 1.19.0
    *

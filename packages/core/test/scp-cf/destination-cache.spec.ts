@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { install } from '@sinonjs/fake-timers';
 import { AuthenticationType, Destination, destinationCache, IsolationStrategy } from '../../src/scp-cf';
 

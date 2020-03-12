@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
@@ -17,7 +15,7 @@ const logger = createLogger({
 /**
  * Basic Credentials Getter from Destination service credentials needed for JWT generator.
  *
- * @returns credentials.
+ * @returns Basic credentials.
  */
 export function getDestinationBasicCredentials(): BasicCredentials {
   const destinationCredentials = getDestinationServiceCredentials();
@@ -31,8 +29,7 @@ export function getDestinationBasicCredentials(): BasicCredentials {
 /**
  * First 'destination' credentials getter.
  *
- * @returns 'destination' credentials object.
- *          null: if there is no existing 'destination' credentials
+ * @returns The 'destination' credentials object or null if it does not exist.
  */
 export function getDestinationServiceCredentials(): any {
   return head(getDestinationServiceCredentialsList());
@@ -41,7 +38,7 @@ export function getDestinationServiceCredentials(): any {
 /**
  * Destination credentials getter.
  *
- * @returns: list of 'credentials' objects in 'destination' service.
+ * @returns A list of 'credentials' objects in 'destination' service.
  */
 export function getDestinationServiceCredentialsList(): DestinationServiceCredentials[] {
   return getServiceList('destination').map(s => s.credentials as DestinationServiceCredentials);
@@ -50,7 +47,7 @@ export function getDestinationServiceCredentialsList(): DestinationServiceCreden
 /**
  * Credentials list getter for a given service.
  *
- * @param service -: Service name
+ * @param service - Service name
  * @returns Fetched credentials objects of existing service in 'VCAP_SERVICES'.
  */
 export function getServiceCredentialsList(service: string): any[] {
@@ -103,7 +100,7 @@ export function getService(service: string): Service | undefined {
  * 'VCAP_SERVICES' Getter from environment variables.
  * This function returns the VCAP_SERVICES as object or null if it is not defined (i.e. no services are bound to the application).
  *
- * @returns: 'VCAP_SERVICES' found in environment variables or null if not defined. The key denotes the name ov the service and the value is the definition.
+ * @returns 'VCAP_SERVICES' found in environment variables or null if not defined. The key denotes the name ov the service and the value is the definition.
  */
 export function getVcapService(): MapType<any> | null {
   const env = getEnvironmentVariable('VCAP_SERVICES');
@@ -145,8 +142,7 @@ export function getEnvironmentVariable(name: string): string | undefined | null 
  * NOTICE: If there exist more than one destination/uri, the function
  * returns the first entry.
  *
- * @returns: the first existing uri in destination.
- *          null: if no valid destination is found.
+ * @returns The first existing uri in destination or null if not found.
  */
 export function getDestinationServiceUri(): string | null {
   const destinationServiceCredentials = getDestinationServiceCredentialsList();
@@ -182,8 +178,8 @@ export function getXsuaaServiceCredentials(token?: DecodedJWT | string): XsuaaSe
  *
  * Throws an error when no service can be found for the given type.
  *
- * @param service - A string representing the service type or an instance of [[Service]].
- * @returns An instance of [[Service]].
+ * @param service - A string representing the service type or a [[Service]] instance.
+ * @returns A [[Service]] instance.
  */
 export function resolveService(service: string | Service): Service {
   if (typeof service === 'string') {
@@ -202,7 +198,7 @@ export function resolveService(service: string | Service): Service {
  * Extracts the credentials of a service into an instance of [[ClientCredentials]].
  *
  * @param serviceCreds - The credentials of a service as read from VCAP_SERVICES.
- * @returns An instance of [[ClientCredentials]].
+ * @returns A [[ClientCredentials]] instance.
  */
 export function extractClientCredentials(serviceCreds: ServiceCredentials): ClientCredentials {
   return { username: serviceCreds.clientid, password: serviceCreds.clientsecret };

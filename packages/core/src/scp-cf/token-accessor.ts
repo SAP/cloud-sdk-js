@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause } from '@sap-cloud-sdk/util';
 import { DecodedJWT, decodeJwt } from '../util';
@@ -37,7 +35,7 @@ export async function serviceToken(
   const opts = {
     useCache: true,
     enableCircuitBreaker: true,
-    ...(options || {}) // tsc complains otherwise
+    ...(options || {}) // Tsc complains otherwise
   };
 
   const xsuaa = multiTenantXsuaaCredentials(opts.userJwt);

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { assoc, filter, head, identity, ifElse, isEmpty, isNil, map, path } from 'rambda';
@@ -92,7 +90,7 @@ const headerFromOAuth2ClientCredentialsDestination = (destination: Destination):
 
 const headerFromAuthToken = (token: DestinationAuthToken) => `${token.type} ${token.value}`;
 
-// using pipe led to wrong type errors
+// Using pipe led to wrong type errors
 const headerFromTokens = (authTokens: DestinationAuthToken[]): string => {
   const usableTokens = filter((token: DestinationAuthToken) => !token.error, authTokens);
 

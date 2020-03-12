@@ -1,14 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
-/**
- * http-proxy-agent is exported with 'export = ' and is exposed externally
- * Therefore, the following typescript specific syntax has to be used.
- * https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import HttpProxyAgent = require('http-proxy-agent');
 import HttpsProxyAgent = require('https-proxy-agent');
-
 import { createLogger } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { basicHeader, getProtocolOrDefault, HttpAgentConfig, HttpsAgentConfig, Protocol } from '../request-builder';
@@ -204,7 +196,7 @@ export function addProxyConfigurationInternet(destination): Destination {
  * Builds the http(s)-agent config. Note that the proxy agent type like http or https is determined by the destination RUL protocol.
  * The protocol from the proxy is unrelated to this and in most cases http.
  *
- * @param destination -: Destination containing the proxy configurations
+ * @param destination - Destination containing the proxy configurations
  * @returns The http(s)-agent containing the proxy configuration
  */
 export function proxyAgent(destination: Destination): HttpAgentConfig | HttpsAgentConfig {

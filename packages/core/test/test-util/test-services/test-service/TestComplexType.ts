@@ -1,11 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
 import {
   ComplexTypeBigNumberPropertyField,
   ComplexTypeBooleanPropertyField,
@@ -20,6 +15,7 @@ import {
   createComplexType,
   edmToTs
 } from '../../../../src';
+import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
 
 /**
  * TestComplexType

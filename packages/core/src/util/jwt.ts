@@ -1,10 +1,8 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { IncomingMessage } from 'http';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosRequestConfig } from 'axios';
-import { IncomingMessage } from 'http';
 import jwt from 'jsonwebtoken';
 import { Cache, fetchVerificationKeys, getXsuaaServiceCredentials, TokenKey, XsuaaServiceCredentials } from '../scp-cf';
 import { mapping as mappingTenantFields, RegisteredJWTClaimsTenant } from '../scp-cf/tenant';
@@ -44,7 +42,8 @@ function authHeader(req: IncomingMessage): string | undefined {
   const entries = Object.entries(req.headers).find(([key]) => key.toLowerCase() === 'authorization');
   if (entries) {
     const header = entries[1];
-    // header could be a list of headers
+
+    // Header could be a list of headers
     return Array.isArray(header) ? header[0] : header;
   }
   return undefined;
@@ -154,7 +153,7 @@ export function verifyJwtWithKey(token: string, key: string): Promise<DecodedJWT
 }
 
 function sanitizeVerificationKey(key: string) {
-  // add new line after -----BEGIN PUBLIC KEY----- and before -----END PUBLIC KEY----- because the lib won't work otherwise
+  // Add new line after -----BEGIN PUBLIC KEY----- and before -----END PUBLIC KEY----- because the lib won't work otherwise
   return key
     .replace(/\n/g, '')
     .replace(/(KEY\s*-+)([^\n-])/, '$1\n$2')
@@ -288,7 +287,7 @@ export function tenantName(decodedToken: DecodedJWT): string | undefined {
 // Comments taken from the Java SDK implementation
 // Currently, scopes containing dots are allowed.
 // Since the UAA builds audiences by taking the substring of scopes up to the last dot,
-// scopes with dots will lead to an incorrect audience which is worked around here.
+// Scopes with dots will lead to an incorrect audience which is worked around here.
 // If a JWT contains no audience, infer audiences based on the scope names in the JWT.
 // This is currently necessary as the UAA does not correctly fill the audience in the user token flow.
 export function audiences(decodedToken: DecodedJWT): Set<string> {
@@ -367,9 +366,9 @@ export type JwtKeyMapping<TypescriptKeys, JwtKeys> = {
 
 /**
  * Checks if a given key is in the decoded JWT. If not an error is raised
- * @param key -: of the representation in typescript
- * @param mapping -: between the typescript keys and the JWT key
- * @param decodedJWT -: token on which the check is done
+ * @param key - The key of the representation in typescript
+ * @param mapping - The mapping between the typescript keys and the JWT key
+ * @param decodedJWT - Decoded token on which the check is done
  * @exception Error is thrown if the key is not present.
  */
 export function checkMandatoryValue<TypeScriptKeys, JwtKeys>(

@@ -1,8 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
   CreateRequestBuilder,
   DeleteRequestBuilder,
@@ -31,7 +27,7 @@ import {
  * @returns A request builder for batch.
  */
 export function batch(
-  ...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>
+  ...requests: (ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>)[]
 ): ODataBatchRequestBuilder {
   return new ODataBatchRequestBuilder(defaultTestServicePath, requests, map);
 }

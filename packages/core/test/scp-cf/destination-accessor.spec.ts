@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { Protocol } from '../../src/request-builder';
 import {
@@ -13,8 +14,8 @@ import {
 import { getDestination, getDestinationFromDestinationService, useOrFetchDestination } from '../../src/scp-cf/destination-accessor';
 import { AuthenticationType } from '../../src/scp-cf/destination-service-types';
 import * as sdkJwt from '../../src/util/jwt';
-// if I combined them, tslint would also complain
-// tslint:disable-next-line: no-duplicate-imports
+// If I combined them, tslint would also complain
+/* eslint-disable-next-line no-duplicate-imports */
 import { decodeJwt } from '../../src/util/jwt';
 import { mockInstanceDestinationsCall, mockSingleDestinationCall, mockSubaccountDestinationsCall } from '../test-util/destination-service-mocks';
 import { mockedConnectivityServiceProxyConfig, mockServiceBindings, mockXsuaaBinding } from '../test-util/environment-mocks';
@@ -53,9 +54,7 @@ const environmentDestinations = [
 ];
 
 function mockVerifyJwt() {
-  return jest.spyOn(sdkJwt, 'verifyJwt').mockImplementation(token => {
-    return Promise.resolve(decodeJwt(token));
-  });
+  return jest.spyOn(sdkJwt, 'verifyJwt').mockImplementation(token => Promise.resolve(decodeJwt(token)));
 }
 
 afterEach(() => {
@@ -118,7 +117,7 @@ describe('destination-accessor', () => {
       mockServiceToken();
 
       const samlDestinationsWithSystemUser = { ...oauthMultipleResponse[0] };
-      // insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
+      // Insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
       samlDestinationsWithSystemUser['SystemUser'] = 'defined';
 
       const httpMocks = [
@@ -209,7 +208,7 @@ describe('destination-accessor', () => {
       expect(actual).toMatchObject(expected);
     });
 
-    // test for ONEmds specific feature
+    // Test for ONEmds specific feature
     it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
       mockServiceBindings();
       mockServiceToken();
@@ -567,7 +566,7 @@ describe('destination-accessor', () => {
         const authType = 'NoAuthentification' as AuthenticationType;
         const subscriberDest = { URL: 'https://subscriber.example', Name: 'SubscriberDest', ProxyType: 'any', Authentication: authType };
         const parsedDestination = parseDestination(subscriberDest);
-        // cache destination to retrieve
+        // Cache destination to retrieve
         destinationCache.cacheRetrievedDestinations(
           decodeJwt(subscriberUserJwt),
           { instance: [parsedDestination], subaccount: [] },

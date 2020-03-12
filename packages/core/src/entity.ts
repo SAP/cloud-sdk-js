@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
@@ -71,7 +69,7 @@ export class Entity {
   /**
    * ETag version identifier accessor.
    *
-   * @returns {string} The ETag version identifier of the retrieved entity, returns undefined if not retrieved
+   * @returns The ETag version identifier of the retrieved entity, returns undefined if not retrieved
    */
   get versionIdentifier(): string {
     return this._versionIdentifier;
@@ -80,7 +78,7 @@ export class Entity {
   /**
    * Returns a map that contains all entity custom fields.
    *
-   * @returns {MapType<any>} A map of all defined custom fields in the entity
+   * @returns A map of all defined custom fields in the entity
    */
   getCustomFields(): MapType<any> {
     return this._customFields;
@@ -90,7 +88,7 @@ export class Entity {
    * Custom field value getter.
    *
    * @param fieldName - The name of the custom field
-   * @returns {any} The value of the corresponding custom field
+   * @returns The value of the corresponding custom field
    */
   getCustomField(fieldName: string): any {
     return this._customFields[fieldName];
@@ -102,7 +100,7 @@ export class Entity {
    *
    * @param fieldName - The name of the custom field to update
    * @param value - The value of the field
-   * @returns {this} The entity itself, to facilitate method chaining
+   * @returns The entity itself, to facilitate method chaining
    */
   setCustomField(fieldName: string, value: any): this {
     if (this.isConflictingCustomField(fieldName)) {
@@ -118,7 +116,7 @@ export class Entity {
    * Validates whether a custom field exists in the entity.
    *
    * @param fieldName - The name of the custom field to update
-   * @returns {boolean} A boolean value, that indicates whether a custom field is defined in entity
+   * @returns A boolean value, that indicates whether a custom field is defined in entity
    */
   hasCustomField(fieldName: string): boolean {
     return this._customFields[fieldName] !== undefined;
@@ -128,7 +126,7 @@ export class Entity {
    * Sets all retrieved custom fields in entity.
    *
    * @param customFields - Extracted custom fields from a retrieved entity
-   * @returns {this} A boolean value, that indicates the existence of the field in entity
+   * @returns A boolean value, that indicates the existence of the field in entity
    */
   initializeCustomFields(customFields: MapType<any>): this {
     Object.entries(customFields).forEach(cf => {
@@ -141,7 +139,7 @@ export class Entity {
    * Set the ETag version identifier of the retrieved entity.
    *
    * @param etag - The returned ETag version of the entity
-   * @returns {this} The entity itself, to facilitate method chaining
+   * @returns The entity itself, to facilitate method chaining
    */
   public setVersionIdentifier(etag: string | undefined): this {
     if (etag && typeof etag === 'string') {
@@ -158,7 +156,7 @@ export class Entity {
    *
    * @deprecated Since 1.12.0. Will be removed in version 2.0.
    * @param state - State to be set as remote state
-   * @returns {this} The entity itself, to facilitate method chaining
+   * @returns The entity itself, to facilitate method chaining
    */
   public setOrInitializeRemoteState(state?: MapType<any>): this {
     if (!this.remoteState) {
@@ -170,7 +168,7 @@ export class Entity {
         if (this[toPropertyFormat(fieldName)]) {
           this.remoteState[toPropertyFormat(fieldName)] = value;
         } else {
-          // we store the custom field with its original name in the remote state
+          // We store the custom field with its original name in the remote state
           this.remoteState[fieldName] = value;
         }
       });
@@ -183,7 +181,7 @@ export class Entity {
   /**
    * Returns all updated custom field properties compared to the last known remote state.
    *
-   * @returns {MapType<any>} A map containing all updated custom properties, with their new values
+   * @returns A map containing all updated custom properties, with their new values
    */
   public getUpdatedCustomFields(): MapType<any> {
     if (this.remoteState === undefined) {
@@ -199,7 +197,7 @@ export class Entity {
    * Returns all changed properties compared to the last known remote state.
    * The returned properties does not include custom fields. Use [[getUpdatedCustomFields]], if updated custom fields are needed.
    *
-   * @returns {this} Entity with all properties that changed
+   * @returns Entity with all properties that changed
    */
   public getUpdatedProperties(): this {
     const current = this.getCurrentMapKeys();
@@ -221,7 +219,7 @@ export class Entity {
   /**
    * Returns a map of all defined fields in entity to their current values.
    *
-   * @returns {this} Entity with all defined entity fields
+   * @returns Entity with all defined entity fields
    */
   protected getCurrentMapKeys(): this {
     return Object.keys(this)
@@ -233,7 +231,7 @@ export class Entity {
    * Validates whether a field name does not conflict with an original field name and thus can be defined as custom fields.
    *
    * @param customFieldName - Field name to check
-   * @returns {boolean} Boolean value that describes whether a field name can be defined as custom field
+   * @returns Boolean value that describes whether a field name can be defined as custom field
    */
   protected isConflictingCustomField(customFieldName: string): boolean {
     return this[toPropertyFormat(customFieldName)] !== undefined;
@@ -247,7 +245,7 @@ export interface EntityIdentifiable<T extends Entity> {
   readonly _entityConstructor: Constructable<T>;
 }
 
-// tslint:disable: valid-jsdoc
+/* eslint-disable valid-jsdoc */
 
 /**
  * @hidden

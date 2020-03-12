@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
 import { sanitizeDestination } from './destination';
@@ -71,7 +69,7 @@ export function getDestinationByName(name: string): Destination | null {
   return getDestinationFromEnvByName(name);
 }
 
-// tslint:disable: valid-jsdoc
+/* eslint-disable valid-jsdoc */
 
 /**
  * @hidden

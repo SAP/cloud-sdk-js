@@ -1,9 +1,7 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
-import { MapType } from '@sap-cloud-sdk/util';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import * as http from 'http';
 import * as https from 'https';
+import { MapType } from '@sap-cloud-sdk/util';
 
 export interface DestinationHttpRequestConfig {
   baseURL: string;

@@ -1,14 +1,11 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+/* eslint-disable valid-jsdoc */
 
 import BigNumber from 'bignumber.js';
 import moment, { Moment } from 'moment';
 import { identity } from 'rambda';
 import { EdmType } from './edm-types';
 import { Time } from './time';
-
-// tslint:disable: valid-jsdoc
 
 /**
  * @hidden
@@ -94,7 +91,7 @@ export function edmDateTimeToMoment(edmDateTime: string): Moment {
 export function momentToEdmDateTime(momentInstance: Moment): string {
   const timestamp = momentInstance.unix() * 1000;
 
-  // for some reason isUtc() returns wrong values here, so we use the internal flag directly
+  // For some reason isUtc() returns wrong values here, so we use the internal flag directly
   if (momentInstance['_isUTC']) {
     const offset = Math.abs(momentInstance.utcOffset());
     const operator = momentInstance.utcOffset() >= 0 ? '+' : '-';
@@ -140,15 +137,27 @@ function leftpad(value: any, targetLength: number): string {
   }
 }
 
-// prettier-ignore
-export type EdmToPrimitive<T extends EdmType> =
-  T extends 'Edm.Int16' | 'Edm.Int32' | 'Edm.Single' | 'Edm.Double' | 'Edm.Float' | 'Edm.Byte' | 'Edm.SByte' ? number :
-  T extends 'Edm.Decimal' | 'Edm.Int64' ? BigNumber :
-  T extends 'Edm.DateTime' | 'Edm.DateTimeOffset' ? Moment :
-  T extends 'Edm.String' | 'Edm.Guid' ? string :
-  T extends 'Edm.Boolean' ? boolean :
-  T extends 'Edm.Time' ? Time :
-  any;
+// Prettier-ignore
+export type EdmToPrimitive<T extends EdmType> = T extends
+  | 'Edm.Int16'
+  | 'Edm.Int32'
+  | 'Edm.Single'
+  | 'Edm.Double'
+  | 'Edm.Float'
+  | 'Edm.Byte'
+  | 'Edm.SByte'
+  ? number
+  : T extends 'Edm.Decimal' | 'Edm.Int64'
+  ? BigNumber
+  : T extends 'Edm.DateTime' | 'Edm.DateTimeOffset'
+  ? Moment
+  : T extends 'Edm.String' | 'Edm.Guid'
+  ? string
+  : T extends 'Edm.Boolean'
+  ? boolean
+  : T extends 'Edm.Time'
+  ? Time
+  : any;
 
 const deserializers: EdmTypeMapping = {
   'Edm.Binary': identity,

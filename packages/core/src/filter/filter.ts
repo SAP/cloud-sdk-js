@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
@@ -42,8 +40,8 @@ export class Filter<EntityT extends Entity, FieldT extends FieldType> implements
   public _fieldName: string | FilterFunction<EntityT, FieldT>;
 
   // TODO: change the constructor to the following:
-  // constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
-  // and deprecate passing a string as the field is needed later on
+  // Constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
+  // And deprecate passing a string as the field is needed later on
   /**
    * Creates an instance of Filter.
    *

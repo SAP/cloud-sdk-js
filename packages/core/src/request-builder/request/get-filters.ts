@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../../constructable';
 import { EdmType } from '../../edm-types';
@@ -17,7 +15,7 @@ import { toStaticPropertyFormat } from '../../util';
  * @typeparam EntityT - Type of the entity to filter on
  * @param filter - The filter to transform to a query parameter
  * @param entityConstructor - Constructor type of the entity to filter on
- * @returns {Partial<{ filter: string; }>} An object containing the query parameter or an empty object
+ * @returns An object containing the query parameter or an empty object
  */
 export function getQueryParametersForFilter<EntityT extends Entity>(
   filter: Filterable<EntityT>,
@@ -93,9 +91,10 @@ function retrieveField<FilterEntityT extends Entity>(filterField: string, target
   const field = targetEntityConstructor[toStaticPropertyFormat(fieldName)];
   if (field instanceof ComplexTypeField) {
     return Object.values(field)
-      .filter(pField => pField?.fieldPath) // filter for ComplexTypePropertyFields only
+      .filter(pField => pField?.fieldPath) // Filter for ComplexTypePropertyFields only
       .find((pField: ComplexTypePropertyFields<FilterEntityT>) => pField.fieldPath() === filterField);
   }
+
   // In case of custom field we infer then the returned field from the filter edmType property
   return field || { edmType: filterEdmType };
 }

@@ -13,7 +13,7 @@ import { WithKeys } from './odata-request-traits';
 /**
  * OData delete request configuration for an entity type.
  *
- * @typeparam EntityT Type of the entity to setup a request for
+ * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataDeleteRequestConfig<EntityT extends Entity> extends ODataRequestConfig implements WithKeys {
   keys: MapType<FieldType>;
@@ -23,7 +23,7 @@ export class ODataDeleteRequestConfig<EntityT extends Entity> extends ODataReque
   /**
    * Creates an instance of ODataDeleteRequestConfig.
    *
-   * @param entityConstructor Constructor type of the entity to create a configuration for
+   * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(readonly entityConstructor: Constructable<EntityT>) {
     super('delete', entityConstructor._defaultServicePath);

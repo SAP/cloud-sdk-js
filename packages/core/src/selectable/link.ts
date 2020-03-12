@@ -20,16 +20,16 @@ import { Selectable } from './selectable';
  *
  * See also: [[Selectable]]
  *
- * @typeparam EntityT Type of the entity to be linked from
- * @typeparam LinkedEntityT Type of the entity to be linked to
+ * @typeparam EntityT - Type of the entity to be linked from
+ * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
 export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implements EntityIdentifiable<EntityT> {
   /**
    * Create a new link based on a given link.
    *
-   * @typeparam EntityT Type of the entity to be linked from
-   * @typeparam LinkedEntityT Type of the entity to be linked to
-   * @param link Link to be cloned
+   * @typeparam EntityT - Type of the entity to be linked from
+   * @typeparam LinkedEntityT - Type of the entity to be linked to
+   * @param link - Link to be cloned
    * @returns Newly created link
    */
   static clone<EntityT extends Entity, LinkedEntityT extends Entity>(link: Link<EntityT, LinkedEntityT>): Link<EntityT, LinkedEntityT> {
@@ -46,9 +46,9 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implemen
   /**
    * Creates an instance of Link.
    *
-   * @param _fieldName Name of the linking field to be used in the OData request.
-   * @param _entityConstructor Constructor type of the entity the field belongs to
-   * @param _linkedEntity Constructor type of the linked entity
+   * @param _fieldName - Name of the linking field to be used in the OData request.
+   * @param _entityConstructor - Constructor type of the entity the field belongs to
+   * @param _linkedEntity - Constructor type of the linked entity
    */
   constructor(
     readonly _fieldName: string,
@@ -61,7 +61,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implemen
    *
    * See also, [[Selectable]]
    *
-   * @param selects Selection of fields or links on a linked entity
+   * @param selects - Selection of fields or links on a linked entity
    * @returns The link itself, to facilitate method chaining
    */
   select(...selects: Selectable<LinkedEntityT>[]): Link<EntityT, LinkedEntityT> {

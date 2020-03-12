@@ -55,7 +55,7 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
     };
     /**
      * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityEndsWith`.
-     * @param fieldName Name of the custom field to select
+     * @param fieldName - Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
      */
     TestEntityEndsWith.customField = function (fieldName) {

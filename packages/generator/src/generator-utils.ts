@@ -141,8 +141,8 @@ export function linkClass(navProperty: VdmNavigationProperty): string {
 /**
  * Applies a prefix to a string if present.
  *
- * @param string The string to be prefixed.
- * @param prefix The optional prefix.
+ * @param string - The string to be prefixed.
+ * @param prefix - The optional prefix.
  * @returns Prefixed string.
  */
 export function prefixString(string: string, prefix?: string): string {
@@ -152,7 +152,7 @@ export function prefixString(string: string, prefix?: string): string {
 /**
  * Takes a name and returns a transformation that is guaranteed to be compliant with npm naming rules.
  *
- * @param name The name to be transformed if necessary.
+ * @param name - The name to be transformed if necessary.
  * @returns Name that is guaranteed to be compliant.
  */
 export function npmCompliantName(name: string): string {

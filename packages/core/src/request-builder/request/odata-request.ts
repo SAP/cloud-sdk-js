@@ -14,14 +14,14 @@ import { ODataRequestConfig } from './odata-request-config';
 /**
  * OData request configuration for an entity type.
  *
- * @typeparam EntityT Type of the entity to setup a request for
+ * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Creates an instance of ODataRequest.
    *
-   * @param config Configuration of the request
-   * @param _destination Destination to setup the request against
+   * @param config - Configuration of the request
+   * @param _destination - Destination to setup the request against
    * @memberof ODataRequest
    */
   constructor(public config: RequestConfigT, private _destination?: Destination | undefined) {}

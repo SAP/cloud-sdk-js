@@ -9,7 +9,7 @@ type EntityBasedRequestBuilder<EntityCT extends Constructable<Entity>> = ReturnT
 
 /**
  * @abstract
- * @typeparam EntityT
+ * @typeparam EntityT -
  * @hidden
  */
 export abstract class RequestBuilder<EntityT extends Entity> implements EntityIdentifiable<EntityT> {

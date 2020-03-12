@@ -66,7 +66,7 @@ export function enableExceptionLogger() {
  * To retrieve a logger after its creation use [[getLogger]].
  * If you want to change the log level of a logger use [[setLogLevel]].
  *
- * @param messageContext Either a key for the message context of all messages produced by the logger or an object with additional keys to set in the message.
+ * @param messageContext - Either a key for the message context of all messages produced by the logger or an object with additional keys to set in the message.
  * @returns A newly created or an already existing logger for the given context.
  */
 export function createLogger(messageContext?: string | (MessageContextObj & LoggerOptions)): Logger {
@@ -84,7 +84,7 @@ export function createLogger(messageContext?: string | (MessageContextObj & Logg
 
 /**
  * Get logger for a given message context, if avilable.
- * @param messageContext A key for the message context of all messages produced by the logger
+ * @param messageContext - A key for the message context of all messages produced by the logger
  * @returns The logger for the given messageContext if it was created before
  */
 export function getLogger(messageContext = DEFAULT_LOGGER__MESSAGE_CONTEXT): Logger | undefined {
@@ -96,8 +96,8 @@ export function getLogger(messageContext = DEFAULT_LOGGER__MESSAGE_CONTEXT): Log
 /**
  * Change the log level of a logger based on its message context.
  * E. g., to set the log level for the destination accessor module of the SDK to _debug_, simply call `setLogLevel('debug', 'destination-acessor')`.
- * @param level level to set the logger to
- * @param messageContextOrLogger Message context of the logger to change the log level for or the logger itself
+ * @param level - level to set the logger to
+ * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself
  */
 export function setLogLevel(level: LogLevel, messageContextOrLogger: string | Logger = DEFAULT_LOGGER__MESSAGE_CONTEXT): void {
   const messageContext = typeof messageContextOrLogger === 'string' ? messageContextOrLogger : getMessageContext(messageContextOrLogger);

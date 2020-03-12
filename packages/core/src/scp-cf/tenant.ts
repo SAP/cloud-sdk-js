@@ -31,7 +31,7 @@ export interface Tenant {
 /**
  * Creates a tenant object from the decoded JWT.
  *
- * @param decodedJWT Decoded JWT token
+ * @param decodedJWT - Decoded JWT token
  * @returns Representation of the tenant.
  * @exception Error Raised if no id is found in the decoded JWT.
  */

@@ -15,13 +15,13 @@ import { EdmTypeField } from './edm-type-field';
 /**
  * Represents a property with a time value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, Time> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   greaterThan(value: Time): Filter<EntityT, Time> {
@@ -31,7 +31,7 @@ export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'ge', i.e. `>=`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   greaterOrEqual(value: Time): Filter<EntityT, Time> {
@@ -41,7 +41,7 @@ export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'lt', i.e. `<`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   lessThan(value: Time): Filter<EntityT, Time> {
@@ -51,7 +51,7 @@ export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'le', i.e. `<=`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   lessOrEqual(value: Time): Filter<EntityT, Time> {
@@ -62,7 +62,7 @@ export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
 /**
  * Represents a selectable property with a time value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class TimeField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
   readonly selectable: true;
@@ -71,7 +71,7 @@ export class TimeField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
 /**
  * Represents a complex type property with a time value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
   /**
@@ -82,9 +82,9 @@ export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFi
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param fieldOf The constructor of the entity or the complex type this field belongs to
-   * @param edmType Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param fieldOf - The constructor of the entity or the complex type this field belongs to
+   * @param edmType - Type of the field according to the metadata description
    */
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, edmType: EdmType);
   /**
@@ -92,10 +92,10 @@ export class ComplexTypeTimePropertyField<EntityT extends Entity> extends TimeFi
    *
    * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param entityConstructor Constructor type of the entity the field belongs to
-   * @param parentTypeName Name of the parent complex type
-   * @param edmType Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param entityConstructor - Constructor type of the entity the field belongs to
+   * @param parentTypeName - Name of the parent complex type
+   * @param edmType - Type of the field according to the metadata description
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
 

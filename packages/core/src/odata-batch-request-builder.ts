@@ -34,9 +34,9 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
   /**
    * Creates an instance of ODataBatchRequestBuilder.
    *
-   * @param defaultServicePath Service path
-   * @param requests An array of retrieve requests or change sets
-   * @param entityToConstructorMap A map that holds the entity type to constructor mapping
+   * @param defaultServicePath - Service path
+   * @param requests - An array of retrieve requests or change sets
+   * @param entityToConstructorMap - A map that holds the entity type to constructor mapping
    */
   constructor(
     readonly defaultServicePath: string,
@@ -54,8 +54,8 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
    *
-   * @param destination Targeted destination on which the request is performed.
-   * @param options Options to employ when fetching destinations.
+   * @param destination - Targeted destination on which the request is performed.
+   * @param options - Options to employ when fetching destinations.
    * @returns {Promise<ReadResponse[]>} Promise resolving to the requested data.
    */
   async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<BatchResponse[]> {
@@ -93,8 +93,8 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
 /**
  * Convert the given requests to the payload of the batch.
  *
- * @param requests Requests of the batch.
- * @param requestConfig The batch request configuration.
+ * @param requests - Requests of the batch.
+ * @param requestConfig - The batch request configuration.
  * @returns {string} The generated payload.
  */
 function getPayload(
@@ -352,7 +352,7 @@ function buildRetrieveOrErrorResponse(
 /**
  * Generate the request line, containing method, url and http version from the request builder, e.g.:
  * GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1
- * @param requestBuilder Reqeust builder holds the request information.
+ * @param requestBuilder - Reqeust builder holds the request information.
  * @returns the generated request line.
  */
 export function getRequestLine(requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>): string {

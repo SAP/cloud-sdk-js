@@ -76,7 +76,7 @@ function hasScopeWrapper(scopes: Scope[]): hasScopeType {
 /**
  * Creates a user object from the decoded JWT.
  *
- * @param decodedJWT Decoded JWT toeken
+ * @param decodedJWT - Decoded JWT toeken
  * @returns Representation of the user
  * @exception Error Raised if no id is found in the decoded JWT.
  */

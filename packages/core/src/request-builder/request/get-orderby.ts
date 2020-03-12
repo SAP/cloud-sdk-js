@@ -8,8 +8,8 @@ import { Order, Orderable, OrderLink } from '../../order';
 /**
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.
  *
- * @typeparam EntityT Type of the entity to order
- * @param orderBy A list of orderables to get the query parameters for
+ * @typeparam EntityT - Type of the entity to order
+ * @param orderBy - A list of orderables to get the query parameters for
  * @returns {Partial<{ orderby: string; }>} An object containing the query parameter or an empty object
  */
 export function getQueryParametersForOrderBy<EntityT extends Entity>(orderBy: Orderable<EntityT>[]): Partial<{ orderby: string }> {

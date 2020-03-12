@@ -30,7 +30,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.
-     * @param keyProperty Key property. See [[TestEntitySingleLink.keyProperty]].
+     * @param keyProperty - Key property. See [[TestEntitySingleLink.keyProperty]].
      * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
      */
     TestEntitySingleLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
@@ -45,7 +45,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for creating a `TestEntitySingleLink` entity.
-     * @param entity The entity to be created
+     * @param entity - The entity to be created
      * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
      */
     TestEntitySingleLinkRequestBuilder.prototype.create = function (entity) {
@@ -53,7 +53,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntitySingleLink`.
-     * @param entity The entity to be updated
+     * @param entity - The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
      */
     TestEntitySingleLinkRequestBuilder.prototype.update = function (entity) {

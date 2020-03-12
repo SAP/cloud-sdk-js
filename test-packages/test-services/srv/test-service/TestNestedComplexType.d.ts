@@ -20,7 +20,7 @@ export interface TestNestedComplexType {
 export declare function createTestNestedComplexType(json: any): TestNestedComplexType;
 /**
  * TestNestedComplexTypeField
- * @typeparam EntityT Type of the entity the complex type field belongs to.
+ * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestNestedComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
   /**

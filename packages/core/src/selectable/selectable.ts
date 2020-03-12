@@ -12,7 +12,7 @@ import { SimpleTypeFields } from './simple-type-fields';
 /**
  * Represents all selectables, i.e. everything that can be used in a `.select` statement.
  *
- * @typeparam EntityT Type of the entity to be selected on
+ * @typeparam EntityT - Type of the entity to be selected on
  */
 
 export type Selectable<EntityT extends Entity> =

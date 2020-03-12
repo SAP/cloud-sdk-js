@@ -50,7 +50,7 @@ export class TestEntityCircularLinkChild extends Entity implements TestEntityCir
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityCircularLinkChild`.
-   * @param fieldName Name of the custom field to select
+   * @param fieldName - Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
   static customField(fieldName: string): CustomField<TestEntityCircularLinkChild> {

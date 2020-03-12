@@ -30,7 +30,7 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
-     * @param keyProperty Key property. See [[TestEntityEndsWith.keyProperty]].
+     * @param keyProperty - Key property. See [[TestEntityEndsWith.keyProperty]].
      * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
      */
     TestEntityEndsWithRequestBuilder.prototype.getByKey = function (keyProperty) {
@@ -45,7 +45,7 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for creating a `TestEntityEndsWith` entity.
-     * @param entity The entity to be created
+     * @param entity - The entity to be created
      * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWith`.
      */
     TestEntityEndsWithRequestBuilder.prototype.create = function (entity) {
@@ -53,7 +53,7 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityEndsWith`.
-     * @param entity The entity to be updated
+     * @param entity - The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWith`.
      */
     TestEntityEndsWithRequestBuilder.prototype.update = function (entity) {

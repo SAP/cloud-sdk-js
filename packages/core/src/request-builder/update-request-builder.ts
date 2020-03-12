@@ -17,7 +17,7 @@ import { ODataUpdateRequestConfig } from './request/odata-update-request-config'
 /**
  * Create OData query to update an entity.
  *
- * @typeparam EntityT Type of the entity to be updated
+ * @typeparam EntityT - Type of the entity to be updated
  */
 export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
@@ -27,8 +27,8 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Creates an instance of UpdateRequestBuilder.
    *
-   * @param _entityConstructor Constructor type of the entity to be updated
-   * @param _entity Entity to be updated
+   * @param _entityConstructor - Constructor type of the entity to be updated
+   * @param _entity - Entity to be updated
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>, private _entity: EntityT) {
     super(new ODataUpdateRequestConfig(_entityConstructor));
@@ -64,8 +64,8 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Executes the query.
    *
-   * @param destination Destination to execute the request against
-   * @param options Options to employ when fetching destinations
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
    */
   async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<EntityT> {
@@ -96,7 +96,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Specifies required entity keys for the update request.
    *
-   * @param fields Enumeration of the fields to be required
+   * @param fields - Enumeration of the fields to be required
    * @returns The entity itself, to facilitate method chaining
    */
   requiredFields(...fields: Selectable<EntityT>[]): this {
@@ -107,7 +107,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Specifies entity fields to ignore by the update request.
    *
-   * @param fields Enumeration of the fields to be ignored
+   * @param fields - Enumeration of the fields to be ignored
    * @returns The entity itself, to facilitate method chaining
    */
   ignoredFields(...fields: Selectable<EntityT>[]): this {

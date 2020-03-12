@@ -12,8 +12,8 @@ import { toStaticPropertyFormat } from './util';
 /**
  * Converts an instance of an entity class into a JSON payload to be sent to an OData service.
  *
- * @param entity An instance of an entity.
- * @param entityConstructor The constructor function of that entity.
+ * @param entity - An instance of an entity.
+ * @param entityConstructor - The constructor function of that entity.
  * @returns JSON.
  */
 export function serializeEntity<EntityT extends Entity>(entity: EntityT, entityConstructor: Constructable<EntityT>): MapType<any> {
@@ -23,8 +23,8 @@ export function serializeEntity<EntityT extends Entity>(entity: EntityT, entityC
 /**
  * Converts an instance of an entity class into a JSON payload to be sent to an OData service, ignoring custom fields.
  *
- * @param entity An instance of an entity.
- * @param entityConstructor The constructor function of that entity.
+ * @param entity - An instance of an entity.
+ * @param entityConstructor - The constructor function of that entity.
  * @returns JSON.
  */
 export function serializeEntityNonCustomFields<EntityT extends Entity>(entity: EntityT, entityConstructor: Constructable<EntityT>): MapType<any> {

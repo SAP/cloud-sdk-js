@@ -15,13 +15,13 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 /**
  * Represents a property with a date value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class DateFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, Moment> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   greaterThan(value: Moment): Filter<EntityT, Moment> {
@@ -31,7 +31,7 @@ export class DateFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'ge', i.e. `>=`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   greaterOrEqual(value: Moment): Filter<EntityT, Moment> {
@@ -41,7 +41,7 @@ export class DateFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'lt', i.e. `<`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   lessThan(value: Moment): Filter<EntityT, Moment> {
@@ -51,7 +51,7 @@ export class DateFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'le', i.e. `<=`.
    *
-   * @param value Value to be used in the filter
+   * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   lessOrEqual(value: Moment): Filter<EntityT, Moment> {
@@ -62,7 +62,7 @@ export class DateFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT,
 /**
  * Represents a selectable property with a date value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class DateField<EntityT extends Entity> extends DateFieldBase<EntityT> implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -71,7 +71,7 @@ export class DateField<EntityT extends Entity> extends DateFieldBase<EntityT> im
 /**
  * Represents a complex type property with a date value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeDatePropertyField<EntityT extends Entity> extends DateFieldBase<EntityT> {
   /**
@@ -82,9 +82,9 @@ export class ComplexTypeDatePropertyField<EntityT extends Entity> extends DateFi
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param fieldOf The constructor of the entity or the complex type this field belongs to
-   * @param edmType Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param fieldOf - The constructor of the entity or the complex type this field belongs to
+   * @param edmType - Type of the field according to the metadata description
    */
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, edmType: EdmType);
   /**
@@ -92,10 +92,10 @@ export class ComplexTypeDatePropertyField<EntityT extends Entity> extends DateFi
    *
    * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param entityConstructor Constructor type of the entity the field belongs to
-   * @param parentTypeName Name of the parent complex type
-   * @param edmType Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param entityConstructor - Constructor type of the entity the field belongs to
+   * @param parentTypeName - Name of the parent complex type
+   * @param edmType - Type of the field according to the metadata description
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
 

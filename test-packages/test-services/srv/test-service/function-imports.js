@@ -11,7 +11,7 @@ var TestComplexType_1 = require("./TestComplexType");
 /**
  * Test Function Import No Return Type.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportNoReturnType(parameters) {
@@ -22,7 +22,7 @@ exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
 /**
  * Test Function Import Edm Return Type.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportEdmReturnType(parameters) {
@@ -33,7 +33,7 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
 /**
  * Test Function Import Edm Return Type Collection.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportEdmReturnTypeCollection(parameters) {
@@ -44,7 +44,7 @@ exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnT
 /**
  * Test Function Import Entity Return Type.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportEntityReturnType(parameters) {
@@ -55,7 +55,7 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
 /**
  * Test Function Import Entity Return Type Collection.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportEntityReturnTypeCollection(parameters) {
@@ -66,7 +66,7 @@ exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityR
 /**
  * Test Function Import Complex Return Type.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportComplexReturnType(parameters) {
@@ -77,7 +77,7 @@ exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnTyp
 /**
  * Test Function Import Complex Return Type Collection.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportComplexReturnTypeCollection(parameters) {
@@ -88,7 +88,7 @@ exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComple
 /**
  * Test Function Import Get.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportGet(parameters) {
@@ -101,7 +101,7 @@ exports.testFunctionImportGet = testFunctionImportGet;
 /**
  * Test Function Import Post.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportPost(parameters) {
@@ -114,7 +114,7 @@ exports.testFunctionImportPost = testFunctionImportPost;
 /**
  * Test Function Import Multiple Params.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testFunctionImportMultipleParams(parameters) {
@@ -128,7 +128,7 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 /**
  * Create Test Complex Type.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function createTestComplexType(parameters) {
@@ -139,7 +139,7 @@ exports.createTestComplexType = createTestComplexType;
 /**
  * Continue.
  *
- * @param parameters Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function fContinue(parameters) {

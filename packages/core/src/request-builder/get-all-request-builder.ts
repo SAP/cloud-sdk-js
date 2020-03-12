@@ -20,14 +20,14 @@ import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config
  * The number of entities in the result can be [[GetAllRequestBuilder.top limited]] and results can be [[GetAllRequestBuilder.skip skipped]] for paging purposes.
  * If none of the above mentioned are configured all entities of the given type will be requested.
  *
- * @typeparam EntityT Type of the entity to be requested
+ * @typeparam EntityT - Type of the entity to be requested
  */
 export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of GetAllRequestBuilder.
    *
-   * @param _entityConstructor Constructor of the entity to create the request for
+   * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
     super(new ODataGetAllRequestConfig(_entityConstructor));
@@ -36,7 +36,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Restrict the response to the given selection of properties in the request.
    *
-   * @param selects Fields to select in the request
+   * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
   select(...selects: Selectable<EntityT>[]): this {
@@ -47,7 +47,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Add filter statements to the request.
    *
-   * @param expressions Filter expressions to restrict the response
+   * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
   filter(...expressions: Filterable<EntityT>[]): this {
@@ -58,7 +58,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Add order-by statements to the request.
    *
-   * @param orderBy OrderBy statements to order the response by
+   * @param orderBy - OrderBy statements to order the response by
    * @returns The request builder itself, to facilitate method chaining
    */
   orderBy(...orderBy: Orderable<EntityT>[]): this {
@@ -69,7 +69,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Limit number of returned entities.
    *
-   * @param top Maximum number of entities to return in the response. Can be less, if less entities match the request
+   * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request
    * @returns The request builder itself, to facilitate method chaining
    */
   top(top: number): this {
@@ -80,7 +80,7 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Skip number of entities.
    *
-   * @param skip Number of matching entities to skip. Useful for paging
+   * @param skip - Number of matching entities to skip. Useful for paging
    * @returns The request builder itself, to facilitate method chaining
    */
   skip(skip: number): this {
@@ -91,8 +91,8 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Execute request.
    *
-   * @param destination Destination to execute the request against
-   * @param options Options to employ when fetching destinations
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the requested entities
    */
   async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<EntityT[]> {

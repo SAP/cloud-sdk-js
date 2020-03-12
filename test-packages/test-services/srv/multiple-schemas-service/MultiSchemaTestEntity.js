@@ -55,7 +55,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
     };
     /**
      * Returns a selectable object that allows the selection of custom field in a get request for the entity `MultiSchemaTestEntity`.
-     * @param fieldName Name of the custom field to select
+     * @param fieldName - Name of the custom field to select
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntity.customField = function (fieldName) {

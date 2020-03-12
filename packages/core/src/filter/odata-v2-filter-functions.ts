@@ -12,8 +12,8 @@ import { StringFilterFunction } from './string-filter-function';
 
 /**
  * Build an OData (V2) filter function to test whether a string is a substring of the other. Evaluates to boolean.
- * @param p0 The substring to test for. This can either be a string, a reference to a field or another filter function.
- * @param p1 The string to test. This can either be a string, a reference to a field or another filter function.
+ * @param p0 - The substring to test for. This can either be a string, a reference to a field or another filter function.
+ * @param p1 - The string to test. This can either be a string, a reference to a field or another filter function.
  *
  * @returns The newly created filter function
  */
@@ -26,8 +26,8 @@ export function substringOf<EntityT extends Entity>(
 
 /**
  * Build an OData (V2) filter function to get a substring starting from a designated position. Evaluates to string.
- * @param p0 the original string. This can either be a string, a reference to a field or another filter function.
- * @param pos the starting position of the original string. This can be either a number, a reference to a field or another filter function.
+ * @param p0 - the original string. This can either be a string, a reference to a field or another filter function.
+ * @param pos - the starting position of the original string. This can be either a number, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
 export function substring<EntityT extends Entity>(
@@ -39,7 +39,7 @@ export function substring<EntityT extends Entity>(
 
 /**
  * Build an OData (V2) filter function to get the length of a string.
- * @param p0 the given string for computing the length
+ * @param p0 - the given string for computing the length
  * @returns The newly created filter function
  */
 export function length<EntityT extends Entity>(p0: string | Field<EntityT> | StringFilterFunction<EntityT>): NumberFilterFunction<EntityT> {
@@ -66,9 +66,9 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * Build a custom OData (V2) filter function.
- * @param functionName the name of the function, e.g., `substring`
- * @param returnType the return type of the filter function
- * @param parameters the parameter(s) used in the function
+ * @param functionName - the name of the function, e.g., `substring`
+ * @param returnType - the return type of the filter function
+ * @param parameters - the parameter(s) used in the function
  * @returns An instance of filter function suited for the given return type
  */
 export function filterFunction<EntityT extends Entity>(

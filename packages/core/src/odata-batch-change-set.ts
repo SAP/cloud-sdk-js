@@ -23,7 +23,7 @@ export class ODataBatchChangeSet<T extends CreateRequestBuilder<Entity> | Update
 
 /**
  * Build the change set payload as the partial payload of the batch request.
- * @param changeSet Change set holds a collection of write operations.
+ * @param changeSet - Change set holds a collection of write operations.
  * @returns The generated payload from the given change set.
  */
 export function toBatchChangeSet<T extends CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>(
@@ -63,8 +63,8 @@ function toBatchChangeSetBody<T extends CreateRequestBuilder<Entity> | UpdateReq
  * }
  *
  * *** example ends ***
- * @param request A request build of a write operation.
- * @param changeSetId The change set identifier
+ * @param request - A request build of a write operation.
+ * @param changeSetId - The change set identifier
  * @returns The generated request payload
  */
 function toRequestPayload(

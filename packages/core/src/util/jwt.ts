@@ -17,7 +17,7 @@ const logger = createLogger({
 
 /**
  * Decode JWT.
- * @param token JWT to be decoded
+ * @param token - JWT to be decoded
  * @returns Decoded payload.
  */
 export function decodeJwt(token: string): DecodedJWT {
@@ -30,7 +30,7 @@ export function decodeJwt(token: string): DecodedJWT {
 
 /**
  * Retrieve JWT from a request that is based on the node `IncomingMessage`. Fails if no authorization header is given or has the wrong format. Expected format is 'Bearer <TOKEN>'.
- * @param req Request to retrieve the JWT from
+ * @param req - Request to retrieve the JWT from
  * @returns JWT found in header
  */
 export function retrieveJwt(req: IncomingMessage): string | undefined {
@@ -74,8 +74,8 @@ function validateAuthHeader(header: string | undefined): boolean {
 /**
  * Verifies the given JWT and returns the decoded payload.
  *
- * @param token JWT to be verified
- * @param options Options to control certain aspects of JWT verification behavior.
+ * @param token - JWT to be verified
+ * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
  */
 export async function verifyJwt(token: string, options?: VerifyJwtOptions): Promise<DecodedJWT> {
@@ -137,8 +137,8 @@ function cacheVerificationKey(xsuaaCredentials: XsuaaServiceCredentials, key: To
 /**
  * Verifies the given JWT with the given key and returns the decoded payload.
  *
- * @param token JWT to be verified
- * @param key Key to use for verification
+ * @param token - JWT to be verified
+ * @param key - Key to use for verification
  * @returns A Promise to the decoded and verified JWT.
  */
 export function verifyJwtWithKey(token: string, key: string): Promise<DecodedJWT> {
@@ -163,8 +163,8 @@ function sanitizeVerificationKey(key: string) {
 
 /**
  * Compare two decoded JWTs based on their tenantIds.
- * @param decodedUserToken User JWT
- * @param decodedProviderToken Provider JWT
+ * @param decodedUserToken - User JWT
+ * @param decodedProviderToken - Provider JWT
  * @returns Whether the tenant is identical.
  */
 export function isIdenticalTenant(decodedUserToken: DecodedJWT, decodedProviderToken: DecodedJWT): boolean {
@@ -176,7 +176,7 @@ export function isIdenticalTenant(decodedUserToken: DecodedJWT, decodedProviderT
 
 /**
  * Get the issuer url of a decoded JWT.
- * @param decodedToken Token to read the issuer url from.
+ * @param decodedToken - Token to read the issuer url from.
  * @returns The issuer url if available.
  */
 export function issuerUrl(decodedToken: DecodedJWT): string | undefined {
@@ -185,7 +185,7 @@ export function issuerUrl(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Get the user id of a decoded JWT.
- * @param decodedToken Token to read the user id from.
+ * @param decodedToken - Token to read the user id from.
  * @returns The user id if available.
  */
 export function userId(decodedToken: DecodedJWT): string | undefined {
@@ -194,7 +194,7 @@ export function userId(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Get the user's given name of a decoded JWT.
- * @param decodedToken Token to read the user id from.
+ * @param decodedToken - Token to read the user id from.
  * @returns The user id if available.
  */
 export function userGivenName(decodedToken: DecodedJWT): string | undefined {
@@ -205,7 +205,7 @@ export function userGivenName(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Get the user's family name of a decoded JWT.
- * @param decodedToken Token to read the user id from.
+ * @param decodedToken - Token to read the user id from.
  * @returns The user id if available.
  */
 export function userFamilyName(decodedToken: DecodedJWT): string | undefined {
@@ -216,7 +216,7 @@ export function userFamilyName(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Get the user name of a decoded JWT.
- * @param decodedToken Token to read the user id from.
+ * @param decodedToken - Token to read the user id from.
  * @returns The user id if available.
  */
 export function userName(decodedToken: DecodedJWT): string | undefined {
@@ -225,7 +225,7 @@ export function userName(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Get the user's email of a decoded JWT.
- * @param decodedToken Token to read the user id from.
+ * @param decodedToken - Token to read the user id from.
  * @returns The user id if available.
  */
 export function userEmail(decodedToken: DecodedJWT): string | undefined {
@@ -236,7 +236,7 @@ export function userEmail(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Get the user's scopes of a decoded JWT.
- * @param decodedToken Token to read the user id from.
+ * @param decodedToken - Token to read the user id from.
  * @returns The user id if available.
  */
 export function userScopes(decodedToken: DecodedJWT): Scope[] | [] {
@@ -248,7 +248,7 @@ export function userScopes(decodedToken: DecodedJWT): Scope[] | [] {
 
 /**
  * Get the tenant id of a decoded JWT.
- * @param decodedToken Token to read the tenant id from.
+ * @param decodedToken - Token to read the tenant id from.
  * @returns The tenant id if available.
  */
 export function tenantId(decodedToken: DecodedJWT): string | undefined {
@@ -257,7 +257,7 @@ export function tenantId(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Extracts the custom attributes in the JWT
- * @param decodedToken Token to read the custom attributes
+ * @param decodedToken - Token to read the custom attributes
  * @returns custom attributes added by the xsuaa to the issued JWT.
  */
 export function customAttributes(decodedToken: DecodedJWT): Map<string, string[]> {
@@ -269,7 +269,7 @@ export function customAttributes(decodedToken: DecodedJWT): Map<string, string[]
 
 /**
  * Get the tenant name of a decoded JWT.
- * @param decodedToken Token to read the tenant id from.
+ * @param decodedToken - Token to read the tenant id from.
  * @returns The tenant id if available.
  */
 export function tenantName(decodedToken: DecodedJWT): string | undefined {
@@ -282,7 +282,7 @@ export function tenantName(decodedToken: DecodedJWT): string | undefined {
 
 /**
  * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
- * @param decodedToken Token to retrieve the audiences from.
+ * @param decodedToken - Token to retrieve the audiences from.
  * @returns A set of audiences.
  */
 // Comments taken from the Java SDK implementation
@@ -321,7 +321,7 @@ function audiencesFromScope(decodedToken: DecodedJWT): string[] {
 
 /**
  * Wraps the access token in header's authorization.
- * @param token Token to attach in request header
+ * @param token - Token to attach in request header
  * @returns The request header that holds the access token
  */
 export function wrapJwtInHeader(token: string): AxiosRequestConfig {
@@ -367,9 +367,9 @@ export type JwtKeyMapping<TypescriptKeys, JwtKeys> = {
 
 /**
  * Checks if a given key is in the decoded JWT. If not an error is raised
- * @param key: of the representation in typescript
- * @param mapping: between the typescript keys and the JWT key
- * @param decodedJWT: token on which the check is done
+ * @param key -: of the representation in typescript
+ * @param mapping -: between the typescript keys and the JWT key
+ * @param decodedJWT -: token on which the check is done
  * @exception Error is thrown if the key is not present.
  */
 export function checkMandatoryValue<TypeScriptKeys, JwtKeys>(

@@ -109,7 +109,7 @@ export interface TestComplexType {
 export declare function createTestComplexType_1(json: any): TestComplexType;
 /**
  * TestComplexTypeField
- * @typeparam EntityT Type of the entity the complex type field belongs to.
+ * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
   /**

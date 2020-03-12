@@ -10,7 +10,7 @@ import { ClientCredentials, ClientCredentialsResponse } from './xsuaa-service-ty
 /**
  * Retrieves an access token required for "OAuth2ClientCredentials" destination authentication type.
  *
- * @param destination A destination having `OAuth2ClientCredentials` authentication type
+ * @param destination - A destination having `OAuth2ClientCredentials` authentication type
  * @returns A promise returning the requested access token on success.
  */
 export async function getOAuth2ClientCredentialsToken(destination: Destination): Promise<ClientCredentialsResponse> {

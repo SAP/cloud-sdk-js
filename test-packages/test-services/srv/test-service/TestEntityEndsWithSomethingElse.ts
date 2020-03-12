@@ -46,7 +46,7 @@ export class TestEntityEndsWithSomethingElse extends Entity implements TestEntit
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityEndsWithSomethingElse`.
-   * @param fieldName Name of the custom field to select
+   * @param fieldName - Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
   static customField(fieldName: string): CustomField<TestEntityEndsWithSomethingElse> {

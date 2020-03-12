@@ -55,7 +55,7 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
     };
     /**
      * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLvl2MultiLink`.
-     * @param fieldName Name of the custom field to select
+     * @param fieldName - Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
      */
     TestEntityLvl2MultiLink.customField = function (fieldName) {

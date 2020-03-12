@@ -27,7 +27,7 @@ export function functionImportFunction(functionImport: VdmFunctionImport, servic
     docs: [
       [
         `${functionImport.description}\n`,
-        '@param parameters Object containing all parameters for the function import.',
+        '@param parameters - Object containing all parameters for the function import.',
         '@returns A request builder that allows to overwrite some of the values and execute the resultng request.'
       ].join('\n')
     ]

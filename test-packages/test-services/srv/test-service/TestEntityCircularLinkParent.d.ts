@@ -42,7 +42,7 @@ export declare class TestEntityCircularLinkParent extends Entity implements Test
   static requestBuilder(): TestEntityCircularLinkParentRequestBuilder;
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityCircularLinkParent`.
-   * @param fieldName Name of the custom field to select
+   * @param fieldName - Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
    */
   static customField(fieldName: string): CustomField<TestEntityCircularLinkParent>;

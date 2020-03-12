@@ -26,7 +26,7 @@ export function getFunctionDoc(description: string, tags: Partial<{ typeparams: 
 }
 
 export function getComplexTypeFieldDescription(complexType: VdmComplexType): string {
-  return `${complexType.fieldType}\n@typeparam EntityT Type of the entity the complex type field belongs to.`;
+  return `${complexType.fieldType}\n@typeparam EntityT - Type of the entity the complex type field belongs to.`;
 }
 
 export function getPropertyDescription(property: VdmProperty, constraints: VdmPropertyValueConstraints = { nullable: false }): string {

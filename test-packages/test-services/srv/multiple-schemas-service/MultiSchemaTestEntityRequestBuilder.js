@@ -30,7 +30,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
-     * @param keyProperty Key property. See [[MultiSchemaTestEntity.keyProperty]].
+     * @param keyProperty - Key property. See [[MultiSchemaTestEntity.keyProperty]].
      * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
      */
     MultiSchemaTestEntityRequestBuilder.prototype.getByKey = function (keyProperty) {
@@ -45,7 +45,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for creating a `MultiSchemaTestEntity` entity.
-     * @param entity The entity to be created
+     * @param entity - The entity to be created
      * @returns A request builder for creating requests that create an entity of type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntityRequestBuilder.prototype.create = function (entity) {
@@ -53,7 +53,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for updating an entity of type `MultiSchemaTestEntity`.
-     * @param entity The entity to be updated
+     * @param entity - The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntityRequestBuilder.prototype.update = function (entity) {

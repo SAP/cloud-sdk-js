@@ -13,8 +13,8 @@ import { getVcapService } from './environment-accessor';
  * Throws an error if no services are bound at all, no service with the given name can be found, or the service type is not supported.
  * The last error can be circumvent by using the second parameter to provide a custom function that transforms a service binding to a destination.
  *
- * @param serviceInstanceName The name of the service.
- * @param options Options to customize the behavior of this function.
+ * @param serviceInstanceName - The name of the service.
+ * @param options - Options to customize the behavior of this function.
  * @returns A destination.
  */
 export function destinationForServiceBinding(serviceInstanceName: string, options: DestinationForServiceBindingsOptions = {}): Destination {

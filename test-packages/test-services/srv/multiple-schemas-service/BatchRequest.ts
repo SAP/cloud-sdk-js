@@ -16,7 +16,7 @@ import { MultiSchemaTestEntity } from './index';
 
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.
- * @param requests The requests of the batch
+ * @param requests - The requests of the batch
  * @returns A request builder for batch.
  */
 export function batch(
@@ -27,7 +27,7 @@ export function batch(
 
 /**
  * Change set constructor consists of write operations supported on the Multiple Schemas Service.
- * @param requests The requests of the change set
+ * @param requests - The requests of the change set
  * @returns A change set for batch.
  */
 export function changeset(...requests: WriteMultipleSchemasServiceRequestBuilder[]): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> {

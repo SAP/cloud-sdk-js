@@ -38,7 +38,7 @@ export declare class TestEntityOtherMultiLink extends Entity implements TestEnti
   static requestBuilder(): TestEntityOtherMultiLinkRequestBuilder;
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityOtherMultiLink`.
-   * @param fieldName Name of the custom field to select
+   * @param fieldName - Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
   static customField(fieldName: string): CustomField<TestEntityOtherMultiLink>;

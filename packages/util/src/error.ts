@@ -5,8 +5,8 @@
 /**
  * Creates a new error using the provided message and appends the causes stacktrace to the new error's stacktrace.
  *
- * @param message The message of the new error.
- * @param cause The original error.
+ * @param message - The message of the new error.
+ * @param cause - The original error.
  * @returns A new error instance.
  */
 export function errorWithCause(message: string, cause: Error): Error {

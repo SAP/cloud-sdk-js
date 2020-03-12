@@ -10,8 +10,8 @@ export type DestinationSelectionStrategy = (allDestinations: AllDestinations, de
 /**
  * Constraints the selection to provider destinations.
  *
- * @param allDestinations Retrieved destinations
- * @param destinationName Name of the destination to retrieve
+ * @param allDestinations - Retrieved destinations
+ * @param destinationName - Name of the destination to retrieve
  * @returns the destination to retrieve, returns null if no matched provider destination is found
  */
 export function alwaysProvider(allDestinations: AllDestinations, destinationName: string): Destination | null {
@@ -23,8 +23,8 @@ export function alwaysProvider(allDestinations: AllDestinations, destinationName
 /**
  * Constraints the selection to subscriber destinations.
  *
- * @param allDestinations Retrieved destinations
- * @param destinationName Name of the destination to retrieve
+ * @param allDestinations - Retrieved destinations
+ * @param destinationName - Name of the destination to retrieve
  * @returns the destination to retrieve, returns null if no matched subscriber destination is found
  */
 export function alwaysSubscriber(allDestinations: AllDestinations, destinationName: string): Destination | null {
@@ -38,8 +38,8 @@ export function alwaysSubscriber(allDestinations: AllDestinations, destinationNa
 /**
  * Prioritizes the selection of subscriber destinations.
  *
- * @param allDestinations Retrieved destinations
- * @param destinationName Name of the destination to retrieve
+ * @param allDestinations - Retrieved destinations
+ * @param destinationName - Name of the destination to retrieve
  * @returns the destination to retrieve, returns null if no matched destination is found
  */
 export function subscriberFirst(allDestinations: AllDestinations, destinationName: string): Destination | null {

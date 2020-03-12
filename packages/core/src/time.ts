@@ -14,7 +14,7 @@ export interface Time {
 /**
  * Converts the given time to seconds in positive numerical format.
  *
- * @param time Time to convert.
+ * @param time - Time to convert.
  * @returns number Time in seconds.
  */
 export function timeToSeconds(time: Time): number {
@@ -27,7 +27,7 @@ export function timeToSeconds(time: Time): number {
 /**
  * Converts from seconds to time in HH:MM:SS format.
  *
- * @param n Number of seconds to convert (should be positive).
+ * @param n - Number of seconds to convert (should be positive).
  * @returns Time The converted time from the given number of seconds
  */
 export function secondsToTime(n: number): Time {

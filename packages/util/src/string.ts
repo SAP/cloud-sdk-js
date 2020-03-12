@@ -5,7 +5,7 @@
 /**
  * Encodes the given string in base64.
  *
- * @param str Input string.
+ * @param str - Input string.
  * @returns Base64 string.
  */
 export function encodeBase64(str: string): string {

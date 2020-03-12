@@ -12,7 +12,7 @@ import { ODataRequestConfig } from './odata-request-config';
 /**
  * OData create request configuration for an entity type.
  *
- * @typeparam EntityT Type of the entity to setup a request for
+ * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataCreateRequestConfig<EntityT extends Entity> extends ODataRequestConfig {
   /**
@@ -26,7 +26,7 @@ export class ODataCreateRequestConfig<EntityT extends Entity> extends ODataReque
 
   /**
    * Creates an instance of ODataRequest.
-   * @param _entityConstructor Constructor type of the entity to create a configuration for
+   * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
     super('post', _entityConstructor._defaultServicePath);

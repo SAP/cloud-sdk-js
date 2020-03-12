@@ -19,7 +19,7 @@ import { Field } from './field';
  *
  * See also: [[Selectable]]
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export abstract class ComplexTypeField<EntityT extends Entity> extends Field<EntityT> {
   /**
@@ -35,8 +35,8 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
   /**
    * Creates an instance of ComplexTypeField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param fieldOf If the complex field is on root level of entity it is the entity otherwise the parent complex field
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param fieldOf - If the complex field is on root level of entity it is the entity otherwise the parent complex field
    */
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
   /**
@@ -44,9 +44,9 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<Ent
    *
    * Creates an instance of ComplexTypeField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param entityConstructor Constructor type of the entity the field belongs to
-   * @param complexTypeName Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param entityConstructor - Constructor type of the entity the field belongs to
+   * @param complexTypeName - Type of the field according to the metadata description
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, complexTypeName: string);
 
@@ -69,7 +69,7 @@ export type ConstructorOrField<EntityT extends Entity> = Constructable<EntityT> 
 
 /**
  * Convenience method to return the entity constructor in the complex extensions of the normal fields e.g. ComplexTypeStringPropertyField
- * @param arg Contains either the entity containing the complex field or a complex field in case of nested fields.
+ * @param arg - Contains either the entity containing the complex field or a complex field in case of nested fields.
  * @returns Constructable
  */
 export function getEntityConstructor<EntityT extends Entity>(arg: Constructable<EntityT> | ComplexTypeField<EntityT>): Constructable<EntityT> {
@@ -78,8 +78,8 @@ export function getEntityConstructor<EntityT extends Entity>(arg: Constructable<
 
 /**
  * Convenience method to return the EDM type for the overloaed constructor e.g. ComplexTypeStringPropertyField
- * @param arg1 Contains either the type name or the EdmType
- * @param arg2 Contains either the EdmType or undefined
+ * @param arg1 - Contains either the type name or the EdmType
+ * @param arg2 - Contains either the EdmType or undefined
  * @returns EdmType
  */
 export function getEdmType(arg1: string | EdmType, arg2: EdmType | undefined): EdmType {

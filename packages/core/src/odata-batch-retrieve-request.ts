@@ -18,7 +18,7 @@ import { GetAllRequestBuilder, GetByKeyRequestBuilder } from './request-builder'
  *
  *
  * *** example ends ***
- * @param requestBuilder The request builder of the retrieve request.
+ * @param requestBuilder - The request builder of the retrieve request.
  * @returns The request body.
  */
 export function toBatchRetrieveBody(requestBuilder: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>): string {

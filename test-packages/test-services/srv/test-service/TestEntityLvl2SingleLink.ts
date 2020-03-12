@@ -68,7 +68,7 @@ export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2Si
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLvl2SingleLink`.
-   * @param fieldName Name of the custom field to select
+   * @param fieldName - Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
    */
   static customField(fieldName: string): CustomField<TestEntityLvl2SingleLink> {

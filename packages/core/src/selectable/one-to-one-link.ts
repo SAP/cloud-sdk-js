@@ -10,16 +10,16 @@ import { Link } from './link';
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.
  *
- * @typeparam EntityT Type of the entity to be linked from
- * @typeparam LinkedEntityT Type of the entity to be linked to
+ * @typeparam EntityT - Type of the entity to be linked from
+ * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
 export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> extends Link<EntityT, LinkedEntityT> {
   /**
    * Create a new one to one link based on a given link.
    *
-   * @typeparam EntityT Type of the entity to be linked from
-   * @typeparam LinkedEntityT Type of the entity to be linked to
-   * @param link Link to be cloned
+   * @typeparam EntityT - Type of the entity to be linked from
+   * @typeparam LinkedEntityT - Type of the entity to be linked to
+   * @param link - Link to be cloned
    * @returns Newly created link
    */
   static clone<EntityT extends Entity, LinkedEntityT extends Entity>(
@@ -52,7 +52,7 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
    *  .getAll()
    *  .orderBy(Entity.TO_LINKED_ENTITY.orderBy(asc(LinkedEntity.PROPERTY1), desc(LinkedEntity.PROPERTY2)));
    * ```
-   * @param orderBy Criteria to order by
+   * @param orderBy - Criteria to order by
    * @returns Newly created order link
    */
   orderBy(...orderBy: Orderable<LinkedEntityT>[]): OrderLink<EntityT, LinkedEntityT> {
@@ -62,7 +62,7 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
   /**
    * Create filter statements to be applied to the OData request based on the linked entity values.
    *
-   * @param filters Filters based on the linked entity
+   * @param filters - Filters based on the linked entity
    * @returns Newly created Filterlink
    */
   filter(...filters: Filterable<LinkedEntityT>[]): FilterLink<EntityT, LinkedEntityT> {

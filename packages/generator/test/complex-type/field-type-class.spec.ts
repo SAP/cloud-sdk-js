@@ -31,7 +31,7 @@ describe('field-type-class', () => {
           ]
         }
       ],
-      docs: ['ComplexMealField\n@typeparam EntityT Type of the entity the complex type field belongs to.']
+      docs: ['ComplexMealField\n@typeparam EntityT - Type of the entity the complex type field belongs to.']
     });
   });
 
@@ -62,7 +62,7 @@ describe('field-type-class', () => {
           ]
         }
       ],
-      docs: ['ComplexMealWithDesertField\n@typeparam EntityT Type of the entity the complex type field belongs to.']
+      docs: ['ComplexMealWithDesertField\n@typeparam EntityT - Type of the entity the complex type field belongs to.']
     });
   });
 });

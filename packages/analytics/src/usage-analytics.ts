@@ -28,8 +28,8 @@ const defaultOptions = { useSalt: true, uri: defaultURI, idsitesub: defaultParam
  * Get and send development environment data based on the context of the given caller path using the given options.
  * The callerPath is necessary to determine whether usage analytics data will be sent or not.
  *
- * @param callerPath Abolute path of the script from which the function is called
- * @param options Usage analytic options
+ * @param callerPath - Abolute path of the script from which the function is called
+ * @param options - Usage analytic options
  * @hidden
  */
 export async function performUsageAnalytics(callerPath: string, options: UsageAnalyticsOptions = {}) {
@@ -55,9 +55,9 @@ export async function performUsageAnalytics(callerPath: string, options: UsageAn
  * Sends development environment data to SAP Web Analytic.
  * For detailed information, check https://github.com/SAP/cloud-sdk-cli/blob/master/usage-analytics.md
  *
- * @param config Configuration for web analytics.
- * @param data Data to be sent.
- * @param options Analytics options
+ * @param config - Configuration for web analytics.
+ * @param data - Data to be sent.
+ * @param options - Analytics options
  * @returns A promise to the response of the request
  * @hidden
  */
@@ -80,7 +80,7 @@ export async function sendAnalyticsData(
 /**
  * Creates SAP Web Analytics regular parameters.
  *
- * @param options Request options
+ * @param options - Request options
  * @returns SAP Web Analytics regular parameters
  * @hidden
  */
@@ -137,7 +137,7 @@ function calledFromCentralDependency(callerPath: string): boolean {
  *
  * Notice: Properties order of the passed parameters is relevant in determining the values of the mapped object.
  *
- * @param params User data
+ * @param params - User data
  * @returns SAP Web Analytics custom parameters
  * @hidden
  */

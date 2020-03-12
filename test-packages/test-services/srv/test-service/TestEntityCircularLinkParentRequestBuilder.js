@@ -30,7 +30,7 @@ var TestEntityCircularLinkParentRequestBuilder = /** @class */ (function (_super
     }
     /**
      * Returns a request builder for retrieving one `TestEntityCircularLinkParent` entity based on its keys.
-     * @param keyProperty Key property. See [[TestEntityCircularLinkParent.keyProperty]].
+     * @param keyProperty - Key property. See [[TestEntityCircularLinkParent.keyProperty]].
      * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkParent` entity based on its keys.
      */
     TestEntityCircularLinkParentRequestBuilder.prototype.getByKey = function (keyProperty) {
@@ -45,7 +45,7 @@ var TestEntityCircularLinkParentRequestBuilder = /** @class */ (function (_super
     };
     /**
      * Returns a request builder for creating a `TestEntityCircularLinkParent` entity.
-     * @param entity The entity to be created
+     * @param entity - The entity to be created
      * @returns A request builder for creating requests that create an entity of type `TestEntityCircularLinkParent`.
      */
     TestEntityCircularLinkParentRequestBuilder.prototype.create = function (entity) {
@@ -53,7 +53,7 @@ var TestEntityCircularLinkParentRequestBuilder = /** @class */ (function (_super
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityCircularLinkParent`.
-     * @param entity The entity to be updated
+     * @param entity - The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `TestEntityCircularLinkParent`.
      */
     TestEntityCircularLinkParentRequestBuilder.prototype.update = function (entity) {

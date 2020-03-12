@@ -11,7 +11,7 @@ describe('function', () => {
       parameters: [{ name: 'parameters', type: 'Params' }],
       returnType: 'FunctionImportRequestBuilder<Params, string>',
       docs: [
-        'order a breakfast\n\n@param parameters Object containing all parameters for the function import.\n@returns A request builder that allows to overwrite some of the values and execute the resultng request.'
+        'order a breakfast\n\n@param parameters - Object containing all parameters for the function import.\n@returns A request builder that allows to overwrite some of the values and execute the resultng request.'
       ],
       isExported: true,
       statements:

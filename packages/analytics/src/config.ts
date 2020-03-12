@@ -18,8 +18,8 @@ export const configFileName = 'sap-cloud-sdk-analytics.json';
 
 /**
  * Write the given configuration to the given path.
- * @param config Config to be written
- * @param path Path to write the config to. Defaults to the result of [[findConfigPath]]
+ * @param config - Config to be written
+ * @param path - Path to write the config to. Defaults to the result of [[findConfigPath]]
  * @hidden
  */
 export function writeConfig(config: UsageAnalyticsProjectConfig, path?: string) {
@@ -43,7 +43,7 @@ export function findConfigPath(): string | undefined {
 
 /**
  * Create configuration and write to the given path.
- * @param path Path to the directory in which a new config file should be generated.
+ * @param path - Path to the directory in which a new config file should be generated.
  * @hidden
  */
 export function generateConfig(path: string): void {
@@ -58,7 +58,7 @@ export function generateConfig(path: string): void {
 /**
  * Validates the given config and updates it if necessary.
  *
- * @param config The config to validate
+ * @param config - The config to validate
  * @returns The config in a valid state.
  * @hidden
  */

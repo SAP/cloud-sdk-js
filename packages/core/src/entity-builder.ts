@@ -27,7 +27,7 @@ export class EntityBuilder<EntityT extends Entity, JsonT> {
   /**
    * Sets the custom fields for the entity.
    *
-   * @param customFields: The custom fields you want to add.
+   * @param customFields -: The custom fields you want to add.
    * @returns Itself for method chaining
    */
   public withCustomFields(customFields: MapType<any>): this {
@@ -51,7 +51,7 @@ export class EntityBuilder<EntityT extends Entity, JsonT> {
    * Builds an entity from JSON representation.
    * If you have obtained the JSON as a request payload use the [[deserializeEntity]] methods.
    * Note that fields not mappable to a field in the target entity are silently ignored.
-   * @param json: Representation of the entity in JSON format.
+   * @param json -: Representation of the entity in JSON format.
    * @returns Entity constructed from JSON representation.
    */
   public fromJson(json: Partial<JsonT>): EntityT {

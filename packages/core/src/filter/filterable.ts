@@ -11,7 +11,7 @@ import { FilterList } from './filter-list';
 /**
  * A union of all types that can be used for filtering.
  *
- * @typeparam EntityT Type of the entity to be filtered on
+ * @typeparam EntityT - Type of the entity to be filtered on
  */
 export type Filterable<EntityT extends Entity> = Filter<EntityT, FieldType> | FilterLink<EntityT, any> | FilterList<EntityT>;
 
@@ -32,8 +32,8 @@ export type Filterable<EntityT extends Entity> = Filter<EntityT, FieldType> | Fi
  *  .filter(filterExp1, filterExp2);
  * ```
  *
- * @typeparam EntityT Type of the entity to be filtered on
- * @param expressions Filterables to be combined with logical `and`
+ * @typeparam EntityT - Type of the entity to be filtered on
+ * @param expressions - Filterables to be combined with logical `and`
  * @returns The newly created FilterList
  */
 export function and<EntityT extends Entity>(...expressions: Filterable<EntityT>[]): FilterList<EntityT> {
@@ -50,8 +50,8 @@ export function and<EntityT extends Entity>(...expressions: Filterable<EntityT>[
  *  .filter(or(filterExp1, filterExp2));
  * ```
  *
- * @typeparam EntityT Type of the entity to be filtered on
- * @param expressions Filterables to be combined with logical `or`
+ * @typeparam EntityT - Type of the entity to be filtered on
+ * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
  */
 export function or<EntityT extends Entity>(...expressions: Filterable<EntityT>[]): FilterList<EntityT> {

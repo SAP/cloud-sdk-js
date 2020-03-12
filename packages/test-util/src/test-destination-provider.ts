@@ -72,8 +72,8 @@ const formatCredentials = `Format of credentials.json is:
  * the JSON is malformed or one of the supplied paths is invalid.
  * Does not throw an error when no credentials.json can be found, but will print a warning.
  *
- * @param alias The alias identifying the destination
- * @param options References to the `systems.json` and `credentials.json` files
+ * @param alias - The alias identifying the destination
+ * @param options - References to the `systems.json` and `credentials.json` files
  * @returns An array of destinations
  */
 export function getTestDestinationByAlias(alias: string, options?: GetTestDestinationOptions): Destination {
@@ -100,7 +100,7 @@ export function getTestDestinationByAlias(alias: string, options?: GetTestDestin
  * Throws an error when no systems.json can be found, the JSON is malformed or one of the supplied paths is invalid.
  * Does not throw an error when no credentials.json can be found, but will print a warning.
  *
- * @param options References to the `systems.json` and `credentials.json` files
+ * @param options - References to the `systems.json` and `credentials.json` files
  * @returns An array of destinations
  */
 export function getTestDestinations(options?: GetTestDestinationOptions): Destination[] {

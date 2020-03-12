@@ -19,7 +19,7 @@ const logger = createLogger({
  * If the destination contains a proxy configuration, the agent will be a proxy-agent.
  * If not it will be the default http-agent coming from node.
  *
- * @param destination determining which kind of configuration is returned
+ * @param destination - determining which kind of configuration is returned
  * @returns The http or http-agent configuration.
  */
 export function getAgentConfig(destination: Destination): HttpAgentConfig | HttpsAgentConfig {
@@ -130,7 +130,7 @@ function createDefaultAgent(destination: Destination): HttpAgentConfig | HttpsAg
 /**
  * Extracts the http protocol from the destination url. The default value is http if no protocol is given.
  *
- * @param destination URL of this destination is parsed
+ * @param destination - URL of this destination is parsed
  * @throws Error in case a unsupported protocol is given in the destination URL like rfc://example.com.
  * @returns The protocol either https or http.
  */
@@ -153,7 +153,7 @@ export function getProtocolOrDefault(destination: Destination): Protocol {
  * @deprecated Since v1.5.1. use getProtocolOrDefault instead
  * Takes the destination URL and return everything before the '://'.
  *
- * @param destination URL of this destination is parsed
+ * @param destination - URL of this destination is parsed
  * @returns The protocol either undefined if no :// is found or anything before the delimiter.
  */
 export function getUrlProtocol(destination: Destination): Protocol | undefined {

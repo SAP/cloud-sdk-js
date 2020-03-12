@@ -89,7 +89,7 @@ export class Entity {
   /**
    * Custom field value getter.
    *
-   * @param fieldName The name of the custom field
+   * @param fieldName - The name of the custom field
    * @returns {any} The value of the corresponding custom field
    */
   getCustomField(fieldName: string): any {
@@ -100,8 +100,8 @@ export class Entity {
    * Sets a new custom field in the entity or updates it.
    * Throws an error, if the provided custom field name is already defined by an original field in entity.
    *
-   * @param fieldName The name of the custom field to update
-   * @param value The value of the field
+   * @param fieldName - The name of the custom field to update
+   * @param value - The value of the field
    * @returns {this} The entity itself, to facilitate method chaining
    */
   setCustomField(fieldName: string, value: any): this {
@@ -117,7 +117,7 @@ export class Entity {
   /**
    * Validates whether a custom field exists in the entity.
    *
-   * @param fieldName The name of the custom field to update
+   * @param fieldName - The name of the custom field to update
    * @returns {boolean} A boolean value, that indicates whether a custom field is defined in entity
    */
   hasCustomField(fieldName: string): boolean {
@@ -127,7 +127,7 @@ export class Entity {
   /**
    * Sets all retrieved custom fields in entity.
    *
-   * @param customFields Extracted custom fields from a retrieved entity
+   * @param customFields - Extracted custom fields from a retrieved entity
    * @returns {this} A boolean value, that indicates the existence of the field in entity
    */
   initializeCustomFields(customFields: MapType<any>): this {
@@ -140,7 +140,7 @@ export class Entity {
   /**
    * Set the ETag version identifier of the retrieved entity.
    *
-   * @param etag The returned ETag version of the entity
+   * @param etag - The returned ETag version of the entity
    * @returns {this} The entity itself, to facilitate method chaining
    */
   public setVersionIdentifier(etag: string | undefined): this {
@@ -157,7 +157,7 @@ export class Entity {
    * This function should be called after [[initializeCustomFields]], if custom fields are defined.
    *
    * @deprecated Since 1.12.0. Will be removed in version 2.0.
-   * @param state State to be set as remote state
+   * @param state - State to be set as remote state
    * @returns {this} The entity itself, to facilitate method chaining
    */
   public setOrInitializeRemoteState(state?: MapType<any>): this {
@@ -232,7 +232,7 @@ export class Entity {
   /**
    * Validates whether a field name does not conflict with an original field name and thus can be defined as custom fields.
    *
-   * @param customFieldName Field name to check
+   * @param customFieldName - Field name to check
    * @returns {boolean} Boolean value that describes whether a field name can be defined as custom field
    */
   protected isConflictingCustomField(customFieldName: string): boolean {

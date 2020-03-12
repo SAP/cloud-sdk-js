@@ -17,7 +17,7 @@ export function randomSalt(): string {
 
 /**
  * Create a hash for the given value.
- * @param value The value to hash.
+ * @param value - The value to hash.
  * @returns The hashed value.
  * @hidden
  */

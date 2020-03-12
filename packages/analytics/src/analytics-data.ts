@@ -15,7 +15,7 @@ const sdkModulePrefix = '@sap';
 /**
  * Collects insensitive data for SAP Web Analytics.
  * For details, check the following blog post: https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/
- * @param config Usage analytics config of the given project
+ * @param config - Usage analytics config of the given project
  * @returns An object that includes information on project development environment
  * @hidden
  */

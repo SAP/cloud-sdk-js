@@ -14,9 +14,9 @@ import { toStaticPropertyFormat } from '../../util';
 /**
  * Get an object containing the given filter as query parameter, or an empty object if none was given.
  *
- * @typeparam EntityT Type of the entity to filter on
- * @param filter The filter to transform to a query parameter
- * @param entityConstructor Constructor type of the entity to filter on
+ * @typeparam EntityT - Type of the entity to filter on
+ * @param filter - The filter to transform to a query parameter
+ * @param entityConstructor - Constructor type of the entity to filter on
  * @returns {Partial<{ filter: string; }>} An object containing the query parameter or an empty object
  */
 export function getQueryParametersForFilter<EntityT extends Entity>(

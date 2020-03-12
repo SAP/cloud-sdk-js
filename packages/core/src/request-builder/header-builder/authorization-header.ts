@@ -15,8 +15,8 @@ const logger = createLogger({
 /**
  * Adds authorization headers for a given ODataRequest to existing headers.
  *
- * @param request an ODataRequest.
- * @param headers The headers that should be added to.
+ * @param request - an ODataRequest.
+ * @param headers - The headers that should be added to.
  * @returns The provided headers with the new authorization headers.
  */
 export function addAuthorizationHeader<RequestT extends ODataRequestConfig>(
@@ -38,8 +38,8 @@ export function addAuthorizationHeader<RequestT extends ODataRequestConfig>(
 /**
  * Adds authorization headers for a given destination to existing headers.
  *
- * @param destination A destination.
- * @param headers The headers that should be added to.
+ * @param destination - A destination.
+ * @param headers - The headers that should be added to.
  * @returns The provided headers with the new authorization headers.
  */
 export const buildAndAddAuthorizationHeader = (destination: Destination) => (headers: MapType<any>): Promise<MapType<string>> => {

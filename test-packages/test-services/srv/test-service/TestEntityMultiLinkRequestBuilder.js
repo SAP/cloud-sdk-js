@@ -30,7 +30,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
-     * @param keyProperty Key property. See [[TestEntityMultiLink.keyProperty]].
+     * @param keyProperty - Key property. See [[TestEntityMultiLink.keyProperty]].
      * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
      */
     TestEntityMultiLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
@@ -45,7 +45,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for creating a `TestEntityMultiLink` entity.
-     * @param entity The entity to be created
+     * @param entity - The entity to be created
      * @returns A request builder for creating requests that create an entity of type `TestEntityMultiLink`.
      */
     TestEntityMultiLinkRequestBuilder.prototype.create = function (entity) {
@@ -53,7 +53,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityMultiLink`.
-     * @param entity The entity to be updated
+     * @param entity - The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `TestEntityMultiLink`.
      */
     TestEntityMultiLinkRequestBuilder.prototype.update = function (entity) {

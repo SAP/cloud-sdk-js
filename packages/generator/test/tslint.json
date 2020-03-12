@@ -1,7 +1,0 @@
-{
-  "extends": ["../../../tslint.json"],
-  "rules": {
-    "file-header": false,
-    "no-object-literal-type-assertion": false
-  }
-}

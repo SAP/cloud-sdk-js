@@ -27,9 +27,7 @@
     "prepare": "npm run compile",
     "test": "npx jest --coverage --runInBand",
     "test:local": "npx jest --config ./jest-local.json",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
-    "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
-    "tslint:fix": "npm run tslint -- --fix"
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json"
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.18.0",
@@ -40,7 +38,6 @@
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "ts-jest": "^25.2.1",
-    "tslint": "6.0.0",
     "typescript": "3.7.4"
   }
 }

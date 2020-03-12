@@ -37,6 +37,28 @@ release-date: March 12, 2020
 docs: https://help.sap.com/doc/69202ef7e0a64767833782132648b855/1.0/en-US/index.html
 blog: https://blogs.sap.com/?p=1060707
 
+## compatibilityNotes
+
+Some packages of the SAP Cloud SDK for JavaScript has been migrated to [github.com](https://github.com/SAP/cloud-sdk).
+As a result, the packages are also renamed as shown in the table. No breaking changes in the functionality were made. You'll need to update your `package.json` to use the new packages.
+
+| old package name         | new package name         |
+|--------------------------|--------------------------|
+| @sap/cloud-sdk-util      | @sap-cloud-sdk/util      |
+| @sap/cloud-sdk-analytics | @sap-cloud-sdk/analytics |
+| @sap/cloud-sdk-core      | @sap-cloud-sdk/core      |
+| @sap/cloud-sdk-generator | @sap-cloud-sdk/generator |
+| @sap/cloud-sdk-test-util | @sap-cloud-sdk/test-util |
+
+##### How to update your project
+1. Search for all `dependencies`, `devDependencies`, `peerDependencies` in your `package.json`.
+2. Replace the old package name (e.g. `@sap/cloud-sdk-core`) with new one (e.g. `@sap-cloud-sdk/core`).
+3. Use a stable version of the open source package (e.g. `^1.18.0`).
+4. Install your dependencies again to reflect the changes (e.g., `npm i`).
+5. Search for your source code for uses of the old packages (e.g. `require()` and replace them with new names.
+
+Note that the old packages can remain in your `node_modules` subdirectory after installing the new dependencies. To make sure that your source code includes the new version, it is recommended to delete the old packages from `node_modules`.
+
 ## improvements
 
 - Allow the definition of a custom version for the gerated `package.json` by passing the desired version to the generator as an argument `versionInPackageJson`.

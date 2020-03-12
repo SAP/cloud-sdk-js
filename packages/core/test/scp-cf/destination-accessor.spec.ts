@@ -14,7 +14,7 @@ import {
 import { getDestination, getDestinationFromDestinationService, useOrFetchDestination } from '../../src/scp-cf/destination-accessor';
 import { AuthenticationType } from '../../src/scp-cf/destination-service-types';
 import * as sdkJwt from '../../src/util/jwt';
-// If I combined them, tslint would also complain
+// When combined, lint also complains
 /* eslint-disable-next-line no-duplicate-imports */
 import { decodeJwt } from '../../src/util/jwt';
 import { mockInstanceDestinationsCall, mockSingleDestinationCall, mockSubaccountDestinationsCall } from '../test-util/destination-service-mocks';

@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { packageJson } from '../../src/aggregator-package';
 
 describe('package-json', () => {

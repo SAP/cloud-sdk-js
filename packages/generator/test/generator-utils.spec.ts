@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
   cloudSdkVdmHack,
   edmToTsType,
@@ -113,7 +114,7 @@ describe('edmToTsType', () => {
 describe('ensureString', () => {
   it('returns string for whatever passed type', () => {
     expect(typeof ensureString('test')).toBe('string');
-    expect(typeof ensureString({ anyNumber: 1234, anyObject: {}, anyString: 'abcd' })).toBe('string'); // this returns [object Object]
+    expect(typeof ensureString({ anyNumber: 1234, anyObject: {}, anyString: 'abcd' })).toBe('string'); // This returns [object Object]
     expect(typeof ensureString(1234)).toBe('string');
     expect(typeof ensureString(undefined)).toBe('string');
     expect(typeof ensureString(null)).toBe('string');

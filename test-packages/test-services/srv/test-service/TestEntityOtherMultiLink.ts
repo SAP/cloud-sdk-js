@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -46,7 +46,7 @@ export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherM
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityOtherMultiLink`.
-   * @param fieldName - Name of the custom field to select
+   * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
   static customField(fieldName: string): CustomField<TestEntityOtherMultiLink> {
@@ -75,15 +75,13 @@ export namespace TestEntityOtherMultiLink {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntityOtherMultiLink> = new StringField(
-    'KeyPropertyString',
-    TestEntityOtherMultiLink,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY_STRING: StringField<TestEntityOtherMultiLink> = new StringField('KeyPropertyString', TestEntityOtherMultiLink, 'Edm.String');
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
-  export const _allFields: Array<StringField<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
+  export const _allFields: Array<StringField<TestEntityOtherMultiLink>> = [
+    TestEntityOtherMultiLink.KEY_PROPERTY_STRING
+  ];
   /**
    * All fields selector.
    */
@@ -95,11 +93,8 @@ export namespace TestEntityOtherMultiLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityOtherMultiLink> } = TestEntityOtherMultiLink._keyFields.reduce(
-    (acc: { [keys: string]: Selectable<TestEntityOtherMultiLink> }, field: Selectable<TestEntityOtherMultiLink>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Selectable<TestEntityOtherMultiLink> } = TestEntityOtherMultiLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityOtherMultiLink> }, field: Selectable<TestEntityOtherMultiLink>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

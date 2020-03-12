@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -6,20 +6,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import {
-  ComplexTypeBigNumberPropertyField,
-  ComplexTypeBooleanPropertyField,
-  ComplexTypeDatePropertyField,
-  ComplexTypeField,
-  ComplexTypeNumberPropertyField,
-  ComplexTypeStringPropertyField,
-  ComplexTypeTimePropertyField,
-  Entity,
-  FieldType,
-  Time,
-  createComplexType,
-  edmToTs
-} from '@sap-cloud-sdk/core';
+import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, Entity, FieldType, Time, createComplexType, edmToTs } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexType
@@ -183,11 +170,7 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField(
-    'DateTimeOffSetProperty',
-    this,
-    'Edm.DateTimeOffset'
-  );
+  dateTimeOffSetProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField('DateTimeOffSetProperty', this, 'Edm.DateTimeOffset');
   /**
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

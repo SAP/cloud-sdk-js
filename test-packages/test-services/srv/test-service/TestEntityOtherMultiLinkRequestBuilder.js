@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -30,7 +30,7 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `TestEntityOtherMultiLink` entity based on its keys.
-     * @param keyPropertyString - Key property. See [[TestEntityOtherMultiLink.keyPropertyString]].
+     * @param keyPropertyString Key property. See [[TestEntityOtherMultiLink.keyPropertyString]].
      * @returns A request builder for creating requests to retrieve one `TestEntityOtherMultiLink` entity based on its keys.
      */
     TestEntityOtherMultiLinkRequestBuilder.prototype.getByKey = function (keyPropertyString) {
@@ -45,7 +45,7 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for creating a `TestEntityOtherMultiLink` entity.
-     * @param entity - The entity to be created
+     * @param entity The entity to be created
      * @returns A request builder for creating requests that create an entity of type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLinkRequestBuilder.prototype.create = function (entity) {
@@ -53,7 +53,7 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityOtherMultiLink`.
-     * @param entity - The entity to be updated
+     * @param entity The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLinkRequestBuilder.prototype.update = function (entity) {

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { FunctionDeclarationStructure, NamespaceDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmComplexType, VdmProperty } from '../vdm-types';

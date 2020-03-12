@@ -24,7 +24,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -55,7 +55,7 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
     };
     /**
      * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLvl2SingleLink`.
-     * @param fieldName - Name of the custom field to select
+     * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
      */
     TestEntityLvl2SingleLink.customField = function (fieldName) {

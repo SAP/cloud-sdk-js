@@ -2,18 +2,41 @@ module.exports = {
     "env": {},
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "tsconfig.json",
+        "project": {
+            "extends": "tsconfig.json",
+            "include": [
+              "**/*.ts"
+            ],
+            "exclude": [
+                "**/*.d.ts",
+                "**/dist/**/*",
+                "**/node_modules/**/*",
+                "test-packages/test-services/**/*",
+                "packages/core/test/test-util/test-services/**/*"
+            ]
+        },
         "sourceType": "module"
     },
     "ignorePatterns": [
         "dist",
-        "packages/core/test/test-util/test-services"
+        "node_modules",
+        "packages/core/test/test-util/test-services",
+        "test-packages/test-services"
     ],
     "plugins": [
         "@typescript-eslint",
         "header",
         "import",
         "prettier"
+    ],
+    "overrides": [
+        {
+            "files": ["**/test/**/*"],
+            "rules": {
+                "import/no-internal-modules": "off",
+                "no-unused-expressions": "off"
+            }
+        }
     ],
     "rules": {
         "@typescript-eslint/adjacent-overload-signatures": "error",

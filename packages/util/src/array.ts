@@ -1,13 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
-
-/**
- * Flatten a multidimensional array
- * @param arr - Multidimensional array to be flattened
- *
- * @returns Flattened array
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 export function flat<T>(arr: T[][]): T[] {
   return arr.reduce((flattened, subArr) => {
     flattened = [...flattened, ...subArr];

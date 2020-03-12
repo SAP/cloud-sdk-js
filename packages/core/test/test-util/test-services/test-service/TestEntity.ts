@@ -1,24 +1,13 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+/*
+ * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import {
-  AllFields,
-  BigNumberField,
-  BooleanField,
-  CustomField,
-  DateField,
-  Entity,
-  EntityBuilderType,
-  Link,
-  NumberField,
-  OneToOneLink,
-  Selectable,
-  StringField,
-  Time,
-  TimeField
-} from '../../../../src';
-import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
+import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField, Time, TimeField } from '../../../../src';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -157,7 +146,7 @@ export class TestEntity extends Entity implements TestEntityType {
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntity`.
-   * @param fieldName - Name of the custom field to select
+   * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   static customField(fieldName: string): CustomField<TestEntity> {
@@ -334,18 +323,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: (
-    | StringField<TestEntity>
-    | BooleanField<TestEntity>
-    | NumberField<TestEntity>
-    | BigNumberField<TestEntity>
-    | TimeField<TestEntity>
-    | DateField<TestEntity>
-    | TestComplexTypeField<TestEntity>
-    | Link<TestEntity, TestEntityMultiLink>
-    | Link<TestEntity, TestEntityOtherMultiLink>
-    | OneToOneLink<TestEntity, TestEntitySingleLink>
-  )[] = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | Link<TestEntity, TestEntityMultiLink> | Link<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -375,15 +353,12 @@ export namespace TestEntity {
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Selectable<TestEntity>[] = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Selectable<TestEntity>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntity> } = TestEntity._keyFields.reduce(
-    (acc: { [keys: string]: Selectable<TestEntity> }, field: Selectable<TestEntity>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Selectable<TestEntity> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntity> }, field: Selectable<TestEntity>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

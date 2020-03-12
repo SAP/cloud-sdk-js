@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -30,8 +30,8 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-     * @param keyPropertyGuid - Key property. See [[TestEntity.keyPropertyGuid]].
-     * @param keyPropertyString - Key property. See [[TestEntity.keyPropertyString]].
+     * @param keyPropertyGuid Key property. See [[TestEntity.keyPropertyGuid]].
+     * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
      * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
      */
     TestEntityRequestBuilder.prototype.getByKey = function (keyPropertyGuid, keyPropertyString) {
@@ -49,7 +49,7 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for creating a `TestEntity` entity.
-     * @param entity - The entity to be created
+     * @param entity The entity to be created
      * @returns A request builder for creating requests that create an entity of type `TestEntity`.
      */
     TestEntityRequestBuilder.prototype.create = function (entity) {
@@ -57,7 +57,7 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntity`.
-     * @param entity - The entity to be updated
+     * @param entity The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `TestEntity`.
      */
     TestEntityRequestBuilder.prototype.update = function (entity) {

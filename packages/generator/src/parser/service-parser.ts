@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { createLogger, propertyExists, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
@@ -389,8 +387,8 @@ function joinEntityMetadata(
   swaggerMetaData?: SwaggerMetadata
 ): JoinedEntityMetadata[] {
   return entitySets.map(entitySet => {
-    // we assume metadata files to have a maximum of two schemas currently
-    // so entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
+    // We assume metadata files to have a maximum of two schemas currently
+    // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
     const entityType = entityTypes.find(t => t.Name === entitySet.EntityType.split('.').slice(-1)[0]);
 
     if (!entityType) {

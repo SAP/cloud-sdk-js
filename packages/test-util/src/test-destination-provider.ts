@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Destination } from '@sap-cloud-sdk/core';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join, parse, resolve, sep } from 'path';
+import { Destination } from '@sap-cloud-sdk/core';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'test-util',

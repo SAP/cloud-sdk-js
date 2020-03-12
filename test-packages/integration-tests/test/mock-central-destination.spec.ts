@@ -1,6 +1,7 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { unlinkSync, writeFileSync } from 'fs';
 import { TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 import { mockAllTestDestinations, unmockAllTestDestinations } from '@sap-cloud-sdk/test-util';
-import { unlinkSync, writeFileSync } from 'fs';
 import nock from 'nock';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
 import { basicCredentials } from './test-util/destination-encoder';

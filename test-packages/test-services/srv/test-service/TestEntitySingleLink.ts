@@ -1,21 +1,10 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import {
-  AllFields,
-  BooleanField,
-  CustomField,
-  Entity,
-  EntityBuilderType,
-  Link,
-  NumberField,
-  OneToOneLink,
-  Selectable,
-  StringField
-} from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
@@ -87,7 +76,7 @@ export class TestEntitySingleLink extends Entity implements TestEntitySingleLink
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntitySingleLink`.
-   * @param fieldName - Name of the custom field to select
+   * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
   static customField(fieldName: string): CustomField<TestEntitySingleLink> {
@@ -156,30 +145,16 @@ export namespace TestEntitySingleLink {
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: Link<TestEntitySingleLink, TestEntityLvl2MultiLink> = new Link(
-    'to_MultiLink',
-    TestEntitySingleLink,
-    TestEntityLvl2MultiLink
-  );
+  export const TO_MULTI_LINK: Link<TestEntitySingleLink, TestEntityLvl2MultiLink> = new Link('to_MultiLink', TestEntitySingleLink, TestEntityLvl2MultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_SINGLE_LINK: OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink> = new OneToOneLink(
-    'to_SingleLink',
-    TestEntitySingleLink,
-    TestEntityLvl2SingleLink
-  );
+  export const TO_SINGLE_LINK: OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink> = new OneToOneLink('to_SingleLink', TestEntitySingleLink, TestEntityLvl2SingleLink);
   /**
    * All fields of the TestEntitySingleLink entity.
    */
-  export const _allFields: Array<
-    | StringField<TestEntitySingleLink>
-    | BooleanField<TestEntitySingleLink>
-    | NumberField<TestEntitySingleLink>
-    | Link<TestEntitySingleLink, TestEntityLvl2MultiLink>
-    | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>
-  > = [
+  export const _allFields: Array<StringField<TestEntitySingleLink> | BooleanField<TestEntitySingleLink> | NumberField<TestEntitySingleLink> | Link<TestEntitySingleLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>> = [
     TestEntitySingleLink.KEY_PROPERTY,
     TestEntitySingleLink.STRING_PROPERTY,
     TestEntitySingleLink.BOOLEAN_PROPERTY,
@@ -199,11 +174,8 @@ export namespace TestEntitySingleLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntitySingleLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntitySingleLink> } = TestEntitySingleLink._keyFields.reduce(
-    (acc: { [keys: string]: Selectable<TestEntitySingleLink> }, field: Selectable<TestEntitySingleLink>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Selectable<TestEntitySingleLink> } = TestEntitySingleLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntitySingleLink> }, field: Selectable<TestEntitySingleLink>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

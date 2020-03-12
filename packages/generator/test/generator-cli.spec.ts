@@ -1,7 +1,7 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import execa = require('execa');
-
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(process.cwd(), 'src/generator-cli.ts');

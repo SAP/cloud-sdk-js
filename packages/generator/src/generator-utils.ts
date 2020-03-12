@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EdmType } from '@sap-cloud-sdk/core';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -159,7 +157,7 @@ export function npmCompliantName(name: string): string {
   return pipe(trimToNpmMaxLength, transformIfNecessary)(name);
 }
 
-// we use this function to still be able to generate the "cloud-sdk-vdm" package, even though the prefix + name logic does not allow it normally
+// We use this function to still be able to generate the "cloud-sdk-vdm" package, even though the prefix + name logic does not allow it normally
 export function cloudSdkVdmHack(name: string): string {
   return name === '@sap/cloud-sdk-vdm-' ? name.slice(0, -1) : name;
 }

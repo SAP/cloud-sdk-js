@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { StructureKind } from 'ts-morph';
 import { complexTypeSourceFile } from '../../src/complex-type';
 import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
@@ -26,7 +27,7 @@ describe('file', () => {
     const actual = complexTypeSourceFile(complexMealWithDesert);
     const imports = (actual.statements as any[]).filter(element => element.kind === StructureKind.ImportDeclaration);
 
-    expect(imports.length).toBe(2); // the only deviation with the previous test
+    expect(imports.length).toBe(2); // The only deviation with the previous test
 
     const entities = (actual.statements as any[]).filter(element => element.kind === StructureKind.Class);
 

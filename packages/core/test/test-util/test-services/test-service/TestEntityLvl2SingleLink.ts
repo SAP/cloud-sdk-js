@@ -1,6 +1,10 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '../../../../src';
+/*
+ * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '../../../../src';
 
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
@@ -64,7 +68,7 @@ export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2Si
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLvl2SingleLink`.
-   * @param fieldName - Name of the custom field to select
+   * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
    */
   static customField(fieldName: string): CustomField<TestEntityLvl2SingleLink> {
@@ -111,11 +115,7 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2SingleLink> = new BooleanField(
-    'BooleanProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.Boolean'
-  );
+  export const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2SingleLink> = new BooleanField('BooleanProperty', TestEntityLvl2SingleLink, 'Edm.Boolean');
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -129,11 +129,7 @@ export namespace TestEntityLvl2SingleLink {
   /**
    * All fields of the TestEntityLvl2SingleLink entity.
    */
-  export const _allFields: (
-    | StringField<TestEntityLvl2SingleLink>
-    | BooleanField<TestEntityLvl2SingleLink>
-    | NumberField<TestEntityLvl2SingleLink>
-  )[] = [
+  export const _allFields: Array<StringField<TestEntityLvl2SingleLink> | BooleanField<TestEntityLvl2SingleLink> | NumberField<TestEntityLvl2SingleLink>> = [
     TestEntityLvl2SingleLink.KEY_PROPERTY,
     TestEntityLvl2SingleLink.STRING_PROPERTY,
     TestEntityLvl2SingleLink.BOOLEAN_PROPERTY,
@@ -147,15 +143,12 @@ export namespace TestEntityLvl2SingleLink {
   /**
    * All key fields of the TestEntityLvl2SingleLink entity.
    */
-  export const _keyFields: Selectable<TestEntityLvl2SingleLink>[] = [TestEntityLvl2SingleLink.KEY_PROPERTY];
+  export const _keyFields: Array<Selectable<TestEntityLvl2SingleLink>> = [TestEntityLvl2SingleLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityLvl2SingleLink> } = TestEntityLvl2SingleLink._keyFields.reduce(
-    (acc: { [keys: string]: Selectable<TestEntityLvl2SingleLink> }, field: Selectable<TestEntityLvl2SingleLink>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Selectable<TestEntityLvl2SingleLink> } = TestEntityLvl2SingleLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityLvl2SingleLink> }, field: Selectable<TestEntityLvl2SingleLink>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

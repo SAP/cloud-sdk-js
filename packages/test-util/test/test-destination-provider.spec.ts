@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { fail } from 'assert';
 import { unlinkSync, writeFileSync } from 'fs';
@@ -191,6 +189,7 @@ describe('test-destination-provider', () => {
 
     it('throws a reasonable error when the file does not contain proper JSON', () => {
       try {
+        /* eslint-disable-next-line @typescript-eslint/no-var-requires */
         const fs = require('fs');
         fs.switchMockOn();
         fs.setReadDirSync(['systems.json']);

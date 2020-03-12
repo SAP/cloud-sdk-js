@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import axios, { AxiosResponse } from 'axios';
 import { readFileSync } from 'fs';
 import { sep } from 'path';
+import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import axios, { AxiosResponse } from 'axios';
 import { AnalyticsData, getAnalyticsData } from './analytics-data';
 import { SwaRequestParameters, UsageAnalyticsOptions, UsageAnalyticsProjectConfig } from './analytics-types';
 import { enforceValidConfig, findConfigPath } from './config';
@@ -97,11 +95,11 @@ function getSWAParameters(options: UsageAnalyticsOptions): SwaRequestParameters 
 function calledFromCentralDependency(callerPath: string): boolean {
   const numNodeModulesInPath = callerPath.split(sep).filter(dir => dir === 'node_modules').length;
 
-  // assuming that npm will always flatten/dedupe dependencies when it can, we can deduce the following
-  // if there is no "node_modules" in the given path, this script is probably called as part of the SDK dev lifecycle
-  // if there are more than 1 "node_modules" path segments, this dependency is the dependency of another dependency
-  // this can happen if users depend on e.g. core@1.2.3 and bupa@1.2.4 (then there will be both core@1.2.3 and core@1.2.4)
-  // only if there is exactly one "node_modules" path segment, this script is called on the postinstall of a direct dependency to core
+  // Assuming that npm will always flatten/dedupe dependencies when it can, we can deduce the following
+  // If there is no "node_modules" in the given path, this script is probably called as part of the SDK dev lifecycle
+  // If there are more than 1 "node_modules" path segments, this dependency is the dependency of another dependency
+  // This can happen if users depend on e.g. core@1.2.3 and bupa@1.2.4 (then there will be both core@1.2.3 and core@1.2.4)
+  // Only if there is exactly one "node_modules" path segment, this script is called on the postinstall of a direct dependency to core
   return numNodeModulesInPath === 1;
 }
 

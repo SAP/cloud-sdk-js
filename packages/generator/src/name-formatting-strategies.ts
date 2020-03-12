@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import voca from 'voca';
 
@@ -14,9 +12,8 @@ const applySuffixOnConflict = (separator: string) => (name: string, previouslyGe
   return newName;
 };
 
-const applyPrefixOnJSReservedWords = (prefix: string) => (param: string): string => {
-  return reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
-};
+const applyPrefixOnJSReservedWords = (prefix: string) => (param: string): string =>
+  reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
 
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');

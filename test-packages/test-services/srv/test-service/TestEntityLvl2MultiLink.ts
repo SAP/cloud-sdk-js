@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -68,7 +68,7 @@ export class TestEntityLvl2MultiLink extends Entity implements TestEntityLvl2Mul
 
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLvl2MultiLink`.
-   * @param fieldName - Name of the custom field to select
+   * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
   static customField(fieldName: string): CustomField<TestEntityLvl2MultiLink> {
@@ -129,9 +129,7 @@ export namespace TestEntityLvl2MultiLink {
   /**
    * All fields of the TestEntityLvl2MultiLink entity.
    */
-  export const _allFields: Array<
-    StringField<TestEntityLvl2MultiLink> | BooleanField<TestEntityLvl2MultiLink> | NumberField<TestEntityLvl2MultiLink>
-  > = [
+  export const _allFields: Array<StringField<TestEntityLvl2MultiLink> | BooleanField<TestEntityLvl2MultiLink> | NumberField<TestEntityLvl2MultiLink>> = [
     TestEntityLvl2MultiLink.KEY_PROPERTY,
     TestEntityLvl2MultiLink.STRING_PROPERTY,
     TestEntityLvl2MultiLink.BOOLEAN_PROPERTY,
@@ -149,11 +147,8 @@ export namespace TestEntityLvl2MultiLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityLvl2MultiLink> } = TestEntityLvl2MultiLink._keyFields.reduce(
-    (acc: { [keys: string]: Selectable<TestEntityLvl2MultiLink> }, field: Selectable<TestEntityLvl2MultiLink>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Selectable<TestEntityLvl2MultiLink> } = TestEntityLvl2MultiLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityLvl2MultiLink> }, field: Selectable<TestEntityLvl2MultiLink>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

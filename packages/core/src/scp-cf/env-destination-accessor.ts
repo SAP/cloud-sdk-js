@@ -3,6 +3,12 @@
 import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
 import { sanitizeDestination } from './destination';
 import { Destination } from './destination-service-types';
+import { createLogger } from '@sap-cloud-sdk/util';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'env-destination-accessor'
+});
 
 /**
  * Get all destinations from the environment variable "destinations".
@@ -12,11 +18,7 @@ import { Destination } from './destination-service-types';
  * @returns A list of destinations
  */
 export function getDestinationsFromEnv(): Destination[] {
-  if (getDestinationsEnvVariable()) {
-    return (JSON.parse(getDestinationsEnvVariable()!) as any[]).map(entry => sanitizeDestination(entry));
-  } else {
-    return [];
-  }
+  return getDestinationsEnvVariable() ? (JSON.parse(getDestinationsEnvVariable()!)).map(entry => sanitizeDestination(entry)) : [];
 }
 
 /**
@@ -41,18 +43,19 @@ export function getDestinations(): Destination[] {
  * @returns The requested destination if existent, otherwise `null`
  */
 export function getDestinationFromEnvByName(name: string): Destination | null {
-  if (getDestinationsEnvVariable()) {
-    const destinations = getDestinationsFromEnv().filter(dest => dest.name === name);
-    if (destinations.length > 1) {
-      throw new Error(`There are multiple destinations with the name "${name}".`);
+  const destinations = getDestinationsFromEnv();
+  if (destinations.length) {
+    validateDestinations(destinations);
+    const matchingDestinations = destinations.filter(dest => dest.name === name);
+    if (matchingDestinations.length > 1) {
+      throw new Error(`There are multiple destinations with the name '${name}'.`);
     }
-    if (destinations[0] && proxyStrategy(destinations[0]) === ProxyStrategy.INTERNET_PROXY) {
-      return addProxyConfigurationInternet(destinations[0]);
+    const destination = matchingDestinations[0];
+    if (destination) {
+      return proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ? addProxyConfigurationInternet(destination) : destination;
     }
-    return destinations[0];
-  } else {
-    return null;
   }
+  return null;
 }
 
 /**
@@ -75,11 +78,7 @@ export function getDestinationByName(name: string): Destination | null {
  * @hidden
  */
 export function getDestinationConfig(dest: string | Destination = 'ErpQueryEndpoint'): Destination | null {
-  if (typeof dest === 'string') {
-    return getDestinationFromEnvByName(dest);
-  } else {
-    return dest;
-  }
+  return typeof dest === 'string' ? getDestinationFromEnvByName(dest) : dest;
 }
 
 /**
@@ -87,4 +86,19 @@ export function getDestinationConfig(dest: string | Destination = 'ErpQueryEndpo
  */
 export function getDestinationsEnvVariable(): string | undefined {
   return process.env['destinations'];
+}
+
+function validateDestinations(destinations: Destination[]) {
+  destinations.forEach(destination => {
+    if (typeof destination.name === 'undefined') {
+      logMissingPropertyWarning(destination, 'name');
+    }
+    if (typeof destination.url === 'undefined') {
+      logMissingPropertyWarning(destination, 'url');
+    }
+  })
+}
+
+function logMissingPropertyWarning(destination: Destination, property: string): void {
+  logger.warn(`Destination from 'destinations' env variable is missing '${property}' property. Make sure it exists: ${JSON.stringify(destination)}`);
 }

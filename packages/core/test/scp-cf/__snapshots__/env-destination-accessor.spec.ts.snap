@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getDestinationByName() should throw an error when multiple destinations with the same name are found 1`] = `"There are multiple destinations with the name 'FINAL_DESTINATION'."`;

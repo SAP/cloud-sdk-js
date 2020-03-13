@@ -2,9 +2,10 @@
 import * as assert from 'assert';
 import { Destination } from '../../src/scp-cf/destination-service-types';
 import { getDestinationByName, getDestinations } from '../../src/scp-cf/env-destination-accessor';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 const environmentDestination = {
-  name: 'ErpQueryEndpoint',
+  name: 'FINAL_DESTINATION',
   url: 'https://mys4hana.com',
   username: 'myuser',
   password: 'mypw'
@@ -13,10 +14,10 @@ const environmentDestination = {
 const destinationFromEnv: Destination = {
   authTokens: [],
   authentication: 'BasicAuthentication',
-  name: 'ErpQueryEndpoint',
+  name: 'FINAL_DESTINATION',
   isTrustingAllCertificates: false,
   originalProperties: {
-    name: 'ErpQueryEndpoint',
+    name: 'FINAL_DESTINATION',
     url: 'https://mys4hana.com',
     username: 'myuser',
     password: 'mypw'
@@ -32,7 +33,6 @@ describe('getDestinations()', () => {
   });
 
   it('should return all destinations from environment variables', () => {
-    // Setup
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)}]`;
 
     const expected: Destination[] = [destinationFromEnv];
@@ -55,17 +55,16 @@ describe('getDestinationByName()', () => {
   });
 
   it('should return the destination if a destination with the respective name is present in the environment variables', () => {
-    // Setup
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)}]`;
 
     const expected: Destination = destinationFromEnv;
-    const actual = getDestinationByName('ErpQueryEndpoint');
+    const actual = getDestinationByName('FINAL_DESTINATION');
     expect(actual).toMatchObject(expected);
   });
 
   it('should return null when no destination can be found', () => {
     const expected = null;
-    const actual = getDestinationByName('ErpQueryEndpoint');
+    const actual = getDestinationByName('FINAL_DESTINATION');
 
     assert.equal(actual, expected, 'Expected null, but got something.');
   });
@@ -73,10 +72,26 @@ describe('getDestinationByName()', () => {
   it('should throw an error when multiple destinations with the same name are found', () => {
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)},${JSON.stringify(environmentDestination)}]`;
 
-    try {
-      getDestinationByName('ErpQueryEndpoint');
-    } catch (error) {
-      assert.equal('There are multiple destinations with the name "ErpQueryEndpoint".', error.message, 'Did not get the expected error message.');
-    }
+    expect(() => getDestinationByName('FINAL_DESTINATION')).toThrowErrorMatchingSnapshot();
+  });
+
+  it('should log a warning when destinations exist but do not contain a `name` key', () => {
+    const destinationMissingName = { url: 'example.com' };
+    process.env['destinations'] = `[${JSON.stringify(environmentDestination)},${JSON.stringify(destinationMissingName)}]`;
+    const logger = createLogger('env-destination-accessor');
+    const warnSpy = jest.spyOn(logger, 'warn');
+
+    getDestinationByName('FINAL_DESTINATION');
+    expect(warnSpy).toBeCalledWith(expect.stringMatching(`Destination from 'destinations' env variable is missing 'name' property. Make sure it exists:`));
+  });
+
+  it('should log a warning when destinations exist but do not contain a `url` key', () => {
+    const destinationMissingUrl = { name: 'FINAL_DESTINATION' };
+    process.env['destinations'] = `[${JSON.stringify(environmentDestination)},${JSON.stringify(destinationMissingUrl)}]`;
+    const logger = createLogger('env-destination-accessor');
+    const warnSpy = jest.spyOn(logger, 'warn');
+
+    getDestinationByName('FINAL_DESTINATION');
+    expect(warnSpy).toBeCalledWith(expect.stringMatching(`Destination from 'destinations' env variable is missing 'url' property. Make sure it exists:`));
   });
 });

@@ -15,8 +15,8 @@
 			<div class="table-wrap">
 				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
-						
-						
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
 					</div>
 					<ul class="results">
 						<li class="state loading">Preparing search index...</li>
@@ -142,7 +142,7 @@
 					<div class="tsd-signature tsd-kind-icon">Log<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"error"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"warn"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"info"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"verbose"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"debug"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"silly"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/cloud-sdk-logger.ts#L129">util/src/logger/cloud-sdk-logger.ts:129</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/cloud-sdk-logger.ts#L129">util/src/logger/cloud-sdk-logger.ts:129</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -160,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">VALUE_<wbr>IS_<wbr>UNDEFINED<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"VALUE_IS_UNDEFINED"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;VALUE_IS_UNDEFINED&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/constants.ts#L6">util/src/constants.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/constants.ts#L6">util/src/constants.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -170,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">cloud<wbr>Sdk<wbr>Exception<wbr>Logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Logger</span><span class="tsd-signature-symbol"> =&nbsp;container.get(exceptionLoggerId, {defaultMeta: { logger: loggerReference, test: &#x27;exception&#x27; },format,exceptionHandlers: [exceptionTransport]})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/cloud-sdk-logger.ts#L25">util/src/logger/cloud-sdk-logger.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/cloud-sdk-logger.ts#L25">util/src/logger/cloud-sdk-logger.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">kibana<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Format</span><span class="tsd-signature-symbol"> =&nbsp;combine(timestamp(),format(info &#x3D;&gt; ({...info,msg: info.message,written_ts: new Date(info.timestamp).getTime(),written_at: info.timestamp}))(),json())</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/format/kibana.ts#L12">util/src/logger/format/kibana.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/format/kibana.ts#L12">util/src/logger/format/kibana.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -200,7 +200,7 @@
 					<div class="tsd-signature tsd-kind-icon">local<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Format</span><span class="tsd-signature-symbol"> =&nbsp;combine(timestamp(),format(info &#x3D;&gt; ({...info,level: info.level.toUpperCase()}))(),cli(),printf(info &#x3D;&gt; {const messageContext &#x3D; info.custom_fields &amp;&amp; info.custom_fields.messageContext ? &#x60;${chalk.blue(&#x60;(${info.custom_fields.messageContext})&#x60;)}: &#x60; : &#x27;&#x27;;const trimmedMessage &#x3D; info.message.replace(/^\s*/, &#x27;&#x27;);const paddingLength &#x3D; info.message.length - trimmedMessage.length + messageContext.length;if (info.error) {info.level &#x3D; chalk.inverse(info.level);}return &#x60;${chalk.gray(&#x60;[${info.timestamp}]&#x60;)} ${info.level} ${messageContext.padStart(paddingLength, &#x27; &#x27;)}${trimmedMessage}&#x60;;}))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/format/local.ts#L13">util/src/logger/format/local.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/format/local.ts#L13">util/src/logger/format/local.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -222,7 +222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/object.ts#L34">util/src/object.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/object.ts#L34">util/src/object.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -271,7 +271,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/pipe.ts#L11">util/src/pipe.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/pipe.ts#L11">util/src/pipe.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -304,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/cloud-sdk-logger.ts#L72">util/src/logger/cloud-sdk-logger.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/cloud-sdk-logger.ts#L72">util/src/logger/cloud-sdk-logger.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -350,7 +350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/cloud-sdk-logger.ts#L34">util/src/logger/cloud-sdk-logger.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/cloud-sdk-logger.ts#L34">util/src/logger/cloud-sdk-logger.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -372,7 +372,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/cloud-sdk-logger.ts#L41">util/src/logger/cloud-sdk-logger.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/cloud-sdk-logger.ts#L41">util/src/logger/cloud-sdk-logger.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -394,7 +394,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/string.ts#L11">util/src/string.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/string.ts#L11">util/src/string.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -426,7 +426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/error.ts#L12">util/src/error.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/error.ts#L12">util/src/error.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -464,7 +464,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/fs.ts#L8">util/src/fs.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/fs.ts#L8">util/src/fs.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -490,7 +490,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/array.ts#L11">util/src/array.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/array.ts#L11">util/src/array.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -528,7 +528,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/cloud-sdk-logger.ts#L90">util/src/logger/cloud-sdk-logger.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/cloud-sdk-logger.ts#L90">util/src/logger/cloud-sdk-logger.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -563,7 +563,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/object.ts#L48">util/src/object.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/object.ts#L48">util/src/object.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -605,7 +605,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/object.ts#L15">util/src/object.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/object.ts#L15">util/src/object.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -643,7 +643,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/object.ts#L64">util/src/object.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/object.ts#L64">util/src/object.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -687,7 +687,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/logger/cloud-sdk-logger.ts#L102">util/src/logger/cloud-sdk-logger.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/logger/cloud-sdk-logger.ts#L102">util/src/logger/cloud-sdk-logger.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -725,7 +725,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/util/src/array.ts#L24">util/src/array.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/util/src/array.ts#L24">util/src/array.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

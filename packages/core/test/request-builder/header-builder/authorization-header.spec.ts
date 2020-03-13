@@ -1,4 +1,4 @@
-import { buildAndAddAuthorizationHeader } from '../../../src';
+import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
 import { addAuthorizationHeader } from '../../../src/request-builder/header-builder/authorization-header';
 import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config';
 import { ODataRequest } from '../../../src/request-builder/request/odata-request';
@@ -43,5 +43,19 @@ describe('Authorization header builder', () => {
 
   it('defaults to NoAuthentication', async () => {
     await expect(buildAndAddAuthorizationHeader({ url: 'https://example.com' })({})).resolves.not.toThrow();
+  });
+
+  it('does not throw on Principal Propagation', async () => {
+    const destination = {
+      authentication: 'PrincipalPropagation',
+      proxyConfiguration: {
+        headers: { 'SAP-Connectivity-Authentication': 'someValue' }
+      }
+    } as Destination;
+
+    await expect(buildAndAddAuthorizationHeader(destination)({})).resolves.not.toThrow();
+
+    delete destination!.proxyConfiguration!.headers!['SAP-Connectivity-Authentication'];
+    await expect(buildAndAddAuthorizationHeader(destination)({})).rejects.toThrowErrorMatchingSnapshot();
   });
 });

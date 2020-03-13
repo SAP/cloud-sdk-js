@@ -206,6 +206,7 @@ export function isDestination(destination: any): destination is Destination {
 }
 
 export type AuthenticationType =
+  | 'PrincipalPropagation'
   | 'NoAuthentication'
   | 'BasicAuthentication'
   | 'OAuth2SAMLBearerAssertion'

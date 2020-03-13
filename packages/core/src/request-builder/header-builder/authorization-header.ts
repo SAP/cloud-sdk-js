@@ -19,12 +19,12 @@ const logger = createLogger({
  * @param headers The headers that should be added to.
  * @returns The provided headers with the new authorization headers.
  */
-export function addAuthorizationHeader<RequestT extends ODataRequestConfig>(
+export async function addAuthorizationHeader<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>,
   headers: MapType<string>
 ): Promise<MapType<string>> {
   if (authorizationHeaderFromCustomHeaders(request)) {
-    return Promise.resolve(assocAuthHeader(headers)(authorizationHeaderFromCustomHeaders(request)!));
+    return { ...headers, ...toAuthHeaderObject(authorizationHeaderFromCustomHeaders(request)!) };
   }
   if (request.needsAuthentication()) {
     if (!request.destination) {
@@ -32,7 +32,7 @@ export function addAuthorizationHeader<RequestT extends ODataRequestConfig>(
     }
     return buildAndAddAuthorizationHeader(request.destination)(headers);
   }
-  return Promise.resolve(headers);
+  return headers;
 }
 
 /**
@@ -42,32 +42,47 @@ export function addAuthorizationHeader<RequestT extends ODataRequestConfig>(
  * @param headers The headers that should be added to.
  * @returns The provided headers with the new authorization headers.
  */
-export const buildAndAddAuthorizationHeader = (destination: Destination) => (headers: MapType<any>): Promise<MapType<string>> => {
+export const buildAndAddAuthorizationHeader = (destination: Destination) => async (headers: MapType<any>): Promise<MapType<string>> => {
   if (destination.authentication === 'NoAuthentication' || destination.authentication === 'ClientCertificateAuthentication') {
-    return Promise.resolve(headers);
+    if (destination.proxyType === 'OnPremise') {
+      logger.warn(
+        `You are using \'NoAuthentication\' in destiantion: ${destination.name} which is an OnPremise destination. This is a deprecated configuration and you should change it to \'PrincipalPropagation\'.`
+      );
+    }
+    return headers;
   } else if (!destination.authentication) {
     logger.warn('No authentication type is specified on the destination! Assuming "NoAuthentication".');
-    return Promise.resolve(headers);
+    return headers;
   }
-  return buildAuthHeader(destination).then(assocAuthHeader(headers));
+  return buildAuthHeader(destination).then(authHeader => ({ ...headers, ...authHeader }));
 };
 
 const authorizationHeaderFromCustomHeaders = <T extends ODataRequestConfig>(request: ODataRequest<T>): string | undefined =>
   path(['config', 'customHeaders', 'authorization'], request) || path(['config', 'customHeaders', 'Authorization'], request);
 
-const assocAuthHeader = (headers: MapType<any>) => (authHeader: string) => assoc('authorization', authHeader)(headers);
+const toAuthHeaderObject = (authHeader: string) => ({ authorization: authHeader });
 
-const buildAuthHeader = (destination: Destination): Promise<string> => {
+// TODO remove addProxyHeaders from header-builder.ts
+// This would be a breaking change because it would enforce setting the authentication to PrincipalPropagation, currently also NoAuthentication also works.
+const buildAuthHeader = async (destination: Destination): Promise<MapType<any>> => {
   switch (destination.authentication) {
     case 'OAuth2SAMLBearerAssertion':
       if (!destination.authTokens) {
         throw new Error('The auth token is null.');
       }
-      return Promise.resolve(headerFromTokens(destination.authTokens));
+      return toAuthHeaderObject(headerFromTokens(destination.authTokens));
     case 'OAuth2ClientCredentials':
-      return headerFromOAuth2ClientCredentialsDestination(destination);
+      return headerFromOAuth2ClientCredentialsDestination(destination).then(value => toAuthHeaderObject(value));
     case 'BasicAuthentication':
-      return Promise.resolve(headerFromBasicAuthDestination(destination));
+      return toAuthHeaderObject(headerFromBasicAuthDestination(destination));
+    case 'PrincipalPropagation':
+      const proxyHeader = destination?.proxyConfiguration?.headers;
+      if (!proxyHeader || !proxyHeader['SAP-Connectivity-Authentication']) {
+        throw new Error(
+          'Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity-service.'
+        );
+      }
+      return proxyHeader;
     default:
       throw new Error(
         'Failed to build authorization header for the given destination. Make sure to either correctly configure your destination for principal propagation, provide both a username and a password or select "NoAuthentication" in your destination configuration.'

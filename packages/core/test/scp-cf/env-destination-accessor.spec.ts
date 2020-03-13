@@ -88,12 +88,12 @@ describe('getDestinationByName()', () => {
   });
 
   it('should log a warning when destinations exist but do not contain a `url` key', () => {
-    const destinationMissingUrl = { name: 'FINAL_DESTINATION' };
+    const destinationMissingUrl = { name: 'TESTINATION' };
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)},${JSON.stringify(destinationMissingUrl)}]`;
     const logger = createLogger('env-destination-accessor');
     const warnSpy = jest.spyOn(logger, 'warn');
 
-    getDestinationByName('FINAL_DESTINATION');
+    getDestinationByName('TESTINATION');
     expect(warnSpy).toBeCalledWith(
       expect.stringMatching("Destination from 'destinations' env variable is missing 'url' property. Make sure it exists:")
     );

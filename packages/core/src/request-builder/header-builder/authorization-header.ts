@@ -3,7 +3,7 @@
  */
 
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import { filter, head, identity, ifElse, isEmpty, isNil, map, path, pipe } from 'rambda';
+import { filter, head, identity, ifElse, isEmpty, isNil, map, path } from 'rambda';
 import { Destination, DestinationAuthToken, getOAuth2ClientCredentialsToken } from '../../scp-cf';
 import { ODataRequest, ODataRequestConfig } from '../request';
 

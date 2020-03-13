@@ -2,7 +2,7 @@
   "name": "@sap-cloud-sdk/analytics",
   "version": "1.18.0",
   "description": "SAP Cloud SDK Analytics Usage",
-  "homepage": "https://www.sap.com/cloud-sdk",
+  "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",

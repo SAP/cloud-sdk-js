@@ -3,7 +3,7 @@
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
-  "homepage": "https://www.sap.com/cloud-sdk",
+  "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",

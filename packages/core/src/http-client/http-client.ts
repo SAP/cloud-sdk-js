@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
 import * as http from 'http';
 import * as https from 'https';
+import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import axios, { AxiosRequestConfig } from 'axios';
 import { buildHeadersForDestination, getAgentConfig } from '../request-builder';
 import { Destination, DestinationNameAndJwt, toDestinationNameUrl, useOrFetchDestination } from '../scp-cf';
 import { DestinationHttpRequestConfig, ExecuteHttpRequestFn, HttpRequest, HttpRequestConfig, HttpResponse } from './http-client-types';
@@ -14,7 +12,7 @@ import { DestinationHttpRequestConfig, ExecuteHttpRequestFn, HttpRequest, HttpRe
  * Builds a [[DestinationHttpRequestConfig]] for the given destination.
  * If a destination name (and a JWT) are provided, it will try to resolve the destination.
  *
- * @param destination A destination or a destination name and a JWT.
+ * @param destination - A destination or a destination name and a JWT.
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(destination: Destination | DestinationNameAndJwt): Promise<DestinationHttpRequestConfig> {
@@ -34,8 +32,8 @@ export async function buildHttpRequest(destination: Destination | DestinationNam
  * they will be overwritten. Headers will be merged, whereby any headers built from the given destination
  * will overwrite existing headers (e.g. the Authorization header).
  *
- * @param destination A destination or a destination name and a JWT.
- * @param requestConfig Any object representing an HTTP request.
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
  * @returns The given request config merged with the config built for the given destination.
  */
 export function addDestinationToRequestConfig<T>(
@@ -52,7 +50,7 @@ export function addDestinationToRequestConfig<T>(
  *
  * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead!
  *
- * @param executeFn Optional: a function that can execute an [[HttpRequestConfig]].
+ * @param executeFn - Optional: a function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
  */
 export const execute = (executeFn: ExecuteHttpRequestFn) => <T extends HttpRequestConfig>(
@@ -67,8 +65,8 @@ export const execute = (executeFn: ExecuteHttpRequestFn) => <T extends HttpReque
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
  * and executes it (using Axios).
  *
- * @param destination A destination or a destination name and a JWT.
- * @param requestConfig Any object representing an HTTP request.
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
  * @returns An [[HttpResponse]].
  */
 export const executeHttpRequest = execute(executeWithAxios);

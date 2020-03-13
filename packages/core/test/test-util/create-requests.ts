@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ODataCreateRequestConfig, ODataGetAllRequestConfig, ODataUpdateRequestConfig } from '../../src/request-builder/request';
 import { ODataRequest } from '../../src/request-builder/request/odata-request';
 import { Destination } from '../../src/scp-cf';

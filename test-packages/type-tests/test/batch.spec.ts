@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { changeset as otherServiceChangeset, MultiSchemaTestEntity } from '@sap-cloud-sdk/test-services/multiple-schemas-service';
 import { batch, changeset as testEntityChangeset, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 
@@ -11,13 +12,13 @@ const changeSetTestEntity = testEntityChangeset(createTestEntity);
 const changeSetOtherServiceTestEntity = otherServiceChangeset(createTestEntityFromOtherService);
 
 // // $ExpectError
-// testEntityChangeset(createTestEntityFromOtherService);
+// TestEntityChangeset(createTestEntityFromOtherService);
 
 // // $ExpectError
-// testEntityChangeset(createTestEntity, createTestEntityFromOtherService);
+// TestEntityChangeset(createTestEntity, createTestEntityFromOtherService);
 
 // $ExpectType ODataBatchRequestBuilder
 batch(changeSetTestEntity, changeSetTestEntity);
 
 // // $ExpectError
-// batch(changeSetTestEntity, changeSetOtherServiceTestEntity);
+// Batch(changeSetTestEntity, changeSetOtherServiceTestEntity);

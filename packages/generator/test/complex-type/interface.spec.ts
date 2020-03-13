@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { StructureKind } from 'ts-morph';
 import { complexTypeInterface } from '../../src/complex-type';
 import { complexMeal, complexMealWithDesert } from '../test-util/data-model';

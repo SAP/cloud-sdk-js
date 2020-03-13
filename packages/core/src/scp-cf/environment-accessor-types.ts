@@ -1,25 +1,19 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
-
-/**
- * Unspecific representation of a service as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 export interface Service {
+  [other: string]: any;
   name: string;
   label: string;
   tags: string[];
   credentials: ServiceCredentials;
-  [other: string]: any;
 }
 
 /**
  * Unspecific representation of a service's credentials as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
  */
 export interface ServiceCredentials {
+  [other: string]: any;
   clientid: string;
   clientsecret: string;
-  [other: string]: any;
 }
 
 /**

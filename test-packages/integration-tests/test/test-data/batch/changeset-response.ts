@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { testEntityKeyPropGuid, testEntityKeyPropString, testEntityMultiLinkKeyProp } from '../keys';
 import { singleTestEntityMultiLinkResponse } from '../single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../single-test-entity-response';

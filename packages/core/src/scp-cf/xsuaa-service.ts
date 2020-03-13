@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType, renameKeys } from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
@@ -8,8 +6,8 @@ import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { circuitBreakerDefaultOptions, ResilienceOptions } from './resilience-options';
 import { ClientCredentials, ClientCredentialsResponse, TokenKey, UserTokenResponse } from './xsuaa-service-types';
 
-// for some inexplicable reason, the equivalent import statement does not work
-// tslint:disable-next-line: no-var-requires
+// For some reason, the equivalent import statement does not work
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const CircuitBreaker = require('opossum');
 
 /**
@@ -17,10 +15,10 @@ const CircuitBreaker = require('opossum');
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is an URI, the response will not be verified.
  *
- * @param xsuaaUriOrCredentials The URI or the credentials of a XSUAA service instance.
- * @param clientCredentials Client credentials for which to request a token
- * @param options Options to use by retrieving access token
- * @param customBody Object containing value required for the body request
+ * @param xsuaaUriOrCredentials - The URI or the credentials of a XSUAA service instance.
+ * @param clientCredentials - Client credentials for which to request a token
+ * @param options - Options to use by retrieving access token
+ * @param customBody - Object containing value required for the body request
  * @returns A promise resolving to the response
  */
 export function clientCredentialsGrant(
@@ -40,10 +38,10 @@ export function clientCredentialsGrant(
 /**
  * Executes a user token grant request against the given URI.
  *
- * @param xsuaaUri The URI of the target XSUAA service instance.
- * @param userJwt The JWT of the user on whose behalf the request is executed.
- * @param clientId The client_id of the target XSUAA service instance.
- * @param options Options to use by retrieving access token
+ * @param xsuaaUri - The URI of the target XSUAA service instance.
+ * @param userJwt - The JWT of the user on whose behalf the request is executed.
+ * @param clientId - The client_id of the target XSUAA service instance.
+ * @param options - Options to use by retrieving access token
  * @returns A promise resolving to the response of the XSUAA service.
  */
 export function userTokenGrant(xsuaaUri: string, userJwt: string, clientId: string, options?: ResilienceOptions): Promise<UserTokenResponse> {
@@ -64,10 +62,10 @@ export function userTokenGrant(xsuaaUri: string, userJwt: string, clientId: stri
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is an URI, the response will not be verified.
  *
- * @param xsuaaUriOrCredentials The URI or the credentials of a XSUAA service instance.
- * @param clientCredentials The credentials (client_id, client_secret) if the target XSUAA service instance.
- * @param refreshToken The refresh token that should be used to generate a new access token.
- * @param options Options to use by retrieving access token.
+ * @param xsuaaUriOrCredentials - The URI or the credentials of a XSUAA service instance.
+ * @param clientCredentials - The credentials (client_id, client_secret) if the target XSUAA service instance.
+ * @param refreshToken - The refresh token that should be used to generate a new access token.
+ * @param options - Options to use by retrieving access token.
  * @returns A promise resolving to the response of the XSUAA service.
  */
 export function refreshTokenGrant(
@@ -90,16 +88,17 @@ export function refreshTokenGrant(
 /**
  * Fetches verification keys from the XSUAA service for the given credentials.
  *
- * @param xsuaaCredentials Credentials of the XSUAA service instance.
+ * @param xsuaaCredentials - Credentials of the XSUAA service instance.
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(xsuaaCredentials: XsuaaServiceCredentials): Promise<TokenKey[]>;
+
 /**
  * Fetches verification keys from the XSUAA service for the given URL, with the given pair of credentials.
  *
- * @param url URL of the XSUAA service instance.
- * @param clientId Client ID of the XSUAA service instance.
- * @param clientSecret Client secret of the XSUAA service instance.
+ * @param url - URL of the XSUAA service instance.
+ * @param clientId - Client ID of the XSUAA service instance.
+ * @param clientSecret - Client secret of the XSUAA service instance.
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(url: string, clientId: string, clientSecret: string): Promise<TokenKey[]>;

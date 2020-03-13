@@ -1,9 +1,10 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import fs from 'fs';
 import { join } from 'path';
 
 /**
  * Removes a directory and its corresponding sub-directories and files.
- * @param directoryPath Path of the directory to unlink
+ * @param directoryPath - Path of the directory to unlink
  */
 export function recursiveRemove(directoryPath: string): void {
   if (fs.existsSync(directoryPath) && fs.lstatSync(directoryPath).isDirectory()) {

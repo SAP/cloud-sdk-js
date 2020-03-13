@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Destination } from '@sap-cloud-sdk/core';
 import { getTestDestinationByAlias, GetTestDestinationOptions, getTestDestinations } from './test-destination-provider';
@@ -10,8 +8,8 @@ import { getTestDestinationByAlias, GetTestDestinationOptions, getTestDestinatio
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
  *
- * @param name Name of the test destination to add to the `destinations` environment variable
- * @param options References to the `systems.json` and `credentials.json` files
+ * @param name - Name of the test destination to add to the `destinations` environment variable
+ * @param options - References to the `systems.json` and `credentials.json` files
  */
 export function mockTestDestination(name: string, options?: GetTestDestinationOptions): void {
   const mockedDestination = getTestDestinationByAlias(name, options);
@@ -23,8 +21,8 @@ export function mockTestDestination(name: string, options?: GetTestDestinationOp
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
  *
- * @param destination Test destination to add to the `destinations` environment variable
- * @param options References to the `systems.json` and `credentials.json` files
+ * @param destination - Test destination to add to the `destinations` environment variable
+ * @param options - References to the `systems.json` and `credentials.json` files
  */
 export function setTestDestination(destination: Destination): void {
   const currentDestinations = getDestinationsFromEnv();
@@ -48,7 +46,7 @@ export function setTestDestination(destination: Destination): void {
  * Removes a destination with the given name from the destinations environment variable. If the given destination name is not found calling this function has no effect.
  * This function should be called to invert the behavior of [[mockTestDestination]]() and [[setTestDestination]]().
  *
- * @param name Name of the mocked destination to remove
+ * @param name - Name of the mocked destination to remove
  */
 export function unmockTestDestination(name: string): void {
   const currentDestinations = getDestinationsFromEnv();
@@ -61,7 +59,7 @@ export function unmockTestDestination(name: string): void {
  *
  * Throws an error if a destination with the same name as the given test destinations already exists.
  *
- * @param options References to the `systems.json` and `credentials.json` files
+ * @param options - References to the `systems.json` and `credentials.json` files
  */
 export function mockAllTestDestinations(options?: GetTestDestinationOptions): void {
   const testDestinations = getTestDestinations(options);

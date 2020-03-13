@@ -1,7 +1,7 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { fail } from 'assert';
 import BigNumber from 'bignumber.js';
 import moment, { Moment } from 'moment';
-
 import { createComplexType, edmToTs, Time } from '../../src';
 
 const converter = {

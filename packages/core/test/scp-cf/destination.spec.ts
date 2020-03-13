@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { AuthenticationType, Destination, parseDestination, sanitizeDestination } from '../../src/scp-cf';
 import { basicMultipleResponse, certificateMultipleResponse, certificateSingleResponse } from '../test-util/example-destination-service-responses';
 

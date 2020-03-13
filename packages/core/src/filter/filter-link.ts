@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
@@ -15,8 +13,8 @@ import { Filterable } from './filterable';
  * In the following filter statement `Entity.requestBuilder().filter(Entity.to_NavProperty.filter(LinkedEntity.property.equals(value)))`,
  * `Entity.to_NavProperty.filter(LinkedEntity.property.equals(value))` is a FilterLink.
  *
- * @typeparam EntityT Type of the entity to be filtered
- * @typeparam LinkedEntityT Type of the linked entity which is used in the filter
+ * @typeparam EntityT - Type of the entity to be filtered
+ * @typeparam LinkedEntityT - Type of the linked entity which is used in the filter
  */
 export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity> implements EntityIdentifiable<EntityT> {
   /**
@@ -32,8 +30,8 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity> im
   /**
    * Creates an instance of FilterLink.
    *
-   * @param link Linked entity to be used in the filter
-   * @param filters List of filterables for the linked entity
+   * @param link - Linked entity to be used in the filter
+   * @param filters - List of filterables for the linked entity
    */
   constructor(public link: Link<EntityT, LinkedEntityT>, public filters: Filterable<LinkedEntityT>[]) {}
 }

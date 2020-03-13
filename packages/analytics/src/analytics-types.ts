@@ -1,11 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
-
-/**
- * Custom options to be added to the collected data.
- * @hidden
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 export interface UsageAnalyticsOptions {
   uri?: string;
   idsitesub?: string;

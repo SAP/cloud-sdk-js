@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
 import { sanitizeDestination } from './destination';
@@ -39,7 +37,7 @@ export function getDestinations(): Destination[] {
  * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
  * from the Cloud Foundry destination service.
  *
- * @param name Name of the destination
+ * @param name - Name of the destination
  * @returns The requested destination if existent, otherwise `null`
  */
 export function getDestinationFromEnvByName(name: string): Destination | null {
@@ -64,14 +62,14 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
  * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
  * from the Cloud Foundry destination service.
  *
- * @param name Name of the destination
+ * @param name - Name of the destination
  * @returns The requested destination if existent, otherwise `null`
  */
 export function getDestinationByName(name: string): Destination | null {
   return getDestinationFromEnvByName(name);
 }
 
-// tslint:disable: valid-jsdoc
+/* eslint-disable valid-jsdoc */
 
 /**
  * @hidden

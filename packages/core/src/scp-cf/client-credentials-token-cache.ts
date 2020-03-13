@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Cache } from './cache';
 import { headerForClientCredentials } from './xsuaa-service';
@@ -8,9 +6,9 @@ import { ClientCredentials, ClientCredentialsResponse } from './xsuaa-service-ty
 
 const ClientCredentialsTokenCache = (cache: Cache<ClientCredentialsResponse>) => ({
   // TODO: this method name can be shortened
-  getGrantTokenFromCache: (url, credentials: ClientCredentials): ClientCredentialsResponse | undefined => {
-    return cache.get(getGrantTokenCacheKey(url, credentials));
-  },
+  getGrantTokenFromCache: (url, credentials: ClientCredentials): ClientCredentialsResponse | undefined =>
+    cache.get(getGrantTokenCacheKey(url, credentials)),
+
   // TODO: this method name can be shortened
   cacheRetrievedToken: (url, credentials: ClientCredentials, token: ClientCredentialsResponse): void => {
     cache.set(getGrantTokenCacheKey(url, credentials), token, token.expires_in);
@@ -18,9 +16,7 @@ const ClientCredentialsTokenCache = (cache: Cache<ClientCredentialsResponse>) =>
   clear: (): void => {
     cache.clear();
   },
-  getCacheInstance: () => {
-    return cache;
-  }
+  getCacheInstance: () => cache
 });
 
 export function getGrantTokenCacheKey(url: string, credentials: ClientCredentials): string {

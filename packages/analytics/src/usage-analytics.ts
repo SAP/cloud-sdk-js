@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import axios, { AxiosResponse } from 'axios';
 import { readFileSync } from 'fs';
 import { sep } from 'path';
+import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import axios, { AxiosResponse } from 'axios';
 import { AnalyticsData, getAnalyticsData } from './analytics-data';
 import { SwaRequestParameters, UsageAnalyticsOptions, UsageAnalyticsProjectConfig } from './analytics-types';
 import { enforceValidConfig, findConfigPath } from './config';
@@ -28,8 +26,8 @@ const defaultOptions = { useSalt: true, uri: defaultURI, idsitesub: defaultParam
  * Get and send development environment data based on the context of the given caller path using the given options.
  * The callerPath is necessary to determine whether usage analytics data will be sent or not.
  *
- * @param callerPath Abolute path of the script from which the function is called
- * @param options Usage analytic options
+ * @param callerPath - Abolute path of the script from which the function is called
+ * @param options - Usage analytic options
  * @hidden
  */
 export async function performUsageAnalytics(callerPath: string, options: UsageAnalyticsOptions = {}) {
@@ -55,9 +53,9 @@ export async function performUsageAnalytics(callerPath: string, options: UsageAn
  * Sends development environment data to SAP Web Analytic.
  * For detailed information, check https://github.com/SAP/cloud-sdk-cli/blob/master/usage-analytics.md
  *
- * @param config Configuration for web analytics.
- * @param data Data to be sent.
- * @param options Analytics options
+ * @param config - Configuration for web analytics.
+ * @param data - Data to be sent.
+ * @param options - Analytics options
  * @returns A promise to the response of the request
  * @hidden
  */
@@ -80,7 +78,7 @@ export async function sendAnalyticsData(
 /**
  * Creates SAP Web Analytics regular parameters.
  *
- * @param options Request options
+ * @param options - Request options
  * @returns SAP Web Analytics regular parameters
  * @hidden
  */
@@ -97,11 +95,11 @@ function getSWAParameters(options: UsageAnalyticsOptions): SwaRequestParameters 
 function calledFromCentralDependency(callerPath: string): boolean {
   const numNodeModulesInPath = callerPath.split(sep).filter(dir => dir === 'node_modules').length;
 
-  // assuming that npm will always flatten/dedupe dependencies when it can, we can deduce the following
-  // if there is no "node_modules" in the given path, this script is probably called as part of the SDK dev lifecycle
-  // if there are more than 1 "node_modules" path segments, this dependency is the dependency of another dependency
-  // this can happen if users depend on e.g. core@1.2.3 and bupa@1.2.4 (then there will be both core@1.2.3 and core@1.2.4)
-  // only if there is exactly one "node_modules" path segment, this script is called on the postinstall of a direct dependency to core
+  // Assuming that npm will always flatten/dedupe dependencies when it can, we can deduce the following
+  // If there is no "node_modules" in the given path, this script is probably called as part of the SDK dev lifecycle
+  // If there are more than 1 "node_modules" path segments, this dependency is the dependency of another dependency
+  // This can happen if users depend on e.g. core@1.2.3 and bupa@1.2.4 (then there will be both core@1.2.3 and core@1.2.4)
+  // Only if there is exactly one "node_modules" path segment, this script is called on the postinstall of a direct dependency to core
   return numNodeModulesInPath === 1;
 }
 
@@ -137,7 +135,7 @@ function calledFromCentralDependency(callerPath: string): boolean {
  *
  * Notice: Properties order of the passed parameters is relevant in determining the values of the mapped object.
  *
- * @param params User data
+ * @param params - User data
  * @returns SAP Web Analytics custom parameters
  * @hidden
  */

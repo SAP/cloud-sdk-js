@@ -1,9 +1,9 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { Destination, executeHttpRequest, HttpMethod, HttpResponse, Protocol } from '@sap-cloud-sdk/core';
 import { setTestDestination, unmockTestDestination } from '@sap-cloud-sdk/test-util';
 import { MapType } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { ODataRequest, ODataRequestConfig } from '../../../packages/core/src/request-builder/request';
-
 import mockserver = require('mockserver-node');
 
 describe('proxy', () => {

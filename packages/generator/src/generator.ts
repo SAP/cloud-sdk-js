@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger } from '@sap-cloud-sdk/util';
 import { PathLike, readFileSync } from 'fs';
-import { emptyDirSync } from 'fs-extra';
 import { relative, resolve } from 'path';
+import { createLogger } from '@sap-cloud-sdk/util';
+import { emptyDirSync } from 'fs-extra';
 import { Directory, DirectoryEmitResult, IndentationText, ModuleResolutionKind, Project, ProjectOptions, QuoteKind, ScriptTarget } from 'ts-morph';
 import { ModuleKind } from 'typescript';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
@@ -51,13 +49,13 @@ export async function generate(options: GeneratorOptions): Promise<void | Direct
 }
 
 function emit(project: Project, options: GeneratorOptions): Promise<DirectoryEmitResult[]> {
-  // filter for .ts files, due to a bug in ts-morph. Has been fixed in a newer version of ts-morph
+  // Filter for .ts files, due to a bug in ts-morph. Has been fixed in a newer version of ts-morph
   const nonTsFiles = project.getSourceFiles().filter(s => !s.getFilePath().endsWith('.ts'));
   nonTsFiles.forEach(f => project.removeSourceFile(f));
   return Promise.all(
     project
       .getDirectories()
-      // filter only for files that are within the service subfolders
+      // Filter only for files that are within the service subfolders
       .filter(d => isDescendant(d.getPath(), options))
       .map(d => d.emit({ outDir: '' }))
   );

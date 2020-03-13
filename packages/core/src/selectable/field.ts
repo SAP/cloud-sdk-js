@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import BigNumber from 'bignumber.js';
 import { Moment } from 'moment';
@@ -28,15 +26,15 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
  *
  * See also: [[Selectable]], [[EdmTypeField]], [[ComplexTypeField]]
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 
 export abstract class Field<EntityT extends Entity> implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of Field.
    *
-   * @param _fieldName Actual name of the field used in the OData request
-   * @param _entityConstructor Constructor type of the entity the field belongs to
+   * @param _fieldName - Actual name of the field used in the OData request
+   * @param _entityConstructor - Constructor type of the entity the field belongs to
    */
   constructor(readonly _fieldName: string, readonly _entityConstructor: Constructable<EntityT>) {}
 

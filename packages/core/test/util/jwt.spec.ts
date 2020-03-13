@@ -1,8 +1,8 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
 import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from '../../src';
 import { publicKey, signedJwt } from '../test-util/keys';
-
 import nock = require('nock');
 
 const jwtPayload = {
@@ -145,12 +145,12 @@ describe('jwt', () => {
     });
 
     it('caches the key after fetching it', done => {
-      // we mock only a single HTTP call
+      // We mock only a single HTTP call
       nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
         .get('/token_keys')
         .reply(200, response);
 
-      // but due to caching multiple calls should not lead to errors
+      // But due to caching multiple calls should not lead to errors
       verifyJwt(signedJwt(jwtPayload))
         .then(() => verifyJwt(signedJwt(jwtPayload)))
         .then(() => verifyJwt(signedJwt(jwtPayload)))
@@ -159,12 +159,12 @@ describe('jwt', () => {
     });
 
     it('fails on the second call when caching is disabled', done => {
-      // we mock only a single HTTP call
+      // We mock only a single HTTP call
       nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
         .get('/token_keys')
         .reply(200, response);
 
-      // so the second call should fail
+      // So the second call should fail
       verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false })
         .then(() => verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false }))
         .then(() => done('Should have failed!'))

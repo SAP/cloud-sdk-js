@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { buildAndAddAuthorizationHeader } from '../../../src';
 import { addAuthorizationHeader } from '../../../src/request-builder/header-builder/authorization-header';
 import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config';

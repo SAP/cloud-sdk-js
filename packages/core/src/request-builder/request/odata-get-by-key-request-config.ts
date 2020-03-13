@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
@@ -14,7 +12,7 @@ import { WithKeys, WithSelection } from './odata-request-traits';
 /**
  * OData getByKey request configuration for an entity type.
  *
- * @typeparam EntityT Type of the entity to setup a request for
+ * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataGetByKeyRequestConfig<EntityT extends Entity> extends ODataRequestConfig implements WithKeys, WithSelection<EntityT> {
   keys: MapType<FieldType>;
@@ -23,7 +21,7 @@ export class ODataGetByKeyRequestConfig<EntityT extends Entity> extends ODataReq
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.
    *
-   * @param entityConstructor Constructor type of the entity to create a configuration for
+   * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(readonly entityConstructor: Constructable<EntityT>) {
     super('get', entityConstructor._defaultServicePath);

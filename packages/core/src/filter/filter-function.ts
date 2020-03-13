@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
@@ -20,15 +18,15 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
 
   /**
    * Creates an instance of FilterFunction.
-   * @param functionName Name of the function
-   * @param parameters Representation of the parameters passed to the filter function
+   * @param functionName - Name of the function
+   * @param parameters - Representation of the parameters passed to the filter function
    */
   constructor(public functionName: string, public parameters: FilterFunctionParameterType<EntityT>[]) {}
 
   /**
    * Serializes the filter function into a string
    *
-   * @param parentFieldNames Names of parents in case the function is part of a filter on a navigation property
+   * @param parentFieldNames - Names of parents in case the function is part of a filter on a navigation property
    * @returns The filter function as string
    */
   toString(parentFieldNames: string[] = []): string {
@@ -39,8 +37,8 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'eq', i.e. `==`.
    *
-   * @param value Value to be used in the filter
-   * @param edmType EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
+   * @param value - Value to be used in the filter
+   * @param edmType - EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
   equals(value: ReturnT): Filter<EntityT, ReturnT> {
@@ -50,8 +48,8 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'ne', i.e. `!=`.
    *
-   * @param value Value to be used in the filter
-   * @param edmType EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
+   * @param value - Value to be used in the filter
+   * @param edmType - EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
   notEquals(value: ReturnT): Filter<EntityT, ReturnT> {
@@ -60,8 +58,8 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
 
   /**
    * For different type of filter function parameters, build a function that generates a string as url pattern.
-   * @param param One parameter of the filter function
-   * @param parentFieldNames The parent field name list used when the field with navigation properties are involved
+   * @param param - One parameter of the filter function
+   * @param parentFieldNames - The parent field name list used when the field with navigation properties are involved
    * @returns A function that convert the parameter to url pattern.
    */
   private transformParameter(param: FilterFunctionParameterType<EntityT>, parentFieldNames: string[]): string {

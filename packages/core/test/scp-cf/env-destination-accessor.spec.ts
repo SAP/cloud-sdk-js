@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import * as assert from 'assert';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src/scp-cf/destination-service-types';
 import { getDestinationByName, getDestinations } from '../../src/scp-cf/env-destination-accessor';
-import { createLogger } from '@sap-cloud-sdk/util';
 
 const environmentDestination = {
   name: 'FINAL_DESTINATION',
@@ -82,7 +82,9 @@ describe('getDestinationByName()', () => {
     const warnSpy = jest.spyOn(logger, 'warn');
 
     getDestinationByName('FINAL_DESTINATION');
-    expect(warnSpy).toBeCalledWith(expect.stringMatching(`Destination from 'destinations' env variable is missing 'name' property. Make sure it exists:`));
+    expect(warnSpy).toBeCalledWith(
+      expect.stringMatching("Destination from 'destinations' env variable is missing 'name' property. Make sure it exists:")
+    );
   });
 
   it('should log a warning when destinations exist but do not contain a `url` key', () => {
@@ -92,6 +94,8 @@ describe('getDestinationByName()', () => {
     const warnSpy = jest.spyOn(logger, 'warn');
 
     getDestinationByName('FINAL_DESTINATION');
-    expect(warnSpy).toBeCalledWith(expect.stringMatching(`Destination from 'destinations' env variable is missing 'url' property. Make sure it exists:`));
+    expect(warnSpy).toBeCalledWith(
+      expect.stringMatching("Destination from 'destinations' env variable is missing 'url' property. Make sure it exists:")
+    );
   });
 });

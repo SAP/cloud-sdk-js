@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
 import { sanitizeDestination } from './destination';
 import { Destination } from './destination-service-types';
-import { createLogger } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'core',
@@ -18,7 +18,7 @@ const logger = createLogger({
  * @returns A list of destinations
  */
 export function getDestinationsFromEnv(): Destination[] {
-  return getDestinationsEnvVariable() ? (JSON.parse(getDestinationsEnvVariable()!)).map(entry => sanitizeDestination(entry)) : [];
+  return getDestinationsEnvVariable() ? JSON.parse(getDestinationsEnvVariable()!).map(entry => sanitizeDestination(entry)) : [];
 }
 
 /**
@@ -96,7 +96,7 @@ function validateDestinations(destinations: Destination[]) {
     if (typeof destination.url === 'undefined') {
       logMissingPropertyWarning(destination, 'url');
     }
-  })
+  });
 }
 
 function logMissingPropertyWarning(destination: Destination, property: string): void {

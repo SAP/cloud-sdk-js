@@ -32,6 +32,7 @@ blog:
 - Fix ordering for complex properties including nested complex properties.
 - Fix the generator crashing for services containing function modules without a return type.
 Now the generator will handle these cases and use  `Promise<void>` as return type.
+- Fix of the destination processing so that the user can set `PrincipalPropagation` as the authentication scheme for OnPremise connectivity. 
 
 
 # 1.18.0

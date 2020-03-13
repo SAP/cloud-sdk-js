@@ -41,7 +41,10 @@ blog: https://blogs.sap.com/?p=1060707
 
 ## compatibilityNotes
 
-- Some packages of the SAP Cloud SDK for JavaScript has been migrated to [github.com](https://github.com/SAP/cloud-sdk). As a result, the packages are also renamed as shown in the below list. No breaking changes in the functionality were made. You'll need to update your `package.json` to use the new packages.
+- Some packages of the SAP Cloud SDK for JavaScript have been migrated to [external GitHub](https://github.com/SAP/cloud-sdk) and are now available as open-source software.
+As a result, the packages have been renamed as shown in the list below. 
+No Breaking changes are made. 
+The old versions of the packages will not receive further updates, so we heavily encourage switching to the new version of the packages.
   - `@sap/cloud-sdk-util` was renamed to `@sap-cloud-sdk/util`
   - `@sap/cloud-sdk-analytics` was renamed to `@sap-cloud-sdk/analytics`
   - `@sap/cloud-sdk-core` was renamed to `@sap-cloud-sdk/core`
@@ -49,13 +52,12 @@ blog: https://blogs.sap.com/?p=1060707
   - `@sap/cloud-sdk-test-util` was renamed to `@sap-cloud-sdk/test-util`
 
 - How to update your project
-  - Search for all `dependencies`, `devDependencies`, `peerDependencies` in your `package.json`.
-  - Replace the old package name (e.g. `@sap/cloud-sdk-core`) with new one (e.g. `@sap-cloud-sdk/core`).
-  - Use a stable version of the open source package (e.g. `^1.18.0`).
-  - Install your dependencies again to reflect the changes (e.g., `npm i`).
-  - Search for your source code for uses of the old packages (e.g. `require()` and replace them with new names.
-
-Note that the old packages can remain in your `node_modules` subdirectory after installing the new dependencies. To make sure that your source code includes the new version, it is recommended to delete the old packages from `node_modules`.
+1. Search for all your `dependencies`/`devDependencies`/`peerDependencies` in your `package.json`.
+1. Replace the old package name e.g., `@sap/cloud-sdk-core` with the new one, `@sap-cloud-sdk/core`.
+1. Use the stable version of the open source version e.g., `^1.18.0`.
+1. Deleting your `node_modules` and the `package-lock.json`.
+1. Install your dependencies again to reflect the changes via e.g., `npm i`.
+1. Search for your source code that uses the old packages as import and replace it with new names.
 
 ## improvements
 

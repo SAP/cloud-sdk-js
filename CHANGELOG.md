@@ -51,7 +51,7 @@ The old versions of the packages will not receive further updates, so we heavily
   - `@sap/cloud-sdk-generator` was renamed to `@sap-cloud-sdk/generator`
   - `@sap/cloud-sdk-test-util` was renamed to `@sap-cloud-sdk/test-util`
 
-- How to update your project
+### How to update your project
 1. Search for all your `dependencies`/`devDependencies`/`peerDependencies` in your `package.json`.
 1. Replace the old package name e.g., `@sap/cloud-sdk-core` with the new one, `@sap-cloud-sdk/core`.
 1. Use the stable version of the open source version e.g., `^1.18.0`.

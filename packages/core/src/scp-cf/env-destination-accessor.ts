@@ -48,7 +48,7 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
     validateDestinations(destinations);
     const matchingDestinations = destinations.filter(dest => dest.name === name);
     if (matchingDestinations.length > 1) {
-      throw new Error(`There are multiple destinations with the name '${name}'.`);
+      logger.warn(`The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be respected.`);
     }
     const destination = matchingDestinations[0];
     if (destination) {
@@ -91,14 +91,8 @@ export function getDestinationsEnvVariable(): string | undefined {
 function validateDestinations(destinations: Destination[]) {
   destinations.forEach(destination => {
     if (typeof destination.name === 'undefined') {
-      logMissingPropertyWarning(destination, 'name');
-    }
-    if (typeof destination.url === 'undefined') {
-      logMissingPropertyWarning(destination, 'url');
+      logger.warn(`Destination from 'destinations' env variable is missing 'name' property. Make sure it exists: ${JSON.stringify(destination)}`);
     }
   });
 }
 
-function logMissingPropertyWarning(destination: Destination, property: string): void {
-  logger.warn(`Destination from 'destinations' env variable is missing '${property}' property. Make sure it exists: ${JSON.stringify(destination)}`);
-}

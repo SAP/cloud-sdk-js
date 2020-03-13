@@ -5,7 +5,7 @@ import { Destination } from '../../src/scp-cf/destination-service-types';
 import { getDestinationByName, getDestinations } from '../../src/scp-cf/env-destination-accessor';
 
 const environmentDestination = {
-  name: 'FINAL_DESTINATION',
+  name: 'FINAL-DESTINATION',
   url: 'https://mys4hana.com',
   username: 'myuser',
   password: 'mypw'
@@ -14,10 +14,10 @@ const environmentDestination = {
 const destinationFromEnv: Destination = {
   authTokens: [],
   authentication: 'BasicAuthentication',
-  name: 'FINAL_DESTINATION',
+  name: 'FINAL-DESTINATION',
   isTrustingAllCertificates: false,
   originalProperties: {
-    name: 'FINAL_DESTINATION',
+    name: 'FINAL-DESTINATION',
     url: 'https://mys4hana.com',
     username: 'myuser',
     password: 'mypw'
@@ -58,21 +58,24 @@ describe('getDestinationByName()', () => {
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)}]`;
 
     const expected: Destination = destinationFromEnv;
-    const actual = getDestinationByName('FINAL_DESTINATION');
+    const actual = getDestinationByName('FINAL-DESTINATION');
     expect(actual).toMatchObject(expected);
   });
 
   it('should return null when no destination can be found', () => {
     const expected = null;
-    const actual = getDestinationByName('FINAL_DESTINATION');
+    const actual = getDestinationByName('FINAL-DESTINATION');
 
     assert.equal(actual, expected, 'Expected null, but got something.');
   });
 
-  it('should throw an error when multiple destinations with the same name are found', () => {
+  it('should log a warning when there are multiple destinations with the same name', () => {
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)},${JSON.stringify(environmentDestination)}]`;
+    const logger = createLogger('env-destination-accessor');
+    const warnSpy = jest.spyOn(logger, 'warn');
 
-    expect(() => getDestinationByName('FINAL_DESTINATION')).toThrowErrorMatchingSnapshot();
+    getDestinationByName('FINAL-DESTINATION');
+    expect(warnSpy).toBeCalledWith(`The 'destinations' env variable contains multiple destinations with the name 'FINAL-DESTINATION'. Only the first entry will be respected.`);
   });
 
   it('should log a warning when destinations exist but do not contain a `name` key', () => {
@@ -81,21 +84,9 @@ describe('getDestinationByName()', () => {
     const logger = createLogger('env-destination-accessor');
     const warnSpy = jest.spyOn(logger, 'warn');
 
-    getDestinationByName('FINAL_DESTINATION');
+    getDestinationByName('FINAL-DESTINATION');
     expect(warnSpy).toBeCalledWith(
       expect.stringMatching("Destination from 'destinations' env variable is missing 'name' property. Make sure it exists:")
-    );
-  });
-
-  it('should log a warning when destinations exist but do not contain a `url` key', () => {
-    const destinationMissingUrl = { name: 'TESTINATION' };
-    process.env['destinations'] = `[${JSON.stringify(environmentDestination)},${JSON.stringify(destinationMissingUrl)}]`;
-    const logger = createLogger('env-destination-accessor');
-    const warnSpy = jest.spyOn(logger, 'warn');
-
-    getDestinationByName('TESTINATION');
-    expect(warnSpy).toBeCalledWith(
-      expect.stringMatching("Destination from 'destinations' env variable is missing 'url' property. Make sure it exists:")
     );
   });
 });

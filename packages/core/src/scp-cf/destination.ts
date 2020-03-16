@@ -14,7 +14,7 @@ import {
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
  *
- * @param destination - A destination representation, that is compatible with the keys of a Destination instance.
+ * @param destination - An object that adheres to the [[Destination]] interface.
  * @returns An SDK compatible destination object.
  */
 export function sanitizeDestination(destination: MapType<any>): Destination {

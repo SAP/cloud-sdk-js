@@ -12,7 +12,7 @@ export interface TestFunctionImportNoReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportNoReturnType(parameters: TestFunctionImportNoReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, Promise<void>>;
+export declare function testFunctionImportNoReturnType(parameters: TestFunctionImportNoReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, undefined>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */

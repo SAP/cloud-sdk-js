@@ -94,9 +94,7 @@ export function getDestinationsEnvVariable(): string | undefined {
 function validateDestinations(destinations: any[]) {
   destinations.forEach(destination => {
     if (typeof destination.name === 'undefined' && typeof destination.Name === 'undefined') {
-      logger.warn(
-        `Destination from 'destinations' env variable is missing 'name' or 'Name' property.`
-      );
+      logger.warn("Destination from 'destinations' env variable is missing 'name' or 'Name' property.");
     }
   });
 }

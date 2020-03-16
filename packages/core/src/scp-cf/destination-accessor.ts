@@ -185,7 +185,9 @@ export async function getDestinationFromDestinationService(
         destination = await fetchDestination(destinationService.credentials.uri, providerToken, name, options);
       } else {
         if (!options.userJwt) {
-          throw Error(`No user token (JWT) has been provided! This is strictly necessary for principal propagation. Value of the JWT: ${options.userJwt}`);
+          throw Error(
+            `No user token (JWT) has been provided! This is strictly necessary for principal propagation. Value of the JWT: ${options.userJwt}.`
+          );
         }
         destination = await getDestinationWithAuthTokens(name, options.userJwt, options);
       }

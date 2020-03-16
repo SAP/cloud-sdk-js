@@ -11,6 +11,9 @@ import {
   sanitizeDestination,
   subscriberFirst
 } from '../../src/scp-cf';
+import * as destinationAccessor from '../../src/scp-cf/destination-accessor';
+// When combined, lint also complains
+/* eslint-disable-next-line no-duplicate-imports */
 import { getDestination, getDestinationFromDestinationService, useOrFetchDestination } from '../../src/scp-cf/destination-accessor';
 import { AuthenticationType } from '../../src/scp-cf/destination-service-types';
 import * as sdkJwt from '../../src/util/jwt';
@@ -37,6 +40,7 @@ import {
 } from '../test-util/mocked-access-tokens';
 import { muteLoggers } from '../test-util/mute-logger';
 import { mockServiceToken, mockUserApprovedServiceToken } from '../test-util/token-accessor-mocks';
+import { Destination } from '../../dist';
 
 const destinationName = 'FINAL-DESTINATION';
 
@@ -46,7 +50,7 @@ function mockEnvDestinations() {
 
 const environmentDestinations = [
   {
-    name: 'ErpQueryEndpoint',
+    name: 'TESTINATION',
     url: 'https://my.system.com',
     username: 'myuser',
     password: 'mypw'
@@ -679,7 +683,7 @@ describe('destination-accessor', () => {
         mockEnvDestinations();
 
         const expected = sanitizeDestination(environmentDestinations[0]);
-        const actual = await useOrFetchDestination({ destinationName: 'ErpQueryEndpoint' }, { cacheVerificationKeys: false });
+        const actual = await useOrFetchDestination({ destinationName: 'TESTINATION' }, { cacheVerificationKeys: false });
         expect(actual).toMatchObject(expected);
       });
     });

@@ -40,17 +40,12 @@ export async function useOrFetchDestination(
   destination: Destination | DestinationNameAndJwt,
   options: DestinationOptions = {}
 ): Promise<Destination | null> {
-  const newDestination = isDestinationNameAndJwt(destination)
-    ? await getDestination(destination.destinationName, {
+  return isDestinationNameAndJwt(destination)
+    ? getDestination(destination.destinationName, {
         userJwt: destination.jwt,
         ...options
       })
     : sanitizeDestination(destination);
-
-  if (newDestination && !newDestination.url) {
-    throw Error(`The retrieved destination is invalid, because it does not contain a 'url' key.`);
-  }
-  return newDestination;
 }
 
 export interface DestinationAccessorOptions {
@@ -229,13 +224,14 @@ function tryDestinationForServiceBinding(name: string): Destination | undefined 
   } catch (error) {
     logger.info(error.message);
     logger.info('Could not retrieve destination from service binding.');
-    logger.info("If you are not using SAP Extension Factory, this information probably does not concern you.");
+    logger.info('If you are not using SAP Extension Factory, this information probably does not concern you.');
     return undefined;
   }
 }
 
 function tryDestinationFromEnv(name: string): Destination | undefined {
   logger.info('Attempting to retrieve destination from environment variable.');
+
   if (getDestinationsEnvVariable()) {
     logger.warn(
       "Environment variable 'destinations' is set. Destinations will be read from this variable. " +

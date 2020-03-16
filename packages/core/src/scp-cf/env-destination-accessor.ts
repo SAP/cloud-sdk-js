@@ -2,7 +2,7 @@
 
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
-import { sanitizeDestination } from './destination';
+import { sanitizeDestination, isDestinationConfiguration, parseDestination } from './destination';
 import { Destination } from './destination-service-types';
 
 const logger = createLogger({
@@ -12,13 +12,20 @@ const logger = createLogger({
 
 /**
  * Get all destinations from the environment variable "destinations".
- * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
- * from the Cloud Foundry destination service.
+ * This is discouraged for productive use! Use [[useOrFetchDestination]] for fetching destinations from the Cloud Foundry destination service.
  *
  * @returns A list of destinations
  */
 export function getDestinationsFromEnv(): Destination[] {
-  return getDestinationsEnvVariable() ? JSON.parse(getDestinationsEnvVariable()!).map(entry => sanitizeDestination(entry)) : [];
+  const destinationsEnv = getDestinationsEnvVariable();
+  if (destinationsEnv) {
+    const destinations = JSON.parse(destinationsEnv);
+    validateDestinations(destinations);
+    return destinations.map(destination =>
+      isDestinationConfiguration(destination) ? parseDestination(destination) : sanitizeDestination(destination)
+    );
+  }
+  return [];
 }
 
 /**
@@ -45,7 +52,6 @@ export function getDestinations(): Destination[] {
 export function getDestinationFromEnvByName(name: string): Destination | null {
   const destinations = getDestinationsFromEnv();
   if (destinations.length) {
-    validateDestinations(destinations);
     const matchingDestinations = destinations.filter(dest => dest.name === name);
     if (matchingDestinations.length > 1) {
       logger.warn(`The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be respected.`);
@@ -88,11 +94,12 @@ export function getDestinationsEnvVariable(): string | undefined {
   return process.env['destinations'];
 }
 
-function validateDestinations(destinations: Destination[]) {
+function validateDestinations(destinations: any[]) {
   destinations.forEach(destination => {
-    if (typeof destination.name === 'undefined') {
-      logger.warn(`Destination from 'destinations' env variable is missing 'name' property. Make sure it exists: ${JSON.stringify(destination)}`);
+    if (typeof destination.name === 'undefined' && typeof destination.Name === 'undefined') {
+      logger.warn(
+        `Destination from 'destinations' env variable is missing 'name' or 'Name' property. Make sure it exists: ${JSON.stringify(destination)}`
+      );
     }
   });
 }
-

@@ -39,8 +39,8 @@ export const defaultDestination: Destination = {
   originalProperties: {}
 };
 
-export function mockDestinationsEnv(...destinations: Destination[]) {
-  process.env.destinations = JSON.stringify([...destinations, defaultDestination]);
+export function mockDestinationsEnv(...destinations) {
+  process.env.destinations = JSON.stringify([...destinations]);
 }
 
 export function unmockDestinationsEnv() {

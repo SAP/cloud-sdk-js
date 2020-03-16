@@ -65,6 +65,10 @@ function validateDestinationInput(destinationInput: MapType<any>): void {
   }
 }
 
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * @hidden
+ */
 export function toDestinationNameUrl(destination: Destination | DestinationNameAndJwt): string {
   return isDestinationNameAndJwt(destination) ? `name: ${destination.destinationName}` : `name: ${destination.name}, url: ${destination.url}`;
 }
@@ -121,13 +125,19 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
   return destination.authentication || (destination.username && destination.password) ? 'BasicAuthentication' : 'NoAuthentication';
 }
 
-interface DestinationJson {
+/**
+ * Destination configuration alongside authtokens and certificates.
+ */
+export interface DestinationJson {
   destinationConfiguration: DestinationConfiguration;
   authTokens?: MapType<string>[];
   certificates?: MapType<string>[];
 }
 
-interface DestinationConfiguration {
+/**
+ * Configuration of a destination as it is available through the destination service.
+ */
+export interface DestinationConfiguration {
   URL: string;
   Name?: string;
   ProxyType?: string;
@@ -144,6 +154,10 @@ interface DestinationConfiguration {
   SystemUser?: string;
 }
 
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * @hidden
+ */
 export function isDestinationConfiguration(destination: any): destination is DestinationConfiguration {
   return destination.URL !== undefined;
 }

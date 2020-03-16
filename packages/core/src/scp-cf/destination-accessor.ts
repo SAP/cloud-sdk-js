@@ -185,7 +185,7 @@ export async function getDestinationFromDestinationService(
         destination = await fetchDestination(destinationService.credentials.uri, providerToken, name, options);
       } else {
         if (!options.userJwt) {
-          throw new Error(`The user jwt is ${options.userJwt}.`);
+          throw Error(`No user token (JWT) has been provided! This is strictly necessary for principal propagation. Value of the JWT: ${options.userJwt}`);
         }
         destination = await getDestinationWithAuthTokens(name, options.userJwt, options);
       }
@@ -239,10 +239,14 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
         'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
     );
 
-    const destination = getDestinationFromEnvByName(name);
-    if (destination) {
-      logger.info('Sucessfully retrieved destination from environment variable.');
-      return destination;
+    try {
+      const destination = getDestinationFromEnvByName(name);
+      if (destination) {
+        logger.info('Sucessfully retrieved destination from environment variable.');
+        return destination;
+      }
+    } catch (error) {
+      logger.info(error.message);
     }
   }
 
@@ -310,7 +314,7 @@ async function getDestinationWithAuthTokens(name: string, userJwt: string, optio
 function getDestinationServiceCredentials(): DestinationServiceCredentials {
   const credentials = getDestinationServiceCredentialsList();
   if (!credentials || credentials.length === 0) {
-    throw new Error('No binding to a Destination service instance found. Please bind a destination service instance to your application!');
+    throw Error('No binding to a Destination service instance found. Please bind a destination service instance to your application!');
   }
 
   return credentials[0];
@@ -323,11 +327,5 @@ function subscriberDestinationIsSelected(selectionStrategy: DestinationSelection
 }
 
 function emptyDestinationsByType(destinationByType: DestinationsByType): boolean {
-  return destinationByType.instance.length + destinationByType.instance.length === 0;
-}
-
-function throwErrorWhenNull(obj: any, readableName: string) {
-  if (!obj) {
-    throw new Error(`The ${readableName} is ${obj}.`);
-  }
+  return !destinationByType.instance.length && !destinationByType.instance.length;
 }

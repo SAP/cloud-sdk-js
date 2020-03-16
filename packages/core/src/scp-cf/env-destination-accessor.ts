@@ -50,18 +50,15 @@ export function getDestinations(): Destination[] {
  * @returns The requested destination if existent, otherwise `null`
  */
 export function getDestinationFromEnvByName(name: string): Destination | null {
-  const destinations = getDestinationsFromEnv();
-  if (destinations.length) {
-    const matchingDestinations = destinations.filter(dest => dest.name === name);
-    if (matchingDestinations.length > 1) {
-      logger.warn(`The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be respected.`);
-    }
-    const destination = matchingDestinations[0];
-    if (destination) {
-      return proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ? addProxyConfigurationInternet(destination) : destination;
-    }
+  const matchingDestinations = getDestinationsFromEnv().filter(dest => dest.name === name);
+  if (!matchingDestinations.length) {
+    return null;
   }
-  return null;
+  if (matchingDestinations.length > 1) {
+    logger.warn(`The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be respected.`);
+  }
+  const destination = matchingDestinations[0];
+  return proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ? addProxyConfigurationInternet(destination) : destination;
 }
 
 /**
@@ -98,7 +95,7 @@ function validateDestinations(destinations: any[]) {
   destinations.forEach(destination => {
     if (typeof destination.name === 'undefined' && typeof destination.Name === 'undefined') {
       logger.warn(
-        `Destination from 'destinations' env variable is missing 'name' or 'Name' property. Make sure it exists: ${JSON.stringify(destination)}`
+        `Destination from 'destinations' env variable is missing 'name' or 'Name' property.`
       );
     }
   });

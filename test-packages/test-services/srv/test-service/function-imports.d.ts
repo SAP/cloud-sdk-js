@@ -18,7 +18,7 @@ export interface TestFunctionImportNoReturnTypeParameters {}
  */
 export declare function testFunctionImportNoReturnType(
   parameters: TestFunctionImportNoReturnTypeParameters
-): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, Promise<void>>;
+): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, undefined>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */

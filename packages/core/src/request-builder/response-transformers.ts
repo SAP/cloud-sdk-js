@@ -6,7 +6,7 @@ import { Constructable } from '../constructable';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 
-export async function transformReturnValueForPromiseVoid<ReturnT>(data: any, builderFn: (data: any) => ReturnT) {
+export function transformReturnValueForPromiseVoid<ReturnT>(data: any, builderFn: (data: any) => ReturnT) {
   return builderFn(data);
 }
 

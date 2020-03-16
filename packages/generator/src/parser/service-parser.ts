@@ -247,7 +247,7 @@ function parseReturnType(returnType: string, entities: VdmEntity[], complexTypes
   if (!returnType) {
     return {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
-      returnType: 'Promise<void>',
+      returnType: 'undefined',
       builderFunction: '(val) => undefined',
       isMulti: false
     };

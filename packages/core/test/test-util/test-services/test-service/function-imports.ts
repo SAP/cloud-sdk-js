@@ -31,7 +31,7 @@ export interface TestFunctionImportNoReturnTypeParameters {}
  */
 export function testFunctionImportNoReturnType(
   parameters: TestFunctionImportNoReturnTypeParameters
-): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, Promise<void>> {
+): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, undefined> {
   const params = {};
 
   return new FunctionImportRequestBuilder(

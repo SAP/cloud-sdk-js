@@ -55,7 +55,7 @@ export function parseDestination(destinationJson: DestinationJson | DestinationC
 
 function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
   if (typeof destinationConfig.URL === 'undefined') {
-    throw Error("'URL' property of destination configuration may not be undefined.");
+    throw Error("Property 'URL' of destination configuration must not be undefined.");
   }
 }
 

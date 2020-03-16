@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { basicHeader } from '../../src/request-builder/header-builder/authorization-header';
 

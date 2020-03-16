@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { convertToUriFormat } from '../../uri-value-converter';
@@ -10,16 +8,16 @@ import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
 /**
  * OData function import request configuration for a set of parameters.
  *
- * @typeparam ParametersT Type of the original parameters object
+ * @typeparam ParametersT - Type of the original parameters object
  */
 export class ODataFunctionImportRequestConfig<ParametersT> extends ODataRequestConfig {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    *
-   * @param method HTTP method for the request
-   * @param defaultServicePath Default path of the service
-   * @param functionImportName The name of the function import.
-   * @param parameters Object containing the parameters with a value and additional meta information
+   * @param method - HTTP method for the request
+   * @param defaultServicePath - Default path of the service
+   * @param functionImportName - The name of the function import.
+   * @param parameters - Object containing the parameters with a value and additional meta information
    */
   constructor(
     method: RequestMethodType,

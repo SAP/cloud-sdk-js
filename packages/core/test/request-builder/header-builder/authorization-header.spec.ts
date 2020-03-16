@@ -1,4 +1,6 @@
 import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
 import { addAuthorizationHeader } from '../../../src/request-builder/header-builder/authorization-header';
 import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config';
 import { ODataRequest } from '../../../src/request-builder/request/odata-request';

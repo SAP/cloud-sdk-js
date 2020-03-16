@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { convertToUriFormat } from '../../src';
 import { TestEntity } from './test-services/test-service';

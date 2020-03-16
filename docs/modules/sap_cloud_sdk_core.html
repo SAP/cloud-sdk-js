@@ -15,8 +15,8 @@
 			<div class="table-wrap">
 				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
-						
-						
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
 					</div>
 					<ul class="results">
 						<li class="state loading">Preparing search index...</li>
@@ -205,6 +205,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_core#authenticationtype" class="tsd-kind-icon">Authentication<wbr>Type</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_core#batchresponse" class="tsd-kind-icon">Batch<wbr>Response</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_core#constructororfield" class="tsd-kind-icon">Constructor<wbr>OrField</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_core#deepfieldtype" class="tsd-kind-icon">Deep<wbr>Field<wbr>Type</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_core#destinationoptions" class="tsd-kind-icon">Destination<wbr>Options</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_core#destinationproxytype" class="tsd-kind-icon">Destination<wbr>Proxy<wbr>Type</a></li>
@@ -293,6 +294,8 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#getdestinationserviceuri" class="tsd-kind-icon">get<wbr>Destination<wbr>Service<wbr>Uri</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#getdestinations" class="tsd-kind-icon">get<wbr>Destinations</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#getdestinationsfromenv" class="tsd-kind-icon">get<wbr>Destinations<wbr>From<wbr>Env</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#getedmtype" class="tsd-kind-icon">get<wbr>Edm<wbr>Type</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_core#getentityconstructor" class="tsd-kind-icon">get<wbr>Entity<wbr>Constructor</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_core#getentitykeys" class="tsd-kind-icon">get<wbr>Entity<wbr>Keys</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#getenvironmentvariable" class="tsd-kind-icon">get<wbr>Environment<wbr>Variable</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#getgranttokencachekey" class="tsd-kind-icon">get<wbr>Grant<wbr>Token<wbr>Cache<wbr>Key</a></li>
@@ -352,6 +355,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_core#transformreturnvalueforedmtypelist" class="tsd-kind-icon">transform<wbr>Return<wbr>Value<wbr>For<wbr>Edm<wbr>Type<wbr>List</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_core#transformreturnvalueforentity" class="tsd-kind-icon">transform<wbr>Return<wbr>Value<wbr>For<wbr>Entity</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_core#transformreturnvalueforentitylist" class="tsd-kind-icon">transform<wbr>Return<wbr>Value<wbr>For<wbr>Entity<wbr>List</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_core#transformreturnvalueforpromisevoid" class="tsd-kind-icon">transform<wbr>Return<wbr>Value<wbr>For<wbr>Promise<wbr>Void</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#useorfetchdestination" class="tsd-kind-icon">use<wbr>OrFetch<wbr>Destination</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#userapprovedservicetoken" class="tsd-kind-icon">user<wbr>Approved<wbr>Service<wbr>Token</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_core#useremail" class="tsd-kind-icon">user<wbr>Email</a></li>
@@ -388,7 +392,7 @@
 					<div class="tsd-signature tsd-kind-icon">Authentication<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"NoAuthentication"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"BasicAuthentication"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"OAuth2SAMLBearerAssertion"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"OAuth2ClientCredentials"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ClientCertificateAuthentication"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service-types.ts#L208">core/src/scp-cf/destination-service-types.ts:208</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service-types.ts#L208">core/src/scp-cf/destination-service-types.ts:208</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -398,9 +402,25 @@
 					<div class="tsd-signature tsd-kind-icon">Batch<wbr>Response<span class="tsd-signature-symbol">:</span> <a href="../interfaces/sap_cloud_sdk_core.readresponse" class="tsd-signature-type">ReadResponse</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/sap_cloud_sdk_core.writeresponses" class="tsd-signature-type">WriteResponses</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/sap_cloud_sdk_core.errorresponse" class="tsd-signature-type">ErrorResponse</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/batch-response.ts#L8">core/src/batch-response.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/batch-response.ts#L8">core/src/batch-response.ts:8</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="constructororfield" class="tsd-anchor"></a>
+					<h3>Constructor<wbr>OrField</h3>
+					<div class="tsd-signature tsd-kind-icon">Constructor<wbr>OrField&lt;EntityT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.complextypefield" class="tsd-signature-type">ComplexTypeField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/complex-type-field.ts#L68">core/src/selectable/complex-type-field.ts:68</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>EntityT<span class="tsd-signature-symbol">: </span><a href="../classes/sap_cloud_sdk_core.entity" class="tsd-signature-type">Entity</a></h4>
+						</li>
+					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
 					<a name="deepfieldtype" class="tsd-anchor"></a>
@@ -408,7 +428,7 @@
 					<div class="tsd-signature tsd-kind-icon">Deep<wbr>Field<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#fieldtype" class="tsd-signature-type">FieldType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/field.ts#L20">core/src/selectable/field.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/field.ts#L20">core/src/selectable/field.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -426,7 +446,7 @@
 					<div class="tsd-signature tsd-kind-icon">Destination<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/sap_cloud_sdk_core.destinationaccessoroptions" class="tsd-signature-type">DestinationAccessorOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="sap_cloud_sdk_core#destinationretrievaloptions" class="tsd-signature-type">DestinationRetrievalOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/sap_cloud_sdk_core.verifyjwtoptions" class="tsd-signature-type">VerifyJwtOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-accessor.ts#L64">core/src/scp-cf/destination-accessor.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-accessor.ts#L64">core/src/scp-cf/destination-accessor.ts:64</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -436,7 +456,7 @@
 					<div class="tsd-signature tsd-kind-icon">Destination<wbr>Proxy<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"OnPremise"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Internet"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service-types.ts#L127">core/src/scp-cf/destination-service-types.ts:127</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service-types.ts#L127">core/src/scp-cf/destination-service-types.ts:127</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -446,7 +466,7 @@
 					<div class="tsd-signature tsd-kind-icon">Destination<wbr>Retrieval<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/sap_cloud_sdk_core.cachingoptions" class="tsd-signature-type">CachingOptions</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/sap_cloud_sdk_core.destinationcachingoptions" class="tsd-signature-type">DestinationCachingOptions</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/sap_cloud_sdk_core.resilienceoptions" class="tsd-signature-type">ResilienceOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service-types.ts#L198">core/src/scp-cf/destination-service-types.ts:198</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service-types.ts#L198">core/src/scp-cf/destination-service-types.ts:198</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -461,7 +481,7 @@
 					<div class="tsd-signature tsd-kind-icon">Destination<wbr>Selection<wbr>Strategy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L8">core/src/scp-cf/destination-selection-strategies.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L8">core/src/scp-cf/destination-selection-strategies.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -498,7 +518,7 @@
 					<div class="tsd-signature tsd-kind-icon">Edm<wbr>ToPrimitive&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T extends &quot;Edm.Int16&quot; | &quot;Edm.Int32&quot; | &quot;Edm.Single&quot; | &quot;Edm.Double&quot; | &quot;Edm.Float&quot; | &quot;Edm.Byte&quot; | &quot;Edm.SByte&quot; ? number : T extends &quot;Edm.Decimal&quot; | &quot;Edm.Int64&quot; ? BigNumber : T extends &quot;Edm.DateTime&quot; | &quot;Edm.DateTimeOffset&quot; ? Moment : T extends &quot;Edm.String&quot; | &quot;Edm.Guid&quot; ? string : T extends &quot;Edm.Boolean&quot; ? boolean : T extends &quot;Edm.Time&quot; ? Time : any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/payload-value-converter.ts#L144">core/src/payload-value-converter.ts:144</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/payload-value-converter.ts#L144">core/src/payload-value-converter.ts:144</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -514,7 +534,7 @@
 					<div class="tsd-signature tsd-kind-icon">Edm<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Edm.String"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Boolean"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Guid"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Decimal"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Double"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Single"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Float"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Int16"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Int32"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Int64"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.SByte"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.DateTime"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.DateTimeOffset"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Time"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Binary"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Edm.Byte"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/edm-types.ts#L5">core/src/edm-types.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/edm-types.ts#L5">core/src/edm-types.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -524,7 +544,7 @@
 					<div class="tsd-signature tsd-kind-icon">Entity<wbr>Builder<wbr>Type&lt;EntityT, EntityTypeForceMandatoryT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">EntityBuilder</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EntityTypeForceMandatoryT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/entity.ts#L12">core/src/entity.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/entity.ts#L12">core/src/entity.ts:12</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -543,7 +563,7 @@
 					<div class="tsd-signature tsd-kind-icon">Execute<wbr>Http<wbr>Request<wbr>Fn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/http-client/http-client-types.ts#L39">core/src/http-client/http-client-types.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/http-client/http-client-types.ts#L39">core/src/http-client/http-client-types.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -574,7 +594,7 @@
 					<div class="tsd-signature tsd-kind-icon">Field<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Time</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Moment</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigNumber</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/field.ts#L14">core/src/selectable/field.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/field.ts#L14">core/src/selectable/field.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -589,7 +609,7 @@
 					<div class="tsd-signature tsd-kind-icon">Filter<wbr>Function<wbr>Parameter<wbr>Type&lt;EntityT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.field" class="tsd-signature-type">Field</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.filterfunction" class="tsd-signature-type">FilterFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">, </span><a href="sap_cloud_sdk_core#fieldtype" class="tsd-signature-type">FieldType</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filter-function.ts#L82">core/src/filter/filter-function.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filter-function.ts#L82">core/src/filter/filter-function.ts:82</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -610,7 +630,7 @@
 					<div class="tsd-signature tsd-kind-icon">Filter<wbr>Operator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FilterOperatorString</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FilterOperatorBoolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FilterOperatorNumber</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filter.ts#L15">core/src/filter/filter.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filter.ts#L15">core/src/filter/filter.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -620,7 +640,7 @@
 					<div class="tsd-signature tsd-kind-icon">Filter<wbr>Operator<wbr>ByType&lt;FieldT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FieldT extends string ? FilterOperatorString : FieldT extends number ? FilterOperatorNumber : FilterOperatorBoolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filter.ts#L17">core/src/filter/filter.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filter.ts#L17">core/src/filter/filter.ts:17</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -636,7 +656,7 @@
 					<div class="tsd-signature tsd-kind-icon">Filterable&lt;EntityT&gt;<span class="tsd-signature-symbol">:</span> <a href="../classes/sap_cloud_sdk_core.filter" class="tsd-signature-type">Filter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">, </span><a href="sap_cloud_sdk_core#fieldtype" class="tsd-signature-type">FieldType</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.filterlink" class="tsd-signature-type">FilterLink</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.filterlist" class="tsd-signature-type">FilterList</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filterable.ts#L16">core/src/filter/filterable.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filterable.ts#L16">core/src/filter/filterable.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -662,7 +682,7 @@
 					<div class="tsd-signature tsd-kind-icon">Function<wbr>Import<wbr>Parameters&lt;ParametersT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/request/function-import-parameter.ts#L25">core/src/request-builder/request/function-import-parameter.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/request/function-import-parameter.ts#L25">core/src/request-builder/request/function-import-parameter.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -693,7 +713,7 @@
 					<div class="tsd-signature tsd-kind-icon">Http<wbr>Request<span class="tsd-signature-symbol">:</span> <a href="../interfaces/sap_cloud_sdk_core.destinationhttprequestconfig" class="tsd-signature-type">DestinationHttpRequestConfig</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/sap_cloud_sdk_core.httprequestconfig" class="tsd-signature-type">HttpRequestConfig</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/http-client/http-client-types.ts#L37">core/src/http-client/http-client-types.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/http-client/http-client-types.ts#L37">core/src/http-client/http-client-types.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -703,7 +723,7 @@
 					<div class="tsd-signature tsd-kind-icon">Jwt<wbr>Key<wbr>Mapping&lt;TypescriptKeys, JwtKeys&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L364">core/src/util/jwt.ts:364</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L364">core/src/util/jwt.ts:364</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -727,7 +747,7 @@
 					<div class="tsd-signature tsd-kind-icon">Orderable&lt;EntityT&gt;<span class="tsd-signature-symbol">:</span> <a href="../classes/sap_cloud_sdk_core.order" class="tsd-signature-type">Order</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.orderlink" class="tsd-signature-type">OrderLink</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">, </span><a href="../classes/sap_cloud_sdk_core.entity" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/order/orderable.ts#L16">core/src/order/orderable.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/order/orderable.ts#L16">core/src/order/orderable.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -753,7 +773,7 @@
 					<div class="tsd-signature tsd-kind-icon">Orderable<wbr>Input&lt;EntityT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SimpleTypeFields</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.link" class="tsd-signature-type">Link</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">, </span><a href="../classes/sap_cloud_sdk_core.entity" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ComplexTypePropertyFields</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/order/orderable.ts#L23">core/src/order/orderable.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/order/orderable.ts#L23">core/src/order/orderable.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -779,7 +799,7 @@
 					<div class="tsd-signature tsd-kind-icon">RegisteredJWTClaims<span class="tsd-signature-symbol">:</span> <a href="../interfaces/sap_cloud_sdk_core.registeredjwtclaimsbasic" class="tsd-signature-type">RegisteredJWTClaimsBasic</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/sap_cloud_sdk_core.registeredjwtclaimsuser" class="tsd-signature-type">RegisteredJWTClaimsUser</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/sap_cloud_sdk_core.registeredjwtclaimstenant" class="tsd-signature-type">RegisteredJWTClaimsTenant</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L342">core/src/util/jwt.ts:342</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L342">core/src/util/jwt.ts:342</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -794,7 +814,7 @@
 					<div class="tsd-signature tsd-kind-icon">Request<wbr>Method<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"get"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"post"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"patch"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"put"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/request/odata-request-config.ts#L7">core/src/request-builder/request/odata-request-config.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/request/odata-request-config.ts#L7">core/src/request-builder/request/odata-request-config.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -804,7 +824,7 @@
 					<div class="tsd-signature tsd-kind-icon">Selectable&lt;EntityT&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SimpleTypeFields</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.link" class="tsd-signature-type">Link</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.complextypefield" class="tsd-signature-type">ComplexTypeField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.customfield" class="tsd-signature-type">CustomField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.allfields" class="tsd-signature-type">AllFields</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/selectable.ts#L18">core/src/selectable/selectable.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/selectable.ts#L18">core/src/selectable/selectable.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -833,7 +853,7 @@
 					<div class="tsd-signature tsd-kind-icon">client<wbr>Credentials<wbr>Token<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;ClientCredentialsTokenCache(new Cache&lt;ClientCredentialsResponse&gt;())</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/client-credentials-token-cache.ts#L30">core/src/scp-cf/client-credentials-token-cache.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/client-credentials-token-cache.ts#L30">core/src/scp-cf/client-credentials-token-cache.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -848,7 +868,7 @@
 					<div class="tsd-signature tsd-kind-icon">content_<wbr>transfer_<wbr>encoding_<wbr>line<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Content-Transfer-Encoding: binary"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Content-Transfer-Encoding: binary&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/odate-batch-consts.ts#L6">core/src/odate-batch-consts.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/odate-batch-consts.ts#L6">core/src/odate-batch-consts.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -858,7 +878,7 @@
 					<div class="tsd-signature tsd-kind-icon">destination<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;DestinationCache(new Cache&lt;Destination&gt;({ hours: 0, minutes: 5, seconds: 0 }))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-cache.ts#L57">core/src/scp-cf/destination-cache.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-cache.ts#L57">core/src/scp-cf/destination-cache.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -873,7 +893,7 @@
 					<div class="tsd-signature tsd-kind-icon">execute<wbr>Http<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">(Anonymous function)</span><span class="tsd-signature-symbol"> =&nbsp;execute(executeWithAxios)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/http-client/http-client.ts#L74">core/src/http-client/http-client.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/http-client/http-client.ts#L74">core/src/http-client/http-client.ts:74</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -900,7 +920,7 @@
 					<div class="tsd-signature tsd-kind-icon">http_<wbr>version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"HTTP/1.1"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;HTTP/1.1&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/odate-batch-consts.ts#L7">core/src/odate-batch-consts.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/odate-batch-consts.ts#L7">core/src/odate-batch-consts.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -910,7 +930,7 @@
 					<div class="tsd-signature tsd-kind-icon">part_<wbr>content_<wbr>type_<wbr>line<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Content-Type: application/http"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Content-Type: application/http&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/odate-batch-consts.ts#L5">core/src/odate-batch-consts.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/odate-batch-consts.ts#L5">core/src/odate-batch-consts.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -920,7 +940,7 @@
 					<div class="tsd-signature tsd-kind-icon">verification<wbr>Key<wbr>Cache<span class="tsd-signature-symbol">:</span> <a href="../classes/sap_cloud_sdk_core.cache" class="tsd-signature-type">Cache</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Cache({ minutes: 15 })</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L128">core/src/util/jwt.ts:128</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L128">core/src/util/jwt.ts:128</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -937,7 +957,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/authorization-header.ts#L22">core/src/request-builder/header-builder/authorization-header.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/authorization-header.ts#L22">core/src/request-builder/header-builder/authorization-header.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -981,7 +1001,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/csrf-token-header.ts#L18">core/src/request-builder/header-builder/csrf-token-header.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/csrf-token-header.ts#L18">core/src/request-builder/header-builder/csrf-token-header.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1013,7 +1033,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/http-client/http-client.ts#L41">core/src/http-client/http-client.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/http-client/http-client.ts#L41">core/src/http-client/http-client.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1061,7 +1081,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/header-builder.ts#L59">core/src/request-builder/header-builder/header-builder.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/header-builder.ts#L59">core/src/request-builder/header-builder/header-builder.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1084,7 +1104,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/connectivity-service.ts#L30">core/src/scp-cf/connectivity-service.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/connectivity-service.ts#L30">core/src/scp-cf/connectivity-service.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1129,7 +1149,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/proxy-util.ts#L190">core/src/util/proxy-util.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/proxy-util.ts#L190">core/src/util/proxy-util.ts:190</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1161,7 +1181,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/connectivity-service.ts#L40">core/src/scp-cf/connectivity-service.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/connectivity-service.ts#L40">core/src/scp-cf/connectivity-service.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1187,7 +1207,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/header-builder.ts#L56">core/src/request-builder/header-builder/header-builder.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/header-builder.ts#L56">core/src/request-builder/header-builder/header-builder.ts:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1210,7 +1230,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/header-builder.ts#L52">core/src/request-builder/header-builder/header-builder.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/header-builder.ts#L52">core/src/request-builder/header-builder/header-builder.ts:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1233,7 +1253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L17">core/src/scp-cf/destination-selection-strategies.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L17">core/src/scp-cf/destination-selection-strategies.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1274,7 +1294,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L30">core/src/scp-cf/destination-selection-strategies.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L30">core/src/scp-cf/destination-selection-strategies.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1315,7 +1335,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filterable.ts#L39">core/src/filter/filterable.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filterable.ts#L39">core/src/filter/filterable.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1364,7 +1384,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/order/orderable.ts#L32">core/src/order/orderable.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/order/orderable.ts#L32">core/src/order/orderable.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1405,7 +1425,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L294">core/src/util/jwt.ts:294</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L294">core/src/util/jwt.ts:294</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1437,7 +1457,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/authorization-header.ts#L123">core/src/request-builder/header-builder/authorization-header.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/authorization-header.ts#L123">core/src/request-builder/header-builder/authorization-header.ts:123</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1463,7 +1483,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/authorization-header.ts#L45">core/src/request-builder/header-builder/authorization-header.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/authorization-header.ts#L45">core/src/request-builder/header-builder/authorization-header.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1497,7 +1517,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/header-builder.ts#L23">core/src/request-builder/header-builder/header-builder.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/header-builder.ts#L23">core/src/request-builder/header-builder/header-builder.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1541,7 +1561,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/header-builder/header-builder.ts#L44">core/src/request-builder/header-builder/header-builder.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/header-builder/header-builder.ts#L44">core/src/request-builder/header-builder/header-builder.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1575,7 +1595,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/http-client/http-client.ts#L20">core/src/http-client/http-client.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/http-client/http-client.ts#L20">core/src/http-client/http-client.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1608,7 +1628,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L375">core/src/util/jwt.ts:375</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L375">core/src/util/jwt.ts:375</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1656,7 +1676,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/xsuaa-service.ts#L26">core/src/scp-cf/xsuaa-service.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/xsuaa-service.ts#L26">core/src/scp-cf/xsuaa-service.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1708,7 +1728,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/uri-value-converter.ts#L60">core/src/uri-value-converter.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/uri-value-converter.ts#L60">core/src/uri-value-converter.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1731,7 +1751,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/create-complex-type.ts#L5">core/src/selectable/create-complex-type.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/create-complex-type.ts#L5">core/src/selectable/create-complex-type.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1763,7 +1783,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L263">core/src/util/jwt.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L263">core/src/util/jwt.ts:263</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1795,7 +1815,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L23">core/src/util/jwt.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L23">core/src/util/jwt.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1827,7 +1847,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/order/orderable.ts#L46">core/src/order/orderable.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/order/orderable.ts#L46">core/src/order/orderable.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1868,7 +1888,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/entity-deserializer.ts#L41">core/src/entity-deserializer.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/entity-deserializer.ts#L41">core/src/entity-deserializer.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1920,7 +1940,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/vcap-service-destination.ts#L20">core/src/scp-cf/vcap-service-destination.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/vcap-service-destination.ts#L20">core/src/scp-cf/vcap-service-destination.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1960,7 +1980,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/http-client/http-client.ts#L58">core/src/http-client/http-client.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/http-client/http-client.ts#L58">core/src/http-client/http-client.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1997,7 +2017,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L207">core/src/scp-cf/environment-accessor.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L207">core/src/scp-cf/environment-accessor.ts:207</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2029,7 +2049,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/entity-deserializer.ts#L20">core/src/entity-deserializer.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/entity-deserializer.ts#L20">core/src/entity-deserializer.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2077,7 +2097,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service.ts#L63">core/src/scp-cf/destination-service.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service.ts#L63">core/src/scp-cf/destination-service.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2128,7 +2148,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service.ts#L24">core/src/scp-cf/destination-service.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service.ts#L24">core/src/scp-cf/destination-service.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2172,7 +2192,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service.ts#L36">core/src/scp-cf/destination-service.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service.ts#L36">core/src/scp-cf/destination-service.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2217,7 +2237,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/xsuaa-service.ts#L96">core/src/scp-cf/xsuaa-service.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/xsuaa-service.ts#L96">core/src/scp-cf/xsuaa-service.ts:96</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2240,7 +2260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/xsuaa-service.ts#L105">core/src/scp-cf/xsuaa-service.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/xsuaa-service.ts#L105">core/src/scp-cf/xsuaa-service.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2286,7 +2306,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/odata-v2-filter-functions.ts#L49">core/src/filter/odata-v2-filter-functions.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/odata-v2-filter-functions.ts#L49">core/src/filter/odata-v2-filter-functions.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2333,7 +2353,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/odata-v2-filter-functions.ts#L55">core/src/filter/odata-v2-filter-functions.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/odata-v2-filter-functions.ts#L55">core/src/filter/odata-v2-filter-functions.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2380,7 +2400,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/odata-v2-filter-functions.ts#L61">core/src/filter/odata-v2-filter-functions.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/odata-v2-filter-functions.ts#L61">core/src/filter/odata-v2-filter-functions.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2436,7 +2456,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/http-agent.ts#L25">core/src/request-builder/http-agent.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/http-agent.ts#L25">core/src/request-builder/http-agent.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2473,7 +2493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/http-client/http-client.ts#L116">core/src/http-client/http-client.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/http-client/http-client.ts#L116">core/src/http-client/http-client.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2496,7 +2516,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-accessor.ts#L97">core/src/scp-cf/destination-accessor.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-accessor.ts#L97">core/src/scp-cf/destination-accessor.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2541,7 +2561,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L22">core/src/scp-cf/environment-accessor.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L22">core/src/scp-cf/environment-accessor.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2564,7 +2584,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/env-destination-accessor.ts#L70">core/src/scp-cf/env-destination-accessor.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/env-destination-accessor.ts#L70">core/src/scp-cf/env-destination-accessor.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2604,7 +2624,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-accessor.ts#L117">core/src/scp-cf/destination-accessor.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-accessor.ts#L117">core/src/scp-cf/destination-accessor.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2646,7 +2666,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/env-destination-accessor.ts#L45">core/src/scp-cf/env-destination-accessor.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/env-destination-accessor.ts#L45">core/src/scp-cf/env-destination-accessor.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2683,7 +2703,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-accessor.ts#L80">core/src/scp-cf/destination-accessor.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-accessor.ts#L80">core/src/scp-cf/destination-accessor.ts:80</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2728,7 +2748,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L37">core/src/scp-cf/environment-accessor.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L37">core/src/scp-cf/environment-accessor.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2752,7 +2772,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L46">core/src/scp-cf/environment-accessor.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L46">core/src/scp-cf/environment-accessor.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2779,7 +2799,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L151">core/src/scp-cf/environment-accessor.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L151">core/src/scp-cf/environment-accessor.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2812,7 +2832,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/env-destination-accessor.ts#L33">core/src/scp-cf/env-destination-accessor.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/env-destination-accessor.ts#L33">core/src/scp-cf/env-destination-accessor.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2840,7 +2860,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/env-destination-accessor.ts#L16">core/src/scp-cf/env-destination-accessor.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/env-destination-accessor.ts#L16">core/src/scp-cf/env-destination-accessor.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2855,6 +2875,82 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getedmtype" class="tsd-anchor"></a>
+					<h3>get<wbr>Edm<wbr>Type</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Edm<wbr>Type<span class="tsd-signature-symbol">(</span>arg1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a>, arg2<span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/complex-type-field.ts#L85">core/src/selectable/complex-type-field.ts:85</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convenience method to return the EDM type for the overloaed constructor e.g. ComplexTypeStringPropertyField</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arg1: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Contains either the type name or the EdmType</p>
+									</div>
+								</li>
+								<li>
+									<h5>arg2: <a href="sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Contains either the EdmType or undefined</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a></h4>
+							<p>EdmType</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="getentityconstructor" class="tsd-anchor"></a>
+					<h3>get<wbr>Entity<wbr>Constructor</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Entity<wbr>Constructor&lt;EntityT&gt;<span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.complextypefield" class="tsd-signature-type">ComplexTypeField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/complex-type-field.ts#L75">core/src/selectable/complex-type-field.ts:75</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convenience method to return the entity constructor in the complex extensions of the normal fields e.g. ComplexTypeStringPropertyField</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>EntityT<span class="tsd-signature-symbol">: </span><a href="../classes/sap_cloud_sdk_core.entity" class="tsd-signature-type">Entity</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arg: <span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../classes/sap_cloud_sdk_core.complextypefield" class="tsd-signature-type">ComplexTypeField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Contains either the entity containing the complex field or a complex field in case of nested fields.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Constructable</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 					<a name="getentitykeys" class="tsd-anchor"></a>
 					<h3>get<wbr>Entity<wbr>Keys</h3>
@@ -2865,7 +2961,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/request/get-keys.ts#L17">core/src/request-builder/request/get-keys.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/request/get-keys.ts#L17">core/src/request-builder/request/get-keys.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2909,7 +3005,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L134">core/src/scp-cf/environment-accessor.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L134">core/src/scp-cf/environment-accessor.ts:134</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2947,7 +3043,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/client-credentials-token-cache.ts#L26">core/src/scp-cf/client-credentials-token-cache.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/client-credentials-token-cache.ts#L26">core/src/scp-cf/client-credentials-token-cache.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2973,7 +3069,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/client-credentials-token.ts#L16">core/src/scp-cf/client-credentials-token.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/client-credentials-token.ts#L16">core/src/scp-cf/client-credentials-token.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3005,7 +3101,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/http-agent.ts#L137">core/src/request-builder/http-agent.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/http-agent.ts#L137">core/src/request-builder/http-agent.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3042,7 +3138,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/request/get-filters.ts#L22">core/src/request-builder/request/get-filters.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/request/get-filters.ts#L22">core/src/request-builder/request/get-filters.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3091,7 +3187,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/request/get-orderby.ts#L15">core/src/request-builder/request/get-orderby.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/request/get-orderby.ts#L15">core/src/request-builder/request/get-orderby.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3134,7 +3230,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/request/get-selection.ts#L21">core/src/request-builder/request/get-selection.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/request/get-selection.ts#L21">core/src/request-builder/request/get-selection.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3176,7 +3272,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/odata-batch-request-builder.ts#L358">core/src/odata-batch-request-builder.ts:358</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/odata-batch-request-builder.ts#L358">core/src/odata-batch-request-builder.ts:358</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3209,7 +3305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/request/get-resource-path.ts#L25">core/src/request-builder/request/get-resource-path.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/request/get-resource-path.ts#L25">core/src/request-builder/request/get-resource-path.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3256,7 +3352,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L85">core/src/scp-cf/environment-accessor.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L85">core/src/scp-cf/environment-accessor.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3291,7 +3387,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L56">core/src/scp-cf/environment-accessor.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L56">core/src/scp-cf/environment-accessor.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3320,7 +3416,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L75">core/src/scp-cf/environment-accessor.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L75">core/src/scp-cf/environment-accessor.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3352,7 +3448,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/http-agent.ts#L159">core/src/request-builder/http-agent.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/http-agent.ts#L159">core/src/request-builder/http-agent.ts:159</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3390,7 +3486,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L108">core/src/scp-cf/environment-accessor.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L108">core/src/scp-cf/environment-accessor.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3421,7 +3517,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L172">core/src/scp-cf/environment-accessor.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L172">core/src/scp-cf/environment-accessor.ts:172</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3455,7 +3551,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/xsuaa-service.ts#L177">core/src/scp-cf/xsuaa-service.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/xsuaa-service.ts#L177">core/src/scp-cf/xsuaa-service.ts:177</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3478,7 +3574,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service-types.ts#L204">core/src/scp-cf/destination-service-types.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service-types.ts#L204">core/src/scp-cf/destination-service-types.ts:204</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3501,7 +3597,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-service-types.ts#L200">core/src/scp-cf/destination-service-types.ts:200</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-service-types.ts#L200">core/src/scp-cf/destination-service-types.ts:200</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3524,7 +3620,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filter.ts#L66">core/src/filter/filter.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filter.ts#L66">core/src/filter/filter.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3556,7 +3652,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filter-link.ts#L41">core/src/filter/filter-link.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filter-link.ts#L41">core/src/filter/filter-link.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3588,7 +3684,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filter-list.ts#L66">core/src/filter/filter-list.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filter-list.ts#L66">core/src/filter/filter-list.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3617,7 +3713,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L170">core/src/util/jwt.ts:170</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L170">core/src/util/jwt.ts:170</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3655,7 +3751,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L182">core/src/util/jwt.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L182">core/src/util/jwt.ts:182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3690,7 +3786,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/odata-v2-filter-functions.ts#L45">core/src/filter/odata-v2-filter-functions.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/odata-v2-filter-functions.ts#L45">core/src/filter/odata-v2-filter-functions.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3728,7 +3824,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/filterable.ts#L57">core/src/filter/filterable.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/filterable.ts#L57">core/src/filter/filterable.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3773,7 +3869,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination.ts#L32">core/src/scp-cf/destination.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination.ts#L32">core/src/scp-cf/destination.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3805,7 +3901,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/proxy-util.ts#L164">core/src/util/proxy-util.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/proxy-util.ts#L164">core/src/util/proxy-util.ts:164</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3842,7 +3938,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/proxy-util.ts#L210">core/src/util/proxy-util.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/proxy-util.ts#L210">core/src/util/proxy-util.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3875,7 +3971,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/proxy-util.ts#L28">core/src/util/proxy-util.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/proxy-util.ts#L28">core/src/util/proxy-util.ts:28</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3908,7 +4004,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/xsuaa-service.ts#L73">core/src/scp-cf/xsuaa-service.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/xsuaa-service.ts#L73">core/src/scp-cf/xsuaa-service.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3960,7 +4056,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L188">core/src/scp-cf/environment-accessor.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L188">core/src/scp-cf/environment-accessor.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3994,7 +4090,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L36">core/src/util/jwt.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L36">core/src/util/jwt.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4029,7 +4125,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination.ts#L22">core/src/scp-cf/destination.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination.ts#L22">core/src/scp-cf/destination.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4061,7 +4157,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/time.ts#L33">core/src/time.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/time.ts#L33">core/src/time.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4093,7 +4189,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/entity-serializer.ts#L19">core/src/entity-serializer.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/entity-serializer.ts#L19">core/src/entity-serializer.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4137,7 +4233,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/entity-serializer.ts#L30">core/src/entity-serializer.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/entity-serializer.ts#L30">core/src/entity-serializer.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4181,7 +4277,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/token-accessor.ts#L28">core/src/scp-cf/token-accessor.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/token-accessor.ts#L28">core/src/scp-cf/token-accessor.ts:28</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4223,7 +4319,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L45">core/src/scp-cf/destination-selection-strategies.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L45">core/src/scp-cf/destination-selection-strategies.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4264,7 +4360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/odata-v2-filter-functions.ts#L33">core/src/filter/odata-v2-filter-functions.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/odata-v2-filter-functions.ts#L33">core/src/filter/odata-v2-filter-functions.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4308,7 +4404,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/filter/odata-v2-filter-functions.ts#L20">core/src/filter/odata-v2-filter-functions.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/filter/odata-v2-filter-functions.ts#L20">core/src/filter/odata-v2-filter-functions.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4352,7 +4448,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L38">core/src/scp-cf/tenant.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L38">core/src/scp-cf/tenant.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4389,7 +4485,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L254">core/src/util/jwt.ts:254</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L254">core/src/util/jwt.ts:254</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4424,7 +4520,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L275">core/src/util/jwt.ts:275</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L275">core/src/util/jwt.ts:275</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4459,7 +4555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/time.ts#L20">core/src/time.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/time.ts#L20">core/src/time.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4491,7 +4587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/odata-batch-change-set.ts#L29">core/src/odata-batch-change-set.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/odata-batch-change-set.ts#L29">core/src/odata-batch-change-set.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4532,7 +4628,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/odata-batch-retrieve-request.ts#L24">core/src/odata-batch-retrieve-request.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/odata-batch-retrieve-request.ts#L24">core/src/odata-batch-retrieve-request.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4570,7 +4666,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination.ts#L51">core/src/scp-cf/destination.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination.ts#L51">core/src/scp-cf/destination.ts:51</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -4593,7 +4689,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/name-converter.ts#L33">core/src/util/name-converter.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/name-converter.ts#L33">core/src/util/name-converter.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4625,7 +4721,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/name-converter.ts#L23">core/src/util/name-converter.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/name-converter.ts#L23">core/src/util/name-converter.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4657,7 +4753,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/name-converter.ts#L13">core/src/util/name-converter.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/name-converter.ts#L13">core/src/util/name-converter.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4689,7 +4785,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/name-converter.ts#L43">core/src/util/name-converter.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/name-converter.ts#L43">core/src/util/name-converter.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4721,7 +4817,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/name-converter.ts#L52">core/src/util/name-converter.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/name-converter.ts#L52">core/src/util/name-converter.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4753,7 +4849,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/response-transformers.ts#L17">core/src/request-builder/response-transformers.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/response-transformers.ts#L21">core/src/request-builder/response-transformers.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4803,7 +4899,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/response-transformers.ts#L21">core/src/request-builder/response-transformers.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/response-transformers.ts#L25">core/src/request-builder/response-transformers.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4853,7 +4949,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/response-transformers.ts#L25">core/src/request-builder/response-transformers.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/response-transformers.ts#L29">core/src/request-builder/response-transformers.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4903,7 +4999,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/response-transformers.ts#L29">core/src/request-builder/response-transformers.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/response-transformers.ts#L33">core/src/request-builder/response-transformers.ts:33</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4953,7 +5049,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/response-transformers.ts#L9">core/src/request-builder/response-transformers.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/response-transformers.ts#L13">core/src/request-builder/response-transformers.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4985,7 +5081,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/request-builder/response-transformers.ts#L13">core/src/request-builder/response-transformers.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/response-transformers.ts#L17">core/src/request-builder/response-transformers.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -5007,6 +5103,56 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="transformreturnvalueforpromisevoid" class="tsd-anchor"></a>
+					<h3>transform<wbr>Return<wbr>Value<wbr>For<wbr>Promise<wbr>Void</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">transform<wbr>Return<wbr>Value<wbr>For<wbr>Promise<wbr>Void&lt;ReturnT&gt;<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, builderFn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReturnT</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/request-builder/response-transformers.ts#L9">core/src/request-builder/response-transformers.ts:9</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>ReturnT</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>builderFn: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReturnT</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>data: <span class="tsd-signature-type">any</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReturnT</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReturnT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="useorfetchdestination" class="tsd-anchor"></a>
 					<h3>use<wbr>OrFetch<wbr>Destination</h3>
@@ -5017,7 +5163,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-accessor.ts#L41">core/src/scp-cf/destination-accessor.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-accessor.ts#L41">core/src/scp-cf/destination-accessor.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5062,7 +5208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/token-accessor.ts#L78">core/src/scp-cf/token-accessor.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/token-accessor.ts#L78">core/src/scp-cf/token-accessor.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5110,7 +5256,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L231">core/src/util/jwt.ts:231</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L231">core/src/util/jwt.ts:231</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5145,7 +5291,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L211">core/src/util/jwt.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L211">core/src/util/jwt.ts:211</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5180,7 +5326,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L83">core/src/scp-cf/user.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L83">core/src/scp-cf/user.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5217,7 +5363,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L200">core/src/util/jwt.ts:200</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L200">core/src/util/jwt.ts:200</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5252,7 +5398,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L191">core/src/util/jwt.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L191">core/src/util/jwt.ts:191</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5287,7 +5433,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L222">core/src/util/jwt.ts:222</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L222">core/src/util/jwt.ts:222</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5322,7 +5468,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L242">core/src/util/jwt.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L242">core/src/util/jwt.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5357,7 +5503,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/xsuaa-service.ts#L49">core/src/scp-cf/xsuaa-service.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/xsuaa-service.ts#L49">core/src/scp-cf/xsuaa-service.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5407,7 +5553,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L81">core/src/util/jwt.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L81">core/src/util/jwt.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5445,7 +5591,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L144">core/src/util/jwt.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L144">core/src/util/jwt.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5483,7 +5629,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/util/jwt.ts#L327">core/src/util/jwt.ts:327</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/util/jwt.ts#L327">core/src/util/jwt.ts:327</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5514,7 +5660,7 @@
 					<div class="tsd-signature tsd-kind-icon">Destination<wbr>Selection<wbr>Strategies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L60">core/src/scp-cf/destination-selection-strategies.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L60">core/src/scp-cf/destination-selection-strategies.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -5528,7 +5674,7 @@
 						<div class="tsd-signature tsd-kind-icon">always<wbr>Provider<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#alwaysprovider" class="tsd-signature-type">alwaysProvider</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L61">core/src/scp-cf/destination-selection-strategies.ts:61</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L61">core/src/scp-cf/destination-selection-strategies.ts:61</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5538,7 +5684,7 @@
 						<div class="tsd-signature tsd-kind-icon">always<wbr>Subscriber<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#alwayssubscriber" class="tsd-signature-type">alwaysSubscriber</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L62">core/src/scp-cf/destination-selection-strategies.ts:62</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L62">core/src/scp-cf/destination-selection-strategies.ts:62</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5548,7 +5694,7 @@
 						<div class="tsd-signature tsd-kind-icon">subscriber<wbr>First<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#subscriberfirst" class="tsd-signature-type">subscriberFirst</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/destination-selection-strategies.ts#L63">core/src/scp-cf/destination-selection-strategies.ts:63</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/destination-selection-strategies.ts#L63">core/src/scp-cf/destination-selection-strategies.ts:63</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5559,7 +5705,7 @@
 					<div class="tsd-signature tsd-kind-icon">Environment<wbr>Accessor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L271">core/src/scp-cf/environment-accessor.ts:271</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L271">core/src/scp-cf/environment-accessor.ts:271</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -5575,7 +5721,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Destination<wbr>Basic<wbr>Credentials<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getdestinationbasiccredentials" class="tsd-signature-type">getDestinationBasicCredentials</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L272">core/src/scp-cf/environment-accessor.ts:272</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L272">core/src/scp-cf/environment-accessor.ts:272</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5585,7 +5731,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Destination<wbr>Service<wbr>Credentials<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getdestinationservicecredentials" class="tsd-signature-type">getDestinationServiceCredentials</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L273">core/src/scp-cf/environment-accessor.ts:273</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L273">core/src/scp-cf/environment-accessor.ts:273</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5595,7 +5741,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Destination<wbr>Service<wbr>Credentials<wbr>List<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getdestinationservicecredentialslist" class="tsd-signature-type">getDestinationServiceCredentialsList</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L274">core/src/scp-cf/environment-accessor.ts:274</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L274">core/src/scp-cf/environment-accessor.ts:274</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5605,7 +5751,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Destination<wbr>Service<wbr>Uri<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getdestinationserviceuri" class="tsd-signature-type">getDestinationServiceUri</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L279">core/src/scp-cf/environment-accessor.ts:279</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L279">core/src/scp-cf/environment-accessor.ts:279</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5615,7 +5761,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Environment<wbr>Variable<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getenvironmentvariable" class="tsd-signature-type">getEnvironmentVariable</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L278">core/src/scp-cf/environment-accessor.ts:278</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L278">core/src/scp-cf/environment-accessor.ts:278</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5625,7 +5771,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Service<wbr>Credentials<wbr>List<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getservicecredentialslist" class="tsd-signature-type">getServiceCredentialsList</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L275">core/src/scp-cf/environment-accessor.ts:275</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L275">core/src/scp-cf/environment-accessor.ts:275</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5635,7 +5781,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Service<wbr>List<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getservicelist" class="tsd-signature-type">getServiceList</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L276">core/src/scp-cf/environment-accessor.ts:276</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L276">core/src/scp-cf/environment-accessor.ts:276</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5645,7 +5791,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Vcap<wbr>Service<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getvcapservice" class="tsd-signature-type">getVcapService</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L277">core/src/scp-cf/environment-accessor.ts:277</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L277">core/src/scp-cf/environment-accessor.ts:277</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5655,7 +5801,7 @@
 						<div class="tsd-signature tsd-kind-icon">get<wbr>Xsuaa<wbr>Service<wbr>Credentials<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#getxsuaaservicecredentials" class="tsd-signature-type">getXsuaaServiceCredentials</a></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/environment-accessor.ts#L280">core/src/scp-cf/environment-accessor.ts:280</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/environment-accessor.ts#L280">core/src/scp-cf/environment-accessor.ts:280</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5666,7 +5812,7 @@
 					<div class="tsd-signature tsd-kind-icon">circuit<wbr>Breaker<wbr>Default<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5675,7 +5821,7 @@
 						<div class="tsd-signature tsd-kind-icon">error<wbr>Threshold<wbr>Percentage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;50</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5685,7 +5831,7 @@
 						<div class="tsd-signature tsd-kind-icon">reset<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;30000</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5695,7 +5841,7 @@
 						<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;10000</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/resilience-options.ts#L12">core/src/scp-cf/resilience-options.ts:12</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -5706,7 +5852,7 @@
 					<div class="tsd-signature tsd-kind-icon">mapping<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L10">core/src/scp-cf/tenant.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L10">core/src/scp-cf/tenant.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -5720,7 +5866,7 @@
 						<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L11">core/src/scp-cf/tenant.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L11">core/src/scp-cf/tenant.ts:11</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5729,7 +5875,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#tenantid" class="tsd-signature-type">tenantId</a><span class="tsd-signature-symbol"> =&nbsp;tenantId</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L11">core/src/scp-cf/tenant.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L11">core/src/scp-cf/tenant.ts:11</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5739,7 +5885,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"zid"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;zid&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L11">core/src/scp-cf/tenant.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L11">core/src/scp-cf/tenant.ts:11</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5750,7 +5896,7 @@
 						<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L12">core/src/scp-cf/tenant.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L12">core/src/scp-cf/tenant.ts:12</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5759,7 +5905,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#tenantname" class="tsd-signature-type">tenantName</a><span class="tsd-signature-symbol"> =&nbsp;tenantName</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L12">core/src/scp-cf/tenant.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L12">core/src/scp-cf/tenant.ts:12</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5769,7 +5915,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"zdn"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;zdn&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/tenant.ts#L12">core/src/scp-cf/tenant.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/tenant.ts#L12">core/src/scp-cf/tenant.ts:12</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5781,7 +5927,7 @@
 					<div class="tsd-signature tsd-kind-icon">mapping<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L39">core/src/scp-cf/user.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L39">core/src/scp-cf/user.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -5795,7 +5941,7 @@
 						<div class="tsd-signature tsd-kind-icon">custom<wbr>Attributes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L46">core/src/scp-cf/user.ts:46</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L46">core/src/scp-cf/user.ts:46</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5804,7 +5950,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#customattributes" class="tsd-signature-type">customAttributes</a><span class="tsd-signature-symbol"> =&nbsp;customAttributes</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L46">core/src/scp-cf/user.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L46">core/src/scp-cf/user.ts:46</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5814,7 +5960,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"xs.user.attributes"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;xs.user.attributes&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L46">core/src/scp-cf/user.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L46">core/src/scp-cf/user.ts:46</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5825,7 +5971,7 @@
 						<div class="tsd-signature tsd-kind-icon">email<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L44">core/src/scp-cf/user.ts:44</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L44">core/src/scp-cf/user.ts:44</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5834,7 +5980,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#useremail" class="tsd-signature-type">userEmail</a><span class="tsd-signature-symbol"> =&nbsp;userEmail</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L44">core/src/scp-cf/user.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L44">core/src/scp-cf/user.ts:44</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5844,7 +5990,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"email"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;email&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L44">core/src/scp-cf/user.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L44">core/src/scp-cf/user.ts:44</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5855,7 +6001,7 @@
 						<div class="tsd-signature tsd-kind-icon">family<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L43">core/src/scp-cf/user.ts:43</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L43">core/src/scp-cf/user.ts:43</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5864,7 +6010,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#userfamilyname" class="tsd-signature-type">userFamilyName</a><span class="tsd-signature-symbol"> =&nbsp;userFamilyName</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L43">core/src/scp-cf/user.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L43">core/src/scp-cf/user.ts:43</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5874,7 +6020,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"family_name"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;family_name&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L43">core/src/scp-cf/user.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L43">core/src/scp-cf/user.ts:43</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5885,7 +6031,7 @@
 						<div class="tsd-signature tsd-kind-icon">given<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L42">core/src/scp-cf/user.ts:42</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L42">core/src/scp-cf/user.ts:42</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5894,7 +6040,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#usergivenname" class="tsd-signature-type">userGivenName</a><span class="tsd-signature-symbol"> =&nbsp;userGivenName</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L42">core/src/scp-cf/user.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L42">core/src/scp-cf/user.ts:42</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5904,7 +6050,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"given_name"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;given_name&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L42">core/src/scp-cf/user.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L42">core/src/scp-cf/user.ts:42</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5915,7 +6061,7 @@
 						<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L40">core/src/scp-cf/user.ts:40</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L40">core/src/scp-cf/user.ts:40</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5924,7 +6070,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#userid" class="tsd-signature-type">userId</a><span class="tsd-signature-symbol"> =&nbsp;userId</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L40">core/src/scp-cf/user.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L40">core/src/scp-cf/user.ts:40</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5934,7 +6080,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"user_id"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;user_id&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L40">core/src/scp-cf/user.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L40">core/src/scp-cf/user.ts:40</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5945,7 +6091,7 @@
 						<div class="tsd-signature tsd-kind-icon">scopes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L45">core/src/scp-cf/user.ts:45</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L45">core/src/scp-cf/user.ts:45</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5954,7 +6100,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#userscopes" class="tsd-signature-type">userScopes</a><span class="tsd-signature-symbol"> =&nbsp;userScopes</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L45">core/src/scp-cf/user.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L45">core/src/scp-cf/user.ts:45</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5964,7 +6110,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"scope"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;scope&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L45">core/src/scp-cf/user.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L45">core/src/scp-cf/user.ts:45</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5975,7 +6121,7 @@
 						<div class="tsd-signature tsd-kind-icon">user<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L41">core/src/scp-cf/user.ts:41</a></li>
+								<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L41">core/src/scp-cf/user.ts:41</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -5984,7 +6130,7 @@
 							<div class="tsd-signature tsd-kind-icon">extractor<wbr>Function<span class="tsd-signature-symbol">:</span> <a href="sap_cloud_sdk_core#username" class="tsd-signature-type">userName</a><span class="tsd-signature-symbol"> =&nbsp;userName</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L41">core/src/scp-cf/user.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L41">core/src/scp-cf/user.ts:41</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -5994,7 +6140,7 @@
 							<div class="tsd-signature tsd-kind-icon">key<wbr>InJwt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"user_name"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;user_name&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/scp-cf/user.ts#L41">core/src/scp-cf/user.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/scp-cf/user.ts#L41">core/src/scp-cf/user.ts:41</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -6324,6 +6470,9 @@
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="sap_cloud_sdk_core#batchresponse" class="tsd-kind-icon">Batch<wbr>Response</a>
 					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_core#constructororfield" class="tsd-kind-icon">Constructor<wbr>OrField</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="sap_cloud_sdk_core#deepfieldtype" class="tsd-kind-icon">Deep<wbr>Field<wbr>Type</a>
 					</li>
@@ -6558,6 +6707,12 @@
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="sap_cloud_sdk_core#getdestinationsfromenv" class="tsd-kind-icon">get<wbr>Destinations<wbr>From<wbr>Env</a>
 					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_core#getedmtype" class="tsd-kind-icon">get<wbr>Edm<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_core#getentityconstructor" class="tsd-kind-icon">get<wbr>Entity<wbr>Constructor</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="sap_cloud_sdk_core#getentitykeys" class="tsd-kind-icon">get<wbr>Entity<wbr>Keys</a>
 					</li>
@@ -6734,6 +6889,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="sap_cloud_sdk_core#transformreturnvalueforentitylist" class="tsd-kind-icon">transform<wbr>Return<wbr>Value<wbr>For<wbr>Entity<wbr>List</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_core#transformreturnvalueforpromisevoid" class="tsd-kind-icon">transform<wbr>Return<wbr>Value<wbr>For<wbr>Promise<wbr>Void</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="sap_cloud_sdk_core#useorfetchdestination" class="tsd-kind-icon">use<wbr>OrFetch<wbr>Destination</a>

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
@@ -27,8 +25,8 @@ export type FilterOperatorByType<FieldT extends FieldType> = FieldT extends stri
  * Example: `Product.NAME.equals('cloud-sdk')` creates a filter for the entity `Product` that matches in case the field `NAME` equals 'cloud-sdk'.
  *
  * See also: [[Filterable]]
- * @typeparam EntityT Type of the entity to be filtered on
- * @typeparam FieldT Type of the field to be filtered by, see also: [[FieldType]]
+ * @typeparam EntityT - Type of the entity to be filtered on
+ * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
 export class Filter<EntityT extends Entity, FieldT extends FieldType> implements EntityIdentifiable<EntityT> {
   /**
@@ -42,15 +40,15 @@ export class Filter<EntityT extends Entity, FieldT extends FieldType> implements
   public _fieldName: string | FilterFunction<EntityT, FieldT>;
 
   // TODO: change the constructor to the following:
-  // constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
-  // and deprecate passing a string as the field is needed later on
+  // Constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
+  // And deprecate passing a string as the field is needed later on
   /**
    * Creates an instance of Filter.
    *
-   * @param field Name of the field of the entity to be filtered on or a filter function
-   * @param operator Function to be used for matching
-   * @param value Value to be used by the operator
-   * @param edmType EdmType of the field to filter on, needed for custom fields
+   * @param field - Name of the field of the entity to be filtered on or a filter function
+   * @param operator - Function to be used for matching
+   * @param value - Value to be used by the operator
+   * @param edmType - EdmType of the field to filter on, needed for custom fields
    */
 
   constructor(

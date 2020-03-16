@@ -34,32 +34,35 @@ blog:
 Now the generator will handle these cases and use  `Promise<void>` as return type.
 - Fix of the destination processing so that the user can set `PrincipalPropagation` as the authentication scheme for OnPremise connectivity. 
 
-
 # 1.18.0
 
-release-date:
-docs:
-blog:
-
-## knownIssues
-
--
+release-date: March 12, 2020
+docs: https://help.sap.com/doc/69202ef7e0a64767833782132648b855/1.0/en-US/index.html
+blog: https://blogs.sap.com/?p=1060707
 
 ## compatibilityNotes
 
--
+- Some packages of the SAP Cloud SDK for JavaScript have been migrated to [external GitHub](https://github.com/SAP/cloud-sdk) and are now available as open-source software.
+As a result, the packages have been renamed as shown in the list below. 
+No Breaking changes are made. 
+The old versions of the packages will not receive further updates, so we heavily encourage switching to the new version of the packages.
+  - `@sap/cloud-sdk-util` was renamed to `@sap-cloud-sdk/util`
+  - `@sap/cloud-sdk-analytics` was renamed to `@sap-cloud-sdk/analytics`
+  - `@sap/cloud-sdk-core` was renamed to `@sap-cloud-sdk/core`
+  - `@sap/cloud-sdk-generator` was renamed to `@sap-cloud-sdk/generator`
+  - `@sap/cloud-sdk-test-util` was renamed to `@sap-cloud-sdk/test-util`
 
-## newFunctionality
-
--
+### How to update your project
+1. Search for all your `dependencies`/`devDependencies`/`peerDependencies` in your `package.json`.
+1. Replace the old package name e.g., `@sap/cloud-sdk-core` with the new one, `@sap-cloud-sdk/core`.
+1. Use the stable version of the open source version e.g., `^1.18.0`.
+1. Deleting your `node_modules` and the `package-lock.json`.
+1. Install your dependencies again to reflect the changes via e.g., `npm i`.
+1. Search for your source code that uses the old packages as import and replace it with new names.
 
 ## improvements
 
-- When generating an OData client using the `generator` package, the version that is put in the generated `package.json` can now be supplied as argument (`versionInPackageJson`). Call `generate-odata-client help` for more details.
-
-## fixedIssues
-
--
+- Allow the definition of a custom version for the gerated `package.json` by passing the desired version to the generator as an argument `versionInPackageJson`.
 
 # 1.17.2
 

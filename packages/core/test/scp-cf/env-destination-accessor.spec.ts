@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import * as assert from 'assert';
 import { Destination } from '../../src/scp-cf/destination-service-types';
 import { getDestinationByName, getDestinations } from '../../src/scp-cf/env-destination-accessor';
@@ -31,7 +32,7 @@ describe('getDestinations()', () => {
   });
 
   it('should return all destinations from environment variables', () => {
-    // setup
+    // Setup
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)}]`;
 
     const expected: Destination[] = [destinationFromEnv];
@@ -54,7 +55,7 @@ describe('getDestinationByName()', () => {
   });
 
   it('should return the destination if a destination with the respective name is present in the environment variables', () => {
-    // setup
+    // Setup
     process.env['destinations'] = `[${JSON.stringify(environmentDestination)}]`;
 
     const expected: Destination = destinationFromEnv;

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import fs from 'fs';
 import path from 'path';
@@ -25,7 +23,7 @@ const generatorConfig = {
   generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
-  // unnecessary options
+  // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false
 };

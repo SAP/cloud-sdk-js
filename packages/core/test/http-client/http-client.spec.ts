@@ -1,5 +1,6 @@
-import Axios from 'axios';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import https from 'https';
+import Axios from 'axios';
 import nock from 'nock';
 import {
   addDestinationToRequestConfig,
@@ -194,11 +195,7 @@ describe('generic http client', () => {
         .get(/.*/)
         .reply(200);
 
-      return new Promise((resolve, reject) => {
-        https.get('https://example.com', response => {
-          response.statusCode === 200 ? resolve() : reject();
-        });
-      });
+      return new Promise((resolve, reject) => https.get('https://example.com', response => (response.statusCode === 200 ? resolve() : reject())));
     });
 
     it('takes a generic HTTP request and executes it', async () => {

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
@@ -13,8 +11,8 @@ import { toPropertyFormat } from './util';
  * Extracts all custom fields from the JSON payload for a single entity.
  * In this context, a custom fields is every property that is not known in the corresponding entity class.
  *
- * @param json The JSON payload.
- * @param entityConstructor The constructor function of the entity class.
+ * @param json - The JSON payload.
+ * @param entityConstructor - The constructor function of the entity class.
  * @returns An object containing the custom fields as key-value pairs.
  */
 export function extractCustomFields<EntityT extends Entity, JsonT>(json: Partial<JsonT>, entityConstructor: Constructable<EntityT>): MapType<any> {
@@ -33,9 +31,9 @@ export function extractCustomFields<EntityT extends Entity, JsonT>(json: Partial
  * It sets the remote state to the data provided by the JSON payload.
  * If a version identifier is found in the '__metadata' or in the request header, the method also sets it.
  *
- * @param json The JSON payload.
- * @param entityConstructor The constructor function of the entity class.
- * @param requestHeader: Optional parameter which may be used to add a version identifier (etag) to the entity
+ * @param json - The JSON payload.
+ * @param entityConstructor - The constructor function of the entity class.
+ * @param requestHeader - Optional parameter which may be used to add a version identifier (etag) to the entity
  * @returns An instance of the entity class.
  */
 export function deserializeEntity<EntityT extends Entity, JsonT>(
@@ -77,8 +75,8 @@ function getLinkFromJson<EntityT extends Entity, LinkedEntityT extends Entity, J
   return link instanceof OneToOneLink ? getSingleLinkFromJson(json, link) : getMultiLinkFromJson(json, link);
 }
 
-// be careful: if the return type is changed to `LinkedEntityT | undefined`, the test 'navigation properties should never be undefined' of the 'business-partner.spec.ts' will fail.
-// not sure the purpose of the usage of null.
+// Be careful: if the return type is changed to `LinkedEntityT | undefined`, the test 'navigation properties should never be undefined' of the 'business-partner.spec.ts' will fail.
+// Not sure the purpose of the usage of null.
 function getSingleLinkFromJson<EntityT extends Entity, LinkedEntityT extends Entity, JsonT>(
   json: Partial<JsonT>,
   link: Link<EntityT, LinkedEntityT>

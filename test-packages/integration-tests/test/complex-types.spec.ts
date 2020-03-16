@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc, Destination } from '@sap-cloud-sdk/core';
 import { TestComplexType, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 import BigNumber from 'bignumber.js';

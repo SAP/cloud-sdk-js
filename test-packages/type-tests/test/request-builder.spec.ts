@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { and, asc, desc, or } from '@sap-cloud-sdk/core';
 import { TestEntity, TestEntityMultiLink, TestEntitySingleLink } from '@sap-cloud-sdk/test-services/test-service';
 /**
@@ -28,7 +29,7 @@ TestEntity.requestBuilder().create(new TestEntityMultiLink());
 TestEntity.requestBuilder().update(new TestEntityMultiLink());
 
 /**
- * asChildOf
+ * AsChildOf
  */
 // $ExpectType CreateRequestBuilder<TestEntityMultiLink>
 TestEntityMultiLink.requestBuilder()

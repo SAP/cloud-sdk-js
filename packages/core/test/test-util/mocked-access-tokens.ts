@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { providerXsuaaUrl, subscriberXsuaaUrl, TestTenants } from './environment-mocks';
 import { signedJwt } from './keys';
 

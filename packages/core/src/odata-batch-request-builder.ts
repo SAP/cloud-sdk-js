@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { head, last } from 'rambda';
@@ -34,9 +32,9 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
   /**
    * Creates an instance of ODataBatchRequestBuilder.
    *
-   * @param defaultServicePath Service path
-   * @param requests An array of retrieve requests or change sets
-   * @param entityToConstructorMap A map that holds the entity type to constructor mapping
+   * @param defaultServicePath - Service path
+   * @param requests - An array of retrieve requests or change sets
+   * @param entityToConstructorMap - A map that holds the entity type to constructor mapping
    */
   constructor(
     readonly defaultServicePath: string,
@@ -54,9 +52,9 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
    *
-   * @param destination Targeted destination on which the request is performed.
-   * @param options Options to employ when fetching destinations.
-   * @returns {Promise<ReadResponse[]>} Promise resolving to the requested data.
+   * @param destination - Targeted destination on which the request is performed.
+   * @param options - Options to employ when fetching destinations.
+   * @returns Promise resolving to the requested data.
    */
   async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<BatchResponse[]> {
     return this.build(destination, options)
@@ -93,9 +91,9 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
 /**
  * Convert the given requests to the payload of the batch.
  *
- * @param requests Requests of the batch.
- * @param requestConfig The batch request configuration.
- * @returns {string} The generated payload.
+ * @param requests - Requests of the batch.
+ * @param requestConfig - The batch request configuration.
+ * @returns The generated payload.
  */
 function getPayload(
   requests: (
@@ -164,7 +162,7 @@ const asWriteResponse = body => <T extends Entity>(constructor: Constructable<T>
 };
 
 /*
-e.g. response:
+E.g. response:
 --batch_1234
 part 1
 --batch_1234
@@ -176,14 +174,17 @@ function partitionBatchResponse(response: string, lineBreak: string): string[] {
   if (!response) {
     return [];
   }
-  // e.g., --batch_1234
+
+  // E.g., --batch_1234
   const partSeparator = head(response.split(lineBreak, 1));
   if (!partSeparator) {
     throw Error(`Failed to get part separator of the response: ${response}`);
   }
-  // e.g., ['', part 1, part 2, '--']
+
+  // E.g., ['', part 1, part 2, '--']
   const parts = response.split(partSeparator).map(line => line.trim());
-  // according to the example above, the min. length to be valid is 3, where the 1st and last elements should be removed.
+
+  // According to the example above, the min. length to be valid is 3, where the 1st and last elements should be removed.
   return parts.length >= 3 ? parts.slice(1, parts.length - 1) : [];
 }
 
@@ -198,7 +199,7 @@ function partitionChangeSetResponse(responseOfSingleRetrieveRequest: string, lin
 }
 
 /*
-response example:
+Response example:
 Content-Type: application/http
 Content-Length: 2833
 content-transfer-encoding: binary
@@ -215,10 +216,12 @@ dataserviceversion: 2.0
  */
 function trimRetrieveHeaders(retrieveResponse: string, lineBreak: string): string {
   const lines = retrieveResponse.split(lineBreak);
+
   // A valid response should contain at least the line with the data and the line with the part id.
   if (lines.length <= 2) {
     throw Error(`The retrieve response is ${retrieveResponse}, which is not valid.`);
   }
+
   // Then the line with the data is returned.
   return lines[lines.length - 1];
 }
@@ -235,13 +238,13 @@ function toConstructableFromRetrieveResponse(responseBody: any, entityToConstruc
   const data = responseBody.d;
 
   if (data.results && data.results.length) {
-    // getAll
+    // GetAll
     entityJson = data.results[0];
   } else if (data.results && !data.results.length) {
-    // getByKey C4C (!)
+    // GetByKey C4C (!)
     entityJson = data.results;
   } else {
-    // getByKey
+    // GetByKey
     entityJson = data;
   }
 
@@ -253,7 +256,8 @@ function getEntityNameFromMetadata(metadata: MapType<string>): string {
   const [pathBeforeQuery] = entityUri.split('?');
   const [pathBeforeKeys] = pathBeforeQuery.split('(');
   const uriParts = pathBeforeKeys.split('/');
-  // remove another part in case of a trailing slash
+
+  // Remove another part in case of a trailing slash
   const entityName = uriParts.pop() || uriParts.pop();
   if (!entityName) {
     throw Error(`The uri of the response metadata cannot be parsed. URI: ${metadata.uri}`);
@@ -352,7 +356,7 @@ function buildRetrieveOrErrorResponse(
 /**
  * Generate the request line, containing method, url and http version from the request builder, e.g.:
  * GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1
- * @param requestBuilder Reqeust builder holds the request information.
+ * @param requestBuilder - Reqeust builder holds the request information.
  * @returns the generated request line.
  */
 export function getRequestLine(requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>): string {

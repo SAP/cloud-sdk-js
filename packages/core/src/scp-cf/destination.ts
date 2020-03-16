@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { assoc, pipe } from 'rambda';
@@ -16,7 +14,7 @@ import {
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
  *
- * @param destination A JSON object returned by the destination service.
+ * @param destination - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
 export function sanitizeDestination(destination: MapType<any>): Destination {
@@ -26,7 +24,7 @@ export function sanitizeDestination(destination: MapType<any>): Destination {
 /**
  * Takes a JSON object returned by any of the calls to the destination service and returns an SDK compatible destination object.
  *
- * @param destinationJson A JSON object returned by the destination service.
+ * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
 export function parseDestination(destinationJson: DestinationJSON | DestinationConfiguration): Destination {

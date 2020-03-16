@@ -1,16 +1,9 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '../../../../src';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '../../../../src';
 import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 
 /**
@@ -65,9 +58,6 @@ export class MultiSchemaTestEntityRequestBuilder extends RequestBuilder<MultiSch
    */
   delete(entity: MultiSchemaTestEntity): DeleteRequestBuilder<MultiSchemaTestEntity>;
   delete(keyPropertyOrEntity: any): DeleteRequestBuilder<MultiSchemaTestEntity> {
-    return new DeleteRequestBuilder(
-      MultiSchemaTestEntity,
-      keyPropertyOrEntity instanceof MultiSchemaTestEntity ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! }
-    );
+    return new DeleteRequestBuilder(MultiSchemaTestEntity, keyPropertyOrEntity instanceof MultiSchemaTestEntity ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger } from '@sap-cloud-sdk/util';
-import { parse } from 'fast-xml-parser';
 import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
+import { createLogger } from '@sap-cloud-sdk/util';
+import { parse } from 'fast-xml-parser';
 import { forceArray } from '../generator-utils';
 import {
   EdmxAssociation,
@@ -97,9 +95,7 @@ export function getRoot(edmx) {
     }
     // We assume SFSF edmx files to always have multiple schema tags
     logger.info(`${schema.length} schemas found. Schemas will be merged.`);
-    return schema.reduce((mergedSchemas, schemaEntry) => {
-      return { ...mergedSchemas, ...schemaEntry };
-    }, {});
+    return schema.reduce((mergedSchemas, schemaEntry) => ({ ...mergedSchemas, ...schemaEntry }), {});
   }
   return schema;
 }

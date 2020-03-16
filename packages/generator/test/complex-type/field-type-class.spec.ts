@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { StructureKind } from 'ts-morph';
 import { fieldTypeClass } from '../../src/complex-type';
 import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
@@ -31,7 +32,7 @@ describe('field-type-class', () => {
           ]
         }
       ],
-      docs: ['ComplexMealField\n@typeparam EntityT Type of the entity the complex type field belongs to.']
+      docs: ['ComplexMealField\n@typeparam EntityT - Type of the entity the complex type field belongs to.']
     });
   });
 
@@ -62,7 +63,7 @@ describe('field-type-class', () => {
           ]
         }
       ],
-      docs: ['ComplexMealWithDesertField\n@typeparam EntityT Type of the entity the complex type field belongs to.']
+      docs: ['ComplexMealWithDesertField\n@typeparam EntityT - Type of the entity the complex type field belongs to.']
     });
   });
 });

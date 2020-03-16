@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addCsrfTokenAndCookies } from '../../../src/request-builder/header-builder';
 import { createCreateRequest, createGetAllRequest, createUpdateRequest } from '../../test-util/create-requests';

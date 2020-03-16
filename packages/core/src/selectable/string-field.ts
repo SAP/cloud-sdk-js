@@ -1,6 +1,5 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+/* eslint-disable max-classes-per-file */
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
@@ -8,19 +7,17 @@ import { Entity } from '../entity';
 import { ComplexTypeField, ConstructorOrField, getEdmType, getEntityConstructor } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
-// tslint:disable: max-classes-per-file
-
 /**
  * Represents a property with a string value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 class StringFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, string> {}
 
 /**
  * Represents a selectable property with a string value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class StringField<EntityT extends Entity> extends StringFieldBase<EntityT> implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -29,7 +26,7 @@ export class StringField<EntityT extends Entity> extends StringFieldBase<EntityT
 /**
  * Represents a complex type property with a string value.
  *
- * @typeparam EntityT Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeStringPropertyField<EntityT extends Entity> extends StringFieldBase<EntityT> {
   /**
@@ -40,20 +37,21 @@ export class ComplexTypeStringPropertyField<EntityT extends Entity> extends Stri
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param fieldOf The constructor of the entity or the complex type this field belongs to
-   * @param edmType Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param fieldOf - The constructor of the entity or the complex type this field belongs to
+   * @param edmType - Type of the field according to the metadata description
    */
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, edmType: EdmType);
+
   /**
    * @deprecated since verision 1.19.0
    *
    * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
-   * @param fieldName Actual name of the field used in the OData request
-   * @param entityConstructor Constructor type of the entity the field belongs to
-   * @param parentTypeName Name of the parent complex type
-   * @param edmType Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param entityConstructor - Constructor type of the entity the field belongs to
+   * @param parentTypeName - Name of the parent complex type
+   * @param edmType - Type of the field according to the metadata description
    */
   constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
 

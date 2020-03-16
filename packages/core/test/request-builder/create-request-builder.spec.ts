@@ -1,5 +1,5 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
-
 import { v4 as uuid } from 'uuid';
 import { CreateRequestBuilder } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';

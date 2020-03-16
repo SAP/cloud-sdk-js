@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { filter, head, identity, ifElse, isEmpty, isNil, map, path } from 'rambda';
@@ -15,8 +13,8 @@ const logger = createLogger({
 /**
  * Adds authorization headers for a given ODataRequest to existing headers.
  *
- * @param request an ODataRequest.
- * @param headers The headers that should be added to.
+ * @param request - an ODataRequest.
+ * @param headers - The headers that should be added to.
  * @returns The provided headers with the new authorization headers.
  */
 export async function addAuthorizationHeader<RequestT extends ODataRequestConfig>(
@@ -38,8 +36,8 @@ export async function addAuthorizationHeader<RequestT extends ODataRequestConfig
 /**
  * Adds authorization headers for a given destination to existing headers.
  *
- * @param destination A destination.
- * @param headers The headers that should be added to.
+ * @param destination - A destination.
+ * @param headers - The headers that should be added to.
  * @returns The provided headers with the new authorization headers.
  */
 export const buildAndAddAuthorizationHeader = (destination: Destination) => async (headers: MapType<any>): Promise<MapType<string>> => {
@@ -117,7 +115,7 @@ const headerFromOAuth2ClientCredentialsDestination = (destination: Destination):
 
 const headerFromAuthToken = (token: DestinationAuthToken) => `${token.type} ${token.value}`;
 
-// using pipe led to wrong type errors
+// Using pipe led to wrong type errors
 const headerFromTokens = (authTokens: DestinationAuthToken[]): string => {
   const usableTokens = filter((token: DestinationAuthToken) => !token.error, authTokens);
 

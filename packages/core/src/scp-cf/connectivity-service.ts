@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { Protocol } from '../request-builder';
@@ -23,9 +21,9 @@ const logger = createLogger({
  *
  * @Deprecated In version 1.16.0 web proxy support was added so this method was renamed to addProxyConfigurationOnPrem to better distinguish the two cases.
  *
- * @param {Destination} destination The destination to which the proxy configuration should be added.
- * @param {string} jwt The JWT of the current user.
- * @returns {Promise<Destination>} A promise resolving to the destiation with the added proxy configuration.
+ * @param destination - The destination to which the proxy configuration should be added.
+ * @param jwt - The JWT of the current user.
+ * @returns A promise resolving to the destiation with the added proxy configuration.
  */
 export function addProxyConfiguration(destination: Destination, jwt?: string): Promise<Destination> {
   return Promise.resolve()

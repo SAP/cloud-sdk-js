@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ComplexTypeNumberPropertyField, Entity, FieldType, Filter, NumberField } from '../../src';
 import { TestComplexTypeField, TestEntity } from '../test-util/test-services/test-service';
 

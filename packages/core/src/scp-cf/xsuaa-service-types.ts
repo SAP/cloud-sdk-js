@@ -1,10 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
-
-/**
- * Username/Password pair used as client credentials.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 export interface ClientCredentials {
   username: string;
   password: string;
@@ -37,26 +31,32 @@ export interface TokenKey {
    * Key type, e.g. RSA.
    */
   keyType: string;
+
   /**
    * Encryption algorithm, e.g. RSA256.
    */
   algorithm: string;
+
   /**
    * ID of the key.
    */
   keyId: string;
+
   /**
    * The actual key.
    */
   value: string;
+
   /**
    * Public key use parameter - identifies intended use of the public key.
    */
   use: string;
+
   /**
    * RSA key modulus.
    */
   publicKeyModulus: string;
+
   /**
    * RSA key exponent.
    */

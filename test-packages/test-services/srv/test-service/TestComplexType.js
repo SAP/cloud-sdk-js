@@ -24,7 +24,7 @@ function createTestComplexType_1(json) {
 exports.createTestComplexType_1 = createTestComplexType_1;
 /**
  * TestComplexTypeField
- * @typeparam EntityT Type of the entity the complex type field belongs to.
+ * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 var TestComplexTypeField = /** @class */ (function (_super) {
     __extends(TestComplexTypeField, _super);

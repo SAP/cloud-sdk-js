@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { install } from '@sinonjs/fake-timers';
 import { AuthenticationType, ClientCredentialsResponse, clientCredentialsTokenCache, Destination, destinationCache } from '../../src/scp-cf';
 import { Cache } from '../../src/scp-cf/cache';
@@ -45,7 +46,7 @@ describe('Cache', () => {
     cacheOne.set('one', destinationOne);
 
     const minutesToExpire = 6;
-    // shift time to expire the set item
+    // Shift time to expire the set item
     clock.tick(60000 * minutesToExpire);
     expect(cacheOne.get('one')).toBeUndefined();
     clock.uninstall();

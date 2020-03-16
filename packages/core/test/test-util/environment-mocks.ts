@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { Protocol, ProxyConfiguration, Service } from '../../src';
 import { publicKey } from './keys';
 

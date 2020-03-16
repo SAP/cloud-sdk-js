@@ -1,6 +1,5 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
 import { getAxiosConfigWithDefaults } from '../http-client';
@@ -9,16 +8,16 @@ import { parseDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { circuitBreakerDefaultOptions, ResilienceOptions } from './resilience-options';
 
-// for some inexplicable reason, the equivalent import statement does not work
-// tslint:disable-next-line: no-var-requires
+// For some reason, the equivalent import statement does not work
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const CircuitBreaker = require('opossum');
 
 /**
  * Fetches all instance destinations from the given URI.
  *
- * @param destinationServiceUri The URI of the destination service
- * @param jwt The access token
- * @param options Options to use by retrieving destinations
+ * @param destinationServiceUri - The URI of the destination service
+ * @param jwt - The access token
+ * @param options - Options to use by retrieving destinations
  * @returns A promise resolving to a list of instance destinations
  */
 export function fetchInstanceDestinations(destinationServiceUri: string, jwt: string, options?: ResilienceOptions): Promise<Destination[]> {
@@ -28,9 +27,9 @@ export function fetchInstanceDestinations(destinationServiceUri: string, jwt: st
 /**
  * Fetches all subaccount destinations from the given URI.
  *
- * @param destinationServiceUri The URI of the destination service
- * @param jwt The access token
- * @param options Options to use by retrieving destinations
+ * @param destinationServiceUri - The URI of the destination service
+ * @param jwt - The access token
+ * @param options - Options to use by retrieving destinations
  * @returns A promise resolving to a list of subaccount destinations
  */
 export function fetchSubaccountDestinations(destinationServiceUri: string, jwt: string, options?: ResilienceOptions): Promise<Destination[]> {
@@ -54,10 +53,10 @@ function fetchDestinations(destinationServiceUri: string, jwt: string, type: Des
  * Fetches a specific destination by name from the given URI, including authorization tokens.
  * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
  *
- * @param destinationServiceUri The URI of the destination service
- * @param jwt The access token
- * @param destinationName The name of the desired destination
- * @param options Options to use by retrieving destinations
+ * @param destinationServiceUri - The URI of the destination service
+ * @param jwt - The access token
+ * @param destinationName - The name of the desired destination
+ * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
  */
 export function fetchDestination(
@@ -81,13 +80,11 @@ function callDestinationService(uri: string, jwt: string, options: ResilienceOpt
   const config: AxiosRequestConfig = { ...getAxiosConfigWithDefaults(), url: uri, headers: wrapJwtInHeader(jwt).headers };
 
   if (options.enableCircuitBreaker || options.enableCircuitBreaker === undefined) {
-    let destinationCircuitBreaker;
-    destinationCircuitBreaker = getInstanceCircuitBreaker(destinationCircuitBreaker);
-    return destinationCircuitBreaker!.fire(uri, config);
+    return getInstanceCircuitBreaker().fire(uri, config);
   }
   return axios.request(config);
 }
 
-function getInstanceCircuitBreaker(breaker: any | undefined): any {
+function getInstanceCircuitBreaker(breaker?: any): any {
   return typeof breaker === 'undefined' ? new CircuitBreaker(axios.get, circuitBreakerDefaultOptions) : breaker;
 }

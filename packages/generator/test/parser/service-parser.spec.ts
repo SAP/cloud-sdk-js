@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GlobalNameFormatter } from '../../src/global-name-formatter';
 import { parseAllServices, parseService } from '../../src/parser';
 import { ServiceMapping } from '../../src/service-mapping';

@@ -1,16 +1,9 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '@sap-cloud-sdk/core';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingElse';
 
 /**
@@ -65,9 +58,6 @@ export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilde
    */
   delete(entity: TestEntityEndsWithSomethingElse): DeleteRequestBuilder<TestEntityEndsWithSomethingElse>;
   delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityEndsWithSomethingElse> {
-    return new DeleteRequestBuilder(
-      TestEntityEndsWithSomethingElse,
-      keyPropertyOrEntity instanceof TestEntityEndsWithSomethingElse ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! }
-    );
+    return new DeleteRequestBuilder(TestEntityEndsWithSomethingElse, keyPropertyOrEntity instanceof TestEntityEndsWithSomethingElse ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

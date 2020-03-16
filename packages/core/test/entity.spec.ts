@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { TestEntity } from './test-util/test-services/test-service';
 
 describe('Entity Class', () => {

@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc, desc } from '../../../src';
 import { getQueryParametersForOrderBy } from '../../../src/request-builder/request/get-orderby';
 import { TestEntity, TestEntitySingleLink } from '../../test-util/test-services/test-service';

@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
 import { getResourcePathForKeys } from '../../../src/request-builder/request/get-resource-path';

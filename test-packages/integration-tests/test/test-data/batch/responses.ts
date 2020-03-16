@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { multiChangesetResponse, singleChangesetResponse } from './changeset-response';
 import { errorChangesetResponse, errorRetrieveResponse } from './error-response';
 import { getAllResponse, getByKeyResponse } from './retrieve-response';

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { assocSome, asyncPipe, createLogger, MapType } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
@@ -31,7 +29,7 @@ const csrfTokenAndCookies = <RequestT extends ODataRequestConfig>(request: OData
 const getCsrfTokenResponseHeaders = <RequestT extends ODataRequestConfig>(request: ODataRequest<RequestT>) => (
   authHeader: MapType<string>
 ): Promise<MapType<any>> => {
-  // ignore possibly defined if-match header.
+  // Ignore possibly defined if-match header.
   const { ['if-match']: _, ...csrfRequestHeaders } = authHeader;
   if (!request.destination) {
     throw Error('The request destination is undefined.');

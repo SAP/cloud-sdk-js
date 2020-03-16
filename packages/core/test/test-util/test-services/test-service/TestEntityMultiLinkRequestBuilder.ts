@@ -1,16 +1,9 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '../../../../src';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '../../../../src';
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 
 /**
@@ -65,9 +58,6 @@ export class TestEntityMultiLinkRequestBuilder extends RequestBuilder<TestEntity
    */
   delete(entity: TestEntityMultiLink): DeleteRequestBuilder<TestEntityMultiLink>;
   delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityMultiLink> {
-    return new DeleteRequestBuilder(
-      TestEntityMultiLink,
-      keyPropertyOrEntity instanceof TestEntityMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! }
-    );
+    return new DeleteRequestBuilder(TestEntityMultiLink, keyPropertyOrEntity instanceof TestEntityMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

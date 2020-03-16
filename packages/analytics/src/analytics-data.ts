@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { findProjectRoot, MapType } from '@sap-cloud-sdk/util';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { findProjectRoot, MapType } from '@sap-cloud-sdk/util';
 import { UsageAnalyticsProjectConfig } from './analytics-types';
 import { enforceValidConfig } from './config';
 import { hash } from './util';
@@ -15,7 +13,7 @@ const sdkModulePrefix = '@sap';
 /**
  * Collects insensitive data for SAP Web Analytics.
  * For details, check the following blog post: https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/
- * @param config Usage analytics config of the given project
+ * @param config - Usage analytics config of the given project
  * @returns An object that includes information on project development environment
  * @hidden
  */
@@ -70,9 +68,9 @@ function getThirdPartyDependencies(packageJson: PackageJson) {
 function getNpmVersion(): string {
   const userAgent = process.env.npm_config_user_agent;
   if (!userAgent) {
-    return 'no version detected'; // rather return something and get some data than throwing and getting no data
+    return 'no version detected'; // Rather return something and get some data than throwing and getting no data
   }
-  // npm_config_user_agent has "npm/x.x.x node/x.x.x operatingSystemName architecture" format
+  // Npm_config_user_agent has "npm/x.x.x node/x.x.x operatingSystemName architecture" format
   const npmInfo = userAgent.split(' ')[0];
   return sanitizeVersionFormat(npmInfo.slice(4));
 }
@@ -80,7 +78,7 @@ function getNpmVersion(): string {
 function getNodeVersion(): string {
   const userAgent = process.env.npm_config_user_agent;
   if (!userAgent) {
-    return 'no version detected'; // rather return something and get some data than throwing and getting no data
+    return 'no version detected'; // Rather return something and get some data than throwing and getting no data
   }
   const nodeInfo = userAgent.split(' ')[1];
   return sanitizeVersionFormat(nodeInfo.slice(5));

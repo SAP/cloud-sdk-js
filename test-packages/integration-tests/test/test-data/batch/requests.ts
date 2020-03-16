@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { multiChangesetRequest, singleChangesetRequest } from './changeset-request';
 import { getAllRequest, getByKeyRequest } from './retrieve-request';
 

@@ -10,9 +10,7 @@
     "test": "npx jest --coverage",
     "test:local": "npx jest --config ./jest-local.json",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
-    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
-    "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
-    "tslint:fix": "npm run tslint -- --fix"
+    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.18.0",
@@ -28,7 +26,6 @@
     "mockserver-node": "5.8.1",
     "nock": "^12.0.2",
     "ts-jest": "^25.2.1",
-    "tslint": "6.0.0",
     "typescript": "3.7.4"
   }
 }

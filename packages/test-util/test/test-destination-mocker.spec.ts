@@ -1,9 +1,7 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Destination } from '@sap-cloud-sdk/core';
 import { unlinkSync, writeFileSync } from 'fs';
+import { Destination } from '@sap-cloud-sdk/core';
 import {
   mockAllTestDestinations,
   mockTestDestination,
@@ -58,9 +56,9 @@ describe('setTestDestinationInEnv', () => {
   it('all test destination should be removed after their insertion', () => {
     process.env['destinations'] = JSON.stringify([envDestination]);
     mockAllTestDestinations();
-    // mock destinations inserted (see previous test)
+    // Mock destinations inserted (see previous test)
     unmockAllTestDestinations();
-    // all mock destinations should be removed
+    // All mock destinations should be removed
 
     const actual = JSON.parse(process.env['destinations']!);
 
@@ -94,9 +92,9 @@ describe('setTestDestinationInEnv', () => {
   it('the test destination should be removed after their insertion', () => {
     process.env['destinations'] = JSON.stringify([envDestination]);
     mockTestDestination('SYS_002');
-    // mock destination 'SYS_002' inserted
+    // Mock destination 'SYS_002' inserted
     unmockTestDestination('SYS_002');
-    // mocked destination should be removed
+    // Mocked destination should be removed
 
     const actual = JSON.parse(process.env['destinations']!);
 

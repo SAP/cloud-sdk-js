@@ -1,4 +1,6 @@
-try { // see docs/specs/0005_analytics-lifecycle-trick.md
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+try {
+  // See docs/specs/0005_analytics-lifecycle-trick.md
   const analytics = require('@sap-cloud-sdk/analytics');
   const path = require('path');
 

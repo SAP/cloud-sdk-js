@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { toTitleFormat } from '@sap-cloud-sdk/core';
 import { endWithDot } from './generator-utils';
@@ -26,7 +24,7 @@ export function getFunctionDoc(description: string, tags: Partial<{ typeparams: 
 }
 
 export function getComplexTypeFieldDescription(complexType: VdmComplexType): string {
-  return `${complexType.fieldType}\n@typeparam EntityT Type of the entity the complex type field belongs to.`;
+  return `${complexType.fieldType}\n@typeparam EntityT - Type of the entity the complex type field belongs to.`;
 }
 
 export function getPropertyDescription(property: VdmProperty, constraints: VdmPropertyValueConstraints = { nullable: false }): string {
@@ -101,6 +99,6 @@ export interface NamedDocType extends DocType {
   name: string;
 }
 
-function tagToText(tag: string, descr: string = ''): string {
+function tagToText(tag: string, descr = ''): string {
   return `\n@${tag}` + (descr ? ` ${descr}` : '');
 }

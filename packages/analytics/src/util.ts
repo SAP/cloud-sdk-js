@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import crypto from 'crypto';
 
@@ -17,7 +15,7 @@ export function randomSalt(): string {
 
 /**
  * Create a hash for the given value.
- * @param value The value to hash.
+ * @param value - The value to hash.
  * @returns The hashed value.
  * @hidden
  */

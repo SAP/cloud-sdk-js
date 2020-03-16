@@ -1,11 +1,8 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+/* eslint-disable valid-jsdoc */
 
 import { EdmType } from './edm-types';
 import { tsToEdm } from './payload-value-converter';
-
-// tslint:disable: valid-jsdoc
 
 /**
  * @hidden
@@ -57,6 +54,9 @@ function isInfOrNan(value: string | number): boolean {
   return ['inf', '-inf', 'nan'].includes(value.toLowerCase());
 }
 
+/**
+ * @hidden
+ */
 export function convertToUriForEdmString(value: any): string {
   return `'${value.replace(/'/g, "''")}'`;
 }

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger } from '@sap-cloud-sdk/util';
 import { DecodedJWT, decodeJwt, isIdenticalTenant, verifyJwt, VerifyJwtOptions } from '../util/jwt';
@@ -34,8 +32,8 @@ const logger = createLogger({
  *
  * If either of the prerequisites is not met or one of the services returns an error, this function will either throw an error or return a promise that rejects.
  *
- * @param destination A destination or the necessary parameters to fetch one.
- * @param options Caching options by fetching destination.
+ * @param destination - A destination or the necessary parameters to fetch one.
+ * @param options - Caching options by fetching destination.
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
@@ -55,6 +53,7 @@ export interface DestinationAccessorOptions {
    * Method that implements the selection strategy of the retrieved destination. Uses [[subscriberFirst]] per default. Use the selector helper [[DestinationSelectionStrategies]] to select the appropriate selection strategy.
    */
   selectionStrategy?: DestinationSelectionStrategy;
+
   /**
    * The user token of the current request.
    */
@@ -73,8 +72,8 @@ export type DestinationOptions = DestinationAccessorOptions & DestinationRetriev
  *
  * If the destinations are read from the environment, the jwt will be ignored.
  *
- * @param name The name of the destination to be retrieved.
- * @param options The options of the fetching query of the destination that include the JWT of the current request and the strategy for selecting a destination.
+ * @param name - The name of the destination to be retrieved.
+ * @param options - The options of the fetching query of the destination that include the JWT of the current request and the strategy for selecting a destination.
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestinationOptions(name: string, options: DestinationOptions = {}): Promise<Destination | null> {
@@ -90,8 +89,8 @@ export async function getDestinationOptions(name: string, options: DestinationOp
  * If you want to get a destination only from a specific source, use the corresponding function directly
  *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
  *
- * @param name The name of the destination to be retrieved.
- * @param options Configuration for how to retrieve destinations from the destination service.
+ * @param name - The name of the destination to be retrieved.
+ * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestination(name: string, options: DestinationOptions = {}): Promise<Destination | null> {
@@ -110,8 +109,8 @@ export async function getDestination(name: string, options: DestinationOptions =
  *
  * If the destinations are read from the environment, the jwt will be ignored.
  *
- * @param name The name of the destination to be retrieved.
- * @param options Configuration for how to retrieve destinations from the destination service.
+ * @param name - The name of the destination to be retrieved.
+ * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestinationFromDestinationService(
@@ -232,8 +231,8 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
 /**
  * This function will fetch a destination of a subscriber given a destination name and the subscriber JWT.
  *
- * @param userJwt The (encoded) JWT of the current request.
- * @param options Destination retrieval options.
+ * @param userJwt - The (encoded) JWT of the current request.
+ * @param options - Destination retrieval options.
  * @returns A promise, that (if it resolves) contains the subscriber destinations, grouped by type (instance, subaccount).
  */
 async function getAllSubscriberDestinations(userJwt: DecodedJWT, options: DestinationRetrievalOptions): Promise<DestinationsByType> {

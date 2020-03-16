@@ -15,8 +15,8 @@
 			<div class="table-wrap">
 				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
-						
-						
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
 					</div>
 					<ul class="results">
 						<li class="state loading">Preparing search index...</li>
@@ -122,7 +122,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.complextypenumberpropertyfield#_entityconstructor" class="tsd-kind-icon">_entity<wbr>Constructor</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.complextypenumberpropertyfield#_fieldname" class="tsd-kind-icon">_field<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.complextypenumberpropertyfield#edmtype" class="tsd-kind-icon">edm<wbr>Type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="sap_cloud_sdk_core.complextypenumberpropertyfield#parenttypename" class="tsd-kind-icon">parent<wbr>Type<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="sap_cloud_sdk_core.complextypenumberpropertyfield#fieldof" class="tsd-kind-icon">field<wbr>Of</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -146,6 +146,7 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Complex<wbr>Type<wbr>Number<wbr>Property<wbr>Field<span class="tsd-signature-symbol">(</span>fieldName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fieldOf<span class="tsd-signature-symbol">: </span><a href="../modules/sap_cloud_sdk_core#constructororfield" class="tsd-signature-type">ConstructorOrField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span>, edmType<span class="tsd-signature-symbol">: </span><a href="../modules/sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_core.complextypenumberpropertyfield" class="tsd-signature-type">ComplexTypeNumberPropertyField</a></li>
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Complex<wbr>Type<wbr>Number<wbr>Property<wbr>Field<span class="tsd-signature-symbol">(</span>fieldName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, entityConstructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span>, parentTypeName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, edmType<span class="tsd-signature-symbol">: </span><a href="../modules/sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_core.complextypenumberpropertyfield" class="tsd-signature-type">ComplexTypeNumberPropertyField</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
@@ -153,13 +154,60 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sap_cloud_sdk_core.edmtypefield">EdmTypeField</a>.<a href="sap_cloud_sdk_core.edmtypefield#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/number-field.ts#L74">core/src/selectable/number-field.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L79">core/src/selectable/number-field.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates an instance of ComplexTypeNumberPropertyField.</p>
+									<p>Creates an instance of ComplexTypeBigNumberPropertyField.</p>
 								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>fieldName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Actual name of the field used in the OData request</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>fieldOf: <a href="../modules/sap_cloud_sdk_core#constructororfield" class="tsd-signature-type">ConstructorOrField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The constructor of the entity or the complex type this field belongs to</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>edmType: <a href="../modules/sap_cloud_sdk_core#edmtype" class="tsd-signature-type">EdmType</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Type of the field according to the metadata description</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_core.complextypenumberpropertyfield" class="tsd-signature-type">ComplexTypeNumberPropertyField</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="sap_cloud_sdk_core.edmtypefield">EdmTypeField</a>.<a href="sap_cloud_sdk_core.edmtypefield#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L88">core/src/selectable/number-field.ts:88</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an instance of ComplexTypeBigNumberPropertyField.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>since verision 1.19.0</p>
+										<p>Creates an instance of ComplexTypeBigNumberPropertyField.</p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -210,7 +258,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sap_cloud_sdk_core.field">Field</a>.<a href="sap_cloud_sdk_core.field#_entityconstructor">_entityConstructor</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/field.ts#L41">core/src/selectable/field.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/field.ts#L41">core/src/selectable/field.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -226,7 +274,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sap_cloud_sdk_core.field">Field</a>.<a href="sap_cloud_sdk_core.field#_fieldname">_fieldName</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/field.ts#L41">core/src/selectable/field.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/field.ts#L41">core/src/selectable/field.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -242,7 +290,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sap_cloud_sdk_core.edmtypefield">EdmTypeField</a>.<a href="sap_cloud_sdk_core.edmtypefield#edmtype">edmType</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/edm-type-field.ts#L33">core/src/selectable/edm-type-field.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/edm-type-field.ts#L33">core/src/selectable/edm-type-field.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -252,17 +300,17 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="parenttypename" class="tsd-anchor"></a>
-					<h3>parent<wbr>Type<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">parent<wbr>Type<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="fieldof" class="tsd-anchor"></a>
+					<h3>field<wbr>Of</h3>
+					<div class="tsd-signature tsd-kind-icon">field<wbr>Of<span class="tsd-signature-symbol">:</span> <a href="../modules/sap_cloud_sdk_core#constructororfield" class="tsd-signature-type">ConstructorOrField</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/number-field.ts#L83">core/src/selectable/number-field.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L79">core/src/selectable/number-field.ts:79</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Name of the parent complex type</p>
+							<p>The constructor of the entity or the complex type this field belongs to</p>
 						</div>
 					</div>
 				</section>
@@ -280,7 +328,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.edmtypefield">EdmTypeField</a>.<a href="sap_cloud_sdk_core.edmtypefield#equals">equals</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/edm-type-field.ts#L43">core/src/selectable/edm-type-field.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/edm-type-field.ts#L43">core/src/selectable/edm-type-field.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -313,7 +361,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="sap_cloud_sdk_core.field">Field</a>.<a href="sap_cloud_sdk_core.field#fieldpath">fieldPath</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/number-field.ts#L92">core/src/selectable/number-field.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L114">core/src/selectable/number-field.ts:114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -337,7 +385,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.numberfieldbase">NumberFieldBase</a>.<a href="sap_cloud_sdk_core.numberfieldbase#greaterorequal">greaterOrEqual</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/number-field.ts#L35">core/src/selectable/number-field.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L36">core/src/selectable/number-field.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -370,7 +418,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.numberfieldbase">NumberFieldBase</a>.<a href="sap_cloud_sdk_core.numberfieldbase#greaterthan">greaterThan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/number-field.ts#L25">core/src/selectable/number-field.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L26">core/src/selectable/number-field.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -403,7 +451,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.numberfieldbase">NumberFieldBase</a>.<a href="sap_cloud_sdk_core.numberfieldbase#lessorequal">lessOrEqual</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/number-field.ts#L55">core/src/selectable/number-field.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L56">core/src/selectable/number-field.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -436,7 +484,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.numberfieldbase">NumberFieldBase</a>.<a href="sap_cloud_sdk_core.numberfieldbase#lessthan">lessThan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/number-field.ts#L45">core/src/selectable/number-field.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/number-field.ts#L46">core/src/selectable/number-field.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -469,7 +517,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.edmtypefield">EdmTypeField</a>.<a href="sap_cloud_sdk_core.edmtypefield#notequals">notEquals</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/4934767/packages/core/src/selectable/edm-type-field.ts#L53">core/src/selectable/edm-type-field.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/ec4d907/packages/core/src/selectable/edm-type-field.ts#L53">core/src/selectable/edm-type-field.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -536,7 +584,7 @@
 								<a href="sap_cloud_sdk_core.complextypenumberpropertyfield#edmtype" class="tsd-kind-icon">edm<wbr>Type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="sap_cloud_sdk_core.complextypenumberpropertyfield#parenttypename" class="tsd-kind-icon">parent<wbr>Type<wbr>Name</a>
+								<a href="sap_cloud_sdk_core.complextypenumberpropertyfield#fieldof" class="tsd-kind-icon">field<wbr>Of</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.complextypenumberpropertyfield#equals" class="tsd-kind-icon">equals</a>

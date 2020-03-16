@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { unique } from '@sap-cloud-sdk/util';
 import { NamespaceDeclarationStructure, StructureKind, VariableDeclarationKind, VariableStatementStructure } from 'ts-morph';

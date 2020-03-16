@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { Destination, ErrorResponse } from '@sap-cloud-sdk/core';
 import { batch, changeset } from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';

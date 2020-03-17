@@ -61,7 +61,7 @@ function validateDestinationConfig(destinationConfig: DestinationConfiguration):
 
 function validateDestinationInput(destinationInput: MapType<any>): void {
   if (typeof destinationInput.url === 'undefined') {
-    throw Error("'url' property of destination input may not be undefined.");
+    throw Error("Property 'url' of destination input must not be undefined.");
   }
 }
 

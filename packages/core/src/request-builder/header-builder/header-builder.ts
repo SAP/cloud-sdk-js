@@ -42,6 +42,8 @@ export function buildHeaders<RequestT extends ODataRequestConfig>(request: OData
 export const buildHeadersForDestination = (destination: Destination): Promise<MapType<string>> =>
   asyncPipe(
     addSapClientHeader(destination.sapClient || undefined),
+    // TODO the proxy header are for OnPrem auth and are now handled correctly in the authorization-header.ts and should be removed here
+    // However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
     addProxyHeaders(destination.proxyConfiguration),
     addLocationIdHeader(destination.cloudConnectorLocationId),
     buildAndAddAuthorizationHeader(destination)

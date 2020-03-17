@@ -11,9 +11,6 @@ import {
   sanitizeDestination,
   subscriberFirst
 } from '../../src/scp-cf';
-import * as destinationAccessor from '../../src/scp-cf/destination-accessor';
-// When combined, lint also complains
-/* eslint-disable-next-line no-duplicate-imports */
 import { getDestination, getDestinationFromDestinationService, useOrFetchDestination } from '../../src/scp-cf/destination-accessor';
 import { AuthenticationType } from '../../src/scp-cf/destination-service-types';
 import * as sdkJwt from '../../src/util/jwt';
@@ -40,7 +37,6 @@ import {
 } from '../test-util/mocked-access-tokens';
 import { muteLoggers } from '../test-util/mute-logger';
 import { mockServiceToken, mockUserApprovedServiceToken } from '../test-util/token-accessor-mocks';
-import { Destination } from '../../dist';
 
 const destinationName = 'FINAL-DESTINATION';
 
@@ -246,7 +242,7 @@ describe('destination-accessor', () => {
       await expect(
         getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false })
       ).rejects.toThrowErrorMatchingSnapshot();
-    });
+    }, 50000);
 
     it('throws an error when the provide userJwt is invalid', async () => {
       mockServiceBindings();

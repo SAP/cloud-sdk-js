@@ -78,9 +78,7 @@ describe('env-destination-accessor', () => {
       const warnSpy = jest.spyOn(logger, 'warn');
 
       getDestinationsFromEnv();
-      expect(warnSpy).toBeCalledWith(
-        expect.stringMatching("Destination from 'destinations' env variable is missing 'name' or 'Name' property. Make sure it exists:")
-      );
+      expect(warnSpy).toBeCalledWith(expect.stringMatching("Destination from 'destinations' env variable is missing 'name' or 'Name' property."));
     });
   });
 

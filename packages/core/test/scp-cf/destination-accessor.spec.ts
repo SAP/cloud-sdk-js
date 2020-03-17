@@ -46,7 +46,7 @@ function mockEnvDestinations() {
 
 const environmentDestinations = [
   {
-    name: 'ErpQueryEndpoint',
+    name: 'TESTINATION',
     url: 'https://my.system.com',
     username: 'myuser',
     password: 'mypw'
@@ -242,7 +242,7 @@ describe('destination-accessor', () => {
       await expect(
         getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false })
       ).rejects.toThrowErrorMatchingSnapshot();
-    });
+    }, 50000);
 
     it('throws an error when the provide userJwt is invalid', async () => {
       mockServiceBindings();
@@ -332,18 +332,12 @@ describe('destination-accessor', () => {
       mockVerifyJwt();
       mockServiceToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(oauthMultipleResponse, 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken)
-      ];
+      const instanceDestinationCallMock = mockInstanceDestinationsCall(oauthMultipleResponse, 200, providerServiceToken);
+      const subaccountDestinationCallMock = mockSubaccountDestinationsCall([], 200, providerServiceToken);
 
-      try {
-        await getDestination(destinationName, { cacheVerificationKeys: false });
-        fail();
-      } catch (error) {
-        expect(error.message).toEqual('The user jwt is undefined.');
-        httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-      }
+      await expect(getDestination(destinationName, { cacheVerificationKeys: false })).rejects.toThrowErrorMatchingSnapshot();
+      expect(instanceDestinationCallMock.isDone()).toBe(true);
+      expect(subaccountDestinationCallMock.isDone()).toBe(true);
     });
   });
 
@@ -679,7 +673,7 @@ describe('destination-accessor', () => {
         mockEnvDestinations();
 
         const expected = sanitizeDestination(environmentDestinations[0]);
-        const actual = await useOrFetchDestination({ destinationName: 'ErpQueryEndpoint' }, { cacheVerificationKeys: false });
+        const actual = await useOrFetchDestination({ destinationName: 'TESTINATION' }, { cacheVerificationKeys: false });
         expect(actual).toMatchObject(expected);
       });
     });

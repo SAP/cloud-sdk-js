@@ -63,7 +63,7 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('throws an error when the destination cannot be found', async () => {
-      mockDestinationsEnv();
+      mockDestinationsEnv(defaultDestination);
 
       const getAllRequest = requestBuilder.execute({ destinationName: 'NonExistentDestination' });
 

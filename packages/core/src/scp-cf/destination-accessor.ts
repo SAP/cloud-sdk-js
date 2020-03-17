@@ -117,6 +117,7 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
+  logger.info('Attempting to retrieve destination from destination service.');
   const decodedUserJwt = options.userJwt ? await verifyJwt(options.userJwt, options) : options.iss ? { iss: options.iss } : undefined;
   const isolation = options.isolationStrategy ? options.isolationStrategy : IsolationStrategy.Tenant;
   const selectionStrategy = options.selectionStrategy ? options.selectionStrategy : subscriberFirst;
@@ -125,6 +126,7 @@ export async function getDestinationFromDestinationService(
   if (options.useCache && options.userJwt && subscriberDestinationIsSelected(selectionStrategy)) {
     const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(decodedUserJwt!, name, isolation);
     if (subscriberDestinationCache) {
+      logger.info('Sucessfully retrieved destination from destination service cache for subscriber destinations.');
       return subscriberDestinationCache;
     }
   }
@@ -139,6 +141,7 @@ export async function getDestinationFromDestinationService(
       providerDestinationCache &&
       (selectionStrategy === alwaysProvider || (decodedUserJwt && isIdenticalTenant(decodedUserJwt!, decodedProviderJwt)))
     ) {
+      logger.info('Sucessfully retrieved destination from destination service cache for provider destinations.');
       return providerDestinationCache;
     }
   }
@@ -149,6 +152,7 @@ export async function getDestinationFromDestinationService(
   const subscriberDestinations = shouldExecuteSubscriberCalls ? await getAllSubscriberDestinations(decodedUserJwt!, options) : emptyDestinationByType;
 
   if (emptyDestinationsByType(subscriberDestinations) && providerDestinationCache && selectionStrategy !== alwaysSubscriber) {
+    logger.info('Sucessfully retrieved destination from destination service cache for provider destinations.');
     return providerDestinationCache;
   }
 
@@ -180,20 +184,27 @@ export async function getDestinationFromDestinationService(
         logger.debug(providerToken);
         destination = await fetchDestination(destinationService.credentials.uri, providerToken, name, options);
       } else {
-        throwErrorWhenNull(options.userJwt, 'user jwt');
-        destination = await getDestinationWithAuthTokens(name, options.userJwt!, options);
+        if (!options.userJwt) {
+          throw Error(
+            `No user token (JWT) has been provided! This is strictly necessary for principal propagation. Value of the JWT: ${options.userJwt}.`
+          );
+        }
+        destination = await getDestinationWithAuthTokens(name, options.userJwt, options);
       }
     } else if (destination.authentication === 'ClientCertificateAuthentication') {
       destination = await getDestinationWithCertificates(name, decodedUserJwt, options);
     }
 
     if (destination) {
+      logger.info('Sucessfully retrieved destination from destination service.');
       if (proxyStrategy(destination) === ProxyStrategy.ON_PREMISE_PROXY) {
         destination = await addProxyConfigurationOnPrem(destination, options.userJwt);
       }
       if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
         destination = addProxyConfigurationInternet(destination);
       }
+    } else {
+      logger.info('Could not retrieve destination from destination service.');
     }
 
     destinationCache.cacheRetrievedDestinations(
@@ -207,16 +218,22 @@ export async function getDestinationFromDestinationService(
 }
 
 function tryDestinationForServiceBinding(name: string): Destination | undefined {
+  logger.info('Attempting to retrieve destination from service binding.');
   try {
-    return destinationForServiceBinding(name);
+    const destination = destinationForServiceBinding(name);
+    logger.info('Sucessfully retrieved destination from service binding.');
+    return destination;
   } catch (error) {
-    logger.warn(error.message);
-    logger.warn("If you're not using SAP Extension Factory, you can ignore this warning.");
+    logger.info(error.message);
+    logger.info('Could not retrieve destination from service binding.');
+    logger.info('If you are not using SAP Extension Factory, this information probably does not concern you.');
     return undefined;
   }
 }
 
 function tryDestinationFromEnv(name: string): Destination | undefined {
+  logger.info('Attempting to retrieve destination from environment variable.');
+
   if (getDestinationsEnvVariable()) {
     logger.warn(
       "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
@@ -224,8 +241,18 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
         'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
     );
 
-    return getDestinationFromEnvByName(name) || undefined;
+    try {
+      const destination = getDestinationFromEnvByName(name);
+      if (destination) {
+        logger.info('Sucessfully retrieved destination from environment variable.');
+        return destination;
+      }
+    } catch (error) {
+      logger.info(error.message);
+    }
   }
+
+  logger.info('Could not retrieve destination from environment variable.');
 }
 
 /**
@@ -289,7 +316,7 @@ async function getDestinationWithAuthTokens(name: string, userJwt: string, optio
 function getDestinationServiceCredentials(): DestinationServiceCredentials {
   const credentials = getDestinationServiceCredentialsList();
   if (!credentials || credentials.length === 0) {
-    throw new Error('No binding to a Destination service instance found. Please bind a destination service instance to your application!');
+    throw Error('No binding to a Destination service instance found. Please bind a destination service instance to your application!');
   }
 
   return credentials[0];
@@ -302,11 +329,5 @@ function subscriberDestinationIsSelected(selectionStrategy: DestinationSelection
 }
 
 function emptyDestinationsByType(destinationByType: DestinationsByType): boolean {
-  return destinationByType.instance.length + destinationByType.instance.length === 0;
-}
-
-function throwErrorWhenNull(obj: any, readableName: string) {
-  if (!obj) {
-    throw new Error(`The ${readableName} is ${obj}.`);
-  }
+  return !destinationByType.instance.length && !destinationByType.instance.length;
 }

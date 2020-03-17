@@ -14,11 +14,13 @@ import {
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
  *
- * @param destination - A JSON object returned by the destination service.
+ * @param destination - An object that adheres to the [[Destination]] interface.
  * @returns An SDK compatible destination object.
  */
 export function sanitizeDestination(destination: MapType<any>): Destination {
-  return pipe(setDefaultAuthenticationFallback, parseAuthTokens, parseCertificates, setTrustAll, setOriginalProperties)(destination) as Destination;
+  validateDestinationInput(destination);
+  const parsedDestination = pipe(parseAuthTokens, parseCertificates)(destination) as Destination;
+  return pipe(setDefaultAuthenticationFallback, setTrustAll, setOriginalProperties)(parsedDestination);
 }
 
 /**
@@ -27,43 +29,57 @@ export function sanitizeDestination(destination: MapType<any>): Destination {
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
-export function parseDestination(destinationJson: DestinationJSON | DestinationConfiguration): Destination {
+export function parseDestination(destinationJson: DestinationJson | DestinationConfiguration): Destination {
   const destinationConfig = Object.keys(destinationJson).includes('destinationConfiguration')
-    ? (destinationJson as DestinationJSON).destinationConfiguration
+    ? (destinationJson as DestinationJson).destinationConfiguration
     : (destinationJson as DestinationConfiguration);
 
-  const destination = {
-    originalProperties: destinationJson,
-    authTokens: destinationJson['authTokens'] || [],
-    certificates: destinationJson['certificates'] || []
-  };
+  validateDestinationConfig(destinationConfig);
 
-  Object.entries(destinationConfig).map(([originalKey, value]) => {
-    if (originalKey in configMapping) {
-      destination[configMapping[originalKey]] = value;
+  const destination = Object.entries(destinationConfig).reduce(
+    (dest, [originalKey, value]) => {
+      if (originalKey in configMapping) {
+        dest[configMapping[originalKey]] = value;
+      }
+      return dest;
+    },
+    {
+      originalProperties: destinationJson,
+      authTokens: destinationJson['authTokens'] || [],
+      certificates: destinationJson['certificates'] || []
     }
-  });
+  );
+
   return sanitizeDestination(destination);
 }
 
-export function toDestinationNameUrl(destination: Destination | DestinationNameAndJwt): string {
-  if (isDestinationNameAndJwt(destination)) {
-    return `name: ${destination.destinationName}`;
-  } else {
-    return `name: ${destination.name}, url: ${destination.url}`;
+function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
+  if (typeof destinationConfig.URL === 'undefined') {
+    throw Error("Property 'URL' of destination configuration must not be undefined.");
   }
 }
 
-function setOriginalProperties(destination: MapType<any>): MapType<any> {
+function validateDestinationInput(destinationInput: MapType<any>): void {
+  if (typeof destinationInput.url === 'undefined') {
+    throw Error("Property 'url' of destination input must not be undefined.");
+  }
+}
+
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * @hidden
+ */
+export function toDestinationNameUrl(destination: Destination | DestinationNameAndJwt): string {
+  return isDestinationNameAndJwt(destination) ? `name: ${destination.destinationName}` : `name: ${destination.name}, url: ${destination.url}`;
+}
+
+function setOriginalProperties(destination: Destination): Destination {
   const originalProperties = destination.originalProperties ? destination.originalProperties : destination;
   return assoc('originalProperties', originalProperties, destination);
 }
 
-function setDefaultAuthenticationFallback(destination: MapType<any>): MapType<any> {
-  if (destination.authentication) {
-    return destination;
-  }
-  return assoc('authentication', getAuthenticationType(destination), destination);
+function setDefaultAuthenticationFallback(destination: Destination): Destination {
+  return destination.authentication ? destination : assoc('authentication', getAuthenticationType(destination), destination);
 }
 
 function parseCertificate(certificate: MapType<any>): DestinationCertificate {
@@ -93,44 +109,42 @@ function parseAuthTokens(destination: MapType<any>): MapType<any> {
   return assoc('authTokens', authTokens, destination);
 }
 
-function setTrustAll(destination: MapType<any>): MapType<any> {
+function setTrustAll(destination: Destination): Destination {
   return assoc('isTrustingAllCertificates', parseTrustAll(destination.isTrustingAllCertificates), destination);
 }
 
-function parseTrustAll(isTrustingAllCertificates: string | boolean): boolean {
-  if (!isTrustingAllCertificates) {
-    return false;
-  } else if (typeof isTrustingAllCertificates === 'boolean') {
-    return isTrustingAllCertificates;
-  } else {
+function parseTrustAll(isTrustingAllCertificates?: string | boolean): boolean {
+  if (typeof isTrustingAllCertificates === 'string') {
     return isTrustingAllCertificates.toLowerCase() === 'true';
   }
+
+  return !!isTrustingAllCertificates;
 }
 
-function getAuthenticationType(destinationConfig: MapType<any>): AuthenticationType {
-  if (destinationConfig.authentication) {
-    return destinationConfig.authentication;
-  }
-  if (destinationConfig.username && destinationConfig.password) {
-    return 'BasicAuthentication';
-  }
-  return 'NoAuthentication';
+function getAuthenticationType(destination: Destination): AuthenticationType {
+  return destination.authentication || (destination.username && destination.password) ? 'BasicAuthentication' : 'NoAuthentication';
 }
 
-interface DestinationJSON {
+/**
+ * Destination configuration alongside authtokens and certificates.
+ */
+export interface DestinationJson {
   destinationConfiguration: DestinationConfiguration;
   authTokens?: MapType<string>[];
   certificates?: MapType<string>[];
 }
 
-interface DestinationConfiguration {
+/**
+ * Configuration of a destination as it is available through the destination service.
+ */
+export interface DestinationConfiguration {
   URL: string;
   Name?: string;
-  ProxyType: string;
+  ProxyType?: string;
   'sap-client'?: string;
   User?: string;
   Password?: string;
-  Authentication: AuthenticationType;
+  Authentication?: AuthenticationType;
   TrustAll?: string;
   tokenServiceURL?: string;
   tokenServiceUsername?: string;
@@ -138,6 +152,14 @@ interface DestinationConfiguration {
   clientId?: string;
   clientSecret?: string;
   SystemUser?: string;
+}
+
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * @hidden
+ */
+export function isDestinationConfiguration(destination: any): destination is DestinationConfiguration {
+  return destination.URL !== undefined;
 }
 
 const configMapping: MapType<string> = {

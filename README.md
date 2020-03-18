@@ -9,6 +9,7 @@ An SDK to reduce your development effort when building side-by-side extension ap
   - [@sap-cloud-sdk/core](#sap-cloud-sdkcore)
   - [@sap-cloud-sdk/generator](#sap-cloud-sdkgenerator)
   - [@sap-cloud-sdk/test-util](#sap-cloud-sdktest-util)
+- [How to switch to the Open Source version of the SAP Cloud SDK](#how-to-switch-to-the-open-source-version-of-the-sap-cloud-sdk)
 - [Related Projects](#related-projects)
   - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
   - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
@@ -45,6 +46,11 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 ```sh-session
 $ npm install -D @sap-cloud-sdk/test-util
 ```
+
+## How to switch to the Open Source version of the SAP Cloud SDK
+Please ignore this section, if you have never used the SAP Cloud SDK with the version `< 1.18.0`.
+If you are using the old version of the SAP Cloud SDK, 
+you might want to understand [how to migrate to this Open Source version](./docs/how-to-switch-to-os-cloud-sdk.md).
 
 ## Related Projects
 

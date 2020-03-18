@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { Destination, parseDestination, sanitizeDestination } from '../../src/scp-cf';
+import { Destination, parseDestination, sanitizeDestination, parseDestinations, DestinationConfiguration } from '../../src/scp-cf';
 import { basicMultipleResponse, certificateMultipleResponse, certificateSingleResponse } from '../test-util/example-destination-service-responses';
 
 describe('Destination parser', () => {
@@ -85,15 +85,6 @@ describe('Destination parser', () => {
     ).toThrowErrorMatchingSnapshot();
   });
 
-  it("parseDestination does not consider destinations of type 'RFC'", () => {
-    expect(() =>
-      parseDestination({
-        Type: 'RFC',
-        Name: 'DEST'
-      } as any)
-    ).toThrowErrorMatchingSnapshot();
-  });
-
   it('sanitizeDestination throws an error if there is no url given', () => {
     expect(() =>
       sanitizeDestination({
@@ -102,5 +93,15 @@ describe('Destination parser', () => {
         name: 'DEST'
       })
     ).toThrowErrorMatchingSnapshot();
+  });
+
+  it("parseDestinations only considers destinations with type 'HTTP' or undefined", () => {
+    const destinationConfigs: any = [{ URL: 'undefined-type' }, { URL: 'http-type', Type: 'HTTP' }, { Name: 'rfc-type', Type: 'RFC' }];
+
+    const actual = parseDestinations(destinationConfigs);
+    const expected = [{ url: 'undefined-type' }, { url: 'http-type' }].map(expectation => expect.objectContaining(expectation));
+
+    expect(actual).toEqual(expect.arrayContaining(expected));
+    expect(actual).toHaveLength(2);
   });
 });

@@ -25,13 +25,13 @@ export function sanitizeDestination(destination: MapType<any>): Destination {
 
 /**
  * Takes a JSON object returned by any of the calls to the destination service and returns an SDK compatible destination object.
+ * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
  *
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
 export function parseDestination(destinationJson: DestinationJson | DestinationConfiguration): Destination {
-  const destinationConfig = isDestinationJson(destinationJson) ? destinationJson.destinationConfiguration : destinationJson;
-
+  const destinationConfig = getDestinationConfig(destinationJson);
   validateDestinationConfig(destinationConfig);
 
   const destination = Object.entries(destinationConfig).reduce(
@@ -51,10 +51,30 @@ export function parseDestination(destinationJson: DestinationJson | DestinationC
   return sanitizeDestination(destination);
 }
 
+/**
+ * Parses a list of destination configurations and returns a list of SDK compatible destinations.
+ * Only destinations of type 'HTTP' destinations are considered, other types will be skipped.
+ * Configurations of type undefined are assumed to have type 'HTTP'.
+ *
+ * @param destinationJsons - JSON objects as given by the destination service.
+ * @returns A list of SDK compatible destinations.
+ */
+export function parseDestinations(destinationJsons: (DestinationJson | DestinationConfiguration)[]): Destination[] {
+  return (
+    destinationJsons
+      .map(destinationJson => getDestinationConfig(destinationJson))
+      // We only consider destinations of type 'HTTP'. If no type is set we assume 'HTTP'
+      .filter(destinationConfig => typeof destinationConfig.Type === 'undefined' || destinationConfig.Type === 'HTTP')
+      .map(destinationConfig => parseDestination(destinationConfig))
+  );
+}
+
+function getDestinationConfig(destinationJson: DestinationJson | DestinationConfiguration): DestinationConfiguration {
+  return isDestinationJson(destinationJson) ? destinationJson.destinationConfiguration : destinationJson;
+}
+
 function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
-  // We only consider destinations with Type 'HTTP'. Others (e. g. 'RFC') will be ignored.
-  const isHttpDestination = destinationConfig.Type === 'HTTP' || typeof destinationConfig.Type === 'undefined';
-  if (isHttpDestination && typeof destinationConfig.URL === 'undefined') {
+  if (typeof destinationConfig.URL === 'undefined') {
     throw Error("Property 'URL' of destination configuration must not be undefined.");
   }
 }
@@ -152,7 +172,7 @@ export interface DestinationConfiguration {
   clientId?: string;
   clientSecret?: string;
   SystemUser?: string;
-  Type?: 'HTTP';
+  Type?: string;
 }
 
 /* eslint-disable-next-line valid-jsdoc */
@@ -168,7 +188,7 @@ export function isDestinationConfiguration(destination: any): destination is Des
  * @hidden
  */
 export function isDestinationJson(destination: any): destination is DestinationJson {
-  return destination.destinationConfig !== undefined;
+  return Object.keys(destination).includes('destinationConfiguration');
 }
 
 const configMapping: MapType<string> = {

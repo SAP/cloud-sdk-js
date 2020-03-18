@@ -77,23 +77,30 @@ describe('Destination parser', () => {
     expect(oneTime).toMatchObject(twoTimes);
   });
 
-  it('sanitizeDestination throws an error if there is no URL given', () => {
-    const destination: any = {
-      User: 'username',
-      Password: 'password',
-      Name: 'DEST'
-    };
+  it('parseDestination throws an error if there is no URL given', () => {
+    expect(() =>
+      parseDestination({
+        Name: 'DEST'
+      } as any)
+    ).toThrowErrorMatchingSnapshot();
+  });
 
-    expect(() => parseDestination(destination)).toThrowErrorMatchingSnapshot();
+  it("parseDestination does not consider destinations of type 'RFC'", () => {
+    expect(() =>
+      parseDestination({
+        Type: 'RFC',
+        Name: 'DEST'
+      } as any)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('sanitizeDestination throws an error if there is no url given', () => {
-    const destination = {
-      username: 'username',
-      password: 'password',
-      name: 'DEST'
-    };
-
-    expect(() => sanitizeDestination(destination)).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      sanitizeDestination({
+        username: 'username',
+        password: 'password',
+        name: 'DEST'
+      })
+    ).toThrowErrorMatchingSnapshot();
   });
 });

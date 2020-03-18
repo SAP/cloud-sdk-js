@@ -30,9 +30,7 @@ export function sanitizeDestination(destination: MapType<any>): Destination {
  * @returns An SDK compatible destination object.
  */
 export function parseDestination(destinationJson: DestinationJson | DestinationConfiguration): Destination {
-  const destinationConfig = Object.keys(destinationJson).includes('destinationConfiguration')
-    ? (destinationJson as DestinationJson).destinationConfiguration
-    : (destinationJson as DestinationConfiguration);
+  const destinationConfig = isDestinationJson(destinationJson) ? destinationJson.destinationConfiguration : destinationJson;
 
   validateDestinationConfig(destinationConfig);
 
@@ -54,7 +52,9 @@ export function parseDestination(destinationJson: DestinationJson | DestinationC
 }
 
 function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
-  if (typeof destinationConfig.URL === 'undefined') {
+  // We only consider destinations with Type 'HTTP'. Others (e. g. 'RFC') will be ignored.
+  const isHttpDestination = destinationConfig.Type === 'HTTP' || typeof destinationConfig.Type === 'undefined';
+  if (isHttpDestination && typeof destinationConfig.URL === 'undefined') {
     throw Error("Property 'URL' of destination configuration must not be undefined.");
   }
 }
@@ -152,6 +152,7 @@ export interface DestinationConfiguration {
   clientId?: string;
   clientSecret?: string;
   SystemUser?: string;
+  Type?: 'HTTP';
 }
 
 /* eslint-disable-next-line valid-jsdoc */
@@ -160,6 +161,14 @@ export interface DestinationConfiguration {
  */
 export function isDestinationConfiguration(destination: any): destination is DestinationConfiguration {
   return destination.URL !== undefined;
+}
+
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * @hidden
+ */
+export function isDestinationJson(destination: any): destination is DestinationJson {
+  return destination.destinationConfig !== undefined;
 }
 
 const configMapping: MapType<string> = {

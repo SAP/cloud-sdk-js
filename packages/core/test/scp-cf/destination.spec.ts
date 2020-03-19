@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { Destination, parseDestination, sanitizeDestination, parseDestinations, DestinationConfiguration } from '../../src/scp-cf';
+import { Destination, parseDestination, sanitizeDestination, DestinationConfiguration } from '../../src/scp-cf';
 import { basicMultipleResponse, certificateMultipleResponse, certificateSingleResponse } from '../test-util/example-destination-service-responses';
 
 describe('Destination parser', () => {

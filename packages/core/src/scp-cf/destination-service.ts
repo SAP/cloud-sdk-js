@@ -4,7 +4,7 @@ import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
 import { getAxiosConfigWithDefaults } from '../http-client';
 import { wrapJwtInHeader } from '../util';
-import { parseDestination, parseHttpDestinations } from './destination';
+import { parseDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { circuitBreakerDefaultOptions, ResilienceOptions } from './resilience-options';
 
@@ -45,7 +45,7 @@ function fetchDestinations(destinationServiceUri: string, jwt: string, type: Des
   const targetUri = `${destinationServiceUri.replace(/\/$/, '')}/destination-configuration/v1/${type}Destinations`;
 
   return callDestinationService(targetUri, jwt, options)
-    .then(response => parseHttpDestinations(response.data))
+    .then(response => response.data.map(d => parseDestination(d)))
     .catch(error => Promise.reject(errorWithCause(`Failed to fetch ${type} destinations.${errorMessageFromResponse(error)}`, error)));
 }
 

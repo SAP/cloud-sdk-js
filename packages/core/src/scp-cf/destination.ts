@@ -51,36 +51,20 @@ export function parseDestination(destinationJson: DestinationJson | DestinationC
   return sanitizeDestination(destination);
 }
 
-/**
- * Parses a list of destination configurations and returns a list of SDK compatible destinations.
- * Only destinations of type 'HTTP' destinations are considered, other types will be skipped.
- * Configurations of type undefined are assumed to have type 'HTTP'.
- *
- * @param destinationJsons - JSON objects as given by the destination service.
- * @returns A list of SDK compatible destinations.
- */
-export function parseHttpDestinations(destinationJsons: (DestinationJson | DestinationConfiguration)[]): Destination[] {
-  return (
-    destinationJsons
-      .map(destinationJson => getDestinationConfig(destinationJson))
-      // We only consider destinations of type 'HTTP'. If no type is set we assume 'HTTP'
-      .filter(destinationConfig => typeof destinationConfig.Type === 'undefined' || destinationConfig.Type === 'HTTP')
-      .map(destinationConfig => parseDestination(destinationConfig))
-  );
-}
-
 function getDestinationConfig(destinationJson: DestinationJson | DestinationConfiguration): DestinationConfiguration {
   return isDestinationJson(destinationJson) ? destinationJson.destinationConfiguration : destinationJson;
 }
 
 function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
-  if (typeof destinationConfig.URL === 'undefined') {
+  const isHttpDestination = destinationConfig.Type === 'HTTP' || typeof destinationConfig.Type === 'undefined';
+  if (isHttpDestination && typeof destinationConfig.URL === 'undefined') {
     throw Error("Property 'URL' of destination configuration must not be undefined.");
   }
 }
 
 function validateDestinationInput(destinationInput: MapType<any>): void {
-  if (typeof destinationInput.url === 'undefined') {
+  const isHttpDestination = destinationInput.type === 'HTTP' || typeof destinationInput.type === 'undefined';
+  if (isHttpDestination && typeof destinationInput.url === 'undefined') {
     throw Error("Property 'url' of destination input must not be undefined.");
   }
 }
@@ -193,7 +177,7 @@ export function isDestinationJson(destination: any): destination is DestinationJ
   return Object.keys(destination).includes('destinationConfiguration');
 }
 
-const configMapping: MapType<string> = {
+const configMapping: MapType<keyof Destination> = {
   URL: 'url',
   Name: 'name',
   User: 'username',
@@ -202,6 +186,7 @@ const configMapping: MapType<string> = {
   'sap-client': 'sapClient',
   Authentication: 'authentication',
   TrustAll: 'isTrustingAllCertificates',
+  Type: 'type',
   tokenServiceURL: 'tokenServiceUrl',
   clientId: 'clientId',
   clientSecret: 'clientSecret',

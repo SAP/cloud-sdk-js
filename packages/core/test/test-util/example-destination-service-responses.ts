@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { AuthenticationType, DestinationConfiguration } from '../../src';
+import { AuthenticationType, DestinationConfiguration, DestinationJson } from '../../src';
 
 export const certificateMultipleResponse: DestinationConfiguration[] = [
   {
@@ -47,7 +47,7 @@ export const oauthMultipleResponse: DestinationConfiguration[] = [
   }
 ];
 
-export const oauthSingleResponse = {
+export const oauthSingleResponse: DestinationJson = {
   owner: {
     SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     InstanceId: null

@@ -96,10 +96,10 @@ describe('Destination parser', () => {
   });
 
   it("parseDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {
-    expect(parseDestination({ Type: 'RFC' } as DestinationConfiguration)).not.toThrow();
+    expect(() => parseDestination({ Type: 'RFC' } as DestinationConfiguration)).not.toThrow();
   });
 
   it("sanitizeDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {
-    expect(sanitizeDestination({ type: 'RFC' })).not.toThrow();
+    expect(() => sanitizeDestination({ type: 'RFC' })).not.toThrow();
   });
 });

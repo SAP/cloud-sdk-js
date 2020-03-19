@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { Destination, parseDestination, sanitizeDestination } from '../../src/scp-cf';
+import { Destination, parseDestination, sanitizeDestination, DestinationConfiguration } from '../../src/scp-cf';
 import { basicMultipleResponse, certificateMultipleResponse, certificateSingleResponse } from '../test-util/example-destination-service-responses';
 
 describe('Destination parser', () => {
@@ -77,23 +77,29 @@ describe('Destination parser', () => {
     expect(oneTime).toMatchObject(twoTimes);
   });
 
-  it('sanitizeDestination throws an error if there is no URL given', () => {
-    const destination: any = {
-      User: 'username',
-      Password: 'password',
-      Name: 'DEST'
-    };
-
-    expect(() => parseDestination(destination)).toThrowErrorMatchingSnapshot();
+  it('parseDestination throws an error if there is no URL given', () => {
+    expect(() =>
+      parseDestination({
+        Name: 'DEST'
+      } as any)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('sanitizeDestination throws an error if there is no url given', () => {
-    const destination = {
-      username: 'username',
-      password: 'password',
-      name: 'DEST'
-    };
+    expect(() =>
+      sanitizeDestination({
+        username: 'username',
+        password: 'password',
+        name: 'DEST'
+      })
+    ).toThrowErrorMatchingSnapshot();
+  });
 
-    expect(() => sanitizeDestination(destination)).toThrowErrorMatchingSnapshot();
+  it("parseDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {
+    expect(() => parseDestination({ Type: 'RFC' } as DestinationConfiguration)).not.toThrow();
+  });
+
+  it("sanitizeDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {
+    expect(() => sanitizeDestination({ type: 'RFC' })).not.toThrow();
   });
 });

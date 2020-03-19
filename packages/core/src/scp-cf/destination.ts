@@ -56,17 +56,23 @@ function getDestinationConfig(destinationJson: DestinationJson | DestinationConf
 }
 
 function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
-  const isHttpDestination = destinationConfig.Type === 'HTTP' || typeof destinationConfig.Type === 'undefined';
-  if (isHttpDestination && typeof destinationConfig.URL === 'undefined') {
+  if (isHttpDestination(destinationConfig) && typeof destinationConfig.URL === 'undefined') {
     throw Error("Property 'URL' of destination configuration must not be undefined.");
   }
 }
 
 function validateDestinationInput(destinationInput: MapType<any>): void {
-  const isHttpDestination = destinationInput.type === 'HTTP' || typeof destinationInput.type === 'undefined';
-  if (isHttpDestination && typeof destinationInput.url === 'undefined') {
+  if (isHttpDestination(destinationInput) && typeof destinationInput.url === 'undefined') {
     throw Error("Property 'url' of destination input must not be undefined.");
   }
+}
+
+function isHttpDestination(destinationInput: MapType<any>): boolean {
+  return (
+    destinationInput.Type === 'HTTP' ||
+    destinationInput.type === 'HTTP' ||
+    (typeof destinationInput.type === 'undefined' && typeof destinationInput.Type === 'undefined')
+  );
 }
 
 /* eslint-disable-next-line valid-jsdoc */

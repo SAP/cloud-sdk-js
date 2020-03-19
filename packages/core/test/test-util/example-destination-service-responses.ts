@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { AuthenticationType } from '../../src';
+import { AuthenticationType, DestinationConfiguration } from '../../src';
 
-export const certificateMultipleResponse = [
+export const certificateMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'ERNIE-UND-CERT',
     Type: 'HTTP',
@@ -28,7 +28,7 @@ export const certificateSingleResponse = {
   ]
 };
 
-export const oauthMultipleResponse = [
+export const oauthMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'FINAL-DESTINATION',
     Type: 'HTTP',
@@ -62,7 +62,7 @@ export const oauthSingleResponse = {
   ]
 };
 
-export const onPremiseMultipleResponse = [
+export const onPremiseMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'OnPremise',
     URL: 'my.on.premise.system:54321',
@@ -71,7 +71,7 @@ export const onPremiseMultipleResponse = [
   }
 ];
 
-export const basicMultipleResponse = [
+export const basicMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'FINAL-DESTINATION',
     Type: 'HTTP',

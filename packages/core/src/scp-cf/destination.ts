@@ -59,7 +59,7 @@ export function parseDestination(destinationJson: DestinationJson | DestinationC
  * @param destinationJsons - JSON objects as given by the destination service.
  * @returns A list of SDK compatible destinations.
  */
-export function parseDestinations(destinationJsons: (DestinationJson | DestinationConfiguration)[]): Destination[] {
+export function parseHttpDestinations(destinationJsons: (DestinationJson | DestinationConfiguration)[]): Destination[] {
   return (
     destinationJsons
       .map(destinationJson => getDestinationConfig(destinationJson))
@@ -149,6 +149,7 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
  * Destination configuration alongside authtokens and certificates.
  */
 export interface DestinationJson {
+  [key: string]: any;
   destinationConfiguration: DestinationConfiguration;
   authTokens?: MapType<string>[];
   certificates?: MapType<string>[];
@@ -158,6 +159,7 @@ export interface DestinationJson {
  * Configuration of a destination as it is available through the destination service.
  */
 export interface DestinationConfiguration {
+  [key: string]: any;
   URL: string;
   Name?: string;
   ProxyType?: string;
@@ -172,7 +174,7 @@ export interface DestinationConfiguration {
   clientId?: string;
   clientSecret?: string;
   SystemUser?: string;
-  Type?: string;
+  Type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 }
 
 /* eslint-disable-next-line valid-jsdoc */

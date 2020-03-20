@@ -29,10 +29,35 @@ blog:
 
 ## fixedIssues
 
+-
+
+# 1.18.1
+
+release-date:
+docs:
+blog:
+
+## knownIssues
+
+-
+
+## compatibilityNotes
+
+-
+
+## newFunctionality
+
+-
+
+## improvements
+
+-
+
+## fixedIssues
+
 - Fix ordering for complex properties including nested complex properties.
-- Fix the generator crashing for services containing function modules without a return type.
-Now the generator will handle these cases and use  `Promise<void>` as return type.
-- Fix of the destination processing so that the user can set `PrincipalPropagation` as the authentication scheme for OnPremise connectivity. 
+- Fix the generator crashing for services containing function imports without a return type.
+- Fix the destination processing so that the user can set `PrincipalPropagation` as authentication scheme for OnPremise connectivity.
 
 # 1.18.0
 
@@ -43,8 +68,8 @@ blog: https://blogs.sap.com/?p=1060707
 ## compatibilityNotes
 
 - Some packages of the SAP Cloud SDK for JavaScript have been migrated to [external GitHub](https://github.com/SAP/cloud-sdk) and are now available as open-source software.
-As a result, the packages have been renamed as shown in the list below. 
-No Breaking changes are made. 
+As a result, the packages have been renamed as shown in the list below.
+No Breaking changes are made.
 The old versions of the packages will not receive further updates, so we heavily encourage switching to the new version of the packages.
   - `@sap/cloud-sdk-util` was renamed to `@sap-cloud-sdk/util`
   - `@sap/cloud-sdk-analytics` was renamed to `@sap-cloud-sdk/analytics`

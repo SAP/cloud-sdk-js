@@ -49,8 +49,7 @@ $ npm install -D @sap-cloud-sdk/test-util
 
 ## How to switch to the Open Source version of the SAP Cloud SDK
 Please ignore this section, if you have never used the SAP Cloud SDK with a version `< 1.18.0`.
-If you are using the old version of the SAP Cloud SDK, 
-you might want to understand [how to migrate to this Open Source version](./docs/how-to-switch-to-os-cloud-sdk.md).
+If you are using an old version of the SAP Cloud SDK, you might want to read [how to migrate to this Open Source version of the SAP Cloud SDK](./docs/how-to-switch-to-os-cloud-sdk.md).
 
 ## Related Projects
 

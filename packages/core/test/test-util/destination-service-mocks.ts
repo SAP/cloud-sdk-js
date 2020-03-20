@@ -2,8 +2,16 @@
 import nock from 'nock';
 import { destinationServiceUri } from './environment-mocks';
 
-export function mockInstanceDestinationsCall(response: any, responseCode: number, accessToken: string, uri: string = destinationServiceUri) {
-  return nock(uri, {
+type nockFunction = (a: string, b: nock.Options) => nock.Scope;
+
+export function mockInstanceDestinationsCall(
+  abc: nockFunction,
+  response: any,
+  responseCode: number,
+  accessToken: string,
+  uri: string = destinationServiceUri
+) {
+  return abc(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -12,8 +20,14 @@ export function mockInstanceDestinationsCall(response: any, responseCode: number
     .reply(responseCode, response);
 }
 
-export function mockSubaccountDestinationsCall(response: any, responseCode: number, accessToken: string, uri: string = destinationServiceUri) {
-  return nock(uri, {
+export function mockSubaccountDestinationsCall(
+  abc: nockFunction,
+  response: any,
+  responseCode: number,
+  accessToken: string,
+  uri: string = destinationServiceUri
+) {
+  return abc(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -23,13 +37,14 @@ export function mockSubaccountDestinationsCall(response: any, responseCode: numb
 }
 
 export function mockSingleDestinationCall(
+  abc: nockFunction,
   response: any,
   responseCode: number,
   destName: string,
   accessToken: string,
   uri: string = destinationServiceUri
 ) {
-  return nock(uri, {
+  return abc(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }

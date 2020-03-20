@@ -20,14 +20,15 @@
     "@sap-cloud-sdk/util": "^1.19.0"
   },
   "devDependencies": {
+    "axios": "0.19.2",
     "@types/jest": "^25.1.4",
+    "jsonwebtoken": "^8.5.1",
     "bignumber.js": "8.1.1",
     "nock": "^12.0.2",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "mockserver-node": "5.8.1",
-    "nock": "^12.0.2",
     "ts-jest": "^25.2.1",
-    "typescript": "3.7.4"
+    "typescript": "3.8.3"
   }
 }

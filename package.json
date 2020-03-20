@@ -29,8 +29,6 @@
     "bump:minor": "npx lerna version minor --force-publish -y"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^8.3.8",
-    "@types/voca": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "audit-ci": "^2.5.1",
@@ -41,13 +39,12 @@
     "glob": "^7.1.6",
     "lerna": "^3.20.2",
     "license-checker": "^25.0.1",
-    "nock": "^12.0.2",
     "pkginfo": "^0.4.1",
     "prettier": "^1.19.1",
     "ts-node": "^8.6.2",
     "typedoc": "^0.16.11",
     "typedoc-plugin-lerna-packages": "^0.3.0",
-    "typescript": "3.7.4"
+    "typescript": "3.8.3"
   },
   "dependencies": {}
 }

@@ -79,11 +79,11 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(oauthMultipleResponse, 200, subscriberServiceToken),
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
-        mockSingleDestinationCall(oauthSingleResponse, 200, destinationName, userApprovedSubscriberServiceToken)
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(nock, oauthMultipleResponse, 200, subscriberServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, userApprovedSubscriberServiceToken)
       ];
 
       const expected = parseDestination(oauthSingleResponse);
@@ -99,9 +99,9 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(oauthMultipleResponse, 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
-        mockSingleDestinationCall(oauthSingleResponse, 200, destinationName, userApprovedProviderServiceToken)
+        mockInstanceDestinationsCall(nock, oauthMultipleResponse, 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, userApprovedProviderServiceToken)
       ];
 
       const expected = parseDestination(oauthSingleResponse);
@@ -121,9 +121,9 @@ describe('destination-accessor', () => {
       samlDestinationsWithSystemUser['SystemUser'] = 'defined';
 
       const httpMocks = [
-        mockInstanceDestinationsCall([samlDestinationsWithSystemUser], 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
-        mockSingleDestinationCall(oauthSingleResponse, 200, destinationName, providerServiceToken)
+        mockInstanceDestinationsCall(nock, [samlDestinationsWithSystemUser], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, providerServiceToken)
       ];
 
       const expected = parseDestination(oauthSingleResponse);
@@ -141,11 +141,11 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(certificateMultipleResponse, 200, subscriberServiceToken),
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
-        mockSingleDestinationCall(certificateSingleResponse, 200, 'ERNIE-UND-CERT', subscriberServiceToken)
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, subscriberServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', subscriberServiceToken)
       ];
 
       const actual = await getDestination('ERNIE-UND-CERT', { userJwt: subscriberUserJwt, cacheVerificationKeys: false });
@@ -162,9 +162,9 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(certificateMultipleResponse, 200, providerServiceToken),
-        mockSingleDestinationCall(certificateSingleResponse, 200, 'ERNIE-UND-CERT', providerServiceToken)
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, providerServiceToken),
+        mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', providerServiceToken)
       ];
 
       const actual = await getDestination('ERNIE-UND-CERT', { cacheVerificationKeys: false });
@@ -185,10 +185,10 @@ describe('destination-accessor', () => {
       mockVerifyJwt();
       const serviceTokenSpy = mockServiceToken();
 
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(basicMultipleResponse, 200, subscriberServiceToken);
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
       const expected = parseDestination(basicMultipleResponse[0]);
       const actual = await getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false });
@@ -200,8 +200,8 @@ describe('destination-accessor', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(basicMultipleResponse, 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, providerServiceToken);
 
       const actual = await getDestination(destinationName, { cacheVerificationKeys: false });
       const expected = parseDestination(basicMultipleResponse[0]);
@@ -213,12 +213,12 @@ describe('destination-accessor', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(certificateMultipleResponse, 200, subscriberServiceToken);
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
-      mockSingleDestinationCall(certificateSingleResponse, 200, 'ERNIE-UND-CERT', subscriberServiceToken);
+      mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', subscriberServiceToken);
 
       const expected = parseDestination(certificateSingleResponse);
       const actual = await getDestinationFromDestinationService('ERNIE-UND-CERT', {
@@ -258,13 +258,14 @@ describe('destination-accessor', () => {
 
       const httpMocks = [
         mockInstanceDestinationsCall(
+          nock,
           {
             ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
           },
           400,
           subscriberServiceToken
         ),
-        mockSubaccountDestinationsCall(basicMultipleResponse, 200, subscriberServiceToken)
+        mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken)
       ];
 
       try {
@@ -284,11 +285,12 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(oauthMultipleResponse, 200, subscriberServiceToken),
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(nock, oauthMultipleResponse, 200, subscriberServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
+          nock,
           {
             ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
           },
@@ -315,10 +317,10 @@ describe('destination-accessor', () => {
       mockServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall([], 200, subscriberServiceToken),
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken)
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken)
       ];
 
       const expected = null;
@@ -332,8 +334,8 @@ describe('destination-accessor', () => {
       mockVerifyJwt();
       mockServiceToken();
 
-      const instanceDestinationCallMock = mockInstanceDestinationsCall(oauthMultipleResponse, 200, providerServiceToken);
-      const subaccountDestinationCallMock = mockSubaccountDestinationsCall([], 200, providerServiceToken);
+      const instanceDestinationCallMock = mockInstanceDestinationsCall(nock, oauthMultipleResponse, 200, providerServiceToken);
+      const subaccountDestinationCallMock = mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
       await expect(getDestination(destinationName, { cacheVerificationKeys: false })).rejects.toThrowErrorMatchingSnapshot();
       expect(instanceDestinationCallMock.isDone()).toBe(true);
@@ -352,12 +354,12 @@ describe('destination-accessor', () => {
       mockServiceToken();
       mockUserApprovedServiceToken();
 
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
-      mockSubaccountDestinationsCall(basicMultipleResponse, 200, subscriberServiceToken);
-      mockSingleDestinationCall(basicMultipleResponse[0], 200, destinationName, subscriberServiceToken);
+      mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken);
+      mockSingleDestinationCall(nock, basicMultipleResponse[0], 200, destinationName, subscriberServiceToken);
       process.env['https_proxy'] = 'some.proxy.com:1234';
 
       const actual = await getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false });
@@ -370,10 +372,10 @@ describe('destination-accessor', () => {
       mockServiceToken();
       mockUserApprovedServiceToken();
 
-      mockInstanceDestinationsCall(onPremiseMultipleResponse, 200, subscriberServiceToken);
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, onPremiseMultipleResponse, 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken);
 
       process.env['https_proxy'] = 'some.proxy.com:1234';
       const expected = {
@@ -411,10 +413,10 @@ describe('destination-accessor', () => {
           Authentication: 'NoAuthentification'
         };
 
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken);
-        mockSubaccountDestinationsCall([subscriberDest], 200, subscriberServiceToken);
-        mockInstanceDestinationsCall([], 200, providerServiceToken);
-        mockSubaccountDestinationsCall([providerDest], 200, providerServiceToken);
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+        mockSubaccountDestinationsCall(nock, [subscriberDest], 200, subscriberServiceToken);
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+        mockSubaccountDestinationsCall(nock, [providerDest], 200, providerServiceToken);
       });
 
       it('retrieved provider and subscriber destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
@@ -473,9 +475,9 @@ describe('destination-accessor', () => {
         mockUserApprovedServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall([], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(certificateMultipleResponse, 200, providerServiceToken),
-          mockSingleDestinationCall(certificateSingleResponse, 200, 'ERNIE-UND-CERT', providerServiceToken)
+          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+          mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, providerServiceToken),
+          mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', providerServiceToken)
         ];
 
         const retrieveFromCacheSpy = jest.spyOn(destinationCache, 'retrieveDestinationFromCache');
@@ -496,9 +498,9 @@ describe('destination-accessor', () => {
         mockUserApprovedServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall(oauthMultipleResponse, 200, providerServiceToken),
-          mockSubaccountDestinationsCall([], 200, providerServiceToken),
-          mockSingleDestinationCall(oauthSingleResponse, 200, destinationName, userApprovedProviderServiceToken)
+          mockInstanceDestinationsCall(nock, oauthMultipleResponse, 200, providerServiceToken),
+          mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+          mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, userApprovedProviderServiceToken)
         ];
 
         const expected = parseDestination(oauthSingleResponse);
@@ -522,8 +524,8 @@ describe('destination-accessor', () => {
         mockUserApprovedServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall([], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(onPremiseMultipleResponse, 200, providerServiceToken)
+          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+          mockSubaccountDestinationsCall(nock, onPremiseMultipleResponse, 200, providerServiceToken)
         ];
 
         const retrieveFromCacheSpy = jest.spyOn(destinationCache, 'retrieveDestinationFromCache');
@@ -617,8 +619,8 @@ describe('destination-accessor', () => {
         );
 
         const httpMocks = [
-          mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-          mockSubaccountDestinationsCall([], 200, subscriberServiceToken)
+          mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+          mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
         ];
 
         const actual = await getDestination('ProviderDest', {
@@ -641,10 +643,10 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const httpMocks = [
-          mockSubaccountDestinationsCall(onPremiseMultipleResponse, 200, subscriberServiceToken),
-          mockInstanceDestinationsCall([], 200, providerServiceToken),
-          mockSubaccountDestinationsCall([], 200, providerServiceToken),
-          mockInstanceDestinationsCall([], 200, subscriberServiceToken)
+          mockSubaccountDestinationsCall(nock, onPremiseMultipleResponse, 200, subscriberServiceToken),
+          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+          mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+          mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken)
         ];
 
         const expected = {
@@ -685,8 +687,8 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-          mockSubaccountDestinationsCall(basicMultipleResponse, 200, subscriberServiceToken)
+          mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+          mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken)
         ];
 
         const expected = parseDestination(basicMultipleResponse[0]);
@@ -705,8 +707,8 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall([], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(basicMultipleResponse, 200, providerServiceToken)
+          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+          mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, providerServiceToken)
         ];
 
         const expected = parseDestination(basicMultipleResponse[0]);

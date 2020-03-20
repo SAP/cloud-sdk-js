@@ -37,8 +37,8 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       mockDestinationServiceBinding.credentials.clientid,
       mockDestinationServiceBinding.credentials.clientsecret
     );
-    mockInstanceDestinationsCall([destination], 200, providerToken);
-    mockSubaccountDestinationsCall([], 200, providerToken);
+    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
+    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
   });
 
   afterEach(() => {

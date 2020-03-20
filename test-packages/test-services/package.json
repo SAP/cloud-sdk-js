@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "description": "Custom Services for testing",
   "files": [
     "srv/**/*.js",
@@ -16,6 +16,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.18.0"
+    "@sap-cloud-sdk/core": "^1.19.0"
   }
 }

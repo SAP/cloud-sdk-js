@@ -25,15 +25,13 @@ export function sanitizeDestination(destination: MapType<any>): Destination {
 
 /**
  * Takes a JSON object returned by any of the calls to the destination service and returns an SDK compatible destination object.
+ * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
  *
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
 export function parseDestination(destinationJson: DestinationJson | DestinationConfiguration): Destination {
-  const destinationConfig = Object.keys(destinationJson).includes('destinationConfiguration')
-    ? (destinationJson as DestinationJson).destinationConfiguration
-    : (destinationJson as DestinationConfiguration);
-
+  const destinationConfig = getDestinationConfig(destinationJson);
   validateDestinationConfig(destinationConfig);
 
   const destination = Object.entries(destinationConfig).reduce(
@@ -53,16 +51,28 @@ export function parseDestination(destinationJson: DestinationJson | DestinationC
   return sanitizeDestination(destination);
 }
 
+function getDestinationConfig(destinationJson: DestinationJson | DestinationConfiguration): DestinationConfiguration {
+  return isDestinationJson(destinationJson) ? destinationJson.destinationConfiguration : destinationJson;
+}
+
 function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
-  if (typeof destinationConfig.URL === 'undefined') {
+  if (isHttpDestination(destinationConfig) && typeof destinationConfig.URL === 'undefined') {
     throw Error("Property 'URL' of destination configuration must not be undefined.");
   }
 }
 
 function validateDestinationInput(destinationInput: MapType<any>): void {
-  if (typeof destinationInput.url === 'undefined') {
+  if (isHttpDestination(destinationInput) && typeof destinationInput.url === 'undefined') {
     throw Error("Property 'url' of destination input must not be undefined.");
   }
+}
+
+function isHttpDestination(destinationInput: MapType<any>): boolean {
+  return (
+    destinationInput.Type === 'HTTP' ||
+    destinationInput.type === 'HTTP' ||
+    (typeof destinationInput.type === 'undefined' && typeof destinationInput.Type === 'undefined')
+  );
 }
 
 /* eslint-disable-next-line valid-jsdoc */
@@ -129,6 +139,7 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
  * Destination configuration alongside authtokens and certificates.
  */
 export interface DestinationJson {
+  [key: string]: any;
   destinationConfiguration: DestinationConfiguration;
   authTokens?: MapType<string>[];
   certificates?: MapType<string>[];
@@ -138,6 +149,7 @@ export interface DestinationJson {
  * Configuration of a destination as it is available through the destination service.
  */
 export interface DestinationConfiguration {
+  [key: string]: any;
   URL: string;
   Name?: string;
   ProxyType?: string;
@@ -152,6 +164,7 @@ export interface DestinationConfiguration {
   clientId?: string;
   clientSecret?: string;
   SystemUser?: string;
+  Type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 }
 
 /* eslint-disable-next-line valid-jsdoc */
@@ -162,7 +175,15 @@ export function isDestinationConfiguration(destination: any): destination is Des
   return destination.URL !== undefined;
 }
 
-const configMapping: MapType<string> = {
+/* eslint-disable-next-line valid-jsdoc */
+/**
+ * @hidden
+ */
+export function isDestinationJson(destination: any): destination is DestinationJson {
+  return Object.keys(destination).includes('destinationConfiguration');
+}
+
+const configMapping: MapType<keyof Destination> = {
   URL: 'url',
   Name: 'name',
   User: 'username',
@@ -171,6 +192,7 @@ const configMapping: MapType<string> = {
   'sap-client': 'sapClient',
   Authentication: 'authentication',
   TrustAll: 'isTrustingAllCertificates',
+  Type: 'type',
   tokenServiceURL: 'tokenServiceUrl',
   clientId: 'clientId',
   clientSecret: 'clientSecret',

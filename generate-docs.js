@@ -88,8 +88,38 @@ function insertCopyrightNotice(path) {
 
 const cleanDocsDir = 'rm -rf documentation';
 const generateDocs = 'npx typedoc .';
-// zipping from outside produces wrong results in the documentation system
-const zipDocs = 'cd documentation && zip documentation.zip * -r && cd ..';
+
+const version = getCurrentSDKVersion();
+
+function createDocFolder(version) {
+  return `mkdir -p docs/${version}`;
+}
+
+function readJson(filePath){
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function getCurrentSDKVersion(){
+  const lernaJson = readJson('./lerna.json');
+  return lernaJson.version;
+}
+
+function moveDocs(version){
+  return `mv -v documentation/* docs/${version}`;
+}
+
+function updateIndex(){
+  const indexPath  = './docs/index.md';
+  const originalData = fs.readFileSync(indexPath, 'utf8');
+  const newLine = `\n- [${version}](${version})`;
+  const newData = originalData + newLine;
+  fs.writeFileSync(indexPath, newData, 'utf8');
+}
+
+function addNewDocs(){
+  execSync(createDocFolder(version));
+  execSync(moveDocs(version));
+}
 
 execSync(cleanDocsDir);
 const generationLogs = execSync(generateDocs, { encoding: 'utf8' });
@@ -101,4 +131,5 @@ if (invalidLinks) {
 }
 adjustmentForGitHubPages();
 addCopyrightNotice();
-execSync(zipDocs);
+addNewDocs();
+updateIndex();

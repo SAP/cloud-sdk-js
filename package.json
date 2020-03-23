@@ -41,7 +41,7 @@
     "glob": "^7.1.6",
     "lerna": "^3.20.2",
     "license-checker": "^25.0.1",
-    "nock": "^12.0.2",
+    "nock": "^12.0.3",
     "pkginfo": "^0.4.1",
     "prettier": "^1.19.1",
     "ts-node": "^8.6.2",

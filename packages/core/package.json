@@ -46,7 +46,7 @@
     "moment": "2.24.0",
     "opossum": "4.0.0",
     "rambda": "2.14.5",
-    "uuid": "7.0.2",
+    "uuid": "^7.0.2",
     "voca": "1.4.0"
   },
   "devDependencies": {

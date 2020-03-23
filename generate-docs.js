@@ -105,11 +105,11 @@ function getCurrentSDKVersion(){
 }
 
 function moveDocs(version){
-  return `mv -v documentation/* docs/${version}`;
+  return `mv -v documentation/* docs/api/${version}`;
 }
 
 function updateIndex(){
-  const indexPath  = './docs/index.md';
+  const indexPath  = './docs/api/index.md';
   const originalData = fs.readFileSync(indexPath, 'utf8');
   const newLine = `\n- [Version ${version}](${version})`;
   const newData = originalData + newLine;

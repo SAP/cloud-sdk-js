@@ -92,7 +92,7 @@ const generateDocs = 'npx typedoc .';
 const version = getCurrentSDKVersion();
 
 function createDocFolder(version) {
-  return `mkdir -p docs/${version}`;
+  return `mkdir -p docs/api/${version}`;
 }
 
 function readJson(filePath){

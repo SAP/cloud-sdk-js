@@ -43,7 +43,7 @@ blog:
 
 ## compatibilityNotes
 
-- Parsing destinations now also checks for validity of the destination. All destinations of type 'HTTP' are expected to contain a `url` or `URL` property. When retrieving a destination from the `destinations` environment variable by name, all destinations are parsed, therefore this validation applies to all available destination, even those that are not read.
+- Parsing destinations now also checks for validity of the destination. All destinations of type 'HTTP' are expected to contain a `url` or `URL` property. When retrieving a destination from the `destinations` environment variable by name, all destinations are parsed, therefore this validation applies to all available destination, even those that are not read. Invalid destinations will be reported with `Property 'URL' of destination configuration must not be undefined.`
 
 ## newFunctionality
 

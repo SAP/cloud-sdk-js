@@ -111,7 +111,7 @@ function moveDocs(version){
 function updateIndex(){
   const indexPath  = './docs/index.md';
   const originalData = fs.readFileSync(indexPath, 'utf8');
-  const newLine = `\n- [${version}](${version})`;
+  const newLine = `\n- [Version ${version}](${version})`;
   const newData = originalData + newLine;
   fs.writeFileSync(indexPath, newData, 'utf8');
 }

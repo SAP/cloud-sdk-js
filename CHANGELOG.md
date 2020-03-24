@@ -33,17 +33,13 @@ blog:
 
 # 1.18.1
 
-release-date:
-docs:
-blog:
-
-## knownIssues
-
--
+release-date: March 26, 2019
+docs: https://sap.github.io/cloud-sdk/
+blog: https://blogs.sap.com/?p=1068438
 
 ## compatibilityNotes
 
-- Parsing destinations now also checks for validity of the destination. All destinations of type 'HTTP' are expected to contain a `url` or `URL` property. When retrieving a destination from the `destinations` environment variable by name, all destinations are parsed, therefore this validation applies to all available destination, even those that are not read. Invalid destinations will be reported with `Property 'URL' of destination configuration must not be undefined.`
+- Intoroduce validation for destination configurations. Destinations of type `HTTP` are expected to contain a `url` or `URL` property. Note that when retrieving a destination from the `destinations` environment variable by name, all destinations are parsed. This validation applies to all configured destinations, even those that are not read.
 
 ## newFunctionality
 

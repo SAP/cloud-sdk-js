@@ -1,7 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { edmDateTimeToMoment, edmToTs, momentToEdmDateTime, parseNumber, tsToEdm } from '../src/payload-value-converter';
+import {
+  edmDateTimeToMoment,
+  edmToTs,
+  momentToEdmDateTime,
+  parseNumber,
+  tsToEdm
+} from '../src/payload-value-converter';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {
@@ -84,9 +90,7 @@ describe('edmToTs()', () => {
   });
 
   it('should parse Edm.DateTimeOffset to Moment', () => {
-    const expected = moment(1425427200000)
-      .utc()
-      .utcOffset(0);
+    const expected = moment(1425427200000).utc().utcOffset(0);
     const actual = edmToTs('/Date(1425427200000+0000)/', 'Edm.DateTimeOffset');
     expect(actual).toEqual(expected);
   });
@@ -185,9 +189,7 @@ describe('tsToEdm()', () => {
   it('should parse Moment to Edm.DateTimeOffset', () => {
     const expected = '/Date(1425427200000+0000)/';
     const actual = tsToEdm(
-      moment(1425427200000)
-        .utc()
-        .utcOffset(0),
+      moment(1425427200000).utc().utcOffset(0),
       'Edm.DateTimeOffset'
     );
     expect(actual).toEqual(expected);
@@ -216,12 +218,16 @@ describe('tsToEdm()', () => {
 describe('edm to ts to edm does not lead to information loss', () => {
   it('Edm.String', () => {
     const expected = 'teststring';
-    expect(tsToEdm(edmToTs(expected, 'Edm.String'), 'Edm.String')).toBe(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.String'), 'Edm.String')).toBe(
+      expected
+    );
   });
 
   it('Edm.Boolean', () => {
     const expected = true;
-    expect(tsToEdm(edmToTs(expected, 'Edm.Boolean'), 'Edm.Boolean')).toBe(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.Boolean'), 'Edm.Boolean')).toBe(
+      expected
+    );
   });
 
   it('Edm.Guid', () => {
@@ -231,17 +237,23 @@ describe('edm to ts to edm does not lead to information loss', () => {
 
   it('Edm.Decimal', () => {
     const expected = '123456.789';
-    expect(tsToEdm(edmToTs(expected, 'Edm.Decimal'), 'Edm.Decimal')).toBe(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.Decimal'), 'Edm.Decimal')).toBe(
+      expected
+    );
   });
 
   it('Edm.Double', () => {
     const expected = 1234.56;
-    expect(tsToEdm(edmToTs(expected, 'Edm.Double'), 'Edm.Double')).toBe(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.Double'), 'Edm.Double')).toBe(
+      expected
+    );
   });
 
   it('Edm.Single', () => {
     const expected = 1234;
-    expect(tsToEdm(edmToTs(expected, 'Edm.Single'), 'Edm.Single')).toBe(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.Single'), 'Edm.Single')).toBe(
+      expected
+    );
   });
 
   it('Edm.Int16', () => {
@@ -256,7 +268,9 @@ describe('edm to ts to edm does not lead to information loss', () => {
 
   it('Edm.Int64', () => {
     const expected = new BigNumber(64);
-    expect(tsToEdm(edmToTs(expected, 'Edm.Int64'), 'Edm.Int64')).toStrictEqual(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.Int64'), 'Edm.Int64')).toStrictEqual(
+      expected
+    );
   });
 
   it('Edm.SByte', () => {
@@ -266,12 +280,16 @@ describe('edm to ts to edm does not lead to information loss', () => {
 
   it('Edm.DateTime', () => {
     const expected = '/Date(1425427200000)/';
-    expect(tsToEdm(edmToTs(expected, 'Edm.DateTime'), 'Edm.DateTime')).toBe(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.DateTime'), 'Edm.DateTime')).toBe(
+      expected
+    );
   });
 
   it('Edm.DateTimeOffset', () => {
     const expected = '/Date(1425427200000+1000)/';
-    expect(tsToEdm(edmToTs(expected, 'Edm.DateTimeOffset'), 'Edm.DateTimeOffset')).toBe(expected);
+    expect(
+      tsToEdm(edmToTs(expected, 'Edm.DateTimeOffset'), 'Edm.DateTimeOffset')
+    ).toBe(expected);
   });
 
   it('Edm.Time', () => {
@@ -281,7 +299,9 @@ describe('edm to ts to edm does not lead to information loss', () => {
 
   it('Edm.Binary', () => {
     const expected = 'BASE64==';
-    expect(tsToEdm(edmToTs(expected, 'Edm.Binary'), 'Edm.Binary')).toBe(expected);
+    expect(tsToEdm(edmToTs(expected, 'Edm.Binary'), 'Edm.Binary')).toBe(
+      expected
+    );
   });
 
   it('Edm.Byte', () => {
@@ -336,27 +356,21 @@ describe('edm to moment and back', () => {
 
     it('returns an offset for utc dates', () => {
       const edmDateTime = momentToEdmDateTime(
-        moment(1556630382000)
-          .utc()
-          .utcOffset(120)
+        moment(1556630382000).utc().utcOffset(120)
       );
       expect(edmDateTime).toBe('/Date(1556630382000+0120)/');
     });
 
     it('handles negative offsets', () => {
       const edmDateTime = momentToEdmDateTime(
-        moment(1556630382000)
-          .utc()
-          .utcOffset(-120)
+        moment(1556630382000).utc().utcOffset(-120)
       );
       expect(edmDateTime).toBe('/Date(1556630382000-0120)/');
     });
 
     it('handles two digit offsets', () => {
       const edmDateTime = momentToEdmDateTime(
-        moment(1556630382000)
-          .utc()
-          .utcOffset(30)
+        moment(1556630382000).utc().utcOffset(30)
       );
       expect(edmDateTime).toBe('/Date(1556630382000+0030)/');
     });
@@ -366,7 +380,11 @@ describe('edm to moment and back', () => {
     const valueWithoutOffset = '/Date(1556630382000)/';
     const valueWithOffset = '/Date(1556630382000+0120)/';
 
-    expect(momentToEdmDateTime(edmDateTimeToMoment(valueWithoutOffset))).toBe(valueWithoutOffset);
-    expect(momentToEdmDateTime(edmDateTimeToMoment(valueWithOffset))).toBe(valueWithOffset);
+    expect(momentToEdmDateTime(edmDateTimeToMoment(valueWithoutOffset))).toBe(
+      valueWithoutOffset
+    );
+    expect(momentToEdmDateTime(edmDateTimeToMoment(valueWithOffset))).toBe(
+      valueWithOffset
+    );
   });
 });

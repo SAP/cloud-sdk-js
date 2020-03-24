@@ -12,16 +12,32 @@ export class GlobalNameFormatter {
 
   constructor(vdmMapping: VdmMapping | undefined) {
     this.vdmMapping = vdmMapping || {};
-    this.directoryNamesCache = Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName);
-    this.npmPackageNamesCache = Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName);
+    this.directoryNamesCache = Object.entries(this.vdmMapping).map(
+      ([k, v]) => v.directoryName
+    );
+    this.npmPackageNamesCache = Object.entries(this.vdmMapping).map(
+      ([k, v]) => v.npmPackageName
+    );
   }
 
-  public uniqueDirectoryName(directoryName: string, originalFileName: string): string {
-    return this.directoryNameFromMapping(originalFileName) || this.transformAndCacheDirectoryName(directoryName);
+  public uniqueDirectoryName(
+    directoryName: string,
+    originalFileName: string
+  ): string {
+    return (
+      this.directoryNameFromMapping(originalFileName) ||
+      this.transformAndCacheDirectoryName(directoryName)
+    );
   }
 
-  public uniqueNpmPackageName(npmPackageName: string, originalFileName: string): string {
-    return this.npmPackageNameFromMapping(originalFileName) || this.transformAndCacheNpmPackageName(npmPackageName);
+  public uniqueNpmPackageName(
+    npmPackageName: string,
+    originalFileName: string
+  ): string {
+    return (
+      this.npmPackageNameFromMapping(originalFileName) ||
+      this.transformAndCacheNpmPackageName(npmPackageName)
+    );
   }
 
   private transformAndCacheDirectoryName(directoryName: string): string {
@@ -44,15 +60,24 @@ export class GlobalNameFormatter {
   private transformIfNecessary = (cache: string[]) => (name: string): string =>
     cache.includes(name) ? applySuffixOnConflictDash(name, cache) : name;
 
-  private directoryNameFromMapping(originalFileName: string): string | undefined {
+  private directoryNameFromMapping(
+    originalFileName: string
+  ): string | undefined {
     return this.fromMapping(originalFileName, 'directoryName');
   }
 
-  private npmPackageNameFromMapping(originalFileName: string): string | undefined {
+  private npmPackageNameFromMapping(
+    originalFileName: string
+  ): string | undefined {
     return this.fromMapping(originalFileName, 'npmPackageName');
   }
 
-  private fromMapping(originalFileName: string, key: keyof ServiceMapping): string | undefined {
-    return propertyExists(this.vdmMapping, originalFileName, key) ? this.vdmMapping[originalFileName][key] : undefined;
+  private fromMapping(
+    originalFileName: string,
+    key: keyof ServiceMapping
+  ): string | undefined {
+    return propertyExists(this.vdmMapping, originalFileName, key)
+      ? this.vdmMapping[originalFileName][key]
+      : undefined;
   }
 }

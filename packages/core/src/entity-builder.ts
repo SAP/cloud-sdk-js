@@ -71,7 +71,9 @@ export class EntityBuilder<EntityT extends Entity, JsonT> {
         validCfs[cf] = customFields[cf];
       }
       logger.warn(
-        `Field name "${cf}" is already existing in "${toClassName(this._entityConstructor._entityName)}" and thus cannot be defined as custom field. `
+        `Field name "${cf}" is already existing in "${toClassName(
+          this._entityConstructor._entityName
+        )}" and thus cannot be defined as custom field. `
       );
       return validCfs;
     }, {});

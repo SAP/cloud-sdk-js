@@ -1,5 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { testEntityKeyPropGuid, testEntityKeyPropString, testEntityMultiLinkKeyProp } from '../keys';
+import {
+  testEntityKeyPropGuid,
+  testEntityKeyPropString,
+  testEntityMultiLinkKeyProp
+} from '../keys';
 import { changesetHeader, changesetRequestHeader } from './header';
 
 export const createTestEntity = [

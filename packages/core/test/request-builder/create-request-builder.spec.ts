@@ -3,9 +3,16 @@ import nock = require('nock');
 import { v4 as uuid } from 'uuid';
 import { CreateRequestBuilder } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
-import { defaultDestination, mockCreateRequest } from '../test-util/request-mocker';
+import {
+  defaultDestination,
+  mockCreateRequest
+} from '../test-util/request-mocker';
 import { testEntityResourcePath } from '../test-util/test-data';
-import { TestEntity, TestEntityMultiLink, TestEntitySingleLink } from '../test-util/test-services/test-service';
+import {
+  TestEntity,
+  TestEntityMultiLink,
+  TestEntitySingleLink
+} from '../test-util/test-services/test-service';
 
 describe('CreateRequestBuilder', () => {
   beforeAll(() => {
@@ -30,7 +37,9 @@ describe('CreateRequestBuilder', () => {
       .stringProperty(stringProp)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -51,10 +60,10 @@ describe('CreateRequestBuilder', () => {
       }
     });
 
-    const entity = TestEntity.builder()
-      .stringProperty(stringProp)
-      .build();
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const entity = TestEntity.builder().stringProperty(stringProp).build();
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     expect(actual['_versionIdentifier']).toBe(eTag);
     expect(actual['remoteState']).toEqual(entity);
@@ -70,13 +79,13 @@ describe('CreateRequestBuilder', () => {
 
     const entity = TestEntity.builder()
       .toSingleLink(
-        TestEntitySingleLink.builder()
-          .stringProperty(stringProp)
-          .build()
+        TestEntitySingleLink.builder().stringProperty(stringProp).build()
       )
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -85,7 +94,9 @@ describe('CreateRequestBuilder', () => {
     const keyProp = 'test';
     const stringProp = 'someStr';
 
-    const linkedEntityBody = [{ KeyProperty: keyProp, StringProperty: stringProp }];
+    const linkedEntityBody = [
+      { KeyProperty: keyProp, StringProperty: stringProp }
+    ];
 
     mockCreateRequest({
       body: { to_MultiLink: linkedEntityBody },
@@ -101,7 +112,9 @@ describe('CreateRequestBuilder', () => {
       ])
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -132,7 +145,9 @@ describe('CreateRequestBuilder', () => {
       .withCustomFields(customFields)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -155,14 +170,20 @@ describe('CreateRequestBuilder', () => {
 
     const postBody = { BooleanProperty: booleanProp, Int16Property: int16Prop };
 
-    const toChildPath = `${testEntityResourcePath(parentKeyGuid, parentKeyString)}/to_MultiLink`;
+    const toChildPath = `${testEntityResourcePath(
+      parentKeyGuid,
+      parentKeyString
+    )}/to_MultiLink`;
 
     mockCreateRequest({
       body: postBody,
       path: toChildPath
     });
 
-    const actual = await new CreateRequestBuilder(TestEntityMultiLink, childEntity)
+    const actual = await new CreateRequestBuilder(
+      TestEntityMultiLink,
+      childEntity
+    )
       .asChildOf(parentEntity, TestEntity.TO_MULTI_LINK)
       .execute(defaultDestination);
 
@@ -175,11 +196,12 @@ describe('CreateRequestBuilder', () => {
       statusCode: 500
     });
 
-    const someEntity = TestEntity.builder()
-      .stringProperty('')
-      .build();
+    const someEntity = TestEntity.builder().stringProperty('').build();
 
-    const createRequest = new CreateRequestBuilder(TestEntity, someEntity).execute(defaultDestination);
+    const createRequest = new CreateRequestBuilder(
+      TestEntity,
+      someEntity
+    ).execute(defaultDestination);
 
     await expect(createRequest).rejects.toThrowErrorMatchingSnapshot();
   });

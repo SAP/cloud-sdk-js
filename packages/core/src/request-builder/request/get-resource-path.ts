@@ -20,7 +20,10 @@ const logger = createLogger({
  * @param entityConstructor - Constructor type of the entity to get the resource path for
  * @returns The path to the resource
  */
-export function getResourcePathForKeys<EntityT extends Entity>(keys: MapType<FieldType> = {}, entityConstructor: Constructable<EntityT>): string {
+export function getResourcePathForKeys<EntityT extends Entity>(
+  keys: MapType<FieldType> = {},
+  entityConstructor: Constructable<EntityT>
+): string {
   keys = filterNonKeyProperties(keys, entityConstructor);
   validateKeys(keys, entityConstructor);
 
@@ -34,12 +37,20 @@ export function getResourcePathForKeys<EntityT extends Entity>(keys: MapType<Fie
   return entityConstructor._entityName;
 }
 
-function getMissingKeys<EntityT extends Entity>(keys: MapType<FieldType>, entityConstructor: Constructable<EntityT>): string[] {
+function getMissingKeys<EntityT extends Entity>(
+  keys: MapType<FieldType>,
+  entityConstructor: Constructable<EntityT>
+): string[] {
   const givenKeys = Object.keys(keys);
-  return entityConstructor._keyFields.map(field => field._fieldName).filter(fieldName => !givenKeys.includes(fieldName));
+  return entityConstructor._keyFields
+    .map(field => field._fieldName)
+    .filter(fieldName => !givenKeys.includes(fieldName));
 }
 
-function getInvalidKeys<EntityT extends Entity>(keys: MapType<FieldType>, entityConstructor: Constructable<EntityT>): string[] {
+function getInvalidKeys<EntityT extends Entity>(
+  keys: MapType<FieldType>,
+  entityConstructor: Constructable<EntityT>
+): string[] {
   const validKeys = entityConstructor._keyFields.map(field => field._fieldName);
   return Object.keys(keys).filter(key => !validKeys.includes(key));
 }
@@ -50,28 +61,47 @@ function getNullishKeys(keys: MapType<FieldType>): string[] {
     .map(([key]) => key);
 }
 
-function filterNonKeyProperties<EntityT extends Entity>(keys: MapType<FieldType>, entityConstructor: Constructable<EntityT>): MapType<FieldType> {
+function filterNonKeyProperties<EntityT extends Entity>(
+  keys: MapType<FieldType>,
+  entityConstructor: Constructable<EntityT>
+): MapType<FieldType> {
   const invalidKeys = getInvalidKeys(keys, entityConstructor);
   if (invalidKeys.length) {
-    logger.warn(`There are too many key properties. Ignoring the following keys: ${invalidKeys.join(', ')}`);
+    logger.warn(
+      `There are too many key properties. Ignoring the following keys: ${invalidKeys.join(
+        ', '
+      )}`
+    );
     return Object.entries(keys)
       .filter(([key]) => !invalidKeys.includes(key))
-      .reduce((validKeys, [key, value]) => ({ ...validKeys, [key]: value }), {});
+      .reduce(
+        (validKeys, [key, value]) => ({ ...validKeys, [key]: value }),
+        {}
+      );
   }
 
   return keys;
 }
 
-function keyToOData<EntityT extends Entity>(key: string, value: any, entityConstructor: Constructable<EntityT>): string {
+function keyToOData<EntityT extends Entity>(
+  key: string,
+  value: any,
+  entityConstructor: Constructable<EntityT>
+): string {
   const edmType = entityConstructor[toStaticPropertyFormat(key)].edmType;
   return `${key}=${convertToUriFormat(value, edmType)}`;
 }
 
-function validateKeys<EntityT extends Entity>(keys: MapType<FieldType>, entityConstructor: Constructable<EntityT>): void {
+function validateKeys<EntityT extends Entity>(
+  keys: MapType<FieldType>,
+  entityConstructor: Constructable<EntityT>
+): void {
   const missingKeys = getMissingKeys(keys, entityConstructor);
   if (missingKeys.length) {
     throw new Error(
-      `Cannot get resource path for entity ${entityConstructor._entityName}. The following keys are missing: ${missingKeys.join(', ')}`
+      `Cannot get resource path for entity ${
+        entityConstructor._entityName
+      }. The following keys are missing: ${missingKeys.join(', ')}`
     );
   }
 
@@ -80,7 +110,9 @@ function validateKeys<EntityT extends Entity>(keys: MapType<FieldType>, entityCo
     throw new Error(
       `Cannot get resource path for entity ${
         entityConstructor._entityName
-      }. The following keys have nullish values, but are not nullable: ${nullishKeys.join(', ')}`
+      }. The following keys have nullish values, but are not nullable: ${nullishKeys.join(
+        ', '
+      )}`
     );
   }
 }

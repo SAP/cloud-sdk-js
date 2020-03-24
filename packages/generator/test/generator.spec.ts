@@ -14,7 +14,9 @@ describe('generator', () => {
 
     expect(files.length).toBe(27);
 
-    const testEntityFile = files.find(file => file.getBaseName() === 'TestEntity.ts');
+    const testEntityFile = files.find(
+      file => file.getBaseName() === 'TestEntity.ts'
+    );
 
     expect(testEntityFile).toBeDefined();
     expect(testEntityFile!.getClasses().length).toBe(1);

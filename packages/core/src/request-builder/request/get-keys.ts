@@ -12,9 +12,20 @@ import { toPropertyFormat } from '../../util';
  * @param entityConstructor - The constructor of the entity
  * @returns object that includes all keys that represent given entity
  */
-export function getEntityKeys<EntityT extends Entity>(entity: EntityT, entityConstructor: Constructable<EntityT>): MapType<any> {
+export function getEntityKeys<EntityT extends Entity>(
+  entity: EntityT,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
   if (!entity) {
-    throw new Error('getEntityKeys() cannot extract keys from an undefined or null object.');
+    throw new Error(
+      'getEntityKeys() cannot extract keys from an undefined or null object.'
+    );
   }
-  return entityConstructor._keyFields.reduce((prev, curr) => ({ ...prev, [curr._fieldName]: entity[toPropertyFormat(curr._fieldName)] }), {});
+  return entityConstructor._keyFields.reduce(
+    (prev, curr) => ({
+      ...prev,
+      [curr._fieldName]: entity[toPropertyFormat(curr._fieldName)]
+    }),
+    {}
+  );
 }

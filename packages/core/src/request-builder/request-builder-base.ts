@@ -2,7 +2,12 @@
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { useOrFetchDestination } from '../scp-cf/destination-accessor';
-import { Destination, DestinationNameAndJwt, DestinationRetrievalOptions, isDestinationNameAndJwt } from '../scp-cf/destination-service-types';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationRetrievalOptions,
+  isDestinationNameAndJwt
+} from '../scp-cf/destination-service-types';
 import { ODataRequest } from './request/odata-request';
 import { ODataRequestConfig } from './request/odata-request-config';
 
@@ -12,7 +17,9 @@ import { ODataRequestConfig } from './request/odata-request-config';
  * @abstract
  * @typeparam EntityT - Type of the entity to create a request for
  */
-export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataRequestConfig> {
+export abstract class MethodRequestBuilderBase<
+  RequestConfigT extends ODataRequestConfig
+> {
   /**
    * Creates an instance of MethodRequestBuilderBase.
    *
@@ -27,7 +34,10 @@ export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataReque
    * @param options - Options to employ when fetching destinations.
    * @returns Promise resolving to the url for the request
    */
-  async url(destination: Destination | DestinationNameAndJwt, options?: DestinationRetrievalOptions): Promise<string> {
+  async url(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationRetrievalOptions
+  ): Promise<string> {
     const request = await this.build(destination, options);
     return request.url();
   }
@@ -71,7 +81,10 @@ export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataReque
    * @param options - Options to employ when fetching destinations.
    * @returns The OData request executor including the destination configuration.
    */
-  build(destination: Destination | DestinationNameAndJwt, options?: DestinationRetrievalOptions): Promise<ODataRequest<RequestConfigT>> {
+  build(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationRetrievalOptions
+  ): Promise<ODataRequest<RequestConfigT>> {
     return useOrFetchDestination(destination, options)
       .then(dest => {
         if (!dest) {
@@ -79,11 +92,17 @@ export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataReque
         }
         return new ODataRequest(this.requestConfig, dest);
       })
-      .catch(error => Promise.reject(errorWithCause(noDestinationErrorMessage(destination), error)));
+      .catch(error =>
+        Promise.reject(
+          errorWithCause(noDestinationErrorMessage(destination), error)
+        )
+      );
   }
 }
 
-function noDestinationErrorMessage(destination: Destination | DestinationNameAndJwt): string {
+function noDestinationErrorMessage(
+  destination: Destination | DestinationNameAndJwt
+): string {
   return isDestinationNameAndJwt(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';

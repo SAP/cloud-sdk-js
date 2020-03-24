@@ -3,7 +3,9 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
 
-export function readRequestType(service: VdmServiceMetadata): TypeAliasDeclarationStructure {
+export function readRequestType(
+  service: VdmServiceMetadata
+): TypeAliasDeclarationStructure {
   return {
     kind: StructureKind.TypeAlias,
     name: `Read${service.className}RequestBuilder`,
@@ -12,7 +14,9 @@ export function readRequestType(service: VdmServiceMetadata): TypeAliasDeclarati
   };
 }
 
-export function writeReqeustType(service: VdmServiceMetadata): TypeAliasDeclarationStructure {
+export function writeReqeustType(
+  service: VdmServiceMetadata
+): TypeAliasDeclarationStructure {
   return {
     kind: StructureKind.TypeAlias,
     name: `Write${service.className}RequestBuilder`,
@@ -23,7 +27,10 @@ export function writeReqeustType(service: VdmServiceMetadata): TypeAliasDeclarat
 
 function getWriteRequestType(service: VdmServiceMetadata): string {
   return service.entities
-    .map(e => `CreateRequestBuilder<${e.className}> | UpdateRequestBuilder<${e.className}> | DeleteRequestBuilder<${e.className}>`)
+    .map(
+      e =>
+        `CreateRequestBuilder<${e.className}> | UpdateRequestBuilder<${e.className}> | DeleteRequestBuilder<${e.className}>`
+    )
     .join(' | ');
 }
 

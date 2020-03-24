@@ -2,7 +2,11 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { flatten, pipe } from 'rambda';
-import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from '../util/proxy-util';
 import { Destination } from './destination-service-types';
 import { getVcapService } from './environment-accessor';
 
@@ -15,12 +19,20 @@ import { getVcapService } from './environment-accessor';
  * @param options - Options to customize the behavior of this function.
  * @returns A destination.
  */
-export function destinationForServiceBinding(serviceInstanceName: string, options: DestinationForServiceBindingsOptions = {}): Destination {
+export function destinationForServiceBinding(
+  serviceInstanceName: string,
+  options: DestinationForServiceBindingsOptions = {}
+): Destination {
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
-  let destination = options.transformationFn ? options.transformationFn(selected) : transform(selected);
+  let destination = options.transformationFn
+    ? options.transformationFn(selected)
+    : transform(selected);
 
-  if (destination && proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
+  if (
+    destination &&
+    proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY
+  ) {
     destination = addProxyConfigurationInternet(destination);
   }
   return destination;
@@ -72,7 +84,10 @@ function loadServiceBindings(): ServiceBinding[] {
   return transformServiceBindings(vcapServices) as ServiceBinding[];
 }
 
-const transformServiceBindings = pipe(inlineServiceTypes, flattenServiceBindings);
+const transformServiceBindings = pipe(
+  inlineServiceTypes,
+  flattenServiceBindings
+);
 
 function flattenServiceBindings(vcapServices: MapType<any>): MapType<any>[] {
   return flatten(Object.values(vcapServices));
@@ -88,7 +103,10 @@ function inlineServiceTypes(vcapServices: MapType<any>): MapType<any> {
   );
 }
 
-function findServiceByName(serviceBindings: ServiceBinding[], serviceInstanceName: string): ServiceBinding {
+function findServiceByName(
+  serviceBindings: ServiceBinding[],
+  serviceInstanceName: string
+): ServiceBinding {
   const found = serviceBindings.find(s => s.name === serviceInstanceName);
   if (!found) {
     throw noServiceBindingFoundError(serviceBindings, serviceInstanceName);
@@ -110,7 +128,9 @@ function transform(serviceBinding: MapType<any>): Destination {
 }
 
 function noVcapServicesError(): Error {
-  return Error('No services are bound to the application (environment variable VCAP_SERVICES is not defined)!');
+  return Error(
+    'No services are bound to the application (environment variable VCAP_SERVICES is not defined)!'
+  );
 }
 
 function serviceTypeNotSupportedError(serviceType: string): Error {
@@ -118,7 +138,10 @@ function serviceTypeNotSupportedError(serviceType: string): Error {
   destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });`);
 }
 
-function noServiceBindingFoundError(serviceBindings: MapType<any>[], serviceInstanceName: string): Error {
+function noServiceBindingFoundError(
+  serviceBindings: MapType<any>[],
+  serviceInstanceName: string
+): Error {
   return Error(
     `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
       .map(s => s.name)
@@ -127,7 +150,9 @@ function noServiceBindingFoundError(serviceBindings: MapType<any>[], serviceInst
   );
 }
 
-function businessLoggingBindingToDestination(serviceBinding: ServiceBinding): Destination {
+function businessLoggingBindingToDestination(
+  serviceBinding: ServiceBinding
+): Destination {
   return {
     url: serviceBinding.credentials.writeUrl,
     authentication: 'OAuth2ClientCredentials',
@@ -136,7 +161,9 @@ function businessLoggingBindingToDestination(serviceBinding: ServiceBinding): De
   };
 }
 
-function xfS4hanaCloudBindingToDestination(serviceBinding: ServiceBinding): Destination {
+function xfS4hanaCloudBindingToDestination(
+  serviceBinding: ServiceBinding
+): Destination {
   return {
     url: serviceBinding.credentials.URL,
     authentication: 'BasicAuthentication',

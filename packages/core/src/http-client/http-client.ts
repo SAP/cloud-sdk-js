@@ -5,8 +5,19 @@ import * as https from 'https';
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import { buildHeadersForDestination, getAgentConfig } from '../request-builder';
-import { Destination, DestinationNameAndJwt, toDestinationNameUrl, useOrFetchDestination } from '../scp-cf';
-import { DestinationHttpRequestConfig, ExecuteHttpRequestFn, HttpRequest, HttpRequestConfig, HttpResponse } from './http-client-types';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  toDestinationNameUrl,
+  useOrFetchDestination
+} from '../scp-cf';
+import {
+  DestinationHttpRequestConfig,
+  ExecuteHttpRequestFn,
+  HttpRequest,
+  HttpRequestConfig,
+  HttpResponse
+} from './http-client-types';
 
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination.
@@ -15,10 +26,14 @@ import { DestinationHttpRequestConfig, ExecuteHttpRequestFn, HttpRequest, HttpRe
  * @param destination - A destination or a destination name and a JWT.
  * @returns A [[DestinationHttpRequestConfig]].
  */
-export async function buildHttpRequest(destination: Destination | DestinationNameAndJwt): Promise<DestinationHttpRequestConfig> {
+export async function buildHttpRequest(
+  destination: Destination | DestinationNameAndJwt
+): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
-    throw Error(`Failed to resolve the destination: ${toDestinationNameUrl(destination)}.`);
+    throw Error(
+      `Failed to resolve the destination: ${toDestinationNameUrl(destination)}.`
+    );
   }
   const headers = await buildHeaders(resolvedDestination);
 
@@ -40,7 +55,9 @@ export function addDestinationToRequestConfig<T>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
-  return buildHttpRequest(destination).then(destinationConfig => merge(requestConfig, destinationConfig));
+  return buildHttpRequest(destination).then(destinationConfig =>
+    merge(requestConfig, destinationConfig)
+  );
 }
 
 /**
@@ -53,7 +70,9 @@ export function addDestinationToRequestConfig<T>(
  * @param executeFn - Optional: a function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
  */
-export const execute = (executeFn: ExecuteHttpRequestFn) => <T extends HttpRequestConfig>(
+export const execute = (executeFn: ExecuteHttpRequestFn) => <
+  T extends HttpRequestConfig
+>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: T
 ): Promise<HttpResponse> =>
@@ -71,7 +90,10 @@ export const execute = (executeFn: ExecuteHttpRequestFn) => <T extends HttpReque
  */
 export const executeHttpRequest = execute(executeWithAxios);
 
-function buildDestinationHttpRequestConfig(destination: Destination, headers: MapType<string>): DestinationHttpRequestConfig {
+function buildDestinationHttpRequestConfig(
+  destination: Destination,
+  headers: MapType<string>
+): DestinationHttpRequestConfig {
   return {
     baseURL: destination.url,
     headers,
@@ -81,17 +103,32 @@ function buildDestinationHttpRequestConfig(destination: Destination, headers: Ma
 
 function buildHeaders(destination: Destination): Promise<MapType<string>> {
   return buildHeadersForDestination(destination).catch(error =>
-    Promise.reject(errorWithCause('Failed to build HTTP request for destination: failed to build headers!', error))
+    Promise.reject(
+      errorWithCause(
+        'Failed to build HTTP request for destination: failed to build headers!',
+        error
+      )
+    )
   );
 }
 
-function resolveDestination(destination: Destination | DestinationNameAndJwt): Promise<Destination | null> {
+function resolveDestination(
+  destination: Destination | DestinationNameAndJwt
+): Promise<Destination | null> {
   return useOrFetchDestination(destination).catch(error =>
-    Promise.reject(errorWithCause('Failed to build HTTP request for destination: failed to load destination!', error))
+    Promise.reject(
+      errorWithCause(
+        'Failed to build HTTP request for destination: failed to load destination!',
+        error
+      )
+    )
   );
 }
 
-function merge<T>(generic: T, request: DestinationHttpRequestConfig): T & DestinationHttpRequestConfig {
+function merge<T>(
+  generic: T,
+  request: DestinationHttpRequestConfig
+): T & DestinationHttpRequestConfig {
   return {
     ...generic,
     ...request,

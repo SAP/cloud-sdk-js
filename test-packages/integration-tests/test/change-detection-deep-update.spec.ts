@@ -1,9 +1,19 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { TestEntity, TestEntitySingleLink } from '@sap-cloud-sdk/test-services/test-service';
+import {
+  TestEntity,
+  TestEntitySingleLink
+} from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';
-import { testEntityKeyPropGuid, testEntityKeyPropString } from './test-data/keys';
+import {
+  testEntityKeyPropGuid,
+  testEntityKeyPropString
+} from './test-data/keys';
 
-function mockCsrfTokenRequest(host: string, authHeader: string, csrfToken: string) {
+function mockCsrfTokenRequest(
+  host: string,
+  authHeader: string,
+  csrfToken: string
+) {
   nock(host, {
     reqheaders: {
       authorization: authHeader,
@@ -17,7 +27,13 @@ function mockCsrfTokenRequest(host: string, authHeader: string, csrfToken: strin
     });
 }
 
-function mockUpdateRequest(host: string, authHeader: string, csrfToken: string, entityNameWithKey: string, payload: { [key: string]: any }) {
+function mockUpdateRequest(
+  host: string,
+  authHeader: string,
+  csrfToken: string,
+  entityNameWithKey: string,
+  payload: { [key: string]: any }
+) {
   return nock(host, {
     reqheaders: {
       authorization: authHeader,
@@ -32,7 +48,11 @@ function mockUpdateRequest(host: string, authHeader: string, csrfToken: string, 
 }
 
 describe('deep-update and change detection', () => {
-  const destination = { url: 'https://example.com', username: 'USERNAME', password: 'PASSWORD' };
+  const destination = {
+    url: 'https://example.com',
+    username: 'USERNAME',
+    password: 'PASSWORD'
+  };
   const basicHeader = 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=';
   const csrfToken = 'csrf-token';
 
@@ -105,7 +125,10 @@ describe('deep-update and change detection', () => {
 
     const request = TestEntity.requestBuilder()
       .update(testEntity)
-      .requiredFields(TestEntity.TO_SINGLE_LINK, TestEntity.COMPLEX_TYPE_PROPERTY)
+      .requiredFields(
+        TestEntity.TO_SINGLE_LINK,
+        TestEntity.COMPLEX_TYPE_PROPERTY
+      )
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();

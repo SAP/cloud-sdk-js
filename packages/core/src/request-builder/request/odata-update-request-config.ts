@@ -13,7 +13,9 @@ import { WithKeys } from './odata-request-traits';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataUpdateRequestConfig<EntityT extends Entity> extends ODataRequestConfig implements WithKeys {
+export class ODataUpdateRequestConfig<EntityT extends Entity>
+  extends ODataRequestConfig
+  implements WithKeys {
   keys: MapType<FieldType>;
   eTag: string;
   versionIdentifierIgnored = false;
@@ -24,7 +26,10 @@ export class ODataUpdateRequestConfig<EntityT extends Entity> extends ODataReque
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(UpdateStrategy.MODIFY_WITH_PATCH, _entityConstructor._defaultServicePath);
+    super(
+      UpdateStrategy.MODIFY_WITH_PATCH,
+      _entityConstructor._defaultServicePath
+    );
   }
 
   resourcePath(): string {

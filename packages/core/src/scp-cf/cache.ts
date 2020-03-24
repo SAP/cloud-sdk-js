@@ -83,7 +83,9 @@ export class Cache<T> implements CacheInterface<T> {
    * @returns The corresponding entry to the provided key if it is still valid, returns undefined otherwise
    */
   get(key: string): T | undefined {
-    return this.hasKey(key) && !isExpired(this.cache[key]) ? this.cache[key].entry : undefined;
+    return this.hasKey(key) && !isExpired(this.cache[key])
+      ? this.cache[key].entry
+      : undefined;
   }
 
   /**
@@ -93,7 +95,9 @@ export class Cache<T> implements CacheInterface<T> {
    * @param expirationTime - The time expressed in UTC in which the given entry expires
    */
   set(key: string, entry: T, expirationTime?: number): void {
-    const expires = expirationTime ? moment(expirationTime) : inferExpirationTime(this.defaultValidityTime);
+    const expires = expirationTime
+      ? moment(expirationTime)
+      : inferExpirationTime(this.defaultValidityTime);
     this.cache[key] = { entry, expires };
   }
 }
@@ -105,6 +109,8 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
   return !item.expires.isAfter(moment());
 }
 
-function inferExpirationTime(expirationTime: MomentInputObject | undefined): Moment | undefined {
+function inferExpirationTime(
+  expirationTime: MomentInputObject | undefined
+): Moment | undefined {
   return expirationTime ? moment().add(expirationTime) : undefined;
 }

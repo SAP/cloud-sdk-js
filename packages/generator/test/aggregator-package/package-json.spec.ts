@@ -5,7 +5,10 @@ describe('package-json', () => {
   it('creates package.json contents from module name and dependencies', () => {
     const actual = packageJson(
       '@sap/cloud-sdk-vdm',
-      ['@sap/cloud-sdk-vdm-business-area-service', '@sap/cloud-sdk-vdm-business-partner-service'],
+      [
+        '@sap/cloud-sdk-vdm-business-area-service',
+        '@sap/cloud-sdk-vdm-business-partner-service'
+      ],
       '2.0.0',
       '1.17.4-alpha.8'
     );

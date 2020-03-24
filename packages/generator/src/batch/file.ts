@@ -6,7 +6,9 @@ import { batchFunction, changesetFunction } from './function';
 import { importBatchDeclarations } from './imports';
 import { readRequestType, writeReqeustType } from './type';
 
-export function batchSourceFile(service: VdmServiceMetadata): SourceFileStructure {
+export function batchSourceFile(
+  service: VdmServiceMetadata
+): SourceFileStructure {
   return {
     kind: StructureKind.SourceFile,
     statements: [
@@ -22,6 +24,8 @@ export function batchSourceFile(service: VdmServiceMetadata): SourceFileStructur
 }
 
 function mappingInitializer(service: VdmServiceMetadata): string {
-  const mapBody = service.entities.map(e => `\'${e.entitySetName}\' : ${e.className}`).join(', ');
+  const mapBody = service.entities
+    .map(e => `\'${e.entitySetName}\' : ${e.className}`)
+    .join(', ');
   return `{${mapBody}}`;
 }

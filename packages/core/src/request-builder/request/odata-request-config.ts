@@ -25,7 +25,11 @@ export abstract class ODataRequestConfig {
    * @param defaultServicePath - default path of the according service
    * @param contentType - The content type of the request
    */
-  constructor(public method: RequestMethodType, readonly defaultServicePath: string, readonly contentType = 'application/json') {
+  constructor(
+    public method: RequestMethodType,
+    readonly defaultServicePath: string,
+    readonly contentType = 'application/json'
+  ) {
     if (defaultServicePath === VALUE_IS_UNDEFINED) {
       logger.warn('The service path is undefined in "_defaultServicePath".');
     }

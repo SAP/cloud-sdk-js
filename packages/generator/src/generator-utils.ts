@@ -96,7 +96,9 @@ export function edmToTsType(edmType: string): string {
   if (edmToTsTypeMapping[edmType]) {
     return edmToTsTypeMapping[edmType];
   }
-  logger.warn(`No type mapping defined for edm type ${edmType}! Will use "any" instead.`);
+  logger.warn(
+    `No type mapping defined for edm type ${edmType}! Will use "any" instead.`
+  );
   return 'any';
 }
 
@@ -164,7 +166,9 @@ export function cloudSdkVdmHack(name: string): string {
 
 const trimToNpmMaxLength = (str: string): string => {
   if (str.length > npmMaxLength) {
-    logger.warn(`Provided package name ${str} is longer than 214 chars and will be cut!`);
+    logger.warn(
+      `Provided package name ${str} is longer than 214 chars and will be cut!`
+    );
     return str.substr(0, npmMaxLength);
   }
   return str;
@@ -175,7 +179,9 @@ const transformIfNecessary = (packageName: string): string => {
     return packageName;
   }
   const newName = _npmCompliantName(packageName);
-  logger.warn(`Provided name ${packageName} is not compliant with npm naming rules and was transformed to ${newName}!`);
+  logger.warn(
+    `Provided name ${packageName} is not compliant with npm naming rules and was transformed to ${newName}!`
+  );
   return newName;
 };
 
@@ -192,13 +198,22 @@ const _npmCompliantName = (name: string): string => {
   }
 };
 
-const splitAtFirstOccurrence = (str: string, separator: string) => [str.slice(0, str.indexOf(separator)), str.slice(str.indexOf(separator) + 1)];
+const splitAtFirstOccurrence = (str: string, separator: string) => [
+  str.slice(0, str.indexOf(separator)),
+  str.slice(str.indexOf(separator) + 1)
+];
 
 const lowerCase = (str: string): string => str.toLowerCase();
-const stripLeadingDotsAndUnderscores = (str: string): string => str.replace(/^[\._]*/g, '');
-const replaceNonNpmPackageCharacters = (str: string): string => str.replace(/[^a-z0-9-~._]/g, '');
+const stripLeadingDotsAndUnderscores = (str: string): string =>
+  str.replace(/^[\._]*/g, '');
+const replaceNonNpmPackageCharacters = (str: string): string =>
+  str.replace(/[^a-z0-9-~._]/g, '');
 
-const makeNpmCompliant = pipe(lowerCase, stripLeadingDotsAndUnderscores, replaceNonNpmPackageCharacters);
+const makeNpmCompliant = pipe(
+  lowerCase,
+  stripLeadingDotsAndUnderscores,
+  replaceNonNpmPackageCharacters
+);
 
 const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;

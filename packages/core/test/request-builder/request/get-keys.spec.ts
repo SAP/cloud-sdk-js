@@ -13,6 +13,9 @@ describe('extractEntityKeys', () => {
 
     const actual = getEntityKeys(entity, TestEntity);
 
-    expect(actual).toEqual({ KeyPropertyGuid: entity.keyPropertyGuid, KeyPropertyString: entity.keyPropertyString });
+    expect(actual).toEqual({
+      KeyPropertyGuid: entity.keyPropertyGuid,
+      KeyPropertyString: entity.keyPropertyString
+    });
   });
 });

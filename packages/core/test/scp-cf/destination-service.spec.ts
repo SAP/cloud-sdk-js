@@ -1,6 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
-import { fetchDestination, fetchInstanceDestinations, fetchSubaccountDestinations } from '../../src/scp-cf/destination-service';
+import {
+  fetchDestination,
+  fetchInstanceDestinations,
+  fetchSubaccountDestinations
+} from '../../src/scp-cf/destination-service';
 import { Destination } from '../../src/scp-cf/destination-service-types';
 import { destinationServiceUri } from '../test-util/environment-mocks';
 
@@ -29,7 +33,8 @@ describe('destination service', () => {
           audience: 'https://my.system.com',
           authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
           clientKey: 'password',
-          nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+          nameIdFormat:
+            'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
           scope: 'SOME_SCOPE',
           tokenServiceUser: 'TOKEN_USER',
           tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
@@ -74,7 +79,8 @@ describe('destination service', () => {
             audience: 'https://my.system.com',
             authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
             clientKey: 'password',
-            nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+            nameIdFormat:
+              'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
             scope: 'SOME_SCOPE',
             tokenServiceUser: 'TOKEN_USER',
             tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
@@ -93,7 +99,10 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(200, response);
 
-      const instanceDestinations: Destination[] = await fetchInstanceDestinations(destinationServiceUri, jwt);
+      const instanceDestinations: Destination[] = await fetchInstanceDestinations(
+        destinationServiceUri,
+        jwt
+      );
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
       });
@@ -112,7 +121,9 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(400, response);
 
-      fetchInstanceDestinations(destinationServiceUri, jwt, { enableCircuitBreaker: false })
+      fetchInstanceDestinations(destinationServiceUri, jwt, {
+        enableCircuitBreaker: false
+      })
         .then(() => {
           done("Should've failed...");
         })
@@ -131,7 +142,9 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(500);
 
-      fetchInstanceDestinations(destinationServiceUri, jwt, { enableCircuitBreaker: false })
+      fetchInstanceDestinations(destinationServiceUri, jwt, {
+        enableCircuitBreaker: false
+      })
         .then(() => {
           done("Should've failed...");
         })
@@ -164,7 +177,8 @@ describe('destination service', () => {
           audience: 'https://my.system.com',
           authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
           clientKey: 'password',
-          nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+          nameIdFormat:
+            'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
           scope: 'SOME_SCOPE',
           tokenServiceUser: 'TOKEN_USER',
           tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
@@ -208,7 +222,8 @@ describe('destination service', () => {
             audience: 'https://my.system.com',
             authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
             clientKey: 'password',
-            nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+            nameIdFormat:
+              'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
             scope: 'SOME_SCOPE',
             tokenServiceUser: 'TOKEN_USER',
             tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
@@ -227,7 +242,10 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/subaccountDestinations')
         .reply(200, response);
 
-      const subaccountDestinations: Destination[] = await fetchSubaccountDestinations(destinationServiceUri, jwt);
+      const subaccountDestinations: Destination[] = await fetchSubaccountDestinations(
+        destinationServiceUri,
+        jwt
+      );
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
@@ -246,7 +264,9 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/subaccountDestinations')
         .reply(400, response);
 
-      fetchSubaccountDestinations(destinationServiceUri, jwt, { enableCircuitBreaker: false })
+      fetchSubaccountDestinations(destinationServiceUri, jwt, {
+        enableCircuitBreaker: false
+      })
         .then(() => {
           done("Should've failed...");
         })
@@ -275,7 +295,8 @@ describe('destination service', () => {
           audience: 'https://my.system.com',
           authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
           clientKey: 'password',
-          nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+          nameIdFormat:
+            'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
           scope: 'SOME_SCOPE',
           tokenServiceUser: 'TOKEN_USER',
           tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
@@ -311,7 +332,8 @@ describe('destination service', () => {
             audience: 'https://my.system.com',
             authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
             clientKey: 'password',
-            nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+            nameIdFormat:
+              'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
             scope: 'SOME_SCOPE',
             tokenServiceUser: 'TOKEN_USER',
             tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
@@ -344,7 +366,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(200, response);
 
-      const actual = await fetchDestination(destinationServiceUri, jwt, destinationName);
+      const actual = await fetchDestination(
+        destinationServiceUri,
+        jwt,
+        destinationName
+      );
       expect(actual).toMatchObject(expected);
     });
 
@@ -365,7 +391,8 @@ describe('destination service', () => {
           audience: 'https://my.system.com',
           authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
           clientKey: 'TOKEN_USER',
-          nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+          nameIdFormat:
+            'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
           scope: 'SOME_SCOPE',
           tokenServiceUser: 'TOKEN_USER',
           tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
@@ -407,7 +434,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(200, response);
 
-      const actual = await fetchDestination(destinationServiceUri, jwt, destinationName);
+      const actual = await fetchDestination(
+        destinationServiceUri,
+        jwt,
+        destinationName
+      );
       expect(actual).toMatchObject(expected);
     });
 
@@ -422,7 +453,9 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(500);
 
-      fetchDestination(destinationServiceUri, jwt, destinationName, { enableCircuitBreaker: false })
+      fetchDestination(destinationServiceUri, jwt, destinationName, {
+        enableCircuitBreaker: false
+      })
         .then(() => {
           done("Should've failed...");
         })
@@ -447,7 +480,9 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(400, response);
 
-      fetchDestination(destinationServiceUri, jwt, destinationName, { enableCircuitBreaker: false })
+      fetchDestination(destinationServiceUri, jwt, destinationName, {
+        enableCircuitBreaker: false
+      })
         .then(() => {
           done("Should've failed...");
         })

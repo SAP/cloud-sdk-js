@@ -18,7 +18,10 @@ describe('Entity Class', () => {
     entity.stringProperty = otherStringProperty;
     entity.doubleProperty = otherDoubleProperty;
 
-    const expected = { stringProperty: otherStringProperty, doubleProperty: otherDoubleProperty };
+    const expected = {
+      stringProperty: otherStringProperty,
+      doubleProperty: otherDoubleProperty
+    };
 
     expect(entity.getUpdatedProperties()).toEqual(expected);
   });
@@ -56,7 +59,9 @@ describe('Entity Class', () => {
     });
 
     it('getCustomField() returns the value of the custom field', () => {
-      expect(entity.getCustomField('CustomField1')).toBe(customFields.CustomField1);
+      expect(entity.getCustomField('CustomField1')).toBe(
+        customFields.CustomField1
+      );
     });
 
     it('setCustomField() adds a new custom field in entity', () => {
@@ -75,7 +80,9 @@ describe('Entity Class', () => {
     });
 
     it('setCustomField() throws an error when the provided field name exists as a property in entity ', () => {
-      expect(() => entity.setCustomField('StringProperty', 'ERROR!')).toThrowError(
+      expect(() =>
+        entity.setCustomField('StringProperty', 'ERROR!')
+      ).toThrowError(
         'The field name "StringProperty" is already defined in the entity and cannot be set as custom field.'
       );
     });

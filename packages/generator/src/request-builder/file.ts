@@ -5,7 +5,9 @@ import { VdmEntity } from '../vdm-types';
 import { requestBuilderClass } from './class';
 import { importDeclarations } from './imports';
 
-export function requestBuilderSourceFile(entity: VdmEntity): SourceFileStructure {
+export function requestBuilderSourceFile(
+  entity: VdmEntity
+): SourceFileStructure {
   return {
     kind: StructureKind.SourceFile,
     statements: [...importDeclarations(entity), requestBuilderClass(entity)]

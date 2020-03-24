@@ -46,7 +46,9 @@ describe('convertToUriFormat', () => {
   });
 
   it('Edm.Guid', () => {
-    expect(convertToUriFormat('01234567-89ab-cdef-ghij-KLMNOPQRSTUV', 'Edm.Guid')).toBe("guid'01234567-89ab-cdef-ghij-KLMNOPQRSTUV'");
+    expect(
+      convertToUriFormat('01234567-89ab-cdef-ghij-KLMNOPQRSTUV', 'Edm.Guid')
+    ).toBe("guid'01234567-89ab-cdef-ghij-KLMNOPQRSTUV'");
   });
 
   it('Edm.String', () => {
@@ -54,18 +56,32 @@ describe('convertToUriFormat', () => {
   });
 
   it('Edm.DateTime', () => {
-    expect(convertToUriFormat(moment(1552304382000).utc(), 'Edm.DateTime')).toBe("datetime'2019-03-11T11:39:42.000'");
-    expect(convertToUriFormat(edmToTs('/Date(1552304382000)/', 'Edm.DateTime'), 'Edm.DateTime')).toBe("datetime'2019-03-11T11:39:42.000'");
+    expect(
+      convertToUriFormat(moment(1552304382000).utc(), 'Edm.DateTime')
+    ).toBe("datetime'2019-03-11T11:39:42.000'");
+    expect(
+      convertToUriFormat(
+        edmToTs('/Date(1552304382000)/', 'Edm.DateTime'),
+        'Edm.DateTime'
+      )
+    ).toBe("datetime'2019-03-11T11:39:42.000'");
   });
 
   it('Edm.DateTimeOffset', () => {
-    expect(convertToUriFormat(moment(1552304382000).utc(), 'Edm.DateTimeOffset')).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
-    expect(convertToUriFormat(edmToTs('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'), 'Edm.DateTimeOffset')).toBe(
-      "datetimeoffset'2019-03-11T11:39:42.000Z'"
-    );
+    expect(
+      convertToUriFormat(moment(1552304382000).utc(), 'Edm.DateTimeOffset')
+    ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
+    expect(
+      convertToUriFormat(
+        edmToTs('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'),
+        'Edm.DateTimeOffset'
+      )
+    ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
   });
 
   it('Edm.Time', () => {
-    expect(convertToUriFormat({ hours: 12, minutes: 34, seconds: 56 }, 'Edm.Time')).toBe("time'PT12H34M56S'");
+    expect(
+      convertToUriFormat({ hours: 12, minutes: 34, seconds: 56 }, 'Edm.Time')
+    ).toBe("time'PT12H34M56S'");
   });
 });

@@ -5,11 +5,17 @@ import { sep } from 'path';
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import axios, { AxiosResponse } from 'axios';
 import { AnalyticsData, getAnalyticsData } from './analytics-data';
-import { SwaRequestParameters, UsageAnalyticsOptions, UsageAnalyticsProjectConfig } from './analytics-types';
+import {
+  SwaRequestParameters,
+  UsageAnalyticsOptions,
+  UsageAnalyticsProjectConfig
+} from './analytics-types';
 import { enforceValidConfig, findConfigPath } from './config';
 
-const usageAnalyticsBlog = 'https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/';
-const defaultURI = 'https://webanalytics.cfapps.eu10.hana.ondemand.com/tracker/log';
+const usageAnalyticsBlog =
+  'https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/';
+const defaultURI =
+  'https://webanalytics.cfapps.eu10.hana.ondemand.com/tracker/log';
 const logger = createLogger('usage-analytics');
 
 const defaultParameters: SwaRequestParameters = {
@@ -20,7 +26,12 @@ const defaultParameters: SwaRequestParameters = {
   event_type: 'npm_install'
 };
 
-const defaultOptions = { useSalt: true, uri: defaultURI, idsitesub: defaultParameters.idsitesub, event_type: defaultParameters.event_type };
+const defaultOptions = {
+  useSalt: true,
+  uri: defaultURI,
+  idsitesub: defaultParameters.idsitesub,
+  event_type: defaultParameters.event_type
+};
 
 /**
  * Get and send development environment data based on the context of the given caller path using the given options.
@@ -30,16 +41,22 @@ const defaultOptions = { useSalt: true, uri: defaultURI, idsitesub: defaultParam
  * @param options - Usage analytic options
  * @hidden
  */
-export async function performUsageAnalytics(callerPath: string, options: UsageAnalyticsOptions = {}) {
+export async function performUsageAnalytics(
+  callerPath: string,
+  options: UsageAnalyticsOptions = {}
+) {
   try {
     if (calledFromCentralDependency(callerPath)) {
       const configPath = findConfigPath();
-      let config: UsageAnalyticsProjectConfig = configPath && JSON.parse(readFileSync(configPath, 'utf8'));
+      let config: UsageAnalyticsProjectConfig =
+        configPath && JSON.parse(readFileSync(configPath, 'utf8'));
 
       if (config && config.enabled) {
         config = enforceValidConfig(config);
         const data = await getAnalyticsData(config);
-        await sendAnalyticsData(config, data, options).catch(logErrorAndContinue);
+        await sendAnalyticsData(config, data, options).catch(
+          logErrorAndContinue
+        );
         printThanksAndDisclaimer();
         printCollectedData(data);
       }
@@ -71,8 +88,17 @@ export async function sendAnalyticsData(
   const mergedOption = { ...defaultOptions, ...options };
 
   return axios
-    .get(mergedOption.uri, { params: { ...getSWAParameters(mergedOption), ...payloadToCustomParameters(data) } })
-    .catch(error => Promise.reject(errorWithCause('Failed to send usage analytics data.', error)));
+    .get(mergedOption.uri, {
+      params: {
+        ...getSWAParameters(mergedOption),
+        ...payloadToCustomParameters(data)
+      }
+    })
+    .catch(error =>
+      Promise.reject(
+        errorWithCause('Failed to send usage analytics data.', error)
+      )
+    );
 }
 
 /**
@@ -82,18 +108,26 @@ export async function sendAnalyticsData(
  * @returns SAP Web Analytics regular parameters
  * @hidden
  */
-function getSWAParameters(options: UsageAnalyticsOptions): SwaRequestParameters {
+function getSWAParameters(
+  options: UsageAnalyticsOptions
+): SwaRequestParameters {
   return {
     action_name: defaultParameters.action_name,
     url: defaultParameters.url,
     idsite: defaultParameters.idsite,
-    idsitesub: options.idsitesub ? options.idsitesub : defaultParameters.idsitesub,
-    event_type: options.event_type ? options.event_type : defaultParameters.event_type
+    idsitesub: options.idsitesub
+      ? options.idsitesub
+      : defaultParameters.idsitesub,
+    event_type: options.event_type
+      ? options.event_type
+      : defaultParameters.event_type
   };
 }
 
 function calledFromCentralDependency(callerPath: string): boolean {
-  const numNodeModulesInPath = callerPath.split(sep).filter(dir => dir === 'node_modules').length;
+  const numNodeModulesInPath = callerPath
+    .split(sep)
+    .filter(dir => dir === 'node_modules').length;
 
   // Assuming that npm will always flatten/dedupe dependencies when it can, we can deduce the following
   // If there is no "node_modules" in the given path, this script is probably called as part of the SDK dev lifecycle
@@ -165,6 +199,8 @@ function printCollectedData(data: AnalyticsData): void {
 }
 
 function logErrorAndContinue(error: Error): void {
-  logger.error('Something went wrong while trying to send usage analytics data!');
+  logger.error(
+    'Something went wrong while trying to send usage analytics data!'
+  );
   logger.error(error.stack!);
 }

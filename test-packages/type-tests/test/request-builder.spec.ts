@@ -1,6 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { and, asc, desc, or } from '@sap-cloud-sdk/core';
-import { TestEntity, TestEntityMultiLink, TestEntitySingleLink } from '@sap-cloud-sdk/test-services/test-service';
+import {
+  TestEntity,
+  TestEntityMultiLink,
+  TestEntitySingleLink
+} from '@sap-cloud-sdk/test-services/test-service';
 /**
  * REQUEST BUILDER
  */
@@ -63,10 +67,14 @@ testEntityGetAllRequest.select(TestEntityMultiLink.customField('CustomField'));
  * SELECTION & EXPANSION
  */
 // $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.select(TestEntity.TO_MULTI_LINK.select(TestEntityMultiLink.STRING_PROPERTY));
+testEntityGetAllRequest.select(
+  TestEntity.TO_MULTI_LINK.select(TestEntityMultiLink.STRING_PROPERTY)
+);
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.select(TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY));
+testEntityGetAllRequest.select(
+  TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY)
+);
 
 testEntityGetAllRequest.select(
   TestEntity.TO_MULTI_LINK.select(
@@ -81,13 +89,26 @@ testEntityGetAllRequest.select(
 testEntityGetAllRequest.filter(TestEntity.STRING_PROPERTY.equals('test'));
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.filter(TestEntity.STRING_PROPERTY.equals('test'), TestEntity.BOOLEAN_PROPERTY.notEquals(false));
+testEntityGetAllRequest.filter(
+  TestEntity.STRING_PROPERTY.equals('test'),
+  TestEntity.BOOLEAN_PROPERTY.notEquals(false)
+);
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.filter(and(TestEntity.STRING_PROPERTY.equals('test'), TestEntity.BOOLEAN_PROPERTY.notEquals(true)));
+testEntityGetAllRequest.filter(
+  and(
+    TestEntity.STRING_PROPERTY.equals('test'),
+    TestEntity.BOOLEAN_PROPERTY.notEquals(true)
+  )
+);
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.filter(or(TestEntity.STRING_PROPERTY.equals('test'), TestEntity.BOOLEAN_PROPERTY.notEquals(false)));
+testEntityGetAllRequest.filter(
+  or(
+    TestEntity.STRING_PROPERTY.equals('test'),
+    TestEntity.BOOLEAN_PROPERTY.notEquals(false)
+  )
+);
 
 testEntityGetAllRequest.filter(
   TestEntityMultiLink.STRING_PROPERTY.equals('test') // $ExpectError
@@ -103,16 +124,12 @@ testEntityGetAllRequest.filter(
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
-  TestEntity.customField('SomeCustomField')
-    .edmString()
-    .equals('test')
+  TestEntity.customField('SomeCustomField').edmString().equals('test')
 );
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
-  TestEntity.customField('SomeCustomField')
-    .edmDouble()
-    .equals(1234)
+  TestEntity.customField('SomeCustomField').edmDouble().equals(1234)
 );
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
@@ -122,13 +139,9 @@ testEntityGetAllRequest.filter(
     .equals({ seconds: 1, minutes: 1, hours: 1 })
 );
 
-TestEntity.customField('SomeCustomField')
-  .edmString()
-  .equals(13214); // $ExpectError
+TestEntity.customField('SomeCustomField').edmString().equals(13214); // $ExpectError
 
-TestEntity.customField('SomeCustomField')
-  .edmDouble()
-  .equals('aString'); // $ExpectError
+TestEntity.customField('SomeCustomField').edmDouble().equals('aString'); // $ExpectError
 
 /**
  * ORDER BY
@@ -140,7 +153,10 @@ testEntityGetAllRequest.orderBy(asc(TestEntity.STRING_PROPERTY));
 testEntityGetAllRequest.orderBy(desc(TestEntity.STRING_PROPERTY));
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.orderBy(asc(TestEntity.STRING_PROPERTY), desc(TestEntity.STRING_PROPERTY));
+testEntityGetAllRequest.orderBy(
+  asc(TestEntity.STRING_PROPERTY),
+  desc(TestEntity.STRING_PROPERTY)
+);
 
 testEntityGetAllRequest.orderBy(
   asc(TestEntityMultiLink.STRING_PROPERTY) // $ExpectError

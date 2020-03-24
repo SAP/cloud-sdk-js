@@ -1,10 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { InterfaceDeclarationStructure, PropertySignatureStructure, StructureKind } from 'ts-morph';
+import {
+  InterfaceDeclarationStructure,
+  PropertySignatureStructure,
+  StructureKind
+} from 'ts-morph';
 import { getPropertyDescription } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 
-export function complexTypeInterface(complexType: VdmComplexType): InterfaceDeclarationStructure {
+export function complexTypeInterface(
+  complexType: VdmComplexType
+): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
     name: complexType.typeName,
@@ -24,6 +30,11 @@ function property(prop: VdmProperty): PropertySignatureStructure {
     name: prop.instancePropertyName,
     type: prop.jsType,
     hasQuestionToken: prop.nullable,
-    docs: [getPropertyDescription(prop, { nullable: prop.nullable, maxLength: prop.maxLength })]
+    docs: [
+      getPropertyDescription(prop, {
+        nullable: prop.nullable,
+        maxLength: prop.maxLength
+      })
+    ]
   };
 }

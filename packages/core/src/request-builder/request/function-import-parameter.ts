@@ -13,11 +13,17 @@ export class FunctionImportParameter<ValueT> {
    * @param edmType - Original edm Type
    * @param value - Value to be used as parameter
    */
-  constructor(public originalName: string, public edmType: EdmType, public value: ValueT) {}
+  constructor(
+    public originalName: string,
+    public edmType: EdmType,
+    public value: ValueT
+  ) {}
 }
 
 /**
  * Internal representation of all parameters of a function import as a map
  * @typeparam ParametersT - External represenation of all parameters
  */
-export type FunctionImportParameters<ParametersT> = { [K in keyof ParametersT]: FunctionImportParameter<ParametersT[K]> };
+export type FunctionImportParameters<ParametersT> = {
+  [K in keyof ParametersT]: FunctionImportParameter<ParametersT[K]>;
+};

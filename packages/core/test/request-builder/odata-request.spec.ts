@@ -42,23 +42,50 @@ describe('OData Request', () => {
 
     describe('isTrustingAllCertificates is defined', () => {
       it('rejectUnauthorized property of HttpsAgent should be set to TRUE when TrustAll is false', async () => {
-        const destination: Destination = { url: 'https://example.com', isTrustingAllCertificates: true };
-        const request = createRequestWithHeaders(ODataDeleteRequestConfig, destination);
+        const destination: Destination = {
+          url: 'https://example.com',
+          isTrustingAllCertificates: true
+        };
+        const request = createRequestWithHeaders(
+          ODataDeleteRequestConfig,
+          destination
+        );
         await request.execute();
-        const expectedJsonHttpsAgent = { httpsAgent: expect.objectContaining({ options: expect.objectContaining({ rejectUnauthorized: false }) }) };
-        expect(axios.request).toHaveBeenCalledWith(expect.objectContaining(expectedJsonHttpsAgent));
+        const expectedJsonHttpsAgent = {
+          httpsAgent: expect.objectContaining({
+            options: expect.objectContaining({ rejectUnauthorized: false })
+          })
+        };
+        expect(axios.request).toHaveBeenCalledWith(
+          expect.objectContaining(expectedJsonHttpsAgent)
+        );
       });
 
       it('rejectUnauthorized property of HttpsAgent should be set to FALSE when TrustAll is true', async () => {
-        const destination: Destination = { url: 'https://example.com', isTrustingAllCertificates: false };
-        const request = createRequestWithHeaders(ODataDeleteRequestConfig, destination);
+        const destination: Destination = {
+          url: 'https://example.com',
+          isTrustingAllCertificates: false
+        };
+        const request = createRequestWithHeaders(
+          ODataDeleteRequestConfig,
+          destination
+        );
         await request.execute();
-        const expectedJsonHttpsAgent = { httpsAgent: expect.objectContaining({ options: expect.objectContaining({ rejectUnauthorized: true }) }) };
-        expect(axios.request).toHaveBeenCalledWith(expect.objectContaining(expectedJsonHttpsAgent));
+        const expectedJsonHttpsAgent = {
+          httpsAgent: expect.objectContaining({
+            options: expect.objectContaining({ rejectUnauthorized: true })
+          })
+        };
+        expect(axios.request).toHaveBeenCalledWith(
+          expect.objectContaining(expectedJsonHttpsAgent)
+        );
       });
     });
 
-    function createRequestWithHeaders(configConstrucor, destination?): ODataRequest<any> {
+    function createRequestWithHeaders(
+      configConstrucor,
+      destination?
+    ): ODataRequest<any> {
       const req = createRequest(configConstrucor, destination);
       jest.spyOn(req, 'headers').mockResolvedValue({});
       return req;
@@ -108,7 +135,9 @@ describe('OData Request', () => {
 
       await createRequest(ODataGetAllRequestConfig, httpDestination).execute();
 
-      expect(axios.request).toHaveBeenCalledWith(expect.objectContaining(expectedConfigEntry));
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfigEntry)
+      );
     });
 
     it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
@@ -120,7 +149,9 @@ describe('OData Request', () => {
 
       await createRequest(ODataGetAllRequestConfig, httpsDestination).execute();
 
-      expect(axios.request).toHaveBeenCalledWith(expect.objectContaining(expectedConfigEntry));
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfigEntry)
+      );
     });
 
     it('throws an error if the destination URL uses neither "http" nor "https" as protocol (e.g. RFC)', async () => {
@@ -129,7 +160,10 @@ describe('OData Request', () => {
         authentication: 'NoAuthentication'
       };
 
-      const request = createRequest(ODataGetAllRequestConfig, rfcDestination).execute();
+      const request = createRequest(
+        ODataGetAllRequestConfig,
+        rfcDestination
+      ).execute();
 
       await expect(request).rejects.toThrowErrorMatchingSnapshot();
     });

@@ -74,14 +74,19 @@ const formatCredentials = `Format of credentials.json is:
  * @param options - References to the `systems.json` and `credentials.json` files
  * @returns An array of destinations
  */
-export function getTestDestinationByAlias(alias: string, options?: GetTestDestinationOptions): Destination {
+export function getTestDestinationByAlias(
+  alias: string,
+  options?: GetTestDestinationOptions
+): Destination {
   const destinations = getTestDestinations(options);
   const matchingDestination = destinations.find(d => d.name === alias);
 
   if (!matchingDestination) {
     throw new Error(
       `Couldn't find destination that matches the provided name "${alias}".
-      The following destinations could be found: ${destinations.map(d => d.name).join(', ')}`
+      The following destinations could be found: ${destinations
+        .map(d => d.name)
+        .join(', ')}`
     );
   }
 
@@ -101,7 +106,9 @@ export function getTestDestinationByAlias(alias: string, options?: GetTestDestin
  * @param options - References to the `systems.json` and `credentials.json` files
  * @returns An array of destinations
  */
-export function getTestDestinations(options?: GetTestDestinationOptions): Destination[] {
+export function getTestDestinations(
+  options?: GetTestDestinationOptions
+): Destination[] {
   const systems = readSystemsOrFail(options);
   const credentials = readCredentialsOrFail(options);
 
@@ -111,7 +118,9 @@ export function getTestDestinations(options?: GetTestDestinationOptions): Destin
 function readSystemsOrFail(options?: GetTestDestinationOptions): System[] {
   if (options && options.systemsFilePath) {
     if (!existsSync(options.systemsFilePath)) {
-      throw new Error(`The provided path (${options.systemsFilePath}) to the systems file is invalid!`);
+      throw new Error(
+        `The provided path (${options.systemsFilePath}) to the systems file is invalid!`
+      );
     }
     return readSystems(options.systemsFilePath).systems;
   }
@@ -126,12 +135,16 @@ function readSystemsOrFail(options?: GetTestDestinationOptions): System[] {
   return readSystems(join(foundPath, SYSTEMS_FILE)).systems;
 }
 
-function readCredentialsOrFail(options?: GetTestDestinationOptions): Credentials[] {
+function readCredentialsOrFail(
+  options?: GetTestDestinationOptions
+): Credentials[] {
   if (options && options.credentialsFilePath) {
     if (existsSync(options.credentialsFilePath)) {
       return readCredentials(options.credentialsFilePath).credentials;
     } else {
-      throw new Error(`The provided path (${options.credentialsFilePath}) to the credentials file is invalid!`);
+      throw new Error(
+        `The provided path (${options.credentialsFilePath}) to the credentials file is invalid!`
+      );
     }
   }
 
@@ -141,7 +154,9 @@ function readCredentialsOrFail(options?: GetTestDestinationOptions): Credentials
     return readCredentials(join(foundPath, CREDENTIALS_FILE)).credentials;
   }
 
-  logger.warn(`No path to a ${CREDENTIALS_FILE} provided and none found next to ${foundPath}${sep}${SYSTEMS_FILE}. Proceeding without credentials.`);
+  logger.warn(
+    `No path to a ${CREDENTIALS_FILE} provided and none found next to ${foundPath}${sep}${SYSTEMS_FILE}. Proceeding without credentials.`
+  );
   return [];
 }
 
@@ -163,7 +178,10 @@ function toDestinations(systemsAndCredentials): Destination[] {
   }));
 }
 
-function findFileSearchingUpwards(dir: string, fileName: string): string | null {
+function findFileSearchingUpwards(
+  dir: string,
+  fileName: string
+): string | null {
   const files = readdirSync(dir);
   // TODO: use util method to find proper project root instead of the overall root
   const rootPath = parse(process.cwd()).root;
@@ -190,7 +208,9 @@ function readSystems(filePath: string): SystemsFile {
   systemfile.systems.forEach(system => {
     if (!system.alias || !system.uri) {
       throw new Error(`A system in ${filePath} is not valid - Mandatory alias or url missing.
-                       Broken entry is: ${JSON.stringify(system)}. ${formatSystemJson}`);
+                       Broken entry is: ${JSON.stringify(
+                         system
+                       )}. ${formatSystemJson}`);
     }
   });
   return systemfile;
@@ -198,7 +218,10 @@ function readSystems(filePath: string): SystemsFile {
 
 function readCredentials(filePath: string): CredentialsFile {
   const credentialsFile = readJson(filePath) as CredentialsFile;
-  if (!credentialsFile.credentials || credentialsFile.credentials.length === 0) {
+  if (
+    !credentialsFile.credentials ||
+    credentialsFile.credentials.length === 0
+  ) {
     throw new Error(`No credentials provided in ${filePath}.
                      If you do not want to define credentials just remove the file. ${formatCredentials}`);
   }
@@ -206,7 +229,9 @@ function readCredentials(filePath: string): CredentialsFile {
   credentialsFile.credentials.forEach(cred => {
     if (!cred.alias || !cred.username || !cred.password) {
       throw new Error(`A credential in ${filePath} is not valid - Mandatory alias, username or password missing.
-                       Broken entry is: ${JSON.stringify(cred)}. ${formatCredentials}`);
+                       Broken entry is: ${JSON.stringify(
+                         cred
+                       )}. ${formatCredentials}`);
     }
   });
   return credentialsFile;

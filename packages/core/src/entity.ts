@@ -7,7 +7,10 @@ import { CustomField, Link, Selectable } from './selectable';
 import { nonEnumerable } from './util';
 import { toPropertyFormat } from './util/name-converter';
 
-export type EntityBuilderType<EntityT extends Entity, EntityTypeForceMandatoryT> = {
+export type EntityBuilderType<
+  EntityT extends Entity,
+  EntityTypeForceMandatoryT
+> = {
   [property in keyof EntityTypeForceMandatoryT]: (
     value: EntityTypeForceMandatoryT[property]
   ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
@@ -22,13 +25,18 @@ export class Entity {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  protected static entityBuilder<EntityT extends Entity, EntityTypeForceMandatoryT>(
+  protected static entityBuilder<
+    EntityT extends Entity,
+    EntityTypeForceMandatoryT
+  >(
     entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT>
   ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT>(entityConstructor);
+    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT>(
+      entityConstructor
+    );
     entityConstructor._allFields.forEach(field => {
       const fieldName = `${toPropertyFormat(field._fieldName)}`;
-      builder[fieldName] = function(value) {
+      builder[fieldName] = function (value) {
         this.entity[fieldName] = value;
         return this;
       };
@@ -36,7 +44,10 @@ export class Entity {
     return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
   }
 
-  protected static customFieldSelector<EntityT extends Entity>(fieldName: string, entityConstructor: Constructable<EntityT>): CustomField<EntityT> {
+  protected static customFieldSelector<EntityT extends Entity>(
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>
+  ): CustomField<EntityT> {
     return new CustomField(fieldName, entityConstructor);
   }
 
@@ -104,7 +115,9 @@ export class Entity {
    */
   setCustomField(fieldName: string, value: any): this {
     if (this.isConflictingCustomField(fieldName)) {
-      throw new Error(`The field name "${fieldName}" is already defined in the entity and cannot be set as custom field.`);
+      throw new Error(
+        `The field name "${fieldName}" is already defined in the entity and cannot be set as custom field.`
+      );
     }
 
     this._customFields[fieldName] = value;
@@ -190,7 +203,13 @@ export class Entity {
 
     return Object.entries(this.getCustomFields())
       .filter(([fieldName, value]) => this.remoteState[fieldName] !== value)
-      .reduce((updatedCustomFields, [fieldName, value]) => ({ ...updatedCustomFields, [fieldName]: value }), {});
+      .reduce(
+        (updatedCustomFields, [fieldName, value]) => ({
+          ...updatedCustomFields,
+          [fieldName]: value
+        }),
+        {}
+      );
   }
 
   /**
@@ -224,7 +243,10 @@ export class Entity {
   protected getCurrentMapKeys(): this {
     return Object.keys(this)
       .filter(key => this.propertyIsEnumerable(key))
-      .reduce((accumulatedMap, key) => ({ ...accumulatedMap, [key]: this[key] }), this.getCustomFields()) as this;
+      .reduce(
+        (accumulatedMap, key) => ({ ...accumulatedMap, [key]: this[key] }),
+        this.getCustomFields()
+      ) as this;
   }
 
   /**
@@ -250,20 +272,32 @@ export interface EntityIdentifiable<T extends Entity> {
 /**
  * @hidden
  */
-export function isSelectedProperty<EntityT extends Entity>(json, selectable: Selectable<EntityT>) {
+export function isSelectedProperty<EntityT extends Entity>(
+  json,
+  selectable: Selectable<EntityT>
+) {
   return json.hasOwnProperty(selectable._fieldName);
 }
 
 /**
  * @hidden
  */
-export function isExistentProperty<EntityT extends Entity, LinkedEntityT extends Entity>(json, link: Link<EntityT, LinkedEntityT>) {
+export function isExistentProperty<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
+>(json, link: Link<EntityT, LinkedEntityT>) {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
 
 /**
  * @hidden
  */
-export function isExpandedProperty<EntityT extends Entity, LinkedEntityT extends Entity>(json, link: Link<EntityT, LinkedEntityT>) {
-  return isExistentProperty(json, link) && !json[link._fieldName].hasOwnProperty('__deferred');
+export function isExpandedProperty<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
+>(json, link: Link<EntityT, LinkedEntityT>) {
+  return (
+    isExistentProperty(json, link) &&
+    !json[link._fieldName].hasOwnProperty('__deferred')
+  );
 }

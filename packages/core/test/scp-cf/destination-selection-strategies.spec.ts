@@ -1,6 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { AllDestinations } from '../../src/scp-cf/destination-accessor-types';
-import { alwaysProvider, alwaysSubscriber, subscriberFirst } from '../../src/scp-cf/destination-selection-strategies';
+import {
+  alwaysProvider,
+  alwaysSubscriber,
+  subscriberFirst
+} from '../../src/scp-cf/destination-selection-strategies';
 
 const target = {
   name: 'testination',

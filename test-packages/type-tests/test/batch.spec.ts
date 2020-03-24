@@ -1,15 +1,28 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { changeset as otherServiceChangeset, MultiSchemaTestEntity } from '@sap-cloud-sdk/test-services/multiple-schemas-service';
-import { batch, changeset as testEntityChangeset, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
+import {
+  changeset as otherServiceChangeset,
+  MultiSchemaTestEntity
+} from '@sap-cloud-sdk/test-services/multiple-schemas-service';
+import {
+  batch,
+  changeset as testEntityChangeset,
+  TestEntity
+} from '@sap-cloud-sdk/test-services/test-service';
 
-const createTestEntity = TestEntity.requestBuilder().create(TestEntity.builder().build());
-const createTestEntityFromOtherService = MultiSchemaTestEntity.requestBuilder().create(MultiSchemaTestEntity.builder().build());
+const createTestEntity = TestEntity.requestBuilder().create(
+  TestEntity.builder().build()
+);
+const createTestEntityFromOtherService = MultiSchemaTestEntity.requestBuilder().create(
+  MultiSchemaTestEntity.builder().build()
+);
 
 // $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
 const changeSetTestEntity = testEntityChangeset(createTestEntity);
 
 // $ExpectType ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
-const changeSetOtherServiceTestEntity = otherServiceChangeset(createTestEntityFromOtherService);
+const changeSetOtherServiceTestEntity = otherServiceChangeset(
+  createTestEntityFromOtherService
+);
 
 // // $ExpectError
 // TestEntityChangeset(createTestEntityFromOtherService);

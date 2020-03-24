@@ -114,7 +114,9 @@ describe('edmToTsType', () => {
 describe('ensureString', () => {
   it('returns string for whatever passed type', () => {
     expect(typeof ensureString('test')).toBe('string');
-    expect(typeof ensureString({ anyNumber: 1234, anyObject: {}, anyString: 'abcd' })).toBe('string'); // This returns [object Object]
+    expect(
+      typeof ensureString({ anyNumber: 1234, anyObject: {}, anyString: 'abcd' })
+    ).toBe('string'); // This returns [object Object]
     expect(typeof ensureString(1234)).toBe('string');
     expect(typeof ensureString(undefined)).toBe('string');
     expect(typeof ensureString(null)).toBe('string');
@@ -133,6 +135,8 @@ describe('prefixString', () => {
 describe('cloudSdkVdmHack', () => {
   it('should pop the string tail if @sap/cloud-sdk-vdm- is passed', () => {
     expect(cloudSdkVdmHack('@sap/cloud-sdk-vdm-')).toBe('@sap/cloud-sdk-vdm');
-    expect(cloudSdkVdmHack('@sap/cloud-sdk-vdm-testing-service')).toBe('@sap/cloud-sdk-vdm-testing-service');
+    expect(cloudSdkVdmHack('@sap/cloud-sdk-vdm-testing-service')).toBe(
+      '@sap/cloud-sdk-vdm-testing-service'
+    );
   });
 });

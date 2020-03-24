@@ -10,7 +10,10 @@ import { Filter } from './filter';
  * Data structure to represent OData V2 filter functions.
  * Use the factory function [[filterFunction]] to create instances of `FilterFunction`.
  */
-export abstract class FilterFunction<EntityT extends Entity, ReturnT extends FieldType> {
+export abstract class FilterFunction<
+  EntityT extends Entity,
+  ReturnT extends FieldType
+> {
   /**
    * EdmType of the return type of the filter function.
    */
@@ -21,7 +24,10 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
    * @param functionName - Name of the function
    * @param parameters - Representation of the parameters passed to the filter function
    */
-  constructor(public functionName: string, public parameters: FilterFunctionParameterType<EntityT>[]) {}
+  constructor(
+    public functionName: string,
+    public parameters: FilterFunctionParameterType<EntityT>[]
+  ) {}
 
   /**
    * Serializes the filter function into a string
@@ -30,7 +36,9 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
    * @returns The filter function as string
    */
   toString(parentFieldNames: string[] = []): string {
-    const params = this.parameters.map(param => this.transformParameter(param, parentFieldNames)).join(', ');
+    const params = this.parameters
+      .map(param => this.transformParameter(param, parentFieldNames))
+      .join(', ');
     return `${this.functionName}(${params})`;
   }
 
@@ -62,7 +70,10 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
    * @param parentFieldNames - The parent field name list used when the field with navigation properties are involved
    * @returns A function that convert the parameter to url pattern.
    */
-  private transformParameter(param: FilterFunctionParameterType<EntityT>, parentFieldNames: string[]): string {
+  private transformParameter(
+    param: FilterFunctionParameterType<EntityT>,
+    parentFieldNames: string[]
+  ): string {
     if (typeof param === 'number') {
       return param.toString();
     } else if (typeof param === 'string') {
@@ -77,4 +88,8 @@ export abstract class FilterFunction<EntityT extends Entity, ReturnT extends Fie
 /**
  * Type of a parameter of a filter function. This can either be an explicit value (string or number), a reference to a field or another filter function.
  */
-export type FilterFunctionParameterType<EntityT extends Entity> = number | string | Field<EntityT> | FilterFunction<EntityT, FieldType>;
+export type FilterFunctionParameterType<EntityT extends Entity> =
+  | number
+  | string
+  | Field<EntityT>
+  | FilterFunction<EntityT, FieldType>;

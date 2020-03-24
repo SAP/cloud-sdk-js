@@ -4,7 +4,10 @@ import { errorWithCause, MapType, propertyExists } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getAxiosConfigWithDefaults } from '../../http-client';
 import { Destination, sanitizeDestination } from '../../scp-cf';
-import { removeSlashes, removeTrailingSlashes } from '../../util/remove-slashes';
+import {
+  removeSlashes,
+  removeTrailingSlashes
+} from '../../util/remove-slashes';
 import { buildHeaders } from '../header-builder/header-builder';
 import { getAgentConfig } from '../http-agent';
 import { ODataRequestConfig } from './odata-request-config';
@@ -22,7 +25,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @param _destination - Destination to setup the request against
    * @memberof ODataRequest
    */
-  constructor(public config: RequestConfigT, private _destination?: Destination | undefined) {}
+  constructor(
+    public config: RequestConfigT,
+    private _destination?: Destination | undefined
+  ) {}
 
   set destination(dest: Destination | undefined) {
     this._destination = dest && sanitizeDestination(dest);
@@ -47,7 +53,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns The relative url for the batch request
    */
   relativeUrl(): string {
-    return `${removeTrailingSlashes(this.relativeResourceUrl())}${this.query()}`;
+    return `${removeTrailingSlashes(
+      this.relativeResourceUrl()
+    )}${this.query()}`;
   }
 
   /**
@@ -57,7 +65,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @memberof ODataRequest
    */
   needsAuthentication(): boolean {
-    return !!this.destination && this.destination.authentication !== 'NoAuthentication';
+    return (
+      !!this.destination &&
+      this.destination.authentication !== 'NoAuthentication'
+    );
   }
 
   /**
@@ -70,7 +81,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination is undefined.');
     }
     const systemUrl = this.destination.url;
-    const servicePath = typeof this.config.customServicePath === 'undefined' ? this.config.defaultServicePath : this.config.customServicePath;
+    const servicePath =
+      typeof this.config.customServicePath === 'undefined'
+        ? this.config.defaultServicePath
+        : this.config.customServicePath;
     return `${removeTrailingSlashes(systemUrl)}/${removeSlashes(servicePath)}`;
   }
 
@@ -80,7 +94,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns The relative URL of the service the given entity belongs to
    */
   relativeServiceUrl(): string {
-    const servicePath = typeof this.config.customServicePath === 'undefined' ? this.config.defaultServicePath : this.config.customServicePath;
+    const servicePath =
+      typeof this.config.customServicePath === 'undefined'
+        ? this.config.defaultServicePath
+        : this.config.customServicePath;
     return `${removeSlashes(servicePath)}`;
   }
 
@@ -90,7 +107,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns The URL of the resource
    */
   resourceUrl(): string {
-    return `${removeTrailingSlashes(this.serviceUrl())}/${this.config.resourcePath()}`;
+    return `${removeTrailingSlashes(
+      this.serviceUrl()
+    )}/${this.config.resourcePath()}`;
   }
 
   /**
@@ -99,7 +118,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns The relative URL of the resource
    */
   relativeResourceUrl(): string {
-    return `${removeTrailingSlashes(this.relativeServiceUrl())}/${this.config.resourcePath()}`;
+    return `${removeTrailingSlashes(
+      this.relativeServiceUrl()
+    )}/${this.config.resourcePath()}`;
   }
 
   /**
@@ -122,7 +143,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   async headers(): Promise<MapType<string>> {
-    return buildHeaders(this).catch(error => Promise.reject(errorWithCause('Constructing headers for OData request failed!', error)));
+    return buildHeaders(this).catch(error =>
+      Promise.reject(
+        errorWithCause('Constructing headers for OData request failed!', error)
+      )
+    );
   }
 
   /**
@@ -142,22 +167,36 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     };
 
     return this.headers()
-      .then((headers): AxiosRequestConfig => ({ headers, ...getAxiosConfigWithDefaults(), ...requestDataWithAxiosKeys }))
+      .then(
+        (headers): AxiosRequestConfig => ({
+          headers,
+          ...getAxiosConfigWithDefaults(),
+          ...requestDataWithAxiosKeys
+        })
+      )
       .then(requestConfig => axios.request(requestConfig))
-      .catch(error => Promise.reject(constructError(error, this.config.method, this.serviceUrl())));
+      .catch(error =>
+        Promise.reject(
+          constructError(error, this.config.method, this.serviceUrl())
+        )
+      );
   }
 }
 
 function constructError(error, requestMethod: string, url: string): Error {
   const defaultMessage = `${requestMethod} request to ${url} failed!`;
-  const s4SpecificMessage = propertyExists(error, 'response', 'data', 'error') ? messageFromS4ErrorResponse(error) : '';
+  const s4SpecificMessage = propertyExists(error, 'response', 'data', 'error')
+    ? messageFromS4ErrorResponse(error)
+    : '';
   const message = [defaultMessage, s4SpecificMessage].join(' ');
 
   return errorWithCause(message, error);
 }
 
 function messageFromS4ErrorResponse(error): string {
-  return `${propertyExists(error.response.data.error, 'message', 'value') ? error.response.data.error.message.value : ''}\n${JSON.stringify(
-    error.response.data.error
-  )}`;
+  return `${
+    propertyExists(error.response.data.error, 'message', 'value')
+      ? error.response.data.error.message.value
+      : ''
+  }\n${JSON.stringify(error.response.data.error)}`;
 }

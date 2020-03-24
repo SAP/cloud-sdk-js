@@ -4,7 +4,12 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
 import { Entity } from './entity';
 import { tsToEdm } from './payload-value-converter';
-import { ComplexTypeField, EdmTypeField, Link, OneToOneLink } from './selectable';
+import {
+  ComplexTypeField,
+  EdmTypeField,
+  Link,
+  OneToOneLink
+} from './selectable';
 import { toStaticPropertyFormat } from './util';
 
 /**
@@ -14,8 +19,14 @@ import { toStaticPropertyFormat } from './util';
  * @param entityConstructor - The constructor function of that entity.
  * @returns JSON.
  */
-export function serializeEntity<EntityT extends Entity>(entity: EntityT, entityConstructor: Constructable<EntityT>): MapType<any> {
-  return { ...serializeEntityNonCustomFields(entity, entityConstructor), ...entity.getCustomFields() };
+export function serializeEntity<EntityT extends Entity>(
+  entity: EntityT,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
+  return {
+    ...serializeEntityNonCustomFields(entity, entityConstructor),
+    ...entity.getCustomFields()
+  };
 }
 
 /**
@@ -25,7 +36,10 @@ export function serializeEntity<EntityT extends Entity>(entity: EntityT, entityC
  * @param entityConstructor - The constructor function of that entity.
  * @returns JSON.
  */
-export function serializeEntityNonCustomFields<EntityT extends Entity>(entity: EntityT, entityConstructor: Constructable<EntityT>): MapType<any> {
+export function serializeEntityNonCustomFields<EntityT extends Entity>(
+  entity: EntityT,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
   if (!entity) {
     return {};
   }
@@ -36,25 +50,48 @@ export function serializeEntityNonCustomFields<EntityT extends Entity>(entity: E
     if (fieldValue === null || fieldValue === undefined) {
       serialized[selectable._fieldName] = null;
     } else if (selectable instanceof EdmTypeField) {
-      serialized[selectable._fieldName] = tsToEdm(fieldValue, selectable.edmType);
+      serialized[selectable._fieldName] = tsToEdm(
+        fieldValue,
+        selectable.edmType
+      );
     } else if (selectable instanceof OneToOneLink) {
-      serialized[selectable._fieldName] = serializeEntityNonCustomFields(fieldValue, selectable._linkedEntity);
+      serialized[selectable._fieldName] = serializeEntityNonCustomFields(
+        fieldValue,
+        selectable._linkedEntity
+      );
     } else if (selectable instanceof Link) {
-      serialized[selectable._fieldName] = fieldValue.map(linkedEntity => serializeEntityNonCustomFields(linkedEntity, selectable._linkedEntity));
+      serialized[selectable._fieldName] = fieldValue.map(linkedEntity =>
+        serializeEntityNonCustomFields(linkedEntity, selectable._linkedEntity)
+      );
     } else if (selectable instanceof ComplexTypeField) {
-      serialized[selectable._fieldName] = serializeComplexTypeField(selectable, fieldValue);
+      serialized[selectable._fieldName] = serializeComplexTypeField(
+        selectable,
+        fieldValue
+      );
     }
 
     return serialized;
   }, {});
 }
 
-function serializeComplexTypeField<EntityT extends Entity>(selectable: ComplexTypeField<EntityT>, fieldValue: any): any {
-  return Object.entries(selectable).reduce((complexTypeObject, [propertyKey, propertyValue]) => {
-    const value = fieldValue[propertyKey];
-    if (propertyValue instanceof EdmTypeField && typeof value !== 'undefined') {
-      complexTypeObject[propertyValue._fieldName] = tsToEdm(fieldValue[propertyKey], propertyValue.edmType);
-    }
-    return complexTypeObject;
-  }, {});
+function serializeComplexTypeField<EntityT extends Entity>(
+  selectable: ComplexTypeField<EntityT>,
+  fieldValue: any
+): any {
+  return Object.entries(selectable).reduce(
+    (complexTypeObject, [propertyKey, propertyValue]) => {
+      const value = fieldValue[propertyKey];
+      if (
+        propertyValue instanceof EdmTypeField &&
+        typeof value !== 'undefined'
+      ) {
+        complexTypeObject[propertyValue._fieldName] = tsToEdm(
+          fieldValue[propertyKey],
+          propertyValue.edmType
+        );
+      }
+      return complexTypeObject;
+    },
+    {}
+  );
 }

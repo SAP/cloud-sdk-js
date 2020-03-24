@@ -1,9 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addCsrfTokenAndCookies } from '../../../src/request-builder/header-builder';
-import { createCreateRequest, createGetAllRequest, createUpdateRequest } from '../../test-util/create-requests';
+import {
+  createCreateRequest,
+  createGetAllRequest,
+  createUpdateRequest
+} from '../../test-util/create-requests';
 import { muteLoggers } from '../../test-util/mute-logger';
-import { defaultBasicCredentials, defaultDestination, mockHeaderRequest } from '../../test-util/request-mocker';
+import {
+  defaultBasicCredentials,
+  defaultDestination,
+  mockHeaderRequest
+} from '../../test-util/request-mocker';
 
 const standardHeaders = {
   Accept: 'application/json',
@@ -53,23 +61,35 @@ describe('csrf-token-header', () => {
     const request = createCreateRequest(defaultDestination);
     const warnSpy = jest.spyOn(logger, 'warn');
 
-    mockHeaderRequest({ request, responseHeaders: { 'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2'] } });
+    mockHeaderRequest({
+      request,
+      responseHeaders: {
+        'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
+      }
+    });
 
     const actual = await addCsrfTokenAndCookies(request, standardHeaders);
 
     expect('x-csrf-token' in actual).toBeFalsy();
-    expect(warnSpy).toBeCalledWith('Destination did not return a CSRF token. This may cause a failure when sending the OData request.');
+    expect(warnSpy).toBeCalledWith(
+      'Destination did not return a CSRF token. This may cause a failure when sending the OData request.'
+    );
   });
 
   it('"cookie" should not be defined in header when not defined in CSRF headers response.', async () => {
     const request = createCreateRequest(defaultDestination);
     const warnSpy = jest.spyOn(logger, 'warn');
 
-    mockHeaderRequest({ request, responseHeaders: { 'x-csrf-token': 'mocked-x-csrf-token' } });
+    mockHeaderRequest({
+      request,
+      responseHeaders: { 'x-csrf-token': 'mocked-x-csrf-token' }
+    });
 
     const actual = await addCsrfTokenAndCookies(request, standardHeaders);
 
     expect('cookie' in actual).toBeFalsy();
-    expect(warnSpy).toBeCalledWith('CSRF header response does not include cookies.');
+    expect(warnSpy).toBeCalledWith(
+      'CSRF header response does not include cookies.'
+    );
   });
 });

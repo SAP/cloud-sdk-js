@@ -26,7 +26,9 @@ describe('builder-function', () => {
       parameters: [{ name: 'json', type: 'any' }],
       returnType: 'ComplexMealWithDesertType',
       statements: 'return ComplexMealWithDesertType.build(json);',
-      docs: ['@deprecated since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.']
+      docs: [
+        '@deprecated since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.'
+      ]
     });
   });
 });

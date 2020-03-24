@@ -32,8 +32,12 @@ export const testFilterGuid = {
 };
 
 export const testFilterSingleLink = {
-  filter: TestEntity.TO_SINGLE_LINK.filter(TestEntitySingleLink.KEY_PROPERTY.equals('test'), TestEntitySingleLink.BOOLEAN_PROPERTY.equals(false)),
-  odataStr: "to_SingleLink/KeyProperty eq 'test' and to_SingleLink/BooleanProperty eq false"
+  filter: TestEntity.TO_SINGLE_LINK.filter(
+    TestEntitySingleLink.KEY_PROPERTY.equals('test'),
+    TestEntitySingleLink.BOOLEAN_PROPERTY.equals(false)
+  ),
+  odataStr:
+    "to_SingleLink/KeyProperty eq 'test' and to_SingleLink/BooleanProperty eq false"
 };
 
 export const testFilterCustomFieldString = {
@@ -82,13 +86,23 @@ export const testFilterFunctionSubstring = {
 };
 
 export const testFilterFunctionCustom = {
-  filter: filterFunction('concat', 'string', filterFunction('concat', 'string', TestEntity.STRING_PROPERTY, ', '), TestEntity.STRING_PROPERTY).equals(
-    'test, test'
-  ),
-  odataStr: "concat(concat(StringProperty, ', '), StringProperty) eq 'test, test'"
+  filter: filterFunction(
+    'concat',
+    'string',
+    filterFunction('concat', 'string', TestEntity.STRING_PROPERTY, ', '),
+    TestEntity.STRING_PROPERTY
+  ).equals('test, test'),
+  odataStr:
+    "concat(concat(StringProperty, ', '), StringProperty) eq 'test, test'"
 };
 
 export const testFilterFunctionNested = {
-  filter: TestEntity.TO_SINGLE_LINK.filter(substringOf(TestEntitySingleLink.STRING_PROPERTY, TestEntitySingleLink.KEY_PROPERTY).equals(false)),
-  odataStr: '(substringof(to_SingleLink/StringProperty, to_SingleLink/KeyProperty) eq false)'
+  filter: TestEntity.TO_SINGLE_LINK.filter(
+    substringOf(
+      TestEntitySingleLink.STRING_PROPERTY,
+      TestEntitySingleLink.KEY_PROPERTY
+    ).equals(false)
+  ),
+  odataStr:
+    '(substringof(to_SingleLink/StringProperty, to_SingleLink/KeyProperty) eq false)'
 };

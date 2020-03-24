@@ -4,11 +4,19 @@ import { errorWithCause } from '@sap-cloud-sdk/util';
 import { DecodedJWT, decodeJwt } from '../util';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
-import { extractClientCredentials, getXsuaaServiceCredentials, resolveService } from './environment-accessor';
+import {
+  extractClientCredentials,
+  getXsuaaServiceCredentials,
+  resolveService
+} from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
-import { clientCredentialsGrant, refreshTokenGrant, userTokenGrant } from './xsuaa-service';
+import {
+  clientCredentialsGrant,
+  refreshTokenGrant,
+  userTokenGrant
+} from './xsuaa-service';
 import { UserTokenResponse } from './xsuaa-service-types';
 
 /**
@@ -42,7 +50,10 @@ export async function serviceToken(
   const serviceCreds = extractClientCredentials(resolvedService.credentials);
 
   if (opts.useCache) {
-    const cachedToken = clientCredentialsTokenCache.getGrantTokenFromCache(xsuaa.url, serviceCreds);
+    const cachedToken = clientCredentialsTokenCache.getGrantTokenFromCache(
+      xsuaa.url,
+      serviceCreds
+    );
     if (cachedToken) {
       return Promise.resolve(cachedToken.access_token);
     }
@@ -51,12 +62,19 @@ export async function serviceToken(
   return clientCredentialsGrant(xsuaa, serviceCreds, opts)
     .then(resp => {
       if (opts.useCache) {
-        clientCredentialsTokenCache.cacheRetrievedToken(xsuaa.url, serviceCreds, resp);
+        clientCredentialsTokenCache.cacheRetrievedToken(
+          xsuaa.url,
+          serviceCreds,
+          resp
+        );
       }
       return resp.access_token;
     })
     .catch(error => {
-      throw errorWithCause(`Fetching an access token for service "${resolvedService.label}" failed!`, error);
+      throw errorWithCause(
+        `Fetching an access token for service "${resolvedService.label}" failed!`,
+        error
+      );
     });
 }
 
@@ -73,7 +91,11 @@ export async function serviceToken(
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns A user approved access token.
  */
-export async function userApprovedServiceToken(userJwt: string, service: string | Service, options?: ResilienceOptions): Promise<string> {
+export async function userApprovedServiceToken(
+  userJwt: string,
+  service: string | Service,
+  options?: ResilienceOptions
+): Promise<string> {
   const resolvedService = resolveService(service);
 
   const opts: ResilienceOptions = {
@@ -85,10 +107,15 @@ export async function userApprovedServiceToken(userJwt: string, service: string 
   const serviceCreds = extractClientCredentials(resolvedService.credentials);
 
   return userTokenGrant(xsuaa.url, userJwt, serviceCreds.username, opts)
-    .then(userToken => refreshTokenGrant(xsuaa, serviceCreds, userToken.refresh_token, opts))
+    .then(userToken =>
+      refreshTokenGrant(xsuaa, serviceCreds, userToken.refresh_token, opts)
+    )
     .then((refreshToken: UserTokenResponse) => refreshToken.access_token)
     .catch(error => {
-      throw errorWithCause(`Fetching a user approved access token for service "${resolvedService.label}" failed!`, error);
+      throw errorWithCause(
+        `Fetching a user approved access token for service "${resolvedService.label}" failed!`,
+        error
+      );
     });
 }
 
@@ -96,10 +123,13 @@ function multiTenantXsuaaCredentials(userJwt?: string | DecodedJWT) {
   const xsuaa = getXsuaaServiceCredentials(userJwt);
 
   if (userJwt) {
-    const decodedJwt = typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
+    const decodedJwt =
+      typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
 
     if (!decodedJwt.iss) {
-      throw Error('Property "iss" is missing from the provided user token! This shouldn\'t happen.');
+      throw Error(
+        'Property "iss" is missing from the provided user token! This shouldn\'t happen.'
+      );
     }
 
     xsuaa.url = replaceSubdomain(decodedJwt.iss, xsuaa.url);

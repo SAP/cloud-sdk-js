@@ -1,9 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { StructureKind, VariableDeclarationKind, VariableStatementStructure } from 'ts-morph';
+import {
+  StructureKind,
+  VariableDeclarationKind,
+  VariableStatementStructure
+} from 'ts-morph';
 import { VdmFunctionImport } from '../vdm-types';
 
-export function exportStatement(functionImports: VdmFunctionImport[]): VariableStatementStructure {
+export function exportStatement(
+  functionImports: VdmFunctionImport[]
+): VariableStatementStructure {
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,

@@ -22,8 +22,13 @@ describe('ODataUpdateRequestConfig', () => {
   it('has resourcePath with keys', () => {
     const keyPropGuid = uuid();
     const keyPropString = 'keyProp';
-    config.keys = { KeyPropertyGuid: keyPropGuid, KeyPropertyString: keyPropString };
-    expect(config.resourcePath()).toBe(testEntityResourcePath(keyPropGuid, keyPropString));
+    config.keys = {
+      KeyPropertyGuid: keyPropGuid,
+      KeyPropertyString: keyPropString
+    };
+    expect(config.resourcePath()).toBe(
+      testEntityResourcePath(keyPropGuid, keyPropString)
+    );
   });
 
   it('has no format', () => {

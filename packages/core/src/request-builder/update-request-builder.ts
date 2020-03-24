@@ -4,9 +4,15 @@ import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
-import { serializeEntity, serializeEntityNonCustomFields } from '../entity-serializer';
+import {
+  serializeEntity,
+  serializeEntityNonCustomFields
+} from '../entity-serializer';
 import { DestinationOptions } from '../scp-cf';
-import { Destination, DestinationNameAndJwt } from '../scp-cf/destination-service-types';
+import {
+  Destination,
+  DestinationNameAndJwt
+} from '../scp-cf/destination-service-types';
 import { Selectable } from '../selectable';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { getEntityKeys } from './request/get-keys';
@@ -17,7 +23,8 @@ import { ODataUpdateRequestConfig } from './request/odata-update-request-config'
  *
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
+export class UpdateRequestBuilder<EntityT extends Entity>
+  extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   private ignored: Set<string>;
   private required: Set<string>;
@@ -28,7 +35,10 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param _entityConstructor - Constructor type of the entity to be updated
    * @param _entity - Entity to be updated
    */
-  constructor(readonly _entityConstructor: Constructable<EntityT>, private _entity: EntityT) {
+  constructor(
+    readonly _entityConstructor: Constructable<EntityT>,
+    private _entity: EntityT
+  ) {
     super(new ODataUpdateRequestConfig(_entityConstructor));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
@@ -41,7 +51,10 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @returns the builder itself
    */
   prepare(): this {
-    this.requestConfig.keys = getEntityKeys(this._entity, this._entityConstructor);
+    this.requestConfig.keys = getEntityKeys(
+      this._entity,
+      this._entityConstructor
+    );
 
     let updateBody;
     switch (this.requestConfig.method) {
@@ -52,7 +65,9 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
         updateBody = this.getUpdateBody();
         break;
       default:
-        throw new Error(`${this.requestConfig.method} is not a valid method of the update request.`);
+        throw new Error(
+          `${this.requestConfig.method} is not a valid method of the update request.`
+        );
     }
     this.requestConfig.payload = updateBody;
 
@@ -66,7 +81,10 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
    */
-  async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<EntityT> {
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<EntityT> {
     this.prepare();
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
@@ -77,8 +95,14 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
         .then(request => request.execute())
 
         // Update returns 204 hence the data from the request is used to build entity for return
-        .then(response => this._entity.setOrInitializeRemoteState().setVersionIdentifier(this.requestConfig.eTag))
-        .catch(error => Promise.reject(errorWithCause('OData update request failed!', error)))
+        .then(response =>
+          this._entity
+            .setOrInitializeRemoteState()
+            .setVersionIdentifier(this.requestConfig.eTag)
+        )
+        .catch(error =>
+          Promise.reject(errorWithCause('OData update request failed!', error))
+        )
     );
   }
 
@@ -136,7 +160,10 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   }
 
   private getUpdateBody(): MapType<any> {
-    const serializedBody = serializeEntity(this._entity, this._entityConstructor);
+    const serializedBody = serializeEntity(
+      this._entity,
+      this._entityConstructor
+    );
 
     return pipe(
       () => this.serializedDiff(),
@@ -149,24 +176,36 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
 
   private serializedDiff(): MapType<any> {
     return {
-      ...serializeEntityNonCustomFields(this._entity.getUpdatedProperties(), this._entityConstructor),
+      ...serializeEntityNonCustomFields(
+        this._entity.getUpdatedProperties(),
+        this._entityConstructor
+      ),
       ...this._entity.getUpdatedCustomFields()
     };
   }
 
   private removeNavPropsAndComplexTypes(body: MapType<any>): MapType<any> {
-    return removePropertyOnCondition(([key, val]) => typeof val === 'object')(body);
+    return removePropertyOnCondition(([key, val]) => typeof val === 'object')(
+      body
+    );
   }
 
   private removeKeyFields(body: MapType<any>): MapType<any> {
-    return removePropertyOnCondition(([key, val]) => this.getKeyFieldNames().includes(key))(body);
+    return removePropertyOnCondition(([key, val]) =>
+      this.getKeyFieldNames().includes(key)
+    )(body);
   }
 
   private removeIgnoredFields(body: MapType<any>): MapType<any> {
-    return removePropertyOnCondition(([key, val]) => this.ignored.has(key))(body);
+    return removePropertyOnCondition(([key, val]) => this.ignored.has(key))(
+      body
+    );
   }
 
-  private addRequiredFields(completeBody: MapType<any>, body: MapType<any>): MapType<any> {
+  private addRequiredFields(
+    completeBody: MapType<any>,
+    body: MapType<any>
+  ): MapType<any> {
     return Array.from(this.required).reduce((resultBody, requiredField) => {
       if (Object.keys(resultBody).includes(requiredField)) {
         return resultBody;
@@ -197,7 +236,9 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   }
 }
 
-const removePropertyOnCondition = (condition: (objectEntry: [string, any]) => boolean) => (body: MapType<any>): MapType<any> =>
+const removePropertyOnCondition = (
+  condition: (objectEntry: [string, any]) => boolean
+) => (body: MapType<any>): MapType<any> =>
   Object.entries(body).reduce((resultBody, [key, val]) => {
     if (condition([key, val])) {
       return resultBody;

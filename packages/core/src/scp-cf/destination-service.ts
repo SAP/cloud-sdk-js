@@ -6,7 +6,10 @@ import { getAxiosConfigWithDefaults } from '../http-client';
 import { wrapJwtInHeader } from '../util';
 import { parseDestination } from './destination';
 import { Destination } from './destination-service-types';
-import { circuitBreakerDefaultOptions, ResilienceOptions } from './resilience-options';
+import {
+  circuitBreakerDefaultOptions,
+  ResilienceOptions
+} from './resilience-options';
 
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
@@ -20,8 +23,17 @@ const CircuitBreaker = require('opossum');
  * @param options - Options to use by retrieving destinations
  * @returns A promise resolving to a list of instance destinations
  */
-export function fetchInstanceDestinations(destinationServiceUri: string, jwt: string, options?: ResilienceOptions): Promise<Destination[]> {
-  return fetchDestinations(destinationServiceUri, jwt, DestinationType.Instance, options);
+export function fetchInstanceDestinations(
+  destinationServiceUri: string,
+  jwt: string,
+  options?: ResilienceOptions
+): Promise<Destination[]> {
+  return fetchDestinations(
+    destinationServiceUri,
+    jwt,
+    DestinationType.Instance,
+    options
+  );
 }
 
 /**
@@ -32,8 +44,17 @@ export function fetchInstanceDestinations(destinationServiceUri: string, jwt: st
  * @param options - Options to use by retrieving destinations
  * @returns A promise resolving to a list of subaccount destinations
  */
-export function fetchSubaccountDestinations(destinationServiceUri: string, jwt: string, options?: ResilienceOptions): Promise<Destination[]> {
-  return fetchDestinations(destinationServiceUri, jwt, DestinationType.Subaccount, options);
+export function fetchSubaccountDestinations(
+  destinationServiceUri: string,
+  jwt: string,
+  options?: ResilienceOptions
+): Promise<Destination[]> {
+  return fetchDestinations(
+    destinationServiceUri,
+    jwt,
+    DestinationType.Subaccount,
+    options
+  );
 }
 
 enum DestinationType {
@@ -41,12 +62,29 @@ enum DestinationType {
   Subaccount = 'subaccount'
 }
 
-function fetchDestinations(destinationServiceUri: string, jwt: string, type: DestinationType, options?: ResilienceOptions): Promise<Destination[]> {
-  const targetUri = `${destinationServiceUri.replace(/\/$/, '')}/destination-configuration/v1/${type}Destinations`;
+function fetchDestinations(
+  destinationServiceUri: string,
+  jwt: string,
+  type: DestinationType,
+  options?: ResilienceOptions
+): Promise<Destination[]> {
+  const targetUri = `${destinationServiceUri.replace(
+    /\/$/,
+    ''
+  )}/destination-configuration/v1/${type}Destinations`;
 
   return callDestinationService(targetUri, jwt, options)
     .then(response => response.data.map(d => parseDestination(d)))
-    .catch(error => Promise.reject(errorWithCause(`Failed to fetch ${type} destinations.${errorMessageFromResponse(error)}`, error)));
+    .catch(error =>
+      Promise.reject(
+        errorWithCause(
+          `Failed to fetch ${type} destinations.${errorMessageFromResponse(
+            error
+          )}`,
+          error
+        )
+      )
+    );
 }
 
 /**
@@ -65,26 +103,53 @@ export function fetchDestination(
   destinationName: string,
   options?: ResilienceOptions
 ): Promise<Destination> {
-  const targetUri = `${destinationServiceUri.replace(/\/$/, '')}/destination-configuration/v1/destinations/${destinationName}`;
+  const targetUri = `${destinationServiceUri.replace(
+    /\/$/,
+    ''
+  )}/destination-configuration/v1/destinations/${destinationName}`;
 
   return callDestinationService(targetUri, jwt, options)
     .then(response => parseDestination(response.data))
-    .catch(error => Promise.reject(errorWithCause(`Failed to fetch destination ${destinationName}.${errorMessageFromResponse(error)}`, error)));
+    .catch(error =>
+      Promise.reject(
+        errorWithCause(
+          `Failed to fetch destination ${destinationName}.${errorMessageFromResponse(
+            error
+          )}`,
+          error
+        )
+      )
+    );
 }
 
 function errorMessageFromResponse(error: AxiosError): string {
-  return propertyExists(error, 'response', 'data', 'ErrorMessage') ? ` ${error.response!.data.ErrorMessage}` : '';
+  return propertyExists(error, 'response', 'data', 'ErrorMessage')
+    ? ` ${error.response!.data.ErrorMessage}`
+    : '';
 }
 
-function callDestinationService(uri: string, jwt: string, options: ResilienceOptions = { enableCircuitBreaker: true }): AxiosPromise {
-  const config: AxiosRequestConfig = { ...getAxiosConfigWithDefaults(), url: uri, headers: wrapJwtInHeader(jwt).headers };
+function callDestinationService(
+  uri: string,
+  jwt: string,
+  options: ResilienceOptions = { enableCircuitBreaker: true }
+): AxiosPromise {
+  const config: AxiosRequestConfig = {
+    ...getAxiosConfigWithDefaults(),
+    url: uri,
+    headers: wrapJwtInHeader(jwt).headers
+  };
 
-  if (options.enableCircuitBreaker || options.enableCircuitBreaker === undefined) {
+  if (
+    options.enableCircuitBreaker ||
+    options.enableCircuitBreaker === undefined
+  ) {
     return getInstanceCircuitBreaker().fire(uri, config);
   }
   return axios.request(config);
 }
 
 function getInstanceCircuitBreaker(breaker?: any): any {
-  return typeof breaker === 'undefined' ? new CircuitBreaker(axios.get, circuitBreakerDefaultOptions) : breaker;
+  return typeof breaker === 'undefined'
+    ? new CircuitBreaker(axios.get, circuitBreakerDefaultOptions)
+    : breaker;
 }

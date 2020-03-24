@@ -17,7 +17,9 @@ import { WithGetAllRestrictions } from './odata-request-traits';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataGetAllRequestConfig<EntityT extends Entity> extends ODataRequestConfig implements WithGetAllRestrictions<EntityT> {
+export class ODataGetAllRequestConfig<EntityT extends Entity>
+  extends ODataRequestConfig
+  implements WithGetAllRestrictions<EntityT> {
   top: number;
   skip: number;
   filter: Filterable<EntityT>;

@@ -9,7 +9,14 @@ describe('parameters-interface', () => {
       kind: StructureKind.Interface,
       name: 'Params',
       isExported: true,
-      properties: [{ name: 'withHoneyToast', type: 'boolean', hasQuestionToken: true, docs: ['Breakfast includes a honey toast'] }],
+      properties: [
+        {
+          name: 'withHoneyToast',
+          type: 'boolean',
+          hasQuestionToken: true,
+          docs: ['Breakfast includes a honey toast']
+        }
+      ],
       docs: ['Type of the parameters to be passed to [[orderBreakfast]].']
     });
   });

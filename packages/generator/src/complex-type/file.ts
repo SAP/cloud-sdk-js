@@ -8,7 +8,9 @@ import { importDeclarations } from './imports';
 import { complexTypeInterface } from './interface';
 import { complexTypeNamespace } from './namespace';
 
-export function complexTypeSourceFile(complexType: VdmComplexType): SourceFileStructure {
+export function complexTypeSourceFile(
+  complexType: VdmComplexType
+): SourceFileStructure {
   return {
     kind: StructureKind.SourceFile,
     statements: [

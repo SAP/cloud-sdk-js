@@ -1,7 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
-import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from '../../src';
+import {
+  audiences,
+  retrieveJwt,
+  verificationKeyCache,
+  verifyJwt
+} from '../../src';
 import { publicKey, signedJwt } from '../test-util/keys';
 import nock = require('nock');
 
@@ -28,13 +33,21 @@ describe('jwt', () => {
     });
 
     it('correctly reads jwt from incoming message with correct auth token', () => {
-      expect(retrieveJwt(createIncomingMessageWithJWT('Bearer test'))).toBe('test');
+      expect(retrieveJwt(createIncomingMessageWithJWT('Bearer test'))).toBe(
+        'test'
+      );
     });
 
     it('works for arbitrary capitalizations of "bearer" (e.g. lowercase)', () => {
-      expect(retrieveJwt(createIncomingMessageWithJWT('bearer test'))).toBe('test');
-      expect(retrieveJwt(createIncomingMessageWithJWT('BeArEr test'))).toBe('test');
-      expect(retrieveJwt(createIncomingMessageWithJWT('BEARER test'))).toBe('test');
+      expect(retrieveJwt(createIncomingMessageWithJWT('bearer test'))).toBe(
+        'test'
+      );
+      expect(retrieveJwt(createIncomingMessageWithJWT('BeArEr test'))).toBe(
+        'test'
+      );
+      expect(retrieveJwt(createIncomingMessageWithJWT('BEARER test'))).toBe(
+        'test'
+      );
     });
   });
 
@@ -62,9 +75,7 @@ describe('jwt', () => {
           use: 'sig',
           kid: 'key-id-0',
           alg: 'RS256',
-          value: publicKey()
-            .split('\n')
-            .join(''),
+          value: publicKey().split('\n').join(''),
           n:
             'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
         }
@@ -118,8 +129,12 @@ describe('jwt', () => {
       verifyJwt(signedJwt(jwtPayload))
         .then(() => done('Should have failed.'))
         .catch(error => {
-          expect(error.message).toContain('Failed to verify JWT - unable to get verification key!');
-          expect(error.stack).toContain('No verification keys have been returned by the XSUAA service!');
+          expect(error.message).toContain(
+            'Failed to verify JWT - unable to get verification key!'
+          );
+          expect(error.stack).toContain(
+            'No verification keys have been returned by the XSUAA service!'
+          );
           done();
         });
     });
@@ -166,7 +181,9 @@ describe('jwt', () => {
 
       // So the second call should fail
       verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false })
-        .then(() => verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false }))
+        .then(() =>
+          verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false })
+        )
         .then(() => done('Should have failed!'))
         .catch(() => done());
     });
@@ -176,7 +193,9 @@ describe('jwt', () => {
         .get('/token_keys')
         .reply(200, response);
 
-      const secondXsuaaMock = nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
+      const secondXsuaaMock = nock(xsuaaUrl, {
+        reqheaders: { Authorization: basicHeader }
+      })
         .get('/token_keys')
         .reply(200, response);
 

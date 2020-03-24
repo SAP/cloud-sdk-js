@@ -12,7 +12,10 @@ import {
 import { credentials, systems } from './test-util/test-destinations';
 
 describe('setTestDestinationInEnv', () => {
-  let envDestination: Destination = { url: 'https://example.com', name: 'envDestination' };
+  let envDestination: Destination = {
+    url: 'https://example.com',
+    name: 'envDestination'
+  };
   beforeAll(() => {
     writeFileSync('./systems.json', JSON.stringify(systems));
     writeFileSync('./credentials.json', JSON.stringify(credentials));
@@ -35,8 +38,19 @@ describe('setTestDestinationInEnv', () => {
 
     const expected = [
       envDestination,
-      { name: 'SYS_001', url: 'https://example.com', username: 'username', password: 'password', isTestDestination: true },
-      { name: 'SYS_002', url: 'https://example.com', sapClient: '002', isTestDestination: true }
+      {
+        name: 'SYS_001',
+        url: 'https://example.com',
+        username: 'username',
+        password: 'password',
+        isTestDestination: true
+      },
+      {
+        name: 'SYS_002',
+        url: 'https://example.com',
+        sapClient: '002',
+        isTestDestination: true
+      }
     ];
 
     expect(actual).toEqual(expected);
@@ -45,10 +59,20 @@ describe('setTestDestinationInEnv', () => {
   it('setTestDestination should add mocked destination with isTestDestination flag', () => {
     process.env['destinations'] = JSON.stringify([envDestination]);
 
-    setTestDestination({ name: 'MockedDestination', url: 'https://example.com' });
+    setTestDestination({
+      name: 'MockedDestination',
+      url: 'https://example.com'
+    });
     const actual = JSON.parse(process.env['destinations']!);
 
-    const expected = [envDestination, { name: 'MockedDestination', url: 'https://example.com', isTestDestination: true }];
+    const expected = [
+      envDestination,
+      {
+        name: 'MockedDestination',
+        url: 'https://example.com',
+        isTestDestination: true
+      }
+    ];
 
     expect(actual).toEqual(expected);
   });
@@ -73,7 +97,15 @@ describe('setTestDestinationInEnv', () => {
 
     const actual = JSON.parse(process.env['destinations']!);
 
-    const expected = [envDestination, { name: 'SYS_002', url: 'https://example.com', sapClient: '002', isTestDestination: true }];
+    const expected = [
+      envDestination,
+      {
+        name: 'SYS_002',
+        url: 'https://example.com',
+        sapClient: '002',
+        isTestDestination: true
+      }
+    ];
 
     expect(actual).toEqual(expected);
   });

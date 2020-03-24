@@ -3,11 +3,20 @@
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { head, last } from 'rambda';
 import { v4 as uuid } from 'uuid';
-import { BatchResponse, ErrorResponse, ReadResponse, WriteResponse, WriteResponses } from './batch-response';
+import {
+  BatchResponse,
+  ErrorResponse,
+  ReadResponse,
+  WriteResponse,
+  WriteResponses
+} from './batch-response';
 import { Constructable } from './constructable';
 import { Entity } from './entity';
 import { deserializeEntity } from './entity-deserializer';
-import { ODataBatchChangeSet, toBatchChangeSet } from './odata-batch-change-set';
+import {
+  ODataBatchChangeSet,
+  toBatchChangeSet
+} from './odata-batch-change-set';
 import { toBatchRetrieveBody } from './odata-batch-retrieve-request';
 import { http_version } from './odate-batch-consts';
 import {
@@ -20,7 +29,12 @@ import {
   UpdateRequestBuilder
 } from './request-builder';
 import { ODataBatchConfig } from './request-builder/request/odata-batch-config';
-import { Destination, DestinationNameAndJwt, DestinationOptions, toDestinationNameUrl } from './scp-cf';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions,
+  toDestinationNameUrl
+} from './scp-cf';
 
 const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
 
@@ -28,7 +42,9 @@ const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
  * The OData batch request builder to build a batch, which consists of an ordered retrieve requests or change sets.
  *
  */
-export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatchConfig> {
+export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
+  ODataBatchConfig
+> {
   /**
    * Creates an instance of ODataBatchRequestBuilder.
    *
@@ -39,7 +55,11 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
   constructor(
     readonly defaultServicePath: string,
     readonly requests: (
-      | ODataBatchChangeSet<CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>
+      | ODataBatchChangeSet<
+          | CreateRequestBuilder<Entity>
+          | UpdateRequestBuilder<Entity>
+          | DeleteRequestBuilder<Entity>
+        >
       | GetAllRequestBuilder<Entity>
       | GetByKeyRequestBuilder<Entity>
     )[],
@@ -56,7 +76,10 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
    * @param options - Options to employ when fetching destinations.
    * @returns Promise resolving to the requested data.
    */
-  async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<BatchResponse[]> {
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<BatchResponse[]> {
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
@@ -69,7 +92,9 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
       .catch(error =>
         Promise.reject(
           errorWithCause(
-            `The batch request failed! The destination provided: ${toDestinationNameUrl(destination)} and the options: ${options}.`,
+            `The batch request failed! The destination provided: ${toDestinationNameUrl(
+              destination
+            )} and the options: ${options}.`,
             error
           )
         )
@@ -83,7 +108,9 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
     } else if (body.split('\n').length > 1) {
       return '\n';
     } else {
-      throw new Error(`Cannot detect the line break of the response body: ${body}.`);
+      throw new Error(
+        `Cannot detect the line break of the response body: ${body}.`
+      );
     }
   }
 }
@@ -97,7 +124,11 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<ODataBatc
  */
 function getPayload(
   requests: (
-    | ODataBatchChangeSet<CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>
+    | ODataBatchChangeSet<
+        | CreateRequestBuilder<Entity>
+        | UpdateRequestBuilder<Entity>
+        | DeleteRequestBuilder<Entity>
+      >
     | GetAllRequestBuilder<Entity>
     | GetByKeyRequestBuilder<Entity>
   )[],
@@ -106,7 +137,12 @@ function getPayload(
   const payloads = requests.map(toRequestBody).filter(b => !!b);
   if (payloads.length > 0) {
     return (
-      payloads.map(part => getBatchRequestStartWithLineBreak(requestConfig.batchId) + part).join('\n') +
+      payloads
+        .map(
+          part =>
+            getBatchRequestStartWithLineBreak(requestConfig.batchId) + part
+        )
+        .join('\n') +
       '\n' +
       getEndBatchWithLineBreak(requestConfig.batchId)
     );
@@ -115,35 +151,68 @@ function getPayload(
   }
 }
 
-function toRequestBody<T extends CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>(
-  request: ODataBatchChangeSet<T> | GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>
+function toRequestBody<
+  T extends
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
+>(
+  request:
+    | ODataBatchChangeSet<T>
+    | GetAllRequestBuilder<Entity>
+    | GetByKeyRequestBuilder<Entity>
 ): string | undefined {
-  if (request instanceof GetAllRequestBuilder || request instanceof GetByKeyRequestBuilder) {
+  if (
+    request instanceof GetAllRequestBuilder ||
+    request instanceof GetByKeyRequestBuilder
+  ) {
     return toBatchRetrieveBody(request);
   } else if (request instanceof ODataBatchChangeSet) {
     return toBatchChangeSet(request);
   } else {
-    throw Error(`The request: ${JSON.stringify(request)} is not a valid retrieve request or change set.`);
-  }
-}
-
-function buildResponses(responses: string[], entityToConstructorMap: MapType<Constructable<Entity>>, lineBreak: string): BatchResponse[] {
-  return responses.map(r => buildResponse(r, entityToConstructorMap, lineBreak));
-}
-
-function buildResponse(response: string, entityToConstructorMap: MapType<Constructable<Entity>>, lineBreak: string) {
-  if (isChangeSet(response)) {
-    return buildWriteResponses(response, entityToConstructorMap, lineBreak);
-  } else if (isRetrieveRequestOrError(response)) {
-    return buildRetrieveOrErrorResponse(response, entityToConstructorMap, lineBreak);
-  } else {
     throw Error(
-      `The response: ${JSON.stringify(response)} is not a valid retrieve request or change set, because it does not contain the proper Content-Type.`
+      `The request: ${JSON.stringify(
+        request
+      )} is not a valid retrieve request or change set.`
     );
   }
 }
 
-const asReadResponse = body => <T extends Entity>(constructor: Constructable<T>) => {
+function buildResponses(
+  responses: string[],
+  entityToConstructorMap: MapType<Constructable<Entity>>,
+  lineBreak: string
+): BatchResponse[] {
+  return responses.map(r =>
+    buildResponse(r, entityToConstructorMap, lineBreak)
+  );
+}
+
+function buildResponse(
+  response: string,
+  entityToConstructorMap: MapType<Constructable<Entity>>,
+  lineBreak: string
+) {
+  if (isChangeSet(response)) {
+    return buildWriteResponses(response, entityToConstructorMap, lineBreak);
+  } else if (isRetrieveRequestOrError(response)) {
+    return buildRetrieveOrErrorResponse(
+      response,
+      entityToConstructorMap,
+      lineBreak
+    );
+  } else {
+    throw Error(
+      `The response: ${JSON.stringify(
+        response
+      )} is not a valid retrieve request or change set, because it does not contain the proper Content-Type.`
+    );
+  }
+}
+
+const asReadResponse = body => <T extends Entity>(
+  constructor: Constructable<T>
+) => {
   if (body.error) {
     return new Error(body.error);
   } else if (body.d.__metadata) {
@@ -153,7 +222,9 @@ const asReadResponse = body => <T extends Entity>(constructor: Constructable<T>)
   }
 };
 
-const asWriteResponse = body => <T extends Entity>(constructor: Constructable<T>) => {
+const asWriteResponse = body => <T extends Entity>(
+  constructor: Constructable<T>
+) => {
   if (!body.d.__metadata) {
     throw Error('The metadata of the response body is undefined.');
   }
@@ -188,13 +259,20 @@ function partitionBatchResponse(response: string, lineBreak: string): string[] {
   return parts.length >= 3 ? parts.slice(1, parts.length - 1) : [];
 }
 
-function partitionChangeSetResponse(responseOfSingleRetrieveRequest: string, lineBreak: string): string[] {
+function partitionChangeSetResponse(
+  responseOfSingleRetrieveRequest: string,
+  lineBreak: string
+): string[] {
   const firstLine = head(responseOfSingleRetrieveRequest.split(lineBreak, 1));
   if (!firstLine) {
-    throw Error(`Failed to get the first line of ${responseOfSingleRetrieveRequest}.`);
+    throw Error(
+      `Failed to get the first line of ${responseOfSingleRetrieveRequest}.`
+    );
   }
   const changeSetId = last(firstLine.split(changesetIdPrefix));
-  const parts = responseOfSingleRetrieveRequest.split(`--${changeSetId}`).map(line => line.trim());
+  const parts = responseOfSingleRetrieveRequest
+    .split(`--${changeSetId}`)
+    .map(line => line.trim());
   return parts.length >= 3 ? parts.slice(1, parts.length - 1) : [];
 }
 
@@ -214,12 +292,17 @@ dataserviceversion: 2.0
 {"d":{"results":["something"]}}
 --454DB24613455B1D7FBA89D16B5D9D610
  */
-function trimRetrieveHeaders(retrieveResponse: string, lineBreak: string): string {
+function trimRetrieveHeaders(
+  retrieveResponse: string,
+  lineBreak: string
+): string {
   const lines = retrieveResponse.split(lineBreak);
 
   // A valid response should contain at least the line with the data and the line with the part id.
   if (lines.length <= 2) {
-    throw Error(`The retrieve response is ${retrieveResponse}, which is not valid.`);
+    throw Error(
+      `The retrieve response is ${retrieveResponse}, which is not valid.`
+    );
   }
 
   // Then the line with the data is returned.
@@ -230,10 +313,15 @@ function toConstructableFromChangeSetResponse(
   responseBody: any,
   entityToConstructorMap: MapType<Constructable<Entity>>
 ): Constructable<Entity> | undefined {
-  return entityToConstructorMap[getEntityNameFromMetadata(responseBody.d.__metadata)];
+  return entityToConstructorMap[
+    getEntityNameFromMetadata(responseBody.d.__metadata)
+  ];
 }
 
-function toConstructableFromRetrieveResponse(responseBody: any, entityToConstructorMap: MapType<Constructable<Entity>>): Constructable<Entity> {
+function toConstructableFromRetrieveResponse(
+  responseBody: any,
+  entityToConstructorMap: MapType<Constructable<Entity>>
+): Constructable<Entity> {
   let entityJson;
   const data = responseBody.d;
 
@@ -248,7 +336,9 @@ function toConstructableFromRetrieveResponse(responseBody: any, entityToConstruc
     entityJson = data;
   }
 
-  return entityToConstructorMap[getEntityNameFromMetadata(entityJson.__metadata)];
+  return entityToConstructorMap[
+    getEntityNameFromMetadata(entityJson.__metadata)
+  ];
 }
 
 function getEntityNameFromMetadata(metadata: MapType<string>): string {
@@ -260,7 +350,9 @@ function getEntityNameFromMetadata(metadata: MapType<string>): string {
   // Remove another part in case of a trailing slash
   const entityName = uriParts.pop() || uriParts.pop();
   if (!entityName) {
-    throw Error(`The uri of the response metadata cannot be parsed. URI: ${metadata.uri}`);
+    throw Error(
+      `The uri of the response metadata cannot be parsed. URI: ${metadata.uri}`
+    );
   }
   return entityName;
 }
@@ -273,7 +365,9 @@ function getEndBatchWithLineBreak(batchId: string) {
   return `--batch_${batchId}--\n`;
 }
 
-function getMethod(requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>) {
+function getMethod(
+  requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>
+) {
   return requestBuilder.requestConfig.method;
 }
 
@@ -301,18 +395,27 @@ function toHttpCode(response: string): number {
   const group = response.match(/HTTP\/\d\.\d (\d{3}).*?/);
 
   if (!group) {
-    throw new Error(`The response: ${response} is not valid, because the http code cannot be retrieved.`);
+    throw new Error(
+      `The response: ${response} is not valid, because the http code cannot be retrieved.`
+    );
   }
   return parseInt(group[1].toString());
 }
 
-function toWriteResponseArray(response: string, lineBreak: string, entityToConstructorMap: MapType<Constructable<Entity>>): WriteResponse[] {
+function toWriteResponseArray(
+  response: string,
+  lineBreak: string,
+  entityToConstructorMap: MapType<Constructable<Entity>>
+): WriteResponse[] {
   return partitionChangeSetResponse(response, lineBreak).map(r => {
     if (isNoContent(r)) {
       return { httpCode: 204 };
     } else if (isCreated(response)) {
       const parsedBody = JSON.parse(trimRetrieveHeaders(r, lineBreak));
-      const entityType = toConstructableFromChangeSetResponse(parsedBody, entityToConstructorMap);
+      const entityType = toConstructableFromChangeSetResponse(
+        parsedBody,
+        entityToConstructorMap
+      );
       if (!entityType) {
         throw Error(`Cannot find the type from the parsedBody: ${parsedBody}`);
       }
@@ -323,13 +426,23 @@ function toWriteResponseArray(response: string, lineBreak: string, entityToConst
         as: asWriteResponse(parsedBody)
       };
     } else {
-      throw new Error(`The request failed because http code of the response: ${r} is not 201/204.`);
+      throw new Error(
+        `The request failed because http code of the response: ${r} is not 201/204.`
+      );
     }
   });
 }
 
-function buildWriteResponses(response: string, entityToConstructorMap: MapType<Constructable<Entity>>, lineBreak: string): WriteResponses {
-  const writeResponses = toWriteResponseArray(response, lineBreak, entityToConstructorMap);
+function buildWriteResponses(
+  response: string,
+  entityToConstructorMap: MapType<Constructable<Entity>>,
+  lineBreak: string
+): WriteResponses {
+  const writeResponses = toWriteResponseArray(
+    response,
+    lineBreak,
+    entityToConstructorMap
+  );
   return { responses: writeResponses, isSuccess: () => true };
 }
 
@@ -344,7 +457,10 @@ function buildRetrieveOrErrorResponse(
     return {
       httpCode: 200,
       body: parsedBody,
-      type: toConstructableFromRetrieveResponse(parsedBody, entityToConstructorMap),
+      type: toConstructableFromRetrieveResponse(
+        parsedBody,
+        entityToConstructorMap
+      ),
       as: asReadResponse(parsedBody),
       isSuccess: () => true
     };
@@ -359,6 +475,10 @@ function buildRetrieveOrErrorResponse(
  * @param requestBuilder - Reqeust builder holds the request information.
  * @returns the generated request line.
  */
-export function getRequestLine(requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>): string {
-  return `${getMethod(requestBuilder).toUpperCase()} ${getUrl(requestBuilder)} ${http_version}`;
+export function getRequestLine(
+  requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>
+): string {
+  return `${getMethod(requestBuilder).toUpperCase()} ${getUrl(
+    requestBuilder
+  )} ${http_version}`;
 }

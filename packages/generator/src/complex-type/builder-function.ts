@@ -3,7 +3,9 @@
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmComplexType } from '../vdm-types';
 
-export function builderFunction(complexType: VdmComplexType): FunctionDeclarationStructure {
+export function builderFunction(
+  complexType: VdmComplexType
+): FunctionDeclarationStructure {
   return {
     kind: StructureKind.Function,
     name: complexType.factoryName,
@@ -16,6 +18,8 @@ export function builderFunction(complexType: VdmComplexType): FunctionDeclaratio
     ],
     returnType: complexType.typeName,
     statements: `return ${complexType.typeName}.build(json);`,
-    docs: [`@deprecated since v1.6.0. Use [[${complexType.typeName}.build]] instead.`]
+    docs: [
+      `@deprecated since v1.6.0. Use [[${complexType.typeName}.build]] instead.`
+    ]
   };
 }

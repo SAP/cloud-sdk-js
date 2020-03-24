@@ -1,8 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger } from '@sap-cloud-sdk/util';
-import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
-import { sanitizeDestination, isDestinationConfiguration, parseDestination } from './destination';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from '../util/proxy-util';
+import {
+  sanitizeDestination,
+  isDestinationConfiguration,
+  parseDestination
+} from './destination';
 import { Destination } from './destination-service-types';
 
 const logger = createLogger({
@@ -22,7 +30,9 @@ export function getDestinationsFromEnv(): Destination[] {
     const destinations = JSON.parse(destinationsEnv);
     validateDestinations(destinations);
     return destinations.map(destination =>
-      isDestinationConfiguration(destination) ? parseDestination(destination) : sanitizeDestination(destination)
+      isDestinationConfiguration(destination)
+        ? parseDestination(destination)
+        : sanitizeDestination(destination)
     );
   }
   return [];
@@ -50,15 +60,21 @@ export function getDestinations(): Destination[] {
  * @returns The requested destination if existent, otherwise `null`
  */
 export function getDestinationFromEnvByName(name: string): Destination | null {
-  const matchingDestinations = getDestinationsFromEnv().filter(dest => dest.name === name);
+  const matchingDestinations = getDestinationsFromEnv().filter(
+    dest => dest.name === name
+  );
   if (!matchingDestinations.length) {
     return null;
   }
   if (matchingDestinations.length > 1) {
-    logger.warn(`The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be respected.`);
+    logger.warn(
+      `The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be respected.`
+    );
   }
   const destination = matchingDestinations[0];
-  return proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ? addProxyConfigurationInternet(destination) : destination;
+  return proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY
+    ? addProxyConfigurationInternet(destination)
+    : destination;
 }
 
 /**
@@ -80,7 +96,9 @@ export function getDestinationByName(name: string): Destination | null {
 /**
  * @hidden
  */
-export function getDestinationConfig(dest: string | Destination = 'ErpQueryEndpoint'): Destination | null {
+export function getDestinationConfig(
+  dest: string | Destination = 'ErpQueryEndpoint'
+): Destination | null {
   return typeof dest === 'string' ? getDestinationFromEnvByName(dest) : dest;
 }
 
@@ -93,8 +111,13 @@ export function getDestinationsEnvVariable(): string | undefined {
 
 function validateDestinations(destinations: any[]) {
   destinations.forEach(destination => {
-    if (typeof destination.name === 'undefined' && typeof destination.Name === 'undefined') {
-      logger.warn("Destination from 'destinations' env variable is missing 'name' or 'Name' property.");
+    if (
+      typeof destination.name === 'undefined' &&
+      typeof destination.Name === 'undefined'
+    ) {
+      logger.warn(
+        "Destination from 'destinations' env variable is missing 'name' or 'Name' property."
+      );
     }
   });
 }

@@ -23,7 +23,8 @@ export interface WithSelection<EntityT extends Entity> {
 /**
  * @hidden
  */
-export interface WithGetAllRestrictions<EntityT extends Entity> extends WithSelection<EntityT> {
+export interface WithGetAllRestrictions<EntityT extends Entity>
+  extends WithSelection<EntityT> {
   top: number;
   skip: number;
   filter: Filterable<EntityT>;

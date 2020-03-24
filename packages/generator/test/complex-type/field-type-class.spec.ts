@@ -17,7 +17,8 @@ describe('field-type-class', () => {
           kind: StructureKind.Property,
           name: 'complexity',
           type: 'ComplexTypeStringPropertyField<EntityT>',
-          initializer: "new ComplexTypeStringPropertyField('Complexity', this, 'Edm.String')",
+          initializer:
+            "new ComplexTypeStringPropertyField('Complexity', this, 'Edm.String')",
           docs: [
             "Representation of the [[ComplexMealType.complexity]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
@@ -26,13 +27,16 @@ describe('field-type-class', () => {
           kind: StructureKind.Property,
           name: 'amount',
           type: 'ComplexTypeNumberPropertyField<EntityT>',
-          initializer: "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
+          initializer:
+            "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
           docs: [
             "Representation of the [[ComplexMealType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         }
       ],
-      docs: ['ComplexMealField\n@typeparam EntityT - Type of the entity the complex type field belongs to.']
+      docs: [
+        'ComplexMealField\n@typeparam EntityT - Type of the entity the complex type field belongs to.'
+      ]
     });
   });
 
@@ -57,13 +61,16 @@ describe('field-type-class', () => {
           kind: StructureKind.Property,
           name: 'amount',
           type: 'ComplexTypeNumberPropertyField<EntityT>',
-          initializer: "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
+          initializer:
+            "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
           docs: [
             "Representation of the [[ComplexMealWithDesertType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         }
       ],
-      docs: ['ComplexMealWithDesertField\n@typeparam EntityT - Type of the entity the complex type field belongs to.']
+      docs: [
+        'ComplexMealWithDesertField\n@typeparam EntityT - Type of the entity the complex type field belongs to.'
+      ]
     });
   });
 });

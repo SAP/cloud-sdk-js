@@ -2,7 +2,12 @@
 import { fail } from 'assert';
 import nock from 'nock';
 import { TokenKey } from '../../src';
-import { clientCredentialsGrant, fetchVerificationKeys, refreshTokenGrant, userTokenGrant } from '../../src/scp-cf/xsuaa-service';
+import {
+  clientCredentialsGrant,
+  fetchVerificationKeys,
+  refreshTokenGrant,
+  userTokenGrant
+} from '../../src/scp-cf/xsuaa-service';
 import { providerXsuaaUrl } from '../test-util/environment-mocks';
 
 describe('xsuaa', () => {
@@ -44,19 +49,23 @@ describe('xsuaa', () => {
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(401, response);
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, { enableCircuitBreaker: false });
+        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+          enableCircuitBreaker: false
+        });
       } catch (error) {
-        expect(error.message).toBe('FetchTokenError: Client credentials Grant failed! Request failed with status code 401');
+        expect(error.message).toBe(
+          'FetchTokenError: Client credentials Grant failed! Request failed with status code 401'
+        );
       }
     });
 
     it('returns 404 in case of a wrong URL', async () => {
-      nock(providerXsuaaUrl)
-        .post('/oauth/token')
-        .reply(404);
+      nock(providerXsuaaUrl).post('/oauth/token').reply(404);
 
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, { enableCircuitBreaker: false });
+        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+          enableCircuitBreaker: false
+        });
         fail();
       } catch (error) {
         expect(error.stack).toContain('404');
@@ -64,12 +73,12 @@ describe('xsuaa', () => {
     });
 
     it('does not fail miserably on internal server error', async () => {
-      nock(providerXsuaaUrl)
-        .post('/oauth/token')
-        .reply(500);
+      nock(providerXsuaaUrl).post('/oauth/token').reply(500);
 
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, { enableCircuitBreaker: false });
+        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+          enableCircuitBreaker: false
+        });
         fail();
       } catch (error) {
         expect(error.stack).toContain('500');
@@ -93,48 +102,71 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Bearer ' + userJwt)
       })
-        .post('/oauth/token', 'client_id=' + clientId + '&grant_type=user_token&response_type=token')
+        .post(
+          '/oauth/token',
+          'client_id=' + clientId + '&grant_type=user_token&response_type=token'
+        )
         .reply(200, expectedResponse);
 
-      const userToken = await userTokenGrant(providerXsuaaUrl, userJwt, clientId);
+      const userToken = await userTokenGrant(
+        providerXsuaaUrl,
+        userJwt,
+        clientId
+      );
       expect(userToken).toEqual(expectedResponse);
     });
 
     it('returns 401 for an invalid JWT', async () => {
       const expectedResponse = {
         error: 'invalid_token',
-        error_description: 'The token expired, was revoked, or the token ID is incorrect.'
+        error_description:
+          'The token expired, was revoked, or the token ID is incorrect.'
       };
 
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Bearer ' + userJwt)
       })
-        .post('/oauth/token', 'client_id=' + clientId + '&grant_type=user_token&response_type=token')
+        .post(
+          '/oauth/token',
+          'client_id=' + clientId + '&grant_type=user_token&response_type=token'
+        )
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, { enableCircuitBreaker: false });
+        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
+          enableCircuitBreaker: false
+        });
       } catch (error) {
-        expect(error.message).toBe('FetchTokenError: User token Grant failed! Request failed with status code 401');
+        expect(error.message).toBe(
+          'FetchTokenError: User token Grant failed! Request failed with status code 401'
+        );
       }
     });
 
     it('returns 401 for an expired JWT', async () => {
       const expectedResponse = {
         error: 'invalid_token',
-        error_description: 'Invalid access token: expired at Wed Dec 12 13:21:33 UTC 2018'
+        error_description:
+          'Invalid access token: expired at Wed Dec 12 13:21:33 UTC 2018'
       };
 
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Bearer ' + userJwt)
       })
-        .post('/oauth/token', 'client_id=' + clientId + '&grant_type=user_token&response_type=token')
+        .post(
+          '/oauth/token',
+          'client_id=' + clientId + '&grant_type=user_token&response_type=token'
+        )
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, { enableCircuitBreaker: false });
+        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
+          enableCircuitBreaker: false
+        });
       } catch (error) {
-        expect(error.message).toBe('FetchTokenError: User token Grant failed! Request failed with status code 401');
+        expect(error.message).toBe(
+          'FetchTokenError: User token Grant failed! Request failed with status code 401'
+        );
       }
     });
 
@@ -147,13 +179,20 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Bearer ' + userJwt)
       })
-        .post('/oauth/token', 'client_id=' + clientId + '&grant_type=user_token&response_type=token')
+        .post(
+          '/oauth/token',
+          'client_id=' + clientId + '&grant_type=user_token&response_type=token'
+        )
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, { enableCircuitBreaker: false });
+        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
+          enableCircuitBreaker: false
+        });
       } catch (error) {
-        expect(error.message).toBe('FetchTokenError: User token Grant failed! Request failed with status code 401');
+        expect(error.message).toBe(
+          'FetchTokenError: User token Grant failed! Request failed with status code 401'
+        );
       }
     });
   });
@@ -173,10 +212,17 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
       })
-        .post('/oauth/token', 'grant_type=refresh_token&refresh_token=refreshtoken')
+        .post(
+          '/oauth/token',
+          'grant_type=refresh_token&refresh_token=refreshtoken'
+        )
         .reply(200, expectedResponse);
 
-      const response = await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken);
+      const response = await refreshTokenGrant(
+        providerXsuaaUrl,
+        creds,
+        refreshToken
+      );
       expect(response).toEqual(expectedResponse);
     });
 
@@ -189,32 +235,47 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
       })
-        .post('/oauth/token', 'grant_type=refresh_token&refresh_token=refreshtoken')
+        .post(
+          '/oauth/token',
+          'grant_type=refresh_token&refresh_token=refreshtoken'
+        )
         .reply(401, expectedResponse);
 
       try {
-        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, { enableCircuitBreaker: false });
+        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, {
+          enableCircuitBreaker: false
+        });
       } catch (error) {
-        expect(error.message).toBe('FetchTokenError: Refresh token Grant failed! Request failed with status code 401');
+        expect(error.message).toBe(
+          'FetchTokenError: Refresh token Grant failed! Request failed with status code 401'
+        );
       }
     });
 
     it('returns 401 for invalid refresh token', async () => {
       const expectedResponse = {
         error: 'invalid_token',
-        error_description: 'The token expired, was revoked, or the token ID is incorrect.'
+        error_description:
+          'The token expired, was revoked, or the token ID is incorrect.'
       };
 
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
       })
-        .post('/oauth/token', 'grant_type=refresh_token&refresh_token=refreshtoken')
+        .post(
+          '/oauth/token',
+          'grant_type=refresh_token&refresh_token=refreshtoken'
+        )
         .reply(401, expectedResponse);
 
       try {
-        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, { enableCircuitBreaker: false });
+        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, {
+          enableCircuitBreaker: false
+        });
       } catch (error) {
-        expect(error.message).toBe('FetchTokenError: Refresh token Grant failed! Request failed with status code 401');
+        expect(error.message).toBe(
+          'FetchTokenError: Refresh token Grant failed! Request failed with status code 401'
+        );
       }
     });
   });
@@ -277,7 +338,11 @@ describe('xsuaa', () => {
         }
       ];
 
-      const actual = await fetchVerificationKeys(providerXsuaaUrl, creds.username, creds.password);
+      const actual = await fetchVerificationKeys(
+        providerXsuaaUrl,
+        creds.username,
+        creds.password
+      );
       expect(actual).toEqual(expected);
     });
 
@@ -294,7 +359,11 @@ describe('xsuaa', () => {
       fetchVerificationKeys(providerXsuaaUrl, creds.username, creds.password)
         .then(() => done('Should have failed!'))
         .catch(error => {
-          expect(error.message.includes(`Failed to fetch verification keys from XSUAA service instance ${providerXsuaaUrl}!`)).toBe(true);
+          expect(
+            error.message.includes(
+              `Failed to fetch verification keys from XSUAA service instance ${providerXsuaaUrl}!`
+            )
+          ).toBe(true);
           done();
         });
     });

@@ -51,7 +51,9 @@ describe('FunctionImportRequestBuilder', () => {
       .query({ $format: 'json', SimpleParam: `'${simpleParam}'` })
       .reply(200);
 
-    await expect(requestBuilder.execute(defaultDestination)).resolves.not.toThrow();
+    await expect(
+      requestBuilder.execute(defaultDestination)
+    ).resolves.not.toThrow();
   });
 
   it('executes request with POST', async () => {
@@ -63,7 +65,9 @@ describe('FunctionImportRequestBuilder', () => {
       .query({ $format: 'json', SimpleParam: `'${simpleParam}'` })
       .reply(200);
 
-    await expect(requestBuilder.execute(defaultDestination)).resolves.not.toThrow();
+    await expect(
+      requestBuilder.execute(defaultDestination)
+    ).resolves.not.toThrow();
   });
 
   it('returns single edm type', async () => {
@@ -136,7 +140,9 @@ describe('FunctionImportRequestBuilder', () => {
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportEntityReturnTypeCollection`)
       .query({ $format: 'json' })
-      .reply(200, { d: { results: expected.map(e => getTestComplexTypeData(e)) } });
+      .reply(200, {
+        d: { results: expected.map(e => getTestComplexTypeData(e)) }
+      });
 
     const returnValue = await requestBuilder.execute(defaultDestination);
     expect(returnValue).toEqual(expected);
@@ -147,14 +153,18 @@ describe('FunctionImportRequestBuilder', () => {
       .post(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
       .reply(200);
 
-    const response = await testFunctionImportNoReturnType({}).execute(defaultDestination);
+    const response = await testFunctionImportNoReturnType({}).execute(
+      defaultDestination
+    );
     expect(response).toBe(undefined);
 
     nock(defaultHost)
       .post(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
       .reply(400);
 
-    await expect(testFunctionImportNoReturnType({}).execute(defaultDestination)).rejects.toThrow();
+    await expect(
+      testFunctionImportNoReturnType({}).execute(defaultDestination)
+    ).rejects.toThrow();
   });
 });
 

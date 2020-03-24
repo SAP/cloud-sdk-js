@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "rambda": "2.14.5",
+    "rambda": "^5.0.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {

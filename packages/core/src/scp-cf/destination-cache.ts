@@ -7,15 +7,30 @@ import { DestinationsByType } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
 
 const DestinationCache = (cache: Cache<Destination>) => ({
-  retrieveDestinationFromCache: (decodedJwt: MapType<any>, name: string, isolation: IsolationStrategy): Destination | undefined =>
+  retrieveDestinationFromCache: (
+    decodedJwt: MapType<any>,
+    name: string,
+    isolation: IsolationStrategy
+  ): Destination | undefined =>
     cache.get(getDestinationCacheKey(decodedJwt, name, isolation)),
-  cacheRetrievedDestinations: (decodedJwt: MapType<any>, retrievedDestinations: DestinationsByType, isolation: IsolationStrategy): void => {
-    [...retrievedDestinations.instance, ...retrievedDestinations.subaccount].forEach(destination => {
+  cacheRetrievedDestinations: (
+    decodedJwt: MapType<any>,
+    retrievedDestinations: DestinationsByType,
+    isolation: IsolationStrategy
+  ): void => {
+    [
+      ...retrievedDestinations.instance,
+      ...retrievedDestinations.subaccount
+    ].forEach(destination => {
       if (!destination.name) {
         throw new Error('The destination name is undefined.');
       }
 
-      const key = getDestinationCacheKey(decodedJwt, destination.name, isolation);
+      const key = getDestinationCacheKey(
+        decodedJwt,
+        destination.name,
+        isolation
+      );
       cache.set(key, destination);
     });
   },
@@ -36,7 +51,11 @@ const DestinationCache = (cache: Cache<Destination>) => ({
  * @returns The cache key.
  * @hidden
  */
-export function getDestinationCacheKey(decodedJwt: MapType<any>, destinationName: string, isolationStrategy: IsolationStrategy): string {
+export function getDestinationCacheKey(
+  decodedJwt: MapType<any>,
+  destinationName: string,
+  isolationStrategy: IsolationStrategy
+): string {
   switch (isolationStrategy) {
     case IsolationStrategy.No_Isolation:
       return `::${destinationName}`;

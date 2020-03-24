@@ -22,7 +22,11 @@ export function getQueryParametersForFilter<EntityT extends Entity>(
   entityConstructor: Constructable<EntityT>
 ): Partial<{ filter: string }> {
   if (typeof filter !== 'undefined') {
-    const filterExpression = getODataFilterExpression(filter, [], entityConstructor);
+    const filterExpression = getODataFilterExpression(
+      filter,
+      [],
+      entityConstructor
+    );
     if (filterExpression) {
       return {
         filter: filterExpression
@@ -41,13 +45,25 @@ function getODataFilterExpression<FilterEntityT extends Entity>(
     filter.flatten();
 
     let andExp = filter.andFilters
-      .map(subFilter => getODataFilterExpression(subFilter, parentFieldNames, targetEntityConstructor))
+      .map(subFilter =>
+        getODataFilterExpression(
+          subFilter,
+          parentFieldNames,
+          targetEntityConstructor
+        )
+      )
       .filter(f => !!f)
       .join(' and ');
     andExp = andExp ? `(${andExp})` : andExp;
 
     let orExp = filter.orFilters
-      .map(subFilter => getODataFilterExpression(subFilter, parentFieldNames, targetEntityConstructor))
+      .map(subFilter =>
+        getODataFilterExpression(
+          subFilter,
+          parentFieldNames,
+          targetEntityConstructor
+        )
+      )
       .filter(f => !!f)
       .join(' or ');
     orExp = orExp ? `(${orExp})` : orExp;
@@ -66,7 +82,13 @@ function getODataFilterExpression<FilterEntityT extends Entity>(
 
   if (isFilterLink(filter)) {
     let linkExp = filter.filters
-      .map(subFilter => getODataFilterExpression(subFilter, [...parentFieldNames, filter.link._fieldName], filter.link._linkedEntity))
+      .map(subFilter =>
+        getODataFilterExpression(
+          subFilter,
+          [...parentFieldNames, filter.link._fieldName],
+          filter.link._linkedEntity
+        )
+      )
       .filter(f => !!f)
       .join(' and ');
     linkExp = linkExp ? `(${linkExp})` : linkExp;
@@ -75,24 +97,43 @@ function getODataFilterExpression<FilterEntityT extends Entity>(
 
   if (isFilter(filter)) {
     if (typeof filter.field === 'string') {
-      const field = retrieveField(filter.field, targetEntityConstructor, filter.edmType);
+      const field = retrieveField(
+        filter.field,
+        targetEntityConstructor,
+        filter.edmType
+      );
       const value = convertToUriFormat(filter.value, field.edmType);
-      return [[...parentFieldNames, filter.field].join('/'), filter.operator, value].join(' ');
+      return [
+        [...parentFieldNames, filter.field].join('/'),
+        filter.operator,
+        value
+      ].join(' ');
     } else {
       const value = convertToUriFormat(filter.value, filter.edmType!);
-      return [filter.field.toString(parentFieldNames), filter.operator, value].join(' ');
+      return [
+        filter.field.toString(parentFieldNames),
+        filter.operator,
+        value
+      ].join(' ');
     }
   }
 }
 
-function retrieveField<FilterEntityT extends Entity>(filterField: string, targetEntityConstructor: Constructable<any>, filterEdmType?: EdmType) {
+function retrieveField<FilterEntityT extends Entity>(
+  filterField: string,
+  targetEntityConstructor: Constructable<any>,
+  filterEdmType?: EdmType
+) {
   // In case of complex types there will be a property name as part of the filter.field
   const [fieldName] = filterField.split('/');
   const field = targetEntityConstructor[toStaticPropertyFormat(fieldName)];
   if (field instanceof ComplexTypeField) {
     return Object.values(field)
       .filter(pField => pField?.fieldPath) // Filter for ComplexTypePropertyFields only
-      .find((pField: ComplexTypePropertyFields<FilterEntityT>) => pField.fieldPath() === filterField);
+      .find(
+        (pField: ComplexTypePropertyFields<FilterEntityT>) =>
+          pField.fieldPath() === filterField
+      );
   }
 
   // In case of custom field we infer then the returned field from the filter edmType property

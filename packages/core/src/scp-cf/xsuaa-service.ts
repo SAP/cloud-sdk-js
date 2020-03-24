@@ -3,8 +3,16 @@
 import { errorWithCause, MapType, renameKeys } from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
-import { circuitBreakerDefaultOptions, ResilienceOptions } from './resilience-options';
-import { ClientCredentials, ClientCredentialsResponse, TokenKey, UserTokenResponse } from './xsuaa-service-types';
+import {
+  circuitBreakerDefaultOptions,
+  ResilienceOptions
+} from './resilience-options';
+import {
+  ClientCredentials,
+  ClientCredentialsResponse,
+  TokenKey,
+  UserTokenResponse
+} from './xsuaa-service-types';
 
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
@@ -30,9 +38,16 @@ export function clientCredentialsGrant(
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = { grant_type: GrantType.CLIENT_CREDENTIALS, ...customBody };
 
-  return executeXsuaaPostRequest(xsuaaUriOrCredentials, authHeader, objectToXWwwUrlEncodedBodyString(body), options)
+  return executeXsuaaPostRequest(
+    xsuaaUriOrCredentials,
+    authHeader,
+    objectToXWwwUrlEncodedBodyString(body),
+    options
+  )
     .then(resp => resp.data as ClientCredentialsResponse)
-    .catch(error => Promise.reject(accessTokenError(error, GrantType.CLIENT_CREDENTIALS)));
+    .catch(error =>
+      Promise.reject(accessTokenError(error, GrantType.CLIENT_CREDENTIALS))
+    );
 }
 
 /**
@@ -44,7 +59,12 @@ export function clientCredentialsGrant(
  * @param options - Options to use by retrieving access token
  * @returns A promise resolving to the response of the XSUAA service.
  */
-export function userTokenGrant(xsuaaUri: string, userJwt: string, clientId: string, options?: ResilienceOptions): Promise<UserTokenResponse> {
+export function userTokenGrant(
+  xsuaaUri: string,
+  userJwt: string,
+  clientId: string,
+  options?: ResilienceOptions
+): Promise<UserTokenResponse> {
   const authHeader = 'Bearer ' + userJwt;
   const body = objectToXWwwUrlEncodedBodyString({
     client_id: clientId,
@@ -52,9 +72,16 @@ export function userTokenGrant(xsuaaUri: string, userJwt: string, clientId: stri
     response_type: 'token'
   });
 
-  return executeXsuaaPostRequest(getTargetUri(xsuaaUri), authHeader, body, options)
+  return executeXsuaaPostRequest(
+    getTargetUri(xsuaaUri),
+    authHeader,
+    body,
+    options
+  )
     .then(resp => resp.data as UserTokenResponse)
-    .catch(error => Promise.reject(accessTokenError(error, GrantType.USER_TOKEN)));
+    .catch(error =>
+      Promise.reject(accessTokenError(error, GrantType.USER_TOKEN))
+    );
 }
 
 /**
@@ -80,9 +107,16 @@ export function refreshTokenGrant(
     refresh_token: refreshToken
   });
 
-  return executeXsuaaPostRequest(xsuaaUriOrCredentials, authHeader, body, options)
+  return executeXsuaaPostRequest(
+    xsuaaUriOrCredentials,
+    authHeader,
+    body,
+    options
+  )
     .then(resp => resp.data as UserTokenResponse)
-    .catch(error => Promise.reject(accessTokenError(error, GrantType.REFRESH_TOKEN)));
+    .catch(error =>
+      Promise.reject(accessTokenError(error, GrantType.REFRESH_TOKEN))
+    );
 }
 
 /**
@@ -91,7 +125,9 @@ export function refreshTokenGrant(
  * @param xsuaaCredentials - Credentials of the XSUAA service instance.
  * @returns An array of TokenKeys.
  */
-export function fetchVerificationKeys(xsuaaCredentials: XsuaaServiceCredentials): Promise<TokenKey[]>;
+export function fetchVerificationKeys(
+  xsuaaCredentials: XsuaaServiceCredentials
+): Promise<TokenKey[]>;
 
 /**
  * Fetches verification keys from the XSUAA service for the given URL, with the given pair of credentials.
@@ -101,7 +137,11 @@ export function fetchVerificationKeys(xsuaaCredentials: XsuaaServiceCredentials)
  * @param clientSecret - Client secret of the XSUAA service instance.
  * @returns An array of TokenKeys.
  */
-export function fetchVerificationKeys(url: string, clientId: string, clientSecret: string): Promise<TokenKey[]>;
+export function fetchVerificationKeys(
+  url: string,
+  clientId: string,
+  clientSecret: string
+): Promise<TokenKey[]>;
 
 export function fetchVerificationKeys(
   xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
@@ -109,20 +149,34 @@ export function fetchVerificationKeys(
   clientSecret?: string
 ): Promise<TokenKey[]> {
   if (typeof xsuaaUriOrCredentials !== 'string') {
-    return fetchVerificationKeys(xsuaaUriOrCredentials.url, xsuaaUriOrCredentials.clientid, xsuaaUriOrCredentials.clientsecret);
+    return fetchVerificationKeys(
+      xsuaaUriOrCredentials.url,
+      xsuaaUriOrCredentials.clientid,
+      xsuaaUriOrCredentials.clientsecret
+    );
   }
 
   const url = `${xsuaaUriOrCredentials}/token_keys`;
   const config: AxiosRequestConfig = { url, method: 'GET' };
   if (clientId && clientSecret) {
-    const authHeader = headerForClientCredentials({ username: clientId, password: clientSecret });
+    const authHeader = headerForClientCredentials({
+      username: clientId,
+      password: clientSecret
+    });
     config.headers = { Authorization: authHeader };
   }
 
   return axios
     .request(config)
     .then(resp => resp.data.keys.map(k => renameKeys(tokenKeyKeyMapping, k)))
-    .catch(error => Promise.reject(errorWithCause(`Failed to fetch verification keys from XSUAA service instance ${xsuaaUriOrCredentials}!`, error)));
+    .catch(error =>
+      Promise.reject(
+        errorWithCause(
+          `Failed to fetch verification keys from XSUAA service instance ${xsuaaUriOrCredentials}!`,
+          error
+        )
+      )
+    );
 }
 
 const tokenKeyKeyMapping: { [key: string]: keyof TokenKey } = {
@@ -147,11 +201,19 @@ function executeXsuaaPostRequest(
   return post(uriOrCredentials.url, authHeader, body, options);
 }
 
-function post(uri: string, authHeader: string, body: string, options: ResilienceOptions = { enableCircuitBreaker: true }): AxiosPromise {
+function post(
+  uri: string,
+  authHeader: string,
+  body: string,
+  options: ResilienceOptions = { enableCircuitBreaker: true }
+): AxiosPromise {
   const config = wrapXsuaaPostRequestHeader(authHeader);
   const targetUri = getTargetUri(uri);
 
-  if (options.enableCircuitBreaker || options.enableCircuitBreaker === undefined) {
+  if (
+    options.enableCircuitBreaker ||
+    options.enableCircuitBreaker === undefined
+  ) {
     const xsuaaCircuitBreaker = getInstanceCircuitBreaker();
 
     if (!xsuaaCircuitBreaker) {
@@ -173,8 +235,13 @@ function wrapXsuaaPostRequestHeader(authHeader: string): AxiosRequestConfig {
   };
 }
 
-export function headerForClientCredentials(clientCredentials: ClientCredentials): string {
-  return 'Basic ' + encodeBase64(`${clientCredentials.username}:${clientCredentials.password}`);
+export function headerForClientCredentials(
+  clientCredentials: ClientCredentials
+): string {
+  return (
+    'Basic ' +
+    encodeBase64(`${clientCredentials.username}:${clientCredentials.password}`)
+  );
 }
 
 function encodeBase64(str: string): string {
@@ -195,15 +262,26 @@ enum GrantType {
 
 function getTargetUri(xsuaaUri: string): string {
   xsuaaUri = xsuaaUri.replace(/\/$/, '');
-  return xsuaaUri.endsWith('/oauth/token') ? xsuaaUri : `${xsuaaUri}/oauth/token`;
+  return xsuaaUri.endsWith('/oauth/token')
+    ? xsuaaUri
+    : `${xsuaaUri}/oauth/token`;
 }
 
 function accessTokenError(error: Error, grant: string): Error {
-  return errorWithCause(`FetchTokenError: ${grantTypeMapper[grant]} Grant failed! ${error.message}`, error);
+  return errorWithCause(
+    `FetchTokenError: ${grantTypeMapper[grant]} Grant failed! ${error.message}`,
+    error
+  );
 }
 
 function getInstanceCircuitBreaker(breaker?: any | undefined): any {
-  return typeof breaker === 'undefined' ? new CircuitBreaker(axios.post, circuitBreakerDefaultOptions) : breaker;
+  return typeof breaker === 'undefined'
+    ? new CircuitBreaker(axios.post, circuitBreakerDefaultOptions)
+    : breaker;
 }
 
-const grantTypeMapper = { user_token: 'User token', refresh_token: 'Refresh token', client_credentials: 'Client credentials' };
+const grantTypeMapper = {
+  user_token: 'User token',
+  refresh_token: 'Refresh token',
+  client_credentials: 'Client credentials'
+};

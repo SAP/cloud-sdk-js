@@ -18,7 +18,10 @@ export function edmxPaths(input: PathLike): PathLike[] {
   }
 }
 
-export function inputPaths(input: PathLike, useSwagger: boolean): ServiceDefinitionPaths[] {
+export function inputPaths(
+  input: PathLike,
+  useSwagger: boolean
+): ServiceDefinitionPaths[] {
   return edmxPaths(input).map(edmxPath => {
     if (useSwagger) {
       const swaggerPath = swaggerPathForEdmx(edmxPath);

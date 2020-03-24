@@ -2,7 +2,8 @@
 import { replaceSubdomain } from '../../src/scp-cf/subdomain-replacer';
 
 describe('subdomain replacer', () => {
-  const issuerUrl = 'https://subscriber-identifier.localhost:8080/uaa/oauth/token';
+  const issuerUrl =
+    'https://subscriber-identifier.localhost:8080/uaa/oauth/token';
   const xsuaaUrl = 'https://provider-identifier.authentication.sap.com';
   const invalidUrl = 'anInvalidUrl';
 
@@ -13,7 +14,8 @@ describe('subdomain replacer', () => {
   });
 
   it('should return the xsuaa url directly without replacement.', () => {
-    const mutatedIssuerUrl = 'https://provider-identifier.localhost:8080/uaa/oauth/token';
+    const mutatedIssuerUrl =
+      'https://provider-identifier.localhost:8080/uaa/oauth/token';
     const actual = replaceSubdomain(mutatedIssuerUrl, xsuaaUrl);
     expect(actual).toBe(xsuaaUrl);
   });

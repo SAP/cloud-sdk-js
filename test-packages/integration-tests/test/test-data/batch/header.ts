@@ -44,8 +44,18 @@ export const header400 = () => [
   'dataserviceversion: 1.0'
 ];
 
-export const retrieveHeader = () => ['Content-Type: application/http', 'Content-Length: 1', 'content-transfer-encoding: binary'];
+export const retrieveHeader = () => [
+  'Content-Type: application/http',
+  'Content-Length: 1',
+  'content-transfer-encoding: binary'
+];
 
-export const changesetHeader = () => ['Content-Type: application/http', 'Content-Transfer-Encoding: binary'];
+export const changesetHeader = () => [
+  'Content-Type: application/http',
+  'Content-Transfer-Encoding: binary'
+];
 
-export const changesetRequestHeader = () => ['Content-Type: application/json', 'Accept: application/json'];
+export const changesetRequestHeader = () => [
+  'Content-Type: application/json',
+  'Accept: application/json'
+];

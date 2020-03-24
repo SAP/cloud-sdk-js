@@ -3,25 +3,41 @@
 import voca from 'voca';
 
 // FIXME: this function has a side effect and it is not obvious that the cache is updated
-const applySuffixOnConflict = (separator: string) => (name: string, previouslyGeneratedNames: string[]): string => {
+const applySuffixOnConflict = (separator: string) => (
+  name: string,
+  previouslyGeneratedNames: string[]
+): string => {
   let newName = name;
-  if (previouslyGeneratedNames.includes(name) || reservedVdmKeywords.has(name) || reservedObjectPrototypeKeywords.has(name)) {
-    newName = `${name}${separator}${nextSuffix(name, previouslyGeneratedNames)}`;
+  if (
+    previouslyGeneratedNames.includes(name) ||
+    reservedVdmKeywords.has(name) ||
+    reservedObjectPrototypeKeywords.has(name)
+  ) {
+    newName = `${name}${separator}${nextSuffix(
+      name,
+      previouslyGeneratedNames
+    )}`;
   }
   previouslyGeneratedNames.push(newName);
   return newName;
 };
 
-const applyPrefixOnJSReservedWords = (prefix: string) => (param: string): string =>
+const applyPrefixOnJSReservedWords = (prefix: string) => (
+  param: string
+): string =>
   reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
 
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
 export const applyPrefixOnJsConfictParam = applyPrefixOnJSReservedWords('p');
-export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords('f');
+export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords(
+  'f'
+);
 
 function nextSuffix(name: string, previouslyGeneratedNames: string[]): number {
-  const sortedList = sortByIntegerSuffix(previouslyGeneratedNames.filter(n => n.startsWith(name)));
+  const sortedList = sortByIntegerSuffix(
+    previouslyGeneratedNames.filter(n => n.startsWith(name))
+  );
   const lastElem = last(sortedList);
   const match = lastElem ? lastElem.match(/(\d+)$/) : null;
 
@@ -58,8 +74,14 @@ function last<T>(array: T[]): T {
   return array[array.length - 1];
 }
 
-const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(Object.getOwnPropertyNames(Object.prototype));
-const reservedVdmKeywords: Set<string> = new Set<string>(['builder', 'entityBuilder', 'requestBuilder']);
+const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
+  Object.getOwnPropertyNames(Object.prototype)
+);
+const reservedVdmKeywords: Set<string> = new Set<string>([
+  'builder',
+  'entityBuilder',
+  'requestBuilder'
+]);
 
 const reservedJSKeywords: Set<string> = new Set<string>([
   'break',

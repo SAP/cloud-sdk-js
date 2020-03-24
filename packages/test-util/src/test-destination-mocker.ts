@@ -1,7 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Destination } from '@sap-cloud-sdk/core';
-import { getTestDestinationByAlias, GetTestDestinationOptions, getTestDestinations } from './test-destination-provider';
+import {
+  getTestDestinationByAlias,
+  GetTestDestinationOptions,
+  getTestDestinations
+} from './test-destination-provider';
 
 /**
  * Add a destination with the given name from the `systems.json` and `credentials.json` files to the `destinations` environment variable.
@@ -11,7 +15,10 @@ import { getTestDestinationByAlias, GetTestDestinationOptions, getTestDestinatio
  * @param name - Name of the test destination to add to the `destinations` environment variable
  * @param options - References to the `systems.json` and `credentials.json` files
  */
-export function mockTestDestination(name: string, options?: GetTestDestinationOptions): void {
+export function mockTestDestination(
+  name: string,
+  options?: GetTestDestinationOptions
+): void {
   const mockedDestination = getTestDestinationByAlias(name, options);
   setTestDestination(mockedDestination);
 }
@@ -50,7 +57,9 @@ export function setTestDestination(destination: Destination): void {
  */
 export function unmockTestDestination(name: string): void {
   const currentDestinations = getDestinationsFromEnv();
-  const cleanedDestinations = currentDestinations.filter(destination => !(destination.isTestDestination && destination.name === name));
+  const cleanedDestinations = currentDestinations.filter(
+    destination => !(destination.isTestDestination && destination.name === name)
+  );
   setDestinationsInEnv(cleanedDestinations);
 }
 
@@ -61,7 +70,9 @@ export function unmockTestDestination(name: string): void {
  *
  * @param options - References to the `systems.json` and `credentials.json` files
  */
-export function mockAllTestDestinations(options?: GetTestDestinationOptions): void {
+export function mockAllTestDestinations(
+  options?: GetTestDestinationOptions
+): void {
   const testDestinations = getTestDestinations(options);
   const currentDestinations = getDestinationsFromEnv();
   const existingNames = new Set<string>(
@@ -74,7 +85,9 @@ export function mockAllTestDestinations(options?: GetTestDestinationOptions): vo
   );
   testDestinations.forEach(dest => {
     if (!dest.name) {
-      throw Error("At least one of the provided destinations is missing a the 'name' property!");
+      throw Error(
+        "At least one of the provided destinations is missing a the 'name' property!"
+      );
     }
     validateNameAvailable(dest.name, existingNames);
     currentDestinations.push(dest);
@@ -89,11 +102,16 @@ export function mockAllTestDestinations(options?: GetTestDestinationOptions): vo
  */
 export function unmockAllTestDestinations(): void {
   const currentDestinations = getDestinationsFromEnv();
-  const cleanedDestinations = currentDestinations.filter(destination => !destination.isTestDestination);
+  const cleanedDestinations = currentDestinations.filter(
+    destination => !destination.isTestDestination
+  );
   setDestinationsInEnv(cleanedDestinations);
 }
 
-function validateNameAvailable(destinationName: string, existingNames: Set<string>): void {
+function validateNameAvailable(
+  destinationName: string,
+  existingNames: Set<string>
+): void {
   if (existingNames.has(destinationName)) {
     throw new Error(
       `Parsing mocked destinations failed, destination with name "${destinationName}" already exists in the "destinations" environment variables.`
@@ -110,6 +128,8 @@ function getDestinationsFromEnv(): Destination[] {
     const envDestinations = process.env['destinations'] || '[]';
     return JSON.parse(envDestinations);
   } catch (error) {
-    throw new Error(`Destinations environment variable cannot be read: ${error.message}`);
+    throw new Error(
+      `Destinations environment variable cannot be read: ${error.message}`
+    );
   }
 }

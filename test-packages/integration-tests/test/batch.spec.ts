@@ -11,8 +11,18 @@ import {
   patchRequest,
   putRequest
 } from './test-data/batch-sub-requests';
-import { mixedBatchRequest, mixedErrorRequest, multiChangesetBatchRequest, multiRetrieveRequest } from './test-data/batch/requests';
-import { mixedBatchResponse, mixedErrorResponse, multiChangesetBatchResponse, multiRetrieveResponse } from './test-data/batch/responses';
+import {
+  mixedBatchRequest,
+  mixedErrorRequest,
+  multiChangesetBatchRequest,
+  multiRetrieveRequest
+} from './test-data/batch/requests';
+import {
+  mixedBatchResponse,
+  mixedErrorResponse,
+  multiChangesetBatchResponse,
+  multiRetrieveResponse
+} from './test-data/batch/responses';
 import { basicCredentials } from './test-util/destination-encoder';
 
 const basicHeader = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
@@ -72,16 +82,24 @@ describe('Batch', () => {
   });
 
   it('should resolve for multiple changesets', async () => {
-    mockBatchRequest(multiChangesetBatchRequest(), multiChangesetBatchResponse());
+    mockBatchRequest(
+      multiChangesetBatchRequest(),
+      multiChangesetBatchResponse()
+    );
 
-    const request = batch(changeset(createRequest), changeset(createAsChildOfRequest, patchRequest, putRequest, deleteRequest)).execute(destination);
+    const request = batch(
+      changeset(createRequest),
+      changeset(createAsChildOfRequest, patchRequest, putRequest, deleteRequest)
+    ).execute(destination);
     await expect(request).resolves.not.toThrow();
   });
 
   it('should resolve for mixed changesets and retrieve requests', async () => {
     mockBatchRequest(mixedBatchRequest(), mixedBatchResponse());
 
-    const request = batch(getAllRequest, changeset(createRequest)).execute(destination);
+    const request = batch(getAllRequest, changeset(createRequest)).execute(
+      destination
+    );
 
     await expect(request).resolves.not.toThrow();
   });
@@ -89,7 +107,12 @@ describe('Batch', () => {
   it('should resolve and return error for failing requests', async () => {
     mockBatchRequest(mixedErrorRequest(), mixedErrorResponse());
 
-    const response = await batch(getAllRequest, getAllRequest, changeset(createRequest), changeset(createRequest)).execute(destination);
+    const response = await batch(
+      getAllRequest,
+      getAllRequest,
+      changeset(createRequest),
+      changeset(createRequest)
+    ).execute(destination);
 
     expect(response[0].isSuccess()).toBe(true);
     expect(response[1].isSuccess()).toBe(false);

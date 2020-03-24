@@ -3,7 +3,10 @@
 import { helpfulLinksSection } from '../service';
 import { VdmServiceMetadata } from '../vdm-types';
 
-export function readme(services: VdmServiceMetadata[], npmPackageName: string): string {
+export function readme(
+  services: VdmServiceMetadata[],
+  npmPackageName: string
+): string {
   return [
     `# ${npmPackageName}`,
     '',

@@ -3,7 +3,10 @@
 import { AllDestinations } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
 
-export type DestinationSelectionStrategy = (allDestinations: AllDestinations, destinationName: string) => Destination | null;
+export type DestinationSelectionStrategy = (
+  allDestinations: AllDestinations,
+  destinationName: string
+) => Destination | null;
 
 /**
  * Constraints the selection to provider destinations.
@@ -12,10 +15,18 @@ export type DestinationSelectionStrategy = (allDestinations: AllDestinations, de
  * @param destinationName - Name of the destination to retrieve
  * @returns the destination to retrieve, returns null if no matched provider destination is found
  */
-export function alwaysProvider(allDestinations: AllDestinations, destinationName: string): Destination | null {
-  const isRequestedDestination = (destination: Destination) => destination.name === destinationName;
+export function alwaysProvider(
+  allDestinations: AllDestinations,
+  destinationName: string
+): Destination | null {
+  const isRequestedDestination = (destination: Destination) =>
+    destination.name === destinationName;
 
-  return allDestinations.provider.instance.find(isRequestedDestination) || allDestinations.provider.subaccount.find(isRequestedDestination) || null;
+  return (
+    allDestinations.provider.instance.find(isRequestedDestination) ||
+    allDestinations.provider.subaccount.find(isRequestedDestination) ||
+    null
+  );
 }
 
 /**
@@ -25,11 +36,17 @@ export function alwaysProvider(allDestinations: AllDestinations, destinationName
  * @param destinationName - Name of the destination to retrieve
  * @returns the destination to retrieve, returns null if no matched subscriber destination is found
  */
-export function alwaysSubscriber(allDestinations: AllDestinations, destinationName: string): Destination | null {
-  const isRequestedDestination = (destination: Destination) => destination.name === destinationName;
+export function alwaysSubscriber(
+  allDestinations: AllDestinations,
+  destinationName: string
+): Destination | null {
+  const isRequestedDestination = (destination: Destination) =>
+    destination.name === destinationName;
 
   return (
-    allDestinations.subscriber.instance.find(isRequestedDestination) || allDestinations.subscriber.subaccount.find(isRequestedDestination) || null
+    allDestinations.subscriber.instance.find(isRequestedDestination) ||
+    allDestinations.subscriber.subaccount.find(isRequestedDestination) ||
+    null
   );
 }
 
@@ -40,8 +57,12 @@ export function alwaysSubscriber(allDestinations: AllDestinations, destinationNa
  * @param destinationName - Name of the destination to retrieve
  * @returns the destination to retrieve, returns null if no matched destination is found
  */
-export function subscriberFirst(allDestinations: AllDestinations, destinationName: string): Destination | null {
-  const isRequestedDestination = (destination: Destination) => destination.name === destinationName;
+export function subscriberFirst(
+  allDestinations: AllDestinations,
+  destinationName: string
+): Destination | null {
+  const isRequestedDestination = (destination: Destination) =>
+    destination.name === destinationName;
 
   return (
     allDestinations.subscriber.instance.find(isRequestedDestination) ||

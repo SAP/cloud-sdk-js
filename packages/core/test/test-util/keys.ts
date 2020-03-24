@@ -15,7 +15,11 @@ export function publicKey(filename = 'test.pub'): string {
   });
 }
 
-export function signedJwt(payload, filename = 'test', algorithm: Algorithm = 'RS512') {
+export function signedJwt(
+  payload,
+  filename = 'test',
+  algorithm: Algorithm = 'RS512'
+) {
   return sign(payload, privateKey(filename), {
     algorithm
   });

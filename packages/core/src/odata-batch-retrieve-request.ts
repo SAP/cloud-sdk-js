@@ -2,8 +2,14 @@
 
 import { Entity } from './entity';
 import { getRequestLine } from './odata-batch-request-builder';
-import { content_transfer_encoding_line, part_content_type_line } from './odate-batch-consts';
-import { GetAllRequestBuilder, GetByKeyRequestBuilder } from './request-builder';
+import {
+  content_transfer_encoding_line,
+  part_content_type_line
+} from './odate-batch-consts';
+import {
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder
+} from './request-builder';
 
 /**
  * Build a string as the request body of the retrieve request.
@@ -19,7 +25,16 @@ import { GetAllRequestBuilder, GetByKeyRequestBuilder } from './request-builder'
  * @param requestBuilder - The request builder of the retrieve request.
  * @returns The request body.
  */
-export function toBatchRetrieveBody(requestBuilder: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>): string {
-  const lines: string[] = [part_content_type_line, content_transfer_encoding_line, '', getRequestLine(requestBuilder), '', ''];
+export function toBatchRetrieveBody(
+  requestBuilder: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>
+): string {
+  const lines: string[] = [
+    part_content_type_line,
+    content_transfer_encoding_line,
+    '',
+    getRequestLine(requestBuilder),
+    '',
+    ''
+  ];
   return lines.join('\n');
 }

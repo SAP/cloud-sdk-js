@@ -1,9 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { FunctionDeclarationStructure, NamespaceDeclarationStructure, StructureKind } from 'ts-morph';
+import {
+  FunctionDeclarationStructure,
+  NamespaceDeclarationStructure,
+  StructureKind
+} from 'ts-morph';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 
-export function complexTypeNamespace(complexType: VdmComplexType): NamespaceDeclarationStructure {
+export function complexTypeNamespace(
+  complexType: VdmComplexType
+): NamespaceDeclarationStructure {
   return {
     kind: StructureKind.Namespace,
     name: complexType.typeName,
@@ -12,13 +18,16 @@ export function complexTypeNamespace(complexType: VdmComplexType): NamespaceDecl
   };
 }
 
-function factoryFunction(complexType: VdmComplexType): FunctionDeclarationStructure {
+function factoryFunction(
+  complexType: VdmComplexType
+): FunctionDeclarationStructure {
   return {
     kind: StructureKind.Function,
     name: 'build',
     returnType: complexType.typeName,
     parameters: [{ name: 'json', type: getJsonType(complexType) }],
-    statements: 'return createComplexType(json, ' + getConverter(complexType) + ');',
+    statements:
+      'return createComplexType(json, ' + getConverter(complexType) + ');',
     isExported: true
   };
 }
@@ -33,7 +42,9 @@ function getConverter(complexType: VdmComplexType): string {
       if (converter !== '{\n') {
         converter += ',\n';
       }
-      converter += `${currentProperty.originalName}: (${currentProperty.instancePropertyName}: ${currentProperty.jsType}) => ({ ${
+      converter += `${currentProperty.originalName}: (${
+        currentProperty.instancePropertyName
+      }: ${currentProperty.jsType}) => ({ ${
         currentProperty.instancePropertyName
       }: ${getConverterFunction(currentProperty)} })`;
       return converter;

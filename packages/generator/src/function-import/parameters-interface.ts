@@ -3,7 +3,9 @@
 import { InterfaceDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport } from '../vdm-types';
 
-export function functionImportParametersInterface(functionImport: VdmFunctionImport): InterfaceDeclarationStructure {
+export function functionImportParametersInterface(
+  functionImport: VdmFunctionImport
+): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
     name: functionImport.parametersTypeName,
@@ -14,6 +16,8 @@ export function functionImportParametersInterface(functionImport: VdmFunctionImp
       hasQuestionToken: parameter.nullable,
       docs: [parameter.description]
     })),
-    docs: [`Type of the parameters to be passed to [[${functionImport.functionName}]].`]
+    docs: [
+      `Type of the parameters to be passed to [[${functionImport.functionName}]].`
+    ]
   };
 }

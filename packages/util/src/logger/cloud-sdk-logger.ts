@@ -1,6 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Container, Logger, LoggerOptions as WinstonLoggerOptions, transports } from 'winston';
+import {
+  Container,
+  Logger,
+  LoggerOptions as WinstonLoggerOptions,
+  transports
+} from 'winston';
 import { kibana, local } from './format';
 
 const format = process.env.VCAP_SERVICES ? kibana : local;
@@ -67,12 +72,22 @@ export function enableExceptionLogger() {
  * @param messageContext - Either a key for the message context of all messages produced by the logger or an object with additional keys to set in the message.
  * @returns A newly created or an already existing logger for the given context.
  */
-export function createLogger(messageContext?: string | (MessageContextObj & LoggerOptions)): Logger {
-  const customFields: { [key: string]: any } = typeof messageContext === 'string' ? { messageContext } : { ...messageContext };
+export function createLogger(
+  messageContext?: string | (MessageContextObj & LoggerOptions)
+): Logger {
+  const customFields: { [key: string]: any } =
+    typeof messageContext === 'string'
+      ? { messageContext }
+      : { ...messageContext };
   return container.get(customFields.messageContext, {
-    level: customLogLevels[customFields.messageContext] || customFields.level || 'info',
+    level:
+      customLogLevels[customFields.messageContext] ||
+      customFields.level ||
+      'info',
     defaultMeta: {
-      ...(Object.entries(customFields).length && { custom_fields: customFields }),
+      ...(Object.entries(customFields).length && {
+        custom_fields: customFields
+      }),
       logger: customFields.logger || loggerReference
     },
     format,
@@ -85,7 +100,9 @@ export function createLogger(messageContext?: string | (MessageContextObj & Logg
  * @param messageContext - A key for the message context of all messages produced by the logger
  * @returns The logger for the given messageContext if it was created before
  */
-export function getLogger(messageContext = DEFAULT_LOGGER__MESSAGE_CONTEXT): Logger | undefined {
+export function getLogger(
+  messageContext = DEFAULT_LOGGER__MESSAGE_CONTEXT
+): Logger | undefined {
   if (container.has(messageContext)) {
     return container.get(messageContext);
   }
@@ -97,8 +114,14 @@ export function getLogger(messageContext = DEFAULT_LOGGER__MESSAGE_CONTEXT): Log
  * @param level - level to set the logger to
  * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself
  */
-export function setLogLevel(level: LogLevel, messageContextOrLogger: string | Logger = DEFAULT_LOGGER__MESSAGE_CONTEXT): void {
-  const messageContext = typeof messageContextOrLogger === 'string' ? messageContextOrLogger : getMessageContext(messageContextOrLogger);
+export function setLogLevel(
+  level: LogLevel,
+  messageContextOrLogger: string | Logger = DEFAULT_LOGGER__MESSAGE_CONTEXT
+): void {
+  const messageContext =
+    typeof messageContextOrLogger === 'string'
+      ? messageContextOrLogger
+      : getMessageContext(messageContextOrLogger);
 
   if (messageContext) {
     customLogLevels[messageContext] = level;
@@ -108,7 +131,9 @@ export function setLogLevel(level: LogLevel, messageContextOrLogger: string | Lo
       logger.level = level;
     }
   } else if (typeof messageContextOrLogger !== 'string') {
-    moduleLogger.warn('Setting log level for logger with unknown message context');
+    moduleLogger.warn(
+      'Setting log level for logger with unknown message context'
+    );
     messageContextOrLogger.level = level;
   }
 }
@@ -116,7 +141,11 @@ export function setLogLevel(level: LogLevel, messageContextOrLogger: string | Lo
 function getMessageContext(logger: Logger): string | undefined {
   // This is a workaround for the missing defaultMeta property on the winston logger.
   const loggerOptions = logger as WinstonLoggerOptions;
-  if (loggerOptions && loggerOptions.defaultMeta && loggerOptions.defaultMeta.custom_fields) {
+  if (
+    loggerOptions &&
+    loggerOptions.defaultMeta &&
+    loggerOptions.defaultMeta.custom_fields
+  ) {
     return loggerOptions.defaultMeta.custom_fields.messageContext;
   }
 }
@@ -124,7 +153,13 @@ function getMessageContext(logger: Logger): string | undefined {
 /**
  * Npm log levels used for the SAP Cloud SDK logger.
  */
-export type LogLevel = 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
+export type LogLevel =
+  | 'error'
+  | 'warn'
+  | 'info'
+  | 'verbose'
+  | 'debug'
+  | 'silly';
 
 /**
  * Configurable logger options.

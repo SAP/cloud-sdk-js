@@ -19,7 +19,13 @@ export function packageJson(
         publishConfig: {
           access: 'public'
         },
-        files: ['**/*.js', '**/*.js.map', '**/*.d.ts', '**/d.ts.map', '**/*-csn.json'],
+        files: [
+          '**/*.js',
+          '**/*.js.map',
+          '**/*.d.ts',
+          '**/d.ts.map',
+          '**/*-csn.json'
+        ],
         repository: {
           type: 'git',
           url: ''
@@ -27,7 +33,9 @@ export function packageJson(
         scripts: {
           compile: 'npx tsc',
           doc: 'npx typedoc',
-          ...(sdkAfterVersionScript ? { version: 'node ../../../after-version-update.js' } : {})
+          ...(sdkAfterVersionScript
+            ? { version: 'node ../../../after-version-update.js' }
+            : {})
         },
         dependencies: {
           '@sap-cloud-sdk/core': `^${generatorVersion}`

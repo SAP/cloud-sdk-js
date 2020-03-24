@@ -5,7 +5,9 @@ import path from 'path';
 import { SwaggerMetadata } from './parser-types';
 
 export function parseSwaggerFromPath(swaggerPath: PathLike): SwaggerMetadata {
-  const swaggerFile = readFileSync(path.resolve(swaggerPath.toString()), { encoding: 'utf-8' });
+  const swaggerFile = readFileSync(path.resolve(swaggerPath.toString()), {
+    encoding: 'utf-8'
+  });
   return parseSwaggerFile(swaggerFile);
 }
 

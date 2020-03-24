@@ -10,7 +10,8 @@ describe('service-parser', () => {
     it('namespace by default', () => {
       const serviceMetadata = parseService(
         {
-          edmxPath: '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
+          edmxPath:
+            '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
         },
         createOptions(),
         {},
@@ -27,7 +28,10 @@ describe('service-parser', () => {
       };
 
       const serviceMetadata = parseService(
-        { edmxPath: '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx' },
+        {
+          edmxPath:
+            '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
+        },
         createOptions(),
         {
           API_TEST_SRV: serviceMapping
@@ -37,7 +41,9 @@ describe('service-parser', () => {
 
       expect(serviceMetadata.directoryName).toBe(serviceMapping.directoryName);
       expect(serviceMetadata.servicePath).toBe(serviceMapping.servicePath);
-      expect(serviceMetadata.npmPackageName).toBe(serviceMapping.npmPackageName);
+      expect(serviceMetadata.npmPackageName).toBe(
+        serviceMapping.npmPackageName
+      );
     });
   });
 
@@ -66,7 +72,9 @@ describe('service-parser', () => {
       );
 
       expect(services[0].entities.length).toBe(10);
-      expect(services[0].apiBusinessHubMetadata!.businessDocumentationUrl).toBeDefined();
+      expect(
+        services[0].apiBusinessHubMetadata!.businessDocumentationUrl
+      ).toBeDefined();
     });
 
     it('entities are read correctly', () => {
@@ -84,16 +92,66 @@ describe('service-parser', () => {
           numKeys: entity.keys.length
         }))
       ).toEqual([
-        { entitySetName: 'A_TestEntity', className: 'TestEntity', numKeys: 2, numProperties: 18 },
-        { entitySetName: 'A_TestEntityMultiLink', className: 'TestEntityMultiLink', numKeys: 1, numProperties: 5 },
-        { entitySetName: 'A_TestEntityOtherMultiLink', className: 'TestEntityOtherMultiLink', numKeys: 1, numProperties: 1 },
-        { entitySetName: 'A_TestEntityLvl2MultiLink', className: 'TestEntityLvl2MultiLink', numKeys: 1, numProperties: 5 },
-        { entitySetName: 'A_TestEntitySingleLink', className: 'TestEntitySingleLink', numKeys: 1, numProperties: 5 },
-        { entitySetName: 'A_TestEntityLvl2SingleLink', className: 'TestEntityLvl2SingleLink', numKeys: 1, numProperties: 5 },
-        { entitySetName: 'A_TestEntityCircularLinkParent', className: 'TestEntityCircularLinkParent', numKeys: 1, numProperties: 1 },
-        { entitySetName: 'A_TestEntityCircularLinkChild', className: 'TestEntityCircularLinkChild', numKeys: 1, numProperties: 1 },
-        { entitySetName: 'A_TestEntityEndsWithCollection', className: 'TestEntityEndsWith', numKeys: 1, numProperties: 1 },
-        { entitySetName: 'A_TestEntityEndsWithSomethingElse', className: 'TestEntityEndsWithSomethingElse', numKeys: 1, numProperties: 1 }
+        {
+          entitySetName: 'A_TestEntity',
+          className: 'TestEntity',
+          numKeys: 2,
+          numProperties: 18
+        },
+        {
+          entitySetName: 'A_TestEntityMultiLink',
+          className: 'TestEntityMultiLink',
+          numKeys: 1,
+          numProperties: 5
+        },
+        {
+          entitySetName: 'A_TestEntityOtherMultiLink',
+          className: 'TestEntityOtherMultiLink',
+          numKeys: 1,
+          numProperties: 1
+        },
+        {
+          entitySetName: 'A_TestEntityLvl2MultiLink',
+          className: 'TestEntityLvl2MultiLink',
+          numKeys: 1,
+          numProperties: 5
+        },
+        {
+          entitySetName: 'A_TestEntitySingleLink',
+          className: 'TestEntitySingleLink',
+          numKeys: 1,
+          numProperties: 5
+        },
+        {
+          entitySetName: 'A_TestEntityLvl2SingleLink',
+          className: 'TestEntityLvl2SingleLink',
+          numKeys: 1,
+          numProperties: 5
+        },
+        {
+          entitySetName: 'A_TestEntityCircularLinkParent',
+          className: 'TestEntityCircularLinkParent',
+          numKeys: 1,
+          numProperties: 1
+        },
+        {
+          entitySetName: 'A_TestEntityCircularLinkChild',
+          className: 'TestEntityCircularLinkChild',
+          numKeys: 1,
+          numProperties: 1
+        },
+        {
+          entitySetName: 'A_TestEntityEndsWithCollection',
+          className: 'TestEntityEndsWith',
+          numKeys: 1,
+          numProperties: 1
+        },
+        {
+          entitySetName: 'A_TestEntityEndsWithSomethingElse',
+          className: 'TestEntityEndsWithSomethingElse',
+          numKeys: 1,
+          numProperties: 1
+        }
       ]);
     });
 
@@ -124,7 +182,9 @@ describe('service-parser', () => {
       );
 
       const testEntity = services[0].entities[0];
-      const complexProperty = testEntity.properties.find(prop => prop.originalName === 'ComplexTypeProperty');
+      const complexProperty = testEntity.properties.find(
+        prop => prop.originalName === 'ComplexTypeProperty'
+      );
       const expected = {
         instancePropertyName: 'complexTypeProperty',
         staticPropertyName: 'COMPLEX_TYPE_PROPERTY',
@@ -148,8 +208,12 @@ describe('service-parser', () => {
         })
       );
 
-      const functionImport = services[0].functionImports.find(f => f.originalName === 'CreateTestComplexType')!;
-      const complexType = services[0].complexTypes.find(c => c.originalName === 'A_TestComplexType')!;
+      const functionImport = services[0].functionImports.find(
+        f => f.originalName === 'CreateTestComplexType'
+      )!;
+      const complexType = services[0].complexTypes.find(
+        c => c.originalName === 'A_TestComplexType'
+      )!;
 
       const complexTypeName = 'TestComplexType';
       const functionImportName = 'createTestComplexType';
@@ -176,7 +240,9 @@ describe('service-parser', () => {
         })
       );
 
-      const functionImport = services[0].functionImports.find(f => f.originalName === 'Continue')!;
+      const functionImport = services[0].functionImports.find(
+        f => f.originalName === 'Continue'
+      )!;
 
       expect(functionImport.functionName).toBe('fContinue');
     });
@@ -189,10 +255,16 @@ describe('service-parser', () => {
         })
       );
 
-      const functionImport = service.functionImports.find(f => f.originalName === 'TestFunctionImportEdmReturnType')!;
+      const functionImport = service.functionImports.find(
+        f => f.originalName === 'TestFunctionImportEdmReturnType'
+      )!;
 
-      expect(functionImport.functionName).toBe('testFunctionImportEdmReturnType');
-      expect(functionImport.returnType.builderFunction).toBe("(val) => edmToTs(val, 'Edm.Boolean')");
+      expect(functionImport.functionName).toBe(
+        'testFunctionImportEdmReturnType'
+      );
+      expect(functionImport.returnType.builderFunction).toBe(
+        "(val) => edmToTs(val, 'Edm.Boolean')"
+      );
     });
 
     it('should parse C4C service definitions with proper class names.', () => {
@@ -205,11 +277,17 @@ describe('service-parser', () => {
 
       const entities = services[0].entities;
 
-      const entityEndsWithCollection = entities.find(e => e.entitySetName === 'A_TestEntityEndsWithCollection')!;
-      const entityEndsWithSthElse = entities.find(e => e.entitySetName === 'A_TestEntityEndsWithSomethingElse')!;
+      const entityEndsWithCollection = entities.find(
+        e => e.entitySetName === 'A_TestEntityEndsWithCollection'
+      )!;
+      const entityEndsWithSthElse = entities.find(
+        e => e.entitySetName === 'A_TestEntityEndsWithSomethingElse'
+      )!;
 
       expect(entityEndsWithCollection.className).toBe('TestEntityEndsWith');
-      expect(entityEndsWithSthElse.className).toBe('TestEntityEndsWithSomethingElse');
+      expect(entityEndsWithSthElse.className).toBe(
+        'TestEntityEndsWithSomethingElse'
+      );
     });
   });
 
@@ -221,7 +299,9 @@ describe('service-parser', () => {
       })
     );
 
-    const entity = services[0].entities.find(e => e.entityTypeName === 'Unused');
+    const entity = services[0].entities.find(
+      e => e.entityTypeName === 'Unused'
+    );
 
     expect(entity).toBeUndefined();
   });

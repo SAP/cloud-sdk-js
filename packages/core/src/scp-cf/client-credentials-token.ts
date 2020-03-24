@@ -2,7 +2,10 @@
 
 import { Destination } from './destination-service-types';
 import { clientCredentialsGrant } from './xsuaa-service';
-import { ClientCredentials, ClientCredentialsResponse } from './xsuaa-service-types';
+import {
+  ClientCredentials,
+  ClientCredentialsResponse
+} from './xsuaa-service-types';
 
 // TODO: This should be moved down to the token accessor
 /**
@@ -11,7 +14,9 @@ import { ClientCredentials, ClientCredentialsResponse } from './xsuaa-service-ty
  * @param destination - A destination having `OAuth2ClientCredentials` authentication type
  * @returns A promise returning the requested access token on success.
  */
-export async function getOAuth2ClientCredentialsToken(destination: Destination): Promise<ClientCredentialsResponse> {
+export async function getOAuth2ClientCredentialsToken(
+  destination: Destination
+): Promise<ClientCredentialsResponse> {
   if (!areValidCredentials(destination)) {
     throw Error(
       'The provided destination does not comply to "OAuth2ClientCredentials" authentication requirements. ' +
@@ -20,7 +25,9 @@ export async function getOAuth2ClientCredentialsToken(destination: Destination):
   }
 
   if (!destination.tokenServiceUrl) {
-    throw Error(`The destination tokenServiceUrl:${destination.tokenServiceUrl} is undefined.`);
+    throw Error(
+      `The destination tokenServiceUrl:${destination.tokenServiceUrl} is undefined.`
+    );
   }
 
   return clientCredentialsGrant(
@@ -35,16 +42,30 @@ export async function getOAuth2ClientCredentialsToken(destination: Destination):
 }
 
 function areValidCredentials(destination: Destination): boolean {
-  return !!(destination.tokenServiceUrl && destination.clientId && destination.clientSecret);
+  return !!(
+    destination.tokenServiceUrl &&
+    destination.clientId &&
+    destination.clientSecret
+  );
 }
 
-function getTokenServiceCredentials(destination: Destination): ClientCredentials {
+function getTokenServiceCredentials(
+  destination: Destination
+): ClientCredentials {
   if (destination.tokenServiceUser && destination.tokenServicePassword) {
-    return { username: destination.tokenServiceUser, password: destination.tokenServicePassword };
+    return {
+      username: destination.tokenServiceUser,
+      password: destination.tokenServicePassword
+    };
   }
   if (destination.clientId && destination.clientSecret) {
-    return { username: destination.clientId, password: destination.clientSecret };
+    return {
+      username: destination.clientId,
+      password: destination.clientSecret
+    };
   }
 
-  throw new Error('Either tokenServiceUser/tokenServicePassword or clientId/clientSecret should be defined.');
+  throw new Error(
+    'Either tokenServiceUser/tokenServicePassword or clientId/clientSecret should be defined.'
+  );
 }

@@ -3,8 +3,15 @@ import nock = require('nock');
 import { v4 as uuid } from 'uuid';
 import { GetByKeyRequestBuilder } from '../../src/request-builder';
 import { muteLoggers } from '../test-util/mute-logger';
-import { defaultDestination, mockGetRequest } from '../test-util/request-mocker';
-import { createOriginalTestEntityData1, createTestEntity, testEntityResourcePath } from '../test-util/test-data';
+import {
+  defaultDestination,
+  mockGetRequest
+} from '../test-util/request-mocker';
+import {
+  createOriginalTestEntityData1,
+  createTestEntity,
+  testEntityResourcePath
+} from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/test-service';
 
 describe('GetByKeyRequestBuilder', () => {
@@ -18,7 +25,10 @@ describe('GetByKeyRequestBuilder', () => {
       const expected = createTestEntity(entityData);
 
       mockGetRequest({
-        path: testEntityResourcePath(expected.keyPropertyGuid, expected.keyPropertyString),
+        path: testEntityResourcePath(
+          expected.keyPropertyGuid,
+          expected.keyPropertyString
+        ),
         responseBody: { d: entityData }
       });
 
@@ -37,7 +47,10 @@ describe('GetByKeyRequestBuilder', () => {
       const expected = createTestEntity(entityData);
 
       mockGetRequest({
-        path: testEntityResourcePath(expected.keyPropertyGuid, expected.keyPropertyString),
+        path: testEntityResourcePath(
+          expected.keyPropertyGuid,
+          expected.keyPropertyString
+        ),
         responseBody: { d: entityData }
       });
 
@@ -56,7 +69,10 @@ describe('GetByKeyRequestBuilder', () => {
       expected.setVersionIdentifier(versionIdentifier);
 
       mockGetRequest({
-        path: testEntityResourcePath(expected.keyPropertyGuid, expected.keyPropertyString),
+        path: testEntityResourcePath(
+          expected.keyPropertyGuid,
+          expected.keyPropertyString
+        ),
         responseBody: { d: entityData },
         responseHeaders: { Etag: versionIdentifier }
       });
@@ -73,7 +89,10 @@ describe('GetByKeyRequestBuilder', () => {
       const expected = createTestEntity(entityData);
 
       mockGetRequest({
-        path: testEntityResourcePath(expected.keyPropertyGuid, expected.keyPropertyString),
+        path: testEntityResourcePath(
+          expected.keyPropertyGuid,
+          expected.keyPropertyString
+        ),
         responseBody: { d: { results: entityData } }
       });
 
@@ -87,9 +106,7 @@ describe('GetByKeyRequestBuilder', () => {
   });
 
   it('throws a useful error when request execution fails', async () => {
-    nock(/.*/)
-      .get(/.*/)
-      .reply(500);
+    nock(/.*/).get(/.*/).reply(500);
 
     const getByKeyRequest = new GetByKeyRequestBuilder(TestEntity, {
       KeyPropertyGuid: uuid(),

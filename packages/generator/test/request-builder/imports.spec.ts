@@ -10,9 +10,20 @@ describe('imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/core',
-        namedImports: ['Time', 'RequestBuilder', 'GetAllRequestBuilder', 'GetByKeyRequestBuilder', 'CreateRequestBuilder', 'UpdateRequestBuilder']
+        namedImports: [
+          'Time',
+          'RequestBuilder',
+          'GetAllRequestBuilder',
+          'GetByKeyRequestBuilder',
+          'CreateRequestBuilder',
+          'UpdateRequestBuilder'
+        ]
       },
-      { kind: StructureKind.ImportDeclaration, namedImports: ['Breakfast'], moduleSpecifier: './Breakfast' }
+      {
+        kind: StructureKind.ImportDeclaration,
+        namedImports: ['Breakfast'],
+        moduleSpecifier: './Breakfast'
+      }
     ]);
   });
 });

@@ -3,7 +3,10 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { EntityBuilder } from '../src';
 import { muteLoggers } from './test-util/mute-logger';
-import { TestEntity, TestEntitySingleLink } from './test-util/test-services/test-service';
+import {
+  TestEntity,
+  TestEntitySingleLink
+} from './test-util/test-services/test-service';
 
 describe('EntityBuilder', () => {
   beforeAll(() => {
@@ -31,7 +34,11 @@ describe('EntityBuilder', () => {
     const expected = { SomeCustomField: null };
     expect(
       builder
-        .withCustomFields({ SomeCustomField: null, StringProperty: 'test', Int16Property: 'test' })
+        .withCustomFields({
+          SomeCustomField: null,
+          StringProperty: 'test',
+          Int16Property: 'test'
+        })
         .build()
         .getCustomFields()
     ).toEqual(expected);
@@ -44,13 +51,20 @@ describe('EntityBuilder', () => {
       .withCustomFields({ linkedCustomField: 'someLinkedValue' })
       .build();
 
-    const entityJson: Partial<TestEntity> = { stringProperty: 'someValue', toSingleLink: linkedEntity };
+    const entityJson: Partial<TestEntity> = {
+      stringProperty: 'someValue',
+      toSingleLink: linkedEntity
+    };
     entityJson['_customFields'] = { additionalField: 'someAdditionalValue' };
     const actual = builder.fromJson(entityJson);
     expect(actual.stringProperty).toBe(entityJson.stringProperty);
     expect(actual.getCustomFields()).toEqual(entityJson['_customFields']);
-    expect(actual.toSingleLink.stringProperty).toBe(linkedEntity.stringProperty);
-    expect(actual.toSingleLink.getCustomFields()).toEqual(linkedEntity.getCustomFields());
+    expect(actual.toSingleLink.stringProperty).toBe(
+      linkedEntity.stringProperty
+    );
+    expect(actual.toSingleLink.getCustomFields()).toEqual(
+      linkedEntity.getCustomFields()
+    );
   });
 
   it('should build an entity with non-primitive JS types (moment, BigNumber etc.)', () => {

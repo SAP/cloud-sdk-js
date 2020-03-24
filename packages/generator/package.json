@@ -39,10 +39,10 @@
     "@sap/edm-converters": "1.0.19",
     "fast-xml-parser": "3.12.14",
     "fs-extra": "^8.1.0",
-    "rambda": "2.14.5",
+    "rambda": "^5.0.0",
     "ts-morph": "4.0.1",
     "typescript": "3.7.4",
-    "voca": "1.4.0",
+    "voca": "^1.4.0",
     "yargs": "14.0.0"
   },
   "devDependencies": {

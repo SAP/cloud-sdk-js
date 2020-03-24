@@ -1,6 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { Destination, parseDestination, sanitizeDestination, DestinationConfiguration } from '../../src/scp-cf';
-import { basicMultipleResponse, certificateMultipleResponse, certificateSingleResponse } from '../test-util/example-destination-service-responses';
+import {
+  Destination,
+  parseDestination,
+  sanitizeDestination,
+  DestinationConfiguration
+} from '../../src/scp-cf';
+import {
+  basicMultipleResponse,
+  certificateMultipleResponse,
+  certificateSingleResponse
+} from '../test-util/example-destination-service-responses';
 
 describe('Destination parser', () => {
   it('destination is parsed correctly ', () => {
@@ -21,17 +30,27 @@ describe('Destination parser', () => {
   });
 
   it('TrustAll is correctly parsed', () => {
-    const actual = parseDestination({ ...basicMultipleResponse[0], TrustAll: 'TRUE' });
+    const actual = parseDestination({
+      ...basicMultipleResponse[0],
+      TrustAll: 'TRUE'
+    });
     expect(actual.isTrustingAllCertificates).toBe(true);
   });
 
   it('isTrustingAllCertificates is set to false when TrustAll is not "TRUE"', () => {
-    const actual = parseDestination({ ...basicMultipleResponse[0], TrustAll: 'TRUEE' });
+    const actual = parseDestination({
+      ...basicMultipleResponse[0],
+      TrustAll: 'TRUEE'
+    });
     expect(actual.isTrustingAllCertificates).toBe(false);
   });
 
   it('isTrustingAllCertificates is set as boolean', () => {
-    const destination = { name: 'destination', isTrustingAllCertificates: true, url: 'https://destination.example' };
+    const destination = {
+      name: 'destination',
+      isTrustingAllCertificates: true,
+      url: 'https://destination.example'
+    };
     const actual = sanitizeDestination(destination);
     const expected = {
       name: 'destination',
@@ -96,7 +115,9 @@ describe('Destination parser', () => {
   });
 
   it("parseDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {
-    expect(() => parseDestination({ Type: 'RFC' } as DestinationConfiguration)).not.toThrow();
+    expect(() =>
+      parseDestination({ Type: 'RFC' } as DestinationConfiguration)
+    ).not.toThrow();
   });
 
   it("sanitizeDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {

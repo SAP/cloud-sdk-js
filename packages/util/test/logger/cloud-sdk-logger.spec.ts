@@ -1,6 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { cloudSdkExceptionLogger, createLogger, disableExceptionLogger, enableExceptionLogger, getLogger, setLogLevel } from '../../src';
+import {
+  cloudSdkExceptionLogger,
+  createLogger,
+  disableExceptionLogger,
+  enableExceptionLogger,
+  getLogger,
+  setLogLevel
+} from '../../src';
 
 describe('Cloud SDK Logger', () => {
   const messageContext = 'my-module';

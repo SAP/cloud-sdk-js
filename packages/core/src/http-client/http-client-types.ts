@@ -34,7 +34,9 @@ export interface HttpRequestConfig {
 
 export type HttpRequest = DestinationHttpRequestConfig & HttpRequestConfig;
 
-export type ExecuteHttpRequestFn = (request: HttpRequest) => Promise<HttpResponse>;
+export type ExecuteHttpRequestFn = (
+  request: HttpRequest
+) => Promise<HttpResponse>;
 
 interface KnownHttpResponseFields {
   data: any;

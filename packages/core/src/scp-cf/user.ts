@@ -41,7 +41,10 @@ export const mapping: JwtKeyMapping<UserData, RegisteredJWTClaimsUser> = {
   familyName: { keyInJwt: 'family_name', extractorFunction: userFamilyName },
   email: { keyInJwt: 'email', extractorFunction: userEmail },
   scopes: { keyInJwt: 'scope', extractorFunction: userScopes },
-  customAttributes: { keyInJwt: 'xs.user.attributes', extractorFunction: customAttributes }
+  customAttributes: {
+    keyInJwt: 'xs.user.attributes',
+    extractorFunction: customAttributes
+  }
 };
 
 /**
@@ -68,7 +71,9 @@ export interface Scope {
 type hasScopeType = (s: Scope) => boolean;
 
 function hasScopeWrapper(scopes: Scope[]): hasScopeType {
-  return (scope: Scope): boolean => scopes.find(scopeFromList => scopeFromList.name === scope.name) !== undefined;
+  return (scope: Scope): boolean =>
+    scopes.find(scopeFromList => scopeFromList.name === scope.name) !==
+    undefined;
 }
 
 /**

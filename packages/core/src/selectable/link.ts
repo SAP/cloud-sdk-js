@@ -21,7 +21,8 @@ import { Selectable } from './selectable';
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
-export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implements EntityIdentifiable<EntityT> {
+export class Link<EntityT extends Entity, LinkedEntityT extends Entity>
+  implements EntityIdentifiable<EntityT> {
   /**
    * Create a new link based on a given link.
    *
@@ -30,8 +31,14 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implemen
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT extends Entity, LinkedEntityT extends Entity>(link: Link<EntityT, LinkedEntityT>): Link<EntityT, LinkedEntityT> {
-    const clonedLink = new Link<EntityT, LinkedEntityT>(link._fieldName, link._entityConstructor, link._linkedEntity);
+  static clone<EntityT extends Entity, LinkedEntityT extends Entity>(
+    link: Link<EntityT, LinkedEntityT>
+  ): Link<EntityT, LinkedEntityT> {
+    const clonedLink = new Link<EntityT, LinkedEntityT>(
+      link._fieldName,
+      link._entityConstructor,
+      link._linkedEntity
+    );
     clonedLink.selects = link.selects;
     return clonedLink;
   }
@@ -61,7 +68,9 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity> implemen
    * @param selects - Selection of fields or links on a linked entity
    * @returns The link itself, to facilitate method chaining
    */
-  select(...selects: Selectable<LinkedEntityT>[]): Link<EntityT, LinkedEntityT> {
+  select(
+    ...selects: Selectable<LinkedEntityT>[]
+  ): Link<EntityT, LinkedEntityT> {
     const link = Link.clone(this);
     link.selects = selects;
     return link;

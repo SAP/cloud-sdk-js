@@ -2,7 +2,10 @@
 
 import { fail } from 'assert';
 import { unlinkSync, writeFileSync } from 'fs';
-import { getTestDestinationByAlias, getTestDestinations } from '../src/test-destination-provider';
+import {
+  getTestDestinationByAlias,
+  getTestDestinations
+} from '../src/test-destination-provider';
 import { credentials, systems } from './test-util/test-destinations';
 
 // This replaces the fs module with the mocked one defined in __mock__/fs.js
@@ -85,7 +88,10 @@ describe('test-destination-provider', () => {
       writeFileSync('./systems.json', JSON.stringify(systems));
 
       try {
-        getTestDestinations({ systemsFilePath: './systems.json', credentialsFilePath: 'nopenopenope' });
+        getTestDestinations({
+          systemsFilePath: './systems.json',
+          credentialsFilePath: 'nopenopenope'
+        });
         fail('Expected an error to be thrown, but none has been.');
       } catch (error) {
         expect(error.message).toContain('The provided path');
@@ -97,7 +103,9 @@ describe('test-destination-provider', () => {
     it('works when providing only a path to a systems.json', () => {
       writeFileSync('./systems.json', JSON.stringify(systems));
 
-      const destinations = getTestDestinations({ systemsFilePath: './systems.json' });
+      const destinations = getTestDestinations({
+        systemsFilePath: './systems.json'
+      });
       expect(destinations).toEqual([
         {
           name: 'SYS_001',
@@ -124,7 +132,9 @@ describe('test-destination-provider', () => {
       writeFileSync('./systems.json', JSON.stringify(systems));
       writeFileSync('../credentials.json', JSON.stringify(credentials));
 
-      const destinations = getTestDestinations({ credentialsFilePath: '../credentials.json' });
+      const destinations = getTestDestinations({
+        credentialsFilePath: '../credentials.json'
+      });
       expect(destinations).toEqual([
         {
           name: 'SYS_001',
@@ -211,7 +221,9 @@ describe('test-destination-provider', () => {
       getTestDestinations();
       fail('Expected an error to be thrown, but none has been.');
     } catch (error) {
-      expect(error.message).toMatch(/A system in .* is not valid - Mandatory alias or url missing./);
+      expect(error.message).toMatch(
+        /A system in .* is not valid - Mandatory alias or url missing./
+      );
     }
 
     unlinkSync('./systems.json');

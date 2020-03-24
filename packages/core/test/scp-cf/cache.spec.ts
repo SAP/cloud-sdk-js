@@ -1,6 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { install } from '@sinonjs/fake-timers';
-import { AuthenticationType, ClientCredentialsResponse, clientCredentialsTokenCache, Destination, destinationCache } from '../../src/scp-cf';
+import {
+  AuthenticationType,
+  ClientCredentialsResponse,
+  clientCredentialsTokenCache,
+  Destination,
+  destinationCache
+} from '../../src/scp-cf';
 import { Cache } from '../../src/scp-cf/cache';
 
 const destinationOne: Destination = {
@@ -59,13 +65,25 @@ describe('Cache', () => {
   });
 
   it('should return the item when its expiration time is undefined', () => {
-    const dummyToken = { access_token: '1234567890', token_type: 'UserToken', expires_in: 12312343414, jti: '', scope: '' };
+    const dummyToken = {
+      access_token: '1234567890',
+      token_type: 'UserToken',
+      expires_in: 12312343414,
+      jti: '',
+      scope: ''
+    };
     cacheTwo.set('someToken', dummyToken);
     expect(cacheTwo.get('someToken')).toEqual(dummyToken);
   });
 
   it('custom expiration time should be set correctly', () => {
-    const dummyToken = { access_token: '1234567890', token_type: 'UserToken', expires_in: 12312343414, jti: '', scope: '' };
+    const dummyToken = {
+      access_token: '1234567890',
+      token_type: 'UserToken',
+      expires_in: 12312343414,
+      jti: '',
+      scope: ''
+    };
     cacheTwo.set('expiredToken', dummyToken, 10);
     cacheTwo.set('validToken', dummyToken, Date.now() + 5000);
     expect(cacheTwo.get('expiredToken')).toBeUndefined();

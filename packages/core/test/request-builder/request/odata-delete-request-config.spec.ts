@@ -17,8 +17,13 @@ describe('ODataDeleteRequestConfig', () => {
   it('has resourcePath with keys', () => {
     const keyPropGuid = uuid();
     const keyPropString = 'keyProp';
-    config.keys = { KeyPropertyGuid: keyPropGuid, KeyPropertyString: keyPropString };
-    expect(config.resourcePath()).toEqual(testEntityResourcePath(keyPropGuid, keyPropString));
+    config.keys = {
+      KeyPropertyGuid: keyPropGuid,
+      KeyPropertyString: keyPropString
+    };
+    expect(config.resourcePath()).toEqual(
+      testEntityResourcePath(keyPropGuid, keyPropString)
+    );
   });
 
   it('has no format', () => {

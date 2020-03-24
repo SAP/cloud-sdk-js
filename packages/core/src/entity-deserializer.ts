@@ -4,7 +4,13 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
 import { Entity, isExpandedProperty, isSelectedProperty } from './entity';
 import { edmToTs } from './payload-value-converter';
-import { ComplexTypeField, EdmTypeField, Link, OneToOneLink, Selectable } from './selectable';
+import {
+  ComplexTypeField,
+  EdmTypeField,
+  Link,
+  OneToOneLink,
+  Selectable
+} from './selectable';
 import { toPropertyFormat } from './util';
 
 /**
@@ -15,8 +21,15 @@ import { toPropertyFormat } from './util';
  * @param entityConstructor - The constructor function of the entity class.
  * @returns An object containing the custom fields as key-value pairs.
  */
-export function extractCustomFields<EntityT extends Entity, JsonT>(json: Partial<JsonT>, entityConstructor: Constructable<EntityT>): MapType<any> {
-  const regularODataProperties = ['__metadata', '__deferred', ...entityConstructor._allFields.map(field => field._fieldName)];
+export function extractCustomFields<EntityT extends Entity, JsonT>(
+  json: Partial<JsonT>,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
+  const regularODataProperties = [
+    '__metadata',
+    '__deferred',
+    ...entityConstructor._allFields.map(field => field._fieldName)
+  ];
   const regularFields = new Set<string>(regularODataProperties);
   return Object.keys(json)
     .filter(key => !regularFields.has(key))
@@ -45,7 +58,10 @@ export function deserializeEntity<EntityT extends Entity, JsonT>(
   return entityConstructor._allFields
     .filter(field => isSelectedProperty(json, field))
     .reduce((entity, staticField) => {
-      entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(json, staticField);
+      entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
+        json,
+        staticField
+      );
       return entity;
     }, new entityConstructor())
     .initializeCustomFields(extractCustomFields(json, entityConstructor))
@@ -61,7 +77,10 @@ function extractODataETag(json: MapType<any>): string | undefined {
   return '__metadata' in json ? json['__metadata']['etag'] : undefined;
 }
 
-function getFieldValue<EntityT extends Entity, JsonT>(json: Partial<JsonT>, selectable: Selectable<EntityT>) {
+function getFieldValue<EntityT extends Entity, JsonT>(
+  json: Partial<JsonT>,
+  selectable: Selectable<EntityT>
+) {
   if (selectable instanceof EdmTypeField) {
     return edmToTs(json[selectable._fieldName], selectable.edmType);
   } else if (selectable instanceof Link) {
@@ -71,13 +90,23 @@ function getFieldValue<EntityT extends Entity, JsonT>(json: Partial<JsonT>, sele
   }
 }
 
-function getLinkFromJson<EntityT extends Entity, LinkedEntityT extends Entity, JsonT>(json: Partial<JsonT>, link: Link<EntityT, LinkedEntityT>) {
-  return link instanceof OneToOneLink ? getSingleLinkFromJson(json, link) : getMultiLinkFromJson(json, link);
+function getLinkFromJson<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity,
+  JsonT
+>(json: Partial<JsonT>, link: Link<EntityT, LinkedEntityT>) {
+  return link instanceof OneToOneLink
+    ? getSingleLinkFromJson(json, link)
+    : getMultiLinkFromJson(json, link);
 }
 
 // Be careful: if the return type is changed to `LinkedEntityT | undefined`, the test 'navigation properties should never be undefined' of the 'business-partner.spec.ts' will fail.
 // Not sure the purpose of the usage of null.
-function getSingleLinkFromJson<EntityT extends Entity, LinkedEntityT extends Entity, JsonT>(
+function getSingleLinkFromJson<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity,
+  JsonT
+>(
   json: Partial<JsonT>,
   link: Link<EntityT, LinkedEntityT>
 ): LinkedEntityT | null {
@@ -88,21 +117,37 @@ function getSingleLinkFromJson<EntityT extends Entity, LinkedEntityT extends Ent
   return null;
 }
 
-function getMultiLinkFromJson<EntityT extends Entity, LinkedEntityT extends Entity, JsonT>(
+function getMultiLinkFromJson<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity,
+  JsonT
+>(
   json: Partial<JsonT>,
   link: Link<EntityT, LinkedEntityT>
 ): LinkedEntityT[] | undefined {
   if (isSelectedProperty(json, link)) {
     const results = json[link._fieldName].results || [];
-    return results.map(linkJson => deserializeEntity(linkJson, link._linkedEntity));
+    return results.map(linkJson =>
+      deserializeEntity(linkJson, link._linkedEntity)
+    );
   }
 }
 
-function deserializeComplexType<EntityT extends Entity>(json: MapType<any>, selectable: ComplexTypeField<EntityT>): MapType<any> {
+function deserializeComplexType<EntityT extends Entity>(
+  json: MapType<any>,
+  selectable: ComplexTypeField<EntityT>
+): MapType<any> {
   return Object.entries(selectable)
-    .filter(([_, field]) => field instanceof EdmTypeField && typeof json[field._fieldName] !== 'undefined')
+    .filter(
+      ([_, field]) =>
+        field instanceof EdmTypeField &&
+        typeof json[field._fieldName] !== 'undefined'
+    )
     .reduce((complexTypeObject, [fieldName, field]) => {
-      complexTypeObject[toPropertyFormat(fieldName)] = edmToTs(json[field._fieldName], field.edmType);
+      complexTypeObject[toPropertyFormat(fieldName)] = edmToTs(
+        json[field._fieldName],
+        field.edmType
+      );
       return complexTypeObject;
     }, {});
 }

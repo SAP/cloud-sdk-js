@@ -43,8 +43,8 @@
     "license-checker": "^25.0.1",
     "nock": "^12.0.3",
     "pkginfo": "^0.4.1",
-    "prettier": "^1.19.1",
-    "ts-node": "^8.6.2",
+    "prettier": "^2.0.2",
+    "ts-node": "^8.8.1",
     "typedoc": "^0.16.11",
     "typedoc-plugin-lerna-packages": "^0.3.0",
     "typescript": "3.7.4"

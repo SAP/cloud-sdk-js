@@ -7,7 +7,10 @@ import { CustomField, Selectable } from './selectable';
 /**
  * @hidden
  */
-export interface Constructable<EntityT extends Entity, EntityTypeForceMandatoryT = {}> {
+export interface Constructable<
+  EntityT extends Entity,
+  EntityTypeForceMandatoryT = {}
+> {
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;

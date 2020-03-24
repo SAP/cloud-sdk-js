@@ -6,7 +6,8 @@ import { UsageAnalyticsOptions } from '../src/analytics-types';
 import { sendAnalyticsData } from '../src/usage-analytics';
 
 describe('sendAnalyticsData()', () => {
-  const salt = '7e5eb0e845e73b72310436f29252bf4ad0ef3d0d8c0ae189dec3d5ff2531e6a0';
+  const salt =
+    '7e5eb0e845e73b72310436f29252bf4ad0ef3d0d8c0ae189dec3d5ff2531e6a0';
 
   beforeEach(() => {
     jest.resetModules();
@@ -21,7 +22,9 @@ describe('sendAnalyticsData()', () => {
 
   it('skip usage analytics', async () => {
     const data = await getAnalyticsData({ enabled: true, salt });
-    await expect(sendAnalyticsData({ enabled: false }, data)).resolves.toBeUndefined();
+    await expect(
+      sendAnalyticsData({ enabled: false }, data)
+    ).resolves.toBeUndefined();
   });
 
   it('sendAnalyticsData should execute the request correctly', done => {
@@ -29,7 +32,11 @@ describe('sendAnalyticsData()', () => {
       .get(/\/mockedUrl.*/)
       .reply(204);
 
-    const options: UsageAnalyticsOptions = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };
+    const options: UsageAnalyticsOptions = {
+      uri: 'http://example.com/mockedUrl',
+      idsitesub: 'test-jssdk',
+      event_type: 'test_event'
+    };
     getAnalyticsData({ enabled: true, salt }).then(data => {
       sendAnalyticsData({ enabled: true, salt }, data, options)
         .then(() => {
@@ -47,7 +54,11 @@ describe('sendAnalyticsData()', () => {
       .get(/\/mockedUrl.*/)
       .reply(401);
 
-    const options: UsageAnalyticsOptions = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };
+    const options: UsageAnalyticsOptions = {
+      uri: 'http://example.com/mockedUrl',
+      idsitesub: 'test-jssdk',
+      event_type: 'test_event'
+    };
     getAnalyticsData({ enabled: true, salt }).then(data => {
       sendAnalyticsData({ enabled: true, salt }, data, options)
         .then(() => done('Should have failed.'))

@@ -1,8 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { TestEntity, TestEntityMultiLink } from '@sap-cloud-sdk/test-services/test-service';
+import {
+  TestEntity,
+  TestEntityMultiLink
+} from '@sap-cloud-sdk/test-services/test-service';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { mockInstanceDestinationsCall, mockSubaccountDestinationsCall } from '../../../packages/core/test/test-util/destination-service-mocks';
+import {
+  mockInstanceDestinationsCall,
+  mockSubaccountDestinationsCall
+} from '../../../packages/core/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
   mockDestinationServiceBinding,
@@ -38,7 +44,9 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
 
 const getAllResponse = testEntityCollectionResponse();
 
-const providerToken = jwt.sign({ zid: 'provider_token' }, privateKey(), { algorithm: 'RS512' });
+const providerToken = jwt.sign({ zid: 'provider_token' }, privateKey(), {
+  algorithm: 'RS512'
+});
 
 let destination;
 
@@ -72,9 +80,7 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
-      .getAll()
-      .execute(destination);
+    const request = TestEntity.requestBuilder().getAll().execute(destination);
 
     await expect(request).resolves.not.toThrow();
   });
@@ -89,11 +95,9 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
-      .getAll()
-      .execute({
-        url: destinationServiceUri
-      });
+    const request = TestEntity.requestBuilder().getAll().execute({
+      url: destinationServiceUri
+    });
 
     await expect(request).resolves.not.toThrow();
   });
@@ -199,7 +203,9 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$select=*,to_SingleLink/*&$expand=to_SingleLink`)
+      .get(
+        `${servicePath}/${entityName}?$format=json&$select=*,to_SingleLink/*&$expand=to_SingleLink`
+      )
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()
@@ -287,11 +293,7 @@ describe('Request Builder', () => {
     parentEntity.keyPropertyString = 'abcd1234';
 
     const request = TestEntityMultiLink.requestBuilder()
-      .create(
-        TestEntityMultiLink.builder()
-          .stringProperty('prop')
-          .build()
-      )
+      .create(TestEntityMultiLink.builder().stringProperty('prop').build())
       .asChildOf(parentEntity, TestEntity.TO_MULTI_LINK)
       .execute(destination);
 
@@ -309,9 +311,12 @@ describe('Request Builder', () => {
         cookie: 'key1=val1;key2=val2;key3=val3'
       }
     })
-      .patch(`${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`, {
-        StringProperty: 'newStringProp'
-      })
+      .patch(
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`,
+        {
+          StringProperty: 'newStringProp'
+        }
+      )
       .reply(204);
 
     const request = TestEntity.requestBuilder()
@@ -351,7 +356,9 @@ describe('Request Builder', () => {
         cookie: 'key1=val1;key2=val2;key3=val3'
       }
     })
-      .delete(`${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`)
+      .delete(
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+      )
       .reply(204);
 
     const request = TestEntity.requestBuilder()
@@ -379,7 +386,9 @@ describe('Request Builder', () => {
         'if-match': 'something-new'
       }
     })
-      .delete(`${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`)
+      .delete(
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+      )
       .reply(204);
 
     const request = TestEntity.requestBuilder()
@@ -482,9 +491,14 @@ describe('Request Builder', () => {
     mockSubaccountDestinationsCall([], 200, providerToken);
 
     nock(destination.tokenServiceURL, {
-      reqheaders: { authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA==' }
+      reqheaders: {
+        authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA=='
+      }
     })
-      .post('/oauth/token', 'grant_type=client_credentials&client_id=TokenClientId&client_secret=TokenClientSecret')
+      .post(
+        '/oauth/token',
+        'grant_type=client_credentials&client_id=TokenClientId&client_secret=TokenClientSecret'
+      )
       .reply(200, { access_token: fakeOAuthToken });
 
     nock(destination.URL, {
@@ -497,11 +511,9 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
-      .getAll()
-      .execute({
-        destinationName: 'FINAL-DESTINATION'
-      });
+    const request = TestEntity.requestBuilder().getAll().execute({
+      destinationName: 'FINAL-DESTINATION'
+    });
 
     await expect(request).resolves.not.toThrow();
   });

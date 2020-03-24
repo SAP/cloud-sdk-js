@@ -1,18 +1,48 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger } from '@sap-cloud-sdk/util';
-import { DecodedJWT, decodeJwt, isIdenticalTenant, verifyJwt, VerifyJwtOptions } from '../util/jwt';
-import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from '../util/proxy-util';
+import {
+  DecodedJWT,
+  decodeJwt,
+  isIdenticalTenant,
+  verifyJwt,
+  VerifyJwtOptions
+} from '../util/jwt';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from '../util/proxy-util';
 import { IsolationStrategy } from './cache';
 import { addProxyConfigurationOnPrem } from './connectivity-service';
 import { sanitizeDestination } from './destination';
 import { DestinationsByType } from './destination-accessor-types';
 import { destinationCache } from './destination-cache';
-import { alwaysProvider, alwaysSubscriber, DestinationSelectionStrategy, subscriberFirst } from './destination-selection-strategies';
-import { fetchDestination, fetchInstanceDestinations, fetchSubaccountDestinations } from './destination-service';
-import { Destination, DestinationNameAndJwt, DestinationRetrievalOptions, isDestinationNameAndJwt } from './destination-service-types';
-import { getDestinationFromEnvByName, getDestinationsEnvVariable } from './env-destination-accessor';
-import { getDestinationServiceCredentialsList, getService } from './environment-accessor';
+import {
+  alwaysProvider,
+  alwaysSubscriber,
+  DestinationSelectionStrategy,
+  subscriberFirst
+} from './destination-selection-strategies';
+import {
+  fetchDestination,
+  fetchInstanceDestinations,
+  fetchSubaccountDestinations
+} from './destination-service';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationRetrievalOptions,
+  isDestinationNameAndJwt
+} from './destination-service-types';
+import {
+  getDestinationFromEnvByName,
+  getDestinationsEnvVariable
+} from './env-destination-accessor';
+import {
+  getDestinationServiceCredentialsList,
+  getService
+} from './environment-accessor';
 import { DestinationServiceCredentials } from './environment-accessor-types';
 import { serviceToken, userApprovedServiceToken } from './token-accessor';
 import { destinationForServiceBinding } from './vcap-service-destination';
@@ -60,7 +90,9 @@ export interface DestinationAccessorOptions {
   userJwt?: string;
 }
 
-export type DestinationOptions = DestinationAccessorOptions & DestinationRetrievalOptions & VerifyJwtOptions;
+export type DestinationOptions = DestinationAccessorOptions &
+  DestinationRetrievalOptions &
+  VerifyJwtOptions;
 
 /**
  * @deprecated Since v1.0.1. Use [[getDestination]] instead.
@@ -76,7 +108,10 @@ export type DestinationOptions = DestinationAccessorOptions & DestinationRetriev
  * @param options - The options of the fetching query of the destination that include the JWT of the current request and the strategy for selecting a destination.
  * @returns A promise returning the requested destination on success.
  */
-export async function getDestinationOptions(name: string, options: DestinationOptions = {}): Promise<Destination | null> {
+export async function getDestinationOptions(
+  name: string,
+  options: DestinationOptions = {}
+): Promise<Destination | null> {
   return getDestination(name, options);
 }
 
@@ -93,7 +128,10 @@ export async function getDestinationOptions(name: string, options: DestinationOp
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
  */
-export async function getDestination(name: string, options: DestinationOptions = {}): Promise<Destination | null> {
+export async function getDestination(
+  name: string,
+  options: DestinationOptions = {}
+): Promise<Destination | null> {
   const destination = await (tryDestinationFromEnv(name) ||
     tryDestinationForServiceBinding(name) ||
     getDestinationFromDestinationService(name, options));
@@ -118,15 +156,33 @@ export async function getDestinationFromDestinationService(
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
   logger.info('Attempting to retrieve destination from destination service.');
-  const decodedUserJwt = options.userJwt ? await verifyJwt(options.userJwt, options) : options.iss ? { iss: options.iss } : undefined;
-  const isolation = options.isolationStrategy ? options.isolationStrategy : IsolationStrategy.Tenant;
-  const selectionStrategy = options.selectionStrategy ? options.selectionStrategy : subscriberFirst;
+  const decodedUserJwt = options.userJwt
+    ? await verifyJwt(options.userJwt, options)
+    : options.iss
+    ? { iss: options.iss }
+    : undefined;
+  const isolation = options.isolationStrategy
+    ? options.isolationStrategy
+    : IsolationStrategy.Tenant;
+  const selectionStrategy = options.selectionStrategy
+    ? options.selectionStrategy
+    : subscriberFirst;
   let providerDestinationCache;
 
-  if (options.useCache && options.userJwt && subscriberDestinationIsSelected(selectionStrategy)) {
-    const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(decodedUserJwt!, name, isolation);
+  if (
+    options.useCache &&
+    options.userJwt &&
+    subscriberDestinationIsSelected(selectionStrategy)
+  ) {
+    const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(
+      decodedUserJwt!,
+      name,
+      isolation
+    );
     if (subscriberDestinationCache) {
-      logger.info('Sucessfully retrieved destination from destination service cache for subscriber destinations.');
+      logger.info(
+        'Sucessfully retrieved destination from destination service cache for subscriber destinations.'
+      );
       return subscriberDestinationCache;
     }
   }
@@ -136,34 +192,62 @@ export async function getDestinationFromDestinationService(
   const decodedProviderJwt = await decodeJwt(providerToken);
 
   if (options.useCache) {
-    providerDestinationCache = destinationCache.retrieveDestinationFromCache(decodedProviderJwt, name, isolation);
+    providerDestinationCache = destinationCache.retrieveDestinationFromCache(
+      decodedProviderJwt,
+      name,
+      isolation
+    );
     if (
       providerDestinationCache &&
-      (selectionStrategy === alwaysProvider || (decodedUserJwt && isIdenticalTenant(decodedUserJwt!, decodedProviderJwt)))
+      (selectionStrategy === alwaysProvider ||
+        (decodedUserJwt &&
+          isIdenticalTenant(decodedUserJwt!, decodedProviderJwt)))
     ) {
-      logger.info('Sucessfully retrieved destination from destination service cache for provider destinations.');
+      logger.info(
+        'Sucessfully retrieved destination from destination service cache for provider destinations.'
+      );
       return providerDestinationCache;
     }
   }
 
   const shouldExecuteSubscriberCalls =
-    decodedUserJwt && !isIdenticalTenant(decodedUserJwt!, decodedProviderJwt) && selectionStrategy !== alwaysProvider;
+    decodedUserJwt &&
+    !isIdenticalTenant(decodedUserJwt!, decodedProviderJwt) &&
+    selectionStrategy !== alwaysProvider;
 
-  const subscriberDestinations = shouldExecuteSubscriberCalls ? await getAllSubscriberDestinations(decodedUserJwt!, options) : emptyDestinationByType;
+  const subscriberDestinations = shouldExecuteSubscriberCalls
+    ? await getAllSubscriberDestinations(decodedUserJwt!, options)
+    : emptyDestinationByType;
 
-  if (emptyDestinationsByType(subscriberDestinations) && providerDestinationCache && selectionStrategy !== alwaysSubscriber) {
-    logger.info('Sucessfully retrieved destination from destination service cache for provider destinations.');
+  if (
+    emptyDestinationsByType(subscriberDestinations) &&
+    providerDestinationCache &&
+    selectionStrategy !== alwaysSubscriber
+  ) {
+    logger.info(
+      'Sucessfully retrieved destination from destination service cache for provider destinations.'
+    );
     return providerDestinationCache;
   }
 
   const providerDestinations =
-    selectionStrategy !== alwaysSubscriber ? await getAllProviderDestinations(providerToken, options) : emptyDestinationByType;
+    selectionStrategy !== alwaysSubscriber
+      ? await getAllProviderDestinations(providerToken, options)
+      : emptyDestinationByType;
 
   if (options.useCache) {
     if (options.userJwt) {
-      destinationCache.cacheRetrievedDestinations(decodedUserJwt!, subscriberDestinations, isolation);
+      destinationCache.cacheRetrievedDestinations(
+        decodedUserJwt!,
+        subscriberDestinations,
+        isolation
+      );
     }
-    destinationCache.cacheRetrievedDestinations(decodedProviderJwt, providerDestinations, isolation);
+    destinationCache.cacheRetrievedDestinations(
+      decodedProviderJwt,
+      providerDestinations,
+      isolation
+    );
   }
 
   const allDestinations = {
@@ -171,7 +255,10 @@ export async function getDestinationFromDestinationService(
     provider: providerDestinations
   };
 
-  let destination: Destination | null = selectionStrategy(allDestinations, name);
+  let destination: Destination | null = selectionStrategy(
+    allDestinations,
+    name
+  );
 
   if (destination) {
     if (destination.authentication === 'OAuth2SAMLBearerAssertion') {
@@ -179,26 +266,48 @@ export async function getDestinationFromDestinationService(
         const destinationService = getService('destination');
 
         if (!destinationService) {
-          throw Error(`Failed to fetch destination "${name}"! No binding to a destination service found.`);
+          throw Error(
+            `Failed to fetch destination "${name}"! No binding to a destination service found.`
+          );
         }
         logger.debug(providerToken);
-        destination = await fetchDestination(destinationService.credentials.uri, providerToken, name, options);
+        destination = await fetchDestination(
+          destinationService.credentials.uri,
+          providerToken,
+          name,
+          options
+        );
       } else {
         if (!options.userJwt) {
           throw Error(
             `No user token (JWT) has been provided! This is strictly necessary for principal propagation. Value of the JWT: ${options.userJwt}.`
           );
         }
-        destination = await getDestinationWithAuthTokens(name, options.userJwt, options);
+        destination = await getDestinationWithAuthTokens(
+          name,
+          options.userJwt,
+          options
+        );
       }
-    } else if (destination.authentication === 'ClientCertificateAuthentication') {
-      destination = await getDestinationWithCertificates(name, decodedUserJwt, options);
+    } else if (
+      destination.authentication === 'ClientCertificateAuthentication'
+    ) {
+      destination = await getDestinationWithCertificates(
+        name,
+        decodedUserJwt,
+        options
+      );
     }
 
     if (destination) {
-      logger.info('Sucessfully retrieved destination from destination service.');
+      logger.info(
+        'Sucessfully retrieved destination from destination service.'
+      );
       if (proxyStrategy(destination) === ProxyStrategy.ON_PREMISE_PROXY) {
-        destination = await addProxyConfigurationOnPrem(destination, options.userJwt);
+        destination = await addProxyConfigurationOnPrem(
+          destination,
+          options.userJwt
+        );
       }
       if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
         destination = addProxyConfigurationInternet(destination);
@@ -217,7 +326,9 @@ export async function getDestinationFromDestinationService(
   return destination;
 }
 
-function tryDestinationForServiceBinding(name: string): Destination | undefined {
+function tryDestinationForServiceBinding(
+  name: string
+): Destination | undefined {
   logger.info('Attempting to retrieve destination from service binding.');
   try {
     const destination = destinationForServiceBinding(name);
@@ -226,7 +337,9 @@ function tryDestinationForServiceBinding(name: string): Destination | undefined 
   } catch (error) {
     logger.info(error.message);
     logger.info('Could not retrieve destination from service binding.');
-    logger.info('If you are not using SAP Extension Factory, this information probably does not concern you.');
+    logger.info(
+      'If you are not using SAP Extension Factory, this information probably does not concern you.'
+    );
     return undefined;
   }
 }
@@ -244,7 +357,9 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
     try {
       const destination = getDestinationFromEnvByName(name);
       if (destination) {
-        logger.info('Sucessfully retrieved destination from environment variable.');
+        logger.info(
+          'Sucessfully retrieved destination from environment variable.'
+        );
         return destination;
       }
     } catch (error) {
@@ -262,17 +377,34 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
  * @param options - Destination retrieval options.
  * @returns A promise, that (if it resolves) contains the subscriber destinations, grouped by type (instance, subaccount).
  */
-async function getAllSubscriberDestinations(userJwt: DecodedJWT, options: DestinationRetrievalOptions): Promise<DestinationsByType> {
+async function getAllSubscriberDestinations(
+  userJwt: DecodedJWT,
+  options: DestinationRetrievalOptions
+): Promise<DestinationsByType> {
   const destinationServiceCreds = getDestinationServiceCredentials();
 
-  const accessToken = await serviceToken('destination', { userJwt, ...options });
-  return getInstanceAndSubaccountDestinations(destinationServiceCreds.uri, accessToken, options);
+  const accessToken = await serviceToken('destination', {
+    userJwt,
+    ...options
+  });
+  return getInstanceAndSubaccountDestinations(
+    destinationServiceCreds.uri,
+    accessToken,
+    options
+  );
 }
 
-async function getAllProviderDestinations(providerJwt: string, options: DestinationRetrievalOptions): Promise<DestinationsByType> {
+async function getAllProviderDestinations(
+  providerJwt: string,
+  options: DestinationRetrievalOptions
+): Promise<DestinationsByType> {
   const destinationServiceCreds = getDestinationServiceCredentials();
 
-  return getInstanceAndSubaccountDestinations(destinationServiceCreds.uri, providerJwt, options);
+  return getInstanceAndSubaccountDestinations(
+    destinationServiceCreds.uri,
+    providerJwt,
+    options
+  );
 }
 
 async function getInstanceAndSubaccountDestinations(
@@ -297,37 +429,74 @@ async function getDestinationWithCertificates(
   options: DestinationRetrievalOptions
 ): Promise<Destination> {
   const destinationServiceCreds = getDestinationServiceCredentials();
-  const accessToken = await serviceToken('destination', { userJwt, ...options });
+  const accessToken = await serviceToken('destination', {
+    userJwt,
+    ...options
+  });
 
-  return fetchDestination(destinationServiceCreds.uri, accessToken, name, options);
+  return fetchDestination(
+    destinationServiceCreds.uri,
+    accessToken,
+    name,
+    options
+  );
 }
 
-async function getDestinationWithAuthTokens(name: string, userJwt: string, options?: DestinationRetrievalOptions): Promise<Destination> {
+async function getDestinationWithAuthTokens(
+  name: string,
+  userJwt: string,
+  options?: DestinationRetrievalOptions
+): Promise<Destination> {
   const destinationService = getService('destination');
 
   if (!destinationService) {
-    throw Error(`Failed to fetch destination "${name}"! No binding to a destination service found.`);
+    throw Error(
+      `Failed to fetch destination "${name}"! No binding to a destination service found.`
+    );
   }
 
-  const accessToken = await userApprovedServiceToken(userJwt, destinationService, options);
-  return fetchDestination(destinationService.credentials.uri, accessToken, name, options);
+  const accessToken = await userApprovedServiceToken(
+    userJwt,
+    destinationService,
+    options
+  );
+  return fetchDestination(
+    destinationService.credentials.uri,
+    accessToken,
+    name,
+    options
+  );
 }
 
 function getDestinationServiceCredentials(): DestinationServiceCredentials {
   const credentials = getDestinationServiceCredentialsList();
   if (!credentials || credentials.length === 0) {
-    throw Error('No binding to a Destination service instance found. Please bind a destination service instance to your application!');
+    throw Error(
+      'No binding to a Destination service instance found. Please bind a destination service instance to your application!'
+    );
   }
 
   return credentials[0];
 }
 
-const emptyDestinationByType: DestinationsByType = { instance: [], subaccount: [] };
+const emptyDestinationByType: DestinationsByType = {
+  instance: [],
+  subaccount: []
+};
 
-function subscriberDestinationIsSelected(selectionStrategy: DestinationSelectionStrategy): boolean {
-  return selectionStrategy === subscriberFirst || selectionStrategy === alwaysSubscriber;
+function subscriberDestinationIsSelected(
+  selectionStrategy: DestinationSelectionStrategy
+): boolean {
+  return (
+    selectionStrategy === subscriberFirst ||
+    selectionStrategy === alwaysSubscriber
+  );
 }
 
-function emptyDestinationsByType(destinationByType: DestinationsByType): boolean {
-  return !destinationByType.instance.length && !destinationByType.instance.length;
+function emptyDestinationsByType(
+  destinationByType: DestinationsByType
+): boolean {
+  return (
+    !destinationByType.instance.length && !destinationByType.instance.length
+  );
 }

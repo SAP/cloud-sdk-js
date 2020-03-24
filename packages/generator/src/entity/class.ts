@@ -1,25 +1,54 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { ClassDeclarationStructure, MethodDeclarationStructure, PropertyDeclarationStructure, StructureKind } from 'ts-morph';
+import {
+  ClassDeclarationStructure,
+  MethodDeclarationStructure,
+  PropertyDeclarationStructure,
+  StructureKind
+} from 'ts-morph';
 import { prependPrefix } from '../internal-prefix';
-import { getEntityDescription, getFunctionDoc, getNavPropertyDescription, getPropertyDescription } from '../typedoc';
-import { VdmEntity, VdmNavigationProperty, VdmProperty, VdmServiceMetadata } from '../vdm-types';
+import {
+  getEntityDescription,
+  getFunctionDoc,
+  getNavPropertyDescription,
+  getPropertyDescription
+} from '../typedoc';
+import {
+  VdmEntity,
+  VdmNavigationProperty,
+  VdmProperty,
+  VdmServiceMetadata
+} from '../vdm-types';
 
-export function entityClass(entity: VdmEntity, service: VdmServiceMetadata): ClassDeclarationStructure {
+export function entityClass(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
     name: entity.className,
     extends: 'Entity',
     implements: [`${entity.className}Type`],
-    properties: [...staticProperties(entity, service), ...properties(entity), ...navProperties(entity, service)],
+    properties: [
+      ...staticProperties(entity, service),
+      ...properties(entity),
+      ...navProperties(entity, service)
+    ],
     methods: methods(entity),
     isExported: true,
     docs: [getEntityDescription(entity, service)]
   };
 }
 
-function staticProperties(entity: VdmEntity, service: VdmServiceMetadata): PropertyDeclarationStructure[] {
-  return [entityName(entity), serviceName(entity, service), defaultServicePath(service)];
+function staticProperties(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): PropertyDeclarationStructure[] {
+  return [
+    entityName(entity),
+    serviceName(entity, service),
+    defaultServicePath(service)
+  ];
 }
 
 function entityName(entity: VdmEntity): PropertyDeclarationStructure {
@@ -32,17 +61,26 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
   };
 }
 
-function serviceName(entity: VdmEntity, service: VdmServiceMetadata): PropertyDeclarationStructure {
+function serviceName(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prependPrefix('serviceName'),
     isStatic: true,
     initializer: `\'${service.namespace}\'`,
-    docs: [`@deprecated Since v1.0.1 Use [[${prependPrefix('defaultServicePath')}]] instead.\nTechnical service name for ${entity.className}.`]
+    docs: [
+      `@deprecated Since v1.0.1 Use [[${prependPrefix(
+        'defaultServicePath'
+      )}]] instead.\nTechnical service name for ${entity.className}.`
+    ]
   };
 }
 
-function defaultServicePath(service: VdmServiceMetadata): PropertyDeclarationStructure {
+function defaultServicePath(
+  service: VdmServiceMetadata
+): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prependPrefix('defaultServicePath'),
@@ -61,18 +99,35 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
     kind: StructureKind.Property,
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
     type: prop.jsType,
-    docs: [getPropertyDescription(prop, { nullable: prop.nullable, maxLength: prop.maxLength })]
+    docs: [
+      getPropertyDescription(prop, {
+        nullable: prop.nullable,
+        maxLength: prop.maxLength
+      })
+    ]
   };
 }
 
-function navProperties(entity: VdmEntity, service: VdmServiceMetadata): PropertyDeclarationStructure[] {
-  return entity.navigationProperties.map(navProp => navProperty(navProp, service));
+function navProperties(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): PropertyDeclarationStructure[] {
+  return entity.navigationProperties.map(navProp =>
+    navProperty(navProp, service)
+  );
 }
 
-function navProperty(navProp: VdmNavigationProperty, service: VdmServiceMetadata): PropertyDeclarationStructure {
+function navProperty(
+  navProp: VdmNavigationProperty,
+  service: VdmServiceMetadata
+): PropertyDeclarationStructure {
   const entity = service.entities.find(e => e.entitySetName === navProp.to);
   if (!entity) {
-    throw Error(`Failed to find the entity from the service: ${JSON.stringify(service)} for nav property ${navProp}`);
+    throw Error(
+      `Failed to find the entity from the service: ${JSON.stringify(
+        service
+      )} for nav property ${navProp}`
+    );
   }
   return {
     kind: StructureKind.Property,
@@ -83,7 +138,12 @@ function navProperty(navProp: VdmNavigationProperty, service: VdmServiceMetadata
 }
 
 function methods(entity: VdmEntity): MethodDeclarationStructure[] {
-  return [builder(entity), requestBuilder(entity), customField(entity), toJSON(entity)];
+  return [
+    builder(entity),
+    requestBuilder(entity),
+    customField(entity),
+    toJSON(entity)
+  ];
 }
 
 function builder(entity: VdmEntity): MethodDeclarationStructure {
@@ -94,12 +154,15 @@ function builder(entity: VdmEntity): MethodDeclarationStructure {
     statements: `return Entity.entityBuilder(${entity.className});`,
     returnType: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
     docs: [
-      getFunctionDoc(`Returns an entity builder to construct instances \`${entity.className}\`.`, {
-        returns: {
-          type: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
-          description: `A builder that constructs instances of entity type \`${entity.className}\`.`
+      getFunctionDoc(
+        `Returns an entity builder to construct instances \`${entity.className}\`.`,
+        {
+          returns: {
+            type: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
+            description: `A builder that constructs instances of entity type \`${entity.className}\`.`
+          }
         }
-      })
+      )
     ]
   };
 }
@@ -112,12 +175,15 @@ function requestBuilder(entity: VdmEntity): MethodDeclarationStructure {
     returnType: `${entity.className}RequestBuilder`,
     statements: `return new ${entity.className}RequestBuilder();`,
     docs: [
-      getFunctionDoc(`Returns a request builder to construct requests for operations on the \`${entity.className}\` entity type.`, {
-        returns: {
-          type: `${entity.className}RequestBuilder`,
-          description: `A \`${entity.className}\` request builder.`
+      getFunctionDoc(
+        `Returns a request builder to construct requests for operations on the \`${entity.className}\` entity type.`,
+        {
+          returns: {
+            type: `${entity.className}RequestBuilder`,
+            description: `A \`${entity.className}\` request builder.`
+          }
         }
-      })
+      )
     ]
   };
 }
@@ -139,7 +205,13 @@ function customField(entity: VdmEntity): MethodDeclarationStructure {
       getFunctionDoc(
         `Returns a selectable object that allows the selection of custom field in a get request for the entity \`${entity.className}\`.`,
         {
-          params: [{ name: 'fieldName', description: 'Name of the custom field to select', type: 'string' }],
+          params: [
+            {
+              name: 'fieldName',
+              description: 'Name of the custom field to select',
+              type: 'string'
+            }
+          ],
           returns: {
             type: `CustomField<${entity.className}>`,
             description: `A builder that constructs instances of entity type \`${entity.className}\`.`
@@ -158,9 +230,16 @@ function toJSON(entity: VdmEntity): MethodDeclarationStructure {
     statements: 'return { ...this, ...this._customFields };',
     returnType: '{ [key: string]: any }',
     docs: [
-      getFunctionDoc('Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.', {
-        returns: { type: '{ [key: string]: any }', description: 'An object containing all instance variables + custom fields.' }
-      })
+      getFunctionDoc(
+        'Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.',
+        {
+          returns: {
+            type: '{ [key: string]: any }',
+            description:
+              'An object containing all instance variables + custom fields.'
+          }
+        }
+      )
     ]
   };
 }

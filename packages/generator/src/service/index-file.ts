@@ -1,6 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { ExportDeclarationStructure, SourceFileStructure, StructureKind } from 'ts-morph';
+import {
+  ExportDeclarationStructure,
+  SourceFileStructure,
+  StructureKind
+} from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
 
 export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
@@ -8,9 +12,15 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
     kind: StructureKind.SourceFile,
     statements: [
       ...service.entities.map(entity => exportStatement(entity.className)),
-      ...service.entities.map(entity => exportStatement(`${entity.className}RequestBuilder`)),
-      ...service.complexTypes.map(complexType => exportStatement(complexType.typeName)),
-      ...(service.functionImports && service.functionImports.length ? [exportStatement('function-imports')] : []),
+      ...service.entities.map(entity =>
+        exportStatement(`${entity.className}RequestBuilder`)
+      ),
+      ...service.complexTypes.map(complexType =>
+        exportStatement(complexType.typeName)
+      ),
+      ...(service.functionImports && service.functionImports.length
+        ? [exportStatement('function-imports')]
+        : []),
       exportStatement('BatchRequest')
     ]
   };

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { checkMandatoryValue, DecodedJWT, JwtKeyMapping, tenantId, tenantName } from '../util';
 
@@ -31,7 +29,7 @@ export interface Tenant {
 /**
  * Creates a tenant object from the decoded JWT.
  *
- * @param decodedJWT Decoded JWT token
+ * @param decodedJWT - Decoded JWT token
  * @returns Representation of the tenant.
  * @exception Error Raised if no id is found in the decoded JWT.
  */

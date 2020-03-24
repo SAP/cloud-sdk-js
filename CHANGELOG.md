@@ -31,7 +31,7 @@ blog:
 
 -
 
-# 1.18.0
+# 1.18.1
 
 release-date:
 docs:
@@ -43,7 +43,7 @@ blog:
 
 ## compatibilityNotes
 
--
+- Parsing destinations now also checks for validity of the destination. All destinations of type 'HTTP' are expected to contain a `url` or `URL` property. When retrieving a destination from the `destinations` environment variable by name, all destinations are parsed, therefore this validation applies to all available destination, even those that are not read. Invalid destinations will be reported with `Property 'URL' of destination configuration must not be undefined.`
 
 ## newFunctionality
 
@@ -51,11 +51,44 @@ blog:
 
 ## improvements
 
-- When generating an OData client using the `generator` package, the version that is put in the generated `package.json` can now be supplied as argument (`versionInPackageJson`). Call `generate-odata-client help` for more details.
+- Validate destinations retrieved from environment variable or destination service.
+- Allow setting the format for the keys of a destination in the `destinations` environment variable as known from the destination service - e. g. `URL` in addition to previously only `url`.
 
 ## fixedIssues
 
--
+- Fix ordering for complex properties including nested complex properties.
+- Fix the generator crashing for services containing function imports without a return type.
+- Fix the destination processing so that the user can set `PrincipalPropagation` as authentication scheme for OnPremise connectivity.
+
+# 1.18.0
+
+release-date: March 12, 2020
+docs: https://help.sap.com/doc/69202ef7e0a64767833782132648b855/1.0/en-US/index.html
+blog: https://blogs.sap.com/?p=1060707
+
+## compatibilityNotes
+
+- Some packages of the SAP Cloud SDK for JavaScript have been migrated to [external GitHub](https://github.com/SAP/cloud-sdk) and are now available as open-source software.
+As a result, the packages have been renamed as shown in the list below.
+No Breaking changes are made.
+The old versions of the packages will not receive further updates, so we heavily encourage switching to the new version of the packages.
+  - `@sap/cloud-sdk-util` was renamed to `@sap-cloud-sdk/util`
+  - `@sap/cloud-sdk-analytics` was renamed to `@sap-cloud-sdk/analytics`
+  - `@sap/cloud-sdk-core` was renamed to `@sap-cloud-sdk/core`
+  - `@sap/cloud-sdk-generator` was renamed to `@sap-cloud-sdk/generator`
+  - `@sap/cloud-sdk-test-util` was renamed to `@sap-cloud-sdk/test-util`
+
+### How to update your project
+1. Search for all your `dependencies`/`devDependencies`/`peerDependencies` in your `package.json`.
+1. Replace the old package name e.g., `@sap/cloud-sdk-core` with the new one, `@sap-cloud-sdk/core`.
+1. Use the stable version of the open source version e.g., `^1.18.0`.
+1. Deleting your `node_modules` and the `package-lock.json`.
+1. Install your dependencies again to reflect the changes via e.g., `npm i`.
+1. Search for your source code that uses the old packages as import and replace it with new names.
+
+## improvements
+
+- Allow the definition of a custom version for the gerated `package.json` by passing the desired version to the generator as an argument `versionInPackageJson`.
 
 # 1.17.2
 

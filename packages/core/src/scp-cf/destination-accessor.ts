@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger } from '@sap-cloud-sdk/util';
 import { DecodedJWT, decodeJwt, isIdenticalTenant, verifyJwt, VerifyJwtOptions } from '../util/jwt';
@@ -34,8 +32,8 @@ const logger = createLogger({
  *
  * If either of the prerequisites is not met or one of the services returns an error, this function will either throw an error or return a promise that rejects.
  *
- * @param destination A destination or the necessary parameters to fetch one.
- * @param options Caching options by fetching destination.
+ * @param destination - A destination or the necessary parameters to fetch one.
+ * @param options - Caching options by fetching destination.
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
@@ -55,6 +53,7 @@ export interface DestinationAccessorOptions {
    * Method that implements the selection strategy of the retrieved destination. Uses [[subscriberFirst]] per default. Use the selector helper [[DestinationSelectionStrategies]] to select the appropriate selection strategy.
    */
   selectionStrategy?: DestinationSelectionStrategy;
+
   /**
    * The user token of the current request.
    */
@@ -73,8 +72,8 @@ export type DestinationOptions = DestinationAccessorOptions & DestinationRetriev
  *
  * If the destinations are read from the environment, the jwt will be ignored.
  *
- * @param name The name of the destination to be retrieved.
- * @param options The options of the fetching query of the destination that include the JWT of the current request and the strategy for selecting a destination.
+ * @param name - The name of the destination to be retrieved.
+ * @param options - The options of the fetching query of the destination that include the JWT of the current request and the strategy for selecting a destination.
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestinationOptions(name: string, options: DestinationOptions = {}): Promise<Destination | null> {
@@ -90,8 +89,8 @@ export async function getDestinationOptions(name: string, options: DestinationOp
  * If you want to get a destination only from a specific source, use the corresponding function directly
  *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
  *
- * @param name The name of the destination to be retrieved.
- * @param options Configuration for how to retrieve destinations from the destination service.
+ * @param name - The name of the destination to be retrieved.
+ * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestination(name: string, options: DestinationOptions = {}): Promise<Destination | null> {
@@ -110,14 +109,15 @@ export async function getDestination(name: string, options: DestinationOptions =
  *
  * If the destinations are read from the environment, the jwt will be ignored.
  *
- * @param name The name of the destination to be retrieved.
- * @param options Configuration for how to retrieve destinations from the destination service.
+ * @param name - The name of the destination to be retrieved.
+ * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
+  logger.info('Attempting to retrieve destination from destination service.');
   const decodedUserJwt = options.userJwt ? await verifyJwt(options.userJwt, options) : options.iss ? { iss: options.iss } : undefined;
   const isolation = options.isolationStrategy ? options.isolationStrategy : IsolationStrategy.Tenant;
   const selectionStrategy = options.selectionStrategy ? options.selectionStrategy : subscriberFirst;
@@ -126,6 +126,7 @@ export async function getDestinationFromDestinationService(
   if (options.useCache && options.userJwt && subscriberDestinationIsSelected(selectionStrategy)) {
     const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(decodedUserJwt!, name, isolation);
     if (subscriberDestinationCache) {
+      logger.info('Sucessfully retrieved destination from destination service cache for subscriber destinations.');
       return subscriberDestinationCache;
     }
   }
@@ -140,6 +141,7 @@ export async function getDestinationFromDestinationService(
       providerDestinationCache &&
       (selectionStrategy === alwaysProvider || (decodedUserJwt && isIdenticalTenant(decodedUserJwt!, decodedProviderJwt)))
     ) {
+      logger.info('Sucessfully retrieved destination from destination service cache for provider destinations.');
       return providerDestinationCache;
     }
   }
@@ -150,6 +152,7 @@ export async function getDestinationFromDestinationService(
   const subscriberDestinations = shouldExecuteSubscriberCalls ? await getAllSubscriberDestinations(decodedUserJwt!, options) : emptyDestinationByType;
 
   if (emptyDestinationsByType(subscriberDestinations) && providerDestinationCache && selectionStrategy !== alwaysSubscriber) {
+    logger.info('Sucessfully retrieved destination from destination service cache for provider destinations.');
     return providerDestinationCache;
   }
 
@@ -181,20 +184,27 @@ export async function getDestinationFromDestinationService(
         logger.debug(providerToken);
         destination = await fetchDestination(destinationService.credentials.uri, providerToken, name, options);
       } else {
-        throwErrorWhenNull(options.userJwt, 'user jwt');
-        destination = await getDestinationWithAuthTokens(name, options.userJwt!, options);
+        if (!options.userJwt) {
+          throw Error(
+            `No user token (JWT) has been provided! This is strictly necessary for principal propagation. Value of the JWT: ${options.userJwt}.`
+          );
+        }
+        destination = await getDestinationWithAuthTokens(name, options.userJwt, options);
       }
     } else if (destination.authentication === 'ClientCertificateAuthentication') {
       destination = await getDestinationWithCertificates(name, decodedUserJwt, options);
     }
 
     if (destination) {
+      logger.info('Sucessfully retrieved destination from destination service.');
       if (proxyStrategy(destination) === ProxyStrategy.ON_PREMISE_PROXY) {
         destination = await addProxyConfigurationOnPrem(destination, options.userJwt);
       }
       if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
         destination = addProxyConfigurationInternet(destination);
       }
+    } else {
+      logger.info('Could not retrieve destination from destination service.');
     }
 
     destinationCache.cacheRetrievedDestinations(
@@ -208,15 +218,22 @@ export async function getDestinationFromDestinationService(
 }
 
 function tryDestinationForServiceBinding(name: string): Destination | undefined {
+  logger.info('Attempting to retrieve destination from service binding.');
   try {
-    return destinationForServiceBinding(name);
+    const destination = destinationForServiceBinding(name);
+    logger.info('Sucessfully retrieved destination from service binding.');
+    return destination;
   } catch (error) {
-    logger.warn(error.message);
+    logger.info(error.message);
+    logger.info('Could not retrieve destination from service binding.');
+    logger.info('If you are not using SAP Extension Factory, this information probably does not concern you.');
     return undefined;
   }
 }
 
 function tryDestinationFromEnv(name: string): Destination | undefined {
+  logger.info('Attempting to retrieve destination from environment variable.');
+
   if (getDestinationsEnvVariable()) {
     logger.warn(
       "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
@@ -224,15 +241,25 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
         'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
     );
 
-    return getDestinationFromEnvByName(name) || undefined;
+    try {
+      const destination = getDestinationFromEnvByName(name);
+      if (destination) {
+        logger.info('Sucessfully retrieved destination from environment variable.');
+        return destination;
+      }
+    } catch (error) {
+      logger.info(error.message);
+    }
   }
+
+  logger.info('Could not retrieve destination from environment variable.');
 }
 
 /**
  * This function will fetch a destination of a subscriber given a destination name and the subscriber JWT.
  *
- * @param userJwt The (encoded) JWT of the current request.
- * @param options Destination retrieval options.
+ * @param userJwt - The (encoded) JWT of the current request.
+ * @param options - Destination retrieval options.
  * @returns A promise, that (if it resolves) contains the subscriber destinations, grouped by type (instance, subaccount).
  */
 async function getAllSubscriberDestinations(userJwt: DecodedJWT, options: DestinationRetrievalOptions): Promise<DestinationsByType> {
@@ -289,7 +316,7 @@ async function getDestinationWithAuthTokens(name: string, userJwt: string, optio
 function getDestinationServiceCredentials(): DestinationServiceCredentials {
   const credentials = getDestinationServiceCredentialsList();
   if (!credentials || credentials.length === 0) {
-    throw new Error('No binding to a Destination service instance found. Please bind a destination service instance to your application!');
+    throw Error('No binding to a Destination service instance found. Please bind a destination service instance to your application!');
   }
 
   return credentials[0];
@@ -302,11 +329,5 @@ function subscriberDestinationIsSelected(selectionStrategy: DestinationSelection
 }
 
 function emptyDestinationsByType(destinationByType: DestinationsByType): boolean {
-  return destinationByType.instance.length + destinationByType.instance.length === 0;
-}
-
-function throwErrorWhenNull(obj: any, readableName: string) {
-  if (!obj) {
-    throw new Error(`The ${readableName} is ${obj}.`);
-  }
+  return !destinationByType.instance.length && !destinationByType.instance.length;
 }

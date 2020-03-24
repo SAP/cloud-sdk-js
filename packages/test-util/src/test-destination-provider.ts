@@ -1,11 +1,9 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Destination } from '@sap-cloud-sdk/core';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join, parse, resolve, sep } from 'path';
+import { Destination } from '@sap-cloud-sdk/core';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'test-util',
@@ -72,8 +70,8 @@ const formatCredentials = `Format of credentials.json is:
  * the JSON is malformed or one of the supplied paths is invalid.
  * Does not throw an error when no credentials.json can be found, but will print a warning.
  *
- * @param alias The alias identifying the destination
- * @param options References to the `systems.json` and `credentials.json` files
+ * @param alias - The alias identifying the destination
+ * @param options - References to the `systems.json` and `credentials.json` files
  * @returns An array of destinations
  */
 export function getTestDestinationByAlias(alias: string, options?: GetTestDestinationOptions): Destination {
@@ -100,7 +98,7 @@ export function getTestDestinationByAlias(alias: string, options?: GetTestDestin
  * Throws an error when no systems.json can be found, the JSON is malformed or one of the supplied paths is invalid.
  * Does not throw an error when no credentials.json can be found, but will print a warning.
  *
- * @param options References to the `systems.json` and `credentials.json` files
+ * @param options - References to the `systems.json` and `credentials.json` files
  * @returns An array of destinations
  */
 export function getTestDestinations(options?: GetTestDestinationOptions): Destination[] {

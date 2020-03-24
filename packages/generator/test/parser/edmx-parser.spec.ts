@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { parseEdmxFromPath } from '../../src/parser';
 
 describe('edmx-parser', () => {
@@ -6,7 +7,7 @@ describe('edmx-parser', () => {
 
     expect(metadataEdmx.entitySets.length).toBe(10);
     expect(metadataEdmx.entityTypes.length).toBe(10);
-    expect(metadataEdmx.functionImports.length).toBe(11);
+    expect(metadataEdmx.functionImports.length).toBe(12);
     expect(metadataEdmx.complexTypes.length).toBe(2);
     expect(metadataEdmx.associationSets.length).toBe(8);
     expect(metadataEdmx.associations.length).toBe(8);

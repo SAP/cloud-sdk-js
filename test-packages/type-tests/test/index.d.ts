@@ -1,2 +1,1 @@
-// TypeScript Version: 3.5
-// This file has to exist for dtslint to work.
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */

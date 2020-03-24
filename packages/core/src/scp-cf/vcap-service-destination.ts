@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { flatten, pipe } from 'rambda';
@@ -13,8 +11,8 @@ import { getVcapService } from './environment-accessor';
  * Throws an error if no services are bound at all, no service with the given name can be found, or the service type is not supported.
  * The last error can be circumvent by using the second parameter to provide a custom function that transforms a service binding to a destination.
  *
- * @param serviceInstanceName The name of the service.
- * @param options Options to customize the behavior of this function.
+ * @param serviceInstanceName - The name of the service.
+ * @param options - Options to customize the behavior of this function.
  * @returns A destination.
  */
 export function destinationForServiceBinding(serviceInstanceName: string, options: DestinationForServiceBindingsOptions = {}): Destination {
@@ -61,9 +59,9 @@ export interface DestinationForServiceBindingsOptions {
  * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
  */
 export interface ServiceBinding {
+  [key: string]: any;
   name: string;
   type: string;
-  [key: string]: any;
 }
 
 function loadServiceBindings(): ServiceBinding[] {
@@ -125,7 +123,6 @@ function noServiceBindingFoundError(serviceBindings: MapType<any>[], serviceInst
     `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
       .map(s => s.name)
       .join(', ')}.
-      If you're not using SAP Extension Factory, you can ignore this warning.
       `
   );
 }

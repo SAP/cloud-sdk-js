@@ -1,5 +1,6 @@
-import nock from 'nock';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import os from 'os';
+import nock from 'nock';
 import { getAnalyticsData } from '../dist';
 import { UsageAnalyticsOptions } from '../src/analytics-types';
 import { sendAnalyticsData } from '../src/usage-analytics';

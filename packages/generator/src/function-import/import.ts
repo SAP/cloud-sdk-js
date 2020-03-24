@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { flat } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
@@ -28,6 +26,7 @@ function returnTypeImports(returnTypes: VdmFunctionImportReturnType[]): ImportDe
   return mergeImportDeclarations(
     returnTypes
       .filter(returnType => returnType.returnTypeCategory !== VdmFunctionImportReturnTypeCategory.EDM_TYPE)
+      .filter(returnType => returnType.returnTypeCategory !== VdmFunctionImportReturnTypeCategory.VOID)
       .map(returnType => returnTypeImport(returnType))
   );
 }

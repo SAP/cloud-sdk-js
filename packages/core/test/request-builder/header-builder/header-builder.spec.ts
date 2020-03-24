@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { buildHeaders } from '../../../src/request-builder/header-builder/header-builder';
 import { ODataCreateRequestConfig } from '../../../src/request-builder/request/odata-create-request-config';

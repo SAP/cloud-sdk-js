@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GetAllRequestBuilder } from '../../src/request-builder';
 import { muteLoggers } from '../test-util/mute-logger';
 import { defaultDestination, mockDestinationsEnv, mockGetRequest, unmockDestinationsEnv } from '../test-util/request-mocker';
@@ -62,7 +63,7 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('throws an error when the destination cannot be found', async () => {
-      mockDestinationsEnv();
+      mockDestinationsEnv(defaultDestination);
 
       const getAllRequest = requestBuilder.execute({ destinationName: 'NonExistentDestination' });
 

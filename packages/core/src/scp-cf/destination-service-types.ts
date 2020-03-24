@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { CachingOptions, IsolationStrategy } from './cache';
 import { ProxyConfiguration } from './connectivity-service-types';
@@ -17,6 +15,7 @@ export interface Destination {
    * Name of the destination retrieved from SAP Cloud Platform, optional.
    */
   name?: string | null;
+
   /**
    * Base URL for calls to this destination, mandatory.
    *
@@ -24,90 +23,116 @@ export interface Destination {
    * The path for requests against this destination will be appended to the path defined in the URL as a new path segment.
    */
   url: string;
+
   /**
    * Type of authentication to use, optional.
    *
    * Defaults to `NoAuthentication`, unless [[username]] and [[password]] are provided, in which case the default is `BasicAuthentication`.
    */
   authentication?: AuthenticationType;
+
   /**
    * Proxy type to specify whether the target resides on-premise, optional, not used.
    */
   proxyType?: DestinationProxyType;
+
   /**
    * @deprecated Since v1.0.1.
    *
    * Origin of the destination in a multi-tenant setup on SAP Cloud Platform (either from provider or subscriber account), optional.
    */
   origin?: DestinationOrigin;
+
   /**
    * Client to target in an SAP system, will be added as HTTP header `sap-client` if set, optional.
    */
   sapClient?: string | undefined | null;
+
   /**
    * Username to use for basic authentication, optional if other means of authentication shall be used.
    */
   username?: string | null;
+
   /**
    * Password to use for basic authentication, optional if other means of authentication shall be used.
    */
   password?: string | null;
+
   /**
    * Authentication tokens returned from destination service on SAP Cloud Platform, optional.
    */
   authTokens?: DestinationAuthToken[] | null;
+
   /**
    * Flag indicating whether all certificates should be accepted when communicating with the destination. Should not be "true" in production.
    */
   isTrustingAllCertificates?: boolean;
+
   /**
    * ProxyConfiguration for on-premise connectivity and http(s) web proxies. Is present if proxyType of the destination equals "OnPremise" or environment variables [http_proxy] or [https_proxy] are set See [[ProxyConfiguration]].
    */
   proxyConfiguration?: ProxyConfiguration;
+
   /**
    * Client Id used to retrieve access token for "OAuth2ClientCredentials" authentication.
    */
   clientId?: string;
+
   /**
    * Client Secret used to retrieve access token for "OAuth2ClientCredentials" authentication.
    */
   clientSecret?: string;
+
   /**
    * URL to retrieve access token for "OAuth2ClientCredentials" authentication.
    */
   tokenServiceUrl?: string;
+
   /**
    * User for basic authentication to OAuth server (if required).
    */
   tokenServiceUser?: string;
+
   /**
    * Password for tokenServiceUser (if required).
    */
   tokenServicePassword?: string;
+
+  /**
+   * The type of the destination, defaults to 'HTTP'. The SAP Cloud SDK only understands destinations of type 'HTTP'.
+   */
+  type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
+
   /**
    * Further properties of the destination as defined in destination service on SAP Cloud Platform, possibly empty.
    */
   originalProperties?: { [key: string]: any };
+
   /**
    * Flag indicating whether the destination is for test purpose. Should be "undefined" or "false" for non-mocked destinations.
    */
   isTestDestination?: boolean;
+
   /**
    * Location ID of the Cloud Connector to be used for connection to an On-Premise system. Optional. Corresponds to property "CloudConnectorLocationId" in the additional properties of a destination.
    */
   cloudConnectorLocationId?: string;
+
   /**
    * Array of certificates used for authentication type ClientCertificateAuthentication.
    */
   certificates?: DestinationCertificate[];
+
   /**
    * Name of the key store/certificate to be used for ClientCertificateAuthentication.
    */
   keyStoreName?: string;
+
   /**
    * Password of the key store/certificate to be used for ClientCertificateAuthentication.
    */
   keyStorePassword?: string;
+
   /**
    * System user to be used for OAuth2SAMLBearerAssertion authentication type.
    */
@@ -134,10 +159,12 @@ export interface DestinationCertificate {
    * Name of the certificate file.
    */
   name: string;
+
   /**
    * Content of the certificate as base64 encoded binary.
    */
   content: string;
+
   /**
    * Type of the certificate.
    */
@@ -169,6 +196,7 @@ export interface DestinationNameAndJwt {
    * Name of the destination to retrieve, mandatory.
    */
   destinationName: string;
+
   /**
    * An access token for the XSUAA service on SAP Cloud Platform, provided as a JSON Web Token, only mandatory when destination shall be retrieved from destination service on SAP Cloud Platform.
    */
@@ -183,6 +211,7 @@ export interface DestinationCachingOptions {
    * A boolean value that indicates whether to read destinations from cache.
    */
   useCache?: boolean;
+
   /**
    * The isolation strategy used for caching destinations. For the available options, see [[IsolationStrategy]].
    * By default, IsolationStrategy.Tenant is set.
@@ -194,7 +223,7 @@ export interface DestinationCachingOptions {
  * Options to use while fetching destinations. Encompasses both [[DestinationCachingOptions]] and [[ResilienceOptions]] interfaces.
  */
 // Prettier will try to remove the parens in the type definition, which changes the meaning of the code
-// prettier-ignore
+// Prettier-ignore
 export type DestinationRetrievalOptions = (DestinationCachingOptions | CachingOptions) & ResilienceOptions;
 
 export function isDestinationNameAndJwt(destination: any): destination is DestinationNameAndJwt {
@@ -206,6 +235,7 @@ export function isDestination(destination: any): destination is Destination {
 }
 
 export type AuthenticationType =
+  | 'PrincipalPropagation'
   | 'NoAuthentication'
   | 'BasicAuthentication'
   | 'OAuth2SAMLBearerAssertion'

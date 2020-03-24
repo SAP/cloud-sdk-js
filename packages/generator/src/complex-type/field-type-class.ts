@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ClassDeclarationStructure, PropertyDeclarationStructure, StructureKind } from 'ts-morph';
 import { getComplexTypeFieldDescription, getComplexTypePropertyDescription } from '../typedoc';
@@ -31,9 +29,10 @@ function property(prop: VdmProperty, complexType: VdmComplexType): PropertyDecla
   };
 }
 
-// If the property is complex, we initialize the static helper with ComplexTypeField (requires only 3 parameters), otherwise we assign an Edm field constructor.
+// If the property is complex, we initialize the static helper with ComplexTypeField (requires only 2 parameters), otherwise we assign an Edm field constructor.
+// Keep in mind that the this pointer is the surrounding or parent field
 function getInitializer(prop: VdmProperty, complexType: VdmComplexType): string {
   return prop.isComplex
-    ? `new ${prop.fieldType}('${prop.originalName}', this._entityConstructor, '${complexType.originalName}')`
-    : `new ${prop.fieldType}('${prop.originalName}', this._entityConstructor, '${complexType.originalName}','${prop.edmType}')`;
+    ? `new ${prop.fieldType}('${prop.originalName}', this)`
+    : `new ${prop.fieldType}('${prop.originalName}', this, '${prop.edmType}')`;
 }

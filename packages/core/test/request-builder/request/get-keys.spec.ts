@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { getEntityKeys } from '../../../src/request-builder/request/get-keys';
 import { TestEntity } from '../../test-util/test-services/test-service';

@@ -1,7 +1,8 @@
-import * as analytics from '@sap-cloud-sdk/analytics';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
-import nock from 'nock';
 import { dirname, resolve, sep } from 'path';
+import * as analytics from '@sap-cloud-sdk/analytics';
+import nock from 'nock';
 
 describe('usage analytics', () => {
   const salt = '7e5eb0e845e73b72310436f29252bf4ad0ef3d0d8c0ae189dec3d5ff2531e6a0';
@@ -47,7 +48,7 @@ describe('usage analytics', () => {
       .reply(204);
 
     const options = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };
-    const callerPath = '/node_modules'; // pretend that we are a dependency
+    const callerPath = '/node_modules'; // Pretend that we are a dependency
 
     await expect(analytics.performUsageAnalytics(callerPath, options)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(true);
@@ -67,9 +68,9 @@ describe('usage analytics', () => {
 
     writeFileSync(rootConfigPath, JSON.stringify({ enabled: false, salt }), 'utf8');
 
-    const callerPath = '/node_modules'; // pretend that we're a dependency
+    const callerPath = '/node_modules'; // Pretend that we're a dependency
     await expect(analytics.performUsageAnalytics(callerPath)).resolves.toBeUndefined();
-    expect(swaCall.isDone()).toBe(false); // since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
+    expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
 
     unlinkSync(rootConfigPath);
   });
@@ -84,9 +85,9 @@ describe('usage analytics', () => {
       )
       .reply(204);
 
-    const callerPath = '/node_modules'; // pretend that we're a dependency
+    const callerPath = '/node_modules'; // Pretend that we're a dependency
     await expect(analytics.performUsageAnalytics(callerPath)).resolves.toBeUndefined();
-    expect(swaCall.isDone()).toBe(false); // since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
+    expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
   });
 
   it('any error in the process should be caught and logged, but otherwise ignored', async () => {
@@ -108,7 +109,7 @@ describe('usage analytics', () => {
       .reply(500);
 
     const options = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };
-    const callerPath = '/node_modules'; // pretend that we are a dependency
+    const callerPath = '/node_modules'; // Pretend that we are a dependency
 
     await expect(analytics.performUsageAnalytics(callerPath, options)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(true);

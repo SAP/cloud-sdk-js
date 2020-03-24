@@ -1,10 +1,12 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
+
+export function transformReturnValueForUndefined<ReturnT>(data: any, builderFn: (data: any) => ReturnT) {
+  return builderFn(data);
+}
 
 export function transformReturnValueForEntity<ReturnT extends Entity>(data: any, entityConstructor: Constructable<ReturnT>): ReturnT {
   return deserializeEntity(data.d, entityConstructor).setOrInitializeRemoteState() as ReturnT;

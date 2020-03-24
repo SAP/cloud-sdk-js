@@ -1,8 +1,8 @@
 {
   "name": "@sap-cloud-sdk/core",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "description": "SAP Cloud SDK for JavaScript core",
-  "homepage": "https://www.sap.com/cloud-sdk",
+  "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -31,13 +31,11 @@
     "test:local": "npx jest --config ./jest-local.json",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
     "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
-    "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --config jest-local.json --runInBand --testNamePattern=\"$PATTERN\"",
-    "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
-    "tslint:fix": "npm run tslint -- --fix"
+    "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --config jest-local.json --runInBand --testNamePattern=\"$PATTERN\""
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.18.0",
-    "@sap-cloud-sdk/util": "^1.18.0",
+    "@sap-cloud-sdk/analytics": "^1.18.1",
+    "@sap-cloud-sdk/util": "^1.18.1",
     "@sap/xsenv": "2.2.0",
     "@types/http-proxy-agent": "^2.0.2",
     "axios": "0.19.2",
@@ -48,7 +46,7 @@
     "moment": "2.24.0",
     "opossum": "4.0.0",
     "rambda": "2.14.5",
-    "uuid": "3.3.2",
+    "uuid": "^7.0.2",
     "voca": "1.4.0"
   },
   "devDependencies": {
@@ -58,9 +56,8 @@
     "@types/sinonjs__fake-timers": "^6.0.0",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
-    "nock": "^12.0.2",
+    "nock": "^12.0.3",
     "ts-jest": "^25.2.1",
-    "tslint": "6.0.0",
     "typescript": "3.7.4"
   }
 }

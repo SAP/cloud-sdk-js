@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { useOrFetchDestination } from '../scp-cf/destination-accessor';
@@ -12,21 +10,21 @@ import { ODataRequestConfig } from './request/odata-request-config';
  * Base class for all request builders.
  *
  * @abstract
- * @typeparam EntityT Type of the entity to create a request for
+ * @typeparam EntityT - Type of the entity to create a request for
  */
 export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataRequestConfig> {
   /**
    * Creates an instance of MethodRequestBuilderBase.
    *
-   * @param requestConfig Request configuration to initialize with
+   * @param requestConfig - Request configuration to initialize with
    */
   constructor(public requestConfig: RequestConfigT) {}
 
   /**
    * Create the url based on configuration of the given builder.
    *
-   * @param destination Destination to execute the request against
-   * @param options Options to employ when fetching destinations.
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations.
    * @returns Promise resolving to the url for the request
    */
   async url(destination: Destination | DestinationNameAndJwt, options?: DestinationRetrievalOptions): Promise<string> {
@@ -46,7 +44,7 @@ export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataReque
   /**
    * Add custom headers to the request.
    *
-   * @param headers Key-value pairs denoting additional custom headers
+   * @param headers - Key-value pairs denoting additional custom headers
    * @returns The request builder itself, to facilitate method chaining
    */
   withCustomHeaders(headers: MapType<string>): this {
@@ -58,7 +56,7 @@ export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataReque
    * Replace the default service path with the given custom path.
    * In case of the S/4HANA apis the servicePath defaults to '/sap/opu/odata/sap/<SERVICE_NAME>' and can be overwritten here.
    *
-   * @param servicePath Path to override the default with
+   * @param servicePath - Path to override the default with
    * @returns The request builder itself, to facilitate method chaining
    */
   withCustomServicePath(servicePath: string): this {
@@ -69,8 +67,8 @@ export abstract class MethodRequestBuilderBase<RequestConfigT extends ODataReque
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
    *
-   * @param destination Targeted destination on which the request is performed.
-   * @param options Options to employ when fetching destinations.
+   * @param destination - Targeted destination on which the request is performed.
+   * @param options - Options to employ when fetching destinations.
    * @returns The OData request executor including the destination configuration.
    */
   build(destination: Destination | DestinationNameAndJwt, options?: DestinationRetrievalOptions): Promise<ODataRequest<RequestConfigT>> {

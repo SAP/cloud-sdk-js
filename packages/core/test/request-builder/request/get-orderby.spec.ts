@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc, desc } from '../../../src';
 import { getQueryParametersForOrderBy } from '../../../src/request-builder/request/get-orderby';
 import { TestEntity, TestEntitySingleLink } from '../../test-util/test-services/test-service';
@@ -21,7 +22,12 @@ describe('get orderby', () => {
     expect(
       getQueryParametersForOrderBy([asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty), desc(TestEntity.COMPLEX_TYPE_PROPERTY.int16Property)])
         .orderby
-    ).toBe('A_TestComplexType/StringProperty asc,A_TestComplexType/Int16Property desc');
-    // ).toBe('ComplexTypeProperty/StringProperty asc,ComplexTypeProperty/Int16Property desc');
+    ).toBe('ComplexTypeProperty/StringProperty asc,ComplexTypeProperty/Int16Property desc');
+  });
+
+  it('for complex nested types', () => {
+    expect(getQueryParametersForOrderBy([asc(TestEntity.COMPLEX_TYPE_PROPERTY.complexTypeProperty.stringProperty)]).orderby).toBe(
+      'ComplexTypeProperty/ComplexTypeProperty/StringProperty asc'
+    );
   });
 });

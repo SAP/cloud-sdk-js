@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { edmDateTimeToMoment, edmToTs, momentToEdmDateTime, parseNumber, tsToEdm } from '../src/payload-value-converter';
@@ -69,7 +70,7 @@ describe('edmToTs()', () => {
     expect(actual).toBe(expected);
   });
 
-  // this is not even used anywhere in S/4...
+  // This is not even used anywhere in S/4...
   it('should parse Edm.SByte to number', () => {
     const expected = -8;
     const actual = edmToTs('-8', 'Edm.SByte');
@@ -168,7 +169,7 @@ describe('tsToEdm()', () => {
     expect(actual).toBe(expected);
   });
 
-  // this is not even used anywhere in S/4...
+  // This is not even used anywhere in S/4...
   it('should parse number to Edm.SByte', () => {
     const expected = -8;
     const actual = tsToEdm(-8, 'Edm.SByte');

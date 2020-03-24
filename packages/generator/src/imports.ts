@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { unique } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
@@ -54,7 +52,7 @@ export function complexTypeImportDeclarations(properties: VdmProperty[]): Import
   return mergeImportDeclarations(properties.filter(prop => prop.isComplex).map(prop => complexTypeImportDeclaration(prop)));
 }
 
-// only supports named imports
+// Only supports named imports
 export function mergeImportDeclarations(importDeclarations: ImportDeclarationStructure[]) {
   return importDeclarations
     .reduce((mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {
@@ -82,9 +80,7 @@ export function mergeImportDeclarations(importDeclarations: ImportDeclarationStr
       }
       return importDeclaration;
     })
-    .filter(importDeclaration => {
-      return importDeclaration.namedImports && importDeclaration.namedImports.length;
-    });
+    .filter(importDeclaration => importDeclaration.namedImports && importDeclaration.namedImports.length);
 }
 
 function complexTypeImportDeclaration(prop: VdmProperty): ImportDeclarationStructure {

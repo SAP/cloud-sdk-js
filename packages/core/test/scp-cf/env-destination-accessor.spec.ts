@@ -1,9 +1,13 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import * as assert from 'assert';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src/scp-cf/destination-service-types';
-import { getDestinationByName, getDestinations } from '../../src/scp-cf/env-destination-accessor';
+import { getDestinationByName, getDestinationsFromEnv } from '../../src/scp-cf/env-destination-accessor';
+import { muteLoggers } from '../test-util/mute-logger';
+import { mockDestinationsEnv, unmockDestinationsEnv } from '../test-util/request-mocker';
 
 const environmentDestination = {
-  name: 'ErpQueryEndpoint',
+  name: 'FINAL-DESTINATION',
   url: 'https://mys4hana.com',
   username: 'myuser',
   password: 'mypw'
@@ -12,10 +16,10 @@ const environmentDestination = {
 const destinationFromEnv: Destination = {
   authTokens: [],
   authentication: 'BasicAuthentication',
-  name: 'ErpQueryEndpoint',
+  name: 'FINAL-DESTINATION',
   isTrustingAllCertificates: false,
   originalProperties: {
-    name: 'ErpQueryEndpoint',
+    name: 'FINAL-DESTINATION',
     url: 'https://mys4hana.com',
     username: 'myuser',
     password: 'mypw'
@@ -25,57 +29,91 @@ const destinationFromEnv: Destination = {
   url: 'https://mys4hana.com'
 };
 
-describe('getDestinations()', () => {
-  afterEach(() => {
-    delete process.env.destinations;
+const environmentDestinationConfig = {
+  Name: 'TESTINATION',
+  URL: 'https://mys4hana.com'
+};
+
+const destinationFromConfigEnv: Destination = {
+  authTokens: [],
+  authentication: 'NoAuthentication',
+  name: 'TESTINATION',
+  isTrustingAllCertificates: false,
+  originalProperties: {
+    Name: 'TESTINATION',
+    URL: 'https://mys4hana.com'
+  },
+  url: 'https://mys4hana.com'
+};
+
+describe('env-destination-accessor', () => {
+  beforeAll(() => {
+    muteLoggers('env-destination-accessor', 'proxy-util');
   });
 
-  it('should return all destinations from environment variables', () => {
-    // setup
-    process.env['destinations'] = `[${JSON.stringify(environmentDestination)}]`;
+  afterEach(() => {
+    unmockDestinationsEnv();
+    jest.resetAllMocks();
+  });
 
-    const expected: Destination[] = [destinationFromEnv];
-    const actual = getDestinations();
-    expected.forEach((e, index) => {
-      expect(actual[index]).toMatchObject(e);
+  describe('getDestinationsFromEnv()', () => {
+    it('should return all destinations from environment variables', () => {
+      mockDestinationsEnv(environmentDestination, environmentDestinationConfig);
+
+      const expected = [destinationFromEnv, destinationFromConfigEnv];
+      const actual = getDestinationsFromEnv();
+      expected.forEach((e, index) => {
+        expect(actual[index]).toMatchObject(e);
+      });
+    });
+
+    it('should return an empty array if no destinations can be found', () => {
+      assert.deepEqual([], getDestinationsFromEnv());
+    });
+
+    it('should log a warning when destinations exist but do not contain a `name` or `Name` key', () => {
+      const destinationMissingName = { url: 'example.com' };
+      mockDestinationsEnv(environmentDestination, destinationMissingName);
+      const logger = createLogger('env-destination-accessor');
+      const warnSpy = jest.spyOn(logger, 'warn');
+
+      getDestinationsFromEnv();
+      expect(warnSpy).toBeCalledWith(expect.stringMatching("Destination from 'destinations' env variable is missing 'name' or 'Name' property."));
     });
   });
 
-  it('should return an empty array if no destinations can be found', () => {
-    const expected = [];
-    const actual = getDestinations();
-    assert.deepEqual(expected, actual, 'No empty array was returned');
-  });
-});
+  describe('getDestinationByName()', () => {
+    it('should return a destination for a name', () => {
+      mockDestinationsEnv(environmentDestination);
 
-describe('getDestinationByName()', () => {
-  afterEach(() => {
-    delete process.env.destinations;
-  });
+      const actual = getDestinationByName('FINAL-DESTINATION');
+      expect(actual).toMatchObject(destinationFromEnv);
+    });
 
-  it('should return the destination if a destination with the respective name is present in the environment variables', () => {
-    // setup
-    process.env['destinations'] = `[${JSON.stringify(environmentDestination)}]`;
+    it('should return a destination for a name, that is given as a destination configuration', () => {
+      mockDestinationsEnv(environmentDestinationConfig);
 
-    const expected: Destination = destinationFromEnv;
-    const actual = getDestinationByName('ErpQueryEndpoint');
-    expect(actual).toMatchObject(expected);
-  });
+      const actual = getDestinationByName('TESTINATION');
+      expect(actual).toMatchObject(destinationFromConfigEnv);
+    });
 
-  it('should return null when no destination can be found', () => {
-    const expected = null;
-    const actual = getDestinationByName('ErpQueryEndpoint');
+    it('should return null when no destination can be found', () => {
+      const expected = null;
+      const actual = getDestinationByName('FINAL-DESTINATION');
 
-    assert.equal(actual, expected, 'Expected null, but got something.');
-  });
+      assert.equal(actual, expected, 'Expected null, but got something.');
+    });
 
-  it('should throw an error when multiple destinations with the same name are found', () => {
-    process.env['destinations'] = `[${JSON.stringify(environmentDestination)},${JSON.stringify(environmentDestination)}]`;
+    it('should log a warning when there are multiple destinations for the given name', () => {
+      mockDestinationsEnv(environmentDestination, { Name: 'FINAL-DESTINATION', URL: 'example.com' });
 
-    try {
-      getDestinationByName('ErpQueryEndpoint');
-    } catch (error) {
-      assert.equal('There are multiple destinations with the name "ErpQueryEndpoint".', error.message, 'Did not get the expected error message.');
-    }
+      const logger = createLogger('env-destination-accessor');
+      const warnSpy = jest.spyOn(logger, 'warn');
+
+      getDestinationByName('FINAL-DESTINATION');
+      expect(warnSpy).toBeCalledWith(
+        "The 'destinations' env variable contains multiple destinations with the name 'FINAL-DESTINATION'. Only the first entry will be respected."
+      );
+    });
   });
 });

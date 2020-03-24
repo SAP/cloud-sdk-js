@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
@@ -9,7 +7,7 @@ import { Filterable } from './filterable';
 /**
  * Data structure to combine [[Filterable]]s conjunctively and / or disjunctively. A FilterList matches when all filterables within the `andFilters` match and when at least one filterable within the `orFilters` matches. Should not be used directly.
  *
- * @typeparam EntityT
+ * @typeparam EntityT -
  */
 export class FilterList<EntityT extends Entity> implements EntityIdentifiable<EntityT> {
   /**
@@ -20,8 +18,8 @@ export class FilterList<EntityT extends Entity> implements EntityIdentifiable<En
   /**
    * Creates an instance of FilterList.
    *
-   * @param andFilters Filters to be combined by logical conjunction (`and`)
-   * @param orFilters Filters to be combined by logical disjunction (`or`)
+   * @param andFilters - Filters to be combined by logical conjunction (`and`)
+   * @param orFilters - Filters to be combined by logical disjunction (`or`)
    */
   constructor(public andFilters: Filterable<EntityT>[] = [], public orFilters: Filterable<EntityT>[] = []) {}
 

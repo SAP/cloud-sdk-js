@@ -1,14 +1,6 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
-/**
- * http-proxy-agent is exported with 'export = ' and is exposed externally
- * Therefore, the following typescript specific syntax has to be used.
- * https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import HttpProxyAgent = require('http-proxy-agent');
 import HttpsProxyAgent = require('https-proxy-agent');
-
 import { createLogger } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { basicHeader, getProtocolOrDefault, HttpAgentConfig, HttpsAgentConfig, Protocol } from '../request-builder';
@@ -22,7 +14,7 @@ const logger = createLogger({
 /**
  * Determines the proxy strategy. If noProxy is set the ProxyConfiguration in the destination is omitted.
  * For onPremProxy or internetProxy the connectivy service or enviroment varialbes are checked to fill the [[ProxyConfiguration]].
- * @param destination from which the proxy strategy is derived.
+ * @param destination - from which the proxy strategy is derived.
  * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
  */
 export function proxyStrategy(destination: Destination): ProxyStrategy {
@@ -158,7 +150,7 @@ const addHost = (groups: any) => (proxyConfiguration: Partial<ProxyConfiguration
  * Parses the environment variable for the web proxy and extracts the values considering defaults like http for the protocol and 80 or 443 for the port.
  * The general pattern to be parsed is protocol://user:password@host:port, where everything besides the host is optional.
  * Special characters in the user and password need to be percent encoded.
- * @param proxyEnvValue Environment variable which is parsed
+ * @param proxyEnvValue - Environment variable which is parsed
  * @returns Configuration with default values or undefined if the parsing failed.
  */
 export function parseProxyEnv(proxyEnvValue: string): ProxyConfiguration | undefined {
@@ -184,7 +176,7 @@ export function parseProxyEnv(proxyEnvValue: string): ProxyConfiguration | undef
 
 /**
  * Adds the proxy configuration to a destination based on web proxies defined in environment variables. See [[ProxyConfiguration]] and [[proxyStrategy]] for details.
- * @param destination to which the proxy configuration is added.
+ * @param destination - to which the proxy configuration is added.
  * @returns Destination containing the configuration for web proxy.
  */
 export function addProxyConfigurationInternet(destination): Destination {
@@ -204,7 +196,7 @@ export function addProxyConfigurationInternet(destination): Destination {
  * Builds the http(s)-agent config. Note that the proxy agent type like http or https is determined by the destination RUL protocol.
  * The protocol from the proxy is unrelated to this and in most cases http.
  *
- * @param destination: Destination containing the proxy configurations
+ * @param destination - Destination containing the proxy configurations
  * @returns The http(s)-agent containing the proxy configuration
  */
 export function proxyAgent(destination: Destination): HttpAgentConfig | HttpsAgentConfig {

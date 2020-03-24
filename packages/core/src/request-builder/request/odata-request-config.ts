@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 
@@ -23,9 +21,9 @@ export abstract class ODataRequestConfig {
   /**
    * Creates an instance of ODataRequest.
    *
-   * @param method HTTP method of the request
-   * @param defaultServicePath default path of the according service
-   * @param contentType The content type of the request
+   * @param method - HTTP method of the request
+   * @param defaultServicePath - default path of the according service
+   * @param contentType - The content type of the request
    */
   constructor(public method: RequestMethodType, readonly defaultServicePath: string, readonly contentType = 'application/json') {
     if (defaultServicePath === VALUE_IS_UNDEFINED) {
@@ -45,13 +43,20 @@ export abstract class ODataRequestConfig {
   /**
    * Add custom headers to the request. This is useful in case you want to provide your own authorization headers for example.
    *
-   * @param headers Key-value pairs where the key is the name of a header property and the value is the respective value
+   * @param headers - Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   addCustomHeaders(headers: MapType<string>): void {
     Object.entries(headers).forEach(([key, value]) => {
-      // enforce lower case as HTTP headers are case-insensitive
+      // Enforce lower case as HTTP headers are case-insensitive
       this.customHeaders[key.toLowerCase()] = value;
     });
+  }
+
+  protected prependDollarToQueryParameters(params: MapType<any>): MapType<any> {
+    return Object.entries(params).reduce((newParams, [key, value]) => {
+      newParams[`$${key}`] = value;
+      return newParams;
+    }, {});
   }
 
   /**
@@ -63,11 +68,4 @@ export abstract class ODataRequestConfig {
    * @hidden
    */
   abstract queryParameters(): MapType<any>;
-
-  protected prependDollarToQueryParameters(params: MapType<any>): MapType<any> {
-    return Object.entries(params).reduce((newParams, [key, value]) => {
-      newParams[`$${key}`] = value;
-      return newParams;
-    }, {});
-  }
 }

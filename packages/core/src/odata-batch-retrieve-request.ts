@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from './entity';
 import { getRequestLine } from './odata-batch-request-builder';
@@ -18,7 +16,7 @@ import { GetAllRequestBuilder, GetByKeyRequestBuilder } from './request-builder'
  *
  *
  * *** example ends ***
- * @param requestBuilder The request builder of the retrieve request.
+ * @param requestBuilder - The request builder of the retrieve request.
  * @returns The request body.
  */
 export function toBatchRetrieveBody(requestBuilder: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>): string {

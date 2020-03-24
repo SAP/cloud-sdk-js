@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
@@ -17,7 +15,7 @@ import { ODataUpdateRequestConfig } from './request/odata-update-request-config'
 /**
  * Create OData query to update an entity.
  *
- * @typeparam EntityT Type of the entity to be updated
+ * @typeparam EntityT - Type of the entity to be updated
  */
 export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
@@ -27,8 +25,8 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Creates an instance of UpdateRequestBuilder.
    *
-   * @param _entityConstructor Constructor type of the entity to be updated
-   * @param _entity Entity to be updated
+   * @param _entityConstructor - Constructor type of the entity to be updated
+   * @param _entity - Entity to be updated
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>, private _entity: EntityT) {
     super(new ODataUpdateRequestConfig(_entityConstructor));
@@ -64,8 +62,8 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Executes the query.
    *
-   * @param destination Destination to execute the request against
-   * @param options Options to employ when fetching destinations
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
    */
   async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<EntityT> {
@@ -77,6 +75,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
     return (
       this.build(destination, options)
         .then(request => request.execute())
+
         // Update returns 204 hence the data from the request is used to build entity for return
         .then(response => this._entity.setOrInitializeRemoteState().setVersionIdentifier(this.requestConfig.eTag))
         .catch(error => Promise.reject(errorWithCause('OData update request failed!', error)))
@@ -96,7 +95,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Specifies required entity keys for the update request.
    *
-   * @param fields Enumeration of the fields to be required
+   * @param fields - Enumeration of the fields to be required
    * @returns The entity itself, to facilitate method chaining
    */
   requiredFields(...fields: Selectable<EntityT>[]): this {
@@ -107,7 +106,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Specifies entity fields to ignore by the update request.
    *
-   * @param fields Enumeration of the fields to be ignored
+   * @param fields - Enumeration of the fields to be ignored
    * @returns The entity itself, to facilitate method chaining
    */
   ignoredFields(...fields: Selectable<EntityT>[]): this {
@@ -118,7 +117,7 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Instructs the request to force an overwrite of the entity by sending an 'If-Match: *' header instead of sending the ETag version identifier.
    *
-   * @returns {this} this The request itself to ease chaining while executing the request
+   * @returns this The request itself to ease chaining while executing the request
    */
   ignoreVersionIdentifier(): this {
     this.requestConfig.versionIdentifierIgnored = true;
@@ -128,8 +127,8 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   /**
    * Specifies a custom ETag version identifier of the entity to update.
    *
-   * @param {string} etag Custom ETag version identifier to be sent in the header of the request
-   * @returns {this} this The request itself to ease chaining while executing the request
+   * @param etag - Custom ETag version identifier to be sent in the header of the request
+   * @returns The request itself to ease chaining while executing the request
    */
   withCustomVersionIdentifier(etag: string): this {
     this.requestConfig.eTag = etag;
@@ -198,11 +197,10 @@ export class UpdateRequestBuilder<EntityT extends Entity> extends MethodRequestB
   }
 }
 
-const removePropertyOnCondition = (condition: (objectEntry: [string, any]) => boolean) => (body: MapType<any>): MapType<any> => {
-  return Object.entries(body).reduce((resultBody, [key, val]) => {
+const removePropertyOnCondition = (condition: (objectEntry: [string, any]) => boolean) => (body: MapType<any>): MapType<any> =>
+  Object.entries(body).reduce((resultBody, [key, val]) => {
     if (condition([key, val])) {
       return resultBody;
     }
     return { ...resultBody, [key]: val };
   }, {});
-};

@@ -1,5 +1,5 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
-
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/request-builder/request/odata-create-request-config';
@@ -39,8 +39,8 @@ export const defaultDestination: Destination = {
   originalProperties: {}
 };
 
-export function mockDestinationsEnv(...destinations: Destination[]) {
-  process.env.destinations = JSON.stringify([...destinations, defaultDestination]);
+export function mockDestinationsEnv(...destinations) {
+  process.env.destinations = JSON.stringify([...destinations]);
 }
 
 export function unmockDestinationsEnv() {

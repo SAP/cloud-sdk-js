@@ -1,13 +1,12 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
 import { generate } from './packages/generator/src';
 
-const [readdir, readFile, writeFile] = [fs.readdir, fs.readFile, fs.writeFile].map(fsModule => util.promisify(fsModule));
+type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
+const [readFile, readdir, writeFile] = [fs.readFile, fs.readdir, fs.writeFile].map((fsModule: fsTypes) => util.promisify(fsModule));
 
 const inputDir = path.join('test-resources', 'service-specs');
 const packageOutputDir = path.resolve('test-packages', 'test-services', 'srv');
@@ -24,7 +23,7 @@ const generatorConfig = {
   generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
-  // unnecessary options
+  // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false
 };

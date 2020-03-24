@@ -1,5 +1,5 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment = require('moment');
-
 import { v4 as uuid } from 'uuid';
 import { filterFunction, substring, substringOf } from '../../src';
 import { TestEntity, TestEntitySingleLink } from './test-services/test-service';
@@ -21,8 +21,7 @@ export const testFilterBoolean = {
 
 export const testFilterComplexType = {
   filter: TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
-  // odataStr: "ComplexTypeProperty/StringProperty eq 'test'"
-  odataStr: "A_TestComplexType/StringProperty eq 'test'"
+  odataStr: "ComplexTypeProperty/StringProperty eq 'test'"
 };
 
 const id = uuid();

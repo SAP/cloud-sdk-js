@@ -24,7 +24,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -178,7 +178,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.COMPLEX_TYPE_PROPERTY = new TestComplexType_1.TestComplexTypeField('ComplexTypeProperty', TestEntity, 'A_TestComplexType');
+    TestEntity.COMPLEX_TYPE_PROPERTY = new TestComplexType_1.TestComplexTypeField('ComplexTypeProperty', TestEntity);
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.

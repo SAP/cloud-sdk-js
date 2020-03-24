@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
 import moment, { Moment, MomentInputObject } from 'moment';
@@ -34,6 +32,7 @@ export interface CachingOptions {
    * A boolean value that indicates whether to read destinations from cache.
    */
   useCache?: boolean;
+
   /**
    * The isolation strategy used for caching destinations. For the available options, see [[IsolationStrategy]].
    * By default, IsolationStrategy.Tenant is set.
@@ -50,6 +49,7 @@ export class Cache<T> implements CacheInterface<T> {
    * Object that stores all cached entries.
    */
   private cache: MapType<CacheEntry<T>>;
+
   /**
    * Default validity period for each entry in cache.
    * If undefined, all cached entries will be valid indefinitely.
@@ -70,7 +70,7 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Specifies whether an entry with a given key is defined in cache.
-   * @param key The entry's key
+   * @param key - The entry's key
    * @returns boolean A boolean value that indicates whether the entry exists in cache
    */
   hasKey(key: string): boolean {
@@ -79,7 +79,7 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Getter of cached entries.
-   * @param key The key of the entry to retrieve
+   * @param key - The key of the entry to retrieve
    * @returns The corresponding entry to the provided key if it is still valid, returns undefined otherwise
    */
   get(key: string): T | undefined {
@@ -88,9 +88,9 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Setter of entries in cache.
-   * @param key The entry's key
-   * @param entry The entry to cache
-   * @param expirationTime The time expressed in UTC in which the given entry expires
+   * @param key - The entry's key
+   * @param entry - The entry to cache
+   * @param expirationTime - The time expressed in UTC in which the given entry expires
    */
   set(key: string, entry: T, expirationTime?: number): void {
     const expires = expirationTime ? moment(expirationTime) : inferExpirationTime(this.defaultValidityTime);

@@ -1,6 +1,7 @@
-import { AuthenticationType } from '../../src';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { AuthenticationType, DestinationConfiguration, DestinationJson } from '../../src';
 
-export const certificateMultipleResponse = [
+export const certificateMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'ERNIE-UND-CERT',
     Type: 'HTTP',
@@ -27,7 +28,7 @@ export const certificateSingleResponse = {
   ]
 };
 
-export const oauthMultipleResponse = [
+export const oauthMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'FINAL-DESTINATION',
     Type: 'HTTP',
@@ -46,7 +47,7 @@ export const oauthMultipleResponse = [
   }
 ];
 
-export const oauthSingleResponse = {
+export const oauthSingleResponse: DestinationJson = {
   owner: {
     SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     InstanceId: null
@@ -61,7 +62,7 @@ export const oauthSingleResponse = {
   ]
 };
 
-export const onPremiseMultipleResponse = [
+export const onPremiseMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'OnPremise',
     URL: 'my.on.premise.system:54321',
@@ -70,7 +71,7 @@ export const onPremiseMultipleResponse = [
   }
 ];
 
-export const basicMultipleResponse = [
+export const basicMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'FINAL-DESTINATION',
     Type: 'HTTP',

@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
@@ -75,15 +75,13 @@ export namespace TestEntityEndsWithSomethingElse {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityEndsWithSomethingElse> = new StringField(
-    'KeyProperty',
-    TestEntityEndsWithSomethingElse,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityEndsWithSomethingElse> = new StringField('KeyProperty', TestEntityEndsWithSomethingElse, 'Edm.String');
   /**
    * All fields of the TestEntityEndsWithSomethingElse entity.
    */
-  export const _allFields: Array<StringField<TestEntityEndsWithSomethingElse>> = [TestEntityEndsWithSomethingElse.KEY_PROPERTY];
+  export const _allFields: Array<StringField<TestEntityEndsWithSomethingElse>> = [
+    TestEntityEndsWithSomethingElse.KEY_PROPERTY
+  ];
   /**
    * All fields selector.
    */
@@ -95,11 +93,8 @@ export namespace TestEntityEndsWithSomethingElse {
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityEndsWithSomethingElse> } = TestEntityEndsWithSomethingElse._keyFields.reduce(
-    (acc: { [keys: string]: Selectable<TestEntityEndsWithSomethingElse> }, field: Selectable<TestEntityEndsWithSomethingElse>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Selectable<TestEntityEndsWithSomethingElse> } = TestEntityEndsWithSomethingElse._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityEndsWithSomethingElse> }, field: Selectable<TestEntityEndsWithSomethingElse>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

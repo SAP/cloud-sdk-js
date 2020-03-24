@@ -1,8 +1,8 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
-  "homepage": "https://www.sap.com/cloud-sdk",
+  "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -31,13 +31,11 @@
     "test": "npx jest --coverage",
     "test:local": "npx jest --config ./jest-local.json",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
-    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
-    "tslint": "npx tslint \"**/*.ts\" -e \"**/node_modules/**\" -e \"**/*.d.ts\"",
-    "tslint:fix": "npm run tslint -- --fix"
+    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.18.0",
-    "@sap-cloud-sdk/util": "^1.18.0",
+    "@sap-cloud-sdk/core": "^1.18.1",
+    "@sap-cloud-sdk/util": "^1.18.1",
     "@sap/edm-converters": "1.0.19",
     "fast-xml-parser": "3.12.14",
     "fs-extra": "^8.1.0",
@@ -48,13 +46,12 @@
     "yargs": "14.0.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services": "^1.18.0",
+    "@sap-cloud-sdk/test-services": "^1.18.1",
     "@types/jest": "^25.1.4",
     "@types/yargs": "^15.0.4",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "ts-jest": "^25.2.1",
-    "tslint": "6.0.0",
     "typescript": "3.7.4"
   }
 }

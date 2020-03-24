@@ -1,5 +1,6 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ComplexTypeNumberPropertyField, Entity, FieldType, Filter, NumberField } from '../../src';
-import { TestEntity } from '../test-util/test-services/test-service';
+import { TestComplexTypeField, TestEntity } from '../test-util/test-services/test-service';
 
 export function checkFilter<EntityT extends Entity, FieldT extends FieldType>(
   filter: Filter<EntityT, FieldT>,
@@ -51,43 +52,44 @@ describe('Number Field', () => {
   });
 
   describe('complex type field', () => {
-    const parentTypeName = 'complexType';
-    const field = new ComplexTypeNumberPropertyField(fieldName, TestEntity, parentTypeName, 'Edm.Single');
+    const parentFieldName = 'complexParentFieldName';
+    const parentComplexField = new TestComplexTypeField(parentFieldName, TestEntity);
+    const field = new ComplexTypeNumberPropertyField(fieldName, parentComplexField, 'Edm.Single');
 
     it('should create filter for "equals" (complex property string)', () => {
       const filter = field.equals(filterValue);
       expect(field._fieldName).toBe(fieldName);
-      checkFilter(filter, `${parentTypeName}/${fieldName}`, 'eq', filterValue);
+      checkFilter(filter, `${parentFieldName}/${fieldName}`, 'eq', filterValue);
     });
 
     it('should create filter for "notEquals" (complex property string)', () => {
       const filter = field.notEquals(filterValue);
       expect(field._fieldName).toBe(fieldName);
-      checkFilter(filter, `${parentTypeName}/${fieldName}`, 'ne', filterValue);
+      checkFilter(filter, `${parentFieldName}/${fieldName}`, 'ne', filterValue);
     });
 
     it('should create filter for "lessThen"', () => {
       const filter = field.lessThan(filterValue);
       expect(field._fieldName).toBe(fieldName);
-      checkFilter(filter, `${parentTypeName}/${fieldName}`, 'lt', filterValue);
+      checkFilter(filter, `${parentFieldName}/${fieldName}`, 'lt', filterValue);
     });
 
     it('should create filter for "lessOrEqual"', () => {
       const filter = field.lessOrEqual(filterValue);
       expect(field._fieldName).toBe(fieldName);
-      checkFilter(filter, `${parentTypeName}/${fieldName}`, 'le', filterValue);
+      checkFilter(filter, `${parentFieldName}/${fieldName}`, 'le', filterValue);
     });
 
     it('should create filter for "greaterThan"', () => {
       const filter = field.greaterThan(filterValue);
       expect(field._fieldName).toBe(fieldName);
-      checkFilter(filter, `${parentTypeName}/${fieldName}`, 'gt', filterValue);
+      checkFilter(filter, `${parentFieldName}/${fieldName}`, 'gt', filterValue);
     });
 
     it('should create filter for "greaterOrEqual"', () => {
       const filter = field.greaterOrEqual(filterValue);
       expect(field._fieldName).toBe(fieldName);
-      checkFilter(filter, `${parentTypeName}/${fieldName}`, 'ge', filterValue);
+      checkFilter(filter, `${parentFieldName}/${fieldName}`, 'ge', filterValue);
     });
   });
 });

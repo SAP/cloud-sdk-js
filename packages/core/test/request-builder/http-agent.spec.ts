@@ -1,11 +1,6 @@
-/**
- * http-proxy-agent is exported with 'export = ' and is exposed externally
- * Therefore, the following typescript specific syntax has to be used.
- * https://www.typescriptlang.org/docs/handbook/modules.html#export--and-import--require
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import HttpProxyAgent = require('http-proxy-agent');
 import HttpsProxyAgent = require('https-proxy-agent');
-
 import * as https from 'https';
 import { Destination, getAgentConfig, getProtocolOrDefault, getUrlProtocol, Protocol } from '../../src';
 import { proxyAgent } from '../../src/util/proxy-util';
@@ -33,7 +28,7 @@ describe('createAgent', () => {
   };
 
   it('returns the default agent if neither a proxy configuration is present nor TrustAll is set', () => {
-    // for some reason deepEqual does not work on https.Agent
+    // For some reason deepEqual does not work on https.Agent
     const actual = getAgentConfig(baseDestination)['httpsAgent'] as https.Agent;
     expect(actual.options.rejectUnauthorized).toBe(true);
   });
@@ -43,7 +38,7 @@ describe('createAgent', () => {
   });
 
   it('returns a trustAll agent if TrustAll is configured', () => {
-    // for some reason deepEqual does not work on https.Agent
+    // For some reason deepEqual does not work on https.Agent
     const actual = getAgentConfig(trustAllDestination)['httpsAgent'] as https.Agent;
     expect(actual.options.rejectUnauthorized).toBeFalsy();
   });
@@ -169,7 +164,7 @@ describe('createAgent', () => {
     expect(() => getAgentConfig(destination)).toThrowError('No certificate with name cert.pfx could be found on the destination!');
   });
 
-  // check coverage
+  // Check coverage
 });
 
 describe('getAgentConfig', () => {

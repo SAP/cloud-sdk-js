@@ -1,4 +1,5 @@
-import { AuthenticationType, Destination, parseDestination, sanitizeDestination } from '../../src/scp-cf';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { Destination, parseDestination, sanitizeDestination, DestinationConfiguration } from '../../src/scp-cf';
 import { basicMultipleResponse, certificateMultipleResponse, certificateSingleResponse } from '../test-util/example-destination-service-responses';
 
 describe('Destination parser', () => {
@@ -29,7 +30,7 @@ describe('Destination parser', () => {
     expect(actual.isTrustingAllCertificates).toBe(false);
   });
 
-  it('isTrustingAllCertificates is set as boolean: ', () => {
+  it('isTrustingAllCertificates is set as boolean', () => {
     const destination = { name: 'destination', isTrustingAllCertificates: true, url: 'https://destination.example' };
     const actual = sanitizeDestination(destination);
     const expected = {
@@ -56,30 +57,49 @@ describe('Destination parser', () => {
   });
 
   it('certificates are initialized as empty array if none are present', () => {
-    const destinationJson = {
-      Name: 'ERNIE-UND-CERT',
-      Type: 'HTTP',
-      URL: 'https://ms.ca.com',
-      Authentication: 'ClientCertificateAuthentication' as AuthenticationType,
-      ProxyType: 'Internet',
-      KeyStorePassword: 'password',
-      KeyStoreLocation: 'key.p12'
-    };
-
-    const actual = parseDestination(destinationJson);
+    const actual = parseDestination(certificateMultipleResponse[0]);
     expect(actual.authentication).toBe('ClientCertificateAuthentication');
     expect(actual.keyStoreName).toBe('key.p12');
     expect(actual.keyStorePassword).toBe('password');
     expect(actual.certificates!.length).toBe(0);
   });
 
-  it('should be idempotent', () => {
-    let oneTime = sanitizeDestination(certificateSingleResponse);
-    let twoTimes = sanitizeDestination(oneTime);
-    expect(oneTime).toMatchObject(twoTimes);
+  it('sanitizeDestination should be idempotent', () => {
+    const destination = {
+      username: 'username',
+      password: 'password',
+      name: 'DEST',
+      url: 'https://example.com'
+    };
 
-    oneTime = sanitizeDestination(certificateMultipleResponse[0]);
-    twoTimes = sanitizeDestination(oneTime);
+    const oneTime = sanitizeDestination(destination);
+    const twoTimes = sanitizeDestination(oneTime);
     expect(oneTime).toMatchObject(twoTimes);
+  });
+
+  it('parseDestination throws an error if there is no URL given', () => {
+    expect(() =>
+      parseDestination({
+        Name: 'DEST'
+      } as any)
+    ).toThrowErrorMatchingSnapshot();
+  });
+
+  it('sanitizeDestination throws an error if there is no url given', () => {
+    expect(() =>
+      sanitizeDestination({
+        username: 'username',
+        password: 'password',
+        name: 'DEST'
+      })
+    ).toThrowErrorMatchingSnapshot();
+  });
+
+  it("parseDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {
+    expect(() => parseDestination({ Type: 'RFC' } as DestinationConfiguration)).not.toThrow();
+  });
+
+  it("sanitizeDestination does not throw when there is not url for destinations with type other than 'HTTP' or undefined", () => {
+    expect(() => sanitizeDestination({ type: 'RFC' })).not.toThrow();
   });
 });

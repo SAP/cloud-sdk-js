@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc, Destination } from '@sap-cloud-sdk/core';
 import { TestComplexType, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 import BigNumber from 'bignumber.js';
@@ -28,7 +29,7 @@ describe('Complex types', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$filter=(A_TestComplexType/StringProperty%20eq%20%27someComplexTypeProperty%27)`)
+      .get(`${servicePath}/${entityName}?$format=json&$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`)
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()
@@ -47,7 +48,7 @@ describe('Complex types', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$orderby=A_TestComplexType/StringProperty%20asc`)
+      .get(`${servicePath}/${entityName}?$format=json&$orderby=ComplexTypeProperty/StringProperty%20asc`)
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()

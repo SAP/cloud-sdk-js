@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { VdmFunctionImportReturnType, VdmFunctionImportReturnTypeCategory } from '../vdm-types';
 
@@ -11,6 +9,8 @@ export function responseTransformerFunctionName(returnType: VdmFunctionImportRet
 
 function singleTransformationFunction(returnType: VdmFunctionImportReturnType): string {
   switch (returnType.returnTypeCategory) {
+    case VdmFunctionImportReturnTypeCategory.VOID:
+      return 'transformReturnValueForUndefined';
     case VdmFunctionImportReturnTypeCategory.ENTITY:
       return 'transformReturnValueForEntity';
     case VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE:

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause } from '@sap-cloud-sdk/util';
 import { DecodedJWT, decodeJwt } from '../util';
@@ -21,8 +19,8 @@ import { UserTokenResponse } from './xsuaa-service-types';
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
  *
- * @param service The type of the service or an instance of [[Service]].
- * @param options Options to influence caching and resilience behavior (see [[CachingOptions]] and [[ResilienceOptions]], respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
+ * @param service - The type of the service or an instance of [[Service]].
+ * @param options - Options to influence caching and resilience behavior (see [[CachingOptions]] and [[ResilienceOptions]], respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
  * @returns Access token.
  */
 export async function serviceToken(
@@ -37,7 +35,7 @@ export async function serviceToken(
   const opts = {
     useCache: true,
     enableCircuitBreaker: true,
-    ...(options || {}) // tsc complains otherwise
+    ...(options || {}) // Tsc complains otherwise
   };
 
   const xsuaa = multiTenantXsuaaCredentials(opts.userJwt);
@@ -70,9 +68,9 @@ export async function serviceToken(
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
  *
- * @param userJwt The JWT of the user for whom the access token should be fetched.
- * @param service The type of the service or an instance of [[Service]].
- * @param options Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
+ * @param userJwt - The JWT of the user for whom the access token should be fetched.
+ * @param service - The type of the service or an instance of [[Service]].
+ * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns A user approved access token.
  */
 export async function userApprovedServiceToken(userJwt: string, service: string | Service, options?: ResilienceOptions): Promise<string> {

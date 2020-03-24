@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { PathLike } from 'fs';
 
@@ -90,7 +88,8 @@ export interface VdmFunctionImportReturnType {
 export enum VdmFunctionImportReturnTypeCategory {
   ENTITY,
   COMPLEX_TYPE,
-  EDM_TYPE
+  EDM_TYPE,
+  VOID
 }
 
 export interface VdmParameter extends VdmMappedEdmType {

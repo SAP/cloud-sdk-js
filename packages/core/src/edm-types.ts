@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 export type EdmType =
   | 'Edm.String'
@@ -9,7 +7,7 @@ export type EdmType =
   | 'Edm.Decimal'
   | 'Edm.Double'
   | 'Edm.Single'
-  | 'Edm.Float' // for ABAP CDS compatibility
+  | 'Edm.Float' // For ABAP CDS compatibility
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Int64'

@@ -1,6 +1,4 @@
-/*!
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Destination } from './destination-service-types';
 import { clientCredentialsGrant } from './xsuaa-service';
@@ -10,7 +8,7 @@ import { ClientCredentials, ClientCredentialsResponse } from './xsuaa-service-ty
 /**
  * Retrieves an access token required for "OAuth2ClientCredentials" destination authentication type.
  *
- * @param destination A destination having `OAuth2ClientCredentials` authentication type
+ * @param destination - A destination having `OAuth2ClientCredentials` authentication type
  * @returns A promise returning the requested access token on success.
  */
 export async function getOAuth2ClientCredentialsToken(destination: Destination): Promise<ClientCredentialsResponse> {

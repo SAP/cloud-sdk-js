@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/util": "^1.18.1",
-    "axios": "0.19.2"
+    "axios": "^0.19.2"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",

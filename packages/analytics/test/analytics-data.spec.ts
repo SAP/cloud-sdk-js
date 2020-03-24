@@ -9,7 +9,7 @@ jest.mock('fs', () => {
     readFileSync: jest.fn().mockReturnValue(`{
         "name": "@sap-cloud-sdk/core",
         "dependencies": {
-          "axios": "0.19.0",
+          "axios": "^0.19.0",
           "rambda": "1.2.3",
           "moment": "2.24.0",
           "@sap-cloud-sdk/util": "1.7.1",

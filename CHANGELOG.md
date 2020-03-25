@@ -39,22 +39,19 @@ blog: https://blogs.sap.com/?p=1068438
 
 ## compatibilityNotes
 
-- Intoroduce validation for destination configurations. Destinations of type `HTTP` are expected to contain a `url` or `URL` property. Note that when retrieving a destination from the `destinations` environment variable by name, all destinations are parsed. This validation applies to all configured destinations, even those that are not read.
-
-## newFunctionality
-
--
+- Due to the intoroduced validation for destination configurations, destinations of type `HTTP` are expected to contain a `url` or `URL` property. Note that when retrieving a destination from the `destinations` environment variable, all destinations are validated. This validation applies even to destinations that are not read.
 
 ## improvements
 
-- Validate destinations retrieved from environment variable or destination service.
-- Allow setting the format for the keys of a destination in the `destinations` environment variable as known from the destination service - e. g. `URL` in addition to previously only `url`.
+- Introduce validation for destinations retrieved from environment variable or destination service.
+- Allow configuring the `destinations` environment variable with the same property keys as known from the destination service on SAP Cloud Platform, e.g. now `URL` is considered valid in addition to previously only `url`.
 
 ## fixedIssues
 
-- Fix ordering for complex properties including nested complex properties.
+- Fix ordering for properties, including nested complex properties.
 - Fix the generator crashing for services containing function imports without a return type.
-- Fix the destination processing so that the user can set `PrincipalPropagation` as authentication scheme for OnPremise connectivity.
+- Fix the destination processing so that the user can set `PrincipalPropagation` as authentication scheme for on-premises connectivity.
+
 
 # 1.18.0
 

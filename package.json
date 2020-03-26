@@ -23,7 +23,7 @@
     "lint:fix-cached": "npm run lint:fix -- --cache",
     "postinstall": "npx lerna bootstrap --hoist --force-local --strict",
     "doc": "node generate-docs.js",
-    "check:license": "npx license-checker -direct --excludePackages \"@sap/edm-converters@1.0.19;@sap/xsenv@2.2.0;weak-map@1.0.5\" --onlyAllow \"MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense;Public Domain\"",
+    "check:license": "npx license-checker -direct --excludePackages \"@sap/edm-converters@1.0.21;@sap/xsenv@2.2.0;weak-map@1.0.5\" --onlyAllow \"MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense;Public Domain\"",
     "check:vulnerability": "npx audit-ci -h",
     "bump:patch": "npx lerna version patch --force-publish -y",
     "bump:minor": "npx lerna version minor --force-publish -y"

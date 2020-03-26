@@ -36,14 +36,14 @@
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.18.1",
     "@sap-cloud-sdk/util": "^1.18.1",
-    "@sap/edm-converters": "1.0.19",
-    "fast-xml-parser": "3.12.14",
-    "fs-extra": "^8.1.0",
+    "@sap/edm-converters": "^1.0.21",
+    "fast-xml-parser": "^3.16.0",
+    "fs-extra": "^9.0.0",
     "rambda": "^5.0.0",
-    "ts-morph": "4.0.1",
+    "ts-morph": "^7.0.0",
     "typescript": "3.7.4",
     "voca": "^1.4.0",
-    "yargs": "14.0.0"
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services": "^1.18.1",

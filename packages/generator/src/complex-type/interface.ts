@@ -5,7 +5,7 @@ import {
   PropertySignatureStructure,
   StructureKind
 } from 'ts-morph';
-import { getPropertyDescription } from '../typedoc';
+import { getPropertyDescription, makeBlockComment } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 
 export function complexTypeInterface(
@@ -16,7 +16,7 @@ export function complexTypeInterface(
     name: complexType.typeName,
     isExported: true,
     properties: properties(complexType),
-    docs: [complexType.typeName]
+    docs: [makeBlockComment(complexType.typeName)]
   };
 }
 

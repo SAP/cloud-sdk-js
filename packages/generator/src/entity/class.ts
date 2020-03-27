@@ -11,7 +11,8 @@ import {
   getEntityDescription,
   getFunctionDoc,
   getNavPropertyDescription,
-  getPropertyDescription
+  getPropertyDescription,
+  makeBlockComment
 } from '../typedoc';
 import {
   VdmEntity,
@@ -57,7 +58,7 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
     name: prependPrefix('entityName'),
     isStatic: true,
     initializer: `\'${entity.entitySetName}\'`,
-    docs: [`Technical entity name for ${entity.className}.`]
+    docs: [makeBlockComment(`Technical entity name for ${entity.className}.`)]
   };
 }
 
@@ -86,7 +87,7 @@ function defaultServicePath(
     name: prependPrefix('defaultServicePath'),
     isStatic: true,
     initializer: `\'${service.servicePath}\'`,
-    docs: ['Default url path for the according service.']
+    docs: [makeBlockComment('Default url path for the according service.')]
   };
 }
 

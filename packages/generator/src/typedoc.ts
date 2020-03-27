@@ -37,7 +37,7 @@ export function getFunctionDoc(
       description += tagToText('returns', `${tags.returns.description}`);
     }
   }
-  return description;
+  return makeBlockComment(description);
 }
 
 export function getComplexTypeFieldDescription(
@@ -50,21 +50,32 @@ export function getPropertyDescription(
   property: VdmProperty,
   constraints: VdmPropertyValueConstraints = { nullable: false }
 ): string {
-  return addConstraints(
-    property.description ||
-      endWithDot(toTitleFormat(property.instancePropertyName).trim()),
-    constraints
+  return makeBlockComment(
+    addConstraints(
+      property.description ||
+        endWithDot(toTitleFormat(property.instancePropertyName).trim()),
+      constraints
+    )
   );
+}
+
+export function makeBlockComment(documentation: string): string {
+  if (!documentation.startsWith('\n')) {
+    return '\n' + documentation;
+  }
+  return documentation;
 }
 
 export function getNavPropertyDescription(
   property: VdmNavigationProperty
 ): string {
-  return `${
-    property.isMultiLink ? 'One-to-many' : 'One-to-one'
-  } navigation property to the [[${
-    property.toEntityClassName
-  }]] entity.`.trim();
+  return makeBlockComment(
+    `${
+      property.isMultiLink ? 'One-to-many' : 'One-to-one'
+    } navigation property to the [[${
+      property.toEntityClassName
+    }]] entity.`.trim()
+  );
 }
 
 export function getComplexTypePropertyDescription(
@@ -98,32 +109,35 @@ export function getEntityDescription(
     service.apiBusinessHubMetadata &&
     service.apiBusinessHubMetadata.communicationScenario
   ) {
-    description +=
-      '\n' +
-      partOfCommunicationScenarios(
-        service.apiBusinessHubMetadata.communicationScenario
-      );
+    description = partOfCommunicationScenarios(
+      service.apiBusinessHubMetadata.communicationScenario
+    );
   }
 
   if (service.apiBusinessHubMetadata) {
-    description +=
-      '\n' + seeForMoreInformation(service.apiBusinessHubMetadata.url);
+    description = seeForMoreInformation(service.apiBusinessHubMetadata.url);
   }
 
   return description;
 }
 
 const entityDescription = (entitySetName: string, speakingModuleName: string) =>
-  `This class represents the entity "${entitySetName}" of service "${speakingModuleName}".`;
+  makeBlockComment(
+    `This class represents the entity "${entitySetName}" of service "${speakingModuleName}".`
+  );
 
 const seeForMoreInformation = (url: string) =>
   `See ${url} for more information.`;
 
 const partOfCommunicationScenarios = (communicationScenarios: string) =>
-  `This service is part of the following communication scenarios: ${communicationScenarios}.`;
+  makeBlockComment(
+    `This service is part of the following communication scenarios: ${communicationScenarios}.`
+  );
 
 export function getRequestBuilderDescription(entity: VdmEntity) {
-  return `Request builder class for operations supported on the [[${entity.className}]] entity.`;
+  return makeBlockComment(
+    `Request builder class for operations supported on the [[${entity.className}]] entity.`
+  );
 }
 
 export function getLookupDescription(service: VdmServiceMetadata) {

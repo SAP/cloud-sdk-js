@@ -1,6 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/prettierrc",
   "singleQuote": true,
-  "printWidth": 150,
-  "filepath": "*.ts"
+  "filepath": "*.ts",
+  "trailingComma": "none",
+  "arrowParens": "avoid"
 }

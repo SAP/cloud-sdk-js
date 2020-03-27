@@ -1,6 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { checkMandatoryValue, DecodedJWT, JwtKeyMapping, tenantId, tenantName } from '../util';
+import {
+  checkMandatoryValue,
+  DecodedJWT,
+  JwtKeyMapping,
+  tenantId,
+  tenantName
+} from '../util';
 
 /**
  * Mapping between key name in the Tenant and key name in decoded JWT and the

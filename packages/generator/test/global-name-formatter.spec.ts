@@ -19,18 +19,30 @@ describe('GlobalNameFormatter', () => {
   it('gives precedence to names present in the mapping', () => {
     const globalNameFormatter = new GlobalNameFormatter(vdmMapping);
 
-    expect(globalNameFormatter.uniqueDirectoryName('a-serv', 'API_A_SERV')).toBe('a-serv');
-    expect(globalNameFormatter.uniqueNpmPackageName('@sap/a-serv', 'API_A_SERV')).toBe('@sap/a-serv');
+    expect(
+      globalNameFormatter.uniqueDirectoryName('a-serv', 'API_A_SERV')
+    ).toBe('a-serv');
+    expect(
+      globalNameFormatter.uniqueNpmPackageName('@sap/a-serv', 'API_A_SERV')
+    ).toBe('@sap/a-serv');
   });
 
   it('does not return the same name twice, but a unique one every time', () => {
     const globalNameFormatter = new GlobalNameFormatter(vdmMapping);
 
-    expect(globalNameFormatter.uniqueDirectoryName('a-serv', 'NOPE')).toBe('a-serv-1');
-    expect(globalNameFormatter.uniqueNpmPackageName('@sap/a-serv', 'NOPE')).toBe('@sap/a-serv-1');
+    expect(globalNameFormatter.uniqueDirectoryName('a-serv', 'NOPE')).toBe(
+      'a-serv-1'
+    );
+    expect(
+      globalNameFormatter.uniqueNpmPackageName('@sap/a-serv', 'NOPE')
+    ).toBe('@sap/a-serv-1');
 
-    expect(globalNameFormatter.uniqueDirectoryName('a-serv', 'NOPE')).toBe('a-serv-2');
-    expect(globalNameFormatter.uniqueNpmPackageName('@sap/a-serv', 'NOPE')).toBe('@sap/a-serv-2');
+    expect(globalNameFormatter.uniqueDirectoryName('a-serv', 'NOPE')).toBe(
+      'a-serv-2'
+    );
+    expect(
+      globalNameFormatter.uniqueNpmPackageName('@sap/a-serv', 'NOPE')
+    ).toBe('@sap/a-serv-2');
   });
 
   it('handles null or incomplete mappings', () => {

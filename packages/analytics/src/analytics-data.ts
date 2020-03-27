@@ -17,9 +17,13 @@ const sdkModulePrefix = '@sap';
  * @returns An object that includes information on project development environment
  * @hidden
  */
-export async function getAnalyticsData(config: UsageAnalyticsProjectConfig): Promise<AnalyticsData> {
+export async function getAnalyticsData(
+  config: UsageAnalyticsProjectConfig
+): Promise<AnalyticsData> {
   const projectRootDir = findProjectRoot(path.resolve());
-  const packageJson = JSON.parse(fs.readFileSync(path.resolve(projectRootDir, 'package.json'), 'utf8'));
+  const packageJson = JSON.parse(
+    fs.readFileSync(path.resolve(projectRootDir, 'package.json'), 'utf8')
+  );
 
   return {
     project_id: getProjectIdentifier(config, packageJson),
@@ -32,7 +36,10 @@ export async function getAnalyticsData(config: UsageAnalyticsProjectConfig): Pro
   }; // SWA expects a certain column order: please do not change the order of this object!
 }
 
-export function getProjectIdentifier(config: UsageAnalyticsProjectConfig, packageJson: PackageJson): string {
+export function getProjectIdentifier(
+  config: UsageAnalyticsProjectConfig,
+  packageJson: PackageJson
+): string {
   if (!config.salt) {
     throw Error('Salt is missing in config!');
   }
@@ -43,12 +50,18 @@ export function getProjectIdentifier(config: UsageAnalyticsProjectConfig, packag
 }
 
 function usesTypeScript(packageJson: PackageJson): string {
-  const mergedDeps = { ...packageJson.dependencies, ...packageJson.devDependencies } as MapType<string>;
+  const mergedDeps = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies
+  } as MapType<string>;
   return mergedDeps.typescript ? 'true' : 'false';
 }
 
 function getSapCloudSdkDependencies(packageJson: PackageJson): string {
-  const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
+  const dependencies = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies
+  };
   return Object.entries(dependencies)
     .filter(([name]) => name.startsWith(sdkModulePrefix))
     .map(dep => dep.join('@'))
@@ -57,7 +70,10 @@ function getSapCloudSdkDependencies(packageJson: PackageJson): string {
 }
 
 function getThirdPartyDependencies(packageJson: PackageJson) {
-  const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
+  const dependencies = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies
+  };
   return Object.entries(dependencies)
     .filter(([name]) => !name.startsWith(sdkModulePrefix))
     .map(dep => dep.join('@'))
@@ -85,11 +101,17 @@ function getNodeVersion(): string {
 }
 
 function sanitizeVersionFormat(version: string): string {
-  return version.startsWith('v') || version.startsWith('^') ? version.slice(1) : version;
+  return version.startsWith('v') || version.startsWith('^')
+    ? version.slice(1)
+    : version;
 }
 
 function getOperatingSystemInfo(): OperatingSystemInfo {
-  return { name: os.platform(), version: os.release(), architecture: os.arch() };
+  return {
+    name: os.platform(),
+    version: os.release(),
+    architecture: os.arch()
+  };
 }
 
 /**

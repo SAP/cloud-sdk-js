@@ -11,7 +11,10 @@ import { Link } from './link';
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
-export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> extends Link<EntityT, LinkedEntityT> {
+export class OneToOneLink<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
+> extends Link<EntityT, LinkedEntityT> {
   /**
    * Create a new one to one link based on a given link.
    *
@@ -51,7 +54,9 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
    * @param orderBy - Criteria to order by
    * @returns Newly created order link
    */
-  orderBy(...orderBy: Orderable<LinkedEntityT>[]): OrderLink<EntityT, LinkedEntityT> {
+  orderBy(
+    ...orderBy: Orderable<LinkedEntityT>[]
+  ): OrderLink<EntityT, LinkedEntityT> {
     return new OrderLink(this, orderBy);
   }
 
@@ -61,7 +66,9 @@ export class OneToOneLink<EntityT extends Entity, LinkedEntityT extends Entity> 
    * @param filters - Filters based on the linked entity
    * @returns Newly created Filterlink
    */
-  filter(...filters: Filterable<LinkedEntityT>[]): FilterLink<EntityT, LinkedEntityT> {
+  filter(
+    ...filters: Filterable<LinkedEntityT>[]
+  ): FilterLink<EntityT, LinkedEntityT> {
     return new FilterLink(this, filters);
   }
 }

@@ -4,7 +4,12 @@
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
-import { ComplexTypeField, ConstructorOrField, getEdmType, getEntityConstructor } from './complex-type-field';
+import {
+  ComplexTypeField,
+  ConstructorOrField,
+  getEdmType,
+  getEntityConstructor
+} from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
 /**
@@ -12,14 +17,19 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, boolean> {}
+export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
+  EntityT,
+  boolean
+> {}
 
 /**
  * Represents a selectable property with a boolean value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanField<EntityT extends Entity> extends BooleanFieldBase<EntityT> implements SelectableEdmTypeField {
+export class BooleanField<EntityT extends Entity>
+  extends BooleanFieldBase<EntityT>
+  implements SelectableEdmTypeField {
   readonly selectable: true;
 }
 
@@ -28,7 +38,9 @@ export class BooleanField<EntityT extends Entity> extends BooleanFieldBase<Entit
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class ComplexTypeBooleanPropertyField<EntityT extends Entity> extends BooleanFieldBase<EntityT> {
+export class ComplexTypeBooleanPropertyField<
+  EntityT extends Entity
+> extends BooleanFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -41,7 +53,11 @@ export class ComplexTypeBooleanPropertyField<EntityT extends Entity> extends Boo
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, edmType: EdmType);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    edmType: EdmType
+  );
 
   /**
    * @deprecated since verision 1.19.0
@@ -53,12 +69,22 @@ export class ComplexTypeBooleanPropertyField<EntityT extends Entity> extends Boo
    * @param parentTypeName - Name of the parent complex type
    * @param edmType - Type of the field according to the metadata description
    */
-  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
+  constructor(
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>,
+    parentTypeName: string,
+    edmType: EdmType
+  );
 
   /*
    * Union of the two possible constructors.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, arg3: string | EdmType, arg4?: EdmType) {
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    arg3: string | EdmType,
+    arg4?: EdmType
+  ) {
     super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
     this.fieldOf = fieldOf;
   }
@@ -69,6 +95,8 @@ export class ComplexTypeBooleanPropertyField<EntityT extends Entity> extends Boo
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {
-    return this.fieldOf instanceof ComplexTypeField ? `${this.fieldOf.fieldPath()}/${this._fieldName}` : this._fieldName;
+    return this.fieldOf instanceof ComplexTypeField
+      ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
+      : this._fieldName;
   }
 }

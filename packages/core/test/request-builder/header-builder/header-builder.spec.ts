@@ -9,7 +9,11 @@ import { sanitizeDestination } from '../../../src/scp-cf';
 import { Destination } from '../../../src/scp-cf/destination-service-types';
 import { mockedConnectivityServiceProxyConfig } from '../../test-util/environment-mocks';
 import { muteLoggers } from '../../test-util/mute-logger';
-import { defaultBasicCredentials, defaultDestination, mockHeaderRequest } from '../../test-util/request-mocker';
+import {
+  defaultBasicCredentials,
+  defaultDestination,
+  mockHeaderRequest
+} from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/test-service';
 
 describe('Header-builder:', () => {
@@ -205,7 +209,12 @@ describe('Header-builder:', () => {
       'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
     };
 
-    nock('https://destination.example.com', { reqheaders: { 'sap-connectivity-scc-location_id': 'Potsdam', 'x-csrf-token': 'Fetch' } })
+    nock('https://destination.example.com', {
+      reqheaders: {
+        'sap-connectivity-scc-location_id': 'Potsdam',
+        'x-csrf-token': 'Fetch'
+      }
+    })
       .get('/sap/opu/odata/sap/API_TEST_SRV')
       .reply(200, undefined, mockedHeaders);
 
@@ -234,12 +243,16 @@ describe('Header-builder:', () => {
       clientSecret: 'TokenClientSecret'
     };
 
-    const requestBody = 'grant_type=client_credentials&client_id=TokenClientId&client_secret=TokenClientSecret';
+    const requestBody =
+      'grant_type=client_credentials&client_id=TokenClientId&client_secret=TokenClientSecret';
     const fakeToken = 'FakeOAuth2ClientCredentialsToken';
 
     it('should add access token to the request header for "OAuth2ClientCredentials" authentication', async () => {
       nock('https://token.example.com', {
-        reqheaders: { 'content-type': 'application/x-www-form-urlencoded', authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA==' }
+        reqheaders: {
+          'content-type': 'application/x-www-form-urlencoded',
+          authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA=='
+        }
       })
         .post('/oauth/token', requestBody)
         .once()
@@ -262,7 +275,8 @@ describe('Header-builder:', () => {
       nock('https://token.example.com', {
         reqheaders: {
           'content-type': 'application/x-www-form-urlencoded',
-          authorization: 'Basic VG9rZW5TZXJ2aWNlVXNlcjpUb2tlblNlcnZpY2VQYXNzd29yZA=='
+          authorization:
+            'Basic VG9rZW5TZXJ2aWNlVXNlcjpUb2tlblNlcnZpY2VQYXNzd29yZA=='
         }
       })
         .post('/oauth/token', requestBody)
@@ -284,12 +298,17 @@ describe('Header-builder:', () => {
       delete destination.tokenServiceUrl;
 
       const request = createGetAllRequest(destination);
-      await expect(buildHeaders(request)).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        buildHeaders(request)
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
 
     it('should throw an error when the access token to the request header for "OAuth2ClientCredentials" is rejected', async () => {
       nock('https://token.example.com', {
-        reqheaders: { 'content-type': 'application/x-www-form-urlencoded', authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA==' }
+        reqheaders: {
+          'content-type': 'application/x-www-form-urlencoded',
+          authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA=='
+        }
       })
         .post('/oauth/token', requestBody)
         .once()
@@ -299,7 +318,9 @@ describe('Header-builder:', () => {
         });
 
       const request = createGetAllRequest(destination);
-      await expect(buildHeaders(request)).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        buildHeaders(request)
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 });

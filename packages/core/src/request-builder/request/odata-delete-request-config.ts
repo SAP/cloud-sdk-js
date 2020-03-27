@@ -13,7 +13,9 @@ import { WithKeys } from './odata-request-traits';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataDeleteRequestConfig<EntityT extends Entity> extends ODataRequestConfig implements WithKeys {
+export class ODataDeleteRequestConfig<EntityT extends Entity>
+  extends ODataRequestConfig
+  implements WithKeys {
   keys: MapType<FieldType>;
   eTag: string;
   versionIdentifierIgnored = false;

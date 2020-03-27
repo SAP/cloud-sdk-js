@@ -24,7 +24,8 @@ jest.mock('fs', () => {
 
 describe('analytics-data', () => {
   const tmpEnv = process.env;
-  const salt = '7e5eb0e845e73b72310436f29252bf4ad0ef3d0d8c0ae189dec3d5ff2531e6a0';
+  const salt =
+    '7e5eb0e845e73b72310436f29252bf4ad0ef3d0d8c0ae189dec3d5ff2531e6a0';
 
   beforeEach(() => {
     jest.resetModules();
@@ -48,8 +49,10 @@ describe('analytics-data', () => {
       node: '10.11.1',
       npm: '6.0.0',
       os: 'darwin,18.2.0,x64',
-      sdk_dependencies: '@sap-cloud-sdk/util@1.7.1, @sap/cloud-sdk-vdm-business-partner-service@1.7.1',
-      third_party_dependencies: 'axios@0.19.0, moment@2.24.0, rambda@1.2.3, typescript@3.4.1',
+      sdk_dependencies:
+        '@sap-cloud-sdk/util@1.7.1, @sap/cloud-sdk-vdm-business-partner-service@1.7.1',
+      third_party_dependencies:
+        'axios@0.19.0, moment@2.24.0, rambda@1.2.3, typescript@3.4.1',
       typescript: 'true'
     });
   });
@@ -68,13 +71,16 @@ describe('analytics-data', () => {
       node: 'no version detected',
       npm: 'no version detected',
       os: 'darwin,18.2.0,x64',
-      sdk_dependencies: '@sap-cloud-sdk/util@1.7.1, @sap/cloud-sdk-vdm-business-partner-service@1.7.1',
-      third_party_dependencies: 'axios@0.19.0, moment@2.24.0, rambda@1.2.3, typescript@3.4.1',
+      sdk_dependencies:
+        '@sap-cloud-sdk/util@1.7.1, @sap/cloud-sdk-vdm-business-partner-service@1.7.1',
+      third_party_dependencies:
+        'axios@0.19.0, moment@2.24.0, rambda@1.2.3, typescript@3.4.1',
       typescript: 'true'
     });
   });
 
-  const hashedProjectIdentifierWithSalt = '638a8cd8f3522a69942b7c32be52af01a12223dd1a5aa9a5eed24e8de26550a3';
+  const hashedProjectIdentifierWithSalt =
+    '638a8cd8f3522a69942b7c32be52af01a12223dd1a5aa9a5eed24e8de26550a3';
 
   it('getProjectIdentifier should throw an error if the salt is missing', async () => {
     expect(getAnalyticsData({ enabled: true })).rejects.toThrow();

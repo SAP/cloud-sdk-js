@@ -1,7 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GeneratorOptions } from '../../src/generator-options';
 
-export function createOptions(options?: Partial<GeneratorOptions>): GeneratorOptions {
+export function createOptions(
+  options?: Partial<GeneratorOptions>
+): GeneratorOptions {
   return {
     inputDir: '',
     outputDir: '',

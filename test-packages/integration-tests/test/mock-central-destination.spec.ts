@@ -1,7 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { unlinkSync, writeFileSync } from 'fs';
 import { TestEntity } from '@sap-cloud-sdk/test-services/test-service';
-import { mockAllTestDestinations, unmockAllTestDestinations } from '@sap-cloud-sdk/test-util';
+import {
+  mockAllTestDestinations,
+  unmockAllTestDestinations
+} from '@sap-cloud-sdk/test-util';
 import nock from 'nock';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
 import { basicCredentials } from './test-util/destination-encoder';
@@ -22,7 +25,10 @@ describe('mockAllTestDestinations', () => {
     const destinationUrl = 'https://example.com';
     nock(destinationUrl, {
       reqheaders: {
-        authorization: basicCredentials({ username: 'username', password: 'password' }),
+        authorization: basicCredentials({
+          username: 'username',
+          password: 'password'
+        }),
         accept: 'application/json',
         'content-type': 'application/json'
       }

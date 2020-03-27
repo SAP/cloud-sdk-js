@@ -19,8 +19,15 @@ import {
  */
 export function sanitizeDestination(destination: MapType<any>): Destination {
   validateDestinationInput(destination);
-  const parsedDestination = pipe(parseAuthTokens, parseCertificates)(destination) as Destination;
-  return pipe(setDefaultAuthenticationFallback, setTrustAll, setOriginalProperties)(parsedDestination);
+  const parsedDestination = pipe(
+    parseAuthTokens,
+    parseCertificates
+  )(destination) as Destination;
+  return pipe(
+    setDefaultAuthenticationFallback,
+    setTrustAll,
+    setOriginalProperties
+  )(parsedDestination);
 }
 
 /**
@@ -30,7 +37,9 @@ export function sanitizeDestination(destination: MapType<any>): Destination {
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
-export function parseDestination(destinationJson: DestinationJson | DestinationConfiguration): Destination {
+export function parseDestination(
+  destinationJson: DestinationJson | DestinationConfiguration
+): Destination {
   const destinationConfig = getDestinationConfig(destinationJson);
   validateDestinationConfig(destinationConfig);
 
@@ -51,18 +60,32 @@ export function parseDestination(destinationJson: DestinationJson | DestinationC
   return sanitizeDestination(destination);
 }
 
-function getDestinationConfig(destinationJson: DestinationJson | DestinationConfiguration): DestinationConfiguration {
-  return isDestinationJson(destinationJson) ? destinationJson.destinationConfiguration : destinationJson;
+function getDestinationConfig(
+  destinationJson: DestinationJson | DestinationConfiguration
+): DestinationConfiguration {
+  return isDestinationJson(destinationJson)
+    ? destinationJson.destinationConfiguration
+    : destinationJson;
 }
 
-function validateDestinationConfig(destinationConfig: DestinationConfiguration): void {
-  if (isHttpDestination(destinationConfig) && typeof destinationConfig.URL === 'undefined') {
-    throw Error("Property 'URL' of destination configuration must not be undefined.");
+function validateDestinationConfig(
+  destinationConfig: DestinationConfiguration
+): void {
+  if (
+    isHttpDestination(destinationConfig) &&
+    typeof destinationConfig.URL === 'undefined'
+  ) {
+    throw Error(
+      "Property 'URL' of destination configuration must not be undefined."
+    );
   }
 }
 
 function validateDestinationInput(destinationInput: MapType<any>): void {
-  if (isHttpDestination(destinationInput) && typeof destinationInput.url === 'undefined') {
+  if (
+    isHttpDestination(destinationInput) &&
+    typeof destinationInput.url === 'undefined'
+  ) {
     throw Error("Property 'url' of destination input must not be undefined.");
   }
 }
@@ -71,7 +94,8 @@ function isHttpDestination(destinationInput: MapType<any>): boolean {
   return (
     destinationInput.Type === 'HTTP' ||
     destinationInput.type === 'HTTP' ||
-    (typeof destinationInput.type === 'undefined' && typeof destinationInput.Type === 'undefined')
+    (typeof destinationInput.type === 'undefined' &&
+      typeof destinationInput.Type === 'undefined')
   );
 }
 
@@ -79,17 +103,27 @@ function isHttpDestination(destinationInput: MapType<any>): boolean {
 /**
  * @hidden
  */
-export function toDestinationNameUrl(destination: Destination | DestinationNameAndJwt): string {
-  return isDestinationNameAndJwt(destination) ? `name: ${destination.destinationName}` : `name: ${destination.name}, url: ${destination.url}`;
+export function toDestinationNameUrl(
+  destination: Destination | DestinationNameAndJwt
+): string {
+  return isDestinationNameAndJwt(destination)
+    ? `name: ${destination.destinationName}`
+    : `name: ${destination.name}, url: ${destination.url}`;
 }
 
 function setOriginalProperties(destination: Destination): Destination {
-  const originalProperties = destination.originalProperties ? destination.originalProperties : destination;
+  const originalProperties = destination.originalProperties
+    ? destination.originalProperties
+    : destination;
   return assoc('originalProperties', originalProperties, destination);
 }
 
-function setDefaultAuthenticationFallback(destination: Destination): Destination {
-  return destination.authentication ? destination : assoc('authentication', getAuthenticationType(destination), destination);
+function setDefaultAuthenticationFallback(
+  destination: Destination
+): Destination {
+  return destination.authentication
+    ? destination
+    : assoc('authentication', getAuthenticationType(destination), destination);
 }
 
 function parseCertificate(certificate: MapType<any>): DestinationCertificate {
@@ -101,7 +135,9 @@ function parseCertificate(certificate: MapType<any>): DestinationCertificate {
 }
 
 function parseCertificates(destination: MapType<any>): MapType<any> {
-  const certificates = destination.certificates ? destination.certificates.map(parseCertificate) : [];
+  const certificates = destination.certificates
+    ? destination.certificates.map(parseCertificate)
+    : [];
   return assoc('certificates', certificates, destination);
 }
 
@@ -115,12 +151,18 @@ function parseAuthToken(authToken: MapType<any>): DestinationAuthToken {
 }
 
 function parseAuthTokens(destination: MapType<any>): MapType<any> {
-  const authTokens = destination.authTokens ? destination.authTokens.map(parseAuthToken) : [];
+  const authTokens = destination.authTokens
+    ? destination.authTokens.map(parseAuthToken)
+    : [];
   return assoc('authTokens', authTokens, destination);
 }
 
 function setTrustAll(destination: Destination): Destination {
-  return assoc('isTrustingAllCertificates', parseTrustAll(destination.isTrustingAllCertificates), destination);
+  return assoc(
+    'isTrustingAllCertificates',
+    parseTrustAll(destination.isTrustingAllCertificates),
+    destination
+  );
 }
 
 function parseTrustAll(isTrustingAllCertificates?: string | boolean): boolean {
@@ -132,7 +174,10 @@ function parseTrustAll(isTrustingAllCertificates?: string | boolean): boolean {
 }
 
 function getAuthenticationType(destination: Destination): AuthenticationType {
-  return destination.authentication || (destination.username && destination.password) ? 'BasicAuthentication' : 'NoAuthentication';
+  return destination.authentication ||
+    (destination.username && destination.password)
+    ? 'BasicAuthentication'
+    : 'NoAuthentication';
 }
 
 /**
@@ -171,7 +216,9 @@ export interface DestinationConfiguration {
 /**
  * @hidden
  */
-export function isDestinationConfiguration(destination: any): destination is DestinationConfiguration {
+export function isDestinationConfiguration(
+  destination: any
+): destination is DestinationConfiguration {
   return destination.URL !== undefined;
 }
 
@@ -179,7 +226,9 @@ export function isDestinationConfiguration(destination: any): destination is Des
 /**
  * @hidden
  */
-export function isDestinationJson(destination: any): destination is DestinationJson {
+export function isDestinationJson(
+  destination: any
+): destination is DestinationJson {
   return Object.keys(destination).includes('destinationConfiguration');
 }
 

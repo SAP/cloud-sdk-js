@@ -57,14 +57,21 @@ describe('user builder from decoded jwt', () => {
 
   it('should also parse custom attributes', () => {
     const userWithoutCustomAtributes = userFromJwt(getSampleJwt());
-    expect(userWithoutCustomAtributes.customAttributes).toMatchObject(new Map<string, string[]>());
+    expect(userWithoutCustomAtributes.customAttributes).toMatchObject(
+      new Map<string, string[]>()
+    );
 
-    const customAttributes = { customKey1: ['value1'], customKey2: ['value2.1', 'value2.2'] };
+    const customAttributes = {
+      customKey1: ['value1'],
+      customKey2: ['value2.1', 'value2.2']
+    };
     const userWithCustomFields = userFromJwt({
       user_name: 'someName',
       user_id: 'someId',
       [mapping.customAttributes.keyInJwt]: customAttributes
     });
-    expect(userWithCustomFields.customAttributes).toMatchObject(customAttributes);
+    expect(userWithCustomFields.customAttributes).toMatchObject(
+      customAttributes
+    );
   });
 });

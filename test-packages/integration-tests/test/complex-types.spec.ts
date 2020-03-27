@@ -1,6 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc, Destination } from '@sap-cloud-sdk/core';
-import { TestComplexType, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
+import {
+  TestComplexType,
+  TestEntity
+} from '@sap-cloud-sdk/test-services/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
@@ -29,12 +32,18 @@ describe('Complex types', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`)
+      .get(
+        `${servicePath}/${entityName}?$format=json&$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`
+      )
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()
       .getAll()
-      .filter(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('someComplexTypeProperty'))
+      .filter(
+        TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals(
+          'someComplexTypeProperty'
+        )
+      )
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();
@@ -48,7 +57,9 @@ describe('Complex types', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$orderby=ComplexTypeProperty/StringProperty%20asc`)
+      .get(
+        `${servicePath}/${entityName}?$format=json&$orderby=ComplexTypeProperty/StringProperty%20asc`
+      )
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()
@@ -84,6 +95,8 @@ describe('Complex types', () => {
   });
 
   it('should fail when passing unknown proerties to the builder', () => {
-    expect(() => TestComplexType.build({ SomethingElse: 'Fails!' })).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      TestComplexType.build({ SomethingElse: 'Fails!' })
+    ).toThrowErrorMatchingSnapshot();
   });
 });

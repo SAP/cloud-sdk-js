@@ -24,7 +24,11 @@ function readJSON(path: PathLike): { [key: string]: any } {
 }
 
 export function readServiceMapping(options: GeneratorOptions): VdmMapping {
-  return (options.serviceMapping && (readJSON(options.serviceMapping) as VdmMapping)) || {};
+  return (
+    (options.serviceMapping &&
+      (readJSON(options.serviceMapping) as VdmMapping)) ||
+    {}
+  );
 }
 
 export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {

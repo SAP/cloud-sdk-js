@@ -8,7 +8,10 @@ export function findProjectRoot(path: string, lastPath: string = path): string {
     return lastPath;
   }
 
-  const inProject = readdirSync(path).includes('package.json') || readdirSync(path).includes('node_modules') || path.includes('node_modules');
+  const inProject =
+    readdirSync(path).includes('package.json') ||
+    readdirSync(path).includes('node_modules') ||
+    path.includes('node_modules');
   if (!inProject) {
     return lastPath;
   }

@@ -4,7 +4,10 @@ import { v4 as uuid } from 'uuid';
 import { convertToUriFormat } from '../../src';
 import { UpdateRequestBuilder } from '../../src/request-builder';
 import { muteLoggers } from '../test-util/mute-logger';
-import { defaultDestination, mockUpdateRequest } from '../test-util/request-mocker';
+import {
+  defaultDestination,
+  mockUpdateRequest
+} from '../test-util/request-mocker';
 import { testEntityResourcePath } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/test-service';
 
@@ -21,7 +24,10 @@ function createTestEntity() {
 }
 
 function resourcePath(entity: TestEntity) {
-  return `(KeyPropertyGuid=${convertToUriFormat(entity.keyPropertyGuid, 'Edm.Guid')},KeyPropertyString='${entity.keyPropertyString}')`;
+  return `(KeyPropertyGuid=${convertToUriFormat(
+    entity.keyPropertyGuid,
+    'Edm.Guid'
+  )},KeyPropertyString='${entity.keyPropertyString}')`;
 }
 
 describe('UpdateRequestBuilder', () => {
@@ -35,22 +41,22 @@ describe('UpdateRequestBuilder', () => {
 
   it('no request is executed when there is no difference between current and remote state', async () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
-    const scope = nock(/.*/)
-      .get(/.*/)
-      .reply(500);
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const scope = nock(/.*/).get(/.*/).reply(500);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
     expect(actual).toEqual(entity);
     expect(scope.isDone()).toBe(false);
   });
 
   it('no request is executed when only keys have been modified', async () => {
-    const scope = nock(/.*/)
-      .get(/.*/)
-      .reply(500);
+    const scope = nock(/.*/).get(/.*/).reply(500);
     const entity = createTestEntity().setOrInitializeRemoteState();
     entity.keyPropertyGuid = uuid();
     entity.keyPropertyString = 'UPDATED!';
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
     expect(actual).toEqual(entity);
     expect(scope.isDone()).toBe(false);
   });
@@ -58,14 +64,22 @@ describe('UpdateRequestBuilder', () => {
   it('update request sends only non-key properties', async () => {
     const entity = createTestEntity();
     entity.booleanProperty = false;
-    const requestBody = { Int32Property: entity.int32Property, BooleanProperty: false };
+    const requestBody = {
+      Int32Property: entity.int32Property,
+      BooleanProperty: false
+    };
 
     mockUpdateRequest({
       body: requestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString)
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -74,14 +88,22 @@ describe('UpdateRequestBuilder', () => {
     const customFieldVal = 'CUSTOM';
     entity.setCustomField('SomeCustomField', customFieldVal);
 
-    const requestBody = { Int32Property: entity.int32Property, SomeCustomField: customFieldVal };
+    const requestBody = {
+      Int32Property: entity.int32Property,
+      SomeCustomField: customFieldVal
+    };
 
     mockUpdateRequest({
       body: requestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString)
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -97,10 +119,15 @@ describe('UpdateRequestBuilder', () => {
 
     mockUpdateRequest({
       body: requestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString)
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -115,11 +142,16 @@ describe('UpdateRequestBuilder', () => {
 
     mockUpdateRequest({
       body: putRequestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString),
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      ),
       method: 'put'
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).replaceWholeEntityWithPut().execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+      .replaceWholeEntityWithPut()
+      .execute(defaultDestination);
 
     expect(await actual).toEqual(entity.setOrInitializeRemoteState());
   });
@@ -130,10 +162,15 @@ describe('UpdateRequestBuilder', () => {
 
     const scope = mockUpdateRequest({
       body: requestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString)
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).requiredFields(TestEntity.KEY_PROPERTY_GUID).execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+      .requiredFields(TestEntity.KEY_PROPERTY_GUID)
+      .execute(defaultDestination);
 
     expect(scope.isDone()).toBe(true);
     expect(actual).toEqual(entity);
@@ -142,11 +179,11 @@ describe('UpdateRequestBuilder', () => {
   it('update request excludes ignored properties', async () => {
     const entity = createTestEntity();
 
-    const scope = nock(/.*/)
-      .patch(/.*/)
-      .reply(500);
+    const scope = nock(/.*/).patch(/.*/).reply(500);
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).ignoredFields(TestEntity.INT_32_PROPERTY).execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+      .ignoredFields(TestEntity.INT_32_PROPERTY)
+      .execute(defaultDestination);
 
     expect(scope.isDone()).toBe(false);
     expect(actual).toEqual(entity);
@@ -158,11 +195,16 @@ describe('UpdateRequestBuilder', () => {
 
     mockUpdateRequest({
       body: requestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString),
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      ),
       additionalHeaders: { 'if-match': 'not-a-star' }
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -173,7 +215,10 @@ describe('UpdateRequestBuilder', () => {
 
     mockUpdateRequest({
       body: requestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString),
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      ),
       additionalHeaders: { 'if-match': customVersionIdentifier }
     });
 
@@ -191,11 +236,16 @@ describe('UpdateRequestBuilder', () => {
 
     mockUpdateRequest({
       body: requestBody,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString),
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      ),
       additionalHeaders: { 'if-match': '*' }
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).ignoreVersionIdentifier().execute(defaultDestination);
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+      .ignoreVersionIdentifier()
+      .execute(defaultDestination);
 
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
@@ -205,11 +255,16 @@ describe('UpdateRequestBuilder', () => {
 
     mockUpdateRequest({
       body: () => true,
-      path: testEntityResourcePath(entity.keyPropertyGuid, entity.keyPropertyString),
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      ),
       statusCode: 500
     });
 
-    const updateRequest = new UpdateRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const updateRequest = new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
   });

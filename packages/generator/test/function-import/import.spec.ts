@@ -14,7 +14,12 @@ describe('function-import generation', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/core',
-        namedImports: ['transformReturnValueForEdmType', 'edmToTs', 'FunctionImportRequestBuilder', 'FunctionImportParameter']
+        namedImports: [
+          'transformReturnValueForEdmType',
+          'edmToTs',
+          'FunctionImportRequestBuilder',
+          'FunctionImportParameter'
+        ]
       }
     ]);
   });

@@ -18,7 +18,13 @@ describe('interface', () => {
           hasQuestionToken: false,
           docs: ['something something very good']
         },
-        { kind: StructureKind.PropertySignature, name: 'amount', type: 'number', hasQuestionToken: false, docs: ['something something very much'] }
+        {
+          kind: StructureKind.PropertySignature,
+          name: 'amount',
+          type: 'number',
+          hasQuestionToken: false,
+          docs: ['something something very much']
+        }
       ],
       docs: ['ComplexMealType']
     });
@@ -38,7 +44,13 @@ describe('interface', () => {
           hasQuestionToken: false,
           docs: ['the desert']
         },
-        { kind: StructureKind.PropertySignature, name: 'amount', type: 'number', hasQuestionToken: false, docs: ['something something very much'] }
+        {
+          kind: StructureKind.PropertySignature,
+          name: 'amount',
+          type: 'number',
+          hasQuestionToken: false,
+          docs: ['something something very much']
+        }
       ],
       docs: ['ComplexMealWithDesertType']
     });

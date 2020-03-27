@@ -1,19 +1,32 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { coreImportDeclaration, corePropertyTypeImportNames, externalImportDeclarations } from '../imports';
+import {
+  coreImportDeclaration,
+  corePropertyTypeImportNames,
+  externalImportDeclarations
+} from '../imports';
 import { VdmEntity } from '../vdm-types';
 
-export function importDeclarations(entity: VdmEntity): ImportDeclarationStructure[] {
+export function importDeclarations(
+  entity: VdmEntity
+): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(entity.keys),
-    coreImportDeclaration([...corePropertyTypeImportNames(entity.keys), ...requestBuilderCoreImportDeclarations(entity)]),
+    coreImportDeclaration([
+      ...corePropertyTypeImportNames(entity.keys),
+      ...requestBuilderCoreImportDeclarations(entity)
+    ]),
     entityImportDeclaration(entity)
   ];
 }
 
 function requestBuilderCoreImportDeclarations(entity: VdmEntity) {
-  const coreImports = ['RequestBuilder', 'GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
+  const coreImports = [
+    'RequestBuilder',
+    'GetAllRequestBuilder',
+    'GetByKeyRequestBuilder'
+  ];
 
   if (entity.creatable) {
     coreImports.push('CreateRequestBuilder');
@@ -30,7 +43,9 @@ function requestBuilderCoreImportDeclarations(entity: VdmEntity) {
   return coreImports;
 }
 
-function entityImportDeclaration(entity: VdmEntity): ImportDeclarationStructure {
+function entityImportDeclaration(
+  entity: VdmEntity
+): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     namedImports: [entity.className],

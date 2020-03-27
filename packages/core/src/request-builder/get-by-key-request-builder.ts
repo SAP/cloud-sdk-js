@@ -6,7 +6,10 @@ import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { DestinationOptions } from '../scp-cf';
-import { Destination, DestinationNameAndJwt } from '../scp-cf/destination-service-types';
+import {
+  Destination,
+  DestinationNameAndJwt
+} from '../scp-cf/destination-service-types';
 import { Selectable } from '../selectable';
 import { FieldType } from '../selectable/field';
 import { MethodRequestBuilderBase } from './request-builder-base';
@@ -18,7 +21,8 @@ import { ODataGetByKeyRequestConfig } from './request/odata-get-by-key-request-c
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilder<EntityT extends Entity> extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
+export class GetByKeyRequestBuilder<EntityT extends Entity>
+  extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
@@ -26,7 +30,10 @@ export class GetByKeyRequestBuilder<EntityT extends Entity> extends MethodReques
    * @param _entityConstructor - Constructor of the entity to create the request for
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    */
-  constructor(readonly _entityConstructor: Constructable<EntityT>, keys: MapType<FieldType>) {
+  constructor(
+    readonly _entityConstructor: Constructable<EntityT>,
+    keys: MapType<FieldType>
+  ) {
     super(new ODataGetByKeyRequestConfig(_entityConstructor));
     this.requestConfig.keys = keys;
   }
@@ -49,11 +56,24 @@ export class GetByKeyRequestBuilder<EntityT extends Entity> extends MethodReques
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the requested entity
    */
-  async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<EntityT> {
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<EntityT> {
     return this.build(destination, options)
       .then(request => request.execute())
-      .then(response => deserializeEntity(extractData(response), this._entityConstructor, response.headers))
-      .catch(error => Promise.reject(errorWithCause('OData get by key request failed!', error)));
+      .then(response =>
+        deserializeEntity(
+          extractData(response),
+          this._entityConstructor,
+          response.headers
+        )
+      )
+      .catch(error =>
+        Promise.reject(
+          errorWithCause('OData get by key request failed!', error)
+        )
+      );
   }
 }
 

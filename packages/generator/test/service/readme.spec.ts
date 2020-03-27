@@ -1,6 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { readme } from '../../src/service';
-import { ApiBusinessHubMetadata, VdmServiceMetadata } from '../../src/vdm-types';
+import {
+  ApiBusinessHubMetadata,
+  VdmServiceMetadata
+} from '../../src/vdm-types';
 
 const npmPackageName = 'business-partner-service';
 const speakingModuleName = 'Business Partner Service';

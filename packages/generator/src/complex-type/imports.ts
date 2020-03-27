@@ -11,7 +11,9 @@ import {
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 import { hasEdmTypeProperty } from './util';
 
-export function importDeclarations(complexType: VdmComplexType): ImportDeclarationStructure[] {
+export function importDeclarations(
+  complexType: VdmComplexType
+): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(complexType.properties),
     ...complexTypeImportDeclarations(complexType.properties),

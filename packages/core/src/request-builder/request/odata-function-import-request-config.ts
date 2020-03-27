@@ -2,7 +2,10 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { convertToUriFormat } from '../../uri-value-converter';
-import { FunctionImportParameter, FunctionImportParameters } from './function-import-parameter';
+import {
+  FunctionImportParameter,
+  FunctionImportParameters
+} from './function-import-parameter';
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
 
 /**
@@ -10,7 +13,9 @@ import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
  *
  * @typeparam ParametersT - Type of the original parameters object
  */
-export class ODataFunctionImportRequestConfig<ParametersT> extends ODataRequestConfig {
+export class ODataFunctionImportRequestConfig<
+  ParametersT
+> extends ODataRequestConfig {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    *
@@ -38,11 +43,23 @@ export class ODataFunctionImportRequestConfig<ParametersT> extends ODataRequestC
         format: 'json'
       }),
       ...(Object.values(this.parameters)
-        .filter((parameter: FunctionImportParameter<ParametersT>) => typeof parameter.value !== 'undefined')
-        .reduce((queryParams: MapType<any>, parameter: FunctionImportParameter<ParametersT>) => {
-          queryParams[parameter.originalName] = convertToUriFormat(parameter.value, parameter.edmType);
-          return queryParams;
-        }, {}) as MapType<any>)
+        .filter(
+          (parameter: FunctionImportParameter<ParametersT>) =>
+            typeof parameter.value !== 'undefined'
+        )
+        .reduce(
+          (
+            queryParams: MapType<any>,
+            parameter: FunctionImportParameter<ParametersT>
+          ) => {
+            queryParams[parameter.originalName] = convertToUriFormat(
+              parameter.value,
+              parameter.edmType
+            );
+            return queryParams;
+          },
+          {}
+        ) as MapType<any>)
     };
   }
 }

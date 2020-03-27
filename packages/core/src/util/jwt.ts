@@ -4,9 +4,22 @@ import { IncomingMessage } from 'http';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosRequestConfig } from 'axios';
 import jwt from 'jsonwebtoken';
-import { Cache, fetchVerificationKeys, getXsuaaServiceCredentials, TokenKey, XsuaaServiceCredentials } from '../scp-cf';
-import { mapping as mappingTenantFields, RegisteredJWTClaimsTenant } from '../scp-cf/tenant';
-import { mapping as mappingUserFields, RegisteredJWTClaimsUser, Scope } from '../scp-cf/user';
+import {
+  Cache,
+  fetchVerificationKeys,
+  getXsuaaServiceCredentials,
+  TokenKey,
+  XsuaaServiceCredentials
+} from '../scp-cf';
+import {
+  mapping as mappingTenantFields,
+  RegisteredJWTClaimsTenant
+} from '../scp-cf/tenant';
+import {
+  mapping as mappingUserFields,
+  RegisteredJWTClaimsUser,
+  Scope
+} from '../scp-cf/user';
 
 const logger = createLogger({
   package: 'core',
@@ -21,7 +34,9 @@ const logger = createLogger({
 export function decodeJwt(token: string): DecodedJWT {
   const decodedToken = jwt.decode(token);
   if (decodedToken === null || typeof decodedToken === 'string') {
-    throw new Error('JwtError: The given jwt payload does not encode valid JSON.');
+    throw new Error(
+      'JwtError: The given jwt payload does not encode valid JSON.'
+    );
   }
   return decodedToken;
 }
@@ -39,7 +54,9 @@ export function retrieveJwt(req: IncomingMessage): string | undefined {
 }
 
 function authHeader(req: IncomingMessage): string | undefined {
-  const entries = Object.entries(req.headers).find(([key]) => key.toLowerCase() === 'authorization');
+  const entries = Object.entries(req.headers).find(
+    ([key]) => key.toLowerCase() === 'authorization'
+  );
   if (entries) {
     const header = entries[1];
 
@@ -77,7 +94,10 @@ function validateAuthHeader(header: string | undefined): boolean {
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
  */
-export async function verifyJwt(token: string, options?: VerifyJwtOptions): Promise<DecodedJWT> {
+export async function verifyJwt(
+  token: string,
+  options?: VerifyJwtOptions
+): Promise<DecodedJWT> {
   options = { ...defaultVerifyJwtOptions, ...options };
 
   const creds = getXsuaaServiceCredentials(token);
@@ -86,7 +106,9 @@ export async function verifyJwt(token: string, options?: VerifyJwtOptions): Prom
     const key = verificationKeyCache.get(creds.url) as TokenKey;
 
     return verifyJwtWithKey(token, key.value).catch(error => {
-      logger.warn('Unable to verify JWT with cached key, fetching new verification key.');
+      logger.warn(
+        'Unable to verify JWT with cached key, fetching new verification key.'
+      );
       logger.warn(`Original error: ${error.message}`);
 
       return fetchAndCacheKeyAndVerify(creds, token, options);
@@ -96,9 +118,20 @@ export async function verifyJwt(token: string, options?: VerifyJwtOptions): Prom
   return fetchAndCacheKeyAndVerify(creds, token, options);
 }
 
-function fetchAndCacheKeyAndVerify(creds: XsuaaServiceCredentials, token: string, options?: VerifyJwtOptions) {
+function fetchAndCacheKeyAndVerify(
+  creds: XsuaaServiceCredentials,
+  token: string,
+  options?: VerifyJwtOptions
+) {
   return getVerificationKey(creds)
-    .catch(error => Promise.reject(errorWithCause('Failed to verify JWT - unable to get verification key!', error)))
+    .catch(error =>
+      Promise.reject(
+        errorWithCause(
+          'Failed to verify JWT - unable to get verification key!',
+          error
+        )
+      )
+    )
     .then(key => (options ? cacheVerificationKey(creds, key, options) : key))
     .then(key => verifyJwtWithKey(token, key.value));
 }
@@ -114,10 +147,14 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
   cacheVerificationKeys: true
 };
 
-function getVerificationKey(xsuaaCredentials: XsuaaServiceCredentials): Promise<TokenKey> {
+function getVerificationKey(
+  xsuaaCredentials: XsuaaServiceCredentials
+): Promise<TokenKey> {
   return fetchVerificationKeys(xsuaaCredentials).then(verificationKeys => {
     if (!verificationKeys.length) {
-      throw Error('No verification keys have been returned by the XSUAA service!');
+      throw Error(
+        'No verification keys have been returned by the XSUAA service!'
+      );
     }
     return verificationKeys[0];
   });
@@ -126,7 +163,11 @@ function getVerificationKey(xsuaaCredentials: XsuaaServiceCredentials): Promise<
 // 15 minutes is the default value used by the xssec lib
 export const verificationKeyCache = new Cache({ minutes: 15 });
 
-function cacheVerificationKey(xsuaaCredentials: XsuaaServiceCredentials, key: TokenKey, options: VerifyJwtOptions): TokenKey {
+function cacheVerificationKey(
+  xsuaaCredentials: XsuaaServiceCredentials,
+  key: TokenKey,
+  options: VerifyJwtOptions
+): TokenKey {
   if (options.cacheVerificationKeys) {
     verificationKeyCache.set(xsuaaCredentials.url, key);
   }
@@ -140,7 +181,10 @@ function cacheVerificationKey(xsuaaCredentials: XsuaaServiceCredentials, key: To
  * @param key - Key to use for verification
  * @returns A Promise to the decoded and verified JWT.
  */
-export function verifyJwtWithKey(token: string, key: string): Promise<DecodedJWT> {
+export function verifyJwtWithKey(
+  token: string,
+  key: string
+): Promise<DecodedJWT> {
   return new Promise((resolve, reject) => {
     jwt.verify(token, sanitizeVerificationKey(key), (err, decodedToken) => {
       if (err) {
@@ -166,7 +210,10 @@ function sanitizeVerificationKey(key: string) {
  * @param decodedProviderToken - Provider JWT
  * @returns Whether the tenant is identical.
  */
-export function isIdenticalTenant(decodedUserToken: DecodedJWT, decodedProviderToken: DecodedJWT): boolean {
+export function isIdenticalTenant(
+  decodedUserToken: DecodedJWT,
+  decodedProviderToken: DecodedJWT
+): boolean {
   return (
     readPropertyWithWarn(decodedUserToken, mappingTenantFields.id.keyInJwt) ===
     readPropertyWithWarn(decodedProviderToken, mappingTenantFields.id.keyInJwt)
@@ -198,7 +245,10 @@ export function userId(decodedToken: DecodedJWT): string | undefined {
  */
 export function userGivenName(decodedToken: DecodedJWT): string | undefined {
   if (mappingUserFields.givenName) {
-    return readPropertyWithWarn(decodedToken, mappingUserFields.givenName.keyInJwt);
+    return readPropertyWithWarn(
+      decodedToken,
+      mappingUserFields.givenName.keyInJwt
+    );
   }
 }
 
@@ -209,7 +259,10 @@ export function userGivenName(decodedToken: DecodedJWT): string | undefined {
  */
 export function userFamilyName(decodedToken: DecodedJWT): string | undefined {
   if (mappingUserFields && mappingUserFields.familyName) {
-    return readPropertyWithWarn(decodedToken, mappingUserFields!.familyName.keyInJwt);
+    return readPropertyWithWarn(
+      decodedToken,
+      mappingUserFields!.familyName.keyInJwt
+    );
   }
 }
 
@@ -219,7 +272,10 @@ export function userFamilyName(decodedToken: DecodedJWT): string | undefined {
  * @returns The user id if available.
  */
 export function userName(decodedToken: DecodedJWT): string | undefined {
-  return readPropertyWithWarn(decodedToken, mappingUserFields.userName.keyInJwt);
+  return readPropertyWithWarn(
+    decodedToken,
+    mappingUserFields.userName.keyInJwt
+  );
 }
 
 /**
@@ -242,7 +298,9 @@ export function userScopes(decodedToken: DecodedJWT): Scope[] | [] {
   if (!(decodedToken.scope instanceof Array && decodedToken.scope.length)) {
     return [];
   }
-  return decodedToken.scope.map(s => (s.includes('.') ? s.substr(s.indexOf('.') + 1, s.length) : s)).map(s => ({ name: s }));
+  return decodedToken.scope
+    .map(s => (s.includes('.') ? s.substr(s.indexOf('.') + 1, s.length) : s))
+    .map(s => ({ name: s }));
 }
 
 /**
@@ -259,9 +317,14 @@ export function tenantId(decodedToken: DecodedJWT): string | undefined {
  * @param decodedToken - Token to read the custom attributes
  * @returns custom attributes added by the xsuaa to the issued JWT.
  */
-export function customAttributes(decodedToken: DecodedJWT): Map<string, string[]> {
+export function customAttributes(
+  decodedToken: DecodedJWT
+): Map<string, string[]> {
   if (decodedToken[mappingUserFields.customAttributes.keyInJwt]) {
-    return readPropertyWithWarn(decodedToken, mappingUserFields.customAttributes.keyInJwt) as Map<string, string[]>;
+    return readPropertyWithWarn(
+      decodedToken,
+      mappingUserFields.customAttributes.keyInJwt
+    ) as Map<string, string[]>;
   }
   return new Map<string, string[]>();
 }
@@ -301,7 +364,9 @@ function audiencesFromAud(decodedToken: DecodedJWT): string[] {
   if (!(decodedToken.aud instanceof Array && decodedToken.aud.length)) {
     return [];
   }
-  return decodedToken.aud.map(aud => (aud.includes('.') ? aud.substr(0, aud.indexOf('.')) : aud));
+  return decodedToken.aud.map(aud =>
+    aud.includes('.') ? aud.substr(0, aud.indexOf('.')) : aud
+  );
 }
 
 function audiencesFromScope(decodedToken: DecodedJWT): string[] {
@@ -309,7 +374,10 @@ function audiencesFromScope(decodedToken: DecodedJWT): string[] {
     return [];
   }
 
-  const scopes = decodedToken.scope instanceof Array ? decodedToken.scope : [decodedToken.scope];
+  const scopes =
+    decodedToken.scope instanceof Array
+      ? decodedToken.scope
+      : [decodedToken.scope];
   return scopes.reduce((aud, scope) => {
     if (scope.includes('.')) {
       return [...aud, scope.substr(0, scope.indexOf('.'))];
@@ -329,7 +397,9 @@ export function wrapJwtInHeader(token: string): AxiosRequestConfig {
 
 function readPropertyWithWarn(decodedJwt: DecodedJWT, property: string): any {
   if (!decodedJwt[property]) {
-    logger.warn(`WarningJWT: The provided JWT does not include "${property}" property.`);
+    logger.warn(
+      `WarningJWT: The provided JWT does not include "${property}" property.`
+    );
   }
 
   return decodedJwt[property];
@@ -338,7 +408,9 @@ function readPropertyWithWarn(decodedJwt: DecodedJWT, property: string): any {
 /**
  * Interface to represent the registered claims of a JWT.
  */
-export type RegisteredJWTClaims = RegisteredJWTClaimsBasic & RegisteredJWTClaimsUser & RegisteredJWTClaimsTenant;
+export type RegisteredJWTClaims = RegisteredJWTClaimsBasic &
+  RegisteredJWTClaimsUser &
+  RegisteredJWTClaimsTenant;
 
 /**
  * Interface to represent the basic properties like issuer, audience etc.
@@ -361,7 +433,10 @@ export interface DecodedJWT extends RegisteredJWTClaims {
 }
 
 export type JwtKeyMapping<TypescriptKeys, JwtKeys> = {
-  [key in keyof TypescriptKeys]: { keyInJwt: keyof JwtKeys; extractorFunction: (decodedJWT: DecodedJWT) => any };
+  [key in keyof TypescriptKeys]: {
+    keyInJwt: keyof JwtKeys;
+    extractorFunction: (decodedJWT: DecodedJWT) => any;
+  };
 };
 
 /**
@@ -378,6 +453,8 @@ export function checkMandatoryValue<TypeScriptKeys, JwtKeys>(
 ): void {
   const value = mapping[key].extractorFunction(decodedJWT);
   if (!value) {
-    throw new Error(`Field ${mapping[key].keyInJwt} not provided in decoded jwt: ${decodedJWT}`);
+    throw new Error(
+      `Field ${mapping[key].keyInJwt} not provided in decoded jwt: ${decodedJWT}`
+    );
   }
 }

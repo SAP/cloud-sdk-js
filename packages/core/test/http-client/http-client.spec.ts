@@ -79,7 +79,9 @@ describe('generic http client', () => {
     });
 
     it('throws useful error messages when finding the destination fails', async () => {
-      await expect(buildHttpRequest({ destinationName: 'does not exist' })).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        buildHttpRequest({ destinationName: 'does not exist' })
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
 
     it('throws useful error messages when building headers fails', async () => {
@@ -92,7 +94,9 @@ describe('generic http client', () => {
     });
 
     it('defaults to NoAuthentication/does not throw if no credentials are provided', async () => {
-      await expect(buildHttpRequest({ url: 'https://example.com' })).resolves.not.toThrow();
+      await expect(
+        buildHttpRequest({ url: 'https://example.com' })
+      ).resolves.not.toThrow();
     });
   });
 
@@ -122,7 +126,10 @@ describe('generic http client', () => {
         }
       };
 
-      const actual = await addDestinationToRequestConfig(httpsDestination, input);
+      const actual = await addDestinationToRequestConfig(
+        httpsDestination,
+        input
+      );
 
       expect(actual).toMatchObject(expected);
       expect(actual.httpsAgent).toBeDefined();
@@ -147,7 +154,10 @@ describe('generic http client', () => {
         }
       };
 
-      const actual = await addDestinationToRequestConfig(httpsDestination, input);
+      const actual = await addDestinationToRequestConfig(
+        httpsDestination,
+        input
+      );
 
       expect(actual).toMatchObject(expected);
       expect(actual.httpsAgent).not.toBe('lalala');
@@ -178,7 +188,10 @@ describe('generic http client', () => {
         })
         .reply(200);
 
-      const request = addDestinationToRequestConfig(httpsDestination, config).then(conf => Axios.request(conf));
+      const request = addDestinationToRequestConfig(
+        httpsDestination,
+        config
+      ).then(conf => Axios.request(conf));
       await expect(request).resolves.not.toThrow();
     });
   });
@@ -191,11 +204,13 @@ describe('generic http client', () => {
     // The base-agent dependency coming in via the http-proxy-agent did mess with the node https.
     // Since version 3.0.0 the issue is fixed and the test ensures this.
     it('should not break the plain node http client', async () => {
-      nock('https://example.com')
-        .get(/.*/)
-        .reply(200);
+      nock('https://example.com').get(/.*/).reply(200);
 
-      return new Promise((resolve, reject) => https.get('https://example.com', response => (response.statusCode === 200 ? resolve() : reject())));
+      return new Promise((resolve, reject) =>
+        https.get('https://example.com', response =>
+          response.statusCode === 200 ? resolve() : reject()
+        )
+      );
     });
 
     it('takes a generic HTTP request and executes it', async () => {
@@ -261,7 +276,9 @@ describe('generic http client', () => {
         }
       };
 
-      await expect(executeHttpRequest(httpsDestination, config)).resolves.not.toThrow();
+      await expect(
+        executeHttpRequest(httpsDestination, config)
+      ).resolves.not.toThrow();
     });
 
     it('propagates errors to the caller', async () => {
@@ -289,7 +306,9 @@ describe('generic http client', () => {
         }
       };
 
-      await expect(executeHttpRequest(httpsDestination, config)).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        executeHttpRequest(httpsDestination, config)
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 });

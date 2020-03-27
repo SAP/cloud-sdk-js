@@ -2,7 +2,12 @@
 import nock from 'nock';
 import { destinationServiceUri } from './environment-mocks';
 
-export function mockInstanceDestinationsCall(response: any, responseCode: number, accessToken: string, uri: string = destinationServiceUri) {
+export function mockInstanceDestinationsCall(
+  response: any,
+  responseCode: number,
+  accessToken: string,
+  uri: string = destinationServiceUri
+) {
   return nock(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
@@ -12,7 +17,12 @@ export function mockInstanceDestinationsCall(response: any, responseCode: number
     .reply(responseCode, response);
 }
 
-export function mockSubaccountDestinationsCall(response: any, responseCode: number, accessToken: string, uri: string = destinationServiceUri) {
+export function mockSubaccountDestinationsCall(
+  response: any,
+  responseCode: number,
+  accessToken: string,
+  uri: string = destinationServiceUri
+) {
   return nock(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`

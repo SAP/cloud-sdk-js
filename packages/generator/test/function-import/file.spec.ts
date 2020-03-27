@@ -7,11 +7,15 @@ describe('file', () => {
   it('functionImportSourceFile', () => {
     const actual = functionImportSourceFile(foodService);
 
-    const imports = (actual.statements as any).filter(element => element.kind === StructureKind.ImportDeclaration);
+    const imports = (actual.statements as any).filter(
+      element => element.kind === StructureKind.ImportDeclaration
+    );
 
     expect(imports.length).toBe(1);
 
-    const variables = (actual.statements as any).filter(element => element.kind === StructureKind.VariableStatement);
+    const variables = (actual.statements as any).filter(
+      element => element.kind === StructureKind.VariableStatement
+    );
 
     expect(variables.length).toBe(1);
   });

@@ -8,6 +8,8 @@ describe('export-statement', () => {
 
     expect(actual.declarationKind).toEqual('const');
     expect(actual.isExported).toBeTruthy();
-    expect(actual.declarations).toEqual([{ name: 'functionImports', initializer: '{\norderBreakfast\n}' }]);
+    expect(actual.declarations).toEqual([
+      { name: 'functionImports', initializer: '{\norderBreakfast\n}' }
+    ]);
   });
 });

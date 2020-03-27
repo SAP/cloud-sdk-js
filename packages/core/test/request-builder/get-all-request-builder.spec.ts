@@ -1,8 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GetAllRequestBuilder } from '../../src/request-builder';
 import { muteLoggers } from '../test-util/mute-logger';
-import { defaultDestination, mockDestinationsEnv, mockGetRequest, unmockDestinationsEnv } from '../test-util/request-mocker';
-import { createOriginalTestEntityData1, createOriginalTestEntityData2, createTestEntity } from '../test-util/test-data';
+import {
+  defaultDestination,
+  mockDestinationsEnv,
+  mockGetRequest,
+  unmockDestinationsEnv
+} from '../test-util/request-mocker';
+import {
+  createOriginalTestEntityData1,
+  createOriginalTestEntityData2,
+  createTestEntity
+} from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/test-service';
 
 describe('GetAllRequestBuilder', () => {
@@ -22,7 +31,8 @@ describe('GetAllRequestBuilder', () => {
 
   describe('url', () => {
     it('is built correctly', async () => {
-      const expected = '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
@@ -38,7 +48,10 @@ describe('GetAllRequestBuilder', () => {
       });
 
       const actual = await requestBuilder.execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(entityData1), createTestEntity(entityData2)]);
+      expect(actual).toEqual([
+        createTestEntity(entityData1),
+        createTestEntity(entityData2)
+      ]);
     });
 
     it('top(1) returns the first entity', async () => {
@@ -65,7 +78,9 @@ describe('GetAllRequestBuilder', () => {
     it('throws an error when the destination cannot be found', async () => {
       mockDestinationsEnv(defaultDestination);
 
-      const getAllRequest = requestBuilder.execute({ destinationName: 'NonExistentDestination' });
+      const getAllRequest = requestBuilder.execute({
+        destinationName: 'NonExistentDestination'
+      });
 
       await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
     });

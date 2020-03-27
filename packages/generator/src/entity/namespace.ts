@@ -1,13 +1,29 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { unique } from '@sap-cloud-sdk/util';
-import { NamespaceDeclarationStructure, StructureKind, VariableDeclarationKind, VariableStatementStructure } from 'ts-morph';
+import {
+  NamespaceDeclarationStructure,
+  StructureKind,
+  VariableDeclarationKind,
+  VariableStatementStructure
+} from 'ts-morph';
 import { linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
-import { getStaticNavPropertyDescription, getStaticPropertyDescription } from '../typedoc';
-import { VdmEntity, VdmNavigationProperty, VdmProperty, VdmServiceMetadata } from '../vdm-types';
+import {
+  getStaticNavPropertyDescription,
+  getStaticPropertyDescription
+} from '../typedoc';
+import {
+  VdmEntity,
+  VdmNavigationProperty,
+  VdmProperty,
+  VdmServiceMetadata
+} from '../vdm-types';
 
-export function entityNamespace(entity: VdmEntity, service: VdmServiceMetadata): NamespaceDeclarationStructure {
+export function entityNamespace(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): NamespaceDeclarationStructure {
   return {
     kind: StructureKind.Namespace,
     name: entity.className,
@@ -27,8 +43,15 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
   return entity.properties.map(prop => property(prop, entity));
 }
 
-function property(prop: VdmProperty, entity: VdmEntity): VariableStatementStructure {
-  const type = `'${prop.edmType.startsWith('Edm') ? prop.edmType : prop.edmType.split('.').pop()}'`;
+function property(
+  prop: VdmProperty,
+  entity: VdmEntity
+): VariableStatementStructure {
+  const type = `'${
+    prop.edmType.startsWith('Edm')
+      ? prop.edmType
+      : prop.edmType.split('.').pop()
+  }'`;
   const initializer = prop.isComplex
     ? `new ${prop.fieldType}('${prop.originalName}', ${entity.className})`
     : `new ${prop.fieldType}('${prop.originalName}', ${entity.className}, ${type})`;
@@ -47,14 +70,29 @@ function property(prop: VdmProperty, entity: VdmEntity): VariableStatementStruct
   };
 }
 
-function navigationProperties(entity: VdmEntity, service: VdmServiceMetadata): VariableStatementStructure[] {
-  return entity.navigationProperties.map(navProp => navigationProperty(navProp, entity, service));
+function navigationProperties(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): VariableStatementStructure[] {
+  return entity.navigationProperties.map(navProp =>
+    navigationProperty(navProp, entity, service)
+  );
 }
 
-function navigationProperty(navProp: VdmNavigationProperty, entity: VdmEntity, service: VdmServiceMetadata): VariableStatementStructure {
-  const matchedEntity = service.entities.find(e => e.entitySetName === navProp.to);
+function navigationProperty(
+  navProp: VdmNavigationProperty,
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): VariableStatementStructure {
+  const matchedEntity = service.entities.find(
+    e => e.entitySetName === navProp.to
+  );
   if (!matchedEntity) {
-    throw Error(`Failed to find the entity from the service: ${JSON.stringify(service)} for nav property ${navProp}`);
+    throw Error(
+      `Failed to find the entity from the service: ${JSON.stringify(
+        service
+      )} for nav property ${navProp}`
+    );
   }
 
   const toEntity = matchedEntity.className;
@@ -66,7 +104,9 @@ function navigationProperty(navProp: VdmNavigationProperty, entity: VdmEntity, s
       {
         name: navProp.staticPropertyName,
         type: `${linkClass(navProp)}<${entity.className},${toEntity}>`,
-        initializer: `new ${linkClass(navProp)}('${navProp.originalName}', ${entity.className}, ${toEntity})`
+        initializer: `new ${linkClass(navProp)}('${navProp.originalName}', ${
+          entity.className
+        }, ${toEntity})`
       }
     ],
     docs: [getStaticNavPropertyDescription(navProp)],
@@ -77,7 +117,9 @@ function navigationProperty(navProp: VdmNavigationProperty, entity: VdmEntity, s
 function allFields(entity: VdmEntity): VariableStatementStructure {
   const fieldTypes = unique([
     ...entity.properties.map(p => `${p.fieldType}<${entity.className}>`),
-    ...entity.navigationProperties.map(p => `${linkClass(p)}<${entity.className},${p.toEntityClassName}>`)
+    ...entity.navigationProperties.map(
+      p => `${linkClass(p)}<${entity.className},${p.toEntityClassName}>`
+    )
   ]);
   return {
     kind: StructureKind.VariableStatement,
@@ -89,7 +131,11 @@ function allFields(entity: VdmEntity): VariableStatementStructure {
         initializer: `[
           ${entity.properties
             .map(prop => prop.staticPropertyName)
-            .concat(entity.navigationProperties.map(navProp => navProp.staticPropertyName))
+            .concat(
+              entity.navigationProperties.map(
+                navProp => navProp.staticPropertyName
+              )
+            )
             .map(name => `${entity.className}.${name}`)
             .join(', \n')}
           ]`
@@ -124,7 +170,12 @@ function keyFields(entity: VdmEntity): VariableStatementStructure {
       {
         name: prependPrefix('keyFields'),
         type: `Array<Selectable<${entity.className}>>`,
-        initializer: '[' + entity.keys.map(key => `${entity.className}.${key.staticPropertyName}`).join(', ') + ']'
+        initializer:
+          '[' +
+          entity.keys
+            .map(key => `${entity.className}.${key.staticPropertyName}`)
+            .join(', ') +
+          ']'
       }
     ],
     docs: [`All key fields of the ${entity.className} entity.`],
@@ -140,7 +191,9 @@ function keys(entity: VdmEntity): VariableStatementStructure {
       {
         name: prependPrefix('keys'),
         type: `{[keys: string]: Selectable<${entity.className}>}`,
-        initializer: `${entity.className}.${prependPrefix('keyFields')}.reduce((acc: {[keys: string]: Selectable<${
+        initializer: `${entity.className}.${prependPrefix(
+          'keyFields'
+        )}.reduce((acc: {[keys: string]: Selectable<${
           entity.className
         }>}, field: Selectable<${entity.className}>) => {
           acc[field._fieldName] = field;
@@ -148,7 +201,9 @@ function keys(entity: VdmEntity): VariableStatementStructure {
         }, {})`
       }
     ],
-    docs: [`Mapping of all key field names to the respective static field property ${entity.className}.`],
+    docs: [
+      `Mapping of all key field names to the respective static field property ${entity.className}.`
+    ],
     isExported: true
   };
 }

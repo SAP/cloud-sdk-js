@@ -4,7 +4,9 @@ import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { coreImportDeclaration } from '../imports';
 import { VdmServiceMetadata } from '../vdm-types';
 
-export function importBatchDeclarations(service: VdmServiceMetadata): ImportDeclarationStructure[] {
+export function importBatchDeclarations(
+  service: VdmServiceMetadata
+): ImportDeclarationStructure[] {
   return [
     coreImportDeclaration([
       'CreateRequestBuilder',

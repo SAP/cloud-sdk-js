@@ -59,9 +59,15 @@ export const mergeSome = (a: MapType<any>, b?: MapType<any>) => {
  * @param obj - The input object.
  * @returns An object with renamed keys.
  */
-export const renameKeys = (keyMapping: MapType<string>, obj: MapType<any>): MapType<any> => {
+export const renameKeys = (
+  keyMapping: MapType<string>,
+  obj: MapType<any>
+): MapType<any> => {
   const unchangedEntries = Object.keys(obj)
     .filter(k => !Object.keys(keyMapping).includes(k))
     .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
-  return Object.entries(keyMapping).reduce((newObj, [oldKey, newKey]) => ({ ...newObj, [newKey]: obj[oldKey] }), unchangedEntries);
+  return Object.entries(keyMapping).reduce(
+    (newObj, [oldKey, newKey]) => ({ ...newObj, [newKey]: obj[oldKey] }),
+    unchangedEntries
+  );
 };

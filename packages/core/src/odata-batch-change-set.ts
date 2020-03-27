@@ -3,10 +3,18 @@
 import { v4 as uuid } from 'uuid';
 import { Entity } from './entity';
 import { getRequestLine } from './odata-batch-request-builder';
-import { content_transfer_encoding_line, part_content_type_line } from './odate-batch-consts';
-import { CreateRequestBuilder, DeleteRequestBuilder, UpdateRequestBuilder } from './request-builder';
+import {
+  content_transfer_encoding_line,
+  part_content_type_line
+} from './odate-batch-consts';
+import {
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  UpdateRequestBuilder
+} from './request-builder';
 
-const batch_content_type_prefix = 'Content-Type: multipart/mixed; boundary=changeset_';
+const batch_content_type_prefix =
+  'Content-Type: multipart/mixed; boundary=changeset_';
 const change_set_start_prefix = '--changeset_';
 const request_content_type_line = 'Content-Type: application/json';
 const request_accept_line = 'Accept: application/json';
@@ -15,7 +23,12 @@ const request_if_match_key = 'If-Match: ';
 /**
  * OData batch change set, which holds a collection of write operations.
  */
-export class ODataBatchChangeSet<T extends CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>> {
+export class ODataBatchChangeSet<
+  T extends
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
+> {
   constructor(readonly requests: T[], readonly changeSetId: string = uuid()) {}
 }
 
@@ -24,24 +37,38 @@ export class ODataBatchChangeSet<T extends CreateRequestBuilder<Entity> | Update
  * @param changeSet - Change set holds a collection of write operations.
  * @returns The generated payload from the given change set.
  */
-export function toBatchChangeSet<T extends CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>(
-  changeSet: ODataBatchChangeSet<T>
-): string | undefined {
+export function toBatchChangeSet<
+  T extends
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
+>(changeSet: ODataBatchChangeSet<T>): string | undefined {
   const changeSetBody = toBatchChangeSetBody(changeSet);
   if (!changeSetBody) {
     return;
   }
-  return [`${batch_content_type_prefix}${changeSet.changeSetId}`, '', changeSetBody].join('\n');
+  return [
+    `${batch_content_type_prefix}${changeSet.changeSetId}`,
+    '',
+    changeSetBody
+  ].join('\n');
 }
 
-function toBatchChangeSetBody<T extends CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>>(
-  changeSet: ODataBatchChangeSet<T>
-): string | undefined {
+function toBatchChangeSetBody<
+  T extends
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
+>(changeSet: ODataBatchChangeSet<T>): string | undefined {
   if (changeSet.requests.length === 0) {
     return;
   }
-  const requests = changeSet.requests.map(r => toRequestPayload(r, changeSet.changeSetId));
-  return Array.prototype.concat(requests, `${change_set_start_prefix}${changeSet.changeSetId}--`).join('\n');
+  const requests = changeSet.requests.map(r =>
+    toRequestPayload(r, changeSet.changeSetId)
+  );
+  return Array.prototype
+    .concat(requests, `${change_set_start_prefix}${changeSet.changeSetId}--`)
+    .join('\n');
 }
 
 /**
@@ -66,10 +93,16 @@ function toBatchChangeSetBody<T extends CreateRequestBuilder<Entity> | UpdateReq
  * @returns The generated request payload
  */
 function toRequestPayload(
-  request: CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>,
+  request:
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>,
   changeSetId: string
 ): string {
-  if (request instanceof CreateRequestBuilder || request instanceof UpdateRequestBuilder) {
+  if (
+    request instanceof CreateRequestBuilder ||
+    request instanceof UpdateRequestBuilder
+  ) {
     request.prepare();
   }
 
@@ -90,8 +123,16 @@ function toRequestPayload(
   return lines.join('\n');
 }
 
-function toEtagHeaderValue(request: CreateRequestBuilder<Entity> | UpdateRequestBuilder<Entity> | DeleteRequestBuilder<Entity>): string | undefined {
-  if (request instanceof UpdateRequestBuilder || request instanceof DeleteRequestBuilder) {
+function toEtagHeaderValue(
+  request:
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
+): string | undefined {
+  if (
+    request instanceof UpdateRequestBuilder ||
+    request instanceof DeleteRequestBuilder
+  ) {
     if (request.requestConfig.versionIdentifierIgnored) {
       return '*';
     }

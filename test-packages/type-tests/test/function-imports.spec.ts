@@ -17,7 +17,9 @@ edmReturnTypeRequestBuilder.execute({
 });
 
 // $ExpectType FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeCollectionParameters, string[]>
-const edmCollectionReturnTypeRequestBuilder = testFunctionImportEdmReturnTypeCollection({});
+const edmCollectionReturnTypeRequestBuilder = testFunctionImportEdmReturnTypeCollection(
+  {}
+);
 
 // $ExpectType Promise<string[]>
 edmCollectionReturnTypeRequestBuilder.execute({
@@ -33,7 +35,9 @@ ctReturnTypeRequestBuilder.execute({
 });
 
 // $ExpectType FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>
-const ctCollectionReturnTypeRequestBuilder = testFunctionImportComplexReturnTypeCollection({});
+const ctCollectionReturnTypeRequestBuilder = testFunctionImportComplexReturnTypeCollection(
+  {}
+);
 
 // $ExpectType Promise<TestComplexType[]>
 ctCollectionReturnTypeRequestBuilder.execute({
@@ -49,7 +53,9 @@ entityReturnTypeRequestBuilder.execute({
 });
 
 // $ExpectType FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>
-const entityCollectionReturnTypeRequestBuilder = testFunctionImportEntityReturnTypeCollection({});
+const entityCollectionReturnTypeRequestBuilder = testFunctionImportEntityReturnTypeCollection(
+  {}
+);
 
 // $ExpectType Promise<TestEntity[]>
 entityCollectionReturnTypeRequestBuilder.execute({

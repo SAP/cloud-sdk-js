@@ -1,7 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
-import { createLogger, propertyExists, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  propertyExists,
+  VALUE_IS_UNDEFINED
+} from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import voca from 'voca';
 import { GeneratorOptions } from '../generator-options';
@@ -21,7 +25,11 @@ import {
 import { GlobalNameFormatter } from '../global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from '../input-path-provider';
 import { applyPrefixOnJsConfictParam } from '../name-formatting-strategies';
-import { readServiceMapping, ServiceMapping, VdmMapping } from '../service-mapping';
+import {
+  readServiceMapping,
+  ServiceMapping,
+  VdmMapping
+} from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import {
   ApiBusinessHubMetadata,
@@ -60,10 +68,14 @@ const logger = createLogger({
   messageContext: 'service-parser'
 });
 
-export function parseAllServices(options: GeneratorOptions): VdmServiceMetadata[] {
+export function parseAllServices(
+  options: GeneratorOptions
+): VdmServiceMetadata[] {
   const serviceMapping = readServiceMapping(options);
   const globalNameFormatter = new GlobalNameFormatter(serviceMapping);
-  return inputPaths(options.inputDir, options.useSwagger).map(p => parseService(p, options, serviceMapping, globalNameFormatter));
+  return inputPaths(options.inputDir, options.useSwagger).map(p =>
+    parseService(p, options, serviceMapping, globalNameFormatter)
+  );
 }
 
 export function parseService(
@@ -74,15 +86,25 @@ export function parseService(
 ): VdmServiceMetadata {
   const serviceMetadata = parseServiceMetadata(serviceDefinitionPaths);
   const serviceMapping = mappings[serviceMetadata.edmx.fileName];
-  return transformServiceMetadata(serviceMetadata, options, globalNameFormatter, serviceDefinitionPaths, serviceMapping);
+  return transformServiceMetadata(
+    serviceMetadata,
+    options,
+    globalNameFormatter,
+    serviceDefinitionPaths,
+    serviceMapping
+  );
 }
 
-function parseServiceMetadata(serviceDefinitionPaths: ServiceDefinitionPaths): ParsedServiceMetadata {
+function parseServiceMetadata(
+  serviceDefinitionPaths: ServiceDefinitionPaths
+): ParsedServiceMetadata {
   const serviceMetadata: ParsedServiceMetadata = {
     edmx: parseEdmxFromPath(serviceDefinitionPaths.edmxPath)
   };
   if (serviceDefinitionPaths.swaggerPath) {
-    serviceMetadata.swagger = parseSwaggerFromPath(serviceDefinitionPaths.swaggerPath);
+    serviceMetadata.swagger = parseSwaggerFromPath(
+      serviceDefinitionPaths.swaggerPath
+    );
   }
 
   return serviceMetadata;
@@ -102,13 +124,33 @@ function transformServiceMetadata(
   );
 
   const namespace = metadata.edmx.namespace;
-  const directoryName = globalNameFormatter.uniqueDirectoryName(packageName(metadata, options, formatter), metadata.edmx.fileName);
-  const npmPackageName = globalNameFormatter.uniqueNpmPackageName(npmCompliantName(directoryName), metadata.edmx.fileName);
-  const speakingModuleName = formatter.directoryToSpeakingModuleName(directoryName);
-  const joinedAssociationMetadata = joinAssociationMetadata(metadata.edmx.associationSets, metadata.edmx.associations);
-  const joinedEntityMetadata = joinEntityMetadata(namespace, metadata.edmx.entityTypes, metadata.edmx.entitySets, metadata.swagger);
+  const directoryName = globalNameFormatter.uniqueDirectoryName(
+    packageName(metadata, options, formatter),
+    metadata.edmx.fileName
+  );
+  const npmPackageName = globalNameFormatter.uniqueNpmPackageName(
+    npmCompliantName(directoryName),
+    metadata.edmx.fileName
+  );
+  const speakingModuleName = formatter.directoryToSpeakingModuleName(
+    directoryName
+  );
+  const joinedAssociationMetadata = joinAssociationMetadata(
+    metadata.edmx.associationSets,
+    metadata.edmx.associations
+  );
+  const joinedEntityMetadata = joinEntityMetadata(
+    namespace,
+    metadata.edmx.entityTypes,
+    metadata.edmx.entitySets,
+    metadata.swagger
+  );
   const reservedFunctionImportNames = getFunctionImportNames(metadata);
-  const complexTypes = transformComplexTypes(metadata.edmx.complexTypes, formatter, reservedFunctionImportNames);
+  const complexTypes = transformComplexTypes(
+    metadata.edmx.complexTypes,
+    formatter,
+    reservedFunctionImportNames
+  );
   const className = `${speakingModuleName.replace(/ /g, '')}`;
 
   const vdmService = {
@@ -118,10 +160,20 @@ function transformServiceMetadata(
     npmPackageName,
     speakingModuleName,
     servicePath: getServicePath(metadata, serviceMapping),
-    entities: transformEntities(joinedEntityMetadata, joinedAssociationMetadata, complexTypes, formatter),
+    entities: transformEntities(
+      joinedEntityMetadata,
+      joinedAssociationMetadata,
+      complexTypes,
+      formatter
+    ),
     edmxPath: serviceDefinitionPaths.edmxPath
   };
-  const functionImports = transformFunctionImports(metadata, vdmService.entities, complexTypes, formatter);
+  const functionImports = transformFunctionImports(
+    metadata,
+    vdmService.entities,
+    complexTypes,
+    formatter
+  );
 
   const apiHubMetadata = apiBusinessHubMetadata(metadata.swagger);
 
@@ -134,7 +186,9 @@ function transformServiceMetadata(
   };
 }
 
-function apiBusinessHubMetadata(swagger?: SwaggerMetadata): ApiBusinessHubMetadata | undefined {
+function apiBusinessHubMetadata(
+  swagger?: SwaggerMetadata
+): ApiBusinessHubMetadata | undefined {
   if (!swagger) {
     return undefined;
   }
@@ -144,7 +198,10 @@ function apiBusinessHubMetadata(swagger?: SwaggerMetadata): ApiBusinessHubMetada
     url: `https://api.sap.com/api/${apiHubServiceName(swagger)}`
   };
 
-  if (swagger.externalDocs && swagger.externalDocs.description === 'Business Documentation') {
+  if (
+    swagger.externalDocs &&
+    swagger.externalDocs.description === 'Business Documentation'
+  ) {
     metadata.businessDocumentationUrl = swagger.externalDocs.url;
   }
 
@@ -171,12 +228,22 @@ function communicationScenario(swagger: SwaggerMetadata): string | null {
   );
 }
 
-function packageName(metadata: ParsedServiceMetadata, options: GeneratorOptions, formatter: ServiceNameFormatter) {
+function packageName(
+  metadata: ParsedServiceMetadata,
+  options: GeneratorOptions,
+  formatter: ServiceNameFormatter
+) {
   return formatter.originalToServiceName(metadata.edmx.namespace);
 }
 
-function getServicePath(metadata: ParsedServiceMetadata, serviceMapping?: ServiceMapping): string {
-  let servicePath = servicePathFromMapping(serviceMapping) || servicePathFromSelfLink(metadata) || servicePathFromSwagger(metadata.swagger);
+function getServicePath(
+  metadata: ParsedServiceMetadata,
+  serviceMapping?: ServiceMapping
+): string {
+  let servicePath =
+    servicePathFromMapping(serviceMapping) ||
+    servicePathFromSelfLink(metadata) ||
+    servicePathFromSwagger(metadata.swagger);
   if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {
     logger.warn(
       'No service path could be determined from available metadata! ' +
@@ -189,11 +256,17 @@ function getServicePath(metadata: ParsedServiceMetadata, serviceMapping?: Servic
   return servicePath;
 }
 
-function servicePathFromMapping(serviceMapping?: ServiceMapping): string | undefined {
-  return serviceMapping && propertyExists(serviceMapping, 'servicePath') ? serviceMapping.servicePath : undefined;
+function servicePathFromMapping(
+  serviceMapping?: ServiceMapping
+): string | undefined {
+  return serviceMapping && propertyExists(serviceMapping, 'servicePath')
+    ? serviceMapping.servicePath
+    : undefined;
 }
 
-function servicePathFromSelfLink(metadata: ParsedServiceMetadata): string | undefined {
+function servicePathFromSelfLink(
+  metadata: ParsedServiceMetadata
+): string | undefined {
   const selfLink = metadata.edmx.selfLink;
   if (selfLink) {
     return selfLink
@@ -209,8 +282,18 @@ function servicePathFromSwagger(swagger?: SwaggerMetadata): string | undefined {
   }
 }
 
-function transformComplexTypes(complexTypes: EdmxComplexType[], formatter: ServiceNameFormatter, reservedNames: Set<string>): VdmComplexType[] {
-  const formattedTypes = complexTypes.reduce((formatted, c) => ({ ...formatted, [c.Name]: formatter.originalToComplexTypeName(c.Name) }), {});
+function transformComplexTypes(
+  complexTypes: EdmxComplexType[],
+  formatter: ServiceNameFormatter,
+  reservedNames: Set<string>
+): VdmComplexType[] {
+  const formattedTypes = complexTypes.reduce(
+    (formatted, c) => ({
+      ...formatted,
+      [c.Name]: formatter.originalToComplexTypeName(c.Name)
+    }),
+    {}
+  );
   return complexTypes.map(c => {
     const typeName = formattedTypes[c.Name];
     return {
@@ -220,20 +303,30 @@ function transformComplexTypes(complexTypes: EdmxComplexType[], formatter: Servi
       fieldType: complexTypeFieldType(typeName),
       properties: c.Property.map(p => {
         checkCollectionKind(p);
-        const instancePropertyName = formatter.originalToInstancePropertyName(c.Name, p.Name);
+        const instancePropertyName = formatter.originalToInstancePropertyName(
+          c.Name,
+          p.Name
+        );
         const isComplex = isComplexType(p.Type);
         const parsedType = parseType(p.Type);
         return {
           originalName: p.Name,
           instancePropertyName,
-          staticPropertyName: formatter.originalToStaticPropertyName(c.Name, p.Name),
-          propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
+          staticPropertyName: formatter.originalToStaticPropertyName(
+            c.Name,
+            p.Name
+          ),
+          propertyNameAsParam: applyPrefixOnJsConfictParam(
+            instancePropertyName
+          ),
           description: propertyDescription(p),
           technicalName: p.Name,
           nullable: isNullableProperty(p),
           edmType: isComplex ? p.Type : parsedType,
           jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(p.Type),
-          fieldType: isComplex ? formattedTypes[parsedType] + 'Field' : edmToComplexPropertyType(p.Type),
+          fieldType: isComplex
+            ? formattedTypes[parsedType] + 'Field'
+            : edmToComplexPropertyType(p.Type),
           isComplex
         };
       })
@@ -241,7 +334,11 @@ function transformComplexTypes(complexTypes: EdmxComplexType[], formatter: Servi
   });
 }
 
-function parseReturnType(returnType: string, entities: VdmEntity[], complexTypes: VdmComplexType[]): VdmFunctionImportReturnType {
+function parseReturnType(
+  returnType: string,
+  entities: VdmEntity[],
+  complexTypes: VdmComplexType[]
+): VdmFunctionImportReturnType {
   if (!returnType) {
     return {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
@@ -272,7 +369,9 @@ function parseReturnType(returnType: string, entities: VdmEntity[], complexTypes
       isMulti
     };
   } else {
-    const complexType = complexTypes.find(c => c.originalName === parsedReturnType);
+    const complexType = complexTypes.find(
+      c => c.originalName === parsedReturnType
+    );
     if (!complexType) {
       throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
     }
@@ -307,10 +406,16 @@ function transformFunctionImports(
       parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
     };
 
-    const swaggerDefinition = swaggerDefinitionForFunctionImport(serviceMetadata, functionImport.originalName, functionImport.httpMethod);
+    const swaggerDefinition = swaggerDefinitionForFunctionImport(
+      serviceMetadata,
+      functionImport.originalName,
+      functionImport.httpMethod
+    );
 
     const parameters = f.Parameter.map(p => {
-      const swaggerParameter = swaggerDefinition ? swaggerDefinition.parameters.find(param => param.name === p.Name) : undefined;
+      const swaggerParameter = swaggerDefinition
+        ? swaggerDefinition.parameters.find(param => param.name === p.Name)
+        : undefined;
       return {
         originalName: p.Name,
         parameterName: formatter.originalToParameterName(f.Name, p.Name),
@@ -324,7 +429,10 @@ function transformFunctionImports(
     return {
       ...functionImport,
       parameters,
-      description: functionImportDescription(swaggerDefinition, functionImport.originalName)
+      description: functionImportDescription(
+        swaggerDefinition,
+        functionImport.originalName
+      )
     };
   });
 }
@@ -336,9 +444,13 @@ function swaggerDefinitionForFunctionImport(
 ): SwaggerPath | undefined {
   if (serviceMetadata.swagger) {
     const paths = serviceMetadata.swagger.paths;
-    const entryPath = Object.keys(paths).find(path => path === `/${originalName}`);
+    const entryPath = Object.keys(paths).find(
+      path => path === `/${originalName}`
+    );
     if (entryPath) {
-      const key = Object.keys(paths[entryPath]).find(k => k.toLowerCase() === httpMethod.toLowerCase());
+      const key = Object.keys(paths[entryPath]).find(
+        k => k.toLowerCase() === httpMethod.toLowerCase()
+      );
       if (key) {
         return paths[entryPath][key];
       }
@@ -346,19 +458,33 @@ function swaggerDefinitionForFunctionImport(
   }
 }
 
-function functionImportDescription(swaggerDefinition: SwaggerPath | undefined, originalName: string): string {
+function functionImportDescription(
+  swaggerDefinition: SwaggerPath | undefined,
+  originalName: string
+): string {
   if (swaggerDefinition && swaggerDefinition.summary) {
     return endWithDot(swaggerDefinition.summary);
   }
   return endWithDot(toTitleFormat(originalName));
 }
 
-function joinAssociationMetadata(associationSets: EdmxAssociationSet[], associations: EdmxAssociation[]): JoinedAssociationMetadata[] {
+function joinAssociationMetadata(
+  associationSets: EdmxAssociationSet[],
+  associations: EdmxAssociation[]
+): JoinedAssociationMetadata[] {
   return associationSets.map(assocSet => {
-    const matchingAssoc = associations.find(a => a.Name === assocSet.Association.split('.')[assocSet.Association.split('.').length - 1]);
+    const matchingAssoc = associations.find(
+      a =>
+        a.Name ===
+        assocSet.Association.split('.')[
+          assocSet.Association.split('.').length - 1
+        ]
+    );
 
     if (!matchingAssoc) {
-      throw Error(`Unable to match the association set: ${assocSet.Association} with associations: ${associations}.`);
+      throw Error(
+        `Unable to match the association set: ${assocSet.Association} with associations: ${associations}.`
+      );
     }
 
     const ends = assocSet.End.map(
@@ -389,7 +515,9 @@ function joinEntityMetadata(
   return entitySets.map(entitySet => {
     // We assume metadata files to have a maximum of two schemas currently
     // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
-    const entityType = entityTypes.find(t => t.Name === entitySet.EntityType.split('.').slice(-1)[0]);
+    const entityType = entityTypes.find(
+      t => t.Name === entitySet.EntityType.split('.').slice(-1)[0]
+    );
 
     if (!entityType) {
       throw Error('The entity type is undefined.');
@@ -401,7 +529,9 @@ function joinEntityMetadata(
     };
 
     if (swaggerMetaData) {
-      const defKey = Object.keys(swaggerMetaData.definitions).find(name => `${namespace}.${name}` === entitySet.EntityType);
+      const defKey = Object.keys(swaggerMetaData.definitions).find(
+        name => `${namespace}.${name}` === entitySet.EntityType
+      );
       if (defKey) {
         joined.swaggerDefinition = swaggerMetaData.definitions[defKey];
       }
@@ -418,7 +548,9 @@ function transformEntities(
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
   const classNames = entities.reduce((names, e) => {
-    names[e.entitySet.Name] = formatter.originalToEntityClassName(e.entitySet.Name);
+    names[e.entitySet.Name] = formatter.originalToEntityClassName(
+      e.entitySet.Name
+    );
     return names;
   }, {});
   return entities.map(e => {
@@ -427,7 +559,12 @@ function transformEntities(
       entityTypeName: e.entityType.Name,
       className: classNames[e.entitySet.Name],
       properties: properties(e, complexTypes, formatter),
-      navigationProperties: navigationProperties(e, associations, classNames, formatter),
+      navigationProperties: navigationProperties(
+        e,
+        associations,
+        classNames,
+        formatter
+      ),
       creatable: e.entitySet ? isCreatable(e.entitySet) : true,
       updatable: e.entitySet ? isUpdatable(e.entitySet) : true,
       deletable: e.entitySet ? isDeletable(e.entitySet) : true
@@ -441,24 +578,44 @@ function transformEntities(
   });
 }
 
-function keys(props: VdmProperty[], edmxKeys: EdmxPropertyRef[]): VdmProperty[] {
-  return edmxKeys.map(key => props.find(prop => prop.originalName === key.Name)).filter(e => !!e) as VdmProperty[];
+function keys(
+  props: VdmProperty[],
+  edmxKeys: EdmxPropertyRef[]
+): VdmProperty[] {
+  return edmxKeys
+    .map(key => props.find(prop => prop.originalName === key.Name))
+    .filter(e => !!e) as VdmProperty[];
 }
 
-function properties(entity: JoinedEntityMetadata, complexTypes: VdmComplexType[], formatter: ServiceNameFormatter): VdmProperty[] {
+function properties(
+  entity: JoinedEntityMetadata,
+  complexTypes: VdmComplexType[],
+  formatter: ServiceNameFormatter
+): VdmProperty[] {
   return entity.entityType.Property.map(p => {
     checkCollectionKind(p);
-    const swaggerProp = entity.swaggerDefinition ? entity.swaggerDefinition.properties[p.Name] : undefined;
-    const instancePropertyName = formatter.originalToInstancePropertyName(entity.entitySet.Name, p.Name);
+    const swaggerProp = entity.swaggerDefinition
+      ? entity.swaggerDefinition.properties[p.Name]
+      : undefined;
+    const instancePropertyName = formatter.originalToInstancePropertyName(
+      entity.entitySet.Name,
+      p.Name
+    );
     const isComplex = isComplexType(p.Type);
     return {
       originalName: p.Name,
       instancePropertyName,
-      staticPropertyName: formatter.originalToStaticPropertyName(entity.entitySet.Name, p.Name),
+      staticPropertyName: formatter.originalToStaticPropertyName(
+        entity.entitySet.Name,
+        p.Name
+      ),
       propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
       edmType: p.Type,
-      jsType: propertyJsType(p.Type) || complexTypeForName(p.Type, complexTypes),
-      fieldType: propertyFieldType(p.Type) || complexTypeFieldForName(p.Type, complexTypes),
+      jsType:
+        propertyJsType(p.Type) || complexTypeForName(p.Type, complexTypes),
+      fieldType:
+        propertyFieldType(p.Type) ||
+        complexTypeFieldForName(p.Type, complexTypes),
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
@@ -467,32 +624,47 @@ function properties(entity: JoinedEntityMetadata, complexTypes: VdmComplexType[]
   });
 }
 
-const propertyFieldType = (type: string): string | undefined => (type.startsWith('Edm.') ? edmToFieldType(type) : undefined);
+const propertyFieldType = (type: string): string | undefined =>
+  type.startsWith('Edm.') ? edmToFieldType(type) : undefined;
 
-const propertyJsType = (type: string): string | undefined => (type.startsWith('Edm.') ? edmToTsType(type) : undefined);
+const propertyJsType = (type: string): string | undefined =>
+  type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
 const complexTypeName = (type: string) => last(type.split('.'));
 
-const findComplexType = (name: string, complexTypes: VdmComplexType[]): VdmComplexType | undefined =>
+const findComplexType = (
+  name: string,
+  complexTypes: VdmComplexType[]
+): VdmComplexType | undefined =>
   complexTypes.find(c => c.originalName === complexTypeName(name));
 
-function complexTypeForName(name: string, complexTypes: VdmComplexType[]): string {
+function complexTypeForName(
+  name: string,
+  complexTypes: VdmComplexType[]
+): string {
   const complexType = findComplexType(name, complexTypes);
   if (complexType) {
     return complexType.typeName;
   }
-  logger.warn(`No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`);
+  logger.warn(
+    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
+  );
   return 'any';
 }
 
 const complexTypeFieldType = (typeName: string) => typeName + 'Field';
 
-function complexTypeFieldForName(name: string, complexTypes: VdmComplexType[]): string {
+function complexTypeFieldForName(
+  name: string,
+  complexTypes: VdmComplexType[]
+): string {
   const complexType = findComplexType(name, complexTypes);
   if (complexType) {
     return complexTypeFieldType(complexType.typeName);
   }
-  logger.warn(`No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`);
+  logger.warn(
+    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
+  );
   return 'any';
 }
 
@@ -504,26 +676,40 @@ function navigationProperties(
 ): VdmNavigationProperty[] {
   return entity.entityType.NavigationProperty.map(navProp => {
     const relationship = navProp.Relationship.split('.').pop();
-    const association = associations.filter(ass => ass.Name === relationship).pop();
+    const association = associations
+      .filter(ass => ass.Name === relationship)
+      .pop();
     if (!association) {
-      throw Error(`Unable to find the association with the name: ${relationship}`);
+      throw Error(
+        `Unable to find the association with the name: ${relationship}`
+      );
     }
     const from = association.Ends.find(end => end.Role === navProp.FromRole);
     const to = association.Ends.find(end => end.Role === navProp.ToRole);
 
     if (!from) {
-      throw Error(`Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.FromRole}`);
+      throw Error(
+        `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.FromRole}`
+      );
     }
     if (!to) {
-      throw Error(`Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.ToRole}`);
+      throw Error(
+        `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.ToRole}`
+      );
     }
 
-    const instancePropertyName = formatter.originalToNavigationPropertyName(entity.entitySet.Name, navProp.Name);
+    const instancePropertyName = formatter.originalToNavigationPropertyName(
+      entity.entitySet.Name,
+      navProp.Name
+    );
 
     return {
       originalName: navProp.Name,
       instancePropertyName,
-      staticPropertyName: formatter.originalToStaticPropertyName(entity.entitySet.Name, navProp.Name),
+      staticPropertyName: formatter.originalToStaticPropertyName(
+        entity.entitySet.Name,
+        navProp.Name
+      ),
       propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
       from: entity.entityType.Name,
       to: to.EntitySet,
@@ -534,7 +720,10 @@ function navigationProperties(
   });
 }
 
-function shortPropertyDescription(property: EdmxProperty, swaggerProperty?: SwaggerProperty): string {
+function shortPropertyDescription(
+  property: EdmxProperty,
+  swaggerProperty?: SwaggerProperty
+): string {
   let desc = '';
   if (property['sap:quickinfo']) {
     desc = property['sap:quickinfo'];
@@ -546,14 +735,22 @@ function shortPropertyDescription(property: EdmxProperty, swaggerProperty?: Swag
   return endWithDot(desc.trim());
 }
 
-function entityDescription(entity: JoinedEntityMetadata, className: string): string {
+function entityDescription(
+  entity: JoinedEntityMetadata,
+  className: string
+): string {
   if (entity.entityType['sap:label']) {
     return entity.entityType['sap:label'];
   }
-  return entity.swaggerDefinition && entity.swaggerDefinition.title ? entity.swaggerDefinition.title : toTitleFormat(className);
+  return entity.swaggerDefinition && entity.swaggerDefinition.title
+    ? entity.swaggerDefinition.title
+    : toTitleFormat(className);
 }
 
-function longDescription(documented: EdmxDocumented, described?: SwaggerDescribed): string {
+function longDescription(
+  documented: EdmxDocumented,
+  described?: SwaggerDescribed
+): string {
   let docs = '';
   if (documented.Documentation) {
     const summmary = ensureString(documented.Documentation.Summary);
@@ -566,13 +763,19 @@ function longDescription(documented: EdmxDocumented, described?: SwaggerDescribe
   return endWithDot(docs.trim());
 }
 
-function propertyDescription(property: EdmxProperty, swaggerProperty?: SwaggerProperty): string {
+function propertyDescription(
+  property: EdmxProperty,
+  swaggerProperty?: SwaggerProperty
+): string {
   const short = shortPropertyDescription(property, swaggerProperty);
   const long = longDescription(property, swaggerProperty);
   return `${short}\n${long}`.trim();
 }
 
-function parameterDescription(parameter: EdmxParameter, swaggerParameter?: SwaggerPathParameter): string {
+function parameterDescription(
+  parameter: EdmxParameter,
+  swaggerParameter?: SwaggerPathParameter
+): string {
   const short = endWithDot(toTitleFormat(parameter.Name));
   const long = longDescription(parameter, swaggerParameter);
   return endWithDot((long || short).trim());
@@ -588,7 +791,9 @@ function isComplexType(type: string): boolean {
 }
 
 function getFunctionImportNames(metadata: ParsedServiceMetadata) {
-  return new Set(metadata.edmx.functionImports.map(f => voca.camelCase(f.Name)));
+  return new Set(
+    metadata.edmx.functionImports.map(f => voca.camelCase(f.Name))
+  );
 }
 
 function checkCollectionKind(property: EdmxProperty) {

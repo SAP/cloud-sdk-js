@@ -13,7 +13,11 @@ export class ODataBatchConfig extends ODataRequestConfig {
    * @param batchId - The batch id for building the header and the payload.
    */
   constructor(readonly defaultServicePath: string, readonly batchId: string) {
-    super('post', defaultServicePath, `${ODataBatchConfig.content_type_prefix}${batchId}`);
+    super(
+      'post',
+      defaultServicePath,
+      `${ODataBatchConfig.content_type_prefix}${batchId}`
+    );
   }
 
   resourcePath(): string {

@@ -20,8 +20,12 @@ const logger = createLogger({
  * @param destination - determining which kind of configuration is returned
  * @returns The http or http-agent configuration.
  */
-export function getAgentConfig(destination: Destination): HttpAgentConfig | HttpsAgentConfig {
-  const agentType = destination.proxyConfiguration ? AgentType.PROXY : AgentType.DEFAULT;
+export function getAgentConfig(
+  destination: Destination
+): HttpAgentConfig | HttpsAgentConfig {
+  const agentType = destination.proxyConfiguration
+    ? AgentType.PROXY
+    : AgentType.DEFAULT;
   if (agentType === AgentType.PROXY) {
     return createProxyAgent(destination);
   }
@@ -47,9 +51,13 @@ export interface HttpsAgentConfig {
   httpsAgent: https.Agent;
 }
 
-function createProxyAgent(destination: Destination): HttpAgentConfig | HttpsAgentConfig {
+function createProxyAgent(
+  destination: Destination
+): HttpAgentConfig | HttpsAgentConfig {
   if (!destination.proxyConfiguration) {
-    throw new Error(`The destination proxy configuration: ${destination.proxyConfiguration} is undefined.`);
+    throw new Error(
+      `The destination proxy configuration: ${destination.proxyConfiguration} is undefined.`
+    );
   }
 
   if (destination.isTrustingAllCertificates) {
@@ -61,10 +69,14 @@ function createProxyAgent(destination: Destination): HttpAgentConfig | HttpsAgen
   return proxyAgent(destination);
 }
 
-const trustAllOptions = (destination: Destination) => (options: MapType<any>): MapType<any> =>
+const trustAllOptions = (destination: Destination) => (
+  options: MapType<any>
+): MapType<any> =>
   assoc('rejectUnauthorized', !destination.isTrustingAllCertificates, options);
 
-const certificateOptions = (destination: Destination) => (options: MapType<any>): MapType<any> => {
+const certificateOptions = (destination: Destination) => (
+  options: MapType<any>
+): MapType<any> => {
   if (destination.keyStoreName && destination.keyStorePassword) {
     const certificate = selectCertificate(destination);
 
@@ -88,16 +100,22 @@ function hasSupportedFormat(certificate: DestinationCertificate): boolean {
 }
 
 function selectCertificate(destination): DestinationCertificate {
-  const certificate = destination.certificates.find(c => c.name === destination.keyStoreName);
+  const certificate = destination.certificates.find(
+    c => c.name === destination.keyStoreName
+  );
 
   if (!certificate) {
-    throw Error(`No certificate with name ${destination.keyStoreName} could be found on the destination!`);
+    throw Error(
+      `No certificate with name ${destination.keyStoreName} could be found on the destination!`
+    );
   }
 
   if (!hasSupportedFormat(certificate)) {
     const format: string | undefined = last(certificate.name.split('.'));
     throw Error(
-      `The format of the provided certificate ${certificate.name} is not supported. Supported formats are: ${supportedCertificateFormats.join(
+      `The format of the provided certificate ${
+        certificate.name
+      } is not supported. Supported formats are: ${supportedCertificateFormats.join(
         ', '
       )}. ${
         format && ['jks', 'keystore'].includes(format)
@@ -110,12 +128,19 @@ function selectCertificate(destination): DestinationCertificate {
   return certificate;
 }
 
-function createDefaultAgent(destination: Destination): HttpAgentConfig | HttpsAgentConfig {
+function createDefaultAgent(
+  destination: Destination
+): HttpAgentConfig | HttpsAgentConfig {
   if (getProtocolOrDefault(destination) === Protocol.HTTPS) {
     if (destination.isTrustingAllCertificates) {
-      logger.warn('"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.');
+      logger.warn(
+        '"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.'
+      );
     }
-    const options = pipe(trustAllOptions(destination), certificateOptions(destination))({});
+    const options = pipe(
+      trustAllOptions(destination),
+      certificateOptions(destination)
+    )({});
     return { httpsAgent: new https.Agent(options) };
   }
 
@@ -136,7 +161,9 @@ export function getProtocolOrDefault(destination: Destination): Protocol {
   const protocol = destination?.url?.toLowerCase()?.split('://');
 
   if (!protocol || protocol.length === 1) {
-    logger.warn(`URL of the provided destination (${destination.url}) has no protocol specified! Assuming HTTPS.`);
+    logger.warn(
+      `URL of the provided destination (${destination.url}) has no protocol specified! Assuming HTTPS.`
+    );
     return Protocol.HTTPS;
   }
   const casted = Protocol.of(protocol[0]);
@@ -144,7 +171,9 @@ export function getProtocolOrDefault(destination: Destination): Protocol {
     return casted;
   }
 
-  throw new Error(`Protocol of the provided destination (${destination.url}) is not supported! Currently only HTTP and HTTPS are supported.`);
+  throw new Error(
+    `Protocol of the provided destination (${destination.url}) is not supported! Currently only HTTP and HTTPS are supported.`
+  );
 }
 
 /**

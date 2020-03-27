@@ -3,7 +3,10 @@ import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { DeleteRequestBuilder } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
-import { defaultDestination, mockDeleteRequest } from '../test-util/request-mocker';
+import {
+  defaultDestination,
+  mockDeleteRequest
+} from '../test-util/request-mocker';
 import { testEntityResourcePath } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/test-service';
 
@@ -47,7 +50,9 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(defaultDestination);
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });
@@ -111,7 +116,9 @@ describe('DeleteRequestBuilder', () => {
       statusCode: 500
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, { KeyPropertyGuid: keyPropGuid }).execute(defaultDestination);
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+      KeyPropertyGuid: keyPropGuid
+    }).execute(defaultDestination);
 
     await expect(deleteRequest).rejects.toThrowErrorMatchingSnapshot();
   });

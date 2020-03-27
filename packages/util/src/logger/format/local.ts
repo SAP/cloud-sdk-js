@@ -16,12 +16,18 @@ export const local = combine(
   }))(),
   cli(),
   printf(info => {
-    const messageContext = info.custom_fields && info.custom_fields.messageContext ? `${chalk.blue(`(${info.custom_fields.messageContext})`)}: ` : '';
+    const messageContext =
+      info.custom_fields && info.custom_fields.messageContext
+        ? `${chalk.blue(`(${info.custom_fields.messageContext})`)}: `
+        : '';
     const trimmedMessage = info.message.replace(/^\s*/, '');
-    const paddingLength = info.message.length - trimmedMessage.length + messageContext.length;
+    const paddingLength =
+      info.message.length - trimmedMessage.length + messageContext.length;
     if (info.error) {
       info.level = chalk.inverse(info.level);
     }
-    return `${chalk.gray(`[${info.timestamp}]`)} ${info.level} ${messageContext.padStart(paddingLength, ' ')}${trimmedMessage}`;
+    return `${chalk.gray(`[${info.timestamp}]`)} ${
+      info.level
+    } ${messageContext.padStart(paddingLength, ' ')}${trimmedMessage}`;
   })
 );

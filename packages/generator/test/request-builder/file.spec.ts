@@ -8,10 +8,14 @@ describe('imports', () => {
     const actual = requestBuilderSourceFile(breakfastEntity);
     expect(actual.kind).toBe(StructureKind.SourceFile);
 
-    const imports = (actual.statements as any[]).filter(element => element.kind === StructureKind.ImportDeclaration);
+    const imports = (actual.statements as any[]).filter(
+      element => element.kind === StructureKind.ImportDeclaration
+    );
     expect(imports.length).toBe(2);
 
-    const classes = (actual.statements as any[]).filter(element => element.kind === StructureKind.Class);
+    const classes = (actual.statements as any[]).filter(
+      element => element.kind === StructureKind.Class
+    );
     expect(classes.length).toBe(1);
   });
 });

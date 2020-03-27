@@ -20,11 +20,15 @@ describe('tenant builder from jwt', () => {
     const decodedJwtMissingName: DecodedJWT = {
       zid: 'tenantUUID'
     };
-    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(decodedJwtMissingName.zid);
+    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(
+      decodedJwtMissingName.zid
+    );
     expect(tenantFromJwt(decodedJwtMissingName).name).toBe(undefined);
 
     decodedJwtMissingName.ext_attr = {};
-    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(decodedJwtMissingName.zid);
+    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(
+      decodedJwtMissingName.zid
+    );
     expect(tenantFromJwt(decodedJwtMissingName).name).toBe(undefined);
   });
 

@@ -40,7 +40,9 @@ export function substring<EntityT extends Entity>(
  * @param p0 - the given string for computing the length
  * @returns The newly created filter function
  */
-export function length<EntityT extends Entity>(p0: string | Field<EntityT> | StringFilterFunction<EntityT>): NumberFilterFunction<EntityT> {
+export function length<EntityT extends Entity>(
+  p0: string | Field<EntityT> | StringFilterFunction<EntityT>
+): NumberFilterFunction<EntityT> {
   return filterFunction('length', 'int', p0);
 }
 
@@ -73,17 +75,26 @@ export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean' | 'int' | 'double' | 'decimal' | 'string',
   ...parameters: FilterFunctionParameterType<EntityT>[]
-): BooleanFilterFunction<EntityT> | NumberFilterFunction<EntityT> | StringFilterFunction<EntityT> {
+):
+  | BooleanFilterFunction<EntityT>
+  | NumberFilterFunction<EntityT>
+  | StringFilterFunction<EntityT> {
   if (returnType === 'boolean') {
     return new BooleanFilterFunction(functionName, parameters);
   }
   if (returnType === 'string') {
     return new StringFilterFunction(functionName, parameters);
   }
-  return new NumberFilterFunction(functionName, parameters, returnTypeToEdmType[returnType]);
+  return new NumberFilterFunction(
+    functionName,
+    parameters,
+    returnTypeToEdmType[returnType]
+  );
 }
 
-const returnTypeToEdmType: MapType<'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'> = {
+const returnTypeToEdmType: MapType<
+  'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
+> = {
   int: 'Edm.Int32',
   double: 'Edm.Double',
   decimal: 'Edm.Decimal'

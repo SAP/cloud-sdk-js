@@ -31,24 +31,34 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination using a custom transformation function', () => {
-    const transformationFn = serviceBinding => ({ url: serviceBinding.credentials.sys });
+    const transformationFn = serviceBinding => ({
+      url: serviceBinding.credentials.sys
+    });
 
-    expect(destinationForServiceBinding('my-custom-service', { transformationFn })).toEqual({
+    expect(
+      destinationForServiceBinding('my-custom-service', { transformationFn })
+    ).toEqual({
       url: 'https://custom-service.my.system.com'
     });
   });
 
   it('throws an error if the service type is not supported', () => {
-    expect(() => destinationForServiceBinding('my-custom-service')).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      destinationForServiceBinding('my-custom-service')
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('throws an error if no service binding can be found for the given name', () => {
-    expect(() => destinationForServiceBinding('non-existent-service')).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      destinationForServiceBinding('non-existent-service')
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('throws an error if there are no service bindings at all', () => {
     delete process.env.VCAP_SERVICES;
-    expect(() => destinationForServiceBinding('my-custom-service')).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      destinationForServiceBinding('my-custom-service')
+    ).toThrowErrorMatchingSnapshot();
   });
 });
 

@@ -25,7 +25,10 @@ const logger = createLogger({
  * @param jwt - The JWT of the current user.
  * @returns A promise resolving to the destiation with the added proxy configuration.
  */
-export function addProxyConfiguration(destination: Destination, jwt?: string): Promise<Destination> {
+export function addProxyConfiguration(
+  destination: Destination,
+  jwt?: string
+): Promise<Destination> {
   return Promise.resolve()
     .then(() => proxyHostAndPort())
     .then(hostAndPort => addHeaders(hostAndPort, jwt))
@@ -35,7 +38,10 @@ export function addProxyConfiguration(destination: Destination, jwt?: string): P
     }));
 }
 
-export function addProxyConfigurationOnPrem(destination: Destination, jwt?: string): Promise<Destination> {
+export function addProxyConfigurationOnPrem(
+  destination: Destination,
+  jwt?: string
+): Promise<Destination> {
   return addProxyConfiguration(destination, jwt);
 }
 
@@ -67,7 +73,10 @@ function readConnectivityServiceBinding(): Service {
   return serviceBindings[0];
 }
 
-function addHeaders(hostAndPort: HostAndPort, jwt?: string): Promise<ProxyConfiguration> {
+function addHeaders(
+  hostAndPort: HostAndPort,
+  jwt?: string
+): Promise<ProxyConfiguration> {
   const connServiceBinding = readConnectivityServiceBinding();
 
   return Promise.resolve()
@@ -85,13 +94,19 @@ function addHeaders(hostAndPort: HostAndPort, jwt?: string): Promise<ProxyConfig
     );
 }
 
-function proxyAuthorizationHeader(connectivityServiceBinding: Service, userJwt?): Promise<MapType<string>> {
+function proxyAuthorizationHeader(
+  connectivityServiceBinding: Service,
+  userJwt?
+): Promise<MapType<string>> {
   return serviceToken(connectivityServiceBinding, { userJwt })
     .then(token => ({
       'Proxy-Authorization': `Bearer ${token}`
     }))
     .catch(error => {
-      throw errorWithCause('Failed to add proxy authorization header - client credentials grant failed!', error);
+      throw errorWithCause(
+        'Failed to add proxy authorization header - client credentials grant failed!',
+        error
+      );
     });
 }
 

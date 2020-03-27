@@ -38,16 +38,16 @@
     "@sap-cloud-sdk/util": "^1.18.1",
     "@sap/xsenv": "2.2.0",
     "@types/http-proxy-agent": "^2.0.2",
-    "axios": "0.19.2",
+    "axios": "^0.19.2",
     "bignumber.js": "8.1.1",
     "http-proxy-agent": "3.0.0",
     "https-proxy-agent": "4.0.0",
     "jsonwebtoken": "8.5.1",
     "moment": "2.24.0",
     "opossum": "4.0.0",
-    "rambda": "2.14.5",
-    "uuid": "3.3.2",
-    "voca": "1.4.0"
+    "rambda": "^5.0.0",
+    "uuid": "^7.0.2",
+    "voca": "^1.4.0"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^6.0.0",
@@ -56,7 +56,7 @@
     "@types/sinonjs__fake-timers": "^6.0.0",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
-    "nock": "^12.0.2",
+    "nock": "^12.0.3",
     "ts-jest": "^25.2.1",
     "typescript": "3.8.3"
   }

@@ -3,7 +3,9 @@ import { parseEdmxFromPath } from '../../src/parser';
 
 describe('edmx-parser', () => {
   it('takes an edmx/XML file, parses it to JSON and coerces properties with possibly many values to arrays', () => {
-    const metadataEdmx = parseEdmxFromPath('../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx');
+    const metadataEdmx = parseEdmxFromPath(
+      '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
+    );
 
     expect(metadataEdmx.entitySets.length).toBe(10);
     expect(metadataEdmx.entityTypes.length).toBe(10);
@@ -36,6 +38,10 @@ describe('edmx-parser', () => {
   });
 
   it('does not fail for multiple schema entries in the edmx file', () => {
-    expect(() => parseEdmxFromPath('../../test-resources/service-specs/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx')).not.toThrow();
+    expect(() =>
+      parseEdmxFromPath(
+        '../../test-resources/service-specs/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
+      )
+    ).not.toThrow();
   });
 });

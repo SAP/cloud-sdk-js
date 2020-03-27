@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { HttpProxyAgent} from 'http-proxy-agent';
-import { HttpsProxyAgent} from 'https-proxy-agent';
-import * as https from 'https';
+import { HttpProxyAgent } from 'http-proxy-agent';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import {
   Destination,
   getAgentConfig,
@@ -37,8 +36,7 @@ describe('createAgent', () => {
   };
 
   it('returns the default agent if neither a proxy configuration is present nor TrustAll is set', () => {
-    // For some reason deepEqual does not work on https.Agent
-    const actual = getAgentConfig(baseDestination)['httpsAgent'] as https.Agent;
+    const actual = getAgentConfig(baseDestination)['httpsAgent'];
     expect(actual.options.rejectUnauthorized).toBe(true);
   });
 
@@ -49,10 +47,7 @@ describe('createAgent', () => {
   });
 
   it('returns a trustAll agent if TrustAll is configured', () => {
-    // For some reason deepEqual does not work on https.Agent
-    const actual = getAgentConfig(trustAllDestination)[
-      'httpsAgent'
-    ] as https.Agent;
+    const actual = getAgentConfig(trustAllDestination)['httpsAgent'];
     expect(actual.options.rejectUnauthorized).toBeFalsy();
   });
 

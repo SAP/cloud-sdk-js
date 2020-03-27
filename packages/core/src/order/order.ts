@@ -12,6 +12,7 @@ type OrderType = 'asc' | 'desc';
  */
 export class Order<EntityT extends Entity>
   implements EntityIdentifiable<EntityT> {
+  readonly makeDifferent: EntityT;
   readonly _entityConstructor: Constructable<EntityT>;
 
   /**

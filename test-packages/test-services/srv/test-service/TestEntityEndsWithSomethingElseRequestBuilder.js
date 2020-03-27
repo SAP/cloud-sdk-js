@@ -20,9 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@sap-cloud-sdk/core");
 var TestEntityEndsWithSomethingElse_1 = require("./TestEntityEndsWithSomethingElse");
-/**
- * Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity.
- */
+/** Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity. */
 var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (_super) {
     __extends(TestEntityEndsWithSomethingElseRequestBuilder, _super);
     function TestEntityEndsWithSomethingElseRequestBuilder() {

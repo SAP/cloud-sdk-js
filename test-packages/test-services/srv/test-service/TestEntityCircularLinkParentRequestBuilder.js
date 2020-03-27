@@ -20,9 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@sap-cloud-sdk/core");
 var TestEntityCircularLinkParent_1 = require("./TestEntityCircularLinkParent");
-/**
- * Request builder class for operations supported on the [[TestEntityCircularLinkParent]] entity.
- */
+/** Request builder class for operations supported on the [[TestEntityCircularLinkParent]] entity. */
 var TestEntityCircularLinkParentRequestBuilder = /** @class */ (function (_super) {
     __extends(TestEntityCircularLinkParentRequestBuilder, _super);
     function TestEntityCircularLinkParentRequestBuilder() {

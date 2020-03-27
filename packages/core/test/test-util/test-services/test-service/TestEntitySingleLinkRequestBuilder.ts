@@ -6,9 +6,7 @@
 import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '../../../../src';
 import { TestEntitySingleLink } from './TestEntitySingleLink';
 
-/**
- * Request builder class for operations supported on the [[TestEntitySingleLink]] entity.
- */
+/** Request builder class for operations supported on the [[TestEntitySingleLink]] entity. */
 export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntitySingleLink> {
   /**
    * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.

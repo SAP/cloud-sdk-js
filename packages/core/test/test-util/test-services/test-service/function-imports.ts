@@ -7,9 +7,7 @@ import { transformReturnValueForUndefined, transformReturnValueForEdmType, trans
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportNoReturnType]]. */
 export interface TestFunctionImportNoReturnTypeParameters {
 }
 
@@ -27,9 +25,7 @@ export function testFunctionImportNoReturnType(parameters: TestFunctionImportNoR
   return new FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNoReturnType', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportEdmReturnType]]. */
 export interface TestFunctionImportEdmReturnTypeParameters {
 }
 
@@ -47,9 +43,7 @@ export function testFunctionImportEdmReturnType(parameters: TestFunctionImportEd
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Boolean')), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]]. */
 export interface TestFunctionImportEdmReturnTypeCollectionParameters {
 }
 
@@ -67,9 +61,7 @@ export function testFunctionImportEdmReturnTypeCollection(parameters: TestFuncti
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeList(data, (val) => edmToTs(val, 'Edm.String')), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportEntityReturnType]]. */
 export interface TestFunctionImportEntityReturnTypeParameters {
 }
 
@@ -87,9 +79,7 @@ export function testFunctionImportEntityReturnType(parameters: TestFunctionImpor
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntity(data, TestEntity), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]]. */
 export interface TestFunctionImportEntityReturnTypeCollectionParameters {
 }
 
@@ -107,9 +97,7 @@ export function testFunctionImportEntityReturnTypeCollection(parameters: TestFun
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityList(data, TestEntity), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportComplexReturnType]]. */
 export interface TestFunctionImportComplexReturnTypeParameters {
 }
 
@@ -127,9 +115,7 @@ export function testFunctionImportComplexReturnType(parameters: TestFunctionImpo
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', (data) => transformReturnValueForComplexType(data, TestComplexType.build), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]]. */
 export interface TestFunctionImportComplexReturnTypeCollectionParameters {
 }
 
@@ -147,13 +133,9 @@ export function testFunctionImportComplexReturnTypeCollection(parameters: TestFu
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeList(data, TestComplexType.build), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportGet]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportGet]]. */
 export interface TestFunctionImportGetParameters {
-  /**
-   * Simple Param.
-   */
+  /** Simple Param. */
   simpleParam: string;
 }
 
@@ -171,13 +153,9 @@ export function testFunctionImportGet(parameters: TestFunctionImportGetParameter
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Boolean')), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportPost]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportPost]]. */
 export interface TestFunctionImportPostParameters {
-  /**
-   * Simple Param.
-   */
+  /** Simple Param. */
   simpleParam: string;
 }
 
@@ -195,17 +173,11 @@ export function testFunctionImportPost(parameters: TestFunctionImportPostParamet
   return new FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Boolean')), params);
 }
 
-/**
- * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
- */
+/** Type of the parameters to be passed to [[testFunctionImportMultipleParams]]. */
 export interface TestFunctionImportMultipleParamsParameters {
-  /**
-   * String Param.
-   */
+  /** String Param. */
   stringParam: string;
-  /**
-   * Boolean Param.
-   */
+  /** Boolean Param. */
   booleanParam: boolean;
 }
 
@@ -224,9 +196,7 @@ export function testFunctionImportMultipleParams(parameters: TestFunctionImportM
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Boolean')), params);
 }
 
-/**
- * Type of the parameters to be passed to [[createTestComplexType]].
- */
+/** Type of the parameters to be passed to [[createTestComplexType]]. */
 export interface CreateTestComplexTypeParameters {
 }
 
@@ -244,9 +214,7 @@ export function createTestComplexType(parameters: CreateTestComplexTypeParameter
   return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', (data) => transformReturnValueForComplexType(data, TestComplexType.build), params);
 }
 
-/**
- * Type of the parameters to be passed to [[fContinue]].
- */
+/** Type of the parameters to be passed to [[fContinue]]. */
 export interface FContinueParameters {
 }
 

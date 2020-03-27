@@ -9,30 +9,20 @@ import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 
-/**
- * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
- */
+/** This class represents the entity "A_TestEntity" of service "API_TEST_SRV". */
 export class TestEntity extends Entity implements TestEntityType {
-  /**
-   * Technical entity name for TestEntity.
-   */
+  /** Technical entity name for TestEntity. */
   static _entityName = 'A_TestEntity';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntity.
    */
   static _serviceName = 'API_TEST_SRV';
-  /**
-   * Default url path for the according service.
-   */
+  /** Default url path for the according service. */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-  /**
-   * Key Property Guid.
-   */
+  /** Key Property Guid. */
   keyPropertyGuid!: string;
-  /**
-   * Key Property String.
-   */
+  /** Key Property String. */
   keyPropertyString!: string;
   /**
    * String Property.
@@ -115,17 +105,11 @@ export class TestEntity extends Entity implements TestEntityType {
    * @nullable
    */
   complexTypeProperty?: TestComplexType;
-  /**
-   * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
-   */
+  /** One-to-many navigation property to the [[TestEntityMultiLink]] entity. */
   toMultiLink!: TestEntityMultiLink[];
-  /**
-   * One-to-many navigation property to the [[TestEntityOtherMultiLink]] entity.
-   */
+  /** One-to-many navigation property to the [[TestEntityOtherMultiLink]] entity. */
   toOtherMultiLink!: TestEntityOtherMultiLink[];
-  /**
-   * One-to-one navigation property to the [[TestEntitySingleLink]] entity.
-   */
+  /** One-to-one navigation property to the [[TestEntitySingleLink]] entity. */
   toSingleLink!: TestEntitySingleLink;
 
   /**
@@ -320,9 +304,7 @@ export namespace TestEntity {
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const TO_SINGLE_LINK: OneToOneLink<TestEntity, TestEntitySingleLink> = new OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink);
-  /**
-   * All fields of the TestEntity entity.
-   */
+  /** All fields of the TestEntity entity. */
   export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | Link<TestEntity, TestEntityMultiLink> | Link<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
@@ -346,17 +328,11 @@ export namespace TestEntity {
     TestEntity.TO_OTHER_MULTI_LINK,
     TestEntity.TO_SINGLE_LINK
   ];
-  /**
-   * All fields selector.
-   */
+  /** All fields selector. */
   export const ALL_FIELDS: AllFields<TestEntity> = new AllFields('*', TestEntity);
-  /**
-   * All key fields of the TestEntity entity.
-   */
+  /** All key fields of the TestEntity entity. */
   export const _keyFields: Array<Selectable<TestEntity>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
-  /**
-   * Mapping of all key field names to the respective static field property TestEntity.
-   */
+  /** Mapping of all key field names to the respective static field property TestEntity. */
   export const _keys: { [keys: string]: Selectable<TestEntity> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntity> }, field: Selectable<TestEntity>) => {
     acc[field._fieldName] = field;
     return acc;

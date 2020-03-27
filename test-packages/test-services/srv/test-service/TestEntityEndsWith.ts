@@ -6,26 +6,18 @@
 import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
 import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '@sap-cloud-sdk/core';
 
-/**
- * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
- */
+/** This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV". */
 export class TestEntityEndsWith extends Entity implements TestEntityEndsWithType {
-  /**
-   * Technical entity name for TestEntityEndsWith.
-   */
+  /** Technical entity name for TestEntityEndsWith. */
   static _entityName = 'A_TestEntityEndsWithCollection';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntityEndsWith.
    */
   static _serviceName = 'API_TEST_SRV';
-  /**
-   * Default url path for the according service.
-   */
+  /** Default url path for the according service. */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-  /**
-   * Key Property.
-   */
+  /** Key Property. */
   keyProperty!: string;
 
   /**
@@ -76,23 +68,15 @@ export namespace TestEntityEndsWith {
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const KEY_PROPERTY: StringField<TestEntityEndsWith> = new StringField('KeyProperty', TestEntityEndsWith, 'Edm.String');
-  /**
-   * All fields of the TestEntityEndsWith entity.
-   */
+  /** All fields of the TestEntityEndsWith entity. */
   export const _allFields: Array<StringField<TestEntityEndsWith>> = [
     TestEntityEndsWith.KEY_PROPERTY
   ];
-  /**
-   * All fields selector.
-   */
+  /** All fields selector. */
   export const ALL_FIELDS: AllFields<TestEntityEndsWith> = new AllFields('*', TestEntityEndsWith);
-  /**
-   * All key fields of the TestEntityEndsWith entity.
-   */
+  /** All key fields of the TestEntityEndsWith entity. */
   export const _keyFields: Array<Selectable<TestEntityEndsWith>> = [TestEntityEndsWith.KEY_PROPERTY];
-  /**
-   * Mapping of all key field names to the respective static field property TestEntityEndsWith.
-   */
+  /** Mapping of all key field names to the respective static field property TestEntityEndsWith. */
   export const _keys: { [keys: string]: Selectable<TestEntityEndsWith> } = TestEntityEndsWith._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityEndsWith> }, field: Selectable<TestEntityEndsWith>) => {
     acc[field._fieldName] = field;
     return acc;

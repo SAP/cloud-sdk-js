@@ -31,9 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var TestEntityLvl2MultiLinkRequestBuilder_1 = require("./TestEntityLvl2MultiLinkRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
-/**
- * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
- */
+/** This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV". */
 var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
     __extends(TestEntityLvl2MultiLink, _super);
     function TestEntityLvl2MultiLink() {
@@ -68,18 +66,14 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
     TestEntityLvl2MultiLink.prototype.toJSON = function () {
         return __assign(__assign({}, this), this._customFields);
     };
-    /**
-     * Technical entity name for TestEntityLvl2MultiLink.
-     */
+    /** Technical entity name for TestEntityLvl2MultiLink. */
     TestEntityLvl2MultiLink._entityName = 'A_TestEntityLvl2MultiLink';
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntityLvl2MultiLink.
      */
     TestEntityLvl2MultiLink._serviceName = 'API_TEST_SRV';
-    /**
-     * Default url path for the according service.
-     */
+    /** Default url path for the according service. */
     TestEntityLvl2MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityLvl2MultiLink;
 }(core_1.Entity));
@@ -110,9 +104,7 @@ exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntityLvl2MultiLink.INT_16_PROPERTY = new core_1.NumberField('Int16Property', TestEntityLvl2MultiLink, 'Edm.Int16');
-    /**
-     * All fields of the TestEntityLvl2MultiLink entity.
-     */
+    /** All fields of the TestEntityLvl2MultiLink entity. */
     TestEntityLvl2MultiLink._allFields = [
         TestEntityLvl2MultiLink.KEY_PROPERTY,
         TestEntityLvl2MultiLink.STRING_PROPERTY,
@@ -120,17 +112,11 @@ exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
         TestEntityLvl2MultiLink.GUID_PROPERTY,
         TestEntityLvl2MultiLink.INT_16_PROPERTY
     ];
-    /**
-     * All fields selector.
-     */
+    /** All fields selector. */
     TestEntityLvl2MultiLink.ALL_FIELDS = new core_1.AllFields('*', TestEntityLvl2MultiLink);
-    /**
-     * All key fields of the TestEntityLvl2MultiLink entity.
-     */
+    /** All key fields of the TestEntityLvl2MultiLink entity. */
     TestEntityLvl2MultiLink._keyFields = [TestEntityLvl2MultiLink.KEY_PROPERTY];
-    /**
-     * Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink.
-     */
+    /** Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink. */
     TestEntityLvl2MultiLink._keys = TestEntityLvl2MultiLink._keyFields.reduce(function (acc, field) {
         acc[field._fieldName] = field;
         return acc;

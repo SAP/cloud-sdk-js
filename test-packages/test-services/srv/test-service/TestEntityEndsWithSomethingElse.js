@@ -31,9 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var TestEntityEndsWithSomethingElseRequestBuilder_1 = require("./TestEntityEndsWithSomethingElseRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
-/**
- * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
- */
+/** This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV". */
 var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
     __extends(TestEntityEndsWithSomethingElse, _super);
     function TestEntityEndsWithSomethingElse() {
@@ -68,18 +66,14 @@ var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
     TestEntityEndsWithSomethingElse.prototype.toJSON = function () {
         return __assign(__assign({}, this), this._customFields);
     };
-    /**
-     * Technical entity name for TestEntityEndsWithSomethingElse.
-     */
+    /** Technical entity name for TestEntityEndsWithSomethingElse. */
     TestEntityEndsWithSomethingElse._entityName = 'A_TestEntityEndsWithSomethingElse';
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntityEndsWithSomethingElse.
      */
     TestEntityEndsWithSomethingElse._serviceName = 'API_TEST_SRV';
-    /**
-     * Default url path for the according service.
-     */
+    /** Default url path for the according service. */
     TestEntityEndsWithSomethingElse._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityEndsWithSomethingElse;
 }(core_1.Entity));
@@ -90,23 +84,15 @@ exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntityEndsWithSomethingElse.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityEndsWithSomethingElse, 'Edm.String');
-    /**
-     * All fields of the TestEntityEndsWithSomethingElse entity.
-     */
+    /** All fields of the TestEntityEndsWithSomethingElse entity. */
     TestEntityEndsWithSomethingElse._allFields = [
         TestEntityEndsWithSomethingElse.KEY_PROPERTY
     ];
-    /**
-     * All fields selector.
-     */
+    /** All fields selector. */
     TestEntityEndsWithSomethingElse.ALL_FIELDS = new core_1.AllFields('*', TestEntityEndsWithSomethingElse);
-    /**
-     * All key fields of the TestEntityEndsWithSomethingElse entity.
-     */
+    /** All key fields of the TestEntityEndsWithSomethingElse entity. */
     TestEntityEndsWithSomethingElse._keyFields = [TestEntityEndsWithSomethingElse.KEY_PROPERTY];
-    /**
-     * Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse.
-     */
+    /** Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse. */
     TestEntityEndsWithSomethingElse._keys = TestEntityEndsWithSomethingElse._keyFields.reduce(function (acc, field) {
         acc[field._fieldName] = field;
         return acc;

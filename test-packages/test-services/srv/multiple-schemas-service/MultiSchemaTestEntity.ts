@@ -6,26 +6,18 @@
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
 import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '@sap-cloud-sdk/core';
 
-/**
- * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
- */
+/** This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA". */
 export class MultiSchemaTestEntity extends Entity implements MultiSchemaTestEntityType {
-  /**
-   * Technical entity name for MultiSchemaTestEntity.
-   */
+  /** Technical entity name for MultiSchemaTestEntity. */
   static _entityName = 'MultiSchemaTestEntity';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for MultiSchemaTestEntity.
    */
   static _serviceName = 'SCHEMA_DATA';
-  /**
-   * Default url path for the according service.
-   */
+  /** Default url path for the according service. */
   static _defaultServicePath = 'VALUE_IS_UNDEFINED';
-  /**
-   * Key Property.
-   */
+  /** Key Property. */
   keyProperty!: string;
 
   /**
@@ -76,23 +68,15 @@ export namespace MultiSchemaTestEntity {
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const KEY_PROPERTY: StringField<MultiSchemaTestEntity> = new StringField('KeyProperty', MultiSchemaTestEntity, 'Edm.String');
-  /**
-   * All fields of the MultiSchemaTestEntity entity.
-   */
+  /** All fields of the MultiSchemaTestEntity entity. */
   export const _allFields: Array<StringField<MultiSchemaTestEntity>> = [
     MultiSchemaTestEntity.KEY_PROPERTY
   ];
-  /**
-   * All fields selector.
-   */
+  /** All fields selector. */
   export const ALL_FIELDS: AllFields<MultiSchemaTestEntity> = new AllFields('*', MultiSchemaTestEntity);
-  /**
-   * All key fields of the MultiSchemaTestEntity entity.
-   */
+  /** All key fields of the MultiSchemaTestEntity entity. */
   export const _keyFields: Array<Selectable<MultiSchemaTestEntity>> = [MultiSchemaTestEntity.KEY_PROPERTY];
-  /**
-   * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
-   */
+  /** Mapping of all key field names to the respective static field property MultiSchemaTestEntity. */
   export const _keys: { [keys: string]: Selectable<MultiSchemaTestEntity> } = MultiSchemaTestEntity._keyFields.reduce((acc: { [keys: string]: Selectable<MultiSchemaTestEntity> }, field: Selectable<MultiSchemaTestEntity>) => {
     acc[field._fieldName] = field;
     return acc;

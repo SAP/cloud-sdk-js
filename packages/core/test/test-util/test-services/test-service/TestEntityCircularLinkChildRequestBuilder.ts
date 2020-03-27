@@ -6,9 +6,7 @@
 import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '../../../../src';
 import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 
-/**
- * Request builder class for operations supported on the [[TestEntityCircularLinkChild]] entity.
- */
+/** Request builder class for operations supported on the [[TestEntityCircularLinkChild]] entity. */
 export class TestEntityCircularLinkChildRequestBuilder extends RequestBuilder<TestEntityCircularLinkChild> {
   /**
    * Returns a request builder for retrieving one `TestEntityCircularLinkChild` entity based on its keys.

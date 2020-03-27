@@ -20,9 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@sap-cloud-sdk/core");
 var MultiSchemaTestEntity_1 = require("./MultiSchemaTestEntity");
-/**
- * Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity.
- */
+/** Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity. */
 var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
     __extends(MultiSchemaTestEntityRequestBuilder, _super);
     function MultiSchemaTestEntityRequestBuilder() {

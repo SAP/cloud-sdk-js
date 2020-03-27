@@ -47,7 +47,10 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity>
    */
   selects: Selectable<LinkedEntityT>[] = [];
 
-  readonly makeDifferent: EntityT;
+  /**
+   * Dummy property to make the type checks work.
+   */
+  protected makeDifferent: EntityT;
   /**
    * Creates an instance of Link.
    *

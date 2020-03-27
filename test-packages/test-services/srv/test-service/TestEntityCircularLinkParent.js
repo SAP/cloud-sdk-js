@@ -31,9 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var TestEntityCircularLinkParentRequestBuilder_1 = require("./TestEntityCircularLinkParentRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
-/**
- * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
- */
+/** This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV". */
 var TestEntityCircularLinkParent = /** @class */ (function (_super) {
     __extends(TestEntityCircularLinkParent, _super);
     function TestEntityCircularLinkParent() {
@@ -68,18 +66,14 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
     TestEntityCircularLinkParent.prototype.toJSON = function () {
         return __assign(__assign({}, this), this._customFields);
     };
-    /**
-     * Technical entity name for TestEntityCircularLinkParent.
-     */
+    /** Technical entity name for TestEntityCircularLinkParent. */
     TestEntityCircularLinkParent._entityName = 'A_TestEntityCircularLinkParent';
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntityCircularLinkParent.
      */
     TestEntityCircularLinkParent._serviceName = 'API_TEST_SRV';
-    /**
-     * Default url path for the according service.
-     */
+    /** Default url path for the according service. */
     TestEntityCircularLinkParent._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityCircularLinkParent;
 }(core_1.Entity));
@@ -96,24 +90,16 @@ var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntityCircularLinkParent.TO_CHILD = new core_1.Link('to_Child', TestEntityCircularLinkParent, TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
-    /**
-     * All fields of the TestEntityCircularLinkParent entity.
-     */
+    /** All fields of the TestEntityCircularLinkParent entity. */
     TestEntityCircularLinkParent._allFields = [
         TestEntityCircularLinkParent.KEY_PROPERTY,
         TestEntityCircularLinkParent.TO_CHILD
     ];
-    /**
-     * All fields selector.
-     */
+    /** All fields selector. */
     TestEntityCircularLinkParent.ALL_FIELDS = new core_1.AllFields('*', TestEntityCircularLinkParent);
-    /**
-     * All key fields of the TestEntityCircularLinkParent entity.
-     */
+    /** All key fields of the TestEntityCircularLinkParent entity. */
     TestEntityCircularLinkParent._keyFields = [TestEntityCircularLinkParent.KEY_PROPERTY];
-    /**
-     * Mapping of all key field names to the respective static field property TestEntityCircularLinkParent.
-     */
+    /** Mapping of all key field names to the respective static field property TestEntityCircularLinkParent. */
     TestEntityCircularLinkParent._keys = TestEntityCircularLinkParent._keyFields.reduce(function (acc, field) {
         acc[field._fieldName] = field;
         return acc;

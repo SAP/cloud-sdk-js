@@ -18,7 +18,7 @@ export class FilterList<EntityT extends Entity>
   /**
    * Entity type of the entity tp be filtered.
    */
-  readonly _entity:EntityT;
+  readonly _entity: EntityT;
 
   /**
    * Creates an instance of FilterList.

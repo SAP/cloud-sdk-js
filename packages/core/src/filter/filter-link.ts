@@ -25,7 +25,7 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
   /**
    * Entity type of the entity tp be filtered.
    */
-  readonly _entity:EntityT;
+  readonly _entity: EntityT;
 
   /**
    * Linked entity to be filtered by.

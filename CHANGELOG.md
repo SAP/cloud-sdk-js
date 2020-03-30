@@ -34,7 +34,7 @@ blog:
 # 1.18.1
 
 release-date: March 26, 2019
-docs: https://sap.github.io/cloud-sdk/
+docs: https://sap.github.io/cloud-sdk/api/1.18.1
 blog: https://blogs.sap.com/?p=1068438
 
 ## compatibilityNotes

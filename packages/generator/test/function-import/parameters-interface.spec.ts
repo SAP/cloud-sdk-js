@@ -14,10 +14,10 @@ describe('parameters-interface', () => {
           name: 'withHoneyToast',
           type: 'boolean',
           hasQuestionToken: true,
-          docs: ['Breakfast includes a honey toast']
+          docs: ['\nBreakfast includes a honey toast']
         }
       ],
-      docs: ['Type of the parameters to be passed to [[orderBreakfast]].']
+      docs: ['\nType of the parameters to be passed to [[orderBreakfast]].']
     });
   });
 });

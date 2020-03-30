@@ -11,7 +11,8 @@ import { linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
 import {
   getStaticNavPropertyDescription,
-  getStaticPropertyDescription
+  getStaticPropertyDescription,
+  addLeadingNewline
 } from '../typedoc';
 import {
   VdmEntity,
@@ -141,7 +142,7 @@ function allFields(entity: VdmEntity): VariableStatementStructure {
           ]`
       }
     ],
-    docs: [`All fields of the ${entity.className} entity.`],
+    docs: [addLeadingNewline(`All fields of the ${entity.className} entity.`)],
     isExported: true
   };
 }
@@ -157,7 +158,7 @@ function allFieldSelector(entity: VdmEntity): VariableStatementStructure {
         initializer: `new AllFields('*', ${entity.className})`
       }
     ],
-    docs: ['All fields selector.'],
+    docs: [addLeadingNewline('All fields selector.')],
     isExported: true
   };
 }
@@ -178,7 +179,9 @@ function keyFields(entity: VdmEntity): VariableStatementStructure {
           ']'
       }
     ],
-    docs: [`All key fields of the ${entity.className} entity.`],
+    docs: [
+      addLeadingNewline(`All key fields of the ${entity.className} entity.`)
+    ],
     isExported: true
   };
 }
@@ -202,7 +205,9 @@ function keys(entity: VdmEntity): VariableStatementStructure {
       }
     ],
     docs: [
-      `Mapping of all key field names to the respective static field property ${entity.className}.`
+      addLeadingNewline(
+        `Mapping of all key field names to the respective static field property ${entity.className}.`
+      )
     ],
     isExported: true
   };

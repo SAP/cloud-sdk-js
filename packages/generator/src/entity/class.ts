@@ -11,7 +11,8 @@ import {
   getEntityDescription,
   getFunctionDoc,
   getNavPropertyDescription,
-  getPropertyDescription
+  getPropertyDescription,
+  addLeadingNewline
 } from '../typedoc';
 import {
   VdmEntity,
@@ -36,7 +37,7 @@ export function entityClass(
     ],
     methods: methods(entity),
     isExported: true,
-    docs: [getEntityDescription(entity, service)]
+    docs: [addLeadingNewline(getEntityDescription(entity, service))]
   };
 }
 
@@ -57,7 +58,7 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
     name: prependPrefix('entityName'),
     isStatic: true,
     initializer: `\'${entity.entitySetName}\'`,
-    docs: [`Technical entity name for ${entity.className}.`]
+    docs: [addLeadingNewline(`Technical entity name for ${entity.className}.`)]
   };
 }
 
@@ -86,7 +87,7 @@ function defaultServicePath(
     name: prependPrefix('defaultServicePath'),
     isStatic: true,
     initializer: `\'${service.servicePath}\'`,
-    docs: ['Default url path for the according service.']
+    docs: [addLeadingNewline('Default url path for the according service.')]
   };
 }
 
@@ -100,10 +101,12 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
     type: prop.jsType,
     docs: [
-      getPropertyDescription(prop, {
-        nullable: prop.nullable,
-        maxLength: prop.maxLength
-      })
+      addLeadingNewline(
+        getPropertyDescription(prop, {
+          nullable: prop.nullable,
+          maxLength: prop.maxLength
+        })
+      )
     ]
   };
 }
@@ -133,7 +136,7 @@ function navProperty(
     kind: StructureKind.Property,
     name: navProp.instancePropertyName + '!',
     type: entity.className + (navProp.isMultiLink ? '[]' : ''),
-    docs: [getNavPropertyDescription(navProp)]
+    docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
   };
 }
 
@@ -154,14 +157,16 @@ function builder(entity: VdmEntity): MethodDeclarationStructure {
     statements: `return Entity.entityBuilder(${entity.className});`,
     returnType: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
     docs: [
-      getFunctionDoc(
-        `Returns an entity builder to construct instances \`${entity.className}\`.`,
-        {
-          returns: {
-            type: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
-            description: `A builder that constructs instances of entity type \`${entity.className}\`.`
+      addLeadingNewline(
+        getFunctionDoc(
+          `Returns an entity builder to construct instances \`${entity.className}\`.`,
+          {
+            returns: {
+              type: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
+              description: `A builder that constructs instances of entity type \`${entity.className}\`.`
+            }
           }
-        }
+        )
       )
     ]
   };
@@ -175,14 +180,16 @@ function requestBuilder(entity: VdmEntity): MethodDeclarationStructure {
     returnType: `${entity.className}RequestBuilder`,
     statements: `return new ${entity.className}RequestBuilder();`,
     docs: [
-      getFunctionDoc(
-        `Returns a request builder to construct requests for operations on the \`${entity.className}\` entity type.`,
-        {
-          returns: {
-            type: `${entity.className}RequestBuilder`,
-            description: `A \`${entity.className}\` request builder.`
+      addLeadingNewline(
+        getFunctionDoc(
+          `Returns a request builder to construct requests for operations on the \`${entity.className}\` entity type.`,
+          {
+            returns: {
+              type: `${entity.className}RequestBuilder`,
+              description: `A \`${entity.className}\` request builder.`
+            }
           }
-        }
+        )
       )
     ]
   };
@@ -202,21 +209,23 @@ function customField(entity: VdmEntity): MethodDeclarationStructure {
     statements: `return Entity.customFieldSelector(fieldName, ${entity.className});`,
     returnType: `CustomField<${entity.className}>`,
     docs: [
-      getFunctionDoc(
-        `Returns a selectable object that allows the selection of custom field in a get request for the entity \`${entity.className}\`.`,
-        {
-          params: [
-            {
-              name: 'fieldName',
-              description: 'Name of the custom field to select',
-              type: 'string'
+      addLeadingNewline(
+        getFunctionDoc(
+          `Returns a selectable object that allows the selection of custom field in a get request for the entity \`${entity.className}\`.`,
+          {
+            params: [
+              {
+                name: 'fieldName',
+                description: 'Name of the custom field to select',
+                type: 'string'
+              }
+            ],
+            returns: {
+              type: `CustomField<${entity.className}>`,
+              description: `A builder that constructs instances of entity type \`${entity.className}\`.`
             }
-          ],
-          returns: {
-            type: `CustomField<${entity.className}>`,
-            description: `A builder that constructs instances of entity type \`${entity.className}\`.`
           }
-        }
+        )
       )
     ]
   };
@@ -230,15 +239,17 @@ function toJSON(entity: VdmEntity): MethodDeclarationStructure {
     statements: 'return { ...this, ...this._customFields };',
     returnType: '{ [key: string]: any }',
     docs: [
-      getFunctionDoc(
-        'Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.',
-        {
-          returns: {
-            type: '{ [key: string]: any }',
-            description:
-              'An object containing all instance variables + custom fields.'
+      addLeadingNewline(
+        getFunctionDoc(
+          'Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.',
+          {
+            returns: {
+              type: '{ [key: string]: any }',
+              description:
+                'An object containing all instance variables + custom fields.'
+            }
           }
-        }
+        )
       )
     ]
   };

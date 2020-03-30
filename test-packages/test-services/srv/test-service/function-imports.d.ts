@@ -1,7 +1,9 @@
 import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
-/** Type of the parameters to be passed to [[testFunctionImportNoReturnType]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
+ */
 export interface TestFunctionImportNoReturnTypeParameters {
 }
 /**
@@ -11,7 +13,9 @@ export interface TestFunctionImportNoReturnTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportNoReturnType(parameters: TestFunctionImportNoReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, undefined>;
-/** Type of the parameters to be passed to [[testFunctionImportEdmReturnType]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
+ */
 export interface TestFunctionImportEdmReturnTypeParameters {
 }
 /**
@@ -21,7 +25,9 @@ export interface TestFunctionImportEdmReturnTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportEdmReturnType(parameters: TestFunctionImportEdmReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeParameters, boolean>;
-/** Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]].
+ */
 export interface TestFunctionImportEdmReturnTypeCollectionParameters {
 }
 /**
@@ -31,7 +37,9 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportEdmReturnTypeCollection(parameters: TestFunctionImportEdmReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeCollectionParameters, string[]>;
-/** Type of the parameters to be passed to [[testFunctionImportEntityReturnType]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
+ */
 export interface TestFunctionImportEntityReturnTypeParameters {
 }
 /**
@@ -41,7 +49,9 @@ export interface TestFunctionImportEntityReturnTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportEntityReturnType(parameters: TestFunctionImportEntityReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeParameters, TestEntity>;
-/** Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
+ */
 export interface TestFunctionImportEntityReturnTypeCollectionParameters {
 }
 /**
@@ -51,7 +61,9 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportEntityReturnTypeCollection(parameters: TestFunctionImportEntityReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>;
-/** Type of the parameters to be passed to [[testFunctionImportComplexReturnType]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
+ */
 export interface TestFunctionImportComplexReturnTypeParameters {
 }
 /**
@@ -61,7 +73,9 @@ export interface TestFunctionImportComplexReturnTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportComplexReturnType(parameters: TestFunctionImportComplexReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeParameters, TestComplexType>;
-/** Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
+ */
 export interface TestFunctionImportComplexReturnTypeCollectionParameters {
 }
 /**
@@ -71,9 +85,13 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportComplexReturnTypeCollection(parameters: TestFunctionImportComplexReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>;
-/** Type of the parameters to be passed to [[testFunctionImportGet]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportGet]].
+ */
 export interface TestFunctionImportGetParameters {
-    /** Simple Param. */
+    /**
+     * Simple Param.
+     */
     simpleParam: string;
 }
 /**
@@ -83,9 +101,13 @@ export interface TestFunctionImportGetParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportGet(parameters: TestFunctionImportGetParameters): FunctionImportRequestBuilder<TestFunctionImportGetParameters, boolean>;
-/** Type of the parameters to be passed to [[testFunctionImportPost]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportPost]].
+ */
 export interface TestFunctionImportPostParameters {
-    /** Simple Param. */
+    /**
+     * Simple Param.
+     */
     simpleParam: string;
 }
 /**
@@ -95,11 +117,17 @@ export interface TestFunctionImportPostParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportPost(parameters: TestFunctionImportPostParameters): FunctionImportRequestBuilder<TestFunctionImportPostParameters, boolean>;
-/** Type of the parameters to be passed to [[testFunctionImportMultipleParams]]. */
+/**
+ * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
+ */
 export interface TestFunctionImportMultipleParamsParameters {
-    /** String Param. */
+    /**
+     * String Param.
+     */
     stringParam: string;
-    /** Boolean Param. */
+    /**
+     * Boolean Param.
+     */
     booleanParam: boolean;
 }
 /**
@@ -109,7 +137,9 @@ export interface TestFunctionImportMultipleParamsParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportMultipleParams(parameters: TestFunctionImportMultipleParamsParameters): FunctionImportRequestBuilder<TestFunctionImportMultipleParamsParameters, boolean>;
-/** Type of the parameters to be passed to [[createTestComplexType]]. */
+/**
+ * Type of the parameters to be passed to [[createTestComplexType]].
+ */
 export interface CreateTestComplexTypeParameters {
 }
 /**
@@ -119,7 +149,9 @@ export interface CreateTestComplexTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function createTestComplexType(parameters: CreateTestComplexTypeParameters): FunctionImportRequestBuilder<CreateTestComplexTypeParameters, TestComplexType>;
-/** Type of the parameters to be passed to [[fContinue]]. */
+/**
+ * Type of the parameters to be passed to [[fContinue]].
+ */
 export interface FContinueParameters {
 }
 /**

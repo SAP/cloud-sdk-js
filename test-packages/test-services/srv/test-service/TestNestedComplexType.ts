@@ -5,7 +5,9 @@
  */
 import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType, createComplexType, edmToTs } from '@sap-cloud-sdk/core';
 
-/** TestNestedComplexType */
+/**
+ * TestNestedComplexType
+ */
 export interface TestNestedComplexType {
   /**
    * String Property.
@@ -14,7 +16,9 @@ export interface TestNestedComplexType {
   stringProperty?: string;
 }
 
-/** @deprecated since v1.6.0. Use [[TestNestedComplexType.build]] instead. */
+/**
+ * @deprecated since v1.6.0. Use [[TestNestedComplexType.build]] instead.
+ */
 export function createTestNestedComplexType(json: any): TestNestedComplexType {
   return TestNestedComplexType.build(json);
 }

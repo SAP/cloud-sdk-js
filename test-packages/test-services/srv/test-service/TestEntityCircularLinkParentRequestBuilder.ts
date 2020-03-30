@@ -6,7 +6,9 @@
 import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 
-/** Request builder class for operations supported on the [[TestEntityCircularLinkParent]] entity. */
+/**
+ * Request builder class for operations supported on the [[TestEntityCircularLinkParent]] entity.
+ */
 export class TestEntityCircularLinkParentRequestBuilder extends RequestBuilder<TestEntityCircularLinkParent> {
   /**
    * Returns a request builder for retrieving one `TestEntityCircularLinkParent` entity based on its keys.

@@ -6,7 +6,9 @@
 import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingElse';
 
-/** Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity. */
+/**
+ * Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity.
+ */
 export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilder<TestEntityEndsWithSomethingElse> {
   /**
    * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.

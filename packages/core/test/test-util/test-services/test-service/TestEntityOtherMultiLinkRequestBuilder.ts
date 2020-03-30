@@ -6,7 +6,9 @@
 import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '../../../../src';
 import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 
-/** Request builder class for operations supported on the [[TestEntityOtherMultiLink]] entity. */
+/**
+ * Request builder class for operations supported on the [[TestEntityOtherMultiLink]] entity.
+ */
 export class TestEntityOtherMultiLinkRequestBuilder extends RequestBuilder<TestEntityOtherMultiLink> {
   /**
    * Returns a request builder for retrieving one `TestEntityOtherMultiLink` entity based on its keys.

@@ -31,7 +31,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var MultiSchemaTestEntityRequestBuilder_1 = require("./MultiSchemaTestEntityRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
-/** This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA". */
+/**
+ * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
+ */
 var MultiSchemaTestEntity = /** @class */ (function (_super) {
     __extends(MultiSchemaTestEntity, _super);
     function MultiSchemaTestEntity() {
@@ -66,14 +68,18 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
     MultiSchemaTestEntity.prototype.toJSON = function () {
         return __assign(__assign({}, this), this._customFields);
     };
-    /** Technical entity name for MultiSchemaTestEntity. */
+    /**
+     * Technical entity name for MultiSchemaTestEntity.
+     */
     MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for MultiSchemaTestEntity.
      */
     MultiSchemaTestEntity._serviceName = 'SCHEMA_DATA';
-    /** Default url path for the according service. */
+    /**
+     * Default url path for the according service.
+     */
     MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
     return MultiSchemaTestEntity;
 }(core_1.Entity));
@@ -84,15 +90,23 @@ exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     MultiSchemaTestEntity.KEY_PROPERTY = new core_1.StringField('KeyProperty', MultiSchemaTestEntity, 'Edm.String');
-    /** All fields of the MultiSchemaTestEntity entity. */
+    /**
+     * All fields of the MultiSchemaTestEntity entity.
+     */
     MultiSchemaTestEntity._allFields = [
         MultiSchemaTestEntity.KEY_PROPERTY
     ];
-    /** All fields selector. */
+    /**
+     * All fields selector.
+     */
     MultiSchemaTestEntity.ALL_FIELDS = new core_1.AllFields('*', MultiSchemaTestEntity);
-    /** All key fields of the MultiSchemaTestEntity entity. */
+    /**
+     * All key fields of the MultiSchemaTestEntity entity.
+     */
     MultiSchemaTestEntity._keyFields = [MultiSchemaTestEntity.KEY_PROPERTY];
-    /** Mapping of all key field names to the respective static field property MultiSchemaTestEntity. */
+    /**
+     * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
+     */
     MultiSchemaTestEntity._keys = MultiSchemaTestEntity._keyFields.reduce(function (acc, field) {
         acc[field._fieldName] = field;
         return acc;

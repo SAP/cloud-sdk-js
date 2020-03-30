@@ -1,15 +1,21 @@
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
 import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '@sap-cloud-sdk/core';
-/** This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV". */
+/**
+ * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
+ */
 export declare class TestEntityLvl2MultiLink extends Entity implements TestEntityLvl2MultiLinkType {
-    /** Technical entity name for TestEntityLvl2MultiLink. */
+    /**
+     * Technical entity name for TestEntityLvl2MultiLink.
+     */
     static _entityName: string;
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntityLvl2MultiLink.
      */
     static _serviceName: string;
-    /** Default url path for the according service. */
+    /**
+     * Default url path for the according service.
+     */
     static _defaultServicePath: string;
     /**
      * Key Property.
@@ -101,13 +107,21 @@ export declare namespace TestEntityLvl2MultiLink {
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     const INT_16_PROPERTY: NumberField<TestEntityLvl2MultiLink>;
-    /** All fields of the TestEntityLvl2MultiLink entity. */
+    /**
+     * All fields of the TestEntityLvl2MultiLink entity.
+     */
     const _allFields: Array<StringField<TestEntityLvl2MultiLink> | BooleanField<TestEntityLvl2MultiLink> | NumberField<TestEntityLvl2MultiLink>>;
-    /** All fields selector. */
+    /**
+     * All fields selector.
+     */
     const ALL_FIELDS: AllFields<TestEntityLvl2MultiLink>;
-    /** All key fields of the TestEntityLvl2MultiLink entity. */
+    /**
+     * All key fields of the TestEntityLvl2MultiLink entity.
+     */
     const _keyFields: Array<Selectable<TestEntityLvl2MultiLink>>;
-    /** Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink. */
+    /**
+     * Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink.
+     */
     const _keys: {
         [keys: string]: Selectable<TestEntityLvl2MultiLink>;
     };

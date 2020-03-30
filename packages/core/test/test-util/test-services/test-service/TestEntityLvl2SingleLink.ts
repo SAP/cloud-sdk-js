@@ -6,16 +6,22 @@
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
 import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '../../../../src';
 
-/** This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV". */
+/**
+ * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
+ */
 export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2SingleLinkType {
-  /** Technical entity name for TestEntityLvl2SingleLink. */
+  /**
+   * Technical entity name for TestEntityLvl2SingleLink.
+   */
   static _entityName = 'A_TestEntityLvl2SingleLink';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntityLvl2SingleLink.
    */
   static _serviceName = 'API_TEST_SRV';
-  /** Default url path for the according service. */
+  /**
+   * Default url path for the according service.
+   */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * Key Property.
@@ -120,7 +126,9 @@ export namespace TestEntityLvl2SingleLink {
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const INT_16_PROPERTY: NumberField<TestEntityLvl2SingleLink> = new NumberField('Int16Property', TestEntityLvl2SingleLink, 'Edm.Int16');
-  /** All fields of the TestEntityLvl2SingleLink entity. */
+  /**
+   * All fields of the TestEntityLvl2SingleLink entity.
+   */
   export const _allFields: Array<StringField<TestEntityLvl2SingleLink> | BooleanField<TestEntityLvl2SingleLink> | NumberField<TestEntityLvl2SingleLink>> = [
     TestEntityLvl2SingleLink.KEY_PROPERTY,
     TestEntityLvl2SingleLink.STRING_PROPERTY,
@@ -128,11 +136,17 @@ export namespace TestEntityLvl2SingleLink {
     TestEntityLvl2SingleLink.GUID_PROPERTY,
     TestEntityLvl2SingleLink.INT_16_PROPERTY
   ];
-  /** All fields selector. */
+  /**
+   * All fields selector.
+   */
   export const ALL_FIELDS: AllFields<TestEntityLvl2SingleLink> = new AllFields('*', TestEntityLvl2SingleLink);
-  /** All key fields of the TestEntityLvl2SingleLink entity. */
+  /**
+   * All key fields of the TestEntityLvl2SingleLink entity.
+   */
   export const _keyFields: Array<Selectable<TestEntityLvl2SingleLink>> = [TestEntityLvl2SingleLink.KEY_PROPERTY];
-  /** Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink. */
+  /**
+   * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
+   */
   export const _keys: { [keys: string]: Selectable<TestEntityLvl2SingleLink> } = TestEntityLvl2SingleLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityLvl2SingleLink> }, field: Selectable<TestEntityLvl2SingleLink>) => {
     acc[field._fieldName] = field;
     return acc;

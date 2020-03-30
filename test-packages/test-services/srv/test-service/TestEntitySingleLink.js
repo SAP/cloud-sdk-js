@@ -31,7 +31,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var TestEntitySingleLinkRequestBuilder_1 = require("./TestEntitySingleLinkRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
-/** This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV". */
+/**
+ * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
+ */
 var TestEntitySingleLink = /** @class */ (function (_super) {
     __extends(TestEntitySingleLink, _super);
     function TestEntitySingleLink() {
@@ -66,14 +68,18 @@ var TestEntitySingleLink = /** @class */ (function (_super) {
     TestEntitySingleLink.prototype.toJSON = function () {
         return __assign(__assign({}, this), this._customFields);
     };
-    /** Technical entity name for TestEntitySingleLink. */
+    /**
+     * Technical entity name for TestEntitySingleLink.
+     */
     TestEntitySingleLink._entityName = 'A_TestEntitySingleLink';
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntitySingleLink.
      */
     TestEntitySingleLink._serviceName = 'API_TEST_SRV';
-    /** Default url path for the according service. */
+    /**
+     * Default url path for the according service.
+     */
     TestEntitySingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntitySingleLink;
 }(core_1.Entity));
@@ -116,7 +122,9 @@ var TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntitySingleLink.TO_SINGLE_LINK = new core_1.OneToOneLink('to_SingleLink', TestEntitySingleLink, TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink);
-    /** All fields of the TestEntitySingleLink entity. */
+    /**
+     * All fields of the TestEntitySingleLink entity.
+     */
     TestEntitySingleLink._allFields = [
         TestEntitySingleLink.KEY_PROPERTY,
         TestEntitySingleLink.STRING_PROPERTY,
@@ -126,11 +134,17 @@ var TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");
         TestEntitySingleLink.TO_MULTI_LINK,
         TestEntitySingleLink.TO_SINGLE_LINK
     ];
-    /** All fields selector. */
+    /**
+     * All fields selector.
+     */
     TestEntitySingleLink.ALL_FIELDS = new core_1.AllFields('*', TestEntitySingleLink);
-    /** All key fields of the TestEntitySingleLink entity. */
+    /**
+     * All key fields of the TestEntitySingleLink entity.
+     */
     TestEntitySingleLink._keyFields = [TestEntitySingleLink.KEY_PROPERTY];
-    /** Mapping of all key field names to the respective static field property TestEntitySingleLink. */
+    /**
+     * Mapping of all key field names to the respective static field property TestEntitySingleLink.
+     */
     TestEntitySingleLink._keys = TestEntitySingleLink._keyFields.reduce(function (acc, field) {
         acc[field._fieldName] = field;
         return acc;

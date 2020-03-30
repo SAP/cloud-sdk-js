@@ -1,15 +1,21 @@
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
 import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField } from '@sap-cloud-sdk/core';
-/** This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV". */
+/**
+ * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
+ */
 export declare class TestEntitySingleLink extends Entity implements TestEntitySingleLinkType {
-    /** Technical entity name for TestEntitySingleLink. */
+    /**
+     * Technical entity name for TestEntitySingleLink.
+     */
     static _entityName: string;
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntitySingleLink.
      */
     static _serviceName: string;
-    /** Default url path for the according service. */
+    /**
+     * Default url path for the according service.
+     */
     static _defaultServicePath: string;
     /**
      * Key Property.
@@ -37,9 +43,13 @@ export declare class TestEntitySingleLink extends Entity implements TestEntitySi
      * @nullable
      */
     int16Property?: number;
-    /** One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity. */
+    /**
+     * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
+     */
     toMultiLink: TestEntityLvl2MultiLink[];
-    /** One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity. */
+    /**
+     * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
+     */
     toSingleLink: TestEntityLvl2SingleLink;
     /**
      * Returns an entity builder to construct instances `TestEntitySingleLink`.
@@ -121,13 +131,21 @@ export declare namespace TestEntitySingleLink {
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     const TO_SINGLE_LINK: OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>;
-    /** All fields of the TestEntitySingleLink entity. */
+    /**
+     * All fields of the TestEntitySingleLink entity.
+     */
     const _allFields: Array<StringField<TestEntitySingleLink> | BooleanField<TestEntitySingleLink> | NumberField<TestEntitySingleLink> | Link<TestEntitySingleLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>>;
-    /** All fields selector. */
+    /**
+     * All fields selector.
+     */
     const ALL_FIELDS: AllFields<TestEntitySingleLink>;
-    /** All key fields of the TestEntitySingleLink entity. */
+    /**
+     * All key fields of the TestEntitySingleLink entity.
+     */
     const _keyFields: Array<Selectable<TestEntitySingleLink>>;
-    /** Mapping of all key field names to the respective static field property TestEntitySingleLink. */
+    /**
+     * Mapping of all key field names to the respective static field property TestEntitySingleLink.
+     */
     const _keys: {
         [keys: string]: Selectable<TestEntitySingleLink>;
     };

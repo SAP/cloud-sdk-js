@@ -2,7 +2,9 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
 import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, Entity, FieldType, Time } from '@sap-cloud-sdk/core';
-/** TestComplexType */
+/**
+ * TestComplexType
+ */
 export interface TestComplexType {
     /**
      * String Property.
@@ -85,7 +87,9 @@ export interface TestComplexType {
      */
     complexTypeProperty?: TestNestedComplexType;
 }
-/** @deprecated since v1.6.0. Use [[TestComplexType.build]] instead. */
+/**
+ * @deprecated since v1.6.0. Use [[TestComplexType.build]] instead.
+ */
 export declare function createTestComplexType_1(json: any): TestComplexType;
 /**
  * TestComplexTypeField

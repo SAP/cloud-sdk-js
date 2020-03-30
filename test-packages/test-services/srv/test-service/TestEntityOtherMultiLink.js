@@ -31,7 +31,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var TestEntityOtherMultiLinkRequestBuilder_1 = require("./TestEntityOtherMultiLinkRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
-/** This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV". */
+/**
+ * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
+ */
 var TestEntityOtherMultiLink = /** @class */ (function (_super) {
     __extends(TestEntityOtherMultiLink, _super);
     function TestEntityOtherMultiLink() {
@@ -66,14 +68,18 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
     TestEntityOtherMultiLink.prototype.toJSON = function () {
         return __assign(__assign({}, this), this._customFields);
     };
-    /** Technical entity name for TestEntityOtherMultiLink. */
+    /**
+     * Technical entity name for TestEntityOtherMultiLink.
+     */
     TestEntityOtherMultiLink._entityName = 'A_TestEntityOtherMultiLink';
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntityOtherMultiLink.
      */
     TestEntityOtherMultiLink._serviceName = 'API_TEST_SRV';
-    /** Default url path for the according service. */
+    /**
+     * Default url path for the according service.
+     */
     TestEntityOtherMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityOtherMultiLink;
 }(core_1.Entity));
@@ -84,15 +90,23 @@ exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntityOtherMultiLink.KEY_PROPERTY_STRING = new core_1.StringField('KeyPropertyString', TestEntityOtherMultiLink, 'Edm.String');
-    /** All fields of the TestEntityOtherMultiLink entity. */
+    /**
+     * All fields of the TestEntityOtherMultiLink entity.
+     */
     TestEntityOtherMultiLink._allFields = [
         TestEntityOtherMultiLink.KEY_PROPERTY_STRING
     ];
-    /** All fields selector. */
+    /**
+     * All fields selector.
+     */
     TestEntityOtherMultiLink.ALL_FIELDS = new core_1.AllFields('*', TestEntityOtherMultiLink);
-    /** All key fields of the TestEntityOtherMultiLink entity. */
+    /**
+     * All key fields of the TestEntityOtherMultiLink entity.
+     */
     TestEntityOtherMultiLink._keyFields = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
-    /** Mapping of all key field names to the respective static field property TestEntityOtherMultiLink. */
+    /**
+     * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
+     */
     TestEntityOtherMultiLink._keys = TestEntityOtherMultiLink._keyFields.reduce(function (acc, field) {
         acc[field._fieldName] = field;
         return acc;

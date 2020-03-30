@@ -6,16 +6,22 @@
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
 import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '@sap-cloud-sdk/core';
 
-/** This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV". */
+/**
+ * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
+ */
 export class TestEntityLvl2MultiLink extends Entity implements TestEntityLvl2MultiLinkType {
-  /** Technical entity name for TestEntityLvl2MultiLink. */
+  /**
+   * Technical entity name for TestEntityLvl2MultiLink.
+   */
   static _entityName = 'A_TestEntityLvl2MultiLink';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntityLvl2MultiLink.
    */
   static _serviceName = 'API_TEST_SRV';
-  /** Default url path for the according service. */
+  /**
+   * Default url path for the according service.
+   */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * Key Property.
@@ -120,7 +126,9 @@ export namespace TestEntityLvl2MultiLink {
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const INT_16_PROPERTY: NumberField<TestEntityLvl2MultiLink> = new NumberField('Int16Property', TestEntityLvl2MultiLink, 'Edm.Int16');
-  /** All fields of the TestEntityLvl2MultiLink entity. */
+  /**
+   * All fields of the TestEntityLvl2MultiLink entity.
+   */
   export const _allFields: Array<StringField<TestEntityLvl2MultiLink> | BooleanField<TestEntityLvl2MultiLink> | NumberField<TestEntityLvl2MultiLink>> = [
     TestEntityLvl2MultiLink.KEY_PROPERTY,
     TestEntityLvl2MultiLink.STRING_PROPERTY,
@@ -128,11 +136,17 @@ export namespace TestEntityLvl2MultiLink {
     TestEntityLvl2MultiLink.GUID_PROPERTY,
     TestEntityLvl2MultiLink.INT_16_PROPERTY
   ];
-  /** All fields selector. */
+  /**
+   * All fields selector.
+   */
   export const ALL_FIELDS: AllFields<TestEntityLvl2MultiLink> = new AllFields('*', TestEntityLvl2MultiLink);
-  /** All key fields of the TestEntityLvl2MultiLink entity. */
+  /**
+   * All key fields of the TestEntityLvl2MultiLink entity.
+   */
   export const _keyFields: Array<Selectable<TestEntityLvl2MultiLink>> = [TestEntityLvl2MultiLink.KEY_PROPERTY];
-  /** Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink. */
+  /**
+   * Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink.
+   */
   export const _keys: { [keys: string]: Selectable<TestEntityLvl2MultiLink> } = TestEntityLvl2MultiLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityLvl2MultiLink> }, field: Selectable<TestEntityLvl2MultiLink>) => {
     acc[field._fieldName] = field;
     return acc;

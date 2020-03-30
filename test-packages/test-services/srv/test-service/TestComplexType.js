@@ -15,7 +15,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var TestNestedComplexType_1 = require("./TestNestedComplexType");
 var core_1 = require("@sap-cloud-sdk/core");
-/** @deprecated since v1.6.0. Use [[TestComplexType.build]] instead. */
+/**
+ * @deprecated since v1.6.0. Use [[TestComplexType.build]] instead.
+ */
 function createTestComplexType_1(json) {
     return TestComplexType.build(json);
 }

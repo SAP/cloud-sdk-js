@@ -6,7 +6,9 @@
 import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 
-/** Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity. */
+/**
+ * Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity.
+ */
 export class MultiSchemaTestEntityRequestBuilder extends RequestBuilder<MultiSchemaTestEntity> {
   /**
    * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.

@@ -1,17 +1,25 @@
 import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
 import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '@sap-cloud-sdk/core';
-/** This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV". */
+/**
+ * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
+ */
 export declare class TestEntityOtherMultiLink extends Entity implements TestEntityOtherMultiLinkType {
-    /** Technical entity name for TestEntityOtherMultiLink. */
+    /**
+     * Technical entity name for TestEntityOtherMultiLink.
+     */
     static _entityName: string;
     /**
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for TestEntityOtherMultiLink.
      */
     static _serviceName: string;
-    /** Default url path for the according service. */
+    /**
+     * Default url path for the according service.
+     */
     static _defaultServicePath: string;
-    /** Key Property String. */
+    /**
+     * Key Property String.
+     */
     keyPropertyString: string;
     /**
      * Returns an entity builder to construct instances `TestEntityOtherMultiLink`.
@@ -49,13 +57,21 @@ export declare namespace TestEntityOtherMultiLink {
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     const KEY_PROPERTY_STRING: StringField<TestEntityOtherMultiLink>;
-    /** All fields of the TestEntityOtherMultiLink entity. */
+    /**
+     * All fields of the TestEntityOtherMultiLink entity.
+     */
     const _allFields: Array<StringField<TestEntityOtherMultiLink>>;
-    /** All fields selector. */
+    /**
+     * All fields selector.
+     */
     const ALL_FIELDS: AllFields<TestEntityOtherMultiLink>;
-    /** All key fields of the TestEntityOtherMultiLink entity. */
+    /**
+     * All key fields of the TestEntityOtherMultiLink entity.
+     */
     const _keyFields: Array<Selectable<TestEntityOtherMultiLink>>;
-    /** Mapping of all key field names to the respective static field property TestEntityOtherMultiLink. */
+    /**
+     * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
+     */
     const _keys: {
         [keys: string]: Selectable<TestEntityOtherMultiLink>;
     };

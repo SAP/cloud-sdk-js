@@ -20,7 +20,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@sap-cloud-sdk/core");
 var TestEntityLvl2MultiLink_1 = require("./TestEntityLvl2MultiLink");
-/** Request builder class for operations supported on the [[TestEntityLvl2MultiLink]] entity. */
+/**
+ * Request builder class for operations supported on the [[TestEntityLvl2MultiLink]] entity.
+ */
 var TestEntityLvl2MultiLinkRequestBuilder = /** @class */ (function (_super) {
     __extends(TestEntityLvl2MultiLinkRequestBuilder, _super);
     function TestEntityLvl2MultiLinkRequestBuilder() {

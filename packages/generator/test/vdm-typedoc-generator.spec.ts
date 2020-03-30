@@ -67,7 +67,7 @@ describe('typedoc', () => {
       ],
       returns: { type: 'string', description: returnDescription }
     });
-    const expected = `\nfunction description\n@param ${paramName} ${paramDescription}\n@returns ${returnDescription}`;
+    const expected = `function description\n@param ${paramName} ${paramDescription}\n@returns ${returnDescription}`;
     expect(actual).toBe(expected);
   });
 

@@ -37,7 +37,7 @@ export function getFunctionDoc(
       description += tagToText('returns', `${tags.returns.description}`);
     }
   }
-  return addLeadingNewline(description);
+  return description;
 }
 
 export function getComplexTypeFieldDescription(

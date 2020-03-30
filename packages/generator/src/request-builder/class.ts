@@ -8,7 +8,11 @@ import {
   ParameterDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { getFunctionDoc, getRequestBuilderDescription } from '../typedoc';
+import {
+  addLeadingNewline,
+  getFunctionDoc,
+  getRequestBuilderDescription
+} from '../typedoc';
 import { VdmEntity } from '../vdm-types';
 
 export function requestBuilderClass(
@@ -20,7 +24,7 @@ export function requestBuilderClass(
     isExported: true,
     extends: `RequestBuilder<${entity.className}>`,
     methods: requestBuilderMethods(entity),
-    docs: [getRequestBuilderDescription(entity)]
+    docs: [addLeadingNewline(getRequestBuilderDescription(entity))]
   };
 }
 

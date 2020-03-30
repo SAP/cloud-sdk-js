@@ -5,7 +5,7 @@ import {
   PropertySignatureStructure,
   StructureKind
 } from 'ts-morph';
-import { getPropertyDescription, makeBlockComment } from '../typedoc';
+import { getPropertyDescription, addLeadingNewline } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 
 export function complexTypeInterface(
@@ -16,7 +16,7 @@ export function complexTypeInterface(
     name: complexType.typeName,
     isExported: true,
     properties: properties(complexType),
-    docs: [makeBlockComment(complexType.typeName)]
+    docs: [addLeadingNewline(complexType.typeName)]
   };
 }
 
@@ -31,10 +31,12 @@ function property(prop: VdmProperty): PropertySignatureStructure {
     type: prop.jsType,
     hasQuestionToken: prop.nullable,
     docs: [
-      getPropertyDescription(prop, {
-        nullable: prop.nullable,
-        maxLength: prop.maxLength
-      })
+      addLeadingNewline(
+        getPropertyDescription(prop, {
+          nullable: prop.nullable,
+          maxLength: prop.maxLength
+        })
+      )
     ]
   };
 }

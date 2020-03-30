@@ -35,7 +35,7 @@ describe('typedoc', () => {
       staticPropertyName: 'ONE_PROPERTY_NAME',
       propertyNameAsParam: 'onePropertyName'
     };
-    expect(getPropertyDescription(property)).toBe('\nOne Property Name.');
+    expect(getPropertyDescription(property)).toBe('One Property Name.');
   });
 
   it('get navigation property description', () => {
@@ -52,7 +52,7 @@ describe('typedoc', () => {
     };
 
     expect(getNavPropertyDescription(navProp)).toBe(
-      '\nOne-to-many navigation property to the [[OtherEntity]] entity.'
+      'One-to-many navigation property to the [[OtherEntity]] entity.'
     );
   });
 
@@ -84,7 +84,7 @@ describe('typedoc', () => {
       propertyNameAsParam: 'onePropertyName'
     };
     expect(getPropertyDescription(property, { nullable: true })).toBe(
-      '\nProperty Description\n@nullable'
+      'Property Description\n@nullable'
     );
   });
 });

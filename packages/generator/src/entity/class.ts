@@ -12,7 +12,7 @@ import {
   getFunctionDoc,
   getNavPropertyDescription,
   getPropertyDescription,
-  makeBlockComment
+  addLeadingNewline
 } from '../typedoc';
 import {
   VdmEntity,
@@ -37,7 +37,7 @@ export function entityClass(
     ],
     methods: methods(entity),
     isExported: true,
-    docs: [getEntityDescription(entity, service)]
+    docs: [addLeadingNewline(getEntityDescription(entity, service))]
   };
 }
 
@@ -58,7 +58,7 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
     name: prependPrefix('entityName'),
     isStatic: true,
     initializer: `\'${entity.entitySetName}\'`,
-    docs: [makeBlockComment(`Technical entity name for ${entity.className}.`)]
+    docs: [addLeadingNewline(`Technical entity name for ${entity.className}.`)]
   };
 }
 
@@ -87,7 +87,7 @@ function defaultServicePath(
     name: prependPrefix('defaultServicePath'),
     isStatic: true,
     initializer: `\'${service.servicePath}\'`,
-    docs: [makeBlockComment('Default url path for the according service.')]
+    docs: [addLeadingNewline('Default url path for the according service.')]
   };
 }
 
@@ -101,10 +101,12 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
     type: prop.jsType,
     docs: [
-      getPropertyDescription(prop, {
-        nullable: prop.nullable,
-        maxLength: prop.maxLength
-      })
+      addLeadingNewline(
+        getPropertyDescription(prop, {
+          nullable: prop.nullable,
+          maxLength: prop.maxLength
+        })
+      )
     ]
   };
 }
@@ -134,7 +136,7 @@ function navProperty(
     kind: StructureKind.Property,
     name: navProp.instancePropertyName + '!',
     type: entity.className + (navProp.isMultiLink ? '[]' : ''),
-    docs: [getNavPropertyDescription(navProp)]
+    docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
   };
 }
 

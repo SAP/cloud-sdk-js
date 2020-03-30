@@ -2,7 +2,7 @@
 
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmComplexType } from '../vdm-types';
-import { makeBlockComment } from '../typedoc';
+import { addLeadingNewline } from '../typedoc';
 
 export function builderFunction(
   complexType: VdmComplexType
@@ -20,7 +20,7 @@ export function builderFunction(
     returnType: complexType.typeName,
     statements: `return ${complexType.typeName}.build(json);`,
     docs: [
-      makeBlockComment(
+      addLeadingNewline(
         `@deprecated since v1.6.0. Use [[${complexType.typeName}.build]] instead.`
       )
     ]

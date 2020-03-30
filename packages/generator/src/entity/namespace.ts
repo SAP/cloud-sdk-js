@@ -12,7 +12,7 @@ import { prependPrefix } from '../internal-prefix';
 import {
   getStaticNavPropertyDescription,
   getStaticPropertyDescription,
-  makeBlockComment
+  addLeadingNewline
 } from '../typedoc';
 import {
   VdmEntity,
@@ -142,7 +142,7 @@ function allFields(entity: VdmEntity): VariableStatementStructure {
           ]`
       }
     ],
-    docs: [makeBlockComment(`All fields of the ${entity.className} entity.`)],
+    docs: [addLeadingNewline(`All fields of the ${entity.className} entity.`)],
     isExported: true
   };
 }
@@ -158,7 +158,7 @@ function allFieldSelector(entity: VdmEntity): VariableStatementStructure {
         initializer: `new AllFields('*', ${entity.className})`
       }
     ],
-    docs: [makeBlockComment('All fields selector.')],
+    docs: [addLeadingNewline('All fields selector.')],
     isExported: true
   };
 }
@@ -180,7 +180,7 @@ function keyFields(entity: VdmEntity): VariableStatementStructure {
       }
     ],
     docs: [
-      makeBlockComment(`All key fields of the ${entity.className} entity.`)
+      addLeadingNewline(`All key fields of the ${entity.className} entity.`)
     ],
     isExported: true
   };
@@ -205,7 +205,7 @@ function keys(entity: VdmEntity): VariableStatementStructure {
       }
     ],
     docs: [
-      makeBlockComment(
+      addLeadingNewline(
         `Mapping of all key field names to the respective static field property ${entity.className}.`
       )
     ],

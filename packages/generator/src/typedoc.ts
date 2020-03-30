@@ -37,7 +37,7 @@ export function getFunctionDoc(
       description += tagToText('returns', `${tags.returns.description}`);
     }
   }
-  return makeBlockComment(description);
+  return addLeadingNewline(description);
 }
 
 export function getComplexTypeFieldDescription(
@@ -50,16 +50,19 @@ export function getPropertyDescription(
   property: VdmProperty,
   constraints: VdmPropertyValueConstraints = { nullable: false }
 ): string {
-  return makeBlockComment(
-    addConstraints(
-      property.description ||
-        endWithDot(toTitleFormat(property.instancePropertyName).trim()),
-      constraints
-    )
+  return addConstraints(
+    property.description ||
+      endWithDot(toTitleFormat(property.instancePropertyName).trim()),
+    constraints
   );
 }
 
-export function makeBlockComment(documentation: string): string {
+/**
+ * Adds a leading \n to a documentation string so that the ts-morph makes a block comment out of it.
+ * @param documentation text.
+ * @returns documentation text with leading \n.
+ */
+export function addLeadingNewline(documentation: string): string {
   if (!documentation.startsWith('\n')) {
     return '\n' + documentation;
   }
@@ -69,13 +72,11 @@ export function makeBlockComment(documentation: string): string {
 export function getNavPropertyDescription(
   property: VdmNavigationProperty
 ): string {
-  return makeBlockComment(
-    `${
-      property.isMultiLink ? 'One-to-many' : 'One-to-one'
-    } navigation property to the [[${
-      property.toEntityClassName
-    }]] entity.`.trim()
-  );
+  return `${
+    property.isMultiLink ? 'One-to-many' : 'One-to-one'
+  } navigation property to the [[${
+    property.toEntityClassName
+  }]] entity.`.trim();
 }
 
 export function getComplexTypePropertyDescription(
@@ -122,22 +123,14 @@ export function getEntityDescription(
 }
 
 const entityDescription = (entitySetName: string, speakingModuleName: string) =>
-  makeBlockComment(
-    `This class represents the entity "${entitySetName}" of service "${speakingModuleName}".`
-  );
-
+  `This class represents the entity "${entitySetName}" of service "${speakingModuleName}".`;
 const seeForMoreInformation = (url: string) =>
   `See ${url} for more information.`;
 
 const partOfCommunicationScenarios = (communicationScenarios: string) =>
-  makeBlockComment(
-    `This service is part of the following communication scenarios: ${communicationScenarios}.`
-  );
-
+  `This service is part of the following communication scenarios: ${communicationScenarios}.`;
 export function getRequestBuilderDescription(entity: VdmEntity) {
-  return makeBlockComment(
-    `Request builder class for operations supported on the [[${entity.className}]] entity.`
-  );
+  return `Request builder class for operations supported on the [[${entity.className}]] entity.`;
 }
 
 export function getLookupDescription(service: VdmServiceMetadata) {

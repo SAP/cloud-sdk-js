@@ -31,7 +31,6 @@ export class CreateRequestBuilder<EntityT extends Entity>
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-
     readonly _entity: EntityT
   ) {
     super(new ODataCreateRequestConfig(_entityConstructor));

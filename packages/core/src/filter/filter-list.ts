@@ -16,6 +16,8 @@ export class FilterList<EntityT extends Entity>
    */
   readonly _entityConstructor: Constructable<EntityT>;
 
+  readonly _entity;
+
   /**
    * Creates an instance of FilterList.
    *

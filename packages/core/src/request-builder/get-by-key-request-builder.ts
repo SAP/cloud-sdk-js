@@ -24,6 +24,8 @@ import { ODataGetByKeyRequestConfig } from './request/odata-get-by-key-request-c
 export class GetByKeyRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
+  readonly _entity: EntityT;
+
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    *

@@ -27,11 +27,12 @@ export class CreateRequestBuilder<EntityT extends Entity>
    * Creates an instance of CreateRequestBuilder.
    *
    * @param _entityConstructor - Constructor type of the entity to be created
-   * @param entity - Entity to be created
+   * @param _entity - Entity to be created
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly entity: EntityT
+
+    readonly _entity: EntityT
   ) {
     super(new ODataCreateRequestConfig(_entityConstructor));
   }
@@ -43,7 +44,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
    */
   prepare(): this {
     this.requestConfig.payload = serializeEntity(
-      this.entity,
+      this._entity,
       this._entityConstructor
     );
     return this;

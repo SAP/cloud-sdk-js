@@ -265,6 +265,7 @@ export class Entity {
  */
 export interface EntityIdentifiable<T extends Entity> {
   readonly _entityConstructor: Constructable<T>;
+  readonly _entity: T;
 }
 
 /* eslint-disable valid-jsdoc */

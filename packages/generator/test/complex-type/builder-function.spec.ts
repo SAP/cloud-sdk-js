@@ -13,7 +13,9 @@ describe('builder-function', () => {
       parameters: [{ name: 'json', type: 'any' }],
       returnType: 'ComplexMealType',
       statements: 'return ComplexMealType.build(json);',
-      docs: ['\n@deprecated since v1.6.0. Use [[ComplexMealType.build]] instead.']
+      docs: [
+        '\n@deprecated since v1.6.0. Use [[ComplexMealType.build]] instead.'
+      ]
     });
   });
 

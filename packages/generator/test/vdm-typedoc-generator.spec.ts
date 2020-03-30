@@ -10,7 +10,7 @@ describe('typedoc', () => {
   it('get normal property description', () => {
     const property: VdmProperty = {
       originalName: 'OnePropertyName',
-      description: 'entity info',
+      description: '\n  entity info',
       jsType: 'string',
       edmType: 'Edm:String',
       nullable: true,

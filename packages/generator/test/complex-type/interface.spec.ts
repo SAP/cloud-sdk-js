@@ -16,17 +16,17 @@ describe('interface', () => {
           name: 'complexity',
           type: 'string',
           hasQuestionToken: false,
-          docs: ['something something very good']
+          docs: ['\nsomething something very good']
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: 'number',
           hasQuestionToken: false,
-          docs: ['something something very much']
+          docs: ['\nsomething something very much']
         }
       ],
-      docs: ['ComplexMealType']
+      docs: ['\nComplexMealType']
     });
   });
 
@@ -42,17 +42,17 @@ describe('interface', () => {
           name: 'complexDesert',
           type: 'ComplexDesert',
           hasQuestionToken: false,
-          docs: ['the desert']
+          docs: ['\nthe desert']
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: 'number',
           hasQuestionToken: false,
-          docs: ['something something very much']
+          docs: ['\nsomething something very much']
         }
       ],
-      docs: ['ComplexMealWithDesertType']
+      docs: ['\nComplexMealWithDesertType']
     });
   });
 });

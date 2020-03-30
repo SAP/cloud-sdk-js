@@ -10,7 +10,7 @@ describe('typedoc', () => {
   it('get normal property description', () => {
     const property: VdmProperty = {
       originalName: 'OnePropertyName',
-      description: 'entity info',
+      description: '\n  entity info',
       jsType: 'string',
       edmType: 'Edm:String',
       nullable: true,
@@ -35,7 +35,7 @@ describe('typedoc', () => {
       staticPropertyName: 'ONE_PROPERTY_NAME',
       propertyNameAsParam: 'onePropertyName'
     };
-    expect(getPropertyDescription(property)).toBe('One Property Name.');
+    expect(getPropertyDescription(property)).toBe('\nOne Property Name.');
   });
 
   it('get navigation property description', () => {
@@ -52,7 +52,7 @@ describe('typedoc', () => {
     };
 
     expect(getNavPropertyDescription(navProp)).toBe(
-      'One-to-many navigation property to the [[OtherEntity]] entity.'
+      '\nOne-to-many navigation property to the [[OtherEntity]] entity.'
     );
   });
 
@@ -67,7 +67,7 @@ describe('typedoc', () => {
       ],
       returns: { type: 'string', description: returnDescription }
     });
-    const expected = `function description\n@param ${paramName} ${paramDescription}\n@returns ${returnDescription}`;
+    const expected = `\nfunction description\n@param ${paramName} ${paramDescription}\n@returns ${returnDescription}`;
     expect(actual).toBe(expected);
   });
 
@@ -84,7 +84,7 @@ describe('typedoc', () => {
       propertyNameAsParam: 'onePropertyName'
     };
     expect(getPropertyDescription(property, { nullable: true })).toBe(
-      'Property Description\n@nullable'
+      '\nProperty Description\n@nullable'
     );
   });
 });

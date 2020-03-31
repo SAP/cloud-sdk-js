@@ -36,6 +36,10 @@ export class CreateRequestBuilder<EntityT extends Entity>
     super(new ODataCreateRequestConfig(_entityConstructor));
   }
 
+  get entity():EntityT{
+    return this._entity;
+  }
+
   /**
    * Builds the payload of the query.
    *

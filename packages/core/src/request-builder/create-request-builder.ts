@@ -36,7 +36,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     super(new ODataCreateRequestConfig(_entityConstructor));
   }
 
-  get entity():EntityT{
+  get entity(): EntityT {
     return this._entity;
   }
 

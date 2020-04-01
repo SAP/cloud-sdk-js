@@ -1,6 +1,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+var compareVersions = require('compare-versions');
 
 const isDirectory = path => fs.lstatSync(path).isDirectory();
 const flatten = arr => arr.reduce((prev, curr) => (curr instanceof Array ? [...prev, ...flatten(curr)] : [...prev, curr]), []);
@@ -69,7 +70,7 @@ function removeUnderlinePrefixFromFileName(path){
   const newPath = path.replace(/_.*.html/gi, function (x) {
     return x.substring(1)
   });
-  fs.rename(path, newPath, ()=>{});
+  fs.renameSync(path, newPath, ()=>{});
 }
 
 const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
@@ -108,12 +109,45 @@ function moveDocs(version){
   return `mv -v documentation/* docs/api/${version}`;
 }
 
-function updateIndex(){
-  const indexPath  = './docs/api/index.md';
-  const originalData = fs.readFileSync(indexPath, 'utf8');
-  const newLine = `\n- [Version ${version}](${version})`;
-  const newData = originalData + newLine;
-  fs.writeFileSync(indexPath, newData, 'utf8');
+const apiDocPath = 'docs/api/'
+
+function getSortedApiVersions(){
+  return fs.readdirSync('./docs/api/').filter(element=>fs.lstatSync(path.resolve(apiDocPath,element)).isDirectory()).sort(compareVersions).reverse();
+}
+
+function getLatestVesrion(){
+  return getSortedApiVersions()[0];
+}
+
+function createIndex(){
+  const indexHeader = '# API Documentation';
+  const apiVersions = getSortedApiVersions();
+
+  const indexContent = indexHeader + '\n' + apiVersions.map(directories => `\n- [Version ${directories}](${directories})`)
+  fs.writeFileSync(path.resolve(apiDocPath,'index.md'), indexContent, 'utf8');
+}
+
+function createRedirectFile(){
+  let latestContent = '<!DOCTYPE html>\n' +
+    '<html lang="en">\n' +
+    '<head>\n' +
+    '    <meta http-equiv="refresh" content="0; url=ReplaceWithLatestURL">\n' +
+    '    <style>\n' +
+    '        * {\n' +
+    '            font-family: Helvetica,Arial,sans-serif;\n' +
+    '            color: #333333;\n' +
+    '        }\n' +
+    '    </style>\n' +
+    '</head>\n' +
+    '<body>\n' +
+    '    <p>Click <a href="ReplaceWithLatestURL">here</a> to redirect...</p>\n' +
+    '</body>\n' +
+    '</html>'
+
+  const latestURL = `https://sap.github.io/cloud-sdk/api/${getLatestVesrion()}`
+  latestContent = latestContent.replace(/ReplaceWithLatestURL/g,latestURL)
+
+  fs.writeFileSync(path.resolve(apiDocPath,'latest.html'), latestContent, 'utf8');
 }
 
 function addNewDocs(){
@@ -132,4 +166,5 @@ if (invalidLinks) {
 adjustmentForGitHubPages();
 addCopyrightNotice();
 addNewDocs();
-updateIndex();
+createRedirectFile();
+createIndex();

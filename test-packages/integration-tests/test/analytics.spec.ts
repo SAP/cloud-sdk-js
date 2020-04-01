@@ -5,11 +5,17 @@ import * as analytics from '@sap-cloud-sdk/analytics';
 import nock from 'nock';
 
 describe('usage analytics', () => {
-  const salt = '7e5eb0e845e73b72310436f29252bf4ad0ef3d0d8c0ae189dec3d5ff2531e6a0';
-  const hashedProjectIdentifierWithSalt = 'e2d76b70dcb8ed5fd86e9fadf5052845ae1a0112e99ab96747b03bf78730a7ab';
+  const salt =
+    '7e5eb0e845e73b72310436f29252bf4ad0ef3d0d8c0ae189dec3d5ff2531e6a0';
+  const hashedProjectIdentifierWithSalt =
+    'e2d76b70dcb8ed5fd86e9fadf5052845ae1a0112e99ab96747b03bf78730a7ab';
 
   const rootConfigPath = resolve(
-    __dirname.split(sep).reduce((prev, curr) => (prev.endsWith('integration-tests') ? prev : `${prev}${sep}${curr}`)),
+    __dirname
+      .split(sep)
+      .reduce((prev, curr) =>
+        prev.endsWith('integration-tests') ? prev : `${prev}${sep}${curr}`
+      ),
     'sap-cloud-sdk-analytics.json'
   );
 
@@ -20,8 +26,10 @@ describe('usage analytics', () => {
       node: '10.11.1',
       npm: '6.0.0',
       typescript: 'true',
-      sdk_dependencies: '@sap-cloud-sdk/util@1.7.1, @sap/cloud-sdk-vdm-some-service@1.7.1',
-      third_party_dependencies: 'axios@0.19.0, moment@2.24.0, rambda@1.2.3, typescript@3.4.1'
+      sdk_dependencies:
+        '@sap-cloud-sdk/util@1.7.1, @sap/cloud-sdk-vdm-some-service@1.7.1',
+      third_party_dependencies:
+        'axios@0.19.0, moment@2.24.0, rambda@1.2.3, typescript@3.4.1'
     });
   });
 
@@ -30,7 +38,11 @@ describe('usage analytics', () => {
   });
 
   it('should send usage data if analytics are enabled', async () => {
-    writeFileSync(rootConfigPath, JSON.stringify({ enabled: true, salt }), 'utf8');
+    writeFileSync(
+      rootConfigPath,
+      JSON.stringify({ enabled: true, salt }),
+      'utf8'
+    );
 
     const swaCall = nock('http://example.com')
       .get('/mockedUrl')
@@ -47,10 +59,16 @@ describe('usage analytics', () => {
       )
       .reply(204);
 
-    const options = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };
+    const options = {
+      uri: 'http://example.com/mockedUrl',
+      idsitesub: 'test-jssdk',
+      event_type: 'test_event'
+    };
     const callerPath = '/node_modules'; // Pretend that we are a dependency
 
-    await expect(analytics.performUsageAnalytics(callerPath, options)).resolves.toBeUndefined();
+    await expect(
+      analytics.performUsageAnalytics(callerPath, options)
+    ).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(true);
 
     unlinkSync(rootConfigPath);
@@ -66,10 +84,16 @@ describe('usage analytics', () => {
       )
       .reply(204);
 
-    writeFileSync(rootConfigPath, JSON.stringify({ enabled: false, salt }), 'utf8');
+    writeFileSync(
+      rootConfigPath,
+      JSON.stringify({ enabled: false, salt }),
+      'utf8'
+    );
 
     const callerPath = '/node_modules'; // Pretend that we're a dependency
-    await expect(analytics.performUsageAnalytics(callerPath)).resolves.toBeUndefined();
+    await expect(
+      analytics.performUsageAnalytics(callerPath)
+    ).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
 
     unlinkSync(rootConfigPath);
@@ -86,12 +110,18 @@ describe('usage analytics', () => {
       .reply(204);
 
     const callerPath = '/node_modules'; // Pretend that we're a dependency
-    await expect(analytics.performUsageAnalytics(callerPath)).resolves.toBeUndefined();
+    await expect(
+      analytics.performUsageAnalytics(callerPath)
+    ).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
   });
 
   it('any error in the process should be caught and logged, but otherwise ignored', async () => {
-    writeFileSync(rootConfigPath, JSON.stringify({ enabled: true, salt }), 'utf8');
+    writeFileSync(
+      rootConfigPath,
+      JSON.stringify({ enabled: true, salt }),
+      'utf8'
+    );
 
     const swaCall = nock('http://example.com')
       .get('/mockedUrl')
@@ -108,10 +138,16 @@ describe('usage analytics', () => {
       )
       .reply(500);
 
-    const options = { uri: 'http://example.com/mockedUrl', idsitesub: 'test-jssdk', event_type: 'test_event' };
+    const options = {
+      uri: 'http://example.com/mockedUrl',
+      idsitesub: 'test-jssdk',
+      event_type: 'test_event'
+    };
     const callerPath = '/node_modules'; // Pretend that we are a dependency
 
-    await expect(analytics.performUsageAnalytics(callerPath, options)).resolves.toBeUndefined();
+    await expect(
+      analytics.performUsageAnalytics(callerPath, options)
+    ).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(true);
 
     unlinkSync(rootConfigPath);
@@ -120,7 +156,9 @@ describe('usage analytics', () => {
   it('generateConfig should generate a new config at the given path if none exists', () => {
     analytics.generateConfig(resolve(__dirname));
 
-    const generatedConfig = JSON.parse(readFileSync(resolve(__dirname, 'sap-cloud-sdk-analytics.json'), 'utf8'));
+    const generatedConfig = JSON.parse(
+      readFileSync(resolve(__dirname, 'sap-cloud-sdk-analytics.json'), 'utf8')
+    );
     expect(generatedConfig.enabled).toBe(true);
     expect(generatedConfig.salt).toBeDefined();
 
@@ -144,5 +182,8 @@ describe('usage analytics', () => {
 });
 
 function isSubQuery(query, subQuery) {
-  return Object.entries(subQuery).reduce((isSub, [key, value]) => isSub && query[key] === value, true);
+  return Object.entries(subQuery).reduce(
+    (isSub, [key, value]) => isSub && query[key] === value,
+    true
+  );
 }

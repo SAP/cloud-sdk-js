@@ -20,8 +20,5 @@ export function randomSalt(): string {
  * @hidden
  */
 export function hash(value: string): string {
-  return crypto
-    .createHash('sha256')
-    .update(value)
-    .digest('hex');
+  return crypto.createHash('sha256').update(value).digest('hex');
 }

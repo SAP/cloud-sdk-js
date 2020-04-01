@@ -1,9 +1,22 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { alwaysProvider, clientCredentialsTokenCache, destinationCache, getDestination, IsolationStrategy } from '@sap-cloud-sdk/core';
+import {
+  alwaysProvider,
+  clientCredentialsTokenCache,
+  destinationCache,
+  getDestination,
+  IsolationStrategy
+} from '@sap-cloud-sdk/core';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { mockInstanceDestinationsCall, mockSubaccountDestinationsCall } from '../../../packages/core/test/test-util/destination-service-mocks';
-import { mockDestinationServiceBinding, mockServiceBindings, providerXsuaaUrl } from '../../../packages/core/test/test-util/environment-mocks';
+import {
+  mockInstanceDestinationsCall,
+  mockSubaccountDestinationsCall
+} from '../../../packages/core/test/test-util/destination-service-mocks';
+import {
+  mockDestinationServiceBinding,
+  mockServiceBindings,
+  providerXsuaaUrl
+} from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
 
@@ -49,13 +62,22 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   });
 
   it('getting the same destination twice should produce a cache hit', async () => {
-    await getDestination('FINAL-DESTINATION', { useCache: true, selectionStrategy: alwaysProvider });
-    await getDestination('FINAL-DESTINATION', { useCache: true, selectionStrategy: alwaysProvider });
+    await getDestination('FINAL-DESTINATION', {
+      useCache: true,
+      selectionStrategy: alwaysProvider
+    });
+    await getDestination('FINAL-DESTINATION', {
+      useCache: true,
+      selectionStrategy: alwaysProvider
+    });
   });
 
   it('changing the isolation should produce a cache miss', async () => {
     await getDestination('FINAL-DESTINATION', { useCache: true });
-    const destinationRequest = getDestination('FINAL-DESTINATION', { useCache: true, isolationStrategy: IsolationStrategy.User });
+    const destinationRequest = getDestination('FINAL-DESTINATION', {
+      useCache: true,
+      isolationStrategy: IsolationStrategy.User
+    });
     await expect(destinationRequest).rejects.toThrowErrorMatchingSnapshot();
   });
 });

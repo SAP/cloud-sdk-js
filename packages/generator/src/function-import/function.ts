@@ -6,7 +6,10 @@ import { responseTransformerFunctionName } from './response-transformer-function
 
 const parameterName = 'parameters';
 
-export function functionImportFunction(functionImport: VdmFunctionImport, service: VdmServiceMetadata): FunctionDeclarationStructure {
+export function functionImportFunction(
+  functionImport: VdmFunctionImport,
+  service: VdmServiceMetadata
+): FunctionDeclarationStructure {
   return {
     kind: StructureKind.Function,
     name: functionImport.functionName,
@@ -17,7 +20,9 @@ export function functionImportFunction(functionImport: VdmFunctionImport, servic
         type: functionImport.parametersTypeName
       }
     ],
-    returnType: `FunctionImportRequestBuilder<${functionImport.parametersTypeName}, ${functionImport.returnType.returnType}${
+    returnType: `FunctionImportRequestBuilder<${
+      functionImport.parametersTypeName
+    }, ${functionImport.returnType.returnType}${
       functionImport.returnType.isMulti ? '[]' : ''
     }>`,
 
@@ -32,7 +37,10 @@ export function functionImportFunction(functionImport: VdmFunctionImport, servic
   };
 }
 
-function getFunctionImportStatements(functionImport: VdmFunctionImport, service: VdmServiceMetadata): string {
+function getFunctionImportStatements(
+  functionImport: VdmFunctionImport,
+  service: VdmServiceMetadata
+): string {
   const context = functionImport.parameters
     ? functionImport.parameters.reduce((cumulator, currentParameters) => {
         if (cumulator !== 'const params = {\n') {
@@ -43,9 +51,13 @@ function getFunctionImportStatements(functionImport: VdmFunctionImport, service:
       }, 'const params = {\n') + '\n}'
     : '{}';
 
-  const returnStatement = `return new FunctionImportRequestBuilder('${functionImport.httpMethod}', '${service.servicePath}', '${
+  const returnStatement = `return new FunctionImportRequestBuilder('${
+    functionImport.httpMethod
+  }', '${service.servicePath}', '${
     functionImport.originalName
-  }', (data) => ${responseTransformerFunctionName(functionImport.returnType)}(data, ${functionImport.returnType.builderFunction}), params);`;
+  }', (data) => ${responseTransformerFunctionName(
+    functionImport.returnType
+  )}(data, ${functionImport.returnType.builderFunction}), params);`;
 
   return context + '\n\n' + returnStatement;
 }

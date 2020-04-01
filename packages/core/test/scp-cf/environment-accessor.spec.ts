@@ -13,12 +13,19 @@ const services = {
       name: 'my-destination',
       plan: 'lite',
       label: 'destination',
-      credentials: { clientid: 'sb-clone', clientsecret: 'jQZB..', uri: 'https://..' }
+      credentials: {
+        clientid: 'sb-clone',
+        clientsecret: 'jQZB..',
+        uri: 'https://..'
+      }
     }
   ],
   xsuaa: [
     {
-      credentials: { clientid: CLIENT_ID, url: 'https://tenant-id.authentication.sap.hana.ondemand.com' },
+      credentials: {
+        clientid: CLIENT_ID,
+        url: 'https://tenant-id.authentication.sap.hana.ondemand.com'
+      },
       plan: 'application',
       label: 'xsuaa',
       name: 'my-xsuaa'
@@ -41,7 +48,9 @@ describe('Environment Accessor', () => {
     it('should return the defined environment variable with the respective name', () => {
       const env = services;
       const expected = JSON.stringify(env);
-      const actual = EnvironmentAccessor.getEnvironmentVariable('VCAP_SERVICES');
+      const actual = EnvironmentAccessor.getEnvironmentVariable(
+        'VCAP_SERVICES'
+      );
       expect(actual).toBe(expected);
     });
 
@@ -64,7 +73,9 @@ describe('Environment Accessor', () => {
 
     it('throws an error if VCAP_SERVICES is not parseable', () => {
       process.env.VCAP_SERVICES = '{JSON?!';
-      expect(() => EnvironmentAccessor.getVcapService()).toThrowError("Failed to parse environment variable 'VCAP_SERVICES'.");
+      expect(() => EnvironmentAccessor.getVcapService()).toThrowError(
+        "Failed to parse environment variable 'VCAP_SERVICES'."
+      );
     });
 
     it('throws an error if VCAP_SERVICES is empty', () => {
@@ -93,7 +104,9 @@ describe('Environment Accessor', () => {
 
     it('skips a service without credentials', () => {
       const expected = [];
-      process.env.VCAP_SERVICES = JSON.stringify({ destination: [{ name: 'my-destination' }] });
+      process.env.VCAP_SERVICES = JSON.stringify({
+        destination: [{ name: 'my-destination' }]
+      });
       const actual = EnvironmentAccessor.getDestinationServiceCredentialsList();
       expect(actual).toEqual(expected);
     });
@@ -111,7 +124,14 @@ describe('Environment Accessor', () => {
     });
 
     it('skip credentials that has no uri property', () => {
-      const mutatedVcap_services = { destination: [{ name: 'my-destination', credentials: { clientid: 'sb-clone', clientsecret: 'jQZB..' } }] };
+      const mutatedVcap_services = {
+        destination: [
+          {
+            name: 'my-destination',
+            credentials: { clientid: 'sb-clone', clientsecret: 'jQZB..' }
+          }
+        ]
+      };
       process.env.VCAP_SERVICES = JSON.stringify(mutatedVcap_services);
       const expected = null;
       const actual = EnvironmentAccessor.getDestinationServiceUri();
@@ -119,7 +139,9 @@ describe('Environment Accessor', () => {
     });
 
     it('return null if credentials list is empty', () => {
-      const mutatedVcap_services = { destination: [{ name: 'my-destination' }] };
+      const mutatedVcap_services = {
+        destination: [{ name: 'my-destination' }]
+      };
       process.env.VCAP_SERVICES = JSON.stringify(mutatedVcap_services);
       const expected = null;
       const actual = EnvironmentAccessor.getDestinationServiceUri();
@@ -146,7 +168,9 @@ describe('Environment Accessor', () => {
         client_id: CLIENT_ID
       };
 
-      expect(EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid).toBe(expected);
+      expect(
+        EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid
+      ).toBe(expected);
     });
 
     it('uses the audience for matching when no match can be found using the clientid', () => {
@@ -157,7 +181,9 @@ describe('Environment Accessor', () => {
         aud: [CLIENT_ID]
       };
 
-      expect(EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid).toBe(expected);
+      expect(
+        EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid
+      ).toBe(expected);
     });
 
     it('uses scope if audience array is empty for matching when no match can be found using the clientid', () => {
@@ -169,11 +195,15 @@ describe('Environment Accessor', () => {
         scope: [CLIENT_ID + '.rest.of.the.link']
       };
 
-      expect(EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid).toBe(expected);
+      expect(
+        EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid
+      ).toBe(expected);
     });
 
     it('Throws error if no match can be found', () => {
-      expect(() => EnvironmentAccessor.getXsuaaServiceCredentials({})).toThrow();
+      expect(() =>
+        EnvironmentAccessor.getXsuaaServiceCredentials({})
+      ).toThrow();
     });
   });
 });

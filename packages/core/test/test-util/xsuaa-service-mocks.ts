@@ -2,7 +2,13 @@
 import nock from 'nock';
 import { basicHeader } from '../../src/request-builder/header-builder/authorization-header';
 
-export function mockClientCredentialsGrantCall(uri: string, response: any, responseCode: number, clientId: string, clientSecret: string) {
+export function mockClientCredentialsGrantCall(
+  uri: string,
+  response: any,
+  responseCode: number,
+  clientId: string,
+  clientSecret: string
+) {
   return nock(uri, {
     reqheaders: xsuaaRequestHeaders(basicHeader(clientId, clientSecret))
   })
@@ -10,11 +16,20 @@ export function mockClientCredentialsGrantCall(uri: string, response: any, respo
     .reply(responseCode, response);
 }
 
-export function mockUserTokenGrantCall(uri: string, response: any, responseCode: number, accessToken: string, clientId: string) {
+export function mockUserTokenGrantCall(
+  uri: string,
+  response: any,
+  responseCode: number,
+  accessToken: string,
+  clientId: string
+) {
   return nock(uri, {
     reqheaders: xsuaaRequestHeaders(`Bearer ${accessToken}`)
   })
-    .post('/oauth/token', `client_id=${clientId}&grant_type=user_token&response_type=token`)
+    .post(
+      '/oauth/token',
+      `client_id=${clientId}&grant_type=user_token&response_type=token`
+    )
     .reply(responseCode, response);
 }
 
@@ -29,7 +44,10 @@ export function mockRefreshTokenGrantCall(
   return nock(uri, {
     reqheaders: xsuaaRequestHeaders(basicHeader(clientId, clientSecret))
   })
-    .post('/oauth/token', `grant_type=refresh_token&refresh_token=${refreshToken}`)
+    .post(
+      '/oauth/token',
+      `grant_type=refresh_token&refresh_token=${refreshToken}`
+    )
     .reply(responseCode, response);
 }
 

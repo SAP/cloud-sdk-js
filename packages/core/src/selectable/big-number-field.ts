@@ -6,7 +6,12 @@ import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
 import { Filter } from '../filter';
-import { ComplexTypeField, ConstructorOrField, getEdmType, getEntityConstructor } from './complex-type-field';
+import {
+  ComplexTypeField,
+  ConstructorOrField,
+  getEdmType,
+  getEntityConstructor
+} from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
 /**
@@ -14,7 +19,10 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class BigNumberFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, BigNumber> {
+class BigNumberFieldBase<EntityT extends Entity> extends EdmTypeField<
+  EntityT,
+  BigNumber
+> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *
@@ -61,7 +69,9 @@ class BigNumberFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, B
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BigNumberField<EntityT extends Entity> extends BigNumberFieldBase<EntityT> implements SelectableEdmTypeField {
+export class BigNumberField<EntityT extends Entity>
+  extends BigNumberFieldBase<EntityT>
+  implements SelectableEdmTypeField {
   readonly selectable: true;
 }
 
@@ -70,7 +80,9 @@ export class BigNumberField<EntityT extends Entity> extends BigNumberFieldBase<E
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class ComplexTypeBigNumberPropertyField<EntityT extends Entity> extends BigNumberFieldBase<EntityT> {
+export class ComplexTypeBigNumberPropertyField<
+  EntityT extends Entity
+> extends BigNumberFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -83,7 +95,11 @@ export class ComplexTypeBigNumberPropertyField<EntityT extends Entity> extends B
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, edmType: EdmType);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    edmType: EdmType
+  );
 
   /**
    * @deprecated since verision 1.19.0
@@ -95,12 +111,22 @@ export class ComplexTypeBigNumberPropertyField<EntityT extends Entity> extends B
    * @param parentTypeName - Name of the parent complex type
    * @param edmType - Type of the field according to the metadata description
    */
-  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, parentTypeName: string, edmType: EdmType);
+  constructor(
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>,
+    parentTypeName: string,
+    edmType: EdmType
+  );
 
   /*
    * Union of the two possible constructors.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>, arg3: string | EdmType, arg4?: EdmType) {
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    arg3: string | EdmType,
+    arg4?: EdmType
+  ) {
     super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
     this.fieldOf = fieldOf;
   }
@@ -111,6 +137,8 @@ export class ComplexTypeBigNumberPropertyField<EntityT extends Entity> extends B
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {
-    return this.fieldOf instanceof ComplexTypeField ? `${this.fieldOf.fieldPath()}/${this._fieldName}` : this._fieldName;
+    return this.fieldOf instanceof ComplexTypeField
+      ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
+      : this._fieldName;
   }
 }

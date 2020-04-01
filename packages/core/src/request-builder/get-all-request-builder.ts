@@ -6,7 +6,10 @@ import { deserializeEntity } from '../entity-deserializer';
 import { and, Filterable } from '../filter/filterable';
 import { Orderable } from '../order/orderable';
 import { DestinationOptions } from '../scp-cf';
-import { Destination, DestinationNameAndJwt } from '../scp-cf/destination-service-types';
+import {
+  Destination,
+  DestinationNameAndJwt
+} from '../scp-cf/destination-service-types';
 import { Selectable } from '../selectable';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config';
@@ -20,8 +23,11 @@ import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
+export class GetAllRequestBuilder<EntityT extends Entity>
+  extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
+  readonly _entity: EntityT;
+
   /**
    * Creates an instance of GetAllRequestBuilder.
    *
@@ -30,7 +36,6 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
     super(new ODataGetAllRequestConfig(_entityConstructor));
   }
-
   /**
    * Restrict the response to the given selection of properties in the request.
    *
@@ -93,9 +98,16 @@ export class GetAllRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the requested entities
    */
-  async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<EntityT[]> {
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<EntityT[]> {
     return this.build(destination, options)
       .then(request => request.execute())
-      .then(response => response.data.d.results.map(json => deserializeEntity(json, this._entityConstructor, response.headers)));
+      .then(response =>
+        response.data.d.results.map(json =>
+          deserializeEntity(json, this._entityConstructor, response.headers)
+        )
+      );
   }
 }

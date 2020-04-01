@@ -8,7 +8,9 @@ describe('propertyExists', () => {
     expect(propertyExists({ a: { b: { c: 0 } } }, 'a', 'b')).toBe(true);
     expect(propertyExists({ a: { b: { c: 0 } } }, 'a', 'b', 'c')).toBe(true);
     expect(propertyExists({ a: { b: { c: 0 } } }, 'a', 'b', 'd')).toBe(false);
-    expect(propertyExists({ a: { b: { c: 0 } } }, 'a', 'b', 'c', 'd')).toBe(false);
+    expect(propertyExists({ a: { b: { c: 0 } } }, 'a', 'b', 'c', 'd')).toBe(
+      false
+    );
     expect(propertyExists({ a: { b: { c: 0 } } }, 'WRONG')).toBe(false);
   });
 

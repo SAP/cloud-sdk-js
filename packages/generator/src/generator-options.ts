@@ -38,7 +38,8 @@ type KeysToOptions = {
 export const generatorOptionsCli: KeysToOptions = {
   inputDir: {
     alias: 'i',
-    describe: 'This directory will be recursively searched for .edmx/.xml files.',
+    describe:
+      'This directory will be recursively searched for .edmx/.xml files.',
     normalize: true,
     coerce: resolve,
     type: 'string',
@@ -77,7 +78,8 @@ export const generatorOptionsCli: KeysToOptions = {
     hidden: true
   },
   changelogFile: {
-    describe: 'Path to file that will be copied into the generated packages under the filename CHANGELOG.md.',
+    describe:
+      'Path to file that will be copied into the generated packages under the filename CHANGELOG.md.',
     type: 'string',
     coerce: resolve,
     normalize: true,
@@ -90,7 +92,8 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false
   },
   clearOutputDir: {
-    describe: 'When set to true, the generator will delete EVERYTHING in the specified output directory before generating code.',
+    describe:
+      'When set to true, the generator will delete EVERYTHING in the specified output directory before generating code.',
     type: 'boolean',
     default: false
   },
@@ -135,19 +138,22 @@ export const generatorOptionsCli: KeysToOptions = {
     default: true
   },
   sdkAfterVersionScript: {
-    describe: 'When set to true, the package.json of generated services will have the after-version script to internally keep the versions in sync.',
+    describe:
+      'When set to true, the package.json of generated services will have the after-version script to internally keep the versions in sync.',
     type: 'boolean',
     default: false,
     hidden: true
   },
   s4hanaCloud: {
-    describe: 'When set to true, the description of the generated packages will be specific to S/4HANA Cloud.',
+    describe:
+      'When set to true, the description of the generated packages will be specific to S/4HANA Cloud.',
     type: 'boolean',
     default: false,
     hidden: true
   },
   generateCSN: {
-    describe: 'When set to true a CSN file will be generated for each service definition in the output directory.',
+    describe:
+      'When set to true a CSN file will be generated for each service definition in the output directory.',
     type: 'boolean',
     default: false
   }

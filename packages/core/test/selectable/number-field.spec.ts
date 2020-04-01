@@ -1,6 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { ComplexTypeNumberPropertyField, Entity, FieldType, Filter, NumberField } from '../../src';
-import { TestComplexTypeField, TestEntity } from '../test-util/test-services/test-service';
+import {
+  ComplexTypeNumberPropertyField,
+  Entity,
+  FieldType,
+  Filter,
+  NumberField
+} from '../../src';
+import {
+  TestComplexTypeField,
+  TestEntity
+} from '../test-util/test-services/test-service';
 
 export function checkFilter<EntityT extends Entity, FieldT extends FieldType>(
   filter: Filter<EntityT, FieldT>,
@@ -53,8 +62,15 @@ describe('Number Field', () => {
 
   describe('complex type field', () => {
     const parentFieldName = 'complexParentFieldName';
-    const parentComplexField = new TestComplexTypeField(parentFieldName, TestEntity);
-    const field = new ComplexTypeNumberPropertyField(fieldName, parentComplexField, 'Edm.Single');
+    const parentComplexField = new TestComplexTypeField(
+      parentFieldName,
+      TestEntity
+    );
+    const field = new ComplexTypeNumberPropertyField(
+      fieldName,
+      parentComplexField,
+      'Edm.Single'
+    );
 
     it('should create filter for "equals" (complex property string)', () => {
       const filter = field.equals(filterValue);

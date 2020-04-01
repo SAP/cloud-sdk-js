@@ -4,7 +4,10 @@ import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { DestinationOptions } from '../scp-cf';
-import { Destination, DestinationNameAndJwt } from '../scp-cf/destination-service-types';
+import {
+  Destination,
+  DestinationNameAndJwt
+} from '../scp-cf/destination-service-types';
 import { FieldType } from '../selectable/field';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { getEntityKeys } from './request/get-keys';
@@ -15,9 +18,11 @@ import { ODataDeleteRequestConfig } from './request/odata-delete-request-config'
  *
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export class DeleteRequestBuilder<EntityT extends Entity> extends MethodRequestBuilderBase<ODataDeleteRequestConfig<EntityT>>
+export class DeleteRequestBuilder<EntityT extends Entity>
+  extends MethodRequestBuilderBase<ODataDeleteRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
+  readonly _entity: EntityT;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
@@ -25,7 +30,10 @@ export class DeleteRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param entityConstructor - Constructor type of the entity to be deleted
    * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
    */
-  constructor(entityConstructor: Constructable<EntityT>, keysOrEntity: MapType<FieldType> | Entity) {
+  constructor(
+    entityConstructor: Constructable<EntityT>,
+    keysOrEntity: MapType<FieldType> | Entity
+  ) {
     super(new ODataDeleteRequestConfig(entityConstructor));
     this._entityConstructor = entityConstructor;
 
@@ -67,10 +75,15 @@ export class DeleteRequestBuilder<EntityT extends Entity> extends MethodRequestB
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving once the entity was deleted
    */
-  async execute(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<void> {
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<void> {
     return this.build(destination, options)
       .then(request => request.execute())
       .then(() => Promise.resolve())
-      .catch(error => Promise.reject(errorWithCause('OData delete request failed!', error)));
+      .catch(error =>
+        Promise.reject(errorWithCause('OData delete request failed!', error))
+      );
   }
 }

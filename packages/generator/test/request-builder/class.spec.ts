@@ -18,7 +18,8 @@ describe('request builder class', () => {
     const getByKey = {
       name: 'getByKey',
       returnType: 'GetByKeyRequestBuilder<Breakfast>',
-      statements: 'return new GetByKeyRequestBuilder(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime});',
+      statements:
+        'return new GetByKeyRequestBuilder(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime});',
       parameters: [
         { name: 'entityName', type: 'string' },
         { name: 'breakfastTime', type: 'Time' }
@@ -63,8 +64,15 @@ describe('request builder class', () => {
     corruptedEntity.keys.push(accompaniment);
     const requestBuilder = requestBuilderClass(corruptedEntity);
     const methods = requestBuilder
-      .methods!.filter(method => method.name === 'getByKey' || method.name === 'delete')
-      .map(method => ({ name: method.name, returnType: method.returnType, statements: method.statements, parameters: method.parameters }));
+      .methods!.filter(
+        method => method.name === 'getByKey' || method.name === 'delete'
+      )
+      .map(method => ({
+        name: method.name,
+        returnType: method.returnType,
+        statements: method.statements,
+        parameters: method.parameters
+      }));
     const params = [
       { name: 'entityName', type: 'string' },
       { name: 'breakfastTime', type: 'Time' },
@@ -73,7 +81,8 @@ describe('request builder class', () => {
     const getByKeyRequestBuilder = {
       name: 'getByKey',
       returnType: 'GetByKeyRequestBuilder<Breakfast>',
-      statements: 'return new GetByKeyRequestBuilder(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime,\nWith: pWith});',
+      statements:
+        'return new GetByKeyRequestBuilder(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime,\nWith: pWith});',
       parameters: params
     };
 

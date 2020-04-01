@@ -60,7 +60,10 @@ interface MockRequestParams {
   method?: string;
 }
 
-export function mockCreateRequest(params: MockRequestParams, entityConstructor = TestEntity) {
+export function mockCreateRequest(
+  params: MockRequestParams,
+  entityConstructor = TestEntity
+) {
   const requestConfig = new ODataCreateRequestConfig(entityConstructor);
   return mockRequest(requestConfig, {
     ...params,
@@ -70,7 +73,10 @@ export function mockCreateRequest(params: MockRequestParams, entityConstructor =
   });
 }
 
-export function mockDeleteRequest(params: MockRequestParams, entityConstructor = TestEntity) {
+export function mockDeleteRequest(
+  params: MockRequestParams,
+  entityConstructor = TestEntity
+) {
   const requestConfig = new ODataDeleteRequestConfig(entityConstructor);
   return mockRequest(requestConfig, {
     ...params,
@@ -79,7 +85,10 @@ export function mockDeleteRequest(params: MockRequestParams, entityConstructor =
   });
 }
 
-export function mockUpdateRequest(params: MockRequestParams, entityConstructor = TestEntity) {
+export function mockUpdateRequest(
+  params: MockRequestParams,
+  entityConstructor = TestEntity
+) {
   const requestConfig = new ODataUpdateRequestConfig(entityConstructor);
   return mockRequest(requestConfig, {
     ...params,
@@ -88,7 +97,10 @@ export function mockUpdateRequest(params: MockRequestParams, entityConstructor =
   });
 }
 
-export function mockGetRequest(params: MockRequestParams, entityConstructor = TestEntity) {
+export function mockGetRequest(
+  params: MockRequestParams,
+  entityConstructor = TestEntity
+) {
   const requestConfig = new ODataGetAllRequestConfig(entityConstructor);
   return mockRequest(requestConfig, {
     ...params,
@@ -104,7 +116,11 @@ interface MockHeaderRequestParams {
   responseHeaders?: MapType<any>;
 }
 
-export function mockHeaderRequest({ request, host = defaultHost, responseHeaders = mockedBuildHeaderResponse }: MockHeaderRequestParams) {
+export function mockHeaderRequest({
+  request,
+  host = defaultHost,
+  responseHeaders = mockedBuildHeaderResponse
+}: MockHeaderRequestParams) {
   return nock(host)
     .get(request.serviceUrl())
     .reply(200, undefined, responseHeaders);
@@ -130,14 +146,20 @@ export function mockRequest(
   mockHeaderRequest({ request });
 
   return nock(host, getRequestHeaders(method, additionalHeaders))
-    [method](path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(), body)
+    [method](
+      path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
+      body
+    )
     .query(query)
     .reply(statusCode, responseBody, responseHeaders);
 }
 
 function getRequestHeaders(method: string, additionalHeaders?: MapType<any>) {
   if (additionalHeaders) {
-    const initialHeaders = method === 'get' ? defaultRequestHeaders : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken };
+    const initialHeaders =
+      method === 'get'
+        ? defaultRequestHeaders
+        : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken };
     return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
   }
 }

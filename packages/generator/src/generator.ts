@@ -4,7 +4,16 @@ import { PathLike, readFileSync } from 'fs';
 import { relative, resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
-import { Directory, DirectoryEmitResult, IndentationText, ModuleResolutionKind, Project, ProjectOptions, QuoteKind, ScriptTarget } from 'ts-morph';
+import {
+  Directory,
+  DirectoryEmitResult,
+  IndentationText,
+  ModuleResolutionKind,
+  Project,
+  ProjectOptions,
+  QuoteKind,
+  ScriptTarget
+} from 'ts-morph';
 import { ModuleKind } from 'typescript';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
@@ -15,7 +24,10 @@ import { copyFile, otherFile, sourceFile } from './file-generator';
 import { functionImportSourceFile } from './function-import/file';
 import { GeneratorOptions } from './generator-options';
 import { cloudSdkVdmHack, npmCompliantName } from './generator-utils';
-import { genericDescription, s4hanaCloudDescription } from './package-description';
+import {
+  genericDescription,
+  s4hanaCloudDescription
+} from './package-description';
 import { parseAllServices } from './parser/service-parser';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
@@ -33,7 +45,9 @@ const logger = createLogger({
   messageContext: 'generator'
 });
 
-export async function generate(options: GeneratorOptions): Promise<void | DirectoryEmitResult[]> {
+export async function generate(
+  options: GeneratorOptions
+): Promise<void | DirectoryEmitResult[]> {
   const project = await generateProject(options);
   if (!project) {
     throw Error('The project is undefined.');
@@ -48,9 +62,14 @@ export async function generate(options: GeneratorOptions): Promise<void | Direct
   return;
 }
 
-function emit(project: Project, options: GeneratorOptions): Promise<DirectoryEmitResult[]> {
+function emit(
+  project: Project,
+  options: GeneratorOptions
+): Promise<DirectoryEmitResult[]> {
   // Filter for .ts files, due to a bug in ts-morph. Has been fixed in a newer version of ts-morph
-  const nonTsFiles = project.getSourceFiles().filter(s => !s.getFilePath().endsWith('.ts'));
+  const nonTsFiles = project
+    .getSourceFiles()
+    .filter(s => !s.getFilePath().endsWith('.ts'));
   nonTsFiles.forEach(f => project.removeSourceFile(f));
   return Promise.all(
     project
@@ -65,12 +84,16 @@ function isDescendant(path: string, options: GeneratorOptions): boolean {
   return !relative(options.outputDir.toString(), path).startsWith('..');
 }
 
-export async function generateProject(options: GeneratorOptions): Promise<Project | undefined> {
+export async function generateProject(
+  options: GeneratorOptions
+): Promise<Project | undefined> {
   options = sanitizeOptions(options);
   const services = readServices(options);
 
   if (!services.length) {
-    logger.warn(`No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`);
+    logger.warn(
+      `No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`
+    );
     return;
   }
 
@@ -80,23 +103,38 @@ export async function generateProject(options: GeneratorOptions): Promise<Projec
 
   const project = new Project(projectOptions());
 
-  const promises = services.map(service => generateSourcesForService(service, project, options));
+  const promises = services.map(service =>
+    generateSourcesForService(service, project, options)
+  );
   await Promise.all(promises);
 
   if (!options.serviceMapping) {
     throw Error('The service mapping is undefined.');
   }
 
-  project.createSourceFile(resolve(options.serviceMapping.toString()), serviceMappingFile(services), { overwrite: true });
+  project.createSourceFile(
+    resolve(options.serviceMapping.toString()),
+    serviceMappingFile(services),
+    { overwrite: true }
+  );
 
   generateAggregatorPackage(services, options, project);
 
   return project;
 }
 
-function generateAggregatorPackage(services: VdmServiceMetadata[], options: GeneratorOptions, project: Project): void {
-  if (typeof options.aggregatorNpmPackageName !== 'undefined' && typeof options.aggregatorDirectoryName !== 'undefined') {
-    const aggregatorPackageDir = project.createDirectory(resolvePath(options.aggregatorDirectoryName, options));
+function generateAggregatorPackage(
+  services: VdmServiceMetadata[],
+  options: GeneratorOptions,
+  project: Project
+): void {
+  if (
+    typeof options.aggregatorNpmPackageName !== 'undefined' &&
+    typeof options.aggregatorDirectoryName !== 'undefined'
+  ) {
+    const aggregatorPackageDir = project.createDirectory(
+      resolvePath(options.aggregatorDirectoryName, options)
+    );
     otherFile(
       aggregatorPackageDir,
       'package.json',
@@ -110,7 +148,12 @@ function generateAggregatorPackage(services: VdmServiceMetadata[], options: Gene
     );
 
     if (options.writeReadme) {
-      otherFile(aggregatorPackageDir, 'README.md', aggregatorReadme(services, options.aggregatorNpmPackageName), options.forceOverwrite);
+      otherFile(
+        aggregatorPackageDir,
+        'README.md',
+        aggregatorReadme(services, options.aggregatorNpmPackageName),
+        options.forceOverwrite
+      );
     }
 
     if (options.changelogFile) {
@@ -119,8 +162,14 @@ function generateAggregatorPackage(services: VdmServiceMetadata[], options: Gene
   }
 }
 
-export async function generateSourcesForService(service: VdmServiceMetadata, project: Project, options: GeneratorOptions): Promise<void> {
-  const serviceDir = project.createDirectory(resolvePath(service.directoryName, options));
+export async function generateSourcesForService(
+  service: VdmServiceMetadata,
+  project: Project,
+  options: GeneratorOptions
+): Promise<void> {
+  const serviceDir = project.createDirectory(
+    resolvePath(service.directoryName, options)
+  );
 
   logger.info(`Generating entities for service: ${service.namespace}...`);
 
@@ -141,25 +190,55 @@ export async function generateSourcesForService(service: VdmServiceMetadata, pro
 
   otherFile(serviceDir, 'tsconfig.json', tsConfig(), options.forceOverwrite);
 
-  sourceFile(serviceDir, 'BatchRequest', batchSourceFile(service), options.forceOverwrite);
+  sourceFile(
+    serviceDir,
+    'BatchRequest',
+    batchSourceFile(service),
+    options.forceOverwrite
+  );
 
   service.entities.forEach(entity => {
-    sourceFile(serviceDir, entity.className, entitySourceFile(entity, service), options.forceOverwrite);
-    sourceFile(serviceDir, `${entity.className}RequestBuilder`, requestBuilderSourceFile(entity), options.forceOverwrite);
+    sourceFile(
+      serviceDir,
+      entity.className,
+      entitySourceFile(entity, service),
+      options.forceOverwrite
+    );
+    sourceFile(
+      serviceDir,
+      `${entity.className}RequestBuilder`,
+      requestBuilderSourceFile(entity),
+      options.forceOverwrite
+    );
   });
 
   service.complexTypes.forEach(complexType => {
-    sourceFile(serviceDir, complexType.typeName, complexTypeSourceFile(complexType), options.forceOverwrite);
+    sourceFile(
+      serviceDir,
+      complexType.typeName,
+      complexTypeSourceFile(complexType),
+      options.forceOverwrite
+    );
   });
 
   if (service.functionImports && service.functionImports.length) {
-    sourceFile(serviceDir, 'function-imports', functionImportSourceFile(service), options.forceOverwrite);
+    sourceFile(
+      serviceDir,
+      'function-imports',
+      functionImportSourceFile(service),
+      options.forceOverwrite
+    );
   }
 
   sourceFile(serviceDir, 'index', indexFile(service), options.forceOverwrite);
 
   if (options.writeReadme) {
-    otherFile(serviceDir, 'README.md', readme(service, options.s4hanaCloud), options.forceOverwrite);
+    otherFile(
+      serviceDir,
+      'README.md',
+      readme(service, options.s4hanaCloud),
+      options.forceOverwrite
+    );
   }
 
   if (options.changelogFile) {
@@ -171,14 +250,26 @@ export async function generateSourcesForService(service: VdmServiceMetadata, pro
   }
 
   if (options.generateTypedocJson) {
-    otherFile(serviceDir, 'typedoc.json', typedocJson(), options.forceOverwrite);
+    otherFile(
+      serviceDir,
+      'typedoc.json',
+      typedocJson(),
+      options.forceOverwrite
+    );
   }
 
   if (options.generateCSN) {
     try {
-      otherFile(serviceDir, `${service.directoryName}-csn.json`, await csn(service), options.forceOverwrite);
+      otherFile(
+        serviceDir,
+        `${service.directoryName}-csn.json`,
+        await csn(service),
+        options.forceOverwrite
+      );
     } catch (e) {
-      logger.error(`CSN creation for service ${service.originalFileName} failed. Original error: ${e.message}`);
+      logger.error(
+        `CSN creation for service ${service.originalFileName} failed. Original error: ${e.message}`
+      );
     }
   }
 }
@@ -209,30 +300,49 @@ function projectOptions(): ProjectOptions {
 function readServices(options: GeneratorOptions): VdmServiceMetadata[] {
   const services = parseAllServices(options);
   if (!services.length) {
-    logger.warn(`No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`);
+    logger.warn(
+      `No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`
+    );
     return [];
   }
   return services;
 }
 
 function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
-  options.serviceMapping = options.serviceMapping || resolve(options.inputDir.toString(), 'service-mapping.json');
-  options.aggregatorDirectoryName = options.aggregatorDirectoryName || options.aggregatorNpmPackageName;
+  options.serviceMapping =
+    options.serviceMapping ||
+    resolve(options.inputDir.toString(), 'service-mapping.json');
+  options.aggregatorDirectoryName =
+    options.aggregatorDirectoryName || options.aggregatorNpmPackageName;
   return options;
 }
 
 function getGeneratorVersion(): string {
-  return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8')).version;
+  return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8'))
+    .version;
 }
 
-function copyChangelog(toDirectory: Directory, options: GeneratorOptions): void {
+function copyChangelog(
+  toDirectory: Directory,
+  options: GeneratorOptions
+): void {
   if (options.changelogFile) {
-    copyFile(options.changelogFile.toString(), 'CHANGELOG.md', toDirectory, options.forceOverwrite);
+    copyFile(
+      options.changelogFile.toString(),
+      'CHANGELOG.md',
+      toDirectory,
+      options.forceOverwrite
+    );
   }
 }
 
-function serviceDescription(service: VdmServiceMetadata, options: GeneratorOptions): string {
-  return options.s4hanaCloud ? s4hanaCloudDescription(service.directoryName) : genericDescription(service.directoryName);
+function serviceDescription(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): string {
+  return options.s4hanaCloud
+    ? s4hanaCloudDescription(service.directoryName)
+    : genericDescription(service.directoryName);
 }
 
 function resolvePath(path: PathLike, options: GeneratorOptions): string {

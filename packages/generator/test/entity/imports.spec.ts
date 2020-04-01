@@ -6,14 +6,22 @@ describe('imports', () => {
   it('importDeclarations', () => {
     const actual = importDeclarations(breakfastEntity);
 
-    expect(actual.map(imports => ({ moduleSpecifier: imports.moduleSpecifier, namedImports: imports.namedImports }))).toEqual(expectedEntityImports);
+    expect(
+      actual.map(imports => ({
+        moduleSpecifier: imports.moduleSpecifier,
+        namedImports: imports.namedImports
+      }))
+    ).toEqual(expectedEntityImports);
   });
 
   it('otherEntityImports', () => {
     const actual = otherEntityImports(breakfastEntity, foodService);
-    expect(actual.map(imports => ({ moduleSpecifier: imports.moduleSpecifier, namedImports: imports.namedImports }))).toEqual(
-      expectedOtherEntityImports
-    );
+    expect(
+      actual.map(imports => ({
+        moduleSpecifier: imports.moduleSpecifier,
+        namedImports: imports.namedImports
+      }))
+    ).toEqual(expectedOtherEntityImports);
   });
 });
 

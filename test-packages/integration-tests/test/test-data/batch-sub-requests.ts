@@ -1,9 +1,19 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { TestEntity, TestEntityMultiLink } from '@sap-cloud-sdk/test-services/test-service';
-import { testEntityKeyPropGuid, testEntityKeyPropString, testEntityMultiLinkKeyProp } from './keys';
+import {
+  TestEntity,
+  TestEntityMultiLink
+} from '@sap-cloud-sdk/test-services/test-service';
+import {
+  testEntityKeyPropGuid,
+  testEntityKeyPropString,
+  testEntityMultiLinkKeyProp
+} from './keys';
 
 export const getAllRequest = TestEntity.requestBuilder().getAll();
-export const getByKeyRequest = TestEntity.requestBuilder().getByKey(testEntityKeyPropGuid, testEntityKeyPropString);
+export const getByKeyRequest = TestEntity.requestBuilder().getByKey(
+  testEntityKeyPropGuid,
+  testEntityKeyPropString
+);
 
 export const createRequest = TestEntity.requestBuilder().create(
   TestEntity.builder()
@@ -15,9 +25,7 @@ export const createRequest = TestEntity.requestBuilder().create(
 
 export const createAsChildOfRequest = TestEntityMultiLink.requestBuilder()
   .create(
-    TestEntityMultiLink.builder()
-      .stringProperty('multiLinkStringProp')
-      .build()
+    TestEntityMultiLink.builder().stringProperty('multiLinkStringProp').build()
   )
   .asChildOf(
     TestEntity.builder()

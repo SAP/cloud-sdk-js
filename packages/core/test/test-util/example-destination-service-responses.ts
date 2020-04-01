@@ -1,5 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { AuthenticationType, DestinationConfiguration, DestinationJson } from '../../src';
+import {
+  AuthenticationType,
+  DestinationConfiguration,
+  DestinationJson
+} from '../../src';
 
 export const certificateMultipleResponse: DestinationConfiguration[] = [
   {

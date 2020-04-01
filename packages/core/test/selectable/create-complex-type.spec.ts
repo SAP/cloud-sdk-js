@@ -5,13 +5,27 @@ import moment, { Moment } from 'moment';
 import { createComplexType, edmToTs, Time } from '../../src';
 
 const converter = {
-  StringField: (controllingArea: string) => ({ stringField: edmToTs(controllingArea, 'Edm.String') }),
-  BooleanField: (booleanField: boolean) => ({ booleanField: edmToTs(booleanField, 'Edm.Boolean') }),
-  NumberField: (numberField: BigNumber) => ({ numberField: edmToTs(numberField, 'Edm.Decimal') }),
-  GuidField: (guidField: string) => ({ guidField: edmToTs(guidField, 'Edm.Guid') }),
-  IntField: (intField: number) => ({ intField: edmToTs(intField, 'Edm.Int16') }),
-  DateField: (dateField: Moment) => ({ dateField: edmToTs(dateField, 'Edm.DateTime') }),
-  TimeField: (timeField: Time) => ({ timeField: edmToTs(timeField, 'Edm.Time') })
+  StringField: (controllingArea: string) => ({
+    stringField: edmToTs(controllingArea, 'Edm.String')
+  }),
+  BooleanField: (booleanField: boolean) => ({
+    booleanField: edmToTs(booleanField, 'Edm.Boolean')
+  }),
+  NumberField: (numberField: BigNumber) => ({
+    numberField: edmToTs(numberField, 'Edm.Decimal')
+  }),
+  GuidField: (guidField: string) => ({
+    guidField: edmToTs(guidField, 'Edm.Guid')
+  }),
+  IntField: (intField: number) => ({
+    intField: edmToTs(intField, 'Edm.Int16')
+  }),
+  DateField: (dateField: Moment) => ({
+    dateField: edmToTs(dateField, 'Edm.DateTime')
+  }),
+  TimeField: (timeField: Time) => ({
+    timeField: edmToTs(timeField, 'Edm.Time')
+  })
 };
 
 const time = { hours: 1, minutes: 20, seconds: 0 };

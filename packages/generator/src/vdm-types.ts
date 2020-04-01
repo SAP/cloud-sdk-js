@@ -45,7 +45,10 @@ export interface VdmPropertyValueConstraints {
   nullable: boolean;
 }
 
-export interface VdmProperty extends VdmPropertyDescriptor, VdmPropertyValueConstraints, VdmMappedEdmType {
+export interface VdmProperty
+  extends VdmPropertyDescriptor,
+    VdmPropertyValueConstraints,
+    VdmMappedEdmType {
   fieldType: string;
   description: string;
 }

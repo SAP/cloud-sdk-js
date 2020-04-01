@@ -20,7 +20,10 @@ export const configFileName = 'sap-cloud-sdk-analytics.json';
  * @param path - Path to write the config to. Defaults to the result of [[findConfigPath]]
  * @hidden
  */
-export function writeConfig(config: UsageAnalyticsProjectConfig, path?: string) {
+export function writeConfig(
+  config: UsageAnalyticsProjectConfig,
+  path?: string
+) {
   // WriteConfig is only called from generateConfig (where a path is provided)
   // Or when the salt is missing and the config needs to be updated, so we can assume findConfigPath to find something
   const configPath = path ? resolve(path, configFileName) : findConfigPath()!;
@@ -46,7 +49,9 @@ export function findConfigPath(): string | undefined {
  */
 export function generateConfig(path: string): void {
   if (existsSync(join(path, configFileName))) {
-    logger.warn(`A ${configFileName} at path ${path} already exists. Skipping generation of new config file!`);
+    logger.warn(
+      `A ${configFileName} at path ${path} already exists. Skipping generation of new config file!`
+    );
     return;
   }
 
@@ -60,7 +65,9 @@ export function generateConfig(path: string): void {
  * @returns The config in a valid state.
  * @hidden
  */
-export function enforceValidConfig(config: UsageAnalyticsProjectConfig): UsageAnalyticsProjectConfig {
+export function enforceValidConfig(
+  config: UsageAnalyticsProjectConfig
+): UsageAnalyticsProjectConfig {
   if (!config.salt) {
     config.salt = randomSalt();
     writeConfig(config);

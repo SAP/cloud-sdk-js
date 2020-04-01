@@ -4,7 +4,12 @@ import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { head } from 'rambda';
 import { audiences, DecodedJWT, decodeJwt } from '../util';
-import { DestinationServiceCredentials, Service, ServiceCredentials, XsuaaServiceCredentials } from './environment-accessor-types';
+import {
+  DestinationServiceCredentials,
+  Service,
+  ServiceCredentials,
+  XsuaaServiceCredentials
+} from './environment-accessor-types';
 import { ClientCredentials } from './xsuaa-service-types';
 
 const logger = createLogger({
@@ -20,8 +25,12 @@ const logger = createLogger({
 export function getDestinationBasicCredentials(): BasicCredentials {
   const destinationCredentials = getDestinationServiceCredentials();
   const basicCredentials: BasicCredentials = {
-    clientid: destinationCredentials.clientid ? destinationCredentials.clientid : null,
-    clientsecret: destinationCredentials.clientsecret ? destinationCredentials.clientsecret : null
+    clientid: destinationCredentials.clientid
+      ? destinationCredentials.clientid
+      : null,
+    clientsecret: destinationCredentials.clientsecret
+      ? destinationCredentials.clientsecret
+      : null
   };
   return basicCredentials;
 }
@@ -41,7 +50,9 @@ export function getDestinationServiceCredentials(): any {
  * @returns A list of 'credentials' objects in 'destination' service.
  */
 export function getDestinationServiceCredentialsList(): DestinationServiceCredentials[] {
-  return getServiceList('destination').map(s => s.credentials as DestinationServiceCredentials);
+  return getServiceList('destination').map(
+    s => s.credentials as DestinationServiceCredentials
+  );
 }
 
 /**
@@ -56,7 +67,9 @@ export function getServiceCredentialsList(service: string): any[] {
     if ('credentials' in entry) {
       credentials.push(entry['credentials']);
     } else {
-      logger.warn(`Skipping a service in ${service}. Object has no 'credentials'.`);
+      logger.warn(
+        `Skipping a service in ${service}. Object has no 'credentials'.`
+      );
     }
   });
 
@@ -83,13 +96,17 @@ export function getService(service: string): Service | undefined {
   const services = xsenv.filterServices({ label: service }) as Service[];
 
   if (!services.length) {
-    logger.warn(`No services of type ${service} found! This might cause errors in other parts of the application.`);
+    logger.warn(
+      `No services of type ${service} found! This might cause errors in other parts of the application.`
+    );
 
     return undefined;
   }
   if (services.length > 1) {
     logger.warn(
-      `Found more than one service instance for service type ${service}. Found: ${services.map(s => s.name).join(', ')}. Selecting the first one.`
+      `Found more than one service instance for service type ${service}. Found: ${services
+        .map(s => s.name)
+        .join(', ')}. Selecting the first one.`
     );
   }
 
@@ -112,10 +129,15 @@ export function getVcapService(): MapType<any> | null {
   try {
     vcapServices = JSON.parse(env);
   } catch (error) {
-    throw errorWithCause("Failed to parse environment variable 'VCAP_SERVICES'.", error);
+    throw errorWithCause(
+      "Failed to parse environment variable 'VCAP_SERVICES'.",
+      error
+    );
   }
   if (!Object.keys(vcapServices).length) {
-    throw new Error("Environment variable 'VCAP_SERVICES' is defined but empty. This should not happen.");
+    throw new Error(
+      "Environment variable 'VCAP_SERVICES' is defined but empty. This should not happen."
+    );
   }
 
   return vcapServices;
@@ -128,7 +150,9 @@ export function getVcapService(): MapType<any> | null {
  * @returns Env variable value if defined.
  *           null: If not defined.
  */
-export function getEnvironmentVariable(name: string): string | undefined | null {
+export function getEnvironmentVariable(
+  name: string
+): string | undefined | null {
   if (process.env[name]) {
     return process.env[name];
   } else {
@@ -151,7 +175,9 @@ export function getDestinationServiceUri(): string | null {
     if ('uri' in credential) {
       uris.push(credential['uri']);
     } else {
-      logger.info("Skipping credentials in 'destination'. 'uri' property not defined");
+      logger.info(
+        "Skipping credentials in 'destination'. 'uri' property not defined"
+      );
     }
   }
   return uris[0] || null;
@@ -165,7 +191,9 @@ export function getDestinationServiceUri(): string | null {
  * @param token - Either an encoded or decoded JWT.
  * @returns The credentials for a match, otherwise null.
  */
-export function getXsuaaServiceCredentials(token?: DecodedJWT | string): XsuaaServiceCredentials {
+export function getXsuaaServiceCredentials(
+  token?: DecodedJWT | string
+): XsuaaServiceCredentials {
   if (typeof token === 'string') {
     return getXsuaaServiceCredentials(decodeJwt(token)); // Decode without verifying
   }
@@ -186,7 +214,9 @@ export function resolveService(service: string | Service): Service {
     const serviceInstance = getService(service);
 
     if (!serviceInstance) {
-      throw Error(`Unable to get access token for "${service}" service! No service instance of type "${service}" found.`);
+      throw Error(
+        `Unable to get access token for "${service}" service! No service instance of type "${service}" found.`
+      );
     }
 
     return serviceInstance;
@@ -200,15 +230,22 @@ export function resolveService(service: string | Service): Service {
  * @param serviceCreds - The credentials of a service as read from VCAP_SERVICES.
  * @returns A [[ClientCredentials]] instance.
  */
-export function extractClientCredentials(serviceCreds: ServiceCredentials): ClientCredentials {
-  return { username: serviceCreds.clientid, password: serviceCreds.clientsecret };
+export function extractClientCredentials(
+  serviceCreds: ServiceCredentials
+): ClientCredentials {
+  return {
+    username: serviceCreds.clientid,
+    password: serviceCreds.clientsecret
+  };
 }
 
 function selectXsuaaInstance(token?: DecodedJWT): XsuaaServiceCredentials {
   const xsuaaInstances = getServiceList('xsuaa');
 
   if (!xsuaaInstances.length) {
-    throw Error('No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application!');
+    throw Error(
+      'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application!'
+    );
   }
 
   const strategies = [matchingClientId, matchingAudience, takeFirstAndWarn];
@@ -220,38 +257,66 @@ function selectXsuaaInstance(token?: DecodedJWT): XsuaaServiceCredentials {
 
   if (selected.length > 1) {
     logger.warn(
-      `Multiple XSUAA instances could be matched to the given JWT! Choosing the first one (xsappname: ${head(selected)!.credentials.xsappname}).`
+      `Multiple XSUAA instances could be matched to the given JWT! Choosing the first one (xsappname: ${
+        head(selected)!.credentials.xsappname
+      }).`
     );
   }
 
   return head(selected)!.credentials;
 }
 
-function applyStrategiesInOrder(selectionStrategies: SelectionStrategyFn[], xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
-  return selectionStrategies.reduce((result, strategy) => (result.length ? result : strategy(xsuaaInstances, token)), []);
+function applyStrategiesInOrder(
+  selectionStrategies: SelectionStrategyFn[],
+  xsuaaInstances: MapType<any>[],
+  token?: DecodedJWT
+): MapType<any>[] {
+  return selectionStrategies.reduce(
+    (result, strategy) =>
+      result.length ? result : strategy(xsuaaInstances, token),
+    []
+  );
 }
 
-type SelectionStrategyFn = (xsuaaInstances: MapType<any>[], token?: DecodedJWT) => MapType<any>[];
+type SelectionStrategyFn = (
+  xsuaaInstances: MapType<any>[],
+  token?: DecodedJWT
+) => MapType<any>[];
 
-function matchingClientId(xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
+function matchingClientId(
+  xsuaaInstances: MapType<any>[],
+  token?: DecodedJWT
+): MapType<any>[] {
   if (!token) {
     return [];
   }
-  return xsuaaInstances.filter(xsuaa => xsuaa.credentials.clientid === token.client_id);
+  return xsuaaInstances.filter(
+    xsuaa => xsuaa.credentials.clientid === token.client_id
+  );
 }
 
-function matchingAudience(xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
+function matchingAudience(
+  xsuaaInstances: MapType<any>[],
+  token?: DecodedJWT
+): MapType<any>[] {
   if (!token) {
     return [];
   }
-  return xsuaaInstances.filter(xsuaa => audiences(token).has(xsuaa.credentials.xsappname));
+  return xsuaaInstances.filter(xsuaa =>
+    audiences(token).has(xsuaa.credentials.xsappname)
+  );
 }
 
-function takeFirstAndWarn(xsuaaInstances: MapType<any>[], token?: DecodedJWT): MapType<any>[] {
+function takeFirstAndWarn(
+  xsuaaInstances: MapType<any>[],
+  token?: DecodedJWT
+): MapType<any>[] {
   logger.warn(
     `Unable to match a specific XSUAA service instance to the given JWT. The following XSUAA instances are bound: ${xsuaaInstances.map(
       x => x.credentials.xsappname
-    )}. The following one will be selected: ${xsuaaInstances[0].credentials.xsappname}. This might produce errors in other parts of the system!`
+    )}. The following one will be selected: ${
+      xsuaaInstances[0].credentials.xsappname
+    }. This might produce errors in other parts of the system!`
   );
   return xsuaaInstances.slice(0, 1);
 }

@@ -1,5 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { toPropertyFormat, toStaticPropertyFormat, toTitleFormat, toTypeNameFormat } from '../../src';
+import {
+  toPropertyFormat,
+  toStaticPropertyFormat,
+  toTitleFormat,
+  toTypeNameFormat
+} from '../../src';
 
 describe('converts names', () => {
   describe('from original names to static field names', () => {
@@ -48,23 +53,33 @@ describe('converts names', () => {
 
   describe('from property names to static field names', () => {
     it('for camel case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('fieldName'))).toBe('FIELD_NAME');
+      expect(toStaticPropertyFormat(toPropertyFormat('fieldName'))).toBe(
+        'FIELD_NAME'
+      );
     });
 
     it('for pascal case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('FieldName'))).toBe('FIELD_NAME');
+      expect(toStaticPropertyFormat(toPropertyFormat('FieldName'))).toBe(
+        'FIELD_NAME'
+      );
     });
 
     it('for snake case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('field_name'))).toBe('FIELD_NAME');
+      expect(toStaticPropertyFormat(toPropertyFormat('field_name'))).toBe(
+        'FIELD_NAME'
+      );
     });
 
     it('for kebab case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('field-name'))).toBe('FIELD_NAME');
+      expect(toStaticPropertyFormat(toPropertyFormat('field-name'))).toBe(
+        'FIELD_NAME'
+      );
     });
 
     it('for properties with numbers', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('Field13Name'))).toBe('FIELD_13_NAME');
+      expect(toStaticPropertyFormat(toPropertyFormat('Field13Name'))).toBe(
+        'FIELD_13_NAME'
+      );
     });
   });
 

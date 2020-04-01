@@ -31,8 +31,8 @@
     "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
-    "rambda": "2.14.5",
+    "chalk": "^3.0.0",
+    "rambda": "^5.0.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -40,6 +40,6 @@
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "ts-jest": "^25.2.1",
-    "typescript": "3.7.4"
+    "typescript": "~3.8.3"
   }
 }

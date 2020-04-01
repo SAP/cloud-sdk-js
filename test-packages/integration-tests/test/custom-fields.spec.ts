@@ -26,7 +26,9 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
     });
 }
 
-const getAllResponseWithCustomField = injectCustomField(testEntityCollectionResponse());
+const getAllResponseWithCustomField = injectCustomField(
+  testEntityCollectionResponse()
+);
 
 const destination: Destination = {
   url: 'https://example.com',
@@ -83,15 +85,15 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$filter=(MyCustomField%20eq%20%27ToMatch%27)`)
+      .get(
+        `${servicePath}/${entityName}?$format=json&$filter=(MyCustomField%20eq%20%27ToMatch%27)`
+      )
       .reply(200, getAllResponseWithCustomField);
 
     const request = TestEntity.requestBuilder()
       .getAll()
       .filter(
-        TestEntity.customField('MyCustomField')
-          .edmString()
-          .equals('ToMatch')
+        TestEntity.customField('MyCustomField').edmString().equals('ToMatch')
       )
       .execute(destination);
 
@@ -119,9 +121,12 @@ describe('Custom Fields', () => {
         cookie: 'key1=val1;key2=val2;key3=val3'
       }
     })
-      .patch(`${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`, {
-        MyCustomField: 'NewValue'
-      })
+      .patch(
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`,
+        {
+          MyCustomField: 'NewValue'
+        }
+      )
       .reply(204);
 
     const entities = await TestEntity.requestBuilder()

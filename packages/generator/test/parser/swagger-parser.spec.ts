@@ -3,7 +3,9 @@ import { parseSwaggerFromPath } from '../../src/parser';
 
 describe('swagger-parser', () => {
   it('parseSwaggerFromPath should parse service info', () => {
-    const json = parseSwaggerFromPath('../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.json');
+    const json = parseSwaggerFromPath(
+      '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.json'
+    );
     expect(json).toBeDefined();
     expect(json.info).toEqual({
       title: 'Test Service Title (Swagger)',

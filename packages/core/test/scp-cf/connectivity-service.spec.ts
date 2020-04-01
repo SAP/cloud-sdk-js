@@ -2,8 +2,15 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src';
 import { addProxyConfiguration } from '../../src/scp-cf/connectivity-service';
-import { mockConnectivityServiceBinding, mockedConnectivityServiceProxyConfig, mockServiceBindings } from '../test-util/environment-mocks';
-import { providerServiceToken, providerUserJwt } from '../test-util/mocked-access-tokens';
+import {
+  mockConnectivityServiceBinding,
+  mockedConnectivityServiceProxyConfig,
+  mockServiceBindings
+} from '../test-util/environment-mocks';
+import {
+  providerServiceToken,
+  providerUserJwt
+} from '../test-util/mocked-access-tokens';
 import { mockServiceToken } from '../test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '../test-util/xsuaa-service-mocks';
 
@@ -96,17 +103,27 @@ describe('connectivity-service', () => {
     });
 
     addProxyConfiguration({ url: '' }).catch(error => {
-      expect(error.message).toBe('Failed to add proxy authorization header - client credentials grant failed!');
+      expect(error.message).toBe(
+        'Failed to add proxy authorization header - client credentials grant failed!'
+      );
       done();
     });
   });
 
   it('throws an error if the client credentials grant fails', done => {
     mockServiceBindings();
-    mockClientCredentialsGrantCall('https://provider.example.com', { error: 'nope' }, 500, 'clientid', 'clientsecret');
+    mockClientCredentialsGrantCall(
+      'https://provider.example.com',
+      { error: 'nope' },
+      500,
+      'clientid',
+      'clientsecret'
+    );
 
     addProxyConfiguration({ url: '' }).catch(error => {
-      expect(error.message).toContain('Failed to add proxy authorization header');
+      expect(error.message).toContain(
+        'Failed to add proxy authorization header'
+      );
       done();
     });
   });

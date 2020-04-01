@@ -1,5 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { FunctionImportParameter, ODataFunctionImportRequestConfig } from '../../../src';
+import {
+  FunctionImportParameter,
+  ODataFunctionImportRequestConfig
+} from '../../../src';
 
 interface TestParameterType {
   test1: string;
@@ -18,12 +21,21 @@ describe('ODataFunctionImportRequestConfig', () => {
 
   const mappedParameters = {
     test1: new FunctionImportParameter('Test1', 'Edm.String', parameters.test1),
-    test2: new FunctionImportParameter('Test2', 'Edm.Boolean', parameters.test2),
+    test2: new FunctionImportParameter(
+      'Test2',
+      'Edm.Boolean',
+      parameters.test2
+    ),
     test3: new FunctionImportParameter('Test3', 'Edm.Double', parameters.test3)
   };
 
   beforeEach(() => {
-    config = new ODataFunctionImportRequestConfig('get', 'somePath', 'Config', mappedParameters);
+    config = new ODataFunctionImportRequestConfig(
+      'get',
+      'somePath',
+      'Config',
+      mappedParameters
+    );
   });
 
   it('resourcePath is the funtion import name', () => {

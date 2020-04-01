@@ -14,25 +14,36 @@ describe('get resource path', () => {
   it('adds keys to path', () => {
     const keyPropGuid = uuid();
     const keyPropString = 'keyProp';
-    const keys = { KeyPropertyGuid: keyPropGuid, KeyPropertyString: keyPropString };
+    const keys = {
+      KeyPropertyGuid: keyPropGuid,
+      KeyPropertyString: keyPropString
+    };
 
-    expect(getResourcePathForKeys(keys, TestEntity)).toEqual(testEntityResourcePath(keyPropGuid, keyPropString));
+    expect(getResourcePathForKeys(keys, TestEntity)).toEqual(
+      testEntityResourcePath(keyPropGuid, keyPropString)
+    );
   });
 
   it('throws error if no keys set', () => {
-    expect(() => getResourcePathForKeys(undefined, TestEntity)).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      getResourcePathForKeys(undefined, TestEntity)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('throws error if not all keys are set', () => {
     const keys = { KeyPropertyGuid: uuid() };
 
-    expect(() => getResourcePathForKeys(keys, TestEntity)).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      getResourcePathForKeys(keys, TestEntity)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('throws error if keys are nullish', () => {
     const keys = { KeyPropertyGuid: null, KeyPropertyString: undefined };
 
-    expect(() => getResourcePathForKeys(keys, TestEntity)).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      getResourcePathForKeys(keys, TestEntity)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('allows values to be empty string', () => {
@@ -44,9 +55,15 @@ describe('get resource path', () => {
   it('ignores additional properties and logs a warning', () => {
     const logger = createLogger('get-resource-path');
     const warnSpy = jest.spyOn(logger, 'warn');
-    const keys = { KeyPropertyGuid: uuid(), KeyPropertyString: '', StringProperty: 'test' };
+    const keys = {
+      KeyPropertyGuid: uuid(),
+      KeyPropertyString: '',
+      StringProperty: 'test'
+    };
 
     expect(() => getResourcePathForKeys(keys, TestEntity)).not.toThrow();
-    expect(warnSpy).toBeCalledWith('There are too many key properties. Ignoring the following keys: StringProperty');
+    expect(warnSpy).toBeCalledWith(
+      'There are too many key properties. Ignoring the following keys: StringProperty'
+    );
   });
 });

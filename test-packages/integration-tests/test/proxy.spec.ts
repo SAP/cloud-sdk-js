@@ -1,9 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { Destination, executeHttpRequest, HttpMethod, HttpResponse, Protocol } from '@sap-cloud-sdk/core';
-import { setTestDestination, unmockTestDestination } from '@sap-cloud-sdk/test-util';
+import {
+  Destination,
+  executeHttpRequest,
+  HttpMethod,
+  HttpResponse,
+  Protocol
+} from '@sap-cloud-sdk/core';
+import {
+  setTestDestination,
+  unmockTestDestination
+} from '@sap-cloud-sdk/test-util';
 import { MapType } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { ODataRequest, ODataRequestConfig } from '../../../packages/core/src/request-builder/request';
+import {
+  ODataRequest,
+  ODataRequestConfig
+} from '../../../packages/core/src/request-builder/request';
 import mockserver = require('mockserver-node');
 
 describe('proxy', () => {
@@ -30,7 +42,9 @@ describe('proxy', () => {
   });
 
   beforeEach(async () => {
-    const response = await axios.put('http://localhost:1080/mockserver/clear?type=log');
+    const response = await axios.put(
+      'http://localhost:1080/mockserver/clear?type=log'
+    );
     expect(response.status).toBe(200);
     unmockTestDestination(destination.name as string);
     delete process.env.VCAP_SERVICES;
@@ -141,25 +155,37 @@ describe('proxy', () => {
   }, 10000);
 });
 
-const expectedStringsAfterRequest = ['example.com', 'for forwarded request', 'This domain is for use in illustrative examples in documents.'];
+const expectedStringsAfterRequest = [
+  'example.com',
+  'for forwarded request',
+  'This domain is for use in illustrative examples in documents.'
+];
 
 async function checkProxyServerLogsClean() {
   const serverLogsBeforCall = await getMockServerLogs();
-  expectedStringsAfterRequest.forEach(expected => expect(serverLogsBeforCall).not.toContain(expected));
+  expectedStringsAfterRequest.forEach(expected =>
+    expect(serverLogsBeforCall).not.toContain(expected)
+  );
 }
 
 async function checkResponse(response: HttpResponse) {
   expect(response.status).toBe(200);
-  expect(response.data).toContain('This domain is for use in illustrative examples in documents.');
+  expect(response.data).toContain(
+    'This domain is for use in illustrative examples in documents.'
+  );
 }
 
 async function checkProxyServerWasUsed() {
   const serverLogsAfterCall = await getMockServerLogs();
-  expectedStringsAfterRequest.forEach(expected => expect(serverLogsAfterCall).toContain(expected));
+  expectedStringsAfterRequest.forEach(expected =>
+    expect(serverLogsAfterCall).toContain(expected)
+  );
 }
 
 async function getMockServerLogs(): Promise<string> {
-  return (await axios.put('http://localhost:1080/mockserver/retrieve?type=logs')).data;
+  return (
+    await axios.put('http://localhost:1080/mockserver/retrieve?type=logs')
+  ).data;
 }
 
 async function startProxyServer(port: number) {

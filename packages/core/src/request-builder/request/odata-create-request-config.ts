@@ -12,7 +12,9 @@ import { ODataRequestConfig } from './odata-request-config';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataCreateRequestConfig<EntityT extends Entity> extends ODataRequestConfig {
+export class ODataCreateRequestConfig<
+  EntityT extends Entity
+> extends ODataRequestConfig {
   /**
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
    */
@@ -32,7 +34,9 @@ export class ODataCreateRequestConfig<EntityT extends Entity> extends ODataReque
   }
 
   resourcePath(): string {
-    return this.parentKeys === undefined ? this._entityConstructor._entityName : this.resourcePathAsChild();
+    return this.parentKeys === undefined
+      ? this._entityConstructor._entityName
+      : this.resourcePathAsChild();
   }
 
   queryParameters(): MapType<any> {
@@ -40,6 +44,13 @@ export class ODataCreateRequestConfig<EntityT extends Entity> extends ODataReque
   }
 
   protected resourcePathAsChild() {
-    return getResourcePathForKeys(this.parentKeys, this.childField._entityConstructor) + '/' + this.childField._fieldName;
+    return (
+      getResourcePathForKeys(
+        this.parentKeys,
+        this.childField._entityConstructor
+      ) +
+      '/' +
+      this.childField._fieldName
+    );
   }
 }

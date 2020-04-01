@@ -1,5 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { providerXsuaaUrl, subscriberXsuaaUrl, TestTenants } from './environment-mocks';
+import {
+  providerXsuaaUrl,
+  subscriberXsuaaUrl,
+  TestTenants
+} from './environment-mocks';
 import { signedJwt } from './keys';
 
 const iat = Math.floor(Date.now() / 1000);
@@ -29,7 +33,9 @@ const userApprovedProviderTokenPayload = {
   user_id: 'service-prov-approvded'
 };
 
-export const userApprovedProviderServiceToken = signedJwt(userApprovedProviderTokenPayload);
+export const userApprovedProviderServiceToken = signedJwt(
+  userApprovedProviderTokenPayload
+);
 
 const userApprovedSubscriberTokenPayload = {
   iat,
@@ -38,7 +44,9 @@ const userApprovedSubscriberTokenPayload = {
   user_id: 'service-sub-approvded'
 };
 
-export const userApprovedSubscriberServiceToken = signedJwt(userApprovedSubscriberTokenPayload);
+export const userApprovedSubscriberServiceToken = signedJwt(
+  userApprovedSubscriberTokenPayload
+);
 
 const providerUserPayload = {
   iat,

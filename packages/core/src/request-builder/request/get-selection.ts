@@ -16,7 +16,9 @@ interface SelectionQueryParameters {
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getQueryParametersForSelection<EntityT extends Entity>(selects: Selectable<EntityT>[]): Partial<{ select: string; expand: string }> {
+export function getQueryParametersForSelection<EntityT extends Entity>(
+  selects: Selectable<EntityT>[]
+): Partial<{ select: string; expand: string }> {
   const queryParameters: Partial<SelectionQueryParameters> = {};
 
   if (selects && selects.length) {
@@ -34,17 +36,19 @@ export function getQueryParametersForSelection<EntityT extends Entity>(selects: 
 }
 
 function selectionLevel(select: string): string {
-  return select
-    .split('/')
-    .slice(0, -1)
-    .join('/');
+  return select.split('/').slice(0, -1).join('/');
 }
 
 function filterSelects(selects: string[]): string[] {
   const allFieldSelects = selects.filter(select => select.endsWith('*'));
   const selectionLevels = allFieldSelects.map(select => selectionLevel(select));
 
-  return [...allFieldSelects, ...selects.filter(select => !selectionLevels.includes(selectionLevel(select)))];
+  return [
+    ...allFieldSelects,
+    ...selects.filter(
+      select => !selectionLevels.includes(selectionLevel(select))
+    )
+  ];
 }
 
 function combineSelection<EntityT extends Entity>(

@@ -5,9 +5,15 @@ import * as fs from 'fs-extra';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(process.cwd(), 'src/generator-cli.ts');
-  const inputDir = path.resolve(process.cwd(), '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx');
+  const inputDir = path.resolve(
+    process.cwd(),
+    '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
+  );
   const outputDir = path.resolve(process.cwd(), 'test/generator-test-output');
-  const pathToGeneratorPackageJson = path.resolve(process.cwd(), 'package.json');
+  const pathToGeneratorPackageJson = path.resolve(
+    process.cwd(),
+    'package.json'
+  );
 
   beforeEach(() => {
     if (!fs.existsSync(outputDir)) {
@@ -23,12 +29,21 @@ describe('generator-cli', () => {
     try {
       await execa('npx', ['ts-node', pathToGenerator]);
     } catch (err) {
-      expect(err.stderr).toContain('Missing required arguments: inputDir, outputDir');
+      expect(err.stderr).toContain(
+        'Missing required arguments: inputDir, outputDir'
+      );
     }
   }, 60000);
 
   it('should generate VDM if all arguments are there', async () => {
-    await execa('npx', ['ts-node', pathToGenerator, '-i', inputDir, '-o', outputDir]);
+    await execa('npx', [
+      'ts-node',
+      pathToGenerator,
+      '-i',
+      inputDir,
+      '-o',
+      outputDir
+    ]);
     const services = fs.readdirSync(outputDir);
     expect(services.length).toBeGreaterThan(0);
     const entities = fs.readdirSync(path.resolve(outputDir, services[0]));

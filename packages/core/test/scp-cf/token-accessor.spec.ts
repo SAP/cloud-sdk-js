@@ -1,11 +1,28 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { clientCredentialsTokenCache } from '../../src';
-import { serviceToken, userApprovedServiceToken } from '../../src/scp-cf/token-accessor';
-import { mockDestinationServiceBinding, mockServiceBindings, providerXsuaaUrl, subscriberXsuaaUrl } from '../test-util/environment-mocks';
+import {
+  serviceToken,
+  userApprovedServiceToken
+} from '../../src/scp-cf/token-accessor';
+import {
+  mockDestinationServiceBinding,
+  mockServiceBindings,
+  providerXsuaaUrl,
+  subscriberXsuaaUrl
+} from '../test-util/environment-mocks';
 import { signedJwt } from '../test-util/keys';
-import { providerServiceToken, providerUserJwt, subscriberServiceToken, subscriberUserJwt } from '../test-util/mocked-access-tokens';
-import { mockClientCredentialsGrantCall, mockRefreshTokenGrantCall, mockUserTokenGrantCall } from '../test-util/xsuaa-service-mocks';
+import {
+  providerServiceToken,
+  providerUserJwt,
+  subscriberServiceToken,
+  subscriberUserJwt
+} from '../test-util/mocked-access-tokens';
+import {
+  mockClientCredentialsGrantCall,
+  mockRefreshTokenGrantCall,
+  mockUserTokenGrantCall
+} from '../test-util/xsuaa-service-mocks';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {
@@ -61,14 +78,19 @@ describe('token accessor', () => {
         mockDestinationServiceBinding.credentials.clientsecret
       );
 
-      const retrieveFromCacheSpy = jest.spyOn(clientCredentialsTokenCache, 'getGrantTokenFromCache');
+      const retrieveFromCacheSpy = jest.spyOn(
+        clientCredentialsTokenCache,
+        'getGrantTokenFromCache'
+      );
 
       const first = await serviceToken('destination');
       const second = await serviceToken('destination');
       expect(first).toBe(expected);
       expect(second).toBe(first);
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(2);
-      expect(retrieveFromCacheSpy).toHaveNthReturnedWith(2, { access_token: expected });
+      expect(retrieveFromCacheSpy).toHaveNthReturnedWith(2, {
+        access_token: expected
+      });
     });
 
     it('cached tokens are isolated by tenant and by service credentials', async () => {
@@ -88,33 +110,49 @@ describe('token accessor', () => {
         mockDestinationServiceBinding.credentials.clientsecret
       );
 
-      const providerToken = await serviceToken('destination', { userJwt: providerUserJwt });
-      const subscriberToken = await serviceToken('destination', { userJwt: subscriberUserJwt });
+      const providerToken = await serviceToken('destination', {
+        userJwt: providerUserJwt
+      });
+      const subscriberToken = await serviceToken('destination', {
+        userJwt: subscriberUserJwt
+      });
 
-      const providerTokenFromCache = clientCredentialsTokenCache.getGrantTokenFromCache(providerXsuaaUrl, {
-        username: mockDestinationServiceBinding.credentials.clientid,
-        password: mockDestinationServiceBinding.credentials.clientsecret
-      });
-      const subscriberTokenFromCache = clientCredentialsTokenCache.getGrantTokenFromCache(subscriberXsuaaUrl, {
-        username: mockDestinationServiceBinding.credentials.clientid,
-        password: mockDestinationServiceBinding.credentials.clientsecret
-      });
+      const providerTokenFromCache = clientCredentialsTokenCache.getGrantTokenFromCache(
+        providerXsuaaUrl,
+        {
+          username: mockDestinationServiceBinding.credentials.clientid,
+          password: mockDestinationServiceBinding.credentials.clientsecret
+        }
+      );
+      const subscriberTokenFromCache = clientCredentialsTokenCache.getGrantTokenFromCache(
+        subscriberXsuaaUrl,
+        {
+          username: mockDestinationServiceBinding.credentials.clientid,
+          password: mockDestinationServiceBinding.credentials.clientsecret
+        }
+      );
 
       expect(providerTokenFromCache!.access_token).toEqual(providerToken);
       expect(subscriberTokenFromCache!.access_token).toEqual(subscriberToken);
 
       expect(
-        clientCredentialsTokenCache.getGrantTokenFromCache('https://doesnotexist.example.com', {
-          username: mockDestinationServiceBinding.credentials.clientid,
-          password: mockDestinationServiceBinding.credentials.clientsecret
-        })
+        clientCredentialsTokenCache.getGrantTokenFromCache(
+          'https://doesnotexist.example.com',
+          {
+            username: mockDestinationServiceBinding.credentials.clientid,
+            password: mockDestinationServiceBinding.credentials.clientsecret
+          }
+        )
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getGrantTokenFromCache('https://doesnotexist.example.com', {
-          username: 'schmusername',
-          password: 'aligator3'
-        })
+        clientCredentialsTokenCache.getGrantTokenFromCache(
+          'https://doesnotexist.example.com',
+          {
+            username: 'schmusername',
+            password: 'aligator3'
+          }
+        )
       ).toBeUndefined();
 
       expect(
@@ -152,7 +190,10 @@ describe('token accessor', () => {
         mockDestinationServiceBinding.credentials.clientsecret
       );
 
-      const retrieveFromCacheSpy = jest.spyOn(clientCredentialsTokenCache, 'getGrantTokenFromCache');
+      const retrieveFromCacheSpy = jest.spyOn(
+        clientCredentialsTokenCache,
+        'getGrantTokenFromCache'
+      );
 
       const first = await serviceToken('destination', { useCache: false });
       const second = await serviceToken('destination', { useCache: false });
@@ -178,7 +219,9 @@ describe('token accessor', () => {
           done('Should have failed.');
         })
         .catch(error => {
-          expect(error.message).toBe('Fetching an access token for service "destination" failed!');
+          expect(error.message).toBe(
+            'Fetching an access token for service "destination" failed!'
+          );
           done();
         });
     });
@@ -208,7 +251,9 @@ describe('token accessor', () => {
           done('Should have failed.');
         })
         .catch(error => {
-          expect(error.message).toBe('Unable to get access token for "destination" service! No service instance of type "destination" found.');
+          expect(error.message).toBe(
+            'Unable to get access token for "destination" service! No service instance of type "destination" found.'
+          );
           done();
         });
     });
@@ -221,7 +266,9 @@ describe('token accessor', () => {
           done('Should have failed.');
         })
         .catch(error => {
-          expect(error.message).toBe('Property "iss" is missing from the provided user token! This shouldn\'t happen.');
+          expect(error.message).toBe(
+            'Property "iss" is missing from the provided user token! This shouldn\'t happen.'
+          );
           done();
         });
     });
@@ -275,7 +322,8 @@ describe('token accessor', () => {
         'https://testeroni.example.com',
         {
           error: 'invalid_token',
-          error_description: 'Invalid access token: expired at Mon Jan 21 16:10:40 UTC 2019'
+          error_description:
+            'Invalid access token: expired at Mon Jan 21 16:10:40 UTC 2019'
         },
         401,
         userJwt,
@@ -287,8 +335,12 @@ describe('token accessor', () => {
           done('Should have failed.');
         })
         .catch(error => {
-          expect(error.message).toBe('Fetching a user approved access token for service "destination" failed!');
-          expect(error.stack.toLowerCase()).toContain('user token grant failed');
+          expect(error.message).toBe(
+            'Fetching a user approved access token for service "destination" failed!'
+          );
+          expect(error.stack.toLowerCase()).toContain(
+            'user token grant failed'
+          );
           done();
         });
     });
@@ -311,7 +363,8 @@ describe('token accessor', () => {
         'https://testeroni.example.com',
         {
           error: 'invalid_token',
-          error_description: 'Invalid access token: expired at Mon Jan 21 16:10:40 UTC 2019'
+          error_description:
+            'Invalid access token: expired at Mon Jan 21 16:10:40 UTC 2019'
         },
         401,
         refreshToken,
@@ -324,8 +377,12 @@ describe('token accessor', () => {
           done('Should have failed.');
         })
         .catch(error => {
-          expect(error.message).toBe('Fetching a user approved access token for service "destination" failed!');
-          expect(error.stack.toLowerCase()).toContain('refresh token grant failed');
+          expect(error.message).toBe(
+            'Fetching a user approved access token for service "destination" failed!'
+          );
+          expect(error.stack.toLowerCase()).toContain(
+            'refresh token grant failed'
+          );
           done();
         });
     });
@@ -357,7 +414,9 @@ describe('token accessor', () => {
           done('Should have failed.');
         })
         .catch(error => {
-          expect(error.message).toBe('Unable to get access token for "destination" service! No service instance of type "destination" found.');
+          expect(error.message).toBe(
+            'Unable to get access token for "destination" service! No service instance of type "destination" found.'
+          );
           done();
         });
     });
@@ -370,7 +429,9 @@ describe('token accessor', () => {
           done('Should have failed.');
         })
         .catch(error => {
-          expect(error.message).toBe('Property "iss" is missing from the provided user token! This shouldn\'t happen.');
+          expect(error.message).toBe(
+            'Property "iss" is missing from the provided user token! This shouldn\'t happen.'
+          );
           done();
         });
     });

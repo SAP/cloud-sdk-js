@@ -2,9 +2,18 @@
 import HttpProxyAgent = require('http-proxy-agent');
 import HttpsProxyAgent = require('https-proxy-agent');
 import * as https from 'https';
-import { Destination, getAgentConfig, getProtocolOrDefault, getUrlProtocol, Protocol } from '../../src';
+import {
+  Destination,
+  getAgentConfig,
+  getProtocolOrDefault,
+  getUrlProtocol,
+  Protocol
+} from '../../src';
 import { proxyAgent } from '../../src/util/proxy-util';
-import { mockedConnectivityServiceProxyConfig, mockedConnectivityServiceProxyURL } from '../test-util/environment-mocks';
+import {
+  mockedConnectivityServiceProxyConfig,
+  mockedConnectivityServiceProxyURL
+} from '../test-util/environment-mocks';
 
 describe('createAgent', () => {
   const baseDestination: Destination = {
@@ -34,47 +43,72 @@ describe('createAgent', () => {
   });
 
   it('returns a proxy agent if there is a proxy setting on the destination', () => {
-    expect(getAgentConfig(proxyDestination)['httpsAgent']).toEqual(new HttpsProxyAgent(mockedConnectivityServiceProxyURL));
+    expect(getAgentConfig(proxyDestination)['httpsAgent']).toEqual(
+      new HttpsProxyAgent(mockedConnectivityServiceProxyURL)
+    );
   });
 
   it('returns a trustAll agent if TrustAll is configured', () => {
     // For some reason deepEqual does not work on https.Agent
-    const actual = getAgentConfig(trustAllDestination)['httpsAgent'] as https.Agent;
+    const actual = getAgentConfig(trustAllDestination)[
+      'httpsAgent'
+    ] as https.Agent;
     expect(actual.options.rejectUnauthorized).toBeFalsy();
   });
 
   it('returns a HTTP agent if a destination with http protocol URL is provided', () => {
     const destHttp = { url: 'http://localhost' };
-    expect(getAgentConfig(destHttp)['httpAgent']).toHaveProperty('protocol', 'http:');
+    expect(getAgentConfig(destHttp)['httpAgent']).toHaveProperty(
+      'protocol',
+      'http:'
+    );
   });
 
   it('returns a HTTP agent when passing HTTP destination with isTrustAll', () => {
-    const destHttp = { url: 'http://localhost', isTrustingAllCertificates: true };
-    expect(getAgentConfig(destHttp)['httpAgent']).toHaveProperty('protocol', 'http:');
+    const destHttp = {
+      url: 'http://localhost',
+      isTrustingAllCertificates: true
+    };
+    expect(getAgentConfig(destHttp)['httpAgent']).toHaveProperty(
+      'protocol',
+      'http:'
+    );
   });
 
   it('returns a proxy agent if a proxy setting and TrustAll are BOTH configured', () => {
-    expect(getAgentConfig({ ...proxyDestination, ...trustAllDestination })['httpsAgent']).toEqual(
-      new HttpsProxyAgent(mockedConnectivityServiceProxyURL)
-    );
+    expect(
+      getAgentConfig({ ...proxyDestination, ...trustAllDestination })[
+        'httpsAgent'
+      ]
+    ).toEqual(new HttpsProxyAgent(mockedConnectivityServiceProxyURL));
   });
 
   it('should return the http protocol', () => {
     expect(getUrlProtocol({ url: 'http://test.com' })).toBe(Protocol.HTTP);
     expect(getUrlProtocol({ url: 'https://test.com' })).toBe(Protocol.HTTPS);
     expect(getUrlProtocol({ url: 'noProtocol.com' })).toBe(undefined);
-    expect(getUrlProtocol({ url: 'rfc://unsupportedProtocol.com' })).toBe('rfc');
+    expect(getUrlProtocol({ url: 'rfc://unsupportedProtocol.com' })).toBe(
+      'rfc'
+    );
     expect(getUrlProtocol({ url: '://missingProtocol.com' })).toBe('');
 
-    expect(getProtocolOrDefault({ url: 'http://test.com' })).toBe(Protocol.HTTP);
-    expect(getProtocolOrDefault({ url: 'https://test.com' })).toBe(Protocol.HTTPS);
+    expect(getProtocolOrDefault({ url: 'http://test.com' })).toBe(
+      Protocol.HTTP
+    );
+    expect(getProtocolOrDefault({ url: 'https://test.com' })).toBe(
+      Protocol.HTTPS
+    );
     expect(getProtocolOrDefault({ url: 'default.com' })).toBe(Protocol.HTTPS);
 
     expect(() => getProtocolOrDefault({ url: '://test.com' })).toThrowError(
-      new Error('Protocol of the provided destination (://test.com) is not supported! Currently only HTTP and HTTPS are supported.')
+      new Error(
+        'Protocol of the provided destination (://test.com) is not supported! Currently only HTTP and HTTPS are supported.'
+      )
     );
     expect(() => getProtocolOrDefault({ url: 'rfc://test.com' })).toThrowError(
-      new Error('Protocol of the provided destination (rfc://test.com) is not supported! Currently only HTTP and HTTPS are supported.')
+      new Error(
+        'Protocol of the provided destination (rfc://test.com) is not supported! Currently only HTTP and HTTPS are supported.'
+      )
     );
   });
 
@@ -88,7 +122,9 @@ describe('createAgent', () => {
         headers: undefined
       }
     };
-    expect(proxyAgent(destHttpWithProxy)['httpAgent']).toStrictEqual(new HttpProxyAgent('https://some.host.com:4711'));
+    expect(proxyAgent(destHttpWithProxy)['httpAgent']).toStrictEqual(
+      new HttpProxyAgent('https://some.host.com:4711')
+    );
 
     const destHttpsWithProxy: Destination = {
       url: 'https://example.com',
@@ -99,7 +135,9 @@ describe('createAgent', () => {
         headers: undefined
       }
     };
-    expect(proxyAgent(destHttpsWithProxy)['httpsAgent']).toStrictEqual(new HttpsProxyAgent('http://some.host.com:4711'));
+    expect(proxyAgent(destHttpsWithProxy)['httpsAgent']).toStrictEqual(
+      new HttpsProxyAgent('http://some.host.com:4711')
+    );
   });
 
   it('returns an agent with certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', () => {
@@ -123,7 +161,9 @@ describe('createAgent', () => {
       pfx: Buffer.from('base64string', 'base64')
     };
 
-    expect(getAgentConfig(destination)['httpsAgent']['options']).toMatchObject(expectedOptions);
+    expect(getAgentConfig(destination)['httpsAgent']['options']).toMatchObject(
+      expectedOptions
+    );
   });
 
   it('throws an error if the format is not supported', () => {
@@ -161,7 +201,9 @@ describe('createAgent', () => {
       ]
     };
 
-    expect(() => getAgentConfig(destination)).toThrowError('No certificate with name cert.pfx could be found on the destination!');
+    expect(() => getAgentConfig(destination)).toThrowError(
+      'No certificate with name cert.pfx could be found on the destination!'
+    );
   });
 
   // Check coverage

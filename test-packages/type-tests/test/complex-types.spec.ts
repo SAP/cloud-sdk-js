@@ -1,6 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { and, asc, desc, or } from '@sap-cloud-sdk/core';
-import { TestComplexType, TestEntity } from '@sap-cloud-sdk/test-services/test-service';
+import {
+  TestComplexType,
+  TestEntity
+} from '@sap-cloud-sdk/test-services/test-service';
 
 // $ExpectType TestComplexTypeField<TestEntity>
 TestEntity.COMPLEX_TYPE_PROPERTY;
@@ -21,19 +24,30 @@ getAllTSE.select(TestEntity.COMPLEX_TYPE_PROPERTY);
 getAllTSE.select(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty);
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-getAllTSE.filter(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'));
-
-// $ExpectType GetAllRequestBuilder<TestEntity>
-getAllTSE.filter(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'), TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test'));
-
-// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.filter(
-  and(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'), TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test'))
+  TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test')
 );
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.filter(
-  or(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'), TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test'))
+  TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
+  TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
+);
+
+// $ExpectType GetAllRequestBuilder<TestEntity>
+getAllTSE.filter(
+  and(
+    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
+    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
+  )
+);
+
+// $ExpectType GetAllRequestBuilder<TestEntity>
+getAllTSE.filter(
+  or(
+    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
+    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
+  )
 );
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
@@ -43,7 +57,10 @@ getAllTSE.orderBy(asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty));
 getAllTSE.orderBy(desc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty));
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-getAllTSE.orderBy(asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty), desc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty));
+getAllTSE.orderBy(
+  asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty),
+  desc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty)
+);
 
 getAllTSE.orderBy(
   asc(TestEntity.COMPLEX_TYPE_PROPERTY) // $ExpectError

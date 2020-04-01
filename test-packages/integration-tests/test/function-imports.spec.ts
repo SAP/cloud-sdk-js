@@ -51,7 +51,9 @@ describe('Function imports', () => {
       .get(`${servicePath}/TestFunctionImportEdmReturnType?$format=json`)
       .reply(200, singleTestEntityResponse());
 
-    const request = functionImports.testFunctionImportEdmReturnType({}).execute(destination);
+    const request = functionImports
+      .testFunctionImportEdmReturnType({})
+      .execute(destination);
     await expect(request).resolves.not.toThrow();
   });
 
@@ -68,7 +70,9 @@ describe('Function imports', () => {
       .get(`${servicePath}/TestFunctionImportEdmReturnType?$format=json`)
       .reply(400, errorResponse());
 
-    const request = functionImports.testFunctionImportEdmReturnType({}).execute(destination);
+    const request = functionImports
+      .testFunctionImportEdmReturnType({})
+      .execute(destination);
     await expect(request).rejects.toThrowErrorMatchingSnapshot();
   });
 });

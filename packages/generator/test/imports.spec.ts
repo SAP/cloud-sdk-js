@@ -10,7 +10,10 @@ import {
   mergeImportDeclarations
 } from '../src/imports';
 import { VdmNavigationProperty, VdmProperty } from '../src/vdm-types';
-import { bigNumberImport, momentImport } from './test-util/import-declaration-structures';
+import {
+  bigNumberImport,
+  momentImport
+} from './test-util/import-declaration-structures';
 
 const momentProperty = {
   jsType: 'Moment',
@@ -53,44 +56,78 @@ const oneToOneLink = {
 describe('imports', () => {
   describe('external import declarations', () => {
     it('are empty when properties do not have external types', () => {
-      expect(externalImportDeclarations([stringProperty, numberProperty]).length).toBe(0);
+      expect(
+        externalImportDeclarations([stringProperty, numberProperty]).length
+      ).toBe(0);
     });
 
     it('contain all imports when properties have all external types', () => {
-      expect(externalImportDeclarations([stringProperty, momentProperty, numberProperty, bigNumberProperty])).toEqual([
-        momentImport,
-        bigNumberImport
-      ]);
+      expect(
+        externalImportDeclarations([
+          stringProperty,
+          momentProperty,
+          numberProperty,
+          bigNumberProperty
+        ])
+      ).toEqual([momentImport, bigNumberImport]);
     });
 
     it('do not contain duplicates when multiple properties have the same external types', () => {
-      expect(externalImportDeclarations([stringProperty, momentProperty, momentProperty, momentProperty])).toEqual([momentImport]);
+      expect(
+        externalImportDeclarations([
+          stringProperty,
+          momentProperty,
+          momentProperty,
+          momentProperty
+        ])
+      ).toEqual([momentImport]);
     });
   });
 
   describe('core import name list', () => {
     it('contains time property when there is a time property', () => {
-      expect(corePropertyTypeImportNames([stringProperty, timeProperty, momentProperty, timeProperty])).toEqual(['Time']);
+      expect(
+        corePropertyTypeImportNames([
+          stringProperty,
+          timeProperty,
+          momentProperty,
+          timeProperty
+        ])
+      ).toEqual(['Time']);
     });
 
     it('does not contain time property when there is no time property', () => {
-      expect(corePropertyTypeImportNames([stringProperty, momentProperty, numberProperty]).length).toBe(0);
+      expect(
+        corePropertyTypeImportNames([
+          stringProperty,
+          momentProperty,
+          numberProperty
+        ]).length
+      ).toBe(0);
     });
 
     it('contains unique field name imports', () => {
-      expect(corePropertyFieldTypeImportNames([stringProperty, timeProperty, stringProperty, momentProperty, timeProperty])).toEqual([
-        'StringField',
-        'TimeField',
-        'DateField'
-      ]);
+      expect(
+        corePropertyFieldTypeImportNames([
+          stringProperty,
+          timeProperty,
+          stringProperty,
+          momentProperty,
+          timeProperty
+        ])
+      ).toEqual(['StringField', 'TimeField', 'DateField']);
     });
 
     it('contains unique multilink import', () => {
-      expect(coreNavPropertyFieldTypeImportNames([multiLink, multiLink])).toEqual(['Link']);
+      expect(
+        coreNavPropertyFieldTypeImportNames([multiLink, multiLink])
+      ).toEqual(['Link']);
     });
 
     it('contains unique one to one link import', () => {
-      expect(coreNavPropertyFieldTypeImportNames([oneToOneLink, oneToOneLink])).toEqual(['OneToOneLink']);
+      expect(
+        coreNavPropertyFieldTypeImportNames([oneToOneLink, oneToOneLink])
+      ).toEqual(['OneToOneLink']);
     });
   });
 
@@ -103,7 +140,12 @@ describe('imports', () => {
         isComplex: true
       } as VdmProperty;
 
-      expect(complexTypeImportDeclarations([complexTypeProperty, complexTypeProperty])).toEqual([
+      expect(
+        complexTypeImportDeclarations([
+          complexTypeProperty,
+          complexTypeProperty
+        ])
+      ).toEqual([
         {
           kind: StructureKind.ImportDeclaration,
           moduleSpecifier: './ComplexType',

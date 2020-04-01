@@ -11,7 +11,8 @@ export function packageJson(
       {
         name: npmPackageName,
         version: versionInPackageJson || generatorVersion,
-        description: 'SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)',
+        description:
+          'SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)',
         homepage: 'https://www.sap.com/cloud-sdk',
         repository: {
           type: 'git',

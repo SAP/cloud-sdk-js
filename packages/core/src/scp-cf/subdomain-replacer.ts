@@ -28,7 +28,9 @@ function parseSubdomain(stringUrl: string): string {
   const url = new URL(stringUrl);
   const host = url.host;
   if (!host || host.indexOf('.') === -1) {
-    throw new Error('Failed to determine sub-domain: invalid host in "' + stringUrl + '".');
+    throw new Error(
+      'Failed to determine sub-domain: invalid host in "' + stringUrl + '".'
+    );
   }
   return host.split('.')[0];
 }

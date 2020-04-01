@@ -2,8 +2,11 @@
 
 import { InterfaceDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport } from '../vdm-types';
+import { addLeadingNewline } from '../typedoc';
 
-export function functionImportParametersInterface(functionImport: VdmFunctionImport): InterfaceDeclarationStructure {
+export function functionImportParametersInterface(
+  functionImport: VdmFunctionImport
+): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
     name: functionImport.parametersTypeName,
@@ -12,8 +15,12 @@ export function functionImportParametersInterface(functionImport: VdmFunctionImp
       name: parameter.parameterName,
       type: parameter.jsType,
       hasQuestionToken: parameter.nullable,
-      docs: [parameter.description]
+      docs: [addLeadingNewline(parameter.description)]
     })),
-    docs: [`Type of the parameters to be passed to [[${functionImport.functionName}]].`]
+    docs: [
+      addLeadingNewline(
+        `Type of the parameters to be passed to [[${functionImport.functionName}]].`
+      )
+    ]
   };
 }

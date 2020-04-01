@@ -20,7 +20,10 @@ import { Field, FieldType } from './field';
  * @typeparam EntityT - Type of the entity the field belongs to
  * @typeparam FieldT - Type of the field
  */
-export abstract class EdmTypeField<EntityT extends Entity, FieldT extends FieldType> extends Field<EntityT> {
+export abstract class EdmTypeField<
+  EntityT extends Entity,
+  FieldT extends FieldType
+> extends Field<EntityT> {
   /**
    * Creates an instance of EdmTypeField.
    *
@@ -28,7 +31,11 @@ export abstract class EdmTypeField<EntityT extends Entity, FieldT extends FieldT
    * @param entityConstructor - Constructor type of the entity the field belongs to
    * @param edmType - Type of the field according to the metadata description
    */
-  constructor(fieldName: string, entityConstructor: Constructable<EntityT>, readonly edmType: EdmType) {
+  constructor(
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>,
+    readonly edmType: EdmType
+  ) {
     super(fieldName, entityConstructor);
   }
 

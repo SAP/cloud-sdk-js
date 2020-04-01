@@ -1,12 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { getFunctionDoc, getNavPropertyDescription, getPropertyDescription } from '../src/typedoc';
+import {
+  getFunctionDoc,
+  getNavPropertyDescription,
+  getPropertyDescription
+} from '../src/typedoc';
 import { VdmNavigationProperty, VdmProperty } from '../src/vdm-types';
 
 describe('typedoc', () => {
   it('get normal property description', () => {
     const property: VdmProperty = {
       originalName: 'OnePropertyName',
-      description: 'entity info',
+      description: '\n  entity info',
       jsType: 'string',
       edmType: 'Edm:String',
       nullable: true,
@@ -47,7 +51,9 @@ describe('typedoc', () => {
       propertyNameAsParam: 'toOtherEntity'
     };
 
-    expect(getNavPropertyDescription(navProp)).toBe('One-to-many navigation property to the [[OtherEntity]] entity.');
+    expect(getNavPropertyDescription(navProp)).toBe(
+      'One-to-many navigation property to the [[OtherEntity]] entity.'
+    );
   });
 
   it('write function JSDoc description', () => {
@@ -56,7 +62,9 @@ describe('typedoc', () => {
     const paramDescription = 'parameter description';
     const returnDescription = 'return description';
     const actual = getFunctionDoc(functionDescription, {
-      params: [{ type: 'string', name: paramName, description: paramDescription }],
+      params: [
+        { type: 'string', name: paramName, description: paramDescription }
+      ],
       returns: { type: 'string', description: returnDescription }
     });
     const expected = `function description\n@param ${paramName} ${paramDescription}\n@returns ${returnDescription}`;
@@ -75,6 +83,8 @@ describe('typedoc', () => {
       staticPropertyName: 'ONE_PROPERTY_NAME',
       propertyNameAsParam: 'onePropertyName'
     };
-    expect(getPropertyDescription(property, { nullable: true })).toBe('Property Description\n@nullable');
+    expect(getPropertyDescription(property, { nullable: true })).toBe(
+      'Property Description\n@nullable'
+    );
   });
 });

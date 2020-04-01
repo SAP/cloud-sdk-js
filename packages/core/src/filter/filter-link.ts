@@ -16,11 +16,16 @@ import { Filterable } from './filterable';
  * @typeparam EntityT - Type of the entity to be filtered
  * @typeparam LinkedEntityT - Type of the linked entity which is used in the filter
  */
-export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity> implements EntityIdentifiable<EntityT> {
+export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
+  implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
    */
   readonly _entityConstructor: Constructable<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
 
   /**
    * Linked entity to be filtered by.
@@ -33,11 +38,17 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity> im
    * @param link - Linked entity to be used in the filter
    * @param filters - List of filterables for the linked entity
    */
-  constructor(public link: Link<EntityT, LinkedEntityT>, public filters: Filterable<LinkedEntityT>[]) {}
+  constructor(
+    public link: Link<EntityT, LinkedEntityT>,
+    public filters: Filterable<LinkedEntityT>[]
+  ) {}
 }
 
 export function isFilterLink<EntityT extends Entity, LinkedT extends Entity>(
   filterable: Filterable<EntityT>
 ): filterable is FilterLink<EntityT, LinkedT> {
-  return typeof filterable['link'] !== 'undefined' && typeof filterable['filters'] !== 'undefined';
+  return (
+    typeof filterable['link'] !== 'undefined' &&
+    typeof filterable['filters'] !== 'undefined'
+  );
 }

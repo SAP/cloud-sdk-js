@@ -11,14 +11,26 @@ import {
   sanitizeDestination,
   subscriberFirst
 } from '../../src/scp-cf';
-import { getDestination, getDestinationFromDestinationService, useOrFetchDestination } from '../../src/scp-cf/destination-accessor';
+import {
+  getDestination,
+  getDestinationFromDestinationService,
+  useOrFetchDestination
+} from '../../src/scp-cf/destination-accessor';
 import { AuthenticationType } from '../../src/scp-cf/destination-service-types';
 import * as sdkJwt from '../../src/util/jwt';
 // When combined, lint also complains
 /* eslint-disable-next-line no-duplicate-imports */
 import { decodeJwt } from '../../src/util/jwt';
-import { mockInstanceDestinationsCall, mockSingleDestinationCall, mockSubaccountDestinationsCall } from '../test-util/destination-service-mocks';
-import { mockedConnectivityServiceProxyConfig, mockServiceBindings, mockXsuaaBinding } from '../test-util/environment-mocks';
+import {
+  mockInstanceDestinationsCall,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall
+} from '../test-util/destination-service-mocks';
+import {
+  mockedConnectivityServiceProxyConfig,
+  mockServiceBindings,
+  mockXsuaaBinding
+} from '../test-util/environment-mocks';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
@@ -36,7 +48,10 @@ import {
   userApprovedSubscriberServiceToken
 } from '../test-util/mocked-access-tokens';
 import { muteLoggers } from '../test-util/mute-logger';
-import { mockServiceToken, mockUserApprovedServiceToken } from '../test-util/token-accessor-mocks';
+import {
+  mockServiceToken,
+  mockUserApprovedServiceToken
+} from '../test-util/token-accessor-mocks';
 
 const destinationName = 'FINAL-DESTINATION';
 
@@ -54,7 +69,9 @@ const environmentDestinations = [
 ];
 
 function mockVerifyJwt() {
-  return jest.spyOn(sdkJwt, 'verifyJwt').mockImplementation(token => Promise.resolve(decodeJwt(token)));
+  return jest
+    .spyOn(sdkJwt, 'verifyJwt')
+    .mockImplementation(token => Promise.resolve(decodeJwt(token)));
 }
 
 afterEach(() => {
@@ -68,7 +85,12 @@ afterEach(() => {
 
 describe('destination-accessor', () => {
   beforeAll(() => {
-    muteLoggers('destination-accessor', 'proxy-util', 'jwt', 'environment-accessor');
+    muteLoggers(
+      'destination-accessor',
+      'proxy-util',
+      'jwt',
+      'environment-accessor'
+    );
   });
 
   describe('authentication type OAuth2SAMLBearerFlow', () => {
@@ -79,15 +101,26 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, oauthMultipleResponse, 200, subscriberServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, userApprovedSubscriberServiceToken)
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          oauthMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          oauthSingleResponse,
+          200,
+          destinationName,
+          userApprovedSubscriberServiceToken
+        )
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, { userJwt: subscriberUserJwt });
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberUserJwt
+      });
       expect(actual).toMatchObject(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
@@ -99,13 +132,25 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, oauthMultipleResponse, 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, userApprovedProviderServiceToken)
+        mockInstanceDestinationsCall(
+          oauthMultipleResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          oauthSingleResponse,
+          200,
+          destinationName,
+          userApprovedProviderServiceToken
+        )
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, { userJwt: providerUserJwt, cacheVerificationKeys: false });
+      const actual = await getDestination(destinationName, {
+        userJwt: providerUserJwt,
+        cacheVerificationKeys: false
+      });
 
       expect(actual).toMatchObject(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -121,13 +166,24 @@ describe('destination-accessor', () => {
       samlDestinationsWithSystemUser['SystemUser'] = 'defined';
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [samlDestinationsWithSystemUser], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, providerServiceToken)
+        mockInstanceDestinationsCall(
+          [samlDestinationsWithSystemUser],
+          200,
+          providerServiceToken
+        ),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          oauthSingleResponse,
+          200,
+          destinationName,
+          providerServiceToken
+        )
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, { cacheVerificationKeys: false });
+      const actual = await getDestination(destinationName, {
+        cacheVerificationKeys: false
+      });
       expect(actual).toMatchObject(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
@@ -141,14 +197,26 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, subscriberServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', subscriberServiceToken)
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          certificateMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          certificateSingleResponse,
+          200,
+          'ERNIE-UND-CERT',
+          subscriberServiceToken
+        )
       ];
 
-      const actual = await getDestination('ERNIE-UND-CERT', { userJwt: subscriberUserJwt, cacheVerificationKeys: false });
+      const actual = await getDestination('ERNIE-UND-CERT', {
+        userJwt: subscriberUserJwt,
+        cacheVerificationKeys: false
+      });
       expect(actual!.certificates!.length).toBe(1);
       expect(actual!.keyStoreName).toBe('key.p12');
       expect(actual!.keyStorePassword).toBe('password');
@@ -162,12 +230,23 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, providerServiceToken),
-        mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', providerServiceToken)
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(
+          certificateMultipleResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSingleDestinationCall(
+          certificateSingleResponse,
+          200,
+          'ERNIE-UND-CERT',
+          providerServiceToken
+        )
       ];
 
-      const actual = await getDestination('ERNIE-UND-CERT', { cacheVerificationKeys: false });
+      const actual = await getDestination('ERNIE-UND-CERT', {
+        cacheVerificationKeys: false
+      });
       expect(actual!.certificates!.length).toBe(1);
       expect(actual!.keyStoreName).toBe('key.p12');
       expect(actual!.keyStorePassword).toBe('password');
@@ -185,13 +264,20 @@ describe('destination-accessor', () => {
       mockVerifyJwt();
       const serviceTokenSpy = mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken);
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        basicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall([], 200, providerServiceToken);
 
       const expected = parseDestination(basicMultipleResponse[0]);
-      const actual = await getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false });
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false
+      });
       expect(actual).toMatchObject(expected);
       expect(serviceTokenSpy).toHaveBeenCalled();
     });
@@ -200,10 +286,16 @@ describe('destination-accessor', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, providerServiceToken);
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(
+        basicMultipleResponse,
+        200,
+        providerServiceToken
+      );
 
-      const actual = await getDestination(destinationName, { cacheVerificationKeys: false });
+      const actual = await getDestination(destinationName, {
+        cacheVerificationKeys: false
+      });
       const expected = parseDestination(basicMultipleResponse[0]);
       expect(actual).toMatchObject(expected);
     });
@@ -213,18 +305,30 @@ describe('destination-accessor', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, subscriberServiceToken);
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        certificateMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall([], 200, providerServiceToken);
 
-      mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', subscriberServiceToken);
+      mockSingleDestinationCall(
+        certificateSingleResponse,
+        200,
+        'ERNIE-UND-CERT',
+        subscriberServiceToken
+      );
 
       const expected = parseDestination(certificateSingleResponse);
-      const actual = await getDestinationFromDestinationService('ERNIE-UND-CERT', {
-        iss: 'https://subscriber.example.com',
-        cacheVerificationKeys: false
-      });
+      const actual = await getDestinationFromDestinationService(
+        'ERNIE-UND-CERT',
+        {
+          iss: 'https://subscriber.example.com',
+          cacheVerificationKeys: false
+        }
+      );
       expect(actual).toMatchObject(expected);
     });
   });
@@ -240,7 +344,10 @@ describe('destination-accessor', () => {
       });
 
       await expect(
-        getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false })
+        getDestination(destinationName, {
+          userJwt: subscriberServiceToken,
+          cacheVerificationKeys: false
+        })
       ).rejects.toThrowErrorMatchingSnapshot();
     }, 50000);
 
@@ -248,7 +355,12 @@ describe('destination-accessor', () => {
       mockServiceBindings();
       mockVerifyJwt();
 
-      await expect(getDestination(destinationName, { userJwt: 'fails', cacheVerificationKeys: false })).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        getDestination(destinationName, {
+          userJwt: 'fails',
+          cacheVerificationKeys: false
+        })
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
 
     it('throws an error if the subaccount/instance destinations call fails', async () => {
@@ -258,21 +370,30 @@ describe('destination-accessor', () => {
 
       const httpMocks = [
         mockInstanceDestinationsCall(
-          nock,
           {
             ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
           },
           400,
           subscriberServiceToken
         ),
-        mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken)
+        mockSubaccountDestinationsCall(
+          basicMultipleResponse,
+          200,
+          subscriberServiceToken
+        )
       ];
 
       try {
-        await getDestination(destinationName, { userJwt: subscriberServiceToken, enableCircuitBreaker: false, cacheVerificationKeys: false });
+        await getDestination(destinationName, {
+          userJwt: subscriberServiceToken,
+          enableCircuitBreaker: false,
+          cacheVerificationKeys: false
+        });
         fail();
       } catch (error) {
-        expect(error.message).toContain('Failed to fetch instance destinations');
+        expect(error.message).toContain(
+          'Failed to fetch instance destinations'
+        );
         expect(error.stack).toContain('status code 400');
         httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
       }
@@ -285,12 +406,15 @@ describe('destination-accessor', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, oauthMultipleResponse, 200, subscriberServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          oauthMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
         mockSingleDestinationCall(
-          nock,
           {
             ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
           },
@@ -301,11 +425,17 @@ describe('destination-accessor', () => {
       ];
 
       try {
-        await getDestination(destinationName, { userJwt: subscriberUserJwt, enableCircuitBreaker: false, cacheVerificationKeys: false });
+        await getDestination(destinationName, {
+          userJwt: subscriberUserJwt,
+          enableCircuitBreaker: false,
+          cacheVerificationKeys: false
+        });
         fail();
       } catch (error) {
         expect(error instanceof Error).toBeTruthy();
-        expect(error.message).toContain('Failed to fetch destination FINAL-DESTINATION');
+        expect(error.message).toContain(
+          'Failed to fetch destination FINAL-DESTINATION'
+        );
         expect(error.stack).toContain('status code 401');
         httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
       }
@@ -317,14 +447,17 @@ describe('destination-accessor', () => {
       mockServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken)
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall([], 200, subscriberServiceToken),
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken)
       ];
 
       const expected = null;
-      const actual = await getDestination(destinationName, { userJwt: subscriberUserJwt, cacheVerificationKeys: false });
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberUserJwt,
+        cacheVerificationKeys: false
+      });
       expect(actual).toEqual(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
@@ -334,10 +467,20 @@ describe('destination-accessor', () => {
       mockVerifyJwt();
       mockServiceToken();
 
-      const instanceDestinationCallMock = mockInstanceDestinationsCall(nock, oauthMultipleResponse, 200, providerServiceToken);
-      const subaccountDestinationCallMock = mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+      const instanceDestinationCallMock = mockInstanceDestinationsCall(
+        oauthMultipleResponse,
+        200,
+        providerServiceToken
+      );
+      const subaccountDestinationCallMock = mockSubaccountDestinationsCall(
+        [],
+        200,
+        providerServiceToken
+      );
 
-      await expect(getDestination(destinationName, { cacheVerificationKeys: false })).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        getDestination(destinationName, { cacheVerificationKeys: false })
+      ).rejects.toThrowErrorMatchingSnapshot();
       expect(instanceDestinationCallMock.isDone()).toBe(true);
       expect(subaccountDestinationCallMock.isDone()).toBe(true);
     });
@@ -354,16 +497,32 @@ describe('destination-accessor', () => {
       mockServiceToken();
       mockUserApprovedServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall([], 200, providerServiceToken);
 
-      mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken);
-      mockSingleDestinationCall(nock, basicMultipleResponse[0], 200, destinationName, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        basicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockSingleDestinationCall(
+        basicMultipleResponse[0],
+        200,
+        destinationName,
+        subscriberServiceToken
+      );
       process.env['https_proxy'] = 'some.proxy.com:1234';
 
-      const actual = await getDestination(destinationName, { userJwt: subscriberServiceToken, cacheVerificationKeys: false });
-      expect(actual?.proxyConfiguration).toEqual({ host: 'some.proxy.com', protocol: Protocol.HTTP, port: 1234 });
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false
+      });
+      expect(actual?.proxyConfiguration).toEqual({
+        host: 'some.proxy.com',
+        protocol: Protocol.HTTP,
+        port: 1234
+      });
     });
 
     it('should ignore the proxy if the destination is onPrem type.', async () => {
@@ -372,10 +531,14 @@ describe('destination-accessor', () => {
       mockServiceToken();
       mockUserApprovedServiceToken();
 
-      mockInstanceDestinationsCall(nock, onPremiseMultipleResponse, 200, subscriberServiceToken);
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(
+        onPremiseMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall([], 200, subscriberServiceToken);
 
       process.env['https_proxy'] = 'some.proxy.com:1234';
       const expected = {
@@ -386,7 +549,10 @@ describe('destination-accessor', () => {
         }
       };
 
-      const actual = await getDestination('OnPremise', { userJwt: subscriberServiceToken, cacheVerificationKeys: false });
+      const actual = await getDestination('OnPremise', {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false
+      });
       expect(actual?.proxyConfiguration).toEqual(expected);
     });
   });
@@ -413,10 +579,18 @@ describe('destination-accessor', () => {
           Authentication: 'NoAuthentification'
         };
 
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-        mockSubaccountDestinationsCall(nock, [subscriberDest], 200, subscriberServiceToken);
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-        mockSubaccountDestinationsCall(nock, [providerDest], 200, providerServiceToken);
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+        mockSubaccountDestinationsCall(
+          [subscriberDest],
+          200,
+          subscriberServiceToken
+        );
+        mockInstanceDestinationsCall([], 200, providerServiceToken);
+        mockSubaccountDestinationsCall(
+          [providerDest],
+          200,
+          providerServiceToken
+        );
       });
 
       it('retrieved provider and subscriber destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
@@ -428,11 +602,31 @@ describe('destination-accessor', () => {
           cacheVerificationKeys: false
         });
 
-        const c1 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.Tenant);
-        const c2 = destinationCache.retrieveDestinationFromCache(decodedProviderJwt, 'ProviderDest', IsolationStrategy.Tenant);
-        const c3 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.User);
-        const c4 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.No_Isolation);
-        const c5 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.Tenant_User);
+        const c1 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.Tenant
+        );
+        const c2 = destinationCache.retrieveDestinationFromCache(
+          decodedProviderJwt,
+          'ProviderDest',
+          IsolationStrategy.Tenant
+        );
+        const c3 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.User
+        );
+        const c4 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.No_Isolation
+        );
+        const c5 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.Tenant_User
+        );
 
         expect(c1!.url).toBe('https://subscriber.example');
         expect(c2!.url).toBe('https://provider.example');
@@ -452,11 +646,31 @@ describe('destination-accessor', () => {
           cacheVerificationKeys: false
         });
 
-        const c1 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.No_Isolation);
-        const c2 = destinationCache.retrieveDestinationFromCache(decodedProviderJwt, 'ProviderDest', IsolationStrategy.No_Isolation);
-        const c3 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.User);
-        const c4 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.Tenant);
-        const c5 = destinationCache.retrieveDestinationFromCache(decodedSubscriberJwt, 'SubscriberDest', IsolationStrategy.Tenant_User);
+        const c1 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.No_Isolation
+        );
+        const c2 = destinationCache.retrieveDestinationFromCache(
+          decodedProviderJwt,
+          'ProviderDest',
+          IsolationStrategy.No_Isolation
+        );
+        const c3 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.User
+        );
+        const c4 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.Tenant
+        );
+        const c5 = destinationCache.retrieveDestinationFromCache(
+          decodedSubscriberJwt,
+          'SubscriberDest',
+          IsolationStrategy.Tenant_User
+        );
 
         expect(c1!.url).toBe('https://subscriber.example');
         expect(c2!.url).toBe('https://provider.example');
@@ -475,17 +689,37 @@ describe('destination-accessor', () => {
         mockUserApprovedServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(nock, certificateMultipleResponse, 200, providerServiceToken),
-          mockSingleDestinationCall(nock, certificateSingleResponse, 200, 'ERNIE-UND-CERT', providerServiceToken)
+          mockInstanceDestinationsCall([], 200, providerServiceToken),
+          mockSubaccountDestinationsCall(
+            certificateMultipleResponse,
+            200,
+            providerServiceToken
+          ),
+          mockSingleDestinationCall(
+            certificateSingleResponse,
+            200,
+            'ERNIE-UND-CERT',
+            providerServiceToken
+          )
         ];
 
-        const retrieveFromCacheSpy = jest.spyOn(destinationCache, 'retrieveDestinationFromCache');
+        const retrieveFromCacheSpy = jest.spyOn(
+          destinationCache,
+          'retrieveDestinationFromCache'
+        );
 
-        const destinationFromService = await getDestinationFromDestinationService('ERNIE-UND-CERT', { useCache: true, userJwt: providerUserJwt });
-        const destinationFromCache = await getDestinationFromDestinationService('ERNIE-UND-CERT', { useCache: true, userJwt: providerUserJwt });
+        const destinationFromService = await getDestinationFromDestinationService(
+          'ERNIE-UND-CERT',
+          { useCache: true, userJwt: providerUserJwt }
+        );
+        const destinationFromCache = await getDestinationFromDestinationService(
+          'ERNIE-UND-CERT',
+          { useCache: true, userJwt: providerUserJwt }
+        );
 
-        expect(destinationFromService).toEqual(parseDestination(certificateSingleResponse));
+        expect(destinationFromService).toEqual(
+          parseDestination(certificateSingleResponse)
+        );
         expect(destinationFromCache).toEqual(destinationFromService);
         expect(retrieveFromCacheSpy).toHaveReturnedWith(destinationFromCache);
         httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -498,20 +732,40 @@ describe('destination-accessor', () => {
         mockUserApprovedServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall(nock, oauthMultipleResponse, 200, providerServiceToken),
-          mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-          mockSingleDestinationCall(nock, oauthSingleResponse, 200, destinationName, userApprovedProviderServiceToken)
+          mockInstanceDestinationsCall(
+            oauthMultipleResponse,
+            200,
+            providerServiceToken
+          ),
+          mockSubaccountDestinationsCall([], 200, providerServiceToken),
+          mockSingleDestinationCall(
+            oauthSingleResponse,
+            200,
+            destinationName,
+            userApprovedProviderServiceToken
+          )
         ];
 
         const expected = parseDestination(oauthSingleResponse);
-        const destinationFromService = await getDestination(destinationName, { userJwt: providerUserJwt, useCache: true });
+        const destinationFromService = await getDestination(destinationName, {
+          userJwt: providerUserJwt,
+          useCache: true
+        });
         expect(destinationFromService).toMatchObject(expected);
 
-        const retrieveFromCacheSpy = jest.spyOn(destinationCache, 'retrieveDestinationFromCache');
+        const retrieveFromCacheSpy = jest.spyOn(
+          destinationCache,
+          'retrieveDestinationFromCache'
+        );
 
-        const destinationFromCache = await getDestination(destinationName, { userJwt: providerUserJwt, useCache: true });
+        const destinationFromCache = await getDestination(destinationName, {
+          userJwt: providerUserJwt,
+          useCache: true
+        });
 
-        expect(destinationFromService).toEqual(parseDestination(oauthSingleResponse));
+        expect(destinationFromService).toEqual(
+          parseDestination(oauthSingleResponse)
+        );
         expect(destinationFromCache).toEqual(destinationFromService);
         expect(retrieveFromCacheSpy).toHaveReturnedWith(destinationFromCache);
         httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -524,14 +778,27 @@ describe('destination-accessor', () => {
         mockUserApprovedServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(nock, onPremiseMultipleResponse, 200, providerServiceToken)
+          mockInstanceDestinationsCall([], 200, providerServiceToken),
+          mockSubaccountDestinationsCall(
+            onPremiseMultipleResponse,
+            200,
+            providerServiceToken
+          )
         ];
 
-        const retrieveFromCacheSpy = jest.spyOn(destinationCache, 'retrieveDestinationFromCache');
+        const retrieveFromCacheSpy = jest.spyOn(
+          destinationCache,
+          'retrieveDestinationFromCache'
+        );
 
-        const destinationFromFirstCall = await getDestinationFromDestinationService('OnPremise', { useCache: true, userJwt: providerUserJwt });
-        const destinationFromCache = await getDestinationFromDestinationService('OnPremise', { useCache: true, userJwt: providerUserJwt });
+        const destinationFromFirstCall = await getDestinationFromDestinationService(
+          'OnPremise',
+          { useCache: true, userJwt: providerUserJwt }
+        );
+        const destinationFromCache = await getDestinationFromDestinationService(
+          'OnPremise',
+          { useCache: true, userJwt: providerUserJwt }
+        );
 
         const expected = {
           ...parseDestination({
@@ -560,7 +827,12 @@ describe('destination-accessor', () => {
         mockVerifyJwt();
 
         const authType = 'NoAuthentification' as AuthenticationType;
-        const subscriberDest = { URL: 'https://subscriber.example', Name: 'SubscriberDest', ProxyType: 'any', Authentication: authType };
+        const subscriberDest = {
+          URL: 'https://subscriber.example',
+          Name: 'SubscriberDest',
+          ProxyType: 'any',
+          Authentication: authType
+        };
         const parsedDestination = parseDestination(subscriberDest);
         // Cache destination to retrieve
         destinationCache.cacheRetrievedDestinations(
@@ -585,7 +857,12 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const authType = 'NoAuthentification' as AuthenticationType;
-        const providerDest = { URL: 'https://provider.example', Name: 'ProviderDest', ProxyType: 'any', Authentication: authType };
+        const providerDest = {
+          URL: 'https://provider.example',
+          Name: 'ProviderDest',
+          ProxyType: 'any',
+          Authentication: authType
+        };
         const parsedDestination = parseDestination(providerDest);
         destinationCache.cacheRetrievedDestinations(
           decodeJwt(providerServiceToken),
@@ -610,7 +887,12 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const authType = 'NoAuthentification' as AuthenticationType;
-        const providerDest = { URL: 'https://provider.example', Name: 'ProviderDest', ProxyType: 'any', Authentication: authType };
+        const providerDest = {
+          URL: 'https://provider.example',
+          Name: 'ProviderDest',
+          ProxyType: 'any',
+          Authentication: authType
+        };
         const parsedDestination = parseDestination(providerDest);
         destinationCache.cacheRetrievedDestinations(
           decodeJwt(providerUserJwt),
@@ -619,8 +901,8 @@ describe('destination-accessor', () => {
         );
 
         const httpMocks = [
-          mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-          mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
+          mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+          mockSubaccountDestinationsCall([], 200, subscriberServiceToken)
         ];
 
         const actual = await getDestination('ProviderDest', {
@@ -643,10 +925,14 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const httpMocks = [
-          mockSubaccountDestinationsCall(nock, onPremiseMultipleResponse, 200, subscriberServiceToken),
-          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-          mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken)
+          mockSubaccountDestinationsCall(
+            onPremiseMultipleResponse,
+            200,
+            subscriberServiceToken
+          ),
+          mockInstanceDestinationsCall([], 200, providerServiceToken),
+          mockSubaccountDestinationsCall([], 200, providerServiceToken),
+          mockInstanceDestinationsCall([], 200, subscriberServiceToken)
         ];
 
         const expected = {
@@ -664,7 +950,9 @@ describe('destination-accessor', () => {
             }
           }
         };
-        const actual = await getDestination('OnPremise', { userJwt: subscriberUserJwt });
+        const actual = await getDestination('OnPremise', {
+          userJwt: subscriberUserJwt
+        });
         expect(actual).toEqual(expected);
         httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
       });
@@ -675,7 +963,10 @@ describe('destination-accessor', () => {
         mockEnvDestinations();
 
         const expected = sanitizeDestination(environmentDestinations[0]);
-        const actual = await useOrFetchDestination({ destinationName: 'TESTINATION' }, { cacheVerificationKeys: false });
+        const actual = await useOrFetchDestination(
+          { destinationName: 'TESTINATION' },
+          { cacheVerificationKeys: false }
+        );
         expect(actual).toMatchObject(expected);
       });
     });
@@ -687,8 +978,12 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-          mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, subscriberServiceToken)
+          mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+          mockSubaccountDestinationsCall(
+            basicMultipleResponse,
+            200,
+            subscriberServiceToken
+          )
         ];
 
         const expected = parseDestination(basicMultipleResponse[0]);
@@ -707,8 +1002,12 @@ describe('destination-accessor', () => {
         mockServiceToken();
 
         const httpMocks = [
-          mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(nock, basicMultipleResponse, 200, providerServiceToken)
+          mockInstanceDestinationsCall([], 200, providerServiceToken),
+          mockSubaccountDestinationsCall(
+            basicMultipleResponse,
+            200,
+            providerServiceToken
+          )
         ];
 
         const expected = parseDestination(basicMultipleResponse[0]);
@@ -754,14 +1053,19 @@ describe('destination-accessor', () => {
         password: '<redacted>'
       };
 
-      expect(await useOrFetchDestination({ destinationName: 'destination-name' })).toEqual(expectedXFS4cloud);
+      expect(
+        await useOrFetchDestination({ destinationName: 'destination-name' })
+      ).toEqual(expectedXFS4cloud);
 
       delete process.env.VCAP_SERVICES;
     });
 
     it('tries to fetch destinations normally when neither the destinations env variables is there nor a service binding exists for a given name', async () => {
       await expect(
-        useOrFetchDestination({ destinationName: 'non-existent' }, { cacheVerificationKeys: false })
+        useOrFetchDestination(
+          { destinationName: 'non-existent' },
+          { cacheVerificationKeys: false }
+        )
       ).rejects.toThrowErrorMatchingSnapshot();
     });
   });

@@ -21,12 +21,17 @@ const logger = createLogger({
 });
 
 export function parseEdmxFromPath(edmxPath: PathLike): EdmxMetadata {
-  const edmxFile = readFileSync(path.resolve(edmxPath.toString()), { encoding: 'utf-8' });
+  const edmxFile = readFileSync(path.resolve(edmxPath.toString()), {
+    encoding: 'utf-8'
+  });
   return parseEdmxFile(edmxFile, edmxPath);
 }
 
 function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadata {
-  const parsedEdmx = parse(edmx, { ignoreAttributes: false, attributeNamePrefix: '' });
+  const parsedEdmx = parse(edmx, {
+    ignoreAttributes: false,
+    attributeNamePrefix: ''
+  });
   const root = getRoot(parsedEdmx);
 
   const metadata: EdmxMetadata = {
@@ -91,11 +96,16 @@ export function getRoot(edmx) {
   const schema = edmx['edmx:Edmx']['edmx:DataServices'].Schema;
   if (schema.length > 1) {
     if (schema.length > 2) {
-      throw new Error('There are more than two schemas in the input metadata file.');
+      throw new Error(
+        'There are more than two schemas in the input metadata file.'
+      );
     }
     // We assume SFSF edmx files to always have multiple schema tags
     logger.info(`${schema.length} schemas found. Schemas will be merged.`);
-    return schema.reduce((mergedSchemas, schemaEntry) => ({ ...mergedSchemas, ...schemaEntry }), {});
+    return schema.reduce(
+      (mergedSchemas, schemaEntry) => ({ ...mergedSchemas, ...schemaEntry }),
+      {}
+    );
   }
   return schema;
 }

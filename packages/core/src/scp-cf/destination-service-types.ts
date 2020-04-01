@@ -224,9 +224,15 @@ export interface DestinationCachingOptions {
  */
 // Prettier will try to remove the parens in the type definition, which changes the meaning of the code
 // Prettier-ignore
-export type DestinationRetrievalOptions = (DestinationCachingOptions | CachingOptions) & ResilienceOptions;
+export type DestinationRetrievalOptions = (
+  | DestinationCachingOptions
+  | CachingOptions
+) &
+  ResilienceOptions;
 
-export function isDestinationNameAndJwt(destination: any): destination is DestinationNameAndJwt {
+export function isDestinationNameAndJwt(
+  destination: any
+): destination is DestinationNameAndJwt {
   return destination.destinationName !== undefined;
 }
 

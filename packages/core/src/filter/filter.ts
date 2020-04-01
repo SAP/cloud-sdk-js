@@ -10,9 +10,14 @@ import { Filterable } from './filterable';
 type FilterOperatorString = 'eq' | 'ne';
 type FilterOperatorBoolean = 'eq' | 'ne';
 type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
-export type FilterOperator = FilterOperatorString | FilterOperatorBoolean | FilterOperatorNumber;
+export type FilterOperator =
+  | FilterOperatorString
+  | FilterOperatorBoolean
+  | FilterOperatorNumber;
 
-export type FilterOperatorByType<FieldT extends FieldType> = FieldT extends string
+export type FilterOperatorByType<
+  FieldT extends FieldType
+> = FieldT extends string
   ? FilterOperatorString
   : FieldT extends number
   ? FilterOperatorNumber
@@ -28,11 +33,16 @@ export type FilterOperatorByType<FieldT extends FieldType> = FieldT extends stri
  * @typeparam EntityT - Type of the entity to be filtered on
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
-export class Filter<EntityT extends Entity, FieldT extends FieldType> implements EntityIdentifiable<EntityT> {
+export class Filter<EntityT extends Entity, FieldT extends FieldType>
+  implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
    */
   readonly _entityConstructor: Constructable<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
 
   /**
    * @deprecated Since v1.16.0 Use [[field]] instead.
@@ -61,6 +71,12 @@ export class Filter<EntityT extends Entity, FieldT extends FieldType> implements
   }
 }
 
-export function isFilter<T extends Entity, FieldT extends FieldType>(filterable: Filterable<T>): filterable is Filter<T, FieldT> {
-  return typeof filterable['field'] !== 'undefined' && typeof filterable['operator'] !== 'undefined' && typeof filterable['value'] !== 'undefined';
+export function isFilter<T extends Entity, FieldT extends FieldType>(
+  filterable: Filterable<T>
+): filterable is Filter<T, FieldT> {
+  return (
+    typeof filterable['field'] !== 'undefined' &&
+    typeof filterable['operator'] !== 'undefined' &&
+    typeof filterable['value'] !== 'undefined'
+  );
 }

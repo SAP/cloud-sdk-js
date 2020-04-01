@@ -6,11 +6,21 @@ import util from 'util';
 import { generate } from './packages/generator/src';
 
 type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
-const [readFile, readdir, writeFile] = [fs.readFile, fs.readdir, fs.writeFile].map((fsModule: fsTypes) => util.promisify(fsModule));
+const [readFile, readdir, writeFile] = [
+  fs.readFile,
+  fs.readdir,
+  fs.writeFile
+].map((fsModule: fsTypes) => util.promisify(fsModule));
 
 const inputDir = path.join('test-resources', 'service-specs');
 const packageOutputDir = path.resolve('test-packages', 'test-services', 'srv');
-const coreUnitTestOutputDir = path.resolve('packages', 'core', 'test', 'test-util', 'test-services');
+const coreUnitTestOutputDir = path.resolve(
+  'packages',
+  'core',
+  'test',
+  'test-util',
+  'test-services'
+);
 
 const generatorConfig = {
   inputDir,
@@ -37,7 +47,11 @@ async function generateTestServicesWithLocalCoreModules(outputDir) {
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
     readServiceDirectory(serviceDirectory).then(files =>
-      files.forEach(file => readServiceFile(serviceDirectory, file).then(data => replaceWithLocalModules(serviceDirectory, file, data)))
+      files.forEach(file =>
+        readServiceFile(serviceDirectory, file).then(data =>
+          replaceWithLocalModules(serviceDirectory, file, data)
+        )
+      )
     )
   );
 
@@ -48,22 +62,32 @@ async function generateTestServicesWithLocalCoreModules(outputDir) {
   }
 
   function readServiceDirectory(serviceDirectory) {
-    return readdir(path.resolve(outputDir, serviceDirectory)).catch(serviceDirErr => {
-      throw Error(`Reading test service directory failed: ${serviceDirErr}`);
-    });
+    return readdir(path.resolve(outputDir, serviceDirectory)).catch(
+      serviceDirErr => {
+        throw Error(`Reading test service directory failed: ${serviceDirErr}`);
+      }
+    );
   }
 
   function readServiceFile(serviceDirectory, file) {
-    return readFile(path.resolve(outputDir, serviceDirectory, file), { encoding: 'utf8' }).catch(fileReadErr => {
+    return readFile(path.resolve(outputDir, serviceDirectory, file), {
+      encoding: 'utf8'
+    }).catch(fileReadErr => {
       throw Error(`Reading test service file '${file}' failed: ${fileReadErr}`);
     });
   }
 
   function replaceWithLocalModules(serviceDirectory, file, data) {
-    return writeFile(path.resolve(outputDir, serviceDirectory, file), data.replace('@sap-cloud-sdk/core', '../../../../src'), {
-      encoding: 'utf8'
-    }).catch(fileWriteErr => {
-      throw Error(`Writing test service file' ${file}' failed: ${fileWriteErr}`);
+    return writeFile(
+      path.resolve(outputDir, serviceDirectory, file),
+      data.replace('@sap-cloud-sdk/core', '../../../../src'),
+      {
+        encoding: 'utf8'
+      }
+    ).catch(fileWriteErr => {
+      throw Error(
+        `Writing test service file' ${file}' failed: ${fileWriteErr}`
+      );
     });
   }
 }

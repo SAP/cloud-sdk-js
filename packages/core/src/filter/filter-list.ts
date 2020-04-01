@@ -9,11 +9,16 @@ import { Filterable } from './filterable';
  *
  * @typeparam EntityT -
  */
-export class FilterList<EntityT extends Entity> implements EntityIdentifiable<EntityT> {
+export class FilterList<EntityT extends Entity>
+  implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
    */
   readonly _entityConstructor: Constructable<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
 
   /**
    * Creates an instance of FilterList.
@@ -21,7 +26,10 @@ export class FilterList<EntityT extends Entity> implements EntityIdentifiable<En
    * @param andFilters - Filters to be combined by logical conjunction (`and`)
    * @param orFilters - Filters to be combined by logical disjunction (`or`)
    */
-  constructor(public andFilters: Filterable<EntityT>[] = [], public orFilters: Filterable<EntityT>[] = []) {}
+  constructor(
+    public andFilters: Filterable<EntityT>[] = [],
+    public orFilters: Filterable<EntityT>[] = []
+  ) {}
 
   /**
    * Flattens `andFilters` and `orFilters` as far as possible while staying logically equivalent.
@@ -35,8 +43,13 @@ export class FilterList<EntityT extends Entity> implements EntityIdentifiable<En
   }
 
   private canFlatten(property: 'andFilters' | 'orFilters'): boolean {
-    const otherProperty = property === 'andFilters' ? 'orFilters' : 'andFilters';
-    return this[property].some(filter => filter instanceof FilterList && (!filter.isEmpty(property) || filter.isEmpty(otherProperty)));
+    const otherProperty =
+      property === 'andFilters' ? 'orFilters' : 'andFilters';
+    return this[property].some(
+      filter =>
+        filter instanceof FilterList &&
+        (!filter.isEmpty(property) || filter.isEmpty(otherProperty))
+    );
   }
 
   private isEmpty(property: 'andFilters' | 'orFilters'): boolean {
@@ -44,7 +57,8 @@ export class FilterList<EntityT extends Entity> implements EntityIdentifiable<En
   }
 
   private _flatten(property: 'andFilters' | 'orFilters'): void {
-    const otherProperty = property === 'andFilters' ? 'orFilters' : 'andFilters';
+    const otherProperty =
+      property === 'andFilters' ? 'orFilters' : 'andFilters';
     while (this.canFlatten(property)) {
       this[property] = this[property].reduce((flatList, current) => {
         if (current instanceof FilterList) {
@@ -61,7 +75,9 @@ export class FilterList<EntityT extends Entity> implements EntityIdentifiable<En
   }
 }
 
-export function isFilterList<T extends Entity>(filterable: Filterable<T>): filterable is FilterList<T> {
+export function isFilterList<T extends Entity>(
+  filterable: Filterable<T>
+): filterable is FilterList<T> {
   return (
     typeof filterable['field'] === 'undefined' &&
     typeof filterable['operator'] === 'undefined' &&

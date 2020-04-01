@@ -47,6 +47,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity>
    */
   selects: Selectable<LinkedEntityT>[] = [];
 
+  readonly _entity: EntityT;
   /**
    * Creates an instance of Link.
    *

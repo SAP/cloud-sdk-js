@@ -39,6 +39,10 @@ export class Filter<EntityT extends Entity, FieldT extends FieldType>
    * Constructor type of the entity to be filtered.
    */
   readonly _entityConstructor: Constructable<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
 
   /**
    * @deprecated Since v1.16.0 Use [[field]] instead.

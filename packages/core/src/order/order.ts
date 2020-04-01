@@ -13,6 +13,7 @@ type OrderType = 'asc' | 'desc';
 export class Order<EntityT extends Entity>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
+  readonly _entity: EntityT;
 
   /**
    * Creates an instance of Order.

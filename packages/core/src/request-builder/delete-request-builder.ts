@@ -22,6 +22,7 @@ export class DeleteRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilderBase<ODataDeleteRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
+  readonly _entity: EntityT;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.

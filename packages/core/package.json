@@ -53,10 +53,9 @@
     "@types/jest": "^25.1.4",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/sinonjs__fake-timers": "^6.0.0",
-    "jest": "^25.1.0",
+    "jest": "^25.2.4",
     "jest-junit": "^10.0.0",
-    "nock": "^12.0.3",
-    "ts-jest": "^25.2.1",
+    "ts-jest": "^25.3.0",
     "typescript": "~3.8.3"
   }
 }

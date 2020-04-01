@@ -37,7 +37,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    private _entity: EntityT
+    readonly _entity: EntityT
   ) {
     super(new ODataUpdateRequestConfig(_entityConstructor));
     this.requestConfig.eTag = _entity.versionIdentifier;

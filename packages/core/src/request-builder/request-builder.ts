@@ -18,5 +18,6 @@ export abstract class RequestBuilder<EntityT extends Entity>
     return entity.requestBuilder() as EntityBasedRequestBuilder<EntityCT>;
   }
 
+  _entity: EntityT;
   _entityConstructor: Constructable<EntityT>;
 }

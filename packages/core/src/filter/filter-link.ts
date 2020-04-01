@@ -22,6 +22,10 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
    * Constructor type of the entity to be filtered.
    */
   readonly _entityConstructor: Constructable<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
 
   /**
    * Linked entity to be filtered by.

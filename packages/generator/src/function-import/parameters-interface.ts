@@ -2,6 +2,7 @@
 
 import { InterfaceDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport } from '../vdm-types';
+import { addLeadingNewline } from '../typedoc';
 
 export function functionImportParametersInterface(
   functionImport: VdmFunctionImport
@@ -14,10 +15,12 @@ export function functionImportParametersInterface(
       name: parameter.parameterName,
       type: parameter.jsType,
       hasQuestionToken: parameter.nullable,
-      docs: [parameter.description]
+      docs: [addLeadingNewline(parameter.description)]
     })),
     docs: [
-      `Type of the parameters to be passed to [[${functionImport.functionName}]].`
+      addLeadingNewline(
+        `Type of the parameters to be passed to [[${functionImport.functionName}]].`
+      )
     ]
   };
 }

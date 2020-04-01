@@ -26,6 +26,8 @@ import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config
 export class GetAllRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
+  readonly _entity: EntityT;
+
   /**
    * Creates an instance of GetAllRequestBuilder.
    *
@@ -34,7 +36,6 @@ export class GetAllRequestBuilder<EntityT extends Entity>
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
     super(new ODataGetAllRequestConfig(_entityConstructor));
   }
-
   /**
    * Restrict the response to the given selection of properties in the request.
    *

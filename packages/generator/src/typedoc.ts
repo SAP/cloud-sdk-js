@@ -57,6 +57,18 @@ export function getPropertyDescription(
   );
 }
 
+/**
+ * Adds a leading \n to a documentation string so that the ts-morph makes a block comment out of it.
+ * @param documentation text.
+ * @returns documentation text with leading \n.
+ */
+export function addLeadingNewline(documentation: string): string {
+  if (!documentation.startsWith('\n')) {
+    return '\n' + documentation;
+  }
+  return documentation;
+}
+
 export function getNavPropertyDescription(
   property: VdmNavigationProperty
 ): string {
@@ -98,16 +110,13 @@ export function getEntityDescription(
     service.apiBusinessHubMetadata &&
     service.apiBusinessHubMetadata.communicationScenario
   ) {
-    description +=
-      '\n' +
-      partOfCommunicationScenarios(
-        service.apiBusinessHubMetadata.communicationScenario
-      );
+    description = partOfCommunicationScenarios(
+      service.apiBusinessHubMetadata.communicationScenario
+    );
   }
 
   if (service.apiBusinessHubMetadata) {
-    description +=
-      '\n' + seeForMoreInformation(service.apiBusinessHubMetadata.url);
+    description = seeForMoreInformation(service.apiBusinessHubMetadata.url);
   }
 
   return description;
@@ -115,13 +124,11 @@ export function getEntityDescription(
 
 const entityDescription = (entitySetName: string, speakingModuleName: string) =>
   `This class represents the entity "${entitySetName}" of service "${speakingModuleName}".`;
-
 const seeForMoreInformation = (url: string) =>
   `See ${url} for more information.`;
 
 const partOfCommunicationScenarios = (communicationScenarios: string) =>
   `This service is part of the following communication scenarios: ${communicationScenarios}.`;
-
 export function getRequestBuilderDescription(entity: VdmEntity) {
   return `Request builder class for operations supported on the [[${entity.className}]] entity.`;
 }

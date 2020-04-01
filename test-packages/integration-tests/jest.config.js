@@ -9,5 +9,5 @@ module.exports = {
   coverageReporters: ['text', 'cobertura', 'html'],
   coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/'],
   reporters: ['default', 'jest-junit'],
-  testPathIgnorePatterns: ['<rootDir>/test/proxy.spec.ts']
+  testPathIgnorePatterns: ['<rootDir>/test/proxy-skipped.spec.ts']
 };

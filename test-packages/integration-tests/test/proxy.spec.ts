@@ -48,7 +48,7 @@ describe('proxy', () => {
   describe('should have proxy config set', () => {
     const destination: Destination = {
       name: 'TESTINATION',
-      url: `http://example.com`,
+      url: 'http://example.com',
       proxyConfiguration: {
         host: 'proxy.com',
         protocol: Protocol.HTTP,
@@ -61,7 +61,7 @@ describe('proxy', () => {
     beforeEach(() => {
       nock('http://example.com')
         .get(/.*/)
-        .reply(200, { d: { results: [] }});
+        .reply(200, { d: { results: [] } });
 
       requestSpy = jest.spyOn(axios, 'request');
     });
@@ -69,29 +69,35 @@ describe('proxy', () => {
     afterEach(() => {
       requestSpy.mockClear();
       delete process.env.destinations;
-    })
+    });
 
     it('not for OData requests without proxy configuration', async () => {
-      await TestEntity.requestBuilder().getAll().execute({url: destination.url});
-      expect(requestSpy).not.toHaveBeenCalledWith(objectContainingProxyAgent())
+      await TestEntity.requestBuilder()
+        .getAll()
+        .execute({ url: destination.url });
+      expect(requestSpy).not.toHaveBeenCalledWith(objectContainingProxyAgent());
     });
 
     it('for OData requests with proxy configuration', async () => {
       await TestEntity.requestBuilder().getAll().execute(destination);
-      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent())
+      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent());
     });
 
     it('for destinations in env variable', async () => {
       setTestDestination({ ...destination, name: destination.name });
-      await TestEntity.requestBuilder().getAll().execute({ destinationName: destination.name! });
-      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent())
+      await TestEntity.requestBuilder()
+        .getAll()
+        .execute({ destinationName: destination.name! });
+      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent());
     });
 
     it('for destinations in env variable with proxy env variable', async () => {
       setTestDestination({ url: destination.url, name: destination.name });
       process.env.http_proxy = `${destination.proxyConfiguration?.protocol}://${destination.proxyConfiguration?.host}:${destination.proxyConfiguration?.port}`;
-      await TestEntity.requestBuilder().getAll().execute({ destinationName: destination.name! });
-      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent())
+      await TestEntity.requestBuilder()
+        .getAll()
+        .execute({ destinationName: destination.name! });
+      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent());
     });
 
     it('for destinations in vcap_services with proxy env variable', async () => {
@@ -110,10 +116,12 @@ describe('proxy', () => {
       };
 
       process.env.VCAP_SERVICES = JSON.stringify(serviceBindings);
-      process.env.http_proxy = `http://proxy.com:1234`;
+      process.env.http_proxy = 'http://proxy.com:1234';
 
-      await TestEntity.requestBuilder().getAll().execute({ destinationName: destination.name! });
-      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent())
+      await TestEntity.requestBuilder()
+        .getAll()
+        .execute({ destinationName: destination.name! });
+      expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent());
     });
   });
 });
@@ -125,7 +133,7 @@ function objectContainingProxyAgent() {
         href: 'http://proxy.com:1234/'
       })
     })
-  })
+  });
 }
 
 async function createHttpServer() {

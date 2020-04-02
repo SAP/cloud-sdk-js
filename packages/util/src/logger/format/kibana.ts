@@ -2,12 +2,13 @@
 
 import { format } from 'winston';
 
-const { combine, timestamp, json } = format;
+const { combine, timestamp, json, errors } = format;
 
 /**
  * Format for logging in Kibana.
  */
 export const kibana = combine(
+  errors({ stack: true }),
   timestamp(),
   format(info => ({
     ...info,

@@ -20,3 +20,4 @@ junit.xml
 # Jetty mock server
 packages/**/*.jar
 *.jar
+local-docs/_site

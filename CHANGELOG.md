@@ -48,7 +48,7 @@ blog: https://blogs.sap.com/?p=1068438
 
 ## fixedIssues
 
-- Fix ordering for properties, including nested complex properties.
+- Fix ordering for complex properties including nested complex properties.
 - Fix the generator crashing for services containing function imports without a return type.
 - Fix the destination processing so that the user can set `PrincipalPropagation` as authentication scheme for on-premises connectivity.
 

@@ -25,7 +25,6 @@
     "http-proxy": "^1.18.0",
     "jest": "^25.2.4",
     "jest-junit": "^10.0.0",
-    "mockserver-node": "5.8.1",
     "ts-jest": "^25.3.0",
     "typescript": "~3.8.3"
   }

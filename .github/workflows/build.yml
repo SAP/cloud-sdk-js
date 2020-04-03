@@ -67,8 +67,8 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
-      - run: echo "##[set-output name=changelog;]$(npx ts-node scripts/get-changelog.ts)"
-        id: getchangelog
+      - run: echo "##[set-output name=mmm;]$(npx ts-node scripts/get-changelog.ts)"
+        id: fruit
       - uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,4 +76,4 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           draft: true,
-          body: ${{ steps.getchangelog.outputs.changelog }}
+          body: ${{ steps.fruit.outputs.mmm }}

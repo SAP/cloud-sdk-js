@@ -1,11 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import * as path from 'path';
-import {
-  transformFile,
-  version,
-  jsonStringify,
-  apiDocsDir
-} from './util';
+import { transformFile, version, jsonStringify, apiDocsDir } from './util';
 
 function updateTypeDocConfig() {
   transformFile('typedoc.json', config =>

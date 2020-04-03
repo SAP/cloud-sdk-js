@@ -3,7 +3,9 @@ import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import compareVersions from 'compare-versions';
-import { version, transformFile, docsDir } from './util';
+import { jsonStringify } from './util';
+
+const apiDocPath = path.resolve('docs', 'api');
 
 const isDirectory = entryPath => fs.lstatSync(entryPath).isDirectory();
 const flatten = arr =>
@@ -32,7 +34,9 @@ const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
  * https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not
  */
 function adjustForGitHubPages() {
-  const documentationFiles = flatten(readDir(path.resolve(docsDir, version)));
+  const documentationFiles = flatten(
+    readDir(path.resolve(apiDocPath, version))
+  );
   const htmlPaths = documentationFiles.filter(isHtmlFile);
   adjustSearchJs(documentationFiles);
   htmlPaths.forEach(filePath =>
@@ -75,7 +79,9 @@ function removeUnderlinePrefixFromFileName(filePath) {
 }
 
 function addCopyrightNotice() {
-  const filePaths = flatten(readDir(path.resolve(docsDir, version))).filter(isHtmlFile);
+  const filePaths = flatten(readDir(path.resolve(apiDocPath, version))).filter(
+    isHtmlFile
+  );
   filePaths.forEach(filePath => {
     const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
     transformFile(filePath, file => {
@@ -91,32 +97,48 @@ function addCopyrightNotice() {
   });
 }
 
+const version = JSON.parse(fs.readFileSync('lerna.json', 'utf8')).version;
+
 function getSortedApiVersions() {
   return fs
-    .readdirSync(docsDir)
+    .readdirSync(apiDocPath)
     .filter(entry =>
-      fs.lstatSync(path.resolve(docsDir, entry)).isDirectory()
+      fs.lstatSync(path.resolve(apiDocPath, entry)).isDirectory()
     )
     .sort(compareVersions)
     .reverse();
 }
 
-
+function writeVersions() {
+  const apiVersions = getSortedApiVersions();
+  fs.writeFileSync(
+    path.resolve('docs', '_data', 'versions.json'),
+    jsonStringify(apiVersions),
+    'utf8'
+  );
+}
 
 function latestRedirectFrontMatter() {
   return ['---', 'redirect_from: "/api/latest/"', '---'].join('\n');
 }
 
+function transformFile(filePath, tranformFn: (file: string) => string): void {
+  const file = fs.readFileSync(filePath, { encoding: 'utf8' });
+  const transformedFile = tranformFn(file);
+  fs.writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
+}
+
 function addReferenceToLatest() {
-  transformFile(path.resolve(path.resolve(docsDir, version), 'index.html'), file =>
-    [latestRedirectFrontMatter(), file].join('\n')
+  transformFile(
+    path.resolve(path.resolve(apiDocPath, version), 'index.html'),
+    file => [latestRedirectFrontMatter(), file].join('\n')
   );
 }
 
 function removePreviousReferenceToLatest() {
   const secondLastVersion = getSortedApiVersions()[1];
   if (secondLastVersion) {
-    const filePath = path.resolve(docsDir, secondLastVersion, 'index.html');
+    const filePath = path.resolve(apiDocPath, secondLastVersion, 'index.html');
     transformFile(filePath, file =>
       file.replace(latestRedirectFrontMatter(), '')
     );
@@ -133,8 +155,10 @@ function validateLogs(generationLogs) {
 }
 
 function generateDocs() {
-  updateTypeDocConfig();
-  const generationLogs = execSync('npx typedoc .', { cwd: path.resolve(), encoding: 'utf8' });
+  const generationLogs = execSync('npx typedoc .', {
+    cwd: path.resolve(),
+    encoding: 'utf8'
+  });
   validateLogs(generationLogs);
   adjustForGitHubPages();
   addCopyrightNotice();

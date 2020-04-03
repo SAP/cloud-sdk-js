@@ -68,7 +68,7 @@ jobs:
           node-version: '12.x'
       - run: npm ci
       - run: echo "##[set-output name=changelog;]$(npx ts-node scripts/get-changelog.ts)"
-        id: get-changelog
+        id: getchangelog
       - uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,4 +76,4 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           draft: true,
-          body: ${{ steps.get-changelog.outputs.changelog }}
+          body: ${{ steps.getchangelog.outputs.changelog }}

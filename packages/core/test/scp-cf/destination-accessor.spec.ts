@@ -555,6 +555,45 @@ describe('destination-accessor', () => {
       });
       expect(actual?.proxyConfiguration).toEqual(expected);
     });
+
+
+    it('returns a destination with a connectivity service proxy configuration when ProxyType equals "OnPremise"', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const httpMocks = [
+        mockSubaccountDestinationsCall(
+          onPremiseMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken)
+      ];
+
+      const expected = {
+        ...parseDestination({
+          Name: 'OnPremise',
+          URL: 'my.on.premise.system:54321',
+          ProxyType: 'OnPremise',
+          Authentication: 'NoAuthentication'
+        }),
+        proxyConfiguration: {
+          ...mockedConnectivityServiceProxyConfig,
+          headers: {
+            'Proxy-Authorization': `Bearer ${subscriberServiceToken}`,
+            'SAP-Connectivity-Authentication': `Bearer ${subscriberUserJwt}`
+          }
+        }
+      };
+      const actual = await getDestination('OnPremise', {
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toEqual(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
   });
 
   describe('caching destination', () => {
@@ -918,107 +957,18 @@ describe('destination-accessor', () => {
       });
     });
 
-    describe('On-Premise destinations', () => {
-      it('returns a destination with a proxy configuration when ProxyType equals "OnPremise"', async () => {
-        mockServiceBindings();
-        mockVerifyJwt();
-        mockServiceToken();
+  });
 
-        const httpMocks = [
-          mockSubaccountDestinationsCall(
-            onPremiseMultipleResponse,
-            200,
-            subscriberServiceToken
-          ),
-          mockInstanceDestinationsCall([], 200, providerServiceToken),
-          mockSubaccountDestinationsCall([], 200, providerServiceToken),
-          mockInstanceDestinationsCall([], 200, subscriberServiceToken)
-        ];
+  describe('destination loading precedence', () => {
+    it('reads from env when only destinationName specified', async () => {
+      mockEnvDestinations();
 
-        const expected = {
-          ...parseDestination({
-            Name: 'OnPremise',
-            URL: 'my.on.premise.system:54321',
-            ProxyType: 'OnPremise',
-            Authentication: 'NoAuthentication'
-          }),
-          proxyConfiguration: {
-            ...mockedConnectivityServiceProxyConfig,
-            headers: {
-              'Proxy-Authorization': `Bearer ${subscriberServiceToken}`,
-              'SAP-Connectivity-Authentication': `Bearer ${subscriberUserJwt}`
-            }
-          }
-        };
-        const actual = await getDestination('OnPremise', {
-          userJwt: subscriberUserJwt
-        });
-        expect(actual).toEqual(expected);
-        httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-      });
-    });
-
-    describe('destination loading precedence', () => {
-      it('reads from env when only destinationName specified', async () => {
-        mockEnvDestinations();
-
-        const expected = sanitizeDestination(environmentDestinations[0]);
-        const actual = await useOrFetchDestination(
-          { destinationName: 'TESTINATION' },
-          { cacheVerificationKeys: false }
-        );
-        expect(actual).toMatchObject(expected);
-      });
-    });
-
-    describe('selection strategies', () => {
-      it('should not send a request to retrieve remote provider destination when alwaysSubscriber applies', async () => {
-        mockServiceBindings();
-        mockVerifyJwt();
-        mockServiceToken();
-
-        const httpMocks = [
-          mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-          mockSubaccountDestinationsCall(
-            basicMultipleResponse,
-            200,
-            subscriberServiceToken
-          )
-        ];
-
-        const expected = parseDestination(basicMultipleResponse[0]);
-        const actual = await getDestination(destinationName, {
-          userJwt: subscriberUserJwt,
-          selectionStrategy: alwaysSubscriber,
-          cacheVerificationKeys: false
-        });
-        expect(actual).toMatchObject(expected);
-        httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-      });
-
-      it('should not send a request to retrieve remote subscriber destination when alwaysProvider applies', async () => {
-        mockServiceBindings();
-        mockVerifyJwt();
-        mockServiceToken();
-
-        const httpMocks = [
-          mockInstanceDestinationsCall([], 200, providerServiceToken),
-          mockSubaccountDestinationsCall(
-            basicMultipleResponse,
-            200,
-            providerServiceToken
-          )
-        ];
-
-        const expected = parseDestination(basicMultipleResponse[0]);
-        const actual = await getDestination(destinationName, {
-          userJwt: providerUserJwt,
-          selectionStrategy: alwaysProvider,
-          cacheVerificationKeys: false
-        });
-        expect(actual).toMatchObject(expected);
-        httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-      });
+      const expected = sanitizeDestination(environmentDestinations[0]);
+      const actual = await useOrFetchDestination(
+        { destinationName: 'TESTINATION' },
+        { cacheVerificationKeys: false }
+      );
+      expect(actual).toMatchObject(expected);
     });
 
     it('tries to build a destination from service bindings when there are no destinations mocked', async () => {
@@ -1067,6 +1017,82 @@ describe('destination-accessor', () => {
           { cacheVerificationKeys: false }
         )
       ).rejects.toThrowErrorMatchingSnapshot();
+    });
+
+  });
+
+  describe('jwtType x selection strategy matrix {subscriberUser,providerUser,noUser} x {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
+    describe('subscriberUser x {alwaysSubscriber,alwaysProvider,subscriberFirst',()=>{
+      it('should not send a request to retrieve remote provider destination when alwaysSubscriber applies', async () => {
+        mockServiceBindings();
+        mockVerifyJwt();
+        mockServiceToken();
+
+        const httpMocks = [
+          mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+          mockSubaccountDestinationsCall(
+            basicMultipleResponse,
+            200,
+            subscriberServiceToken
+          )
+        ];
+
+        const expected = parseDestination(basicMultipleResponse[0]);
+        const actual = await getDestination(destinationName, {
+          userJwt: subscriberUserJwt,
+          selectionStrategy: alwaysSubscriber,
+          cacheVerificationKeys: false
+        });
+        expect(actual).toMatchObject(expected);
+        httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      });
+
+      it('should return null if ',async ()=>{
+        mockServiceBindings();
+        mockVerifyJwt();
+        mockServiceToken();
+
+        const foo = providerServiceToken;console.log(foo)
+        const httpMocks = [
+          mockInstanceDestinationsCall(undefined, 401, subscriberServiceToken),//call is made with providerToken since serToken returns the one. Ask dennis what the dest service returns either a 404 or empty arra?
+          mockSubaccountDestinationsCall(undefined,401,subscriberServiceToken)
+        ];
+
+        const actual = await getDestination(destinationName, {
+          userJwt: subscriberUserJwt,
+          selectionStrategy: alwaysProvider,
+          cacheVerificationKeys: false
+        });
+        expect(actual).toBe(undefined);
+        httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      })
+    })
+
+
+    it('should not send a request to retrieve remote subscriber destination when alwaysProvider applies', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(
+          basicMultipleResponse,
+          200,
+          providerServiceToken
+        )
+      ];
+
+
+
+      const expected = parseDestination(basicMultipleResponse[0]);
+      const actual = await getDestination(destinationName, {
+        userJwt: providerUserJwt,
+        selectionStrategy: alwaysProvider,
+        cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
   });
 });

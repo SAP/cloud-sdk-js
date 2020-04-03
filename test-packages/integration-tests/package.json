@@ -20,6 +20,7 @@
     "@sap-cloud-sdk/util": "^1.18.1"
   },
   "devDependencies": {
+    "axios": "^0.19.2",
     "@types/jest": "^25.1.4",
     "jsonwebtoken": "^8.5.1",
     "bignumber.js": "8.1.1",

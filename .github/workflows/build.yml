@@ -31,15 +31,15 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
+      - run: echo "##[set-output name=changelog;]$(npx ts-node get-changelog.ts)"
+        id: get-changelog
+      - run: echo ${{ steps.get-changelog.outputs.changelog }}
       - run: npm run lint
         name: Static Code Check
       - run: npm run check:vulnerability
         name: Dependency Vulnerability Check
       - run: npm run check:license
         name: License Check
-      - run: echo "##[set-output name=changelog;]$(ts-node get-changelog.ts)"
-        id: get-changelog
-      - run: echo ${{ steps.get-changelog.outputs.changelog }}
   canary-release:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest

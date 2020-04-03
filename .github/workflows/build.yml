@@ -31,6 +31,18 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
+      - run: echo "##[set-output name=action_js1;]$(npx ts-node scripts/1-try.ts)"
+        id: step_js1
+      - run: echo ${{ steps.step_js1.outputs.action_js1 }}
+      - run: echo "##[set-output name=action_ts1;]$(npx ts-node scripts/1-try.ts)"
+        id: step_ts1
+      - run: echo ${{ steps.step_ts1.outputs.action_ts1 }}
+      - run: echo "##[set-output name=action_js2;]$(npx ts-node scripts/2-try.ts)"
+        id: step_js2
+      - run: echo ${{ steps.step_js2.outputs.action_js2 }}
+      - run: echo "##[set-output name=action_ts2;]$(npx ts-node scripts/2-try.ts)"
+        id: step_ts2
+      - run: echo ${{ steps.step_ts2.outputs.action_ts2 }}
       - run: echo "##[set-output name=changelog;]$(npx ts-node scripts/get-changelog.ts)"
         id: get-changelog
       - run: echo ${{ steps.get-changelog.outputs.changelog }}

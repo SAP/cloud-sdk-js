@@ -4,7 +4,8 @@ import { version, openFile } from './util';
 export function getChangeLog(v = version) {
   const changeLog = openFile('CHANGELOG.md');
   const [_, olderLogs] = changeLog.split(`\n# ${v}`);
-  return olderLogs.split('\n# ')[0];
+  const logs = olderLogs.split('\n# ')[0];
+  return logs.slice(logs.indexOf('\n##') + 1);
 }
 
 /* eslint-disable-next-line no-console */

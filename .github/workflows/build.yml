@@ -34,6 +34,7 @@ jobs:
       - run: echo "##[set-output name=action_ts1;]$(npx ts-node scripts/1-try.ts)"
         id: step_ts1
       - run: echo ${{ steps.step_ts1.outputs.action_ts1 }}
+      - run: echo $(npx ts-node scripts/1-try.ts)
       - run: echo "##[set-output name=changelog;]$(npx ts-node scripts/get-changelog.ts)"
         id: get-changelog
       - run: echo ${{ steps.get-changelog.outputs.changelog }}

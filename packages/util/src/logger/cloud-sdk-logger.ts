@@ -81,6 +81,7 @@ export function createLogger(
       : { ...messageContext };
   return container.get(customFields.messageContext, {
     level:
+      container.options.level ||
       customLogLevels[customFields.messageContext] ||
       customFields.level ||
       'info',
@@ -136,6 +137,19 @@ export function setLogLevel(
     );
     messageContextOrLogger.level = level;
   }
+}
+
+/**
+ * Change the global log level of the container which will set default level for all active loggers.
+ * E. g., to set the global log level call `setGlobalLogLevel('debug')`.
+ * @param level: LogLevel
+ */
+export function setGlobalLogLevel(level: LogLevel): void {
+  container.options.level = level;
+}
+
+export function getGlobalLogLevel(): string | undefined {
+  return container.options.level;
 }
 
 function getMessageContext(logger: Logger): string | undefined {

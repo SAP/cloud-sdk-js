@@ -6,7 +6,9 @@ import {
   disableExceptionLogger,
   enableExceptionLogger,
   getLogger,
-  setLogLevel
+  setLogLevel,
+  setGlobalLogLevel,
+  getGlobalLogLevel
 } from '../../src';
 
 describe('Cloud SDK Logger', () => {
@@ -160,6 +162,25 @@ describe('Cloud SDK Logger', () => {
       logger = createLogger(messageContext);
       setLogLevel(level, logger);
       expect(logger.level).toEqual(level);
+    });
+  });
+
+  describe('set global log level', () => {
+    const level = 'error';
+
+    it('before creating loggers, should set global log level', () => {
+      setGlobalLogLevel(level);
+      expect(getGlobalLogLevel()).toEqual(level);
+    });
+
+    it('after creating a logger, it should have the global log level', () => {
+      logger = createLogger(messageContext);
+      expect(logger.level).toEqual(level);
+    });
+
+    it('another arbitrary logger should have the same global level', () => {
+      const loggerTwo = createLogger(messageContext);
+      expect(loggerTwo.level).toEqual(level);
     });
   });
 });

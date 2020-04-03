@@ -37,6 +37,9 @@ jobs:
         name: Dependency Vulnerability Check
       - run: npm run check:license
         name: License Check
+      - run: echo "##[set-output name=changelog;]$(ts-node get-changelog.ts)"
+        id: get-changelog
+      - run: echo ${{ steps.get-changelog.outputs.changelog }}
   canary-release:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -60,10 +63,17 @@ jobs:
     needs: [tests, checks]
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - run: echo "##[set-output name=changelog;]$(ts-node get-changelog.ts)"
+        id: get-changelog
       - uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          draft: true
+          draft: true,
+          body: ${{ steps.get-changelog.outputs.changelog }}

@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
-      - run: echo "##[set-output name=changelog;]$(npx ts-node get-changelog.ts)"
+      - run: echo "##[set-output name=changelog;]$(npx ts-node scripts/get-changelog.ts)"
         id: get-changelog
       - run: echo ${{ steps.get-changelog.outputs.changelog }}
       - run: npm run lint
@@ -67,7 +67,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
-      - run: echo "##[set-output name=changelog;]$(ts-node get-changelog.ts)"
+      - run: echo "##[set-output name=changelog;]$(npx ts-node scripts/get-changelog.ts)"
         id: get-changelog
       - uses: actions/create-release@latest
         env:

@@ -33,7 +33,7 @@ jobs:
       - run: npm ci
       - uses: ./.github/actions/get-changelog
         id: get-changelog
-      - run: echo "${{ steps.get-changelog.outputs.changelog }}""
+      - run: echo "${{ steps.get-changelog.outputs.changelog }}"
       - run: npm run lint
         name: Static Code Check
       - run: npm run check:vulnerability

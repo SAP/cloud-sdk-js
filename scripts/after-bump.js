@@ -36,8 +36,8 @@ const nextChangelogTemplate = [
   ].join(['', '', '-', '', ''].join('\n'))
 ].join('\n');
 
-function transformChangeLog(changeLog) {
-  const [comments, versionSections] = changeLog.split('\n# Next');
+function transformChangeLog(changelog) {
+  const [comments, versionSections] = changelog.split('\n# Next');
   const [
     latestVersionSection,
     ...previousVersionSections
@@ -68,8 +68,8 @@ function transformChangeLog(changeLog) {
 }
 
 function updateChangelog() {
-  transformFile(path.resolve('CHANGELOG.md'), changeLog =>
-    transformChangeLog(changeLog)
+  transformFile(path.resolve('CHANGELOG.md'), changelog =>
+    transformChangeLog(changelog)
   );
 }
 

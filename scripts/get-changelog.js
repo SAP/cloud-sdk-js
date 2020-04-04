@@ -2,9 +2,9 @@
 const { version, openFile } = require('./util');
 
 module.exports = {
-  getChangeLog: function (v = version) {
-    const changeLog = openFile('CHANGELOG.md');
-    const [_, olderLogs] = changeLog.split(`\n# ${v}`);
+  getChangelog: function (v = version) {
+    const changelog = openFile('CHANGELOG.md');
+    const [_, olderLogs] = changelog.split(`\n# ${v}`);
     const logs = olderLogs.split('\n# ')[0];
     return logs.slice(logs.indexOf('\n##') + 1);
   }

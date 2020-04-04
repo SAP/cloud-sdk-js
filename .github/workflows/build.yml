@@ -31,10 +31,10 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
-      - run: npm run lint
       - uses: ./.github/actions/get-changelog
         id: get-changelog
       - run: echo ${{ steps.get-changelog.outputs.changelog }}
+      - run: npm run lint
         name: Static Code Check
       - run: npm run check:vulnerability
         name: Dependency Vulnerability Check

@@ -32,6 +32,9 @@ jobs:
           node-version: '12.x'
       - run: npm ci
       - run: npm run lint
+      - uses: ./.github/actions/get-changelog
+        id: get-changelog
+      - run: echo ${{ steps.get-changelog.outputs.changelog }}
         name: Static Code Check
       - run: npm run check:vulnerability
         name: Dependency Vulnerability Check
@@ -60,10 +63,9 @@ jobs:
     needs: [tests, checks]
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
       - run: npm ci
+      - uses: ./.github/actions/get-changelog
+        id: get-changelog
       - uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,4 +73,4 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           draft: true,
-          body: $(npx ts-node scripts/get-changelog.ts)
+          body: ${{ steps.get-changelog.outputs.changelog }}

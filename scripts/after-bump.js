@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import * as path from 'path';
-import { transformFile, version, jsonStringify, apiDocsDir } from './util';
+const path = require('path');
+const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
 
 function updateTypeDocConfig() {
   transformFile('typedoc.json', config =>
@@ -15,7 +15,7 @@ function updateDocsVersions() {
   transformFile(
     path.resolve('docs', '_data', 'versions.json'),
     versionsJson => {
-      const versions: string[] = JSON.parse(versionsJson);
+      const versions = JSON.parse(versionsJson);
       return versions.includes(version)
         ? versionsJson
         : jsonStringify([version, ...versions]);

@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { execSync } from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
-import compareVersions from 'compare-versions';
-import { jsonStringify } from './util';
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const compareVersions = require('compare-versions');
+const { jsonStringify, transformFile } = require('./util');
 
 const apiDocPath = path.resolve('docs', 'api');
 
@@ -120,12 +120,6 @@ function writeVersions() {
 
 function latestRedirectFrontMatter() {
   return ['---', 'redirect_from: "/api/latest/"', '---'].join('\n');
-}
-
-function transformFile(filePath, tranformFn: (file: string) => string): void {
-  const file = fs.readFileSync(filePath, { encoding: 'utf8' });
-  const transformedFile = tranformFn(file);
-  fs.writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
 }
 
 function addReferenceToLatest() {

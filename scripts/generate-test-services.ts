@@ -1,15 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
-const { generate } = require('../packages/generator/src');
+import fs from 'fs';
+import path from 'path';
+import util from 'util';
+import { generate } from '../packages/generator/src';
 
+type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
 const [readFile, readdir, writeFile] = [
   fs.readFile,
   fs.readdir,
   fs.writeFile
-].map(fsModule => util.promisify(fsModule));
+].map((fsModule: fsTypes) => util.promisify(fsModule));
 
 const inputDir = path.join('test-resources', 'service-specs');
 const packageOutputDir = path.resolve('test-packages', 'test-services', 'srv');

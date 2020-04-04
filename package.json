@@ -16,7 +16,7 @@
     "test:unit": "npx lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\"",
     "test:integration": "npx lerna run test --scope \"@sap-cloud-sdk/integration-tests\"",
     "test:type": "npx lerna run test --scope \"@sap-cloud-sdk/type-tests\"",
-    "generate:test-services": "node generate-test-services.js && npm run lint:fix && lerna link --force-local",
+    "generate:test-services": "npx ts-node scripts/generate-test-services.ts && npm run lint:fix && lerna link --force-local",
     "compile": "npx lerna run compile",
     "doc": "node scripts/generate-docs.js",
     "version": "node scripts/after-bump.js && npm run doc",

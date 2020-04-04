@@ -31,9 +31,6 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
-      - uses: ./.github/actions/get-changelog
-        id: get-changelog
-      - run: echo "${{ steps.get-changelog.outputs.changelog }}"
       - run: npm run lint
         name: Static Code Check
       - run: npm run check:vulnerability
@@ -65,6 +62,7 @@ jobs:
       - uses: actions/checkout@v1
       - run: npm ci
       - uses: ./.github/actions/get-changelog
+        name: Get Changelog
         id: get-changelog
       - uses: actions/create-release@latest
         env:

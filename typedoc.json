@@ -2,6 +2,7 @@
   "mode": "modules",
   "out": "docs/api/1.18.1",
   "exclude": [
+    "**/index.ts",
     "scripts/*.ts",
     "*.ts",
     "**/*.d.ts",

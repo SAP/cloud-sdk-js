@@ -112,11 +112,11 @@ export function getLogger(
 /**
  * Change the log level of a logger based on its message context.
  * E. g., to set the log level for the destination accessor module of the SDK to _debug_, simply call `setLogLevel('debug', 'destination-acessor')`.
- * @param level - level to set the logger to
+ * @param level - level to set the logger to. Use an empty string '' as level to unset context level.
  * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself
  */
 export function setLogLevel(
-  level: LogLevel,
+  level: LogLevel | '',
   messageContextOrLogger: string | Logger = DEFAULT_LOGGER__MESSAGE_CONTEXT
 ): void {
   const messageContext =

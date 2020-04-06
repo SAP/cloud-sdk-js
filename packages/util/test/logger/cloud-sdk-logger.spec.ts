@@ -18,6 +18,7 @@ describe('Cloud SDK Logger', () => {
 
   afterEach(() => {
     logger.close();
+    setLogLevel('', messageContext);
   });
 
   describe('createLogger', () => {

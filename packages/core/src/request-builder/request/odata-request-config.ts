@@ -72,7 +72,9 @@ export abstract class ODataRequestConfig {
    * @param queryParameters - Key-value pairs where the key is the name of a query parameter and the value is the respective value
    */
   addCustomQueryParameters(queryParameters: MapType<string>): void {
-    this.customQueryParameters = { ...this.customQueryParameters, ...queryParameters };
+    Object.entries(queryParameters).forEach(([key, value]) => {
+      this.customQueryParameters[key] = value;
+    });
   }
 
   protected prependDollarToQueryParameters(params: MapType<any>): MapType<any> {

@@ -143,6 +143,23 @@ describe('Cloud SDK Logger', () => {
     });
   });
 
+  describe('get message when passing error objects', () => {
+    it('should show correct message', () => {
+      logger = createLogger(messageContext);
+      logger.level = 'error';
+      const write = spyOnWrite(logger);
+
+      logger.error(new Error(message));
+
+      expect(write).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: expect.stringContaining(message)
+        }),
+        expect.anything()
+      );
+    });
+  });
+
   describe('set log level', () => {
     const level = 'silly';
 
@@ -168,19 +185,32 @@ describe('Cloud SDK Logger', () => {
   describe('set global log level', () => {
     const level = 'error';
 
-    it('before creating loggers, should set global log level', () => {
+    beforeAll(() => {
       setGlobalLogLevel(level);
-      expect(getGlobalLogLevel()).toEqual(level);
     });
 
-    it('after creating a logger, it should have the global log level', () => {
+    it('global log level getter and setter work', () => {
+      expect(level).toEqual(getGlobalLogLevel());
+    });
+
+    it('should have the global log level, if not applied a more specific level', () => {
       logger = createLogger(messageContext);
-      expect(logger.level).toEqual(level);
+
+      expect(logger.level).toEqual(getGlobalLogLevel());
     });
 
-    it('another arbitrary logger should have the same global level', () => {
-      const loggerTwo = createLogger(messageContext);
-      expect(loggerTwo.level).toEqual(level);
+    it('should have the context level, if applied a more specific level after creation', () => {
+      logger = createLogger(messageContext);
+      setLogLevel('warn', messageContext);
+
+      expect(logger.level).toEqual('warn');
+    });
+
+    it('should have the context level, if applied a more specific level before creation', () => {
+      setLogLevel('warn', messageContext);
+      logger = createLogger(messageContext);
+
+      expect(logger.level).toEqual('warn');
     });
   });
 });

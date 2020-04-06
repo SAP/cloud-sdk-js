@@ -81,9 +81,9 @@ export function createLogger(
       : { ...messageContext };
   return container.get(customFields.messageContext, {
     level:
-      container.options.level ||
       customLogLevels[customFields.messageContext] ||
       customFields.level ||
+      container.options.level ||
       'info',
     defaultMeta: {
       ...(Object.entries(customFields).length && {

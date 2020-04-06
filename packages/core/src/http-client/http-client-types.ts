@@ -7,7 +7,7 @@ export interface DestinationHttpRequestConfig {
   baseURL: string;
   headers: MapType<string>;
   httpAgent?: http.Agent;
-  httpsAgent?: https.Agent;
+  httpsAgent?: http.Agent;
 }
 
 export enum HttpMethod {

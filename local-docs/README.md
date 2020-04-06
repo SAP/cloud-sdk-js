@@ -7,4 +7,4 @@
 
 ## Running locally
 
-Run `ruby serve.rb` in the `local-docs` directory. The documentation will be served at `http://localhost:4000/api`.
+Run `bundle update` and then `ruby serve.rb` in the `local-docs` directory. The documentation will be served at `http://localhost:4000/api`.

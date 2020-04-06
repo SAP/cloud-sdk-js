@@ -2,6 +2,13 @@
 const path = require('path');
 const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
 
+function updateDocumentationMd() {
+  transformFile(path.resolve('DOCUMENTATION.md'), documentation => documentation.split('\n')
+    .map(line => line.startsWith('## Version:') ? `## Version: ${version}` : line)
+    .join('\n')
+  )
+}
+
 function updateTypeDocConfig() {
   transformFile('typedoc.json', config =>
     jsonStringify({
@@ -73,7 +80,10 @@ function updateChangelog() {
   );
 }
 
+
+
 function afterBump() {
+  updateDocumentationMd();
   updateTypeDocConfig();
   updateDocsVersions();
   updateChangelog();

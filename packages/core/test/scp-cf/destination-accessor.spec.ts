@@ -1162,7 +1162,7 @@ describe('destination-accessor', () => {
     });
 
     describe('providerUserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
-      it('providerUserToken x alwaysSubscriber: should return null since the token does not match subscriber', async () => {
+      it('providerUserToken && alwaysSubscriber: should return null since the token does not match subscriber', async () => {
         const mocks = mockThingsForCombinations();
 
         const actual = await fetchDestination(
@@ -1172,14 +1172,14 @@ describe('destination-accessor', () => {
         assertNothingCalledAndNullFound(mocks, actual);
       });
 
-      it('providerUserToken x alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
+      it('providerUserToken && alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
         const mocks = mockThingsForCombinations();
 
         const actual = await fetchDestination(providerUserJwt, alwaysProvider);
         assertSubscriberNotCalledAndProviderFound(mocks, actual!);
       });
 
-      it('providerUserToken x subscriberFirst: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
+      it('providerUserToken && subscriberFirst: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
         const mocks = mockThingsForCombinations();
 
         const actual = await fetchDestination(providerUserJwt, subscriberFirst);
@@ -1202,7 +1202,7 @@ describe('destination-accessor', () => {
         assertSubscriberNotCalledAndProviderFound(mocks, actual!);
       });
 
-      it('noUserToken x subscriberFirst: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
+      it('noUserToken && subscriberFirst: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
         const mocks = mockThingsForCombinations();
 
         const actual = await fetchDestination(undefined, subscriberFirst);

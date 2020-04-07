@@ -1,6 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+const { execSync } = require('child_process');
 const path = require('path');
 const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
+
 
 function updateDocumentationMd() {
   transformFile(path.resolve('DOCUMENTATION.md'), documentation => documentation.split('\n')
@@ -80,13 +82,16 @@ function updateChangelog() {
   );
 }
 
-
+function stageChanges() {
+  execSync('git add .');
+}
 
 function afterBump() {
   updateDocumentationMd();
   updateTypeDocConfig();
   updateDocsVersions();
   updateChangelog();
+  stageChanges();
 }
 
 afterBump();

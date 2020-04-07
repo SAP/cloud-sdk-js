@@ -6,4 +6,4 @@ exports[`destination-accessor Failure cases should throw an error when neither u
 
 exports[`destination-accessor Failure cases throws an error when the provide userJwt is invalid 1`] = `"JwtError: The given jwt payload does not encode valid JSON."`;
 
-exports[`destination-accessor caching destination tries to fetch destinations normally when neither the destinations env variables is there nor a service binding exists for a given name 1`] = `"Unable to get access token for \\"destination\\" service! No service instance of type \\"destination\\" found."`;
+exports[`destination-accessor destination loading precedence tries to fetch destinations normally when neither the destinations env variables is there nor a service binding exists for a given name 1`] = `"Unable to get access token for \\"destination\\" service! No service instance of type \\"destination\\" found."`;

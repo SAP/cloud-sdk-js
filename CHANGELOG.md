@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Allow setting additional query parameters for OData queries, using `withQueryParameters()`.
 
 ## Improvements
 

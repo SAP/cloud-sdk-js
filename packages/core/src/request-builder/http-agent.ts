@@ -48,7 +48,7 @@ export interface HttpAgentConfig {
  * Interface for the https-agent within the Axios request config.
  */
 export interface HttpsAgentConfig {
-  httpsAgent: https.Agent;
+  httpsAgent: http.Agent;
 }
 
 function createProxyAgent(

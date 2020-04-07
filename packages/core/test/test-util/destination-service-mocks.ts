@@ -3,13 +3,16 @@ import nock from 'nock';
 import * as sdkJwt from '../../src/util/jwt';
 import { destinationServiceUri } from './environment-mocks';
 
+type nockFunction = (a: string, b: nock.Options) => nock.Scope;
+
 export function mockInstanceDestinationsCall(
+  nockRef: nockFunction,
   response: any,
   responseCode: number,
   accessToken: string,
   uri: string = destinationServiceUri
 ) {
-  return nock(uri, {
+  return nockRef(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -19,12 +22,13 @@ export function mockInstanceDestinationsCall(
 }
 
 export function mockSubaccountDestinationsCall(
+  nockRef: nockFunction,
   response: any,
   responseCode: number,
   accessToken: string,
   uri: string = destinationServiceUri
 ) {
-  return nock(uri, {
+  return nockRef(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -34,13 +38,14 @@ export function mockSubaccountDestinationsCall(
 }
 
 export function mockSingleDestinationCall(
+  nockRef: nockFunction,
   response: any,
   responseCode: number,
   destName: string,
   accessToken: string,
   uri: string = destinationServiceUri
 ) {
-  return nock(uri, {
+  return nockRef(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }

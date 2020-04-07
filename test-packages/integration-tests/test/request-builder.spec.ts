@@ -151,8 +151,8 @@ describe('Request Builder', () => {
       mockDestinationServiceBinding.credentials.clientsecret
     );
 
-    mockInstanceDestinationsCall([destination], 200, providerToken);
-    mockSubaccountDestinationsCall([], 200, providerToken);
+    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
+    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
 
     nock(destination.URL, {
       reqheaders: {
@@ -461,6 +461,79 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
+  it('should allow setting custom headers twice', async () => {
+    nock(destinationServiceUri, {
+      reqheaders: {
+        authorization: 'customcustom',
+        additionalheader: 'additional',
+        accept: 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+      .get(`${servicePath}/${entityName}?$format=json`)
+      .reply(200, getAllResponse);
+
+    const request = TestEntity.requestBuilder()
+      .getAll()
+      .withCustomHeaders({
+        authorization: 'customcustom'
+      })
+      .withCustomHeaders({
+        additionalHeader: 'additional'
+      })
+      .execute({
+        url: destinationServiceUri
+      });
+
+    await expect(request).resolves.not.toThrow();
+  });
+
+  it('should allow setting custom query parameters', async () => {
+    nock(destinationServiceUri)
+      .get(`${servicePath}/${entityName}`)
+      .query({
+        $format: 'json',
+        testParameter: 'customcustom'
+      })
+      .reply(200, getAllResponse);
+
+    const request = TestEntity.requestBuilder()
+      .getAll()
+      .withCustomQueryParameters({
+        testParameter: 'customcustom'
+      })
+      .execute({
+        url: destinationServiceUri
+      });
+
+    await expect(request).resolves.not.toThrow();
+  });
+
+  it('should allow setting custom query parameters twice', async () => {
+    nock(destinationServiceUri)
+      .get(`${servicePath}/${entityName}`)
+      .query({
+        $format: 'json',
+        testParameter: 'customcustom',
+        additionalParameter: 'additional'
+      })
+      .reply(200, getAllResponse);
+
+    const request = TestEntity.requestBuilder()
+      .getAll()
+      .withCustomQueryParameters({
+        testParameter: 'customcustom'
+      })
+      .withCustomQueryParameters({
+        additionalParameter: 'additional'
+      })
+      .execute({
+        url: destinationServiceUri
+      });
+
+    await expect(request).resolves.not.toThrow();
+  });
+
   it('should retrieve access token for OAuth2ClientCredentials authentication and set it in request header', async () => {
     mockServiceBindings();
     destination = {
@@ -487,8 +560,8 @@ describe('Request Builder', () => {
       mockDestinationServiceBinding.credentials.clientsecret
     );
 
-    mockInstanceDestinationsCall([destination], 200, providerToken);
-    mockSubaccountDestinationsCall([], 200, providerToken);
+    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
+    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
 
     nock(destination.tokenServiceURL, {
       reqheaders: {

@@ -63,6 +63,17 @@ export abstract class MethodRequestBuilderBase<
   }
 
   /**
+   * Add custom query parameters to the request.
+   *
+   * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  withCustomQueryParameters(queryParameters: MapType<string>): this {
+    this.requestConfig.addCustomQueryParameters(queryParameters);
+    return this;
+  }
+
+  /**
    * Replace the default service path with the given custom path.
    * In case of the S/4HANA apis the servicePath defaults to '/sap/opu/odata/sap/<SERVICE_NAME>' and can be overwritten here.
    *

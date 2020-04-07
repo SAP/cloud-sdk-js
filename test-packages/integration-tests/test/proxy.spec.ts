@@ -12,7 +12,7 @@ import httpProxy from 'http-proxy';
 import { TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';
 import { setTestDestination } from '@sap-cloud-sdk/test-util';
-import axios from 'axios';
+import axios from '../../../packages/core/node_modules/axios';
 
 const httpServerResponse = 'http';
 describe('proxy', () => {
@@ -83,6 +83,19 @@ describe('proxy', () => {
       expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent());
     });
 
+    it('for OData requests with proxy configuration to https destination', async () => {
+      nock('https://example.com')
+        .get(/.*/)
+        .reply(200, { d: { results: [] } });
+      const httpsRequestSpy = jest.spyOn(axios, 'request');
+      await TestEntity.requestBuilder()
+        .getAll()
+        .execute({ ...destination, url: 'https://example.com' });
+      expect(httpsRequestSpy).toHaveBeenCalledWith(
+        objectContainingProxyAgent('httpsAgent')
+      );
+    });
+
     it('for destinations in env variable', async () => {
       setTestDestination({ ...destination, name: destination.name });
       await TestEntity.requestBuilder()
@@ -126,9 +139,9 @@ describe('proxy', () => {
   });
 });
 
-function objectContainingProxyAgent() {
+function objectContainingProxyAgent(agentKey = 'httpAgent') {
   return expect.objectContaining({
-    httpAgent: expect.objectContaining({
+    [agentKey]: expect.objectContaining({
       proxy: expect.objectContaining({
         href: 'http://proxy.com:1234/'
       })

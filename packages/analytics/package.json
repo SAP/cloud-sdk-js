@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/analytics",
-  "version": "1.18.1",
+  "version": "1.19.0",
   "description": "SAP Cloud SDK Analytics Usage",
   "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
@@ -30,16 +30,14 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^1.18.1",
+    "@sap-cloud-sdk/util": "^1.19.0",
     "axios": "^0.19.2"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
-    "jest": "^25.1.0",
+    "jest": "^25.2.4",
     "jest-junit": "^10.0.0",
-    "jest-when": "^2.6.0",
-    "nock": "^12.0.3",
-    "ts-jest": "^25.2.1",
+    "ts-jest": "^25.3.0",
     "typescript": "~3.8.3"
   }
 }

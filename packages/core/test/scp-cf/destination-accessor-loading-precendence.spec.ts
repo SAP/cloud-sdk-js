@@ -1,10 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  sanitizeDestination
-} from '../../src/scp-cf';
-import {  useOrFetchDestination
-} from '../../src/scp-cf/destination-accessor';
-
+import { sanitizeDestination } from '../../src/scp-cf';
+import { useOrFetchDestination } from '../../src/scp-cf/destination-accessor';
 import { muteLoggers } from '../test-util/mute-logger';
 
 function mockEnvDestinations() {

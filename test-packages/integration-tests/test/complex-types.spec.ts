@@ -91,7 +91,7 @@ describe('Complex types', () => {
       timeProperty: { hours: 11, minutes: 43, seconds: 43 }
     };
 
-    expect(actual).toEqual(expected);
+    expect(actual).toMatchObject(expected);
   });
 
   it('should fail when passing unknown proerties to the builder', () => {

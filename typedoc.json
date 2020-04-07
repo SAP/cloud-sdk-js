@@ -1,7 +1,9 @@
 {
   "mode": "modules",
-  "out": "documentation",
+  "out": "docs/api/1.18.1",
   "exclude": [
+    "**/index.ts",
+    "scripts/*.ts",
     "*.ts",
     "**/*.d.ts",
     "**/*.spec.ts",
@@ -13,6 +15,7 @@
   "name": "SAP Cloud SDK for JavaScript / TypeScript",
   "readme": "DOCUMENTATION.md",
   "theme": "default",
+  "includeVersion": true,
   "ignoreCompilerErrors": true,
   "hideGenerator": true,
   "excludePrivate": true,

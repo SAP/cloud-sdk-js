@@ -200,14 +200,14 @@ describe('Cloud SDK Logger', () => {
       expect(logger.level).toEqual(getGlobalLogLevel());
     });
 
-    it('should have the context level, if applied a more specific level after creation', () => {
+    it('should have the log level, if applied a more specific level after creation', () => {
       logger = createLogger(messageContext);
       setLogLevel('warn', messageContext);
 
       expect(logger.level).toEqual('warn');
     });
 
-    it('should have the context level, if applied a more specific level before creation', () => {
+    it('should have the log level, if applied a more specific level before creation', () => {
       setLogLevel('warn', messageContext);
       logger = createLogger(messageContext);
 

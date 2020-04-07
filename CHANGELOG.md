@@ -37,7 +37,7 @@ Blog: TBD
 
 ## New Functionality
 
-- Allow setting additional query parameters for OData queries, using `withQueryParameters()`.
+- Allow setting additional query parameters for OData queries, using `withCustomQueryParameters()`.
 
 # 1.18.1
 

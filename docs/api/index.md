@@ -1,4 +1,7 @@
-# API Documentation
+# SAP Cloud SDK API Documentation
 
-- [Version 1.18.1](1.18.1),
-- [Version 1.18.0](1.18.0)
+- [Latest Version](latest)
+
+{% for version in site.data.versions %}
+- [Version {{ version }}]({{ version }})
+{% endfor %}

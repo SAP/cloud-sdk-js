@@ -60,10 +60,15 @@ jobs:
     needs: [tests, checks]
     steps:
       - uses: actions/checkout@v1
+      - run: npm ci
+      - uses: ./.github/actions/get-changelog
+        name: Get Changelog
+        id: get-changelog
       - uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          draft: true
+          draft: true,
+          body: ${{ steps.get-changelog.outputs.changelog }}

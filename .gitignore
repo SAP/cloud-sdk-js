@@ -1,4 +1,5 @@
 node_modules
+!.github/actions/**/node_modules
 .vscode
 dist
 .DS_Store
@@ -20,3 +21,4 @@ junit.xml
 # Jetty mock server
 packages/**/*.jar
 *.jar
+local-docs/_site

@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import nock from 'nock';
 import {
   mockedConnectivityServiceProxyConfig,
   mockServiceBindings
@@ -42,16 +43,18 @@ describe('proxy configuration', () => {
     mockServiceToken();
     mockUserApprovedServiceToken();
 
-    mockInstanceDestinationsCall([], 200, subscriberServiceToken);
-    mockInstanceDestinationsCall([], 200, providerServiceToken);
-    mockSubaccountDestinationsCall([], 200, providerServiceToken);
+    mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+    mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
     mockSubaccountDestinationsCall(
+      nock,
       basicMultipleResponse,
       200,
       subscriberServiceToken
     );
     mockSingleDestinationCall(
+      nock,
       basicMultipleResponse[0],
       200,
       destinationName,
@@ -77,13 +80,14 @@ describe('proxy configuration', () => {
     mockUserApprovedServiceToken();
 
     mockInstanceDestinationsCall(
+      nock,
       onPremiseMultipleResponse,
       200,
       subscriberServiceToken
     );
-    mockInstanceDestinationsCall([], 200, providerServiceToken);
-    mockSubaccountDestinationsCall([], 200, providerServiceToken);
-    mockSubaccountDestinationsCall([], 200, subscriberServiceToken);
+    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+    mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+    mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken);
 
     process.env['https_proxy'] = 'some.proxy.com:1234';
     const expected = {
@@ -108,13 +112,14 @@ describe('proxy configuration', () => {
 
     const httpMocks = [
       mockSubaccountDestinationsCall(
+        nock,
         onPremiseMultipleResponse,
         200,
         subscriberServiceToken
       ),
-      mockInstanceDestinationsCall([], 200, providerServiceToken),
-      mockSubaccountDestinationsCall([], 200, providerServiceToken),
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken)
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken)
     ];
 
     const expected = {

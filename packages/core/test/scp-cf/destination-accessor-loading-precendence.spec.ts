@@ -1,62 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import nock from 'nock';
 import {
-  alwaysProvider,
-  alwaysSubscriber,
-  clientCredentialsTokenCache,
-  Destination,
-  destinationCache,
-  DestinationConfiguration,
-  DestinationOptions,
-  DestinationSelectionStrategy,
-  IsolationStrategy,
-  parseDestination,
-  sanitizeDestination,
-  subscriberFirst
+  sanitizeDestination
 } from '../../src/scp-cf';
-import {
-  getDestination,
-  getDestinationFromDestinationService,
-  useOrFetchDestination
+import {  useOrFetchDestination
 } from '../../src/scp-cf/destination-accessor';
-import { AuthenticationType } from '../../src/scp-cf/destination-service-types';
-import * as sdkJwt from '../../src/util/jwt';
-import * as destinationService from '../../src/scp-cf/destination-service';
-// When combined, lint also complains
-/* eslint-disable-next-line no-duplicate-imports */
-import { decodeJwt } from '../../src/util/jwt';
-import {
-  mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall
-} from '../test-util/destination-service-mocks';
-import {
-  mockedConnectivityServiceProxyConfig,
-  mockServiceBindings,
-  mockXsuaaBinding
-} from '../test-util/environment-mocks';
-import {
-  basicMultipleResponse,
-  certificateMultipleResponse,
-  certificateSingleResponse,
-  destinationName,
-  oauthMultipleResponse,
-  oauthSingleResponse,
-  onPremiseMultipleResponse
-} from '../test-util/example-destination-service-responses';
-import {
-  providerServiceToken,
-  providerUserJwt,
-  subscriberServiceToken,
-  subscriberUserJwt,
-  userApprovedProviderServiceToken,
-  userApprovedSubscriberServiceToken
-} from '../test-util/mocked-access-tokens';
+
 import { muteLoggers } from '../test-util/mute-logger';
-import {
-  mockServiceToken,
-  mockUserApprovedServiceToken
-} from '../test-util/token-accessor-mocks';
 
 function mockEnvDestinations() {
   process.env['destinations'] = JSON.stringify(environmentDestinations);

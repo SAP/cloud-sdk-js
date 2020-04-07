@@ -31,9 +31,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     muteLoggers('destination-accessor', 'proxy-util', 'jwt');
   });
 
-  afterEach(()=>{
+  afterEach(() => {
     nock.cleanAll();
-  })
+  });
 
   const destName = 'DESTINATION';
 
@@ -51,8 +51,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
   function mockProvider(): nock.Scope[] {
     return [
-      mockInstanceDestinationsCall([], 200, providerServiceToken),
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
       mockSubaccountDestinationsCall(
+        nock,
         [providerDestination],
         200,
         providerServiceToken
@@ -62,8 +63,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
   function mockSubscriber(): nock.Scope[] {
     return [
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
       mockSubaccountDestinationsCall(
+        nock,
         [subscriberDestination],
         200,
         subscriberServiceToken

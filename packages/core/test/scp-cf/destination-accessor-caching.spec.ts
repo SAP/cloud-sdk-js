@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import nock from 'nock';
 import { decodeJwt } from '../../src/util';
 import {
   providerServiceToken,
@@ -23,7 +24,8 @@ import {
 } from '../test-util/destination-service-mocks';
 import {
   alwaysProvider,
-  AuthenticationType, clientCredentialsTokenCache,
+  AuthenticationType,
+  clientCredentialsTokenCache,
   destinationCache,
   getDestination,
   getDestinationFromDestinationService,
@@ -70,14 +72,20 @@ describe('caching destination', () => {
         Authentication: 'NoAuthentification'
       };
 
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
       mockSubaccountDestinationsCall(
+        nock,
         [subscriberDest],
         200,
         subscriberServiceToken
       );
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([providerDest], 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        [providerDest],
+        200,
+        providerServiceToken
+      );
     });
 
     it('retrieved provider and subscriber destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
@@ -176,13 +184,15 @@ describe('caching destination', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
         mockSubaccountDestinationsCall(
+          nock,
           certificateMultipleResponse,
           200,
           providerServiceToken
         ),
         mockSingleDestinationCall(
+          nock,
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
@@ -220,12 +230,14 @@ describe('caching destination', () => {
 
       const httpMocks = [
         mockInstanceDestinationsCall(
+          nock,
           oauthMultipleResponse,
           200,
           providerServiceToken
         ),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
+          nock,
           oauthSingleResponse,
           200,
           destinationName,
@@ -265,8 +277,9 @@ describe('caching destination', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
         mockSubaccountDestinationsCall(
+          nock,
           onPremiseMultipleResponse,
           200,
           providerServiceToken
@@ -388,8 +401,8 @@ describe('caching destination', () => {
       );
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall([], 200, subscriberServiceToken)
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
       ];
 
       const actual = await getDestination('ProviderDest', {

@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import nock from 'nock';
 import { mockServiceBindings } from '../test-util/environment-mocks';
 import {
   mockServiceToken,
@@ -27,7 +28,8 @@ import {
   oauthSingleResponse
 } from '../test-util/example-destination-service-responses';
 import {
-  clientCredentialsTokenCache, destinationCache,
+  clientCredentialsTokenCache,
+  destinationCache,
   getDestination,
   getDestinationFromDestinationService,
   parseDestination
@@ -52,15 +54,17 @@ describe('authentication types', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
         mockSubaccountDestinationsCall(
+          nock,
           oauthMultipleResponse,
           200,
           subscriberServiceToken
         ),
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
+          nock,
           oauthSingleResponse,
           200,
           destinationName,
@@ -84,12 +88,14 @@ describe('authentication types', () => {
 
       const httpMocks = [
         mockInstanceDestinationsCall(
+          nock,
           oauthMultipleResponse,
           200,
           providerServiceToken
         ),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
+          nock,
           oauthSingleResponse,
           200,
           destinationName,
@@ -118,12 +124,14 @@ describe('authentication types', () => {
 
       const httpMocks = [
         mockInstanceDestinationsCall(
+          nock,
           [samlDestinationsWithSystemUser],
           200,
           providerServiceToken
         ),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
+          nock,
           oauthSingleResponse,
           200,
           destinationName,
@@ -148,15 +156,17 @@ describe('authentication types', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
         mockSubaccountDestinationsCall(
+          nock,
           certificateMultipleResponse,
           200,
           subscriberServiceToken
         ),
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
-        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
+          nock,
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
@@ -181,13 +191,15 @@ describe('authentication types', () => {
       mockUserApprovedServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
         mockSubaccountDestinationsCall(
+          nock,
           certificateMultipleResponse,
           200,
           providerServiceToken
         ),
         mockSingleDestinationCall(
+          nock,
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
@@ -215,14 +227,15 @@ describe('authentication types', () => {
       mockVerifyJwt();
       const serviceTokenSpy = mockServiceToken();
 
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
       mockSubaccountDestinationsCall(
+        nock,
         basicMultipleResponse,
         200,
         subscriberServiceToken
       );
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
       const expected = parseDestination(basicMultipleResponse[0]);
       const actual = await getDestination(destinationName, {
@@ -237,8 +250,9 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
       mockSubaccountDestinationsCall(
+        nock,
         basicMultipleResponse,
         200,
         providerServiceToken
@@ -256,16 +270,18 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
       mockSubaccountDestinationsCall(
+        nock,
         certificateMultipleResponse,
         200,
         subscriberServiceToken
       );
-      mockInstanceDestinationsCall([], 200, providerServiceToken);
-      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
       mockSingleDestinationCall(
+        nock,
         certificateSingleResponse,
         200,
         'ERNIE-UND-CERT',

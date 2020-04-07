@@ -79,7 +79,7 @@ describe('proxy', () => {
     });
 
     it('for OData requests with proxy configuration', async () => {
-      const test = await TestEntity.requestBuilder().getAll().execute(destination);
+      await TestEntity.requestBuilder().getAll().execute(destination);
       expect(requestSpy).toHaveBeenCalledWith(objectContainingProxyAgent());
     });
 

@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
+import * as sdkJwt from '../../src/util/jwt';
 import { destinationServiceUri } from './environment-mocks';
 
 type nockFunction = (a: string, b: nock.Options) => nock.Scope;
@@ -51,4 +52,10 @@ export function mockSingleDestinationCall(
   })
     .get(`/destination-configuration/v1/destinations/${destName}`)
     .reply(responseCode, response);
+}
+
+export function mockVerifyJwt() {
+  return jest
+    .spyOn(sdkJwt, 'verifyJwt')
+    .mockImplementation(token => Promise.resolve(sdkJwt.decodeJwt(token)));
 }

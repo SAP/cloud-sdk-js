@@ -1172,7 +1172,7 @@ describe('destination-accessor', () => {
         assertNothingCalledAndNullFound(mocks, actual);
       });
 
-      it('providerUserToken x alwaysProvider: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
+      it('providerUserToken x alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
         const mocks = mockThingsForCombinations();
 
         const actual = await fetchDestination(providerUserJwt, alwaysProvider);

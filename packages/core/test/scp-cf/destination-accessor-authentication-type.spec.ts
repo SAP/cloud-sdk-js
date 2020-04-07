@@ -1,0 +1,286 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { mockServiceBindings } from '../test-util/environment-mocks';
+import {
+  mockServiceToken,
+  mockUserApprovedServiceToken
+} from '../test-util/token-accessor-mocks';
+import {
+  mockInstanceDestinationsCall,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall,
+  mockVerifyJwt
+} from '../test-util/destination-service-mocks';
+import {
+  providerServiceToken,
+  providerUserJwt,
+  subscriberServiceToken,
+  subscriberUserJwt,
+  userApprovedProviderServiceToken,
+  userApprovedSubscriberServiceToken
+} from '../test-util/mocked-access-tokens';
+import {
+  basicMultipleResponse,
+  certificateMultipleResponse,
+  certificateSingleResponse,
+  destinationName,
+  oauthMultipleResponse,
+  oauthSingleResponse
+} from '../test-util/example-destination-service-responses';
+import {
+  clientCredentialsTokenCache, destinationCache,
+  getDestination,
+  getDestinationFromDestinationService,
+  parseDestination
+} from '../../src/scp-cf';
+import { muteLoggers } from '../test-util/mute-logger';
+
+describe('authentication types', () => {
+  beforeAll(() => {
+    muteLoggers('destination-accessor', 'proxy-util', 'jwt');
+  });
+
+  afterEach(() => {
+    clientCredentialsTokenCache.clear();
+    destinationCache.clear();
+  });
+
+  describe('authentication type OAuth2SAMLBearerFlow', () => {
+    it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, subscriber tenant', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          oauthMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          oauthSingleResponse,
+          200,
+          destinationName,
+          userApprovedSubscriberServiceToken
+        )
+      ];
+
+      const expected = parseDestination(oauthSingleResponse);
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+
+    it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, provider tenant', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(
+          oauthMultipleResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          oauthSingleResponse,
+          200,
+          destinationName,
+          userApprovedProviderServiceToken
+        )
+      ];
+
+      const expected = parseDestination(oauthSingleResponse);
+      const actual = await getDestination(destinationName, {
+        userJwt: providerUserJwt,
+        cacheVerificationKeys: false
+      });
+
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+
+    it('should use provider token first instead of the userJwt when SystemUser exists in destination', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const samlDestinationsWithSystemUser = { ...oauthMultipleResponse[0] };
+      // Insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
+      samlDestinationsWithSystemUser['SystemUser'] = 'defined';
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(
+          [samlDestinationsWithSystemUser],
+          200,
+          providerServiceToken
+        ),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          oauthSingleResponse,
+          200,
+          destinationName,
+          providerServiceToken
+        )
+      ];
+
+      const expected = parseDestination(oauthSingleResponse);
+      const actual = await getDestination(destinationName, {
+        cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+  });
+
+  describe('authentication type ClientCertificateAuthentication', () => {
+    it('returns a destination with certificates if the authentication type is ClientCertificateAuthentication, subscriber tenant', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall([], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          certificateMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall([], 200, providerServiceToken),
+        mockSingleDestinationCall(
+          certificateSingleResponse,
+          200,
+          'ERNIE-UND-CERT',
+          subscriberServiceToken
+        )
+      ];
+
+      const actual = await getDestination('ERNIE-UND-CERT', {
+        userJwt: subscriberUserJwt,
+        cacheVerificationKeys: false
+      });
+      expect(actual!.certificates!.length).toBe(1);
+      expect(actual!.keyStoreName).toBe('key.p12');
+      expect(actual!.keyStorePassword).toBe('password');
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+
+    it('returns a destination with certificates if the authentication type is ClientCertificateAuthentication, provider tenant', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall([], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(
+          certificateMultipleResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSingleDestinationCall(
+          certificateSingleResponse,
+          200,
+          'ERNIE-UND-CERT',
+          providerServiceToken
+        )
+      ];
+
+      const actual = await getDestination('ERNIE-UND-CERT', {
+        cacheVerificationKeys: false
+      });
+      expect(actual!.certificates!.length).toBe(1);
+      expect(actual!.keyStoreName).toBe('key.p12');
+      expect(actual!.keyStorePassword).toBe('password');
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+  });
+
+  describe('authentication type BasicAuthentication', () => {
+    beforeEach(() => {
+      clientCredentialsTokenCache.clear();
+    });
+
+    it('returns a destination without authTokens if its authenticationType is Basic', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      const serviceTokenSpy = mockServiceToken();
+
+      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        basicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+
+      const expected = parseDestination(basicMultipleResponse[0]);
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
+      expect(serviceTokenSpy).toHaveBeenCalled();
+    });
+
+    it('retrieves destination without specifying userJwt', async () => {
+      mockServiceBindings();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(
+        basicMultipleResponse,
+        200,
+        providerServiceToken
+      );
+
+      const actual = await getDestination(destinationName, {
+        cacheVerificationKeys: false
+      });
+      const expected = parseDestination(basicMultipleResponse[0]);
+      expect(actual).toMatchObject(expected);
+    });
+
+    // Test for ONEmds specific feature
+    it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
+      mockServiceBindings();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall([], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        certificateMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockInstanceDestinationsCall([], 200, providerServiceToken);
+      mockSubaccountDestinationsCall([], 200, providerServiceToken);
+
+      mockSingleDestinationCall(
+        certificateSingleResponse,
+        200,
+        'ERNIE-UND-CERT',
+        subscriberServiceToken
+      );
+
+      const expected = parseDestination(certificateSingleResponse);
+      const actual = await getDestinationFromDestinationService(
+        'ERNIE-UND-CERT',
+        {
+          iss: 'https://subscriber.example.com',
+          cacheVerificationKeys: false
+        }
+      );
+      expect(actual).toMatchObject(expected);
+    });
+  });
+});

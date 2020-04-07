@@ -5,6 +5,7 @@ import {
   DestinationJson
 } from '../../src';
 
+export const destinationName = 'FINAL-DESTINATION';
 export const certificateMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'ERNIE-UND-CERT',

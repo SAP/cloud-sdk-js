@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- Allow setting additional query parameters for OData queries, using `withQueryParameters()`.
+-
 
 ## Improvements
 
@@ -28,6 +28,16 @@
 
 -
 
+
+# 1.19.0
+
+Release Date: TBD
+API Docs: https://sap.github.io/cloud-sdk/api/1.19.0
+Blog: TBD
+
+## New Functionality
+
+- Allow setting additional query parameters for OData queries, using `withQueryParameters()`.
 
 # 1.18.1
 

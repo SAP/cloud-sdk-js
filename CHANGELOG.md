@@ -31,9 +31,9 @@
 
 # 1.19.0
 
-Release Date: TBD
+Release Date: April 8, 2020
 API Docs: https://sap.github.io/cloud-sdk/api/1.19.0
-Blog: TBD
+Blog: https://blogs.sap.com/?p=1075911
 
 ## New Functionality
 

@@ -1161,7 +1161,7 @@ describe('destination-accessor', () => {
       });
     });
 
-    describe('providerUserToken x  {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
+    describe('providerUserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
       it('providerUserToken x alwaysSubscriber: should return null since the token does not match subscriber', async () => {
         const mocks = mockThingsForCombinations();
 

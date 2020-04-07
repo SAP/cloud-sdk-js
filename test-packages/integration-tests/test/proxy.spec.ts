@@ -12,7 +12,7 @@ import httpProxy from 'http-proxy';
 import { TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';
 import { setTestDestination } from '@sap-cloud-sdk/test-util';
-import axios from 'axios';
+import axios from '../../../packages/core/node_modules/axios';
 
 const httpServerResponse = 'http';
 describe('proxy', () => {

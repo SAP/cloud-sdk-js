@@ -17,6 +17,7 @@ export abstract class ODataRequestConfig {
   customServicePath: string;
 
   private _customHeaders: MapType<string> = {};
+  private _customQueryParameters: MapType<string> = {};
 
   /**
    * Creates an instance of ODataRequest.
@@ -44,6 +45,15 @@ export abstract class ODataRequestConfig {
     return this._customHeaders;
   }
 
+  set customQueryParameters(queryParameters: MapType<string>) {
+    this._customQueryParameters = {};
+    this.addCustomQueryParameters(queryParameters);
+  }
+
+  get customQueryParameters(): MapType<string> {
+    return this._customQueryParameters;
+  }
+
   /**
    * Add custom headers to the request. This is useful in case you want to provide your own authorization headers for example.
    *
@@ -53,6 +63,17 @@ export abstract class ODataRequestConfig {
     Object.entries(headers).forEach(([key, value]) => {
       // Enforce lower case as HTTP headers are case-insensitive
       this.customHeaders[key.toLowerCase()] = value;
+    });
+  }
+
+  /**
+   * Add custom query parameters to the request. This is useful in case your OData service allows non-standard query parameters.
+   *
+   * @param queryParameters - Key-value pairs where the key is the name of a query parameter and the value is the respective value
+   */
+  addCustomQueryParameters(queryParameters: MapType<string>): void {
+    Object.entries(queryParameters).forEach(([key, value]) => {
+      this.customQueryParameters[key] = value;
     });
   }
 

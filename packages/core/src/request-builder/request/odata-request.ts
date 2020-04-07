@@ -129,7 +129,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const queryParameters = this.config.queryParameters();
+    const queryParameters = {
+      ...this.config.queryParameters(),
+      ...this.config.customQueryParameters
+    };
 
     const query = Object.entries(queryParameters)
       .map(([key, value]) => `${key}=${value}`)

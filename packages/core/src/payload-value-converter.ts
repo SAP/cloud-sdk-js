@@ -205,7 +205,7 @@ const serializers: EdmTypeMapping = {
   'Edm.Guid': identity,
   'Edm.Int16': toNumber,
   'Edm.Int32': toNumber,
-  'Edm.Int64': toBigNumber,
+  'Edm.Int64': fromBigNumber,
   'Edm.SByte': toNumber,
   'Edm.Single': parseNumber,
   'Edm.String': identity,

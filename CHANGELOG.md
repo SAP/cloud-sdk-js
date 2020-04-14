@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Support setting log levels for all loggers globally. Use `setGlobalLogLevel('debug')` for this. Log levels set individually still take precedence.
 
 ## Improvements
 
@@ -26,8 +26,7 @@
 
 ## Fixed Issues
 
--
-
+- Fix logging of error messages that were logged as `undefined` before.
 
 # 1.19.0
 

@@ -44,8 +44,8 @@ export function packageJson(
           '@sap-cloud-sdk/core': `^${generatorVersion}`
         },
         devDependencies: {
-          typedoc: '^0.15.0',
-          typescript: '3.7.4'
+          typedoc: '^0.17.0',
+          typescript: '~3.8.3'
         }
       },
       null,

@@ -3,12 +3,13 @@
 import chalk from 'chalk';
 import { format } from 'winston';
 
-const { combine, timestamp, cli, printf } = format;
+const { combine, timestamp, cli, printf, errors } = format;
 
 /**
  * Format for local logging.
  */
 export const local = combine(
+  errors({ stack: true }),
   timestamp(),
   format(info => ({
     ...info,

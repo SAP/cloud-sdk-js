@@ -83,6 +83,7 @@ export function createLogger(
     level:
       customLogLevels[customFields.messageContext] ||
       customFields.level ||
+      container.options.level ||
       'info',
     defaultMeta: {
       ...(Object.entries(customFields).length && {
@@ -110,12 +111,12 @@ export function getLogger(
 
 /**
  * Change the log level of a logger based on its message context.
- * E. g., to set the log level for the destination accessor module of the SDK to _debug_, simply call `setLogLevel('debug', 'destination-accessor')`.
- * @param level - level to set the logger to
+ * E. g., to set the log level for the destination accessor module of the SDK to _debug_, simply call `setLogLevel('debug', 'destination-acessor')`.
+ * @param level - level to set the logger to. Use an empty string '' as level to unset context level.
  * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself
  */
 export function setLogLevel(
-  level: LogLevel,
+  level: LogLevel | '',
   messageContextOrLogger: string | Logger = DEFAULT_LOGGER__MESSAGE_CONTEXT
 ): void {
   const messageContext =
@@ -136,6 +137,19 @@ export function setLogLevel(
     );
     messageContextOrLogger.level = level;
   }
+}
+
+/**
+ * Change the global log level of the container which will set default level for all active loggers.
+ * E. g., to set the global log level call `setGlobalLogLevel('debug')`.
+ * @param level: LogLevel
+ */
+export function setGlobalLogLevel(level: LogLevel): void {
+  container.options.level = level;
+}
+
+export function getGlobalLogLevel(): string | undefined {
+  return container.options.level;
 }
 
 function getMessageContext(logger: Logger): string | undefined {

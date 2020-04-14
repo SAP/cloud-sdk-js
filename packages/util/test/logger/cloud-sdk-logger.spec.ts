@@ -6,7 +6,9 @@ import {
   disableExceptionLogger,
   enableExceptionLogger,
   getLogger,
-  setLogLevel
+  setLogLevel,
+  setGlobalLogLevel,
+  getGlobalLogLevel
 } from '../../src';
 
 describe('Cloud SDK Logger', () => {
@@ -16,6 +18,7 @@ describe('Cloud SDK Logger', () => {
 
   afterEach(() => {
     logger.close();
+    setLogLevel('', messageContext);
   });
 
   describe('createLogger', () => {
@@ -141,6 +144,23 @@ describe('Cloud SDK Logger', () => {
     });
   });
 
+  describe('get message when passing error objects', () => {
+    it('should show correct message', () => {
+      logger = createLogger(messageContext);
+      logger.level = 'error';
+      const write = spyOnWrite(logger);
+
+      logger.error(new Error(message));
+
+      expect(write).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: expect.stringContaining(message)
+        }),
+        expect.anything()
+      );
+    });
+  });
+
   describe('set log level', () => {
     const level = 'silly';
 
@@ -160,6 +180,38 @@ describe('Cloud SDK Logger', () => {
       logger = createLogger(messageContext);
       setLogLevel(level, logger);
       expect(logger.level).toEqual(level);
+    });
+  });
+
+  describe('set global log level', () => {
+    const level = 'error';
+
+    beforeAll(() => {
+      setGlobalLogLevel(level);
+    });
+
+    it('global log level getter and setter work', () => {
+      expect(level).toEqual(getGlobalLogLevel());
+    });
+
+    it('should have the global log level, if not applied a more specific level', () => {
+      logger = createLogger(messageContext);
+
+      expect(logger.level).toEqual(getGlobalLogLevel());
+    });
+
+    it('should have the log level, if applied a more specific level after creation', () => {
+      logger = createLogger(messageContext);
+      setLogLevel('warn', messageContext);
+
+      expect(logger.level).toEqual('warn');
+    });
+
+    it('should have the log level, if applied a more specific level before creation', () => {
+      setLogLevel('warn', messageContext);
+      logger = createLogger(messageContext);
+
+      expect(logger.level).toEqual('warn');
     });
   });
 });

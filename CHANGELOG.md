@@ -28,7 +28,6 @@
 
 - Fix logging of error messages that were logged as `undefined` before.
 
-
 # 1.19.0
 
 Release Date: April 8, 2020

@@ -150,7 +150,7 @@ describe('tsToEdm()', () => {
   });
 
   it('should parse BigNumber to Edm.Int64', () => {
-    const expected = new BigNumber(16);
+    const expected = '16';
     const actual = tsToEdm(new BigNumber('16'), 'Edm.Int64');
     expect(actual).toStrictEqual(expected);
   });
@@ -267,7 +267,7 @@ describe('edm to ts to edm does not lead to information loss', () => {
   });
 
   it('Edm.Int64', () => {
-    const expected = new BigNumber(64);
+    const expected = '64';
     expect(tsToEdm(edmToTs(expected, 'Edm.Int64'), 'Edm.Int64')).toStrictEqual(
       expected
     );

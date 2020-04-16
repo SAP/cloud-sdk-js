@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`CacheDestination & CacheClientCredentialToken changing the isolation should produce a cache miss 1`] = `"Failed to fetch instance destinations."`;

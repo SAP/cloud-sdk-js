@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`destination loading precedence tries to fetch destinations normally when neither the destinations env variables is there nor a service binding exists for a given name 1`] = `"Unable to get access token for \\"destination\\" service! No service instance of type \\"destination\\" found."`;

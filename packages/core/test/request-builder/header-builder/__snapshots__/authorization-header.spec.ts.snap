@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Authorization header builder does not throw on Principal Propagation 1`] = `"Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity-service."`;

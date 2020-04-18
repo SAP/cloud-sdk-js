@@ -22,15 +22,17 @@ import { singleTestEntityResponse } from './test-data/single-test-entity-respons
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
 import { basicCredentials } from './test-util/destination-encoder';
 
-const basicHeader = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const csrfToken = 'CSRFTOKEN';
 const entityName = 'A_TestEntity';
+const username = 'username';
+const password = 'password';
+const url = 'https://example.com';
 
 function mockCsrfTokenRequest(host: string, sapClient: string) {
   nock(host, {
     reqheaders: {
-      authorization: basicHeader,
+      authorization: basicCredentials({ username, password }),
       'x-csrf-token': 'Fetch',
       'sap-client': sapClient
     }
@@ -56,9 +58,9 @@ describe('Request Builder', () => {
     delete process.env.VCAP_SERVICES;
 
     destination = {
-      url: 'https://example.com',
-      username: 'username',
-      password: 'password',
+      url,
+      username,
+      password,
       sapClient: '123',
       authTokens: [],
       originalProperties: {}
@@ -135,11 +137,11 @@ describe('Request Builder', () => {
     destination = {
       Name: 'FINAL-DESTINATION',
       Authentication: 'BasicAuthentication',
-      Password: 'password',
-      User: 'username',
+      Password: password,
+      User: username,
       ProxyType: 'Internet',
       sapclient: null,
-      URL: 'https://example.com',
+      URL: url,
       authTokens: []
     };
 
@@ -403,7 +405,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicHeader,
+        authorization: basicCredentials(destination),
         'x-csrf-token': 'Fetch',
         'sap-client': destination.sapClient as string
       }
@@ -538,11 +540,11 @@ describe('Request Builder', () => {
     mockServiceBindings();
     destination = {
       Name: 'FINAL-DESTINATION',
-      Password: 'password',
-      User: 'username',
+      Password: password,
+      User: username,
       ProxyType: 'Internet',
       sapclient: null,
-      URL: 'https://example.com',
+      URL: url,
       authTokens: [],
       Authentication: 'OAuth2ClientCredentials',
       tokenServiceURL: 'https://token.example.com',

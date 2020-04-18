@@ -11,8 +11,8 @@ import {
   addAuthorizationHeader,
   buildAndAddAuthorizationHeader
 } from './authorization-header';
-import { addCsrfTokenAndCookies } from './csrf-token-header';
-import { filterNullishValues, filterDuplicateKeys, getHeaderByKeyOrExecute } from './headers-util';
+import { getCsrfHeaders } from './csrf-token-header';
+import { filterNullishValues, filterDuplicateKeys, getHeaderByKeyOrExecute, replaceDuplicateKeys } from './headers-util';
 import { buildAuthorizationHeader } from './auth-headers';
 
 /**
@@ -31,26 +31,44 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
   }
   const destination = request.destination;
 
-  const defaultHeaders = filterNullishValues({
-    'Accept': 'application/json',
-    'Content-Type': request.config.contentType,
-    'sap-client': destination.sapClient,
-    'SAP-Connectivity-SCC-Location_ID': request.destination.cloudConnectorLocationId
-  });
+  const defaultHeaders = replaceDuplicateKeys(
+    filterNullishValues({
+      'Accept': 'application/json',
+      'Content-Type': request.config.contentType,
+      'if-match': getETagHeaderValue(request.config)
+    }),
+    request.config.customHeaders
+  );
+
+  const sapHeaders = replaceDuplicateKeys(
+    filterNullishValues({
+      'sap-client': destination.sapClient,
+      'SAP-Connectivity-SCC-Location_ID': request.destination.cloudConnectorLocationId
+    }),
+    request.config.customHeaders
+  );
+
+  const authHeaders = await getHeaderByKeyOrExecute(
+    'authorization',
+    request.config.customHeaders,
+    () => buildAuthorizationHeader(destination)
+  );
+
+  const csrfHeaders = request.config.method === 'get' ? {} : await getHeaderByKeyOrExecute(
+    'x-csrf-token',
+    request.config.customHeaders,
+    () => getCsrfHeaders(request, {
+      ...authHeaders,
+      ...sapHeaders
+    })
+  );
 
   return {
-    ...await getHeaderByKeyOrExecute(
-      () => buildAuthorizationHeader(destination),
-      'authorization',
-      request.config.customHeaders
-    ),
-    // ...await addAuthorizationHeader(request, {}),
-    ...addEtagHeader(request.config)({}) as MapType<string>,
-    ...await addCsrfTokenAndCookies(request, {}),
-    ...filterDuplicateKeys(defaultHeaders, request.config.customHeaders),
-    ...addProxyHeaders(request.destination.proxyConfiguration)({}),
-    // ...addLocationIdHeader(request.destination.cloudConnectorLocationId)({}) as MapType<string>,
-    ...addCustomHeaders(request.config.customHeaders)({})
+    ...authHeaders,
+    ...sapHeaders,
+    ...csrfHeaders,
+    ...defaultHeaders,
+    ...request.config.customHeaders
   };
 }
 
@@ -85,32 +103,8 @@ export const addLocationIdHeader = (locationId?: string) => (
   headers: MapType<string>
 ) => assocSome('SAP-Connectivity-SCC-Location_ID', locationId)(headers);
 
-const addEtagHeader = (requestConfig: ODataRequestConfig) => (
-  headers: MapType<string>
-) => assocSome('if-match', getETagHeader(requestConfig))(headers);
-
-const addCustomHeaders = (customHeaders: MapType<string>) => (
-  headers: MapType<string>
-) => ({
-  ...headers,
-  ...customHeaders
-});
-
-const addContentTypeHeader = (contentType: string, headers: MapType<string>) =>
-  assoc('Content-Type', contentType)(headers);
-
-const addAcceptHeader = (headers: MapType<string>) =>
-  assoc('Accept', 'application/json')(headers);
-
-const eTagFromConfig = <T extends Entity>(
-  config: ODataUpdateRequestConfig<T> | ODataDeleteRequestConfig<T>
-) => (config.versionIdentifierIgnored ? '*' : config.eTag);
-
-const getETagHeader = (config: ODataRequestConfig): string | undefined =>
-  ifElse(
-    c =>
-      c instanceof ODataUpdateRequestConfig ||
-      c instanceof ODataDeleteRequestConfig,
-    eTagFromConfig,
-    () => undefined
-  )(config);
+function getETagHeaderValue(config: ODataRequestConfig): string | undefined {
+  if (config instanceof ODataUpdateRequestConfig || config instanceof ODataDeleteRequestConfig) {
+    return config.versionIdentifierIgnored ? '*' : config.eTag;
+  }
+}

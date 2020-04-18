@@ -17,6 +17,7 @@ import {
   getOAuth2ClientCredentialsToken
 } from '../../scp-cf';
 import { ODataRequest, ODataRequestConfig } from '../request';
+import { buildAuthorizationHeader } from './auth-headers';
 
 const logger = createLogger({
   package: 'core',
@@ -46,7 +47,7 @@ export async function addAuthorizationHeader<
     if (!request.destination) {
       throw Error('The request destination is undefined.');
     }
-    return buildAndAddAuthorizationHeader(request.destination)(headers);
+    return buildAuthorizationHeader(request.destination);
   }
   return headers;
 }
@@ -124,7 +125,7 @@ const buildAuthHeader = async (
 const throwAllTokensErrored = (authTokens: DestinationAuthToken[]) => {
   throw new Error(
     [
-      'The destination tried to provide authorization tokens but errored in all cases. This is most likely due to misconfiguration.',
+      'The destination tried to provide authorization tokens but failed in all cases. This is most likely due to misconfiguration.',
       'Original error messages:',
       ...map(token => token.error, authTokens)
     ].join('\n')
@@ -201,7 +202,7 @@ const headerFromTokens = (authTokens: DestinationAuthToken[]): string => {
 const headerFromBasicAuthDestination = (destination: Destination) => {
   if (isNil(destination.username) || isNil(destination.password)) {
     throw new Error(
-      'AuthenticationType is "BasicAuthentication", but "username" and/or "password" are missing!'
+      'AuthenticationType is "BasicAuthentication", but "username" and / or "password" are missing!'
     );
   }
 

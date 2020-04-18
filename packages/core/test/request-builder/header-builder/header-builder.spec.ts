@@ -15,6 +15,7 @@ import {
   mockHeaderRequest
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/test-service';
+import * as csrfTokenHeaders from '../../../src/request-builder/header-builder/csrf-token-header';
 
 describe('Header-builder:', () => {
   beforeAll(() => {
@@ -174,6 +175,7 @@ describe('Header-builder:', () => {
 
     const destination: Destination = {
       url: 'https://destination.example.com',
+      proxyType: 'OnPremise',
       proxyConfiguration: {
         ...mockedConnectivityServiceProxyConfig,
         headers: proxyHeaders
@@ -232,6 +234,27 @@ describe('Header-builder:', () => {
 
     const headers = await request.headers();
     expect(headers['x-csrf-token']).toBe('mocked-x-csrf-token');
+  });
+
+  it('Skips csrf token retrieval for existing csrf header', async () => {
+    spyOn(csrfTokenHeaders, 'getCsrfHeaders');
+    const request = createCreateRequest(defaultDestination);
+    request.config.customHeaders = { 'x-csrf-token': 'defined' };
+
+    mockHeaderRequest({ request });
+
+    await request.headers();
+    expect(csrfTokenHeaders.getCsrfHeaders).not.toHaveBeenCalled();
+  });
+
+  it('Skips csrf token retrieval for GET request', async () => {
+    spyOn(csrfTokenHeaders, 'getCsrfHeaders');
+    const request = createGetAllRequest(defaultDestination);
+
+    mockHeaderRequest({ request });
+
+    await request.headers();
+    expect(csrfTokenHeaders.getCsrfHeaders).not.toHaveBeenCalled();
   });
 
   describe('OAuth2ClientCredentials', () => {

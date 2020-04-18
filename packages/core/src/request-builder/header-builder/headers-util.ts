@@ -8,8 +8,13 @@ export function toHeaderObject(key: string, value: any): MapType<any> {
   return isNullish(value) ? {} : { [key]: value };
 }
 
-export function getHeaderValue(headers: MapType<any> = {}, headerKey: string): any | undefined {
-  return Object.entries(headers).find(([key]) => key.toLowerCase() === headerKey.toLowerCase())?.[1];
+export function getHeader( key: string, headers: MapType<any> = {}): MapType<any> {
+  const entry = Object.entries(headers).find(([entryKey]) => entryKey.toLowerCase() === key.toLowerCase());
+  return entry ? { [entry[0]]: entry[1] }: {};
+}
+
+export function getHeaderValue(key: string, headers: MapType<any> = {}): any | undefined {
+  return Object.entries(headers).find(([entryKey]) => entryKey.toLowerCase() === key.toLowerCase())?.[1];
 }
 
 export function filterNullishValues(headers: MapType<any> = {}): MapType<any> {
@@ -18,14 +23,20 @@ export function filterNullishValues(headers: MapType<any> = {}): MapType<any> {
     .reduce((filtered, [key, value]) => ({ ...filtered, [key]: value }), {});
 }
 
-export function filterDuplicateKeys(defaultHeaders: MapType<any> = {}, customHeaders: MapType<any> = {}): MapType<any> {
-  return Object.entries(defaultHeaders)
-    .filter(([key]) => !getHeaderValue(customHeaders, key))
+export function filterDuplicateKeys(headers: MapType<any> = {}, customHeaders: MapType<any> = {}): MapType<any> {
+  return Object.entries(headers)
+    .filter(([key]) => !getHeaderValue(key, customHeaders))
     .reduce((filtered, [key, value]) => ({ ...filtered, [key]: value }), {});
 }
 
-export async function getHeaderByKeyOrExecute(fn, key: string, headers: MapType<any> = {}) {
-  const defaultValue = getHeaderValue(headers, key);
+export function replaceDuplicateKeys(headers: MapType<any> = {}, customHeaders: MapType<any> = {}): MapType<any> {
+  return Object.entries(headers)
+    .map(([key, value]) => getHeaderValue(key, customHeaders) ? getHeader(key, customHeaders) : {[key]: value})
+    .reduce((replaced, header) => ({ ...replaced, ...header }), {});
+}
+
+export async function getHeaderByKeyOrExecute(key: string, headers: MapType<any> = {}, fn) {
+  const defaultValue = getHeaderValue(key, headers);
   return isNullish(defaultValue) ? fn() : { [key]: defaultValue };
 }
 

@@ -73,30 +73,36 @@ function headerForPrincipalPropagation(destination: Destination): MapType<any> {
 }
 
 function headerForProxy(destination: Destination): MapType<any> {
-  return {
-    'Proxy-Authorization': destination?.proxyConfiguration?.headers?.[
-      'Proxy-Authorization'
-    ]
+  const proxyAuthHeader = destination?.proxyConfiguration?.headers?.[
+    'Proxy-Authorization'
+  ];
+
+  return proxyAuthHeader ? {'Proxy-Authorization': proxyAuthHeader } : {};
+}
+
+function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
+  logger.warn(
+    `You are using \'NoAuthentication\' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up \'PrincipalPropagation\' so please change the destination property to the desired authentication scheme.`
+  );
+
+  let principalPropagationHeader;
+  try {
+    principalPropagationHeader = headerForPrincipalPropagation(destination);
+  } catch (e) {
+    logger.warn('No principal propagation header found.');
   }
+
+  // TODO the proxy header are for OnPrem auth and are now handled correctly in the authorization-header.ts and should be removed here
+  // However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
+  return {
+    ...headerForProxy(destination),
+    ...principalPropagationHeader
+  };
 }
 
 function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
-  if (destination.proxyType !== 'OnPremise') {
-    return {};
-  }
-
-  if (destination.authentication === 'NoAuthentication') {
-    logger.warn(
-      `You are using \'NoAuthentication\' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up \'PrincipalPropagation\' so please change the destination property to the desired authentication scheme.`
-    );
-
-    // TODO the proxy header are for OnPrem auth and are now handled correctly in the authorization-header.ts and should be removed here
-    // However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
-
-    return {
-      ...headerForProxy(destination),
-      ...headerForPrincipalPropagation(destination)
-    };
+  if (destination.proxyType === 'OnPremise' && destination.authentication === 'NoAuthentication') {
+    return legacyNoAuthOnPremiseProxy(destination);
   }
 
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
@@ -122,9 +128,9 @@ async function getAuthenticationRelatedAuthHeaders (
       return toAuthorizationHeader(
         await headerFromOAuth2ClientCredentialsDestination(destination)
       );
-    case  'BasicAuthentication':
+    case 'BasicAuthentication':
       return toAuthorizationHeader(headerFromBasicAuthDestination(destination));
-    case  'PrincipalPropagation':
+    case 'PrincipalPropagation':
       return headerForPrincipalPropagation(destination);
     default:
       throw Error(

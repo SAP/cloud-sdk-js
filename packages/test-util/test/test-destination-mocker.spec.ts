@@ -16,6 +16,7 @@ describe('setTestDestinationInEnv', () => {
     url: 'https://example.com',
     name: 'envDestination'
   };
+
   beforeAll(() => {
     writeFileSync('./systems.json', JSON.stringify(systems));
     writeFileSync('./credentials.json', JSON.stringify(credentials));

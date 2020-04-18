@@ -25,7 +25,6 @@ import {
 import {
   alwaysProvider,
   AuthenticationType,
-  clientCredentialsTokenCache,
   destinationCache,
   getDestination,
   getDestinationFromDestinationService,

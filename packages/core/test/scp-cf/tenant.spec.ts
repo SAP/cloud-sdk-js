@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import assert = require('assert');
 import { mapping, tenantFromJwt } from '../../src/scp-cf/tenant';
-import { DecodedJWT, tenantId } from '../../src/util';
+import { DecodedJWT } from '../../src/util';
 
 describe('tenant builder from jwt', () => {
   it('should contain the fields from decodedJwt', () => {

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import assert = require('assert');
 import { mapping, userFromJwt } from '../../src/scp-cf/user';
-import { DecodedJWT, userId, userName } from '../../src/util';
+import { DecodedJWT } from '../../src/util';
 
 function getSampleJwt(scopes?: string[]): DecodedJWT {
   return {

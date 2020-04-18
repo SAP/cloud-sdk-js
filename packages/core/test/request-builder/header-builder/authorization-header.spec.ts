@@ -1,22 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { MapType } from '@sap-cloud-sdk/util';
-import {
-  buildAndAddAuthorizationHeader,
-  buildHeadersForDestination,
-  Destination
-} from '../../../src';
+
+import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
 import { addAuthorizationHeader } from '../../../src/request-builder/header-builder/authorization-header';
 import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config';
 import { ODataRequest } from '../../../src/request-builder/request/odata-request';
-import { muteLoggers } from '../../test-util/mute-logger';
 import { defaultDestination } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/test-service';
 
 describe('Authorization header builder', () => {
-  beforeAll(() => {
-    muteLoggers('authorization-header');
-  });
-
   it('Prioritizes custom Authorization headers (upper case A)', async () => {
     const request = new ODataRequest(
       new ODataGetAllRequestConfig(TestEntity),
@@ -80,7 +71,8 @@ describe('Authorization header builder', () => {
     } as Destination;
 
     const headers = await buildAndAddAuthorizationHeader(destination)({});
-    checkHeaders(headers);
+    expect(headers['SAP-Connectivity-Authentication']).toBe('someValue');
+    expect(headers['Proxy-Authorization']).toBe('someProxyValue');
 
     delete destination!.proxyConfiguration!.headers![
       'SAP-Connectivity-Authentication'
@@ -89,25 +81,4 @@ describe('Authorization header builder', () => {
       buildAndAddAuthorizationHeader(destination)({})
     ).rejects.toThrowErrorMatchingSnapshot();
   });
-
-  it("should still add header if the old 'NoAuthorization' workaround is used.", async () => {
-    const destination = {
-      authentication: 'NoAuthentication',
-      proxyType: 'OnPremise',
-      proxyConfiguration: {
-        headers: {
-          'SAP-Connectivity-Authentication': 'someValue',
-          'Proxy-Authorization': 'someProxyValue'
-        }
-      }
-    } as Destination;
-
-    const headers = await buildHeadersForDestination(destination);
-    checkHeaders(headers);
-  });
-
-  function checkHeaders(headers: MapType<any>) {
-    expect(headers['SAP-Connectivity-Authentication']).toBe('someValue');
-    expect(headers['Proxy-Authorization']).toBe('someProxyValue');
-  }
 });

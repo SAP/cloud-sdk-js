@@ -15,11 +15,11 @@ import {
   mockHeaderRequest
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/test-service';
-import * as csrfTokenHeaders from '../../../src/request-builder/header-builder/csrf-token-header';
+import * as csrfHeaders from '../../../src/request-builder/header-builder/csrf-headers';
 
 describe('Header-builder:', () => {
   beforeAll(() => {
-    muteLoggers('http-agent', 'csrf-token-header', 'authorization-header');
+    muteLoggers('http-agent', 'csrf-headers', 'auth-headers');
   });
 
   it('customHeaders are not overwritten.', async () => {
@@ -237,24 +237,44 @@ describe('Header-builder:', () => {
   });
 
   it('Skips csrf token retrieval for existing csrf header', async () => {
-    spyOn(csrfTokenHeaders, 'getCsrfHeaders');
+    spyOn(csrfHeaders, 'getCsrfHeaders');
     const request = createCreateRequest(defaultDestination);
     request.config.customHeaders = { 'x-csrf-token': 'defined' };
 
     mockHeaderRequest({ request });
 
     await request.headers();
-    expect(csrfTokenHeaders.getCsrfHeaders).not.toHaveBeenCalled();
+    expect(csrfHeaders.getCsrfHeaders).not.toHaveBeenCalled();
   });
 
   it('Skips csrf token retrieval for GET request', async () => {
-    spyOn(csrfTokenHeaders, 'getCsrfHeaders');
+    spyOn(csrfHeaders, 'getCsrfHeaders');
     const request = createGetAllRequest(defaultDestination);
 
     mockHeaderRequest({ request });
 
     await request.headers();
-    expect(csrfTokenHeaders.getCsrfHeaders).not.toHaveBeenCalled();
+    expect(csrfHeaders.getCsrfHeaders).not.toHaveBeenCalled();
+  });
+
+  it('Prioritizes custom Authorization headers (upper case A)', async () => {
+    const request = createGetAllRequest(defaultDestination);
+    request.config.addCustomHeaders({
+      Authorization: 'Basic SOMETHINGSOMETHING'
+    });
+
+    const headers = await request.headers();
+    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
+  });
+
+  it('Prioritizes custom Authorization headers (lower case A)', async () => {
+    const request = createGetAllRequest(defaultDestination);
+    request.config.addCustomHeaders({
+      authorization: 'Basic SOMETHINGSOMETHING'
+    });
+
+    const headers = await request.headers();
+    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
   });
 
   describe('OAuth2ClientCredentials', () => {

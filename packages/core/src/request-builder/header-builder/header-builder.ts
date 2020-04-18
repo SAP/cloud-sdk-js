@@ -5,7 +5,7 @@ import { Destination } from '../../scp-cf';
 import { ODataDeleteRequestConfig, ODataUpdateRequestConfig } from '../request';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
-import { getCsrfHeaders } from './csrf-token-header';
+import { getCsrfHeaders } from './csrf-headers';
 import {
   filterNullishValues,
   getHeaderByKeyOrExecute,

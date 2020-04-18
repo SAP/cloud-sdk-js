@@ -24,7 +24,7 @@ export type FilterOperatorByType<
   : FilterOperatorBoolean;
 
 /**
- * Represents a filter expression to narrow the data on a [[GetAllRequestBuilder request for multiple entities]] that match the specified criteria.
+ * Represents a filter expression to narrow the data on a [[GetAllRequestBuilder]] request for multiple entities that match the specified criteria.
  * A filter refers to the field of an entity and restricts the request based on an operator and a value. `Entity.FIELD_NAME.operator(value)`
  *
  * Example: `Product.NAME.equals('cloud-sdk')` creates a filter for the entity `Product` that matches in case the field `NAME` equals 'cloud-sdk'.

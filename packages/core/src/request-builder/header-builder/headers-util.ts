@@ -19,13 +19,7 @@ export function getHeaderValue(key: string, headers: MapType<any> = {}): any | u
 
 export function filterNullishValues(headers: MapType<any> = {}): MapType<any> {
   return Object.entries(headers)
-    .filter(([key, value]) => !isNullish(value))
-    .reduce((filtered, [key, value]) => ({ ...filtered, [key]: value }), {});
-}
-
-export function filterDuplicateKeys(headers: MapType<any> = {}, customHeaders: MapType<any> = {}): MapType<any> {
-  return Object.entries(headers)
-    .filter(([key]) => !getHeaderValue(key, customHeaders))
+    .filter(([_, value]) => !isNullish(value))
     .reduce((filtered, [key, value]) => ({ ...filtered, [key]: value }), {});
 }
 

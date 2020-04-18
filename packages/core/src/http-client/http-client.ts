@@ -27,7 +27,8 @@ import {
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
-  destination: Destination | DestinationNameAndJwt
+  destination: Destination | DestinationNameAndJwt,
+  customHeaders?: MapType<any>
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
@@ -35,7 +36,7 @@ export async function buildHttpRequest(
       `Failed to resolve the destination: ${toDestinationNameUrl(destination)}.`
     );
   }
-  const headers = await buildHeaders(resolvedDestination);
+  const headers = await buildHeaders(resolvedDestination, customHeaders);
 
   return buildDestinationHttpRequestConfig(resolvedDestination, headers);
 }
@@ -67,18 +68,19 @@ export function addDestinationToRequestConfig<T>(
  *
  * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead!
  *
- * @param executeFn - Optional: a function that can execute an [[HttpRequestConfig]].
+ * @param executeFn - A function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
  */
-export const execute = (executeFn: ExecuteHttpRequestFn) => <
-  T extends HttpRequestConfig
->(
-  destination: Destination | DestinationNameAndJwt,
-  requestConfig: T
-): Promise<HttpResponse> =>
-  buildHttpRequest(destination)
-    .then(req => merge(requestConfig, req))
-    .then(executeFn);
+export function execute(executeFn: ExecuteHttpRequestFn) {
+  return async function <T extends HttpRequestConfig>(
+    destination: Destination | DestinationNameAndJwt,
+    requestConfig: T
+  ): Promise<HttpResponse> {
+    const req = await buildHttpRequest(destination);
+    const request = merge(requestConfig, req);
+    return executeFn(request);
+  }
+}
 
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
@@ -101,8 +103,8 @@ function buildDestinationHttpRequestConfig(
   };
 }
 
-function buildHeaders(destination: Destination): Promise<MapType<string>> {
-  return buildHeadersForDestination(destination).catch(error =>
+function buildHeaders(destination: Destination, customHeaders?: MapType<any>): Promise<MapType<string>> {
+  return buildHeadersForDestination(destination, customHeaders).catch(error =>
     Promise.reject(
       errorWithCause(
         'Failed to build HTTP request for destination: failed to build headers!',

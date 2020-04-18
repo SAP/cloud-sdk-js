@@ -1,18 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { assocSome, asyncPipe, MapType, mergeSome } from '@sap-cloud-sdk/util';
-import { assoc, ifElse, path } from 'rambda';
-import { Entity } from '../../entity';
+import { assocSome, MapType, mergeSome } from '@sap-cloud-sdk/util';
+import { path } from 'rambda';
 import { Destination, ProxyConfiguration } from '../../scp-cf';
 import { ODataDeleteRequestConfig, ODataUpdateRequestConfig } from '../request';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
-import {
-  addAuthorizationHeader,
-  buildAndAddAuthorizationHeader
-} from './authorization-header';
+
 import { getCsrfHeaders } from './csrf-token-header';
-import { filterNullishValues, filterDuplicateKeys, getHeaderByKeyOrExecute, replaceDuplicateKeys } from './headers-util';
+import { filterNullishValues, getHeaderByKeyOrExecute, replaceDuplicateKeys } from './headers-util';
 import { buildAuthorizationHeader } from './auth-headers';
 
 /**
@@ -29,7 +25,6 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
   if (!request.destination) {
     throw Error('The request destination is undefined.');
   }
-  const destination = request.destination;
 
   const defaultHeaders = replaceDuplicateKeys(
     filterNullishValues({
@@ -40,32 +35,18 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
     request.config.customHeaders
   );
 
-  const sapHeaders = replaceDuplicateKeys(
-    filterNullishValues({
-      'sap-client': destination.sapClient,
-      'SAP-Connectivity-SCC-Location_ID': request.destination.cloudConnectorLocationId
-    }),
-    request.config.customHeaders
-  );
-
-  const authHeaders = await getHeaderByKeyOrExecute(
-    'authorization',
-    request.config.customHeaders,
-    () => buildAuthorizationHeader(destination)
-  );
+  const destinationRelatedHeaders = await buildHeadersForDestination(request.destination, request.config.customHeaders);
 
   const csrfHeaders = request.config.method === 'get' ? {} : await getHeaderByKeyOrExecute(
     'x-csrf-token',
     request.config.customHeaders,
     () => getCsrfHeaders(request, {
-      ...authHeaders,
-      ...sapHeaders
+      ...destinationRelatedHeaders
     })
   );
 
   return {
-    ...authHeaders,
-    ...sapHeaders,
+    ...destinationRelatedHeaders,
     ...csrfHeaders,
     ...defaultHeaders,
     ...request.config.customHeaders
@@ -73,35 +54,31 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
 }
 
 /**
- * Builds the authorization, proxy authorization and SAP client headers for a given destination.
+ * Builds the authorization, proxy authorization and SAP headers for a given destination.
  *
  * @param destination - A destination.
  * @returns HTTP headers for the given destination.
  */
-export const buildHeadersForDestination = (
-  destination: Destination
-): Promise<MapType<string>> =>
-  asyncPipe(
-    addSapClientHeader(destination.sapClient),
-    // TODO the proxy header are for OnPrem auth and are now handled correctly in the authorization-header.ts and should be removed here
-    // However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
-    addProxyHeaders(destination.proxyConfiguration),
-    addLocationIdHeader(destination.cloudConnectorLocationId),
-    buildAndAddAuthorizationHeader(destination)
-  )({});
+export async function buildHeadersForDestination(
+  destination: Destination,
+  customHeaders?: MapType<any>
+): Promise<MapType<string>> {
+  const authHeaders = await getHeaderByKeyOrExecute(
+    'authorization',
+    customHeaders,
+    () => buildAuthorizationHeader(destination)
+  );
 
-export function addSapClientHeader(sapClient?: string | null) {
-  return (headers: MapType<string>) =>
-    assocSome('sap-client', sapClient)(headers);
+  const sapHeaders = replaceDuplicateKeys(
+    filterNullishValues({
+      'sap-client': destination.sapClient,
+      'SAP-Connectivity-SCC-Location_ID': destination.cloudConnectorLocationId
+    }),
+    customHeaders
+  );
+
+  return { ...authHeaders, ...sapHeaders };
 }
-
-export const addProxyHeaders = (proxyConfiguration?: ProxyConfiguration) => (
-  headers: MapType<string>
-) => mergeSome(headers, path(['headers'], proxyConfiguration));
-
-export const addLocationIdHeader = (locationId?: string) => (
-  headers: MapType<string>
-) => assocSome('SAP-Connectivity-SCC-Location_ID', locationId)(headers);
 
 function getETagHeaderValue(config: ODataRequestConfig): string | undefined {
   if (config instanceof ODataUpdateRequestConfig || config instanceof ODataDeleteRequestConfig) {

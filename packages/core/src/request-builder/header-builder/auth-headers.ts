@@ -141,7 +141,7 @@ async function getAuthenticationRelatedAuthHeaders (
 
 export async function buildAuthorizationHeader(
   destination: Destination
-): Promise<MapType<any>> {
+): Promise<MapType<string>> {
   return {
     ...await getAuthenticationRelatedAuthHeaders(destination),
     ...getProxyRelatedAuthHeaders(destination)

@@ -67,8 +67,7 @@ describe('generic http client', () => {
         headers: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001',
-          'Proxy-Authorization': 'jajaja',
-          'SAP-Connectivity-Authentication': 'yeahyeah'
+          'Proxy-Authorization': 'jajaja'
         }
       };
 

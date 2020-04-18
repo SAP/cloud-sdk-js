@@ -1,6 +1,11 @@
-import { MapType, errorWithCause, createLogger } from "@sap-cloud-sdk/util";
-import { isNullish, toHeaderObject } from "./headers-util";
-import { DestinationAuthToken, Destination, getOAuth2ClientCredentialsToken } from "../../scp-cf";
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { MapType, errorWithCause, createLogger } from '@sap-cloud-sdk/util';
+import {
+  DestinationAuthToken,
+  Destination,
+  getOAuth2ClientCredentialsToken
+} from '../../scp-cf';
+import { isNullish, toHeaderObject } from './headers-util';
 
 const logger = createLogger({
   package: 'core',
@@ -18,7 +23,9 @@ function headerFromTokens(authTokens?: DestinationAuthToken[] | null): string {
     );
   }
 
-  const usableTokens = authTokens.filter((token: DestinationAuthToken) => !token.error);
+  const usableTokens = authTokens.filter(
+    (token: DestinationAuthToken) => !token.error
+  );
 
   if (!usableTokens.length) {
     throw Error(
@@ -29,21 +36,22 @@ function headerFromTokens(authTokens?: DestinationAuthToken[] | null): string {
       ].join('\n')
     );
   }
-  const token = usableTokens[0];
-  return `${token.type} ${token.value}`;
-};
+  const authToken = usableTokens[0];
+  return `${authToken.type} ${authToken.value}`;
+}
 
 async function headerFromOAuth2ClientCredentialsDestination(
   destination: Destination
 ): Promise<string> {
-  const response = await getOAuth2ClientCredentialsToken(destination)
-    .catch(error => {
+  const response = await getOAuth2ClientCredentialsToken(destination).catch(
+    error => {
       throw errorWithCause(
         'Request for "OAuth2ClientCredentials" authentication access token failed or denied.',
         error
-      )
-    });
-  return `Bearer ${response.access_token}`
+      );
+    }
+  );
+  return `Bearer ${response.access_token}`;
 }
 
 function headerFromBasicAuthDestination(destination: Destination): string {
@@ -54,14 +62,17 @@ function headerFromBasicAuthDestination(destination: Destination): string {
   }
 
   return basicHeader(destination.username, destination.password);
-};
+}
 
 export function basicHeader(username: string, password: string): string {
   return `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
 }
 
 function headerForPrincipalPropagation(destination: Destination): MapType<any> {
-  const principalPropagationHeader = destination?.proxyConfiguration?.headers?.['SAP-Connectivity-Authentication'];
+  const principalPropagationHeader =
+    destination?.proxyConfiguration?.headers?.[
+      'SAP-Connectivity-Authentication'
+    ];
   if (!principalPropagationHeader) {
     throw Error(
       'Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity service.'
@@ -73,11 +84,10 @@ function headerForPrincipalPropagation(destination: Destination): MapType<any> {
 }
 
 function headerForProxy(destination: Destination): MapType<any> {
-  const proxyAuthHeader = destination?.proxyConfiguration?.headers?.[
-    'Proxy-Authorization'
-  ];
+  const proxyAuthHeader =
+    destination?.proxyConfiguration?.headers?.['Proxy-Authorization'];
 
-  return proxyAuthHeader ? {'Proxy-Authorization': proxyAuthHeader } : {};
+  return proxyAuthHeader ? { 'Proxy-Authorization': proxyAuthHeader } : {};
 }
 
 function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
@@ -101,7 +111,10 @@ function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
 }
 
 function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
-  if (destination.proxyType === 'OnPremise' && destination.authentication === 'NoAuthentication') {
+  if (
+    destination.proxyType === 'OnPremise' &&
+    destination.authentication === 'NoAuthentication'
+  ) {
     return legacyNoAuthOnPremiseProxy(destination);
   }
 
@@ -109,7 +122,7 @@ function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
   return headerForProxy(destination);
 }
 
-async function getAuthenticationRelatedAuthHeaders (
+async function getAuthenticationRelatedAuthHeaders(
   destination: Destination
 ): Promise<MapType<any>> {
   switch (destination.authentication) {
@@ -137,14 +150,13 @@ async function getAuthenticationRelatedAuthHeaders (
         'Failed to build authorization header for the given destination. Make sure to either correctly configure your destination for principal propagation, provide both a username and a password or select "NoAuthentication" in your destination configuration.'
       );
   }
-};
+}
 
 export async function buildAuthorizationHeader(
   destination: Destination
 ): Promise<MapType<string>> {
   return {
-    ...await getAuthenticationRelatedAuthHeaders(destination),
+    ...(await getAuthenticationRelatedAuthHeaders(destination)),
     ...getProxyRelatedAuthHeaders(destination)
-  }
+  };
 }
-

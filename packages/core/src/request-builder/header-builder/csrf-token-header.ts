@@ -1,9 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import {
-  createLogger,
-  MapType
-} from '@sap-cloud-sdk/util';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import axios, { AxiosError } from 'axios';
 import { getAxiosConfigWithDefaults } from '../../http-client';
 import { getAgentConfig } from '../http-agent';
@@ -24,7 +21,7 @@ export async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
   return buildCsrfHeaders(csrfHeaders);
 }
 
-function makeCsrfRequest <RequestT extends ODataRequestConfig>(
+function makeCsrfRequest<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>,
   csrfRequestHeaders: MapType<string>
 ): Promise<MapType<any>> {
@@ -51,7 +48,7 @@ function makeCsrfRequest <RequestT extends ODataRequestConfig>(
       }
       return error.response.headers;
     });
-};
+}
 
 function validateCsrfTokenResponse(responseHeaders: MapType<any>) {
   if (!responseHeaders['x-csrf-token']) {
@@ -65,7 +62,7 @@ function validateCsrfTokenResponse(responseHeaders: MapType<any>) {
   }
 
   return responseHeaders;
-};
+}
 
 function buildCsrfHeaders(headers: MapType<any>) {
   return filterNullishValues({
@@ -75,7 +72,7 @@ function buildCsrfHeaders(headers: MapType<any>) {
 }
 
 function buildCookieHeaderValue(cookies?: string[]): string | undefined {
-  if(cookies && cookies.length){
-    return cookies.map((cookie: string) => cookie.split(';')[0]).join(';')
+  if (cookies && cookies.length) {
+    return cookies.map((cookie: string) => cookie.split(';')[0]).join(';');
   }
 }

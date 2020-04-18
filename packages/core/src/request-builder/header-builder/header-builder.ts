@@ -1,14 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { assocSome, MapType, mergeSome } from '@sap-cloud-sdk/util';
-import { path } from 'rambda';
-import { Destination, ProxyConfiguration } from '../../scp-cf';
+import { MapType } from '@sap-cloud-sdk/util';
+import { Destination } from '../../scp-cf';
 import { ODataDeleteRequestConfig, ODataUpdateRequestConfig } from '../request';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
-
 import { getCsrfHeaders } from './csrf-token-header';
-import { filterNullishValues, getHeaderByKeyOrExecute, replaceDuplicateKeys } from './headers-util';
+import {
+  filterNullishValues,
+  getHeaderByKeyOrExecute,
+  replaceDuplicateKeys
+} from './headers-util';
 import { buildAuthorizationHeader } from './auth-headers';
 
 /**
@@ -28,22 +30,29 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
 
   const defaultHeaders = replaceDuplicateKeys(
     filterNullishValues({
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': request.config.contentType,
       'if-match': getETagHeaderValue(request.config)
     }),
     request.config.customHeaders
   );
 
-  const destinationRelatedHeaders = await buildHeadersForDestination(request.destination, request.config.customHeaders);
-
-  const csrfHeaders = request.config.method === 'get' ? {} : await getHeaderByKeyOrExecute(
-    'x-csrf-token',
-    request.config.customHeaders,
-    () => getCsrfHeaders(request, {
-      ...destinationRelatedHeaders
-    })
+  const destinationRelatedHeaders = await buildHeadersForDestination(
+    request.destination,
+    request.config.customHeaders
   );
+
+  const csrfHeaders =
+    request.config.method === 'get'
+      ? {}
+      : await getHeaderByKeyOrExecute(
+          'x-csrf-token',
+          request.config.customHeaders,
+          () =>
+            getCsrfHeaders(request, {
+              ...destinationRelatedHeaders
+            })
+        );
 
   return {
     ...destinationRelatedHeaders,
@@ -57,6 +66,7 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
  * Builds the authorization, proxy authorization and SAP headers for a given destination.
  *
  * @param destination - A destination.
+ * @param customHeaders - Custom default headers for the resulting HTTP headers.
  * @returns HTTP headers for the given destination.
  */
 export async function buildHeadersForDestination(
@@ -81,7 +91,10 @@ export async function buildHeadersForDestination(
 }
 
 function getETagHeaderValue(config: ODataRequestConfig): string | undefined {
-  if (config instanceof ODataUpdateRequestConfig || config instanceof ODataDeleteRequestConfig) {
+  if (
+    config instanceof ODataUpdateRequestConfig ||
+    config instanceof ODataDeleteRequestConfig
+  ) {
     return config.versionIdentifierIgnored ? '*' : config.eTag;
   }
 }

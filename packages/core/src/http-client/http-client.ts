@@ -24,6 +24,7 @@ import {
  * If a destination name (and a JWT) are provided, it will try to resolve the destination.
  *
  * @param destination - A destination or a destination name and a JWT.
+ * @param customHeaders - Custom default headers for the resulting HTTP request.
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
@@ -79,7 +80,7 @@ export function execute(executeFn: ExecuteHttpRequestFn) {
     const req = await buildHttpRequest(destination);
     const request = merge(requestConfig, req);
     return executeFn(request);
-  }
+  };
 }
 
 /**
@@ -103,7 +104,10 @@ function buildDestinationHttpRequestConfig(
   };
 }
 
-function buildHeaders(destination: Destination, customHeaders?: MapType<any>): Promise<MapType<string>> {
+function buildHeaders(
+  destination: Destination,
+  customHeaders?: MapType<any>
+): Promise<MapType<string>> {
   return buildHeadersForDestination(destination, customHeaders).catch(error =>
     Promise.reject(
       errorWithCause(

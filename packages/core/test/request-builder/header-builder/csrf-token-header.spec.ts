@@ -1,11 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getCsrfHeaders } from '../../../src/request-builder/header-builder';
-import {
-  createCreateRequest,
-  createGetAllRequest,
-  createUpdateRequest
-} from '../../test-util/create-requests';
+import { createCreateRequest } from '../../test-util/create-requests';
 import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultBasicCredentials,

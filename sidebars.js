@@ -9,8 +9,8 @@ module.exports = {
       'overview/what-is-new'
     ],
     Java: [
-      //   'introduction',
-      //   'getting-started',
+      'java/introduction',
+      'java/getting-started',
       'java/api-documentation',
       //   {
       //     type: 'category',
@@ -44,21 +44,22 @@ module.exports = {
         type: 'category',
         label: 'How To',
         items: [
-          'java/how-to/sap-cloud-sdk-linux-how-to'
-          //       'test-odata-service',
-          //       'deploy-to-cf',
-          //       'build-client-for-cap',
-          //       'cap-with-client-sdk',
-          //       'generate-open-api-client',
-          //       'workflow-api',
-          //       's4hana-api',
-          //       'business-logging',
-          //       'sap-graph',
-          //       'xsuaa-broker',
-          //       'sdk-with-mocked-xsuaa',
-          //       'jwt-handling',
-          //       'app-router',
-          //       'configure-ide'
+          'java/how-to/sap-cloud-sdk-linux-how-to',
+          'java/how-to/cf-cli',
+          'java/how-to/cf-deploy'
+          //       'java/how-to/test-odata-service',
+          //       'java/how-to/build-client-for-cap',
+          //       'java/how-to/cap-with-client-sdk',
+          //       'java/how-to/generate-open-api-client',
+          //       'java/how-to/workflow-api',
+          //       'java/how-to/s4hana-api',
+          //       'java/how-to/business-logging',
+          //       'java/how-to/sap-graph',
+          //       'java/how-to/xsuaa-broker',
+          //       'java/how-to/sdk-with-mocked-xsuaa',
+          //       'java/how-to/jwt-handling',
+          //       'java/how-to/app-router',
+          //       'java/how-to/configure-ide'
         ]
       }
       //   'hot-to-contribute',
@@ -87,14 +88,19 @@ module.exports = {
       //       'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:java'
       //   }
     ],
-    JavaScript: ['js/api-documentation']
+    JavaScript: [
+      'js/introduction',
+      'js/getting-started',
+      'js/api-documentation'
+    ],
+    'Devops and CI/CD': ['devops/getting-started'],
     // FAQ: ['faq/frequently-asked-questions'],
     // Support: ['support/support'],
-    // 'Related projects': [
-    //   'related-projects/cloud-application-model',
-    //   'related-projects/sap-cloud-for-realestate',
-    //   'related-projects/sap-s4-hana',
-    //   'related-projects/sap-xsuaa-cf'
-    // ]
+    'Related projects': [
+      'related-projects/cloud-application-model'
+      //   'related-projects/sap-cloud-for-realestate',
+      //   'related-projects/sap-s4-hana',
+      //   'related-projects/sap-xsuaa-cf'
+    ]
   }
 }

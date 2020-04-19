@@ -40,7 +40,9 @@ const features = [
       <>
         The goal of project "Piper" is to substantially ease setting up
         continuous delivery in your project using SAP technologies. <br />
-        <a href=''>Get started with best CI/CD practices</a>
+        <a href='docs/devops/getting-started'>
+          Get started with best CI/CD practices
+        </a>
       </>
     )
   }
@@ -81,7 +83,7 @@ function Home () {
                 'button button--outline button--secondary button--lg',
                 styles.getStarted
               )}
-              to={useBaseUrl('docs/get-started')}
+              to={useBaseUrl('docs/overview/getting-started')}
             >
               Get Started
             </Link>

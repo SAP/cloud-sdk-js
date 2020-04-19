@@ -27,7 +27,7 @@ it grew into a fully-fledged and [feature rich](key-features ) development libra
 
 - [Cloud SDK for Java](../java/introduction )
 - [Cloud SDK for JavaScript (Node.js)](../js/introduction )
-- [Cloud SDK for CI/CD](https://sap.github.io/jenkins-library/ )
+- [Cloud SDK for CI/CD](../devops/getting-started )
 
 ### Organic part of SAP Cloud Ecosystem ###
 <img alt="SAP Cloud SDK as a part of SAP Cloud Applications ecosystem" src={useBaseUrl('img/cloud-sdk-under-the-hood.png')} />;

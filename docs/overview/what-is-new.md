@@ -15,8 +15,23 @@ keywords:
 image:
 ---
 
-## Cloud SDK for Java release notes ##
+## Cloud SDK for Java ##
 
-https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html
+### Latest highlights ###
 
-## Cloud SDK for JavaScript release notes ##
+- OData V4 is out of Beta
+- Authentication flows are now migrated to official [XSUAA Java client library](https://github.com/SAP/cloud-security-xsuaa-integration )
+
+### Release notes ###
+
+Check the latest [release notes](https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html)
+
+## Cloud SDK for JavaScript ##
+
+### Latest highlights ###
+
+- SAP Cloud SDK for Java is now [Open Source](https://github.com/SAP/cloud-sdk)
+
+### Release notes ###
+
+Check the latest [release notes](https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html )

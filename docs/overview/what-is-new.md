@@ -14,3 +14,9 @@ keywords:
 - sap cloud sdk
 image:
 ---
+
+## Cloud SDK for Java release notes ##
+
+https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html
+
+## Cloud SDK for JavaScript release notes ##

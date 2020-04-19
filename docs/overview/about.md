@@ -16,8 +16,6 @@ image:
 ---
 import useBaseUrl from '@docusaurus/useBaseUrl'
 
-<a href={useBaseUrl('api/index.html')}>WWWWWWWWWWW</a>
-
 ## Introduction ##
 The Cloud SDK is a set of tools and libraries for consuming, building or extending SAP services and applications in the
 cloud native way and deploying them to SAP Cloud Platform.

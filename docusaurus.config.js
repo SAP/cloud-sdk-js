@@ -3,7 +3,7 @@ module.exports = {
   tagline:
     'A one stop shop for developing and extending SAP applications in a Cloud.',
   url: 'https://github.com/SAP/cloud-sdk',
-  baseUrl: '/',
+  baseUrl: '/cloud-sdk/',
   favicon: 'img/favicon.ico',
   organizationName: 'SAP', // Usually your GitHub org/user name.
   projectName: 'cloud-sdk', // Usually your repo name.

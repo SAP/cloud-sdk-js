@@ -1,5 +1,9 @@
 # SAP Cloud SDK documentation portal
 
+## Currently deployed version ##
+
+[SAP Cloud SDK Documentation](https://sap.github.io/cloud-sdk/ )
+
 ## Requirements ##
 
 - [Node.js](https://nodejs.org/en/download/) version >= 10.9.0 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm)  for managing multiple Node versions on a single machine installed
@@ -12,7 +16,7 @@
 - Run `npm ci`
 - Run `npm start`
 - You should now see a browser window with SAP Cloud SDK documentation portal open
-- Open [How to write documentation](https://artemkovalyov.github.io/ph-stone/docs/dzen/how-to-write-documentation )
+- Open [How to write documentation](https://sap.github.io/cloud-sdk/docs/dzen/how-to-write-documentation )
 
 ## How to start documenting ##
 
@@ -25,4 +29,4 @@
 - Save you work and make a pull request
 - Enjoy love and appreciation from community
 
-Check our additional materials and our documentation guide [here](URL )
+Check our additional materials and our documentation guide [here](https://sap.github.io/cloud-sdk/docs/dzen/how-to-write-documentation )

@@ -8,7 +8,7 @@ function ApiReleaseList () {
     <ul>
       {versions.map(ver => (
         <li key={`${ver}`}>
-          <Link to={useBaseUrl(`api/${ver}/`)}>{`${ver}`}</Link>
+          <a href={useBaseUrl(`api/${ver}/`)}>{`${ver}`}</a>
         </li>
       ))}
     </ul>

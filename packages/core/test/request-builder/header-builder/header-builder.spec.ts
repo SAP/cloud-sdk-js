@@ -15,7 +15,7 @@ import {
   mockHeaderRequest
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/test-service';
-import * as csrfHeaders from '../../../src/request-builder/header-builder/csrf-headers';
+import * as csrfHeaders from '../../../src/request-builder/header-builder/csrf-token-header';
 
 describe('Header-builder:', () => {
   beforeAll(() => {

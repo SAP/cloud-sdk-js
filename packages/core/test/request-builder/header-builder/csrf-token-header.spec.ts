@@ -22,12 +22,12 @@ const standardHeaders = {
   'content-type': 'application/json'
 };
 
-describe('csrf-headers', () => {
+describe('csrf-token-header', () => {
   beforeAll(() => {
-    muteLoggers('http-agent', 'csrf-headers');
+    muteLoggers('http-agent', 'csrf-token-header');
   });
 
-  const logger = createLogger('csrf-headers');
+  const logger = createLogger('csrf-token-header');
 
   it('should build "cookie" and "x-csrf-token" properties.', async () => {
     const request = createCreateRequest(defaultDestination);

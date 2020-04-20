@@ -2,6 +2,5 @@
 
 export * from './authorization-header';
 export * from './csrf-token-header';
-export * from './csrf-headers';
 export * from './header-builder';
 export * from './headers-util';

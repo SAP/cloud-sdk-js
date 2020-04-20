@@ -19,7 +19,7 @@ module.exports = {
       title: 'SAP Cloud SDK',
       logo: {
         alt: 'SAP Cloud SDK',
-        src: 'https://help.sap.com/viewer/_build_2.3.0.1311/img/sap.svg'
+        src: 'img/logo.svg'
       },
       links: [
         {
@@ -76,10 +76,6 @@ module.exports = {
     },
     footer: {
       style: 'dark',
-      logo: {
-        alt: 'SAP Cloud SDK',
-        src: 'https://help.sap.com/viewer/_build_2.3.0.1311/img/sap.svg'
-      },
       links: [
         {
           title: 'Docs',
@@ -177,10 +173,5 @@ module.exports = {
       }
     ]
   ],
-  customFields: {
-    logo: {
-      alt: 'SAP Developers',
-      src: 'https://help.sap.com/viewer/_build_2.3.0.1311/img/sap.svg'
-    }
-  }
+  customFields: {}
 }

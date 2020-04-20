@@ -244,7 +244,7 @@ describe('Header-builder:', () => {
     mockHeaderRequest({ request });
 
     await request.headers();
-    expect(csrfHeaders.getCsrfHeaders).not.toHaveBeenCalled();
+    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
   });
 
   it('Skips csrf token retrieval for GET request', async () => {
@@ -254,7 +254,7 @@ describe('Header-builder:', () => {
     mockHeaderRequest({ request });
 
     await request.headers();
-    expect(csrfHeaders.getCsrfHeaders).not.toHaveBeenCalled();
+    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
   });
 
   it('Prioritizes custom Authorization headers (upper case A)', async () => {

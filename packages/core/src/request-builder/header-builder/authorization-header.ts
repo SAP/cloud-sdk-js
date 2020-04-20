@@ -7,7 +7,7 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../scp-cf';
 import { ODataRequest, ODataRequestConfig } from '../request';
 import { buildAuthorizationHeaders } from './auth-headers';
-import { getHeaderByKeyOrExecute } from './headers-util';
+import { getHeader } from './headers-util';
 
 /**
  * @deprecated Since v1.20.0. Use [[buildAuthorizationHeader]] instead.
@@ -27,15 +27,24 @@ export async function addAuthorizationHeader<
   if (!destination) {
     return headers;
   }
-  const authHeaders = await getHeaderByKeyOrExecute(
-    'authorization',
-    request.config.customHeaders,
-    () => buildAuthorizationHeaders(destination)
+  const authHeaders = await getAuthHeaders(
+    destination,
+    request.config.customHeaders
   );
   return {
     ...headers,
     ...authHeaders
   };
+}
+
+async function getAuthHeaders(
+  destination: Destination,
+  customHeaders?: MapType<any>
+): Promise<MapType<string>> {
+  const customAuthHeaders = getHeader('authorization', customHeaders);
+  return Object.keys(customAuthHeaders).length
+    ? customAuthHeaders
+    : buildAuthorizationHeaders(destination);
 }
 
 /**

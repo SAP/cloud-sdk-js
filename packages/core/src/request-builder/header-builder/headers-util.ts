@@ -46,12 +46,3 @@ export function replaceDuplicateKeys(
     )
     .reduce((replaced, header) => ({ ...replaced, ...header }), {});
 }
-
-export async function getHeaderByKeyOrExecute(
-  key: string,
-  headers: MapType<any> = {},
-  fn
-) {
-  const defaultValue = getHeaderValue(key, headers);
-  return isNullish(defaultValue) ? fn() : { [key]: defaultValue };
-}

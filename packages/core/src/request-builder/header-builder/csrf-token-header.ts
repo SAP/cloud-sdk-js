@@ -2,7 +2,7 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { ODataRequest, ODataRequestConfig } from '../request';
-import { getCsrfHeaders } from './csrf-headers';
+import { buildCsrfHeaders } from './csrf-headers';
 
 /**
  * @deprecated Since v1.20.0, refer to 'csrf-headers' instead.
@@ -29,5 +29,5 @@ export async function addCsrfTokenAndCookies<
   ) {
     return headers;
   }
-  return { ...(await getCsrfHeaders(request, headers)), ...headers };
+  return { ...(await buildCsrfHeaders(request, headers)), ...headers };
 }

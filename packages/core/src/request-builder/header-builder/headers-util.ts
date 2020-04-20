@@ -6,7 +6,7 @@ export function isNullish(x: any): x is null | undefined {
 }
 
 export function toHeaderObject(key: string, value: any): MapType<any> {
-  return isNullish(value) ? {} : { [key]: value };
+  return isNullish(key) || isNullish(value) ? {} : { [key]: value };
 }
 
 export function getHeader(

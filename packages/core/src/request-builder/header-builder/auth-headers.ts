@@ -12,11 +12,13 @@ const logger = createLogger({
   messageContext: 'auth-headers'
 });
 
-function toAuthorizationHeader(authorization: string): MapType<any> {
+function toAuthorizationHeader(authorization: string): MapType<string> {
   return toHeaderObject('authorization', authorization);
 }
 
-function headerFromTokens(authTokens?: DestinationAuthToken[] | null): string {
+function headerFromTokens(
+  authTokens?: DestinationAuthToken[] | null
+): MapType<string> {
   if (!authTokens || !authTokens.length) {
     throw Error(
       'AuthenticationType is "OAuth2SAMLBearerAssertion", but no AuthTokens could be fetched from the destination service!'
@@ -37,12 +39,12 @@ function headerFromTokens(authTokens?: DestinationAuthToken[] | null): string {
     );
   }
   const authToken = usableTokens[0];
-  return `${authToken.type} ${authToken.value}`;
+  return toAuthorizationHeader(`${authToken.type} ${authToken.value}`);
 }
 
 async function headerFromOAuth2ClientCredentialsDestination(
   destination: Destination
-): Promise<string> {
+): Promise<MapType<string>> {
   const response = await getOAuth2ClientCredentialsToken(destination).catch(
     error => {
       throw errorWithCause(
@@ -51,17 +53,21 @@ async function headerFromOAuth2ClientCredentialsDestination(
       );
     }
   );
-  return `Bearer ${response.access_token}`;
+  return toAuthorizationHeader(`Bearer ${response.access_token}`);
 }
 
-function headerFromBasicAuthDestination(destination: Destination): string {
+function headerFromBasicAuthDestination(
+  destination: Destination
+): MapType<string> {
   if (isNullish(destination.username) || isNullish(destination.password)) {
     throw Error(
       'AuthenticationType is "BasicAuthentication", but "username" and / or "password" are missing!'
     );
   }
 
-  return basicHeader(destination.username, destination.password);
+  return toAuthorizationHeader(
+    basicHeader(destination.username, destination.password)
+  );
 }
 
 export function basicHeader(username: string, password: string): string {
@@ -90,6 +96,9 @@ function headerForProxy(destination: Destination): MapType<any> {
   return proxyAuthHeader ? { 'Proxy-Authorization': proxyAuthHeader } : {};
 }
 
+// TODO the proxy header are for OnPrem auth and are now handled correctly and should be removed here
+// However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
+// Remove this in v2
 function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
   logger.warn(
     `You are using \'NoAuthentication\' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up \'PrincipalPropagation\' so please change the destination property to the desired authentication scheme.`
@@ -102,8 +111,6 @@ function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
     logger.warn('No principal propagation header found.');
   }
 
-  // TODO the proxy header are for OnPrem auth and are now handled correctly in the authorization-header.ts and should be removed here
-  // However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
   return {
     ...headerForProxy(destination),
     ...principalPropagationHeader
@@ -122,9 +129,9 @@ function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
   return headerForProxy(destination);
 }
 
-async function getAuthenticationRelatedAuthHeaders(
+async function getAuthenticationRelatedHeaders(
   destination: Destination
-): Promise<MapType<any>> {
+): Promise<MapType<string>> {
   switch (destination.authentication) {
     case null:
     case undefined:
@@ -136,13 +143,11 @@ async function getAuthenticationRelatedAuthHeaders(
     case 'ClientCertificateAuthentication':
       return {};
     case 'OAuth2SAMLBearerAssertion':
-      return toAuthorizationHeader(headerFromTokens(destination.authTokens));
+      return headerFromTokens(destination.authTokens);
     case 'OAuth2ClientCredentials':
-      return toAuthorizationHeader(
-        await headerFromOAuth2ClientCredentialsDestination(destination)
-      );
+      return headerFromOAuth2ClientCredentialsDestination(destination);
     case 'BasicAuthentication':
-      return toAuthorizationHeader(headerFromBasicAuthDestination(destination));
+      return headerFromBasicAuthDestination(destination);
     case 'PrincipalPropagation':
       return headerForPrincipalPropagation(destination);
     default:
@@ -152,11 +157,11 @@ async function getAuthenticationRelatedAuthHeaders(
   }
 }
 
-export async function buildAuthorizationHeader(
+export async function buildAuthorizationHeaders(
   destination: Destination
 ): Promise<MapType<string>> {
   return {
-    ...(await getAuthenticationRelatedAuthHeaders(destination)),
+    ...(await getAuthenticationRelatedHeaders(destination)),
     ...getProxyRelatedAuthHeaders(destination)
   };
 }

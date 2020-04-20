@@ -5,13 +5,13 @@ import { Destination } from '../../scp-cf';
 import { ODataDeleteRequestConfig, ODataUpdateRequestConfig } from '../request';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
-import { getCsrfHeaders } from './csrf-headers';
+import { buildCsrfHeaders } from './csrf-headers';
 import {
   filterNullishValues,
-  getHeaderByKeyOrExecute,
-  replaceDuplicateKeys
+  replaceDuplicateKeys,
+  getHeader
 } from './headers-util';
-import { buildAuthorizationHeader } from './auth-headers';
+import { buildAuthorizationHeaders } from './auth-headers';
 
 /**
  * Create object containing all headers, including custom headers for a given  OData request configuration and destination.
@@ -45,13 +45,10 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
   const csrfHeaders =
     request.config.method === 'get'
       ? {}
-      : await getHeaderByKeyOrExecute(
-          'x-csrf-token',
-          request.config.customHeaders,
-          () =>
-            getCsrfHeaders(request, {
-              ...destinationRelatedHeaders
-            })
+      : await getCsrfHeaders(
+          request,
+          destinationRelatedHeaders,
+          request.config.customHeaders
         );
 
   return {
@@ -60,6 +57,27 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
     ...defaultHeaders,
     ...request.config.customHeaders
   };
+}
+
+async function getAuthHeaders(
+  destination: Destination,
+  customHeaders?: MapType<any>
+): Promise<MapType<string>> {
+  const customAuthHeaders = getHeader('authorization', customHeaders);
+  return Object.keys(customAuthHeaders).length
+    ? customAuthHeaders
+    : buildAuthorizationHeaders(destination);
+}
+
+async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
+  request: ODataRequest<RequestT>,
+  destinationRelatedHeaders: MapType<string>,
+  customHeaders?: MapType<any>
+): Promise<MapType<string>> {
+  const customCsrfHeaders = getHeader('x-csrf-token', customHeaders);
+  return Object.keys(customCsrfHeaders).length
+    ? customCsrfHeaders
+    : buildCsrfHeaders(request, destinationRelatedHeaders);
 }
 
 /**
@@ -73,11 +91,7 @@ export async function buildHeadersForDestination(
   destination: Destination,
   customHeaders?: MapType<any>
 ): Promise<MapType<string>> {
-  const authHeaders = await getHeaderByKeyOrExecute(
-    'authorization',
-    customHeaders,
-    () => buildAuthorizationHeader(destination)
-  );
+  const authHeaders = await getAuthHeaders(destination, customHeaders);
 
   const sapHeaders = replaceDuplicateKeys(
     filterNullishValues({

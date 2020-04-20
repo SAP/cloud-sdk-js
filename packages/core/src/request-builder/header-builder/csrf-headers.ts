@@ -18,13 +18,16 @@ const logger = createLogger({
  * @param headers Destination related headers to include in the request.
  * @returns A promise to an object containing the CSRF related headers
  */
-export async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
+export async function buildCsrfHeaders<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>,
   headers: MapType<string>
 ): Promise<MapType<string>> {
   const csrfHeaders = await makeCsrfRequest(request, headers);
   validateCsrfTokenResponse(csrfHeaders);
-  return buildCsrfHeaders(csrfHeaders);
+  return filterNullishValues({
+    ...getHeader('x-csrf-token', headers),
+    cookie: buildCookieHeaderValue(getHeaderValue('set-cookie', headers))
+  });
 }
 
 function makeCsrfRequest<RequestT extends ODataRequestConfig>(
@@ -68,13 +71,6 @@ function validateCsrfTokenResponse(responseHeaders: MapType<any>) {
   }
 
   return responseHeaders;
-}
-
-function buildCsrfHeaders(headers: MapType<any>) {
-  return filterNullishValues({
-    ...getHeader('x-csrf-token', headers),
-    cookie: buildCookieHeaderValue(getHeaderValue('set-cookie', headers))
-  });
 }
 
 function buildCookieHeaderValue(cookies?: string[]): string | undefined {

@@ -2,7 +2,7 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { buildHeadersForDestination, Destination } from '../../../src';
 import { muteLoggers } from '../../test-util/mute-logger';
-import { buildAuthorizationHeader } from '../../../src/request-builder/header-builder/auth-headers';
+import { buildAuthorizationHeaders } from '../../../src/request-builder/header-builder/auth-headers';
 
 describe('Authorization header builder', () => {
   beforeAll(() => {
@@ -11,7 +11,7 @@ describe('Authorization header builder', () => {
 
   it('does not throw on NoAuthentication', async () => {
     await expect(
-      buildAuthorizationHeader({
+      buildAuthorizationHeaders({
         url: 'https://example.com',
         authentication: 'NoAuthentication'
       })
@@ -20,7 +20,7 @@ describe('Authorization header builder', () => {
 
   it('does not throw on ClientCertificateAuthentication', async () => {
     await expect(
-      buildAuthorizationHeader({
+      buildAuthorizationHeaders({
         url: 'https://example.com',
         authentication: 'ClientCertificateAuthentication'
       })
@@ -29,7 +29,7 @@ describe('Authorization header builder', () => {
 
   it('defaults to NoAuthentication', async () => {
     await expect(
-      buildAuthorizationHeader({ url: 'https://example.com' })
+      buildAuthorizationHeaders({ url: 'https://example.com' })
     ).resolves.not.toThrow();
   });
 
@@ -45,14 +45,14 @@ describe('Authorization header builder', () => {
       }
     } as Destination;
 
-    const headers = await buildAuthorizationHeader(destination);
+    const headers = await buildAuthorizationHeaders(destination);
     checkHeaders(headers);
 
     delete destination!.proxyConfiguration!.headers![
       'SAP-Connectivity-Authentication'
     ];
     await expect(
-      buildAuthorizationHeader(destination)
+      buildAuthorizationHeaders(destination)
     ).rejects.toThrowErrorMatchingSnapshot();
   });
 

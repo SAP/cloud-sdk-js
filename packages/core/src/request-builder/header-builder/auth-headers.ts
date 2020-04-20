@@ -1,11 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { MapType, errorWithCause, createLogger } from '@sap-cloud-sdk/util';
+import {
+  MapType,
+  errorWithCause,
+  createLogger,
+  isNullish
+} from '@sap-cloud-sdk/util';
 import {
   DestinationAuthToken,
   Destination,
   getOAuth2ClientCredentialsToken
 } from '../../scp-cf';
-import { isNullish, toHeaderObject } from './headers-util';
+import { toHeaderObject } from './headers-util';
 
 const logger = createLogger({
   package: 'core',

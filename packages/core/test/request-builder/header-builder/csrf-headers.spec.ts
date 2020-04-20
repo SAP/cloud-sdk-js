@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
-import { getCsrfHeaders } from '../../../src/request-builder/header-builder';
+import { buildCsrfHeaders } from '../../../src/request-builder/header-builder';
 import { createCreateRequest } from '../../test-util/create-requests';
 import { muteLoggers } from '../../test-util/mute-logger';
 import {
@@ -35,7 +35,7 @@ describe('csrf-headers', () => {
       cookie: 'mocked-cookie-0;mocked-cookie-2',
       'x-csrf-token': mockedHeaders['x-csrf-token']
     };
-    const headers = await getCsrfHeaders(request, standardHeaders);
+    const headers = await buildCsrfHeaders(request, standardHeaders);
     expect(headers).toEqual(expected);
   });
 
@@ -50,7 +50,7 @@ describe('csrf-headers', () => {
       }
     });
 
-    const actual = await getCsrfHeaders(request, standardHeaders);
+    const actual = await buildCsrfHeaders(request, standardHeaders);
 
     expect('x-csrf-token' in actual).toBeFalsy();
     expect(warnSpy).toBeCalledWith(
@@ -67,7 +67,7 @@ describe('csrf-headers', () => {
       responseHeaders: { 'x-csrf-token': 'mocked-x-csrf-token' }
     });
 
-    const actual = await getCsrfHeaders(request, standardHeaders);
+    const actual = await buildCsrfHeaders(request, standardHeaders);
 
     expect('cookie' in actual).toBeFalsy();
     expect(warnSpy).toBeCalledWith(

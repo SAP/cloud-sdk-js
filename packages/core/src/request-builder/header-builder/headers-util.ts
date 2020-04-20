@@ -1,9 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { MapType } from '@sap-cloud-sdk/util';
-
-export function isNullish(x: any): x is null | undefined {
-  return x === null || x === undefined;
-}
+import { MapType, isNullish } from '@sap-cloud-sdk/util';
 
 export function toHeaderObject(key: string, value: any): MapType<any> {
   return isNullish(key) || isNullish(value) ? {} : { [key]: value };

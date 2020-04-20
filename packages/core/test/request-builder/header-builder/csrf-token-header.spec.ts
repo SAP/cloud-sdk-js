@@ -12,9 +12,9 @@ import {
 } from '../../test-util/request-mocker';
 
 const standardHeaders = {
-  Accept: 'application/json',
+  accept: 'application/json',
   authorization: defaultBasicCredentials,
-  'Content-Type': 'application/json'
+  'content-type': 'application/json'
 };
 
 describe('csrf-token-header', () => {

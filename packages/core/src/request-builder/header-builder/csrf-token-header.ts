@@ -10,7 +10,7 @@ import { buildCsrfHeaders } from './csrf-headers';
  */
 
 /**
- * @deprecated Since v1.20.0, use [[getCsrfHeaders]] instead.
+ * @deprecated Since v1.20.0, use [[buildCsrfHeaders]] instead.
  *
  * Add CSRF token and cookies for a request to destination related headers.
  * @param request The request to get CSRF headers for.

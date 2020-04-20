@@ -25,8 +25,8 @@ export async function buildCsrfHeaders<RequestT extends ODataRequestConfig>(
   const csrfHeaders = await makeCsrfRequest(request, headers);
   validateCsrfTokenResponse(csrfHeaders);
   return filterNullishValues({
-    ...getHeader('x-csrf-token', headers),
-    cookie: buildCookieHeaderValue(getHeaderValue('set-cookie', headers))
+    ...getHeader('x-csrf-token', csrfHeaders),
+    cookie: buildCookieHeaderValue(getHeaderValue('set-cookie', csrfHeaders))
   });
 }
 

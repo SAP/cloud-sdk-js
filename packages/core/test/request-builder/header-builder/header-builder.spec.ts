@@ -237,7 +237,7 @@ describe('Header-builder:', () => {
   });
 
   it('Skips csrf token retrieval for existing csrf header', async () => {
-    spyOn(csrfHeaders, 'getCsrfHeaders');
+    spyOn(csrfHeaders, 'buildCsrfHeaders');
     const request = createCreateRequest(defaultDestination);
     request.config.customHeaders = { 'x-csrf-token': 'defined' };
 
@@ -248,7 +248,7 @@ describe('Header-builder:', () => {
   });
 
   it('Skips csrf token retrieval for GET request', async () => {
-    spyOn(csrfHeaders, 'getCsrfHeaders');
+    spyOn(csrfHeaders, 'buildCsrfHeaders');
     const request = createGetAllRequest(defaultDestination);
 
     mockHeaderRequest({ request });
@@ -306,8 +306,8 @@ describe('Header-builder:', () => {
 
       expect(actual).toEqual({
         authorization: 'Bearer ' + fakeToken,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'content-type': 'application/json',
+        accept: 'application/json',
         'sap-client': '123'
       });
     });
@@ -331,8 +331,8 @@ describe('Header-builder:', () => {
 
       expect(actual).toEqual({
         authorization: 'Bearer ' + fakeToken,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'content-type': 'application/json',
+        accept: 'application/json',
         'sap-client': '123'
       });
     });

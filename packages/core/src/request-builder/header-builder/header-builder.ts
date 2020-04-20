@@ -11,7 +11,7 @@ import {
   replaceDuplicateKeys,
   getHeader
 } from './headers-util';
-import { buildAuthorizationHeaders } from './auth-headers';
+import { buildAuthorizationHeaders } from './authorization-header';
 
 /**
  * Create object containing all headers, including custom headers for a given  OData request configuration and destination.

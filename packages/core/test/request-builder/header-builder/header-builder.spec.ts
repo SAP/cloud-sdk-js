@@ -19,7 +19,7 @@ import * as csrfHeaders from '../../../src/request-builder/header-builder/csrf-h
 
 describe('Header-builder:', () => {
   beforeAll(() => {
-    muteLoggers('http-agent', 'csrf-headers', 'auth-headers');
+    muteLoggers('http-agent', 'csrf-token-header', 'authorization-header');
   });
 
   it('customHeaders are not overwritten.', async () => {

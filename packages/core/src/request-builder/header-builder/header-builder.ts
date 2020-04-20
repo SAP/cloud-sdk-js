@@ -30,8 +30,8 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
 
   const defaultHeaders = replaceDuplicateKeys(
     filterNullishValues({
-      Accept: 'application/json',
-      'Content-Type': request.config.contentType,
+      accept: 'application/json',
+      'content-type': request.config.contentType,
       'if-match': getETagHeaderValue(request.config)
     }),
     request.config.customHeaders

@@ -19,7 +19,7 @@ module.exports = {
       title: 'SAP Cloud SDK',
       logo: {
         alt: 'SAP Cloud SDK',
-        src: 'img/logo.svg'
+        src: 'https://help.sap.com/viewer/_build_2.3.0.1311/img/sap.svg'
       },
       links: [
         {
@@ -180,7 +180,7 @@ module.exports = {
   customFields: {
     logo: {
       alt: 'SAP Developers',
-      src: 'img/sap.svg'
+      src: 'https://help.sap.com/viewer/_build_2.3.0.1311/img/sap.svg'
     }
   }
 }

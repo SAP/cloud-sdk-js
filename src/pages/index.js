@@ -9,7 +9,8 @@ import styles from './styles.module.css'
 const features = [
   {
     title: <>SAP Cloud SDK for Java</>,
-    imageUrl: 'img/sdk/logos/black/sdk-java.svg',
+    imageUrl:
+      'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-java.svg',
     description: (
       <>
         SAP Cloud SDK for Java allows you develop, extend, and communicate wiht
@@ -21,7 +22,8 @@ const features = [
   },
   {
     title: <>SAP Cloud SDK for JavaScript</>,
-    imageUrl: 'img/sdk/logos/black/sdk-js.svg',
+    imageUrl:
+      'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg',
     description: (
       <>
         SAP Cloud SDK for JavaScript leverages popularity and flexibility of
@@ -35,7 +37,8 @@ const features = [
   },
   {
     title: <>SAP Cloud SDK for CI\CD</>,
-    imageUrl: 'img/sdk/logos/black/sdk-cicd.svg',
+    imageUrl:
+      'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-cd.svg',
     description: (
       <>
         The goal of project "Piper" is to substantially ease setting up

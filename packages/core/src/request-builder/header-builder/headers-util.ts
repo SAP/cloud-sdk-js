@@ -19,9 +19,7 @@ export function getHeaderValue(
   key: string,
   headers: MapType<any> = {}
 ): any | undefined {
-  return Object.entries(headers).find(
-    ([entryKey]) => entryKey.toLowerCase() === key.toLowerCase()
-  )?.[1];
+  return Object.values(getHeader(key, headers))[0];
 }
 
 export function filterNullishValues(headers: MapType<any> = {}): MapType<any> {

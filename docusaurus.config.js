@@ -78,7 +78,7 @@ module.exports = {
       style: 'dark',
       logo: {
         alt: 'SAP Cloud SDK',
-        src: 'img/sap.svg'
+        src: 'https://help.sap.com/viewer/_build_2.3.0.1311/img/sap.svg'
       },
       links: [
         {

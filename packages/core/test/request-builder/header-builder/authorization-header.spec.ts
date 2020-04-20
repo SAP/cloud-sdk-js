@@ -2,7 +2,6 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import {
   buildAndAddAuthorizationHeader,
-  buildHeaders,
   buildHeadersForDestination,
   Destination
 } from '../../../src';

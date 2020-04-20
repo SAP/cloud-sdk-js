@@ -27,7 +27,8 @@ module.exports = {
         "@typescript-eslint",
         "header",
         "import",
-        "prettier"
+        "prettier",
+        "unused-imports"
     ],
     "overrides": [
         {
@@ -242,6 +243,7 @@ module.exports = {
         "no-unsafe-finally": "error",
         "no-unused-expressions": "error",
         "no-unused-labels": "error",
+        "no-unused-vars": "off",
         "no-var": "error",
         "object-curly-spacing": [
             "error",
@@ -271,6 +273,7 @@ module.exports = {
             "never"
         ],
         "spaced-comment": "error",
+        "unused-imports/no-unused-imports-ts": "error",
         "use-isnan": "error",
         "valid-jsdoc": [
             "error",

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { MapType, isNullish } from '@sap-cloud-sdk/util';
 
-export function toHeaderObject(key: string, value: any): MapType<any> {
+export function toSanitizedHeaderObject(key: string, value: any): MapType<any> {
   return isNullish(key) || isNullish(value) ? {} : { [key]: value };
 }
 

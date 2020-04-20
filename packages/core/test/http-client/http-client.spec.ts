@@ -38,8 +38,7 @@ describe('generic http client', () => {
     sapClient: '001',
     proxyConfiguration: {
       headers: {
-        'Proxy-Authorization': 'jajaja',
-        'SAP-Connectivity-Authentication': 'yeahyeah'
+        'Proxy-Authorization': 'youmaypass'
       },
       host: 'proxy.host',
       port: 1234,
@@ -67,7 +66,9 @@ describe('generic http client', () => {
         headers: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001',
-          'Proxy-Authorization': 'jajaja'
+          'Proxy-Authorization': proxyDestination.proxyConfiguration?.headers?.[
+            'Proxy-Authorization'
+          ]!
         }
       };
 

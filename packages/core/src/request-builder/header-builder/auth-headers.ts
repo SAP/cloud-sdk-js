@@ -10,7 +10,7 @@ import {
   Destination,
   getOAuth2ClientCredentialsToken
 } from '../../scp-cf';
-import { toHeaderObject } from './headers-util';
+import { toSanitizedHeaderObject } from './headers-util';
 
 const logger = createLogger({
   package: 'core',
@@ -18,7 +18,7 @@ const logger = createLogger({
 });
 
 function toAuthorizationHeader(authorization: string): MapType<string> {
-  return toHeaderObject('authorization', authorization);
+  return toSanitizedHeaderObject('authorization', authorization);
 }
 
 function headerFromTokens(

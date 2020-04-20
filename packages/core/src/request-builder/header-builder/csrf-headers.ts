@@ -15,7 +15,7 @@ const logger = createLogger({
 /**
  * Get CSRF token and cookies for a request with destination related headers.
  * @param request The request to get CSRF headers for.
- * @param headers Destination related headers to include in the request.
+ * @param headers Destination related headers to include in the CSRF fetch request.
  * @returns A promise to an object containing the CSRF related headers
  */
 export async function buildCsrfHeaders<RequestT extends ODataRequestConfig>(

@@ -6,7 +6,7 @@ import { Entity } from '../../entity';
 import { FieldType } from '../../selectable';
 import { getResourcePathForKeys } from './get-resource-path';
 import { ODataRequestConfig } from './odata-request-config';
-import { WithKeys } from './odata-request-traits';
+import { WithKeys, WithETag } from './odata-request-traits';
 
 /**
  * OData update request configuration for an entity type.
@@ -15,7 +15,7 @@ import { WithKeys } from './odata-request-traits';
  */
 export class ODataUpdateRequestConfig<EntityT extends Entity>
   extends ODataRequestConfig
-  implements WithKeys {
+  implements WithKeys, WithETag {
   keys: MapType<FieldType>;
   eTag: string;
   versionIdentifierIgnored = false;

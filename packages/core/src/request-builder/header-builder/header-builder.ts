@@ -2,9 +2,12 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../scp-cf';
-import { ODataDeleteRequestConfig, ODataUpdateRequestConfig } from '../request';
-import { ODataRequest } from '../request/odata-request';
-import { ODataRequestConfig } from '../request/odata-request-config';
+import {
+  ODataDeleteRequestConfig,
+  ODataUpdateRequestConfig,
+  ODataRequestConfig,
+  ODataRequest
+} from '../request';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   filterNullishValues,

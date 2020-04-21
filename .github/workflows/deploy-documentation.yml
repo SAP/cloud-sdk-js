@@ -1,0 +1,25 @@
+name: Build Documentation
+
+on:
+  push:
+    branches-ignore: [master, gh-pages]
+    branches: [documentation]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: documentation
+      - name: Checkout API docs
+        uses: actions/checkout@v2
+        with:
+          ref: api-docs
+          path: static/api
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm ci
+      - run: USE_SSH=true GIT_USER=git npx docusaurus deploy

@@ -1,0 +1,22 @@
+name: Build Documentation
+
+on:
+  pull_request:
+    branches-ignore: [master, gh-pages]
+    branches: [documentation]
+  push:
+    branches: [documentation]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: documentation
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm ci
+      - run: npm run build

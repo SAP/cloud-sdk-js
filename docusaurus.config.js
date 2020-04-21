@@ -28,7 +28,7 @@ module.exports = {
           position: 'left'
         },
         {
-          href: 'https://blogs.sap.com/tag/sap-cloud-sdk/',
+          href: 'https://blogs.sap.com/',
           label: 'Blog',
           position: 'left'
         },
@@ -115,6 +115,10 @@ module.exports = {
               href: 'https://developers.sap.com/topics/cloud-sdk.html'
             },
             {
+              label: 'Cloud SDK Community Page',
+              href: 'https://community.sap.com/topics/cloud-sdk'
+            },
+            {
               label: 'Cloud SDK on SAP Help',
               href:
                 'https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US?task=discover_task'
@@ -126,27 +130,11 @@ module.exports = {
           items: [
             {
               label: 'Blog',
-              href: 'https://blogs.sap.com/tag/sap-cloud-sdk/'
+              href: 'https://https://blogs.sap.com/'
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/sap'
-            },
-            {
-              label: 'Facebook',
-              href: 'https://twitter.com/docusaurus'
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/sapdevs'
-            },
-            {
-              label: 'Youtube',
-              href: 'https://www.youtube.com/user/sapdevs'
-            },
-            {
-              label: 'LinkedIn',
-              href: 'https://www.linkedin.com/company/sap-developers'
+              href: 'https://github.com/SAP/cloud-sdk'
             }
           ]
         }

@@ -146,7 +146,7 @@ function merge<T>(
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  return axios.request({ proxy: false, ...request });
+  return axios.request({ ...getAxiosConfigWithDefaults(), ...request });
 }
 
 /**

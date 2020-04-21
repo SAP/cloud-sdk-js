@@ -1,15 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType, propertyExists } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getAxiosConfigWithDefaults } from '../../http-client';
 import { Destination, sanitizeDestination } from '../../scp-cf';
 import {
   removeSlashes,
   removeTrailingSlashes
 } from '../../util/remove-slashes';
 import { buildHeaders } from '../header-builder/header-builder';
-import { getAgentConfig } from '../http-agent';
+import { HttpResponse, executeHttpRequest } from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**
@@ -158,42 +156,36 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    *
    * @returns Promise resolving to the requested data
    */
-  async execute(): Promise<AxiosResponse> {
-    if (!this._destination) {
+  async execute(): Promise<HttpResponse> {
+    const destination = this.destination;
+    if (!destination) {
       throw Error('The destination cannot be undefined.');
     }
-    const requestDataWithAxiosKeys = {
-      url: this.url(),
-      method: this.config.method,
-      data: this.config.payload,
-      ...getAgentConfig(this._destination)
-    };
 
-    return this.headers()
-      .then(
-        (headers): AxiosRequestConfig => ({
-          headers,
-          ...getAxiosConfigWithDefaults(),
-          ...requestDataWithAxiosKeys
-        })
+    return executeHttpRequest(destination, {
+      headers: await this.headers(),
+      url: this.relativeUrl(),
+      method: this.config.method,
+      data: this.config.payload
+    }).catch(error =>
+      Promise.reject(
+        constructError(error, this.config.method, this.serviceUrl())
       )
-      .then(requestConfig => axios.request(requestConfig))
-      .catch(error =>
-        Promise.reject(
-          constructError(error, this.config.method, this.serviceUrl())
-        )
-      );
+    );
   }
 }
 
 function constructError(error, requestMethod: string, url: string): Error {
-  const defaultMessage = `${requestMethod} request to ${url} failed!`;
-  const s4SpecificMessage = propertyExists(error, 'response', 'data', 'error')
-    ? messageFromS4ErrorResponse(error)
-    : '';
-  const message = [defaultMessage, s4SpecificMessage].join(' ');
+  if (error.isAxiosError) {
+    const defaultMessage = `${requestMethod} request to ${url} failed!`;
+    const s4SpecificMessage = propertyExists(error, 'response', 'data', 'error')
+      ? messageFromS4ErrorResponse(error)
+      : '';
+    const message = [defaultMessage, s4SpecificMessage].join(' ');
 
-  return errorWithCause(message, error);
+    return errorWithCause(message, error);
+  }
+  return error;
 }
 
 function messageFromS4ErrorResponse(error): string {

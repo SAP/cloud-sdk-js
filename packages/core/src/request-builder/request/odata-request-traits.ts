@@ -30,3 +30,15 @@ export interface WithGetAllRestrictions<EntityT extends Entity>
   filter: Filterable<EntityT>;
   orderBy: Orderable<EntityT>[];
 }
+
+/**
+ * @hidden
+ */
+export interface WithETag {
+  eTag: string;
+  versionIdentifierIgnored: boolean;
+}
+
+export function isWithETag(config: any): config is WithETag {
+  return 'eTag' in config || 'versionIdentifierIgnored' in config;
+}

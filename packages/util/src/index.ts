@@ -5,6 +5,7 @@ export * from './constants';
 export * from './error';
 export * from './fs';
 export * from './logger';
+export * from './nullish';
 export * from './object';
 export * from './pipe';
 export * from './string';

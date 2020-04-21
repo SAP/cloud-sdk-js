@@ -19,7 +19,7 @@ const logger = createLogger({
 
 /**
  * Determines the proxy strategy. If noProxy is set the ProxyConfiguration in the destination is omitted.
- * For onPremProxy or internetProxy the connectivy service or enviroment varialbes are checked to fill the [[ProxyConfiguration]].
+ * For onPremProxy or internetProxy the connectivy service or enviroment variables are checked to fill the [[ProxyConfiguration]].
  * @param destination - from which the proxy strategy is derived.
  * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
  */

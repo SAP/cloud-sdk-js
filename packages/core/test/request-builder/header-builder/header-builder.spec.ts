@@ -15,6 +15,7 @@ import {
   mockHeaderRequest
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/test-service';
+import * as csrfHeaders from '../../../src/request-builder/header-builder/csrf-token-header';
 
 describe('Header-builder:', () => {
   beforeAll(() => {
@@ -174,6 +175,7 @@ describe('Header-builder:', () => {
 
     const destination: Destination = {
       url: 'https://destination.example.com',
+      proxyType: 'OnPremise',
       proxyConfiguration: {
         ...mockedConnectivityServiceProxyConfig,
         headers: proxyHeaders
@@ -234,6 +236,47 @@ describe('Header-builder:', () => {
     expect(headers['x-csrf-token']).toBe('mocked-x-csrf-token');
   });
 
+  it('Skips csrf token retrieval for existing csrf header', async () => {
+    spyOn(csrfHeaders, 'buildCsrfHeaders');
+    const request = createCreateRequest(defaultDestination);
+    request.config.customHeaders = { 'x-csrf-token': 'defined' };
+
+    mockHeaderRequest({ request });
+
+    await request.headers();
+    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
+  });
+
+  it('Skips csrf token retrieval for GET request', async () => {
+    spyOn(csrfHeaders, 'buildCsrfHeaders');
+    const request = createGetAllRequest(defaultDestination);
+
+    mockHeaderRequest({ request });
+
+    await request.headers();
+    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
+  });
+
+  it('Prioritizes custom Authorization headers (upper case A)', async () => {
+    const request = createGetAllRequest(defaultDestination);
+    request.config.addCustomHeaders({
+      Authorization: 'Basic SOMETHINGSOMETHING'
+    });
+
+    const headers = await request.headers();
+    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
+  });
+
+  it('Prioritizes custom Authorization headers (lower case A)', async () => {
+    const request = createGetAllRequest(defaultDestination);
+    request.config.addCustomHeaders({
+      authorization: 'Basic SOMETHINGSOMETHING'
+    });
+
+    const headers = await request.headers();
+    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
+  });
+
   describe('OAuth2ClientCredentials', () => {
     const destination: Destination = {
       ...defaultDestination,
@@ -263,8 +306,8 @@ describe('Header-builder:', () => {
 
       expect(actual).toEqual({
         authorization: 'Bearer ' + fakeToken,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'content-type': 'application/json',
+        accept: 'application/json',
         'sap-client': '123'
       });
     });
@@ -288,8 +331,8 @@ describe('Header-builder:', () => {
 
       expect(actual).toEqual({
         authorization: 'Bearer ' + fakeToken,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'content-type': 'application/json',
+        accept: 'application/json',
         'sap-client': '123'
       });
     });

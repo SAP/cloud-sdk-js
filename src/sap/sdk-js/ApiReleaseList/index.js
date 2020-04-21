@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '@docusaurus/Link'
 import useBaseUrl from '@docusaurus/useBaseUrl'
-import versions from './versions.js'
+import versions from '../../../../static/api/versions'
 
 function ApiReleaseList () {
   return (

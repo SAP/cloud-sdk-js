@@ -4,7 +4,6 @@ title: Introduction - SDK for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Introduction
-custom_edit_url: https://github.com
 description: Cloud SDK for Java significantly simlifies extending and developing application with SAP Cloud Platform
 keywords:
 - sap
@@ -25,6 +24,10 @@ For a quick start check [getting started](getting-started ) section.
 SAP Cloud SDK for Java allows you develop, extend, and communicate wiht SAP solutions SAP S/4HANA Cloud, SAP
 SuccessFactors, and many others.
 
+## High-level architecture ##
+
+
+
 ## Benefits ##
 
 TBD
@@ -38,3 +41,6 @@ TBD
 ## SDK as a service ##
 
 TBD link to contributions
+
+## Read next ##
+-

@@ -3,14 +3,15 @@
 import * as http from 'http';
 import * as https from 'https';
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
-import { buildHeadersForDestination, getAgentConfig } from '../request-builder';
+import axios from 'axios';
+import { buildHeadersForDestination } from '../request-builder/header-builder/header-builder';
 import {
   Destination,
   DestinationNameAndJwt,
   toDestinationNameUrl,
   useOrFetchDestination
 } from '../scp-cf';
+import { getAgentConfig } from '../request-builder';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -77,7 +78,7 @@ export function execute(executeFn: ExecuteHttpRequestFn) {
     destination: Destination | DestinationNameAndJwt,
     requestConfig: T
   ): Promise<HttpResponse> {
-    const req = await buildHttpRequest(destination);
+    const req = await buildHttpRequest(destination, requestConfig.headers);
     const request = merge(requestConfig, req);
     return executeFn(request);
   };
@@ -154,7 +155,7 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
  *
  * @returns AxiosRequestConfig with default parameters
  */
-export function getAxiosConfigWithDefaults(): AxiosRequestConfig {
+export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   return {
     method: 'get',
     proxy: false,

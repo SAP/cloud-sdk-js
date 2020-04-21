@@ -2,9 +2,14 @@
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import axios, { AxiosError } from 'axios';
-import { getAxiosConfigWithDefaults } from '../../http-client';
+import {
+  getAxiosConfigWithDefaults,
+  HttpRequestConfig,
+  executeHttpRequest
+} from '../../http-client';
 import { getAgentConfig } from '../http-agent';
 import { ODataRequest, ODataRequestConfig } from '../request';
+import { Destination } from '../../scp-cf';
 import { filterNullishValues, getHeader, getHeaderValue } from './headers-util';
 
 const logger = createLogger({
@@ -30,6 +35,43 @@ export async function buildCsrfHeaders<RequestT extends ODataRequestConfig>(
   });
 }
 
+export async function buildCsrfHeaders2<T extends HttpRequestConfig>(
+  destination: Destination, // | DestinationNameAndJwt,
+  requestConfig: T
+): Promise<MapType<string>> {
+  const csrfHeaders = await makeCsrfRequest2(destination, requestConfig);
+  validateCsrfTokenResponse(csrfHeaders);
+  return filterNullishValues({
+    ...getHeader('x-csrf-token', csrfHeaders),
+    cookie: buildCookieHeaderValue(getHeaderValue('set-cookie', csrfHeaders))
+  });
+}
+
+function makeCsrfRequest2<T extends HttpRequestConfig>(
+  destination: Destination, // | DestinationNameAndJwt,
+  requestConfig: T
+): Promise<MapType<any>> {
+  const axiosConfig: HttpRequestConfig = {
+    method: 'get',
+    headers: {
+      ...requestConfig.headers,
+      'x-csrf-token': 'Fetch'
+    },
+    url: requestConfig.url,
+    ...getAxiosConfigWithDefaults(),
+    ...getAgentConfig(destination)
+  };
+
+  return executeHttpRequest(destination, axiosConfig)
+    .then(response => response.headers)
+    .catch((error: AxiosError) => {
+      if (!error.response) {
+        throw new Error('The error response is undefined.');
+      }
+      return error.response.headers;
+    });
+}
+
 function makeCsrfRequest<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>,
   csrfRequestHeaders: MapType<string>
@@ -41,10 +83,10 @@ function makeCsrfRequest<RequestT extends ODataRequestConfig>(
   const axiosConfig = {
     headers: {
       ...csrfRequestHeaders,
-      'x-csrf-token': 'Fetch',
-      ...getAxiosConfigWithDefaults()
+      'x-csrf-token': 'Fetch'
     },
     url: request.serviceUrl(),
+    ...getAxiosConfigWithDefaults(),
     ...getAgentConfig(request.destination)
   };
 

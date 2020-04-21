@@ -6,9 +6,16 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '../../util/remove-slashes';
-import { buildHeaders } from '../header-builder/header-builder';
+import { buildHeadersForDestination } from '../header-builder/header-builder';
 import { HttpResponse, executeHttpRequest } from '../../http-client';
+import {
+  filterNullishValues,
+  getHeader,
+  replaceDuplicateKeys,
+  buildCsrfHeaders2
+} from '../header-builder';
 import { ODataRequestConfig } from './odata-request-config';
+import { isWithETag } from './odata-request-traits';
 
 /**
  * OData request configuration for an entity type.
@@ -144,11 +151,40 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   async headers(): Promise<MapType<string>> {
-    return buildHeaders(this).catch(error =>
-      Promise.reject(
+    try {
+      if (!this.destination) {
+        throw Error('The destination is undefined.');
+      }
+      const defaultHeaders = replaceDuplicateKeys(
+        filterNullishValues({
+          accept: 'application/json',
+          'content-type': this.config.contentType,
+          ...this.getETagHeader()
+        }),
+        this.config.customHeaders
+      );
+
+      const destinationRelatedHeaders = await buildHeadersForDestination(
+        this.destination,
+        this.config.customHeaders
+      );
+
+      const csrfHeaders =
+        this.config.method === 'get'
+          ? {}
+          : await this.getCsrfHeaders(destinationRelatedHeaders);
+
+      return {
+        ...destinationRelatedHeaders,
+        ...csrfHeaders,
+        ...defaultHeaders,
+        ...this.config.customHeaders
+      };
+    } catch (error) {
+      return Promise.reject(
         errorWithCause('Constructing headers for OData request failed!', error)
-      )
-    );
+      );
+    }
   }
 
   /**
@@ -172,6 +208,29 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         constructError(error, this.config.method, this.serviceUrl())
       )
     );
+  }
+
+  private getETagHeader(): MapType<string> {
+    const eTag =
+      isWithETag(this.config) &&
+      (this.config.versionIdentifierIgnored ? '*' : this.config.eTag);
+    return filterNullishValues({ 'if-match': eTag });
+  }
+
+  private async getCsrfHeaders(
+    destinationRelatedHeaders: MapType<string>
+  ): Promise<MapType<string>> {
+    const customCsrfHeaders = getHeader(
+      'x-csrf-token',
+      this.config.customHeaders
+    );
+    return Object.keys(customCsrfHeaders).length
+      ? customCsrfHeaders
+      : buildCsrfHeaders2(this.destination!, {
+          headers: destinationRelatedHeaders,
+          url: this.relativeServiceUrl(),
+          method: 'get'
+        });
   }
 }
 

@@ -10,13 +10,20 @@ export interface DestinationHttpRequestConfig {
 }
 
 type Method =
-  | 'get' | 'GET'
-  | 'delete' | 'DELETE'
-  | 'head' | 'HEAD'
-  | 'options' | 'OPTIONS'
-  | 'post' | 'POST'
-  | 'put' | 'PUT'
-  | 'patch' | 'PATCH';
+  | 'get'
+  | 'GET'
+  | 'delete'
+  | 'DELETE'
+  | 'head'
+  | 'HEAD'
+  | 'options'
+  | 'OPTIONS'
+  | 'post'
+  | 'POST'
+  | 'put'
+  | 'PUT'
+  | 'patch'
+  | 'PATCH';
 
 /**
  * @deprecated Since v1.20.0. Use method string directly, e. g. 'get' or 'GET'.
@@ -41,6 +48,10 @@ export interface HttpRequestConfig {
   params?: MapType<string>;
   timeout?: number;
   maxContentLength?: number;
+  headers?: any;
+  proxy?: false;
+  httpAgent?: any;
+  httpsAgent?: any;
 }
 
 export type HttpRequest = DestinationHttpRequestConfig & HttpRequestConfig;

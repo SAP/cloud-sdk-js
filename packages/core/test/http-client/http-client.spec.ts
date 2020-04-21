@@ -242,7 +242,7 @@ describe('generic http client', () => {
       expect(response.headers).toMatchObject({ sharp: 'header' });
     });
 
-    it('works also in more complex cases', async () => {
+    it('also works also in more complex cases in more complex cases', async () => {
       nock('https://example.com', {
         reqheaders: {
           'Content-Type': 'application/json',

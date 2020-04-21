@@ -1,11 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import {
-  buildAndAddAuthorizationHeader,
-  Destination,
-  buildHeadersForDestination
-} from '../../../src';
+import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
 import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
@@ -14,6 +10,7 @@ import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/o
 import { ODataRequest } from '../../../src/request-builder/request/odata-request';
 import { defaultDestination } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/test-service';
+import { buildHeadersForDestination } from '../../../src/request-builder/header-builder/header-builder';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {

@@ -39,6 +39,6 @@ export interface WithETag {
   versionIdentifierIgnored: boolean;
 }
 
-export function isWithETag(config): config is WithETag {
-  return 'eTag' in config && 'versionIdentifierIgnored' in config;
+export function isWithETag(config: any): config is WithETag {
+  return 'eTag' in config || 'versionIdentifierIgnored' in config;
 }

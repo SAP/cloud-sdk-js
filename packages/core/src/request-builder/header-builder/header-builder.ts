@@ -2,12 +2,7 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../scp-cf';
-import {
-  ODataDeleteRequestConfig,
-  ODataUpdateRequestConfig,
-  ODataRequestConfig,
-  ODataRequest
-} from '../request';
+import { ODataRequestConfig, ODataRequest, isWithETag } from '../request';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   filterNullishValues,
@@ -108,10 +103,7 @@ export async function buildHeadersForDestination(
 }
 
 function getETagHeaderValue(config: ODataRequestConfig): string | undefined {
-  if (
-    config instanceof ODataUpdateRequestConfig ||
-    config instanceof ODataDeleteRequestConfig
-  ) {
+  if (isWithETag(config)) {
     return config.versionIdentifierIgnored ? '*' : config.eTag;
   }
 }

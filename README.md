@@ -13,7 +13,7 @@
 
 - Clone this repository
 - Change to the root directory of the cloned project
-- Run `npm ci`
+- Run `npm install`
 - Run `npm start`
 - You should now see a browser window with SAP Cloud SDK documentation portal open
 - Open [How to write documentation](https://sap.github.io/cloud-sdk/docs/dzen/how-to-write-documentation )

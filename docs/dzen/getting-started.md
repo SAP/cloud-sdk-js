@@ -227,5 +227,9 @@ Please, refer to the official documentation:
 - [Markdown Guide](https://www.markdownguide.org/) - officially supported by Docusaurus
 - [Kung Fu belt system](https://www.kungfuwestisland.com/kung-fu-belt-system/) - you'll need a Kimono to look cool in
   the office
+
+## Questions? ##
+
+
 [^1]: Backlog Item
 [^2]: Documentation Item

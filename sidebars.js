@@ -11,7 +11,13 @@ module.exports = {
     Java: [
       'java/introduction',
       'java/getting-started',
-      'java/api-documentation',
+      {
+        type: 'category',
+        label: 'OData',
+        items: [
+          'java/odata/generate-odata-v4-client-with-cloud-sdk-for-java-how-to'
+        ]
+      },
       //   {
       //     type: 'category',
       //     label: 'Features',
@@ -44,7 +50,6 @@ module.exports = {
         type: 'category',
         label: 'How To',
         items: [
-          'java/how-to/generate-odata-client-with-cloud-sdk-for-java-how-to',
           'java/how-to/sap-cloud-sdk-linux-how-to',
           'java/how-to/cf-cli',
           'java/how-to/cf-deploy'
@@ -62,7 +67,7 @@ module.exports = {
           //       'java/how-to/app-router',
           //       'java/how-to/configure-ide'
         ]
-      }
+      },
       //   'hot-to-contribute',
       //   'support',
       //   'feature-request',
@@ -88,6 +93,7 @@ module.exports = {
       //     href:
       //       'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:java'
       //   }
+      'java/api-documentation'
     ],
     JavaScript: [
       'js/introduction',

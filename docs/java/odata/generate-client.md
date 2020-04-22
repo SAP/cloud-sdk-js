@@ -1,9 +1,9 @@
 ---
-id: generate-odata-client-with-cloud-sdk-for-java-how-to
-title: Generate OData client
+id: generate-odata-v4-client-with-cloud-sdk-for-java-how-to
+title: OData V4 client for Java
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Generate Odata client
+sidebar_label: Generate Odata V4 client
 description: You'll learn how to convert your service definition into a Java project containing type-safe Odata V4 lient to consume it
 keywords:
 - sap

@@ -96,9 +96,8 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 
 <TabItem value="v4">
 
-1. Create an edmx folder inside your application folder and place your service definition (EDMX file) inside it.
+1. Update your `application/pom.xml` file by adding the generator plugin under the `<plugin>` section.
 
-1. Update your `application/pom.xml` file by adding the generator plugin under the `<plugin>` section. Please note that if you use the generator for services other then SAP S/4HANA services, you need to add the parameter `defaultBasePath` to the configuration section, which should provide the base path to the exposed API (e.g odata/v4/).
     ```XML
     <plugin>
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
@@ -124,15 +123,40 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
     </plugin>
     ```
 
-1. Use the following parameters to configure the generator:
+</TabItem>
+<TabItem value="v2">
 
-    |   Parameter Value |   Explanation |
-    |-------------------|---------------|
-    |`<inputDirectory>`|Location of the metadata file.
-    |`<outputDirectory>`|Location of the output directory for generated sources.
-    |`<deleteOutputDirectory>`|Target directory is deleted before every execution of the generator
-    |`<packageName>`|Package name for the generated sources
-    |`<defaultBasePath>`|Base path of the exposed API
+1. Update your `application/pom.xml` file by adding the generator plugin under the `<plugin>` section.
+
+    ```XML
+    <plugin>
+        <groupId>com.sap.cloud.sdk.datamodel</groupId>
+        <artifactId>odata-generator-maven-plugin</artifactId>
+        <!-- Please use the latest version here-->
+        <version>3.18.0</version>
+        <executions>
+            <execution>
+                <id>generate-consumption</id>
+                <phase>generate-sources</phase>
+                <goals>
+                    <goal>generate</goal>
+                </goals>
+                <configuration>
+                    <inputDirectory>${project.basedir}/edmx</inputDirectory>
+                    <outputDirectory>${project.build.directory}/vdm</outputDirectory>
+                    <deleteOutputDirectory>true</deleteOutputDirectory>
+                    <packageName>com.mycompany.vdm</packageName>
+                    <defaultBasePath>odata/v4/</defaultBasePath>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    ```
+
+</TabItem>
+</Tabs>
+
+2. Adapt the `<inputDirectory>` to point to the place of your service definition.
 
 1. In case the target folder should be automatically added as a source folder by maven you can leverage the build helper plugin:
     ```XML
@@ -158,12 +182,19 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 
 Now maven will run the generator within the `process-sources` phase which is executed before compile.
 
-</TabItem>
-<TabItem value="v2">
+The following parameters allow to configure the generator further:
 
-Refer to this [blog post](https://blogs.sap.com/2018/04/30/deep-dive-10-with-sap-s4hana-cloud-sdk-generating-java-vdm-for-s4hana-custom-odata-service/) for OData v2.
-</TabItem>
-</Tabs>
+|   Parameter Value |   Explanation |
+|-------------------|---------------|
+|`<inputDirectory>`|Location of the metadata file.
+|`<outputDirectory>`|Location of the output directory for generated sources.
+|`<deleteOutputDirectory>`|Target directory is deleted before every execution of the generator
+|`<packageName>`|Package name for the generated sources
+|`<defaultBasePath>`|Base path of the exposed API
+
+:::note
+Please note that if you use the generator for services other than SAP S/4HANA services, you need to add the parameter `defaultBasePath` to the configuration section, which should provide the base path to the exposed API (e.g odata/v4/).
+:::
 
 ### Using the CLI
 

@@ -15,10 +15,89 @@ keywords:
 - generate
 ---
 
-## Build and execute OData Requests with the Virtual Data Model ##
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
+# Build and execute OData Requests with the Virtual Data Model #
 
-The below example demonstrates how the VDM would be used. If you are familiar with some of the VDMs for existing S4/HANA services you will find the following code very much familiar:
+The Virtual Data Model (VDM) allows to build type-safe OData requests for a given service. The java classes represent the _data model and API of the service_. As a consequence all requests that are build through the VDM are not only _syntactically valid_ but also _semantically valid_.
+
+## Using the Fluent API ##
+
+The VDM consistes of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests.
+
+To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/docs/java/features/connectivity). The following code snippits assume that such a destination is in place:
+
+```JAVA
+HttpDestination destination;
+```
+
+Below the different OData operations are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA VDM. The following code snippits assume that an instance of this service is setup:
+
+```JAVA
+BusinessPartnerService service = new DefaultBusinessPartnerService();
+```
+
+### Create ###
+
+```JAVA
+BusinessParter partner = new BusinessPartner();
+partner = service.createBusinessPartner(partner)
+    .execute(destination);
+```
+
+### Read (Single) ###
+
+```JAVA
+BusinessParter partner = new BusinessPartner();
+service.getBusinessPartnerByKey("id")
+    .select(BusinessPartner.FIRST_NAME)
+    .execute(destination);
+```
+
+### Read (Collection) ###
+
+<Tabs defaultValue="v4" values={[
+{ label: 'OData V2', value: 'v2', },
+{ label: 'OData V4', value: 'v4', }]}>
+<TabItem value="v4">
+
+```JAVA
+service.getBusinessPartnerByKey("id")
+    .select(BusinessPartner.FIRST_NAME)
+    .filter(BusinessPartner.FIRST_NAME.substring("substr"))
+    .execute(destination);
+```
+
+</TabItem>
+<TabItem value="v2">
+
+```JAVA
+service.getBusinessPartnerByKey("id")
+    .select(BusinessPartner.FIRST_NAME)
+    .filter(BusinessPartner.FIRST_NAME.ne("substr"))
+    .execute(destination);
+```
+
+</TabItem>
+</Tabs>
+
+### Update ###
+
+```JAVA
+service.updateBusinessPartner(partner)
+    .replacingEntity()
+    .execute(destination);
+```
+
+### Delete ###
+
+```JAVA
+service.deleteBusinessPartner(partner)
+    .execute(destination);
+```
+
+## Error Handling
 
 ```Java
 private static final HttpDestination destination = DefaultHttpDestination.builder("https://my.service.url").build();
@@ -37,8 +116,6 @@ public void testGetAll() {
             .execute(destination);
 }
 ```
-
-In summary we generated service and datamodel classes. The service classes expose the methods that the service API offers and the datamodel classes are used to provide type safe access to those APIs.
 
 ### Using OData v4 features in queries
 

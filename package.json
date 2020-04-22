@@ -1,6 +1,6 @@
 {
-  "name": "my-website",
-  "version": "0.0.0",
+  "name": "sap-cloud-sdk-documentation",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "docusaurus start",

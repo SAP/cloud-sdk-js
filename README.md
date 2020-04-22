@@ -23,8 +23,8 @@
 
 - Consider the following commands (1) to install node dependencies and (2) to serve the continuously generated site:
   ```
-  docker run -it --rm -v "${pwd}:/doc"  -w "/doc" --entrypoint "/bin/sh" node:alpine3.10  -c "npm ci"
-  docker run -it --rm -v "${pwd}:/doc"  -w "/doc" --entrypoint "/bin/sh" -p 3000:3000 node:alpine3.10  -c "npm run start -- --port 3000 --host 0.0.0.0"
+  docker run -it --rm -v "${pwd}:/doc" -w "/doc" --entrypoint "/bin/sh" node:alpine3.10  -c "npm ci"
+  docker run -it --rm -v "${pwd}:/doc" -w "/doc" --entrypoint "/bin/sh" -p 3000:3000 node:alpine3.10  -c "npm run start -- --port 3000 --host 0.0.0.0"
   ```
   Windows users can use PowerShell.
 

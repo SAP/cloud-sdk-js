@@ -18,9 +18,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 
 ## 0. What you'll need?  ##
-> Great attitude and a bit of inspiration
+> A great attitude and a bit of inspiration
 
-### Follow this steps (approx. 5 min) ###
+### Follow these steps (approx. 5 min) ###
 
 - [x] **Be The Best You**
 - [ ] Install [Node.js](https://nodejs.org/en/download/ ) version 12.x
@@ -30,7 +30,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 - [ ] Proceed to the next step
 
 :::tip Use Online GitHub editor if you can't clone things locally
-Open documentation branch and [checking files in browser](https://github.com/SAP/cloud-sdk/tree/documentation )
+Open the `documentation` branch and [open the files in your browser](https://github.com/SAP/cloud-sdk/tree/documentation )
 :::
 
 ## 1. Running documentation locally (approx. 5-7 min) ##
@@ -50,14 +50,14 @@ git clone -b documentation git@github.com:SAP/cloud-sdk.git documentation
 Run documentation locally
 ```bash
 cd documentation
-npm ci
+npm install
 npm start
 
 ```
 
 You should see the following output in your console and documentation should automatically open in your browser
 ```bash
-> ph-stone@0.0.0 start /home/i531196/dev/docu
+> sap-cloud-sdk-documentation@0.1.0 start /home/USERNAME/dev/documentation
 > docusaurus start
 
 Starting the development server...
@@ -67,19 +67,19 @@ Starting the development server...
 
 ℹ ｢wds｣: Project is running at http://localhost:3000/
 ℹ ｢wds｣: webpack output is served from /cloud-sdk/
-ℹ ｢wds｣: Content not from webpack is served from /home/i531196/dev/docu
+ℹ ｢wds｣: Content not from webpack is served from /home/USERNAME/dev/documentation
 ℹ ｢wds｣: 404s will fallback to /index.html
 
 ```
 
-Try opening [http://localhost:3000/](http://localhost:3000/ ) in case browser tab was not created automatically.
+Try opening [http://localhost:3000/](http://localhost:3000/ ) in case browser tab was not opened automatically.
 
 :::note
-Congratulation! You achieved **white belt** in mastery or the docs Kung Fu. Please, proceed to the next level!
+Congratulation! You achieved the **white belt** in mastery of the docs Kung-Fu. Please, proceed to the next level!
 :::
 
 ## 2. Getting Creative ##
-:::info Most of the people using word `Creative` forget about `create` side of it.
+:::info Most of the people using the word `creative` forget about the `create` side of it.
 Creativity is the ability to generate innovative ideas and manifest them from thought into reality. The process involves original thinking and then producing.
 
 **Creative** without producing is just **Imaginative**
@@ -93,7 +93,7 @@ access is required.
 I encourage you to make a bookmark and every time you have an `Eureka` about DCI to note it quickly.
 
 Remember to:
-- Tag is with `content`
+- Tag it with `content`
 - Assign yourself to the item if you're planning to write it
 - Add enough context to explain your idea for anyone working on it
 
@@ -117,7 +117,7 @@ Create a branch for the thing you document
 git checkout -b java-client-generator-how-to
 ```
 
-1. All the documentation resides in `docs` folder.
+1. All the documentation resides in the `docs` folder.
 2. Let's start with creating a file containing our _How To_. In my case it will be `java/how-to/generate-client.md`
 3. Use content from this internal [generator how-to](https://github.wdf.sap.corp/MA/sdk/edit/develop/docs/how-to/use-odata-v4.md )
 4. Add the meta-header and update the fields
@@ -140,7 +140,7 @@ keywords: --- can be removed or standard template
 image: --- only for blog
 ---
 ```
-5. Let's publish it locally to enable prview
+5. Let's publish it locally to enable preview
 - [ ] Open `sidebar.js` from project root
 - [ ] Find this code snippet in `Java` section
 ```javascript
@@ -159,13 +159,13 @@ image: --- only for blog
 		  '...'
 		  ]
 ```
-- [ ] Start you project by running `npm start`, it should recompile automatically on every change afterward
+- [ ] Start your project by running `npm start`, it should recompile automatically on every change afterward
 - [ ] Make sure you can access you article via [http://localhost:3000/cloud-sdk/docs/java/how-to/generate-odata-client-with-cloud-sdk-for-java-how-to](http://localhost:3000/cloud-sdk/docs/java/how-to/generate-odata-client-with-cloud-sdk-for-java-how-to )`
 6. Showcase your knowledge, creativity and markdown skills by delivering a concise but useful documentation. Please,
    check [this material on good writing practices](how-to-write-documentation).
 7. Be proud of yourself!
 
-:::caution You made it to Orange Belt of Documentation Kung Fu
+:::caution You made it to the **Orange Belt** of Documentation Kung-Fu
 Great Job and stay curious!
 :::
 
@@ -178,31 +178,31 @@ npm run build
 ```
 - [ ] Please, `commit` you work and create a `pull-request`.
 
-Because our **Documentation** shares home with **SDK for JavaScript** you have to make you `pull-request` against
-`documentation` branch.
+Because our **Documentation** shares a home with the **SAP Cloud SDK for JavaScript** you have to make your `pull-request` against the `documentation` branch.
 
 <img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
 
 #### Review ####
-Ask someone to review you work. Please, make sure you followed [this best practices](how-to-write-documentation) or at lease ran you writing through
-the spell checker.
+Ask someone to review you work. 
+Please, make sure you followed [this best practices](how-to-write-documentation) or at lease run you writing through the spell checker.
 
 #### Publish ####
-Pipeline should do it for you after `pull-request` is merged. It's still work in progress. Please, contact Artem Kovalov
-to push the changes to GitHub pages in the meanwhile.
+Pipeline should do it for you after `pull-request` is merged. 
+It's still work in progress. 
+Please, contact Artem Kovalov to push the changes to GitHub pages in the meanwhile.
 
 ## 3. Conventions ##
 - Static content resides in the `static` folder
-- Linking to files and images from Markdown starts from the folder where you file is located. In this case if I want to
-  link anything in `docs` folder I'll have to go with [my-link](../java/getting-started). You can react up until `docs`
-  with this approach.
-- To make dynamic link to the `static` folder content you'll need smth like this:
+- Linking to files and images from Markdown starts from the folder where you file is located. 
+  In this case if I want to link anything in `docs` folder I'll have to go with [my-link](../java/getting-started). 
+  You can react up until `docs` with this approach.
+- To make dynamic link to the `static` folder content you'll need something like this:
 ```javascript
 import useBaseUrl from '@docusaurus/useBaseUrl'
 <img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
 ```
-- Of course you can link with `your-link/your-path#your-heading`, check the right-side menu for the links like [sending
-  you to the top](http://localhost:3000/cloud-sdk/docs/dzen/getting-started#what-youll-need ).
+- Of course you can link with `your-link/your-path#your-heading`, 
+  check the right-side menu for the links like [sending you to the top](http://localhost:3000/cloud-sdk/docs/dzen/getting-started#what-youll-need ).
 
 ## 4. Advanced topics ##
 **Tabs? Admonitions? Advanced code blocks? You own plugin?**

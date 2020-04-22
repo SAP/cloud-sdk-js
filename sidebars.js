@@ -13,19 +13,19 @@ module.exports = {
       'java/getting-started',
       {
         type: 'category',
-        label: 'OData',
+        label: 'Core Features',
         items: [
+          // authorization & authentication
+          // destinations
+          // resilience & caching
           {
             type: 'category',
-            label: 'Version 4.x',
+            label: 'OData',
             items: [
-              'java/odata/version4/generate-odata-v4-client-with-cloud-sdk-for-java-how-to'
+              'java/features/odata/overview',
+              'java/features/odata/generate-java-odata-vmd-v2-v4',
+              'java/features/odata/use-generated-odata-vdm-v2-v4'
             ]
-          },
-          {
-            type: 'category',
-            label: 'Version 2.0',
-            items: []
           }
         ]
       },

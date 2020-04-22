@@ -17,7 +17,7 @@ image:
 import useBaseUrl from '@docusaurus/useBaseUrl'
 
 
-## What you'll need?  ##
+## 0. What you'll need?  ##
 > Great attitude and a bit of inspiration
 
 ### Follow this steps (approx. 5 min) ###
@@ -33,7 +33,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 Open documentation branch and [checking files in browser](https://github.com/SAP/cloud-sdk/tree/documentation )
 :::
 
-## Running documentation locally (approx. 5-7 min) ##
+## 1. Running documentation locally (approx. 5-7 min) ##
 
 Check `Node.js` and `npm` are installed
 ```bash
@@ -78,7 +78,7 @@ Try opening [http://localhost:3000/](http://localhost:3000/ ) in case browser ta
 Congratulation! You achieved **white belt** in mastery or the docs Kung Fu. Please, proceed to the next level!
 :::
 
-## Getting Creative ##
+## 2. Getting Creative ##
 :::info Most of the people using word `Creative` forget about `create` side of it.
 Creativity is the ability to generate innovative ideas and manifest them from thought into reality. The process involves original thinking and then producing.
 
@@ -191,7 +191,7 @@ the spell checker.
 Pipeline should do it for you after `pull-request` is merged. It's still work in progress. Please, contact Artem Kovalov
 to push the changes to GitHub pages in the meanwhile.
 
-## Conventions ##
+## 3. Conventions ##
 - Static content resides in the `static` folder
 - Linking to files and images from Markdown starts from the folder where you file is located. In this case if I want to
   link anything in `docs` folder I'll have to go with [my-link](../java/getting-started). You can react up until `docs`
@@ -204,7 +204,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 - Of course you can link with `your-link/your-path#your-heading`, check the right-side menu for the links like [sending
   you to the top](http://localhost:3000/cloud-sdk/docs/dzen/getting-started#what-youll-need ).
 
-## Advanced topics ##
+## 4. Advanced topics ##
 **Tabs? Admonitions? Advanced code blocks? You own plugin?**
 Docusaurus support additional markup to extend markdown.
 Please, refer to the official documentation:
@@ -212,23 +212,23 @@ Please, refer to the official documentation:
 - [Admonitions](https://v2.docusaurus.io/docs/markdown-features/#calloutsadmonitions )
 - [Coding you own component with React and MDX](https://v2.docusaurus.io/docs/markdown-features/#embedding-react-components-with-mdx )
 
-## Where to get help? ##
+## 5. Where to get help? ##
 - Ask me anything if in doubt or feeling stuck. Really **ANYTHING**
 - Check [Docusaurus documentation](https://v2.docusaurus.io/docs/markdown-features/ )
 - Read good documentation to write good documentation
 
-## What to do next? ##
+## 6. What to do next? ##
 - Think of a `How To`, `FAQ`, `Article`, `Manual`, `Snippet` or simply `DCI` and put it into work!
 - Get you first item delivered ~~this~~ next week!
 - Share ideas and feedback about improving our documentation
 
-## Useful resources ##
+## 7. Useful resources ##
 
 - [Markdown Guide](https://www.markdownguide.org/) - officially supported by Docusaurus
 - [Kung Fu belt system](https://www.kungfuwestisland.com/kung-fu-belt-system/) - you'll need a Kimono to look cool in
   the office
 
-## Questions? ##
+## &infin;. Questions? ##
 
 
 [^1]: Backlog Item

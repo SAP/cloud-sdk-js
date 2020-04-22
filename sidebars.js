@@ -1,6 +1,6 @@
 module.exports = {
   someSidebar: {
-    Dzen: ['dzen/how-to-write-documentation', 'dzen/getting-started'],
+    Dzen: ['dzen/getting-started', 'dzen/how-to-write-documentation'],
     Overview: [
       'overview/about',
       'overview/getting-started',

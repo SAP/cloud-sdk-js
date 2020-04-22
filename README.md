@@ -38,4 +38,4 @@
 - Save you work and make a pull request
 - Enjoy love and appreciation from community
 
-Check our additional materials and our documentation guide [here](https://sap.github.io/cloud-sdk/docs/dzen/how-to-write-documentation )
+Check our additional materials and our documentation guide [here](https://sap.github.io/cloud-sdk/docs/dzen/getting-started )

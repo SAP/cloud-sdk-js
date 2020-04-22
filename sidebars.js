@@ -44,7 +44,7 @@ module.exports = {
         type: 'category',
         label: 'How To',
         items: [
-          // 'java/how-to/generate-odata-client-with-cloud-sdk-for-java-how-to',
+          'java/how-to/generate-odata-client-with-cloud-sdk-for-java-how-to',
           'java/how-to/sap-cloud-sdk-linux-how-to',
           'java/how-to/cf-cli',
           'java/how-to/cf-deploy'

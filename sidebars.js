@@ -1,6 +1,6 @@
 module.exports = {
   someSidebar: {
-    Dzen: ['dzen/how-to-write-documentation'],
+    Dzen: ['dzen/how-to-write-documentation', 'dzen/getting-started'],
     Overview: [
       'overview/about',
       'overview/getting-started',
@@ -44,6 +44,7 @@ module.exports = {
         type: 'category',
         label: 'How To',
         items: [
+          // 'java/how-to/generate-odata-client-with-cloud-sdk-for-java-how-to',
           'java/how-to/sap-cloud-sdk-linux-how-to',
           'java/how-to/cf-cli',
           'java/how-to/cf-deploy'

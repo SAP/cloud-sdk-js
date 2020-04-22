@@ -50,6 +50,7 @@ git clone -b documentation git@github.com:SAP/cloud-sdk.git documentation
 Run documentation locally
 ```bash
 cd documentation
+npm ci
 npm start
 
 ```

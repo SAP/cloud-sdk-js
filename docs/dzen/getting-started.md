@@ -191,6 +191,27 @@ the spell checker.
 Pipeline should do it for you after `pull-request` is merged. It's still work in progress. Please, contact Artem Kovalov
 to push the changes to GitHub pages in the meanwhile.
 
+## Conventions ##
+- Static content resides in the `static` folder
+- Linking to files and images from Markdown starts from the folder where you file is located. In this case if I want to
+  link anything in `docs` folder I'll have to go with [my-link](../java/getting-started). You can react up until `docs`
+  with this approach.
+- To make dynamic link to the `static` folder content you'll need smth like this:
+```javascript
+import useBaseUrl from '@docusaurus/useBaseUrl'
+<img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
+```
+- Of course you can link with `your-link/your-path#your-heading`, check the right-side menu for the links like [sending
+  you to the top](http://localhost:3000/cloud-sdk/docs/dzen/getting-started#what-youll-need ).
+
+## Advanced topics ##
+**Tabs? Admonitions? Advanced code blocks? You own plugin?**
+Docusaurus support additional markup to extend markdown.
+Please, refer to the official documentation:
+- [Tabs](https://v2.docusaurus.io/docs/markdown-features/#tabs )
+- [Admonitions](https://v2.docusaurus.io/docs/markdown-features/#calloutsadmonitions )
+- [Coding you own component with React and MDX](https://v2.docusaurus.io/docs/markdown-features/#embedding-react-components-with-mdx )
+
 ## Where to get help? ##
 - Ask me anything if in doubt or feeling stuck. Really **ANYTHING**
 - Check [Docusaurus documentation](https://v2.docusaurus.io/docs/markdown-features/ )

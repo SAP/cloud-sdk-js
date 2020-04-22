@@ -15,7 +15,18 @@ module.exports = {
         type: 'category',
         label: 'OData',
         items: [
-          'java/odata/generate-odata-v4-client-with-cloud-sdk-for-java-how-to'
+          {
+            type: 'category',
+            label: 'Version 4.x',
+            items: [
+              'java/odata/version4/generate-odata-v4-client-with-cloud-sdk-for-java-how-to'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'Version 2.0',
+            items: []
+          }
         ]
       },
       //   {

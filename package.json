@@ -1,5 +1,5 @@
 {
-  "name": "ph-stone",
+  "name": "my-website",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.50",
-    "@docusaurus/plugin-ideal-image": "^2.0.0-alpha.39",
     "@docusaurus/preset-classic": "^2.0.0-alpha.50",
     "classnames": "^2.2.6",
     "react": "^16.8.4",

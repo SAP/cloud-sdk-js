@@ -20,7 +20,7 @@ const logger = createLogger({
 });
 
 /**
- * @deprecated Since v1.20.0. Use [[buildAuthorizationHeader]] instead.
+ * @deprecated Since v1.20.0. Use [[buildAuthorizationHeaders]] instead.
  * Adds authorization headers for a given ODataRequest to existing headers.
  *
  * @param request - an ODataRequest.
@@ -58,7 +58,7 @@ async function getAuthHeaders(
 }
 
 /**
- * @deprecated Since v1.20.0. Use [[buildAuthorizationHeader]] instead.
+ * @deprecated Since v1.20.0. Use [[buildAuthorizationHeaders]] instead.
  * Adds authorization headers for a given destination to existing headers.
  *
  * @param destination - A destination.

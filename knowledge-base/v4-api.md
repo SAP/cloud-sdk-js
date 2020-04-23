@@ -16,7 +16,7 @@ This document contains a collection of OData v4 features we want to implement an
 - Represent as arrays for primitive types (e. g. `string[]` for the example above)
 
 ### Decision
-- 1.
+- Proposal accepted.
 
 ## $expand with Subqueries
 - Make queries on expanded entities (navigation properties)
@@ -79,7 +79,8 @@ This document contains a collection of OData v4 features we want to implement an
   ```
 
 ### Decision:
-- 2. when assumption is correct, otherwise 1.
+- Second proposal accepted under the assumption that expanding navigation properties automatically selects all properties of the navigation property.
+- If the assumtion is incorrect, use the first proposal.
 
 ## $select with Subqueries
 - Can only be used for complex types and collection types, not for navigation properties
@@ -126,9 +127,10 @@ This document contains a collection of OData v4 features we want to implement an
   ```
 
 ### Decision
-- proposal looks ok, but decision can only be made once we can test the feature
+- Proposal accepted so far, but a final decision can only be made once we can test the feature.
 
-## $filter with Subqueries on One-To-Many and One-To-One Links
+
+## Filtering the Root Collection by Filters on One-To-One Links
 - One-To-Many Links: by filtering in $expand
 - One-To-One Links:
   - v2 example:
@@ -146,15 +148,50 @@ This document contains a collection of OData v4 features we want to implement an
       TestEntity.TO_SINGLE_LINK.filter(
         TestEntitySingleLink.TO_SINGLE_LINK.filter(
           WhateverTheName.STRING_PROPERTY.equals('test'),
-          WhateverTheName.STRING_PROPERTY.equals('fest')
+          WhateverTheName.STRING_PROPERTY.notEquals('fest')
         )
       )
     )
   ```
   The second use of `filter` is misleading, we might want ot find a better keyword
 
+- Direct chaining
+  ```ts
+  TestEntity.requestBuilder()
+    .getAll()
+    .filter(
+      TestEntity.TO_SINGLE_LINK.TO_SINGLE_LINK.STRING_PROPERTY.equals('test'),
+      TestEntity.TO_SINGLE_LINK.TO_SINGLE_LINK.STRING_PROPERTY.notEquals('fest')
+    )
+  ```
+
 ### Decision
-- TBD
+- We will go with the first approach for now, but consider the second approach for SDK 2.0. The second option would most likely require us to change our API alltogether, which might be valid for an SDK 2.0. A decision like this should probably also be supported by a user study.
+
+
+## Filtering the Root Collection by Lambda functions for One-To-Many Links
+- Keywords: `any` and `all`, evaluate filter expressions that hold true for at least one (or for all) entities in a navigation property
+- Example query: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName)&$filter=Friends/any(d:d/UserName%20eq%20%27scottketchum%27)
+
+### Proposal(s)
+
+```ts
+TestEntity.requestBuilder()
+    .getAll()
+    .filter(
+      TestEntity.TO_MULTI_LINK.filter(
+        any(
+          TestEntitySingleLink.STRING_PROPERTY.equals('test')
+        ),
+        all(
+          TestEntitySingleLink.STRING_PROPERTY.notEquals('fest')
+        )
+      )
+    )
+```
+### Decision
+- Proposal accepted.
+
 
 ## Type dependent filter expressions (e. g. 'year' for dates)
 - Already available in v2 for the most part, there are some more functions
@@ -167,13 +204,14 @@ This document contains a collection of OData v4 features we want to implement an
       filterfunction('length', 'int', TestEntity.STRING_PROPERTY).equals(3) // generic function
     )
   ```
+  - => yields $filter=length(StringProperty) eq 3
 
 ### Proposal(s)
 - Reuse filter functions from v2
 - Provide more default implementations for both v2 / v4
 
 ### Decision
-- TBD
+- Proposal accepted.
 
 ## Deep update of child entitites
 - Recap v2 create as child of:
@@ -182,6 +220,10 @@ TestEntityMultiLink.requestBuilder()
   .create(multiLinkEntity)
   .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
 ```
+### Questions
+- Understand what deep update actually is
+- Refer to Alex to understand details
+- Consider differences between 4.0 and 4.01?
 
 ### Proposal(s)
 - Same as v2 create as child of
@@ -191,6 +233,10 @@ TestEntityMultiLink.requestBuilder()
     .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
   ```
 
+### Decision
+- TBD, decision postponed after we understand details
+
+# Additional Features aka. Nice to haves
 
 ## $search
 - New query operator allows to search all columns by value
@@ -216,15 +262,8 @@ TestEntityMultiLink.requestBuilder()
   .search(not('term')) // $search=NOT term
   .search(not('term', 'otherterm')) // $search=NOT (term AND otherterm)
   ```
-
-# Additional Features aka. Nice to haves
-
-## Lambda functions
-
-### Proposal(s)
-
 ### Decision
-- TBD
+- Proposal accepted, but only nice to have.
 
 
 ## Enum types
@@ -265,4 +304,3 @@ TestEntityMultiLink.requestBuilder()
 ## Other Featuers
 - Singletons
 - Bound Operations (actions and functions)
-- Lambda expressions

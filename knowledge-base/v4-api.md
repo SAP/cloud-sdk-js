@@ -24,7 +24,7 @@ This document contains a collection of OData v4 features we want to implement an
 - Example request for collection: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName,Emails;$filter=startswith(UserName,%27s%27))
 - Example request for single link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=BestFriend&$expand=BestFriend($select=UserName,Emails)
 
-### Open Questions
+### Questions
 - Query options related to lists should be used on one-to-many navigation properties only? (This is not failing in the reference services)
 - Is v4 behavior that when expanding, all properties of the navigation property are selected?
 
@@ -88,7 +88,7 @@ This document contains a collection of OData v4 features we want to implement an
   - Selection within complex type (does not work): https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/Airports?$select=Location($select=Address)
   - Filter within collection complex type (does not work): https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=AddressInfo($filter=Address%20eq%20%27187%20Suffolk%20Ln.%27)
 
-### Open Questions
+### Questions
 - How does this feature really work?
 - Where can we test this?
 - Can we use a CAP service to test this?

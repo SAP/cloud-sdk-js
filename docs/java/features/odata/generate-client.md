@@ -1,5 +1,5 @@
 ---
-id: generate-java-odata-vmd-v2-v4
+id: java-generate-odata-vmd-v2-v4
 title: OData VDM Generator for Java
 hide_title: false
 hide_table_of_contents: false
@@ -33,7 +33,7 @@ The maven plugin is usually the recommended way as it integrates nicely with mos
 For all three the required input is an `EDMX` file holding the service metadata.
 
 :::note
-Please be aware that V2 and V4 service definitions are not interchangeable. In particular, the service definition of a V2 service can not serve as input to the V4 generator.
+Please be aware that OData v2 and OData v4 service definitions are not interchangeable. There is a dedicated generator for each protocol version and it only accepts service definitions for that version. 
 :::
 
 ## Using the OData Generator ##
@@ -41,8 +41,8 @@ Please be aware that V2 and V4 service definitions are not interchangeable. In p
 Regardless of how the generator is invoked the generated code requires some dependencies to be present. Therefore it is required to ensure the following dependencies are present in your project:
 
 <Tabs defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V4', value: 'v4', }]}>
+{ label: 'OData v2', value: 'v2', },
+{ label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
 
 ```XML
@@ -91,8 +91,8 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 ### Using the OData Generator Maven Plugin ###
 
 <Tabs defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V4', value: 'v4', }]}>
+{ label: 'OData v2', value: 'v2', },
+{ label: 'OData v4', value: 'v4', }]}>
 
 <TabItem value="v4">
 
@@ -156,9 +156,9 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 </TabItem>
 </Tabs>
 
-2. Adapt the `<inputDirectory>` to point to the place of your service definition.
+2. Adapt the `<inputDirectory>` to point to the location of your service definition.
 
-1. In case the target folder should be automatically added as a source folder by maven you can leverage the build helper plugin:
+1. In case the target directory should be automatically added as a source folder by maven you can leverage the build helper plugin:
     ```XML
     <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -193,22 +193,22 @@ The following parameters allow to configure the generator further:
 |`<defaultBasePath>`|Base path of the exposed API
 
 :::note
-Please note that if you use the generator for services other than SAP S/4HANA services, you need to add the parameter `defaultBasePath` to the configuration section, which should provide the base path to the exposed API (e.g odata/v4/).
+Please note that if you use the generator for services other than SAP S/4HANA services, you need to add the parameter `defaultBasePath` to the configuration section, which should provide the base path to the exposed API (e.g _odata/v4/_).
 :::
 
 ### Using the CLI
 
 <Tabs defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V4', value: 'v4', }]}>
+{ label: 'OData v2', value: 'v2', },
+{ label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
 
-1. Download the command line interface (CLI) of the generator from [internal nexus](http://nexus.wdf.sap.corp:8081/nexus/) (search for `odata-v4-generator-cli`), rename it to `odata-generator-cli.jar` and put it in a folder of your choice.
+1. Download the latest command line interface (CLI) of the generator from [maven central](https://search.maven.org/artifact/com.sap.cloud.sdk.datamodel/odata-v4-generator-cli). Rename it to `odata-generator-cli.jar` and put it in a directory of your choice.
 
 </TabItem>
 <TabItem value="v2">
 
-1. Download the command line interface (CLI) of the generator from [internal nexus](http://nexus.wdf.sap.corp:8081/nexus/) (search for `odata-generator-cli`) and put it in a folder of your choice.
+1. Download the latest command line interface (CLI) of the generator from [maven central](https://search.maven.org/artifact/com.sap.cloud.sdk.datamodel/odata-generator-cli). Rename it to `odata-generator-cli.jar` and put it in a directory of your choice.
 
 </TabItem>
 </Tabs>
@@ -221,8 +221,8 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 ### Invoke the generator programmatically
 
 <Tabs defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V4', value: 'v4', }]}>
+{ label: 'OData v2', value: 'v2', },
+{ label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
 
 1.  Please include the `odata-v4-generator` artifact as a dependency in a your project. Choose a module and location from which you intend to invoke the generator and add the following dependency to the appropriate `pom.xml`.

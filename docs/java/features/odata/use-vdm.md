@@ -4,7 +4,7 @@ title: Use the VDM to consume OData Services
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Consume OData Services
-description: This article describes of how the SAP Cloud SDK for Java can be used to build and run OData requests.
+description: This article describes how the SAP Cloud SDK for Java can be used to build and run OData requests.
 keywords:
 - sap
 - cloud
@@ -37,6 +37,8 @@ Below the different OData operations are documented using the [Business Partner 
 ```JAVA
 BusinessPartnerService service = new DefaultBusinessPartnerService();
 ```
+
+## The rest of this document is still TODO and only struct/copy pasted ##
 
 ### Create ###
 

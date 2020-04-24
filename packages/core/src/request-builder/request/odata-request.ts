@@ -12,7 +12,7 @@ import {
   filterNullishValues,
   getHeader,
   replaceDuplicateKeys,
-  buildCsrfHeaders2
+  buildCsrfHeaders
 } from '../header-builder';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
@@ -226,7 +226,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     );
     return Object.keys(customCsrfHeaders).length
       ? customCsrfHeaders
-      : buildCsrfHeaders2(this.destination!, {
+      : buildCsrfHeaders(this.destination!, {
           headers: destinationRelatedHeaders,
           url: this.relativeServiceUrl()
         });

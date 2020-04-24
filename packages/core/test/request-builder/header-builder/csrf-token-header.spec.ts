@@ -2,7 +2,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   addCsrfTokenAndCookies,
-  buildCsrfHeaders2 as buildCsrfHeaders
+  buildCsrfHeaders
 } from '../../../src/request-builder/header-builder';
 import {
   createCreateRequest,

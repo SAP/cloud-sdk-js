@@ -3,7 +3,7 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../scp-cf';
 import { ODataRequestConfig, ODataRequest, isWithETag } from '../request';
-import { buildCsrfHeaders2 } from './csrf-token-header';
+import { buildCsrfHeaders } from './csrf-token-header';
 import {
   filterNullishValues,
   replaceDuplicateKeys,
@@ -26,35 +26,7 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
     throw Error('The request destination is undefined.');
   }
 
-  const defaultHeaders = replaceDuplicateKeys(
-    filterNullishValues({
-      accept: 'application/json',
-      'content-type': request.config.contentType,
-      'if-match': getETagHeaderValue(request.config)
-    }),
-    request.config.customHeaders
-  );
-
-  const destinationRelatedHeaders = await buildHeadersForDestination(
-    request.destination,
-    request.config.customHeaders
-  );
-
-  const csrfHeaders =
-    request.config.method === 'get'
-      ? {}
-      : await getCsrfHeaders(
-          request,
-          destinationRelatedHeaders,
-          request.config.customHeaders
-        );
-
-  return {
-    ...destinationRelatedHeaders,
-    ...csrfHeaders,
-    ...defaultHeaders,
-    ...request.config.customHeaders
-  };
+  return request.headers();
 }
 
 async function getAuthHeaders(
@@ -79,7 +51,7 @@ async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
   const customCsrfHeaders = getHeader('x-csrf-token', customHeaders);
   return Object.keys(customCsrfHeaders).length
     ? customCsrfHeaders
-    : buildCsrfHeaders2(request.destination, {
+    : buildCsrfHeaders(request.destination, {
         headers: destinationRelatedHeaders,
         url: request.relativeServiceUrl()
       });

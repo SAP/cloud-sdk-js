@@ -9,7 +9,8 @@ import {
 import {
   Destination,
   DestinationAuthToken,
-  getOAuth2ClientCredentialsToken
+  getOAuth2ClientCredentialsToken,
+  sanitizeDestination
 } from '../../scp-cf';
 import { ODataRequest, ODataRequestConfig } from '../request';
 import { getHeader, toSanitizedHeaderObject } from './headers-util';
@@ -180,8 +181,10 @@ function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
 
 function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
   if (
-    destination.proxyType === 'OnPremise' &&
-    destination.authentication === 'NoAuthentication'
+    (destination.proxyType === 'OnPremise' &&
+      destination.authentication === 'NoAuthentication') ||
+    (destination.proxyType === 'OnPremise' &&
+      typeof destination.authentication === 'undefined')
   ) {
     return legacyNoAuthOnPremiseProxy(destination);
   }
@@ -221,8 +224,9 @@ async function getAuthenticationRelatedHeaders(
 export async function buildAuthorizationHeaders(
   destination: Destination
 ): Promise<MapType<string>> {
+  const sanitizedDestination = sanitizeDestination(destination);
   return {
-    ...(await getAuthenticationRelatedHeaders(destination)),
-    ...getProxyRelatedAuthHeaders(destination)
+    ...(await getAuthenticationRelatedHeaders(sanitizedDestination)),
+    ...getProxyRelatedAuthHeaders(sanitizedDestination)
   };
 }

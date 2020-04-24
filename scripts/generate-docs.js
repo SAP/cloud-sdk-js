@@ -112,7 +112,7 @@ function getSortedApiVersions() {
 function writeVersions() {
   const apiVersions = getSortedApiVersions();
   fs.writeFileSync(
-    path.resolve('docs', '_data', 'versions.json'),
+    path.resolve('docs', 'api', 'versions.js'),
     `export default ${jsonStringify(apiVersions)}`,
     'utf8'
   );

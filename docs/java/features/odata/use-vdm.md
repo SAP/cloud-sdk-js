@@ -38,8 +38,6 @@ Below the different OData operations are documented using the [Business Partner 
 BusinessPartnerService service = new DefaultBusinessPartnerService();
 ```
 
-## The rest of this document is still TODO and only struct/copy pasted ##
-
 ### Create ###
 
 ```JAVA
@@ -99,6 +97,7 @@ service.deleteBusinessPartner(partner)
     .execute(destination);
 ```
 
+<!--
 ## Error Handling
 
 ```Java
@@ -213,3 +212,5 @@ Note that instead of applying `try/catch` you can also make use of `tryExecute` 
 * Batch Requests are not available
 * Media entities are not available
 * Stream properties are not available
+
+-->

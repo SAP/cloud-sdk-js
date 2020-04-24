@@ -23,7 +23,7 @@ module.exports = {
             label: 'OData',
             items: [
               'java/features/odata/overview',
-              'java/features/odata/generate-java-odata-vmd-v2-v4',
+              'java/features/odata/java-generate-odata-vmd-v2-v4',
               'java/features/odata/use-generated-odata-vdm-v2-v4'
             ]
           }

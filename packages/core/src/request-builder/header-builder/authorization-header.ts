@@ -181,10 +181,8 @@ function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
 
 function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
   if (
-    (destination.proxyType === 'OnPremise' &&
-      destination.authentication === 'NoAuthentication') ||
-    (destination.proxyType === 'OnPremise' &&
-      typeof destination.authentication === 'undefined')
+    destination.proxyType === 'OnPremise' &&
+    destination.authentication === 'NoAuthentication'
   ) {
     return legacyNoAuthOnPremiseProxy(destination);
   }

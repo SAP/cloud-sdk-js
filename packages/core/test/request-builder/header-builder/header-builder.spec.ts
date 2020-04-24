@@ -237,24 +237,24 @@ describe('Header-builder:', () => {
   });
 
   it('Skips csrf token retrieval for existing csrf header', async () => {
-    spyOn(csrfHeaders, 'buildCsrfHeaders');
+    spyOn(csrfHeaders, 'buildCsrfHeaders2');
     const request = createCreateRequest(defaultDestination);
     request.config.customHeaders = { 'x-csrf-token': 'defined' };
 
     mockHeaderRequest({ request });
 
     await request.headers();
-    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
+    expect(csrfHeaders.buildCsrfHeaders2).not.toHaveBeenCalled();
   });
 
   it('Skips csrf token retrieval for GET request', async () => {
-    spyOn(csrfHeaders, 'buildCsrfHeaders');
+    spyOn(csrfHeaders, 'buildCsrfHeaders2');
     const request = createGetAllRequest(defaultDestination);
 
     mockHeaderRequest({ request });
 
     await request.headers();
-    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
+    expect(csrfHeaders.buildCsrfHeaders2).not.toHaveBeenCalled();
   });
 
   it('Prioritizes custom Authorization headers (upper case A)', async () => {

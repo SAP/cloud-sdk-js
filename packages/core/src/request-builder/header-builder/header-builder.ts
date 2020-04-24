@@ -3,7 +3,7 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../scp-cf';
 import { ODataRequestConfig, ODataRequest, isWithETag } from '../request';
-import { buildCsrfHeaders } from './csrf-token-header';
+import { buildCsrfHeaders2 } from './csrf-token-header';
 import {
   filterNullishValues,
   replaceDuplicateKeys,
@@ -72,10 +72,17 @@ async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
   destinationRelatedHeaders: MapType<string>,
   customHeaders?: MapType<any>
 ): Promise<MapType<string>> {
+  if (!request.destination) {
+    throw Error('The request destination is undefined.');
+  }
+
   const customCsrfHeaders = getHeader('x-csrf-token', customHeaders);
   return Object.keys(customCsrfHeaders).length
     ? customCsrfHeaders
-    : buildCsrfHeaders(request, destinationRelatedHeaders);
+    : buildCsrfHeaders2(request.destination, {
+        headers: destinationRelatedHeaders,
+        url: request.relativeServiceUrl()
+      });
 }
 
 /**

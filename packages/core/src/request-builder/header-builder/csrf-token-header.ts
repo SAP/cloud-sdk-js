@@ -37,7 +37,7 @@ export async function buildCsrfHeaders<RequestT extends ODataRequestConfig>(
 
 export async function buildCsrfHeaders2<T extends HttpRequestConfig>(
   destination: Destination, // | DestinationNameAndJwt,
-  requestConfig: T
+  requestConfig: Partial<T>
 ): Promise<MapType<string>> {
   const csrfHeaders = await makeCsrfRequest2(destination, requestConfig);
   validateCsrfTokenResponse(csrfHeaders);
@@ -49,7 +49,7 @@ export async function buildCsrfHeaders2<T extends HttpRequestConfig>(
 
 function makeCsrfRequest2<T extends HttpRequestConfig>(
   destination: Destination, // | DestinationNameAndJwt,
-  requestConfig: T
+  requestConfig: Partial<T>
 ): Promise<MapType<any>> {
   const axiosConfig: HttpRequestConfig = {
     method: 'get',

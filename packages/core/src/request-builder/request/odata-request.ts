@@ -228,8 +228,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       ? customCsrfHeaders
       : buildCsrfHeaders2(this.destination!, {
           headers: destinationRelatedHeaders,
-          url: this.relativeServiceUrl(),
-          method: 'get'
+          url: this.relativeServiceUrl()
         });
   }
 }

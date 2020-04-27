@@ -8,6 +8,7 @@ import {
 import {
   providerServiceToken,
   subscriberServiceToken,
+  subscriberServiceTokenWithVerificationURL,
   subscriberUserJwt,
   userApprovedSubscriberServiceToken
 } from '../test-util/mocked-access-tokens';
@@ -43,7 +44,7 @@ describe('Failure cases', () => {
 
     await expect(
       getDestination(destinationName, {
-        userJwt: subscriberServiceToken,
+        userJwt: subscriberServiceTokenWithVerificationURL,
         cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingSnapshot();

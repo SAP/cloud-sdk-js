@@ -123,10 +123,12 @@ export function refreshTokenGrant(
  * Fetches verification keys from the XSUAA service for the given credentials.
  *
  * @param xsuaaCredentials - Credentials of the XSUAA service instance.
+ * @param jku - Value of the jku property of the JWT header. If not provided the xsuaaCredentials.url is used which does not work for tenant issues jwt.
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(
-  xsuaaCredentials: XsuaaServiceCredentials
+  xsuaaCredentials: XsuaaServiceCredentials,
+  jku?: string
 ): Promise<TokenKey[]>;
 
 /**
@@ -145,22 +147,25 @@ export function fetchVerificationKeys(
 
 export function fetchVerificationKeys(
   xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
-  clientId?: string,
+  clientIdOrJku?: string,
   clientSecret?: string
 ): Promise<TokenKey[]> {
+  // The case where the XsuaaServiceCredentials are given as object
   if (typeof xsuaaUriOrCredentials !== 'string') {
     return fetchVerificationKeys(
-      xsuaaUriOrCredentials.url,
+      clientIdOrJku || `${xsuaaUriOrCredentials.url}/token_keys`,
       xsuaaUriOrCredentials.clientid,
       xsuaaUriOrCredentials.clientsecret
     );
   }
-
-  const url = `${xsuaaUriOrCredentials}/token_keys`;
-  const config: AxiosRequestConfig = { url, method: 'GET' };
-  if (clientId && clientSecret) {
+  // The three strings case
+  const config: AxiosRequestConfig = {
+    url: xsuaaUriOrCredentials,
+    method: 'GET'
+  };
+  if (clientIdOrJku && clientSecret) {
     const authHeader = headerForClientCredentials({
-      username: clientId,
+      username: clientIdOrJku,
       password: clientSecret
     });
     config.headers = { Authorization: authHeader };

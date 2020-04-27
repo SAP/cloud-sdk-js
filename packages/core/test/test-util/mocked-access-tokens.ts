@@ -4,7 +4,7 @@ import {
   subscriberXsuaaUrl,
   TestTenants
 } from './environment-mocks';
-import { signedJwt } from './keys';
+import { signedJwt, signedJwtForVerification } from './keys';
 
 const iat = Math.floor(Date.now() / 1000);
 
@@ -25,6 +25,11 @@ const subscriberServiceTokenPayload = {
 };
 
 export const subscriberServiceToken = signedJwt(subscriberServiceTokenPayload);
+
+export const subscriberServiceTokenWithVerificationURL = signedJwtForVerification(
+  subscriberServiceTokenPayload,
+  'https://some-jku-url.com'
+);
 
 const userApprovedProviderTokenPayload = {
   iat,

@@ -310,7 +310,7 @@ describe('xsuaa', () => {
       };
 
       nock(providerXsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+        .get('/')
         .reply(200, response);
 
       const expected: TokenKey[] = [
@@ -353,7 +353,7 @@ describe('xsuaa', () => {
       };
 
       nock(providerXsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+        .get('/')
         .reply(401, response);
 
       fetchVerificationKeys(providerXsuaaUrl, creds.username, creds.password)

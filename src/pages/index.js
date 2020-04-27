@@ -9,6 +9,7 @@ import styles from './styles.module.css'
 const features = [
   {
     title: <>SAP Cloud SDK for Java</>,
+    link: 'docs/java/getting-started',
     imageUrl:
       'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-java.svg',
     description: (
@@ -22,6 +23,7 @@ const features = [
   },
   {
     title: <>SAP Cloud SDK for JavaScript</>,
+    link: 'docs/js/getting-started',
     imageUrl:
       'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg',
     description: (
@@ -37,6 +39,7 @@ const features = [
   },
   {
     title: <>SAP Cloud SDK for CI\CD</>,
+    link: 'docs/devops/getting-started',
     imageUrl:
       'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-cd.svg',
     description: (
@@ -51,13 +54,13 @@ const features = [
   }
 ]
 
-function Feature ({ imageUrl, title, description }) {
+function Feature ({ imageUrl, link, title, description }) {
   const imgUrl = useBaseUrl(imageUrl)
   return (
     <div className={classnames('col col--4', styles.feature)}>
       {imgUrl && (
         <div className='text--center'>
-          <a href='docs/java/getting-started'>
+          <a href={link}>
             <img className={styles.featureImage} src={imgUrl} alt={title} />
           </a>
         </div>

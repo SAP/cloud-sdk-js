@@ -28,6 +28,7 @@
 
 - Fix logging of error messages that were logged as `undefined` before.
 - Fix serialization of EDM type Int64 to return a string instead of an instance of `BigNumber`.
+- Fix JWT verification to use  the url stored in the `JKU` field of the token header to fetch the verification key.
 
 # 1.19.0
 

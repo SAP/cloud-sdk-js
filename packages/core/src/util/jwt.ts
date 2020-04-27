@@ -110,7 +110,6 @@ export async function verifyJwt(
   options = { ...defaultVerifyJwtOptions, ...options };
 
   const creds = getXsuaaServiceCredentials(token);
-
   const jku = getVerificationKeyURL(token);
 
   if (options.cacheVerificationKeys && verificationKeyCache.get(jku)) {

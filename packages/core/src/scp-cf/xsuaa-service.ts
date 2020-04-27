@@ -123,7 +123,7 @@ export function refreshTokenGrant(
  * Fetches verification keys from the XSUAA service for the given credentials.
  *
  * @param xsuaaCredentials - Credentials of the XSUAA service instance.
- * @param jku - Value of the jku property of the JWT header. If not provided the xsuaaCredentials.url is used which does not work for tenant issues jwt.
+ * @param jku - Value of the jku property in the JWT header. If not provided the xsuaaCredentials.url is used as a fallback which does not work for subscriber jwt.
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(
@@ -153,7 +153,7 @@ export function fetchVerificationKeys(
   // The case where the XsuaaServiceCredentials are given as object
   if (typeof xsuaaUriOrCredentials !== 'string') {
     return fetchVerificationKeys(
-      clientIdOrJku || `${xsuaaUriOrCredentials.url}/token_keys`,
+      clientIdOrJku || xsuaaUriOrCredentials.url,
       xsuaaUriOrCredentials.clientid,
       xsuaaUriOrCredentials.clientsecret
     );

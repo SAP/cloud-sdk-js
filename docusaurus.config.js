@@ -139,7 +139,7 @@ module.exports = {
           ]
         }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} SAP Cloud SDK`
+      copyright: `Copyright © ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.`
     }
   },
   presets: [

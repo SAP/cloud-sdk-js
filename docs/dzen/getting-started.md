@@ -4,6 +4,7 @@ title: Getting started with Documentation
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Getting Started
+description: This is a getting started guide for anyone willing to contributio to the Cloud SDK documentation.
 keywords:
 - sap
 - cloud
@@ -183,25 +184,25 @@ Because our **Documentation** shares a home with the **SAP Cloud SDK for JavaScr
 <img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
 
 #### Review ####
-Ask someone to review you work. 
+Ask someone to review you work.
 Please, make sure you followed [this best practices](how-to-write-documentation) or at lease run you writing through the spell checker.
 
 #### Publish ####
-Pipeline should do it for you after `pull-request` is merged. 
-It's still work in progress. 
+Pipeline should do it for you after `pull-request` is merged.
+It's still work in progress.
 Please, contact Artem Kovalov to push the changes to GitHub pages in the meanwhile.
 
 ## 3. Conventions ##
 - Static content resides in the `static` folder
-- Linking to files and images from Markdown starts from the folder where you file is located. 
-  In this case if I want to link anything in `docs` folder I'll have to go with [my-link](../java/getting-started). 
+- Linking to files and images from Markdown starts from the folder where you file is located.
+  In this case if I want to link anything in `docs` folder I'll have to go with [my-link](../java/getting-started).
   You can react up until `docs` with this approach.
 - To make dynamic link to the `static` folder content you'll need something like this:
 ```javascript
 import useBaseUrl from '@docusaurus/useBaseUrl'
 <img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
 ```
-- Of course you can link with `your-link/your-path#your-heading`, 
+- Of course you can link with `your-link/your-path#your-heading`,
   check the right-side menu for the links like [sending you to the top](http://localhost:3000/cloud-sdk/docs/dzen/getting-started#what-youll-need ).
 
 ## 4. Advanced topics ##

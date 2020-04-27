@@ -118,27 +118,6 @@ function writeVersions() {
   );
 }
 
-function latestRedirectFrontMatter() {
-  return ['---', 'redirect_from: "/api/latest/"', '---'].join('\n');
-}
-
-function addReferenceToLatest() {
-  transformFile(
-    path.resolve(path.resolve(apiDocPath, version), 'index.html'),
-    file => [latestRedirectFrontMatter(), file].join('\n')
-  );
-}
-
-function removePreviousReferenceToLatest() {
-  const secondLastVersion = getSortedApiVersions()[1];
-  if (secondLastVersion) {
-    const filePath = path.resolve(apiDocPath, secondLastVersion, 'index.html');
-    transformFile(filePath, file =>
-      file.replace(latestRedirectFrontMatter(), '')
-    );
-  }
-}
-
 function validateLogs(generationLogs) {
   const invalidLinksMessage =
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
@@ -156,8 +135,6 @@ function generateDocs() {
   validateLogs(generationLogs);
   adjustForGitHubPages();
   addCopyrightNotice();
-  addReferenceToLatest();
-  removePreviousReferenceToLatest();
   writeVersions();
 }
 

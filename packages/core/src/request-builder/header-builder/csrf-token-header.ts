@@ -1,10 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
-import axios, { AxiosError } from 'axios';
-import { getAxiosConfigWithDefaults } from '../../http-client';
-import { getAgentConfig } from '../http-agent';
+import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
 import { ODataRequest, ODataRequestConfig } from '../request';
+import { Destination, DestinationNameAndJwt } from '../../scp-cf';
 import { filterNullishValues, getHeader, getHeaderValue } from './headers-util';
 
 const logger = createLogger({
@@ -13,16 +12,17 @@ const logger = createLogger({
 });
 
 /**
- * Get CSRF token and cookies for a request with destination related headers.
- * @param request The request to get CSRF headers for.
- * @param headers Destination related headers to include in the CSRF fetch request.
+ * Get CSRF token and cookies for a destination and request configuration. The CSRF token and cookies will be retrieved based on the url of the destination and the custom configuration given by the `requestConfig`.
+ * If there is a relative url in the `requestConfig` it will be appended to the destination's url, an absolute url overwrites the destination related url.
+ * @param destination The destination to get the headers from
+ * @param requestConfig An http request configuration containing additional information about the request, like url or headers
  * @returns A promise to an object containing the CSRF related headers
  */
-export async function buildCsrfHeaders<RequestT extends ODataRequestConfig>(
-  request: ODataRequest<RequestT>,
-  headers: MapType<string>
+export async function buildCsrfHeaders<T extends HttpRequestConfig>(
+  destination: Destination | DestinationNameAndJwt,
+  requestConfig: Partial<T>
 ): Promise<MapType<string>> {
-  const csrfHeaders = await makeCsrfRequest(request, headers);
+  const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
   validateCsrfTokenResponse(csrfHeaders);
   return filterNullishValues({
     ...getHeader('x-csrf-token', csrfHeaders),
@@ -30,28 +30,27 @@ export async function buildCsrfHeaders<RequestT extends ODataRequestConfig>(
   });
 }
 
-function makeCsrfRequest<RequestT extends ODataRequestConfig>(
-  request: ODataRequest<RequestT>,
-  csrfRequestHeaders: MapType<string>
+function makeCsrfRequest<T extends HttpRequestConfig>(
+  destination: Destination | DestinationNameAndJwt,
+  requestConfig: Partial<T>
 ): Promise<MapType<any>> {
-  if (!request.destination) {
-    throw Error('The request destination is undefined.');
-  }
-
-  const axiosConfig = {
+  const fetchHeader = !getHeaderValue(
+    'x-csrf-token',
+    requestConfig.headers
+  ) && { 'x-csrf-token': 'Fetch' };
+  const axiosConfig: HttpRequestConfig = {
+    method: 'get',
+    ...requestConfig,
     headers: {
-      ...csrfRequestHeaders,
-      'x-csrf-token': 'Fetch',
-      ...getAxiosConfigWithDefaults()
+      ...fetchHeader,
+      ...requestConfig.headers
     },
-    url: request.serviceUrl(),
-    ...getAgentConfig(request.destination)
+    url: requestConfig.url
   };
 
-  return axios
-    .request(axiosConfig)
+  return executeHttpRequest(destination, axiosConfig)
     .then(response => response.headers)
-    .catch((error: AxiosError) => {
+    .catch(error => {
       if (!error.response) {
         throw new Error('The error response is undefined.');
       }
@@ -93,11 +92,20 @@ export async function addCsrfTokenAndCookies<
   request: ODataRequest<RequestT>,
   headers: MapType<string>
 ): Promise<MapType<string>> {
+  if (!request.destination) {
+    throw Error('The request destination is undefined.');
+  }
   if (
     request.config.method === 'get' ||
     Object.keys(headers).includes('x-csrf-token')
   ) {
     return headers;
   }
-  return { ...(await buildCsrfHeaders(request, headers)), ...headers };
+  return {
+    ...(await buildCsrfHeaders(request.destination, {
+      headers,
+      url: request.relativeServiceUrl()
+    })),
+    ...headers
+  };
 }

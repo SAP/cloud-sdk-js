@@ -42,7 +42,10 @@ describe('csrf-token-header', () => {
       cookie: 'mocked-cookie-0;mocked-cookie-2',
       'x-csrf-token': mockedHeaders['x-csrf-token']
     };
-    const headers = await buildCsrfHeaders(request, standardHeaders);
+    const headers = await buildCsrfHeaders(request.destination!, {
+      headers: standardHeaders,
+      url: request.relativeServiceUrl()
+    });
     expect(headers).toEqual(expected);
   });
 
@@ -57,9 +60,11 @@ describe('csrf-token-header', () => {
       }
     });
 
-    const actual = await buildCsrfHeaders(request, standardHeaders);
-
-    expect('x-csrf-token' in actual).toBeFalsy();
+    const headers = await buildCsrfHeaders(request.destination!, {
+      headers: standardHeaders,
+      url: request.relativeServiceUrl()
+    });
+    expect('x-csrf-token' in headers).toBeFalsy();
     expect(warnSpy).toBeCalledWith(
       'Destination did not return a CSRF token. This may cause a failure when sending the OData request.'
     );
@@ -74,9 +79,12 @@ describe('csrf-token-header', () => {
       responseHeaders: { 'x-csrf-token': 'mocked-x-csrf-token' }
     });
 
-    const actual = await buildCsrfHeaders(request, standardHeaders);
+    const headers = await buildCsrfHeaders(request.destination!, {
+      headers: standardHeaders,
+      url: request.relativeServiceUrl()
+    });
 
-    expect('cookie' in actual).toBeFalsy();
+    expect('cookie' in headers).toBeFalsy();
     expect(warnSpy).toBeCalledWith(
       'CSRF header response does not include cookies.'
     );

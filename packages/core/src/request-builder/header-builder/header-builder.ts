@@ -26,35 +26,7 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
     throw Error('The request destination is undefined.');
   }
 
-  const defaultHeaders = replaceDuplicateKeys(
-    filterNullishValues({
-      accept: 'application/json',
-      'content-type': request.config.contentType,
-      'if-match': getETagHeaderValue(request.config)
-    }),
-    request.config.customHeaders
-  );
-
-  const destinationRelatedHeaders = await buildHeadersForDestination(
-    request.destination,
-    request.config.customHeaders
-  );
-
-  const csrfHeaders =
-    request.config.method === 'get'
-      ? {}
-      : await getCsrfHeaders(
-          request,
-          destinationRelatedHeaders,
-          request.config.customHeaders
-        );
-
-  return {
-    ...destinationRelatedHeaders,
-    ...csrfHeaders,
-    ...defaultHeaders,
-    ...request.config.customHeaders
-  };
+  return request.headers();
 }
 
 async function getAuthHeaders(
@@ -72,10 +44,17 @@ async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
   destinationRelatedHeaders: MapType<string>,
   customHeaders?: MapType<any>
 ): Promise<MapType<string>> {
+  if (!request.destination) {
+    throw Error('The request destination is undefined.');
+  }
+
   const customCsrfHeaders = getHeader('x-csrf-token', customHeaders);
   return Object.keys(customCsrfHeaders).length
     ? customCsrfHeaders
-    : buildCsrfHeaders(request, destinationRelatedHeaders);
+    : buildCsrfHeaders(request.destination, {
+        headers: destinationRelatedHeaders,
+        url: request.relativeServiceUrl()
+      });
 }
 
 /**

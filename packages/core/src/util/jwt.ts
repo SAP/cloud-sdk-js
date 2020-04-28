@@ -32,22 +32,26 @@ const logger = createLogger({
  * @returns Decoded payload.
  */
 export function decodeJwt(token: string): DecodedJWT {
-  return decodeJwtWithHeader(token).payload;
+  return decodeJwtComplete(token).payload;
 }
 
 /**
- * Decode JWT with Header.
+ * Decode JWT and return the complete decoded token.
  * @param token - JWT to be decoded
- * @returns Decoded payload.
+ * @returns Decoded token containing payload, header and signature.
  */
-export function decodeJwtWithHeader(token: string): DecodedJWTWithHeader {
+export function decodeJwtComplete(token: string): FullDecodedJWT {
   const decodedToken = jwt.decode(token, { complete: true });
   if (decodedToken === null || typeof decodedToken === 'string') {
     throw new Error(
       'JwtError: The given jwt payload does not encode valid JSON.'
     );
   }
-  return { header: decodedToken.header, payload: decodedToken.payload };
+  return {
+    header: decodedToken.header,
+    payload: decodedToken.payload,
+    signature: decodedToken.signature
+  };
 }
 
 /**
@@ -110,10 +114,13 @@ export async function verifyJwt(
   options = { ...defaultVerifyJwtOptions, ...options };
 
   const creds = getXsuaaServiceCredentials(token);
-  const jku = getVerificationKeyURL(token);
+  const verificationKeyURL = getVerificationKeyURL(token);
 
-  if (options.cacheVerificationKeys && verificationKeyCache.get(jku)) {
-    const key = verificationKeyCache.get(jku) as TokenKey;
+  if (
+    options.cacheVerificationKeys &&
+    verificationKeyCache.get(verificationKeyURL)
+  ) {
+    const key = verificationKeyCache.get(verificationKeyURL) as TokenKey;
 
     return verifyJwtWithKey(token, key.value).catch(error => {
       logger.warn(
@@ -121,20 +128,25 @@ export async function verifyJwt(
       );
       logger.warn(`Original error: ${error.message}`);
 
-      return fetchAndCacheKeyAndVerify(creds, jku, token, options);
+      return fetchAndCacheKeyAndVerify(
+        creds,
+        verificationKeyURL,
+        token,
+        options
+      );
     });
   }
 
-  return fetchAndCacheKeyAndVerify(creds, jku, token, options); // Verify only here
+  return fetchAndCacheKeyAndVerify(creds, verificationKeyURL, token, options); // Verify only here
 }
 
 function fetchAndCacheKeyAndVerify(
   creds: XsuaaServiceCredentials,
-  jku: string,
+  verificationKeyURL: string,
   token: string,
   options?: VerifyJwtOptions
 ) {
-  return getVerificationKey(creds, jku)
+  return getVerificationKey(creds, verificationKeyURL)
     .catch(error =>
       Promise.reject(
         errorWithCause(
@@ -143,7 +155,9 @@ function fetchAndCacheKeyAndVerify(
         )
       )
     )
-    .then(key => (options ? cacheVerificationKey(jku, key, options) : key))
+    .then(key =>
+      options ? cacheVerificationKey(verificationKeyURL, key, options) : key
+    )
     .then(key => verifyJwtWithKey(token, key.value));
 }
 
@@ -176,12 +190,12 @@ function getVerificationKey(
 export const verificationKeyCache = new Cache({ minutes: 15 });
 
 function cacheVerificationKey(
-  jku: string,
+  verificationKeyURL: string,
   key: TokenKey,
   options: VerifyJwtOptions
 ): TokenKey {
   if (options.cacheVerificationKeys) {
-    verificationKeyCache.set(jku, key);
+    verificationKeyCache.set(verificationKeyURL, key);
   }
   return key;
 }
@@ -423,13 +437,13 @@ function readPropertyWithWarn(decodedJwt: DecodedJWT, property: string): any {
  * @returns The value of jku property of the JWT header
  */
 function getVerificationKeyURL(token: string): string {
-  const decodedWithHeader = decodeJwtWithHeader(token);
-  if (!decodedWithHeader.header.jku) {
+  const decodedJwt = decodeJwtComplete(token);
+  if (!decodedJwt.header.jku) {
     throw new Error(
       'Field jku containing the URL for JWT verification not part of header.'
     );
   }
-  return decodedWithHeader.header.jku;
+  return decodedJwt.header.jku;
 }
 
 /**
@@ -462,6 +476,7 @@ export interface JWTHeader {
 }
 
 /**
+ * @Deprecated Use [[JWTPayload]] if you want to represent the decoded JWT payload or [[FullDecodedJWT]] for the full decoded object.
  * Interface to represent the payload of a JWT.
  */
 export interface DecodedJWT extends RegisteredJWTClaims {
@@ -469,11 +484,19 @@ export interface DecodedJWT extends RegisteredJWTClaims {
 }
 
 /**
+ * Interface to represent the payload of a JWT.
+ */
+export interface JWTPayload extends RegisteredJWTClaims {
+  [otherKey: string]: any;
+}
+
+/**
  * Interface to represent header and  payload of a JWT.
  */
-export interface DecodedJWTWithHeader extends RegisteredJWTClaims {
+export interface FullDecodedJWT extends RegisteredJWTClaims {
   header: JWTHeader;
-  payload: DecodedJWT;
+  payload: JWTPayload;
+  signature: string;
 }
 
 export type JwtKeyMapping<TypescriptKeys, JwtKeys> = {

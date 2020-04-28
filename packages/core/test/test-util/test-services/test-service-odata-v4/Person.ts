@@ -4,7 +4,7 @@ import {
   Entity, EntityBuilderType, Link,
   OneToOneLink, Selectable,
   StringField,
-} from '@sap-cloud-sdk/core';
+} from '../../../../src';
 import BigNumber from 'bignumber.js';
 import { PersonRequestBuilder } from './PersonRequestBuilder';
 import { LocationType, LocationTypeField } from './LocationType';

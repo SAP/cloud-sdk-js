@@ -40,7 +40,7 @@ export function decodeJwt(token: string): DecodedJWT {
  * @param token - JWT to be decoded
  * @returns Decoded token containing payload, header and signature.
  */
-export function decodeJwtComplete(token: string): FullDecodedJWT {
+export function decodeJwtComplete(token: string): CompleteDecodedJWT {
   const decodedToken = jwt.decode(token, { complete: true });
   if (decodedToken === null || typeof decodedToken === 'string') {
     throw new Error(
@@ -493,7 +493,7 @@ export interface JWTPayload extends RegisteredJWTClaims {
 /**
  * Interface to represent header and  payload of a JWT.
  */
-export interface FullDecodedJWT extends RegisteredJWTClaims {
+export interface CompleteDecodedJWT extends RegisteredJWTClaims {
   header: JWTHeader;
   payload: JWTPayload;
   signature: string;

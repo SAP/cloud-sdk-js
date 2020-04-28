@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import { AxiosResponse } from 'axios';
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
@@ -12,6 +11,7 @@ import {
 } from '../scp-cf/destination-service-types';
 import { Selectable } from '../selectable';
 import { FieldType } from '../selectable/field';
+import { HttpReponse } from '../http-client';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { ODataGetByKeyRequestConfig } from './request/odata-get-by-key-request-config';
 
@@ -83,6 +83,6 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
 C4C response to getByKey requests with the collection response format instead of the single element one
 To account for this, we test for this and use the normal format if `.result` return undefined.
 */
-function extractData(response: AxiosResponse): MapType<any> {
+function extractData(response: HttpReponse): MapType<any> {
   return response.data.d.results || response.data.d;
 }

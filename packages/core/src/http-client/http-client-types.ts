@@ -9,6 +9,25 @@ export interface DestinationHttpRequestConfig {
   httpsAgent?: http.Agent;
 }
 
+type Method =
+  | 'get'
+  | 'GET'
+  | 'delete'
+  | 'DELETE'
+  | 'head'
+  | 'HEAD'
+  | 'options'
+  | 'OPTIONS'
+  | 'post'
+  | 'POST'
+  | 'put'
+  | 'PUT'
+  | 'patch'
+  | 'PATCH';
+
+/**
+ * @deprecated Since v1.20.0. Use method string directly, e. g. 'get' or 'GET'.
+ */
 export enum HttpMethod {
   GET = 'GET',
   DELETE = 'DELETE',
@@ -24,11 +43,15 @@ export enum HttpMethod {
  */
 export interface HttpRequestConfig {
   url?: string;
-  method: HttpMethod;
-  data?: MapType<any>;
+  method: Method;
+  data?: any;
   params?: MapType<string>;
   timeout?: number;
   maxContentLength?: number;
+  headers?: any;
+  proxy?: false;
+  httpAgent?: any;
+  httpsAgent?: any;
 }
 
 export type HttpRequest = DestinationHttpRequestConfig & HttpRequestConfig;

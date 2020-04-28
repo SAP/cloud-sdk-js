@@ -9,7 +9,8 @@ import {
 import {
   Destination,
   DestinationAuthToken,
-  getOAuth2ClientCredentialsToken
+  getOAuth2ClientCredentialsToken,
+  sanitizeDestination
 } from '../../scp-cf';
 import { ODataRequest, ODataRequestConfig } from '../request';
 import { getHeader, toSanitizedHeaderObject } from './headers-util';
@@ -221,8 +222,9 @@ async function getAuthenticationRelatedHeaders(
 export async function buildAuthorizationHeaders(
   destination: Destination
 ): Promise<MapType<string>> {
+  const sanitizedDestination = sanitizeDestination(destination);
   return {
-    ...(await getAuthenticationRelatedHeaders(destination)),
-    ...getProxyRelatedAuthHeaders(destination)
+    ...(await getAuthenticationRelatedHeaders(sanitizedDestination)),
+    ...getProxyRelatedAuthHeaders(sanitizedDestination)
   };
 }

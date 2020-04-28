@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- When executing and building requests with the generic `http-client` custom request configurations now take precedence over configurations resulting from the given destination. This applies to all `http-client` related functions: `buildHttpRequest`, `addDestinationToRequestConfig`, `execute` and `executeHttpRequest`.
 
 ## New Functionality
 

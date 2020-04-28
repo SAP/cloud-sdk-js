@@ -105,76 +105,57 @@ describe('generic http client', () => {
       nock.cleanAll();
     });
 
-    it('merges given headers with provided headers (but gives priority to our headers)', async () => {
-      const input = {
-        a: '1',
-        b: '2',
-        headers: {
-          a: '1',
-          authorization: 'whatever'
-        }
-      };
-
+    it('merges given headers with provided headers (but gives priority to custom headers)', async () => {
       const expected = {
         a: '1',
         b: '2',
         baseURL: 'https://example.com',
         headers: {
           a: '1',
-          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
+          authorization: 'CUSTOM',
           'sap-client': '001'
         }
       };
 
-      const actual = await addDestinationToRequestConfig(
-        httpsDestination,
-        input
-      );
+      const actual = await addDestinationToRequestConfig(httpsDestination, {
+        method: 'get',
+        a: '1',
+        b: '2',
+        headers: {
+          a: '1',
+          authorization: 'CUSTOM'
+        }
+      });
 
       expect(actual).toMatchObject(expected);
       expect(actual.httpsAgent).toBeDefined();
     });
 
     it('overwrites baseURL and either httpAgent or httpsAgent', async () => {
-      const input = {
-        baseURL: 'lalala',
-        headers: {
-          a: '1',
-          authorization: 'whatever'
-        },
-        httpsAgent: 'lalala'
-      };
-
       const expected = {
-        baseURL: 'https://example.com',
+        baseURL: 'https://custom.example.com',
         headers: {
           a: '1',
-          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
+          authorization: 'CUSTOM',
           'sap-client': '001'
-        }
+        },
+        httpsAgent: 'custom-agent'
       };
 
-      const actual = await addDestinationToRequestConfig(
-        httpsDestination,
-        input
-      );
+      const actual = await addDestinationToRequestConfig(httpsDestination, {
+        method: 'get',
+        baseURL: 'https://custom.example.com',
+        headers: {
+          a: '1',
+          authorization: 'CUSTOM'
+        },
+        httpsAgent: 'custom-agent'
+      });
 
       expect(actual).toMatchObject(expected);
-      expect(actual.httpsAgent).not.toBe('lalala');
     });
 
     it('allows usage with e.g. axios.request', async () => {
-      const config: HttpRequest = {
-        baseURL: '',
-        method: HttpMethod.GET,
-        url: '/api/entity',
-        headers: {},
-        params: {
-          a: 'a',
-          b: 'b'
-        }
-      };
-
       nock('https://example.com', {
         reqheaders: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
@@ -188,10 +169,15 @@ describe('generic http client', () => {
         })
         .reply(200);
 
-      const request = addDestinationToRequestConfig(
-        httpsDestination,
-        config
-      ).then(conf => Axios.request(conf));
+      const request = addDestinationToRequestConfig(httpsDestination, {
+        method: 'get',
+        url: '/api/entity',
+        headers: {},
+        params: {
+          a: 'a',
+          b: 'b'
+        }
+      }).then(conf => Axios.request(conf));
       await expect(request).resolves.not.toThrow();
     });
   });
@@ -242,13 +228,13 @@ describe('generic http client', () => {
       expect(response.headers).toMatchObject({ sharp: 'header' });
     });
 
-    it('works also in more complex cases', async () => {
-      nock('https://example.com', {
+    it('also works also in more complex cases in more complex cases', async () => {
+      nock('https://custom.example.com', {
         reqheaders: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          'content-type': 'application/json',
+          accept: 'application/json',
           'x-csrf-token': 'Fetch',
-          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
+          authorization: 'custom-auth-header',
           'sap-client': '001'
         }
       })
@@ -260,14 +246,14 @@ describe('generic http client', () => {
         .reply(200);
 
       const config: HttpRequest = {
-        baseURL: '',
+        baseURL: 'https://custom.example.com',
         method: HttpMethod.POST,
         url: '/api/entity',
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          'content-type': 'application/json',
+          accept: 'application/json',
           'x-csrf-token': 'Fetch',
-          authorization: 'trololol'
+          authorization: 'custom-auth-header'
         },
         data: {
           a: 1,
@@ -295,19 +281,15 @@ describe('generic http client', () => {
         })
         .reply(500, { res: 'NOPE' }, { sharp: 'header' });
 
-      const config: HttpRequest = {
-        baseURL: '',
-        method: HttpMethod.GET,
-        url: '/api/entity',
-        headers: {},
-        params: {
-          a: 'a',
-          b: 'b'
-        }
-      };
-
       await expect(
-        executeHttpRequest(httpsDestination, config)
+        executeHttpRequest(httpsDestination, {
+          method: 'get',
+          url: '/api/entity',
+          params: {
+            a: 'a',
+            b: 'b'
+          }
+        })
       ).rejects.toThrowErrorMatchingSnapshot();
     });
   });

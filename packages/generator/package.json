@@ -51,7 +51,7 @@
     "@types/yargs": "^15.0.4",
     "jest": "^25.2.4",
     "jest-junit": "^10.0.0",
-    "ts-jest": "^25.3.0",
+    "ts-jest": "^25.4.0",
     "typescript": "~3.8.3"
   }
 }

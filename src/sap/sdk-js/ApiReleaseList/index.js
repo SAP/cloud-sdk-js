@@ -1,11 +1,11 @@
 import React from 'react'
 import useBaseUrl from '@docusaurus/useBaseUrl'
-import versions from '../../../../static/api/versions'
+import { jsReleases } from '../../utils'
 
 function ApiReleaseList () {
   return (
     <ul>
-      {versions.map((ver, ind) => (
+      {jsReleases.map((ver, ind) => (
         <li key={`${ver}`}>
           <a href={useBaseUrl(`api/${ver}/`)}>{`${ver}`}</a>{ind ? "" : <strong><em> - latest </em></strong>}
         </li>

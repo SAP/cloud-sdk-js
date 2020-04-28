@@ -6,9 +6,9 @@ import versions from '../../../../static/api/versions'
 function ApiReleaseList () {
   return (
     <ul>
-      {versions.map(ver => (
+      {versions.map((ver, ind) => (
         <li key={`${ver}`}>
-          <a href={useBaseUrl(`api/${ver}/`)}>{`${ver}`}</a>
+          <a href={useBaseUrl(`api/${ver}/`)}>{`${ver}`}</a>{ind ? "" : <strong><em> - latest </em></strong>}
         </li>
       ))}
     </ul>

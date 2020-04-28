@@ -104,12 +104,12 @@ module.exports = {
       //     href:
       //       'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:java'
       //   }
-      'java/api-documentation'
+      'java/api-reference-java'
     ],
     JavaScript: [
       'js/introduction',
       'js/getting-started',
-      'js/api-documentation'
+      'js/api-reference-js-ts'
     ],
     'Devops and CI/CD': ['devops/getting-started'],
     // FAQ: ['faq/frequently-asked-questions'],

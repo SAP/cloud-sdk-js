@@ -17,12 +17,12 @@ image:
 
 The SAP Cloud SDK for Java comprises a toolkit to develop cloud native applications on the SAP Cloud Platform.
 
-## API Version 3 ##
+## SDK Version 3 ##
 - [3.18.0](https://help.sap.com/doc/2e07eccb70364934adc2e01239828e6b/1.0/en-US/index.html)
 - [3.17.1](https://help.sap.com/doc/a3be0ed889004b9485c980357ab6ad52/1.0/en-US/index.html)
 - [3.16.1](https://help.sap.com/doc/059aaed870b44d8e8e24938c505b8120/1.0/en-US/index.html)
 
-## API Version 2  ##
+## SDK Version 2  ##
 :::caution
 Cloud **SDK for Java V2** is in maintenance. No major updates and bug-fixing is planned.
 To continue using the latest feature, please, migrate to **SDK for Java V3**

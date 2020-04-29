@@ -1,6 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType, renameKeys } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  errorWithCause,
+  MapType,
+  renameKeys
+} from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
@@ -17,6 +22,11 @@ import {
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const CircuitBreaker = require('opossum');
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'xsuaa-service'
+});
 
 /**
  * Executes a client credentials grant request.
@@ -123,10 +133,12 @@ export function refreshTokenGrant(
  * Fetches verification keys from the XSUAA service for the given credentials.
  *
  * @param xsuaaCredentials - Credentials of the XSUAA service instance.
+ * @param jku - Value of the jku property in the JWT header. If not provided the old legacy URL xsuaaCredentials.url/token_keys is used as a fallback which will not work for subscriber accounts created after 14th of April 2020.
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(
-  xsuaaCredentials: XsuaaServiceCredentials
+  xsuaaCredentials: XsuaaServiceCredentials,
+  jku?: string
 ): Promise<TokenKey[]>;
 
 /**
@@ -145,22 +157,32 @@ export function fetchVerificationKeys(
 
 export function fetchVerificationKeys(
   xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
-  clientId?: string,
+  clientIdOrJku?: string,
   clientSecret?: string
 ): Promise<TokenKey[]> {
+  // The case where the XsuaaServiceCredentials are given as object
   if (typeof xsuaaUriOrCredentials !== 'string') {
+    if (!clientIdOrJku) {
+      logger.warn(
+        'JKU field from the JWT not provided. Use xsuaaClient.url/token_keys as fallback. ' +
+          'This will not work for subscriber accounts created after 14th of April 2020.' +
+          'Please provide the right URL given by the field JKU present in the JWT header.'
+      );
+    }
     return fetchVerificationKeys(
-      xsuaaUriOrCredentials.url,
+      clientIdOrJku || `${xsuaaUriOrCredentials.url}/token_keys`,
       xsuaaUriOrCredentials.clientid,
       xsuaaUriOrCredentials.clientsecret
     );
   }
-
-  const url = `${xsuaaUriOrCredentials}/token_keys`;
-  const config: AxiosRequestConfig = { url, method: 'GET' };
-  if (clientId && clientSecret) {
+  // The three strings case
+  const config: AxiosRequestConfig = {
+    url: xsuaaUriOrCredentials,
+    method: 'GET'
+  };
+  if (clientIdOrJku && clientSecret) {
     const authHeader = headerForClientCredentials({
-      username: clientId,
+      username: clientIdOrJku,
       password: clientSecret
     });
     config.headers = { Authorization: authHeader };

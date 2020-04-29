@@ -7,7 +7,7 @@ import {
   verificationKeyCache,
   verifyJwt
 } from '../../src';
-import { publicKey, signedJwt } from '../test-util/keys';
+import { publicKey, signedJwtForVerification } from '../test-util/keys';
 import nock = require('nock');
 
 const jwtPayload = {
@@ -97,6 +97,7 @@ describe('jwt', () => {
     };
 
     const xsuaaUrl = 'https://example.com';
+    const jku = 'https://my-verification-url.com';
 
     beforeEach(() => {
       process.env.VCAP_SERVICES = JSON.stringify({
@@ -122,11 +123,11 @@ describe('jwt', () => {
     });
 
     it('fails for no key', done => {
-      nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
         .reply(200, { keys: [] });
 
-      verifyJwt(signedJwt(jwtPayload))
+      verifyJwt(signedJwtForVerification(jwtPayload, jku))
         .then(() => done('Should have failed.'))
         .catch(error => {
           expect(error.message).toContain(
@@ -140,67 +141,71 @@ describe('jwt', () => {
     });
 
     it('succeeds and decodes for correct key', done => {
-      nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
         .reply(200, response);
 
-      verifyJwt(signedJwt(jwtPayload))
+      verifyJwt(signedJwtForVerification(jwtPayload, jku))
         .then(() => done())
         .catch(done);
     });
 
     it('succeeds and decodes for correct inline key', done => {
-      nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
         .reply(200, responseWithoutNewlines);
 
-      verifyJwt(signedJwt(jwtPayload))
+      verifyJwt(signedJwtForVerification(jwtPayload, jku))
         .then(() => done())
         .catch(done);
     });
 
     it('caches the key after fetching it', done => {
       // We mock only a single HTTP call
-      nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
         .reply(200, response);
 
       // But due to caching multiple calls should not lead to errors
-      verifyJwt(signedJwt(jwtPayload))
-        .then(() => verifyJwt(signedJwt(jwtPayload)))
-        .then(() => verifyJwt(signedJwt(jwtPayload)))
+      verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        .then(() => verifyJwt(signedJwtForVerification(jwtPayload, jku)))
+        .then(() => verifyJwt(signedJwtForVerification(jwtPayload, jku)))
         .then(() => done())
         .catch(done);
     });
 
     it('fails on the second call when caching is disabled', done => {
       // We mock only a single HTTP call
-      nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
         .reply(200, response);
 
       // So the second call should fail
-      verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false })
+      verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        cacheVerificationKeys: false
+      })
         .then(() =>
-          verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false })
+          verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+            cacheVerificationKeys: false
+          })
         )
         .then(() => done('Should have failed!'))
         .catch(() => done());
     });
 
     it('fetches a new key when a key taken from the cache has been invalidated in the meantime', done => {
-      nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
         .reply(200, response);
 
-      const secondXsuaaMock = nock(xsuaaUrl, {
+      const secondXsuaaMock = nock(jku, {
         reqheaders: { Authorization: basicHeader }
       })
-        .get('/token_keys')
+        .get('/')
         .reply(200, response);
 
-      const jwt1 = signedJwt(jwtPayload);
-      const jwt2 = signedJwt(jwtPayload2);
+      const jwt1 = signedJwtForVerification(jwtPayload, jku);
+      const jwt2 = signedJwtForVerification(jwtPayload2, jku);
 
       verifyJwt(jwt1)
         .then(() => {
@@ -215,11 +220,13 @@ describe('jwt', () => {
     });
 
     it('fails if the verification key is not conform with the signed JWT', done => {
-      nock(xsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/token_keys')
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
         .reply(200, responseWithWrongKey);
 
-      verifyJwt(signedJwt(jwtPayload), { cacheVerificationKeys: false })
+      verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        cacheVerificationKeys: false
+      })
         .then(() => {
           done('Should have failed.');
         })

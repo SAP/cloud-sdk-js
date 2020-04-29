@@ -24,3 +24,15 @@ export function signedJwt(
     algorithm
   });
 }
+
+export function signedJwtForVerification(
+  payload,
+  jku,
+  filename = 'test',
+  algorithm: Algorithm = 'RS512'
+) {
+  return sign(payload, privateKey(filename), {
+    header: { jku },
+    algorithm
+  });
+}

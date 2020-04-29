@@ -3,8 +3,11 @@
 import chalk from 'chalk';
 import { format } from 'winston';
 
-const { combine, timestamp, cli, printf, errors } = format;
+const { combine, timestamp, cli, printf } = format;
 
+// This is a hack to ensure that error logging works in browsers. Necessary due to: https://github.com/winstonjs/logform/issues/97
+// eslint-disable-next-line import/no-internal-modules
+const errors = format.errors || require('logform/errors');
 /**
  * Format for local logging.
  */

@@ -1,16 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType, propertyExists } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getAxiosConfigWithDefaults } from '../../http-client';
 import { Destination, sanitizeDestination } from '../../scp-cf';
 import {
   removeSlashes,
   removeTrailingSlashes
 } from '../../util/remove-slashes';
-import { buildHeaders } from '../header-builder/header-builder';
-import { getAgentConfig } from '../http-agent';
+import { buildHeadersForDestination } from '../header-builder/header-builder';
+import { HttpResponse, executeHttpRequest } from '../../http-client';
+import {
+  filterNullishValues,
+  getHeader,
+  replaceDuplicateKeys,
+  buildCsrfHeaders
+} from '../header-builder';
 import { ODataRequestConfig } from './odata-request-config';
+import { isWithETag } from './odata-request-traits';
 
 /**
  * OData request configuration for an entity type.
@@ -146,11 +151,40 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   async headers(): Promise<MapType<string>> {
-    return buildHeaders(this).catch(error =>
-      Promise.reject(
+    try {
+      if (!this.destination) {
+        throw Error('The destination is undefined.');
+      }
+      const defaultHeaders = replaceDuplicateKeys(
+        filterNullishValues({
+          accept: 'application/json',
+          'content-type': this.config.contentType,
+          ...this.getETagHeader()
+        }),
+        this.config.customHeaders
+      );
+
+      const destinationRelatedHeaders = await buildHeadersForDestination(
+        this.destination,
+        this.config.customHeaders
+      );
+
+      const csrfHeaders =
+        this.config.method === 'get'
+          ? {}
+          : await this.getCsrfHeaders(destinationRelatedHeaders);
+
+      return {
+        ...destinationRelatedHeaders,
+        ...csrfHeaders,
+        ...defaultHeaders,
+        ...this.config.customHeaders
+      };
+    } catch (error) {
+      return Promise.reject(
         errorWithCause('Constructing headers for OData request failed!', error)
-      )
-    );
+      );
+    }
   }
 
   /**
@@ -158,42 +192,58 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    *
    * @returns Promise resolving to the requested data
    */
-  async execute(): Promise<AxiosResponse> {
-    if (!this._destination) {
+  async execute(): Promise<HttpResponse> {
+    const destination = this.destination;
+    if (!destination) {
       throw Error('The destination cannot be undefined.');
     }
-    const requestDataWithAxiosKeys = {
-      url: this.url(),
-      method: this.config.method,
-      data: this.config.payload,
-      ...getAgentConfig(this._destination)
-    };
 
-    return this.headers()
-      .then(
-        (headers): AxiosRequestConfig => ({
-          headers,
-          ...getAxiosConfigWithDefaults(),
-          ...requestDataWithAxiosKeys
-        })
+    return executeHttpRequest(destination, {
+      headers: await this.headers(),
+      url: this.relativeUrl(),
+      method: this.config.method,
+      data: this.config.payload
+    }).catch(error =>
+      Promise.reject(
+        constructError(error, this.config.method, this.serviceUrl())
       )
-      .then(requestConfig => axios.request(requestConfig))
-      .catch(error =>
-        Promise.reject(
-          constructError(error, this.config.method, this.serviceUrl())
-        )
-      );
+    );
+  }
+
+  private getETagHeader(): MapType<string> {
+    const eTag =
+      isWithETag(this.config) &&
+      (this.config.versionIdentifierIgnored ? '*' : this.config.eTag);
+    return filterNullishValues({ 'if-match': eTag });
+  }
+
+  private async getCsrfHeaders(
+    destinationRelatedHeaders: MapType<string>
+  ): Promise<MapType<string>> {
+    const customCsrfHeaders = getHeader(
+      'x-csrf-token',
+      this.config.customHeaders
+    );
+    return Object.keys(customCsrfHeaders).length
+      ? customCsrfHeaders
+      : buildCsrfHeaders(this.destination!, {
+          headers: destinationRelatedHeaders,
+          url: this.relativeServiceUrl()
+        });
   }
 }
 
 function constructError(error, requestMethod: string, url: string): Error {
-  const defaultMessage = `${requestMethod} request to ${url} failed!`;
-  const s4SpecificMessage = propertyExists(error, 'response', 'data', 'error')
-    ? messageFromS4ErrorResponse(error)
-    : '';
-  const message = [defaultMessage, s4SpecificMessage].join(' ');
+  if (error.isAxiosError) {
+    const defaultMessage = `${requestMethod} request to ${url} failed!`;
+    const s4SpecificMessage = propertyExists(error, 'response', 'data', 'error')
+      ? messageFromS4ErrorResponse(error)
+      : '';
+    const message = [defaultMessage, s4SpecificMessage].join(' ');
 
-  return errorWithCause(message, error);
+    return errorWithCause(message, error);
+  }
+  return error;
 }
 
 function messageFromS4ErrorResponse(error): string {

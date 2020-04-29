@@ -3,14 +3,15 @@
 import * as http from 'http';
 import * as https from 'https';
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
-import { buildHeadersForDestination, getAgentConfig } from '../request-builder';
+import axios from 'axios';
+import { buildHeadersForDestination } from '../request-builder/header-builder/header-builder';
 import {
   Destination,
   DestinationNameAndJwt,
   toDestinationNameUrl,
   useOrFetchDestination
 } from '../scp-cf';
+import { getAgentConfig } from '../request-builder';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -44,21 +45,19 @@ export async function buildHttpRequest(
 
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination
- * and then merges it into the given requestConfig.
- * NOTE: If the properties baseURL, httpClient, and httpsClient exist on the given requestConfig,
- * they will be overwritten. Headers will be merged, whereby any headers built from the given destination
- * will overwrite existing headers (e.g. the Authorization header).
+ * and then merges it into the given request configuration.
+ * Setting of the given request configuration take precedence over any destination related configuration.
  *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @returns The given request config merged with the config built for the given destination.
  */
-export function addDestinationToRequestConfig<T>(
+export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
   return buildHttpRequest(destination).then(destinationConfig =>
-    merge(requestConfig, destinationConfig)
+    merge(destinationConfig, requestConfig)
   );
 }
 
@@ -77,8 +76,11 @@ export function execute(executeFn: ExecuteHttpRequestFn) {
     destination: Destination | DestinationNameAndJwt,
     requestConfig: T
   ): Promise<HttpResponse> {
-    const req = await buildHttpRequest(destination);
-    const request = merge(requestConfig, req);
+    const destinationRequestConfig = await buildHttpRequest(
+      destination,
+      requestConfig.headers
+    );
+    const request = merge(destinationRequestConfig, requestConfig);
     return executeFn(request);
   };
 }
@@ -131,22 +133,22 @@ function resolveDestination(
   );
 }
 
-function merge<T>(
-  generic: T,
-  request: DestinationHttpRequestConfig
+function merge<T extends HttpRequestConfig>(
+  destinationRequestConfig: DestinationHttpRequestConfig,
+  customRequestConfig: T
 ): T & DestinationHttpRequestConfig {
   return {
-    ...generic,
-    ...request,
+    ...destinationRequestConfig,
+    ...customRequestConfig,
     headers: {
-      ...(generic['headers'] || {}),
-      ...request.headers
+      ...destinationRequestConfig.headers,
+      ...customRequestConfig.headers
     }
   };
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  return axios.request({ proxy: false, ...request });
+  return axios.request({ ...getAxiosConfigWithDefaults(), ...request });
 }
 
 /**
@@ -154,7 +156,7 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
  *
  * @returns AxiosRequestConfig with default parameters
  */
-export function getAxiosConfigWithDefaults(): AxiosRequestConfig {
+export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   return {
     method: 'get',
     proxy: false,

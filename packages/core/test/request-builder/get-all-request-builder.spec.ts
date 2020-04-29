@@ -91,9 +91,9 @@ describe('GetAllRequestBuilder', () => {
         statusCode: 500
       });
 
-      const updateRequest = requestBuilder.execute(defaultDestination);
+      const getAllRequest = requestBuilder.execute(defaultDestination);
 
-      await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
+      await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 });

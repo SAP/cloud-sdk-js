@@ -10,7 +10,7 @@ import {
   EdmTypeField,
   Link,
   OneToOneLink,
-  Selectable, SimpleTypeFields
+  Selectable
 } from './selectable';
 import { toPropertyFormat } from './util';
 
@@ -91,17 +91,23 @@ function getFieldValue<EntityT extends Entity, JsonT>(
   }
 }
 
-function isODataV2Selectable<EntityT extends Entity>(selectable: Selectable<EntityT>): boolean {
-  return selectable instanceof EdmTypeField || selectable instanceof Link || selectable instanceof ComplexTypeField;
+function isODataV2Selectable<EntityT extends Entity>(
+  selectable: Selectable<EntityT>
+): boolean {
+  return (
+    selectable instanceof EdmTypeField ||
+    selectable instanceof Link ||
+    selectable instanceof ComplexTypeField
+  );
 }
 
 function getFieldValueODataV4<EntityT extends Entity, JsonT>(
   json: Partial<JsonT>,
   selectable: Selectable<EntityT>
 ) {
-  if (isODataV2Selectable(selectable)){
-    return getFieldValue(json, selectable)
-  } else if (selectable instanceof CollectionField){
+  if (isODataV2Selectable(selectable)) {
+    return getFieldValue(json, selectable);
+  } else if (selectable instanceof CollectionField) {
     return deserializeCollectionType(json[selectable._fieldName], selectable);
   }
 }
@@ -171,10 +177,10 @@ function deserializeComplexType<EntityT extends Entity>(
 function deserializeCollectionType<EntityT extends Entity>(
   json: any[],
   selectable: CollectionField<EntityT>
-){
-  if (selectable._elementType instanceof EdmTypeField){
+) {
+  if (selectable._elementType instanceof EdmTypeField) {
     const edmType = selectable._elementType.edmType;
-    return json.map(v => edmToTs(v, edmType))
+    return json.map(v => edmToTs(v, edmType));
   } else if (selectable._elementType instanceof ComplexTypeField) {
     const complexTypeField = selectable._elementType;
     return json.map(v => deserializeComplexType(v, complexTypeField));

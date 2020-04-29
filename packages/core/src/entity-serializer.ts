@@ -3,7 +3,7 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
 import { Entity } from './entity';
-import { edmToTs, tsToEdm } from './payload-value-converter';
+import { tsToEdm } from './payload-value-converter';
 import {
   CollectionField,
   ComplexTypeField,
@@ -66,17 +66,26 @@ export function serializeEntityNonCustomFieldsODataV4<EntityT extends Entity>(
     const fieldValue = entity[key];
 
     if (isODataV2Serizable(fieldValue, selectable)) {
-      serialized[selectable._fieldName] = serializeField(fieldValue, selectable);
+      serialized[selectable._fieldName] = serializeField(
+        fieldValue,
+        selectable
+      );
     } else if (selectable instanceof CollectionField) {
-      serialized[selectable._fieldName] = serilizeCollectionField(fieldValue, selectable);
+      serialized[selectable._fieldName] = serilizeCollectionField(
+        fieldValue,
+        selectable
+      );
     }
 
     return serialized;
   }, {});
 }
 
-function serilizeCollectionField<EntityT extends Entity>(fieldValue: any[], selectable: CollectionField<EntityT>){
-  if (selectable._elementType instanceof EdmTypeField){
+function serilizeCollectionField<EntityT extends Entity>(
+  fieldValue: any[],
+  selectable: CollectionField<EntityT>
+) {
+  if (selectable._elementType instanceof EdmTypeField) {
     const edmType = selectable._elementType.edmType;
     return fieldValue.map(v => tsToEdm(v, edmType));
   } else if (selectable._elementType instanceof ComplexTypeField) {
@@ -85,32 +94,30 @@ function serilizeCollectionField<EntityT extends Entity>(fieldValue: any[], sele
   }
 }
 
-function isODataV2Serizable(fieldValue, selectable){
-  return fieldValue === null || fieldValue === undefined || selectable instanceof EdmTypeField || selectable instanceof OneToOneLink || selectable instanceof  Link || selectable instanceof ComplexTypeField;
+function isODataV2Serizable(fieldValue, selectable) {
+  return (
+    fieldValue === null ||
+    fieldValue === undefined ||
+    selectable instanceof EdmTypeField ||
+    selectable instanceof OneToOneLink ||
+    selectable instanceof Link ||
+    selectable instanceof ComplexTypeField
+  );
 }
 
-function serializeField(fieldValue, selectable){
+function serializeField(fieldValue, selectable) {
   if (fieldValue === null || fieldValue === undefined) {
     return null;
   } else if (selectable instanceof EdmTypeField) {
-    return tsToEdm(
-      fieldValue,
-      selectable.edmType
-    );
+    return tsToEdm(fieldValue, selectable.edmType);
   } else if (selectable instanceof OneToOneLink) {
-    return serializeEntityNonCustomFields(
-      fieldValue,
-      selectable._linkedEntity
-    );
+    return serializeEntityNonCustomFields(fieldValue, selectable._linkedEntity);
   } else if (selectable instanceof Link) {
     return fieldValue.map(linkedEntity =>
       serializeEntityNonCustomFields(linkedEntity, selectable._linkedEntity)
     );
   } else if (selectable instanceof ComplexTypeField) {
-    return serializeComplexTypeField(
-      selectable,
-      fieldValue
-    );
+    return serializeComplexTypeField(selectable, fieldValue);
   }
 }
 

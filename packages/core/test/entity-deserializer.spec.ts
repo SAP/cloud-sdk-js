@@ -30,18 +30,25 @@ describe('entity-deserializer', () => {
     expected.homeAddress = {
       address: homeAddress
     };
-    expected.addressInfo = [{address: homeAddress}, {address: homeAddress2}];
+    expected.addressInfo = [
+      { address: homeAddress },
+      { address: homeAddress2 }
+    ];
     expected.userName = userName;
 
-    const actual = deserializeEntity({
+    const actual = deserializeEntity(
+      {
         HomeAddress: {
           Address: homeAddress
         },
-        AddressInfo: [{
-          Address: homeAddress
-        },{
-          Address: homeAddress2
-        }],
+        AddressInfo: [
+          {
+            Address: homeAddress
+          },
+          {
+            Address: homeAddress2
+          }
+        ],
         UserName: userName
       },
       Person

@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 import { tsToEdm } from '../src';
 import { serializeEntity } from '../src/entity-serializer';
 import {
@@ -9,7 +10,6 @@ import {
   TestEntitySingleLink
 } from './test-util/test-services/test-service';
 import { Person } from './test-util/test-services/test-service-odata-v4';
-import { add } from 'rambda';
 
 describe('entity-serializer', () => {
   it('should serialize collection field', () => {
@@ -17,7 +17,7 @@ describe('entity-serializer', () => {
     const person = Person.builder().emails(emails).build();
 
     expect(serializeEntity(person, Person)).toEqual({
-        Emails: emails
+      Emails: emails
     });
   });
 
@@ -26,20 +26,27 @@ describe('entity-serializer', () => {
     const address1 = 'home address';
     const address2 = 'home address 2';
     const homeAddress = { address: address1 };
-    const homeAddress2 = { address: address2};
+    const homeAddress2 = { address: address2 };
     const addressInfo = [homeAddress, homeAddress2];
-    const person = Person.builder().userName(userName).homeAddress(homeAddress).addressInfo(addressInfo).build();
+    const person = Person.builder()
+      .userName(userName)
+      .homeAddress(homeAddress)
+      .addressInfo(addressInfo)
+      .build();
 
     expect(serializeEntity(person, Person)).toEqual({
       UserName: userName,
       HomeAddress: {
         Address: address1
       },
-      AddressInfo: [{
-        Address: address1
-      },{
-        Address: address2
-      }]
+      AddressInfo: [
+        {
+          Address: address1
+        },
+        {
+          Address: address2
+        }
+      ]
     });
   });
 

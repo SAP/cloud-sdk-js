@@ -59,6 +59,26 @@ export function deserializeEntity<EntityT extends Entity, JsonT>(
   return entityConstructor._allFields
     .filter(field => isSelectedProperty(json, field))
     .reduce((entity, staticField) => {
+      entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
+        json,
+        staticField
+      );
+      return entity;
+    }, new entityConstructor())
+    .initializeCustomFields(extractCustomFields(json, entityConstructor))
+    .setVersionIdentifier(etag)
+    .setOrInitializeRemoteState();
+}
+
+export function deserializeEntityODataV4<EntityT extends Entity, JsonT>(
+  json: Partial<JsonT>,
+  entityConstructor: Constructable<EntityT>,
+  requestHeader?: any
+): EntityT {
+  const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
+  return entityConstructor._allFields
+    .filter(field => isSelectedProperty(json, field))
+    .reduce((entity, staticField) => {
       entity[toPropertyFormat(staticField._fieldName)] = getFieldValueODataV4(
         json,
         staticField

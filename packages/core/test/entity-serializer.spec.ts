@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { tsToEdm } from '../src';
+import { serializeEntityODataV4, tsToEdm } from '../src';
 import { serializeEntity } from '../src/entity-serializer';
 import {
   TestEntity,
@@ -12,44 +12,6 @@ import {
 import { Person } from './test-util/test-services/test-service-odata-v4';
 
 describe('entity-serializer', () => {
-  it('should serialize collection field', () => {
-    const emails = ['abc@example.com', 'def@example.com'];
-    const person = Person.builder().emails(emails).build();
-
-    expect(serializeEntity(person, Person)).toEqual({
-      Emails: emails
-    });
-  });
-
-  it('should serialize collection field with complex type', () => {
-    const userName = 'user';
-    const address1 = 'home address';
-    const address2 = 'home address 2';
-    const homeAddress = { address: address1 };
-    const homeAddress2 = { address: address2 };
-    const addressInfo = [homeAddress, homeAddress2];
-    const person = Person.builder()
-      .userName(userName)
-      .homeAddress(homeAddress)
-      .addressInfo(addressInfo)
-      .build();
-
-    expect(serializeEntity(person, Person)).toEqual({
-      UserName: userName,
-      HomeAddress: {
-        Address: address1
-      },
-      AddressInfo: [
-        {
-          Address: address1
-        },
-        {
-          Address: address2
-        }
-      ]
-    });
-  });
-
   it('should serialize simple entity', () => {
     const testEntity = TestEntity.builder()
       .stringProperty('test')
@@ -166,6 +128,46 @@ describe('entity-serializer', () => {
       SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',
       CustomField2: 1234
+    });
+  });
+
+  describe('odata v4 tests', () => {
+    it('should serialize collection field', () => {
+      const emails = ['abc@example.com', 'def@example.com'];
+      const person = Person.builder().emails(emails).build();
+
+      expect(serializeEntityODataV4(person, Person)).toEqual({
+        Emails: emails
+      });
+    });
+
+    it('should serialize collection field with complex type', () => {
+      const userName = 'user';
+      const address1 = 'home address';
+      const address2 = 'home address 2';
+      const homeAddress = { address: address1 };
+      const homeAddress2 = { address: address2 };
+      const addressInfo = [homeAddress, homeAddress2];
+      const person = Person.builder()
+        .userName(userName)
+        .homeAddress(homeAddress)
+        .addressInfo(addressInfo)
+        .build();
+
+      expect(serializeEntityODataV4(person, Person)).toEqual({
+        UserName: userName,
+        HomeAddress: {
+          Address: address1
+        },
+        AddressInfo: [
+          {
+            Address: address1
+          },
+          {
+            Address: address2
+          }
+        ]
+      });
     });
   });
 });

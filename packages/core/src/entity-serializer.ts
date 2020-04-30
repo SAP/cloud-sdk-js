@@ -25,6 +25,16 @@ export function serializeEntity<EntityT extends Entity>(
   entityConstructor: Constructable<EntityT>
 ): MapType<any> {
   return {
+    ...serializeEntityNonCustomFields(entity, entityConstructor),
+    ...entity.getCustomFields()
+  };
+}
+
+export function serializeEntityODataV4<EntityT extends Entity>(
+  entity: EntityT,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
+  return {
     ...serializeEntityNonCustomFieldsODataV4(entity, entityConstructor),
     ...entity.getCustomFields()
   };

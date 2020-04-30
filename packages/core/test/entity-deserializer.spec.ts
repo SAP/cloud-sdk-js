@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
-  deserializeEntity,
+  deserializeEntity, deserializeEntityODataV4,
   extractCustomFields
 } from '../src/entity-deserializer';
 import {
@@ -18,7 +18,7 @@ describe('entity-deserializer', () => {
 
     const response = { Emails: emails };
 
-    expect(deserializeEntity(response, Person)).toEqual(person);
+    expect(deserializeEntityODataV4(response, Person)).toEqual(person);
   });
 
   it('should deserialize an entity with collection of complex properties', () => {
@@ -36,7 +36,7 @@ describe('entity-deserializer', () => {
     ];
     expected.userName = userName;
 
-    const actual = deserializeEntity(
+    const actual = deserializeEntityODataV4(
       {
         HomeAddress: {
           Address: homeAddress
@@ -158,6 +158,54 @@ describe('entity-deserializer', () => {
           StringProperty: expected.stringProperty
         },
         TestEntity
+      );
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('odata v4 tests', () => {
+    it('should deserialize an entity with collection of string properties', () => {
+      const emails = ['abc@example.com', 'efg@example.com'];
+      const person = new Person();
+      person.emails = emails;
+
+      const response = { Emails: emails };
+
+      expect(deserializeEntityODataV4(response, Person)).toEqual(person);
+    });
+
+    it('should deserialize an entity with collection of complex properties', () => {
+      const homeAddress = 'home address';
+      const homeAddress2 = 'home address 2';
+      const userName = 'user';
+
+      const expected = new Person();
+      expected.homeAddress = {
+        address: homeAddress
+      };
+      expected.addressInfo = [
+        { address: homeAddress },
+        { address: homeAddress2 }
+      ];
+      expected.userName = userName;
+
+      const actual = deserializeEntityODataV4(
+        {
+          HomeAddress: {
+            Address: homeAddress
+          },
+          AddressInfo: [
+            {
+              Address: homeAddress
+            },
+            {
+              Address: homeAddress2
+            }
+          ],
+          UserName: userName
+        },
+        Person
       );
 
       expect(actual).toEqual(expected);

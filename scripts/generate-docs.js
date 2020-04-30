@@ -25,7 +25,7 @@ const readDir = inputDir =>
   )(inputDir);
 
 const isHtmlFile = fileName => path.extname(fileName) === '.html';
-const isSearchJs = fileName => path.basename(fileName) === 'search.js';
+const isSearchJson = fileName => path.basename(fileName) === 'search.json';
 const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
 
 /**
@@ -51,9 +51,9 @@ function adjustForGitHubPages() {
 }
 
 function adjustSearchJs(paths) {
-  const filtered = paths.filter(isSearchJs);
+  const filtered = paths.filter(isSearchJson);
   if (filtered.length !== 1) {
-    throw Error(`Expected one 'search.js', but found: ${filtered.length}.`);
+    throw Error(`Expected one 'search.json', but found: ${filtered.length}.`);
   }
   transformFile(filtered[0], file =>
     file.replace(

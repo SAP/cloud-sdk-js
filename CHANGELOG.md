@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- Increase the information shown on VDM generation and parallelized the file creation process.
 
 ## Fixed Issues
 

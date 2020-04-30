@@ -57,8 +57,12 @@ export function serializeEntityNonCustomFields<EntityT extends Entity>(
   return Object.keys(entity).reduce((serialized, key) => {
     const selectable = entityConstructor[toStaticPropertyFormat(key)];
     const fieldValue = entity[key];
-
-    serialized[selectable._fieldName] = serializeField(fieldValue, selectable);
+    if (isODataV2Serizable(fieldValue, selectable)) {
+      serialized[selectable._fieldName] = serializeField(
+        fieldValue,
+        selectable
+      );
+    }
 
     return serialized;
   }, {});

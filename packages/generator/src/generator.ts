@@ -6,7 +6,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
-  DirectoryEmitResult,
+  EmitResult,
   IndentationText,
   ModuleResolutionKind,
   Project,
@@ -47,7 +47,7 @@ const logger = createLogger({
 
 export async function generate(
   options: GeneratorOptions
-): Promise<void | DirectoryEmitResult[]> {
+): Promise<void | EmitResult[]> {
   const project = await generateProject(options);
   if (!project) {
     throw Error('The project is undefined.');
@@ -65,18 +65,27 @@ export async function generate(
 function emit(
   project: Project,
   options: GeneratorOptions
-): Promise<DirectoryEmitResult[]> {
+): Promise<EmitResult[]> {
+  logger.info(
+    'Starting to save files for project to disk. This can take a while...'
+  );
   // Filter for .ts files, due to a bug in ts-morph. Has been fixed in a newer version of ts-morph
   const nonTsFiles = project
     .getSourceFiles()
     .filter(s => !s.getFilePath().endsWith('.ts'));
   nonTsFiles.forEach(f => project.removeSourceFile(f));
+
+  const flatSourceFileList = project
+    .getDirectories()
+    // Filter only for files that are within the service subfolders
+    .filter(d => isDescendant(d.getPath(), options))
+    .map(d => d.getSourceFiles())
+    .reduce((d, collected) => [...collected, ...d], []);
   return Promise.all(
-    project
-      .getDirectories()
-      // Filter only for files that are within the service subfolders
-      .filter(d => isDescendant(d.getPath(), options))
-      .map(d => d.emit({ outDir: '' }))
+    flatSourceFileList.map(file => {
+      logger.info(`Saving file: ${file.getBaseName()}...`);
+      return file.emit();
+    })
   );
 }
 
@@ -135,6 +144,9 @@ function generateAggregatorPackage(
     const aggregatorPackageDir = project.createDirectory(
       resolvePath(options.aggregatorDirectoryName, options)
     );
+    logger.info(
+      `Generating package.json for project: ${aggregatorPackageDir}...`
+    );
     otherFile(
       aggregatorPackageDir,
       'package.json',
@@ -148,6 +160,9 @@ function generateAggregatorPackage(
     );
 
     if (options.writeReadme) {
+      logger.info(
+        `Generating README.md for project: ${aggregatorPackageDir}...`
+      );
       otherFile(
         aggregatorPackageDir,
         'README.md',
@@ -157,6 +172,9 @@ function generateAggregatorPackage(
     }
 
     if (options.changelogFile) {
+      logger.info(
+        `Generating CHANGELOG.md for project: ${aggregatorPackageDir}...`
+      );
       copyChangelog(aggregatorPackageDir, options);
     }
   }
@@ -198,6 +216,7 @@ export async function generateSourcesForService(
   );
 
   service.entities.forEach(entity => {
+    logger.info(`Generating entity: ${entity.className}...`);
     sourceFile(
       serviceDir,
       entity.className,
@@ -213,6 +232,7 @@ export async function generateSourcesForService(
   });
 
   service.complexTypes.forEach(complexType => {
+    logger.info(`Generating complex type: ${complexType.typeName}...`);
     sourceFile(
       serviceDir,
       complexType.typeName,
@@ -222,6 +242,9 @@ export async function generateSourcesForService(
   });
 
   if (service.functionImports && service.functionImports.length) {
+    logger.info(
+      `Generating function imports for service: ${service.namespace}...`
+    );
     sourceFile(
       serviceDir,
       'function-imports',
@@ -233,6 +256,7 @@ export async function generateSourcesForService(
   sourceFile(serviceDir, 'index', indexFile(service), options.forceOverwrite);
 
   if (options.writeReadme) {
+    logger.info(`Generating readme for service: ${service.namespace}...`);
     otherFile(
       serviceDir,
       'README.md',
@@ -242,14 +266,19 @@ export async function generateSourcesForService(
   }
 
   if (options.changelogFile) {
+    logger.info(
+      `Generating change log file for service: ${service.namespace}...`
+    );
     copyChangelog(serviceDir, options);
   }
 
   if (options.generateNpmrc) {
+    logger.info(`Generating .npmrc for service: ${service.namespace}...`);
     otherFile(serviceDir, '.npmrc', npmrc(), options.forceOverwrite);
   }
 
   if (options.generateTypedocJson) {
+    logger.info(`Generating typedoc.json for service: ${service.namespace}...`);
     otherFile(
       serviceDir,
       'typedoc.json',
@@ -260,6 +289,9 @@ export async function generateSourcesForService(
 
   if (options.generateCSN) {
     try {
+      logger.info(
+        `Generating ${service.directoryName}-csn.json for service: ${service.namespace}...`
+      );
       otherFile(
         serviceDir,
         `${service.directoryName}-csn.json`,

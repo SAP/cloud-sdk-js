@@ -24,9 +24,9 @@ The Virtual Data Model (VDM) allows to build type-safe OData requests for a give
 
 ## Using the Fluent API ##
 
-The VDM consistes of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.
+The VDM consists of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.
 
-To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/docs/java/features/connectivity). The following code snippits assume that such a destination is in place:
+To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/docs/java/features/connectivity). The following code snippets assume that such a destination is in place:
 
 ```JAVA
 HttpDestination destination;
@@ -46,7 +46,7 @@ result = service.operation()
     - Or other modifiers like custom headers
 - Which OData parameters are available depends on the operation. For example when updating entities the `$filter` parameter is not available.
 
-Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA VDM. The following code snippits assume that an instance of this service is setup:
+Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA VDM. The following code snippets assume that an instance of this service is setup:
 
 ```JAVA
 BusinessPartnerService service = new DefaultBusinessPartnerService();
@@ -124,7 +124,7 @@ If a service requires this header to be sent: Fetching the entity from the servi
 
 #### Handling of CSRF tokens ####
 
-For create, update and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution the request will try to fetch a token first before issuing the actual create request. Many services require this behaviour for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
+For create, update and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution the request will try to fetch a token first before issuing the actual create request. Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
 
 ### Select ###
 

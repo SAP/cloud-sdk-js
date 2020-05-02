@@ -128,6 +128,10 @@ For create, update and delete requests the SDK will try to send a [CSRF token](h
 
 ### Select ###
 
+When reading entities the API offers `select( ... )` on the builders. Through it the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
+
+The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
+
 <Tabs defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
@@ -135,9 +139,32 @@ For create, update and delete requests the SDK will try to send a [CSRF token](h
 
 ```JAVA
 service.getBusinessPartnerByKey("id")
-    .select(BusinessPartner.FIRST_NAME)
-    .filter(BusinessPartner.FIRST_NAME.substring("substr"))
+    .select(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME, BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
     .execute(destination);
+```
+
+The above translates to the following query parameters:
+
+```TXT
+$select=FirstName,LastName$expand=to_BusinessPartnerAddress
+```
+
+OData v4 allows for formulating nested, fully featured queries on complex and navigational properties. Querying nested objects is possible within expand. That means the following query is possible:
+
+```JAVA
+service.getBusinessPartnerByKey("id")
+    .select(BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
+        .select(BusinessPartnerAddress.CITY_CODE, BusinessPartnerAddress.COUNTRY)
+        .filter(BusinessPartnerAddress.CITY_CODE.ne("1234"))
+        .orderBy(BusinessPartnerAddress.COUNTRY.desc())
+    )
+    .execute(destination);
+```
+
+The above translates to the following `expand` query parameter:
+
+```TXT
+$expand=to_BusinessPartnerAddress($select=CityCode,Country;$filter=CityCode eq '1234';$orderby=Country%20desc)
 ```
 
 </TabItem>
@@ -145,9 +172,14 @@ service.getBusinessPartnerByKey("id")
 
 ```JAVA
 service.getBusinessPartnerByKey("id")
-    .select(BusinessPartner.FIRST_NAME)
-    .filter(BusinessPartner.FIRST_NAME.ne("substr"))
+    .select(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME, BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
     .execute(destination);
+```
+
+The above translates to the following query parameters:
+
+```TXT
+$select=FirstName,LastName$expand=to_BusinessPartnerAddress
 ```
 
 </TabItem>
@@ -156,138 +188,105 @@ service.getBusinessPartnerByKey("id")
 
 ### Filter ###
 
+When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also build via the static property fields on entities.
+
+The following example:
+
+```JAVA
+/*
+Get all business partners that either:
+  - Have first name 'Alice' but not last name 'Bob'
+  - Or have first name 'Mallory'
+*/
+service.getAllBusinessPartner()
+    .filter(BusinessPartner.FIRST_NAME.eq("Alice")
+        .and(BusinessPartner.LAST_NAME.ne("Bob"))
+        .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
+    )
+    .execute(destination);
+```
+
+Will translate to this filter parameter:
+```TXT
+$filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mallory'))
+```
+
+Take note of the order of `and` and `or`. As `or` is invoked on the result of `and` it will form the outer expression while `and` is an inner expression in the first branch of `or`.
+
+To achieve a different order with `and` as the top level statement one would nest the `or` within `and(...)`:
+
+```JAVA
+.and(BusinessPartner.LAST_NAME.ne("Bob")
+    .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
+)
+```
+
+#### Available Filter Expressions ####
+
+<!-- TODO: Explain filters on complex types and navigational properties -->
+
 <Tabs defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
 <TabItem value="v4">
 
+The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) allows for a wide range of filter expressions. A detailed list of what is available in the SDK can be obtained from [the Javadoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odatav4/expression/package-summary.html). The functionality can also be discovered through the fluent API.
+
+The below example leverages OData v4 exclusive features to build a more complex request:
+ 
 ```JAVA
-service.getBusinessPartnerByKey("id")
-    .select(BusinessPartner.FIRST_NAME)
-    .filter(BusinessPartner.FIRST_NAME.substring("substr"))
+/*
+Fetch all business partners where:
+- the last name is at least twice as long as the first name 
+- AND the combined string of first and last name does not contain 'bob'
+*/
+service.getAllBusinessPartner()
+    .filter(BusinessPartner.FIRST_NAME.length().multiply(2).lessThan(BusinessPartner.LAST_NAME.length())
+        .and(BusinessPartner.FIRST_NAME.concat(BusinessPartner.LAST_NAME).contains("bob"))
+    )
     .execute(destination);
 ```
 
 </TabItem>
 <TabItem value="v2">
 
-```JAVA
-service.getBusinessPartnerByKey("id")
-    .select(BusinessPartner.FIRST_NAME)
-    .filter(BusinessPartner.FIRST_NAME.ne("substr"))
-    .execute(destination);
-```
+The [OData v2 standard](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/) allows for a limited range of filter expressions compared to OData v4. A detailed list of what is available in the SDK can be obtained from [the Javadoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/helper/package-summary.html). The functionality can also be discovered through the fluent API.
 
 </TabItem>
 </Tabs>
 
-### Update ###
-
-```JAVA
-service.updateBusinessPartner(partner)
-    .replacingEntity()
-    .execute(destination);
-```
-
-### Delete ###
-
-```JAVA
-service.deleteBusinessPartner(partner)
-    .execute(destination);
-```
-
 <!--
+### Count ###
+
+### Batch Requests ###
+
+### Advanced OData Features ###
+
+Function Imports / Functions & Actions 
+
+-->
+
 ## Error Handling
 
-```Java
-private static final HttpDestination destination = DefaultHttpDestination.builder("https://my.service.url").build();
-private static final MyService service = new DefaultMyService().withServicePath("/my/base/path");
-
-@Test
-public void testGetAll() {
-    service.getAllItem()
-            .select(Item.ID,
-                    Item.DESCRIPTION,
-                    Item.TO_SUB_ITEMS
-                            .select(SubItem.DESCRIPTION))
-            .filter(Item.ID.lessThan(10), Item.DESCRIPTION.length().greaterThan(20))
-            .top(5)
-            .skip(5)
-            .execute(destination);
-}
-```
-
-### Using OData v4 features in queries
-
-The VDM offers a fluent API so you can discover the service API through the VDM.
-
-Below are a few more examples that were build for one of the [OData reference services](https://www.odata.org/odata-services/).
-
-Assuming that `destination` points towards the `TripPin` reference service the following requests could be performed:
-* To fetch all Persons:
-  ```java
-  final List<Persons> persons = new DefaultPersonService().getPersons().execute(destination);
-  ```
-* To fetch a paticular person by key:
-    ```java
-    final Person person = new DefaultPersonService().getPersonsByKey("userName").execute(destination);
-    ```
-* Using `select` and `filter` query options:
-    ```java
-    final List<Persons> personList = new DefaultPersonService()
-        .getPersons()
-        .select(Person.GENDER, Person.USER_NAME)
-        .select(Person.TRIPS.select(Trip.NAME),
-            Person.FRIENDS.top(2).skip(1))
-        .filter(Person.EMAILS.contains(Collections.singletonList("ASD")))
-        .execute(destination);
-    ```
-  The above query also shows how to perform nested operations on navigation properties `Person.TRIPS` and `Person.FRIENDS`.
-  This is a new functionality introduced as part of supporting OData v4. In addition we aslo see new type-sensitive filter expressions on entity fields.
-
-### Handling and debugging failures
+<Tabs defaultValue="v4" values={[
+{ label: 'OData V2', value: 'v2', },
+{ label: 'OData V4', value: 'v4', }]}>
+<TabItem value="v4">
 
 Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `execute` methods may throw a runtime exception (extending) `ODataException`. This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. To handle all kind of failures consider the following code:
 
 ```java
 try { ... }
  catch( final ODataException e ) {
-    logger.error("Failed to execute OData query.", e);
     ODataQueryGeneric query = e.getQuery();
     logger.debug("The following query failed: {}", query);
     // do something else
 }
 ```
 
-This handling is very generic and does not really give a lot of information, except for the request that was (to be) sent out. For more specific information there are dedicated exceptions. Please tend to the documentation of `ODataException` for all the exception types. The following code presents one example which deals with the case that the OData service responded with an HTTP status code indicating an error:
+This handling is the most generic, handling all possible failures. For more specific information there are dedicated exceptions inheriting from `ODataException`. Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odatav4/exception/ODataException.html) for all the exception types.
 
- ```java
-try { ... }
-catch( final ODataServiceException e ) {
-    // ODataQueryGeneric query = e.getQuery();
-    int httpCode = e.getHttpCode();
-    Header[] httpHeaders = e.getHttpHeaders():
-    // react based on the response code
- }
- ```
-
-Finally, the OData service might also include an OData error in the payload of the response:
-
-```java
-    try { ... }
-    catch( ODataErrorResponseException e ) {
-      // ODataQueryGeneric query = e.getQuery();
-      // int httpCode = e.getHttpCode();
-      // Header[] httpHeaders = e.getHttpHeaders():
-      String oDataCode = e.getError().getODataCode();
-      String oDataMessage = e.getError().getODataMessage();
-      String target = e.getError().getTarget();
-      List<ODataServiceError> details = e.getError().getDetails();
-      Map<String, Object> innerError = e.getError().getInnerError();
-    }
-```
-
-You can also list multiple catch clauses to cover different levels or cases that might occur, e.g.:
+In order to handle different kinds of failure one can list multiple catch clauses to cover different levels or cases that might occur, e.g.:
 
 ```java
 try { ... }
@@ -300,16 +299,12 @@ catch( ODataErrorResponseException e ) {
 }
 ```
 
-Note that instead of applying `try/catch` you can also make use of `tryExecute` on the request builders.
+Note that instead of applying `try/catch` one can also make use of `tryExecute` on the request builders.
 
+</TabItem>
+<TabItem value="v2">
 
-## The following features are not yet supported in the implementation of the OData v4 standard:
-* Error handling for failed OData requests
-* Complex Type properties are not available in query builders
-* Order By parameter must be set manually
-* Functions & Actions are both unavailable
-* Batch Requests are not available
-* Media entities are not available
-* Stream properties are not available
+<!-- TODO -->
 
--->
+</TabItem>
+</Tabs>

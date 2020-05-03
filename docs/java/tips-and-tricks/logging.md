@@ -18,7 +18,7 @@ image:
 ## When debugging locally ##
 To quickly change `log level` while debugging your Cloud SDK application locally add this argument to you Java compiler:
 
-```bash
+```makefile
 -Dorg.slf4j.simpleLogger.log.org.apache.http.wire=debug
 ```
 
@@ -33,7 +33,7 @@ SDK_ or _SAP Service SDK_ or _Apache HTTP components_. Here is how you do it for
 
 - Edit the `manifest.yml` to include the following `env` entry for environment variable:
 
-```
+```makefile
 SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, org.apache.http.wire: DEBUG}'
 ```
 You can customize it to the `logging level` to reflect you debugging needs.
@@ -44,7 +44,7 @@ You can customize it to the `logging level` to reflect you debugging needs.
 - We assume the `logback` framework is used
 :::
 - Edit or create a file: `application/src/main/resources/logback-spring.xml`
-    ```xml
+```xml
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration>
         <springProfile name="!cloud">
@@ -65,12 +65,12 @@ You can customize it to the `logging level` to reflect you debugging needs.
             </root>
         </springProfile>
     </configuration>
-    ```
+```
 You can customize it to the `logging level` to reflect you debugging needs.
 
 :::caution  Pay attention to the different profile settings.
 Make sure the `cloud` profile is active for deployed applications. Edit the `manifest.yml` to include the following `env` entry for environment variable:
-    ```
-    SPRING_PROFILES_ACTIVE: 'cloud'
-    ```
+```makefile
+SPRING_PROFILES_ACTIVE: 'cloud'
+```
 :::

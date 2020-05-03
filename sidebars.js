@@ -58,6 +58,13 @@ module.exports = {
       //   },
       //   'client-libraries',
       {
+	type: 'category',
+	label: 'Tips & Tricks',
+	items: [
+	  'java/tips-and-tricks/change-log-level'
+	],
+      },
+      {
         type: 'category',
         label: 'How To',
         items: [

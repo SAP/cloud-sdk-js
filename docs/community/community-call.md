@@ -40,13 +40,13 @@ https://community.sap.com/resources/community-calls
 
 * Apr 7 - SAP Cloud SDK for JavaScript goes open source
 * Mar 4 - Get from Zero to Production with SAP Cloud SDK
-* Feb 4 – Consume APIs of SAP Solutions with Ease
+* Feb 4 - Consume APIs of SAP Solutions with Ease
 
 ### 2019
 
-* Dec 3 – SAP Cloud SDK at TechEd 2019
-* Nov 5 – What’s New in SAP Cloud SDK for JavaScript
-* Oct 1 – Continuous Delivery
-* Sep 3 – SAP Cloud SDK for Java version 3
-* Aug 6 – SCP Extension Factory
-* Jul 2 – SAP Cloud SDK Introduction
+* Dec 3 - SAP Cloud SDK at TechEd 2019
+* Nov 5 - What’s New in SAP Cloud SDK for JavaScript
+* Oct 1 - Continuous Delivery
+* Sep 3 - SAP Cloud SDK for Java version 3
+* Aug 6 - SCP Extension Factory
+* Jul 2 - SAP Cloud SDK Introduction

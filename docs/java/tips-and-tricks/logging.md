@@ -27,7 +27,7 @@ To quickly change `log level` while debugging your Cloud SDK application locally
 
 For applications deployed on [SAP CF](https://developers.sap.com/tutorials/cp-cf-fundamentals.html) you have to
 configure individual log levels for specific packages of your application and third-party dependencies, e.g. _SAP Cloud
-SDK_ or _SAP Service SDK_ or _Apache HTTP components_. Here is how you do it for different Java Frameworks.
+SDK_ or _SAP Cloud Platform SDK for Service Development_ or _Apache HTTP components_. Here is how you do it for different Java Frameworks.
 
 ### **TomEE** based application ###
 

@@ -4,7 +4,7 @@ title: Change log level
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Increase log level
-description: Change log level for your Cloud SDK application for efficient debuggins
+description: Change log levels for your Cloud SDK application for efficient debugging
 keywords:
 - sap
 - cloud

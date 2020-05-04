@@ -29,7 +29,7 @@ BusinessPartner.requestBuilder()
 ```
 
 ### Api documentation
-https://sap.github.io/cloud-sdk/api/
+https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts
 
 ### Helpful Links
 

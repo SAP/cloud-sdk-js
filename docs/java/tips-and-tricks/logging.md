@@ -31,7 +31,7 @@ SDK_ or _SAP Service SDK_ or _Apache HTTP components_. Here is how you do it for
 
 ### **TomEE** based application ###
 
-- Edit the `manifest.yml` to include the following `env` entry for environment variable:
+- Edit the `manifest.yml` to include the following `env` entry for the `SET_LOGGING_LEVEL` environment variable:
 
 ```makefile
 SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, org.apache.http.wire: DEBUG}'

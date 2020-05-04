@@ -4,6 +4,7 @@ import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { Link } from '../selectable';
 import { Filterable } from './filterable';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).
@@ -22,6 +23,7 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
    * Constructor type of the entity to be filtered.
    */
   readonly _entityConstructor: Constructable<EntityT>;
+  readonly _version:ODataV2;
   /**
    * Entity type of the entity tp be filtered.
    */

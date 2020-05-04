@@ -5,6 +5,7 @@ import { Moment } from 'moment';
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { Time } from '../time';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Union type to represent all possible types of a field.
@@ -40,6 +41,7 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
 export abstract class Field<EntityT extends Entity>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
+  readonly _version:ODataV2;
   /**
    * Creates an instance of Field.
    *

@@ -2,51 +2,41 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
-import { Constructable as ConstructableV4 } from './constructable-v4';
 import { EntityBuilder } from './entity-builder';
-import { EntityBuilder as EntityBuilderV4 } from './entity-builder-v4';
 import { CustomField, Link, Selectable } from './selectable';
-import { Selectable as SelectableV4 } from './selectable-v4/selectable';
 import { nonEnumerable } from './util';
 import { toPropertyFormat } from './util/name-converter';
 import { ODataV2 } from './odata-v2';
 import { ODataV4 } from './odata-v4';
 
 export type EntityBuilderType<
-  EntityT extends Entity,
-  EntityTypeForceMandatoryT
+  EntityT extends Entity<Version>,
+  EntityTypeForceMandatoryT,
+  Version=ODataV2
 > = {
   [property in keyof EntityTypeForceMandatoryT]: (
     value: EntityTypeForceMandatoryT[property]
-  ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
+  ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT,Version>;
 } &
-  EntityBuilder<EntityT, EntityTypeForceMandatoryT>;
+  EntityBuilder<EntityT, EntityTypeForceMandatoryT,Version>;
 
-export type EntityBuilderTypeV4<
-  EntityT extends Entity<ODataV4>,
-  EntityTypeForceMandatoryT
-  > = {
-  [property in keyof EntityTypeForceMandatoryT]: (
-    value: EntityTypeForceMandatoryT[property]
-  ) => EntityBuilderTypeV4<EntityT, EntityTypeForceMandatoryT>;
-} &
-  EntityBuilderV4<EntityT, EntityTypeForceMandatoryT>;
 
 /**
  * Super class for all representations of OData entity types.
  */
-export class Entity<version=ODataV2> {
+export class Entity<Version=ODataV2> {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
 
   protected static entityBuilder<
-    EntityT extends Entity,
-    EntityTypeForceMandatoryT
+    EntityT extends Entity<Version>,
+    EntityTypeForceMandatoryT,
+    Version
   >(
-    entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT>
-  ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT>(
+    entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT,Version>
+  ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT,Version> {
+    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT,Version>(
       entityConstructor
     );
     entityConstructor._allFields.forEach(field => {
@@ -56,14 +46,14 @@ export class Entity<version=ODataV2> {
         return this;
       };
     });
-    return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
+    return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT,Version>;
   }
 
-  protected static customFieldSelector<EntityT extends Entity>(
+  protected static customFieldSelector<EntityT extends Entity<Version>,Version=ODataV2>(
     fieldName: string,
-    entityConstructor: Constructable<EntityT>
+    entityConstructor: Constructable<EntityT,Version>
   ): CustomField<EntityT> {
-    return new CustomField(fieldName, entityConstructor);
+    return new CustomField<EntityT,Version>(fieldName, entityConstructor);
   }
 
   /**
@@ -278,17 +268,10 @@ export class Entity<version=ODataV2> {
 /**
  * @hidden
  */
-export interface EntityIdentifiable<T extends Entity> {
-  readonly _entityConstructor: T;
+export interface EntityIdentifiable<T extends Entity<Version>,Version=ODataV2> {
+  readonly _entityConstructor: Constructable<T,{},Version>;
   readonly _entity: T;
-}
-
-/**
- * @hidden
- */
-export interface EntityIdentifiableV4<T extends Entity<ODataV4>> {
-  readonly _entityConstructor: T;
-  readonly _entity: T;
+  readonly _version:Version;
 }
 
 /* eslint-disable valid-jsdoc */

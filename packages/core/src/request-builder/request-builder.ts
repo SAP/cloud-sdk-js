@@ -2,6 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
+import { ODataV2 } from '../odata-v2';
 
 type EntityBasedRequestBuilder<
   EntityCT extends Constructable<Entity>
@@ -10,14 +11,14 @@ type EntityBasedRequestBuilder<
 /**
  * @hidden
  */
-export abstract class RequestBuilder<EntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
+export abstract class RequestBuilder<EntityT extends Entity<Version>,Version=ODataV2>
+  implements EntityIdentifiable<EntityT,Version> {
   static forEntity<EntityCT extends Constructable<Entity>>(
     entity: EntityCT
   ): EntityBasedRequestBuilder<EntityCT> {
     return entity.requestBuilder() as EntityBasedRequestBuilder<EntityCT>;
   }
-
+  _version:Version;
   _entity: EntityT;
-  _entityConstructor: Constructable<EntityT>;
+  _entityConstructor: Constructable<EntityT,{},Version>;
 }

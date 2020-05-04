@@ -3,6 +3,7 @@
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { Filterable } from './filterable';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Data structure to combine [[Filterable]]s conjunctively and / or disjunctively. A FilterList matches when all filterables within the `andFilters` match and when at least one filterable within the `orFilters` matches. Should not be used directly.
@@ -19,6 +20,7 @@ export class FilterList<EntityT extends Entity>
    * Entity type of the entity tp be filtered.
    */
   readonly _entity: EntityT;
+  readonly _version:ODataV2;
 
   /**
    * Creates an instance of FilterList.

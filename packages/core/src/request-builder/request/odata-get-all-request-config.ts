@@ -11,6 +11,7 @@ import { getQueryParametersForOrderBy } from './get-orderby';
 import { getQueryParametersForSelection } from './get-selection';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
+import { ODataV2 } from '../../odata-v2';
 
 /**
  * OData getAll request configuration for an entity type.

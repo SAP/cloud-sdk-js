@@ -17,6 +17,7 @@ import { Selectable } from '../selectable';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { getEntityKeys } from './request/get-keys';
 import { ODataUpdateRequestConfig } from './request/odata-update-request-config';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Create OData query to update an entity.
@@ -37,7 +38,8 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entity: EntityT
+    readonly _entity: EntityT,
+    readonly _version:ODataV2
   ) {
     super(new ODataUpdateRequestConfig(_entityConstructor));
     this.requestConfig.eTag = _entity.versionIdentifier;

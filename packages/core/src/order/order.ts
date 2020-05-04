@@ -2,6 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
+import { ODataV2 } from '../odata-v2';
 
 type OrderType = 'asc' | 'desc';
 
@@ -14,6 +15,7 @@ export class Order<EntityT extends Entity>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
+  readonly _version:ODataV2;
 
   /**
    * Creates an instance of Order.

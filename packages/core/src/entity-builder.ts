@@ -4,6 +4,7 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
 import { Entity } from './entity';
 import { toStaticPropertyFormat } from './util';
+import { ODataV2 } from './odata-v2';
 
 const logger = createLogger({
   package: 'core',
@@ -13,10 +14,10 @@ const logger = createLogger({
 /**
  * @hidden
  */
-export class EntityBuilder<EntityT extends Entity, JsonT> {
+export class EntityBuilder<EntityT extends Entity<Version>, JsonT,Version=ODataV2> {
   protected entity: EntityT;
 
-  constructor(private _entityConstructor: Constructable<EntityT, JsonT>) {
+  constructor(private _entityConstructor: Constructable<EntityT, JsonT,Version>) {
     if (!this.entity) {
       this.entity = new this._entityConstructor();
     }

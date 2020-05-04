@@ -11,6 +11,7 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Represents a property with a string value.
@@ -27,7 +28,7 @@ class StringFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class StringField<EntityT extends Entity>
+export class StringField<EntityT extends Entity<Version>,Version=ODataV2>
   extends StringFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;

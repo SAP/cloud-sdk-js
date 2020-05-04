@@ -9,8 +9,9 @@ import { Field } from './field';
 import { NumberField } from './number-field';
 import { StringField } from './string-field';
 import { TimeField } from './time-field';
+import { ODataV2 } from '../odata-v2';
 
-export class CustomField<EntityT extends Entity> extends Field<EntityT> {
+export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extends Field<EntityT> {
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>

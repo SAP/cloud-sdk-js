@@ -3,6 +3,7 @@
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { Selectable } from './selectable';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Represents a navigation property of an OData entity.
@@ -48,6 +49,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity>
   selects: Selectable<LinkedEntityT>[] = [];
 
   readonly _entity: EntityT;
+  readonly _version:ODataV2;
   /**
    * Creates an instance of Link.
    *

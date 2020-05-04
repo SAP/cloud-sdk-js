@@ -13,6 +13,8 @@ import {
 import { Selectable } from '../selectable';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config';
+import { ODataV2 } from '../odata-v2';
+import { ODataV4 } from '../odata-v4';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -27,6 +29,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
+  readonly _version:ODataV2;
 
   /**
    * Creates an instance of GetAllRequestBuilder.

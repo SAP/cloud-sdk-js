@@ -6,6 +6,7 @@ import { Entity, EntityIdentifiable } from '../entity';
 import { FieldType } from '../selectable';
 import { FilterFunction } from './filter-function';
 import { Filterable } from './filterable';
+import { ODataV2 } from '../odata-v2';
 
 type FilterOperatorString = 'eq' | 'ne';
 type FilterOperatorBoolean = 'eq' | 'ne';
@@ -39,6 +40,7 @@ export class Filter<EntityT extends Entity, FieldT extends FieldType>
    * Constructor type of the entity to be filtered.
    */
   readonly _entityConstructor: Constructable<EntityT>;
+  readonly _version:ODataV2;
   /**
    * Entity type of the entity tp be filtered.
    */

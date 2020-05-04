@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable-v4';
-import { Entity, EntityIdentifiable, EntityIdentifiableV4 } from '../entity';
-import { deserializeEntity } from '../entity-deserializer-v4';
+import { Constructable } from '../constructable';
+import { Entity, EntityIdentifiable } from '../entity';
+import { deserializeEntity } from '../entity-deserializer';
 import { and, Filterable } from '../filter/filterable';
 import { Orderable } from '../order/orderable';
 import { DestinationOptions } from '../scp-cf';
@@ -13,7 +13,10 @@ import {
 import { Selectable } from '../selectable';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config';
+import { ODataV2 } from '../odata-v2';
 import { ODataV4 } from '../odata-v4';
+import { deserializeEntityV4 } from '../entity-deserializer-v4';
+import { ODataGetAllRequestConfigV4 } from './request/odata-get-all-request-config-v4';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -24,18 +27,19 @@ import { ODataV4 } from '../odata-v4';
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetAllRequestBuilder<EntityT extends Entity<ODataV4>>
-  extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
-  implements EntityIdentifiableV4<EntityT> {
+export class GetAllRequestBuilderV4<EntityT extends Entity<ODataV4>>
+  extends MethodRequestBuilderBase<ODataGetAllRequestConfigV4<EntityT>>
+  implements EntityIdentifiable<EntityT,ODataV4> {
   readonly _entity: EntityT;
+  readonly _version:ODataV4;
 
   /**
    * Creates an instance of GetAllRequestBuilder.
    *
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
-  constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(new ODataGetAllRequestConfig(_entityConstructor));
+  constructor(readonly _entityConstructor: Constructable<EntityT,{},ODataV4>) {
+    super(new ODataGetAllRequestConfigV4(_entityConstructor));
   }
   /**
    * Restrict the response to the given selection of properties in the request.
@@ -48,49 +52,49 @@ export class GetAllRequestBuilder<EntityT extends Entity<ODataV4>>
     return this;
   }
 
-  // /**
-  //  * Add filter statements to the request.
-  //  *
-  //  * @param expressions - Filter expressions to restrict the response
-  //  * @returns The request builder itself, to facilitate method chaining
-  //  */
-  // filter(...expressions: Filterable<EntityT>[]): this {
-  //   this.requestConfig.filter = and(...expressions);
-  //   return this;
-  // }
-  //
-  // /**
-  //  * Add order-by statements to the request.
-  //  *
-  //  * @param orderBy - OrderBy statements to order the response by
-  //  * @returns The request builder itself, to facilitate method chaining
-  //  */
-  // orderBy(...orderBy: Orderable<EntityT>[]): this {
-  //   this.requestConfig.orderBy = orderBy;
-  //   return this;
-  // }
-  //
-  // /**
-  //  * Limit number of returned entities.
-  //  *
-  //  * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request
-  //  * @returns The request builder itself, to facilitate method chaining
-  //  */
-  // top(top: number): this {
-  //   this.requestConfig.top = top;
-  //   return this;
-  // }
-  //
-  // /**
-  //  * Skip number of entities.
-  //  *
-  //  * @param skip - Number of matching entities to skip. Useful for paging
-  //  * @returns The request builder itself, to facilitate method chaining
-  //  */
-  // skip(skip: number): this {
-  //   this.requestConfig.skip = skip;
-  //   return this;
-  // }
+  /**
+   * Add filter statements to the request.
+   *
+   * @param expressions - Filter expressions to restrict the response
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  filter(...expressions: Filterable<EntityT>[]): this {
+    this.requestConfig.filter = and(...expressions);
+    return this;
+  }
+
+  /**
+   * Add order-by statements to the request.
+   *
+   * @param orderBy - OrderBy statements to order the response by
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  orderBy(...orderBy: Orderable<EntityT>[]): this {
+    this.requestConfig.orderBy = orderBy;
+    return this;
+  }
+
+  /**
+   * Limit number of returned entities.
+   *
+   * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  top(top: number): this {
+    this.requestConfig.top = top;
+    return this;
+  }
+
+  /**
+   * Skip number of entities.
+   *
+   * @param skip - Number of matching entities to skip. Useful for paging
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  skip(skip: number): this {
+    this.requestConfig.skip = skip;
+    return this;
+  }
 
   /**
    * Execute request.
@@ -107,7 +111,7 @@ export class GetAllRequestBuilder<EntityT extends Entity<ODataV4>>
       .then(request => request.execute())
       .then(response =>
         response.data.d.results.map(json =>
-          deserializeEntity(json, this._entityConstructor, response.headers)
+          deserializeEntityV4(json, this._entityConstructor, response.headers)
         )
       );
   }

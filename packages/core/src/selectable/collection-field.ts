@@ -11,6 +11,7 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ODataV2 } from '../odata-v2';
 import { ODataV4 } from '../odata-v4';
 
 /**
@@ -18,18 +19,18 @@ import { ODataV4 } from '../odata-v4';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class StringFieldBase<EntityT extends Entity<ODataV4>> extends EdmTypeField<
+class CollectionFieldBase<EntityT extends Entity<ODataV4>> extends EdmTypeField<
   EntityT,
   string
-> {}
+  > {}
 
 /**
  * Represents a selectable property with a string value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class StringField<EntityT extends Entity<ODataV4>>
-  extends StringFieldBase<EntityT>
+export class CollectionField<EntityT extends Entity<ODataV4> >
+  extends CollectionFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
 }
@@ -39,9 +40,9 @@ export class StringField<EntityT extends Entity<ODataV4>>
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class ComplexTypeStringPropertyField<
+export class ComplexTypeCollectionFieldPropertyField<
   EntityT extends Entity
-> extends StringFieldBase<EntityT> {
+  > extends CollectionFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */

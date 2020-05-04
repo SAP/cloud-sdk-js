@@ -1,25 +1,11 @@
-name: documentation
+name: Release Cloud SDK documentation
 
 on:
-  pull_request:
-    branches: [documentation]
   push:
     branches: [documentation]
 
 jobs:
- checks:
-   if: github.event_name != 'push'
-   runs-on: ubuntu-latest
-   steps:
-     - uses: actions/checkout@v1
-     - uses: actions/setup-node@v1
-       with:
-         node-version: '12.x'
-         run: |
-          npm ci
-          npm run build
- gh-release:
-   if: github.event_name != 'pull_request'
+ release:
    runs-on: ubuntu-latest
    steps:
     - uses: actions/checkout@v1
@@ -39,12 +25,12 @@ jobs:
         HostName github.com
         IdentityFile ~/.ssh/id_rsa
         EOT
-    - name: Release to GitHub Pages
+    - name: Release Documentation to GitHub Pages
       env:
         USE_SSH: true
-        GIT_USER: git
+        GIT_USER: irrelevant
       run: |
-        git config --global user.email "actions@gihub.com"
-        git config --global user.name "gh-actions"
+        git config --global user.email "irrelevant@completely.irrelevant"
+        git config --global user.name "irrelevant"
         npm ci
         npx docusaurus deploy

@@ -69,7 +69,7 @@ You can customize it to the `logging level` to reflect you debugging needs.
 You can customize the `logging level` to reflect you debugging needs.
 
 :::caution  Pay attention to the different profile settings.
-Make sure the `cloud` profile is active for deployed applications. Edit the `manifest.yml` to include the following `env` entry for environment variable:
+Make sure the `cloud` profile is active for deployed applications. Edit the `manifest.yml` to include the following `env` entry for the `SPRING_PROFILES_ACTIVE` environment variable:
 ```makefile
 SPRING_PROFILES_ACTIVE: 'cloud'
 ```

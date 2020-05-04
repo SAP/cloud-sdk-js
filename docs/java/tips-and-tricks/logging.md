@@ -19,7 +19,7 @@ image:
 To quickly change `log level` while debugging your Cloud SDK application locally add this argument to you Java compiler:
 
 ```makefile
--Dorg.slf4j.simpleLogger.log.org.apache.http.wire=debug
+-Dorg.slf4j.simpleLogger.log.package.to.change.log.level.for=debug
 ```
 
 

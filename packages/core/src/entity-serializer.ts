@@ -5,6 +5,7 @@ import { Constructable } from './constructable';
 import { Entity } from './entity';
 import { tsToEdm } from './payload-value-converter';
 import {
+  CollectionField,
   ComplexTypeField,
   EdmTypeField,
   Link,
@@ -29,6 +30,16 @@ export function serializeEntity<EntityT extends Entity>(
   };
 }
 
+export function serializeEntityODataV4<EntityT extends Entity>(
+  entity: EntityT,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
+  return {
+    ...serializeEntityNonCustomFieldsODataV4(entity, entityConstructor),
+    ...entity.getCustomFields()
+  };
+}
+
 /**
  * Converts an instance of an entity class into a JSON payload to be sent to an OData service, ignoring custom fields.
  *
@@ -46,32 +57,82 @@ export function serializeEntityNonCustomFields<EntityT extends Entity>(
   return Object.keys(entity).reduce((serialized, key) => {
     const selectable = entityConstructor[toStaticPropertyFormat(key)];
     const fieldValue = entity[key];
-
-    if (fieldValue === null || fieldValue === undefined) {
-      serialized[selectable._fieldName] = null;
-    } else if (selectable instanceof EdmTypeField) {
-      serialized[selectable._fieldName] = tsToEdm(
+    if (isODataV2Serizable(fieldValue, selectable)) {
+      serialized[selectable._fieldName] = serializeField(
         fieldValue,
-        selectable.edmType
-      );
-    } else if (selectable instanceof OneToOneLink) {
-      serialized[selectable._fieldName] = serializeEntityNonCustomFields(
-        fieldValue,
-        selectable._linkedEntity
-      );
-    } else if (selectable instanceof Link) {
-      serialized[selectable._fieldName] = fieldValue.map(linkedEntity =>
-        serializeEntityNonCustomFields(linkedEntity, selectable._linkedEntity)
-      );
-    } else if (selectable instanceof ComplexTypeField) {
-      serialized[selectable._fieldName] = serializeComplexTypeField(
-        selectable,
-        fieldValue
+        selectable
       );
     }
 
     return serialized;
   }, {});
+}
+
+export function serializeEntityNonCustomFieldsODataV4<EntityT extends Entity>(
+  entity: EntityT,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
+  if (!entity) {
+    return {};
+  }
+  return Object.keys(entity).reduce((serialized, key) => {
+    const selectable = entityConstructor[toStaticPropertyFormat(key)];
+    const fieldValue = entity[key];
+
+    if (isODataV2Serizable(fieldValue, selectable)) {
+      serialized[selectable._fieldName] = serializeField(
+        fieldValue,
+        selectable
+      );
+    } else if (selectable instanceof CollectionField) {
+      serialized[selectable._fieldName] = serilizeCollectionField(
+        fieldValue,
+        selectable
+      );
+    }
+
+    return serialized;
+  }, {});
+}
+
+function serilizeCollectionField<EntityT extends Entity>(
+  fieldValue: any[],
+  selectable: CollectionField<EntityT>
+) {
+  if (selectable._elementType instanceof EdmTypeField) {
+    const edmType = selectable._elementType.edmType;
+    return fieldValue.map(v => tsToEdm(v, edmType));
+  } else if (selectable._elementType instanceof ComplexTypeField) {
+    const complexTypeField = selectable._elementType;
+    return fieldValue.map(v => serializeComplexTypeField(complexTypeField, v));
+  }
+}
+
+function isODataV2Serizable(fieldValue, selectable) {
+  return (
+    fieldValue === null ||
+    fieldValue === undefined ||
+    selectable instanceof EdmTypeField ||
+    selectable instanceof OneToOneLink ||
+    selectable instanceof Link ||
+    selectable instanceof ComplexTypeField
+  );
+}
+
+function serializeField(fieldValue, selectable) {
+  if (fieldValue === null || fieldValue === undefined) {
+    return null;
+  } else if (selectable instanceof EdmTypeField) {
+    return tsToEdm(fieldValue, selectable.edmType);
+  } else if (selectable instanceof OneToOneLink) {
+    return serializeEntityNonCustomFields(fieldValue, selectable._linkedEntity);
+  } else if (selectable instanceof Link) {
+    return fieldValue.map(linkedEntity =>
+      serializeEntityNonCustomFields(linkedEntity, selectable._linkedEntity)
+    );
+  } else if (selectable instanceof ComplexTypeField) {
+    return serializeComplexTypeField(selectable, fieldValue);
+  }
 }
 
 function serializeComplexTypeField<EntityT extends Entity>(

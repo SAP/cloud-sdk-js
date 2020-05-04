@@ -6,6 +6,7 @@ import { ComplexTypeField } from './complex-type-field';
 import { CustomField } from './custom-field';
 import { Link } from './link';
 import { SimpleTypeFields } from './simple-type-fields';
+import { CollectionField } from './collection-field';
 
 /**
  * Represents all selectables, i.e. everything that can be used in a `.select` statement.
@@ -18,4 +19,5 @@ export type Selectable<EntityT extends Entity> =
   | Link<EntityT, any>
   | ComplexTypeField<EntityT>
   | CustomField<EntityT>
-  | AllFields<EntityT>;
+  | AllFields<EntityT>
+  | CollectionField<EntityT>;

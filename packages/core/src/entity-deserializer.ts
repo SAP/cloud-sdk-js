@@ -5,6 +5,7 @@ import { Constructable } from './constructable';
 import { Entity, isExpandedProperty, isSelectedProperty } from './entity';
 import { edmToTs } from './payload-value-converter';
 import {
+  CollectionField,
   ComplexTypeField,
   EdmTypeField,
   Link,
@@ -69,6 +70,26 @@ export function deserializeEntity<EntityT extends Entity, JsonT>(
     .setOrInitializeRemoteState();
 }
 
+export function deserializeEntityODataV4<EntityT extends Entity, JsonT>(
+  json: Partial<JsonT>,
+  entityConstructor: Constructable<EntityT>,
+  requestHeader?: any
+): EntityT {
+  const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
+  return entityConstructor._allFields
+    .filter(field => isSelectedProperty(json, field))
+    .reduce((entity, staticField) => {
+      entity[toPropertyFormat(staticField._fieldName)] = getFieldValueODataV4(
+        json,
+        staticField
+      );
+      return entity;
+    }, new entityConstructor())
+    .initializeCustomFields(extractCustomFields(json, entityConstructor))
+    .setVersionIdentifier(etag)
+    .setOrInitializeRemoteState();
+}
+
 function extractEtagFromHeader(headers: any): string | undefined {
   return headers ? headers['Etag'] || headers['etag'] : undefined;
 }
@@ -87,6 +108,27 @@ function getFieldValue<EntityT extends Entity, JsonT>(
     return getLinkFromJson(json, selectable);
   } else if (selectable instanceof ComplexTypeField) {
     return deserializeComplexType(json[selectable._fieldName], selectable);
+  }
+}
+
+function isODataV2Selectable<EntityT extends Entity>(
+  selectable: Selectable<EntityT>
+): boolean {
+  return (
+    selectable instanceof EdmTypeField ||
+    selectable instanceof Link ||
+    selectable instanceof ComplexTypeField
+  );
+}
+
+function getFieldValueODataV4<EntityT extends Entity, JsonT>(
+  json: Partial<JsonT>,
+  selectable: Selectable<EntityT>
+) {
+  if (isODataV2Selectable(selectable)) {
+    return getFieldValue(json, selectable);
+  } else if (selectable instanceof CollectionField) {
+    return deserializeCollectionType(json[selectable._fieldName], selectable);
   }
 }
 
@@ -150,4 +192,17 @@ function deserializeComplexType<EntityT extends Entity>(
       );
       return complexTypeObject;
     }, {});
+}
+
+function deserializeCollectionType<EntityT extends Entity>(
+  json: any[],
+  selectable: CollectionField<EntityT>
+) {
+  if (selectable._elementType instanceof EdmTypeField) {
+    const edmType = selectable._elementType.edmType;
+    return json.map(v => edmToTs(v, edmType));
+  } else if (selectable._elementType instanceof ComplexTypeField) {
+    const complexTypeField = selectable._elementType;
+    return json.map(v => deserializeComplexType(v, complexTypeField));
+  }
 }

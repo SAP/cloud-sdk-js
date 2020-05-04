@@ -28,13 +28,13 @@ The VDM consists of _service_ and _data model_ classes. The service classes mirr
 
 To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/docs/java/features/connectivity). The following code snippets assume that such a destination is in place:
 
-```JAVA
+```java
 HttpDestination destination;
 ```
 
 On an abstract level requests are generally build up according to the following pattern:
 
-```JAVA
+```java
 result = service.operation()
     .withParameter(...)
     .execute(destination);
@@ -48,7 +48,7 @@ result = service.operation()
 
 Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA VDM. The following code snippets assume that an instance of this service is setup:
 
-```JAVA
+```java
 BusinessPartnerService service = new DefaultBusinessPartnerService();
 ```
 
@@ -58,7 +58,7 @@ BusinessPartnerService service = new DefaultBusinessPartnerService();
 
 Create, Read, Update and Delete operations on entities are build from the associated service class:
 
-```JAVA
+```java
 service.createBusinessPartner(partner);
 service.getBusinessPartnerByKey("id");
 service.getAllBusinessPartner();
@@ -109,7 +109,7 @@ Request parameters:
 An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SDK will try to read version identifiers from responses and set them when sending OData requests.
 
 Consider the following example:
-```JAVA
+```java
 partner = service.getBusinessPartnerByKey("id")
                  .execute(destination);
 service.updateBusinessPartner(partner)
@@ -137,7 +137,7 @@ The properties that can be selected or expanded are represented via static _fiel
 { label: 'OData V4', value: 'v4', }]}>
 <TabItem value="v4">
 
-```JAVA
+```java
 service.getBusinessPartnerByKey("id")
     .select(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME, BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
     .execute(destination);
@@ -145,13 +145,13 @@ service.getBusinessPartnerByKey("id")
 
 The above translates to the following query parameters:
 
-```TXT
+```
 $select=FirstName,LastName$expand=to_BusinessPartnerAddress
 ```
 
 OData v4 allows for formulating nested, fully featured queries on complex and navigational properties. Querying nested objects is possible within expand. That means the following query is possible:
 
-```JAVA
+```java
 service.getBusinessPartnerByKey("id")
     .select(BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
         .select(BusinessPartnerAddress.CITY_CODE, BusinessPartnerAddress.COUNTRY)
@@ -163,14 +163,14 @@ service.getBusinessPartnerByKey("id")
 
 The above translates to the following `expand` query parameter:
 
-```TXT
+```
 $expand=to_BusinessPartnerAddress($select=CityCode,Country;$filter=CityCode eq '1234';$orderby=Country%20desc)
 ```
 
 </TabItem>
 <TabItem value="v2">
 
-```JAVA
+```java
 service.getBusinessPartnerByKey("id")
     .select(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME, BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
     .execute(destination);
@@ -178,7 +178,7 @@ service.getBusinessPartnerByKey("id")
 
 The above translates to the following query parameters:
 
-```TXT
+```
 $select=FirstName,LastName$expand=to_BusinessPartnerAddress
 ```
 
@@ -192,7 +192,7 @@ When operating on a collection of entities the API offers `filter( ... )` on the
 
 The following example:
 
-```JAVA
+```java
 /*
 Get all business partners that either:
   - Have first name 'Alice' but not last name 'Bob'
@@ -207,7 +207,7 @@ service.getAllBusinessPartner()
 ```
 
 Will translate to this filter parameter:
-```TXT
+```
 $filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mallory'))
 ```
 
@@ -215,7 +215,7 @@ Take note of the order of `and` and `or`. As `or` is invoked on the result of `a
 
 To achieve a different order with `and` as the top level statement one would nest the `or` within `and(...)`:
 
-```JAVA
+```java
 .and(BusinessPartner.LAST_NAME.ne("Bob")
     .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
 )
@@ -234,7 +234,7 @@ The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01
 
 The below example leverages OData v4 exclusive features to build a more complex request:
  
-```JAVA
+```java
 /*
 Fetch all business partners where:
 - the last name is at least twice as long as the first name 

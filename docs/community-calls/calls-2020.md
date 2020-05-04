@@ -1,5 +1,5 @@
 ---
-id: community-calls-2020
+id: community-call
 title: Update Call for SAP Community
 hide_title: false
 hide_table_of_contents: false

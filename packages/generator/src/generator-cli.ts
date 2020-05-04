@@ -13,7 +13,7 @@ const logger = createLogger({
 logger.info('Parsing args...');
 
 generate(parseCmdArgs()).then(() =>
-  logger.info('Generation of services successfully finished.')
+  logger.info('Generation of services finished successfully.')
 );
 
 export function parseCmdArgs(): GeneratorOptions {

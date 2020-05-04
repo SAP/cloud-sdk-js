@@ -16,7 +16,7 @@ image:
 ---
 
 ## When debugging locally ##
-To quickly change `log level` while debugging your Cloud SDK application locally add this argument to you Java compiler:
+To quickly change `log levels` while debugging your Cloud SDK application locally add this argument to your `mvn` run command:
 
 ```makefile
 -Dorg.slf4j.simpleLogger.log.package.to.change.log.level.for=debug

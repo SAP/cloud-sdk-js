@@ -39,7 +39,6 @@ export class Entity<version=ODataV2> {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
-  _version:version;
 
   protected static entityBuilder<
     EntityT extends Entity,

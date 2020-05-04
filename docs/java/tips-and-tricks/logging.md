@@ -66,7 +66,7 @@ You can customize it to the `logging level` to reflect you debugging needs.
         </springProfile>
     </configuration>
 ```
-You can customize it to the `logging level` to reflect you debugging needs.
+You can customize the `logging level` to reflect you debugging needs.
 
 :::caution  Pay attention to the different profile settings.
 Make sure the `cloud` profile is active for deployed applications. Edit the `manifest.yml` to include the following `env` entry for environment variable:

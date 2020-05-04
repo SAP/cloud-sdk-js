@@ -42,7 +42,7 @@
     "http-proxy-agent": "^4.0.1",
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.25.1",
+    "moment": "~2.24.0",
     "opossum": "^5.0.0",
     "rambda": "^5.0.0",
     "uuid": "^7.0.3",

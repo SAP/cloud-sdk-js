@@ -2,10 +2,15 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from './constructable';
+import { Constructable as ConstructableV4 } from './constructable-v4';
 import { EntityBuilder } from './entity-builder';
+import { EntityBuilder as EntityBuilderV4 } from './entity-builder-v4';
 import { CustomField, Link, Selectable } from './selectable';
+import { Selectable as SelectableV4 } from './selectable-v4/selectable';
 import { nonEnumerable } from './util';
 import { toPropertyFormat } from './util/name-converter';
+import { ODataV2 } from './odata-v2';
+import { ODataV4 } from './odata-v4';
 
 export type EntityBuilderType<
   EntityT extends Entity,
@@ -17,13 +22,24 @@ export type EntityBuilderType<
 } &
   EntityBuilder<EntityT, EntityTypeForceMandatoryT>;
 
+export type EntityBuilderTypeV4<
+  EntityT extends Entity<ODataV4>,
+  EntityTypeForceMandatoryT
+  > = {
+  [property in keyof EntityTypeForceMandatoryT]: (
+    value: EntityTypeForceMandatoryT[property]
+  ) => EntityBuilderTypeV4<EntityT, EntityTypeForceMandatoryT>;
+} &
+  EntityBuilderV4<EntityT, EntityTypeForceMandatoryT>;
+
 /**
  * Super class for all representations of OData entity types.
  */
-export class Entity {
+export class Entity<version=ODataV2> {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
+  _version:version;
 
   protected static entityBuilder<
     EntityT extends Entity,
@@ -264,7 +280,15 @@ export class Entity {
  * @hidden
  */
 export interface EntityIdentifiable<T extends Entity> {
-  readonly _entityConstructor: Constructable<T>;
+  readonly _entityConstructor: T;
+  readonly _entity: T;
+}
+
+/**
+ * @hidden
+ */
+export interface EntityIdentifiableV4<T extends Entity<ODataV4>> {
+  readonly _entityConstructor: T;
   readonly _entity: T;
 }
 
@@ -274,6 +298,13 @@ export interface EntityIdentifiable<T extends Entity> {
  * @hidden
  */
 export function isSelectedProperty<EntityT extends Entity>(
+  json,
+  selectable: Selectable<EntityT>
+) {
+  return json.hasOwnProperty(selectable._fieldName);
+}
+
+export function isSelectedPropertyV4<EntityT extends Entity<ODataV4>>(
   json,
   selectable: Selectable<EntityT>
 ) {

@@ -36,7 +36,7 @@ SDK_ or _SAP Service SDK_ or _Apache HTTP components_. Here is how you do it for
 ```makefile
 SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, org.apache.http.wire: DEBUG}'
 ```
-You can customize it to the `logging level` to reflect you debugging needs.
+You can customize the `logging level` to reflect you debugging needs.
 
 ## **Spring Boot** based application ##
 

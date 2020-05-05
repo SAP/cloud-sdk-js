@@ -35,7 +35,7 @@ module.exports = {
 	      'java/features/rest/sap-cloud-sdk-as-a-service',
 	      {
 		type: 'category',
-		label: 'Released Clients',
+		label: 'Released clients',
 		items: [
 		  'java/features/rest/clients/workflow-api',
 		  'java/features/rest/clients/currency-conversion',

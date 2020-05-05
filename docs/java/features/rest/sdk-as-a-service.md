@@ -22,4 +22,4 @@ keywords:
 
 ### Handcrafted as Code ###
 
-## Available client libraries ##
+## Released client libraries ##

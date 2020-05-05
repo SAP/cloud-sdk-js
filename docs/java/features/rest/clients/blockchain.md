@@ -1,5 +1,5 @@
 ---
-id: blockchaing-business-sdk
+id: blockchain-business-sdk
 title: Feature title
 hide_title: false
 hide_table_of_contents: false

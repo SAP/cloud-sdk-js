@@ -146,7 +146,7 @@ service.getBusinessPartnerByKey("id")
 The above translates to the following query parameters:
 
 ```
-$select=FirstName,LastName$expand=to_BusinessPartnerAddress
+$select=FirstName,LastName&$expand=to_BusinessPartnerAddress
 ```
 
 OData v4 allows for formulating nested, fully featured queries on complex and navigational properties. Querying nested objects is possible within expand. That means the following query is possible:
@@ -155,7 +155,7 @@ OData v4 allows for formulating nested, fully featured queries on complex and na
 service.getBusinessPartnerByKey("id")
     .select(BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
         .select(BusinessPartnerAddress.CITY_CODE, BusinessPartnerAddress.COUNTRY)
-        .filter(BusinessPartnerAddress.CITY_CODE.ne("1234"))
+        .filter(BusinessPartnerAddress.CITY_CODE.notEqualTo("1234"))
         .orderBy(BusinessPartnerAddress.COUNTRY.desc())
     )
     .execute(destination);
@@ -164,7 +164,7 @@ service.getBusinessPartnerByKey("id")
 The above translates to the following `expand` query parameter:
 
 ```
-$expand=to_BusinessPartnerAddress($select=CityCode,Country;$filter=CityCode eq '1234';$orderby=Country%20desc)
+$expand=to_BusinessPartnerAddress($select=CityCode,Country;$filter=CityCode eq '1234';$orderby=Country desc)
 ```
 
 </TabItem>
@@ -179,7 +179,24 @@ service.getBusinessPartnerByKey("id")
 The above translates to the following query parameters:
 
 ```
-$select=FirstName,LastName$expand=to_BusinessPartnerAddress
+$select=FirstName,LastName,to_BusinessPartnerAddress/*&$expand=to_BusinessPartnerAddress
+```
+
+One can also apply select again to the expanded object:
+
+```java
+service.getBusinessPartnerByKey("id")
+    .select(BusinessPartner.FIRST_NAME,
+        BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
+            .select(BusinessPartnerAddress.ADDRESS_ID, 
+                BusinessPartnerAddress.CITY_CODE))
+    .execute(destination);
+```
+
+The above translates to the following query parameters:
+
+```
+$select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/CityCode&$expand=to_BusinessPartnerAddress
 ```
 
 </TabItem>
@@ -191,6 +208,28 @@ $select=FirstName,LastName$expand=to_BusinessPartnerAddress
 When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also build via the static property fields on entities.
 
 The following example:
+
+<Tabs defaultValue="v4" values={[
+{ label: 'OData V2', value: 'v2', },
+{ label: 'OData V4', value: 'v4', }]}>
+<TabItem value="v4">
+
+```java
+/*
+Get all business partners that either:
+  - Have first name 'Alice' but not last name 'Bob'
+  - Or have first name 'Mallory'
+*/
+service.getAllBusinessPartner()
+    .filter(BusinessPartner.FIRST_NAME.equalTo("Alice")
+        .and(BusinessPartner.LAST_NAME.notEqualTo("Bob"))
+        .or(BusinessPartner.FIRST_NAME.equalTo("Mallory"))
+    )
+    .execute(destination);
+```
+
+</TabItem>
+<TabItem value="v2">
 
 ```java
 /*
@@ -206,6 +245,9 @@ service.getAllBusinessPartner()
     .execute(destination);
 ```
 
+</TabItem>
+</Tabs>
+
 Will translate to this filter parameter:
 ```
 $filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mallory'))
@@ -215,11 +257,29 @@ Take note of the order of `and` and `or`. As `or` is invoked on the result of `a
 
 To achieve a different order with `and` as the top level statement one would nest the `or` within `and(...)`:
 
+<Tabs defaultValue="v4" values={[
+{ label: 'OData V2', value: 'v2', },
+{ label: 'OData V4', value: 'v4', }]}>
+<TabItem value="v4">
+
+```java
+.and(BusinessPartner.LAST_NAME.notEqualTo("Bob")
+    .or(BusinessPartner.FIRST_NAME.equalTo("Mallory"))
+)
+```
+
+
+</TabItem>
+<TabItem value="v2">
+
 ```java
 .and(BusinessPartner.LAST_NAME.ne("Bob")
     .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
 )
 ```
+
+</TabItem>
+</Tabs>
 
 #### Available Filter Expressions ####
 

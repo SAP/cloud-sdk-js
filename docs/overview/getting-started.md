@@ -13,7 +13,7 @@ keywords:
 - cloud sdk
 - sap cloud sdk
 image:
-k---
+---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';

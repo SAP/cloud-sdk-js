@@ -11,7 +11,7 @@ import {
 } from './test-util/test-services/test-service';
 
 describe('entity-deserializer', () => {
-  it('should handle V4 collection ', () => {
+  it('should handle V4 collection', () => {
     const testEntity = new TestEntityV4();
     testEntity.stringProperty = 'something';
     testEntity.collectionProperty = ['Foo', 'Bar'];

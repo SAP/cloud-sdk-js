@@ -569,11 +569,6 @@ MY_STRING_FIELD_2.equals('huh') // but then again I did not know you could call 
 // you can uses clases + interfaces, which bring you duplicated code
 // or you can use mixins + interfaces, which loses you properly rendered documentation (though you might make an argument that something like StringField is maybe not what people are looking at the docs for)
 
-// minor points:
-
-// TODO: every time I look at this I'm wondering what the difference between _keyFields and _keys is
-// I think _keys should be a function somewhere else that takes the model and the state container and then gives you the key of that instance (which is what is returned here)
-
 // get rid of ForceMandatory type
 // either generate the builders explicitly
 // or just accept and document the fact that there's a mismatch between "nullable" in OData, "select" in OData and "optional" in TypeScript and just make the ForceMandatory the normal interface and get rid of the current normal one 

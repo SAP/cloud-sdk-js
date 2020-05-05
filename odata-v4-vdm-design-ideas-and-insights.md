@@ -473,6 +473,50 @@ requestBuilder
 I find the drawbacks of approaches 1 and 3 too much, for my personal taste.
 2 is probably easy to implement, but I prefer the API of 4, so that's what I would try and then re-open the discussion if there are unforeseen problems (though it also works in the Java SDK, so it shouldn't be that much of a problem in the JS SDK).
 
+## V4 as a Superset of V2
+
+This is an idea that Matthias told me about and that apparently the Java SDK team has already started to put into practice.
+Assuming that the set of requests that you can build in V4 is a superset of the set of requests you can build in V2, it should be fairly straight-forward to bring the request builders themselves in a state where a lot of the code can be reused.
+Also if you look at the interfaces I defined for the request itself and then also consider that we will very likely need a some shared interfaces between the request builder and the static helpers for navigation properties, the whole thing is starting to make a lot of sense to me.
+Short recap about the interfaces that already exist in my prototype:
+
+```ts
+type V2GetAllQuery<EntityT extends Entity> = Filters & V2Selects<EntityT> & Orders<EntityT> & Top & Skip;
+type V4GetAllQuery<EntityT extends Entity> = Filters & V4Selects<EntityT> & Expands<EntityT> & Orders<EntityT> & Top & Skip & Search & Count;
+```
+
+If you apply the same exact idea to the request builder, you'll end up with something like this:
+
+```ts
+interface V2Select<EntityT extends Entity> {
+  select: (...selects: Array<Selectable & EntityIdentifiable<EntityT> & Field & Link<EntityT, ?>>) => this;
+}
+
+interface V4Select<EntityT extends Entity> {
+  select: (...selects: Array<Selectable & EntityIdentifiable<EntityT> & Field>) => this;
+}
+
+interface Expand<EntityT extends Entity> {
+  expand: (...expands: Array<Field & Link<EntityT, ?>>) => this;
+}
+
+// ...
+
+class V2GetAllRequestBuilder<EntityT extends Entity> implements V2Select<EntityT> & // ...
+{}
+
+class V4GetAllRequestBuilder<EntityT extends Entity> implements V4Select<EntityT> & Expand<EntityT> & // ...
+{}
+```
+
+Assuming that all other differences between v2 and v4 are restricted to local decisions that could without much effort be solved by `if`s, it could be easier than initially expected to integrate the two worlds from the get go.
+
+Now I think it's worth to throw some real-world forces into the mix:
+On the one hand, if this approach saves us significant time until initially delivering v4 support, it's suddenly becoming awfully attractive.
+On the other hand, I'd bet money that we'd end up removing less tech debt from the existing code base this way, since there's less of an incentive this way and the inertia to it is always higher when working code has already been produced vs when it still has to be produced in the first way.
+
+Again, it's a trade-off and in my opinion both options are legit, but the choice should be a deliberate one.
+
 ## Minor Points
 
 ### Document Design Decisions!

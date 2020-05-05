@@ -26,7 +26,7 @@ The Virtual Data Model (VDM) allows to build type-safe OData requests for a give
 
 The VDM consists of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.
 
-To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/docs/java/features/connectivity). The following code snippets assume that such a destination is in place:
+To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/cloud-sdk/docs/java/features/connectivity/sdk-connectivity-destination-service). The following code snippets assume that such a destination is in place:
 
 ```java
 HttpDestination destination;

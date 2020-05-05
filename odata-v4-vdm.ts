@@ -1,10 +1,9 @@
-import { asyncPipe } from "./packages/util/dist";
 
 type FilterThing = Filter<?> | FilterLink<?,?> | FilterExpression
 // and then there's also FilterLink and FilterList
 // FilterLink is a thing that needs to be considered
 interface FilterLink<EntityT extends Entity, LinkedEntityT extends Entity> {
-  link: Link<EntityT, LinkedEntityT>;
+  link: JLink<EntityT, LinkedEntityT>;
   actualFilter: FilterThing; // recursion, so we can get from 
 }
 // FilterList I'd hazard a guess could also be replaced by an array of something...
@@ -146,7 +145,7 @@ const lessVDMishV4GetAllQuery = {
     direction: 'desc'
   }],
   count: false,
-  search: '', 
+  search: '',
   skip: 0,
   top: -1
 }
@@ -172,7 +171,7 @@ const httpV4GetAllRequest: HttpRequest = {
 // and now we can pass this thing to an ODataRequestExecutor or something that makes some decisions about eTag and csrf and stuff but under the hood again delegates to the generic http client
 // and then of course we still need to perform all of the transformation back, put in some thing that holds the entitie's data + eTag + last known remote state etc., but that should be analogous to v2
 // except we might need one step in between for the CQN use case
-
+type Method = 'get' | 'post'; // and so on
 interface HttpRequest {
   url: string;
   // => that's the service path + the entity name
@@ -398,14 +397,9 @@ interface JNavigationProperty<EntityT extends Entity, LinkedEntityT extends Enti
 }
 
 // TODO: filterable?
-type Link<EntityT extends Entity, LinkedEntityT extends Entity> = Selectable & Field & EntityIdentifier<EntityT> & NavigationProperty<EntityT, LinkedEntityT>;
-type Link2<EntityT extends Entity, LinkedEntityT extends Entity> = Selectable & Field & EntityIdentifier<EntityT> & NavProp2<LinkedEntityT>;
-type JLink<EntityT extends Entity, LinkedEntityT extends Entity> = Selectable & JNavigationProperty<EntityT, LinkedEntityT>;
-
-interface RequestBuilderContainer<EntityT extends Entity, LinkedEntityT extends Entity> {
-  entity: EntityT;
-  requestBuilder: V4GetAllRequestBuilder<LinkedEntityT>
-}
+type Link<EntityT extends Entity, LinkedEntityT extends Entity> = Field & EntityIdentifier<EntityT> & NavigationProperty<EntityT, LinkedEntityT>;
+type Link2<EntityT extends Entity, LinkedEntityT extends Entity> = Field & EntityIdentifier<EntityT> & NavProp2<LinkedEntityT>;
+type JLink<EntityT extends Entity, LinkedEntityT extends Entity> = Field & EntityIdentifier<EntityT> & JNavigationProperty<EntityT, LinkedEntityT>;
 
 namespace V4TestEntityModel {
   export const STRING_FIELD: StringField<V4TestEntity> = {
@@ -423,7 +417,6 @@ namespace V4TestEntityModel {
   }
 
   export const TO_TEST_ENTITY_LINK: Link<V4TestEntity, V4TestEntityLink> = {
-    selectable: true,
     fieldName: 'to_TestEntityLink',
     fieldEdmType: 'TestEntityLinkType', // the way it's called in the edmx? I guess? cross reference with v2
     entity: new V4TestEntity(),
@@ -431,7 +424,6 @@ namespace V4TestEntityModel {
   }
 
   export const TO_TEST_ENTITY_LINK_2: Link2<V4TestEntity, V4TestEntityLink> = {
-    selectable: true,
     fieldName: 'to_TestEntityLink',
     fieldEdmType: 'TestEntityLinkType', // the way it's called in the edmx? I guess? cross reference with v2
     entity: new V4TestEntity(),
@@ -439,7 +431,6 @@ namespace V4TestEntityModel {
   }
 
   export const TO_TEST_ENTITY_J_LINK: JLink<V4TestEntity, V4TestEntityLink> = {
-    selectable: true,
     fieldEdmType: 'TestEntityLinkType', // the way it's called in the edmx? I guess? cross reference with v2
     fieldName: 'to_TestEntityLink',
     entity: new V4TestEntity(),
@@ -486,7 +477,7 @@ requestBuilder
       )
   )
   .expand3(
-    new V4GetAllRequestBuilder(new V4TestEntityLink()) // *click* Noice!
+    new V4GetAllRequestBuilder(new V4TestEntityLink())
       .select()
       .filter(),
     new V4GetAllRequestBuilder(new V4TestEntity2())
@@ -494,7 +485,7 @@ requestBuilder
       .filter()
   )
 
-// fuck! union types!
+// However - union types! if the type is determined once, it cannot be redetermined for the second param
 // so you cannot use two different entities in the same expand call...
 new V4GetAllRequestBuilder(new V4TestEntity2())
   .expand3(
@@ -503,10 +494,7 @@ new V4GetAllRequestBuilder(new V4TestEntity2())
       .filter(),
     new V4GetAllRequestBuilder(new V4TestEntity2MultiLink())
       .select()
-      .filter(),
-    new V4GetAllRequestBuilder(new V4TestEntity())
-      .select()
-      .filter(),
+      .filter()
   )
   .expand3(
     new V4GetAllRequestBuilder(new V4TestEntity2MultiLink())
@@ -581,11 +569,11 @@ MY_STRING_FIELD_2.equals('huh') // but then again I did not know you could call 
 // you can uses clases + interfaces, which bring you duplicated code
 // or you can use mixins + interfaces, which loses you properly rendered documentation (though you might make an argument that something like StringField is maybe not what people are looking at the docs for)
 
+// minor points:
+
 // TODO: every time I look at this I'm wondering what the difference between _keyFields and _keys is
 // I think _keys should be a function somewhere else that takes the model and the state container and then gives you the key of that instance (which is what is returned here)
 
-// how do I separate the model from the generic request?
-
-// get rid of the god damn ForceMandatory type
+// get rid of ForceMandatory type
 // either generate the builders explicitly
 // or just accept and document the fact that there's a mismatch between "nullable" in OData, "select" in OData and "optional" in TypeScript and just make the ForceMandatory the normal interface and get rid of the current normal one 

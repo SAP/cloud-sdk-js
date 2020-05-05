@@ -1,4 +1,3 @@
-
 module.exports = {
   someSidebar: {
     Dzen: ['dzen/getting-started', 'dzen/how-to-write-documentation'],
@@ -28,24 +27,24 @@ module.exports = {
               'java/features/odata/use-generated-odata-vdm-v2-v4'
             ]
           },
-	  {
-	    type: 'category',
-	    label: 'REST',
-	    items: [
-	      'java/features/rest/sap-cloud-sdk-as-a-service',
-	      {
-		type: 'category',
-		label: 'Released clients',
-		items: [
-		  'java/features/rest/clients/workflow-api',
-		  'java/features/rest/clients/currency-conversion',
-		  'java/features/rest/clients/core-services',
-		  'java/features/rest/clients/blockchain-business-sdk'
-		],
-	      },
-	    ],
-	  },
-        ],
+          {
+            type: 'category',
+            label: 'REST',
+            items: [
+              'java/features/rest/sap-cloud-sdk-as-a-service',
+              {
+                type: 'category',
+                label: 'Released clients',
+                items: [
+                  'java/features/rest/clients/workflow-api',
+                  'java/features/rest/clients/currency-conversion',
+                  'java/features/rest/clients/core-services',
+                  'java/features/rest/clients/blockchain-business-sdk'
+                ]
+              }
+            ]
+          }
+        ]
       },
       //   {
       //     type: 'category',
@@ -129,7 +128,7 @@ module.exports = {
       'js/getting-started',
       'js/api-reference-js-ts'
     ],
-    'Devops and CI/CD': ['devops/getting-started'],
+    'Continuous Delivery': ['devops/getting-started'],
     // FAQ: ['faq/frequently-asked-questions'],
     // Support: ['support/support'],
     'Community calls': ['community-calls/community-calls-2020'],

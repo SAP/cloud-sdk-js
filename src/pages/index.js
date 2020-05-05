@@ -14,7 +14,7 @@ const features = [
     title: <>SAP Cloud SDK for Java</>,
     link: 'docs/java/getting-started',
     imageUrl:
-    'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-java.svg',
+      'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-java.svg',
     badge: <MvnBadge />,
     description: (
       <>
@@ -29,8 +29,12 @@ const features = [
     title: <>SAP Cloud SDK for JavaScript</>,
     link: 'docs/js/getting-started',
     imageUrl:
-    'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg',
-    badge: <><BuildBadge />{' '}<LicenseBadge /></>,
+      'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg',
+    badge: (
+      <>
+        <BuildBadge /> <LicenseBadge />
+      </>
+    ),
     description: (
       <>
         SAP Cloud SDK for JavaScript leverages popularity and flexibility of
@@ -43,10 +47,10 @@ const features = [
     )
   },
   {
-    title: <>SAP Cloud SDK for CI\CD</>,
+    title: <>Continuous Delivery Toolkit</>,
     link: 'docs/devops/getting-started',
     imageUrl:
-    'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-cd.svg',
+      'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-cd.svg',
     badge: <LicenseBadge />,
     description: (
       <>

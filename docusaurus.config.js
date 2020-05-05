@@ -41,31 +41,38 @@ module.exports = {
               href: 'https://stackoverflow.com/questions/tagged/sap-cloud-sdk'
             },
             {
-              label: 'GitHub JavaScript',
+              label: 'GitHub JS/TS',
               href: 'https://github.com/SAP/cloud-sdk/issues'
             },
             {
-              label: 'SAP GitHub Java',
+              label: ' GitHub Java',
               href: 'https://github.wdf.sap.corp/MA/sdk'
             }
           ]
         },
         {
+          label: 'Release notes',
+          position: 'left',
+          items: [
+            {
+              label: 'Java SDK',
+              href: 'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html'
+            },
+            {
+              label: 'JS SDK',
+              href:             'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html'
+            },
+            {
+              label: 'CI/CD Toolkit',
+              href: 'https://github.com/SAP/cloud-s4-sdk-pipeline/releases'
+            },
+
+          ]
+        },
+        {
           href: 'https://api.sap.com/',
           label: 'SAP API Hub',
-          position: 'left'
-        },
-        {
-          position: 'right',
-          label: 'SDK Java Release Notes',
-          href:
-            'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html'
-        },
-        {
-          position: 'right',
-          label: 'SDK JS Release Notes',
-          href:
-            'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html'
+          position: 'right'
         },
         {
           href: 'https://github.com/SAP/cloud-sdk',
@@ -139,7 +146,7 @@ module.exports = {
           ]
         }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} SAP Cloud SDK`
+      copyright: `Copyright © ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.`
     }
   },
   presets: [

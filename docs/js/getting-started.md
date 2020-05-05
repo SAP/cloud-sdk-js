@@ -14,6 +14,10 @@ keywords:
 - sap cloud sdk
 image:
 ---
+import BuildBadge from '../../src/sap/sdk-js/BuildBadge'
+import LicenseBadge from '../../src/sap/sdk-js/LicenseBadge'
+
+<> <BuildBadge /> { } <LicenseBadge /> </>
 
 ## Installation
 To install the CLI globally, run:

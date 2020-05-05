@@ -5,12 +5,17 @@ import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 import styles from './styles.module.css'
+import MvnBadge from '../sap/sdk-java/MvnBadge'
+import BuildBadge from '../sap/sdk-js/BuildBadge'
+import LicenseBadge from '../sap/sdk-js/LicenseBadge'
 
 const features = [
   {
     title: <>SAP Cloud SDK for Java</>,
+    link: 'docs/java/getting-started',
     imageUrl:
       'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-java.svg',
+    badge: <MvnBadge />,
     description: (
       <>
         SAP Cloud SDK for Java allows you develop, extend, and communicate wiht
@@ -22,8 +27,14 @@ const features = [
   },
   {
     title: <>SAP Cloud SDK for JavaScript</>,
+    link: 'docs/js/getting-started',
     imageUrl:
       'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg',
+    badge: (
+      <>
+        <BuildBadge /> <LicenseBadge />
+      </>
+    ),
     description: (
       <>
         SAP Cloud SDK for JavaScript leverages popularity and flexibility of
@@ -36,9 +47,11 @@ const features = [
     )
   },
   {
-    title: <>SAP Cloud SDK for CI\CD</>,
+    title: <>Continuous Delivery Toolkit</>,
+    link: 'docs/devops/getting-started',
     imageUrl:
       'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-cd.svg',
+    badge: <LicenseBadge />,
     description: (
       <>
         The goal of project "Piper" is to substantially ease setting up
@@ -51,18 +64,19 @@ const features = [
   }
 ]
 
-function Feature ({ imageUrl, title, description }) {
+function Feature ({ imageUrl, link, title, description, badge }) {
   const imgUrl = useBaseUrl(imageUrl)
   return (
     <div className={classnames('col col--4', styles.feature)}>
       {imgUrl && (
         <div className='text--center'>
-          <a href='docs/java/getting-started'>
+          <a href={link}>
             <img className={styles.featureImage} src={imgUrl} alt={title} />
           </a>
         </div>
       )}
       <h3>{title}</h3>
+      {badge ? badge : ''}
       <p>{description}</p>
     </div>
   )

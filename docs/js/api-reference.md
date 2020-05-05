@@ -1,0 +1,30 @@
+---
+id: api-reference-js-ts
+title: JS/TS API Reference
+hide_title: false
+hide_table_of_contents: false
+sidebar_label: JSDoc API reference
+description: Check our generated API Documentation to discover SDK capabilities via code
+keywords:
+- sap
+- cloud
+- sdk
+- cloud native
+- cloud sdk
+- sap cloud sdk
+image:
+---
+
+import ApiReleaseList from '../../src/sap/sdk-js/ApiReleaseList'
+
+The SAP Cloud SDK for JavaScript and TypeScript consists of multiple libraries to enable you to write side-by-side
+extensions on SAP Cloud Platform. Check `JSDoc`API documentation.
+
+## SDK Versions ##
+
+<ApiReleaseList/>
+
+## See also ##
+
+- [Release notes](https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html)
+- [Getting Started](getting-started)

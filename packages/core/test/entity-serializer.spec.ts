@@ -7,7 +7,7 @@ import {
   TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from './test-util/test-services/test-service';
+} from './test-util/test-services/v2/test-service';
 
 describe('entity-serializer', () => {
   it('should serialize simple entity', () => {

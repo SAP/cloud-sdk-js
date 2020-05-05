@@ -8,7 +8,7 @@ import {
   getUrlProtocol,
   Protocol
 } from '../../src';
-import { proxyAgent } from '../../src/util/proxy-util';
+import { proxyAgent } from '../../src/v2/proxy-util';
 import {
   mockedConnectivityServiceProxyConfig,
   mockedConnectivityServiceProxyURL

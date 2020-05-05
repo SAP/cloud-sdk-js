@@ -7,7 +7,7 @@ import {
   parseProxyEnv,
   ProxyStrategy,
   proxyStrategy
-} from '../../src/util/proxy-util';
+} from '../../src/v2/proxy-util';
 
 describe('proxy-util', () => {
   afterEach(() => {

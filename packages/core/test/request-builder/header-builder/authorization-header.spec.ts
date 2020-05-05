@@ -7,13 +7,13 @@ import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
 } from '../../../src/request-builder/header-builder/authorization-header';
-import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config';
+import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config-v2';
 import { ODataRequest } from '../../../src/request-builder/request/odata-request';
 import {
   defaultDestination,
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
-import { TestEntity } from '../../test-util/test-services/test-service';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
 import { buildHeadersForDestination } from '../../../src/request-builder/header-builder/header-builder';
 
 describe('Authorization header builder', () => {

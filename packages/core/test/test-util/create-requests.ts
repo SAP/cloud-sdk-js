@@ -6,7 +6,7 @@ import {
 } from '../../src/request-builder/request';
 import { ODataRequest } from '../../src/request-builder/request/odata-request';
 import { Destination } from '../../src/scp-cf';
-import { TestEntity } from './test-services/test-service';
+import { TestEntity } from './test-services/v2/test-service';
 
 export function createUpdateRequest(
   dest: Destination

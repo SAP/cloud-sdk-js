@@ -152,7 +152,6 @@ module.exports = {
         ],
         "brace-style": "error",
         "camelcase": "off",
-        "capitalized-comments": "error",
         "comma-dangle": "off",
         "complexity": "off",
         "constructor-super": "error",

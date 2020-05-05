@@ -9,7 +9,7 @@ import {
 import {
   TestComplexTypeField,
   TestEntity
-} from '../test-util/test-services/test-service';
+} from '../test-util/test-services/v2/test-service';
 
 export function checkFilter<EntityT extends Entity, FieldT extends FieldType>(
   filter: Filter<EntityT, FieldT>,

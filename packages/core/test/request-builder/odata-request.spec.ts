@@ -3,11 +3,11 @@ import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import { ODataCreateRequestConfig } from '../../src/request-builder/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/request-builder/request/odata-delete-request-config';
-import { ODataGetAllRequestConfig } from '../../src/request-builder/request/odata-get-all-request-config';
+import { ODataGetAllRequestConfig } from '../../src/request-builder/request/odata-get-all-request-config-v2';
 import { ODataRequest } from '../../src/request-builder/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/request-builder/request/odata-update-request-config';
 import { Destination } from '../../src/scp-cf';
-import { TestEntity } from '../test-util/test-services/test-service';
+import { TestEntity } from '../test-util/test-services/v2/test-service';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;

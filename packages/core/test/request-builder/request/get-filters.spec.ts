@@ -18,7 +18,7 @@ import {
   testFilterSingleLink,
   testFilterString
 } from '../../test-util/filter-factory';
-import { TestEntity } from '../../test-util/test-services/test-service';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
 
 describe('get filters', () => {
   it('for simple filters', () => {

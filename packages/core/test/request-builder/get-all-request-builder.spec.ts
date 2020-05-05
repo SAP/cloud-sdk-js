@@ -12,7 +12,7 @@ import {
   createOriginalTestEntityData2,
   createTestEntity
 } from '../test-util/test-data';
-import { TestEntity } from '../test-util/test-services/test-service';
+import { TestEntity } from '../test-util/test-services/v2/test-service';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity>;

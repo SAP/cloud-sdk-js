@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { TestEntity } from './test-util/test-services/test-service';
+import { TestEntity } from './test-util/test-services/v2/test-service';
 
 describe('Entity Class', () => {
   let entity: TestEntity;

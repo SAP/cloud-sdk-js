@@ -6,7 +6,7 @@ import { muteLoggers } from './test-util/mute-logger';
 import {
   TestEntity,
   TestEntitySingleLink
-} from './test-util/test-services/test-service';
+} from './test-util/test-services/v2/test-service';
 
 describe('EntityBuilder', () => {
   beforeAll(() => {

@@ -5,7 +5,7 @@ import {
   TestEntityLvl2MultiLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../test-util/test-services/test-service';
+} from '../../test-util/test-services/v2/test-service';
 
 describe('get selection', () => {
   it('is empty for empty selection', () => {

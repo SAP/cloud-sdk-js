@@ -7,7 +7,7 @@ import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from './test-util/test-services/test-service';
+} from './test-util/test-services/v2/test-service';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {

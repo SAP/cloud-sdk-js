@@ -4,10 +4,10 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/request-builder/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/request-builder/request/odata-delete-request-config';
-import { ODataGetAllRequestConfig } from '../../src/request-builder/request/odata-get-all-request-config';
+import { ODataGetAllRequestConfig } from '../../src/request-builder/request/odata-get-all-request-config-v2';
 import { ODataRequest } from '../../src/request-builder/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/request-builder/request/odata-update-request-config';
-import { TestEntity } from './test-services/test-service';
+import { TestEntity } from './test-services/v2/test-service';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';

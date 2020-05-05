@@ -4,7 +4,7 @@ import { getQueryParametersForOrderBy } from '../../../src/request-builder/reque
 import {
   TestEntity,
   TestEntitySingleLink
-} from '../../test-util/test-services/test-service';
+} from '../../test-util/test-services/v2/test-service';
 
 describe('get orderby', () => {
   it('is empty for empty orderbys', () => {

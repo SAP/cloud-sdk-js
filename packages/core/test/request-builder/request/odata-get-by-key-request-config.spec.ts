@@ -2,7 +2,7 @@
 import { v4 as uuid } from 'uuid';
 import { ODataGetByKeyRequestConfig } from '../../../src/request-builder/request/odata-get-by-key-request-config';
 import { testEntityResourcePath } from '../../test-util/test-data';
-import { TestEntity } from '../../test-util/test-services/test-service';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
 
 describe('ODataGetByKeyRequestConfig', () => {
   let config: ODataGetByKeyRequestConfig<TestEntity>;

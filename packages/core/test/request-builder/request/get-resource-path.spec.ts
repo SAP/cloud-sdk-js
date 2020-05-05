@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { getResourcePathForKeys } from '../../../src/request-builder/request/get-resource-path';
 import { muteLoggers } from '../../test-util/mute-logger';
 import { testEntityResourcePath } from '../../test-util/test-data';
-import { TestEntity } from '../../test-util/test-services/test-service';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
 
 describe('get resource path', () => {
   beforeAll(() => {

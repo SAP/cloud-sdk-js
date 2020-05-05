@@ -37,6 +37,7 @@
     "@sap-cloud-sdk/core": "^1.19.0",
     "@sap-cloud-sdk/util": "^1.19.0",
     "@sap/edm-converters": "^1.0.21",
+    "@types/fs-extra": "^8.1.0",
     "fast-xml-parser": "^3.16.0",
     "fs-extra": "^9.0.0",
     "rambda": "^5.0.0",

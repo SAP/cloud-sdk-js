@@ -79,6 +79,10 @@ var TestEntity = /** @class */ (function (_super) {
      */
     TestEntity._serviceName = 'API_TEST_SRV';
     /**
+     * Version currently V2
+     */
+    TestEntity._version = new core_1.ODataV2();
+    /**
      * Default url path for the according service.
      */
     TestEntity._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

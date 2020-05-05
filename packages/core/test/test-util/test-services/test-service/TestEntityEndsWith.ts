@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '../../../../src';
+import { AllFields, CustomField, Entity, EntityBuilderType, ODataV2, Selectable, StringField } from '../../../../src';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
@@ -19,6 +19,10 @@ export class TestEntityEndsWith extends Entity implements TestEntityEndsWithType
    * Technical service name for TestEntityEndsWith.
    */
   static _serviceName = 'API_TEST_SRV';
+  /**
+   * Version currently V2
+   */
+  static _version = new ODataV2();
   /**
    * Default url path for the according service.
    */

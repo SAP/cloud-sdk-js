@@ -9,10 +9,10 @@ import {
   DestinationNameAndJwt
 } from '../scp-cf/destination-service-types';
 import { FieldType } from '../selectable/field';
+import { ODataV2 } from '../odata-v2';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { getEntityKeys } from './request/get-keys';
 import { ODataDeleteRequestConfig } from './request/odata-delete-request-config';
-import { ODataV2 } from '../odata-v2';
 
 /**
  * Create OData query to delete an entity.
@@ -24,7 +24,7 @@ export class DeleteRequestBuilder<EntityT extends Entity>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
-  readonly _version:ODataV2;
+  readonly _version: ODataV2;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.

@@ -11,14 +11,16 @@ type EntityBasedRequestBuilder<
 /**
  * @hidden
  */
-export abstract class RequestBuilder<EntityT extends Entity<Version>,Version=ODataV2>
-  implements EntityIdentifiable<EntityT,Version> {
+export abstract class RequestBuilder<
+  EntityT extends Entity<Version>,
+  Version = ODataV2
+> implements EntityIdentifiable<EntityT, Version> {
   static forEntity<EntityCT extends Constructable<Entity>>(
     entity: EntityCT
   ): EntityBasedRequestBuilder<EntityCT> {
     return entity.requestBuilder() as EntityBasedRequestBuilder<EntityCT>;
   }
-  _version:Version;
+  _version: Version;
   _entity: EntityT;
-  _entityConstructor: Constructable<EntityT,{},Version>;
+  _entityConstructor: Constructable<EntityT, {}, Version>;
 }

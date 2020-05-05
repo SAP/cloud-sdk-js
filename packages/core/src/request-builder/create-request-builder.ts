@@ -11,10 +11,10 @@ import {
   DestinationNameAndJwt
 } from '../scp-cf/destination-service-types';
 import { Link } from '../selectable';
+import { ODataV2 } from '../odata-v2';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { getEntityKeys } from './request/get-keys';
 import { ODataCreateRequestConfig } from './request/odata-create-request-config';
-import { ODataV2 } from '../odata-v2';
 
 /**
  * Create OData request to create an entity.
@@ -36,7 +36,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
   ) {
     super(new ODataCreateRequestConfig(_entityConstructor));
   }
-  readonly _version:ODataV2;
+  readonly _version: ODataV2;
 
   get entity(): EntityT {
     return this._entity;

@@ -5,6 +5,7 @@ import { Entity } from '../entity';
 import { Field, FieldType } from '../selectable';
 import { convertToUriForEdmString } from '../uri-value-converter';
 import { Filter } from './filter';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Data structure to represent OData V2 filter functions.
@@ -88,8 +89,8 @@ export abstract class FilterFunction<
 /**
  * Type of a parameter of a filter function. This can either be an explicit value (string or number), a reference to a field or another filter function.
  */
-export type FilterFunctionParameterType<EntityT extends Entity> =
+export type FilterFunctionParameterType<EntityT extends Entity<Version>,Version=ODataV2> =
   | number
   | string
-  | Field<EntityT>
+  | Field<EntityT,Version>
   | FilterFunction<EntityT, FieldType>;

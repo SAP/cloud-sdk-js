@@ -1,3 +1,5 @@
 - Use type with default
 - Use V4 extension also in class not only in file name.
 -Selectable seems like a huge duplicate
+- CustomField and concrete String & StringComplex are for ODataV2 the base classes are for <Version>,
+-ComplexTypeField have default V2 so that generator stays the same

@@ -4,9 +4,9 @@ import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
 import { Entity, EntityIdentifiable } from '../entity';
 import { FieldType } from '../selectable';
+import { ODataV2 } from '../odata-v2';
 import { FilterFunction } from './filter-function';
 import { Filterable } from './filterable';
-import { ODataV2 } from '../odata-v2';
 
 type FilterOperatorString = 'eq' | 'ne';
 type FilterOperatorBoolean = 'eq' | 'ne';
@@ -34,13 +34,13 @@ export type FilterOperatorByType<
  * @typeparam EntityT - Type of the entity to be filtered on
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
-export class Filter<EntityT extends Entity, FieldT extends FieldType>
-  implements EntityIdentifiable<EntityT> {
+export class Filter<EntityT extends Entity<Version>, FieldT extends FieldType,Version=ODataV2>
+  implements EntityIdentifiable<EntityT,Version> {
   /**
    * Constructor type of the entity to be filtered.
    */
-  readonly _entityConstructor: Constructable<EntityT>;
-  readonly _version:ODataV2;
+  readonly _entityConstructor: Constructable<EntityT,{},Version>;
+  readonly _version: Version;
   /**
    * Entity type of the entity tp be filtered.
    */

@@ -78,6 +78,10 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      */
     MultiSchemaTestEntity._serviceName = 'SCHEMA_DATA';
     /**
+     * Version currently V2
+     */
+    MultiSchemaTestEntity._version = new core_1.ODataV2();
+    /**
      * Default url path for the according service.
      */
     MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';

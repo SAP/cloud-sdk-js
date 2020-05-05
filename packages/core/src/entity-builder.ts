@@ -14,10 +14,16 @@ const logger = createLogger({
 /**
  * @hidden
  */
-export class EntityBuilder<EntityT extends Entity<Version>, JsonT,Version=ODataV2> {
+export class EntityBuilder<
+  EntityT extends Entity<Version>,
+  JsonT,
+  Version = ODataV2
+> {
   protected entity: EntityT;
 
-  constructor(private _entityConstructor: Constructable<EntityT, JsonT,Version>) {
+  constructor(
+    private _entityConstructor: Constructable<EntityT, JsonT, Version>
+  ) {
     if (!this.entity) {
       this.entity = new this._entityConstructor();
     }

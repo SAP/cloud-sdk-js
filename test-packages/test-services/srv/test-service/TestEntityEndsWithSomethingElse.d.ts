@@ -14,6 +14,10 @@ export declare class TestEntityEndsWithSomethingElse extends Entity implements T
      */
     static _serviceName: string;
     /**
+     * Version currently V2
+     */
+    static _version: any;
+    /**
      * Default url path for the according service.
      */
     static _defaultServicePath: string;

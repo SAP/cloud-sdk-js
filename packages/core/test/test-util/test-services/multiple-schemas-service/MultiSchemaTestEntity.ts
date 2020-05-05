@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '../../../../src';
+import { AllFields, CustomField, Entity, EntityBuilderType, ODataV2, Selectable, StringField } from '../../../../src';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
@@ -19,6 +19,10 @@ export class MultiSchemaTestEntity extends Entity implements MultiSchemaTestEnti
    * Technical service name for MultiSchemaTestEntity.
    */
   static _serviceName = 'SCHEMA_DATA';
+  /**
+   * Version currently V2
+   */
+  static _version = new ODataV2();
   /**
    * Default url path for the according service.
    */

@@ -78,6 +78,10 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
      */
     TestEntityLvl2SingleLink._serviceName = 'API_TEST_SRV';
     /**
+     * Version currently V2
+     */
+    TestEntityLvl2SingleLink._version = new core_1.ODataV2();
+    /**
      * Default url path for the according service.
      */
     TestEntityLvl2SingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

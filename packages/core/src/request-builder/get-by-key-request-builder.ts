@@ -12,9 +12,9 @@ import {
 import { Selectable } from '../selectable';
 import { FieldType } from '../selectable/field';
 import { HttpReponse } from '../http-client';
+import { ODataV2 } from '../odata-v2';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { ODataGetByKeyRequestConfig } from './request/odata-get-by-key-request-config';
-import { ODataV2 } from '../odata-v2';
 
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,
@@ -26,7 +26,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
-  readonly _version:ODataV2;
+  readonly _version: ODataV2;
 
   /**
    * Creates an instance of GetByKeyRequestBuilder.

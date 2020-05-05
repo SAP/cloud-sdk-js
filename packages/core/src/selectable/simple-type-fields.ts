@@ -8,15 +8,16 @@ import { DateField } from './date-field';
 import { NumberField } from './number-field';
 import { StringField } from './string-field';
 import { TimeField } from './time-field';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * @hidden
  */
-export type SimpleTypeFields<EntityT extends Entity> =
-  | BigNumberField<EntityT>
-  | BinaryField<EntityT>
-  | BooleanField<EntityT>
-  | DateField<EntityT>
-  | NumberField<EntityT>
-  | StringField<EntityT>
-  | TimeField<EntityT>;
+export type SimpleTypeFields<EntityT extends Entity<Version>,Version=ODataV2> =
+  | BigNumberField<EntityT,Version>
+  | BinaryField<EntityT,Version>
+  | BooleanField<EntityT,Version>
+  | DateField<EntityT,Version>
+  | NumberField<EntityT,Version>
+  | StringField<EntityT,Version>
+  | TimeField<EntityT,Version>;

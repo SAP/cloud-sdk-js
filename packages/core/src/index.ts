@@ -20,3 +20,5 @@ export * from './selectable';
 export * from './time';
 export * from './uri-value-converter';
 export * from './util';
+export * from './odata-v4';
+export * from './odata-v2';

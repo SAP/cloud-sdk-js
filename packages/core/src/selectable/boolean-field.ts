@@ -11,15 +11,17 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Represents a property with a boolean value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
+export class BooleanFieldBase<EntityT extends Entity<Version>,Version> extends EdmTypeField<
   EntityT,
-  boolean
+  boolean,
+  Version
 > {}
 
 /**
@@ -27,8 +29,8 @@ export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanField<EntityT extends Entity>
-  extends BooleanFieldBase<EntityT>
+export class BooleanField<EntityT extends Entity<Version>,Version=ODataV2>
+  extends BooleanFieldBase<EntityT,Version>
   implements SelectableEdmTypeField {
   readonly selectable: true;
 }
@@ -39,12 +41,13 @@ export class BooleanField<EntityT extends Entity>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeBooleanPropertyField<
-  EntityT extends Entity
-> extends BooleanFieldBase<EntityT> {
+  EntityT extends Entity<Version>,
+  Version=ODataV2
+> extends BooleanFieldBase<EntityT,Version> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT>;
+  readonly fieldOf: ConstructorOrField<EntityT,Version>;
 
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
@@ -55,7 +58,7 @@ export class ComplexTypeBooleanPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT,Version>,
     edmType: EdmType
   );
 
@@ -71,7 +74,7 @@ export class ComplexTypeBooleanPropertyField<
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT>,
+    entityConstructor: Constructable<EntityT,{},Version>,
     parentTypeName: string,
     edmType: EdmType
   );
@@ -81,7 +84,7 @@ export class ComplexTypeBooleanPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT,Version>,
     arg3: string | EdmType,
     arg4?: EdmType
   ) {

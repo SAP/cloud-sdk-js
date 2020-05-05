@@ -6,13 +6,11 @@ import { Entity } from '../../entity';
 import { Filterable } from '../../filter';
 import { Orderable } from '../../order';
 import { Selectable } from '../../selectable';
-import { getQueryParametersForFilter } from './get-filters';
+import { ODataV4 } from '../../odata-v4';
 import { getQueryParametersForOrderBy } from './get-orderby';
 import { getQueryParametersForSelection } from './get-selection';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
-import { ODataV2 } from '../../odata-v2';
-import { ODataV4 } from '../../odata-v4';
 
 /**
  * OData getAll request configuration for an entity type.
@@ -33,7 +31,7 @@ export class ODataGetAllRequestConfigV4<EntityT extends Entity<ODataV4>>
    *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(readonly entityConstructor: Constructable<EntityT,{},ODataV4>) {
+  constructor(readonly entityConstructor: Constructable<EntityT, {}, ODataV4>) {
     super('get', entityConstructor._defaultServicePath);
   }
 
@@ -45,7 +43,7 @@ export class ODataGetAllRequestConfigV4<EntityT extends Entity<ODataV4>>
     const params: MapType<any> = {
       format: 'json',
       ...getQueryParametersForSelection(this.selects),
-      //STOP here for PoC
+      // STOP here for PoC
       // ...getQueryParametersForFilter(this.filter, this.entityConstructor),
       ...getQueryParametersForOrderBy(this.orderBy)
     };

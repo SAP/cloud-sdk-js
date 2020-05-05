@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, ODataV2, Selectable, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
@@ -19,6 +19,10 @@ export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2Si
    * Technical service name for TestEntityLvl2SingleLink.
    */
   static _serviceName = 'API_TEST_SRV';
+  /**
+   * Version currently V2
+   */
+  static _version = new ODataV2();
   /**
    * Default url path for the according service.
    */

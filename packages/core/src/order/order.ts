@@ -11,11 +11,11 @@ type OrderType = 'asc' | 'desc';
  *
  * @typeparam EntityT -
  */
-export class Order<EntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
-  readonly _entityConstructor: Constructable<EntityT>;
+export class Order<EntityT extends Entity<Version>,Version=ODataV2>
+  implements EntityIdentifiable<EntityT,Version> {
+  readonly _entityConstructor: Constructable<EntityT,{},Version>;
   readonly _entity: EntityT;
-  readonly _version:ODataV2;
+  readonly _version: Version;
 
   /**
    * Creates an instance of Order.

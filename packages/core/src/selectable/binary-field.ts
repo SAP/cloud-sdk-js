@@ -11,15 +11,17 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Represents a property with a binary value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BinaryFieldBase<EntityT extends Entity> extends EdmTypeField<
+export class BinaryFieldBase<EntityT extends Entity<Version>,Version> extends EdmTypeField<
   EntityT,
-  string
+  string,
+  Version
 > {}
 
 /**
@@ -27,8 +29,8 @@ export class BinaryFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BinaryField<EntityT extends Entity>
-  extends BinaryFieldBase<EntityT>
+export class BinaryField<EntityT extends Entity<Version>,Version=ODataV2>
+  extends BinaryFieldBase<EntityT,Version>
   implements SelectableEdmTypeField {
   readonly selectable: true;
 }
@@ -39,12 +41,12 @@ export class BinaryField<EntityT extends Entity>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeBinaryPropertyField<
-  EntityT extends Entity
-> extends BinaryFieldBase<EntityT> {
+  EntityT extends Entity<Version>,Version=ODataV2
+> extends BinaryFieldBase<EntityT,Version> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT>;
+  readonly fieldOf: ConstructorOrField<EntityT,Version>;
 
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
@@ -55,7 +57,7 @@ export class ComplexTypeBinaryPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT,Version>,
     edmType: EdmType
   );
 
@@ -71,7 +73,7 @@ export class ComplexTypeBinaryPropertyField<
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT>,
+    entityConstructor: Constructable<EntityT,{},Version>,
     parentTypeName: string,
     edmType: EdmType
   );
@@ -81,7 +83,7 @@ export class ComplexTypeBinaryPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT,Version>,
     arg3: string | EdmType,
     arg4?: EdmType
   ) {

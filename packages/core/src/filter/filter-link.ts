@@ -3,8 +3,8 @@
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { Link } from '../selectable';
-import { Filterable } from './filterable';
 import { ODataV2 } from '../odata-v2';
+import { Filterable } from './filterable';
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).
@@ -17,13 +17,13 @@ import { ODataV2 } from '../odata-v2';
  * @typeparam EntityT - Type of the entity to be filtered
  * @typeparam LinkedEntityT - Type of the linked entity which is used in the filter
  */
-export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
+export class FilterLink<EntityT extends Entity<Version>, LinkedEntityT extends Entity<Version>,Version=ODataV2>
+  implements EntityIdentifiable<EntityT,Version> {
   /**
    * Constructor type of the entity to be filtered.
    */
-  readonly _entityConstructor: Constructable<EntityT>;
-  readonly _version:ODataV2;
+  readonly _entityConstructor: Constructable<EntityT,{},Version>;
+  readonly _version: Version;
   /**
    * Entity type of the entity tp be filtered.
    */
@@ -41,14 +41,14 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
    * @param filters - List of filterables for the linked entity
    */
   constructor(
-    public link: Link<EntityT, LinkedEntityT>,
-    public filters: Filterable<LinkedEntityT>[]
+    public link: Link<EntityT, LinkedEntityT,Version>,
+    public filters: Filterable<LinkedEntityT,Version>[]
   ) {}
 }
 
-export function isFilterLink<EntityT extends Entity, LinkedT extends Entity>(
-  filterable: Filterable<EntityT>
-): filterable is FilterLink<EntityT, LinkedT> {
+export function isFilterLink<EntityT extends Entity<Version>, LinkedT extends Entity<Version>,Version>(
+  filterable: Filterable<EntityT,Version>
+): filterable is FilterLink<EntityT, LinkedT,Version> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

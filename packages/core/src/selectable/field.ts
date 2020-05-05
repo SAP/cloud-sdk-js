@@ -38,10 +38,10 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 
-export abstract class Field<EntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
+export abstract class Field<EntityT extends Entity<Version>,Version>
+  implements EntityIdentifiable<EntityT,Version> {
   readonly _entity: EntityT;
-  readonly _version:ODataV2;
+  readonly _version: Version;
   /**
    * Creates an instance of Field.
    *
@@ -50,7 +50,7 @@ export abstract class Field<EntityT extends Entity>
    */
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT>
+    readonly _entityConstructor: Constructable<EntityT,{},Version>
   ) {}
 
   /**

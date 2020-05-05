@@ -2,7 +2,6 @@
 
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
 import { and, Filterable } from '../filter/filterable';
 import { Orderable } from '../order/orderable';
 import { DestinationOptions } from '../scp-cf';
@@ -11,12 +10,10 @@ import {
   DestinationNameAndJwt
 } from '../scp-cf/destination-service-types';
 import { Selectable } from '../selectable';
-import { MethodRequestBuilderBase } from './request-builder-base';
-import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config';
-import { ODataV2 } from '../odata-v2';
 import { ODataV4 } from '../odata-v4';
-import { deserializeEntityV4 } from '../entity-deserializer-v4';
+import { MethodRequestBuilderBase } from './request-builder-base';
 import { ODataGetAllRequestConfigV4 } from './request/odata-get-all-request-config-v4';
+import { deserializeEntity } from '../entity-deserializer';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -29,16 +26,18 @@ import { ODataGetAllRequestConfigV4 } from './request/odata-get-all-request-conf
  */
 export class GetAllRequestBuilderV4<EntityT extends Entity<ODataV4>>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfigV4<EntityT>>
-  implements EntityIdentifiable<EntityT,ODataV4> {
+  implements EntityIdentifiable<EntityT, ODataV4> {
   readonly _entity: EntityT;
-  readonly _version:ODataV4;
+  readonly _version: ODataV4;
 
   /**
    * Creates an instance of GetAllRequestBuilder.
    *
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
-  constructor(readonly _entityConstructor: Constructable<EntityT,{},ODataV4>) {
+  constructor(
+    readonly _entityConstructor: Constructable<EntityT, {}, ODataV4>
+  ) {
     super(new ODataGetAllRequestConfigV4(_entityConstructor));
   }
   /**
@@ -111,7 +110,7 @@ export class GetAllRequestBuilderV4<EntityT extends Entity<ODataV4>>
       .then(request => request.execute())
       .then(response =>
         response.data.d.results.map(json =>
-          deserializeEntityV4(json, this._entityConstructor, response.headers)
+          deserializeEntity(json, this._entityConstructor, response.headers)
         )
       );
   }

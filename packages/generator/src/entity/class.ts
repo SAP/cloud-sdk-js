@@ -48,8 +48,19 @@ function staticProperties(
   return [
     entityName(entity),
     serviceName(entity, service),
+    version(),
     defaultServicePath(service)
   ];
+}
+
+function version(): PropertyDeclarationStructure {
+  return {
+    kind: StructureKind.Property,
+    name: prependPrefix('version'),
+    isStatic: true,
+    initializer: 'new ODataV2()',
+    docs: [addLeadingNewline('Version currently V2')]
+  };
 }
 
 function entityName(entity: VdmEntity): PropertyDeclarationStructure {

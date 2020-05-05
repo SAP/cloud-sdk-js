@@ -78,6 +78,10 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
      */
     TestEntityLvl2MultiLink._serviceName = 'API_TEST_SRV';
     /**
+     * Version currently V2
+     */
+    TestEntityLvl2MultiLink._version = new core_1.ODataV2();
+    /**
      * Default url path for the according service.
      */
     TestEntityLvl2MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

@@ -4,6 +4,7 @@ import { Entity } from '../entity';
 import { Filterable, FilterLink } from '../filter';
 import { Order, Orderable, OrderLink } from '../order';
 import { Link } from './link';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.
@@ -12,9 +13,10 @@ import { Link } from './link';
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
 export class OneToOneLink<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
-> extends Link<EntityT, LinkedEntityT> {
+  EntityT extends Entity<Version>,
+  LinkedEntityT extends Entity<Version>,
+  Version=ODataV2
+> extends Link<EntityT, LinkedEntityT,Version> {
   /**
    * Create a new one to one link based on a given link.
    *
@@ -23,10 +25,10 @@ export class OneToOneLink<
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT extends Entity, LinkedEntityT extends Entity>(
-    link: OneToOneLink<EntityT, LinkedEntityT>
-  ): OneToOneLink<EntityT, LinkedEntityT> {
-    const clonedLink = Link.clone(link) as OneToOneLink<EntityT, LinkedEntityT>;
+  static clone<EntityT extends Entity<Version>, LinkedEntityT extends Entity<Version>,Version=ODataV2>(
+    link: OneToOneLink<EntityT, LinkedEntityT,Version>
+  ): OneToOneLink<EntityT, LinkedEntityT,Version> {
+    const clonedLink = Link.clone(link) as OneToOneLink<EntityT, LinkedEntityT,Version>;
     clonedLink.orderBys = link.orderBys;
     clonedLink.filters = link.filters;
     return clonedLink;
@@ -55,8 +57,8 @@ export class OneToOneLink<
    * @returns Newly created order link
    */
   orderBy(
-    ...orderBy: Orderable<LinkedEntityT>[]
-  ): OrderLink<EntityT, LinkedEntityT> {
+    ...orderBy: Orderable<LinkedEntityT,Version>[]
+  ): OrderLink<EntityT, LinkedEntityT,Version> {
     return new OrderLink(this, orderBy);
   }
 
@@ -67,8 +69,8 @@ export class OneToOneLink<
    * @returns Newly created Filterlink
    */
   filter(
-    ...filters: Filterable<LinkedEntityT>[]
-  ): FilterLink<EntityT, LinkedEntityT> {
+    ...filters: Filterable<LinkedEntityT,Version>[]
+  ): FilterLink<EntityT, LinkedEntityT,Version> {
     return new FilterLink(this, filters);
   }
 }

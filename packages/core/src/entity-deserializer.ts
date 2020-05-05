@@ -12,6 +12,7 @@ import {
   Selectable
 } from './selectable';
 import { toPropertyFormat } from './util';
+import { ODataV2 } from './odata-v2';
 
 /**
  * Extracts all custom fields from the JSON payload for a single entity.
@@ -21,9 +22,9 @@ import { toPropertyFormat } from './util';
  * @param entityConstructor - The constructor function of the entity class.
  * @returns An object containing the custom fields as key-value pairs.
  */
-export function extractCustomFields<EntityT extends Entity, JsonT>(
+export function extractCustomFields<EntityT extends Entity<Version>, JsonT,Version=ODataV2>(
   json: Partial<JsonT>,
-  entityConstructor: Constructable<EntityT>
+  entityConstructor: Constructable<EntityT,{},Version>
 ): MapType<any> {
   const regularODataProperties = [
     '__metadata',
@@ -49,9 +50,9 @@ export function extractCustomFields<EntityT extends Entity, JsonT>(
  * @param requestHeader - Optional parameter which may be used to add a version identifier (etag) to the entity
  * @returns An instance of the entity class.
  */
-export function deserializeEntity<EntityT extends Entity, JsonT>(
+export function deserializeEntity<EntityT extends Entity<Version>, JsonT,Version=ODataV2>(
   json: Partial<JsonT>,
-  entityConstructor: Constructable<EntityT>,
+  entityConstructor: Constructable<EntityT,{},Version>,
   requestHeader?: any
 ): EntityT {
   const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
@@ -77,9 +78,9 @@ function extractODataETag(json: MapType<any>): string | undefined {
   return '__metadata' in json ? json['__metadata']['etag'] : undefined;
 }
 
-function getFieldValue<EntityT extends Entity, JsonT>(
+function getFieldValue<EntityT extends Entity<Version>, JsonT,Version=ODataV2>(
   json: Partial<JsonT>,
-  selectable: Selectable<EntityT>
+  selectable: Selectable<EntityT,Version>
 ) {
   if (selectable instanceof EdmTypeField) {
     return edmToTs(json[selectable._fieldName], selectable.edmType);

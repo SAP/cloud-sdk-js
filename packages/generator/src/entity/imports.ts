@@ -31,7 +31,8 @@ export function importDeclarations(
         'CustomField',
         'Entity',
         'EntityBuilderType',
-        'Selectable'
+        'Selectable',
+        'ODataV2'
       ].sort()
     )
   ];

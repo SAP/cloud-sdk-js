@@ -12,15 +12,17 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Represents a property with a number value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class NumberFieldBase<EntityT extends Entity> extends EdmTypeField<
+export class NumberFieldBase<EntityT extends Entity<Version>,Version> extends EdmTypeField<
   EntityT,
-  number
+  number,
+  Version
 > {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
@@ -68,8 +70,8 @@ export class NumberFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class NumberField<EntityT extends Entity>
-  extends NumberFieldBase<EntityT>
+export class NumberField<EntityT extends Entity<Version>,Version=ODataV2>
+  extends NumberFieldBase<EntityT,Version>
   implements SelectableEdmTypeField {
   readonly selectable: true;
 }
@@ -80,12 +82,13 @@ export class NumberField<EntityT extends Entity>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeNumberPropertyField<
-  EntityT extends Entity
-> extends NumberFieldBase<EntityT> {
+  EntityT extends Entity<Version>,
+  Version=ODataV2
+> extends NumberFieldBase<EntityT,Version> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT>;
+  readonly fieldOf: ConstructorOrField<EntityT,Version>;
 
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
@@ -96,7 +99,7 @@ export class ComplexTypeNumberPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT,Version>,
     edmType: EdmType
   );
 
@@ -112,7 +115,7 @@ export class ComplexTypeNumberPropertyField<
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT>,
+    entityConstructor: Constructable<EntityT,{},Version>,
     parentTypeName: string,
     edmType: EdmType
   );
@@ -122,7 +125,7 @@ export class ComplexTypeNumberPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT,Version>,
     arg3: string | EdmType,
     arg4?: EdmType
   ) {

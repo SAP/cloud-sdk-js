@@ -78,6 +78,10 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      */
     TestEntityCircularLinkParent._serviceName = 'API_TEST_SRV';
     /**
+     * Version currently V2
+     */
+    TestEntityCircularLinkParent._version = new core_1.ODataV2();
+    /**
      * Default url path for the according service.
      */
     TestEntityCircularLinkParent._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

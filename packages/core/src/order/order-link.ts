@@ -3,6 +3,7 @@
 import { Entity } from '../entity';
 import { Link } from '../selectable/link';
 import { Orderable } from './orderable';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Link to represent an order by on a linked entity.
@@ -10,7 +11,7 @@ import { Orderable } from './orderable';
  * @typeparam EntityT - Type of the entity to link from
  * @typeparam LinkedEntityT - Type of the entity to link to
  */
-export class OrderLink<EntityT extends Entity, LinkedEntityT extends Entity> {
+export class OrderLink<EntityT extends Entity<Version>, LinkedEntityT extends Entity<Version>,Version=ODataV2> {
   readonly entityType: EntityT;
   readonly linkedEntityType: LinkedEntityT;
 
@@ -21,7 +22,7 @@ export class OrderLink<EntityT extends Entity, LinkedEntityT extends Entity> {
    * @param orderBy - A list of orderables based on the linked entity
    */
   constructor(
-    public link: Link<EntityT, LinkedEntityT>,
-    public orderBy: Orderable<LinkedEntityT>[]
+    public link: Link<EntityT, LinkedEntityT,Version>,
+    public orderBy: Orderable<LinkedEntityT,Version>[]
   ) {}
 }

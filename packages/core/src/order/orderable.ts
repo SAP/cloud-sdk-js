@@ -5,15 +5,16 @@ import { Link, SimpleTypeFields } from '../selectable';
 import { ComplexTypePropertyFields } from '../selectable/complex-type-property-fields';
 import { Order } from './order';
 import { OrderLink } from './order-link';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * A union of all types that can be used for ordering.
  *
  * @typeparam EntityT - Type of the entity to be ordered
  */
-export type Orderable<EntityT extends Entity> =
-  | Order<EntityT>
-  | OrderLink<EntityT, Entity>;
+export type Orderable<EntityT extends Entity<Version>,Version=ODataV2> =
+  | Order<EntityT,Version>
+  | OrderLink<EntityT, Entity,Version>;
 
 /**
  * A union of all types that can be used as input for ordering.

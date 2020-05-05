@@ -12,19 +12,18 @@ import { ODataV4 } from './odata-v4';
 export type EntityBuilderType<
   EntityT extends Entity<Version>,
   EntityTypeForceMandatoryT,
-  Version=ODataV2
+  Version = ODataV2
 > = {
   [property in keyof EntityTypeForceMandatoryT]: (
     value: EntityTypeForceMandatoryT[property]
-  ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT,Version>;
+  ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT, Version>;
 } &
-  EntityBuilder<EntityT, EntityTypeForceMandatoryT,Version>;
-
+  EntityBuilder<EntityT, EntityTypeForceMandatoryT, Version>;
 
 /**
  * Super class for all representations of OData entity types.
  */
-export class Entity<Version=ODataV2> {
+export class Entity<Version = ODataV2> {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
@@ -34,11 +33,17 @@ export class Entity<Version=ODataV2> {
     EntityTypeForceMandatoryT,
     Version
   >(
-    entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT,Version>
-  ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT,Version> {
-    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT,Version>(
-      entityConstructor
-    );
+    entityConstructor: Constructable<
+      EntityT,
+      EntityTypeForceMandatoryT,
+      Version
+    >
+  ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT, Version> {
+    const builder = new EntityBuilder<
+      EntityT,
+      EntityTypeForceMandatoryT,
+      Version
+    >(entityConstructor);
     entityConstructor._allFields.forEach(field => {
       const fieldName = `${toPropertyFormat(field._fieldName)}`;
       builder[fieldName] = function (value) {
@@ -46,13 +51,20 @@ export class Entity<Version=ODataV2> {
         return this;
       };
     });
-    return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT,Version>;
+    return builder as EntityBuilderType<
+      EntityT,
+      EntityTypeForceMandatoryT,
+      Version
+    >;
   }
 
-  protected static customFieldSelector<EntityT extends Entity<Version>,Version=ODataV2>(
+  protected static customFieldSelector<
+    EntityT extends Entity<Version>,
+    Version=ODataV2
+  >(
     fieldName: string,
-    entityConstructor: Constructable<EntityT,Version>
-  ): CustomField<EntityT> {
+    entityConstructor: Constructable<EntityT,{}, Version>
+  ): CustomField<EntityT,Version> {
     return new CustomField<EntityT,Version>(fieldName, entityConstructor);
   }
 
@@ -268,10 +280,13 @@ export class Entity<Version=ODataV2> {
 /**
  * @hidden
  */
-export interface EntityIdentifiable<T extends Entity<Version>,Version=ODataV2> {
-  readonly _entityConstructor: Constructable<T,{},Version>;
+export interface EntityIdentifiable<
+  T extends Entity<Version>,
+  Version = ODataV2
+> {
+  readonly _entityConstructor: Constructable<T, {}, Version>;
   readonly _entity: T;
-  readonly _version:Version;
+  readonly _version: Version;
 }
 
 /* eslint-disable valid-jsdoc */
@@ -279,19 +294,19 @@ export interface EntityIdentifiable<T extends Entity<Version>,Version=ODataV2> {
 /**
  * @hidden
  */
-export function isSelectedProperty<EntityT extends Entity>(
+export function isSelectedProperty<EntityT extends Entity<Version>,Version=ODataV2>(
   json,
-  selectable: Selectable<EntityT>
+  selectable: Selectable<EntityT,Version>
 ) {
   return json.hasOwnProperty(selectable._fieldName);
 }
-
-export function isSelectedPropertyV4<EntityT extends Entity<ODataV4>>(
-  json,
-  selectable: Selectable<EntityT>
-) {
-  return json.hasOwnProperty(selectable._fieldName);
-}
+//
+// export function isSelectedPropertyV4<EntityT extends Entity<ODataV4>>(
+//   json,
+//   selectable: Selectable<EntityT,O>
+// ) {
+//   return json.hasOwnProperty(selectable._fieldName);
+// }
 
 /**
  * @hidden

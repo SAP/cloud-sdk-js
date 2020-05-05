@@ -7,6 +7,7 @@ import { BooleanFilterFunction } from './boolean-filter-function';
 import { FilterFunctionParameterType } from './filter-function';
 import { NumberFilterFunction } from './number-filter-function';
 import { StringFilterFunction } from './string-filter-function';
+import { ODataV2 } from '../odata-v2';
 
 /**
  * Build an OData (V2) filter function to test whether a string is a substring of the other. Evaluates to boolean.
@@ -16,8 +17,8 @@ import { StringFilterFunction } from './string-filter-function';
  * @returns The newly created filter function
  */
 export function substringOf<EntityT extends Entity>(
-  p0: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  p1: string | Field<EntityT> | StringFilterFunction<EntityT>
+  p0: string | Field<EntityT,ODataV2> | StringFilterFunction<EntityT>,
+  p1: string | Field<EntityT,ODataV2> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('substringof', 'boolean', p0, p1);
 }
@@ -29,8 +30,8 @@ export function substringOf<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function substring<EntityT extends Entity>(
-  p0: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  pos: number | Field<EntityT> | NumberFilterFunction<EntityT>
+  p0: string | Field<EntityT,ODataV2> | StringFilterFunction<EntityT>,
+  pos: number | Field<EntityT,ODataV2> | NumberFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('substring', 'string', p0, pos);
 }
@@ -41,7 +42,7 @@ export function substring<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function length<EntityT extends Entity>(
-  p0: string | Field<EntityT> | StringFilterFunction<EntityT>
+  p0: string | Field<EntityT,ODataV2> | StringFilterFunction<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('length', 'int', p0);
 }

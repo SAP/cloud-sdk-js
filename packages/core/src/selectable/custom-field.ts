@@ -2,6 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { Entity } from '../entity';
+import { ODataV2 } from '../odata-v2';
 import { BigNumberField } from './big-number-field';
 import { BooleanField } from './boolean-field';
 import { DateField } from './date-field';
@@ -9,17 +10,19 @@ import { Field } from './field';
 import { NumberField } from './number-field';
 import { StringField } from './string-field';
 import { TimeField } from './time-field';
-import { ODataV2 } from '../odata-v2';
 
-export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extends Field<EntityT> {
+export class CustomField<
+  EntityT extends Entity<Version> ,
+  Version=ODataV2
+> extends Field<EntityT,Version> {
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT>
+    readonly _entityConstructor: Constructable<EntityT,{},Version>
   ) {
     super(_fieldName, _entityConstructor);
   }
 
-  edmString(): StringField<EntityT> {
+  edmString(): StringField<EntityT,Version> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
@@ -27,7 +30,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmBoolean(): BooleanField<EntityT> {
+  edmBoolean(): BooleanField<EntityT,Version> {
     return new BooleanField(
       this._fieldName,
       this._entityConstructor,
@@ -35,7 +38,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmGuid(): StringField<EntityT> {
+  edmGuid(): StringField<EntityT,Version> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
@@ -43,7 +46,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmDecimal(): BigNumberField<EntityT> {
+  edmDecimal(): BigNumberField<EntityT,Version> {
     return new BigNumberField(
       this._fieldName,
       this._entityConstructor,
@@ -51,7 +54,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmInt16(): NumberField<EntityT> {
+  edmInt16(): NumberField<EntityT,Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -59,7 +62,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmInt32(): NumberField<EntityT> {
+  edmInt32(): NumberField<EntityT,Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -67,7 +70,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmInt64(): BigNumberField<EntityT> {
+  edmInt64(): BigNumberField<EntityT,Version> {
     return new BigNumberField(
       this._fieldName,
       this._entityConstructor,
@@ -75,7 +78,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmSingle(): NumberField<EntityT> {
+  edmSingle(): NumberField<EntityT,Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -83,7 +86,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmDouble(): NumberField<EntityT> {
+  edmDouble(): NumberField<EntityT,Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -91,7 +94,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmByte(): NumberField<EntityT> {
+  edmByte(): NumberField<EntityT,Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -99,7 +102,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmSByte(): NumberField<EntityT> {
+  edmSByte(): NumberField<EntityT,Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -107,7 +110,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmDateTime(): DateField<EntityT> {
+  edmDateTime(): DateField<EntityT,Version> {
     return new DateField(
       this._fieldName,
       this._entityConstructor,
@@ -115,7 +118,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmDateTimeOffset(): DateField<EntityT> {
+  edmDateTimeOffset(): DateField<EntityT,Version> {
     return new DateField(
       this._fieldName,
       this._entityConstructor,
@@ -123,7 +126,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmBinary(): StringField<EntityT> {
+  edmBinary(): StringField<EntityT,Version> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
@@ -131,7 +134,7 @@ export class CustomField<EntityT extends Entity<Version>,Version=ODataV2> extend
     );
   }
 
-  edmTime(): TimeField<EntityT> {
+  edmTime(): TimeField<EntityT,Version> {
     return new TimeField(this._fieldName, this._entityConstructor, 'Edm.Time');
   }
 }

@@ -21,9 +21,10 @@ import { Field, FieldType } from './field';
  * @typeparam FieldT - Type of the field
  */
 export abstract class EdmTypeField<
-  EntityT extends Entity,
-  FieldT extends FieldType
-> extends Field<EntityT> {
+  EntityT extends Entity<Version>,
+  FieldT extends FieldType,
+  Version
+> extends Field<EntityT,Version> {
   /**
    * Creates an instance of EdmTypeField.
    *
@@ -33,7 +34,7 @@ export abstract class EdmTypeField<
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT>,
+    entityConstructor: Constructable<EntityT,{},Version>,
     readonly edmType: EdmType
   ) {
     super(fieldName, entityConstructor);

@@ -1,5 +1,5 @@
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, Entity, EntityBuilderType, ODataV2, Selectable, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
@@ -16,7 +16,7 @@ export declare class TestEntityEndsWithSomethingElse extends Entity implements T
     /**
      * Version currently V2
      */
-    static _version: any;
+    static _version: ODataV2;
     /**
      * Default url path for the according service.
      */

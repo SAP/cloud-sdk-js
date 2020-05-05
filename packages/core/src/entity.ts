@@ -7,7 +7,6 @@ import { CustomField, Link, Selectable } from './selectable';
 import { nonEnumerable } from './util';
 import { toPropertyFormat } from './util/name-converter';
 import { ODataV2 } from './odata-v2';
-import { ODataV4 } from './odata-v4';
 
 export type EntityBuilderType<
   EntityT extends Entity<Version>,
@@ -60,12 +59,12 @@ export class Entity<Version = ODataV2> {
 
   protected static customFieldSelector<
     EntityT extends Entity<Version>,
-    Version=ODataV2
+    Version = ODataV2
   >(
     fieldName: string,
-    entityConstructor: Constructable<EntityT,{}, Version>
-  ): CustomField<EntityT,Version> {
-    return new CustomField<EntityT,Version>(fieldName, entityConstructor);
+    entityConstructor: Constructable<EntityT, {}, Version>
+  ): CustomField<EntityT, Version> {
+    return new CustomField<EntityT, Version>(fieldName, entityConstructor);
   }
 
   /**
@@ -294,19 +293,12 @@ export interface EntityIdentifiable<
 /**
  * @hidden
  */
-export function isSelectedProperty<EntityT extends Entity<Version>,Version=ODataV2>(
-  json,
-  selectable: Selectable<EntityT,Version>
-) {
+export function isSelectedProperty<
+  EntityT extends Entity<Version>,
+  Version = ODataV2
+>(json, selectable: Selectable<EntityT, Version>) {
   return json.hasOwnProperty(selectable._fieldName);
 }
-//
-// export function isSelectedPropertyV4<EntityT extends Entity<ODataV4>>(
-//   json,
-//   selectable: Selectable<EntityT,O>
-// ) {
-//   return json.hasOwnProperty(selectable._fieldName);
-// }
 
 /**
  * @hidden

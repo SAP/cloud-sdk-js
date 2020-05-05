@@ -42,6 +42,7 @@ const expectedEntityImports = [
       'CustomField',
       'Entity',
       'EntityBuilderType',
+      'ODataV2',
       'OneToOneLink',
       'Selectable',
       'StringField',

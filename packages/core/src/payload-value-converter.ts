@@ -6,19 +6,30 @@ import moment, { Moment } from 'moment';
 import { identity } from 'rambda';
 import { EdmType } from './edm-types';
 import { Time } from './time';
+import { ODataV2 } from './odata-v2';
+import { ODataV4 } from './odata-v4';
+import { Entity } from './entity';
+import { ODataVersion } from './odata-version';
 
 /**
  * @hidden
  */
-export function edmToTs<T extends EdmType>(
-  value: any,
-  edmType: T
-): EdmToPrimitive<T> {
+export function edmToTs<
+  T extends EdmType,
+  EntityT extends Entity<Version>,
+  Version extends ODataVersion
+>(value: any, edmType: T, version?: Version): EdmToPrimitive<T, Version> {
   if (value === null || typeof value === 'undefined') {
     return value;
   }
-  if (deserializers[edmType]) {
+  if (
+    deserializers[edmType] &&
+    (version instanceof ODataV2 || version === undefined)
+  ) {
     return deserializers[edmType](value);
+  }
+  if (deserializers[edmType] && version instanceof ODataV4) {
+    return deserializersV4[edmType](value);
   }
   return value;
 }
@@ -153,7 +164,7 @@ function leftpad(value: any, targetLength: number): string {
 }
 
 // Prettier-ignore
-export type EdmToPrimitive<T extends EdmType> = T extends
+export type EdmToPrimitiveV2<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Single'
@@ -174,6 +185,12 @@ export type EdmToPrimitive<T extends EdmType> = T extends
   ? Time
   : any;
 
+export type EdmToPrimitiveV4<T extends EdmType> = EdmToPrimitiveV2<T>;
+
+export type EdmToPrimitive<T extends EdmType, Version> = Version extends ODataV4
+  ? EdmToPrimitiveV4<T>
+  : EdmToPrimitiveV2<T>;
+
 const deserializers: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,
@@ -192,6 +209,8 @@ const deserializers: EdmTypeMapping = {
   'Edm.String': identity,
   'Edm.Time': toTime
 };
+
+const deserializersV4: EdmTypeMapping = deserializers;
 
 const serializers: EdmTypeMapping = {
   'Edm.Binary': identity,

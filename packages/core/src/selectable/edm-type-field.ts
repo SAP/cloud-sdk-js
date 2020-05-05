@@ -24,7 +24,7 @@ export abstract class EdmTypeField<
   EntityT extends Entity<Version>,
   FieldT extends FieldType,
   Version
-> extends Field<EntityT,Version> {
+> extends Field<EntityT, Version> {
   /**
    * Creates an instance of EdmTypeField.
    *
@@ -34,7 +34,7 @@ export abstract class EdmTypeField<
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT,{},Version>,
+    entityConstructor: Constructable<EntityT, {}, Version>,
     readonly edmType: EdmType
   ) {
     super(fieldName, entityConstructor);

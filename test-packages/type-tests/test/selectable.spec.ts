@@ -5,7 +5,7 @@ import {
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/test-service';
 
-// $ExpectType OneToOneLink<TestEntity, TestEntitySingleLink>
+// $ExpectType OneToOneLink<TestEntity, TestEntitySingleLink, ODataV2>
 new OneToOneLink('TestEntitySingleLink', TestEntity, TestEntitySingleLink);
 
 // $ExpectError

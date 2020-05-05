@@ -13,6 +13,8 @@ import {
 } from './selectable';
 import { toPropertyFormat } from './util';
 import { ODataV2 } from './odata-v2';
+import { CollectionField } from './selectable/collection-field';
+import { ODataVersion } from './odata-version';
 
 /**
  * Extracts all custom fields from the JSON payload for a single entity.
@@ -22,9 +24,13 @@ import { ODataV2 } from './odata-v2';
  * @param entityConstructor - The constructor function of the entity class.
  * @returns An object containing the custom fields as key-value pairs.
  */
-export function extractCustomFields<EntityT extends Entity<Version>, JsonT,Version=ODataV2>(
+export function extractCustomFields<
+  EntityT extends Entity<Version>,
+  JsonT,
+  Version = ODataV2
+>(
   json: Partial<JsonT>,
-  entityConstructor: Constructable<EntityT,{},Version>
+  entityConstructor: Constructable<EntityT, {}, Version>
 ): MapType<any> {
   const regularODataProperties = [
     '__metadata',
@@ -50,9 +56,13 @@ export function extractCustomFields<EntityT extends Entity<Version>, JsonT,Versi
  * @param requestHeader - Optional parameter which may be used to add a version identifier (etag) to the entity
  * @returns An instance of the entity class.
  */
-export function deserializeEntity<EntityT extends Entity<Version>, JsonT,Version=ODataV2>(
+export function deserializeEntity<
+  EntityT extends Entity<Version>,
+  JsonT,
+  Version extends ODataVersion = ODataV2
+>(
   json: Partial<JsonT>,
-  entityConstructor: Constructable<EntityT,{},Version>,
+  entityConstructor: Constructable<EntityT, {}, Version>,
   requestHeader?: any
 ): EntityT {
   const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
@@ -61,7 +71,8 @@ export function deserializeEntity<EntityT extends Entity<Version>, JsonT,Version
     .reduce((entity, staticField) => {
       entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
         json,
-        staticField
+        staticField,
+        entityConstructor
       );
       return entity;
     }, new entityConstructor())
@@ -78,16 +89,31 @@ function extractODataETag(json: MapType<any>): string | undefined {
   return '__metadata' in json ? json['__metadata']['etag'] : undefined;
 }
 
-function getFieldValue<EntityT extends Entity<Version>, JsonT,Version=ODataV2>(
+function getFieldValue<
+  EntityT extends Entity<Version>,
+  JsonT,
+  Version extends ODataVersion
+>(
   json: Partial<JsonT>,
-  selectable: Selectable<EntityT,Version>
+  selectable: Selectable<EntityT, Version>,
+  entityConstructor: Constructable<EntityT, {}, Version>
 ) {
   if (selectable instanceof EdmTypeField) {
-    return edmToTs(json[selectable._fieldName], selectable.edmType);
+    return edmToTs(
+      json[selectable._fieldName],
+      selectable.edmType,
+      entityConstructor._version
+    );
   } else if (selectable instanceof Link) {
     return getLinkFromJson(json, selectable);
   } else if (selectable instanceof ComplexTypeField) {
-    return deserializeComplexType(json[selectable._fieldName], selectable);
+    return deserializeComplexType(
+      json[selectable._fieldName],
+      selectable,
+      entityConstructor._version
+    );
+  } else if (selectable instanceof CollectionField) {
+    return json[selectable._fieldName];
   }
 }
 
@@ -134,9 +160,13 @@ function getMultiLinkFromJson<
   }
 }
 
-function deserializeComplexType<EntityT extends Entity>(
+function deserializeComplexType<
+  EntityT extends Entity<Version>,
+  Version extends ODataVersion
+>(
   json: MapType<any>,
-  selectable: ComplexTypeField<EntityT>
+  selectable: ComplexTypeField<EntityT>,
+  version: Version
 ): MapType<any> {
   return Object.entries(selectable)
     .filter(
@@ -147,7 +177,8 @@ function deserializeComplexType<EntityT extends Entity>(
     .reduce((complexTypeObject, [fieldName, field]) => {
       complexTypeObject[toPropertyFormat(fieldName)] = edmToTs(
         json[field._fieldName],
-        field.edmType
+        field.edmType,
+        version
       );
       return complexTypeObject;
     }, {});

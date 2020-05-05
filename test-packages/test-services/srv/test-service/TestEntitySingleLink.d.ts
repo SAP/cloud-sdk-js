@@ -1,5 +1,5 @@
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, ODataV2, OneToOneLink, Selectable, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
  */
@@ -16,7 +16,7 @@ export declare class TestEntitySingleLink extends Entity implements TestEntitySi
     /**
      * Version currently V2
      */
-    static _version: any;
+    static _version: ODataV2;
     /**
      * Default url path for the according service.
      */

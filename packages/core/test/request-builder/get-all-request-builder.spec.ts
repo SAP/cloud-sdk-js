@@ -5,6 +5,7 @@ import {
   defaultDestination,
   mockDestinationsEnv,
   mockGetRequest,
+  mockRequest,
   unmockDestinationsEnv
 } from '../test-util/request-mocker';
 import {
@@ -13,6 +14,8 @@ import {
   createTestEntity
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/test-service';
+import { TestEntityV4 } from '../../src/test-entity-v4';
+import { ODataGetAllRequestConfigV4 } from '../../src/request-builder/request/odata-get-all-request-config-v4';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity>;
@@ -51,6 +54,30 @@ describe('GetAllRequestBuilder', () => {
       expect(actual).toEqual([
         createTestEntity(entityData1),
         createTestEntity(entityData2)
+      ]);
+    });
+
+    it('returns all entites v4', async () => {
+      const entityResponse = {
+        StringProperty: 'something',
+        CollectionProperty: ['Foo', 'Bar']
+      };
+      const requestConfig = new ODataGetAllRequestConfigV4(TestEntityV4);
+      mockRequest(requestConfig, {
+        responseBody: { d: { results: [entityResponse] } },
+        statusCode: 200,
+        method: 'get',
+        query: { $format: 'json' }
+      });
+
+      const actual = await TestEntityV4.requestBuilder()
+        .getAll()
+        .execute(defaultDestination);
+      expect(actual).toEqual([
+        TestEntityV4.builder()
+          .collectionProperty(['Foo', 'Bar'])
+          .stringProperty('something')
+          .build()
       ]);
     });
 

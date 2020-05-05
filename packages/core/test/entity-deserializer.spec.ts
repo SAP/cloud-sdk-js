@@ -3,6 +3,7 @@ import {
   deserializeEntity,
   extractCustomFields
 } from '../src/entity-deserializer';
+import { TestEntityV4 } from '../src/test-entity-v4';
 import {
   TestEntity,
   TestEntityMultiLink,
@@ -10,6 +11,19 @@ import {
 } from './test-util/test-services/test-service';
 
 describe('entity-deserializer', () => {
+  it('should handle V4 collection ', () => {
+    const testEntity = new TestEntityV4();
+    testEntity.stringProperty = 'something';
+    testEntity.collectionProperty = ['Foo', 'Bar'];
+
+    const response = {
+      StringProperty: 'something',
+      CollectionProperty: ['Foo', 'Bar']
+    };
+
+    expect(deserializeEntity(response, TestEntityV4)).toEqual(testEntity);
+  });
+
   it('should build an entity with properties', () => {
     const prop = 'test';
     const testEntity = new TestEntity();

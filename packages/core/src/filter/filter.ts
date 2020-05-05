@@ -34,12 +34,15 @@ export type FilterOperatorByType<
  * @typeparam EntityT - Type of the entity to be filtered on
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
-export class Filter<EntityT extends Entity<Version>, FieldT extends FieldType,Version=ODataV2>
-  implements EntityIdentifiable<EntityT,Version> {
+export class Filter<
+  EntityT extends Entity<Version>,
+  FieldT extends FieldType,
+  Version = ODataV2
+> implements EntityIdentifiable<EntityT, Version> {
   /**
    * Constructor type of the entity to be filtered.
    */
-  readonly _entityConstructor: Constructable<EntityT,{},Version>;
+  readonly _entityConstructor: Constructable<EntityT, {}, Version>;
   readonly _version: Version;
   /**
    * Entity type of the entity tp be filtered.

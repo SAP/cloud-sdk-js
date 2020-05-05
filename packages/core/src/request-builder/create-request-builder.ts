@@ -24,6 +24,7 @@ import { ODataCreateRequestConfig } from './request/odata-create-request-config'
 export class CreateRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilderBase<ODataCreateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
+  readonly _version: ODataV2;
   /**
    * Creates an instance of CreateRequestBuilder.
    *
@@ -36,7 +37,6 @@ export class CreateRequestBuilder<EntityT extends Entity>
   ) {
     super(new ODataCreateRequestConfig(_entityConstructor));
   }
-  readonly _version: ODataV2;
 
   get entity(): EntityT {
     return this._entity;

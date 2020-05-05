@@ -11,9 +11,9 @@ import {
 } from '../scp-cf/destination-service-types';
 import { Selectable } from '../selectable';
 import { ODataV4 } from '../odata-v4';
+import { deserializeEntity } from '../entity-deserializer';
 import { MethodRequestBuilderBase } from './request-builder-base';
 import { ODataGetAllRequestConfigV4 } from './request/odata-get-all-request-config-v4';
-import { deserializeEntity } from '../entity-deserializer';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.

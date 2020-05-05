@@ -1,5 +1,5 @@
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, ODataV2, Selectable, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
  */
@@ -16,7 +16,7 @@ export declare class TestEntityLvl2MultiLink extends Entity implements TestEntit
     /**
      * Version currently V2
      */
-    static _version: any;
+    static _version: ODataV2;
     /**
      * Default url path for the according service.
      */

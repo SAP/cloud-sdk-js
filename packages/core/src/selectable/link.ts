@@ -22,8 +22,11 @@ import { Selectable } from './selectable';
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
-export class Link<EntityT extends Entity<Version>, LinkedEntityT extends Entity<Version>,Version=ODataV2>
-  implements EntityIdentifiable<EntityT,Version> {
+export class Link<
+  EntityT extends Entity<Version>,
+  LinkedEntityT extends Entity<Version>,
+  Version = ODataV2
+> implements EntityIdentifiable<EntityT, Version> {
   /**
    * Create a new link based on a given link.
    *
@@ -32,10 +35,14 @@ export class Link<EntityT extends Entity<Version>, LinkedEntityT extends Entity<
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT extends Entity<Version>, LinkedEntityT extends Entity<Version>,Version=ODataV2>(
-    link: Link<EntityT, LinkedEntityT,Version>
-  ): Link<EntityT, LinkedEntityT,Version> {
-    const clonedLink = new Link<EntityT, LinkedEntityT,Version>(
+  static clone<
+    EntityT extends Entity<Version>,
+    LinkedEntityT extends Entity<Version>,
+    Version = ODataV2
+  >(
+    link: Link<EntityT, LinkedEntityT, Version>
+  ): Link<EntityT, LinkedEntityT, Version> {
+    const clonedLink = new Link<EntityT, LinkedEntityT, Version>(
       link._fieldName,
       link._entityConstructor,
       link._linkedEntity
@@ -46,7 +53,7 @@ export class Link<EntityT extends Entity<Version>, LinkedEntityT extends Entity<
   /**
    * List of selectables on the linked entity.
    */
-  selects: Selectable<LinkedEntityT,Version>[] = [];
+  selects: Selectable<LinkedEntityT, Version>[] = [];
 
   readonly _entity: EntityT;
   readonly _version: Version;
@@ -59,7 +66,7 @@ export class Link<EntityT extends Entity<Version>, LinkedEntityT extends Entity<
    */
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT,{},Version>,
+    readonly _entityConstructor: Constructable<EntityT, {}, Version>,
     readonly _linkedEntity: Constructable<LinkedEntityT>
   ) {}
 
@@ -72,8 +79,8 @@ export class Link<EntityT extends Entity<Version>, LinkedEntityT extends Entity<
    * @returns The link itself, to facilitate method chaining
    */
   select(
-    ...selects: Selectable<LinkedEntityT,Version>[]
-  ): Link<EntityT, LinkedEntityT,Version> {
+    ...selects: Selectable<LinkedEntityT, Version>[]
+  ): Link<EntityT, LinkedEntityT, Version> {
     const link = Link.clone(this);
     link.selects = selects;
     return link;

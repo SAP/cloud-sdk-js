@@ -17,12 +17,15 @@ import { Filterable } from './filterable';
  * @typeparam EntityT - Type of the entity to be filtered
  * @typeparam LinkedEntityT - Type of the linked entity which is used in the filter
  */
-export class FilterLink<EntityT extends Entity<Version>, LinkedEntityT extends Entity<Version>,Version=ODataV2>
-  implements EntityIdentifiable<EntityT,Version> {
+export class FilterLink<
+  EntityT extends Entity<Version>,
+  LinkedEntityT extends Entity<Version>,
+  Version = ODataV2
+> implements EntityIdentifiable<EntityT, Version> {
   /**
    * Constructor type of the entity to be filtered.
    */
-  readonly _entityConstructor: Constructable<EntityT,{},Version>;
+  readonly _entityConstructor: Constructable<EntityT, {}, Version>;
   readonly _version: Version;
   /**
    * Entity type of the entity tp be filtered.
@@ -41,14 +44,18 @@ export class FilterLink<EntityT extends Entity<Version>, LinkedEntityT extends E
    * @param filters - List of filterables for the linked entity
    */
   constructor(
-    public link: Link<EntityT, LinkedEntityT,Version>,
-    public filters: Filterable<LinkedEntityT,Version>[]
+    public link: Link<EntityT, LinkedEntityT, Version>,
+    public filters: Filterable<LinkedEntityT, Version>[]
   ) {}
 }
 
-export function isFilterLink<EntityT extends Entity<Version>, LinkedT extends Entity<Version>,Version>(
-  filterable: Filterable<EntityT,Version>
-): filterable is FilterLink<EntityT, LinkedT,Version> {
+export function isFilterLink<
+  EntityT extends Entity<Version>,
+  LinkedT extends Entity<Version>,
+  Version
+>(
+  filterable: Filterable<EntityT, Version>
+): filterable is FilterLink<EntityT, LinkedT, Version> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

@@ -2,19 +2,19 @@
 
 import { Entity } from '../entity';
 import { FieldType } from '../selectable';
+import { ODataV2 } from '../odata-v2';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
-import { ODataV2 } from '../odata-v2';
 
 /**
  * A union of all types that can be used for filtering.
  *
  * @typeparam EntityT - Type of the entity to be filtered on
  */
-export type Filterable<EntityT extends Entity<Version>,Version=ODataV2> =
+export type Filterable<EntityT extends Entity<Version>, Version = ODataV2> =
   | Filter<EntityT, FieldType>
-  | FilterLink<EntityT, any,Version>
+  | FilterLink<EntityT, any, Version>
   | FilterList<EntityT>;
 
 /**

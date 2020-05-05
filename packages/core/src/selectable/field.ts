@@ -5,7 +5,6 @@ import { Moment } from 'moment';
 import { Constructable } from '../constructable';
 import { Entity, EntityIdentifiable } from '../entity';
 import { Time } from '../time';
-import { ODataV2 } from '../odata-v2';
 
 /**
  * Union type to represent all possible types of a field.
@@ -38,8 +37,8 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 
-export abstract class Field<EntityT extends Entity<Version>,Version>
-  implements EntityIdentifiable<EntityT,Version> {
+export abstract class Field<EntityT extends Entity<Version>, Version>
+  implements EntityIdentifiable<EntityT, Version> {
   readonly _entity: EntityT;
   readonly _version: Version;
   /**
@@ -50,7 +49,7 @@ export abstract class Field<EntityT extends Entity<Version>,Version>
    */
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT,{},Version>
+    readonly _entityConstructor: Constructable<EntityT, {}, Version>
   ) {}
 
   /**

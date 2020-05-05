@@ -24,7 +24,7 @@ describe('generator', () => {
     expect(testEntityFile!.getNamespaces().length).toBe(1);
 
     const entityClass = testEntityFile!.getClass('TestEntity');
-    expect(entityClass!.getProperties().length).toBe(24);
+    expect(entityClass!.getProperties().length).toBe(25);
 
     const properties = entityClass!.getProperties();
     const staticProperties = [

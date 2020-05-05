@@ -27,9 +27,9 @@ import { ODataUpdateRequestConfig } from './request/odata-update-request-config'
 export class UpdateRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
+  readonly _version: ODataV2;
   private ignored: Set<string>;
   private required: Set<string>;
-
   /**
    * Creates an instance of UpdateRequestBuilder.
    *
@@ -38,8 +38,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entity: EntityT,
-    readonly _version: ODataV2
+    readonly _entity: EntityT
   ) {
     super(new ODataUpdateRequestConfig(_entityConstructor));
     this.requestConfig.eTag = _entity.versionIdentifier;

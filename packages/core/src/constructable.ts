@@ -17,11 +17,11 @@ export interface Constructable<
   _entityName: string;
   _version: Version;
   _defaultServicePath: string;
-  _allFields: Selectable<EntityT,Version>[];
-  _keyFields: Selectable<EntityT,Version>[];
-  _keys: { [keys: string]: Selectable<EntityT,Version> };
+  _allFields: Selectable<EntityT, Version>[];
+  _keyFields: Selectable<EntityT, Version>[];
+  _keys: { [keys: string]: Selectable<EntityT, Version> };
   new (...args: any[]): EntityT;
-  requestBuilder(): RequestBuilder<EntityT,Version>;
-  builder(): EntityBuilderType<EntityT, EntityTypeForceMandatoryT,Version>;
-  customField(fieldName: string): CustomField<EntityT,Version>;
+  requestBuilder(): RequestBuilder<EntityT, Version>;
+  builder(): EntityBuilderType<EntityT, EntityTypeForceMandatoryT, Version>;
+  customField(fieldName: string): CustomField<EntityT, Version>;
 }

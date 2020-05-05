@@ -9,7 +9,7 @@ export class AllFields<EntityT extends Entity<Version>, Version = ODataV2> {
 
   constructor(
     public _fieldName: string,
-    public _entityConstructor: Constructable<EntityT,{},Version>
+    public _entityConstructor: Constructable<EntityT, {}, Version>
   ) {
     this._fieldName = '*';
   }

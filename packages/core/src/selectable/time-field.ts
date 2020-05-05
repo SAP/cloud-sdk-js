@@ -6,6 +6,7 @@ import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
 import { Filter } from '../filter';
 import { Time } from '../time';
+import { ODataV2 } from '../odata-v2';
 import {
   ComplexTypeField,
   ConstructorOrField,
@@ -13,18 +14,16 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
-import { ODataV2 } from '../odata-v2';
 
 /**
  * Represents a property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class TimeFieldBase<EntityT extends Entity<Version>,Version> extends EdmTypeField<
-  EntityT,
-  Time,
+export class TimeFieldBase<
+  EntityT extends Entity<Version>,
   Version
-> {
+> extends EdmTypeField<EntityT, Time, Version> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *
@@ -71,7 +70,10 @@ export class TimeFieldBase<EntityT extends Entity<Version>,Version> extends EdmT
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class TimeField<EntityT extends Entity<Version>,Version=ODataV2> extends TimeFieldBase<EntityT,Version> {
+export class TimeField<
+  EntityT extends Entity<Version>,
+  Version = ODataV2
+> extends TimeFieldBase<EntityT, Version> {
   readonly selectable: true;
 }
 
@@ -82,12 +84,12 @@ export class TimeField<EntityT extends Entity<Version>,Version=ODataV2> extends 
  */
 export class ComplexTypeTimePropertyField<
   EntityT extends Entity<Version>,
-  Version=ODataV2
-> extends TimeFieldBase<EntityT,Version> {
+  Version = ODataV2
+> extends TimeFieldBase<EntityT, Version> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT,Version>;
+  readonly fieldOf: ConstructorOrField<EntityT, Version>;
 
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
@@ -98,7 +100,7 @@ export class ComplexTypeTimePropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT,Version>,
+    fieldOf: ConstructorOrField<EntityT, Version>,
     edmType: EdmType
   );
 
@@ -114,7 +116,7 @@ export class ComplexTypeTimePropertyField<
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT,{},Version>,
+    entityConstructor: Constructable<EntityT, {}, Version>,
     parentTypeName: string,
     edmType: EdmType
   );
@@ -124,7 +126,7 @@ export class ComplexTypeTimePropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT,Version>,
+    fieldOf: ConstructorOrField<EntityT, Version>,
     arg3: string | EdmType,
     arg4?: EdmType
   ) {

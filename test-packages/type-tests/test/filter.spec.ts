@@ -6,13 +6,13 @@ import {
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/test-service';
 
-// $ExpectType Filter<TestEntity, string>
+// $ExpectType Filter<TestEntity, string, ODataV2>
 const stringProp = TestEntity.STRING_PROPERTY.equals('test');
 
-// $ExpectType Filter<TestEntity, boolean>
+// $ExpectType Filter<TestEntity, boolean, ODataV2>
 const booleanProp = TestEntity.BOOLEAN_PROPERTY.equals(true);
 
-// $ExpectType Filter<TestEntityMultiLink, number>
+// $ExpectType Filter<TestEntityMultiLink, number, ODataV2>
 const multiLinkInt16Prop = TestEntityMultiLink.INT_16_PROPERTY.equals(15);
 
 // $ExpectType FilterList<TestEntity>
@@ -33,12 +33,12 @@ and(stringProp, booleanProp, multiLinkInt16Prop);
 // $ExpectError
 TestEntity.TO_MULTI_LINK.filter;
 
-// $ExpectType FilterLink<TestEntity, TestEntitySingleLink>
+// $ExpectType FilterLink<TestEntity, TestEntitySingleLink, ODataV2>
 TestEntity.TO_SINGLE_LINK.filter(
   TestEntitySingleLink.STRING_PROPERTY.equals('test')
 );
 
-// $ExpectType Filter<TestEntity, string>
+// $ExpectType Filter<TestEntity, string, ODataV2>
 TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
 
 // $ExpectError
@@ -50,7 +50,7 @@ const substringFn = substring(
   TestEntity.INT_16_PROPERTY
 );
 
-// $ExpectType Filter<TestEntity, string>
+// $ExpectType Filter<TestEntity, string, ODataV2>
 const substringFnFilter = substringFn.equals('test');
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
@@ -61,5 +61,5 @@ TestEntitySingleLink.requestBuilder().getAll().filter(substringFnFilter); // $Ex
 // $ExpectError
 substring(TestEntitySingleLink.STRING_PROPERTY, TestEntity.STRING_PROPERTY);
 
-// $ExpectType Filter<TestEntity, number>
+// $ExpectType Filter<TestEntity, number, ODataV2>
 length(TestEntity.STRING_PROPERTY).greaterThan(1);

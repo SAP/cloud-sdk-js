@@ -12,17 +12,17 @@ import { StringField } from './string-field';
 import { TimeField } from './time-field';
 
 export class CustomField<
-  EntityT extends Entity<Version> ,
-  Version=ODataV2
-> extends Field<EntityT,Version> {
+  EntityT extends Entity<Version>,
+  Version = ODataV2
+> extends Field<EntityT, Version> {
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT,{},Version>
+    readonly _entityConstructor: Constructable<EntityT, {}, Version>
   ) {
     super(_fieldName, _entityConstructor);
   }
 
-  edmString(): StringField<EntityT,Version> {
+  edmString(): StringField<EntityT, Version> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
@@ -30,7 +30,7 @@ export class CustomField<
     );
   }
 
-  edmBoolean(): BooleanField<EntityT,Version> {
+  edmBoolean(): BooleanField<EntityT, Version> {
     return new BooleanField(
       this._fieldName,
       this._entityConstructor,
@@ -38,7 +38,7 @@ export class CustomField<
     );
   }
 
-  edmGuid(): StringField<EntityT,Version> {
+  edmGuid(): StringField<EntityT, Version> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
@@ -46,7 +46,7 @@ export class CustomField<
     );
   }
 
-  edmDecimal(): BigNumberField<EntityT,Version> {
+  edmDecimal(): BigNumberField<EntityT, Version> {
     return new BigNumberField(
       this._fieldName,
       this._entityConstructor,
@@ -54,7 +54,7 @@ export class CustomField<
     );
   }
 
-  edmInt16(): NumberField<EntityT,Version> {
+  edmInt16(): NumberField<EntityT, Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -62,7 +62,7 @@ export class CustomField<
     );
   }
 
-  edmInt32(): NumberField<EntityT,Version> {
+  edmInt32(): NumberField<EntityT, Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -70,7 +70,7 @@ export class CustomField<
     );
   }
 
-  edmInt64(): BigNumberField<EntityT,Version> {
+  edmInt64(): BigNumberField<EntityT, Version> {
     return new BigNumberField(
       this._fieldName,
       this._entityConstructor,
@@ -78,7 +78,7 @@ export class CustomField<
     );
   }
 
-  edmSingle(): NumberField<EntityT,Version> {
+  edmSingle(): NumberField<EntityT, Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -86,7 +86,7 @@ export class CustomField<
     );
   }
 
-  edmDouble(): NumberField<EntityT,Version> {
+  edmDouble(): NumberField<EntityT, Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -94,7 +94,7 @@ export class CustomField<
     );
   }
 
-  edmByte(): NumberField<EntityT,Version> {
+  edmByte(): NumberField<EntityT, Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -102,7 +102,7 @@ export class CustomField<
     );
   }
 
-  edmSByte(): NumberField<EntityT,Version> {
+  edmSByte(): NumberField<EntityT, Version> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
@@ -110,7 +110,7 @@ export class CustomField<
     );
   }
 
-  edmDateTime(): DateField<EntityT,Version> {
+  edmDateTime(): DateField<EntityT, Version> {
     return new DateField(
       this._fieldName,
       this._entityConstructor,
@@ -118,7 +118,7 @@ export class CustomField<
     );
   }
 
-  edmDateTimeOffset(): DateField<EntityT,Version> {
+  edmDateTimeOffset(): DateField<EntityT, Version> {
     return new DateField(
       this._fieldName,
       this._entityConstructor,
@@ -126,7 +126,7 @@ export class CustomField<
     );
   }
 
-  edmBinary(): StringField<EntityT,Version> {
+  edmBinary(): StringField<EntityT, Version> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
@@ -134,7 +134,7 @@ export class CustomField<
     );
   }
 
-  edmTime(): TimeField<EntityT,Version> {
+  edmTime(): TimeField<EntityT, Version> {
     return new TimeField(this._fieldName, this._entityConstructor, 'Edm.Time');
   }
 }

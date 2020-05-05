@@ -3,8 +3,8 @@
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
-import { Field } from './field';
 import { ODataV2 } from '../odata-v2';
+import { Field } from './field';
 
 /**
  * Represents a property of an OData entity with a complex type.
@@ -20,13 +20,14 @@ import { ODataV2 } from '../odata-v2';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export abstract class ComplexTypeField<EntityT extends Entity<Version>,Version=ODataV2> extends Field<
-  EntityT,Version
-> {
+export abstract class ComplexTypeField<
+  EntityT extends Entity<Version>,
+  Version = ODataV2
+> extends Field<EntityT, Version> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT,Version>;
+  readonly fieldOf: ConstructorOrField<EntityT, Version>;
 
   /**
    * Note that this property is crucial, although not really used.
@@ -40,7 +41,7 @@ export abstract class ComplexTypeField<EntityT extends Entity<Version>,Version=O
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - If the complex field is on root level of entity it is the entity otherwise the parent complex field
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT,Version>);
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, Version>);
 
   /**
    * @deprecated since verision 1.19.0
@@ -53,7 +54,7 @@ export abstract class ComplexTypeField<EntityT extends Entity<Version>,Version=O
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT,{},Version>,
+    entityConstructor: Constructable<EntityT, {}, Version>,
     complexTypeName: string
   );
 
@@ -62,7 +63,7 @@ export abstract class ComplexTypeField<EntityT extends Entity<Version>,Version=O
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT,Version>,
+    fieldOf: ConstructorOrField<EntityT, Version>,
     complexTypeName?: string
   ) {
     super(fieldName, getEntityConstructor(fieldOf));
@@ -79,18 +80,18 @@ export abstract class ComplexTypeField<EntityT extends Entity<Version>,Version=O
   }
 }
 
-export type ConstructorOrField<EntityT extends Entity<Version>,Version> =
-  | Constructable<EntityT,{},Version>
-  | ComplexTypeField<EntityT,Version>;
+export type ConstructorOrField<EntityT extends Entity<Version>, Version> =
+  | Constructable<EntityT, {}, Version>
+  | ComplexTypeField<EntityT, Version>;
 
 /**
  * Convenience method to return the entity constructor in the complex extensions of the normal fields e.g. ComplexTypeStringPropertyField
  * @param arg - Contains either the entity containing the complex field or a complex field in case of nested fields.
  * @returns Constructable
  */
-export function getEntityConstructor<EntityT extends Entity<Version>,Version>(
-  arg: Constructable<EntityT,{},Version> | ComplexTypeField<EntityT,Version>
-): Constructable<EntityT,{},Version> {
+export function getEntityConstructor<EntityT extends Entity<Version>, Version>(
+  arg: Constructable<EntityT, {}, Version> | ComplexTypeField<EntityT, Version>
+): Constructable<EntityT, {}, Version> {
   return arg instanceof ComplexTypeField ? arg._entityConstructor : arg;
 }
 

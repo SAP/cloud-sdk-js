@@ -21,6 +21,7 @@ describe('entity class generator', () => {
       [
         ['_entityName', `'${breakfastEntity.entitySetName}'`],
         ['_serviceName', `'${foodService.namespace}'`],
+        ['_version', 'new ODataV2()'],
         ['_defaultServicePath', `'${foodService.servicePath}'`]
       ]
     );

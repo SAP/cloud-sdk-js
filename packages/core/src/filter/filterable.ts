@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { Entity, EntityODataV4 } from '../entity';
 import { FieldType } from '../selectable';
-import { Filter } from './filter';
-import { FilterLink } from './filter-link';
-import { FilterList } from './filter-list';
+import { Filter, FilterODataV4 } from './filter';
+import { FilterLink, FilterLinkODataV4 } from './filter-link';
+import { FilterList, FilterListODataV4 } from './filter-list';
 
 /**
  * A union of all types that can be used for filtering.
@@ -15,6 +15,11 @@ export type Filterable<EntityT extends Entity> =
   | Filter<EntityT, FieldType>
   | FilterLink<EntityT, any>
   | FilterList<EntityT>;
+
+export type FilterableODataV4<EntityT extends EntityODataV4> =
+  | FilterODataV4<EntityT, FieldType>
+  | FilterLinkODataV4<EntityT, any>
+  | FilterListODataV4<EntityT>;
 
 /**
  * Create a [[FilterList]] by combining [[Filterable]]s with logical `and`.
@@ -41,6 +46,12 @@ export function and<EntityT extends Entity>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT> {
   return new FilterList(expressions);
+}
+// todo name
+export function andODataV4<EntityT extends EntityODataV4>(
+  ...expressions: FilterableODataV4<EntityT>[]
+): FilterListODataV4<EntityT> {
+  return new FilterListODataV4(expressions);
 }
 
 /**

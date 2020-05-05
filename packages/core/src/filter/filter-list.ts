@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
-import { Filterable } from './filterable';
+import { Constructable, ConstructableODataV4 } from '../constructable';
+import { Entity, EntityIdentifiable, EntityIdentifiableODataV4, EntityODataV4 } from '../entity';
+import { Filterable, FilterableODataV4 } from './filterable';
 
 /**
  * Data structure to combine [[Filterable]]s conjunctively and / or disjunctively. A FilterList matches when all filterables within the `andFilters` match and when at least one filterable within the `orFilters` matches. Should not be used directly.
@@ -75,9 +75,86 @@ export class FilterList<EntityT extends Entity>
   }
 }
 
+export class FilterListODataV4<EntityT extends EntityODataV4>
+  implements EntityIdentifiableODataV4<EntityT> {
+  /**
+   * Constructor type of the entity to be filtered.
+   */
+  readonly _entityConstructor: ConstructableODataV4<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
+
+  /**
+   * Creates an instance of FilterList.
+   *
+   * @param andFilters - Filters to be combined by logical conjunction (`and`)
+   * @param orFilters - Filters to be combined by logical disjunction (`or`)
+   */
+  constructor(
+    public andFilters: FilterableODataV4<EntityT>[] = [],
+    public orFilters: FilterableODataV4<EntityT>[] = []
+  ) {}
+
+  /**
+   * Flattens `andFilters` and `orFilters` as far as possible while staying logically equivalent.
+   *
+   * @returns Flattened filter list
+   */
+  flatten(): FilterListODataV4<EntityT> {
+    this._flatten('andFilters');
+    this._flatten('orFilters');
+    return this;
+  }
+
+  private canFlatten(property: 'andFilters' | 'orFilters'): boolean {
+    const otherProperty =
+      property === 'andFilters' ? 'orFilters' : 'andFilters';
+    return this[property].some(
+      filter =>
+        filter instanceof FilterListODataV4 &&
+        (!filter.isEmpty(property) || filter.isEmpty(otherProperty))
+    );
+  }
+
+  private isEmpty(property: 'andFilters' | 'orFilters'): boolean {
+    return !this[property].length;
+  }
+
+  private _flatten(property: 'andFilters' | 'orFilters'): void {
+    const otherProperty =
+      property === 'andFilters' ? 'orFilters' : 'andFilters';
+    while (this.canFlatten(property)) {
+      this[property] = this[property].reduce((flatList, current) => {
+        if (current instanceof FilterListODataV4) {
+          const flattendFilters = [...flatList, ...current[property]];
+          if (current[otherProperty].length) {
+            current[property] = [];
+            flattendFilters.push(current.flatten());
+          }
+          return flattendFilters;
+        }
+        return [...flatList, current];
+      }, []);
+    }
+  }
+}
+
 export function isFilterList<T extends Entity>(
   filterable: Filterable<T>
 ): filterable is FilterList<T> {
+  return (
+    typeof filterable['field'] === 'undefined' &&
+    typeof filterable['operator'] === 'undefined' &&
+    typeof filterable['value'] === 'undefined' &&
+    typeof filterable['flatten'] === 'function'
+  );
+}
+
+export function isFilterListODataV4<T extends EntityODataV4>(
+  filterable: FilterableODataV4<T>
+): filterable is FilterListODataV4<T> {
   return (
     typeof filterable['field'] === 'undefined' &&
     typeof filterable['operator'] === 'undefined' &&

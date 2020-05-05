@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from './constructable';
-import { EntityBuilder } from './entity-builder';
-import { CustomField, Link, Selectable } from './selectable';
+import { Constructable, ConstructableODataV4 } from './constructable';
+import { EntityBuilder, EntityBuilderODataV4 } from './entity-builder';
+import { CustomField, CustomFieldODataV4, Link, LinkODataV4, Selectable, SelectableODataV4 } from './selectable';
 import { nonEnumerable } from './util';
 import { toPropertyFormat } from './util/name-converter';
 
@@ -17,39 +17,21 @@ export type EntityBuilderType<
 } &
   EntityBuilder<EntityT, EntityTypeForceMandatoryT>;
 
-/**
- * Super class for all representations of OData entity types.
- */
-export class Entity {
+export type EntityBuilderTypeODataV4<
+  EntityT extends EntityODataV4,
+  EntityTypeForceMandatoryT
+  > = {
+  [property in keyof EntityTypeForceMandatoryT]: (
+    value: EntityTypeForceMandatoryT[property]
+  ) => EntityBuilderTypeODataV4<EntityT, EntityTypeForceMandatoryT>;
+} &
+  EntityBuilderODataV4<EntityT, EntityTypeForceMandatoryT>;
+
+// todo fix reference of Entity
+export abstract class AbstractEntity {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
-
-  protected static entityBuilder<
-    EntityT extends Entity,
-    EntityTypeForceMandatoryT
-  >(
-    entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT>
-  ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT>(
-      entityConstructor
-    );
-    entityConstructor._allFields.forEach(field => {
-      const fieldName = `${toPropertyFormat(field._fieldName)}`;
-      builder[fieldName] = function (value) {
-        this.entity[fieldName] = value;
-        return this;
-      };
-    });
-    return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
-  }
-
-  protected static customFieldSelector<EntityT extends Entity>(
-    fieldName: string,
-    entityConstructor: Constructable<EntityT>
-  ): CustomField<EntityT> {
-    return new CustomField(fieldName, entityConstructor);
-  }
 
   /**
    * The remote state of the entity.
@@ -260,11 +242,87 @@ export class Entity {
   }
 }
 
+interface ODataV2Version{
+  oDataV2Version: true;
+}
+
+interface ODataV4Version{
+  oDataV4Version: true;
+}
+
+/**
+ * Super class for all representations of OData entity types.
+ */
+export class Entity extends AbstractEntity implements ODataV2Version{
+  oDataV2Version: true = true;
+
+  protected static entityBuilder<
+    EntityT extends Entity,
+    EntityTypeForceMandatoryT
+    >(
+    entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT>
+  ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT> {
+    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT>(
+      entityConstructor
+    );
+    entityConstructor._allFields.forEach(field => {
+      const fieldName = `${toPropertyFormat(field._fieldName)}`;
+      builder[fieldName] = function (value) {
+        this.entity[fieldName] = value;
+        return this;
+      };
+    });
+    return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
+  }
+
+  protected static customFieldSelector<EntityT extends Entity>(
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>
+  ): CustomField<EntityT> {
+    return new CustomField(fieldName, entityConstructor);
+  }
+}
+
+export class EntityODataV4 extends AbstractEntity implements ODataV4Version{
+  oDataV4Version: true = true;
+
+  protected static entityBuilder<
+    EntityT extends EntityODataV4,
+    EntityTypeForceMandatoryT
+    >(
+    entityConstructor: ConstructableODataV4<EntityT, EntityTypeForceMandatoryT>
+  ): EntityBuilderTypeODataV4<EntityT, EntityTypeForceMandatoryT> {
+    const builder = new EntityBuilderODataV4<EntityT, EntityTypeForceMandatoryT>(
+      entityConstructor
+    );
+    entityConstructor._allFields.forEach(field => {
+      const fieldName = `${toPropertyFormat(field._fieldName)}`;
+      builder[fieldName] = function (value) {
+        this.entity[fieldName] = value;
+        return this;
+      };
+    });
+    return builder as EntityBuilderTypeODataV4<EntityT, EntityTypeForceMandatoryT>;
+  }
+
+  protected static customFieldSelector<EntityT extends EntityODataV4>(
+    fieldName: string,
+    entityConstructor: ConstructableODataV4<EntityT>
+  ): CustomFieldODataV4<EntityT> {
+    return new CustomFieldODataV4(fieldName, entityConstructor);
+  }
+}
+
 /**
  * @hidden
  */
 export interface EntityIdentifiable<T extends Entity> {
   readonly _entityConstructor: Constructable<T>;
+  readonly _entity: T;
+}
+
+export interface EntityIdentifiableODataV4<T extends EntityODataV4> {
+  readonly _entityConstructor: ConstructableODataV4<T>;
   readonly _entity: T;
 }
 
@@ -280,6 +338,13 @@ export function isSelectedProperty<EntityT extends Entity>(
   return json.hasOwnProperty(selectable._fieldName);
 }
 
+export function isSelectedPropertyODataV4<EntityT extends EntityODataV4>(
+  json,
+  selectable: SelectableODataV4<EntityT>
+) {
+  return json.hasOwnProperty(selectable._fieldName);
+}
+
 /**
  * @hidden
  */
@@ -288,6 +353,13 @@ export function isExistentProperty<
   LinkedEntityT extends Entity
 >(json, link: Link<EntityT, LinkedEntityT>) {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
+}
+
+export function isExistentPropertyODataV4<
+  EntityT extends EntityODataV4,
+  LinkedEntityT extends EntityODataV4
+  >(json, link: LinkODataV4<EntityT, LinkedEntityT>) {
+  return isSelectedPropertyODataV4(json, link) && json[link._fieldName] !== null;
 }
 
 /**
@@ -299,6 +371,16 @@ export function isExpandedProperty<
 >(json, link: Link<EntityT, LinkedEntityT>) {
   return (
     isExistentProperty(json, link) &&
+    !json[link._fieldName].hasOwnProperty('__deferred')
+  );
+}
+
+export function isExpandedPropertyODataV4<
+  EntityT extends EntityODataV4,
+  LinkedEntityT extends EntityODataV4
+  >(json, link: LinkODataV4<EntityT, LinkedEntityT>) {
+  return (
+    isExistentPropertyODataV4(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')
   );
 }

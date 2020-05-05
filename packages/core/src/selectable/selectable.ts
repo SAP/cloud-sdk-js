@@ -1,12 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
-import { AllFields } from './all-fields';
-import { ComplexTypeField } from './complex-type-field';
-import { CustomField } from './custom-field';
-import { Link } from './link';
-import { SimpleTypeFields } from './simple-type-fields';
-import { CollectionField } from './collection-field';
+import { Entity, EntityODataV4 } from '../entity';
+import { AllFields, AllFieldsODataV4 } from './all-fields';
+import { ComplexTypeField, ComplexTypeFieldODataV4 } from './complex-type-field';
+import { CustomField, CustomFieldODataV4 } from './custom-field';
+import { Link, LinkODataV4 } from './link';
+import { SimpleTypeFields, SimpleTypeFieldsODataV4 } from './simple-type-fields';
+import { CollectionFieldODataV4 } from './collection-field';
 
 /**
  * Represents all selectables, i.e. everything that can be used in a `.select` statement.
@@ -19,5 +19,12 @@ export type Selectable<EntityT extends Entity> =
   | Link<EntityT, any>
   | ComplexTypeField<EntityT>
   | CustomField<EntityT>
-  | AllFields<EntityT>
-  | CollectionField<EntityT>;
+  | AllFields<EntityT>;
+
+export type SelectableODataV4<EntityT extends EntityODataV4> =
+  | SimpleTypeFieldsODataV4<EntityT>
+  | LinkODataV4<EntityT, any>
+  | ComplexTypeFieldODataV4<EntityT>
+  | CustomFieldODataV4<EntityT>
+  | AllFieldsODataV4<EntityT>
+  | CollectionFieldODataV4<EntityT>;

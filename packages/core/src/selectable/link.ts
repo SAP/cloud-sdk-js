@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
-import { Selectable } from './selectable';
+import { Constructable, ConstructableODataV4 } from '../constructable';
+import { Entity, EntityIdentifiable, EntityIdentifiableODataV4, EntityODataV4 } from '../entity';
+import { Selectable, SelectableODataV4 } from './selectable';
 
 /**
  * Represents a navigation property of an OData entity.
@@ -73,6 +73,63 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity>
     ...selects: Selectable<LinkedEntityT>[]
   ): Link<EntityT, LinkedEntityT> {
     const link = Link.clone(this);
+    link.selects = selects;
+    return link;
+  }
+}
+
+export class LinkODataV4<EntityT extends EntityODataV4, LinkedEntityT extends EntityODataV4>
+  implements EntityIdentifiableODataV4<EntityT> {
+  /**
+   * Create a new link based on a given link.
+   *
+   * @typeparam EntityT - Type of the entity to be linked from
+   * @typeparam LinkedEntityT - Type of the entity to be linked to
+   * @param link - Link to be cloned
+   * @returns Newly created link
+   */
+  static clone<EntityT extends EntityODataV4, LinkedEntityT extends EntityODataV4>(
+    link: LinkODataV4<EntityT, LinkedEntityT>
+  ): LinkODataV4<EntityT, LinkedEntityT> {
+    const clonedLink = new LinkODataV4<EntityT, LinkedEntityT>(
+      link._fieldName,
+      link._entityConstructor,
+      link._linkedEntity
+    );
+    clonedLink.selects = link.selects;
+    return clonedLink;
+  }
+  /**
+   * List of selectables on the linked entity.
+   */
+  selects: SelectableODataV4<LinkedEntityT>[] = [];
+
+  readonly _entity: EntityT;
+  /**
+   * Creates an instance of Link.
+   *
+   * @param _fieldName - Name of the linking field to be used in the OData request.
+   * @param _entityConstructor - Constructor type of the entity the field belongs to
+   * @param _linkedEntity - Constructor type of the linked entity
+   */
+  constructor(
+    readonly _fieldName: string,
+    readonly _entityConstructor: ConstructableODataV4<EntityT>,
+    readonly _linkedEntity: ConstructableODataV4<LinkedEntityT>
+  ) {}
+
+  /**
+   * Creates a selection on a linked entity. Has the same behavior as [[GetAllRequestBuilder.select]] and [[GetByKeyRequestBuilder.select]] but for linked entities.
+   *
+   * See also, [[Selectable]]
+   *
+   * @param selects - Selection of fields or links on a linked entity
+   * @returns The link itself, to facilitate method chaining
+   */
+  select(
+    ...selects: SelectableODataV4<LinkedEntityT>[]
+  ): LinkODataV4<EntityT, LinkedEntityT> {
+    const link = LinkODataV4.clone(this);
     link.selects = selects;
     return link;
   }

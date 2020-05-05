@@ -1,18 +1,18 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
-import { and, Filterable } from '../filter/filterable';
-import { Orderable } from '../order/orderable';
+import { Constructable, ConstructableODataV4 } from '../constructable';
+import { Entity, EntityIdentifiable, EntityIdentifiableODataV4, EntityODataV4 } from '../entity';
+import { deserializeEntity, deserializeEntityODataV4 } from '../entity-deserializer';
+import { and, andODataV4, Filterable, FilterableODataV4 } from '../filter/filterable';
+import { Orderable, OrderableODataV4 } from '../order/orderable';
 import { DestinationOptions } from '../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../scp-cf/destination-service-types';
-import { Selectable } from '../selectable';
+import { Selectable, SelectableODataV4 } from '../selectable';
 import { MethodRequestBuilderBase } from './request-builder-base';
-import { ODataGetAllRequestConfig } from './request/odata-get-all-request-config';
+import { ODataGetAllRequestConfig, ODataGetAllRequestConfigODataV4 } from './request/odata-get-all-request-config';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -107,6 +107,95 @@ export class GetAllRequestBuilder<EntityT extends Entity>
       .then(response =>
         response.data.d.results.map(json =>
           deserializeEntity(json, this._entityConstructor, response.headers)
+        )
+      );
+  }
+}
+
+export class GetAllRequestBuilderODataV4<EntityT extends EntityODataV4>
+  extends MethodRequestBuilderBase<ODataGetAllRequestConfigODataV4<EntityT>>
+  implements EntityIdentifiableODataV4<EntityT> {
+  readonly _entity: EntityT;
+
+  /**
+   * Creates an instance of GetAllRequestBuilder.
+   *
+   * @param _entityConstructor - Constructor of the entity to create the request for
+   */
+  constructor(readonly _entityConstructor: ConstructableODataV4<EntityT>) {
+    super(new ODataGetAllRequestConfigODataV4(_entityConstructor));
+  }
+  /**
+   * Restrict the response to the given selection of properties in the request.
+   *
+   * @param selects - Fields to select in the request
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  select(...selects: SelectableODataV4<EntityT>[]): this {
+    this.requestConfig.selects = selects;
+    return this;
+  }
+
+  /**
+   * Add filter statements to the request.
+   *
+   * @param expressions - Filter expressions to restrict the response
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  filter(...expressions: FilterableODataV4<EntityT>[]): this {
+    this.requestConfig.filter = andODataV4(...expressions);
+    return this;
+  }
+
+  /**
+   * Add order-by statements to the request.
+   *
+   * @param orderBy - OrderBy statements to order the response by
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  orderBy(...orderBy: OrderableODataV4<EntityT>[]): this {
+    this.requestConfig.orderBy = orderBy;
+    return this;
+  }
+
+  /**
+   * Limit number of returned entities.
+   *
+   * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  top(top: number): this {
+    this.requestConfig.top = top;
+    return this;
+  }
+
+  /**
+   * Skip number of entities.
+   *
+   * @param skip - Number of matching entities to skip. Useful for paging
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  skip(skip: number): this {
+    this.requestConfig.skip = skip;
+    return this;
+  }
+
+  /**
+   * Execute request.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to the requested entities
+   */
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<EntityT[]> {
+    return this.build(destination, options)
+      .then(request => request.execute())
+      .then(response =>
+        response.data.value.map(json =>
+          deserializeEntityODataV4(json, this._entityConstructor, response.headers)
         )
       );
   }

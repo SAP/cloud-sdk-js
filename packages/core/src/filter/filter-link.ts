@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
-import { Link } from '../selectable';
-import { Filterable } from './filterable';
+import { Constructable, ConstructableODataV4 } from '../constructable';
+import { Entity, EntityIdentifiable, EntityIdentifiableODataV4, EntityODataV4 } from '../entity';
+import { Link, LinkODataV4 } from '../selectable';
+import { Filterable, FilterableODataV4 } from './filterable';
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).
@@ -44,9 +44,46 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
   ) {}
 }
 
+export class FilterLinkODataV4<EntityT extends EntityODataV4, LinkedEntityT extends EntityODataV4>
+  implements EntityIdentifiableODataV4<EntityT> {
+  /**
+   * Constructor type of the entity to be filtered.
+   */
+  readonly _entityConstructor: ConstructableODataV4<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
+
+  /**
+   * Linked entity to be filtered by.
+   */
+  readonly _linkedEntityType: LinkedEntityT;
+
+  /**
+   * Creates an instance of FilterLink.
+   *
+   * @param link - Linked entity to be used in the filter
+   * @param filters - List of filterables for the linked entity
+   */
+  constructor(
+    public link: LinkODataV4<EntityT, LinkedEntityT>,
+    public filters: FilterableODataV4<LinkedEntityT>[]
+  ) {}
+}
+
 export function isFilterLink<EntityT extends Entity, LinkedT extends Entity>(
   filterable: Filterable<EntityT>
 ): filterable is FilterLink<EntityT, LinkedT> {
+  return (
+    typeof filterable['link'] !== 'undefined' &&
+    typeof filterable['filters'] !== 'undefined'
+  );
+}
+
+export function isFilterLinkODataV4<EntityT extends EntityODataV4, LinkedT extends EntityODataV4>(
+  filterable: FilterableODataV4<EntityT>
+): filterable is FilterLinkODataV4<EntityT, LinkedT> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

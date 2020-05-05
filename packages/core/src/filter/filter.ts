@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
+import { Constructable, ConstructableODataV4 } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity, EntityIdentifiable } from '../entity';
+import { Entity, EntityIdentifiable, EntityIdentifiableODataV4, EntityODataV4 } from '../entity';
 import { FieldType } from '../selectable';
-import { FilterFunction } from './filter-function';
-import { Filterable } from './filterable';
+import { FilterFunction, FilterFunctionODataV4 } from './filter-function';
+import { Filterable, FilterableODataV4 } from './filterable';
 
 type FilterOperatorString = 'eq' | 'ne';
 type FilterOperatorBoolean = 'eq' | 'ne';
@@ -71,9 +71,57 @@ export class Filter<EntityT extends Entity, FieldT extends FieldType>
   }
 }
 
+export class FilterODataV4<EntityT extends EntityODataV4, FieldT extends FieldType>
+  implements EntityIdentifiableODataV4<EntityT> {
+  /**
+   * Constructor type of the entity to be filtered.
+   */
+  readonly _entityConstructor: ConstructableODataV4<EntityT>;
+  /**
+   * Entity type of the entity tp be filtered.
+   */
+  readonly _entity: EntityT;
+
+  /**
+   * @deprecated Since v1.16.0 Use [[field]] instead.
+   */
+  public _fieldName: string | FilterFunctionODataV4<EntityT, FieldT>;
+
+  // TODO: change the constructor to the following:
+  // Constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
+  // And deprecate passing a string as the field is needed later on
+  /**
+   * Creates an instance of Filter.
+   *
+   * @param field - Name of the field of the entity to be filtered on or a filter function
+   * @param operator - Function to be used for matching
+   * @param value - Value to be used by the operator
+   * @param edmType - EdmType of the field to filter on, needed for custom fields
+   */
+
+  constructor(
+    public field: string | FilterFunctionODataV4<EntityT, FieldT>,
+    public operator: FilterOperator,
+    public value: FieldT,
+    public edmType?: EdmType
+  ) {
+    this._fieldName = field;
+  }
+}
+
 export function isFilter<T extends Entity, FieldT extends FieldType>(
   filterable: Filterable<T>
 ): filterable is Filter<T, FieldT> {
+  return (
+    typeof filterable['field'] !== 'undefined' &&
+    typeof filterable['operator'] !== 'undefined' &&
+    typeof filterable['value'] !== 'undefined'
+  );
+}
+
+export function isFilterODataV4<T extends EntityODataV4, FieldT extends FieldType>(
+  filterable: FilterableODataV4<T>
+): filterable is FilterODataV4<T, FieldT> {
   return (
     typeof filterable['field'] !== 'undefined' &&
     typeof filterable['operator'] !== 'undefined' &&

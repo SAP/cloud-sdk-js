@@ -1,18 +1,18 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable max-classes-per-file */
 
-import { Constructable } from '../constructable';
+import { Constructable, ConstructableODataV4 } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity } from '../entity';
-import { Filter } from '../filter';
+import { Entity, EntityODataV4 } from '../entity';
+import { Filter, FilterODataV4 } from '../filter';
 import { Time } from '../time';
 import {
-  ComplexTypeField,
-  ConstructorOrField,
+  ComplexTypeField, ComplexTypeFieldODataV4,
+  ConstructorOrField, ConstructorOrFieldODataV4,
   getEdmType,
-  getEntityConstructor
+  getEntityConstructor, getEntityConstructorODataV4
 } from './complex-type-field';
-import { EdmTypeField } from './edm-type-field';
+import { EdmTypeField, EdmTypeFieldODataV4 } from './edm-type-field';
 
 /**
  * Represents a property with a time value.
@@ -64,12 +64,61 @@ export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<
   }
 }
 
+export class TimeFieldBaseODataV4<EntityT extends EntityODataV4> extends EdmTypeFieldODataV4<
+  EntityT,
+  Time
+  > {
+  /**
+   * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
+   *
+   * @param value - Value to be used in the filter
+   * @returns The resulting filter
+   */
+  greaterThan(value: Time): FilterODataV4<EntityT, Time> {
+    return new FilterODataV4(this.fieldPath(), 'gt', value, this.edmType);
+  }
+
+  /**
+   * Creates an instance of Filter for this field and the given value using the operator 'ge', i.e. `>=`.
+   *
+   * @param value - Value to be used in the filter
+   * @returns The resulting filter
+   */
+  greaterOrEqual(value: Time): FilterODataV4<EntityT, Time> {
+    return new FilterODataV4(this.fieldPath(), 'ge', value, this.edmType);
+  }
+
+  /**
+   * Creates an instance of Filter for this field and the given value using the operator 'lt', i.e. `<`.
+   *
+   * @param value - Value to be used in the filter
+   * @returns The resulting filter
+   */
+  lessThan(value: Time): FilterODataV4<EntityT, Time> {
+    return new FilterODataV4(this.fieldPath(), 'lt', value, this.edmType);
+  }
+
+  /**
+   * Creates an instance of Filter for this field and the given value using the operator 'le', i.e. `<=`.
+   *
+   * @param value - Value to be used in the filter
+   * @returns The resulting filter
+   */
+  lessOrEqual(value: Time): FilterODataV4<EntityT, Time> {
+    return new FilterODataV4(this.fieldPath(), 'le', value, this.edmType);
+  }
+}
+
 /**
  * Represents a selectable property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class TimeField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
+  readonly selectable: true;
+}
+
+export class TimeFieldODataV4<EntityT extends EntityODataV4> extends TimeFieldBaseODataV4<EntityT> {
   readonly selectable: true;
 }
 
@@ -136,6 +185,69 @@ export class ComplexTypeTimePropertyField<
    */
   fieldPath(): string {
     return this.fieldOf instanceof ComplexTypeField
+      ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
+      : this._fieldName;
+  }
+}
+
+export class ComplexTypeTimePropertyFieldODataV4<
+  EntityT extends EntityODataV4
+  > extends TimeFieldBaseODataV4<EntityT> {
+  /**
+   * The constructor of the entity or the complex type this field belongs to
+   */
+  readonly fieldOf: ConstructorOrFieldODataV4<EntityT>;
+
+  /**
+   * Creates an instance of ComplexTypeBigNumberPropertyField.
+   *
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param fieldOf - The constructor of the entity or the complex type this field belongs to
+   * @param edmType - Type of the field according to the metadata description
+   */
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrFieldODataV4<EntityT>,
+    edmType: EdmType
+  );
+
+  /**
+   * @deprecated since verision 1.19.0
+   *
+   * Creates an instance of ComplexTypeBigNumberPropertyField.
+   *
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param entityConstructor - Constructor type of the entity the field belongs to
+   * @param parentTypeName - Name of the parent complex type
+   * @param edmType - Type of the field according to the metadata description
+   */
+  constructor(
+    fieldName: string,
+    entityConstructor: ConstructableODataV4<EntityT>,
+    parentTypeName: string,
+    edmType: EdmType
+  );
+
+  /*
+   * Union of the two possible constructors.
+   */
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrFieldODataV4<EntityT>,
+    arg3: string | EdmType,
+    arg4?: EdmType
+  ) {
+    super(fieldName, getEntityConstructorODataV4(fieldOf), getEdmType(arg3, arg4));
+    this.fieldOf = fieldOf;
+  }
+
+  /**
+   * Path to the field to be used in filter and order by queries. Combines the parent complex type name with the field name.
+   *
+   * @returns Path to the field to be used in filter and order by queries.
+   */
+  fieldPath(): string {
+    return this.fieldOf instanceof ComplexTypeFieldODataV4
       ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
       : this._fieldName;
   }

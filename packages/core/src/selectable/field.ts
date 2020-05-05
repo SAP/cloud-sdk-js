@@ -2,8 +2,8 @@
 
 import BigNumber from 'bignumber.js';
 import { Moment } from 'moment';
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { Constructable, ConstructableODataV4 } from '../constructable';
+import { Entity, EntityIdentifiable, EntityIdentifiableODataV4, EntityODataV4 } from '../entity';
 import { Time } from '../time';
 
 /**
@@ -49,6 +49,30 @@ export abstract class Field<EntityT extends Entity>
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>
+  ) {}
+
+  /**
+   * Path to the field to be used in filter and order by queries. In most cases this will just be the [[_fieldName]] itself. However, for complex types for instance, the path is prefixed with the name of the complextype.
+   *
+   * @returns Path to the field to be used in filter and order by queries.
+   */
+  fieldPath(): string {
+    return this._fieldName;
+  }
+}
+
+export abstract class FieldODataV4<EntityT extends EntityODataV4>
+  implements EntityIdentifiableODataV4<EntityT> {
+  readonly _entity: EntityT;
+  /**
+   * Creates an instance of Field.
+   *
+   * @param _fieldName - Actual name of the field used in the OData request
+   * @param _entityConstructor - Constructor type of the entity the field belongs to
+   */
+  constructor(
+    readonly _fieldName: string,
+    readonly _entityConstructor: ConstructableODataV4<EntityT>
   ) {}
 
   /**

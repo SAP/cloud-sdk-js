@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../../entity';
-import { Link, Selectable } from '../../selectable';
+import { Entity, EntityODataV4 } from '../../entity';
+import { Link, LinkODataV4, Selectable, SelectableODataV4 } from '../../selectable';
 
 interface SelectionQueryParameters {
   select: string;
@@ -23,6 +23,25 @@ export function getQueryParametersForSelection<EntityT extends Entity>(
 
   if (selects && selects.length) {
     const selection = combineSelection(selects);
+    if (selection.selects.length) {
+      queryParameters.select = filterSelects(selection.selects).join(',');
+    }
+
+    if (selection.expands.length) {
+      queryParameters.expand = selection.expands.join(',');
+    }
+  }
+
+  return queryParameters;
+}
+
+export function getQueryParametersForSelectionODataV4<EntityT extends EntityODataV4>(
+  selects: SelectableODataV4<EntityT>[]
+): Partial<{ select: string; expand: string }> {
+  const queryParameters: Partial<SelectionQueryParameters> = {};
+
+  if (selects && selects.length) {
+    const selection = combineSelectionODataV4(selects);
     if (selection.selects.length) {
       queryParameters.select = filterSelects(selection.selects).join(',');
     }
@@ -65,6 +84,30 @@ function combineSelection<EntityT extends Entity>(
       combination.expands.push(fullFieldName);
       if (select.selects.length) {
         return combineSelection(select.selects, combination, fullFieldName);
+      } else {
+        combination.selects.push(`${fullFieldName}/*`);
+      }
+    } else {
+      combination.selects.push(fullFieldName);
+    }
+    return combination;
+  }, initialCombination);
+}
+
+function combineSelectionODataV4<EntityT extends EntityODataV4>(
+  selects: SelectableODataV4<EntityT>[],
+  initialCombination: SelectionCombination = {
+    selects: [],
+    expands: []
+  },
+  parent = ''
+): SelectionCombination {
+  return selects.reduce((combination: SelectionCombination, select) => {
+    const fullFieldName = getPath(parent, select._fieldName);
+    if (select instanceof LinkODataV4) {
+      combination.expands.push(fullFieldName);
+      if (select.selects.length) {
+        return combineSelectionODataV4(select.selects, combination, fullFieldName);
       } else {
         combination.selects.push(`${fullFieldName}/*`);
       }

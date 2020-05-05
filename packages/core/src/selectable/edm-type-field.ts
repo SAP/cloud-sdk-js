@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
+import { Constructable, ConstructableODataV4 } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity } from '../entity';
-import { Filter } from '../filter';
-import { Field, FieldType } from './field';
+import { Entity, EntityODataV4 } from '../entity';
+import { Filter, FilterODataV4 } from '../filter';
+import { Field, FieldODataV4, FieldType } from './field';
 
 /**
  * Represents a property of an OData entity with an Edm type.
@@ -57,6 +57,46 @@ export abstract class EdmTypeField<
    */
   notEquals(value: FieldT): Filter<EntityT, FieldT> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
+  }
+}
+
+export abstract class EdmTypeFieldODataV4<
+  EntityT extends EntityODataV4,
+  FieldT extends FieldType
+  > extends FieldODataV4<EntityT> {
+  /**
+   * Creates an instance of EdmTypeField.
+   *
+   * @param fieldName - Actual name of the field used in the OData request
+   * @param entityConstructor - Constructor type of the entity the field belongs to
+   * @param edmType - Type of the field according to the metadata description
+   */
+  constructor(
+    fieldName: string,
+    entityConstructor: ConstructableODataV4<EntityT>,
+    readonly edmType: EdmType
+  ) {
+    super(fieldName, entityConstructor);
+  }
+
+  /**
+   * Creates an instance of Filter for this field and the given value using the operator 'eq', i.e. `==`.
+   *
+   * @param value - Value to be used in the filter
+   * @returns The resulting filter
+   */
+  equals(value: FieldT): FilterODataV4<EntityT, FieldT> {
+    return new FilterODataV4(this.fieldPath(), 'eq', value, this.edmType);
+  }
+
+  /**
+   * Creates an instance of Filter for this field and the given value using the operator 'ne', i.e. `!=`.
+   *
+   * @param value - Value to be used in the filter
+   * @returns The resulting filter
+   */
+  notEquals(value: FieldT): FilterODataV4<EntityT, FieldT> {
+    return new FilterODataV4(this.fieldPath(), 'ne', value, this.edmType);
   }
 }
 

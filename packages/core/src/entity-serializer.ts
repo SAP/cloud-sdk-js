@@ -1,15 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from './constructable';
-import { Entity } from './entity';
+import { Constructable, ConstructableODataV4 } from './constructable';
+import { Entity, EntityODataV4 } from './entity';
 import { tsToEdm } from './payload-value-converter';
 import {
-  CollectionField,
-  ComplexTypeField,
-  EdmTypeField,
-  Link,
-  OneToOneLink
+  CollectionFieldODataV4,
+  ComplexTypeField, ComplexTypeFieldODataV4,
+  EdmTypeField, EdmTypeFieldODataV4,
+  Link, LinkODataV4,
+  OneToOneLink, OneToOneLinkODataV4
 } from './selectable';
 import { toStaticPropertyFormat } from './util';
 
@@ -30,9 +30,9 @@ export function serializeEntity<EntityT extends Entity>(
   };
 }
 
-export function serializeEntityODataV4<EntityT extends Entity>(
+export function serializeEntityODataV4<EntityT extends EntityODataV4>(
   entity: EntityT,
-  entityConstructor: Constructable<EntityT>
+  entityConstructor: ConstructableODataV4<EntityT>
 ): MapType<any> {
   return {
     ...serializeEntityNonCustomFieldsODataV4(entity, entityConstructor),
@@ -57,10 +57,27 @@ export function serializeEntityNonCustomFields<EntityT extends Entity>(
   return Object.keys(entity).reduce((serialized, key) => {
     const selectable = entityConstructor[toStaticPropertyFormat(key)];
     const fieldValue = entity[key];
-    if (isODataV2Serizable(fieldValue, selectable)) {
-      serialized[selectable._fieldName] = serializeField(
+
+    if (fieldValue === null || fieldValue === undefined) {
+      serialized[selectable._fieldName] = null;
+    } else if (selectable instanceof EdmTypeField) {
+      serialized[selectable._fieldName] = tsToEdm(
         fieldValue,
-        selectable
+        selectable.edmType
+      );
+    } else if (selectable instanceof OneToOneLink) {
+      serialized[selectable._fieldName] = serializeEntityNonCustomFields(
+        fieldValue,
+        selectable._linkedEntity
+      );
+    } else if (selectable instanceof Link) {
+      serialized[selectable._fieldName] = fieldValue.map(linkedEntity =>
+        serializeEntityNonCustomFields(linkedEntity, selectable._linkedEntity)
+      );
+    } else if (selectable instanceof ComplexTypeField) {
+      serialized[selectable._fieldName] = serializeComplexTypeField(
+        selectable,
+        fieldValue
       );
     }
 
@@ -68,9 +85,9 @@ export function serializeEntityNonCustomFields<EntityT extends Entity>(
   }, {});
 }
 
-export function serializeEntityNonCustomFieldsODataV4<EntityT extends Entity>(
+export function serializeEntityNonCustomFieldsODataV4<EntityT extends EntityODataV4>(
   entity: EntityT,
-  entityConstructor: Constructable<EntityT>
+  entityConstructor: ConstructableODataV4<EntityT>
 ): MapType<any> {
   if (!entity) {
     return {};
@@ -79,13 +96,29 @@ export function serializeEntityNonCustomFieldsODataV4<EntityT extends Entity>(
     const selectable = entityConstructor[toStaticPropertyFormat(key)];
     const fieldValue = entity[key];
 
-    if (isODataV2Serizable(fieldValue, selectable)) {
-      serialized[selectable._fieldName] = serializeField(
+    if (fieldValue === null || fieldValue === undefined) {
+      serialized[selectable._fieldName] = null;
+    } else if (selectable instanceof EdmTypeFieldODataV4) {
+      serialized[selectable._fieldName] = tsToEdm(
         fieldValue,
-        selectable
+        selectable.edmType
       );
-    } else if (selectable instanceof CollectionField) {
-      serialized[selectable._fieldName] = serilizeCollectionField(
+    } else if (selectable instanceof OneToOneLinkODataV4) {
+      serialized[selectable._fieldName] = serializeEntityNonCustomFieldsODataV4(
+        fieldValue,
+        selectable._linkedEntity
+      );
+    } else if (selectable instanceof LinkODataV4) {
+      serialized[selectable._fieldName] = fieldValue.map(linkedEntity =>
+        serializeEntityNonCustomFieldsODataV4(linkedEntity, selectable._linkedEntity)
+      );
+    } else if (selectable instanceof ComplexTypeFieldODataV4) {
+      serialized[selectable._fieldName] = serializeComplexTypeFieldODataV4(
+        selectable,
+        fieldValue
+      );
+    } else if (selectable instanceof CollectionFieldODataV4) {
+      serialized[selectable._fieldName] = serilizeCollectionFieldODataV4(
         fieldValue,
         selectable
       );
@@ -95,16 +128,16 @@ export function serializeEntityNonCustomFieldsODataV4<EntityT extends Entity>(
   }, {});
 }
 
-function serilizeCollectionField<EntityT extends Entity>(
+function serilizeCollectionFieldODataV4<EntityT extends EntityODataV4>(
   fieldValue: any[],
-  selectable: CollectionField<EntityT>
+  selectable: CollectionFieldODataV4<EntityT>
 ) {
-  if (selectable._elementType instanceof EdmTypeField) {
+  if (selectable._elementType instanceof EdmTypeFieldODataV4) {
     const edmType = selectable._elementType.edmType;
     return fieldValue.map(v => tsToEdm(v, edmType));
-  } else if (selectable._elementType instanceof ComplexTypeField) {
+  } else if (selectable._elementType instanceof ComplexTypeFieldODataV4) {
     const complexTypeField = selectable._elementType;
-    return fieldValue.map(v => serializeComplexTypeField(complexTypeField, v));
+    return fieldValue.map(v => serializeComplexTypeFieldODataV4(complexTypeField, v));
   }
 }
 
@@ -144,6 +177,28 @@ function serializeComplexTypeField<EntityT extends Entity>(
       const value = fieldValue[propertyKey];
       if (
         propertyValue instanceof EdmTypeField &&
+        typeof value !== 'undefined'
+      ) {
+        complexTypeObject[propertyValue._fieldName] = tsToEdm(
+          fieldValue[propertyKey],
+          propertyValue.edmType
+        );
+      }
+      return complexTypeObject;
+    },
+    {}
+  );
+}
+
+function serializeComplexTypeFieldODataV4<EntityT extends EntityODataV4>(
+  selectable: ComplexTypeFieldODataV4<EntityT>,
+  fieldValue: any
+): any {
+  return Object.entries(selectable).reduce(
+    (complexTypeObject, [propertyKey, propertyValue]) => {
+      const value = fieldValue[propertyKey];
+      if (
+        propertyValue instanceof EdmTypeFieldODataV4 &&
         typeof value !== 'undefined'
       ) {
         complexTypeObject[propertyValue._fieldName] = tsToEdm(

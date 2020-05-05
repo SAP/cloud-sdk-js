@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { Entity, EntityODataV4 } from '../entity';
 import { Link, SimpleTypeFields } from '../selectable';
 import { ComplexTypePropertyFields } from '../selectable/complex-type-property-fields';
-import { Order } from './order';
-import { OrderLink } from './order-link';
+import { Order, OrderODataV4 } from './order';
+import { OrderLink, OrderLinkODataV4 } from './order-link';
 
 /**
  * A union of all types that can be used for ordering.
@@ -14,6 +14,10 @@ import { OrderLink } from './order-link';
 export type Orderable<EntityT extends Entity> =
   | Order<EntityT>
   | OrderLink<EntityT, Entity>;
+
+export type OrderableODataV4<EntityT extends EntityODataV4> =
+  | OrderODataV4<EntityT>
+  | OrderLinkODataV4<EntityT, EntityODataV4>;
 
 /**
  * A union of all types that can be used as input for ordering.

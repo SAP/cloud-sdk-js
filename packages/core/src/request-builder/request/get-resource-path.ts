@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
-import { FieldType } from '../..';
+import { ConstructableODataV4, EntityODataV4, FieldType } from '../..';
 import { Constructable } from '../../constructable';
 import { Entity } from '../../entity';
 import { convertToUriFormat } from '../../uri-value-converter';
@@ -37,6 +37,23 @@ export function getResourcePathForKeys<EntityT extends Entity>(
   return entityConstructor._entityName;
 }
 
+export function getResourcePathForKeysODataV4<EntityT extends EntityODataV4>(
+  keys: MapType<FieldType> = {},
+  entityConstructor: ConstructableODataV4<EntityT>
+): string {
+  keys = filterNonKeyPropertiesODataV4(keys, entityConstructor);
+  validateKeysODataV4(keys, entityConstructor);
+
+  if (Object.keys(keys).length) {
+    const byKey = Object.entries(keys)
+      .map(([key, value]) => keyToODataODataV4(key, value, entityConstructor))
+      .join(',');
+    return `${entityConstructor._entityName}(${byKey})`;
+  }
+
+  return entityConstructor._entityName;
+}
+
 function getMissingKeys<EntityT extends Entity>(
   keys: MapType<FieldType>,
   entityConstructor: Constructable<EntityT>
@@ -47,9 +64,27 @@ function getMissingKeys<EntityT extends Entity>(
     .filter(fieldName => !givenKeys.includes(fieldName));
 }
 
+function getMissingKeysODataV4<EntityT extends EntityODataV4>(
+  keys: MapType<FieldType>,
+  entityConstructor: ConstructableODataV4<EntityT>
+): string[] {
+  const givenKeys = Object.keys(keys);
+  return entityConstructor._keyFields
+    .map(field => field._fieldName)
+    .filter(fieldName => !givenKeys.includes(fieldName));
+}
+
 function getInvalidKeys<EntityT extends Entity>(
   keys: MapType<FieldType>,
   entityConstructor: Constructable<EntityT>
+): string[] {
+  const validKeys = entityConstructor._keyFields.map(field => field._fieldName);
+  return Object.keys(keys).filter(key => !validKeys.includes(key));
+}
+
+function getInvalidKeysODataV4<EntityT extends EntityODataV4>(
+  keys: MapType<FieldType>,
+  entityConstructor: ConstructableODataV4<EntityT>
 ): string[] {
   const validKeys = entityConstructor._keyFields.map(field => field._fieldName);
   return Object.keys(keys).filter(key => !validKeys.includes(key));
@@ -83,10 +118,41 @@ function filterNonKeyProperties<EntityT extends Entity>(
   return keys;
 }
 
+function filterNonKeyPropertiesODataV4<EntityT extends EntityODataV4>(
+  keys: MapType<FieldType>,
+  entityConstructor: ConstructableODataV4<EntityT>
+): MapType<FieldType> {
+  const invalidKeys = getInvalidKeysODataV4(keys, entityConstructor);
+  if (invalidKeys.length) {
+    logger.warn(
+      `There are too many key properties. Ignoring the following keys: ${invalidKeys.join(
+        ', '
+      )}`
+    );
+    return Object.entries(keys)
+      .filter(([key]) => !invalidKeys.includes(key))
+      .reduce(
+        (validKeys, [key, value]) => ({ ...validKeys, [key]: value }),
+        {}
+      );
+  }
+
+  return keys;
+}
+
 function keyToOData<EntityT extends Entity>(
   key: string,
   value: any,
   entityConstructor: Constructable<EntityT>
+): string {
+  const edmType = entityConstructor[toStaticPropertyFormat(key)].edmType;
+  return `${key}=${convertToUriFormat(value, edmType)}`;
+}
+
+function keyToODataODataV4<EntityT extends EntityODataV4>(
+  key: string,
+  value: any,
+  entityConstructor: ConstructableODataV4<EntityT>
 ): string {
   const edmType = entityConstructor[toStaticPropertyFormat(key)].edmType;
   return `${key}=${convertToUriFormat(value, edmType)}`;
@@ -101,7 +167,7 @@ function validateKeys<EntityT extends Entity>(
     throw new Error(
       `Cannot get resource path for entity ${
         entityConstructor._entityName
-      }. The following keys are missing: ${missingKeys.join(', ')}`
+        }. The following keys are missing: ${missingKeys.join(', ')}`
     );
   }
 
@@ -110,7 +176,32 @@ function validateKeys<EntityT extends Entity>(
     throw new Error(
       `Cannot get resource path for entity ${
         entityConstructor._entityName
-      }. The following keys have nullish values, but are not nullable: ${nullishKeys.join(
+        }. The following keys have nullish values, but are not nullable: ${nullishKeys.join(
+        ', '
+      )}`
+    );
+  }
+}
+
+function validateKeysODataV4<EntityT extends EntityODataV4>(
+  keys: MapType<FieldType>,
+  entityConstructor: ConstructableODataV4<EntityT>
+): void {
+  const missingKeys = getMissingKeysODataV4(keys, entityConstructor);
+  if (missingKeys.length) {
+    throw new Error(
+      `Cannot get resource path for entity ${
+        entityConstructor._entityName
+        }. The following keys are missing: ${missingKeys.join(', ')}`
+    );
+  }
+
+  const nullishKeys = getNullishKeys(keys);
+  if (nullishKeys.length) {
+    throw new Error(
+      `Cannot get resource path for entity ${
+        entityConstructor._entityName
+        }. The following keys have nullish values, but are not nullable: ${nullishKeys.join(
         ', '
       )}`
     );

@@ -1,13 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
-import { Destination } from '../../src';
+import { Destination, ODataGetAllRequestConfigODataV4 } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/request-builder/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/request-builder/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/request-builder/request/odata-get-all-request-config';
 import { ODataRequest } from '../../src/request-builder/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/request-builder/request/odata-update-request-config';
 import { TestEntity } from './test-services/test-service';
+import { Person } from './test-services/test-service-odata-v4';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -102,6 +103,19 @@ export function mockGetRequest(
   entityConstructor = TestEntity
 ) {
   const requestConfig = new ODataGetAllRequestConfig(entityConstructor);
+  return mockRequest(requestConfig, {
+    ...params,
+    statusCode: params.statusCode || 200,
+    method: params.method || 'get',
+    query: { $format: 'json', ...params.query }
+  });
+}
+
+export function mockGetRequestODataV4(
+  params: MockRequestParams,
+  entityConstructor = Person
+) {
+  const requestConfig = new ODataGetAllRequestConfigODataV4(entityConstructor);
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 200,

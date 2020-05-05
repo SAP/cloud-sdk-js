@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from '../../constructable';
-import { Entity } from '../../entity';
-import { FieldType, Selectable } from '../../selectable';
-import { getResourcePathForKeys } from './get-resource-path';
-import { getQueryParametersForSelection } from './get-selection';
+import { Constructable, ConstructableODataV4 } from '../../constructable';
+import { Entity, EntityODataV4 } from '../../entity';
+import { FieldType, Selectable, SelectableODataV4 } from '../../selectable';
+import { getResourcePathForKeys, getResourcePathForKeysODataV4 } from './get-resource-path';
+import { getQueryParametersForSelection, getQueryParametersForSelectionODataV4 } from './get-selection';
 import { ODataRequestConfig } from './odata-request-config';
-import { WithKeys, WithSelection } from './odata-request-traits';
+import { WithKeys, WithSelection, WithSelectionODataV4 } from './odata-request-traits';
 
 /**
  * OData getByKey request configuration for an entity type.
@@ -37,6 +37,33 @@ export class ODataGetByKeyRequestConfig<EntityT extends Entity>
     return this.prependDollarToQueryParameters({
       format: 'json',
       ...getQueryParametersForSelection(this.selects)
+    });
+  }
+}
+
+export class ODataGetByKeyRequestConfigODataV4<EntityT extends EntityODataV4>
+  extends ODataRequestConfig
+  implements WithKeys, WithSelectionODataV4<EntityT> {
+  keys: MapType<FieldType>;
+  selects: SelectableODataV4<EntityT>[] = [];
+
+  /**
+   * Creates an instance of ODataGetByKeyRequestConfig.
+   *
+   * @param entityConstructor - Constructor type of the entity to create a configuration for
+   */
+  constructor(readonly entityConstructor: ConstructableODataV4<EntityT>) {
+    super('get', entityConstructor._defaultServicePath);
+  }
+
+  resourcePath(): string {
+    return getResourcePathForKeysODataV4(this.keys, this.entityConstructor);
+  }
+
+  queryParameters(): MapType<any> {
+    return this.prependDollarToQueryParameters({
+      format: 'json',
+      ...getQueryParametersForSelectionODataV4(this.selects)
     });
   }
 }

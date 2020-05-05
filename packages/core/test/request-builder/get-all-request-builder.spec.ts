@@ -1,18 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { GetAllRequestBuilder } from '../../src/request-builder';
+import { GetAllRequestBuilder, GetAllRequestBuilderODataV4 } from '../../src/request-builder';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
   mockDestinationsEnv,
-  mockGetRequest,
+  mockGetRequest, mockGetRequestODataV4,
   unmockDestinationsEnv
 } from '../test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
+  createPeople,
+  createPersonJson1, createPersonJson2,
   createTestEntity
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/test-service';
+import { Person } from '../test-util/test-services/test-service-odata-v4';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity>;
@@ -94,6 +97,23 @@ describe('GetAllRequestBuilder', () => {
       const getAllRequest = requestBuilder.execute(defaultDestination);
 
       await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('odata v4', () => {
+    it('returns all entities', async () => {
+      const person1 = createPersonJson1();
+      const person2 = createPersonJson2();
+
+      mockGetRequestODataV4({
+        responseBody: {  value: [person1, person2] }
+      });
+
+      const actual = await new GetAllRequestBuilderODataV4(Person).execute(defaultDestination);
+      expect(actual).toEqual([
+        createPeople(person1),
+        createPeople(person2)
+      ]);
     });
   });
 });

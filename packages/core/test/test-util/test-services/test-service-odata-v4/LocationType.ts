@@ -1,10 +1,10 @@
 import {
-  ComplexTypeField,
-  ComplexTypeStringPropertyField,
+  ComplexTypeField, ComplexTypeFieldODataV4,
+  ComplexTypeStringPropertyField, ComplexTypeStringPropertyFieldODataV4,
   createComplexType, edmToTs,
-  Entity,
+  Entity, EntityODataV4,
   FieldType
-} from '../../../../src'
+} from '../../../../src';
 
 export interface LocationType {
   address?: string
@@ -14,8 +14,8 @@ export function createLocationType(json: any): LocationType {
   return LocationType.build(json);
 }
 
-export class LocationTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
-  address: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('Address', this, 'Edm.String');
+export class LocationTypeField<EntityT extends EntityODataV4> extends ComplexTypeFieldODataV4<EntityT> {
+  address: ComplexTypeStringPropertyFieldODataV4<EntityT> = new ComplexTypeStringPropertyFieldODataV4('Address', this, 'Edm.String');
 }
 
 export namespace LocationType {

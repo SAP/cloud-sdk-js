@@ -12,52 +12,6 @@ import {
 import { Person } from './test-util/test-services/test-service-odata-v4/Person';
 
 describe('entity-deserializer', () => {
-  it('should deserialize an entity with collection of string properties', () => {
-    const emails = ['abc@example.com', 'efg@example.com'];
-    const person = new Person();
-    person.emails = emails;
-
-    const response = { Emails: emails };
-
-    expect(deserializeEntityODataV4(response, Person)).toEqual(person);
-  });
-
-  it('should deserialize an entity with collection of complex properties', () => {
-    const homeAddress = 'home address';
-    const homeAddress2 = 'home address 2';
-    const userName = 'user';
-
-    const expected = new Person();
-    expected.homeAddress = {
-      address: homeAddress
-    };
-    expected.addressInfo = [
-      { address: homeAddress },
-      { address: homeAddress2 }
-    ];
-    expected.userName = userName;
-
-    const actual = deserializeEntityODataV4(
-      {
-        HomeAddress: {
-          Address: homeAddress
-        },
-        AddressInfo: [
-          {
-            Address: homeAddress
-          },
-          {
-            Address: homeAddress2
-          }
-        ],
-        UserName: userName
-      },
-      Person
-    );
-
-    expect(actual).toEqual(expected);
-  });
-
   it('should build an entity with properties', () => {
     const prop = 'test';
     const testEntity = new TestEntity();

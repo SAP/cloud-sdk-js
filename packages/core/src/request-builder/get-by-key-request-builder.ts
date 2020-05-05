@@ -1,19 +1,22 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
+import { Constructable, ConstructableODataV4 } from '../constructable';
+import { Entity, EntityIdentifiable, EntityIdentifiableODataV4, EntityODataV4 } from '../entity';
+import { deserializeEntity, deserializeEntityODataV4 } from '../entity-deserializer';
 import { DestinationOptions } from '../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../scp-cf/destination-service-types';
-import { Selectable } from '../selectable';
+import { Selectable, SelectableODataV4 } from '../selectable';
 import { FieldType } from '../selectable/field';
 import { HttpReponse } from '../http-client';
 import { MethodRequestBuilderBase } from './request-builder-base';
-import { ODataGetByKeyRequestConfig } from './request/odata-get-by-key-request-config';
+import {
+  ODataGetByKeyRequestConfig,
+  ODataGetByKeyRequestConfigODataV4
+} from './request/odata-get-by-key-request-config';
 
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,
@@ -66,6 +69,64 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
       .then(request => request.execute())
       .then(response =>
         deserializeEntity(
+          extractData(response),
+          this._entityConstructor,
+          response.headers
+        )
+      )
+      .catch(error =>
+        Promise.reject(
+          errorWithCause('OData get by key request failed!', error)
+        )
+      );
+  }
+}
+
+export class GetByKeyRequestBuilderODataV4<EntityT extends EntityODataV4>
+  extends MethodRequestBuilderBase<ODataGetByKeyRequestConfigODataV4<EntityT>>
+  implements EntityIdentifiableODataV4<EntityT> {
+  readonly _entity: EntityT;
+
+  /**
+   * Creates an instance of GetByKeyRequestBuilder.
+   *
+   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
+   */
+  constructor(
+    readonly _entityConstructor: ConstructableODataV4<EntityT>,
+    keys: MapType<FieldType>
+  ) {
+    super(new ODataGetByKeyRequestConfigODataV4(_entityConstructor));
+    this.requestConfig.keys = keys;
+  }
+
+  /**
+   * Restrict the response to the given selection of properties in the request.
+   *
+   * @param selects - Fields to select in the request
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  select(...selects: SelectableODataV4<EntityT>[]): this {
+    this.requestConfig.selects = selects;
+    return this;
+  }
+
+  /**
+   * Execute request.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to the requested entity
+   */
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<EntityT> {
+    return this.build(destination, options)
+      .then(request => request.execute())
+      .then(response =>
+        deserializeEntityODataV4(
           extractData(response),
           this._entityConstructor,
           response.headers

@@ -11,7 +11,7 @@ description:
 
 [SAP Cloud Application Programming Model] is widely used to build cloud services within SAP.
 
-- CAP uses some of Cloud SDK features to deliver best user experience out of the box
+- CAP uses some of Cloud SDK features to deliver the best user experience out of the box
  - Pipeline
  - Resilience
  - OData V4 helpers
@@ -19,8 +19,7 @@ description:
  - Un-typed Odata client
 - You can consume CAP based services with SAP Cloud SDK by generating a compatible client
 - CAP and Cloud SDK can be used together to leverage benefits from both platforms
-- CAP and Cloud SDK have many features in common, complementary features as well as unique ones. Feel free to approach
-  us to get recommendation for you specific project.
+- CAP and Cloud SDK have many features in common as well as unique ones. Feel free to approach us to get a recommendation for your specific project.
 
 
 ## About CAP ##
@@ -36,6 +35,5 @@ CAP-based projects benefit from a primary [focus on domain](https://cap.cloud.sa
 - Building APIs (OData, REST, Messaging)
 - Consuming and emitting Enterprise Messages for S/4HANA
 
-
-## Documentation ##
+## Learn more ##
 Learn more about CAP from the [official documentation](https://cap.cloud.sap/docs/ )

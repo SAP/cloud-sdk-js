@@ -4,9 +4,9 @@ module.exports = {
     Overview: [
       'overview/about',
       'overview/getting-started',
-      'overview/benefits',
-      'overview/key-features',
-      'overview/what-is-new'
+      'overview/benefits'
+      // 'overview/key-features'
+      // 'overview/what-is-new'
     ],
     Java: [
       'java/introduction',

@@ -40,5 +40,3 @@ Please, review respective documentation sections to find out more.
 ## DevOps ##
 
 ## Test Utilities ##
-
-## Header 1 ##

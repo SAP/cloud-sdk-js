@@ -5,6 +5,7 @@ import { Entity } from '../../entity';
 import { Filterable } from '../../filter';
 import { Orderable } from '../../order';
 import { FieldType, Selectable } from '../../selectable';
+import { ODataV2 } from '../../odata-v2';
 
 /**
  * @hidden
@@ -16,19 +17,19 @@ export interface WithKeys {
 /**
  * @hidden
  */
-export interface WithSelection<EntityT extends Entity> {
-  selects: Selectable<EntityT>[];
+export interface WithSelection<EntityT extends Entity<Version>,Version=ODataV2> {
+  selects: Selectable<EntityT,Version>[];
 }
 
 /**
  * @hidden
  */
-export interface WithGetAllRestrictions<EntityT extends Entity>
-  extends WithSelection<EntityT> {
+export interface WithGetAllRestrictions<EntityT extends Entity<Version>,Version=ODataV2>
+  extends WithSelection<EntityT,Version> {
   top: number;
   skip: number;
-  filter: Filterable<EntityT>;
-  orderBy: Orderable<EntityT>[];
+  filter: Filterable<EntityT,Version>;
+  orderBy: Orderable<EntityT,Version>[];
 }
 
 /**

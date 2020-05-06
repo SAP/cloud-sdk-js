@@ -19,12 +19,12 @@ import { WithGetAllRestrictions } from './odata-request-traits';
  */
 export class ODataGetAllRequestConfigV4<EntityT extends Entity<ODataV4>>
   extends ODataRequestConfig
-  implements WithGetAllRestrictions<EntityT> {
+  implements WithGetAllRestrictions<EntityT,ODataV4> {
   top: number;
   skip: number;
-  filter: Filterable<EntityT>;
-  orderBy: Orderable<EntityT>[];
-  selects: Selectable<EntityT>[];
+  filter: Filterable<EntityT,ODataV4>;
+  orderBy: Orderable<EntityT,ODataV4>[];
+  selects: Selectable<EntityT,ODataV4>[];
 
   /**
    * Creates an instance of ODataGetAllRequestConfig.

@@ -72,6 +72,9 @@ describe('GetAllRequestBuilder', () => {
 
       const actual = await TestEntityV4.requestBuilder()
         .getAll()
+        //.select(TestEntity.BOOLEAN_PROPERTY)
+        .select(TestEntityV4.STRING_PROPERTY)
+        .select(TestEntityV4.COLLECTION_PROPERTY)
         .execute(defaultDestination);
       expect(actual).toEqual([
         TestEntityV4.builder()

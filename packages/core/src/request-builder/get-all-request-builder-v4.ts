@@ -46,7 +46,7 @@ export class GetAllRequestBuilderV4<EntityT extends Entity<ODataV4>>
    * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Selectable<EntityT>[]): this {
+  select(...selects: Selectable<EntityT,ODataV4>[]): this {
     this.requestConfig.selects = selects;
     return this;
   }
@@ -68,7 +68,7 @@ export class GetAllRequestBuilderV4<EntityT extends Entity<ODataV4>>
    * @param orderBy - OrderBy statements to order the response by
    * @returns The request builder itself, to facilitate method chaining
    */
-  orderBy(...orderBy: Orderable<EntityT>[]): this {
+  orderBy(...orderBy: Orderable<EntityT,ODataV4>[]): this {
     this.requestConfig.orderBy = orderBy;
     return this;
   }

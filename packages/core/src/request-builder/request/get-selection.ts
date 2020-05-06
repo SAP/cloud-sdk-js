@@ -2,6 +2,7 @@
 
 import { Entity } from '../../entity';
 import { Link, Selectable } from '../../selectable';
+import { ODataV2 } from '../../odata-v2';
 
 interface SelectionQueryParameters {
   select: string;
@@ -16,8 +17,8 @@ interface SelectionQueryParameters {
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getQueryParametersForSelection<EntityT extends Entity>(
-  selects: Selectable<EntityT>[]
+export function getQueryParametersForSelection<EntityT extends Entity<Version>,Version=ODataV2>(
+  selects: Selectable<EntityT,Version>[]
 ): Partial<{ select: string; expand: string }> {
   const queryParameters: Partial<SelectionQueryParameters> = {};
 
@@ -51,8 +52,8 @@ function filterSelects(selects: string[]): string[] {
   ];
 }
 
-function combineSelection<EntityT extends Entity>(
-  selects: Selectable<EntityT>[],
+function combineSelection<EntityT extends Entity<Version>,Version=ODataV2>(
+  selects: Selectable<EntityT,Version>[],
   initialCombination: SelectionCombination = {
     selects: [],
     expands: []

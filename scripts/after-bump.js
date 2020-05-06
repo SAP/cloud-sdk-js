@@ -3,10 +3,14 @@ const path = require('path');
 const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
 
 function updateDocumentationMd() {
-  transformFile(path.resolve('DOCUMENTATION.md'), documentation => documentation.split('\n')
-    .map(line => line.startsWith('## Version:') ? `## Version: ${version}` : line)
-    .join('\n')
-  )
+  transformFile(path.resolve('DOCUMENTATION.md'), documentation =>
+    documentation
+      .split('\n')
+      .map(line =>
+        line.startsWith('## Version:') ? `## Version: ${version}` : line
+      )
+      .join('\n')
+  );
 }
 
 function updateTypeDocConfig() {
@@ -19,15 +23,12 @@ function updateTypeDocConfig() {
 }
 
 function updateDocsVersions() {
-  transformFile(
-    path.resolve('docs', '_data', 'versions.json'),
-    versionsJson => {
-      const versions = JSON.parse(versionsJson);
-      return versions.includes(version)
-        ? versionsJson
-        : jsonStringify([version, ...versions]);
-    }
-  );
+  transformFile(path.resolve('docs', 'api', 'versions.json'), versionsJson => {
+    const versions = JSON.parse(versionsJson);
+    return versions.includes(version)
+      ? versionsJson
+      : jsonStringify([version, ...versions]);
+  });
 }
 
 const nextChangelogTemplate = [
@@ -79,8 +80,6 @@ function updateChangelog() {
     transformChangeLog(changelog)
   );
 }
-
-
 
 function afterBump() {
   updateDocumentationMd();

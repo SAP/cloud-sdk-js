@@ -45,7 +45,7 @@ Regardless of how the generator is invoked the generated code requires some depe
 { label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
 
-```XML
+```xml
 <dependency>
     <groupId>com.sap.cloud.sdk.datamodel</groupId>
     <artifactId>odata-v4-core</artifactId>
@@ -65,7 +65,7 @@ Regardless of how the generator is invoked the generated code requires some depe
 </TabItem>
 <TabItem value="v2">
 
-```XML
+```xml
 <dependency>
     <groupId>com.sap.cloud.sdk.datamodel</groupId>
     <artifactId>odata-core</artifactId>
@@ -98,7 +98,7 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 
 1. Update your `application/pom.xml` file by adding the generator plugin under the `<plugin>` section.
 
-    ```XML
+    ```xml
     <plugin>
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-v4-generator-maven-plugin</artifactId>
@@ -128,7 +128,7 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 
 1. Update your `application/pom.xml` file by adding the generator plugin under the `<plugin>` section.
 
-    ```XML
+    ```xml
     <plugin>
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-generator-maven-plugin</artifactId>
@@ -159,7 +159,7 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 2. Adapt the `<inputDirectory>` to point to the location of your service definition.
 
 1. In case the target directory should be automatically added as a source folder by maven you can leverage the build helper plugin:
-    ```XML
+    ```xml
     <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -226,7 +226,7 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 <TabItem value="v4">
 
 1.  Please include the `odata-v4-generator` artifact as a dependency in a your project. Choose a module and location from which you intend to invoke the generator and add the following dependency to the appropriate `pom.xml`.
-    ```XML
+    ```xml
      <dependency>
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-v4-generator</artifactId>
@@ -237,7 +237,7 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 <TabItem value="v2">
 
 1.  Please include the `odata-generator` artifact as a dependency in a your project. Choose a module and location from which you intend to invoke the generator and add the following dependency to the appropriate `pom.xml`.
-    ```XML
+    ```xml
      <dependency>
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-generator</artifactId>

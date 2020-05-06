@@ -27,3 +27,4 @@ I didn't really get to this part, but I was aiming for splitting the above menti
 - `Link` can be simplified by adding a default parameter
 - `AllFields` should be a Field itself
 - We could add some more type safety by storing the name of the entity as an instance variable, e. g. `_entityName: 'TestEntity' = 'TestEntity'` for more convenience
+- `odate-batch-consts`

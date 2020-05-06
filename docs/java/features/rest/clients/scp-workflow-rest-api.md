@@ -1,12 +1,26 @@
-# Consume the SAP Cloud Platform Workflow Service
+---
+id: scp-workflow-rest-api
+title: Consume the SAP Cloud Platform Workflow REST API
+hide_title: false
+hide_table_of_contents: false
+sidebar_label: Consume SCP Workflow
+description: This article describes how you can consume the SCP Workflow REST API with the SAP Cloud SDK
+keywords:
+- sap
+- cloud
+- sdk
+- rest
+- scp
+- workflow
+---
 
 ## Goal of this Documentation
-In the following documentation we cover the SAP Cloud SDK Java client library (Beta) for the SCP Workflow REST API. After a brief introduction in the SCP Workflow service, we explain in detail how the developer can use this client library. Thereby we touch in particular upon all necessary configuration steps and the app development.
+In the following we cover the SAP Cloud SDK Java client library (Beta) for the SCP Workflow REST API. After a brief introduction in the SCP Workflow service, we explain in detail how the developer can use this client library. Thereby we touch in particular upon all necessary configuration steps and the app development.
 
-## Introduction to the SCP Workflow Service and its REST API
+## How SCP Workflow and Cloud SDK play together
 The [SAP Cloud Platform (SCP) Workflow service](https://help.sap.com/viewer/product/WORKFLOW_SERVICE/Cloud/en-US) is available on the Cloud Foundry environment [since April 2019](https://blogs.sap.com/2019/04/03/workflow-and-business-rules-now-available-in-cloud-foundry-environment-of-sap-cloud-platform/). It helps you build, run and manage workflows to model processes that span from simple approval steps to complex business scenarios with several involved parties.
 
-The SCP Workflow service provides a web editor for visual workflow modeling as well as an [REST API](https://api.sap.com/api/SAP_CP_Workflow_CF/resource). For example, the REST API allows for interaction with your workflow definitions and task definitions from a loosely-coupled REST client. On its [section within the SAP API Business Hub](https://api.sap.com/api/SAP_CP_Workflow_CF/resource) we can discover all API endpoints along with their payloads and status codes. 
+Imagine a business scenario with multiple involved parties, complex validation logic, and parallel execution flows. SCP Workflow service solves exactly this problem. By integrating this service into your application via its REST API you get a seamless solution for this problem.
 
 Refer to [this blog post](https://blogs.sap.com/2018/01/09/sap-cloud-platform-workflow-developer-center/) for an overview of all resources in the realm of the SCP Workflow Service.
 
@@ -159,9 +173,6 @@ In addition, we assume that your have the SAP Cloud SDK Bill-of-Material (BOM) i
   </dependencies>
 </dependencyManagement>
 ``` 
-If you use the SAP Cloud SDK Maven archetypes, this will be automatically the case.
-
-Note that the presented client library is released as of version `3.19.1`.
 
 #### Add Maven Dependency 
 

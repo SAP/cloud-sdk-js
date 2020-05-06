@@ -80,13 +80,13 @@ module.exports = {
       //     ]
       //   },
       //   'client-libraries',
-      {
-        type: 'category',
-        label: 'Guides',
-        items: [
-          'java/guides/sap-cloud-sdk-linux-how-to',
-          'java/guides/cf-cli',
-          'java/guides/cf-deploy'
+      // {
+      //   type: 'category',
+      //   label: 'Guides',
+      //   items: [
+      //     'java/guides/sap-cloud-sdk-linux-how-to',
+      //     'java/guides/cf-cli',
+      //     'java/guides/cf-deploy'
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',
@@ -100,8 +100,8 @@ module.exports = {
           //       'java/how-to/jwt-handling',
           //       'java/how-to/app-router',
           //       'java/how-to/configure-ide'
-        ]
-      },
+      //   ]
+      // },
       //   'hot-to-contribute',
       //   'support',
       //   'feature-request',

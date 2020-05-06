@@ -22,5 +22,5 @@ yarn-error.log*
 .git
 .log
 
-.iml
+*.iml
 .idea/

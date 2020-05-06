@@ -20,7 +20,7 @@ import TabItem from '@theme/TabItem';
 
 
 ## Create your first App ##
-You can chose between `JavaScript` and `Java` when developing with SAP Cloud SDK.
+You can choose between `JavaScript` and `Java` when developing with SAP Cloud SDK.
 Check these two examples to initialize an application for your favorite development environment.
 
 <Tabs
@@ -34,7 +34,7 @@ values={[
 <TabItem value="js">
 
 :::note
-Make sure your have the latest stable version of [Node.js](https://nodejs.org/en/download/ ) and `npm` installed.
+Make sure you have the latest stable version of [Node.js](https://nodejs.org/en/download/ ) and `npm` installed.
 This example assumes you're running Mac or Linux. [Check detailed getting started guide for your platform](../js/getting-started )
 :::
 
@@ -75,8 +75,8 @@ mvn archetype:generate "-DarchetypeGroupId=com.sap.cloud.sdk.archetypes"\
 
 ## Hello World ##
 This example is not a classical `Hello World` of course. There is much more to it than just bootstrapping a starter
-application. Cloud SDK is a complex and flexible library addressing a vast range of use-cases. Every of them would
-require a `Hello Word` of its own, and we have them!
+application. Cloud SDK is a complex and flexible library addressing a vast range of use-cases. Each of them would
+require a `Hello World` of its own, and we have them!
 
 To continue discovering SDK for your favorite programming language check respective getting started
 guides and comprehensive tutorials for multiple use cases.

@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.20.0
+
+Release Date: TBD
+API Docs: https://sap.github.io/cloud-sdk/api/1.20.0
+Blog: TBD
+
+## Compatibility Notes
+
 - When executing and building requests with the generic `http-client` custom request configurations now take precedence over configurations resulting from the given destination. This applies to all `http-client` related functions: `buildHttpRequest`, `addDestinationToRequestConfig`, `execute` and `executeHttpRequest`.
 
 ## New Functionality

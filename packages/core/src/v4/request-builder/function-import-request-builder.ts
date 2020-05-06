@@ -5,11 +5,12 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import { MethodRequestBuilderBase } from './request-builder-base';
-import { FunctionImportParameters } from './request/function-import-parameter';
-import { ODataFunctionImportRequestConfig } from './request/odata-function-import-request-config';
-import { RequestMethodType } from './request/odata-request-config';
-
+import {
+  MethodRequestBuilderBase,
+  ODataFunctionImportRequestConfig,
+  FunctionImportParameters,
+  RequestMethodType
+} from '../../common';
 /**
  * Create OData request to execute a function import.
  * @typeparam ParametersT - Type of the function import parameters

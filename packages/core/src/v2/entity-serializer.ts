@@ -2,15 +2,15 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { toStaticPropertyFormat } from '../util';
-import { Constructable } from './constructable';
+import {
+  Constructable,
+  EdmTypeField,
+  OneToOneLink,
+  Link,
+  ComplexTypeField
+} from '../common';
 import { Entity } from './entity';
 import { tsToEdm } from './payload-value-converter';
-import {
-  ComplexTypeField,
-  EdmTypeField,
-  Link,
-  OneToOneLink
-} from './selectable';
 
 /**
  * Converts an instance of an entity class into a JSON payload to be sent to an OData service.

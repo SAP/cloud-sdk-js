@@ -1,17 +1,20 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { Entity } from '../entity';
 import { DestinationOptions } from '../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import { FieldType } from '../selectable/field';
-import { MethodRequestBuilderBase } from './request-builder-base';
+import {
+  MethodRequestBuilderBase,
+  ODataDeleteRequestConfig,
+  EntityIdentifiable,
+  Constructable,
+  FieldType
+} from '../../common';
 import { getEntityKeys } from './request/uri-conversion';
-import { ODataDeleteRequestConfig } from './request/odata-delete-request-config';
 
 /**
  * Create OData query to delete an entity.

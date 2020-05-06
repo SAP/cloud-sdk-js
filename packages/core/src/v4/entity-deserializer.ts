@@ -2,16 +2,18 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { toPropertyFormat } from '../util';
-import { Constructable } from './constructable';
-import { Entity, isExpandedProperty, isSelectedProperty } from './entity';
-import { edmToTs } from './payload-value-converter';
 import {
-  ComplexTypeField,
-  EdmTypeField,
+  Constructable,
+  isSelectedProperty,
+  Field,
   Link,
+  EdmTypeField,
+  ComplexTypeField,
   OneToOneLink,
-  Field
-} from './selectable';
+  isExpandedProperty
+} from '../common';
+import { Entity } from './entity';
+import { edmToTs } from './payload-value-converter';
 
 /**
  * Extracts all custom fields from the JSON payload for a single entity.

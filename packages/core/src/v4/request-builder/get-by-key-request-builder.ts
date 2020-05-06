@@ -1,19 +1,22 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { DestinationOptions } from '../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import { Selectable } from '../selectable';
-import { FieldType } from '../selectable/field';
-import { HttpReponse } from '../http-client';
-import { MethodRequestBuilderBase } from './request-builder-base';
-import { ODataGetByKeyRequestConfig } from './request/odata-get-by-key-request-config';
+import {
+  MethodRequestBuilderBase,
+  ODataGetByKeyRequestConfig,
+  EntityIdentifiable,
+  Constructable,
+  FieldType,
+  Selectable,
+  HttpReponse
+} from '../../common';
 
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,

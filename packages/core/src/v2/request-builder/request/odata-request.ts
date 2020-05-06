@@ -6,16 +6,17 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '../../../util/remove-slashes';
-import { buildHeadersForDestination } from '../header-builder/header-builder';
-import { HttpResponse, executeHttpRequest } from '../../http-client';
+import { ODataRequestConfig } from '../../../common/request-builder/request/odata-request-config';
+import { isWithETag } from '../../../common/request-builder/request/odata-request-traits';
 import {
-  filterNullishValues,
-  getHeader,
   replaceDuplicateKeys,
+  filterNullishValues,
+  buildHeadersForDestination,
+  HttpResponse,
+  executeHttpRequest,
+  getHeader,
   buildCsrfHeaders
-} from '../header-builder';
-import { ODataRequestConfig } from './odata-request-config';
-import { isWithETag } from './odata-request-traits';
+} from '../../../common';
 
 /**
  * OData request configuration for an entity type.

@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import {
+  part_content_type_line,
+  content_transfer_encoding_line
+} from '../common';
 import { Entity } from './entity';
 import { getRequestLine } from './odata-batch-request-builder';
-import {
-  content_transfer_encoding_line,
-  part_content_type_line
-} from './odate-batch-consts';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder

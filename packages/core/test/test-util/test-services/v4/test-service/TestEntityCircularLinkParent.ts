@@ -4,7 +4,8 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, OneToManyLink, Selectable, StringField } from '../../../../../src/v4';
+import { AllFields, CustomField, EntityBuilderType, Link, Selectable, StringField } from '../../../../../src/common';
+import { Entity } from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
@@ -13,9 +14,7 @@ export class TestEntityCircularLinkParent extends Entity implements TestEntityCi
   /**
    * Technical entity name for TestEntityCircularLinkParent.
    */
-  static _entityName: 'A_TestEntityCircularLinkParent' = 'A_TestEntityCircularLinkParent';
-
-readonly _entityName: 'A_TestEntityCircularLinkParent' = 'A_TestEntityCircularLinkParent';
+  static _entityName = 'A_TestEntityCircularLinkParent';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntityCircularLinkParent.
@@ -90,11 +89,11 @@ export namespace TestEntityCircularLinkParent {
    * Static representation of the one-to-many navigation property [[toChild]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_CHILD: OneToManyLink<TestEntityCircularLinkParent, TestEntityCircularLinkChild> = new OneToManyLink('to_Child', TestEntityCircularLinkParent, TestEntityCircularLinkChild);
+  export const TO_CHILD: Link<TestEntityCircularLinkParent, TestEntityCircularLinkChild> = new Link('to_Child', TestEntityCircularLinkParent, TestEntityCircularLinkChild);
   /**
    * All fields of the TestEntityCircularLinkParent entity.
    */
-  export const _allFields: Array<StringField<TestEntityCircularLinkParent> | OneToManyLink<TestEntityCircularLinkParent, TestEntityCircularLinkChild>> = [
+  export const _allFields: Array<StringField<TestEntityCircularLinkParent> | Link<TestEntityCircularLinkParent, TestEntityCircularLinkChild>> = [
     TestEntityCircularLinkParent.KEY_PROPERTY,
     TestEntityCircularLinkParent.TO_CHILD
   ];

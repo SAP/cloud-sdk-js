@@ -19,7 +19,8 @@ const coreUnitTestOutputDir = path.resolve(
   'core',
   'test',
   'test-util',
-  'test-services'
+  'test-services',
+  'v4'
 );
 
 const generatorConfig = {
@@ -78,13 +79,31 @@ async function generateTestServicesWithLocalCoreModules(outputDir) {
   }
 
   function replaceWithLocalModules(serviceDirectory, file, data) {
-    return writeFile(
-      path.resolve(outputDir, serviceDirectory, file),
-      data.replace('@sap-cloud-sdk/core', '../../../../src'),
-      {
-        encoding: 'utf8'
-      }
-    ).catch(fileWriteErr => {
+    const lines = data.split('\n');
+    const importLineIndex = lines.findIndex(l =>
+      l.includes('@sap-cloud-sdk/core')
+    );
+    if (!lines[importLineIndex]) {
+      return;
+    }
+    const commonImportLine = lines[importLineIndex]
+      .replace('@sap-cloud-sdk/core', '../../../../../src/common')
+      .split(',')
+      .filter(l => l.trim() !== 'Entity')
+      .join(',');
+
+    lines.splice(
+      importLineIndex,
+      1,
+      commonImportLine,
+      "import { Entity } from '../../../../../src/v4';"
+    );
+
+    const newData = lines.join('\n');
+
+    return writeFile(path.resolve(outputDir, serviceDirectory, file), newData, {
+      encoding: 'utf8'
+    }).catch(fileWriteErr => {
       throw Error(
         `Writing test service file' ${file}' failed: ${fileWriteErr}`
       );

@@ -10,13 +10,18 @@ import {
   toDestinationNameUrl
 } from '../scp-cf';
 import {
+  MethodRequestBuilderBase,
+  ODataBatchConfig,
+  Constructable,
+  http_version
+} from '../common';
+import {
   BatchResponse,
   ErrorResponse,
   ReadResponse,
   WriteResponse,
   WriteResponses
 } from './batch-response';
-import { Constructable } from './constructable';
 import { Entity } from './entity';
 import { deserializeEntity } from './entity-deserializer';
 import {
@@ -24,17 +29,14 @@ import {
   toBatchChangeSet
 } from './odata-batch-change-set';
 import { toBatchRetrieveBody } from './odata-batch-retrieve-request';
-import { http_version } from './odate-batch-consts';
 import {
   CreateRequestBuilder,
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  MethodRequestBuilderBase,
-  ODataRequestConfig,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  ODataRequestConfig
 } from './request-builder';
-import { ODataBatchConfig } from './request-builder/request/odata-batch-config';
 
 const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
 

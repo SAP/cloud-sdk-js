@@ -7,7 +7,8 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, OneToManyLink, NumberField, OneToOneLink, Selectable, StringField, Time, TimeField } from '../../../../../src/v4';
+import { AllFields, BigNumberField, BooleanField, CustomField, DateField, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField, Time, TimeField } from '../../../../../src/common';
+import { Entity } from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -16,9 +17,7 @@ export class TestEntity extends Entity implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
-  static _entityName: 'A_TestEntity' = 'A_TestEntity';
-
-readonly _entityName: 'A_TestEntity' = 'A_TestEntity';
+  static _entityName = 'A_TestEntity';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntity.
@@ -311,12 +310,12 @@ export namespace TestEntity {
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: OneToManyLink<TestEntity, TestEntityMultiLink> = new OneToManyLink('to_MultiLink', TestEntity, TestEntityMultiLink);
+  export const TO_MULTI_LINK: Link<TestEntity, TestEntityMultiLink> = new Link('to_MultiLink', TestEntity, TestEntityMultiLink);
   /**
    * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_OTHER_MULTI_LINK: OneToManyLink<TestEntity, TestEntityOtherMultiLink> = new OneToManyLink('to_OtherMultiLink', TestEntity, TestEntityOtherMultiLink);
+  export const TO_OTHER_MULTI_LINK: Link<TestEntity, TestEntityOtherMultiLink> = new Link('to_OtherMultiLink', TestEntity, TestEntityOtherMultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -325,7 +324,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToManyLink<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | Link<TestEntity, TestEntityMultiLink> | Link<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,

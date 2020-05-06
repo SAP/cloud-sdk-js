@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { serializeEntity } from '../entity-serializer';
 import { DestinationOptions } from '../../scp-cf';
@@ -10,10 +9,14 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import { Link } from '../selectable';
-import { MethodRequestBuilderBase } from './request-builder-base';
+import {
+  MethodRequestBuilderBase,
+  ODataCreateRequestConfig,
+  EntityIdentifiable,
+  Constructable,
+  Link
+} from '../../common';
 import { getEntityKeys } from './request/uri-conversion';
-import { ODataCreateRequestConfig } from './request/odata-create-request-config';
 
 /**
  * Create OData request to create an entity.

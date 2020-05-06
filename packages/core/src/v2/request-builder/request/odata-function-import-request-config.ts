@@ -1,12 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { convertToUriFormat } from './uri-conversion/uri-value-converter';
 import {
-  FunctionImportParameter,
-  FunctionImportParameters
-} from './function-import-parameter';
-import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
+  ODataRequestConfig,
+  RequestMethodType
+} from '../../../common/request-builder/request/odata-request-config';
+import {
+  FunctionImportParameters,
+  FunctionImportParameter
+} from '../../../common';
+import { convertToUriFormat } from './uri-conversion/uri-value-converter';
 
 /**
  * OData function import request configuration for a set of parameters.

@@ -2,7 +2,7 @@
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { toStaticPropertyFormat } from '../util';
-import { Constructable } from './constructable';
+import { Constructable } from '../common';
 import { Entity } from './entity';
 
 const logger = createLogger({

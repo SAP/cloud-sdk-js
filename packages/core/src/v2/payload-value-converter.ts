@@ -4,8 +4,8 @@
 import BigNumber from 'bignumber.js';
 import moment, { Moment } from 'moment';
 import { identity } from 'rambda';
+import { Time } from '../common';
 import { EdmType } from './edm-types';
-import { Time } from './time';
 
 /**
  * @hidden

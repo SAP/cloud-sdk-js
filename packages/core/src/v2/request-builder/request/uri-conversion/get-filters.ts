@@ -1,17 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../../../constructable';
 import { EdmType } from '../../../edm-types';
 import { Entity } from '../../../entity';
-import {
-  Filterable,
-  isFilter,
-  isFilterLink,
-  isFilterList
-} from '../../../filter';
-import { ComplexTypeField } from '../../../selectable';
-import { ComplexTypePropertyFields } from '../../../selectable/complex-type-property-fields';
 import { toStaticPropertyFormat } from '../../../../util';
+import {
+  Constructable,
+  Filterable,
+  isFilterList,
+  isFilterLink,
+  isFilter,
+  ComplexTypeField,
+  ComplexTypePropertyFields
+} from '../../../../common';
 import { convertToUriFormat } from './uri-value-converter';
 
 /**

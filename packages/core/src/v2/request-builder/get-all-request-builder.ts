@@ -17,7 +17,6 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import { UriConverter } from '../../common/request-builder/request/uri-converter';
 import * as uriConversion from './request/uri-conversion';
 
 /**
@@ -40,12 +39,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(
-      new ODataGetAllRequestConfig(
-        _entityConstructor,
-        uriConversion as UriConverter
-      )
-    );
+    super(new ODataGetAllRequestConfig(_entityConstructor, uriConversion));
   }
   /**
    * Restrict the response to the given selection of properties in the request.

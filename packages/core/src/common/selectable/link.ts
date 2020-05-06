@@ -29,6 +29,14 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
   readonly _entity: EntityT;
 
   /**
+   * @deprecated
+   * List of selectables on the linked entity.
+   */
+  get selects() {
+    return this._selects;
+  }
+
+  /**
    * List of selectables on the linked entity.
    */
   _selects: Selectable<LinkedEntityT>[] = [];

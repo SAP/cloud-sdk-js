@@ -34,4 +34,12 @@ export interface UriConverter {
     expands: any[], // Expandable<EntityT>[],
     entityConstructor: Constructable<EntityT>
   ): Partial<{ expand: string }>;
+
+  // TODO: EdmType<EntityT>
+  convertToUriFormat<EntityT extends Entity>(
+    value: any,
+    edmType: any // EdmType<EntityT>
+  ): string;
+
+  convertToUriForEdmString(value: any): string;
 }

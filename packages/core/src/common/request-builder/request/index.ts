@@ -11,3 +11,4 @@ export * from './odata-request';
 export * from './odata-request-config';
 export * from './odata-request-traits';
 export * from './odata-update-request-config';
+export * from './uri-converter';

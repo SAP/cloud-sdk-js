@@ -2,8 +2,8 @@
 
 import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
-import { getAxiosConfigWithDefaults } from '../v2/http-client';
 import { wrapJwtInHeader } from '../util';
+import { getAxiosConfigWithDefaults } from '../common';
 import { parseDestination } from './destination';
 import { Destination } from './destination-service-types';
 import {

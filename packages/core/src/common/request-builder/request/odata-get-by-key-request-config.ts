@@ -4,10 +4,9 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
 import { Entity } from '../../entity';
 import { FieldType, Selectable } from '../../selectable';
-import { getResourcePathForKeys } from './uri-conversion';
-import { getQueryParametersForSelection } from './uri-conversion/get-selection';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithSelection } from './odata-request-traits';
+import { UriConverter } from './uri-converter';
 
 /**
  * OData getByKey request configuration for an entity type.
@@ -25,18 +24,24 @@ export class ODataGetByKeyRequestConfig<EntityT extends Entity>
    *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(readonly entityConstructor: Constructable<EntityT>) {
+  constructor(
+    readonly entityConstructor: Constructable<EntityT>,
+    private uriConversion: UriConverter
+  ) {
     super('get', entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return getResourcePathForKeys(this.keys, this.entityConstructor);
+    return this.uriConversion.getResourcePathForKeys(
+      this.keys,
+      this.entityConstructor
+    );
   }
 
   queryParameters(): MapType<any> {
     return this.prependDollarToQueryParameters({
       format: 'json',
-      ...getQueryParametersForSelection(this.selects)
+      ...this.uriConversion.getQueryParametersForSelection(this.selects)
     });
   }
 }

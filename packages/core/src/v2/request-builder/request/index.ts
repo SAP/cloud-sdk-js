@@ -2,5 +2,3 @@
 
 export * from './uri-conversion';
 export * from './odata-request';
-export * from '../../../common/request-builder/request/odata-request-config';
-export * from '../../../common/request-builder/request/odata-request-traits';

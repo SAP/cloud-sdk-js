@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from '../../../constructable';
 import { Entity } from '../../../entity';
 import { toPropertyFormat } from '../../../../util';
+import { Constructable } from '../../../../common';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.

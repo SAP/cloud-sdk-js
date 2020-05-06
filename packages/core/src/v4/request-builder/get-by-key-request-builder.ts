@@ -17,7 +17,7 @@ import {
   Selectable,
   HttpReponse
 } from '../../common';
-
+import * as uriConversion from './request/uri-conversion';
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,
  * where no selection is equal to selecting all fields.
@@ -39,7 +39,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     keys: MapType<FieldType>
   ) {
-    super(new ODataGetByKeyRequestConfig(_entityConstructor));
+    super(new ODataGetByKeyRequestConfig(_entityConstructor, uriConversion));
     this.requestConfig.keys = keys;
   }
 

@@ -13,7 +13,8 @@ import {
   MethodRequestBuilderBase,
   ODataBatchConfig,
   Constructable,
-  http_version
+  http_version,
+  ODataRequestConfig
 } from '../common';
 import {
   BatchResponse,
@@ -34,8 +35,7 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  UpdateRequestBuilder,
-  ODataRequestConfig
+  UpdateRequestBuilder
 } from './request-builder';
 
 const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';

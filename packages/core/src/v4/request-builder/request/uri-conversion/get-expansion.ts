@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from '../../../entity';
-import { OneToManyLink, AllFields } from '../../../selectable';
-import { Expandable } from '../../../selectable/expandable';
-import { Constructable } from '../../../constructable';
-import { getQueryParametersForSelection } from './get-selection';
+import { Expandable } from '../../../../common/expandable';
+import { Constructable, AllFields, Link } from '../../../../common';
+import { OneToManyLink } from '../../../../common/selectable/one-to-many-link';
 import { getQueryParametersForFilter } from './get-filters';
+import { getQueryParametersForSelection } from './get-selection';
 
 function prependDollar(param: string): string {
   return `$${param}`;
@@ -30,22 +30,29 @@ function getExpand<EntityT extends Entity>(
     return '*';
   }
 
-  let params = {
-    ...getQueryParametersForSelection(expand._selects),
-    ...getQueryParametersForExpansion(expand._expand, expand._linkedEntity)
-  };
+  let params = {};
 
-  if (expand instanceof OneToManyLink) {
+  if (expand instanceof Link) {
     params = {
       ...params,
-      ...getQueryParametersForFilter(expand._filters, entityConstructor),
-      ...(expand._skip && { skip: expand._skip }),
-      ...(expand._top && { top: expand._top })
+      ...getQueryParametersForSelection(expand._selects),
+      ...getQueryParametersForExpansion(expand._expand, expand._linkedEntity)
     };
-  }
-  const subQuery = Object.entries(params)
-    .map(([key, value]) => `${prependDollar(key)}=${value}`)
-    .join(',');
 
-  return `${expand._linkedEntity._entityName}(${subQuery})`;
+    if (expand instanceof OneToManyLink) {
+      params = {
+        ...params,
+        ...getQueryParametersForFilter(expand._filters, entityConstructor),
+        ...(expand._skip && { skip: expand._skip }),
+        ...(expand._top && { top: expand._top })
+      };
+    }
+    const subQuery = Object.entries(params)
+      .map(([key, value]) => `${prependDollar(key)}=${value}`)
+      .join(',');
+
+    return `${expand._linkedEntity._entityName}(${subQuery})`;
+  }
+
+  return '';
 }

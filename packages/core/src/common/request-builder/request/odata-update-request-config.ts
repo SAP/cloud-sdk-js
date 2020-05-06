@@ -4,9 +4,9 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
 import { Entity } from '../../entity';
 import { FieldType } from '../../selectable';
-import { getResourcePathForKeys } from './uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
+import { UriConverter } from './uri-converter';
 
 /**
  * OData update request configuration for an entity type.
@@ -25,7 +25,10 @@ export class ODataUpdateRequestConfig<EntityT extends Entity>
    *
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(readonly _entityConstructor: Constructable<EntityT>) {
+  constructor(
+    readonly _entityConstructor: Constructable<EntityT>,
+    private uriConversion: UriConverter
+  ) {
     super(
       UpdateStrategy.MODIFY_WITH_PATCH,
       _entityConstructor._defaultServicePath
@@ -33,7 +36,10 @@ export class ODataUpdateRequestConfig<EntityT extends Entity>
   }
 
   resourcePath(): string {
-    return getResourcePathForKeys(this.keys, this._entityConstructor);
+    return this.uriConversion.getResourcePathForKeys(
+      this.keys,
+      this._entityConstructor
+    );
   }
 
   queryParameters(): MapType<any> {

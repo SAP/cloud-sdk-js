@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from '../../../entity';
-import { Link, Selectable } from '../../../selectable';
+import { Selectable, Link } from '../../../../common';
 
 interface SelectionQueryParameters {
   select: string;
@@ -63,8 +63,8 @@ function combineSelection<EntityT extends Entity>(
     const fullFieldName = getPath(parent, select._fieldName);
     if (select instanceof Link) {
       combination.expands.push(fullFieldName);
-      if (select.selects.length) {
-        return combineSelection(select.selects, combination, fullFieldName);
+      if (select._selects.length) {
+        return combineSelection(select._selects, combination, fullFieldName);
       } else {
         combination.selects.push(`${fullFieldName}/*`);
       }

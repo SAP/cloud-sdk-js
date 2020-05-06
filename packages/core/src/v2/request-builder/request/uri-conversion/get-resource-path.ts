@@ -1,10 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
-import { FieldType } from '../../..';
-import { Constructable } from '../../../constructable';
 import { Entity } from '../../../entity';
 import { toStaticPropertyFormat } from '../../../../util';
+import { FieldType, Constructable } from '../../../../common';
 import { convertToUriFormat } from './uri-value-converter';
 
 const logger = createLogger({

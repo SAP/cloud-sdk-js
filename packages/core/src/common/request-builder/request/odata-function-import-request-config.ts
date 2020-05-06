@@ -1,12 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { convertToUriFormat } from './uri-conversion/uri-value-converter';
 import {
   FunctionImportParameter,
   FunctionImportParameters
 } from './function-import-parameter';
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
+import { UriConverter } from './uri-converter';
 
 /**
  * OData function import request configuration for a set of parameters.
@@ -28,7 +28,8 @@ export class ODataFunctionImportRequestConfig<
     method: RequestMethodType,
     defaultServicePath: string,
     readonly functionImportName: string,
-    public parameters: FunctionImportParameters<ParametersT>
+    public parameters: FunctionImportParameters<ParametersT>,
+    private uriConversion: UriConverter
   ) {
     super(method, defaultServicePath);
   }
@@ -52,7 +53,9 @@ export class ODataFunctionImportRequestConfig<
             queryParams: MapType<any>,
             parameter: FunctionImportParameter<ParametersT>
           ) => {
-            queryParams[parameter.originalName] = convertToUriFormat(
+            queryParams[
+              parameter.originalName
+            ] = this.uriConversion.convertToUriFormat(
               parameter.value,
               parameter.edmType
             );

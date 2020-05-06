@@ -10,7 +10,7 @@ import {
   HttpAgentConfig,
   HttpsAgentConfig
 } from '../http-agent';
-import { basicHeader } from '../v2';
+import { basicHeader } from '../common';
 
 const logger = createLogger({
   package: 'core',

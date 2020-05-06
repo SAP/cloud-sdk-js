@@ -19,8 +19,7 @@ import {
   Selectable
 } from '../../common';
 import { Entity } from '../entity';
-import { getEntityKeys } from './request/uri-conversion';
-
+import * as uriConversion from './request/uri-conversion';
 /**
  * Create OData query to update an entity.
  *
@@ -42,7 +41,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataUpdateRequestConfig(_entityConstructor));
+    super(new ODataUpdateRequestConfig(_entityConstructor, uriConversion));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
@@ -54,7 +53,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    * @returns the builder itself
    */
   prepare(): this {
-    this.requestConfig.keys = getEntityKeys(
+    this.requestConfig.keys = uriConversion.getEntityKeys(
       this._entity,
       this._entityConstructor
     );

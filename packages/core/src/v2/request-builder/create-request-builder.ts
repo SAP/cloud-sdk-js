@@ -17,7 +17,7 @@ import {
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
 import { getEntityKeys } from './request/uri-conversion/get-keys';
-
+import * as uriConversion from './request/uri-conversion';
 /**
  * Create OData request to create an entity.
  *
@@ -36,7 +36,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor));
+    super(new ODataCreateRequestConfig(_entityConstructor, uriConversion));
   }
 
   get entity(): EntityT {

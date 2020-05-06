@@ -73,7 +73,7 @@ export abstract class Entity {
    */
   protected _customFields: MapType<any>;
 
-  abstract readonly _oDataVersion: 'v2' | 'v4';
+  abstract readonly _oDataVersion; // : 'v2' | 'v4';
 
   constructor() {
     nonEnumerable(this, '_oDataVersion');

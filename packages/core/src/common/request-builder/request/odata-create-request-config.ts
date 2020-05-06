@@ -4,8 +4,8 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
 import { Entity } from '../../entity';
 import { Link } from '../../selectable';
-import { getResourcePathForKeys } from './uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
+import { UriConverter } from './uri-converter';
 
 /**
  * OData create request configuration for an entity type.
@@ -29,7 +29,10 @@ export class ODataCreateRequestConfig<
    * Creates an instance of ODataRequest.
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(readonly _entityConstructor: Constructable<EntityT>) {
+  constructor(
+    readonly _entityConstructor: Constructable<EntityT>,
+    private uriConversion: UriConverter
+  ) {
     super('post', _entityConstructor._defaultServicePath);
   }
 
@@ -45,7 +48,7 @@ export class ODataCreateRequestConfig<
 
   protected resourcePathAsChild() {
     return (
-      getResourcePathForKeys(
+      this.uriConversion.getResourcePathForKeys(
         this.parentKeys,
         this.childField._entityConstructor
       ) +

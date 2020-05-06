@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Entity } from '../../../entity';
-import { Order, Orderable, OrderLink } from '../../../order';
+import { Orderable, OrderLink, Order } from '../../../../common';
 
 /**
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.

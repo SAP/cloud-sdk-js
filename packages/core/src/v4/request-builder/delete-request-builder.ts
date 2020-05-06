@@ -14,8 +14,7 @@ import {
   Constructable,
   FieldType
 } from '../../common';
-import { getEntityKeys } from './request/uri-conversion';
-
+import * as uriConversion from './request/uri-conversion';
 /**
  * Create OData query to delete an entity.
  *
@@ -37,11 +36,14 @@ export class DeleteRequestBuilder<EntityT extends Entity>
     entityConstructor: Constructable<EntityT>,
     keysOrEntity: MapType<FieldType> | Entity
   ) {
-    super(new ODataDeleteRequestConfig(entityConstructor));
+    super(new ODataDeleteRequestConfig(entityConstructor, uriConversion));
     this._entityConstructor = entityConstructor;
 
     if (keysOrEntity instanceof Entity) {
-      this.requestConfig.keys = getEntityKeys(keysOrEntity, entityConstructor);
+      this.requestConfig.keys = uriConversion.getEntityKeys(
+        keysOrEntity,
+        entityConstructor
+      );
       this.setVersionIdentifier(keysOrEntity.versionIdentifier);
     } else {
       this.requestConfig.keys = keysOrEntity;

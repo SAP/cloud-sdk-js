@@ -3,7 +3,6 @@
 import { EdmType } from '../edm-types';
 import { Entity } from '../entity';
 import { Field, FieldType } from '../selectable';
-import { convertToUriForEdmString } from '../request-builder/request/uri-conversion/uri-value-converter';
 import { Filter } from './filter';
 
 /**

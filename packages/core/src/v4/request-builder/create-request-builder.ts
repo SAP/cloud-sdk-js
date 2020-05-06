@@ -16,8 +16,7 @@ import {
   Constructable,
   Link
 } from '../../common';
-import { getEntityKeys } from './request/uri-conversion';
-
+import * as uriConversion from './request/uri-conversion';
 /**
  * Create OData request to create an entity.
  *
@@ -36,7 +35,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor));
+    super(new ODataCreateRequestConfig(_entityConstructor, uriConversion));
   }
 
   get entity(): EntityT {
@@ -67,7 +66,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, EntityT>
   ): this {
-    this.requestConfig.parentKeys = getEntityKeys(
+    this.requestConfig.parentKeys = uriConversion.getEntityKeys(
       parentEntity,
       linkField._entityConstructor
     );

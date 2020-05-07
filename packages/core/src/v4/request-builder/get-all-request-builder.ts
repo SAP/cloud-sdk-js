@@ -9,14 +9,14 @@ import {
 } from '../../scp-cf/destination-service-types';
 import {
   EntityIdentifiable,
-  ODataGetAllRequestConfig,
   Constructable,
   Selectable,
-  MethodRequestBuilderBase,
   Filterable,
   and,
   Orderable
 } from '../../common';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataGetAllRequestConfig } from '../../common/request-builder/request/odata-get-all-request-config';
 import { Expandable } from '../../common/expandable';
 import { UriConverter } from '../../common/request-builder/request/uri-converter';
 import * as uriConversion from './request/uri-conversion';

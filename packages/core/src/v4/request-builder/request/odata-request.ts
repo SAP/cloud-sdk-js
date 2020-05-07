@@ -6,6 +6,7 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '../../../util/remove-slashes';
+import { ODataRequestConfig } from '../../../common/request-builder/request/odata-request-config';
 import {
   replaceDuplicateKeys,
   filterNullishValues,
@@ -14,7 +15,6 @@ import {
   executeHttpRequest,
   getHeader,
   buildCsrfHeaders,
-  ODataRequestConfig,
   isWithETag
 } from '../../../common';
 

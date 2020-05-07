@@ -1,21 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { Constructable, EntityIdentifiable, FieldType } from '../../common';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataDeleteRequestConfig } from '../../common/request-builder/request/odata-delete-request-config';
 import { Entity } from '../entity';
 import { DestinationOptions } from '../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import {
-  MethodRequestBuilderBase,
-  ODataDeleteRequestConfig,
-  EntityIdentifiable,
-  Constructable,
-  FieldType
-} from '../../common';
+import { getEntityKeys } from './request/uri-conversion/get-keys';
 import * as uriConversion from './request/uri-conversion';
-
 /**
  * Create OData query to delete an entity.
  *
@@ -41,10 +37,7 @@ export class DeleteRequestBuilder<EntityT extends Entity>
     this._entityConstructor = entityConstructor;
 
     if (keysOrEntity instanceof Entity) {
-      this.requestConfig.keys = uriConversion.getEntityKeys(
-        keysOrEntity,
-        entityConstructor
-      );
+      this.requestConfig.keys = getEntityKeys(keysOrEntity, entityConstructor);
       this.setVersionIdentifier(keysOrEntity.versionIdentifier);
     } else {
       this.requestConfig.keys = keysOrEntity;

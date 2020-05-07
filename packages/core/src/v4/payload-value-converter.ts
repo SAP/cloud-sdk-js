@@ -147,9 +147,8 @@ function leftpad(value: any, targetLength: number): string {
   const str = value.toString();
   if (str.length >= targetLength) {
     return str;
-  } else {
-    return '0'.repeat(targetLength - str.length) + str;
   }
+  return '0'.repeat(targetLength - str.length) + str;
 }
 
 // Prettier-ignore

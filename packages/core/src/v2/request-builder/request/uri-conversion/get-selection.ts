@@ -65,9 +65,8 @@ function combineSelection<EntityT extends Entity>(
       combination.expands.push(fullFieldName);
       if (select._selects.length) {
         return combineSelection(select._selects, combination, fullFieldName);
-      } else {
-        combination.selects.push(`${fullFieldName}/*`);
       }
+      combination.selects.push(`${fullFieldName}/*`);
     } else {
       combination.selects.push(fullFieldName);
     }

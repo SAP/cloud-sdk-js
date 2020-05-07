@@ -11,4 +11,3 @@ export * from './odata-batch-request-builder';
 export * from './odata-batch-retrieve-request';
 export * from './payload-value-converter';
 export * from './request-builder';
-export * from './request-builder/request/uri-conversion';

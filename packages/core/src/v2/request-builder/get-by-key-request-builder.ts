@@ -3,8 +3,6 @@
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import {
   Constructable,
-  MethodRequestBuilderBase,
-  ODataGetByKeyRequestConfig,
   EntityIdentifiable,
   FieldType,
   Selectable,
@@ -17,6 +15,8 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataGetByKeyRequestConfig } from '../../common/request-builder/request/odata-get-by-key-request-config';
 import * as uriConversion from './request/uri-conversion';
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,

@@ -1,6 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause } from '@sap-cloud-sdk/util';
+import { Constructable, EntityIdentifiable, Link } from '../../common';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataCreateRequestConfig } from '../../common/request-builder/request/odata-create-request-config';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { serializeEntity } from '../entity-serializer';
@@ -9,13 +12,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import {
-  MethodRequestBuilderBase,
-  ODataCreateRequestConfig,
-  EntityIdentifiable,
-  Constructable,
-  Link
-} from '../../common';
+import { getEntityKeys } from './request/uri-conversion/get-keys';
 import * as uriConversion from './request/uri-conversion';
 /**
  * Create OData request to create an entity.
@@ -66,7 +63,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, EntityT>
   ): this {
-    this.requestConfig.parentKeys = uriConversion.getEntityKeys(
+    this.requestConfig.parentKeys = getEntityKeys(
       parentEntity,
       linkField._entityConstructor
     );

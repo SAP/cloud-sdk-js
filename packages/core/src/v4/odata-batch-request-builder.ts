@@ -9,13 +9,10 @@ import {
   DestinationOptions,
   toDestinationNameUrl
 } from '../scp-cf';
-import {
-  MethodRequestBuilderBase,
-  Constructable,
-  ODataRequestConfig,
-  ODataBatchConfig,
-  http_version
-} from '../common';
+import { Constructable, http_version } from '../common';
+import { MethodRequestBuilderBase } from '../common/request-builder/request-builder-base';
+import { ODataBatchConfig } from '../common/request-builder/request/odata-batch-config';
+import { ODataRequestConfig } from '../common/request-builder/request/odata-request-config';
 import {
   BatchResponse,
   ErrorResponse,
@@ -109,11 +106,10 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
       return '\r\n';
     } else if (body.split('\n').length > 1) {
       return '\n';
-    } else {
-      throw new Error(
-        `Cannot detect the line break of the response body: ${body}.`
-      );
     }
+    throw new Error(
+      `Cannot detect the line break of the response body: ${body}.`
+    );
   }
 }
 
@@ -148,9 +144,8 @@ function getPayload(
       '\n' +
       getEndBatchWithLineBreak(requestConfig.batchId)
     );
-  } else {
-    return '';
   }
+  return '';
 }
 
 function toRequestBody<
@@ -171,13 +166,12 @@ function toRequestBody<
     return toBatchRetrieveBody(request);
   } else if (request instanceof ODataBatchChangeSet) {
     return toBatchChangeSet(request);
-  } else {
-    throw Error(
-      `The request: ${JSON.stringify(
-        request
-      )} is not a valid retrieve request or change set.`
-    );
   }
+  throw Error(
+    `The request: ${JSON.stringify(
+      request
+    )} is not a valid retrieve request or change set.`
+  );
 }
 
 function buildResponses(
@@ -203,13 +197,12 @@ function buildResponse(
       entityToConstructorMap,
       lineBreak
     );
-  } else {
-    throw Error(
-      `The response: ${JSON.stringify(
-        response
-      )} is not a valid retrieve request or change set, because it does not contain the proper Content-Type.`
-    );
   }
+  throw Error(
+    `The response: ${JSON.stringify(
+      response
+    )} is not a valid retrieve request or change set, because it does not contain the proper Content-Type.`
+  );
 }
 
 const asReadResponse = body => <T extends Entity>(
@@ -219,9 +212,8 @@ const asReadResponse = body => <T extends Entity>(
     return new Error(body.error);
   } else if (body.d.__metadata) {
     return [deserializeEntity(body.d, constructor)];
-  } else {
-    return body.d.results.map(r => deserializeEntity(r, constructor));
   }
+  return body.d.results.map(r => deserializeEntity(r, constructor));
 };
 
 const asWriteResponse = body => <T extends Entity>(
@@ -427,11 +419,10 @@ function toWriteResponseArray(
         type: entityType!,
         as: asWriteResponse(parsedBody)
       };
-    } else {
-      throw new Error(
-        `The request failed because http code of the response: ${r} is not 201/204.`
-      );
     }
+    throw new Error(
+      `The request failed because http code of the response: ${r} is not 201/204.`
+    );
   });
 }
 
@@ -466,9 +457,8 @@ function buildRetrieveOrErrorResponse(
       as: asReadResponse(parsedBody),
       isSuccess: () => true
     };
-  } else {
-    return { httpCode, body: parsedBody, isSuccess: () => false };
   }
+  return { httpCode, body: parsedBody, isSuccess: () => false };
 }
 
 /**

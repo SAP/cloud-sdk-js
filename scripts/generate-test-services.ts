@@ -19,8 +19,7 @@ const coreUnitTestOutputDir = path.resolve(
   'core',
   'test',
   'test-util',
-  'test-services',
-  'v4'
+  'test-services'
 );
 
 const generatorConfig = {
@@ -43,7 +42,11 @@ function generateTestServicesPackage(outputDir) {
   generate({ ...generatorConfig, outputDir, generateJs: true });
 }
 
-async function generateTestServicesWithLocalCoreModules(outputDir) {
+async function generateTestServicesWithLocalCoreModules(
+  outputDirBase,
+  version: 'v2' | 'v4'
+) {
+  const outputDir = path.resolve(outputDirBase, version);
   await generate({ ...generatorConfig, outputDir });
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
@@ -86,18 +89,45 @@ async function generateTestServicesWithLocalCoreModules(outputDir) {
     if (!lines[importLineIndex]) {
       return;
     }
-    const commonImportLine = lines[importLineIndex]
-      .replace('@sap-cloud-sdk/core', '../../../../../src/common')
-      .split(',')
-      .filter(l => l.trim() !== 'Entity')
-      .join(',');
-
-    lines.splice(
-      importLineIndex,
-      1,
-      commonImportLine,
-      "import { Entity } from '../../../../../src/v4';"
+    const commonImportLine = lines[importLineIndex].replace(
+      '@sap-cloud-sdk/core',
+      '../../../../../src/common'
     );
+    const [preamble, contentAndPostAmble] = commonImportLine.split('{');
+    const [content, postamble] = contentAndPostAmble.split('}');
+    const imports = content.split(',').map(c => c.trim());
+    const potentialLocalImports = [
+      'Entity',
+      'CreateRequestBuilder',
+      'DeleteRequestBuilder',
+      'FunctionImportRequestBuilder',
+      'GetAllRequestBuilder',
+      'GetByKeyRequestBuilder',
+      'UpdateRequestBuilder',
+      'ODataBatchRequestBuilder',
+      'ODataBatchChangeSet',
+      'transformReturnValueForUndefined',
+      'transformReturnValueForEdmType',
+      'transformReturnValueForEdmTypeList',
+      'transformReturnValueForEntity',
+      'transformReturnValueForEntityList',
+      'transformReturnValueForComplexType',
+      'transformReturnValueForComplexTypeList'
+    ];
+    const commonImports = imports.filter(
+      i => !potentialLocalImports.includes(i)
+    );
+    const localImports = imports.filter(i => potentialLocalImports.includes(i));
+    const newCommonImportLine = commonImports.length
+      ? `import {${commonImports.join(',')}} from '../../../../../src/common'`
+      : '';
+    const localImportLine = localImports.length
+      ? `import {${localImports.join(
+          ','
+        )}} from '../../../../../src/${version}'`
+      : '';
+
+    lines.splice(importLineIndex, 1, newCommonImportLine, localImportLine);
 
     const newData = lines.join('\n');
 
@@ -112,4 +142,5 @@ async function generateTestServicesWithLocalCoreModules(outputDir) {
 }
 
 generateTestServicesPackage(packageOutputDir);
-generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir);
+generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
+generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');

@@ -155,10 +155,9 @@ export function getEnvironmentVariable(
 ): string | undefined | null {
   if (process.env[name]) {
     return process.env[name];
-  } else {
-    logger.info('Environment variable ' + name + ' is not defined.');
-    return null;
   }
+  logger.info('Environment variable ' + name + ' is not defined.');
+  return null;
 }
 
 /**

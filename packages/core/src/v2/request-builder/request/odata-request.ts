@@ -7,7 +7,6 @@ import {
   removeTrailingSlashes
 } from '../../../util/remove-slashes';
 import { ODataRequestConfig } from '../../../common/request-builder/request/odata-request-config';
-import { isWithETag } from '../../../common/request-builder/request/odata-request-traits';
 import {
   replaceDuplicateKeys,
   filterNullishValues,
@@ -15,7 +14,8 @@ import {
   HttpResponse,
   executeHttpRequest,
   getHeader,
-  buildCsrfHeaders
+  buildCsrfHeaders,
+  isWithETag
 } from '../../../common';
 
 /**

@@ -15,18 +15,17 @@ export function mockServiceToken() {
     .mockImplementation((service, options) => {
       if (!options || typeof options.userJwt === 'undefined') {
         return Promise.resolve(providerServiceToken);
-      } else {
-        const userJwt =
-          typeof options.userJwt === 'string'
-            ? decodeJwt(options.userJwt)
-            : options.userJwt;
-
-        if (userJwt.zid === TestTenants.PROVIDER) {
-          return Promise.resolve(providerServiceToken);
-        }
-
-        return Promise.resolve(subscriberServiceToken);
       }
+      const userJwt =
+        typeof options.userJwt === 'string'
+          ? decodeJwt(options.userJwt)
+          : options.userJwt;
+
+      if (userJwt.zid === TestTenants.PROVIDER) {
+        return Promise.resolve(providerServiceToken);
+      }
+
+      return Promise.resolve(subscriberServiceToken);
     });
 }
 

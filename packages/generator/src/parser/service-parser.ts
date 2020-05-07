@@ -368,20 +368,19 @@ function parseReturnType(
       builderFunction: entity.className,
       isMulti
     };
-  } else {
-    const complexType = complexTypes.find(
-      c => c.originalName === parsedReturnType
-    );
-    if (!complexType) {
-      throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
-    }
-    return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
-      returnType: complexType.typeName,
-      builderFunction: `${complexType.typeName}.build`,
-      isMulti
-    };
   }
+  const complexType = complexTypes.find(
+    c => c.originalName === parsedReturnType
+  );
+  if (!complexType) {
+    throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
+  }
+  return {
+    returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
+    returnType: complexType.typeName,
+    builderFunction: `${complexType.typeName}.build`,
+    isMulti
+  };
 }
 
 function isMultiReturnType(returnType: string): boolean {

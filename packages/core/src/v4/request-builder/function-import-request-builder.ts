@@ -5,12 +5,9 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import {
-  MethodRequestBuilderBase,
-  ODataFunctionImportRequestConfig,
-  FunctionImportParameters,
-  RequestMethodType
-} from '../../common';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataFunctionImportRequestConfig } from '../../common/request-builder/request/odata-function-import-request-config';
+import { FunctionImportParameters, RequestMethodType } from '../../common';
 import * as uriConversion from './request/uri-conversion';
 
 /**

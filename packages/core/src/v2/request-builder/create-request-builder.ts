@@ -1,13 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import {
-  Constructable,
-  MethodRequestBuilderBase,
-  ODataCreateRequestConfig,
-  EntityIdentifiable,
-  Link
-} from '../../common';
+import { Constructable, EntityIdentifiable, Link } from '../../common';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataCreateRequestConfig } from '../../common/request-builder/request/odata-create-request-config';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { serializeEntity } from '../entity-serializer';

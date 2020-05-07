@@ -2,14 +2,10 @@
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import {
-  Constructable,
-  MethodRequestBuilderBase,
-  ODataUpdateRequestConfig,
-  EntityIdentifiable,
-  Selectable
-} from '../../common';
+import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { Entity } from '../entity';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataUpdateRequestConfig } from '../../common/request-builder/request/odata-update-request-config';
 import {
   serializeEntity,
   serializeEntityNonCustomFields

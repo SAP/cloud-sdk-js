@@ -2,6 +2,10 @@
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
+import { Constructable, EntityIdentifiable, Selectable } from '../../common';
+import { Entity } from '../entity';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataUpdateRequestConfig } from '../../common/request-builder/request/odata-update-request-config';
 import {
   serializeEntity,
   serializeEntityNonCustomFields
@@ -11,15 +15,8 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import {
-  MethodRequestBuilderBase,
-  ODataUpdateRequestConfig,
-  EntityIdentifiable,
-  Constructable,
-  Selectable
-} from '../../common';
-import { Entity } from '../entity';
 import * as uriConversion from './request/uri-conversion';
+
 /**
  * Create OData query to update an entity.
  *

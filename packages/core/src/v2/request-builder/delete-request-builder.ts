@@ -1,13 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import {
-  Constructable,
-  MethodRequestBuilderBase,
-  ODataDeleteRequestConfig,
-  EntityIdentifiable,
-  FieldType
-} from '../../common';
+import { Constructable, EntityIdentifiable, FieldType } from '../../common';
+import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
+import { ODataDeleteRequestConfig } from '../../common/request-builder/request/odata-delete-request-config';
 import { Entity } from '../entity';
 import { DestinationOptions } from '../../scp-cf';
 import {

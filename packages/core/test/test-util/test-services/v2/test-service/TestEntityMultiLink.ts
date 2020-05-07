@@ -4,7 +4,8 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField } from '../../../../../src/v2';
+import {AllFields,BooleanField,CustomField,EntityBuilderType,Link,NumberField,OneToOneLink,Selectable,StringField} from '../../../../../src/common'
+import {Entity} from '../../../../../src/v2'
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
@@ -13,9 +14,7 @@ export class TestEntityMultiLink extends Entity implements TestEntityMultiLinkTy
   /**
    * Technical entity name for TestEntityMultiLink.
    */
-  static _entityName: 'A_TestEntityMultiLink' = 'A_TestEntityMultiLink';
-
-readonly _entityName: 'A_TestEntityMultiLink' = 'A_TestEntityMultiLink';
+  static _entityName = 'A_TestEntityMultiLink';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntityMultiLink.

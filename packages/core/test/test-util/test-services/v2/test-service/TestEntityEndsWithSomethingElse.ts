@@ -4,7 +4,8 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '../../../../../src/v2';
+import {AllFields,CustomField,EntityBuilderType,Selectable,StringField} from '../../../../../src/common'
+import {Entity} from '../../../../../src/v2'
 
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
@@ -13,9 +14,7 @@ export class TestEntityEndsWithSomethingElse extends Entity implements TestEntit
   /**
    * Technical entity name for TestEntityEndsWithSomethingElse.
    */
-  static _entityName: 'A_TestEntityEndsWithSomethingElse' = 'A_TestEntityEndsWithSomethingElse';
-
-readonly _entityName: 'A_TestEntityEndsWithSomethingElse' = 'A_TestEntityEndsWithSomethingElse';
+  static _entityName = 'A_TestEntityEndsWithSomethingElse';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntityEndsWithSomethingElse.

@@ -4,7 +4,8 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Link, Selectable, StringField } from '../../../../../src/v2';
+import {AllFields,CustomField,EntityBuilderType,Link,Selectable,StringField} from '../../../../../src/common'
+import {Entity} from '../../../../../src/v2'
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
@@ -13,9 +14,7 @@ export class TestEntityCircularLinkParent extends Entity implements TestEntityCi
   /**
    * Technical entity name for TestEntityCircularLinkParent.
    */
-  static _entityName: 'A_TestEntityCircularLinkParent' = 'A_TestEntityCircularLinkParent';
-
-readonly _entityName: 'A_TestEntityCircularLinkParent' = 'A_TestEntityCircularLinkParent';
+  static _entityName = 'A_TestEntityCircularLinkParent';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntityCircularLinkParent.

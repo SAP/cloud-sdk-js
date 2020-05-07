@@ -3,7 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '../../../../../src/v2';
+import {RequestBuilder} from '../../../../../src/common'
+import {GetAllRequestBuilder,GetByKeyRequestBuilder,CreateRequestBuilder,UpdateRequestBuilder,DeleteRequestBuilder} from '../../../../../src/v2'
 import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 
 /**

@@ -7,7 +7,8 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField, Time, TimeField } from '../../../../../src/v2';
+import {AllFields,BigNumberField,BooleanField,CustomField,DateField,EntityBuilderType,Link,NumberField,OneToOneLink,Selectable,StringField,Time,TimeField} from '../../../../../src/common'
+import {Entity} from '../../../../../src/v2'
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -16,9 +17,7 @@ export class TestEntity extends Entity implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
-  static _entityName: 'A_TestEntity' = 'A_TestEntity';
-
-readonly _entityName: 'A_TestEntity' = 'A_TestEntity';
+  static _entityName = 'A_TestEntity';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntity.

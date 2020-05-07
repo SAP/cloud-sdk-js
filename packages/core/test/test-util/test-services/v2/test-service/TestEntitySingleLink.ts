@@ -4,7 +4,8 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField } from '../../../../../src/v2';
+import {AllFields,BooleanField,CustomField,EntityBuilderType,Link,NumberField,OneToOneLink,Selectable,StringField} from '../../../../../src/common'
+import {Entity} from '../../../../../src/v2'
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
@@ -13,9 +14,7 @@ export class TestEntitySingleLink extends Entity implements TestEntitySingleLink
   /**
    * Technical entity name for TestEntitySingleLink.
    */
-  static _entityName: 'A_TestEntitySingleLink' = 'A_TestEntitySingleLink';
-
-readonly _entityName: 'A_TestEntitySingleLink' = 'A_TestEntitySingleLink';
+  static _entityName = 'A_TestEntitySingleLink';
   /**
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for TestEntitySingleLink.

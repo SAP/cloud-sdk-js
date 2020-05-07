@@ -4,8 +4,8 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, EntityBuilderType, NumberField, Selectable, StringField } from '../../../../../src/common';
-import { Entity } from '../../../../../src/v4';
+import {AllFields,BooleanField,CustomField,EntityBuilderType,NumberField,Selectable,StringField} from '../../../../../src/common'
+import {Entity} from '../../../../../src/v4'
 
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".

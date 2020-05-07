@@ -3,7 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '../../../../../src/v2';
+
+import {CreateRequestBuilder,DeleteRequestBuilder,GetAllRequestBuilder,GetByKeyRequestBuilder,ODataBatchChangeSet,ODataBatchRequestBuilder,UpdateRequestBuilder} from '../../../../../src/v2'
 import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLvl2MultiLink, TestEntitySingleLink, TestEntityLvl2SingleLink, TestEntityCircularLinkParent, TestEntityCircularLinkChild, TestEntityEndsWith, TestEntityEndsWithSomethingElse } from './index';
 
 /**

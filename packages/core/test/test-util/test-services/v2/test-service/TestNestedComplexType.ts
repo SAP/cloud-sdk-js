@@ -3,7 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType, createComplexType, edmToTs } from '../../../../../src/v2';
+import {ComplexTypeField,ComplexTypeStringPropertyField,FieldType,createComplexType,edmToTs} from '../../../../../src/common'
+import {Entity} from '../../../../../src/v2'
 
 /**
  * TestNestedComplexType

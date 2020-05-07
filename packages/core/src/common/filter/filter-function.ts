@@ -29,6 +29,7 @@ export abstract class FilterFunction<
   ) {}
 
   /**
+   * @deprecated
    * Serializes the filter function into a string
    *
    * @param parentFieldNames - Names of parents in case the function is part of a filter on a navigation property
@@ -64,6 +65,7 @@ export abstract class FilterFunction<
   }
 
   /**
+   * @deprecated
    * For different type of filter function parameters, build a function that generates a string as url pattern.
    * @param param - One parameter of the filter function
    * @param parentFieldNames - The parent field name list used when the field with navigation properties are involved
@@ -75,9 +77,11 @@ export abstract class FilterFunction<
   ): string {
     if (typeof param === 'number') {
       return param.toString();
-    } else if (typeof param === 'string') {
-      return convertToUriForEdmString(param);
-    } else if (param instanceof FilterFunction) {
+    }
+    if (typeof param === 'string') {
+      return `'${param.replace(/'/g, "''")}'`;
+    }
+    if (param instanceof FilterFunction) {
       return param.toString(parentFieldNames);
     }
     return [...parentFieldNames, param._fieldName].join('/');

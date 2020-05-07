@@ -9,10 +9,16 @@ import {
   isFilterLink,
   isFilter,
   ComplexTypeField,
-  ComplexTypePropertyFields
+  ComplexTypePropertyFields,
+  FilterFunctionParameterType,
+  FieldType,
+  FilterFunction
 } from '../../../../common';
 import { Entity } from '../../../entity';
-import { convertToUriFormat } from './uri-value-converter';
+import {
+  convertToUriFormat,
+  convertToUriForEdmString
+} from './uri-value-converter';
 
 /**
  * Get an object containing the given filter as query parameter, or an empty object if none was given.
@@ -107,20 +113,17 @@ function getODataFilterExpression<FilterEntityT extends Entity>(
         targetEntityConstructor,
         filter.edmType
       );
-      const value = convertToUriFormat(filter.value, field.edmType);
       return [
         [...parentFieldNames, filter.field].join('/'),
         filter.operator,
-        value
-      ].join(' ');
-    } else {
-      const value = convertToUriFormat(filter.value, filter.edmType!);
-      return [
-        filter.field.toString(parentFieldNames),
-        filter.operator,
-        value
+        convertToUriFormat(filter.value, field.edmType)
       ].join(' ');
     }
+    return [
+      filterFunctionToString(filter.field, parentFieldNames),
+      filter.operator,
+      convertToUriFormat(filter.value, filter.edmType!)
+    ].join(' ');
   }
 }
 
@@ -143,4 +146,33 @@ function retrieveField<FilterEntityT extends Entity>(
 
   // In case of custom field we infer then the returned field from the filter edmType property
   return field || { edmType: filterEdmType };
+}
+
+function filterFunctionToString<
+  EntityT extends Entity,
+  FieldT extends FieldType
+>(
+  filterFunction: FilterFunction<EntityT, FieldT>,
+  parentFieldNames: string[] = []
+): string {
+  const params = filterFunction.parameters
+    .map(param => filterFunctionParameterToString(param, parentFieldNames))
+    .join(', ');
+  return `${filterFunction.functionName}(${params})`;
+}
+
+function filterFunctionParameterToString<EntityT extends Entity>(
+  param: FilterFunctionParameterType<EntityT>,
+  parentFieldNames: string[]
+): string {
+  if (typeof param === 'number') {
+    return param.toString();
+  }
+  if (typeof param === 'string') {
+    return convertToUriForEdmString(param);
+  }
+  if (param instanceof FilterFunction) {
+    return filterFunctionToString(param, parentFieldNames);
+  }
+  return [...parentFieldNames, param._fieldName].join('/');
 }

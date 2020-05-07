@@ -11,6 +11,8 @@ import {
   FunctionImportParameters,
   RequestMethodType
 } from '../../common';
+import * as uriConversion from './request/uri-conversion';
+
 /**
  * Create OData request to execute a function import.
  * @typeparam ParametersT - Type of the function import parameters
@@ -42,7 +44,8 @@ export class FunctionImportRequestBuilder<
         method,
         defaultServicePath,
         functionImportName,
-        parameters
+        parameters,
+        uriConversion
       )
     );
   }

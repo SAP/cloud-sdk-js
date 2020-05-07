@@ -15,6 +15,7 @@ import {
   FieldType
 } from '../../common';
 import * as uriConversion from './request/uri-conversion';
+
 /**
  * Create OData query to delete an entity.
  *

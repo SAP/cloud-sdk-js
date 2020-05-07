@@ -249,21 +249,21 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 
 2. Copy the following code which will later invoke the generator:
 
-```java
-final Path inputDirectory = Paths.get("application/src/main/resources/");
-final Path outputDirectory = Paths.get("application/src/main/java/");
-final Path serviceNameMapping = inputDirectory.resolve("serviceNameMappings.properties");
+    ```java
+    final Path inputDirectory = Paths.get("application/src/main/resources/");
+    final Path outputDirectory = Paths.get("application/src/main/java/");
+    final Path serviceNameMapping = inputDirectory.resolve("serviceNameMappings.properties");
 
-new DataModelGenerator()
-    .withInputDirectory(inputDirectory.toFile())
-    .withOutputDirectory(outputDirectory.toFile())
-    .withServiceNameMapping(serviceNameMapping.toFile())
-    .pojosOnly(false)
-    .withNameSource(DefaultNamingStrategy.NameSource.NAME)
-    .withPackageName("org.example")
-    .withDefaultBasePath("/my/path/")
-    .execute();
-```
+    new DataModelGenerator()
+        .withInputDirectory(inputDirectory.toFile())
+        .withOutputDirectory(outputDirectory.toFile())
+        .withServiceNameMapping(serviceNameMapping.toFile())
+        .pojosOnly(false)
+        .withNameSource(DefaultNamingStrategy.NameSource.NAME)
+        .withPackageName("org.example")
+        .withDefaultBasePath("/my/path/")
+        .execute();
+    ```
 
 3. Adapt the input & output directory as well as the package name according to your setup. Place your EDMX file within the input folder and run the generator.
 

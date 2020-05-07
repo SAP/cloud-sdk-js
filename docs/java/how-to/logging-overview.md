@@ -7,32 +7,12 @@ sidebar_label: Logging Overview
 description: This document will give you an overview of the different ways to log information with your application.
 ---
 
-There are three kinds of event logs the SAP Cloud SDK supports you with: Audit, Business, and Application Logging.
-
-This document aims to give you an overview of what the differences between them are, when to use what, and how the SAP Cloud SDK supports you in leveraging them.
-
-## Audit Logging
-
-> Systems handling confidential data such as personal or financial information are often faced with additional audit requirements. In these cases, your logging needs should be reflected in a corresponding security concept. In some business areas, it is even required by law to log _who_ accessed or modified _what_ data and _when_. To make the application development experience delightful, the SDK provides AuditLogger which acts as an abstraction layer from the underlying cloud platform implementation (SCP Neo or Cloud Foundry).
-
-[//]: # (Adopt remaining documentation from the blog post, probably testing the code snippets again)
-For further details refer to this [blog post](https://blogs.sap.com/2017/09/19/logging-on-sap-s4hana-cloud-sdk/).
-
-## Business Logging
-
-> Business Logging is a Cloud business reuse service that records your cloud application’s business flow. It runs on Cloud Foundry – on SAP Cloud Platform.
->
-> This service logs one or more records with success, information, warning, and error types within a message, depending on your business needs.
->
-> The Business Logging service is primarily intended for use by process specialists who oversee the end-to-end business flow of Cloud applications. Our tenancy-aware logging service enables process specialists to troubleshoot errors and learn what went wrong or even review successes and see what went right.
-
-[//]: # (Probably check back with Swati Nair from BusinessLogging whether this is okay. Also: probably provide some tested code snippets in here)
-For further details refer to this [blog post](https://blogs.sap.com/2019/05/24/an-introduction-to-business-logging/).
+This document aims to give you an overview of how you can write events of your application with the standard logging frameworks and how the SAP Cloud SDK integrates with that.
 
 ## Application Logging
 
-Whereas the previous logging types have business specific target groups (so people more or less actively working with the application), the application logging is directed at the application developers.
-With these logs the developer should be able to understand how the system behaves and, in case of failures, why the system failed.
+To better differentiate between different kinds of logging we will call the type of logs that are usually only relevant for developers to understand why the system behaves the way it did (for example during debugging) as _Application Logging_.
+Other types of logs might be kept due to legislative requirements (audit trails or audit logging) or be part of the terms and conditions (business logging).
 
 [//]: # (Add some points of the history of logging in Java)
 

@@ -16,7 +16,6 @@ module.exports = {
         label: 'Core Features',
         items: [
           // authorization & authentication
-          // destinations
           // resilience & caching
           {
             type: 'category',
@@ -26,6 +25,13 @@ module.exports = {
               'java/features/odata/java-generate-odata-vmd-v2-v4',
               'java/features/odata/use-generated-odata-vdm-v2-v4'
             ]
+          },
+          {
+            type: 'category',
+            label: 'Connectivity',
+            items: [
+              'java/features/connectivity/sdk-connectivity-destination-service'
+              ]
           },
           {
             type: 'category',

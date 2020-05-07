@@ -54,8 +54,7 @@ const features = [
     badge: <LicenseBadge />,
     description: (
       <>
-        The goal of project "Piper" is to substantially ease setting up
-        continuous delivery in your project using SAP technologies. <br />
+	CI toolkit contains a Jenkins Pipeline-as-Code that assures a high level of quality on process as well as code level. High quality is achieved by a set of standard and SDK-specific quality checks.<br />
         <a href='docs/devops/getting-started'>
           Get started with best CI/CD practices
         </a>

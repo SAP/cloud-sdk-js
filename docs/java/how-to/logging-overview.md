@@ -18,9 +18,90 @@ Other types of logs might be kept due to legislative requirements (audit trails 
 
 [//]: # (Add a section on what SLF4J is)
 
+### Write log messages in your application
+
+To start writing log messages you need two dependencies:
+
+- The SLF4J API `org.slf4j:slf4j-api`
+- A logging implementation of your choice (e.g. logback `ch.qos.logback:logback-classic`)
+
+Depending on the chosen logging implementation you might not _need_ to specify the SLF4J API, but it's in general best practice to not rely on transitive dependencies and therefore reference the SLF4J API anyway.
+
+Also, if you deploy your application to SCP CloudFoundry using the SAP Java Buildpack you get the logging implementation provided at runtime by the container. This means, if you only run the application on Cloud Foundry you don't need to provide any implementation.
+However, if you want to locally run your application (e.g. with TomEE with `mvn tomee:run`) you will need a logging implementation with at least the maven scope `runtime`.
+
+#### Simple SLF4J usage
+
+Having these prerequisites out of the way, you can now start logging:
+
+```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class DummyClass {
+    private static final Logger logger = LoggerFactory.getLogger(DummyClass.class);
+
+    public void doSomething() {
+        logger.trace("doSomething was called");
+    }
+}
+```
+
+What do you see in this example?
+
+- In the first line inside the class a new logger is created (once per class), with the class object as a reference. This class name will then be logged alongside the message in the logs.
+- Inside the `doSomething` method this logger is now used to log the fact that the given method was called. The method you use for that depends on the level at which you want to see the message. Other options besides `trace` are `debug`, `info`, `warn`, and `error`.
+
+As you can see, no reference to the actual logging implementation can be found in the code. This is the benefit of using SLF4J as a logging facade. This allows you to change the logging implementation without any changes to your application code.
+
+#### More advanced SLF4J usage
+
+If you are logging more and more information you might find yourself in cases where you concatenate `String`s or log inside a loop. This might cause unnecessary load on your system if the runtime log level is higher than the messages you actually want to log. To make this more plastic have a look at the following example:
+
+```java
+public class DummyClass {
+    private static final Logger logger = LoggerFactory.getLogger(DummyClass.class);
+
+    public void doSomething() {
+        List<String> someResults = retrieveSomeResults();
+
+        logger.debug("Processing the following results:")
+        for(String result : someResult) {
+            logger.debug("- " + result);
+        }
+        consumeResults(someResults)
+    }
+}
+```
+
+Now assume that you have `someResults` contains hundreds or thousands of entries and the log level at runtime is set to `INFO`. This would mean that the loop is run without actually doing anything.
+
+To prevent this kind of _empty_ loops you can use guards like `logger.isDebugEnabled()` in the following way:
+
+```java
+public class DummyClass {
+    private static final Logger logger = LoggerFactory.getLogger(DummyClass.class);
+
+    public void doSomething() {
+        List<String> someResults = retrieveSomeResults();
+
+        if( logger.isDebugEnabled() ) {
+            logger.debug("Processing the following results:")
+            for(String result : someResult) {
+                logger.debug("- " + result);
+            }
+        }
+
+        consumeResults(someResults)
+    }
+}
+```
+
+That way the loop is only executed if actually necessary.
+
 ### Set your Application log level
 
-If you want to configure the log level of your application you have to know, which logging implementation your application uses.
+If you want to configure the log level of your application you have to know which logging implementation your application uses.
 Some libraries then allow you different ways on how to configure them.
 
 For more detailed information on your specific setup, please refer to the documentation of your logging implementation.

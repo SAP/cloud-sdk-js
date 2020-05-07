@@ -15,7 +15,7 @@ keywords:
 image:
 ---
 
-The SAP Cloud SDK for Java comprises a toolkit to develop cloud native applications on the SAP Cloud Platform.
+The SAP Cloud SDK for Java is a toolkit to develop cloud native applications on the SAP Cloud Platform.
 
 ## SDK Version 3 ##
 - [3.18.0](https://help.sap.com/doc/2e07eccb70364934adc2e01239828e6b/1.0/en-US/index.html)

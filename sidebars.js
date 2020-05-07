@@ -4,9 +4,9 @@ module.exports = {
     Overview: [
       'overview/about',
       'overview/getting-started',
-      'overview/benefits',
-      'overview/key-features',
-      'overview/what-is-new'
+      'overview/benefits'
+      // 'overview/key-features'
+      // 'overview/what-is-new'
     ],
     Java: [
       'java/introduction',
@@ -16,7 +16,6 @@ module.exports = {
         label: 'Core Features',
         items: [
           // authorization & authentication
-          // destinations
           // resilience & caching
           {
             type: 'category',
@@ -25,6 +24,30 @@ module.exports = {
               'java/features/odata/overview',
               'java/features/odata/java-generate-odata-vmd-v2-v4',
               'java/features/odata/use-generated-odata-vdm-v2-v4'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'Connectivity',
+            items: [
+              'java/features/connectivity/sdk-connectivity-destination-service'
+              ]
+          },
+          {
+            type: 'category',
+            label: 'REST',
+            items: [
+              'java/features/rest/sap-cloud-sdk-as-a-service',
+              {
+                type: 'category',
+                label: 'Released clients',
+                items: [
+                  'java/features/rest/clients/workflow-api',
+                  'java/features/rest/clients/currency-conversion',
+                  'java/features/rest/clients/core-services',
+                  'java/features/rest/clients/blockchain-business-sdk'
+                ]
+              }
             ]
           }
         ]
@@ -66,11 +89,11 @@ module.exports = {
       },
       {
         type: 'category',
-        label: 'How To',
+        label: 'Guides',
         items: [
-          'java/how-to/sap-cloud-sdk-linux-how-to',
-          'java/how-to/cf-cli',
-          'java/how-to/cf-deploy'
+          'java/guides/sap-cloud-sdk-linux-how-to',
+          'java/guides/cf-cli',
+          'java/guides/cf-deploy'
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',
@@ -118,7 +141,7 @@ module.exports = {
       'js/getting-started',
       'js/api-reference-js-ts'
     ],
-    'Devops and CI/CD': ['devops/getting-started'],
+    'Continuous Delivery': ['devops/getting-started'],
     // FAQ: ['faq/frequently-asked-questions'],
     // Support: ['support/support'],
     'Community calls': ['community-calls/community-calls-2020'],

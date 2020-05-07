@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
-import {AllFields,CustomField,EntityBuilderType,Link,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,CustomField,EntityBuilderType,OneToManyLink,Selectable,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v4'
 
 /**
@@ -87,11 +87,11 @@ export namespace TestEntityCircularLinkChild {
    * Static representation of the one-to-many navigation property [[toParent]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_PARENT: Link<TestEntityCircularLinkChild, TestEntityCircularLinkChild> = new Link('to_Parent', TestEntityCircularLinkChild, TestEntityCircularLinkChild);
+  export const TO_PARENT: OneToManyLink<TestEntityCircularLinkChild, TestEntityCircularLinkChild> = new OneToManyLink('to_Parent', TestEntityCircularLinkChild, TestEntityCircularLinkChild);
   /**
    * All fields of the TestEntityCircularLinkChild entity.
    */
-  export const _allFields: Array<StringField<TestEntityCircularLinkChild> | Link<TestEntityCircularLinkChild, TestEntityCircularLinkChild>> = [
+  export const _allFields: Array<StringField<TestEntityCircularLinkChild> | OneToManyLink<TestEntityCircularLinkChild, TestEntityCircularLinkChild>> = [
     TestEntityCircularLinkChild.KEY_PROPERTY,
     TestEntityCircularLinkChild.TO_PARENT
   ];

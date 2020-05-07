@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import {AllFields,BooleanField,CustomField,EntityBuilderType,Link,NumberField,OneToOneLink,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,BooleanField,CustomField,EntityBuilderType,OneToManyLink,NumberField,OneToOneLink,Selectable,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v4'
 
 /**
@@ -146,7 +146,7 @@ export namespace TestEntityMultiLink {
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: Link<TestEntityMultiLink, TestEntityLvl2MultiLink> = new Link('to_MultiLink', TestEntityMultiLink, TestEntityLvl2MultiLink);
+  export const TO_MULTI_LINK: OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink> = new OneToManyLink('to_MultiLink', TestEntityMultiLink, TestEntityLvl2MultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -155,7 +155,7 @@ export namespace TestEntityMultiLink {
   /**
    * All fields of the TestEntityMultiLink entity.
    */
-  export const _allFields: Array<StringField<TestEntityMultiLink> | BooleanField<TestEntityMultiLink> | NumberField<TestEntityMultiLink> | Link<TestEntityMultiLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>> = [
+  export const _allFields: Array<StringField<TestEntityMultiLink> | BooleanField<TestEntityMultiLink> | NumberField<TestEntityMultiLink> | OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>> = [
     TestEntityMultiLink.KEY_PROPERTY,
     TestEntityMultiLink.STRING_PROPERTY,
     TestEntityMultiLink.BOOLEAN_PROPERTY,

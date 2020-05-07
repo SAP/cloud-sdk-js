@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import {AllFields,BooleanField,CustomField,EntityBuilderType,Link,NumberField,OneToOneLink,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,BooleanField,CustomField,EntityBuilderType,OneToManyLink,NumberField,OneToOneLink,Selectable,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v4'
 
 /**
@@ -146,7 +146,7 @@ export namespace TestEntitySingleLink {
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: Link<TestEntitySingleLink, TestEntityLvl2MultiLink> = new Link('to_MultiLink', TestEntitySingleLink, TestEntityLvl2MultiLink);
+  export const TO_MULTI_LINK: OneToManyLink<TestEntitySingleLink, TestEntityLvl2MultiLink> = new OneToManyLink('to_MultiLink', TestEntitySingleLink, TestEntityLvl2MultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -155,7 +155,7 @@ export namespace TestEntitySingleLink {
   /**
    * All fields of the TestEntitySingleLink entity.
    */
-  export const _allFields: Array<StringField<TestEntitySingleLink> | BooleanField<TestEntitySingleLink> | NumberField<TestEntitySingleLink> | Link<TestEntitySingleLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>> = [
+  export const _allFields: Array<StringField<TestEntitySingleLink> | BooleanField<TestEntitySingleLink> | NumberField<TestEntitySingleLink> | OneToManyLink<TestEntitySingleLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>> = [
     TestEntitySingleLink.KEY_PROPERTY,
     TestEntitySingleLink.STRING_PROPERTY,
     TestEntitySingleLink.BOOLEAN_PROPERTY,

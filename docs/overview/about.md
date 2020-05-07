@@ -18,9 +18,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Introduction ##
 The Cloud SDK is a set of tools and libraries for consuming, building or extending SAP services and applications in the
-cloud native way and deploying them to SAP Cloud Platform.
+cloud-native way and deploying them to SAP Cloud Platform.
 
-SAP Cloud SDK was conceived as a collection of best practices for developing cloud native applications withing SAP. Eventually
+SAP Cloud SDK was conceived as a collection of best practices for developing cloud-native applications withing SAP. Eventually
 it grew into a fully-fledged and [feature rich](key-features ) development library consisting of three main components.
 
 ### Cloud SDK components ###
@@ -33,15 +33,15 @@ it grew into a fully-fledged and [feature rich](key-features ) development libra
 <img alt="SAP Cloud SDK as a part of SAP Cloud Applications ecosystem" src={useBaseUrl('img/cloud-sdk-under-the-hood.png')} />;
 
 ### Open Source ###
-The SAP Cloud SDK actively works in the direction of open sourcing most of its code. We endorse best open standards and
-technologies to simplify developer's life and stay ahead of the curve. It's almost impossible to develop such a product
+The SAP Cloud SDK actively works in the direction of open-sourcing most of its code. We endorse best open standards and
+technologies to simplify the developer's life and stay ahead of the curve. It's almost impossible to develop such a product
 as a closed source only. As of today we already open sourced SDK for [JavaScript](https://github.com/SAP/cloud-sdk ) and
-[CI/CD](https://sap.github.io/jenkins-library/ )  to raise transparency, allow developers easily access our source code,
-integrate it in their Apps and contribute back into SDK to make it better.
+[Continuous delivery toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline )  to raise transparency, allow developers easily access our source code,
+integrate it in their Apps, and contribute back into SDK to make it better.
 
-On the other hand we're remaining main contributors to every SDK component and continue actively developing them to
-ensure highest quality and seamless integration with other SAP solutions.
+On the other hand, we're remaining main contributors to every SDK component and continue actively developing them to
+ensure the highest quality and seamless integration with other SAP solutions.
 
 ### Feedback ###
-We are happy to hear your feedback about SAP Cloud SDK. Please, fill this [feedback survey](URL ) or rich out directly
-via [email](URL )
+We are happy to hear your feedback about SAP Cloud SDK. You can write us an [email](s4sdk@sap.com ) or submit an issue
+in this [repository](https://github.com/SAP/cloud-sdk/issues)

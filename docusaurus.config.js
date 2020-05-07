@@ -164,7 +164,10 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
-        }
+        },
+	prism: {
+	  additionalLanguages: ['powershell', 'java', 'groovy'],
+	}
       }
     ]
   ],

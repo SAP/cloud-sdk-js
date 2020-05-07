@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 
 The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are refered to as Virtual Data Model (VDM) provide type-safe access to the service.
 
-In general there are three ways to use the generator: 
+In general there are three ways to use the generator:
 - Via the dedicated maven plugin
 - Via the CLI
 - By instantiating and invoking it at runtime
@@ -33,7 +33,7 @@ The maven plugin is usually the recommended way as it integrates nicely with mos
 For all three the required input is an `EDMX` file holding the service metadata.
 
 :::note
-Please be aware that OData v2 and OData v4 service definitions are not interchangeable. There is a dedicated generator for each protocol version and it only accepts service definitions for that version. 
+Please be aware that OData v2 and OData v4 service definitions are not interchangeable. There is a dedicated generator for each protocol version and it only accepts service definitions for that version.
 :::
 
 ## Using the OData Generator ##
@@ -248,21 +248,23 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 </Tabs>
 
 2. Copy the following code which will later invoke the generator:
-    ```Java
-    final Path inputDirectory = Paths.get("application/src/main/resources/");
-    final Path outputDirectory = Paths.get("application/src/main/java/");
-    final Path serviceNameMapping = inputDirectory.resolve("serviceNameMappings.properties");
 
-    new DataModelGenerator()
-        .withInputDirectory(inputDirectory.toFile())
-        .withOutputDirectory(outputDirectory.toFile())
-        .withServiceNameMapping(serviceNameMapping.toFile())
-        .pojosOnly(false)
-        .withNameSource(DefaultNamingStrategy.NameSource.NAME)
-        .withPackageName("org.example")
-        .withDefaultBasePath("/my/path/")
-        .execute();
-    ```
+```java
+final Path inputDirectory = Paths.get("application/src/main/resources/");
+final Path outputDirectory = Paths.get("application/src/main/java/");
+final Path serviceNameMapping = inputDirectory.resolve("serviceNameMappings.properties");
+
+new DataModelGenerator()
+    .withInputDirectory(inputDirectory.toFile())
+    .withOutputDirectory(outputDirectory.toFile())
+    .withServiceNameMapping(serviceNameMapping.toFile())
+    .pojosOnly(false)
+    .withNameSource(DefaultNamingStrategy.NameSource.NAME)
+    .withPackageName("org.example")
+    .withDefaultBasePath("/my/path/")
+    .execute();
+```
+
 3. Adapt the input & output directory as well as the package name according to your setup. Place your EDMX file within the input folder and run the generator.
 
 This should give you the generated classes in the desired folder. You can now proceed with using them to build requests.

@@ -109,6 +109,7 @@ Request parameters:
 An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SDK will try to read version identifiers from responses and set them when sending OData requests.
 
 Consider the following example:
+
 ```java
 partner = service.getBusinessPartnerByKey("id")
                  .execute(destination);
@@ -135,6 +136,7 @@ The properties that can be selected or expanded are represented via static _fiel
 <Tabs defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
+
 <TabItem value="v4">
 
 ```java
@@ -188,7 +190,7 @@ One can also apply select again to the expanded object:
 service.getBusinessPartnerByKey("id")
     .select(BusinessPartner.FIRST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
-            .select(BusinessPartnerAddress.ADDRESS_ID, 
+            .select(BusinessPartnerAddress.ADDRESS_ID,
                 BusinessPartnerAddress.CITY_CODE))
     .execute(destination);
 ```
@@ -293,11 +295,11 @@ To achieve a different order with `and` as the top level statement one would nes
 The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) allows for a wide range of filter expressions. A detailed list of what is available in the SDK can be obtained from [the Javadoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odatav4/expression/package-summary.html). The functionality can also be discovered through the fluent API.
 
 The below example leverages OData v4 exclusive features to build a more complex request:
- 
+
 ```java
 /*
 Fetch all business partners where:
-- the last name is at least twice as long as the first name 
+- the last name is at least twice as long as the first name
 - AND the combined string of first and last name does not contain 'bob'
 */
 service.getAllBusinessPartner()
@@ -322,7 +324,7 @@ The [OData v2 standard](https://www.odata.org/documentation/odata-version-2-0/ur
 
 ### Advanced OData Features ###
 
-Function Imports / Functions & Actions 
+Function Imports / Functions & Actions
 
 -->
 

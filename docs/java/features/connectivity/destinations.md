@@ -22,7 +22,7 @@ This concept is integrated with the [Destination Service](https://help.sap.com/v
 
 In general destinations are accessed through the `DestinationAccessor`:
 
-```Java
+```java
 DestinationAccessor.getDestination("my-destination");
 ```
 

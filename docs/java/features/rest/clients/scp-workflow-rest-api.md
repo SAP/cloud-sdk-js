@@ -67,7 +67,7 @@ Consider specifying the respective subaccount, organization and space with `cf t
 
 Use `cd` to navigate to the directory that contains the JSON file created beforehand.
 Being in that directory, create the service instance as follows:
-```
+```bash
 cf create-service workflow standard my-workflow-service -c <path-to-json-file>
 ```
 This command creates an instance of the SCP Workflow Service in the CF space that your CLI points to. More specifically, it uses the service plan "standard" and takes the JSON configuration into account. Note that we named the service instance `my-workflow`. You can name it as you want, it is just important to remember the name as you need it in your deployment descriptor `manifest.yml` later on.
@@ -225,4 +225,3 @@ We have published the client library in a Beta state. That is, we verified its f
 Henceforth, the library supports the SCP Workflow service on Cloud Foundry, while it does not cover the SCP Workflow service on the Neo landscape on SCP. 
 
 Related to Cloud Foundry, you might know that environment variable VCAP_SERVICES contains information about your bound service instances. In the current state, it is required to create a destination manually instead of letting the library consume VCAP_SERVICES directly.
-

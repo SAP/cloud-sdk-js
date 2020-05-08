@@ -74,7 +74,7 @@ public class DummyClass {
 }
 ```
 
-Now assume that you have `someResults` contains hundreds or thousands of entries and the log level at runtime is set to `INFO`. This would mean that the loop is run without actually doing anything.
+Now assume that `someResults` contains hundreds or thousands of entries and the log level at runtime is set to `INFO`. This would mean that the loop is run without actually doing anything.
 
 To prevent this kind of _empty_ loops you can use guards like `logger.isDebugEnabled()` in the following way:
 

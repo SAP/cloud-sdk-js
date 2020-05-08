@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { OneToOneLink, AllFields } from './selectable';
-import { Entity } from './entity';
+import { EntityBase } from './entity';
 import { OneToManyLink } from './selectable/one-to-many-link';
 
 /**
@@ -10,7 +10,7 @@ import { OneToManyLink } from './selectable/one-to-many-link';
  * @typeparam EntityT - Type of the entity to be selected on
  */
 
-export type Expandable<EntityT extends Entity> = EntityT extends {
+export type Expandable<EntityT extends EntityBase> = EntityT extends {
   _odataVersion: 'v2';
 }
   ? never

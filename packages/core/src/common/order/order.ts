@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { EntityBase, EntityIdentifiable } from '../entity';
 
 type OrderType = 'asc' | 'desc';
 
@@ -10,7 +10,7 @@ type OrderType = 'asc' | 'desc';
  *
  * @typeparam EntityT -
  */
-export class Order<EntityT extends Entity>
+export class Order<EntityT extends EntityBase>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;

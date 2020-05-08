@@ -3,7 +3,8 @@
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
+import { ODataVersion } from '../service';
 import {
   ComplexTypeField,
   ConstructorOrField,
@@ -17,7 +18,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class StringFieldBase<EntityT extends Entity> extends EdmTypeField<
+class StringFieldBase<EntityT extends EntityBase> extends EdmTypeField<
   EntityT,
   string
 > {}
@@ -27,7 +28,7 @@ class StringFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class StringField<EntityT extends Entity>
+export class StringField<EntityT extends EntityBase>
   extends StringFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -39,7 +40,7 @@ export class StringField<EntityT extends Entity>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeStringPropertyField<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > extends StringFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
@@ -56,7 +57,7 @@ export class ComplexTypeStringPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    edmType: EdmType
+    edmType: EdmType<ODataVersion<EntityT>>
   );
 
   /**
@@ -73,7 +74,7 @@ export class ComplexTypeStringPropertyField<
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
     parentTypeName: string,
-    edmType: EdmType
+    edmType: EdmType<ODataVersion<EntityT>>
   );
 
   /*
@@ -82,8 +83,8 @@ export class ComplexTypeStringPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    arg3: string | EdmType,
-    arg4?: EdmType
+    arg3: string | EdmType<ODataVersion<EntityT>>,
+    arg4?: EdmType<ODataVersion<EntityT>>
   ) {
     super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
     this.fieldOf = fieldOf;

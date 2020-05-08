@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { FieldType } from '../selectable';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
@@ -11,7 +11,7 @@ import { FilterList } from './filter-list';
  *
  * @typeparam EntityT - Type of the entity to be filtered on
  */
-export type Filterable<EntityT extends Entity> =
+export type Filterable<EntityT extends EntityBase> =
   | Filter<EntityT, FieldType>
   | FilterLink<EntityT, any>
   | FilterList<EntityT>;
@@ -37,7 +37,7 @@ export type Filterable<EntityT extends Entity> =
  * @param expressions - Filterables to be combined with logical `and`
  * @returns The newly created FilterList
  */
-export function and<EntityT extends Entity>(
+export function and<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT> {
   return new FilterList(expressions);
@@ -57,7 +57,7 @@ export function and<EntityT extends Entity>(
  * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
  */
-export function or<EntityT extends Entity>(
+export function or<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT> {
   return new FilterList([], expressions);

@@ -1,8 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EdmType } from '../edm-types';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Field, FieldType } from '../selectable';
+import { ODataVersion } from '../service';
 import { Filter } from './filter';
 
 /**
@@ -10,13 +11,13 @@ import { Filter } from './filter';
  * Use the factory function [[filterFunction]] to create instances of `FilterFunction`.
  */
 export abstract class FilterFunction<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   ReturnT extends FieldType
 > {
   /**
    * EdmType of the return type of the filter function.
    */
-  public edmType: EdmType;
+  public edmType: EdmType<ODataVersion<EntityT>>;
 
   /**
    * Creates an instance of FilterFunction.
@@ -91,7 +92,7 @@ export abstract class FilterFunction<
 /**
  * Type of a parameter of a filter function. This can either be an explicit value (string or number), a reference to a field or another filter function.
  */
-export type FilterFunctionParameterType<EntityT extends Entity> =
+export type FilterFunctionParameterType<EntityT extends EntityBase> =
   | number
   | string
   | Field<EntityT>

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity, EntityBuilderType } from './entity';
+import { EntityBase, EntityBuilderType } from './entity';
 import { RequestBuilder } from './request-builder/request-builder';
 import { CustomField, Field, Link } from './selectable';
 
@@ -8,7 +8,7 @@ import { CustomField, Field, Link } from './selectable';
  * @hidden
  */
 export interface Constructable<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   EntityTypeForceMandatoryT = {}
 > {
   _serviceName: string;

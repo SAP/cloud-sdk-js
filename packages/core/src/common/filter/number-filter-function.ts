@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Filter } from './filter';
 import { FilterFunction, FilterFunctionParameterType } from './filter-function';
 
@@ -8,7 +8,7 @@ import { FilterFunction, FilterFunctionParameterType } from './filter-function';
  * Representation of a filter function, that returns a value of type number. This supports int, double and decimal values.
  */
 export class NumberFilterFunction<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > extends FilterFunction<EntityT, number> {
   /**
    * Creates an instance of NumberFilterFunction.

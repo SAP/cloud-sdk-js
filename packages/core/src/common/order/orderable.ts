@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Link, SimpleTypeFields } from '../selectable';
 import { ComplexTypePropertyFields } from '../selectable/complex-type-property-fields';
 import { Order } from './order';
@@ -11,18 +11,18 @@ import { OrderLink } from './order-link';
  *
  * @typeparam EntityT - Type of the entity to be ordered
  */
-export type Orderable<EntityT extends Entity> =
+export type Orderable<EntityT extends EntityBase> =
   | Order<EntityT>
-  | OrderLink<EntityT, Entity>;
+  | OrderLink<EntityT, EntityBase>;
 
 /**
  * A union of all types that can be used as input for ordering.
  *
  * @typeparam EntityT - Type of the entity to be ordered
  */
-export type OrderableInput<EntityT extends Entity> =
+export type OrderableInput<EntityT extends EntityBase> =
   | SimpleTypeFields<EntityT>
-  | Link<EntityT, Entity>
+  | Link<EntityT, EntityBase>
   | ComplexTypePropertyFields<EntityT>;
 
 /**
@@ -32,7 +32,7 @@ export type OrderableInput<EntityT extends Entity> =
  * @param orderBy - Field or link to be ordered by
  * @returns New order
  */
-export function asc<EntityT extends Entity>(
+export function asc<EntityT extends EntityBase>(
   orderBy: OrderableInput<EntityT>
 ): Order<EntityT> {
   if (orderBy instanceof Link) {
@@ -48,7 +48,7 @@ export function asc<EntityT extends Entity>(
  * @param orderBy - Field or link to be ordered by
  * @returns New order
  */
-export function desc<EntityT extends Entity>(
+export function desc<EntityT extends EntityBase>(
   orderBy: OrderableInput<EntityT>
 ): Order<EntityT> {
   if (orderBy instanceof Link) {

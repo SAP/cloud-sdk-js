@@ -2,7 +2,7 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
-import { Entity } from '../../entity';
+import { EntityBase } from '../../entity';
 import { Link } from '../../selectable';
 import { ODataRequestConfig } from './odata-request-config';
 import { UriConverter } from './uri-converter';
@@ -13,7 +13,7 @@ import { UriConverter } from './uri-converter';
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataCreateRequestConfig<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > extends ODataRequestConfig {
   /**
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
@@ -23,7 +23,7 @@ export class ODataCreateRequestConfig<
   /**
    * Field that links the parent entity class to the child entity class.
    */
-  childField: Link<Entity, EntityT>;
+  childField: Link<EntityBase, EntityT>;
 
   /**
    * Creates an instance of ODataRequest.

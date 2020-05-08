@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { ComplexTypeBigNumberPropertyField } from './big-number-field';
 import { ComplexTypeBinaryPropertyField } from './binary-field';
 import { ComplexTypeBooleanPropertyField } from './boolean-field';
@@ -12,7 +12,7 @@ import { ComplexTypeTimePropertyField } from './time-field';
 /**
  * @hidden
  */
-export type ComplexTypePropertyFields<EntityT extends Entity> =
+export type ComplexTypePropertyFields<EntityT extends EntityBase> =
   | ComplexTypeBigNumberPropertyField<EntityT>
   | ComplexTypeBinaryPropertyField<EntityT>
   | ComplexTypeBooleanPropertyField<EntityT>

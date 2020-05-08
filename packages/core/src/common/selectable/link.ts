@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { EntityBase, EntityIdentifiable } from '../entity';
 import { Expandable } from '../expandable';
 import { Selectable } from './selectable';
 
@@ -22,8 +22,10 @@ import { Selectable } from './selectable';
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
-export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
-  implements EntityIdentifiable<EntityT> {
+export class Link<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase = any
+> implements EntityIdentifiable<EntityT> {
   readonly selectable: true;
   readonly expandable: true;
   readonly _entity: EntityT;

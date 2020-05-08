@@ -2,7 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Filter } from '../filter';
 import { Field, FieldType } from './field';
 
@@ -21,7 +21,7 @@ import { Field, FieldType } from './field';
  * @typeparam FieldT - Type of the field
  */
 export abstract class EdmTypeField<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   FieldT extends FieldType
 > extends Field<EntityT> {
   /**

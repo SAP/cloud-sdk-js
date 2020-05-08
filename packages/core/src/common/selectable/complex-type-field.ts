@@ -2,7 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Field } from './field';
 
 /**
@@ -19,9 +19,9 @@ import { Field } from './field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export abstract class ComplexTypeField<EntityT extends Entity> extends Field<
-  EntityT
-> {
+export abstract class ComplexTypeField<
+  EntityT extends EntityBase
+> extends Field<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -78,7 +78,7 @@ export abstract class ComplexTypeField<EntityT extends Entity> extends Field<
   }
 }
 
-export type ConstructorOrField<EntityT extends Entity> =
+export type ConstructorOrField<EntityT extends EntityBase> =
   | Constructable<EntityT>
   | ComplexTypeField<EntityT>;
 
@@ -87,7 +87,7 @@ export type ConstructorOrField<EntityT extends Entity> =
  * @param arg - Contains either the entity containing the complex field or a complex field in case of nested fields.
  * @returns Constructable
  */
-export function getEntityConstructor<EntityT extends Entity>(
+export function getEntityConstructor<EntityT extends EntityBase>(
   arg: Constructable<EntityT> | ComplexTypeField<EntityT>
 ): Constructable<EntityT> {
   return arg instanceof ComplexTypeField ? arg._entityConstructor : arg;
@@ -99,15 +99,15 @@ export function getEntityConstructor<EntityT extends Entity>(
  * @param arg2 - Contains either the EdmType or undefined
  * @returns EdmType
  */
-export function getEdmType(
-  arg1: string | EdmType,
-  arg2: EdmType | undefined
-): EdmType {
+export function getEdmType<T extends 'v2' | 'v4'>(
+  arg1: string | EdmType<T>,
+  arg2: EdmType<T> | undefined
+): EdmType<T> {
   if ((arg1 as string).includes('Edm.') && !arg2) {
-    return arg1 as EdmType;
+    return arg1 as EdmType<T>;
   }
   if (typeof arg1 === 'string' && arg2 && (arg2 as string).includes('Edm.')) {
-    return arg2 as EdmType;
+    return arg2 as EdmType<T>;
   }
   throw new Error('Illegal argument exception!');
 }

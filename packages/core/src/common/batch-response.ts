@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from './constructable';
-import { Entity } from './entity';
+import { EntityBase } from './entity';
 
 export type BatchResponse = ReadResponse | WriteResponses | ErrorResponse;
 
@@ -19,14 +19,14 @@ export interface ErrorResponse {
 export interface ReadResponse {
   httpCode: number;
   body: object;
-  type: Constructable<Entity>;
-  as: <T extends Entity>(constructor: Constructable<T>) => T[];
+  type: Constructable<EntityBase>;
+  as: <T extends EntityBase>(constructor: Constructable<T>) => T[];
   isSuccess: () => boolean;
 }
 
 export interface WriteResponse {
   httpCode: number;
   body?: object;
-  type?: Constructable<Entity>;
-  as?: <T extends Entity>(constructor: Constructable<T>) => T;
+  type?: Constructable<EntityBase>;
+  as?: <T extends EntityBase>(constructor: Constructable<T>) => T;
 }

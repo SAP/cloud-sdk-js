@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { AllFields } from './all-fields';
 import { ComplexTypeField } from './complex-type-field';
 import { CustomField } from './custom-field';
@@ -14,7 +14,7 @@ import { SimpleTypeFields } from './simple-type-fields';
  */
 
 export type Selectable<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > = EntityT['_oDataVersion'] extends 'v2'
   ?
       | SimpleTypeFields<EntityT>

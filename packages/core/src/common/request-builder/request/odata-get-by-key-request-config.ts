@@ -2,7 +2,7 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
-import { Entity } from '../../entity';
+import { EntityBase } from '../../entity';
 import { FieldType, Selectable } from '../../selectable';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithSelection } from './odata-request-traits';
@@ -13,7 +13,7 @@ import { UriConverter } from './uri-converter';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataGetByKeyRequestConfig<EntityT extends Entity>
+export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithKeys, WithSelection<EntityT> {
   keys: MapType<FieldType>;

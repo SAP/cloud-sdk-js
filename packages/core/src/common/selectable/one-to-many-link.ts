@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Filterable, and, FilterList } from '../filter';
 import { Orderable } from '../order';
 import { Link } from './link';
@@ -23,8 +23,8 @@ import { Link } from './link';
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
 export class OneToManyLink<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
   /**
    * @deprecated
@@ -35,7 +35,7 @@ export class OneToManyLink<
    * @param link - OneToManyLink to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT extends Entity, LinkedEntityT extends Entity>(
+  static clone<EntityT extends EntityBase, LinkedEntityT extends EntityBase>(
     link: OneToManyLink<EntityT, LinkedEntityT>
   ): OneToManyLink<EntityT, LinkedEntityT> {
     return link.clone();

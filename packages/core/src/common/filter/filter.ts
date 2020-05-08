@@ -2,7 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity, EntityIdentifiable } from '../entity';
+import { EntityBase, EntityIdentifiable } from '../entity';
 import { FieldType } from '../selectable';
 import { FilterFunction } from './filter-function';
 import { Filterable } from './filterable';
@@ -33,7 +33,7 @@ export type FilterOperatorByType<
  * @typeparam EntityT - Type of the entity to be filtered on
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
-export class Filter<EntityT extends Entity, FieldT extends FieldType>
+export class Filter<EntityT extends EntityBase, FieldT extends FieldType>
   implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
@@ -65,13 +65,13 @@ export class Filter<EntityT extends Entity, FieldT extends FieldType>
     public field: string | FilterFunction<EntityT, FieldT>,
     public operator: FilterOperator,
     public value: FieldT,
-    public edmType?: EdmType
+    public edmType?: EdmType<EntityT['_oDataVersion']>
   ) {
     this._fieldName = field;
   }
 }
 
-export function isFilter<T extends Entity, FieldT extends FieldType>(
+export function isFilter<T extends EntityBase, FieldT extends FieldType>(
   filterable: Filterable<T>
 ): filterable is Filter<T, FieldT> {
   return (

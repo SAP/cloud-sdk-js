@@ -3,7 +3,7 @@
 import BigNumber from 'bignumber.js';
 import { Moment } from 'moment';
 import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { EntityBase, EntityIdentifiable } from '../entity';
 import { Time } from '../time';
 
 /**
@@ -37,7 +37,7 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 
-export abstract class Field<EntityT extends Entity>
+export abstract class Field<EntityT extends EntityBase>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
   /**

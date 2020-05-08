@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-export type EdmType =
+type EdmTypeCommon =
   | 'Edm.String'
   | 'Edm.Boolean'
   | 'Edm.Guid'
@@ -12,8 +12,17 @@ export type EdmType =
   | 'Edm.Int32'
   | 'Edm.Int64'
   | 'Edm.SByte'
-  | 'Edm.DateTime'
   | 'Edm.DateTimeOffset'
   | 'Edm.Time'
   | 'Edm.Binary'
   | 'Edm.Byte';
+
+type EdmTypeV2 = 'Edm.DateTime';
+type EdmTypeV4 = 'Edm.Date';
+export type EdmType<VersionT extends 'v2' | 'v4'> =
+  | EdmTypeCommon
+  | (VersionT extends 'v2'
+      ? EdmTypeV2
+      : VersionT extends 'v4'
+      ? EdmTypeV4
+      : never);

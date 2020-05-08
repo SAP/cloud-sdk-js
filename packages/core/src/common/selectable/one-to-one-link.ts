@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Filterable, FilterLink } from '../filter';
 import { Order, Orderable, OrderLink } from '../order';
 import { Link } from './link';
@@ -12,8 +12,8 @@ import { Link } from './link';
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
 export class OneToOneLink<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
   /**
    * @deprecated
@@ -24,7 +24,7 @@ export class OneToOneLink<
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT extends Entity, LinkedEntityT extends Entity>(
+  static clone<EntityT extends EntityBase, LinkedEntityT extends EntityBase>(
     link: OneToOneLink<EntityT, LinkedEntityT>
   ): OneToOneLink<EntityT, LinkedEntityT> {
     const clonedLink = link.clone() as OneToOneLink<EntityT, LinkedEntityT>;

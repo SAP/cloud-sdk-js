@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
   ComplexTypeNumberPropertyField,
-  Entity,
+  EntityBase,
   FieldType,
   Filter,
   NumberField
@@ -11,7 +11,10 @@ import {
   TestEntity
 } from '../test-util/test-services/v2/test-service';
 
-export function checkFilter<EntityT extends Entity, FieldT extends FieldType>(
+export function checkFilter<
+  EntityT extends EntityBase,
+  FieldT extends FieldType
+>(
   filter: Filter<EntityT, FieldT>,
   fieldName: string,
   operator: string,

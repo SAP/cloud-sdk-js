@@ -3,7 +3,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmType } from '../edm-types';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import {
   ComplexTypeField,
   ConstructorOrField,
@@ -17,7 +17,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
+export class BooleanFieldBase<EntityT extends EntityBase> extends EdmTypeField<
   EntityT,
   boolean
 > {}
@@ -27,7 +27,7 @@ export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanField<EntityT extends Entity>
+export class BooleanField<EntityT extends EntityBase>
   extends BooleanFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -39,7 +39,7 @@ export class BooleanField<EntityT extends Entity>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeBooleanPropertyField<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > extends BooleanFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to

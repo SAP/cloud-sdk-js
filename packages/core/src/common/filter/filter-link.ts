@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { EntityBase, EntityIdentifiable } from '../entity';
 import { Link } from '../selectable';
 import { Filterable } from './filterable';
 
@@ -16,8 +16,10 @@ import { Filterable } from './filterable';
  * @typeparam EntityT - Type of the entity to be filtered
  * @typeparam LinkedEntityT - Type of the linked entity which is used in the filter
  */
-export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
+export class FilterLink<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
+> implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
    */
@@ -44,9 +46,10 @@ export class FilterLink<EntityT extends Entity, LinkedEntityT extends Entity>
   ) {}
 }
 
-export function isFilterLink<EntityT extends Entity, LinkedT extends Entity>(
-  filterable: Filterable<EntityT>
-): filterable is FilterLink<EntityT, LinkedT> {
+export function isFilterLink<
+  EntityT extends EntityBase,
+  LinkedT extends EntityBase
+>(filterable: Filterable<EntityT>): filterable is FilterLink<EntityT, LinkedT> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

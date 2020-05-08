@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
-import { Entity, EntityIdentifiable } from '../entity';
+import { EntityBase, EntityIdentifiable } from '../entity';
 import { Filterable } from './filterable';
 
 /**
@@ -9,7 +9,7 @@ import { Filterable } from './filterable';
  *
  * @typeparam EntityT -
  */
-export class FilterList<EntityT extends Entity>
+export class FilterList<EntityT extends EntityBase>
   implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
@@ -75,7 +75,7 @@ export class FilterList<EntityT extends Entity>
   }
 }
 
-export function isFilterList<T extends Entity>(
+export function isFilterList<T extends EntityBase>(
   filterable: Filterable<T>
 ): filterable is FilterList<T> {
   return (

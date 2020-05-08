@@ -3,7 +3,7 @@
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { toStaticPropertyFormat } from '../util';
 import { Constructable } from './constructable';
-import { Entity } from './entity';
+import { EntityBase } from './entity';
 
 const logger = createLogger({
   package: 'core',
@@ -13,7 +13,7 @@ const logger = createLogger({
 /**
  * @hidden
  */
-export class EntityBuilder<EntityT extends Entity, JsonT> {
+export class EntityBuilder<EntityT extends EntityBase, JsonT> {
   protected entity: EntityT;
 
   constructor(private _entityConstructor: Constructable<EntityT, JsonT>) {

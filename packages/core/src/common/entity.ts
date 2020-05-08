@@ -7,9 +7,10 @@ import { toPropertyFormat } from '../util/name-converter';
 import { Constructable } from './constructable';
 import { EntityBuilder } from './entity-builder';
 import { CustomField, Link, Field } from './selectable';
+import { ServiceIdentifiable } from './service';
 
 export type EntityBuilderType<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   EntityTypeForceMandatoryT
 > = {
   [property in keyof EntityTypeForceMandatoryT]: (
@@ -21,13 +22,13 @@ export type EntityBuilderType<
 /**
  * Super class for all representations of OData entity types.
  */
-export abstract class Entity {
+export abstract class EntityBase implements ServiceIdentifiable {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
 
   protected static entityBuilder<
-    EntityT extends Entity,
+    EntityT extends EntityBase,
     EntityTypeForceMandatoryT
   >(
     entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT>
@@ -45,7 +46,7 @@ export abstract class Entity {
     return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
   }
 
-  protected static customFieldSelector<EntityT extends Entity>(
+  protected static customFieldSelector<EntityT extends EntityBase>(
     fieldName: string,
     entityConstructor: Constructable<EntityT>
   ): CustomField<EntityT> {
@@ -57,6 +58,7 @@ export abstract class Entity {
    * Remote state refers to the last known state of the entity on the remote system from which it has been retrieved or to which it has been posted.
    * It is stored as map, where the keys are stored in the format of the original OData properties.
    */
+
   protected remoteState: { [keys: string]: any };
 
   /**
@@ -73,7 +75,7 @@ export abstract class Entity {
    */
   protected _customFields: MapType<any>;
 
-  abstract readonly _oDataVersion; // : 'v2' | 'v4';
+  abstract readonly _oDataVersion: any;
 
   constructor() {
     nonEnumerable(this, '_oDataVersion');
@@ -267,7 +269,7 @@ export abstract class Entity {
 /**
  * @hidden
  */
-export interface EntityIdentifiable<T extends Entity> {
+export interface EntityIdentifiable<T extends EntityBase> {
   readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;
 }
@@ -277,7 +279,7 @@ export interface EntityIdentifiable<T extends Entity> {
 /**
  * @hidden
  */
-export function isSelectedProperty<EntityT extends Entity>(
+export function isSelectedProperty<EntityT extends EntityBase>(
   json,
   field: Field<EntityT> | Link<EntityT>
 ) {
@@ -288,8 +290,8 @@ export function isSelectedProperty<EntityT extends Entity>(
  * @hidden
  */
 export function isExistentProperty<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 >(json, link: Link<EntityT, LinkedEntityT>) {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
@@ -298,8 +300,8 @@ export function isExistentProperty<
  * @hidden
  */
 export function isExpandedProperty<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 >(json, link: Link<EntityT, LinkedEntityT>) {
   return (
     isExistentProperty(json, link) &&

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Entity } from '../../entity';
+import { EntityBase } from '../../entity';
 import { Filterable } from '../../filter';
 import { Orderable } from '../../order';
 import { FieldType, Selectable } from '../../selectable';
@@ -16,14 +16,14 @@ export interface WithKeys {
 /**
  * @hidden
  */
-export interface WithSelection<EntityT extends Entity> {
+export interface WithSelection<EntityT extends EntityBase> {
   selects: Selectable<EntityT>[];
 }
 
 /**
  * @hidden
  */
-export interface WithGetAllRestrictions<EntityT extends Entity>
+export interface WithGetAllRestrictions<EntityT extends EntityBase>
   extends WithSelection<EntityT> {
   top: number;
   skip: number;

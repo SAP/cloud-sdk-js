@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityBase } from '../entity';
 import { Link } from '../selectable/link';
 import { Orderable } from './orderable';
 
@@ -10,7 +10,10 @@ import { Orderable } from './orderable';
  * @typeparam EntityT - Type of the entity to link from
  * @typeparam LinkedEntityT - Type of the entity to link to
  */
-export class OrderLink<EntityT extends Entity, LinkedEntityT extends Entity> {
+export class OrderLink<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
+> {
   readonly entityType: EntityT;
   readonly linkedEntityType: LinkedEntityT;
 

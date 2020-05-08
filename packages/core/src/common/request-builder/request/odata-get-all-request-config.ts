@@ -2,7 +2,7 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
-import { Entity } from '../../entity';
+import { EntityBase } from '../../entity';
 import { Filterable } from '../../filter';
 import { Orderable } from '../../order';
 import { Selectable } from '../../selectable';
@@ -16,7 +16,7 @@ import { UriConverter } from './uri-converter';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataGetAllRequestConfig<EntityT extends Entity>
+export class ODataGetAllRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithGetAllRestrictions<EntityT> {
   top: number;

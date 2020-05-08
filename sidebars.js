@@ -37,15 +37,12 @@ module.exports = {
             type: 'category',
             label: 'REST',
             items: [
-              'java/features/rest/sap-cloud-sdk-as-a-service',
+              'java/features/rest/overview',
               {
                 type: 'category',
                 label: 'Released clients',
                 items: [
-                  'java/features/rest/clients/workflow-api',
-                  'java/features/rest/clients/currency-conversion',
-                  'java/features/rest/clients/core-services',
-                  'java/features/rest/clients/blockchain-business-sdk'
+                  'java/features/rest/clients/scp-workflow-rest-api'
                 ]
               }
             ]

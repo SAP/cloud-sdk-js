@@ -94,7 +94,7 @@ module.exports = {
           'java/guides/sap-cloud-sdk-linux-how-to',
           'java/guides/cf-cli',
           'java/guides/cf-deploy',
-          'java/how-to/logging-overview'
+          'java/guides/logging-overview'
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',

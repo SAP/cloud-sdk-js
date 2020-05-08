@@ -77,7 +77,7 @@ Once the service instance creation is finished, you can see the service instance
 
 ##### Bind your App to Service Instance
 Open the file ``manifest.yml`` in your project and mention your service instance under `services`. Refer to this example:
-```
+```yaml
 applications:
 - name: awesome-app
   memory: 1024M
@@ -225,5 +225,4 @@ We have published the client library in a Beta state. That is, we verified its f
 Henceforth, the library supports the SCP Workflow service on Cloud Foundry, while it does not cover the SCP Workflow service on the Neo landscape on SCP. 
 
 Related to Cloud Foundry, you might know that environment variable VCAP_SERVICES contains information about your bound service instances. In the current state, it is required to create a destination manually instead of letting the library consume VCAP_SERVICES directly.
-
 

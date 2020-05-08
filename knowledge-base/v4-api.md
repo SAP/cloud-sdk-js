@@ -80,7 +80,7 @@ This document contains a collection of OData v4 features we want to implement an
   ```
 
 ### Decision:
-- First proposal accepted. Our assumption that expanding navigation properties automatically selects all properties of the navigation property has proven correct.
+- Second proposal accepted. Our assumption that expanding navigation properties automatically selects all properties of the navigation property has proven correct.
 
 ## $select with Subqueries
 - Can only be used for complex types and collection types, not for navigation properties

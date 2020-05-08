@@ -24,6 +24,8 @@ describe('v4', () => {
 
       /* SHOULD NOT WORK */
       /* any kind of link */
+      // TestEntity.TO_SINGLE_LINK,
+      // TestEntity.TO_MULTI_LINK,
       // TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY),
       // TestEntity.TO_SINGLE_LINK.select(
       //   TestEntitySingleLink.TO_SINGLE_LINK.select(
@@ -32,12 +34,12 @@ describe('v4', () => {
       // ),
       // TestEntity.TO_SINGLE_LINK.select(
       //   TestEntitySingleLink.TO_MULTI_LINK.select(
-      //     TestEntityLvl2MultiLink.BOOLEAN_PROPERTY
+      //     TestEntityLvl2SingleLink.BOOLEAN_PROPERTY
       //   )
       // ),
       // TestEntity.TO_MULTI_LINK.select(
       //   TestEntityMultiLink.TO_SINGLE_LINK.select(
-      //     TestEntityLvl2SingleLink.STRING_PROPERTY
+      //     TestEntityLvl2MultiLink.STRING_PROPERTY
       //   )
       // ),
       // TestEntity.TO_MULTI_LINK.select(

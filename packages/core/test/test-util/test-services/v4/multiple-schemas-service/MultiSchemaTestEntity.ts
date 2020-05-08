@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import {AllFields,CustomField,EntityBuilderType,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,CustomField,EntityBuilderType,Field,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v4'
 
 /**
@@ -90,11 +90,11 @@ export namespace MultiSchemaTestEntity {
   /**
    * All key fields of the MultiSchemaTestEntity entity.
    */
-  export const _keyFields: Array<Selectable<MultiSchemaTestEntity>> = [MultiSchemaTestEntity.KEY_PROPERTY];
+  export const _keyFields: Array<Field<MultiSchemaTestEntity>> = [MultiSchemaTestEntity.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */
-  export const _keys: { [keys: string]: Selectable<MultiSchemaTestEntity> } = MultiSchemaTestEntity._keyFields.reduce((acc: { [keys: string]: Selectable<MultiSchemaTestEntity> }, field: Selectable<MultiSchemaTestEntity>) => {
+  export const _keys: { [keys: string]: Field<MultiSchemaTestEntity> } = MultiSchemaTestEntity._keyFields.reduce((acc: { [keys: string]: Field<MultiSchemaTestEntity> }, field: Field<MultiSchemaTestEntity>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

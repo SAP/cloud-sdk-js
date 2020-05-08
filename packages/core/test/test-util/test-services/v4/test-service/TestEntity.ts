@@ -7,7 +7,7 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import {AllFields,BigNumberField,BooleanField,CustomField,DateField,EntityBuilderType,OneToManyLink,NumberField,OneToOneLink,Selectable,StringField,Time,TimeField} from '../../../../../src/common'
+import {AllFields,BigNumberField,BooleanField,CustomField,DateField,EntityBuilderType,Field,OneToManyLink,NumberField,OneToOneLink,StringField,Time,TimeField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v4'
 
 /**
@@ -354,11 +354,11 @@ export namespace TestEntity {
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Selectable<TestEntity>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntity>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntity> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntity> }, field: Selectable<TestEntity>) => {
+  export const _keys: { [keys: string]: Field<TestEntity> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Field<TestEntity> }, field: Field<TestEntity>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

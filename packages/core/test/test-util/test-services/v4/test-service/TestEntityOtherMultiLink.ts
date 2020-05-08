@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
-import {AllFields,CustomField,EntityBuilderType,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,CustomField,EntityBuilderType,Field,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v4'
 
 /**
@@ -90,11 +90,11 @@ export namespace TestEntityOtherMultiLink {
   /**
    * All key fields of the TestEntityOtherMultiLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityOtherMultiLink> } = TestEntityOtherMultiLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityOtherMultiLink> }, field: Selectable<TestEntityOtherMultiLink>) => {
+  export const _keys: { [keys: string]: Field<TestEntityOtherMultiLink> } = TestEntityOtherMultiLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityOtherMultiLink> }, field: Field<TestEntityOtherMultiLink>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import {AllFields,CustomField,EntityBuilderType,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,CustomField,EntityBuilderType,Field,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v4'
 
 /**
@@ -90,11 +90,11 @@ export namespace TestEntityEndsWithSomethingElse {
   /**
    * All key fields of the TestEntityEndsWithSomethingElse entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityEndsWithSomethingElse>> = [TestEntityEndsWithSomethingElse.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntityEndsWithSomethingElse>> = [TestEntityEndsWithSomethingElse.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityEndsWithSomethingElse> } = TestEntityEndsWithSomethingElse._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityEndsWithSomethingElse> }, field: Selectable<TestEntityEndsWithSomethingElse>) => {
+  export const _keys: { [keys: string]: Field<TestEntityEndsWithSomethingElse> } = TestEntityEndsWithSomethingElse._keyFields.reduce((acc: { [keys: string]: Field<TestEntityEndsWithSomethingElse> }, field: Field<TestEntityEndsWithSomethingElse>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

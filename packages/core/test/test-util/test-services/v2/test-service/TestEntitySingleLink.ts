@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import {AllFields,BooleanField,CustomField,EntityBuilderType,Link,NumberField,OneToOneLink,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,BooleanField,CustomField,EntityBuilderType,Field,Link,NumberField,OneToOneLink,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v2'
 
 /**
@@ -171,11 +171,11 @@ export namespace TestEntitySingleLink {
   /**
    * All key fields of the TestEntitySingleLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntitySingleLink>> = [TestEntitySingleLink.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntitySingleLink>> = [TestEntitySingleLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntitySingleLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntitySingleLink> } = TestEntitySingleLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntitySingleLink> }, field: Selectable<TestEntitySingleLink>) => {
+  export const _keys: { [keys: string]: Field<TestEntitySingleLink> } = TestEntitySingleLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntitySingleLink> }, field: Field<TestEntitySingleLink>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

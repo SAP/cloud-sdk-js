@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
-import {AllFields,BooleanField,CustomField,EntityBuilderType,NumberField,Selectable,StringField} from '../../../../../src/common'
+import {AllFields,BooleanField,CustomField,EntityBuilderType,Field,NumberField,StringField} from '../../../../../src/common'
 import {Entity} from '../../../../../src/v2'
 
 /**
@@ -144,11 +144,11 @@ export namespace TestEntityLvl2MultiLink {
   /**
    * All key fields of the TestEntityLvl2MultiLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityLvl2MultiLink>> = [TestEntityLvl2MultiLink.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntityLvl2MultiLink>> = [TestEntityLvl2MultiLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityLvl2MultiLink> } = TestEntityLvl2MultiLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityLvl2MultiLink> }, field: Selectable<TestEntityLvl2MultiLink>) => {
+  export const _keys: { [keys: string]: Field<TestEntityLvl2MultiLink> } = TestEntityLvl2MultiLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityLvl2MultiLink> }, field: Field<TestEntityLvl2MultiLink>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

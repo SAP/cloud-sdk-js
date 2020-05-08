@@ -21,6 +21,7 @@ export class ServiceNameFormatter {
     'CustomField',
     'Entity',
     'EntityBuilderType',
+    'Field',
     'Selectable',
     'OneToOneLink',
     'BooleanField',

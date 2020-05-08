@@ -2,13 +2,14 @@
 
 import { Constructable } from '../constructable';
 import { Entity } from '../entity';
-import { Field } from './field';
 
-export class AllFields<EntityT extends Entity> extends Field<EntityT> {
+export class AllFields<EntityT extends Entity> {
   readonly selectable: true;
-  readonly expandable: true;
 
-  constructor(_fieldName: string, _entityConstructor: Constructable<EntityT>) {
-    super('*', _entityConstructor);
+  constructor(
+    public _fieldName: string,
+    public _entityConstructor: Constructable<EntityT>
+  ) {
+    this._fieldName = '*';
   }
 }

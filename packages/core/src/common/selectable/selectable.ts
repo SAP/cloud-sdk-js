@@ -13,17 +13,19 @@ import { SimpleTypeFields } from './simple-type-fields';
  * @typeparam EntityT - Type of the entity to be selected on
  */
 
-export type Selectable<EntityT extends Entity> = EntityT extends {
-  _odataVersion: 'v2';
-}
+export type Selectable<
+  EntityT extends Entity
+> = EntityT['_oDataVersion'] extends 'v2'
   ?
       | SimpleTypeFields<EntityT>
       | Link<EntityT, any>
       | ComplexTypeField<EntityT>
       | CustomField<EntityT>
       | AllFields<EntityT>
-  :
+  : EntityT['_oDataVersion'] extends 'v4'
+  ?
       | SimpleTypeFields<EntityT>
       | ComplexTypeField<EntityT>
       | CustomField<EntityT>
-      | AllFields<EntityT>;
+      | AllFields<EntityT>
+  : never;

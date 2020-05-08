@@ -3,17 +3,26 @@
 import {
   TestEntity,
   TestEntitySingleLink,
+  TestEntityLvl2SingleLink,
   TestEntityMultiLink,
-  TestEntityLvl2MultiLink,
-  TestEntityLvl2SingleLink
+  TestEntityLvl2MultiLink
 } from './test-services/v2/test-service';
+// import { TestEntity as TestEntityV4 } from './test-services/v4/test-service';
 
 describe('v4', () => {
   it('selects', () => {
     TestEntity.requestBuilder()
       .getAll()
       .select(
+        /* SHOULD WORK */
+        /* Property */
         TestEntity.STRING_PROPERTY,
+
+        /* Complex Type Property */
+        TestEntity.COMPLEX_TYPE_PROPERTY,
+
+        /* any kind of link */
+        TestEntity.TO_SINGLE_LINK,
         TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY),
         TestEntity.TO_SINGLE_LINK.select(
           TestEntitySingleLink.TO_SINGLE_LINK.select(
@@ -22,12 +31,12 @@ describe('v4', () => {
         ),
         TestEntity.TO_SINGLE_LINK.select(
           TestEntitySingleLink.TO_MULTI_LINK.select(
-            TestEntityLvl2MultiLink.BOOLEAN_PROPERTY
+            TestEntityLvl2SingleLink.BOOLEAN_PROPERTY
           )
         ),
         TestEntity.TO_MULTI_LINK.select(
           TestEntityMultiLink.TO_SINGLE_LINK.select(
-            TestEntityLvl2SingleLink.STRING_PROPERTY
+            TestEntityLvl2MultiLink.STRING_PROPERTY
           )
         ),
         TestEntity.TO_MULTI_LINK.select(
@@ -35,6 +44,9 @@ describe('v4', () => {
             TestEntityLvl2MultiLink.STRING_PROPERTY
           )
         )
+        /* SHOULD NOT WORK */
+        /* Complex Type Property subselection*/
+        // TestEntity.COMPLEX_TYPE_PROPERTY.booleanProperty,
       );
   });
 
@@ -67,5 +79,25 @@ describe('v4', () => {
         //   TestEntityMultiLink.BOOLEAN_PROPERTY.equals(true)
         // )
       );
+  });
+
+  it('expands', () => {
+    TestEntity.requestBuilder()
+      .getAll()
+
+      /* SHOULD NOT WORK */
+      // .expand(
+      //   /* Single Link */
+      //   TestEntity.TO_SINGLE_LINK
+      // )
+      .filter(
+        TestEntity.TO_SINGLE_LINK.filter(
+          TestEntitySingleLink.BOOLEAN_PROPERTY.equals(true)
+        )
+      );
+  });
+
+  it('v2', () => {
+    // TestEntity.requestBuilder().getAll().select(TestEntityV4.FLOAT_PROPERTY);
   });
 });

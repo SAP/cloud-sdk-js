@@ -48,11 +48,11 @@ Refer to the documentation on [help.sap.com](https://help.sap.com/viewer/e157c39
 ##### Identify necessary OAuth Scopes
 The REST API is protected and requires authenticating with an OAuth 2.0 access token. Each particular API endpoint requires the calling REST client to provide an access token valid for the respective endpoint. That is, the token must be issued for the respective OAuth scope that corresponds to the desired API endpoint.
 
-Let us figure out which OAuth scope is relevant for our application use case. We see on the [API documentation](https://api.sap.com/api/SAP_CP_Workflow_CF/resource) that the endpoint ``/v1/workflow-definitions`` is assigned to the scope `WORKFLOW_DEFINITION_GET`.
+Let us figure out which OAuth scope is relevant for our application use case. We see on the [API documentation](https://api.sap.com/api/SAP_CP_Workflow_CF/resource) that the endpoint `/v1/workflow-definitions` is assigned to the scope `WORKFLOW_DEFINITION_GET`.
 
 ##### Create Service Instance JSON Configuration
 Open a text editor of your choice and save a JSON file on your system with the following content:
-```
+```json
 {
   "authorities": ["WORKFLOW_DEFINITION_GET"]
 }
@@ -61,22 +61,22 @@ Remember where you've saved the file, you'll need it later.
 
 ##### Create Service Instance
 
-Open the command line and authenticate at your Cloud Foundry organization by invoking ``cf login``.
+Open the command line and authenticate at your Cloud Foundry organization by invoking `cf login`.
 
-Consider specifying the respective subaccount, organization and space with ``cf target`` if necessary.
+Consider specifying the respective subaccount, organization and space with `cf target` if necessary.
 
-Use ``cd`` to navigate to the directory that contains the JSON file created beforehand.
+Use `cd` to navigate to the directory that contains the JSON file created beforehand.
 Being in that directory, create the service instance as follows:
 ```
 cf create-service workflow standard my-workflow-service -c <path-to-json-file>
 ```
-This command creates an instance of the SCP Workflow Service in the CF space that your CLI points to. More specifically, it uses the service plan "standard" and takes the JSON configuration into account. Note that we named the service instance ``my-workflow``. You can name it as you want, it is just important to remember the name as you need it in your deployment descriptor `manifest.yml` later on.
+This command creates an instance of the SCP Workflow Service in the CF space that your CLI points to. More specifically, it uses the service plan "standard" and takes the JSON configuration into account. Note that we named the service instance `my-workflow`. You can name it as you want, it is just important to remember the name as you need it in your deployment descriptor `manifest.yml` later on.
 
-Once the service instance creation is finished, you can see the service instance in your CF space under ``Services`` and `Service Instances` in the left-hand side menu.
+Once the service instance creation is finished, you can see the service instance in your CF space under `Services` and `Service Instances` in the left-hand side menu.
 
 
 ##### Bind your App to Service Instance
-Open the file ``manifest.yml`` in your project and mention your service instance under `services`. Refer to this example:
+Open the file `manifest.yml` in your project and mention your service instance under `services`. Refer to this example:
 ```yaml
 applications:
 - name: awesome-app
@@ -96,15 +96,15 @@ applications:
   routes:
   - route: <omitted-on-purpose>
 ```
-Redeploy your app with ``cf push``.
+Redeploy your app with `cf push`.
 
 ##### Take Note of API endpoint and OAuth Credentials
-After the deployment of the app happened, go to your CF space and navigate to ``Services`` and thereafter to `Service Instances`. You should see the service instance you created along with the information that is is bound to your application.
+After the deployment of the app happened, go to your CF space and navigate to `Services` and thereafter to `Service Instances`. You should see the service instance you created along with the information that is is bound to your application.
 
-Click on the service instance name, for instance ``my-workflow``, in the upcoming screen you should see the headline `Service Instance: my-workflow - Referencing Apps`. Make sure that the entry belong to your app is selected in the table below, given that multiple apps are bound to the same service instance.
+Click on the service instance name, for instance `my-workflow`, in the upcoming screen you should see the headline `Service Instance: my-workflow - Referencing Apps`. Make sure that the entry belong to your app is selected in the table below, given that multiple apps are bound to the same service instance.
 
 Consider the JSON content below the table. For your convenience we recommend copying that JSON to a text editor. Here is one example for your reference:
-```
+```json
 {
 	"endpoints": {
 		"workflow_odata_url": "foo",
@@ -142,7 +142,7 @@ At next, carefully look at the JSON content and collect the values for the follo
 You'll need the values in the next step.
 
 #### Maintain HTTP Destination 
-Go to your CF subaccount, navigate to ``Connectivity`` and `Destinations` in the left-hand side menu and create a new HTTP destination with the following properties:
+Go to your CF subaccount, navigate to `Connectivity` and `Destinations` in the left-hand side menu and create a new HTTP destination with the following properties:
 - Name: Workflow-Api
 - Type: HTTP
 - URL: The value of `workflow_rest_url`
@@ -156,10 +156,10 @@ Restart your app thereafter.
 
 ### Develop your App
 #### Assumptions
-We assume that you have a Java project that uses the SAP Cloud SDK at hand. If not, we recommend going ahead [creating one from one of the Maven archetypes](https://sap.github.io/cloud-sdk/docs/java/getting-started). Moreover, we assume your system is configured so that you can successfully invoke ``mvn clean install`` from your project's root directory.
+We assume that you have a Java project that uses the SAP Cloud SDK at hand. If not, we recommend going ahead [creating one from one of the Maven archetypes](https://sap.github.io/cloud-sdk/docs/java/getting-started). Moreover, we assume your system is configured so that you can successfully invoke `mvn clean install` from your project's root directory.
 
-In addition, we assume that your have the SAP Cloud SDK Bill-of-Material (BOM) in your ``dependencyManagement`` section in your pom structure. Example:
-```
+In addition, we assume that your have the SAP Cloud SDK Bill-of-Material (BOM) in your `dependencyManagement` section in your pom structure. Example:
+```xml
 <dependencyManagement>
   <dependencies>
     <dependency>
@@ -177,28 +177,28 @@ In addition, we assume that your have the SAP Cloud SDK Bill-of-Material (BOM) i
 #### Add Maven Dependency 
 
 You can refer to the Java client library for the SCP Workflow service with the following Maven dependency:
-```
+```xml
 <dependency>
     <groupId>com.sap.cloud.sdk.services</groupId>
     <artifactId>scp-workflow-cf</artifactId>
 </dependency>
 ```
-Add that dependency into your pom file and invoke ``mvn clean install`` to check if Maven is able to pick that dependency up.
+Add that dependency into your pom file and invoke `mvn clean install` to check if Maven is able to pick that dependency up.
 
 ### Invoke the Java Client Library
 We know the name of the HTTP destination that we configured in the SCP cockpit.
 At first, we obtain a Java representation of that destination.
-```
+```java
 final String destinationName = "Workflow-Api";
 final HttpDestination httpDestination = DestinationAccessor.getDestination(destinationName).asHttp();
 ```
 Secondly, we go ahead and invoke the Java API class for the workflow definitions. More specifically, we invoke the method to obtain the list of all existing workflow definitions. We pass the HTTP destination as argument to the constructor of the API class.
-```
+```java
 final List<WorkflowDefinition> workflowDefinitions =
         new WorkflowDefinitionsApi(httpDestination).getWorkflowDefinitions();
 ```
 We have now invoked the REST API in a type-safe manner and furthermore gain type-safe access to the resulting objects. For instance, we can read particular details about each worklow definition (printed to the log here for demonstration purposes).
-```
+```java
 workflowDefinitions.forEach(workflowDefinition -> {
     log.info(workflowDefinition.getName());
     log.info(workflowDefinition.getVersion());
@@ -206,7 +206,7 @@ workflowDefinitions.forEach(workflowDefinition -> {
 });
 ```
 Going even further, the library allows us to inspect all jobs related to a particular workflow definitions. Check out the model definition on the API Hub for this model relationship.
-```
+```java
 final WorkflowDefinition workflowDefinition = workflowDefinitions.get(0);
 workflowDefinition.getJobs().forEach(job -> {
     log.info(job.getId());

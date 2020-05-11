@@ -1,20 +1,22 @@
 module.exports = {
   title: 'SAP Cloud SDK',
   tagline:
-    'A one stop shop for developing and extending SAP applications in a Cloud.',
+    'A one-stop shop for developing and extending SAP applications in a Cloud.',
   url: 'https://github.com/SAP/cloud-sdk',
   baseUrl: '/cloud-sdk/',
   favicon: 'img/favicon.ico',
   organizationName: 'SAP', // Usually your GitHub org/user name.
   projectName: 'cloud-sdk', // Usually your repo name.
   themeConfig: {
-    announcementBar: {
-      id: 'WIP', // Any value that will identify this message
-      content:
-        '~~~WIP~~~ Cloud SDK Documentation is work in progress. Use on your own discretion.',
-      backgroundColor: '#ed2939', // Defaults to `#fff`
-      textColor: '#000' // Defaults to `#000`
+    prism: {
+      additionalLanguages: ['powershell', 'java', 'groovy']
     },
+    // announcementBar: {
+    //   id: 'WIP', // Any value that will identify this message
+    //   content:
+    //     '~~~WIP~~~ Cloud SDK Documentation is work in progress. Use on your own discretion.',
+    //   backgroundColor: '#ed2939', // Defaults to `#fff`
+    //   textColor: '#000' // Defaults to `#000`
     navbar: {
       title: 'SAP Cloud SDK',
       logo: {
@@ -56,17 +58,18 @@ module.exports = {
           items: [
             {
               label: 'Java SDK',
-              href: 'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html'
+              href:
+                'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html'
             },
             {
               label: 'JS SDK',
-              href:             'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html'
+              href:
+                'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html'
             },
             {
               label: 'CI/CD Toolkit',
               href: 'https://github.com/SAP/cloud-s4-sdk-pipeline/releases'
-            },
-
+            }
           ]
         },
         {
@@ -164,10 +167,7 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
-        },
-	prism: {
-	  additionalLanguages: ['powershell', 'java', 'groovy'],
-	}
+        }
       }
     ]
   ],

@@ -15,13 +15,16 @@
 - Run `npm install`
 - Run `npm start`
 - You should now see a browser window with SAP Cloud SDK documentation portal open
-- Open [How to write documentation](https://sap.github.io/cloud-sdk/docs/dzen/how-to-write-documentation )
+
+### How to document
+- Read this [getting started guide](https://sap.github.io/cloud-sdk/docs/dzen/getting-started )
+- Also check this [guide on mindful witting](https://sap.github.io/cloud-sdk/docs/dzen/how-to-write-documentation )
 
 
 ### Docker alternative
 
 - Consider the following commands (1) to install node dependencies and (2) to serve the continuously generated site:
-  ```
+  ```bash
   docker run -it --rm -v "${pwd}:/doc" -w "/doc" --entrypoint "/bin/sh" node:alpine3.10 -c "npm ci"
   docker run -it --rm -v "${pwd}:/doc" -w "/doc" --entrypoint "/bin/sh" -p 3000:3000 node:alpine3.10 -c "npm run start -- --port 3000 --host 0.0.0.0"
   ```

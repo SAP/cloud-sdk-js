@@ -131,7 +131,6 @@ This document contains a collection of OData v4 features we want to implement an
 
 
 ## Filtering the Root Collection by Filters on One-To-One Links
-- One-To-Many Links: by filtering in $expand
 - One-To-One Links:
   - v2 example:
   https://services.odata.org/V2/Northwind/Northwind.svc/Products?$select=Category/CategoryID&$expand=Category&$format=json&$filter=Category/CategoryID%20eq%202

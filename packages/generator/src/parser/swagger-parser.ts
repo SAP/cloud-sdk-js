@@ -12,5 +12,9 @@ export function parseSwaggerFromPath(swaggerPath: PathLike): SwaggerMetadata {
 }
 
 function parseSwaggerFile(swaggerFile: string): SwaggerMetadata {
-  return JSON.parse(swaggerFile);
+  const swaggerMetaData = JSON.parse(swaggerFile);
+  if (swaggerMetaData.openapi) {
+    swaggerMetaData.definitions = swaggerMetaData?.components?.schemas;
+  }
+  return swaggerMetaData;
 }

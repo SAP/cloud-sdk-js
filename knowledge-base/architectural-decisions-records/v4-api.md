@@ -191,6 +191,10 @@ TestEntity.requestBuilder()
 ### Decision
 - Proposal accepted.
 
+Here some flow on the actual filter possibilities and in which version they are implemented.
+The possible filter functions will depend on the data type. For example a string type will offer different conditions than a boolean or collection.
+![](../img/filter-flowchart.png)
+
 
 ## Type dependent filter expressions (e. g. 'year' for dates)
 - Already available in v2 for the most part, there are some more functions

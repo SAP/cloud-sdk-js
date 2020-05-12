@@ -271,7 +271,7 @@ In case you run into issues with the above process: Double check your service an
 
 ## Available Parameters
 
-The following parameters are available on the generator:
+The following parameters are available on the generator for both OData protocol versions:
 
 <Tabs defaultValue="maven" values={[
 { label: 'Maven Plugin', value: 'maven', },
@@ -297,18 +297,18 @@ The following parameters are available on the generator:
 </TabItem>
 <TabItem value="cli">
 
-|   Parameter       | Default |   Description |
-|:------------------|:-------:|:--------------|
-|`-b,--default-base-path <arg>`| - | Base path of the exposed API |
-|`-d,--delete-output-dir`| `False` | Target directory is deleted before code generation |
-|`-f,--overwrite-files`| `False` | Overwrite existing files |
-|`-i,--input-dir <arg>`| `input` | Location of the metadata files |
-|`-ies,--include-entity-sets <arg>`| - | Only generate classes for specific entity sets |
-|`-ifn,--include-function-imports <arg>`| - | Only generate classes for specific function imports |
-|`-m,--name-mapping-file <arg>`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
-|`-n,--name-strategy-class <arg>`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
-|`-o,--output-dir <arg>`| `output` | Output directory for generated sources |
-|`-p,--package-name-prefix <arg>`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
+|   Parameter       | Alias | Default |   Description |
+|:------------------|:-----:|:----  -:|:--------------|
+|`--default-base-path <arg>`|`-b`| - | Base path of the exposed API |
+|`--delete-output-dir`|`-d`| `False` | Target directory is deleted before code generation |
+|`--overwrite-files`|`-f`| `False` | Overwrite existing files |
+|`--input-dir <arg>`|`-i`| `input` | Location of the metadata files |
+|`--include-entity-sets <arg>`|`-ies`| - | Only generate classes for specific entity sets |
+|`--include-function-imports <arg>`|`-ifn`| - | Only generate classes for specific function imports |
+|`--name-mapping-file <arg>`|`-m`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
+|`--name-strategy-class <arg>`|`-n`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
+|`--output-dir <arg>`|`-o`| `output` | Output directory for generated sources |
+|`--package-name-prefix <arg>`|`-p`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
 
 <!-- |`<nameSource>`| `LABEL` | If no custom naming strategy is used, this switches naming from label to name | -->
 

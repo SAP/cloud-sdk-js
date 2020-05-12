@@ -19,10 +19,11 @@ This document contains a collection of OData v4 features we want to implement an
 - Proposal accepted.
 
 ## $expand with Subqueries
-- Make queries on expanded entities (navigation properties)
+- Make queries on expanded entities (navigation properties and complex properties)
 - Works for `getAll` and `getByKey`
-- Example request for collection: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName,Emails;$filter=startswith(UserName,%27s%27))
-- Example request for single link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=BestFriend&$expand=BestFriend($select=UserName,Emails)
+- Example request for one to many link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName,Emails;$filter=startswith(UserName,%27s%27))
+- Example request for one to one link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=BestFriend&$expand=BestFriend($select=UserName,Emails)
+- Could not find a working example for complex types
 
 ### Questions
 - Query options related to lists should be used on one-to-many navigation properties only? (This is not failing in the reference services)
@@ -79,8 +80,7 @@ This document contains a collection of OData v4 features we want to implement an
   ```
 
 ### Decision:
-- Second proposal accepted under the assumption that expanding navigation properties automatically selects all properties of the navigation property.
-- If the assumtion is incorrect, use the first proposal.
+- Second proposal accepted. Our assumption that expanding navigation properties automatically selects all properties of the navigation property has proven correct.
 
 ## $select with Subqueries
 - Can only be used for complex types and collection types, not for navigation properties
@@ -190,6 +190,10 @@ TestEntity.requestBuilder()
 ```
 ### Decision
 - Proposal accepted.
+
+Here some flow on the actual filter possibilities and in which version they are implemented.
+The possible filter functions will depend on the data type. For example a string type will offer different conditions than a boolean or collection.
+![](../img/filter-flowchart.png)
 
 
 ## Type dependent filter expressions (e. g. 'year' for dates)

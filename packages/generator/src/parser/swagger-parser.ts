@@ -13,9 +13,7 @@ export function parseSwaggerFromPath(swaggerPath: PathLike): SwaggerMetadata {
 
 function parseSwaggerFile(swaggerFile: string): SwaggerMetadata {
   const swaggerMetaData = JSON.parse(swaggerFile);
-  // If the file is not swagger but openapi
-  if (swaggerMetaData.openapi) {
-    swaggerMetaData.definitions = swaggerMetaData?.components?.schemas;
-  }
+  // Get definitions from schema, this is typically the case for openapi files
+  swaggerMetaData.definitions = swaggerMetaData.definitions || swaggerMetaData?.components?.schemas;
   return swaggerMetaData;
 }

@@ -26,8 +26,18 @@
 
 ## Fixed Issues
 
-- Fix the OData client generator to also parse definitions of OpenAPI files with version higher than 3.
+-
 
+
+# 1.20.1
+
+Release Date: TBD
+API Docs: https://sap.github.io/cloud-sdk/api/1.20.1
+Blog: TBD
+
+## Fixed Issues
+
+- Fix the OData client generator to also parse definitions of OpenAPI files with version higher than 3.
 
 # 1.20.0
 

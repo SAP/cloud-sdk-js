@@ -189,7 +189,7 @@ function transformServiceMetadata(
 function apiBusinessHubMetadata(
   swagger?: SwaggerMetadata
 ): ApiBusinessHubMetadata | undefined {
-  if (!swagger) {
+  if (!swagger || !swagger?.basePath) {
     return undefined;
   }
 

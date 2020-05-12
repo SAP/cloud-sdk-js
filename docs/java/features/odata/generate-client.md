@@ -40,7 +40,9 @@ Please be aware that OData v2 and OData v4 service definitions are not interchan
 
 Regardless of how the generator is invoked the generated code requires some dependencies to be present. Therefore it is required to ensure the following dependencies are present in your project:
 
-<Tabs defaultValue="v4" values={[
+<Tabs 
+groupId="odataVersion"
+defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },
 { label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
@@ -90,7 +92,9 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 
 ### Using the OData Generator Maven Plugin ###
 
-<Tabs defaultValue="v4" values={[
+<Tabs
+groupId="odataVersion"
+defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },
 { label: 'OData v4', value: 'v4', }]}>
 
@@ -156,7 +160,7 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 </TabItem>
 </Tabs>
 
-2. Adapt the `<inputDirectory>` to point to the location of your service definition.
+2. Adapt the `<inputDirectory>` to point to the location of your service definitions. A full list of parameters is [available here](#available-parameters).
 
 1. In case the target directory should be automatically added as a source folder by maven you can leverage the build helper plugin:
     ```xml
@@ -182,23 +186,15 @@ Lombok and dependency injections are used by the generated VDM classes, that is 
 
 Now maven will run the generator within the `process-sources` phase which is executed before compile.
 
-The following parameters allow to configure the generator further:
-
-|   Parameter Value |   Explanation |
-|-------------------|---------------|
-|`<inputDirectory>`|Location of the metadata file.
-|`<outputDirectory>`|Location of the output directory for generated sources.
-|`<deleteOutputDirectory>`|Target directory is deleted before every execution of the generator
-|`<packageName>`|Package name for the generated sources
-|`<defaultBasePath>`|Base path of the exposed API
-
 :::note
 Please note that if you use the generator for services other than SAP S/4HANA services, you need to add the parameter `defaultBasePath` to the configuration section, which should provide the base path to the exposed API (e.g _odata/v4/_).
 :::
 
 ### Using the CLI
 
-<Tabs defaultValue="v4" values={[
+<Tabs 
+groupId="odataVersion"
+defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },
 { label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
@@ -213,14 +209,16 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 </TabItem>
 </Tabs>
 
-1. Run `java -jar odata-generator-cli.jar -i /path/to/input/folder -o /path/to/output/folder`. You can also specify the parameter `-p "my.package.name"` to choose the package name and `-b "/my/path"` to choose the base path.
+1. Run `java -jar odata-generator-cli.jar -i /path/to/input/folder -o /path/to/output/folder`. You can also specify the parameter `-p "my.package.name"` to choose the package name and `-b "/my/path"` to choose the base path. A full list of parameters is [available here](#available-parameters).
 
 1. Put the generated Java source files from the output folder into your project that is using the SAP Cloud SDK so that they are picked up by Java. For example, move them to the `application/src/main/java` folder.
 
 
 ### Invoke the generator programmatically
 
-<Tabs defaultValue="v4" values={[
+<Tabs
+groupId="odataVersion"
+defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },
 { label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
@@ -265,8 +263,71 @@ Please note that if you use the generator for services other than SAP S/4HANA se
         .execute();
     ```
 
-3. Adapt the input & output directory as well as the package name according to your setup. Place your EDMX file within the input folder and run the generator.
+3. Adapt the input & output directory as well as the package name according to your setup. A full list of parameters is [available here](#available-parameters). Place your EDMX file within the input folder and run the generator.
 
 This should give you the generated classes in the desired folder. You can now proceed with using them to build requests.
 
 In case you run into issues with the above process: Double check your service and file names, check that the folders are setup correctly and that the service name mappings meet your expectations.
+
+## Available Parameters
+
+The following parameters are available on the generator:
+
+<Tabs defaultValue="maven" values={[
+{ label: 'Maven Plugin', value: 'maven', },
+{ label: 'CLI', value: 'cli', },
+{ label: 'Java', value: 'java', }]}>
+<TabItem value="maven">
+
+|   Parameter       | Default |   Description |
+|:------------------|:-------:|:--------------|
+|`<deleteOutputDirectory>`| `False` | Target directory is deleted before code generation |
+|`<defaultBasePath>`| - | Base path of the exposed API |
+|`<includeEntitySets>`| - | Only generate classes for specific entity sets |
+|`<includeFunctionImports>`| - | Only generate classes for specific function imports |
+|`<inputDirectory>`| `input` | Location of the metadata files |
+|`<namingStrategy>`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
+|`<outputDirectory>`| `output` | Output directory for generated sources |
+|`<overwriteFiles>`| `False` | Overwrite existing files |
+|`<packageName>`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
+|`<serviceNameMappingFile>`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
+
+<!-- |`<nameSource>`| `LABEL` | If no custom naming strategy is used, this switches naming from label to name | -->
+
+</TabItem>
+<TabItem value="cli">
+
+|   Parameter       | Default |   Description |
+|:------------------|:-------:|:--------------|
+|`-b,--default-base-path <arg>`| - | Base path of the exposed API |
+|`-d,--delete-output-dir`| `False` | Target directory is deleted before code generation |
+|`-f,--overwrite-files`| `False` | Overwrite existing files |
+|`-i,--input-dir <arg>`| `input` | Location of the metadata files |
+|`-ies,--include-entity-sets <arg>`| - | Only generate classes for specific entity sets |
+|`-ifn,--include-function-imports <arg>`| - | Only generate classes for specific function imports |
+|`-m,--name-mapping-file <arg>`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
+|`-n,--name-strategy-class <arg>`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
+|`-o,--output-dir <arg>`| `output` | Output directory for generated sources |
+|`-p,--package-name-prefix <arg>`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
+
+<!-- |`<nameSource>`| `LABEL` | If no custom naming strategy is used, this switches naming from label to name | -->
+
+</TabItem>
+<TabItem value="java">
+
+
+|   Parameter       | Default |   Description |
+|:------------------|:-------:|:--------------|
+|`deleteOutputDirectory()`| `False` | Target directory is deleted before code generation |
+|`overwriteFiles()`| `False` | Overwrite existing files |
+|`withDefaultBasePath()`| - | Base path of the exposed API |
+|`withIncludedEntitySets()`| - | Only generate classes for specific entity sets |
+|`withIncludedFunctionImports()`| - | Only generate classes for specific function imports |
+|`withInputDirectory()`| `input` | Location of the metadata files |
+|`withNamingStrategy()`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
+|`withOutputDirectory()`| `output` | Output directory for generated sources |
+|`withPackageName()`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
+|`withServiceNameMapping()`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
+
+</TabItem>
+</Tabs>

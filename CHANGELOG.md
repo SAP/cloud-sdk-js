@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix the OData client generator to also parse definitions of OpenAPI files with version higher than 3.
 
 
 # 1.20.0

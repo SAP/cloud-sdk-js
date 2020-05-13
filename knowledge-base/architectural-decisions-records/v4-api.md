@@ -227,6 +227,7 @@ The possible filter functions will depend on the data type. For example a string
   - adding links
   - deleting links
   - deleting entities
+because it replaces the existing data with the payload.
 ``` json
 {
   "@type":"#Northwind.Manager",

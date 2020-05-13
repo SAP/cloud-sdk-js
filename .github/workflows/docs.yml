@@ -6,6 +6,7 @@ on:
   push:
     branches: [master]
     tags: ['v*']
+    # run only for update inside the docs folder
     paths:
       - 'docs/**'
 
@@ -35,9 +36,13 @@ jobs:
           git config --global user.email "irrelevant@completely.irrelevant"
           git config --global user.name "irrelevant"
           cd ..
+          # clone current version of documentation
           git clone --depth 1 -b documentation git@github.com:SAP/cloud-sdk.git documentation
+          # copy latest changes from the API docs to the SDK documentation
           rsync -avz cloud-sdk/docs/api/ documentation/static/api/
+          # change to documentation folder
           cd documentation
+          # run git add -> commit -> push the new version of the docs
           git add -A
           git commit -a -m "JS API documentation update via pipeline"
           git push

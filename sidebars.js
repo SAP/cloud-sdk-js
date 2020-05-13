@@ -31,7 +31,7 @@ module.exports = {
             label: 'Connectivity',
             items: [
               'java/features/connectivity/sdk-connectivity-destination-service'
-              ]
+            ]
           },
           {
             type: 'category',
@@ -41,9 +41,7 @@ module.exports = {
               {
                 type: 'category',
                 label: 'Released clients',
-                items: [
-                  'java/features/rest/clients/scp-workflow-rest-api'
-                ]
+                items: ['java/features/rest/clients/scp-workflow-rest-api']
               }
             ]
           }
@@ -78,11 +76,9 @@ module.exports = {
       //   },
       //   'client-libraries',
       {
-	type: 'category',
-	label: 'Tips & Tricks',
-	items: [
-	  'java/tips-and-tricks/change-log-level'
-	],
+        type: 'category',
+        label: 'Tips & Tricks',
+        items: ['java/tips-and-tricks/change-log-level']
       },
       {
         type: 'category',
@@ -107,32 +103,8 @@ module.exports = {
           //       'java/how-to/configure-ide'
         ]
       },
-      //   'hot-to-contribute',
-      //   'support',
-      //   'feature-request',
-      //   'Feedback',
-      //   'thank-you',
-      //   'release-notes'
-      // ],
-      // 'JS and Node.js': [
-      //   {
-      //     type: 'category',
-      //     label: 'Getting started',
-      //     items: [
-      //       'java/getting-started/tools-java-sdk',
-      //       'java/getting-started/getting-java-sdk',
-      //       'java/getting-started/verify-your-setup',
-      //       'java/getting-started/generating-vdm',
-      //       'java/getting-started/hello-odata'
-      //     ]
-      //   },
-      //   {
-      //     type: 'link',
-      //     label: 'Tutorials',
-      //     href:
-      //       'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:java'
-      //   }
-      'java/api-reference-java'
+      'java/api-reference-java',
+      'java/frequently-asked-questions'
     ],
     JavaScript: [
       'js/introduction',

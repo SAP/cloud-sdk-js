@@ -70,7 +70,7 @@ Each of the above statements returns a builder object that allows for specifying
 
 The following query parameters and request options are available for these operations:
 
-<Tabs defaultValue="v4" values={[
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
 <TabItem value="v4">
@@ -152,7 +152,7 @@ When reading entities the API offers `select( ... )` on the builders. Through it
 
 The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
 
-<Tabs defaultValue="v4" values={[
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
 
@@ -230,7 +230,7 @@ When operating on a collection of entities the API offers `filter( ... )` on the
 
 The following example:
 
-<Tabs defaultValue="v4" values={[
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
 <TabItem value="v4">
@@ -278,7 +278,7 @@ Take note of the order of `and` and `or`. As `or` is invoked on the result of `a
 
 To achieve a different order with `and` as the top level statement one would nest the `or` within `and(...)`:
 
-<Tabs defaultValue="v4" values={[
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
 <TabItem value="v4">
@@ -306,7 +306,7 @@ To achieve a different order with `and` as the top level statement one would nes
 
 <!-- TODO: Explain filters on complex types and navigational properties -->
 
-<Tabs defaultValue="v4" values={[
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
 <TabItem value="v4">
@@ -349,7 +349,7 @@ Function Imports / Functions & Actions
 
 ## Error Handling
 
-<Tabs defaultValue="v4" values={[
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },
 { label: 'OData V4', value: 'v4', }]}>
 <TabItem value="v4">

@@ -39,6 +39,6 @@ jobs:
           git config --global user.name "irrelevant"
           cd ..
           git clone --depth 1 -b documentation git@github.com:SAP/cloud-sdk.git documentation
-          rsync -avz cloud-sdk/api documentation/static/api
+          rsync -avz ./cloud-sdk/api ./documentation/static/api
           cd documentation/static/api
           ls -a

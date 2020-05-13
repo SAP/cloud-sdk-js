@@ -60,7 +60,7 @@ async function generateTestServicesWithLocalCoreModules(
                   'OneToManyLink'
                 )
               : data;
-          replaceWithLocalModules(serviceDirectory, file, fileContent);
+          replaceWithLocalModules(serviceDirectory, file, fileContent, version);
         })
       )
     )
@@ -88,7 +88,22 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function replaceWithLocalModules(serviceDirectory, file, data) {
+  function replaceWithLocalModules(serviceDirectory, file, data, v) {
+    const versionSuffix = v === 'v4' ? '/v4' : '';
+    return writeFile(
+      path.resolve(outputDir, serviceDirectory, file),
+      data.replace('@sap-cloud-sdk/core', `../../../../../src${versionSuffix}`),
+      {
+        encoding: 'utf8'
+      }
+    ).catch(fileWriteErr => {
+      throw Error(
+        `Writing test service file' ${file}' failed: ${fileWriteErr}`
+      );
+    });
+  }
+
+  function replaceWithLocalModules2(serviceDirectory, file, data) {
     const lines = data.split('\n');
     const importLineIndex = lines.findIndex(l =>
       l.includes('@sap-cloud-sdk/core')

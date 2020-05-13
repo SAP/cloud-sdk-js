@@ -4,8 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import {AllFields,BooleanField,EntityBuilderType,Field,Link,NumberField,OneToOneLink,StringField} from '../../../../../src/common'
-import {CustomField,Entity} from '../../../../../src/v2'
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, Link, NumberField, OneToOneLink, StringField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".

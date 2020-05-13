@@ -2,6 +2,5 @@
 
 export * from './scp-cf';
 export * from './util';
-export * from './common';
 export * from './v2';
 export * from './http-agent';

@@ -338,6 +338,7 @@ We stick to version `4.0.1`, since it's newer, the latest and more powerful.
 Also, this [link](http://docs.oasis-open.org/odata/new-in-odata/v4.01/cn01/new-in-odata-v4.01-cn01.html#_Toc485385071)
 indicates that 4.0.1 introduces deep updates.
 ### Scope
+We will do the the implementation of the `full set` and not the delta since there is no test system to support it.
 - Full set (Y)
 - @delta (N)
   - @delete (N)

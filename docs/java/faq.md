@@ -79,5 +79,5 @@ we have workarounds. If you can't solve your issue via debugging and experimenti
 
 Yes, we do. We do not release a public REST client generator as of yet. We have a set of libraries supplied together
 with Cloud SDK for Java. Some of them are available only for SAP internal use, others like Workflow service on Cloud
-Foundry are released publicly. Check our [REST capabilities](../rest/overview) and let us know if you need a library for an
+Foundry are released publicly. Check our [REST capabilities](../features/rest/overview) and let us know if you need a library for an
 SAP service that you use and know to be providing REST API.

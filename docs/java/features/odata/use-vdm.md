@@ -101,6 +101,25 @@ Request parameters:
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 - All operations allow for adding custom headers via `withheader(...)`
 
+Naivgable entities:
+- By using the `forEntity` method on service classes, you can recursively traverse navigation properties in entity sets. It's a generic API extension with type-safe methods to allow for requests along chained entities, according to their navigation properties.
+- Consider the following example:
+  ```java
+  // Create a new Trip in Vacation (id 2020) of Person (username "John")
+  // POST /ODataService/People('John')/Vacations(2020)/Trips
+  
+  Trip tripItem;
+  Person personById = Person.builder().username("John").build();
+  Vacation vacationById = Vacation.builder().id(2020).build();
+  
+  CreateRequestBuilder<Trip> createRequest = service
+    .forEntity( personById ).navigateTo( Person.VACATIONS )
+    .forEntity( vacationById ).navigateTo( Vacation.TRIPS )
+    .create( tripItem );
+
+  createRequest.execute( destination );
+  ```
+
 </TabItem>
 </Tabs>
 

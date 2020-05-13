@@ -3,10 +3,10 @@ import {
   ODataCreateRequestConfig,
   ODataGetAllRequestConfig,
   ODataUpdateRequestConfig
-} from '../../src/common/request-builder/request';
-import { ODataRequest } from '../../src/v2/request-builder/request/odata-request';
+} from '../../src/odata/common/request-builder/request';
+import { ODataRequest } from '../../src/odata/v2/request-builder/request/odata-request';
 import { Destination } from '../../src/scp-cf';
-import * as uriConversion from '../../src/v2/request-builder/request/uri-conversion';
+import * as uriConversion from '../../src/odata/v2/request-builder/request/uri-conversion';
 import { TestEntity } from './test-services/v2/test-service';
 
 export function createUpdateRequest(

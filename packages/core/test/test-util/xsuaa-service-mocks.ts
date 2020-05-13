@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
-import { basicHeader } from '../../src/common/request-builder/header-builder';
+import { basicHeader } from '../../src/odata/common/request-builder/header-builder';
 
 export function mockClientCredentialsGrantCall(
   uri: string,

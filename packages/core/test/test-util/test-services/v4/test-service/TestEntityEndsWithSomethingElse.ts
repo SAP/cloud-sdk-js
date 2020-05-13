@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, StringField } from '../../../../../src/v4';
+import { AllFields, CustomField, Entity, EntityBuilderType, Field, StringField } from '../../../../../src/odata/v4';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".

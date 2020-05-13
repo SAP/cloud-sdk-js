@@ -1,14 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
-import { ODataCreateRequestConfig } from '../../src/common/request-builder/request/odata-create-request-config';
-import { ODataDeleteRequestConfig } from '../../src/common/request-builder/request/odata-delete-request-config';
-import { ODataGetAllRequestConfig } from '../../src/common/request-builder/request/odata-get-all-request-config';
-import { ODataRequest } from '../../src/v2/request-builder/request/odata-request';
-import { ODataUpdateRequestConfig } from '../../src/common/request-builder/request/odata-update-request-config';
+import { ODataCreateRequestConfig } from '../../src/odata/common/request-builder/request/odata-create-request-config';
+import { ODataDeleteRequestConfig } from '../../src/odata/common/request-builder/request/odata-delete-request-config';
+import { ODataGetAllRequestConfig } from '../../src/odata/common/request-builder/request/odata-get-all-request-config';
+import { ODataRequest } from '../../src/odata/v2/request-builder/request/odata-request';
+import { ODataUpdateRequestConfig } from '../../src/odata/common/request-builder/request/odata-update-request-config';
 import { Destination } from '../../src/scp-cf';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
-import * as uriConversion from '../../src/v2/request-builder/request/uri-conversion';
+import * as uriConversion from '../../src/odata/v2/request-builder/request/uri-conversion';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;

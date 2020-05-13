@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import nock from 'nock';
-import { buildHeaders } from '../../../src/common/request-builder/header-builder/header-builder';
+import { buildHeaders } from '../../../src/odata/common/request-builder/header-builder/header-builder';
 import { Destination } from '../../../src/scp-cf/destination-service-types';
 import { mockedConnectivityServiceProxyConfig } from '../../test-util/environment-mocks';
 import { muteLoggers } from '../../test-util/mute-logger';
@@ -9,7 +9,7 @@ import {
   defaultDestination,
   mockHeaderRequest
 } from '../../test-util/request-mocker';
-import * as csrfHeaders from '../../../src/common/request-builder/header-builder/csrf-token-header';
+import * as csrfHeaders from '../../../src/odata/common/request-builder/header-builder/csrf-token-header';
 import {
   createGetAllRequest,
   createUpdateRequest,

@@ -6,16 +6,16 @@ import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
 import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
-} from '../../../src/common/request-builder/header-builder/authorization-header';
-import { ODataGetAllRequestConfig } from '../../../src/common/request-builder/request/odata-get-all-request-config';
-import { ODataRequest } from '../../../src/v2/request-builder/request/odata-request';
+} from '../../../src/odata/common/request-builder/header-builder/authorization-header';
+import { ODataGetAllRequestConfig } from '../../../src/odata/common/request-builder/request/odata-get-all-request-config';
+import { ODataRequest } from '../../../src/odata/v2/request-builder/request/odata-request';
 import {
   defaultDestination,
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { buildHeadersForDestination } from '../../../src/common/request-builder/header-builder/header-builder';
-import * as uriConversion from '../../../src/v2/request-builder/request/uri-conversion';
+import { buildHeadersForDestination } from '../../../src/odata/common/request-builder/header-builder/header-builder';
+import * as uriConversion from '../../../src/odata/v2/request-builder/request/uri-conversion';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {

@@ -2,5 +2,5 @@
 
 export * from './scp-cf';
 export * from './util';
-export * from './v2';
+export * from './odata/v2';
 export * from './http-agent';

@@ -3,7 +3,7 @@ import {
   FunctionImportParameter,
   ODataFunctionImportRequestConfig
 } from '../../../src';
-import * as uriConversion from '../../../src/v2/request-builder/request/uri-conversion';
+import * as uriConversion from '../../../src/odata/v2/request-builder/request/uri-conversion';
 
 interface TestParameterType {
   test1: string;

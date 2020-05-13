@@ -89,7 +89,7 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   function replaceWithLocalModules(serviceDirectory, file, data, v) {
-    const versionSuffix = v === 'v4' ? '/v4' : '';
+    const versionSuffix = v === 'v4' ? '/odata/v4' : '';
     return writeFile(
       path.resolve(outputDir, serviceDirectory, file),
       data.replace('@sap-cloud-sdk/core', `../../../../../src${versionSuffix}`),

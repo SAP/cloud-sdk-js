@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { ODataBatchConfig } from '../../src/common/request-builder/request/odata-batch-config';
+import { ODataBatchConfig } from '../../src/odata/common/request-builder/request/odata-batch-config';
 import { defaultTestServicePath } from '../test-util/test-services/v2/test-service';
 
 describe('ODataBatchConfig', () => {

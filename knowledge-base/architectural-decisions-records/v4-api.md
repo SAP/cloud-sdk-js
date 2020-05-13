@@ -217,27 +217,138 @@ The possible filter functions will depend on the data type. For example a string
 - Proposal accepted.
 
 ## Deep update of child entitites
-- Recap v2 create as child of:
-```ts
-TestEntityMultiLink.requestBuilder()
-  .create(multiLinkEntity)
-  .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
+### odata v4.0 V.S. odata v4.0.1
+#### odata v4.0
+- only support binding info for navi-property
+  1. [1-to-1] replace the existing one `object.set()`
+  1. [1-to-n] add them to the existing collection `collection.addAll()`
+#### odata v4.0.1
+- full set by using the same navi-property name `object.set()`, which does NOT allow:
+  - adding links
+  - deleting links
+  - deleting entities
+because it replaces the existing data with the payload.
+``` json
+{
+  "@type":"#Northwind.Manager",
+  "FirstName" : "Patricia",
+  "DirectReports": [
+    {
+      "@id": "Employees(5}"
+    },
+    {
+      "@id": "Employees(6}",
+      "LastName": "Smith"
+    },
+    {
+      "FirstName": "Suzanne",
+      "LastName": "Brown"
+    }
+  ]
+}
 ```
-### Questions
-- Understand what deep update actually is
-- Refer to Alex to understand details
-- Consider differences between 4.0 and 4.01?
-
+- delta update by using a `@delta` annotation
+  - delete entities (`@removed`)
+  - delete links (`reason = deleted`)
+  - add links (with id/key)
+  - update entities (with id/key + Partial<Entity>)
+  - create new entities + add links (without id/key)
+``` json
+{
+  "@type": "#Northwind.Manager",
+  "FirstName": "Patricia",
+  "DirectReports@delta": [
+    {
+      "@removed": {
+        "reason": "deleted"
+      },
+      "@id": "Employees(3)"
+    },
+    {
+      "@removed": {
+        "reason": "changed"
+      },
+      "@id": "Employees(4)"
+    },
+    {
+      "@id": "Employees(5)"
+    },
+    {
+      "@id": "Employees(6)",
+      "LastName": "Smith"
+    },
+    {
+      "FirstName": "Suzanne",
+      "LastName": "Brown"
+    }
+  ]
+}
+```
 ### Proposal(s)
-- Same as v2 create as child of
-  ```ts
-  TestEntityMultiLink.requestBuilder()
-    .update(multiLinkEntity)
-    .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
-  ```
+#### Full set
+- like deep create
+- no api changes, only behaviour changes
+- be aware of the `@id` field that needs to be handled
+   - [chosen] add `@id` attribute implicitly in the request builder (Java)
+   - [interesting][optional] change navi-property type to e.g., :
+   ```
+   toOtherMultiLink: (TestEntityOtherMultiLink & Identifiable)[];
+   
+   interface Identifiable{
+       _id: string
+   }
+   ```
+   - hint: `@id` is used [here](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_LinktoRelatedEntitiesWhenCreatinganE)
+   
+``` typescript
+    const singleLink = getSingleLinkFromSystem();
+    singleLink.stringProperty = 'new value';
+    
+    const entity = TestEntity.builder()
+      .toSingleLink(singleLink)
+      .build();
+      
+    new UpdateRequestBuilder(TestEntity, entity)
+    .execute(destination);
+```
+#### Delta update
+``` typescript
+    new UpdateRequestBuilder(TestEntity, entity)
+      .deepUpdateWithDeltaPayload(
+      TestEntity.TO_MULTI_LINK, deltaMultiLink1, deltaMultiLink2
+    ).deepUpdateWithDeltaPayload(
+      someOtherNaviProperties...
+    )
+    .execute(destination);
+```
+```
+deltaMultiLink: TestEntityMultiLink & IsRemoved;
+
+interface IsRemoved{
+    removed?: boolean;
+    reason?: string;
+}
+```
+
+Again, `@id` can be treated the same way as the full set
 
 ### Decision
-- TBD, decision postponed after we understand details
+#### 4.0 V.S. 4.0.1
+We stick to version `4.0.1`, since it's newer, the latest and more powerful.
+Also, this [link](http://docs.oasis-open.org/odata/new-in-odata/v4.01/cn01/new-in-odata-v4.01-cn01.html#_Toc485385071)
+indicates that 4.0.1 introduces deep updates.
+### Scope
+We will do the the implementation of the `full set` and not the delta since there is no test system to support it.
+- Full set (Y)
+- @delta (N)
+  - @delete (N)
+    - reason (N)
+  - with id/key (N)
+  - without id/key (N)
+### Priority
+Relatively low
+- No test system
+- No feature request
 
 # Additional Features aka. Nice to haves
 
@@ -307,3 +418,8 @@ TestEntityMultiLink.requestBuilder()
 ## Other Featuers
 - Singletons
 - Bound Operations (actions and functions)
+- create entities + add links
+  - It seems that the sdk v2 api already supports such operation. 
+    But for both s4 business partner and [this reference service](https://services.odata.org/V2/(S(readwrite))/OData/OData.svc/),
+    it's not easy to test whether our existing v2 api support such operation, because the children entities cannot be created as orphan entities.
+    Without orphan entities, one cannot create a parent entity and link the parent to some children. 

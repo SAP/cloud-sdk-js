@@ -22,7 +22,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 - ensure access to the latest Cloud SDK features
 - keep up with the latest changes in SAP Cloud infrastructure
-- get cutting edge client libraries giving access to all underlying services
+- update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
 ## SDK Version 3 ##

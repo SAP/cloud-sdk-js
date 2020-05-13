@@ -290,7 +290,6 @@ because it replaces the existing data with the payload.
 - no api changes, only behaviour changes
 - be aware of the `@id` field that needs to be handled
    - [chosen] add `@id` attribute implicitly in the request builder (Java)
-   - add `@id` as default attribute to the abstract entity,
    - [interesting][optional] change navi-property type to e.g., :
    ```
    toOtherMultiLink: (TestEntityOtherMultiLink & Identifiable)[];

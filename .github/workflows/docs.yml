@@ -45,6 +45,5 @@ jobs:
           cd documentation
           # run git add -> commit -> push the new version of the docs
           git add -A
-          git commit -a -m "JS API documentation update via pipeline"
-          # force the changes to avoid errors from inconsistent state
+          git commit -a -m "JS API documentation update via pipeline" || exit 0
           git push --force

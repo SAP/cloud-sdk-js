@@ -37,6 +37,7 @@ jobs:
           cd ..
           git clone --depth 1 -b documentation git@github.com:SAP/cloud-sdk.git documentation
           pwd
-          rsync -avz ./cloud-sdk/api/ ./documentation/static/api/
-          cd documentation/static/api
-          ls -a
+          cd cloud-sdk
+          pwd
+          cd ../documentation
+          pwd

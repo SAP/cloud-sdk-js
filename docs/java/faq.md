@@ -48,7 +48,7 @@ Please, report it to us via any available channel. The preferred support channel
 Overflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk ). You can also create an issue on the Cloud SDK
 external GitHub repository or use the internal one if you're SAP employee.
 
-- ** I'm creating a BCP incident, what's your component name? **
+- **I'm creating a BCP incident, what's your component name?**
 
 Choose `XX-S4C-SDK` if you are reporting an issue via BCP.
 

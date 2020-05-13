@@ -37,9 +37,7 @@ jobs:
         run: |
           git config --global user.email "irrelevant@completely.irrelevant"
           git config --global user.name "irrelevant"
-          ls -a
           cd ..
+          git clone --depth 1 -b documentation git@github.com:SAP/cloud-sdk.git documentation
+          cd documentation
           ls -a
-          cd /
-          ls -a
-

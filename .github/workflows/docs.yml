@@ -39,7 +39,7 @@ jobs:
           # clone current version of documentation
           git clone --depth 1 -b documentation git@github.com:SAP/cloud-sdk.git documentation
           # copy latest changes from the API docs to the SDK documentation
-          rsync -avz cloud-sdk/docs/api documentation/static/api
+          rsync -avz cloud-sdk/docs/api/ documentation/static/api/
           # change to documentation folder
           cd documentation
           # run git add -> commit -> push the new version of the docs

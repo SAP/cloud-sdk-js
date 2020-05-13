@@ -45,4 +45,4 @@ jobs:
           # run git add -> commit -> push the new version of the docs
           git add -A
           git commit -a -m "JS API documentation update via pipeline"
-          git push
+          git push --force

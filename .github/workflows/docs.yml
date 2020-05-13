@@ -7,7 +7,7 @@ on:
     branches: [master]
     tags: ['v*']
     paths:
-      - 'docs/**'
+    - 'docs/**'
 
 jobs:
   push-to-documentation:

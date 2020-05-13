@@ -101,7 +101,7 @@ Request parameters:
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 - All operations allow for adding custom headers via `withheader(...)`
 
-Naivgable entities:
+Navigable entities:
 - By using the `forEntity` method on service classes, you can recursively traverse navigation properties in entity sets. It's a generic API extension with type-safe methods to allow for requests along chained entities, according to their navigation properties.
 - Consider the following example:
   ```java

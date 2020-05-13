@@ -40,4 +40,4 @@ jobs:
           cd documentation
           git add -A
           git commit -a -m "JS API documentation update via pipeline"
-          git branch
+          git push

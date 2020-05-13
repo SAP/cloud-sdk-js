@@ -18,6 +18,7 @@ import {
   DestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
 import * as uriConversion from './request/uri-conversion';
+import { ODataRequest } from './request';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -39,7 +40,10 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(new ODataGetAllRequestConfig(_entityConstructor, uriConversion));
+    super(
+      new ODataGetAllRequestConfig(_entityConstructor, uriConversion),
+      ODataRequest
+    );
   }
   /**
    * Restrict the response to the given selection of properties in the request.

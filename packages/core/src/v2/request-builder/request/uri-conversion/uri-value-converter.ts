@@ -1,13 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable valid-jsdoc */
 
-import { EdmType } from '../../../edm-types';
 import { tsToEdm } from '../../../payload-value-converter';
+import { EdmTypeShared } from '../../../../common';
 
 /**
  * @hidden
  */
-export function convertToUriFormat(value: any, edmType: EdmType): string {
+export function convertToUriFormat(
+  value: any,
+  edmType: EdmTypeShared<'v2'>
+): string {
   const converted = tsToEdm(value, edmType);
   switch (edmType) {
     case 'Edm.Binary':

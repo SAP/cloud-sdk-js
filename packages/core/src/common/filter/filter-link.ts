@@ -18,7 +18,7 @@ import { Filterable } from './filterable';
  */
 export class FilterLink<
   EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  LinkedEntityT extends EntityBase = any
 > implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.

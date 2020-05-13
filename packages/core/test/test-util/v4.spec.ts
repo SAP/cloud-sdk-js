@@ -11,6 +11,8 @@ import {
 
 describe('v4', () => {
   it('selects', () => {
+    TestEntity.customField('Peter').edmBoolean().equals(false);
+
     TestEntity.requestBuilder().getAll().select(
       /* SHOULD WORK */
       /* Property */

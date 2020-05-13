@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import moment, { Moment } from 'moment';
 import { identity } from 'rambda';
-import { Time } from '../common';
+import { Time, EdmTypeShared } from '../common';
 import { EdmType } from './edm-types';
 
 /**
@@ -12,7 +12,7 @@ import { EdmType } from './edm-types';
  */
 export function edmToTs<T extends EdmType>(
   value: any,
-  edmType: T
+  edmType: EdmTypeShared<'v2'>
 ): EdmToPrimitive<T> {
   if (value === null || typeof value === 'undefined') {
     return value;
@@ -26,7 +26,7 @@ export function edmToTs<T extends EdmType>(
 /**
  * @hidden
  */
-export function tsToEdm(value: any, edmType: EdmType): any {
+export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
   if (value === null) {
     return 'null';
   }

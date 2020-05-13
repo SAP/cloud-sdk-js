@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EdmType } from '../../../edm-types';
 import { Entity } from '../../../entity';
 import { toStaticPropertyFormat } from '../../../../util';
 import {
@@ -13,7 +12,8 @@ import {
   ComplexTypePropertyFields,
   FieldType,
   FilterFunction,
-  FilterFunctionParameterType
+  FilterFunctionParameterType,
+  EdmTypeShared
 } from '../../../../common';
 import {
   convertToUriFormat,
@@ -130,7 +130,7 @@ function getODataFilterExpression<FilterEntityT extends Entity>(
 function retrieveField<FilterEntityT extends Entity>(
   filterField: string,
   targetEntityConstructor: Constructable<any>,
-  filterEdmType?: EdmType
+  filterEdmType?: EdmTypeShared<'v2'>
 ) {
   // In case of complex types there will be a property name as part of the filter.field
   const [fieldName] = filterField.split('/');

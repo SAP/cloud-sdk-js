@@ -1,13 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable valid-jsdoc */
 
-import { EdmType } from '../../../edm-types';
 import { tsToEdm } from '../../../payload-value-converter';
+import { EdmTypeShared } from '../../../../common';
 
 /**
  * @hidden
  */
-export function convertToUriFormat(value: any, edmType: EdmType): string {
+export function convertToUriFormat(
+  value: any,
+  edmType: EdmTypeShared<'v4'>
+): string {
   const converted = tsToEdm(value, edmType);
   switch (edmType) {
     case 'Edm.Binary':
@@ -36,7 +39,7 @@ export function convertToUriFormat(value: any, edmType: EdmType): string {
       return `guid'${converted}'`;
     case 'Edm.String':
       return convertToUriForEdmString(converted);
-    case 'Edm.DateTime':
+    case 'Edm.Date':
       return `datetime'${value.toISOString().replace(/Z$/, '')}'`;
     case 'Edm.DateTimeOffset':
       return `datetimeoffset'${value.toISOString()}'`;

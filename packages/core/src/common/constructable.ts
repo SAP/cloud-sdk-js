@@ -2,7 +2,7 @@
 
 import { EntityBase, EntityBuilderType } from './entity';
 import { RequestBuilder } from './request-builder/request-builder';
-import { CustomField, Field, Link } from './selectable';
+import { CustomFieldBase, Field, Link } from './selectable';
 
 /**
  * @hidden
@@ -20,5 +20,5 @@ export interface Constructable<
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;
   builder(): EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
-  customField(fieldName: string): CustomField<EntityT>;
+  customField(fieldName: string): CustomFieldBase<EntityT>;
 }

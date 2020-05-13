@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EdmType } from '../../edm-types';
+import { EdmTypeShared } from '../../edm-types';
 
 /**
  * Internal representation of function import parameters. It adds metadata to the value.
@@ -15,7 +15,7 @@ export class FunctionImportParameter<ValueT> {
    */
   constructor(
     public originalName: string,
-    public edmType: EdmType,
+    public edmType: EdmTypeShared<'any'>,
     public value: ValueT
   ) {}
 }

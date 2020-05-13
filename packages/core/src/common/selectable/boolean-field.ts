@@ -2,8 +2,9 @@
 /* eslint-disable max-classes-per-file */
 
 import { Constructable } from '../constructable';
-import { EdmType } from '../edm-types';
+import { EdmTypeShared } from '../edm-types';
 import { EntityBase } from '../entity';
+import { ODataVersion } from '../service';
 import {
   ComplexTypeField,
   ConstructorOrField,
@@ -56,7 +57,7 @@ export class ComplexTypeBooleanPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    edmType: EdmType
+    edmType: EdmTypeShared<ODataVersion<EntityT>>
   );
 
   /**
@@ -73,7 +74,7 @@ export class ComplexTypeBooleanPropertyField<
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
     parentTypeName: string,
-    edmType: EdmType
+    edmType: EdmTypeShared<ODataVersion<EntityT>>
   );
 
   /*
@@ -82,8 +83,8 @@ export class ComplexTypeBooleanPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    arg3: string | EdmType,
-    arg4?: EdmType
+    arg3: string | EdmTypeShared<ODataVersion<EntityT>>,
+    arg4?: EdmTypeShared<ODataVersion<EntityT>>
   ) {
     super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
     this.fieldOf = fieldOf;

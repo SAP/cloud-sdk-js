@@ -2,7 +2,8 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../../scp-cf';
-import { ODataRequestConfig, ODataRequest, isWithETag } from '../request';
+import { ODataRequestConfig, isWithETag } from '../request';
+import { ODataRequestBase } from '../request/odata-request';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   filterNullishValues,
@@ -20,7 +21,7 @@ import { buildAuthorizationHeaders } from './authorization-header';
  * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
  */
 export async function buildHeaders<RequestT extends ODataRequestConfig>(
-  request: ODataRequest<RequestT>
+  request: ODataRequestBase<RequestT>
 ): Promise<MapType<string>> {
   if (!request.destination) {
     throw Error('The request destination is undefined.');
@@ -40,7 +41,7 @@ async function getAuthHeaders(
 }
 
 async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
-  request: ODataRequest<RequestT>,
+  request: ODataRequestBase<RequestT>,
   destinationRelatedHeaders: MapType<string>,
   customHeaders?: MapType<any>
 ): Promise<MapType<string>> {

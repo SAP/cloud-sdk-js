@@ -189,7 +189,7 @@ function transformServiceMetadata(
 function apiBusinessHubMetadata(
   swagger?: SwaggerMetadata
 ): ApiBusinessHubMetadata | undefined {
-  if (!swagger) {
+  if (!swagger?.basePath) {
     return undefined;
   }
 
@@ -198,10 +198,7 @@ function apiBusinessHubMetadata(
     url: `https://api.sap.com/api/${apiHubServiceName(swagger)}`
   };
 
-  if (
-    swagger.externalDocs &&
-    swagger.externalDocs.description === 'Business Documentation'
-  ) {
+  if (swagger.externalDocs?.description === 'Business Documentation') {
     metadata.businessDocumentationUrl = swagger.externalDocs.url;
   }
 

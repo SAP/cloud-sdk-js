@@ -7,8 +7,8 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import {AllFields,BigNumberField,BooleanField,CustomField,DateField,EntityBuilderType,Field,Link,NumberField,OneToOneLink,StringField,Time,TimeField} from '../../../../../src/common'
-import {Entity} from '../../../../../src/v2'
+import {AllFields,BigNumberField,BooleanField,DateField,EntityBuilderType,Field,Link,NumberField,OneToOneLink,StringField,Time,TimeField} from '../../../../../src/common'
+import {CustomField,Entity} from '../../../../../src/v2'
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".

@@ -1,9 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
-import { EdmType } from '../edm-types';
+import { EdmTypeShared } from '../edm-types';
 import { EntityBase, EntityIdentifiable } from '../entity';
 import { FieldType } from '../selectable';
+import { ODataVersion } from '../service';
 import { FilterFunction } from './filter-function';
 import { Filterable } from './filterable';
 
@@ -65,7 +66,7 @@ export class Filter<EntityT extends EntityBase, FieldT extends FieldType>
     public field: string | FilterFunction<EntityT, FieldT>,
     public operator: FilterOperator,
     public value: FieldT,
-    public edmType?: EdmType<EntityT['_oDataVersion']>
+    public edmType?: EdmTypeShared<ODataVersion<EntityT>>
   ) {
     this._fieldName = field;
   }

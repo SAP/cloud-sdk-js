@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
-import { EdmType } from '../edm-types';
+import { EdmTypeShared } from '../edm-types';
 import { EntityBase } from '../entity';
 import { Field } from './field';
 
@@ -100,14 +100,14 @@ export function getEntityConstructor<EntityT extends EntityBase>(
  * @returns EdmType
  */
 export function getEdmType<T extends 'v2' | 'v4'>(
-  arg1: string | EdmType<T>,
-  arg2: EdmType<T> | undefined
-): EdmType<T> {
+  arg1: string | EdmTypeShared<T>,
+  arg2: EdmTypeShared<T> | undefined
+): EdmTypeShared<T> {
   if ((arg1 as string).includes('Edm.') && !arg2) {
-    return arg1 as EdmType<T>;
+    return arg1 as EdmTypeShared<T>;
   }
   if (typeof arg1 === 'string' && arg2 && (arg2 as string).includes('Edm.')) {
-    return arg2 as EdmType<T>;
+    return arg2 as EdmTypeShared<T>;
   }
   throw new Error('Illegal argument exception!');
 }

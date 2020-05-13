@@ -8,19 +8,21 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../../common/request-builder/request/odata-function-import-request-config';
 import { FunctionImportParameters, RequestMethodType } from '../../common';
+import { ServiceIdentifiable } from '../../common/service';
 import * as uriConversion from './request/uri-conversion';
+import { ODataRequest } from './request';
 
 /**
  * Create OData request to execute a function import.
  * @typeparam ParametersT - Type of the function import parameters
  * @typeparam ReturnT - Type of the function import return value
  */
-export class FunctionImportRequestBuilder<
-  ParametersT,
-  ReturnT
-> extends MethodRequestBuilderBase<
-  ODataFunctionImportRequestConfig<ParametersT>
-> {
+export class FunctionImportRequestBuilder<ParametersT, ReturnT>
+  extends MethodRequestBuilderBase<
+    ODataFunctionImportRequestConfig<ParametersT>
+  >
+  implements ServiceIdentifiable {
+  readonly _oDataVersion: 'v2' = 'v2';
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param method - HTTP method to be used for the request
@@ -43,7 +45,8 @@ export class FunctionImportRequestBuilder<
         functionImportName,
         parameters,
         uriConversion
-      )
+      ),
+      ODataRequest
     );
   }
 

@@ -3,7 +3,7 @@
 import { EntityBase } from '../entity';
 import { AllFields } from './all-fields';
 import { ComplexTypeField } from './complex-type-field';
-import { CustomField } from './custom-field';
+import { CustomFieldBase } from './custom-field';
 import { Link } from './link';
 import { SimpleTypeFields } from './simple-type-fields';
 
@@ -20,12 +20,12 @@ export type Selectable<
       | SimpleTypeFields<EntityT>
       | Link<EntityT, any>
       | ComplexTypeField<EntityT>
-      | CustomField<EntityT>
+      | CustomFieldBase<EntityT>
       | AllFields<EntityT>
   : EntityT['_oDataVersion'] extends 'v4'
   ?
       | SimpleTypeFields<EntityT>
       | ComplexTypeField<EntityT>
-      | CustomField<EntityT>
+      | CustomFieldBase<EntityT>
       | AllFields<EntityT>
   : never;

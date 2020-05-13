@@ -8,13 +8,12 @@ import {
   DestinationRetrievalOptions,
   isDestinationNameAndJwt
 } from '../../scp-cf/destination-service-types';
-import { ODataRequest } from './request/odata-request';
+import { ODataRequestBase } from './request/odata-request';
 import { ODataRequestConfig } from './request/odata-request-config';
 
 /**
  * Base class for all request builders.
  *
- * @abstract
  * @typeparam EntityT - Type of the entity to create a request for
  */
 export abstract class MethodRequestBuilderBase<
@@ -25,7 +24,10 @@ export abstract class MethodRequestBuilderBase<
    *
    * @param requestConfig - Request configuration to initialize with
    */
-  constructor(public requestConfig: RequestConfigT) {}
+  constructor(
+    public requestConfig: RequestConfigT,
+    private oDataRequestConstructor
+  ) {}
 
   /**
    * Create the url based on configuration of the given builder.
@@ -48,7 +50,7 @@ export abstract class MethodRequestBuilderBase<
    * @returns The relative url for the request
    */
   relativeUrl(): string {
-    return new ODataRequest(this.requestConfig).relativeUrl();
+    return new this.oDataRequestConstructor(this.requestConfig).relativeUrl();
   }
 
   /**
@@ -95,13 +97,13 @@ export abstract class MethodRequestBuilderBase<
   build(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationRetrievalOptions
-  ): Promise<ODataRequest<RequestConfigT>> {
+  ): Promise<ODataRequestBase<RequestConfigT>> {
     return useOrFetchDestination(destination, options)
       .then(dest => {
         if (!dest) {
           throw Error(noDestinationErrorMessage(destination));
         }
-        return new ODataRequest(this.requestConfig, dest);
+        return new this.oDataRequestConstructor(this.requestConfig, dest);
       })
       .catch(error =>
         Promise.reject(

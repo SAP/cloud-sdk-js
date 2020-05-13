@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EdmType } from '../edm-types';
+import { EdmTypeShared } from '../edm-types';
 import { EntityBase } from '../entity';
 import { Field, FieldType } from '../selectable';
 import { ODataVersion } from '../service';
@@ -17,7 +17,7 @@ export abstract class FilterFunction<
   /**
    * EdmType of the return type of the filter function.
    */
-  public edmType: EdmType<ODataVersion<EntityT>>;
+  public edmType: EdmTypeShared<ODataVersion<EntityT>>;
 
   /**
    * Creates an instance of FilterFunction.

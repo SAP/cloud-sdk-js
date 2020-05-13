@@ -9,17 +9,18 @@ import {
   DestinationOptions,
   toDestinationNameUrl
 } from '../scp-cf';
-import { Constructable, http_version } from '../common';
+import {
+  Constructable,
+  http_version,
+  BatchResponse,
+  WriteResponse,
+  WriteResponses,
+  ReadResponse,
+  ErrorResponse
+} from '../common';
 import { MethodRequestBuilderBase } from '../common/request-builder/request-builder-base';
 import { ODataBatchConfig } from '../common/request-builder/request/odata-batch-config';
 import { ODataRequestConfig } from '../common/request-builder/request/odata-request-config';
-import {
-  BatchResponse,
-  ErrorResponse,
-  ReadResponse,
-  WriteResponse,
-  WriteResponses
-} from './batch-response';
 import { Entity } from './entity';
 import { deserializeEntity } from './entity-deserializer';
 import {
@@ -32,7 +33,8 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  ODataRequest
 } from './request-builder';
 
 const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
@@ -64,7 +66,7 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
     )[],
     readonly entityToConstructorMap: MapType<Constructable<Entity>>
   ) {
-    super(new ODataBatchConfig(defaultServicePath, uuid()));
+    super(new ODataBatchConfig(defaultServicePath, uuid()), ODataRequest);
     this.requestConfig.payload = getPayload(requests, this.requestConfig);
   }
 

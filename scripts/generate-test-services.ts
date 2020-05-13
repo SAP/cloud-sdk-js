@@ -106,6 +106,7 @@ async function generateTestServicesWithLocalCoreModules(
     const potentialLocalImports = [
       'Entity',
       'CreateRequestBuilder',
+      'CustomField',
       'DeleteRequestBuilder',
       'FunctionImportRequestBuilder',
       'GetAllRequestBuilder',
@@ -119,7 +120,8 @@ async function generateTestServicesWithLocalCoreModules(
       'transformReturnValueForEntity',
       'transformReturnValueForEntityList',
       'transformReturnValueForComplexType',
-      'transformReturnValueForComplexTypeList'
+      'transformReturnValueForComplexTypeList',
+      'edmToTs'
     ];
     const commonImports = imports.filter(
       i => !potentialLocalImports.includes(i)

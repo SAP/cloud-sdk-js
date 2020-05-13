@@ -13,7 +13,7 @@ import { FilterList } from './filter-list';
  */
 export type Filterable<EntityT extends EntityBase> =
   | Filter<EntityT, FieldType>
-  | FilterLink<EntityT, any>
+  | FilterLink<EntityT>
   | FilterList<EntityT>;
 
 /**

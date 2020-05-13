@@ -3,7 +3,7 @@
 
 import { BigNumber } from 'bignumber.js';
 import { Constructable } from '../constructable';
-import { EdmType } from '../edm-types';
+import { EdmTypeShared } from '../edm-types';
 import { EntityBase } from '../entity';
 import { Filter } from '../filter';
 import { ODataVersion } from '../service';
@@ -99,7 +99,7 @@ export class ComplexTypeBigNumberPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    edmType: EdmType<ODataVersion<EntityT>>
+    edmType: EdmTypeShared<ODataVersion<EntityT>>
   );
 
   /**
@@ -116,7 +116,7 @@ export class ComplexTypeBigNumberPropertyField<
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
     parentTypeName: string,
-    edmType: EdmType<ODataVersion<EntityT>>
+    edmType: EdmTypeShared<ODataVersion<EntityT>>
   );
 
   /*
@@ -125,8 +125,8 @@ export class ComplexTypeBigNumberPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    arg3: string | EdmType<ODataVersion<EntityT>>,
-    arg4?: EdmType<ODataVersion<EntityT>>
+    arg3: string | EdmTypeShared<ODataVersion<EntityT>>,
+    arg4?: EdmTypeShared<ODataVersion<EntityT>>
   ) {
     super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
     this.fieldOf = fieldOf;

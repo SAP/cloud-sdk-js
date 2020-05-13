@@ -6,7 +6,7 @@ import { nonEnumerable } from '../util';
 import { toPropertyFormat } from '../util/name-converter';
 import { Constructable } from './constructable';
 import { EntityBuilder } from './entity-builder';
-import { CustomField, Link, Field } from './selectable';
+import { CustomFieldBase, Link, Field } from './selectable';
 import { ServiceIdentifiable } from './service';
 
 export type EntityBuilderType<
@@ -49,8 +49,8 @@ export abstract class EntityBase implements ServiceIdentifiable {
   protected static customFieldSelector<EntityT extends EntityBase>(
     fieldName: string,
     entityConstructor: Constructable<EntityT>
-  ): CustomField<EntityT> {
-    return new CustomField(fieldName, entityConstructor);
+  ): CustomFieldBase<EntityT> {
+    return new CustomFieldBase(fieldName, entityConstructor);
   }
 
   /**
@@ -75,7 +75,7 @@ export abstract class EntityBase implements ServiceIdentifiable {
    */
   protected _customFields: MapType<any>;
 
-  abstract readonly _oDataVersion: any;
+  abstract readonly _oDataVersion: any; // 'v2' | 'v4';
 
   constructor() {
     nonEnumerable(this, '_oDataVersion');

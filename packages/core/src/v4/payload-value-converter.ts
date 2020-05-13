@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import moment, { Moment } from 'moment';
 import { identity } from 'rambda';
-import { Time } from '../common';
+import { Time, EdmTypeShared } from '../common';
 import { EdmType } from './edm-types';
 
 /**
@@ -12,7 +12,7 @@ import { EdmType } from './edm-types';
  */
 export function edmToTs<T extends EdmType>(
   value: any,
-  edmType: T
+  edmType: EdmTypeShared<'v4'>
 ): EdmToPrimitive<T> {
   if (value === null || typeof value === 'undefined') {
     return value;
@@ -26,7 +26,7 @@ export function edmToTs<T extends EdmType>(
 /**
  * @hidden
  */
-export function tsToEdm(value: any, edmType: EdmType): any {
+export function tsToEdm(value: any, edmType: EdmTypeShared<'v4'>): any {
   if (value === null) {
     return 'null';
   }
@@ -36,7 +36,9 @@ export function tsToEdm(value: any, edmType: EdmType): any {
   return value;
 }
 
-type EdmTypeMapping = { [key in EdmType]: (value: any) => any };
+type EdmTypeMapping = {
+  [key in EdmType]: (value: any) => any;
+};
 
 const toNumber = (value: any): number => Number(value);
 const toBigNumber = (value: any): BigNumber => new BigNumber(value);
@@ -177,7 +179,7 @@ const deserializers: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
-  'Edm.DateTime': edmDateTimeToMoment,
+  'Edm.Date': edmDateTimeToMoment,
   'Edm.DateTimeOffset': edmDateTimeToMoment,
   'Edm.Decimal': toBigNumber,
   'Edm.Double': parseNumber,
@@ -196,7 +198,7 @@ const serializers: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
-  'Edm.DateTime': momentToEdmDateTime,
+  'Edm.Date': momentToEdmDateTime,
   'Edm.DateTimeOffset': momentToEdmDateTime,
   'Edm.Decimal': fromBigNumber,
   'Edm.Double': parseNumber,

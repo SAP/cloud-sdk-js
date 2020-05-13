@@ -10,7 +10,9 @@ import { NumberField } from './number-field';
 import { StringField } from './string-field';
 import { TimeField } from './time-field';
 
-export class CustomField<EntityT extends EntityBase> extends Field<EntityT> {
+export class CustomFieldBase<EntityT extends EntityBase> extends Field<
+  EntityT
+> {
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>
@@ -103,14 +105,6 @@ export class CustomField<EntityT extends EntityBase> extends Field<EntityT> {
       this._fieldName,
       this._entityConstructor,
       'Edm.SByte'
-    );
-  }
-
-  edmDateTime(): DateField<EntityT> {
-    return new DateField(
-      this._fieldName,
-      this._entityConstructor,
-      'Edm.DateTime'
     );
   }
 

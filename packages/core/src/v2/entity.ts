@@ -5,6 +5,6 @@ import { EntityBase } from '../common';
 /**
  * Super class for all representations of OData entity types.
  */
-export abstract class Entity extends EntityBase {
+export class Entity extends EntityBase {
   readonly _oDataVersion: 'v2' = 'v2';
 }

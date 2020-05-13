@@ -1,9 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { Constructable } from '../constructable';
-import { EdmType } from '../edm-types';
+import { EdmTypeShared } from '../edm-types';
 import { EntityBase } from '../entity';
 import { Filter } from '../filter';
+import { ODataVersion } from '../service';
 import { Field, FieldType } from './field';
 
 /**
@@ -34,7 +35,7 @@ export abstract class EdmTypeField<
   constructor(
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
-    readonly edmType: EdmType
+    readonly edmType: EdmTypeShared<ODataVersion<EntityT>>
   ) {
     super(fieldName, entityConstructor);
   }

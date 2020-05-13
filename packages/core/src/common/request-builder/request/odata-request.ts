@@ -6,17 +6,18 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '../../../util/remove-slashes';
-import { ODataRequestConfig } from '../../../common/request-builder/request/odata-request-config';
+import { HttpResponse, executeHttpRequest } from '../../http-client';
 import {
-  replaceDuplicateKeys,
   filterNullishValues,
-  buildHeadersForDestination,
-  HttpResponse,
-  executeHttpRequest,
   getHeader,
-  buildCsrfHeaders,
-  isWithETag
-} from '../../../common';
+  replaceDuplicateKeys
+} from '../header-builder';
+// TODO: v2.0 - The buildCsrfHeaders import cannot be combined with the rest of the other headers due to circular dependencies
+import { buildCsrfHeaders } from '../header-builder/csrf-token-header';
+// TODO: v2.0 - The buildHeadersForDestination import cannot be combined with the rest of the other headers due to circular dependencies
+import { buildHeadersForDestination } from '../header-builder/header-builder';
+import { ODataRequestConfig } from './odata-request-config';
+import { isWithETag } from './odata-request-traits';
 
 /**
  * OData request configuration for an entity type.
@@ -68,6 +69,7 @@ export class ODataRequestBase<RequestConfigT extends ODataRequestConfig> {
    * Specifies whether the destination needs a specific authentication or not.
    *
    * @returns A boolean value that specifies whether the destination needs authentication or not
+   * @memberof ODataRequest
    */
   needsAuthentication(): boolean {
     return (

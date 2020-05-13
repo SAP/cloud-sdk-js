@@ -3,6 +3,7 @@ import {
   FunctionImportParameter,
   ODataFunctionImportRequestConfig
 } from '../../../src';
+import * as uriConversion from '../../../src/v2/request-builder/request/uri-conversion';
 
 interface TestParameterType {
   test1: string;
@@ -34,7 +35,8 @@ describe('ODataFunctionImportRequestConfig', () => {
       'get',
       'somePath',
       'Config',
-      mappedParameters
+      mappedParameters,
+      uriConversion
     );
   });
 

@@ -86,12 +86,13 @@ export class Link<
    * @returns Newly created link
    */
   clone(): this {
-    const clonedLink = this.constructor(
+    const clonedLink = new (this.constructor as any)(
       this._fieldName,
       this._entityConstructor,
       this._linkedEntity
     );
     clonedLink._selects = this._selects;
+    clonedLink._expand = this._expand;
     return clonedLink;
   }
 }

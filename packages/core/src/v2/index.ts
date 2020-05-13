@@ -4,6 +4,7 @@ export * from './edm-types';
 export * from './entity';
 export * from './entity-deserializer';
 export * from './entity-serializer';
+export * from './filter-functions';
 export * from './odata-batch-change-set';
 export * from './odata-batch-request-builder';
 export * from './odata-batch-retrieve-request';

@@ -6,15 +6,16 @@ import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
 import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
-} from '../../../src/request-builder/header-builder/authorization-header';
-import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config-v2';
-import { ODataRequest } from '../../../src/request-builder/request/odata-request';
+} from '../../../src/common/request-builder/header-builder/authorization-header';
+import { ODataGetAllRequestConfig } from '../../../src/common/request-builder/request/odata-get-all-request-config';
+import { ODataRequest } from '../../../src/v2/request-builder/request/odata-request';
 import {
   defaultDestination,
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { buildHeadersForDestination } from '../../../src/request-builder/header-builder/header-builder';
+import { buildHeadersForDestination } from '../../../src/common/request-builder/header-builder/header-builder';
+import * as uriConversion from '../../../src/v2/request-builder/request/uri-conversion';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {
@@ -85,7 +86,7 @@ describe('Authorization header builder', () => {
   describe('[deprecated]', () => {
     it('Prioritizes custom Authorization headers (upper case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity),
+        new ODataGetAllRequestConfig(TestEntity, uriConversion),
         defaultDestination
       );
       request.config.addCustomHeaders({
@@ -98,7 +99,7 @@ describe('Authorization header builder', () => {
 
     it('Prioritizes custom Authorization headers (lower case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity),
+        new ODataGetAllRequestConfig(TestEntity, uriConversion),
         defaultDestination
       );
       request.config.addCustomHeaders({

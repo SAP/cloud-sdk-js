@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { and, or } from '../../../src';
-import { getQueryParametersForFilter } from '../../../src/request-builder/request/get-filters';
+import { getQueryParametersForFilter } from '../../../src/v2/request-builder/request/uri-conversion/get-filters';
 import {
   testFilterBoolean,
   testFilterComplexType,

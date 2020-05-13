@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { unmockAllTestDestinations } from '../../../test-util/src';
-import { basicHeader, Protocol } from '../../src/request-builder';
 import { Destination } from '../../src/scp-cf';
+import { basicHeader, Protocol } from '../../src';
 import {
   addProxyConfigurationInternet,
   parseProxyEnv,
   ProxyStrategy,
   proxyStrategy
-} from '../../src/v2/proxy-util';
+} from '../../src/util/proxy-util';
 
 describe('proxy-util', () => {
   afterEach(() => {

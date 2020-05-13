@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { tsToEdm } from '../src';
-import { serializeEntity } from '../src/entity-serializer';
+import { tsToEdm, serializeEntity } from '../src';
 import {
   TestEntity,
   TestEntityLvl2MultiLink,

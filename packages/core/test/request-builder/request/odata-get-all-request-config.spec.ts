@@ -1,13 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc } from '../../../src';
-import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config-v2';
+import { ODataGetAllRequestConfig } from '../../../src/common/request-builder/request/odata-get-all-request-config';
 import { testFilterString } from '../../test-util/filter-factory';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
+import * as uriConversion from '../../../src/v2/request-builder/request/uri-conversion';
 
 describe('ODataGetAllRequestConfig', () => {
   let config: ODataGetAllRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataGetAllRequestConfig(TestEntity);
+    config = new ODataGetAllRequestConfig(TestEntity, uriConversion);
   });
 
   it('method is get', () => {

@@ -24,8 +24,7 @@ import {
   destinationName,
   onPremiseMultipleResponse
 } from '../test-util/example-destination-service-responses';
-import { getDestination, parseDestination } from '../../src/scp-cf';
-import { Protocol } from '../../src/request-builder';
+import { getDestination, parseDestination, Protocol } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
 
 describe('proxy configuration', () => {

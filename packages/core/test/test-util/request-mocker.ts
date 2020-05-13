@@ -2,11 +2,12 @@
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src';
-import { ODataCreateRequestConfig } from '../../src/request-builder/request/odata-create-request-config';
-import { ODataDeleteRequestConfig } from '../../src/request-builder/request/odata-delete-request-config';
-import { ODataGetAllRequestConfig } from '../../src/request-builder/request/odata-get-all-request-config-v2';
-import { ODataRequest } from '../../src/request-builder/request/odata-request';
-import { ODataUpdateRequestConfig } from '../../src/request-builder/request/odata-update-request-config';
+import { ODataCreateRequestConfig } from '../../src/common/request-builder/request/odata-create-request-config';
+import { ODataDeleteRequestConfig } from '../../src/common/request-builder/request/odata-delete-request-config';
+import { ODataGetAllRequestConfig } from '../../src/common/request-builder/request/odata-get-all-request-config';
+import { ODataRequest } from '../../src/v2/request-builder/request/odata-request';
+import { ODataUpdateRequestConfig } from '../../src/common/request-builder/request/odata-update-request-config';
+import * as uriConversion from '../../src/v2/request-builder/request/uri-conversion';
 import { TestEntity } from './test-services/v2/test-service';
 
 export const defaultHost = 'http://localhost';
@@ -64,7 +65,10 @@ export function mockCreateRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataCreateRequestConfig(entityConstructor);
+  const requestConfig = new ODataCreateRequestConfig(
+    entityConstructor,
+    uriConversion
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 200,
@@ -77,7 +81,10 @@ export function mockDeleteRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataDeleteRequestConfig(entityConstructor);
+  const requestConfig = new ODataDeleteRequestConfig(
+    entityConstructor,
+    uriConversion
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 202,
@@ -89,7 +96,10 @@ export function mockUpdateRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataUpdateRequestConfig(entityConstructor);
+  const requestConfig = new ODataUpdateRequestConfig(
+    entityConstructor,
+    uriConversion
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 204,
@@ -101,7 +111,10 @@ export function mockGetRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataGetAllRequestConfig(entityConstructor);
+  const requestConfig = new ODataGetAllRequestConfig(
+    entityConstructor,
+    uriConversion
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 200,

@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { convertToUriFormat } from '../../src';
-import { UpdateRequestBuilder } from '../../src/request-builder';
+import { convertToUriFormat, UpdateRequestBuilder } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,

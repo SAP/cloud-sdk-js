@@ -1,8 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  deserializeEntity,
-  extractCustomFields
-} from '../src/entity-deserializer';
+import { deserializeEntity, extractCustomFields } from '../src';
 import {
   TestEntity,
   TestEntityMultiLink,

@@ -37,3 +37,7 @@ jobs:
           cd ..
           git clone --depth 1 -b documentation git@github.com:SAP/cloud-sdk.git documentation
           rsync -avz cloud-sdk/docs/api documentation/static/api
+          cd documentation
+          git add -A
+          git commit -a -m "JS API documentation update via pipeline"
+          git branch

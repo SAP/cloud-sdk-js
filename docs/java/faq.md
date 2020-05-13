@@ -20,7 +20,7 @@ keywords:
 
 We release [bi-weekly](https://search.maven.org/artifact/com.sap.cloud.sdk/sdk-bom). All the features that are in
 _Generally Available_ or _Beta_ state get into the next release. You can find the latest SDK version and the list
-of previous releases [here](./api-reference-java) or on [Maven
+of previous releases [here](../api-reference-java) or on [Maven
 Central](https://search.maven.org/artifact/com.sap.cloud.sdk/sdk-bom).
 
 - **Do you release hot fixes?**

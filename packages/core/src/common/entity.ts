@@ -6,7 +6,7 @@ import { nonEnumerable } from '../util';
 import { toPropertyFormat } from '../util/name-converter';
 import { Constructable } from './constructable';
 import { EntityBuilder } from './entity-builder';
-import { CustomFieldBase, Link, Field } from './selectable';
+import { Link, Field } from './selectable';
 import { ServiceIdentifiable } from './service';
 
 export type EntityBuilderType<
@@ -44,13 +44,6 @@ export abstract class EntityBase implements ServiceIdentifiable {
       };
     });
     return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
-  }
-
-  protected static customFieldSelector<EntityT extends EntityBase>(
-    fieldName: string,
-    entityConstructor: Constructable<EntityT>
-  ): CustomFieldBase<EntityT> {
-    return new CustomFieldBase(fieldName, entityConstructor);
   }
 
   /**

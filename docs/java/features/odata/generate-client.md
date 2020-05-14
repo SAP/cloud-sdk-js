@@ -21,7 +21,7 @@ import TabItem from '@theme/TabItem';
 
 ## Generate a Virtual Data Model with the OData Generator ##
 
-The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are refered to as Virtual Data Model (VDM) provide type-safe access to the service.
+The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are referred to as Virtual Data Model (VDM) provide type-safe access to the service.
 
 In general there are three ways to use the generator:
 - Via the dedicated maven plugin
@@ -292,7 +292,7 @@ The following parameters are available on the generator for both OData protocol 
 |`<packageName>`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
 |`<serviceNameMappingFile>`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
 
-<!-- |`<nameSource>`| `LABEL` | If no custom naming strategy is used, this switches naming from label to name | -->
+More information is also available in the Javadoc of the generator implementation ([OData v2](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odata/generator/DataModelGenerator.html), [OData v4](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odatav4/generator/DataModelGenerator.html)).
 
 </TabItem>
 <TabItem value="cli">
@@ -301,33 +301,37 @@ The following parameters are available on the generator for both OData protocol 
 |:------------------|:-----:|:----  -:|:--------------|
 |`--default-base-path <arg>`|`-b`| - | Base path of the exposed API |
 |`--delete-output-dir`|`-d`| `False` | Target directory is deleted before code generation |
-|`--overwrite-files`|`-f`| `False` | Overwrite existing files |
+|`--help`|`-h`| - | Print a help message. |
 |`--input-dir <arg>`|`-i`| `input` | Location of the metadata files |
 |`--include-entity-sets <arg>`|`-ies`| - | Only generate classes for specific entity sets |
 |`--include-function-imports <arg>`|`-ifn`| - | Only generate classes for specific function imports |
 |`--name-mapping-file <arg>`|`-m`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
 |`--name-strategy-class <arg>`|`-n`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
 |`--output-dir <arg>`|`-o`| `output` | Output directory for generated sources |
+|`--overwrite-files`|`-f`| `False` | Overwrite existing files |
 |`--package-name-prefix <arg>`|`-p`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
 
-<!-- |`<nameSource>`| `LABEL` | If no custom naming strategy is used, this switches naming from label to name | -->
+For details leverage the `--help` option. More information is also available in the Javadoc of the generator implementation ([OData v2](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odata/generator/DataModelGenerator.html), [OData v4](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odatav4/generator/DataModelGenerator.html)).
+
+</TabItem>
 
 </TabItem>
 <TabItem value="java">
-
 
 |   Parameter       | Default |   Description |
 |:------------------|:-------:|:--------------|
 |`deleteOutputDirectory()`| `False` | Target directory is deleted before code generation |
 |`overwriteFiles()`| `False` | Overwrite existing files |
-|`withDefaultBasePath()`| - | Base path of the exposed API |
-|`withIncludedEntitySets()`| - | Only generate classes for specific entity sets |
-|`withIncludedFunctionImports()`| - | Only generate classes for specific function imports |
-|`withInputDirectory()`| `input` | Location of the metadata files |
-|`withNamingStrategy()`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
-|`withOutputDirectory()`| `output` | Output directory for generated sources |
-|`withPackageName()`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
-|`withServiceNameMapping()`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
+|`withDefaultBasePath(String)`| - | Base path of the exposed API |
+|`withIncludedEntitySets(Set<String>)`| - | Only generate classes for specific entity sets |
+|`withIncludedFunctionImports(Set<String>)`| - | Only generate classes for specific function imports |
+|`withInputDirectory(String)`| `input` | Location of the metadata files |
+|`withNamingStrategy(NamingStrategy)`| - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
+|`withOutputDirectory(String)`| `output` | Output directory for generated sources |
+|`withPackageName(String)`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
+|`withServiceNameMapping(String)`| - <!--`serviceNameMappings.properties`--> | Determine service names from a given mapping file |
+
+More details can be found on the Javadoc ([OData v2](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odata/generator/DataModelGenerator.html), [OData v4](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odatav4/generator/DataModelGenerator.html)).
 
 </TabItem>
 </Tabs>

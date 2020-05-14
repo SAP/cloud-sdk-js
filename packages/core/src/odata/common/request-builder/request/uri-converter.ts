@@ -5,6 +5,7 @@ import { EntityBase } from '../../entity';
 import { Constructable } from '../../constructable';
 import { Orderable } from '../../order';
 import { FieldType, Selectable } from '../../selectable';
+import { EdmTypeShared } from '../../edm-types';
 
 export interface UriConverter {
   getQueryParametersForFilter<EntityT extends EntityBase>(
@@ -38,7 +39,7 @@ export interface UriConverter {
   // TODO: EdmType<EntityT>
   convertToUriFormat<EntityT extends EntityBase>(
     value: any,
-    edmType: any // EdmType<EntityT>
+    edmType: EdmTypeShared<'any'>
   ): string;
 
   convertToUriForEdmString(value: any): string;

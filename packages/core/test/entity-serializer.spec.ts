@@ -46,7 +46,7 @@ describe('entity-serializer', () => {
     });
   });
 
-  it('should serialize multi linked entity with nested links', () => {
+  it.only('should serialize multi linked entity with nested links', () => {
     const lvl2MultiLinkEntity = TestEntityLvl2MultiLink.builder()
       .booleanProperty(false)
       .build();

@@ -17,36 +17,12 @@ export type EdmTypeCommon =
   | 'Edm.Binary'
   | 'Edm.Byte';
 
+// Exclusive types for ODataVersions
 export type EdmTypeV2 = 'Edm.DateTime';
 export type EdmTypeV4 = 'Edm.Date';
 
-type EdmTypeVersionBased<VersionT extends 'v2' | 'v4'> = VersionT extends 'v2'
-  ? EdmTypeV2
-  : VersionT extends 'v4'
-  ? EdmTypeV4
-  : never;
-
-export type EdmTypeSharedC<T> = T extends 'v4' ? EdmTypeCommon : EdmTypeCommon;
-
-// export type EdmTypeShared<VersionT extends 'v2' | 'v4' | EntityBase> =
-//   | EdmTypeCommon
-//   | (VersionT extends EntityBase
-//       ? EdmTypeVersionBased<VersionT['_oDataVersion']>
-//       : VersionT extends 'v2'
-//       ? EdmTypeVersionBased<VersionT>
-//       : VersionT extends 'v4'
-//       ? EdmTypeVersionBased<VersionT>
-//       : never);
-
+// The generic parameter is currently unused. We still have to revise whether we can use it in a later version of typescript.
 export type EdmTypeShared<VersionT extends 'v2' | 'v4' | 'any'> =
   | EdmTypeCommon
   | EdmTypeV2
   | EdmTypeV4;
-
-// export type EdmTypeShared<
-//   VersionT extends 'v2' | 'v4' | EntityBase
-// > = VersionT extends 'v2' ? EdmTypeCommon : EdmTypeCommon;
-
-// function fnv2(d: EdmTypeShared<'v2'>) {}
-// function fnv4(d: EdmTypeShared<'v4'>) {}
-// fnv2('');

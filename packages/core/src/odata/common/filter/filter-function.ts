@@ -1,9 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase } from '../entity';
+import { EntityBase, ODataVersion } from '../entity';
 import { Field, FieldType } from '../selectable';
-import { ODataVersion } from '../service';
 import { Filter } from './filter';
 
 /**

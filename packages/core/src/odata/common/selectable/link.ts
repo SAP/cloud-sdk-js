@@ -26,8 +26,8 @@ export class Link<
   EntityT extends EntityBase,
   LinkedEntityT extends EntityBase = any
 > implements EntityIdentifiable<EntityT> {
-  readonly selectable: true;
-  readonly expandable: true;
+  // readonly selectable: true;
+  // readonly expandable: true;
   readonly _entity: EntityT;
 
   /**

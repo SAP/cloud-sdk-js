@@ -6,7 +6,8 @@ import { nonEnumerable, toPropertyFormat } from '../../util';
 import { Constructable } from './constructable';
 import { EntityBuilder } from './entity-builder';
 import { Link, Field } from './selectable';
-import { ServiceIdentifiable } from './service';
+
+export type ODataVersion<T extends EntityBase> = T['_oDataVersion'];
 
 export type EntityBuilderType<
   EntityT extends EntityBase,
@@ -21,7 +22,7 @@ export type EntityBuilderType<
 /**
  * Super class for all representations of OData entity types.
  */
-export abstract class EntityBase implements ServiceIdentifiable {
+export abstract class EntityBase {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
@@ -67,7 +68,7 @@ export abstract class EntityBase implements ServiceIdentifiable {
    */
   protected _customFields: MapType<any>;
 
-  abstract readonly _oDataVersion: any; // 'v2' | 'v4';
+  abstract readonly _oDataVersion: any;
 
   constructor() {
     nonEnumerable(this, '_oDataVersion');

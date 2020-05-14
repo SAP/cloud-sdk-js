@@ -3,8 +3,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase } from '../entity';
-import { ODataVersion } from '../service';
+import { EntityBase, ODataVersion } from '../entity';
 import {
   ComplexTypeField,
   ConstructorOrField,

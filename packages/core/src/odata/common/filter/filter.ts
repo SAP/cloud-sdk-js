@@ -2,9 +2,8 @@
 
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, EntityIdentifiable } from '../entity';
+import { EntityBase, EntityIdentifiable, ODataVersion } from '../entity';
 import { FieldType } from '../selectable';
-import { ODataVersion } from '../service';
 import { FilterFunction } from './filter-function';
 import { Filterable } from './filterable';
 

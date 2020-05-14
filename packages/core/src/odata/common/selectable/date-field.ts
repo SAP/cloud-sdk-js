@@ -4,9 +4,8 @@
 import { Moment } from 'moment';
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase } from '../entity';
+import { EntityBase, ODataVersion } from '../entity';
 import { Filter } from '../filter';
-import { ODataVersion } from '../service';
 import {
   ComplexTypeField,
   ConstructorOrField,

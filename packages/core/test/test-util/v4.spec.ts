@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { asc, desc } from '../../src//odatacommon';
+import { asc, desc } from '../../src';
 import {
   TestEntity,
   TestEntitySingleLink,

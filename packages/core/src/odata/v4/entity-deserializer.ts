@@ -81,16 +81,16 @@ function extractODataETag(json: MapType<any>): string | undefined {
 
 function getFieldValue<EntityT extends Entity, JsonT>(
   json: Partial<JsonT>,
-  selectable: Field<EntityT> | Link<EntityT>
+  field: Field<EntityT> | Link<EntityT>
 ) {
-  if (selectable instanceof EdmTypeField) {
-    return edmToTs(json[selectable._fieldName], selectable.edmType);
+  if (field instanceof EdmTypeField) {
+    return edmToTs(json[field._fieldName], field.edmType);
   }
-  if (selectable instanceof Link) {
-    return getLinkFromJson(json, selectable);
+  if (field instanceof Link) {
+    return getLinkFromJson(json, field);
   }
-  if (selectable instanceof ComplexTypeField) {
-    return deserializeComplexType(json[selectable._fieldName], selectable);
+  if (field instanceof ComplexTypeField) {
+    return deserializeComplexType(json[field._fieldName], field);
   }
 }
 
@@ -138,9 +138,9 @@ function getMultiLinkFromJson<
 
 function deserializeComplexType<EntityT extends Entity>(
   json: MapType<any>,
-  selectable: ComplexTypeField<EntityT>
+  complexTypeField: ComplexTypeField<EntityT>
 ): MapType<any> {
-  return Object.entries(selectable)
+  return Object.entries(complexTypeField)
     .filter(
       ([_, field]) =>
         field instanceof EdmTypeField &&

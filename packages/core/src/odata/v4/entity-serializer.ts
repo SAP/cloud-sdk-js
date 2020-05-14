@@ -44,28 +44,25 @@ export function serializeEntityNonCustomFields<EntityT extends Entity>(
     return {};
   }
   return Object.keys(entity).reduce((serialized, key) => {
-    const selectable = entityConstructor[toStaticPropertyFormat(key)];
+    const field = entityConstructor[toStaticPropertyFormat(key)];
     const fieldValue = entity[key];
 
     if (fieldValue === null || fieldValue === undefined) {
-      serialized[selectable._fieldName] = null;
-    } else if (selectable instanceof EdmTypeField) {
-      serialized[selectable._fieldName] = tsToEdm(
+      serialized[field._fieldName] = null;
+    } else if (field instanceof EdmTypeField) {
+      serialized[field._fieldName] = tsToEdm(fieldValue, field.edmType);
+    } else if (field instanceof OneToOneLink) {
+      serialized[field._fieldName] = serializeEntityNonCustomFields(
         fieldValue,
-        selectable.edmType
+        field._linkedEntity
       );
-    } else if (selectable instanceof OneToOneLink) {
-      serialized[selectable._fieldName] = serializeEntityNonCustomFields(
-        fieldValue,
-        selectable._linkedEntity
+    } else if (field instanceof Link) {
+      serialized[field._fieldName] = fieldValue.map(linkedEntity =>
+        serializeEntityNonCustomFields(linkedEntity, field._linkedEntity)
       );
-    } else if (selectable instanceof Link) {
-      serialized[selectable._fieldName] = fieldValue.map(linkedEntity =>
-        serializeEntityNonCustomFields(linkedEntity, selectable._linkedEntity)
-      );
-    } else if (selectable instanceof ComplexTypeField) {
-      serialized[selectable._fieldName] = serializeComplexTypeField(
-        selectable,
+    } else if (field instanceof ComplexTypeField) {
+      serialized[field._fieldName] = serializeComplexTypeField(
+        field,
         fieldValue
       );
     }
@@ -75,10 +72,10 @@ export function serializeEntityNonCustomFields<EntityT extends Entity>(
 }
 
 function serializeComplexTypeField<EntityT extends Entity>(
-  selectable: ComplexTypeField<EntityT>,
+  complexTypeField: ComplexTypeField<EntityT>,
   fieldValue: any
 ): any {
-  return Object.entries(selectable).reduce(
+  return Object.entries(complexTypeField).reduce(
     (complexTypeObject, [propertyKey, propertyValue]) => {
       const value = fieldValue[propertyKey];
       if (

@@ -139,9 +139,9 @@ function getMultiLinkFromJson<
 
 function deserializeComplexType<EntityT extends Entity>(
   json: MapType<any>,
-  selectable: ComplexTypeField<EntityT>
+  complexTypeField: ComplexTypeField<EntityT>
 ): MapType<any> {
-  return Object.entries(selectable)
+  return Object.entries(complexTypeField)
     .filter(
       ([_, field]) =>
         field instanceof EdmTypeField &&

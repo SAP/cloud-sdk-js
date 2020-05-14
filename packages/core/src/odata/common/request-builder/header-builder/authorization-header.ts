@@ -13,7 +13,7 @@ import {
   sanitizeDestination
 } from '../../../../scp-cf';
 import { ODataRequestConfig } from '../request';
-import { ODataRequestBase } from '../request/odata-request';
+import { ODataRequest } from '../request/odata-request';
 import { getHeader, toSanitizedHeaderObject } from './headers-util';
 
 const logger = createLogger({
@@ -32,7 +32,7 @@ const logger = createLogger({
 export async function addAuthorizationHeader<
   RequestT extends ODataRequestConfig
 >(
-  request: ODataRequestBase<RequestT>,
+  request: ODataRequest<RequestT>,
   headers: MapType<string>
 ): Promise<MapType<string>> {
   const destination = request.destination;

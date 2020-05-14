@@ -16,7 +16,6 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import * as uriConversion from './request/uri-conversion';
-import { ODataRequest } from './request';
 
 /**
  * Create OData query to update an entity.
@@ -39,10 +38,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(
-      new ODataUpdateRequestConfig(_entityConstructor, uriConversion),
-      ODataRequest
-    );
+    super(new ODataUpdateRequestConfig(_entityConstructor, uriConversion));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();

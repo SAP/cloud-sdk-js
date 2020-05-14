@@ -24,7 +24,7 @@ import { isWithETag } from './odata-request-traits';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataRequestBase<RequestConfigT extends ODataRequestConfig> {
+export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Creates an instance of ODataRequest.
    *

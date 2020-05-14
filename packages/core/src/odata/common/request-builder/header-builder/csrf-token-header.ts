@@ -4,7 +4,7 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
 import { ODataRequestConfig } from '../request';
 import { Destination, DestinationNameAndJwt } from '../../../../scp-cf';
-import { ODataRequestBase } from '../request/odata-request';
+import { ODataRequest } from '../request/odata-request';
 import { filterNullishValues, getHeader, getHeaderValue } from './headers-util';
 
 const logger = createLogger({
@@ -90,7 +90,7 @@ function buildCookieHeaderValue(cookies?: string[]): string | undefined {
 export async function addCsrfTokenAndCookies<
   RequestT extends ODataRequestConfig
 >(
-  request: ODataRequestBase<RequestT>,
+  request: ODataRequest<RequestT>,
   headers: MapType<string>
 ): Promise<MapType<string>> {
   if (!request.destination) {

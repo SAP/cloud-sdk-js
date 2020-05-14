@@ -33,8 +33,7 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  UpdateRequestBuilder,
-  ODataRequest
+  UpdateRequestBuilder
 } from './request-builder';
 
 const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
@@ -66,7 +65,7 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
     )[],
     readonly entityToConstructorMap: MapType<Constructable<Entity>>
   ) {
-    super(new ODataBatchConfig(defaultServicePath, uuid()), ODataRequest);
+    super(new ODataBatchConfig(defaultServicePath, uuid()));
     this.requestConfig.payload = getPayload(requests, this.requestConfig);
   }
 

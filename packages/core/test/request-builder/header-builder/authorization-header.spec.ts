@@ -2,13 +2,16 @@
 
 import nock from 'nock';
 import { MapType } from '@sap-cloud-sdk/util';
-import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
+import {
+  buildAndAddAuthorizationHeader,
+  Destination,
+  ODataRequest
+} from '../../../src';
 import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
 } from '../../../src/odata/common/request-builder/header-builder/authorization-header';
 import { ODataGetAllRequestConfig } from '../../../src/odata/common/request-builder/request/odata-get-all-request-config';
-import { ODataRequest } from '../../../src/odata/v2/request-builder/request/odata-request';
 import {
   defaultDestination,
   defaultBasicCredentials

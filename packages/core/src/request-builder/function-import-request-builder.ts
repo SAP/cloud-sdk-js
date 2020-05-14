@@ -15,7 +15,7 @@ import { RequestMethodType } from './request/odata-request-config';
  * @typeparam ParametersT - Type of the function import parameters
  * @typeparam ReturnT - Type of the function import return value
  */
-export class FunctionImportRequestBuilder<
+export class FunctionImportRequestBuilder<//reuse
   ParametersT,
   ReturnT
 > extends MethodRequestBuilderBase<

@@ -12,7 +12,7 @@ import { toPropertyFormat } from '../../util';
  * @param entityConstructor - The constructor of the entity
  * @returns object that includes all keys that represent given entity
  */
-export function getEntityKeys<EntityT extends Entity>(
+export function getEntityKeys<EntityT extends Entity>(//reuse
   entity: EntityT,
   entityConstructor: Constructable<EntityT>
 ): MapType<any> {

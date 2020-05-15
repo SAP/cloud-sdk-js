@@ -4,9 +4,10 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
 import { EntityBase } from '../../entity';
 import { FieldType, Selectable } from '../../selectable';
+import { Expandable } from '../../expandable';
+import { ODataUri } from '../../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithSelection } from './odata-request-traits';
-import { UriConverter } from './uri-converter';
 
 /**
  * OData getByKey request configuration for an entity type.
@@ -18,6 +19,7 @@ export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
   implements WithKeys, WithSelection<EntityT> {
   keys: MapType<FieldType>;
   selects: Selectable<EntityT>[] = [];
+  expands: Expandable<EntityT>[];
 
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.
@@ -26,13 +28,13 @@ export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
-    private uriConversion: UriConverter
+    private oDataUri: ODataUri
   ) {
     super('get', entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.uriConversion.getResourcePathForKeys(
+    return this.oDataUri.getResourcePathForKeys(
       this.keys,
       this.entityConstructor
     );
@@ -41,7 +43,12 @@ export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
   queryParameters(): MapType<any> {
     return this.prependDollarToQueryParameters({
       format: 'json',
-      ...this.uriConversion.getQueryParametersForSelection(this.selects)
+      ...this.oDataUri.getSelect(this.selects),
+      ...this.oDataUri.getExpand(
+        this.selects,
+        this.expands,
+        this.entityConstructor
+      )
     });
   }
 }

@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
   FunctionImportParameter,
-  ODataFunctionImportRequestConfig
+  ODataFunctionImportRequestConfig,
+  oDataUri
 } from '../../../src';
-import * as uriConversion from '../../../src/odata/v2/request-builder/request/uri-conversion';
 
 interface TestParameterType {
   test1: string;
@@ -36,7 +36,7 @@ describe('ODataFunctionImportRequestConfig', () => {
       'somePath',
       'Config',
       mappedParameters,
-      uriConversion
+      oDataUri
     );
   });
 

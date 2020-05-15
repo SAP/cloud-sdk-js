@@ -18,8 +18,7 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetAllRequestConfig } from '../../common/request-builder/request/odata-get-all-request-config';
 import { Expandable } from '../../common/expandable';
-import { UriConverter } from '../../common/request-builder/request/uri-converter';
-import * as uriConversion from './request/uri-conversion';
+import { oDataUri } from './request/uri-conversion';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -41,12 +40,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(
-      new ODataGetAllRequestConfig(
-        _entityConstructor,
-        uriConversion as UriConverter
-      )
-    );
+    super(new ODataGetAllRequestConfig(_entityConstructor, oDataUri));
   }
   /**
    * Restrict the response to the given selection of properties in the request.

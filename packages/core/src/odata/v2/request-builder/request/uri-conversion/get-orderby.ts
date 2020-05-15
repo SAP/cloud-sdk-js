@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
+import { getOrderBy, Orderable } from '../../../../common';
 import { Entity } from '../../../entity';
-import { Orderable, OrderLink, Order } from '../../../../common';
 
 /**
+ * @deprecated Use [[getOrderBy]] instead
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.
  *
  * @typeparam EntityT - Type of the entity to order
@@ -13,54 +13,5 @@ import { Orderable, OrderLink, Order } from '../../../../common';
 export function getQueryParametersForOrderBy<EntityT extends Entity>(
   orderBy: Orderable<EntityT>[]
 ): Partial<{ orderby: string }> {
-  if (typeof orderBy !== 'undefined' && orderBy.length) {
-    return {
-      orderby: getODataOrderByExpressions(orderBy).join(',')
-    };
-  }
-  return {};
-}
-
-function getODataOrderByExpressions<OrderByEntityT extends Entity>(
-  orderBys: Orderable<OrderByEntityT>[],
-  parentFieldNames: string[] = []
-): string[] {
-  return orderBys.reduce(
-    (expressions: string[], orderBy: Orderable<OrderByEntityT>) => {
-      if (orderBy instanceof OrderLink) {
-        return [
-          ...expressions,
-          getOrderByExpressionForOrderLink(orderBy, [...parentFieldNames])
-        ];
-      }
-      return [
-        ...expressions,
-        getOrderByExpressionForOrder(orderBy, parentFieldNames)
-      ];
-    },
-    []
-  );
-}
-
-function getOrderByExpressionForOrderLink<
-  OrderByEntityT extends Entity,
-  LinkedEntityT extends Entity
->(
-  orderBy: OrderLink<OrderByEntityT, LinkedEntityT>,
-  parentFieldNames: string[] = []
-): string {
-  return getODataOrderByExpressions(orderBy.orderBy, [
-    ...parentFieldNames,
-    orderBy.link._fieldName
-  ]).join(',');
-}
-
-function getOrderByExpressionForOrder<OrderByEntityT extends Entity>(
-  orderBy: Order<OrderByEntityT>,
-  parentFieldNames: string[] = []
-): string {
-  return [
-    [...parentFieldNames, orderBy._fieldName].join('/'),
-    orderBy.orderType
-  ].join(' ');
+  return getOrderBy(orderBy);
 }

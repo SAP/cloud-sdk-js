@@ -7,9 +7,9 @@ import { Filterable } from '../../filter';
 import { Orderable } from '../../order';
 import { Selectable } from '../../selectable';
 import { Expandable } from '../../expandable';
+import { ODataUri } from '../../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
-import { UriConverter } from './uri-converter';
 
 /**
  * OData getAll request configuration for an entity type.
@@ -33,7 +33,7 @@ export class ODataGetAllRequestConfig<EntityT extends EntityBase>
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
-    private uriConversion: UriConverter
+    private oDataUri: ODataUri
   ) {
     super('get', entityConstructor._defaultServicePath);
   }
@@ -45,12 +45,14 @@ export class ODataGetAllRequestConfig<EntityT extends EntityBase>
   queryParameters(): MapType<any> {
     const params: MapType<any> = {
       format: 'json',
-      ...this.uriConversion.getQueryParametersForSelection(this.selects),
-      ...this.uriConversion.getQueryParametersForFilter(
-        this.filter,
+      ...this.oDataUri.getSelect(this.selects),
+      ...this.oDataUri.getExpand(
+        this.selects,
+        this.expands,
         this.entityConstructor
       ),
-      ...this.uriConversion.getQueryParametersForOrderBy(this.orderBy)
+      ...this.oDataUri.getFilter(this.filter, this.entityConstructor),
+      ...this.oDataUri.getOrderBy(this.orderBy)
     };
     if (typeof this.top !== 'undefined') {
       params.top = this.top;

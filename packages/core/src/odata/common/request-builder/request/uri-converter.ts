@@ -7,7 +7,7 @@ import { Orderable } from '../../order';
 import { FieldType, Selectable } from '../../selectable';
 import { EdmTypeShared } from '../../edm-types';
 
-export interface UriConverter {
+export interface UriConverterOld {
   getQueryParametersForFilter<EntityT extends EntityBase>(
     filter: Filterable<EntityT>,
     entityConstructor: Constructable<EntityT>
@@ -42,5 +42,10 @@ export interface UriConverter {
     edmType: EdmTypeShared<'any'>
   ): string;
 
+  convertToUriForEdmString(value: any): string;
+}
+
+export interface UriConverter {
+  convertToUriFormat(value: any, edmType: EdmTypeShared<'v2'>): string;
   convertToUriForEdmString(value: any): string;
 }

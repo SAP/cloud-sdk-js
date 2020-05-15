@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Entity } from '../../../entity';
-import { toPropertyFormat } from '../../../../../util';
-import { Constructable } from '../../../../common';
+import { EntityBase } from '../entity';
+import { Constructable } from '../constructable';
+import { toPropertyFormat } from '../../../util';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.
@@ -12,7 +12,7 @@ import { Constructable } from '../../../../common';
  * @param entityConstructor - The constructor of the entity
  * @returns object that includes all keys that represent given entity
  */
-export function getEntityKeys<EntityT extends Entity>(
+export function getEntityKeys<EntityT extends EntityBase>(
   entity: EntityT,
   entityConstructor: Constructable<EntityT>
 ): MapType<any> {

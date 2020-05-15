@@ -8,7 +8,7 @@ import { ODataRequest } from '../../src/odata/common/request-builder/request/oda
 import { ODataUpdateRequestConfig } from '../../src/odata/common/request-builder/request/odata-update-request-config';
 import { Destination } from '../../src/scp-cf';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
-import * as uriConversion from '../../src/odata/v2/request-builder/request/uri-conversion';
+import { oDataUri } from '../../src';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;
@@ -172,7 +172,7 @@ describe('OData Request', () => {
 });
 
 function createRequest(requestConfigConstructor, destination = { url: '' }) {
-  const config = new requestConfigConstructor(TestEntity, uriConversion);
+  const config = new requestConfigConstructor(TestEntity, oDataUri);
   config.keys = {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'id'

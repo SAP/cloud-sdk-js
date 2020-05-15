@@ -4,9 +4,9 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable } from '../../constructable';
 import { EntityBase } from '../../entity';
 import { FieldType } from '../../selectable';
+import { ODataUri } from '../../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
-import { UriConverter } from './uri-converter';
 
 /**
  * OData delete request configuration for an entity type.
@@ -27,13 +27,13 @@ export class ODataDeleteRequestConfig<EntityT extends EntityBase>
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
-    private uriConversion: UriConverter
+    private oDataUri: ODataUri
   ) {
     super('delete', entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.uriConversion.getResourcePathForKeys(
+    return this.oDataUri.getResourcePathForKeys(
       this.keys,
       this.entityConstructor
     );

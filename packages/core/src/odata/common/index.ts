@@ -12,3 +12,4 @@ export * from './order';
 export * from './request-builder';
 export * from './selectable';
 export * from './time';
+export * from './uri-conversion';

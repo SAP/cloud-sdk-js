@@ -5,7 +5,8 @@ import { MapType } from '@sap-cloud-sdk/util';
 import {
   buildAndAddAuthorizationHeader,
   Destination,
-  ODataRequest
+  ODataRequest,
+  oDataUri
 } from '../../../src';
 import {
   addAuthorizationHeader,
@@ -18,7 +19,6 @@ import {
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
 import { buildHeadersForDestination } from '../../../src/odata/common/request-builder/header-builder/header-builder';
-import * as uriConversion from '../../../src/odata/v2/request-builder/request/uri-conversion';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {
@@ -89,7 +89,7 @@ describe('Authorization header builder', () => {
   describe('[deprecated]', () => {
     it('Prioritizes custom Authorization headers (upper case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity, uriConversion),
+        new ODataGetAllRequestConfig(TestEntity, oDataUri),
         defaultDestination
       );
       request.config.addCustomHeaders({
@@ -102,7 +102,7 @@ describe('Authorization header builder', () => {
 
     it('Prioritizes custom Authorization headers (lower case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity, uriConversion),
+        new ODataGetAllRequestConfig(TestEntity, oDataUri),
         defaultDestination
       );
       request.config.addCustomHeaders({

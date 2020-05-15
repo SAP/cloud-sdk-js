@@ -8,7 +8,7 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../../common/request-builder/request/odata-function-import-request-config';
 import { FunctionImportParameters, RequestMethodType } from '../../common';
-import * as uriConversion from './request/uri-conversion';
+import { oDataUri } from './request/uri-conversion';
 
 /**
  * Create OData request to execute a function import.
@@ -42,7 +42,7 @@ export class FunctionImportRequestBuilder<
         defaultServicePath,
         functionImportName,
         parameters,
-        uriConversion
+        oDataUri
       )
     );
   }

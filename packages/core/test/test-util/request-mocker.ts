@@ -1,13 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
-import { Destination } from '../../src';
+import { Destination, oDataUri } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request-builder/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request-builder/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request-builder/request/odata-get-all-request-config';
 import { ODataRequest } from '../../src/odata/common/request-builder/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/odata/common/request-builder/request/odata-update-request-config';
-import * as uriConversion from '../../src/odata/v2/request-builder/request/uri-conversion';
 import { TestEntity } from './test-services/v2/test-service';
 
 export const defaultHost = 'http://localhost';
@@ -67,7 +66,7 @@ export function mockCreateRequest(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    uriConversion
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -83,7 +82,7 @@ export function mockDeleteRequest(
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
     entityConstructor,
-    uriConversion
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -98,7 +97,7 @@ export function mockUpdateRequest(
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
     entityConstructor,
-    uriConversion
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -113,7 +112,7 @@ export function mockGetRequest(
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
     entityConstructor,
-    uriConversion
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,

@@ -3,12 +3,12 @@ import { v4 as uuid } from 'uuid';
 import { ODataGetByKeyRequestConfig } from '../../../src/odata/common/request-builder/request/odata-get-by-key-request-config';
 import { testEntityResourcePath } from '../../test-util/test-data';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import * as uriConversion from '../../../src/odata/v2/request-builder/request/uri-conversion';
+import { oDataUri } from '../../../src/odata/v2/request-builder/request/uri-conversion';
 
 describe('ODataGetByKeyRequestConfig', () => {
   let config: ODataGetByKeyRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataGetByKeyRequestConfig(TestEntity, uriConversion);
+    config = new ODataGetByKeyRequestConfig(TestEntity, oDataUri);
   });
 
   it('method is get', () => {

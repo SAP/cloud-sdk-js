@@ -17,7 +17,8 @@ import {
 } from '../../../scp-cf/destination-service-types';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request-builder/request/odata-get-by-key-request-config';
-import * as uriConversion from './request/uri-conversion';
+import { Expandable } from '../../common/expandable';
+import { oDataUri } from './request/uri-conversion';
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,
  * where no selection is equal to selecting all fields.
@@ -39,7 +40,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     keys: MapType<FieldType>
   ) {
-    super(new ODataGetByKeyRequestConfig(_entityConstructor, uriConversion));
+    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUri));
     this.requestConfig.keys = keys;
   }
 
@@ -51,6 +52,11 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
    */
   select(...selects: Selectable<EntityT>[]): this {
     this.requestConfig.selects = selects;
+    return this;
+  }
+
+  expand(...expands: Expandable<EntityT>[]): this {
+    this.requestConfig.expands = expands;
     return this;
   }
 

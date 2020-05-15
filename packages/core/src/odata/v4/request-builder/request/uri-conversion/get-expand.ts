@@ -4,25 +4,27 @@ import { Entity } from '../../../entity';
 import { Expandable } from '../../../../common/expandable';
 import { Constructable, AllFields, Link } from '../../../../common';
 import { OneToManyLink } from '../../../../common/selectable/one-to-many-link';
-import { getQueryParametersForFilter } from './get-filters';
-import { getQueryParametersForSelection } from './get-selection';
+import { getFilter } from './get-filter';
+import { getSelect } from './get-select';
 
 function prependDollar(param: string): string {
   return `$${param}`;
 }
 
-export function getQueryParametersForExpansion<EntityT extends Entity>(
-  expands: Expandable<EntityT>[],
+export function getExpand<EntityT extends Entity>(
+  expands: Expandable<EntityT>[] = [],
   entityConstructor: Constructable<EntityT>
 ): Partial<{ expand: string }> {
-  return {
-    expand: expands
-      .map(expand => getExpand(expand, entityConstructor))
-      .join(',')
-  };
+  return expands.length
+    ? {
+        expand: expands
+          .map(expand => getExpandAsString(expand, entityConstructor))
+          .join(',')
+      }
+    : {};
 }
 
-function getExpand<EntityT extends Entity>(
+function getExpandAsString<EntityT extends Entity>(
   expand: Expandable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): string {
@@ -35,14 +37,14 @@ function getExpand<EntityT extends Entity>(
   if (expand instanceof Link) {
     params = {
       ...params,
-      ...getQueryParametersForSelection(expand._selects),
-      ...getQueryParametersForExpansion(expand._expand, expand._linkedEntity)
+      ...getSelect(expand._selects),
+      ...getExpand(expand._expand, expand._linkedEntity)
     };
 
     if (expand instanceof OneToManyLink) {
       params = {
         ...params,
-        ...getQueryParametersForFilter(expand._filters, entityConstructor),
+        ...getFilter(expand._filters, entityConstructor),
         ...(expand._skip && { skip: expand._skip }),
         ...(expand._top && { top: expand._top })
       };

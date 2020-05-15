@@ -11,17 +11,15 @@ import { Selectable } from '../../../../common';
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getQueryParametersForSelection<EntityT extends Entity>(
-  selects: Selectable<EntityT>[]
+export function getSelect<EntityT extends Entity>(
+  selects: Selectable<EntityT>[] = []
 ): Partial<{ select: string }> {
-  if (selects && selects.length) {
-    const selection = selects.map(select => select._fieldName);
-    if (selection.length) {
-      if (selection.find(select => select.endsWith('*'))) {
-        return { select: '*' };
-      }
-      return { select: selection.join(',') };
+  const selection = selects.map(select => select._fieldName);
+  if (selection.length) {
+    if (selection.find(select => select.endsWith('*'))) {
+      return { select: '*' };
     }
+    return { select: selection.join(',') };
   }
 
   return {};

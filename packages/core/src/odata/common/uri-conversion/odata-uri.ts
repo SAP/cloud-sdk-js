@@ -9,6 +9,9 @@ import { Filterable } from '../filter';
 import { Orderable } from '../order';
 import { EdmTypeShared } from '../edm-types';
 
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
 export interface ODataUri {
   getExpand<EntityT extends EntityBase>(
     selects: Selectable<EntityT>[],

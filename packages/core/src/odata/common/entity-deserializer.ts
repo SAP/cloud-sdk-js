@@ -14,6 +14,10 @@ import {
   EntityBase
 } from '../common';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
 export function enityDeserializer(edmToTs) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.

@@ -21,7 +21,7 @@ import { UriConverter } from '../request';
 
 // eslint-disable-next-line valid-jsdoc
 /**
- * @hidden
+ * @experimental This is experimental and is subject to change. Use with caution.
  */
 export function createGetFilter(uriConverter: UriConverter) {
   /**

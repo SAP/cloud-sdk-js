@@ -12,6 +12,10 @@ const logger = createLogger({
   messageContext: 'get-resource-path'
 });
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
 export function createGetResourcePathForKeys(uriConverter: UriConverter) {
   /**
    * Get the resource path of an entity specified by key-value pairs.

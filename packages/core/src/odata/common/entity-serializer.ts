@@ -11,6 +11,10 @@ import {
   EntityBase
 } from '../common';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
 export function entitySerializer(tsToEdm) {
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service.

@@ -6,7 +6,7 @@ import { getSelect } from './get-select';
 import { getExpand } from './get-expand';
 
 /**
- * @deprecated Use [[getSelect]] and [[getExpand]] instead
+ * @deprecated Use [[oDataUri.getSelect]] and [[oDataUri.getExpand]] instead
  *
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.
  * This retrieves where in addition to the selection (`select`) there is also an expansion (`expand`) needed.

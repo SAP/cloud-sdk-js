@@ -5,6 +5,7 @@ import { EntityBase, FieldType, Constructable } from '../../common';
 import { oDataUri } from './odata-uri';
 
 /**
+ * @deprecated Use [[oDataUri.getResourcePathForKeys]] instead
  * Get the resource path of an entity specified by key-value pairs.
  *
  * @typeparam EntityT - Type of the entity to get the resource path for

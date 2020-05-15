@@ -16,6 +16,9 @@ import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
 import * as uriConverter from './uri-value-converter';
 
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
 export const oDataUri: ODataUri = {
   getExpand,
   getFilter: <EntityT extends Entity>(

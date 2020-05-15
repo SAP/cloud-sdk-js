@@ -12,7 +12,7 @@ import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
 } from '../../../src/header-builder/authorization-header';
-import { ODataGetAllRequestConfig } from '../../../src/odata/common/request-builder/request/odata-get-all-request-config';
+import { ODataGetAllRequestConfig } from '../../../src/odata/common/request/odata-get-all-request-config';
 import {
   defaultDestination,
   defaultBasicCredentials

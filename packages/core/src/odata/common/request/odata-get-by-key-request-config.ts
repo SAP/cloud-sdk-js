@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable } from '../../constructable';
-import { EntityBase } from '../../entity';
-import { FieldType, Selectable } from '../../selectable';
-import { Expandable } from '../../expandable';
-import { ODataUri } from '../../uri-conversion';
+import { Constructable } from '../constructable';
+import { EntityBase } from '../entity';
+import { FieldType, Selectable } from '../selectable';
+import { Expandable } from '../expandable';
+import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithSelection } from './odata-request-traits';
 

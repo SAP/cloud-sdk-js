@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
-import { ODataGetByKeyRequestConfig } from '../../../src/odata/common/request-builder/request/odata-get-by-key-request-config';
+import { ODataGetByKeyRequestConfig } from '../../../src/odata/common/request/odata-get-by-key-request-config';
 import { testEntityResourcePath } from '../../test-util/test-data';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
 import { oDataUri } from '../../../src/odata/v2/request-builder/request/uri-conversion';

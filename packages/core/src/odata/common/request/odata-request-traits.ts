@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { EntityBase } from '../../entity';
-import { Filterable } from '../../filter';
-import { Orderable } from '../../order';
-import { FieldType, Selectable } from '../../selectable';
+import { EntityBase } from '../entity';
+import { Filterable } from '../filter';
+import { Orderable } from '../order';
+import { FieldType, Selectable } from '../selectable';
 
 /**
  * @hidden

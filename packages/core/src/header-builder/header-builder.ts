@@ -2,11 +2,8 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../scp-cf';
-import {
-  ODataRequestConfig,
-  isWithETag
-} from '../odata/common/request-builder/request';
-import { ODataRequest } from '../odata/common/request-builder/request/odata-request';
+import { ODataRequestConfig, isWithETag } from '../odata/common/request';
+import { ODataRequest } from '../odata/common/request/odata-request';
 import { buildAuthorizationHeaders } from './authorization-header';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {

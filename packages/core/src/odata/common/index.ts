@@ -8,6 +8,7 @@ export * from './entity-builder';
 export * from './filter';
 export * from './odate-batch-consts';
 export * from './order';
+export * from './request';
 export * from './request-builder';
 export * from './selectable';
 export * from './time';

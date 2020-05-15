@@ -15,7 +15,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
-import { ODataGetByKeyRequestConfig } from '../../common/request-builder/request/odata-get-by-key-request-config';
+import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
 import { HttpReponse } from '../../../http-client';
 import { oDataUri } from './request/uri-conversion';
 /**

@@ -9,7 +9,7 @@ import {
   Orderable
 } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
-import { ODataGetAllRequestConfig } from '../../common/request-builder/request/odata-get-all-request-config';
+import { ODataGetAllRequestConfig } from '../../common/request/odata-get-all-request-config';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { DestinationOptions } from '../../../scp-cf';

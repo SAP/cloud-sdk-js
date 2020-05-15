@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { ODataUri } from '../../uri-conversion';
+import { ODataUri } from '../uri-conversion';
 import {
   FunctionImportParameter,
   FunctionImportParameters

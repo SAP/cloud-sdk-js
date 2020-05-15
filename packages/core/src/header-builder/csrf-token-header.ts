@@ -2,9 +2,9 @@
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
-import { ODataRequestConfig } from '../odata/common/request-builder/request';
+import { ODataRequestConfig } from '../odata/common/request';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
-import { ODataRequest } from '../odata/common/request-builder/request/odata-request';
+import { ODataRequest } from '../odata/common/request/odata-request';
 import { filterNullishValues, getHeader, getHeaderValue } from './headers-util';
 
 const logger = createLogger({

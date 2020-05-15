@@ -2,11 +2,11 @@
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination, oDataUri } from '../../src';
-import { ODataCreateRequestConfig } from '../../src/odata/common/request-builder/request/odata-create-request-config';
-import { ODataDeleteRequestConfig } from '../../src/odata/common/request-builder/request/odata-delete-request-config';
-import { ODataGetAllRequestConfig } from '../../src/odata/common/request-builder/request/odata-get-all-request-config';
-import { ODataRequest } from '../../src/odata/common/request-builder/request/odata-request';
-import { ODataUpdateRequestConfig } from '../../src/odata/common/request-builder/request/odata-update-request-config';
+import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
+import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
+import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
+import { ODataRequest } from '../../src/odata/common/request/odata-request';
+import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
 import { TestEntity } from './test-services/v2/test-service';
 
 export const defaultHost = 'http://localhost';

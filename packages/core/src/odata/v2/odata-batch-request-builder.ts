@@ -19,8 +19,8 @@ import {
   ErrorResponse
 } from '../common';
 import { MethodRequestBuilderBase } from '../common/request-builder/request-builder-base';
-import { ODataBatchConfig } from '../common/request-builder/request/odata-batch-config';
-import { ODataRequestConfig } from '../common/request-builder/request/odata-request-config';
+import { ODataBatchConfig } from '../common/request/odata-batch-config';
+import { ODataRequestConfig } from '../common/request/odata-request-config';
 import { Entity } from './entity';
 import { deserializeEntity } from './entity-deserializer';
 import {

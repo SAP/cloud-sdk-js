@@ -3,8 +3,8 @@ import {
   ODataCreateRequestConfig,
   ODataGetAllRequestConfig,
   ODataUpdateRequestConfig
-} from '../../src/odata/common/request-builder/request';
-import { ODataRequest } from '../../src/odata/common/request-builder/request/odata-request';
+} from '../../src/odata/common/request';
+import { ODataRequest } from '../../src/odata/common/request/odata-request';
 import { Destination } from '../../src/scp-cf';
 import { oDataUri } from '../../src';
 import { TestEntity } from './test-services/v2/test-service';

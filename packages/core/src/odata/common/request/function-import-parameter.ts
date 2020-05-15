@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EdmTypeShared } from '../../edm-types';
+import { EdmTypeShared } from '../edm-types';
 
 /**
  * Internal representation of function import parameters. It adds metadata to the value.

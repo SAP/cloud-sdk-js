@@ -3,7 +3,7 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, Link } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
-import { ODataCreateRequestConfig } from '../../common/request-builder/request/odata-create-request-config';
+import { ODataCreateRequestConfig } from '../../common/request/odata-create-request-config';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { serializeEntity } from '../entity-serializer';

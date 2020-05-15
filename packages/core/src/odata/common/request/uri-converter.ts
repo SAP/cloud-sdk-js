@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { MapType } from '@sap-cloud-sdk/util';
-import { Filterable } from '../../filter';
-import { EntityBase } from '../../entity';
-import { Constructable } from '../../constructable';
-import { Orderable } from '../../order';
-import { FieldType, Selectable } from '../../selectable';
-import { EdmTypeShared } from '../../edm-types';
+import { Filterable } from '../filter';
+import { EntityBase } from '../entity';
+import { Constructable } from '../constructable';
+import { Orderable } from '../order';
+import { FieldType, Selectable } from '../selectable';
+import { EdmTypeShared } from '../edm-types';
 
 export interface UriConverterOld {
   getQueryParametersForFilter<EntityT extends EntityBase>(

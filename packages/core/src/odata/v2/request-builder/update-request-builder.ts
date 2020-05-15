@@ -5,7 +5,7 @@ import { pipe } from 'rambda';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { Entity } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
-import { ODataUpdateRequestConfig } from '../../common/request-builder/request/odata-update-request-config';
+import { ODataUpdateRequestConfig } from '../../common/request/odata-update-request-config';
 import {
   serializeEntity,
   serializeEntityNonCustomFields

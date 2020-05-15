@@ -6,7 +6,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
-import { ODataFunctionImportRequestConfig } from '../../common/request-builder/request/odata-function-import-request-config';
+import { ODataFunctionImportRequestConfig } from '../../common/request/odata-function-import-request-config';
 import { FunctionImportParameters, RequestMethodType } from '../../common';
 import { oDataUri } from './request/uri-conversion';
 

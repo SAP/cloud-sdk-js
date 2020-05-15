@@ -8,8 +8,8 @@ import {
   DestinationRetrievalOptions,
   isDestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { ODataRequest } from './request/odata-request';
-import { ODataRequestConfig } from './request/odata-request-config';
+import { ODataRequest } from '../request/odata-request';
+import { ODataRequestConfig } from '../request/odata-request-config';
 
 /**
  * Base class for all request builders.

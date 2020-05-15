@@ -19,10 +19,11 @@ This document contains a collection of OData v4 features we want to implement an
 - Proposal accepted.
 
 ## $expand with Subqueries
-- Make queries on expanded entities (navigation properties)
+- Make queries on expanded entities (navigation properties and complex properties)
 - Works for `getAll` and `getByKey`
-- Example request for collection: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName,Emails;$filter=startswith(UserName,%27s%27))
-- Example request for single link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=BestFriend&$expand=BestFriend($select=UserName,Emails)
+- Example request for one to many link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=Friends&$expand=Friends($select=UserName,Emails;$filter=startswith(UserName,%27s%27))
+- Example request for one to one link: https://services.odata.org/TripPinRESTierService/(S(ljgcbxqwp45c5l5m0h24kk1g))/People?$select=BestFriend&$expand=BestFriend($select=UserName,Emails)
+- Could not find a working example for complex types
 
 ### Questions
 - Query options related to lists should be used on one-to-many navigation properties only? (This is not failing in the reference services)
@@ -79,8 +80,7 @@ This document contains a collection of OData v4 features we want to implement an
   ```
 
 ### Decision:
-- Second proposal accepted under the assumption that expanding navigation properties automatically selects all properties of the navigation property.
-- If the assumtion is incorrect, use the first proposal.
+- Second proposal accepted. Our assumption that expanding navigation properties automatically selects all properties of the navigation property has proven correct.
 
 ## $select with Subqueries
 - Can only be used for complex types and collection types, not for navigation properties
@@ -131,7 +131,6 @@ This document contains a collection of OData v4 features we want to implement an
 
 
 ## Filtering the Root Collection by Filters on One-To-One Links
-- One-To-Many Links: by filtering in $expand
 - One-To-One Links:
   - v2 example:
   https://services.odata.org/V2/Northwind/Northwind.svc/Products?$select=Category/CategoryID&$expand=Category&$format=json&$filter=Category/CategoryID%20eq%202
@@ -192,6 +191,10 @@ TestEntity.requestBuilder()
 ### Decision
 - Proposal accepted.
 
+Here some flow on the actual filter possibilities and in which version they are implemented.
+The possible filter functions will depend on the data type. For example a string type will offer different conditions than a boolean or collection.
+![](../img/filter-flowchart.png)
+
 
 ## Type dependent filter expressions (e. g. 'year' for dates)
 - Already available in v2 for the most part, there are some more functions
@@ -214,27 +217,138 @@ TestEntity.requestBuilder()
 - Proposal accepted.
 
 ## Deep update of child entitites
-- Recap v2 create as child of:
-```ts
-TestEntityMultiLink.requestBuilder()
-  .create(multiLinkEntity)
-  .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
+### odata v4.0 V.S. odata v4.0.1
+#### odata v4.0
+- only support binding info for navi-property
+  1. [1-to-1] replace the existing one `object.set()`
+  1. [1-to-n] add them to the existing collection `collection.addAll()`
+#### odata v4.0.1
+- full set by using the same navi-property name `object.set()`, which does NOT allow:
+  - adding links
+  - deleting links
+  - deleting entities
+because it replaces the existing data with the payload.
+``` json
+{
+  "@type":"#Northwind.Manager",
+  "FirstName" : "Patricia",
+  "DirectReports": [
+    {
+      "@id": "Employees(5}"
+    },
+    {
+      "@id": "Employees(6}",
+      "LastName": "Smith"
+    },
+    {
+      "FirstName": "Suzanne",
+      "LastName": "Brown"
+    }
+  ]
+}
 ```
-### Questions
-- Understand what deep update actually is
-- Refer to Alex to understand details
-- Consider differences between 4.0 and 4.01?
-
+- delta update by using a `@delta` annotation
+  - delete entities (`@removed`)
+  - delete links (`reason = deleted`)
+  - add links (with id/key)
+  - update entities (with id/key + Partial<Entity>)
+  - create new entities + add links (without id/key)
+``` json
+{
+  "@type": "#Northwind.Manager",
+  "FirstName": "Patricia",
+  "DirectReports@delta": [
+    {
+      "@removed": {
+        "reason": "deleted"
+      },
+      "@id": "Employees(3)"
+    },
+    {
+      "@removed": {
+        "reason": "changed"
+      },
+      "@id": "Employees(4)"
+    },
+    {
+      "@id": "Employees(5)"
+    },
+    {
+      "@id": "Employees(6)",
+      "LastName": "Smith"
+    },
+    {
+      "FirstName": "Suzanne",
+      "LastName": "Brown"
+    }
+  ]
+}
+```
 ### Proposal(s)
-- Same as v2 create as child of
-  ```ts
-  TestEntityMultiLink.requestBuilder()
-    .update(multiLinkEntity)
-    .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
-  ```
+#### Full set
+- like deep create
+- no api changes, only behaviour changes
+- be aware of the `@id` field that needs to be handled
+   - [chosen] add `@id` attribute implicitly in the request builder (Java)
+   - [interesting][optional] change navi-property type to e.g., :
+   ```
+   toOtherMultiLink: (TestEntityOtherMultiLink & Identifiable)[];
+   
+   interface Identifiable{
+       _id: string
+   }
+   ```
+   - hint: `@id` is used [here](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_LinktoRelatedEntitiesWhenCreatinganE)
+   
+``` typescript
+    const singleLink = getSingleLinkFromSystem();
+    singleLink.stringProperty = 'new value';
+    
+    const entity = TestEntity.builder()
+      .toSingleLink(singleLink)
+      .build();
+      
+    new UpdateRequestBuilder(TestEntity, entity)
+    .execute(destination);
+```
+#### Delta update
+``` typescript
+    new UpdateRequestBuilder(TestEntity, entity)
+      .deepUpdateWithDeltaPayload(
+      TestEntity.TO_MULTI_LINK, deltaMultiLink1, deltaMultiLink2
+    ).deepUpdateWithDeltaPayload(
+      someOtherNaviProperties...
+    )
+    .execute(destination);
+```
+```
+deltaMultiLink: TestEntityMultiLink & IsRemoved;
+
+interface IsRemoved{
+    removed?: boolean;
+    reason?: string;
+}
+```
+
+Again, `@id` can be treated the same way as the full set
 
 ### Decision
-- TBD, decision postponed after we understand details
+#### 4.0 V.S. 4.0.1
+We stick to version `4.0.1`, since it's newer, the latest and more powerful.
+Also, this [link](http://docs.oasis-open.org/odata/new-in-odata/v4.01/cn01/new-in-odata-v4.01-cn01.html#_Toc485385071)
+indicates that 4.0.1 introduces deep updates.
+### Scope
+We will do the the implementation of the `full set` and not the delta since there is no test system to support it.
+- Full set (Y)
+- @delta (N)
+  - @delete (N)
+    - reason (N)
+  - with id/key (N)
+  - without id/key (N)
+### Priority
+Relatively low
+- No test system
+- No feature request
 
 # Additional Features aka. Nice to haves
 
@@ -304,3 +418,8 @@ TestEntityMultiLink.requestBuilder()
 ## Other Featuers
 - Singletons
 - Bound Operations (actions and functions)
+- create entities + add links
+  - It seems that the sdk v2 api already supports such operation. 
+    But for both s4 business partner and [this reference service](https://services.odata.org/V2/(S(readwrite))/OData/OData.svc/),
+    it's not easy to test whether our existing v2 api support such operation, because the children entities cannot be created as orphan entities.
+    Without orphan entities, one cannot create a parent entity and link the parent to some children. 

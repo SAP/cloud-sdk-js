@@ -17,7 +17,7 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
 import { HttpReponse } from '../../../http-client';
-import { oDataUri } from './request/uri-conversion';
+import { oDataUri } from '../uri-conversion';
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,
  * where no selection is equal to selecting all fields.

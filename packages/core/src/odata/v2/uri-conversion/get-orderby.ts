@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { getOrderBy, Orderable } from '../../../../common';
-import { Entity } from '../../../entity';
+import { getOrderBy, Orderable } from '../../common';
+import { Entity } from '../entity';
 
 /**
  * @deprecated Use [[getOrderBy]] instead

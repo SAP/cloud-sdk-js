@@ -10,8 +10,8 @@ import {
   createGetResourcePathForKeys,
   Filterable,
   createGetFilter
-} from '../../../../common';
-import { Entity } from '../../../entity';
+} from '../../common';
+import { Entity } from '../entity';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
 import * as uriConverter from './uri-value-converter';

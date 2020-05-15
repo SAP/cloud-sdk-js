@@ -11,11 +11,11 @@ import {
   filterNullishValues,
   getHeader,
   replaceDuplicateKeys
-} from '../header-builder';
+} from '../../../../header-builder';
 // TODO: v2.0 - The buildCsrfHeaders import cannot be combined with the rest of the other headers due to circular dependencies
-import { buildCsrfHeaders } from '../header-builder/csrf-token-header';
+import { buildCsrfHeaders } from '../../../../header-builder/csrf-token-header';
 // TODO: v2.0 - The buildHeadersForDestination import cannot be combined with the rest of the other headers due to circular dependencies
-import { buildHeadersForDestination } from '../header-builder/header-builder';
+import { buildHeadersForDestination } from '../../../../header-builder/header-builder';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 

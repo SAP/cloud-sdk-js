@@ -10,7 +10,7 @@ import {
   HttpAgentConfig,
   HttpsAgentConfig
 } from '../http-agent';
-import { basicHeader } from '../odata/common';
+import { basicHeader } from '../header-builder';
 
 const logger = createLogger({
   package: 'core',

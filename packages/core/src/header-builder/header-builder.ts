@@ -1,16 +1,19 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { Destination } from '../../../../scp-cf';
-import { ODataRequestConfig, isWithETag } from '../request';
-import { ODataRequest } from '../request/odata-request';
+import { Destination } from '../scp-cf';
+import {
+  ODataRequestConfig,
+  isWithETag
+} from '../odata/common/request-builder/request';
+import { ODataRequest } from '../odata/common/request-builder/request/odata-request';
+import { buildAuthorizationHeaders } from './authorization-header';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
-  filterNullishValues,
+  getHeader,
   replaceDuplicateKeys,
-  getHeader
+  filterNullishValues
 } from './headers-util';
-import { buildAuthorizationHeaders } from './authorization-header';
 
 /**
  * Create object containing all headers, including custom headers for a given  OData request configuration and destination.

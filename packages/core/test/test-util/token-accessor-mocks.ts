@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { decodeJwt } from '../../src';
+import { decodeJwt } from '../../src/util/jwt';
 import * as tokenAccessor from '../../src/scp-cf/token-accessor';
 import { TestTenants } from './environment-mocks';
 import {

@@ -11,14 +11,14 @@ import {
 import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
-} from '../../../src/odata/common/request-builder/header-builder/authorization-header';
+} from '../../../src/header-builder/authorization-header';
 import { ODataGetAllRequestConfig } from '../../../src/odata/common/request-builder/request/odata-get-all-request-config';
 import {
   defaultDestination,
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { buildHeadersForDestination } from '../../../src/odata/common/request-builder/header-builder/header-builder';
+import { buildHeadersForDestination } from '../../../src/header-builder/header-builder';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {

@@ -1,12 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { ODataBatchConfig } from '../../src/odata/common/request/odata-batch-config';
+import { ODataBatchRequestConfig } from '../../src/odata/common/request/odata-batch-request-config';
 import { defaultTestServicePath } from '../test-util/test-services/v2/test-service';
 
 describe('ODataBatchConfig', () => {
-  let config: ODataBatchConfig;
+  let config: ODataBatchRequestConfig;
 
   beforeEach(() => {
-    config = new ODataBatchConfig(defaultTestServicePath, 'batch_id');
+    config = new ODataBatchRequestConfig(defaultTestServicePath, 'batch_id');
   });
 
   it('method is post', () => {

@@ -6,21 +6,7 @@ import { Orderable } from '../order';
 import { Link } from './link';
 
 /**
- * Represents a navigation property of an OData entity.
- *
- * OData is a relational data model, i.e. entities can be related to one another.
- * For example, BusinessPartner is in a 1:n relation with BusinessPartnerAddress and in a 1:1 relation with Customer.
- * Like normal properties, navigation properties can be used for selecting (expanding) and filtering.
- * For example, when constructing a query on the BusinessPartner entity, an instance of `OneToManyLink<BusinessPartner, Customer>`
- * can be passed as argument to the select function, e.g. `BusinessPartner.TO_CUSTOMER`.
- *
- * NOTE: the OneToManyLink class represents navigation properties with a 1:n cardinality.
- * For navigation properties with a 1:0..1 cardinality, see [[OneToOneLink]].
- *
- * See also: [[Selectable]]
- *
- * @typeparam EntityT - Type of the entity to be linked from
- * @typeparam LinkedEntityT - Type of the entity to be linked to
+ * @experimental
  */
 export class OneToManyLink<
   EntityT extends EntityBase,

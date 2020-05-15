@@ -19,7 +19,7 @@ import {
   ErrorResponse
 } from '../common';
 import { MethodRequestBuilderBase } from '../common/request-builder/request-builder-base';
-import { ODataBatchConfig } from '../common/request/odata-batch-config';
+import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
 import { ODataRequestConfig } from '../common/request/odata-request-config';
 import { Entity } from './entity';
 import { deserializeEntity } from './entity-deserializer';
@@ -43,7 +43,7 @@ const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
  *
  */
 export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
-  ODataBatchConfig
+  ODataBatchRequestConfig
 > {
   /**
    * Creates an instance of ODataBatchRequestBuilder.
@@ -65,7 +65,7 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
     )[],
     readonly entityToConstructorMap: MapType<Constructable<Entity>>
   ) {
-    super(new ODataBatchConfig(defaultServicePath, uuid()));
+    super(new ODataBatchRequestConfig(defaultServicePath, uuid()));
     this.requestConfig.payload = getPayload(requests, this.requestConfig);
   }
 
@@ -131,7 +131,7 @@ function getPayload(
     | GetAllRequestBuilder<Entity>
     | GetByKeyRequestBuilder<Entity>
   )[],
-  requestConfig: ODataBatchConfig
+  requestConfig: ODataBatchRequestConfig
 ): string {
   const payloads = requests.map(toRequestBody).filter(b => !!b);
   if (payloads.length > 0) {

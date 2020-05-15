@@ -13,7 +13,6 @@ export * from './edm-type-field';
 export * from './field';
 export * from './link';
 export * from './number-field';
-export * from './one-to-many-link';
 export * from './one-to-one-link';
 export * from './selectable';
 export * from './simple-type-fields';

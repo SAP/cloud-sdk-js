@@ -17,8 +17,12 @@ import {
   ComplexTypePropertyFields,
   FieldType
 } from '../selectable';
-import { UriConverter } from '../../v2';
+import { UriConverter } from '../request';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @hidden
+ */
 export function createGetFilter(uriConverter: UriConverter) {
   /**
    * Get an object containing the given filter as query parameter, or an empty object if none was given.

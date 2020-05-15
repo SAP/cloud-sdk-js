@@ -3,11 +3,11 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { ODataRequestConfig } from './odata-request-config';
 
-export class ODataBatchConfig extends ODataRequestConfig {
+export class ODataBatchRequestConfig extends ODataRequestConfig {
   static readonly content_type_prefix = 'multipart/mixed; boundary=batch_';
 
   /**
-   * Creates an instance of ODataBatchConfig.
+   * Creates an instance of ODataBatchRequestConfig.
    *
    * @param defaultServicePath - The default OData service path
    * @param batchId - The batch id for building the header and the payload.
@@ -16,7 +16,7 @@ export class ODataBatchConfig extends ODataRequestConfig {
     super(
       'post',
       defaultServicePath,
-      `${ODataBatchConfig.content_type_prefix}${batchId}`
+      `${ODataBatchRequestConfig.content_type_prefix}${batchId}`
     );
   }
 

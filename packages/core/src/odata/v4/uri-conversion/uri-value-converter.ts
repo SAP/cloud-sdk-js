@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable valid-jsdoc */
 
-import { tsToEdm } from '../../../payload-value-converter';
-import { EdmTypeShared } from '../../../../common';
+import { tsToEdm } from '../payload-value-converter';
+import { EdmTypeShared } from '../../common';
 
 /**
  * @hidden

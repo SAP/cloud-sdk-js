@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../../../entity';
-import { Expandable } from '../../../../common/expandable';
-import { Constructable, AllFields, Link } from '../../../../common';
-import { OneToManyLink } from '../../../../common/selectable/one-to-many-link';
+import { Entity } from '../entity';
+import { Expandable } from '../../common/expandable';
+import { Constructable, AllFields, Link } from '../../common';
+import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { getFilter } from './get-filter';
 import { getSelect } from './get-select';
 

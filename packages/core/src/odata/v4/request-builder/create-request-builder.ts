@@ -12,7 +12,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { oDataUri } from './request/uri-conversion';
+import { oDataUri } from '../uri-conversion';
 /**
  * Create OData request to create an entity.
  *

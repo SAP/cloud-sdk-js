@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Filterable, Constructable, createGetFilter } from '../../../../common';
-import { Entity } from '../../../entity';
+import { Filterable, Constructable, createGetFilter } from '../../common';
+import { Entity } from '../entity';
 import * as uriConverter from './uri-value-converter';
 
 /**

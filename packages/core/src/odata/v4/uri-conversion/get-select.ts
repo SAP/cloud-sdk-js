@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../../../entity';
-import { Selectable } from '../../../../common';
+import { Entity } from '../entity';
+import { Selectable } from '../../common';
 
 /**
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.

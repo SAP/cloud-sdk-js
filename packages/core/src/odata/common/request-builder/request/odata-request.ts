@@ -6,7 +6,7 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '../../../../util/remove-slashes';
-import { HttpResponse, executeHttpRequest } from '../../http-client';
+import { HttpResponse, executeHttpRequest } from '../../../../http-client';
 import {
   filterNullishValues,
   getHeader,

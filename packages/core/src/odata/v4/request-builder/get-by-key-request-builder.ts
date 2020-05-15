@@ -5,8 +5,7 @@ import {
   Constructable,
   EntityIdentifiable,
   FieldType,
-  Selectable,
-  HttpReponse
+  Selectable
 } from '../../common';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
@@ -18,6 +17,7 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request-builder/request/odata-get-by-key-request-config';
 import { Expandable } from '../../common/expandable';
+import { HttpReponse } from '../../../http-client';
 import { oDataUri } from './request/uri-conversion';
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,

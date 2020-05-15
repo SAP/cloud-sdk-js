@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
-import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
+import { HttpRequestConfig, executeHttpRequest } from '../../../../http-client';
 import { ODataRequestConfig } from '../request';
 import { Destination, DestinationNameAndJwt } from '../../../../scp-cf';
 import { ODataRequest } from '../request/odata-request';

@@ -29,7 +29,7 @@ Specifically the following three objects are stored:
 
 - The current _Tenant_
 - The current _Principal_ (User)
-- The [Jason Web Token](https://jwt.io) (JWT)
+- The [JSON Web Token](https://jwt.io) (JWT)
 
 This information is used throughout the SDK to provide features like tenant and principal isolation, JWT verification and authorization against other systems and services.
 To ensure different tenants and users are properly isolated in an application this information is always limited to the Thread it was created on, unless it is explicitly passed on by the application (see [Propagating the Thread Context](#running-asynchronous-operations)).

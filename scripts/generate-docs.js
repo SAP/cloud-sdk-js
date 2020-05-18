@@ -1,3 +1,4 @@
+
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 const { execSync } = require('child_process');
 const fs = require('fs');
@@ -114,6 +115,11 @@ function writeVersions() {
   fs.writeFileSync(
     path.resolve('docs', 'api', 'versions.js'),
     `export default ${jsonStringify(apiVersions)}`,
+    'utf8'
+  );
+  fs.writeFileSync(
+    path.resolve('docs', 'api', 'versions.json'),
+    `${jsonStringify(apiVersions)}`,
     'utf8'
   );
 }

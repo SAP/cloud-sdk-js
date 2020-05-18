@@ -6,3 +6,4 @@ export * from './odata/v2';
 export * from './header-builder';
 export * from './http-agent';
 export * from './http-client';
+export * as v4 from './odata/v4';

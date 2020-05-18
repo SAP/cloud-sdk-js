@@ -9,6 +9,7 @@ import {
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
 
 /**
+ * @experimental This is experimental and is subject to change. Use with caution.
  * OData function import request configuration for a set of parameters.
  *
  * @typeparam ParametersT - Type of the original parameters object

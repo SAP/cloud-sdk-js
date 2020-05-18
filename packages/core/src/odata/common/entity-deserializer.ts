@@ -163,5 +163,6 @@ export function enityDeserializer(edmToTs) {
       }, {});
   }
 
+  // TODO: extractCustomFields should not be exported here. This was probably done only for testing
   return { extractCustomFields, deserializeEntity };
 }

@@ -9,6 +9,7 @@ import {
 } from './test-services/v4/test-service';
 // import { TestEntity as TestEntityV2 } from './test-services/v2/test-service';
 
+// TODO: This file is for intermediate testing purposes only. It does not contain any actual tests and should be removed once our v4 support is not experimental anymore.
 describe('v4', () => {
   it('selects', () => {
     TestEntity.customField('Peter').edmBoolean().equals(false);

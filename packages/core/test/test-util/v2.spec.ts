@@ -9,7 +9,8 @@ import {
 } from './test-services/v2/test-service';
 // import { TestEntity as TestEntityV4 } from './test-services/v4/test-service';
 
-describe('v4', () => {
+// TODO: This file is for intermediate testing purposes only. It does not contain any actual tests and should be removed once our v4 support is not experimental anymore.
+describe('v2', () => {
   it('selects', () => {
     TestEntity.requestBuilder()
       .getAll()

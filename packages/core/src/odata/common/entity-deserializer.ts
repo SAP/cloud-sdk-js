@@ -34,7 +34,11 @@ export function enityDeserializer(edmToTs) {
     const regularODataProperties = [
       '__metadata',
       '__deferred',
-      ...entityConstructor._allFields.map(field => field._fieldName)
+      // type assertion for backwards compatibility, TODO: remove in v2.0
+      ...(entityConstructor._allFields as (
+        | Field<EntityT>
+        | Link<EntityT>
+      )[]).map(field => field._fieldName)
     ];
     const regularFields = new Set<string>(regularODataProperties);
     return Object.keys(json)
@@ -61,7 +65,7 @@ export function enityDeserializer(edmToTs) {
     requestHeader?: any
   ): EntityT {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
-    return entityConstructor._allFields
+    return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
         entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(

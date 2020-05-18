@@ -3,7 +3,7 @@
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity';
 import { Constructable } from '../constructable';
-import { FieldType } from '../selectable';
+import { FieldType, Field } from '../selectable';
 import { toStaticPropertyFormat } from '../../../util';
 import { UriConverter } from '../../v2';
 
@@ -48,7 +48,7 @@ export function createGetResourcePathForKeys(uriConverter: UriConverter) {
     entityConstructor: Constructable<EntityT>
   ): string[] {
     const givenKeys = Object.keys(keys);
-    return entityConstructor._keyFields
+    return (entityConstructor._keyFields as Field<EntityT>[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .map(field => field._fieldName)
       .filter(fieldName => !givenKeys.includes(fieldName));
   }
@@ -57,7 +57,8 @@ export function createGetResourcePathForKeys(uriConverter: UriConverter) {
     keys: MapType<FieldType>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
-    const validKeys = entityConstructor._keyFields.map(
+    // type assertion for backwards compatibility, TODO: remove in v2.0
+    const validKeys = (entityConstructor._keyFields as Field<EntityT>[]).map(
       field => field._fieldName
     );
     return Object.keys(keys).filter(key => !validKeys.includes(key));

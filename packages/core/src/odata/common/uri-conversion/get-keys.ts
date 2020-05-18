@@ -4,6 +4,7 @@ import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity';
 import { Constructable } from '../constructable';
 import { toPropertyFormat } from '../../../util';
+import { Field } from '../../v2';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.
@@ -21,7 +22,8 @@ export function getEntityKeys<EntityT extends EntityBase>(
       'getEntityKeys() cannot extract keys from an undefined or null object.'
     );
   }
-  return entityConstructor._keyFields.reduce(
+  // type assertion for backwards compatibility, TODO: remove in v2.0
+  return (entityConstructor._keyFields as Field<EntityT>[]).reduce(
     (prev, curr) => ({
       ...prev,
       [curr._fieldName]: entity[toPropertyFormat(curr._fieldName)]

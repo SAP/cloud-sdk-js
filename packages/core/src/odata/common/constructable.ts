@@ -2,7 +2,7 @@
 
 import { EntityBase, EntityBuilderType } from './entity';
 import { RequestBuilder } from './request-builder/request-builder';
-import { CustomFieldBase, Field, Link } from './selectable';
+import { CustomFieldBase, Selectable, Field, Link } from './selectable';
 
 /**
  * @hidden
@@ -14,9 +14,9 @@ export interface Constructable<
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
-  _allFields: (Field<EntityT> | Link<EntityT>)[];
-  _keyFields: Field<EntityT>[];
-  _keys: { [keys: string]: Field<EntityT> };
+  _allFields: Selectable<EntityT>[] | (Field<EntityT> | Link<EntityT>)[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _keyFields: Selectable<EntityT>[] | Field<EntityT>[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _keys: { [keys: string]: Selectable<EntityT> | Field<EntityT> }; // Selectable only here for backwards TODO: Remove in v2.0
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;
   builder(): EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;

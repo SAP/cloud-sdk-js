@@ -1,9 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  FunctionImportParameter,
-  ODataFunctionImportRequestConfig,
-  oDataUri
-} from '../../../src';
+import { FunctionImportParameter, oDataUri } from '../../../src';
+import { ODataFunctionImportRequestConfig } from '../../../src/odata/common/request/odata-function-import-request-config';
 
 interface TestParameterType {
   test1: string;

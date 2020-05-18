@@ -64,7 +64,12 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/core',
-        namedImports: ['ComplexTypeField', 'Entity', 'FieldType', 'createComplexType']
+        namedImports: [
+          'ComplexTypeField',
+          'Entity',
+          'FieldType',
+          'createComplexType'
+        ]
       }
     ]);
   });

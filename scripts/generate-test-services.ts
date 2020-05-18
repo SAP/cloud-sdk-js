@@ -3,6 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
+import { exec } from 'child_process';
 import { generate } from '../packages/generator/src';
 
 type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
@@ -40,6 +41,9 @@ const generatorConfig = {
 
 function generateTestServicesPackage(outputDir) {
   generate({ ...generatorConfig, outputDir, generateJs: true });
+  exec(
+    'cp -r test-packages/test-services/test-service-legacy test-packages/test-services/srv/test-service-legacy'
+  );
 }
 
 async function generateTestServicesWithLocalCoreModules(

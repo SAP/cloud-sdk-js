@@ -8,7 +8,7 @@ import {
   mockDeleteRequest
 } from '../test-util/request-mocker';
 import { testEntityResourcePath } from '../test-util/test-data';
-import { TestEntity } from '../test-util/test-services/test-service';
+import { TestEntity } from '../test-util/test-services/v2/test-service';
 
 describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();

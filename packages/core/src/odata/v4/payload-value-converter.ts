@@ -194,7 +194,6 @@ const deserializers: EdmTypeMapping = {
   'Edm.Time': toTime
 };
 
-//Here the switch is relavant
 const serializers: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,

@@ -3,14 +3,14 @@ import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import {
-  basicHeader,
-  getProtocolOrDefault,
-  HttpAgentConfig,
-  HttpsAgentConfig,
-  Protocol
-} from '../request-builder';
 import { Destination, ProxyConfiguration } from '../scp-cf';
+import {
+  getProtocolOrDefault,
+  Protocol,
+  HttpAgentConfig,
+  HttpsAgentConfig
+} from '../http-agent';
+import { basicHeader } from '../header-builder';
 
 const logger = createLogger({
   package: 'core',

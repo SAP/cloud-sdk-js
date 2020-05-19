@@ -181,7 +181,7 @@ export async function getDestinationFromDestinationService(
     );
     if (subscriberDestinationCache) {
       logger.info(
-        'Sucessfully retrieved destination from destination service cache for subscriber destinations.'
+        'Successfully retrieved destination from destination service cache for subscriber destinations.'
       );
       return subscriberDestinationCache;
     }
@@ -204,7 +204,7 @@ export async function getDestinationFromDestinationService(
           isIdenticalTenant(decodedUserJwt!, decodedProviderJwt)))
     ) {
       logger.info(
-        'Sucessfully retrieved destination from destination service cache for provider destinations.'
+        'Successfully retrieved destination from destination service cache for provider destinations.'
       );
       return providerDestinationCache;
     }
@@ -225,7 +225,7 @@ export async function getDestinationFromDestinationService(
     selectionStrategy !== alwaysSubscriber
   ) {
     logger.info(
-      'Sucessfully retrieved destination from destination service cache for provider destinations.'
+      'Successfully retrieved destination from destination service cache for provider destinations.'
     );
     return providerDestinationCache;
   }
@@ -301,7 +301,7 @@ export async function getDestinationFromDestinationService(
 
     if (destination) {
       logger.info(
-        'Sucessfully retrieved destination from destination service.'
+        'Successfully retrieved destination from destination service.'
       );
       if (proxyStrategy(destination) === ProxyStrategy.ON_PREMISE_PROXY) {
         destination = await addProxyConfigurationOnPrem(
@@ -332,7 +332,7 @@ function tryDestinationForServiceBinding(
   logger.info('Attempting to retrieve destination from service binding.');
   try {
     const destination = destinationForServiceBinding(name);
-    logger.info('Sucessfully retrieved destination from service binding.');
+    logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {
     logger.info(error.message);
@@ -358,7 +358,7 @@ function tryDestinationFromEnv(name: string): Destination | undefined {
       const destination = getDestinationFromEnvByName(name);
       if (destination) {
         logger.info(
-          'Sucessfully retrieved destination from environment variable.'
+          'Successfully retrieved destination from environment variable.'
         );
         return destination;
       }

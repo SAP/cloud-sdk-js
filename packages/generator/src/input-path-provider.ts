@@ -13,9 +13,8 @@ export function edmxPaths(input: PathLike): PathLike[] {
         prev.push(...curr);
         return prev;
       }, []);
-  } else {
-    return hasEdmxFileExtension(input.toString()) ? [input] : [];
   }
+  return hasEdmxFileExtension(input.toString()) ? [input] : [];
 }
 
 export function inputPaths(

@@ -1,5 +1,5 @@
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, Link, NumberField, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
@@ -142,12 +142,12 @@ export declare namespace TestEntityMultiLink {
     /**
      * All key fields of the TestEntityMultiLink entity.
      */
-    const _keyFields: Array<Selectable<TestEntityMultiLink>>;
+    const _keyFields: Array<Field<TestEntityMultiLink>>;
     /**
      * Mapping of all key field names to the respective static field property TestEntityMultiLink.
      */
     const _keys: {
-        [keys: string]: Selectable<TestEntityMultiLink>;
+        [keys: string]: Field<TestEntityMultiLink>;
     };
 }
 //# sourceMappingURL=TestEntityMultiLink.d.ts.map

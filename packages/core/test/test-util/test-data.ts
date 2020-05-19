@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { convertToUriFormat } from '../../src';
-import { TestEntity } from './test-services/test-service';
+import { TestEntity } from './test-services/v2/test-service';
 
 export function createOriginalTestEntityData1() {
   return {

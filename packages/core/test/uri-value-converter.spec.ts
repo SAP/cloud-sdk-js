@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import BigNumber from 'bignumber.js';
-import { edmToTs } from '../src/payload-value-converter';
-import { convertToUriFormat } from '../src/uri-value-converter';
+import { convertToUriFormat, edmToTs } from '../src';
 import moment = require('moment');
 
 describe('convertToUriFormat', () => {

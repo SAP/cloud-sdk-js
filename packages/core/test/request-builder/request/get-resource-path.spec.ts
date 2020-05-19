@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
-import { getResourcePathForKeys } from '../../../src/request-builder/request/get-resource-path';
 import { muteLoggers } from '../../test-util/mute-logger';
 import { testEntityResourcePath } from '../../test-util/test-data';
-import { TestEntity } from '../../test-util/test-services/test-service';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
+import { getResourcePathForKeys } from '../../../src';
 
 describe('get resource path', () => {
   beforeAll(() => {

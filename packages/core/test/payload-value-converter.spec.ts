@@ -7,7 +7,7 @@ import {
   momentToEdmDateTime,
   parseNumber,
   tsToEdm
-} from '../src/payload-value-converter';
+} from '../src';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {

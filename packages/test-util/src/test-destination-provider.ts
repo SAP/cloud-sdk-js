@@ -141,11 +141,10 @@ function readCredentialsOrFail(
   if (options && options.credentialsFilePath) {
     if (existsSync(options.credentialsFilePath)) {
       return readCredentials(options.credentialsFilePath).credentials;
-    } else {
-      throw new Error(
-        `The provided path (${options.credentialsFilePath}) to the credentials file is invalid!`
-      );
     }
+    throw new Error(
+      `The provided path (${options.credentialsFilePath}) to the credentials file is invalid!`
+    );
   }
 
   const foundPath = findFileSearchingUpwards(process.cwd(), CREDENTIALS_FILE);

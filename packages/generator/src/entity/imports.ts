@@ -31,7 +31,7 @@ export function importDeclarations(
         'CustomField',
         'Entity',
         'EntityBuilderType',
-        'Selectable'
+        'Field'
       ].sort()
     )
   ];

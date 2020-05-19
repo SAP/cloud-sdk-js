@@ -27,7 +27,7 @@
 
 ## Fixed Issues
 
--
+- Fix the OData client generator to avoid a compilation error when a complex type only contain complex types.
 
 
 # 1.20.1

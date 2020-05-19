@@ -42,7 +42,7 @@ export abstract class ComplexTypeField<
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
 
   /**
-   * @deprecated since verision 1.19.0
+   * @deprecated Since v1.19.0.
    *
    * Creates an instance of ComplexTypeField.
    *

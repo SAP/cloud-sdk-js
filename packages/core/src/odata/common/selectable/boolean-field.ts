@@ -60,7 +60,7 @@ export class ComplexTypeBooleanPropertyField<
   );
 
   /**
-   * @deprecated since verision 1.19.0
+   * @deprecated Since v1.19.0.
    *
    * Creates an instance of ComplexTypeBigNumberPropertyField.
    *

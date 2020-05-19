@@ -17,7 +17,7 @@ export interface TestNestedComplexType {
 }
 
 /**
- * @deprecated since v1.6.0. Use [[TestNestedComplexType.build]] instead.
+ * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
  */
 export function createTestNestedComplexType(json: any): TestNestedComplexType {
   return TestNestedComplexType.build(json);

@@ -88,7 +88,7 @@ export interface TestComplexType {
     complexTypeProperty?: TestNestedComplexType;
 }
 /**
- * @deprecated since v1.6.0. Use [[TestComplexType.build]] instead.
+ * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
  */
 export declare function createTestComplexType_1(json: any): TestComplexType;
 /**

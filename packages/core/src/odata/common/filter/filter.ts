@@ -45,7 +45,7 @@ export class Filter<EntityT extends EntityBase, FieldT extends FieldType>
   readonly _entity: EntityT;
 
   /**
-   * @deprecated Since v1.16.0 Use [[field]] instead.
+   * @deprecated Since v1.16.0. Use [[field]] instead.
    */
   public _fieldName: string | FilterFunction<EntityT, FieldT>;
 

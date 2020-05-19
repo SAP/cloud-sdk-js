@@ -10,7 +10,7 @@ export interface TestNestedComplexType {
     stringProperty?: string;
 }
 /**
- * @deprecated since v1.6.0. Use [[TestNestedComplexType.build]] instead.
+ * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
  */
 export declare function createTestNestedComplexType(json: any): TestNestedComplexType;
 /**

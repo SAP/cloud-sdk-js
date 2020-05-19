@@ -6,7 +6,7 @@ import { ODataFunctionImportRequestConfig as Base } from '../../common/request/o
 import { RequestMethodType } from '../../common';
 
 /**
- * @deprecated Use superclass instead.
+ * @deprecated Since v1.21.0. Use superclass instead.
  * OData function import request configuration for a set of parameters.
  *
  * @typeparam ParametersT - Type of the original parameters object

@@ -12,21 +12,6 @@ export class OneToManyLink<
   EntityT extends EntityBase,
   LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
-  /**
-   * @deprecated
-   * Create a new link based on a given link.
-   *
-   * @typeparam EntityT - Type of the entity to be linked from
-   * @typeparam LinkedEntityT - Type of the entity to be linked to
-   * @param link - OneToManyLink to be cloned
-   * @returns Newly created link
-   */
-  static clone<EntityT extends EntityBase, LinkedEntityT extends EntityBase>(
-    link: OneToManyLink<EntityT, LinkedEntityT>
-  ): OneToManyLink<EntityT, LinkedEntityT> {
-    return link.clone();
-  }
-
   _filters: FilterList<LinkedEntityT>;
   _orderBy: Orderable<LinkedEntityT>[] = [];
   _top: number;

@@ -95,7 +95,7 @@ export interface TestComplexType {
 }
 
 /**
- * @deprecated since v1.6.0. Use [[TestComplexType.build]] instead.
+ * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
  */
 export function createTestComplexType_1(json: any): TestComplexType {
   return TestComplexType.build(json);

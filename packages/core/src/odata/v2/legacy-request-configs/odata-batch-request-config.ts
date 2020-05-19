@@ -4,7 +4,7 @@ import { ODataBatchRequestConfig } from '../../common/request/odata-batch-reques
 
 export class ODataBatchConfig extends ODataBatchRequestConfig {
   /**
-   * @deprecated Use superclass instead.
+   * @deprecated Since v1.21.0. Use superclass instead.
    * Creates an instance of ODataBatchConfig.
    *
    * @param defaultServicePath - The default OData service path

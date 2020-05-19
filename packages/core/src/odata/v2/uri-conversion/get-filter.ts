@@ -5,7 +5,7 @@ import { Constructable, Filterable } from '../../common';
 import { oDataUri } from './odata-uri';
 
 /**
- * @deprecated Use [[oDataUri.getFilter]] instead
+ * @deprecated Since v1.21.0. Use [[oDataUri.getFilter]] instead.
  * Get an object containing the given filter as query parameter, or an empty object if none was given.
  *
  * @typeparam EntityT - Type of the entity to filter on

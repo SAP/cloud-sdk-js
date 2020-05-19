@@ -20,7 +20,7 @@ export type FieldType =
   | undefined;
 
 /**
- * @deprecated Use [[FieldType]] instead.
+ * @deprecated Since v1.18.0. Use [[FieldType]] instead.
  * Represents types of nested fields.
  */
 export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };

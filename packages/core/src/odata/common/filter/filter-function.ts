@@ -29,9 +29,8 @@ export abstract class FilterFunction<
   ) {}
 
   /**
-   * @deprecated
+   * @deprecated Since v1.21.0. There will be no replacement. Let us know if you were using this functionality.
    * Serializes the filter function into a string
-   *
    * @param parentFieldNames - Names of parents in case the function is part of a filter on a navigation property
    * @returns The filter function as string
    */
@@ -65,7 +64,7 @@ export abstract class FilterFunction<
   }
 
   /**
-   * @deprecated
+   * @deprecated Since v1.21.0. There will be no replacement. Let us know if you were using this functionality.
    * For different type of filter function parameters, build a function that generates a string as url pattern.
    * @param param - One parameter of the filter function
    * @param parentFieldNames - The parent field name list used when the field with navigation properties are involved

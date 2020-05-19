@@ -11,7 +11,8 @@
     "**/dist/**/*",
     "**/test/**/*",
     "test-packages/**/*",
-    "packages/core/src/odata/v4/**/*"
+    "packages/core/src/odata/v4/**/*",
+    "packages/core/src/odata/common/**/*"
   ],
   "name": "SAP Cloud SDK for JavaScript / TypeScript",
   "readme": "DOCUMENTATION.md",

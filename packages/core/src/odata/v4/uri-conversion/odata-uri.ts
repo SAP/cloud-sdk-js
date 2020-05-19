@@ -7,22 +7,18 @@ import {
   ODataUri,
   FieldType,
   Constructable,
-  createGetResourcePathForKeys,
-  Filterable,
-  createGetFilter
+  createGetResourcePathForKeys
 } from '../../common';
 import { Entity } from '../entity';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
 import * as uriConverter from './uri-value-converter';
+import { getFilter } from './get-filter';
 
 export const oDataUri: ODataUri = {
   getExpand: (_, expands, entityConstructor) =>
     getExpand(expands, entityConstructor),
-  getFilter: <EntityT extends Entity>(
-    filter: Filterable<EntityT>,
-    entityConstructor: Constructable<EntityT>
-  ) => createGetFilter(uriConverter).getFilter(filter, entityConstructor),
+  getFilter,
   getEntityKeys,
   getOrderBy,
   getResourcePathForKeys: <EntityT extends Entity>(

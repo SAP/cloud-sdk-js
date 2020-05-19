@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { decodeJwt } from '../../src';
+import { decodeJwt } from '../../src/util/jwt';
 import * as tokenAccessor from '../../src/scp-cf/token-accessor';
 import { TestTenants } from './environment-mocks';
 import {
@@ -15,18 +15,17 @@ export function mockServiceToken() {
     .mockImplementation((service, options) => {
       if (!options || typeof options.userJwt === 'undefined') {
         return Promise.resolve(providerServiceToken);
-      } else {
-        const userJwt =
-          typeof options.userJwt === 'string'
-            ? decodeJwt(options.userJwt)
-            : options.userJwt;
-
-        if (userJwt.zid === TestTenants.PROVIDER) {
-          return Promise.resolve(providerServiceToken);
-        }
-
-        return Promise.resolve(subscriberServiceToken);
       }
+      const userJwt =
+        typeof options.userJwt === 'string'
+          ? decodeJwt(options.userJwt)
+          : options.userJwt;
+
+      if (userJwt.zid === TestTenants.PROVIDER) {
+        return Promise.resolve(providerServiceToken);
+      }
+
+      return Promise.resolve(subscriberServiceToken);
     });
 }
 

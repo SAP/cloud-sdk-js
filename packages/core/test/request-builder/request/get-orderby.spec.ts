@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { asc, desc } from '../../../src';
-import { getQueryParametersForOrderBy } from '../../../src/request-builder/request/get-orderby';
+import { getQueryParametersForOrderBy } from '../../../src/odata/v2/uri-conversion/get-orderby';
 import {
   TestEntity,
   TestEntitySingleLink
-} from '../../test-util/test-services/test-service';
+} from '../../test-util/test-services/v2/test-service';
 
 describe('get orderby', () => {
   it('is empty for empty orderbys', () => {

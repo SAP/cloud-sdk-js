@@ -2,7 +2,10 @@
 import moment = require('moment');
 import { v4 as uuid } from 'uuid';
 import { filterFunction, substring, substringOf } from '../../src';
-import { TestEntity, TestEntitySingleLink } from './test-services/test-service';
+import {
+  TestEntity,
+  TestEntitySingleLink
+} from './test-services/v2/test-service';
 
 export const testFilterString = {
   filter: TestEntity.STRING_PROPERTY.equals('test'),

@@ -21,7 +21,7 @@ export function builderFunction(
     statements: `return ${complexType.typeName}.build(json);`,
     docs: [
       addLeadingNewline(
-        `@deprecated since v1.6.0. Use [[${complexType.typeName}.build]] instead.`
+        `@deprecated Since v1.6.0. Use [[${complexType.typeName}.build]] instead.`
       )
     ]
   };

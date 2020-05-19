@@ -1,5 +1,5 @@
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, Entity, EntityBuilderType, Field, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
@@ -68,12 +68,12 @@ export declare namespace TestEntityEndsWithSomethingElse {
     /**
      * All key fields of the TestEntityEndsWithSomethingElse entity.
      */
-    const _keyFields: Array<Selectable<TestEntityEndsWithSomethingElse>>;
+    const _keyFields: Array<Field<TestEntityEndsWithSomethingElse>>;
     /**
      * Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse.
      */
     const _keys: {
-        [keys: string]: Selectable<TestEntityEndsWithSomethingElse>;
+        [keys: string]: Field<TestEntityEndsWithSomethingElse>;
     };
 }
 //# sourceMappingURL=TestEntityEndsWithSomethingElse.d.ts.map

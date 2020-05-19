@@ -1,5 +1,5 @@
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, Entity, EntityBuilderType, Field, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
  */
@@ -68,12 +68,12 @@ export declare namespace MultiSchemaTestEntity {
     /**
      * All key fields of the MultiSchemaTestEntity entity.
      */
-    const _keyFields: Array<Selectable<MultiSchemaTestEntity>>;
+    const _keyFields: Array<Field<MultiSchemaTestEntity>>;
     /**
      * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
      */
     const _keys: {
-        [keys: string]: Selectable<MultiSchemaTestEntity>;
+        [keys: string]: Field<MultiSchemaTestEntity>;
     };
 }
 //# sourceMappingURL=MultiSchemaTestEntity.d.ts.map

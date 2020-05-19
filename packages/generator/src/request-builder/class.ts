@@ -194,22 +194,20 @@ function deleteRequestBuilderParameters(
           type: 'any',
           hasQuestionToken: false
         };
-      } else {
-        return {
-          name: key.propertyNameAsParam,
-          type: key.jsType,
-          hasQuestionToken: true
-        };
       }
+      return {
+        name: key.propertyNameAsParam,
+        type: key.jsType,
+        hasQuestionToken: true
+      };
     });
-  } else {
-    return [
-      {
-        name: 'entity',
-        type: 'Entity'
-      }
-    ];
   }
+  return [
+    {
+      name: 'entity',
+      type: 'Entity'
+    }
+  ];
 }
 
 function deleteRequestBuilderOverload(

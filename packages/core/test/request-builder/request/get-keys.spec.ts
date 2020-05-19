@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
-import { getEntityKeys } from '../../../src/request-builder/request/get-keys';
-import { TestEntity } from '../../test-util/test-services/test-service';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
+import { oDataUri } from '../../../src';
 
 describe('extractEntityKeys', () => {
   it('should extract entity keys correctly', () => {
@@ -11,7 +11,7 @@ describe('extractEntityKeys', () => {
       .stringProperty('any')
       .build();
 
-    const actual = getEntityKeys(entity, TestEntity);
+    const actual = oDataUri.getEntityKeys(entity, TestEntity);
 
     expect(actual).toEqual({
       KeyPropertyGuid: entity.keyPropertyGuid,

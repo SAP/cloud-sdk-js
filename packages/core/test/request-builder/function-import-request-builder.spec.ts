@@ -14,7 +14,7 @@ import {
   testFunctionImportMultipleParams,
   testFunctionImportNoReturnType,
   testFunctionImportPost
-} from '../test-util/test-services/test-service';
+} from '../test-util/test-services/v2/test-service';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 

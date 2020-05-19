@@ -1,13 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
-import { ODataDeleteRequestConfig } from '../../../src/request-builder/request/odata-delete-request-config';
+import { ODataDeleteRequestConfig } from '../../../src/odata/common/request/odata-delete-request-config';
 import { testEntityResourcePath } from '../../test-util/test-data';
-import { TestEntity } from '../../test-util/test-services/test-service';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
+import { oDataUri } from '../../../src/odata/v2/uri-conversion';
 
 describe('ODataDeleteRequestConfig', () => {
   let config: ODataDeleteRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataDeleteRequestConfig(TestEntity);
+    config = new ODataDeleteRequestConfig(TestEntity, oDataUri);
   });
 
   it('method is delete', () => {

@@ -42,8 +42,8 @@ const expectedEntityImports = [
       'CustomField',
       'Entity',
       'EntityBuilderType',
+      'Field',
       'OneToOneLink',
-      'Selectable',
       'StringField',
       'Time',
       'TimeField'

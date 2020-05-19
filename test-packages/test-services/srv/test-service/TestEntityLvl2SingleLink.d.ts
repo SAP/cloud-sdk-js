@@ -1,5 +1,5 @@
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, NumberField, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
@@ -118,12 +118,12 @@ export declare namespace TestEntityLvl2SingleLink {
     /**
      * All key fields of the TestEntityLvl2SingleLink entity.
      */
-    const _keyFields: Array<Selectable<TestEntityLvl2SingleLink>>;
+    const _keyFields: Array<Field<TestEntityLvl2SingleLink>>;
     /**
      * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
      */
     const _keys: {
-        [keys: string]: Selectable<TestEntityLvl2SingleLink>;
+        [keys: string]: Field<TestEntityLvl2SingleLink>;
     };
 }
 //# sourceMappingURL=TestEntityLvl2SingleLink.d.ts.map

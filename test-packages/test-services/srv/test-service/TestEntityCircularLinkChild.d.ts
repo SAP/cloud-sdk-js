@@ -1,5 +1,5 @@
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Link, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, Entity, EntityBuilderType, Field, Link, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
@@ -79,12 +79,12 @@ export declare namespace TestEntityCircularLinkChild {
     /**
      * All key fields of the TestEntityCircularLinkChild entity.
      */
-    const _keyFields: Array<Selectable<TestEntityCircularLinkChild>>;
+    const _keyFields: Array<Field<TestEntityCircularLinkChild>>;
     /**
      * Mapping of all key field names to the respective static field property TestEntityCircularLinkChild.
      */
     const _keys: {
-        [keys: string]: Selectable<TestEntityCircularLinkChild>;
+        [keys: string]: Field<TestEntityCircularLinkChild>;
     };
 }
 //# sourceMappingURL=TestEntityCircularLinkChild.d.ts.map

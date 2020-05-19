@@ -115,9 +115,8 @@ export function forceArray(obj: any): any[] {
     return [];
   } else if (!(obj instanceof Array)) {
     return [obj];
-  } else {
-    return obj;
   }
+  return obj;
 }
 
 export function ensureString(obj: any): string {
@@ -125,9 +124,8 @@ export function ensureString(obj: any): string {
     return '';
   } else if (typeof obj === 'string') {
     return obj;
-  } else {
-    return `${obj}`;
   }
+  return `${obj}`;
 }
 
 export function endWithDot(text: string): string {
@@ -193,9 +191,8 @@ const _npmCompliantName = (name: string): string => {
         .map(x => makeNpmCompliant(x))
         .join('/')
     );
-  } else {
-    return makeNpmCompliant(name);
   }
+  return makeNpmCompliant(name);
 };
 
 const splitAtFirstOccurrence = (str: string, separator: string) => [

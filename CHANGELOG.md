@@ -14,15 +14,16 @@
 
 ## Compatibility Notes
 
--
+- New generated OData clients yield more narrow types on the `_keys`, `_keyFields` and `_allFields` properties, that differ from older generated clients. Old clients are still supported but will be deprecated soon.
+- Internal directory structure has changed. This is a breaking change for users that reference internal modules directly.
 
 ## New Functionality
 
--
+- Added experimental support for OData v4. All functionality related to OData v4 is subject to change.
 
 ## Improvements
 
--
+- _OData client generator_: Narrow the types of the generated properties `_keys`, `_keyFields` and `_allFields` to the correct types.
 
 ## Fixed Issues
 

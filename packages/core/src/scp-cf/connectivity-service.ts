@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import { Protocol } from '../request-builder';
+import { Protocol } from '../http-agent';
 import { ProxyConfiguration } from './connectivity-service-types';
 import { Destination } from './destination-service-types';
 import { EnvironmentAccessor } from './environment-accessor';
@@ -19,7 +19,7 @@ const logger = createLogger({
  *
  * This function will reject if no connectivity service is bound, no XSUAA service with plan application is bound or the client credentials grant with the XSUAA service fails.
  *
- * @Deprecated In version 1.16.0 web proxy support was added so this method was renamed to addProxyConfigurationOnPrem to better distinguish the two cases.
+ * @Deprecated Since v1.16.0. Use [[addProxyConfigurationOnPrem]] instead.
  *
  * @param destination - The destination to which the proxy configuration should be added.
  * @param jwt - The JWT of the current user.

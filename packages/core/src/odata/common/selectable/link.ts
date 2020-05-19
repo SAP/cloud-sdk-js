@@ -27,7 +27,7 @@ export class Link<
   LinkedEntityT extends EntityBase = any
 > implements EntityIdentifiable<EntityT> {
   /**
-   * @deprecated Since v1.21.0. Use [[clone]].
+   * @deprecated Since v1.21.0. Use [[clone]] instead.
    * Create a new link based on a given link.
    *
    * @typeparam EntityT - Type of the entity to be linked from

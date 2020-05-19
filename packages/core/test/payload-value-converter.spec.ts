@@ -42,7 +42,7 @@ describe('edmToTs()', () => {
 
   it('should parse Edm.Int16 to number', () => {
     const expected = 16;
-    const actual = edmToTs('16', 'Edm.Int16');payload-value-converter.spec.ts
+    const actual = edmToTs('16', 'Edm.Int16');
     expect(actual).toBe(expected);
   });
 

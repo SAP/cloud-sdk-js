@@ -1,87 +1,45 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import BigNumber from 'bignumber.js';
-import { edmToTs } from '../src/payload-value-converter';
-import { convertToUriFormat } from '../src/uri-value-converter';
-import moment = require('moment');
+import { EdmWithV4, tsToEdm } from './payload-value-converter-v4.spec';
+import moment from 'moment';
+
+function convertToUriFormat(value: any, edmType: EdmWithV4): string {
+  const converted = tsToEdm(value, edmType);
+  switch (edmType) {
+    case 'Edm.Date':
+      return converted
+      case 'Edm.DateTimeOffset':
+        return converted;
+    case 'Edm.TimeOfDay':
+      return converted;
+    case 'Edm.Duration':
+      return `duration'${converted}'`
+    case 'Edm.Guid':
+      return converted;
+    default:
+      return converted
+  }
+}
 
 describe('convertToUriFormat', () => {
-  it('Edm.Binary', () => {
-    expect(convertToUriFormat('BASE64==', 'Edm.Binary')).toBe("X'BASE64=='");
-  });
+  it('should convert guid',()=>{
+    const value = '01234567-89ab-cdef-0123-456789abcdef'
+    expect(convertToUriFormat(value,'Edm.Guid')).toBe(value)
+  })
 
-  it('Edm.Boolean', () => {
-    expect(convertToUriFormat(true, 'Edm.Boolean')).toBe('true');
-  });
+  it('should convert dateTimeOffset',()=>{
+    expect(convertToUriFormat(moment(0),'Edm.DateTimeOffset')).toBe('1970-01-01T00:00:00.000Z')
+  })
 
-  it('Edm.Byte', () => {
-    expect(convertToUriFormat(8, 'Edm.Byte')).toBe('8');
-  });
+  it('should convert duration',()=>{
+    const value = moment.duration({d:1,h:17,s:59,ms:123})
+    expect(convertToUriFormat(value,'Edm.Duration')).toBe('duration\'P1DT17H59.123S\'')
+  })
 
-  it('Edm.Int16', () => {
-    expect(convertToUriFormat(16, 'Edm.Int16')).toBe('16');
-  });
+  it('should convert timeOfDay',()=>{
+    expect(convertToUriFormat(moment(1589887303123),'Edm.TimeOfDay')).toBe('13:21:43.123')
+  })
 
-  it('Edm.Int32', () => {
-    expect(convertToUriFormat(32, 'Edm.Int32')).toBe('32');
-  });
-
-  it('Edm.SByte', () => {
-    expect(convertToUriFormat(-8, 'Edm.SByte')).toBe('-8');
-  });
-
-  it('Edm.Int64', () => {
-    expect(convertToUriFormat(64, 'Edm.Int64')).toBe('64L');
-  });
-
-  it('Edm.Decimal', () => {
-    expect(convertToUriFormat(new BigNumber('64'), 'Edm.Decimal')).toBe('64M');
-  });
-
-  it('Edm.Double', () => {
-    expect(convertToUriFormat(64, 'Edm.Double')).toBe('64D');
-  });
-
-  it('Edm.Single', () => {
-    expect(convertToUriFormat(64, 'Edm.Single')).toBe('64F');
-  });
-
-  it('Edm.Guid', () => {
-    expect(
-      convertToUriFormat('01234567-89ab-cdef-ghij-KLMNOPQRSTUV', 'Edm.Guid')
-    ).toBe("guid'01234567-89ab-cdef-ghij-KLMNOPQRSTUV'");
-  });
-
-  it('Edm.String', () => {
-    expect(convertToUriFormat('test', 'Edm.String')).toBe("'test'");
-  });
-
-  it('Edm.DateTime', () => {
-    expect(
-      convertToUriFormat(moment(1552304382000).utc(), 'Edm.DateTime')
-    ).toBe("datetime'2019-03-11T11:39:42.000'");
-    expect(
-      convertToUriFormat(
-        edmToTs('/Date(1552304382000)/', 'Edm.DateTime'),
-        'Edm.DateTime'
-      )
-    ).toBe("datetime'2019-03-11T11:39:42.000'");
-  });
-
-  it('Edm.DateTimeOffset', () => {
-    expect(
-      convertToUriFormat(moment(1552304382000).utc(), 'Edm.DateTimeOffset')
-    ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
-    expect(
-      convertToUriFormat(
-        edmToTs('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'),
-        'Edm.DateTimeOffset'
-      )
-    ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
-  });
-
-  it('Edm.Time', () => {
-    expect(
-      convertToUriFormat({ hours: 12, minutes: 34, seconds: 56 }, 'Edm.Time')
-    ).toBe("time'PT12H34M56S'");
-  });
+  it('should convert date',()=>{
+    expect(convertToUriFormat(moment(1589887303000),'Edm.Date')).toBe('2020-05-19')
+  })
 });

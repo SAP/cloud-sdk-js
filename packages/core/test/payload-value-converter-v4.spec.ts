@@ -4,10 +4,10 @@ import {
 } from '../src/payload-value-converter';
 import { EdmType } from '../src';
 
-
+export type EdmWithV4 =  EdmType|'Edm.Date'|'Edm.Duration'|'Edm.TimeOfDay'
 
 //replace later in the desrializer map
-function edmToTs(value:string,edmType:EdmType|'Edm.Date'|'Edm.Duration'|'Edm.TimeOfDay'){
+export function edmToTs(value:string,edmType:EdmType|'Edm.Date'|'Edm.Duration'|'Edm.TimeOfDay'){
   switch (edmType) {
     case 'Edm.Date':
       return edmDateToMoment(value)
@@ -23,7 +23,7 @@ function edmToTs(value:string,edmType:EdmType|'Edm.Date'|'Edm.Duration'|'Edm.Tim
 }
 
 function momentToEdmDate(value: Moment):string {
-  return value.format('YYYY-MM-DD')
+  return value.format('YYYY-MM-DD');
 }
 
 function momentToEdmDateTimeOffsetToMoment(value: Moment):string {
@@ -38,7 +38,7 @@ function momentToEdmTimeOfDay(value: Moment):string {
   return value.format('HH:mm:ss.SSS')
 }
 
-function tsToEdm(value:any,edmType:EdmType|'Edm.Date'|'Edm.Duration'|'Edm.TimeOfDay'){
+export function tsToEdm(value:any,edmType:EdmWithV4){
   switch (edmType) {
     case 'Edm.Date':
       return momentToEdmDate(value)
@@ -48,6 +48,8 @@ function tsToEdm(value:any,edmType:EdmType|'Edm.Date'|'Edm.Duration'|'Edm.TimeOf
       return momentToEdmDuration(value)
     case 'Edm.TimeOfDay':
       return momentToEdmTimeOfDay(value)
+    case 'Edm.Guid':
+      return value;
     default:
       throw new Error('Implementation is missing.')
   }
@@ -55,7 +57,7 @@ function tsToEdm(value:any,edmType:EdmType|'Edm.Date'|'Edm.Duration'|'Edm.TimeOf
 
 //put to desrializer mapping
 function edmDateToMoment(date:string):Moment{
-  const parsed =  moment(date,'YYYY-MM-DD',true);
+  const parsed =  moment.utc(date,'YYYY-MM-DD',true);
   if(!parsed.isValid()){
     throw new Error(`Provided date value ${date} does not follow the Edm.Date pattern: YYYY-MM-DD`)
   }

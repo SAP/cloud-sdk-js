@@ -2,12 +2,12 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import {
+  createGetResourcePathForKeys,
   getEntityKeys,
   getOrderBy,
   ODataUri,
   FieldType,
-  Constructable,
-  createGetResourcePathForKeys
+  Constructable
 } from '../../common';
 import { Entity } from '../entity';
 import { getExpand } from './get-expand';

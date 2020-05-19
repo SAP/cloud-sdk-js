@@ -29,7 +29,7 @@ export class Link<
   readonly _entity: EntityT;
 
   /**
-   * @deprecated
+   * @deprecated Since 1.21.0.
    * List of selectables on the linked entity.
    */
   get selects() {

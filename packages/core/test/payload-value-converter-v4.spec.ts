@@ -18,7 +18,7 @@ export function edmToTs(value:string,edmType:EdmType|'Edm.Date'|'Edm.Duration'|'
     case 'Edm.TimeOfDay':
       return edmTimeOfDay(value)
     default:
-      throw new Error('Implementation is missing.')
+      throw new Error('Put common implementation later')
   }
 }
 
@@ -77,7 +77,8 @@ function edmDateTimeOffsetToMoment(dateTime: string):Moment {
 
 function edmDurationToMoment(value: string):Duration {
   const durationPattern = /([\+,\-]{1,1})?P(\d+D)?T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?/;
-  if(!durationPattern.test(value)){
+  const captured = durationPattern.exec(value)
+  if( !captured || captured[0] !== value ){
     throw new Error(`Provided duration value ${value} does not follow the Edm.Duration pattern: +/- P0DT0H0M0S`)
   }
   return moment.duration(value)
@@ -151,6 +152,8 @@ describe('edmToTs()', () => {
     expect(()=>edmToTs('PT501S','Edm.Duration')).toThrow(/ does not follow the Edm.Duration pattern/)
 
     expect(()=>edmToTs('P23H','Edm.Duration')).toThrow(/ does not follow the Edm.Duration pattern/)
+
+    expect(()=>edmToTs('P1D23H46M23S','Edm.Duration')).toThrow(/ does not follow the Edm.Duration pattern/)
   })
 
   it('should parse Edm.TimeOfDay to moment.utc since there is proper time object', ()=>{

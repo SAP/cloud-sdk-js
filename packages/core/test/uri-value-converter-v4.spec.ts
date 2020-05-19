@@ -16,7 +16,7 @@ function convertToUriFormat(value: any, edmType: EdmWithV4): string {
     case 'Edm.Guid':
       return converted;
     default:
-      return converted
+      throw new Error('Put common implementation later')
   }
 }
 

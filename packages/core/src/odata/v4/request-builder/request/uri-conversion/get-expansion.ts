@@ -4,14 +4,14 @@ import { Entity } from '../../../entity';
 import { Expandable } from '../../../../common/expandable';
 import { Constructable, AllFields, Link } from '../../../../common';
 import { OneToManyLink } from '../../../../common/selectable/one-to-many-link';
-import { getQueryParametersForFilter } from './get-filters';
-import { getQueryParametersForSelection } from './get-selection';
+import { getQueryParametersForFilter } from '../../../../v2/uri-conversion/get-filter';
+import { getQueryParametersForSelection } from '../../../../v2/uri-conversion/get-selection';
 
 function prependDollar(param: string): string {
   return `$${param}`;
 }
 
-export function getQueryParametersForExpansion<EntityT extends Entity>(//Expand = expansion
+export function getQueryParametersForExpansion<EntityT extends Entity>( // Expand = expansion
   expands: Expandable<EntityT>[],
   entityConstructor: Constructable<EntityT>
 ): Partial<{ expand: string }> {

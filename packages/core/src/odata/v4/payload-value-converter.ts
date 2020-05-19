@@ -2,9 +2,12 @@
 /* eslint-disable valid-jsdoc */
 
 import BigNumber from 'bignumber.js';
-import moment, { Moment } from 'moment';
-import { identity } from 'rambda';
+import moment, { Duration, Moment } from 'moment';
 import { Time, EdmTypeShared } from '../common';
+import {
+  deserializersCommon,
+  serializersCommom
+} from '../common/payload-value-converter';
 import { EdmType } from './edm-types';
 
 /**
@@ -40,117 +43,74 @@ type EdmTypeMapping = {
   [key in EdmType]: (value: any) => any;
 };
 
-const toNumber = (value: any): number => Number(value);
-const toBigNumber = (value: any): BigNumber => new BigNumber(value);
-
-const toGuid = (value: string): string => {
-  const guids = /[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}/.exec(
-    value
-  );
-  if (!guids || guids.length <= 0) {
-    throw new Error(`Failed to parse the value: ${value} to guid.`);
+function edmDateToMoment(date: string): Moment {
+  const parsed = moment.utc(date, 'YYYY-MM-DD', true);
+  if (!parsed.isValid()) {
+    throw new Error(
+      `Provided date value ${date} does not follow the Edm.Date pattern: YYYY-MM-DD`
+    );
   }
-
-  return guids[0];
-};
-
-const toTime = (value: string): Time => {
-  const timeComponents = /PT(\d{1,2})H(\d{1,2})M(\d{1,2})S/.exec(value);
-  if (!timeComponents) {
-    throw new Error(`Failed to parse the value: ${value} to time.`);
-  }
-  return {
-    hours: parseInt(timeComponents[1], 10),
-    minutes: parseInt(timeComponents[2], 10),
-    seconds: parseInt(timeComponents[3], 10)
-  };
-};
-
-const fromBigNumber = (value: BigNumber): string =>
-  (value as BigNumber).toString();
-const fromTime = (value: Time): string =>
-  'PT' +
-  leftpad(value.hours, 2) +
-  'H' +
-  leftpad(value.minutes, 2) +
-  'M' +
-  leftpad(value.seconds, 2) +
-  'S';
-
-/**
- * @hidden
- * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
- */
-export function edmDateTimeToMoment(edmDateTime: string): Moment {
-  const dateTimeOffsetComponents = /.*\((-?\d+)(?:([\+-])(\d{4})\))?/.exec(
-    edmDateTime
-  );
-  if (!dateTimeOffsetComponents) {
-    throw new Error(`Failed to parse edmDateTime: ${edmDateTime} to moment.`);
-  }
-
-  const timestamp = moment(parseInt(dateTimeOffsetComponents[1]));
-
-  if (dateTimeOffsetComponents[2] && dateTimeOffsetComponents[3]) {
-    const offsetMultiplier = dateTimeOffsetComponents[2] === '+' ? 1 : -1;
-    const offsetInMinutes = parseInt(dateTimeOffsetComponents[3]);
-
-    return timestamp.utc().utcOffset(offsetMultiplier * offsetInMinutes);
-  }
-
-  return timestamp;
+  return parsed;
 }
 
-/**
- * @hidden
- * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
- */
-export function momentToEdmDateTime(momentInstance: Moment): string {
-  const timestamp = momentInstance.unix() * 1000;
-
-  // For some reason isUtc() returns wrong values here, so we use the internal flag directly
-  if (momentInstance['_isUTC']) {
-    const offset = Math.abs(momentInstance.utcOffset());
-    const operator = momentInstance.utcOffset() >= 0 ? '+' : '-';
-    return `/Date(${timestamp}${operator}${leftpad(offset, 4)})/`;
+function edmDateTimeOffsetToMoment(dateTime: string): Moment {
+  const prefix = 'YYYY-MM-DDTHH:mm';
+  // In moment the Z is either Offset from UTC as +-HH:mm, +-HHmm, or Z
+  const validFormats = [`${prefix}Z`, `${prefix}:ssZ`, `${prefix}:ss.SSSZ`];
+  const parsed = moment(dateTime, validFormats, true);
+  if (!parsed.isValid()) {
+    throw new Error(
+      `Provided date-time value ${dateTime} does not follow the Edm.DateTimeOffset pattern: YYYY-MM-DDTHH:mm(:ss(.SSS))Z`
+    );
   }
-
-  return `/Date(${timestamp})/`;
+  return parsed;
 }
 
-/**
- * @hidden
- */
-export function parseNumber(value: string | number): number {
-  if (typeof value === 'number') {
-    return value;
+function edmDurationToMoment(value: string): Duration {
+  const durationPattern = /([\+,\-]{1,1})?P(\d+D)?T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?/;
+  const captured = durationPattern.exec(value);
+  if (!captured || captured[0] !== value) {
+    throw new Error(
+      `Provided duration value ${value} does not follow the Edm.Duration pattern: +/- P0DT0H0M0S`
+    );
   }
-
-  if (value.toLowerCase() === 'inf') {
-    return Number.POSITIVE_INFINITY;
-  }
-  if (value.toLowerCase() === '-inf') {
-    return Number.NEGATIVE_INFINITY;
-  }
-  if (value.toLowerCase() === 'nan') {
-    return Number.NaN;
-  }
-
-  const num = Number(value);
-
-  if (Number.isNaN(num)) {
-    throw new Error(`Cannot create number from input "${value}"`);
-  }
-
-  return num;
+  return moment.duration(value);
 }
 
-function leftpad(value: any, targetLength: number): string {
-  const str = value.toString();
-  if (str.length >= targetLength) {
-    return str;
+function edmTimeOfDay(value: string): Moment {
+  const prefix = 'HH:mm:ss';
+  const validFormats = [`${prefix}`, `${prefix}.SSS`];
+  const parsed = moment.utc(value, validFormats, true);
+  if (!parsed.isValid()) {
+    throw new Error(
+      `Provided time-of-day value ${value} does not follow the Edm.TimeOfDay pattern: HH:mm:ss(.SSS)`
+    );
   }
-  return '0'.repeat(targetLength - str.length) + str;
+  return moment.utc({
+    y: 1970,
+    M: 0,
+    d: 0,
+    h: parsed.hours(),
+    m: parsed.minutes(),
+    s: parsed.seconds(),
+    ms: parsed.milliseconds()
+  });
+}
+
+function momentToEdmDate(value: Moment): string {
+  return value.format('YYYY-MM-DD');
+}
+
+function momentToEdmDateTimeOffsetToMoment(value: Moment): string {
+  return value.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
+}
+
+function durationToEdmDuration(value: Duration): string {
+  return value.toISOString();
+}
+
+function momentToEdmTimeOfDay(value: Moment): string {
+  return value.format('HH:mm:ss.SSS');
 }
 
 // Prettier-ignore
@@ -176,39 +136,17 @@ export type EdmToPrimitive<T extends EdmType> = T extends
   : any;
 
 const deserializers: EdmTypeMapping = {
-  'Edm.Binary': identity,
-  'Edm.Boolean': identity,
-  'Edm.Byte': toNumber,
-  'Edm.Date': edmDateTimeToMoment,
-  'Edm.DateTimeOffset': edmDateTimeToMoment,
-  'Edm.Decimal': toBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
-  'Edm.Guid': toGuid,
-  'Edm.Int16': toNumber,
-  'Edm.Int32': toNumber,
-  'Edm.Int64': toBigNumber,
-  'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
-  'Edm.String': identity,
-  'Edm.Time': toTime
+  ...deserializersCommon,
+  'Edm.Date': edmDateToMoment,
+  'Edm.DateTimeOffset': edmDateTimeOffsetToMoment,
+  'Edm.Duration': edmDurationToMoment,
+  'Edm.TimeOfDay': edmTimeOfDay
 };
 
 const serializers: EdmTypeMapping = {
-  'Edm.Binary': identity,
-  'Edm.Boolean': identity,
-  'Edm.Byte': toNumber,
-  'Edm.Date': momentToEdmDateTime,
-  'Edm.DateTimeOffset': momentToEdmDateTime,
-  'Edm.Decimal': fromBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
-  'Edm.Guid': identity,
-  'Edm.Int16': toNumber,
-  'Edm.Int32': toNumber,
-  'Edm.Int64': fromBigNumber,
-  'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
-  'Edm.String': identity,
-  'Edm.Time': fromTime
+  ...serializersCommom,
+  'Edm.Date': momentToEdmDate,
+  'Edm.DateTimeOffset': momentToEdmDateTimeOffsetToMoment,
+  'Edm.Duration': durationToEdmDuration,
+  'Edm.TimeOfDay': momentToEdmTimeOfDay
 };

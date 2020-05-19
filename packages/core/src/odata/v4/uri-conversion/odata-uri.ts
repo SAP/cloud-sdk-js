@@ -10,9 +10,10 @@ import {
   Constructable
 } from '../../common';
 import { Entity } from '../entity';
+import { convertToUriForEdmString } from '../../common/uri-conversion/uri-value-converter';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
-import * as uriConverter from './uri-value-converter';
+import { convertToUriFormat } from './uri-value-converter';
 import { getFilter } from './get-filter';
 
 export const oDataUri: ODataUri = {
@@ -25,10 +26,11 @@ export const oDataUri: ODataUri = {
     keys: MapType<FieldType> = {},
     entityConstructor: Constructable<EntityT>
   ) =>
-    createGetResourcePathForKeys(uriConverter).getResourcePathForKeys(
-      keys,
-      entityConstructor
-    ),
+    createGetResourcePathForKeys({
+      convertToUriFormat,
+      convertToUriForEdmString
+    }).getResourcePathForKeys(keys, entityConstructor),
   getSelect,
-  ...uriConverter
+  convertToUriFormat,
+  convertToUriForEdmString
 };

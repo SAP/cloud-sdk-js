@@ -16,7 +16,7 @@ export class OneToOneLink<
   LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
   /**
-   * @deprecated Since v1.21.0. Use instance method instead.
+   * @deprecated Since v1.21.0. Use [[clone]].
    * Create a new one to one link based on a given link.
    *
    * @typeparam EntityT - Type of the entity to be linked from

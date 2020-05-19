@@ -198,10 +198,7 @@ function apiBusinessHubMetadata(
     url: `https://api.sap.com/api/${apiHubServiceName(swagger)}`
   };
 
-  if (
-    swagger.externalDocs &&
-    swagger.externalDocs.description === 'Business Documentation'
-  ) {
+  if (swagger.externalDocs?.description === 'Business Documentation') {
     metadata.businessDocumentationUrl = swagger.externalDocs.url;
   }
 
@@ -368,20 +365,19 @@ function parseReturnType(
       builderFunction: entity.className,
       isMulti
     };
-  } else {
-    const complexType = complexTypes.find(
-      c => c.originalName === parsedReturnType
-    );
-    if (!complexType) {
-      throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
-    }
-    return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
-      returnType: complexType.typeName,
-      builderFunction: `${complexType.typeName}.build`,
-      isMulti
-    };
   }
+  const complexType = complexTypes.find(
+    c => c.originalName === parsedReturnType
+  );
+  if (!complexType) {
+    throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
+  }
+  return {
+    returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
+    returnType: complexType.typeName,
+    builderFunction: `${complexType.typeName}.build`,
+    isMulti
+  };
 }
 
 function isMultiReturnType(returnType: string): boolean {

@@ -155,10 +155,9 @@ export function getEnvironmentVariable(
 ): string | undefined | null {
   if (process.env[name]) {
     return process.env[name];
-  } else {
-    logger.info('Environment variable ' + name + ' is not defined.');
-    return null;
   }
+  logger.info('Environment variable ' + name + ' is not defined.');
+  return null;
 }
 
 /**
@@ -327,7 +326,7 @@ interface BasicCredentials {
 }
 
 /**
- * @deprecated Use directly exported functions instead
+ * @deprecated Since v1.5.0. Use directly exported functions instead
  */
 export const EnvironmentAccessor = {
   getDestinationBasicCredentials,

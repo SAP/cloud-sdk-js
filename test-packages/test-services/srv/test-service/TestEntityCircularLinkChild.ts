@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Link, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, Entity, EntityBuilderType, Field, Link, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
@@ -101,11 +101,11 @@ export namespace TestEntityCircularLinkChild {
   /**
    * All key fields of the TestEntityCircularLinkChild entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityCircularLinkChild>> = [TestEntityCircularLinkChild.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntityCircularLinkChild>> = [TestEntityCircularLinkChild.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityCircularLinkChild.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityCircularLinkChild> } = TestEntityCircularLinkChild._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityCircularLinkChild> }, field: Selectable<TestEntityCircularLinkChild>) => {
+  export const _keys: { [keys: string]: Field<TestEntityCircularLinkChild> } = TestEntityCircularLinkChild._keyFields.reduce((acc: { [keys: string]: Field<TestEntityCircularLinkChild> }, field: Field<TestEntityCircularLinkChild>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
-import { Destination } from '../../src';
-import { ODataCreateRequestConfig } from '../../src/request-builder/request/odata-create-request-config';
-import { ODataDeleteRequestConfig } from '../../src/request-builder/request/odata-delete-request-config';
-import { ODataGetAllRequestConfig } from '../../src/request-builder/request/odata-get-all-request-config';
-import { ODataRequest } from '../../src/request-builder/request/odata-request';
-import { ODataUpdateRequestConfig } from '../../src/request-builder/request/odata-update-request-config';
-import { TestEntity } from './test-services/test-service';
+import { Destination, oDataUri } from '../../src';
+import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
+import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
+import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
+import { ODataRequest } from '../../src/odata/common/request/odata-request';
+import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
+import { TestEntity } from './test-services/v2/test-service';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -64,7 +64,10 @@ export function mockCreateRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataCreateRequestConfig(entityConstructor);
+  const requestConfig = new ODataCreateRequestConfig(
+    entityConstructor,
+    oDataUri
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 200,
@@ -77,7 +80,10 @@ export function mockDeleteRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataDeleteRequestConfig(entityConstructor);
+  const requestConfig = new ODataDeleteRequestConfig(
+    entityConstructor,
+    oDataUri
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 202,
@@ -89,7 +95,10 @@ export function mockUpdateRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataUpdateRequestConfig(entityConstructor);
+  const requestConfig = new ODataUpdateRequestConfig(
+    entityConstructor,
+    oDataUri
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 204,
@@ -101,7 +110,10 @@ export function mockGetRequest(
   params: MockRequestParams,
   entityConstructor = TestEntity
 ) {
-  const requestConfig = new ODataGetAllRequestConfig(entityConstructor);
+  const requestConfig = new ODataGetAllRequestConfig(
+    entityConstructor,
+    oDataUri
+  );
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 200,

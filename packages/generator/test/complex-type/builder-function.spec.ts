@@ -14,7 +14,7 @@ describe('builder-function', () => {
       returnType: 'ComplexMealType',
       statements: 'return ComplexMealType.build(json);',
       docs: [
-        '\n@deprecated since v1.6.0. Use [[ComplexMealType.build]] instead.'
+        '\n@deprecated Since v1.6.0. Use [[ComplexMealType.build]] instead.'
       ]
     });
   });
@@ -29,7 +29,7 @@ describe('builder-function', () => {
       returnType: 'ComplexMealWithDesertType',
       statements: 'return ComplexMealWithDesertType.build(json);',
       docs: [
-        '\n@deprecated since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.'
+        '\n@deprecated Since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.'
       ]
     });
   });

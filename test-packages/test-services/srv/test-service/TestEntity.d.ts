@@ -2,7 +2,7 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
+import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, Link, NumberField, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
@@ -311,12 +311,12 @@ export declare namespace TestEntity {
     /**
      * All key fields of the TestEntity entity.
      */
-    const _keyFields: Array<Selectable<TestEntity>>;
+    const _keyFields: Array<Field<TestEntity>>;
     /**
      * Mapping of all key field names to the respective static field property TestEntity.
      */
     const _keys: {
-        [keys: string]: Selectable<TestEntity>;
+        [keys: string]: Field<TestEntity>;
     };
 }
 //# sourceMappingURL=TestEntity.d.ts.map

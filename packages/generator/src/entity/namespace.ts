@@ -170,7 +170,7 @@ function keyFields(entity: VdmEntity): VariableStatementStructure {
     declarations: [
       {
         name: prependPrefix('keyFields'),
-        type: `Array<Selectable<${entity.className}>>`,
+        type: `Array<Field<${entity.className}>>`,
         initializer:
           '[' +
           entity.keys
@@ -193,12 +193,12 @@ function keys(entity: VdmEntity): VariableStatementStructure {
     declarations: [
       {
         name: prependPrefix('keys'),
-        type: `{[keys: string]: Selectable<${entity.className}>}`,
+        type: `{[keys: string]: Field<${entity.className}>}`,
         initializer: `${entity.className}.${prependPrefix(
           'keyFields'
-        )}.reduce((acc: {[keys: string]: Selectable<${
+        )}.reduce((acc: {[keys: string]: Field<${
           entity.className
-        }>}, field: Selectable<${entity.className}>) => {
+        }>}, field: Field<${entity.className}>) => {
           acc[field._fieldName] = field;
           return acc;
         }, {})`

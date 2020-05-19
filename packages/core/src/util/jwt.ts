@@ -476,7 +476,7 @@ export interface JWTHeader {
 }
 
 /**
- * @Deprecated Use [[JWTPayload]] if you want to represent the decoded JWT payload or [[CompleteDecodedJWT]] for the full decoded object.
+ * @Deprecated Since v1.20.0. Use [[JWTPayload]] if you want to represent the decoded JWT payload or [[CompleteDecodedJWT]] for the full decoded object.
  * Interface to represent the payload of a JWT.
  */
 export interface DecodedJWT extends RegisteredJWTClaims {

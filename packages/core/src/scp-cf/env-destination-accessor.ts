@@ -2,9 +2,9 @@
 
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  addProxyConfigurationInternet,
+  proxyStrategy,
   ProxyStrategy,
-  proxyStrategy
+  addProxyConfigurationInternet
 } from '../util/proxy-util';
 import {
   sanitizeDestination,

@@ -2,19 +2,23 @@
 
 import nock from 'nock';
 import { MapType } from '@sap-cloud-sdk/util';
-import { buildAndAddAuthorizationHeader, Destination } from '../../../src';
+import {
+  buildAndAddAuthorizationHeader,
+  Destination,
+  ODataRequest,
+  oDataUri
+} from '../../../src';
 import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
-} from '../../../src/request-builder/header-builder/authorization-header';
-import { ODataGetAllRequestConfig } from '../../../src/request-builder/request/odata-get-all-request-config';
-import { ODataRequest } from '../../../src/request-builder/request/odata-request';
+} from '../../../src/header-builder/authorization-header';
+import { ODataGetAllRequestConfig } from '../../../src/odata/common/request/odata-get-all-request-config';
 import {
   defaultDestination,
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
-import { TestEntity } from '../../test-util/test-services/test-service';
-import { buildHeadersForDestination } from '../../../src/request-builder/header-builder/header-builder';
+import { TestEntity } from '../../test-util/test-services/v2/test-service';
+import { buildHeadersForDestination } from '../../../src/header-builder/header-builder';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {
@@ -85,7 +89,7 @@ describe('Authorization header builder', () => {
   describe('[deprecated]', () => {
     it('Prioritizes custom Authorization headers (upper case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity),
+        new ODataGetAllRequestConfig(TestEntity, oDataUri),
         defaultDestination
       );
       request.config.addCustomHeaders({
@@ -98,7 +102,7 @@ describe('Authorization header builder', () => {
 
     it('Prioritizes custom Authorization headers (lower case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity),
+        new ODataGetAllRequestConfig(TestEntity, oDataUri),
         defaultDestination
       );
       request.config.addCustomHeaders({

@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Link, NumberField, OneToOneLink, Selectable, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, Link, NumberField, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
@@ -170,11 +170,11 @@ export namespace TestEntityMultiLink {
   /**
    * All key fields of the TestEntityMultiLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityMultiLink>> = [TestEntityMultiLink.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntityMultiLink>> = [TestEntityMultiLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityMultiLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityMultiLink> } = TestEntityMultiLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityMultiLink> }, field: Selectable<TestEntityMultiLink>) => {
+  export const _keys: { [keys: string]: Field<TestEntityMultiLink> } = TestEntityMultiLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityMultiLink> }, field: Field<TestEntityMultiLink>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

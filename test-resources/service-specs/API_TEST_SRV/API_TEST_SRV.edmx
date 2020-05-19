@@ -26,7 +26,6 @@
         <Property Name="SByteProperty" Type="Edm.SByte"/>
 
         <Property Name="ComplexTypeProperty" Type="API_TEST_SRV.A_TestComplexType"/>
-        <Property Name="ComplexTypeContainingOnlyComplexProperty" Type="API_TEST_SRV.A_TestComplexTypeContainingOnlyComplex"/>
 
         <NavigationProperty Name="to_MultiLink" Relationship="API_TEST_SRV.assoc_TestEntityToMultiLink" FromRole="FromRole_assoc_TestEntityToMultiLink" ToRole="ToRole_assoc_TestEntityToMultiLink"/>
         <NavigationProperty Name="to_OtherMultiLink" Relationship="API_TEST_SRV.assoc_TestEntityToOtherMultiLink" FromRole="FromRole_assoc_TestEntityToOtherMultiLink" ToRole="ToRole_assoc_TestEntityToOtherMultiLink"/>
@@ -149,10 +148,6 @@
 
       <ComplexType Name="A_TestNestedComplexType">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
-      </ComplexType>
-
-      <ComplexType Name="A_TestComplexTypeContainingOnlyComplex">
-         <Property Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexType"/>
       </ComplexType>
 
       <Association Name="assoc_TestEntityToMultiLink" sap:content-version="1">

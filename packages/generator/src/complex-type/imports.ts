@@ -24,12 +24,13 @@ export function importDeclarations(
         ...edmTypeImportNames(complexType.properties),
         'ComplexTypeField',
         'createComplexType',
-        'Entity'
+        'Entity',
+        'FieldType'
       ].sort()
     )
   ];
 }
 
 function edmTypeImportNames(properties: VdmProperty[]): string[] {
-  return hasEdmTypeProperty(properties) ? ['edmToTs', 'FieldType'] : [];
+  return hasEdmTypeProperty(properties) ? ['edmToTs'] : [];
 }

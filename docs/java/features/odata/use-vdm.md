@@ -398,7 +398,13 @@ service.createBusinessPartnerAddress( addressItem )
     .execute(destination);
 ```
 
-This results in the POST request to `/ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartnerAddress`
+This sample API call translates to the following service request:
+```
+POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartnerAddress
+{
+  "country": "de"
+}
+```
 
 </TabItem>
 <TabItem value="v4">
@@ -425,7 +431,13 @@ service.forEntity( businessPartnerById )
     .execute(destination);
 ```
 
-This results in the POST request to `/ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartnerAddress`
+This sample API call translates to the following service request:
+```
+POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartnerAddress
+{
+  "country": "de"
+}
+```
 
 </TabItem>
 </Tabs>

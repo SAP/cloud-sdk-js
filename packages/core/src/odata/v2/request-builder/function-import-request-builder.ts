@@ -16,6 +16,7 @@ import { oDataUri } from '../uri-conversion';
  * @typeparam ReturnT - Type of the function import return value
  */
 export class FunctionImportRequestBuilder<
+  // reuse
   ParametersT,
   ReturnT
 > extends MethodRequestBuilderBase<

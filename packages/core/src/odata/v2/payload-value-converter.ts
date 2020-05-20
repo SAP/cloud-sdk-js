@@ -3,8 +3,11 @@
 
 import BigNumber from 'bignumber.js';
 import moment, { Moment } from 'moment';
-import { identity } from 'rambda';
 import { Time, EdmTypeShared } from '../common';
+import {
+  deserializersCommon,
+  serializersCommom
+} from '../common/payload-value-converter';
 import { EdmType } from './edm-types';
 
 /**
@@ -38,20 +41,6 @@ export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
 
 type EdmTypeMapping = { [key in EdmType]: (value: any) => any };
 
-const toNumber = (value: any): number => Number(value);
-const toBigNumber = (value: any): BigNumber => new BigNumber(value);
-
-const toGuid = (value: string): string => {
-  const guids = /[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}/.exec(
-    value
-  );
-  if (!guids || guids.length <= 0) {
-    throw new Error(`Failed to parse the value: ${value} to guid.`);
-  }
-
-  return guids[0];
-};
-
 const toTime = (value: string): Time => {
   const timeComponents = /PT(\d{1,2})H(\d{1,2})M(\d{1,2})S/.exec(value);
   if (!timeComponents) {
@@ -63,17 +52,6 @@ const toTime = (value: string): Time => {
     seconds: parseInt(timeComponents[3], 10)
   };
 };
-
-const fromBigNumber = (value: BigNumber): string =>
-  (value as BigNumber).toString();
-const fromTime = (value: Time): string =>
-  'PT' +
-  leftpad(value.hours, 2) +
-  'H' +
-  leftpad(value.minutes, 2) +
-  'M' +
-  leftpad(value.seconds, 2) +
-  'S';
 
 /**
  * @hidden
@@ -116,32 +94,14 @@ export function momentToEdmDateTime(momentInstance: Moment): string {
   return `/Date(${timestamp})/`;
 }
 
-/**
- * @hidden
- */
-export function parseNumber(value: string | number): number {
-  if (typeof value === 'number') {
-    return value;
-  }
-
-  if (value.toLowerCase() === 'inf') {
-    return Number.POSITIVE_INFINITY;
-  }
-  if (value.toLowerCase() === '-inf') {
-    return Number.NEGATIVE_INFINITY;
-  }
-  if (value.toLowerCase() === 'nan') {
-    return Number.NaN;
-  }
-
-  const num = Number(value);
-
-  if (Number.isNaN(num)) {
-    throw new Error(`Cannot create number from input "${value}"`);
-  }
-
-  return num;
-}
+const fromTime = (value: Time): string =>
+  'PT' +
+  leftpad(value.hours, 2) +
+  'H' +
+  leftpad(value.minutes, 2) +
+  'M' +
+  leftpad(value.seconds, 2) +
+  'S';
 
 function leftpad(value: any, targetLength: number): string {
   const str = value.toString();
@@ -151,7 +111,6 @@ function leftpad(value: any, targetLength: number): string {
   return '0'.repeat(targetLength - str.length) + str;
 }
 
-// Prettier-ignore
 export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
@@ -174,39 +133,15 @@ export type EdmToPrimitive<T extends EdmType> = T extends
   : any;
 
 const deserializers: EdmTypeMapping = {
-  'Edm.Binary': identity,
-  'Edm.Boolean': identity,
-  'Edm.Byte': toNumber,
+  ...deserializersCommon,
   'Edm.DateTime': edmDateTimeToMoment,
   'Edm.DateTimeOffset': edmDateTimeToMoment,
-  'Edm.Decimal': toBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
-  'Edm.Guid': toGuid,
-  'Edm.Int16': toNumber,
-  'Edm.Int32': toNumber,
-  'Edm.Int64': toBigNumber,
-  'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
-  'Edm.String': identity,
   'Edm.Time': toTime
 };
 
 const serializers: EdmTypeMapping = {
-  'Edm.Binary': identity,
-  'Edm.Boolean': identity,
-  'Edm.Byte': toNumber,
+  ...serializersCommom,
   'Edm.DateTime': momentToEdmDateTime,
   'Edm.DateTimeOffset': momentToEdmDateTime,
-  'Edm.Decimal': fromBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
-  'Edm.Guid': identity,
-  'Edm.Int16': toNumber,
-  'Edm.Int32': toNumber,
-  'Edm.Int64': fromBigNumber,
-  'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
-  'Edm.String': identity,
   'Edm.Time': fromTime
 };

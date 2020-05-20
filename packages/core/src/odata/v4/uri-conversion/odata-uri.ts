@@ -12,7 +12,7 @@ import {
 import { Entity } from '../entity';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
-import * as uriConverter from './uri-value-converter';
+import { convertToUriFormat } from './uri-value-converter';
 import { getFilter } from './get-filter';
 
 export const oDataUri: ODataUri = {
@@ -25,10 +25,9 @@ export const oDataUri: ODataUri = {
     keys: MapType<FieldType> = {},
     entityConstructor: Constructable<EntityT>
   ) =>
-    createGetResourcePathForKeys(uriConverter).getResourcePathForKeys(
-      keys,
-      entityConstructor
-    ),
+    createGetResourcePathForKeys({
+      convertToUriFormat
+    }).getResourcePathForKeys(keys, entityConstructor),
   getSelect,
-  ...uriConverter
+  convertToUriFormat
 };

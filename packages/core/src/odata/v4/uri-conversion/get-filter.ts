@@ -2,8 +2,7 @@
 
 import { Filterable, Constructable, createGetFilter } from '../../common';
 import { Entity } from '../entity';
-import * as uriConverter from './uri-value-converter';
-
+import { convertToUriFormat } from './uri-value-converter';
 /**
  * Get an object containing the given filter as query parameter, or an empty object if none was given.
  *
@@ -16,5 +15,7 @@ export function getFilter<EntityT extends Entity>(
   filter: Filterable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): Partial<{ filter: string }> {
-  return createGetFilter(uriConverter).getFilter(filter, entityConstructor);
+  return createGetFilter({
+    convertToUriFormat
+  }).getFilter(filter, entityConstructor);
 }

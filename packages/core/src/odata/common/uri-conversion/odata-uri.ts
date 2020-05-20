@@ -37,7 +37,6 @@ export interface ODataUri {
     selects: Selectable<EntityT>[]
   ): Partial<{ select: string }>;
   convertToUriFormat(value: any, edmType: EdmTypeShared<'any'>): string;
-  convertToUriForEdmString(value: any): string;
 }
 
 export function prependDollar(param: string): string {

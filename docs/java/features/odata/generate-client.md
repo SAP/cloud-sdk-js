@@ -315,7 +315,6 @@ For details leverage the `--help` option. More information is also available in 
 
 </TabItem>
 
-</TabItem>
 <TabItem value="java">
 
 |   Parameter       | Default |   Description |

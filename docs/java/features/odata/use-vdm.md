@@ -100,6 +100,7 @@ Request parameters:
    - By default an ETag is send if one is present on the entity being modified.
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 - All operations allow for adding custom headers via `withheader(...)`
+
 </TabItem>
 </Tabs>
 
@@ -314,6 +315,7 @@ service.getAllBusinessPartner()
 The [OData v2 standard](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/) allows for a limited range of filter expressions compared to OData v4. A detailed list of what is available in the SDK can be obtained from [the Javadoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/helper/package-summary.html). The functionality can also be discovered through the fluent API.
 
 </TabItem>
+
 </Tabs>
 
 <!--
@@ -368,6 +370,7 @@ Note that instead of applying `try/catch` one can also make use of `tryExecute` 
 <!-- TODO -->
 
 </TabItem>
+</Tabs>
 
 ## Navigation properties
 
@@ -393,9 +396,10 @@ Create a new address for a specific business partner.
 */
 BusinessPartner businessPartnerById = BusinessPartner.builder().businessPartner("123").build();
 BusinessPartnerAddress addressItem = BusinessPartnerAddress.builder().country("DE").build();
+
 service.createBusinessPartnerAddress( addressItem )
     .asChildOf( businessPartnerById, BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS )
-    .execute(destination);
+    .execute( destination );
 ```
 
 This sample API call translates to the following service request:
@@ -425,10 +429,11 @@ Create a new address for a specific business partner.
 */
 BusinessPartner businessPartnerById = BusinessPartner.builder().businessPartner("123").build();
 BusinessPartnerAddress addressItem = BusinessPartnerAddress.builder().country("DE").build();
+
 service.forEntity( businessPartnerById )
     .navigateTo( BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS )
     .create( addressItem )
-    .execute(destination);
+    .execute( destination );
 ```
 
 This sample API call translates to the following service request:

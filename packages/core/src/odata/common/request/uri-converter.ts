@@ -7,5 +7,4 @@ import { EdmTypeShared } from '../edm-types';
  */
 export interface UriConverter {
   convertToUriFormat(value: any, edmType: EdmTypeShared<'v2'>): string;
-  convertToUriForEdmString(value: any): string;
 }

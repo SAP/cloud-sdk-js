@@ -5,6 +5,10 @@ export interface Time {
   seconds: number;
 }
 
+export interface TimeFractionalSeconds extends Time {
+  fractionalSeconds: string | undefined;
+}
+
 /**
  * Converts the given time to seconds in positive numerical format.
  *

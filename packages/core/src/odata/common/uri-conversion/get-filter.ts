@@ -18,6 +18,7 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
+import { convertToUriForEdmString } from './uri-value-converter';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -173,7 +174,7 @@ export function createGetFilter(uriConverter: UriConverter) {
       return param.toString();
     }
     if (typeof param === 'string') {
-      return uriConverter.convertToUriForEdmString(param);
+      return convertToUriForEdmString(param);
     }
     if (param instanceof FilterFunction) {
       return filterFunctionToString(param, parentFieldNames);

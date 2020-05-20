@@ -7,7 +7,7 @@ import {
   momentToEdmDateTime,
   parseNumber,
   tsToEdm
-} from '../src';
+} from '../../src';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {

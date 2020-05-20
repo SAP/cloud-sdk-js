@@ -26,7 +26,19 @@ In general destinations are accessed through the `DestinationAccessor`:
 DestinationAccessor.getDestination("my-destination");
 ```
 
-This will lookup the destination in the destination service, if the application is running on SAP Cloud Platform. But also other sources like the environment variables are considered.
+This will lookup the destination in the destination service, if the application is running on SAP Cloud Platform. But
+also other sources like the environment variables are considered.
+
+### Connect to on-premise S/4HANA system ###
+If your destination is exposing an on-premise S/4HANA service via a **[Cloud
+Connector](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/e6c7616abb5710148cfcf3e75d96d596.html)**
+you need to decorate the destination with `DefaultErpHttpDestination`
+
+```java
+final HttpDestination httpDestination =
+destination.asHttp().decorate(DefaultErpHttpDestination::new);
+
+```
 
 ## Testing ##
 

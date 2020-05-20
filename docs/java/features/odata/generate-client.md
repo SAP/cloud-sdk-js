@@ -314,7 +314,6 @@ More information is also available in the Javadoc of the generator implementatio
 For details leverage the `--help` option. More information is also available in the Javadoc of the generator implementation ([OData v2](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odata/generator/DataModelGenerator.html), [OData v4](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odatav4/generator/DataModelGenerator.html)).
 
 </TabItem>
-
 <TabItem value="java">
 
 |   Parameter       | Default |   Description |

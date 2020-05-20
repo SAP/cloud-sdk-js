@@ -326,7 +326,7 @@ export namespace TestEntity {
    */
   export const COLLECTION_PROPERTY_WITH_STRING: CollectionField<TestEntity> = new CollectionField('CollectionPropertyWithString', TestEntity, new StringField('', TestEntity, 'Edm.String'));
   /**
-   * Static representation of the [[collectionPropertyWithString]] property for query construction.
+   * Static representation of the [[collectionPropertyWithComplexType]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const COLLECTION_PROPERTY_WITH_COMPLEX_TYPE: CollectionField<TestEntity> = new CollectionField('CollectionPropertyWithComplexType', TestEntity, new TestComplexTypeField('', TestEntity));

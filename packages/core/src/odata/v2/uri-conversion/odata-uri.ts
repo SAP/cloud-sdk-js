@@ -11,7 +11,6 @@ import {
   createGetFilter
 } from '../../common';
 import { Entity } from '../entity';
-import { convertToUriForEdmString } from '../../common/uri-conversion/uri-value-converter';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
 import { convertToUriFormat } from './uri-value-converter';
@@ -21,8 +20,7 @@ import { convertToUriFormat } from './uri-value-converter';
  */
 export const oDataUri: ODataUri = {
   getExpand,
-  getFilter: createGetFilter({ convertToUriFormat, convertToUriForEdmString })
-    .getFilter,
+  getFilter: createGetFilter({ convertToUriFormat }).getFilter,
   getEntityKeys,
   getOrderBy,
   getResourcePathForKeys: <EntityT extends Entity>(
@@ -30,10 +28,8 @@ export const oDataUri: ODataUri = {
     entityConstructor: Constructable<EntityT>
   ) =>
     createGetResourcePathForKeys({
-      convertToUriFormat,
-      convertToUriForEdmString
+      convertToUriFormat
     }).getResourcePathForKeys(keys, entityConstructor),
   getSelect,
-  convertToUriFormat,
-  convertToUriForEdmString
+  convertToUriFormat
 };

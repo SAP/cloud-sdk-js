@@ -100,26 +100,6 @@ Request parameters:
    - By default an ETag is send if one is present on the entity being modified.
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 - All operations allow for adding custom headers via `withheader(...)`
-
-Navigable entities:
-- By using the `forEntity` method on service classes, you can recursively traverse navigation properties in entity sets. It's a generic API extension with type-safe methods to allow for requests along chained entities, according to their navigation properties.
-- Consider the following example:
-  ```java
-  // Create a new Trip in Vacation (id 2020) of Person (username "John")
-  // POST /ODataService/People('John')/Vacations(2020)/Trips
-  
-  Trip tripItem;
-  Person personById = Person.builder().username("John").build();
-  Vacation vacationById = Vacation.builder().id(2020).build();
-  
-  CreateRequestBuilder<Trip> createRequest = service
-    .forEntity( personById ).navigateTo( Person.VACATIONS )
-    .forEntity( vacationById ).navigateTo( Vacation.TRIPS )
-    .create( tripItem );
-
-  createRequest.execute( destination );
-  ```
-
 </TabItem>
 </Tabs>
 
@@ -386,6 +366,66 @@ Note that instead of applying `try/catch` one can also make use of `tryExecute` 
 <TabItem value="v2">
 
 <!-- TODO -->
+
+</TabItem>
+
+## Navigation properties
+
+A navigation property describes a unidirectional relationship between two entity types.
+Like other properties it has a name and declares a multiplicity, i.e. whether to expect a single or multiple values.
+Additionally a navigation property allows for dedicated CRUD operations, that may not be exposed by default on entity sets of the service root.
+Such operations also provide a convenient way to access the nested resources of entities.   
+
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
+{ label: 'OData V2', value: 'v2', },
+{ label: 'OData V4', value: 'v4', }]}>
+
+<TabItem value="v2">
+
+The VDM for OData v2 supports the following operations on (first-level only) navigation properties:
+- Create
+
+The below example leverages the creation of a nested entity in relation to an existing entity:
+
+```java
+/*
+Create a new address for a specific business partner.
+*/
+BusinessPartner businessPartnerById = BusinessPartner.builder().businessPartner("123").build();
+BusinessPartnerAddress addressItem = BusinessPartnerAddress.builder().country("DE").build();
+service.createBusinessPartnerAddress( addressItem )
+    .asChildOf( businessPartnerById, BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS )
+    .execute(destination);
+```
+
+This results in the POST request to `/ODataService/API_BUSINESS_PARTNER(123)/to_BusinessPartnerAddress`
+
+</TabItem>
+<TabItem value="v4">
+
+The VDM for OData v4 supports the following operations on (arbitrarily nested) navigation properties:
+- Create
+- Read
+- Update
+- Delete
+- Count
+
+
+The below example leverages the creation of a nested entity in relation to an existing entity:
+
+```java
+/*
+Create a new address for a specific business partner.
+*/
+BusinessPartner businessPartnerById = BusinessPartner.builder().businessPartner("123").build();
+BusinessPartnerAddress addressItem = BusinessPartnerAddress.builder().country("DE").build();
+service.forEntity( businessPartnerById )
+    .navigateTo( BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS )
+    .create( addressItem )
+    .execute(destination);
+```
+
+This results in the POST request to `/ODataService/API_BUSINESS_PARTNER(123)/to_BusinessPartnerAddress`
 
 </TabItem>
 </Tabs>

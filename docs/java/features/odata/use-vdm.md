@@ -362,7 +362,7 @@ Note that instead of applying `try/catch` one can also make use of `tryExecute` 
 </TabItem>
 <TabItem value="v2">
 
-<!-- TODO -->
+Coming soon
 
 </TabItem>
 </Tabs>

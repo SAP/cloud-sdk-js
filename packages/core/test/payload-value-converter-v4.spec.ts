@@ -65,6 +65,11 @@ describe('edmToTs()', () => {
     expected = (6 * 60 * 60 + 49) * 1000;
     actual = edmToTs(durationSomeDefaults, 'Edm.Duration') as Duration;
     expect(actual.asMilliseconds()).toBe(expected);
+
+    const durationOnlyDays = 'P1D';
+    expected = 24 * 60 * 60 * 1000;
+    actual = edmToTs(durationOnlyDays, 'Edm.Duration') as Duration;
+    expect(actual.asMilliseconds()).toBe(expected);
   });
 
   it('should throw on a wrongly formatted Edm.Duration', () => {

@@ -9,7 +9,9 @@ module.exports = {
   projectName: 'cloud-sdk', // Usually your repo name.
   themeConfig: {
     prism: {
-      additionalLanguages: ['powershell', 'java', 'groovy']
+      additionalLanguages: ['powershell', 'java', 'groovy'],
+      theme: require('prism-react-renderer/themes/github'),
+      darkTheme: require('prism-react-renderer/themes/dracula')
     },
     // announcementBar: {
     //   id: 'WIP', // Any value that will identify this message
@@ -161,9 +163,9 @@ module.exports = {
           // Equivalent to `enableUpdateBy`.
           showLastUpdateAuthor: true,
           // Equivalent to `enableUpdateTime`.
-          showLastUpdateTime: true
-          // editUrl:
-          // 'https://github.com/facebook/docusaurus/edit/master/website/',
+          showLastUpdateTime: true,
+          editUrl:
+          'https://github.com/SAP/cloud-sdk/tree/documentation',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')

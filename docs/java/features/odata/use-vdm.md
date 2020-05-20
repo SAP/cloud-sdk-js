@@ -398,7 +398,7 @@ service.createBusinessPartnerAddress( addressItem )
     .execute(destination);
 ```
 
-This results in the POST request to `/ODataService/API_BUSINESS_PARTNER(123)/to_BusinessPartnerAddress`
+This results in the POST request to `/ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartnerAddress`
 
 </TabItem>
 <TabItem value="v4">
@@ -425,7 +425,7 @@ service.forEntity( businessPartnerById )
     .execute(destination);
 ```
 
-This results in the POST request to `/ODataService/API_BUSINESS_PARTNER(123)/to_BusinessPartnerAddress`
+This results in the POST request to `/ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartnerAddress`
 
 </TabItem>
 </Tabs>

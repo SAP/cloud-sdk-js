@@ -18,7 +18,7 @@ keywords:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Build and execute OData Requests with the Virtual Data Model #
+## Build and execute OData Requests with the Virtual Data Model
 
 The Virtual Data Model (VDM) allows to build type-safe OData requests for a given service. The java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the VDM are not only _syntactically valid_ but also _semantically valid_.
 
@@ -269,17 +269,13 @@ To achieve a different order with `and` as the top level statement one would nes
     .or(BusinessPartner.FIRST_NAME.equalTo("Mallory"))
 )
 ```
-
-
 </TabItem>
 <TabItem value="v2">
-
 ```java
 .and(BusinessPartner.LAST_NAME.ne("Bob")
     .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
 )
 ```
-
 </TabItem>
 </Tabs>
 

@@ -111,7 +111,6 @@ function leftpad(value: any, targetLength: number): string {
   return '0'.repeat(targetLength - str.length) + str;
 }
 
-// Prettier-ignore
 export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'

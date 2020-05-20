@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import moment, { Duration, Moment } from 'moment';
-import { Time, EdmTypeShared } from '../common';
+import { Time, EdmTypeShared, TimeFractionalSeconds } from '../common';
 import {
   deserializersCommon,
   serializersCommom
@@ -77,24 +77,21 @@ function edmDurationToMoment(value: string): Duration {
   return moment.duration(value);
 }
 
-function edmTimeOfDay(value: string): Moment {
-  const prefix = 'HH:mm:ss';
-  const validFormats = [`${prefix}`, `${prefix}.SSS`];
-  const parsed = moment.utc(value, validFormats, true);
-  if (!parsed.isValid()) {
+function edmTimeOfDayToTime(value: string): TimeFractionalSeconds {
+  const timeComponents = /(\d{2,2}):(\d{2,2}):(\d{2,2})\.{0,1}(\d{1,12})?/.exec(
+    value
+  );
+  if (!timeComponents) {
     throw new Error(
-      `Provided time-of-day value ${value} does not follow the Edm.TimeOfDay pattern: HH:mm:ss(.SSS)`
+      `Provided time value ${value} does not follow the Edm.TimeOfDay pattern: HH:MM:SS(.S)`
     );
   }
-  return moment.utc({
-    y: 1970,
-    M: 0,
-    d: 0,
-    h: parsed.hours(),
-    m: parsed.minutes(),
-    s: parsed.seconds(),
-    ms: parsed.milliseconds()
-  });
+  return {
+    hours: parseInt(timeComponents[1], 10),
+    minutes: parseInt(timeComponents[2], 10),
+    seconds: parseInt(timeComponents[3], 10),
+    fractionalSeconds: timeComponents[4] || undefined
+  };
 }
 
 function momentToEdmDate(value: Moment): string {
@@ -109,11 +106,13 @@ function durationToEdmDuration(value: Duration): string {
   return value.toISOString();
 }
 
-function momentToEdmTimeOfDay(value: Moment): string {
-  return value.format('HH:mm:ss.SSS');
+function timeToEdmTimeOfDay(value: TimeFractionalSeconds): string {
+  if (value.fractionalSeconds) {
+    return `${value.hours}:${value.minutes}:${value.seconds}.${value.fractionalSeconds}`;
+  }
+  return `${value.hours}:${value.minutes}:${value.seconds}`;
 }
 
-// Prettier-ignore
 export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
@@ -140,7 +139,7 @@ const deserializers: EdmTypeMapping = {
   'Edm.Date': edmDateToMoment,
   'Edm.DateTimeOffset': edmDateTimeOffsetToMoment,
   'Edm.Duration': edmDurationToMoment,
-  'Edm.TimeOfDay': edmTimeOfDay
+  'Edm.TimeOfDay': edmTimeOfDayToTime
 };
 
 const serializers: EdmTypeMapping = {
@@ -148,5 +147,5 @@ const serializers: EdmTypeMapping = {
   'Edm.Date': momentToEdmDate,
   'Edm.DateTimeOffset': momentToEdmDateTimeOffsetToMoment,
   'Edm.Duration': durationToEdmDuration,
-  'Edm.TimeOfDay': momentToEdmTimeOfDay
+  'Edm.TimeOfDay': timeToEdmTimeOfDay
 };

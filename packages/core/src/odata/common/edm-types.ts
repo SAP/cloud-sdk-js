@@ -29,12 +29,7 @@ export type EdmTypeShared<VersionT extends 'v2' | 'v4' | 'any'> =
   | EdmTypeV2
   | EdmTypeV4;
 
-/**
- * for literal unions
- * @example Sub<'Y' | 'X', 'X'> // === 'Y'
- */
-export type Sub<O extends string, D extends string> = {
-  [K in O]: (Record<D, never> & Record<string, K>)[K];
-}[O];
-
-export type EdmTypeSameConvertersUri = Sub<EdmTypeSameConverters, 'Edm.Guid'>;
+export type EdmTypeSameConvertersUri = Exclude<
+  EdmTypeSameConverters,
+  'Edm.Guid'
+>;

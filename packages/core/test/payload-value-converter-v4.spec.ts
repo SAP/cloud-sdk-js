@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment, { Duration, Moment } from 'moment';
-import { edmToTs, tsToEdm } from '../src/v4';
+import { edmToTs, TimeFractionalSeconds, tsToEdm } from '../src/v4';
 
 describe('edmToTs()', () => {
   it('should parse Edm.Date to moment', () => {
@@ -87,14 +87,29 @@ describe('edmToTs()', () => {
 
   it('should parse Edm.TimeOfDay to moment.utc since there is proper time object', () => {
     let timeOfDay = '06:46:32';
-    const expected = 6 * 60 * 60 + 46 * 60 + 32;
-    let actual = edmToTs(timeOfDay, 'Edm.TimeOfDay') as Moment;
-    expect(actual.unix()).toBe(expected);
+    let expected: TimeFractionalSeconds = {
+      hours: 6,
+      minutes: 46,
+      seconds: 32,
+      fractionalSeconds: undefined
+    };
+    let actual = edmToTs(timeOfDay, 'Edm.TimeOfDay');
+    expect(actual).toEqual(expected);
 
-    timeOfDay = '06:46:32.965';
-    actual = edmToTs(timeOfDay, 'Edm.TimeOfDay') as Moment;
-    expect(actual.unix()).toBe(expected);
-    expect(actual.milliseconds()).toBe(965);
+    timeOfDay = '06:46:32.065123';
+    expected = {
+      hours: 6,
+      minutes: 46,
+      seconds: 32,
+      fractionalSeconds: '065123'
+    };
+    actual = edmToTs(timeOfDay, 'Edm.TimeOfDay');
+    expect(actual).toEqual(expected);
+
+    timeOfDay = '06:46:32.00';
+    expected = { hours: 6, minutes: 46, seconds: 32, fractionalSeconds: '00' };
+    actual = edmToTs(timeOfDay, 'Edm.TimeOfDay');
+    expect(actual).toEqual(expected);
   });
 
   it('should throw on wrong formatter Edm.TimeOfDay', () => {
@@ -124,10 +139,13 @@ describe('tsToEdm()', () => {
     );
   });
 
-  it('should convert moment to Edm.TimeOfDay', () => {
+  it('should convert time to Edm.TimeOfDay', () => {
     expect(
-      tsToEdm(moment((17 * 3600 + 900 + 57) * 1000 + 987), 'Edm.TimeOfDay')
-    ).toBe('18:15:57.987');
+      tsToEdm(
+        { hours: 18, minutes: 15, seconds: 57, fractionalSeconds: '0987' },
+        'Edm.TimeOfDay'
+      )
+    ).toBe('18:15:57.0987');
   });
 });
 
@@ -152,9 +170,24 @@ describe('edm to ts to edm does not lead to information loss', () => {
   });
 
   it('should not lose information for Edm.TimeOfDay', () => {
-    const expected = '18:27:32';
+    let expected = '18:27:32.12345678';
     expect(tsToEdm(edmToTs(expected, 'Edm.TimeOfDay'), 'Edm.TimeOfDay')).toBe(
-      expected + '.000'
+      expected
+    );
+
+    expected = '18:27:32';
+    expect(tsToEdm(edmToTs(expected, 'Edm.TimeOfDay'), 'Edm.TimeOfDay')).toBe(
+      expected
+    );
+
+    expected = '18:27:32.0';
+    expect(tsToEdm(edmToTs(expected, 'Edm.TimeOfDay'), 'Edm.TimeOfDay')).toBe(
+      expected
+    );
+
+    expected = '18:27:32.0001';
+    expect(tsToEdm(edmToTs(expected, 'Edm.TimeOfDay'), 'Edm.TimeOfDay')).toBe(
+      expected
     );
   });
 });

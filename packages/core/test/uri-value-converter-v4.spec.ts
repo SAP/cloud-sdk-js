@@ -22,9 +22,12 @@ describe('convertToUriFormat', () => {
   });
 
   it('should convert timeOfDay', () => {
-    expect(convertToUriFormat(moment(1589887303123), 'Edm.TimeOfDay')).toBe(
-      '13:21:43.123'
-    );
+    expect(
+      convertToUriFormat(
+        { hours: 13, minutes: 21, seconds: 43, fractionalSeconds: 123 },
+        'Edm.TimeOfDay'
+      )
+    ).toBe('13:21:43.123');
   });
 
   it('should convert date', () => {

@@ -24,7 +24,7 @@ export const uriConverters: UriConverterMapping = {
  */
 export function convertToUriFormat(
   value: any,
-  edmType: EdmTypeShared<'v2'>
+  edmType: EdmTypeShared<'v4'>
 ): string {
   const converted = tsToEdm(value, edmType);
   const uriConverter = uriConverters[edmType];

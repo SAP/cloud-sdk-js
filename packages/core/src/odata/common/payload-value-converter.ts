@@ -51,28 +51,6 @@ export function parseNumber(value: string | number): number {
   return num;
 }
 
-// Prettier-ignore
-// export type EdmToPrimitive<T extends EdmType> = T extends
-//   | 'Edm.Int16'
-//   | 'Edm.Int32'
-//   | 'Edm.Single'
-//   | 'Edm.Double'
-//   | 'Edm.Float'
-//   | 'Edm.Byte'
-//   | 'Edm.SByte'
-//   ? number
-//   : T extends 'Edm.Decimal' | 'Edm.Int64'
-//   ? BigNumber
-//   : T extends 'Edm.DateTime' | 'Edm.DateTimeOffset'
-//   ? Moment
-//   : T extends 'Edm.String' | 'Edm.Guid'
-//   ? string
-//   : T extends 'Edm.Boolean'
-//   ? boolean
-//   : T extends 'Edm.Time'
-//   ? Time
-//   : any;
-
 export const deserializersCommon: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,

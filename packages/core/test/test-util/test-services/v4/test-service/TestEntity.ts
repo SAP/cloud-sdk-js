@@ -116,6 +116,16 @@ export class TestEntity extends Entity implements TestEntityType {
    */
   complexTypeProperty?: TestComplexType;
   /**
+   * Collection Property with string inside.
+   * @nullable
+   */
+  collectionPropertyWithString?: string[];
+  /**
+   * Collection Property with complex type inside.
+   * @nullable
+   */
+  collectionPropertyWithComplexType?: TestComplexType[];
+  /**
    * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
    */
   toMultiLink!: TestEntityMultiLink[];
@@ -165,6 +175,7 @@ export class TestEntity extends Entity implements TestEntityType {
 import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
 import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
 import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
+import { CollectionField } from '../../../../../src/odata/v4/selectable/collection-field';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
@@ -185,6 +196,8 @@ export interface TestEntityType {
   byteProperty?: number;
   sByteProperty?: number;
   complexTypeProperty?: TestComplexType;
+  collectionPropertyWithString?: string[];
+  collectionPropertyWithComplexType?: TestComplexType[];
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityOtherMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;
@@ -209,6 +222,8 @@ export interface TestEntityTypeForceMandatory {
   byteProperty: number;
   sByteProperty: number;
   complexTypeProperty: TestComplexType;
+  collectionPropertyWithString: string[];
+  collectionPropertyWithComplexType: TestComplexType[];
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityOtherMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;
@@ -306,6 +321,16 @@ export namespace TestEntity {
    */
   export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> = new TestComplexTypeField('ComplexTypeProperty', TestEntity);
   /**
+   * Static representation of the [[collectionPropertyWithString]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const COLLECTION_PROPERTY_WITH_STRING: CollectionField<TestEntity> = new CollectionField('CollectionPropertyWithString', TestEntity, new StringField('', TestEntity, 'Edm.String'));
+  /**
+   * Static representation of the [[collectionPropertyWithString]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const COLLECTION_PROPERTY_WITH_COMPLEX_TYPE: CollectionField<TestEntity> = new CollectionField('CollectionPropertyWithComplexType', TestEntity, new TestComplexTypeField('', TestEntity));
+  /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -323,7 +348,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToManyLink<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToManyLink<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -342,6 +367,8 @@ export namespace TestEntity {
     TestEntity.BYTE_PROPERTY,
     TestEntity.S_BYTE_PROPERTY,
     TestEntity.COMPLEX_TYPE_PROPERTY,
+    TestEntity.COLLECTION_PROPERTY_WITH_STRING,
+    TestEntity.COLLECTION_PROPERTY_WITH_COMPLEX_TYPE,
     TestEntity.TO_MULTI_LINK,
     TestEntity.TO_OTHER_MULTI_LINK,
     TestEntity.TO_SINGLE_LINK

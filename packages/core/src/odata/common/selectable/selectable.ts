@@ -6,6 +6,7 @@ import { ComplexTypeField } from './complex-type-field';
 import { CustomFieldBase } from './custom-field';
 import { Link } from './link';
 import { SimpleTypeFields } from './simple-type-fields';
+import { CollectionField } from '../../v4/selectable/collection-field';
 
 /**
  * Represents all selectables, i.e. everything that can be used in a `.select` statement.
@@ -28,4 +29,5 @@ export type Selectable<EntityT extends EntityBase> = ODataVersion<
       | ComplexTypeField<EntityT>
       | CustomFieldBase<EntityT>
       | AllFields<EntityT>
+      | CollectionField<EntityT>
   : never;

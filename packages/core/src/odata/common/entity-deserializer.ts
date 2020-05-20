@@ -11,14 +11,15 @@ import {
   ComplexTypeField,
   OneToOneLink,
   isExpandedProperty,
-  EntityBase
+  EntityBase, Selectable
 } from '../common';
+import { CollectionField } from '../v4/selectable/collection-field';
 
 // eslint-disable-next-line valid-jsdoc
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function enityDeserializer(edmToTs) {
+export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
    * In this context, a custom fields is every property that is not known in the corresponding entity class.
@@ -68,7 +69,7 @@ export function enityDeserializer(edmToTs) {
     return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
-        entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
+        entity[toPropertyFormat(staticField._fieldName)] = getFieldValueVersionSpecific(
           json,
           staticField
         );
@@ -163,6 +164,16 @@ export function enityDeserializer(edmToTs) {
       }, {});
   }
 
+  function isODataV2Field<EntityT extends EntityBase>(
+    selectable: Field<EntityT> | Link<EntityT>
+  ): boolean {
+    return (
+      selectable instanceof EdmTypeField ||
+      selectable instanceof Link ||
+      selectable instanceof ComplexTypeField
+    );
+  }
+
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing
-  return { extractCustomFields, deserializeEntity };
+  return { extractCustomFields, deserializeComplexType, isODataV2Field, getFieldValue, deserializeEntity };
 }

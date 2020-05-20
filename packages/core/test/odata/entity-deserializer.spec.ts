@@ -1,10 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { deserializeEntity, extractCustomFields } from '../src';
+import { deserializeEntity, extractCustomFields } from '../../src';
 import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from './test-util/test-services/v2/test-service';
+} from '../test-util/test-services/v2/test-service';
+import {deserializeEntity as deserializeEntityV4} from '../../src/odata/v4/entity-deserializer';
+import {TestEntity as TestEntityV4} from '../test-util/test-services/v4/test-service';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {
@@ -108,6 +110,51 @@ describe('entity-deserializer', () => {
           StringProperty: expected.stringProperty
         },
         TestEntity
+      );
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('odata v4 tests', () => {
+    it('should deserialize an entity with collection of string properties', () => {
+      const collectionPropertyWithString = ['abc', 'def'];
+      const testEntity = new TestEntityV4();
+      testEntity.collectionPropertyWithString = collectionPropertyWithString;
+
+      const response = { CollectionPropertyWithString: collectionPropertyWithString };
+
+      expect(deserializeEntityV4(response, TestEntityV4)).toEqual(testEntity);
+    });
+
+    it('should deserialize an entity with collection of complex properties', () => {
+      const stringProp1 = 'string 1';
+      const stringProp2 = 'string 2';
+
+      const expected = new TestEntityV4();
+      expected.complexTypeProperty = {
+        stringProperty: stringProp1
+      };
+      expected.collectionPropertyWithComplexType = [
+        { stringProperty: stringProp1 },
+        { stringProperty: stringProp2 }
+      ];
+
+      const actual = deserializeEntityV4(
+        {
+          ComplexTypeProperty: {
+            StringProperty: stringProp1
+          },
+          CollectionPropertyWithComplexType: [
+            {
+              StringProperty: stringProp1
+            },
+            {
+              StringProperty: stringProp2
+            }
+          ]
+        },
+        TestEntityV4
       );
 
       expect(actual).toEqual(expected);

@@ -1,12 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { tsToEdm, serializeEntity } from '../src';
+import { tsToEdm, serializeEntity } from '../../src';
 import {
   TestEntity,
   TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from './test-util/test-services/v2/test-service';
+} from '../test-util/test-services/v2/test-service';
+import {serializeEntity as serializeEntityV4} from '../../src/odata/v4/entity-serializer';
+import {TestEntity as TestEntityV4} from '../test-util/test-services/v4/test-service';
 
 describe('entity-serializer', () => {
   it('should serialize simple entity', () => {
@@ -46,7 +48,7 @@ describe('entity-serializer', () => {
     });
   });
 
-  it.only('should serialize multi linked entity with nested links', () => {
+  it('should serialize multi linked entity with nested links', () => {
     const lvl2MultiLinkEntity = TestEntityLvl2MultiLink.builder()
       .booleanProperty(false)
       .build();
@@ -125,6 +127,43 @@ describe('entity-serializer', () => {
       SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',
       CustomField2: 1234
+    });
+  });
+
+  describe('odata v4 tests', () => {
+    it('should serialize collection field', () => {
+      const collectionPropertyWithString = ['abc', 'def'];
+      const testEntity = TestEntityV4.builder().collectionPropertyWithString(collectionPropertyWithString).build();
+
+      expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
+        CollectionPropertyWithString: collectionPropertyWithString
+      });
+    });
+
+    it('should serialize collection field with complex type', () => {
+      const stringProp1 = 'string 1';
+      const stringProp2 = 'string 2';
+      const complexType1 = { stringProperty: stringProp1 };
+      const complexType2 = { stringProperty: stringProp2 };
+      const collectionPropWithComplexType = [complexType1, complexType2];
+      const testEntity = TestEntityV4.builder()
+        .complexTypeProperty(complexType1)
+        .collectionPropertyWithComplexType(collectionPropWithComplexType)
+        .build();
+
+      expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
+        ComplexTypeProperty: {
+          StringProperty: stringProp1
+        },
+        CollectionPropertyWithComplexType: [
+          {
+            StringProperty: stringProp1
+          },
+          {
+            StringProperty: stringProp2
+          }
+        ]
+      });
     });
   });
 });

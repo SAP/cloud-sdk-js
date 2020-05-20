@@ -5,8 +5,8 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
-import {deserializeEntity as deserializeEntityV4} from '../../src/odata/v4/entity-deserializer';
-import {TestEntity as TestEntityV4} from '../test-util/test-services/v4/test-service';
+import { deserializeEntity as deserializeEntityV4 } from '../../src/odata/v4/entity-deserializer';
+import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {
@@ -122,7 +122,9 @@ describe('entity-deserializer', () => {
       const testEntity = new TestEntityV4();
       testEntity.collectionPropertyWithString = collectionPropertyWithString;
 
-      const response = { CollectionPropertyWithString: collectionPropertyWithString };
+      const response = {
+        CollectionPropertyWithString: collectionPropertyWithString
+      };
 
       expect(deserializeEntityV4(response, TestEntityV4)).toEqual(testEntity);
     });

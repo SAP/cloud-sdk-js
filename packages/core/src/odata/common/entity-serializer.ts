@@ -105,5 +105,11 @@ export function entitySerializer(tsToEdm, updateSerialized) {
     }
   }
 
-  return { serializeEntity, serializeEntityNonCustomFields, isODataV2Serializable, serializeField, serializeComplexTypeField };
+  return {
+    serializeEntity,
+    serializeEntityNonCustomFields,
+    isODataV2Serializable,
+    serializeField,
+    serializeComplexTypeField
+  };
 }

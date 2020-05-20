@@ -7,8 +7,8 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
-import {serializeEntity as serializeEntityV4} from '../../src/odata/v4/entity-serializer';
-import {TestEntity as TestEntityV4} from '../test-util/test-services/v4/test-service';
+import { serializeEntity as serializeEntityV4 } from '../../src/odata/v4/entity-serializer';
+import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
 
 describe('entity-serializer', () => {
   it('should serialize simple entity', () => {
@@ -133,7 +133,9 @@ describe('entity-serializer', () => {
   describe('odata v4 tests', () => {
     it('should serialize collection field', () => {
       const collectionPropertyWithString = ['abc', 'def'];
-      const testEntity = TestEntityV4.builder().collectionPropertyWithString(collectionPropertyWithString).build();
+      const testEntity = TestEntityV4.builder()
+        .collectionPropertyWithString(collectionPropertyWithString)
+        .build();
 
       expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
         CollectionPropertyWithString: collectionPropertyWithString

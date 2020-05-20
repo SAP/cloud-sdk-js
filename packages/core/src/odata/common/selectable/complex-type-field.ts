@@ -39,7 +39,6 @@ export abstract class ComplexTypeField<
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - If the complex field is on root level of entity it is the entity otherwise the parent complex field
    */
-  //TODO
   constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
 
   /**
@@ -72,8 +71,8 @@ export abstract class ComplexTypeField<
 
   fieldPath(): string {
     return this.fieldOf instanceof ComplexTypeField
-        ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
-        : this._fieldName;
+      ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
+      : this._fieldName;
   }
 }
 

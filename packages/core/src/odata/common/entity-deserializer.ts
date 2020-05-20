@@ -11,9 +11,8 @@ import {
   ComplexTypeField,
   OneToOneLink,
   isExpandedProperty,
-  EntityBase, Selectable
+  EntityBase
 } from '../common';
-import { CollectionField } from '../v4/selectable/collection-field';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -69,10 +68,9 @@ export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
     return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
-        entity[toPropertyFormat(staticField._fieldName)] = getFieldValueVersionSpecific(
-          json,
-          staticField
-        );
+        entity[
+          toPropertyFormat(staticField._fieldName)
+        ] = getFieldValueVersionSpecific(json, staticField);
         return entity;
       }, new entityConstructor())
       .initializeCustomFields(extractCustomFields(json, entityConstructor))
@@ -175,5 +173,11 @@ export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
   }
 
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing
-  return { extractCustomFields, deserializeComplexType, isODataV2Field, getFieldValue, deserializeEntity };
+  return {
+    extractCustomFields,
+    deserializeComplexType,
+    isODataV2Field,
+    getFieldValue,
+    deserializeEntity
+  };
 }

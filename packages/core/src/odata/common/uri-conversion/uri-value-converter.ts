@@ -24,44 +24,6 @@ export const uriConvertersCommon: UriConverterMapping = {
   'Edm.String': value => convertToUriForEdmString(value)
 };
 
-//
-// (
-//   value
-// }: any,
-//   edmType: EdmTypeShared<'v4'>
-//
-// ): string|undefined {
-//   const converted = tsToEdm(value, edmType);
-//   switch (edmType) {
-//     case 'Edm.Binary':
-//       return `X'${converted}'`;
-//     case 'Edm.Boolean':
-//       return String(converted);
-//     case 'Edm.Byte':
-//       return String(converted);
-//     case 'Edm.Int16':
-//       return String(converted);
-//     case 'Edm.Int32':
-//       return String(converted);
-//     case 'Edm.SByte':
-//       return String(converted);
-//     case 'Edm.Int64':
-//       return `${converted}L`;
-//     case 'Edm.Decimal':
-//       return `${converted}M`;
-//     case 'Edm.Double':
-//       return isInfOrNan(converted) ? converted : `${converted}D`;
-//     case 'Edm.Single':
-//       return isInfOrNan(converted) ? converted : `${converted}F`;
-//     case 'Edm.Float': // ABAP CDS compatibility
-//       return isInfOrNan(converted) ? converted : `${converted}F`;
-//     case 'Edm.String':
-//       return convertToUriForEdmString(converted);
-//     default:
-//       return undefined;
-//   }
-// }
-
 function isInfOrNan(value: string | number): boolean {
   if (typeof value === 'number') {
     return false;

@@ -9,7 +9,7 @@ description:
 
 ## Relation to SAP Cloud SDK ##
 
-[SAP Cloud Application Programming Model] is widely used to build cloud services within SAP.
+[SAP Cloud Application Programming Model](https://cap.cloud.sap/docs/) is widely used to build cloud services within SAP.
 
 - CAP uses some of Cloud SDK features to deliver the best user experience out of the box
  - Pipeline
@@ -36,4 +36,4 @@ CAP-based projects benefit from a primary [focus on domain](https://cap.cloud.sa
 - Consuming and emitting Enterprise Messages for S/4HANA
 
 ## Learn more ##
-Learn more about CAP from the [official documentation](https://cap.cloud.sap/docs/ )
+Learn more about CAP from the [official documentation](https://cap.cloud.sap/docs/)

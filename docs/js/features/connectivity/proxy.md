@@ -82,7 +82,7 @@ This will trigger the destination lookup as described [here](destination.md).
 The result of the lookup is a destination object which contains a property `Proxy Type`.
 This property can have two vales: `Internet` and `OnPremise`:
 
-![](../../img/proxyTypeDestination.png)
+<img alt="Destination in CF" src={useBaseUrl('img/proxyTypeDestination.png')} />
 
 if `OnPremise` is selected it is assumed that this destination points to an OnPremise S/4 HANA system.
 In this case you need the `connectivity proxy`. 
@@ -110,9 +110,9 @@ some.host.com:1234 -> will use http as default
 some.host.com -> will use http and 80 as default
 ```
 
-::::Note
+:::note
 If you use any special character in your username or password you need to encode them using [percent encoding](https://en.wikipedia.org/wiki/Percent-encoding)
-::::
+:::
 
 Since environment variables are a global setting, it might become necessary to exclude some destinations from using the proxy.
 This is possible using the `NO_PROXY` environment variable.

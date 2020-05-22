@@ -137,11 +137,11 @@ Even if you present a subscriber JWT the provider destination will be returned i
 - subscriberFirst: Tries to get from the subscriber first using the JWT.
 If no valid JWT is provided or the destination is not found it tries the provider as described for alwaysProvider.
 
-::::Note
+:::note
 One aspect has been left out for simplicity.
 In principle it is possible to define destinations not only on the account level but also on the destination service level.
 These destinations are called `instance destinations` since they are tied to an service binding called instance on SCP.
 In every request these destinations are added to the destinations returned by the destination service.
-::::
+:::
 
  

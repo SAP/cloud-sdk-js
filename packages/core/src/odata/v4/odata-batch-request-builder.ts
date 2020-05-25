@@ -105,7 +105,8 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
     const body = response.data;
     if (body.split('\r\n').length > 1) {
       return '\r\n';
-    } else if (body.split('\n').length > 1) {
+    }
+    if (body.split('\n').length > 1) {
       return '\n';
     }
     throw new Error(
@@ -165,7 +166,8 @@ function toRequestBody<
     request instanceof GetByKeyRequestBuilder
   ) {
     return toBatchRetrieveBody(request);
-  } else if (request instanceof ODataBatchChangeSet) {
+  }
+  if (request instanceof ODataBatchChangeSet) {
     return toBatchChangeSet(request);
   }
   throw Error(
@@ -192,7 +194,8 @@ function buildResponse(
 ) {
   if (isChangeSet(response)) {
     return buildWriteResponses(response, entityToConstructorMap, lineBreak);
-  } else if (isRetrieveRequestOrError(response)) {
+  }
+  if (isRetrieveRequestOrError(response)) {
     return buildRetrieveOrErrorResponse(
       response,
       entityToConstructorMap,
@@ -211,7 +214,8 @@ const asReadResponse = body => <T extends Entity>(
 ) => {
   if (body.error) {
     return new Error(body.error);
-  } else if (body.d.__metadata) {
+  }
+  if (body.d.__metadata) {
     return [deserializeEntity(body.d, constructor)];
   }
   return body.d.results.map(r => deserializeEntity(r, constructor));
@@ -405,7 +409,8 @@ function toWriteResponseArray(
   return partitionChangeSetResponse(response, lineBreak).map(r => {
     if (isNoContent(r)) {
       return { httpCode: 204 };
-    } else if (isCreated(response)) {
+    }
+    if (isCreated(response)) {
       const parsedBody = JSON.parse(trimRetrieveHeaders(r, lineBreak));
       const entityType = toConstructableFromChangeSetResponse(
         parsedBody,

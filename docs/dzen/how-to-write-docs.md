@@ -4,7 +4,6 @@ title: Documentation Guide Lines
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Documentation How To
-custom_edit_url: https://github.com
 description: Writing is an art!
 keywords:
 - sap

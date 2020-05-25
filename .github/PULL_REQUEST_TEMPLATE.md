@@ -15,7 +15,3 @@ Please consider all items and remove only if not applicable.
 - [ ] PR title adheres to [conventional commit guidelines](https://www.conventionalcommits.org) (please note that only `fix:` and `feat:` will end up in the release notes)
 - [ ] If applicable: Properly documented (JSDoc of public API)
 - [ ] If applicable: Check if `node run doc` still works.
-
-## Labels
-We use labels to indicate the status of PRs. 
-Please select `please review`, `please merge` or `don't merge` for your PR.

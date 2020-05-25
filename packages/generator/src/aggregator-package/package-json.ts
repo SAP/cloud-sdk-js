@@ -22,11 +22,11 @@ export function packageJson(
           version: 'node ../../../after-version-update.js'
         },
         dependencies: dependencies.reduce((deps, service) => {
-          deps[service] = `^${generatorVersion}`;
+          deps[service] = `^${versionInPackageJson || generatorVersion}`;
           return deps;
         }, {}),
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${generatorVersion}`
+          '@sap-cloud-sdk/core': `^${versionInPackageJson || generatorVersion}`
         }
       },
       null,

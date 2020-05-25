@@ -113,7 +113,8 @@ export function edmToComplexPropertyType(edmType: string): string {
 export function forceArray(obj: any): any[] {
   if (!obj) {
     return [];
-  } else if (!(obj instanceof Array)) {
+  }
+  if (!(obj instanceof Array)) {
     return [obj];
   }
   return obj;
@@ -122,7 +123,8 @@ export function forceArray(obj: any): any[] {
 export function ensureString(obj: any): string {
   if (typeof obj === 'undefined' || obj === null) {
     return '';
-  } else if (typeof obj === 'string') {
+  }
+  if (typeof obj === 'string') {
     return obj;
   }
   return `${obj}`;

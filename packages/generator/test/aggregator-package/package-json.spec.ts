@@ -26,11 +26,11 @@ describe('package-json', () => {
       '    "version": "node ../../../after-version-update.js"\n' +
       '  },\n' +
       '  "dependencies": {\n' +
-      '    "@sap/cloud-sdk-vdm-business-area-service": "^1.17.4-alpha.8",\n' +
-      '    "@sap/cloud-sdk-vdm-business-partner-service": "^1.17.4-alpha.8"\n' +
+      '    "@sap/cloud-sdk-vdm-business-area-service": "^2.0.0",\n' +
+      '    "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0"\n' +
       '  },\n' +
       '  "peerDependencies": {\n' +
-      '    "@sap-cloud-sdk/core": "^1.17.4-alpha.8"\n' +
+      '    "@sap-cloud-sdk/core": "^2.0.0"\n' +
       '  }\n' +
       '}\n';
     expect(actual).toEqual(expected);

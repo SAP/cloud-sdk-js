@@ -174,20 +174,11 @@ export function entityDeserializer(edmToTs) {
     if (selectable._fieldType instanceof EdmTypeField) {
       const edmType = selectable._fieldType.edmType;
       return json.map(v => edmToTs(v, edmType));
-    } else if (selectable._fieldType instanceof ComplexTypeField) {
+    }
+    if (selectable._fieldType instanceof ComplexTypeField) {
       const complexTypeField = selectable._fieldType;
       return json.map(v => deserializeComplexType(v, complexTypeField));
     }
-  }
-
-  function isODataV2Field<EntityT extends EntityBase>(
-    selectable: Field<EntityT> | Link<EntityT>
-  ): boolean {
-    return (
-      selectable instanceof EdmTypeField ||
-      selectable instanceof Link ||
-      selectable instanceof ComplexTypeField
-    );
   }
 
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing

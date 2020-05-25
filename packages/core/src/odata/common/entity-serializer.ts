@@ -110,7 +110,8 @@ export function entitySerializer(tsToEdm) {
     if (selectable._fieldType instanceof EdmTypeField) {
       const edmType = selectable._fieldType.edmType;
       return fieldValue.map(v => tsToEdm(v, edmType));
-    } else if (selectable._fieldType instanceof ComplexTypeField) {
+    }
+    if (selectable._fieldType instanceof ComplexTypeField) {
       const complexTypeField = selectable._fieldType;
       return fieldValue.map(v =>
         serializeComplexTypeField(complexTypeField, v)

@@ -207,7 +207,7 @@ module.exports = {
         "no-debugger": "error",
         "no-duplicate-case": "error",
         "no-duplicate-imports": "error",
-        "no-else-return": "error",
+        "no-else-return": ["error", { "allowElseIf": false }],
         "no-empty": "error",
         "no-eval": "error",
         "no-extra-bind": "error",

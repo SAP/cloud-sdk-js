@@ -15,7 +15,7 @@ keywords:
 - jenkins
 - continuous integration
 - continuous delivery
-- project "piper"
+- project "Piper"
 image:
 ---
 
@@ -23,17 +23,17 @@ image:
 
 Continuous delivery is a method to develop software with short feedback cycles.
 It is applicable to projects both for SAP Cloud Platform and SAP on-premise platforms.
-SAP implements tooling for continuous delivery in project "Piper" and SAP Cloud SDK for Continuous Delivery.
+SAP implements tooling for continuous delivery in project "Piper".
 The goal of project "Piper" is to substantially ease setting up continuous delivery in your project using SAP technologies.
 
 ### SAP Cloud SDK for Continuous Delivery ###
 
-SAP Cloud SDK for Continuous Delivery is Open Source and easy to use.
+[SAP Cloud SDK for Continuous Delivery](https://github.com/SAP/cloud-s4-sdk-pipeline) is open source and free to use.
+This ready-made pipeline allows you to start with continuous delivery without writing any pipeline code -- only declarative configuration is required.
+It helps you to quickly deliver high quality applications to SAP Cloud Platform.
 
-[The GitHub repository](https://github.com/SAP/cloud-s4-sdk-pipeline) contains a Jenkins Pipeline-as-Code that enables development teams to assure a high level of quality on the process as well as code level.
-While the SAP Cloud SDK enables us to build high-quality cloud applications, this pipeline helps to assure high quality on the project level by a set of standard and SDK-specific quality checks.
+Check out the [documentation of SAP Cloud SDK for Continuous Delivery](https://sap.github.io/jenkins-library/pipelines/cloud-sdk/introduction/) for more details and usage hints.
 
 ### Project "Piper" ###
 
 For more information on CI/CD in the SAP ecosytem, please refer to the documentation of [project "Piper"](https://sap.github.io/jenkins-library).
-It also holds the [documentation of SAP Cloud SDK for Continuous Delivery](https://sap.github.io/jenkins-library/pipelines/cloud-sdk/introduction/).

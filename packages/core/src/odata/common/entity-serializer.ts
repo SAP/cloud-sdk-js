@@ -11,7 +11,6 @@ import {
   EntityBase
 } from '../common';
 import { CollectionField } from '../v4/selectable/collection-field';
-import { tsToEdm } from '../v4';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -72,7 +71,10 @@ export function entitySerializer(tsToEdm) {
           fieldValue
         );
       } else if (field instanceof CollectionField) {
-        serialized[field._fieldName] = serializeCollectionField(fieldValue, field);
+        serialized[field._fieldName] = serializeCollectionField(
+          fieldValue,
+          field
+        );
       }
 
       return serialized;

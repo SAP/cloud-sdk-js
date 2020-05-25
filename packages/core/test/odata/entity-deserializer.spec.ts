@@ -131,11 +131,11 @@ describe('entity-deserializer', () => {
       const stringProp1 = 'string 1';
       const stringProp2 = 'string 2';
 
-      const expected = new TestEntityV4();
-      expected.complexTypeProperty = {
+      const expectedWithCollection = new TestEntityV4();
+      expectedWithCollection.complexTypeProperty = {
         stringProperty: stringProp1
       };
-      expected.collectionPropertyWithComplexType = [
+      expectedWithCollection.collectionPropertyWithComplexType = [
         { stringProperty: stringProp1 },
         { stringProperty: stringProp2 }
       ];
@@ -157,7 +157,7 @@ describe('entity-deserializer', () => {
         TestEntityV4
       );
 
-      expect(actual).toEqual(expected);
+      expect(actual).toEqual(expectedWithCollection);
     });
   });
 });

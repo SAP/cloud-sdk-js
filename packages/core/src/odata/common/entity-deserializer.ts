@@ -14,7 +14,6 @@ import {
   EntityBase
 } from '../common';
 import { CollectionField } from '../v4/selectable/collection-field';
-import { edmToTs } from '../v4';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -70,9 +69,10 @@ export function entityDeserializer(edmToTs) {
     return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
-        entity[
-          toPropertyFormat(staticField._fieldName)
-        ] = getFieldValue(json, staticField);
+        entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
+          json,
+          staticField
+        );
         return entity;
       }, new entityConstructor())
       .initializeCustomFields(extractCustomFields(json, entityConstructor))
@@ -176,9 +176,7 @@ export function entityDeserializer(edmToTs) {
       return json.map(v => edmToTs(v, edmType));
     } else if (selectable._fieldType instanceof ComplexTypeField) {
       const complexTypeField = selectable._fieldType;
-      return json.map(v =>
-        deserializeComplexType(v, complexTypeField)
-      );
+      return json.map(v => deserializeComplexType(v, complexTypeField));
     }
   }
 

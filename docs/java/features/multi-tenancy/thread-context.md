@@ -4,7 +4,6 @@ title: Multi Tenancy with the Thread Context
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Thread Context
-custom_edit_url: https://github.com
 description: This article describes how the SAP Cloud SDK for Java provides an application context that is stored in a thread-safe manner and enables cloud native features to be used out of the box.
 keywords:
 - sap

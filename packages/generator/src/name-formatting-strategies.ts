@@ -63,7 +63,8 @@ function sortByIntegerSuffix(array: string[]): string[] {
 
     if (suffix1 > suffix2) {
       return 1;
-    } else if (suffix2 > suffix1) {
+    }
+    if (suffix2 > suffix1) {
       return -1;
     }
     return 0;

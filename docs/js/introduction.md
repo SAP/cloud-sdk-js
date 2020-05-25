@@ -4,7 +4,6 @@ title: Introduction - SDK for JavaScript
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Introduction
-custom_edit_url: https://github.com
 description: Cloud SDK for JavaScript significantly simlifies extending and developing application with SAP Cloud Platform
 keywords:
 - sap

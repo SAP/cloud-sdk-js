@@ -114,9 +114,7 @@ describe('entity-deserializer', () => {
 
       expect(actual).toEqual(expected);
     });
-  });
 
-  describe('odata v4 tests', () => {
     it('should deserialize an entity with collection of string properties', () => {
       const collectionPropertyWithString = ['abc', 'def'];
       const testEntity = new TestEntityV4();

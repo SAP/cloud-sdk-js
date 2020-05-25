@@ -14,7 +14,8 @@ export class CollectionField<EntityT extends Entity> extends Field<EntityT>
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly _elementType: SimpleTypeFields<EntityT> | ComplexTypeField<EntityT>
+    // TODO because complex type field is then used when calling `deserializeComplexType`
+    readonly _fieldType: SimpleTypeFields<EntityT> | ComplexTypeField<EntityT>
   ) {
     super(_fieldName, _entityConstructor);
   }

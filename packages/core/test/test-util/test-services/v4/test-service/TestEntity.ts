@@ -124,6 +124,7 @@ export class TestEntity extends Entity implements TestEntityType {
    * Collection Property with complex type inside.
    * @nullable
    */
+    // TODO: the collection type is added manually without any reproducible script/generator, because we want to handle it in the new generator soon.
   collectionPropertyWithComplexType?: TestComplexType[];
   /**
    * One-to-many navigation property to the [[TestEntityMultiLink]] entity.

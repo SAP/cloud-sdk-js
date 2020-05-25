@@ -130,42 +130,40 @@ describe('entity-serializer', () => {
     });
   });
 
-  describe('odata v4 tests', () => {
-    it('should serialize collection field', () => {
-      const collectionPropertyWithString = ['abc', 'def'];
-      const testEntity = TestEntityV4.builder()
-        .collectionPropertyWithString(collectionPropertyWithString)
-        .build();
+  it('should serialize collection field', () => {
+    const collectionPropertyWithString = ['abc', 'def'];
+    const testEntity = TestEntityV4.builder()
+      .collectionPropertyWithString(collectionPropertyWithString)
+      .build();
 
-      expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
-        CollectionPropertyWithString: collectionPropertyWithString
-      });
+    expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
+      CollectionPropertyWithString: collectionPropertyWithString
     });
+  });
 
-    it('should serialize collection field with complex type', () => {
-      const stringProp1 = 'string 1';
-      const stringProp2 = 'string 2';
-      const complexType1 = { stringProperty: stringProp1 };
-      const complexType2 = { stringProperty: stringProp2 };
-      const collectionPropWithComplexType = [complexType1, complexType2];
-      const testEntity = TestEntityV4.builder()
-        .complexTypeProperty(complexType1)
-        .collectionPropertyWithComplexType(collectionPropWithComplexType)
-        .build();
+  it('should serialize collection field with complex type', () => {
+    const stringProp1 = 'string 1';
+    const stringProp2 = 'string 2';
+    const complexType1 = { stringProperty: stringProp1 };
+    const complexType2 = { stringProperty: stringProp2 };
+    const collectionPropWithComplexType = [complexType1, complexType2];
+    const testEntity = TestEntityV4.builder()
+      .complexTypeProperty(complexType1)
+      .collectionPropertyWithComplexType(collectionPropWithComplexType)
+      .build();
 
-      expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
-        ComplexTypeProperty: {
+    expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
+      ComplexTypeProperty: {
+        StringProperty: stringProp1
+      },
+      CollectionPropertyWithComplexType: [
+        {
           StringProperty: stringProp1
         },
-        CollectionPropertyWithComplexType: [
-          {
-            StringProperty: stringProp1
-          },
-          {
-            StringProperty: stringProp2
-          }
-        ]
-      });
+        {
+          StringProperty: stringProp2
+        }
+      ]
     });
   });
 });

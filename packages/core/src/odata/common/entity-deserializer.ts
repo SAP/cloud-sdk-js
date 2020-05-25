@@ -13,12 +13,14 @@ import {
   isExpandedProperty,
   EntityBase
 } from '../common';
+import { CollectionField } from '../v4/selectable/collection-field';
+import { edmToTs } from '../v4';
 
 // eslint-disable-next-line valid-jsdoc
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
+export function entityDeserializer(edmToTs) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
    * In this context, a custom fields is every property that is not known in the corresponding entity class.
@@ -70,7 +72,7 @@ export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
       .reduce((entity, staticField) => {
         entity[
           toPropertyFormat(staticField._fieldName)
-        ] = getFieldValueVersionSpecific(json, staticField);
+        ] = getFieldValue(json, staticField);
         return entity;
       }, new entityConstructor())
       .initializeCustomFields(extractCustomFields(json, entityConstructor))
@@ -98,6 +100,9 @@ export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
     }
     if (field instanceof ComplexTypeField) {
       return deserializeComplexType(json[field._fieldName], field);
+    }
+    if (field instanceof CollectionField) {
+      return deserializeCollectionType(json[field._fieldName], field);
     }
   }
 
@@ -162,6 +167,21 @@ export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
       }, {});
   }
 
+  function deserializeCollectionType<EntityT extends EntityBase>(
+    json: any[],
+    selectable: CollectionField<EntityT>
+  ) {
+    if (selectable._fieldType instanceof EdmTypeField) {
+      const edmType = selectable._fieldType.edmType;
+      return json.map(v => edmToTs(v, edmType));
+    } else if (selectable._fieldType instanceof ComplexTypeField) {
+      const complexTypeField = selectable._fieldType;
+      return json.map(v =>
+        deserializeComplexType(v, complexTypeField)
+      );
+    }
+  }
+
   function isODataV2Field<EntityT extends EntityBase>(
     selectable: Field<EntityT> | Link<EntityT>
   ): boolean {
@@ -175,9 +195,6 @@ export function entityDeserializer(edmToTs, getFieldValueVersionSpecific) {
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing
   return {
     extractCustomFields,
-    deserializeComplexType,
-    isODataV2Field,
-    getFieldValue,
     deserializeEntity
   };
 }

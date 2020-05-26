@@ -1,6 +1,6 @@
 ---
 id: use-generated-odata-vdm-v2-v4
-title: Use the VDM to consume OData Services
+title: Use the typed OData client to consume OData Services
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Consume OData Services
@@ -20,11 +20,11 @@ import TabItem from '@theme/TabItem';
 
 ## Build and execute OData Requests with the Virtual Data Model
 
-The Virtual Data Model (VDM) allows to build type-safe OData requests for a given service. The java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the VDM are not only _syntactically valid_ but also _semantically valid_.
+The typed OData client allows to build type-safe OData requests for a given service. The java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
 
 ## Using the Fluent API ##
 
-The VDM consists of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.
+The typed OData client consists of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.
 
 To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/cloud-sdk/docs/java/features/connectivity/sdk-connectivity-destination-service). The following code snippets assume that such a destination is in place:
 
@@ -46,7 +46,7 @@ result = service.operation()
     - Or other modifiers like custom headers
 - Which OData parameters are available depends on the operation. For example when updating entities the `$filter` parameter is not available.
 
-Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA VDM. The following code snippets assume that an instance of this service is setup:
+Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA Virtual Data Model (VDM). The following code snippets assume that an instance of this service is set up:
 
 ```java
 BusinessPartnerService service = new DefaultBusinessPartnerService();
@@ -381,7 +381,7 @@ Such operations also provide a convenient way to access the nested resources of 
 
 <TabItem value="v2">
 
-The VDM for OData v2 supports the following operations on (first-level only) navigation properties:
+The typed OData client for OData v2 supports the following operations on (first-level only) navigation properties:
 - Create
 
 The below example leverages the creation of a nested entity in relation to an existing entity:
@@ -409,7 +409,7 @@ POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartne
 </TabItem>
 <TabItem value="v4">
 
-The VDM for OData v4 supports the following operations on (arbitrarily nested) navigation properties:
+The typed OData client for OData v4 supports the following operations on (arbitrarily nested) navigation properties:
 - Create
 - Read
 - Update

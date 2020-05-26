@@ -66,9 +66,9 @@ function transformChangeLog(changelog) {
     nextChangelogTemplate,
     `# ${version}`,
     '',
-    'Release Date: TBD',
-    `API Docs: https://sap.github.io/cloud-sdk/api/${version}`,
-    'Blog: TBD',
+    'Release Date: TBD<br>',
+    `API Docs: https://sap.github.io/cloud-sdk/api/${version}<br>`,
+    'Blog: TBD<br>',
     '',
     ...usedCategories,
     ...previousVersionSections.map(section => `# ${section}`)

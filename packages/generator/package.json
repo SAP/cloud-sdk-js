@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "1.20.1",
+  "version": "1.21.0",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
@@ -34,8 +34,8 @@
     "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.20.1",
-    "@sap-cloud-sdk/util": "^1.20.1",
+    "@sap-cloud-sdk/core": "^1.21.0",
+    "@sap-cloud-sdk/util": "^1.21.0",
     "@sap/edm-converters": "^1.0.21",
     "@types/fs-extra": "^8.1.0",
     "fast-xml-parser": "^3.16.0",
@@ -47,7 +47,7 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services": "^1.20.1",
+    "@sap-cloud-sdk/test-services": "^1.21.0",
     "@types/jest": "^25.1.4",
     "@types/yargs": "^15.0.4",
     "jest": "^25.2.4",

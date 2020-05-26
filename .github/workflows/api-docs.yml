@@ -3,7 +3,6 @@ name: update-api-documentation
 on:
   push:
     branches: [master]
-    tags: ['v*']
     paths:
     - 'docs/**'
 

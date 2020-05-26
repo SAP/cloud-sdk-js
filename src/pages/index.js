@@ -18,7 +18,7 @@ const features = [
     badge: <MvnBadge />,
     description: (
       <>
-        SAP Cloud SDK for Java allows you develop, extend, and communicate wiht
+        SAP Cloud SDK for Java allows you develop, extend, and communicate with
         SAP solutions SAP S/4HANA Cloud, SAP SuccessFactors, and many others.{' '}
         <br />
         <a href='docs/java/getting-started'>Get started with SDK for Java.</a>
@@ -37,8 +37,8 @@ const features = [
     ),
     description: (
       <>
-        SAP Cloud SDK for JavaScript leverages popularity and flexibility of
-        Node.js ecosystem for building Apps and extensions on top of SAP
+        SAP Cloud SDK for JavaScript (and TypeScript) leverages the popularity and flexibility of
+        Node.js ecosystem for building apps and extensions on top of SAP
         solutions and deploy them to cloud. <br />
         <a href='docs/js/getting-started'>
           Get started with SDK for JavaScript
@@ -47,14 +47,14 @@ const features = [
     )
   },
   {
-    title: <>Continuous Delivery Toolkit</>,
+    title: <>SAP Cloud SDK for continuous delivery</>,
     link: 'docs/devops/getting-started',
     imageUrl:
       'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/logo-for-cd.svg',
     badge: <LicenseBadge />,
     description: (
       <>
-	CI toolkit contains a Jenkins Pipeline-as-Code that assures a high level of quality on process as well as code level. High quality is achieved by a set of standard and SDK-specific quality checks.<br />
+	SAP Cloud SDK provides a ready-to-use Jenkins Pipeline-as-Code that assures a high level of quality on process as well as code level. High quality is achieved by a set of standard and SDK-specific quality checks.<br />
         <a href='docs/devops/getting-started'>
           Get started with best CI/CD practices
         </a>

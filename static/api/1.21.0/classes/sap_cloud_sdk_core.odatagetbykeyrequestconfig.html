@@ -69,16 +69,19 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>OData getByKey request configuration for an entity type.</p>
-					</div>
+					<dl class="tsd-comment-tags">
+						<dt>deprecated</dt>
+						<dd><p>Since v1.21.0. Use superclass instead.
+							OData delete request configuration for an entity type.</p>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>EntityT<span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_core.entity" class="tsd-signature-type">Entity</a></h4>
+						<h4>EntityT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EntityBase</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>Type of the entity to setup a request for</p>
@@ -91,7 +94,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">ODataRequestConfig</span>
+						<span class="tsd-signature-type">ODataGetByKeyRequestConfig</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">ODataGetByKeyRequestConfig</span>
@@ -117,17 +120,18 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#contenttype" class="tsd-kind-icon">content<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#customservicepath" class="tsd-kind-icon">custom<wbr>Service<wbr>Path</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#defaultservicepath" class="tsd-kind-icon">default<wbr>Service<wbr>Path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#entityconstructor" class="tsd-kind-icon">entity<wbr>Constructor</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#keys" class="tsd-kind-icon">keys</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#entityconstructor" class="tsd-kind-icon">entity<wbr>Constructor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#expands" class="tsd-kind-icon">expands</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#keys" class="tsd-kind-icon">keys</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#method" class="tsd-kind-icon">method</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#payload" class="tsd-kind-icon">payload</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#selects" class="tsd-kind-icon">selects</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#selects" class="tsd-kind-icon">selects</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited">
@@ -137,14 +141,14 @@
 								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#customqueryparameters" class="tsd-kind-icon">custom<wbr>Query<wbr>Parameters</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#addcustomheaders" class="tsd-kind-icon">add<wbr>Custom<wbr>Headers</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#addcustomqueryparameters" class="tsd-kind-icon">add<wbr>Custom<wbr>Query<wbr>Parameters</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#prependdollartoqueryparameters" class="tsd-kind-icon">prepend<wbr>Dollar<wbr>ToQuery<wbr>Parameters</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#queryparameters" class="tsd-kind-icon">query<wbr>Parameters</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#resourcepath" class="tsd-kind-icon">resource<wbr>Path</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#queryparameters" class="tsd-kind-icon">query<wbr>Parameters</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#resourcepath" class="tsd-kind-icon">resource<wbr>Path</a></li>
 							</ul>
 						</section>
 					</div>
@@ -156,14 +160,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new OData<wbr>Get<wbr>ByKey<wbr>Request<wbr>Config<span class="tsd-signature-symbol">(</span>entityConstructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig" class="tsd-signature-type">ODataGetByKeyRequestConfig</a></li>
+						<li class="tsd-signature tsd-kind-icon">new OData<wbr>Get<wbr>ByKey<wbr>Request<wbr>Config<span class="tsd-signature-symbol">(</span>_entityConstructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig" class="tsd-signature-type">ODataGetByKeyRequestConfig</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides ODataRequestConfig.__constructor</p>
+								<p>Overrides ODataGetByKeyRequestConfig.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-get-by-key-request-config.ts#L21">core/src/request-builder/request/odata-get-by-key-request-config.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/v2/legacy-request-configs/odata-get-by-key-request-config.ts#L15">core/src/odata/v2/legacy-request-configs/odata-get-by-key-request-config.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -174,7 +178,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>entityConstructor: <span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>_entityConstructor: <span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>Constructor type of the entity to create a configuration for</p>
@@ -187,7 +191,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="contenttype" class="tsd-anchor"></a>
@@ -196,7 +200,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#contenttype">contentType</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L32">core/src/request-builder/request/odata-request-config.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L32">core/src/odata/common/request/odata-request-config.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -212,7 +216,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#customservicepath">customServicePath</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L17">core/src/request-builder/request/odata-request-config.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L17">core/src/odata/common/request/odata-request-config.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,9 +225,9 @@
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> default<wbr>Service<wbr>Path</h3>
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Service<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from ODataRequestConfig.defaultServicePath</p>
+						<p>Inherited from <a href="sap_cloud_sdk_core.odatacreaterequestconfig">ODataCreateRequestConfig</a>.<a href="sap_cloud_sdk_core.odatacreaterequestconfig#defaultservicepath">defaultServicePath</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L31">core/src/request-builder/request/odata-request-config.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L31">core/src/odata/common/request/odata-request-config.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -232,13 +236,14 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="entityconstructor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> entity<wbr>Constructor</h3>
 					<div class="tsd-signature tsd-kind-icon">entity<wbr>Constructor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Constructable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig">ODataGetByKeyRequestConfig</a>.<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#entityconstructor">entityConstructor</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-get-by-key-request-config.ts#L28">core/src/request-builder/request/odata-get-by-key-request-config.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-get-by-key-request-config.ts#L31">core/src/odata/common/request/odata-get-by-key-request-config.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -247,13 +252,25 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="expands" class="tsd-anchor"></a>
+					<h3>expands</h3>
+					<div class="tsd-signature tsd-kind-icon">expands<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Expandable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig">ODataGetByKeyRequestConfig</a>.<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#expands">expands</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-get-by-key-request-config.ts#L23">core/src/odata/common/request/odata-get-by-key-request-config.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="keys" class="tsd-anchor"></a>
 					<h3>keys</h3>
 					<div class="tsd-signature tsd-kind-icon">keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MapType</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/sap_cloud_sdk_core#fieldtype" class="tsd-signature-type">FieldType</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig">ODataGetByKeyRequestConfig</a>.<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#keys">keys</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-get-by-key-request-config.ts#L20">core/src/request-builder/request/odata-get-by-key-request-config.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-get-by-key-request-config.ts#L21">core/src/odata/common/request/odata-get-by-key-request-config.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -264,7 +281,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#method">method</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L30">core/src/request-builder/request/odata-request-config.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L30">core/src/odata/common/request/odata-request-config.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -280,17 +297,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#payload">payload</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L16">core/src/request-builder/request/odata-request-config.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L16">core/src/odata/common/request/odata-request-config.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="selects" class="tsd-anchor"></a>
 					<h3>selects</h3>
 					<div class="tsd-signature tsd-kind-icon">selects<span class="tsd-signature-symbol">:</span> <a href="../modules/sap_cloud_sdk_core#selectable" class="tsd-signature-type">Selectable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig">ODataGetByKeyRequestConfig</a>.<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#selects">selects</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-get-by-key-request-config.ts#L21">core/src/request-builder/request/odata-get-by-key-request-config.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-get-by-key-request-config.ts#L22">core/src/odata/common/request/odata-get-by-key-request-config.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -309,7 +327,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#customheaders">customHeaders</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L44">core/src/request-builder/request/odata-request-config.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L44">core/src/odata/common/request/odata-request-config.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">MapType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -318,7 +336,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#customheaders">customHeaders</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L39">core/src/request-builder/request/odata-request-config.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L39">core/src/odata/common/request/odata-request-config.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -343,7 +361,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#customqueryparameters">customQueryParameters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L53">core/src/request-builder/request/odata-request-config.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L53">core/src/odata/common/request/odata-request-config.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">MapType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -352,7 +370,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#customqueryparameters">customQueryParameters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L48">core/src/request-builder/request/odata-request-config.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L48">core/src/odata/common/request/odata-request-config.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -366,7 +384,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="addcustomheaders" class="tsd-anchor"></a>
@@ -379,7 +397,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#addcustomheaders">addCustomHeaders</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L62">core/src/request-builder/request/odata-request-config.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L62">core/src/odata/common/request/odata-request-config.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -411,7 +429,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#addcustomqueryparameters">addCustomQueryParameters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L74">core/src/request-builder/request/odata-request-config.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L74">core/src/odata/common/request/odata-request-config.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -443,7 +461,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="sap_cloud_sdk_core.odatabatchconfig">ODataBatchConfig</a>.<a href="sap_cloud_sdk_core.odatabatchconfig#prependdollartoqueryparameters">prependDollarToQueryParameters</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-request-config.ts#L80">core/src/request-builder/request/odata-request-config.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-request-config.ts#L80">core/src/odata/common/request/odata-request-config.ts:80</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -456,36 +474,38 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="queryparameters" class="tsd-anchor"></a>
 					<h3>query<wbr>Parameters</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">query<wbr>Parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MapType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig">ODataGetByKeyRequestConfig</a>.<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#queryparameters">queryParameters</a></p>
 								<p>Overrides ODataRequestConfig.queryParameters</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-get-by-key-request-config.ts#L36">core/src/request-builder/request/odata-get-by-key-request-config.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-get-by-key-request-config.ts#L44">core/src/odata/common/request/odata-get-by-key-request-config.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">MapType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 					<a name="resourcepath" class="tsd-anchor"></a>
 					<h3>resource<wbr>Path</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">resource<wbr>Path<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig">ODataGetByKeyRequestConfig</a>.<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#resourcepath">resourcePath</a></p>
 								<p>Overrides ODataRequestConfig.resourcePath</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/7b3868b/packages/core/src/request-builder/request/odata-get-by-key-request-config.ts#L32">core/src/request-builder/request/odata-get-by-key-request-config.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk/blob/0bf1d89/packages/core/src/odata/common/request/odata-get-by-key-request-config.ts#L37">core/src/odata/common/request/odata-get-by-key-request-config.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -536,10 +556,13 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#defaultservicepath" class="tsd-kind-icon">default<wbr>Service<wbr>Path</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#entityconstructor" class="tsd-kind-icon">entity<wbr>Constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#expands" class="tsd-kind-icon">expands</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#keys" class="tsd-kind-icon">keys</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
@@ -548,7 +571,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#payload" class="tsd-kind-icon">payload</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#selects" class="tsd-kind-icon">selects</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -566,10 +589,10 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#prependdollartoqueryparameters" class="tsd-kind-icon">prepend<wbr>Dollar<wbr>ToQuery<wbr>Parameters</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#queryparameters" class="tsd-kind-icon">query<wbr>Parameters</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="sap_cloud_sdk_core.odatagetbykeyrequestconfig#resourcepath" class="tsd-kind-icon">resource<wbr>Path</a>
 							</li>
 						</ul>
@@ -597,8 +620,6 @@
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>

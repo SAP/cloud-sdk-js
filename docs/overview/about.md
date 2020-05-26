@@ -5,7 +5,6 @@ hide_title: false
 hide_table_of_contents: false
 sidebar_label: About
 description: SAP Cloud SDK is the simplest and fastest way to extend SAP services and applications in the cloud.
-custom_edit_url: https://github.com/SAP/cloud-sdk/edit/documentation/docs/overview/about.md
 keywords:
 - sap
 - cloud

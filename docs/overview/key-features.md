@@ -21,7 +21,7 @@ Please, review respective documentation sections to find out more.
 
 ## CLI ##
 
-## Virtual Data Model ##
+## Typed OData Client ##
 
 ## Cloud Abstractions ##
 

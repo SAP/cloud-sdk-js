@@ -18,7 +18,7 @@ keywords:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Build and execute OData Requests with the Virtual Data Model
+## Build and execute OData Requests with the typed OData client
 
 The typed OData client allows to build type-safe OData requests for a given service. The java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
 

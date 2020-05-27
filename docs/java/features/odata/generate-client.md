@@ -19,7 +19,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-## Generate a Virtual Data Model with the OData Generator ##
+## Generate a typed OData client with the OData Generator ##
 
 The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are referred to as _typed OData client_ provide type-safe access to the service.
 

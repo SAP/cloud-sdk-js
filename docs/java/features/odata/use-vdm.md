@@ -4,7 +4,7 @@ title: Typed client to consume OData Services for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Typesafe consumption of Odata services
-description: Use SAP Cloud SDK for Java to build build and run OData requests in a typesafe way.
+description: Use SAP Cloud SDK for Java to build and run OData requests in a typesafe way.
 keywords:
 - sap
 - cloud

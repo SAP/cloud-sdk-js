@@ -1,9 +1,9 @@
 ---
 id: java-generate-odata-vmd-v2-v4
-title: OData VDM Generator for Java
+title: Typed OData client generator for Java
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Generate a VDM for OData
+sidebar_label: Generate a typed OData client for OData
 description: This article describes how to leverage the OData Generator to obtain Java classes from a service definition. These classes can then be used to build type-safe OData requests.
 keywords:
 - sap
@@ -19,13 +19,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-## Generate a Virtual Data Model with the OData Generator ##
+## Generate a typed OData client with the OData Generator ##
 
-The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are referred to as Virtual Data Model (VDM) provide type-safe access to the service.
+The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are referred to as _typed OData client_ provide type-safe access to the service.
 
 In general there are three ways to use the generator:
 - Via the dedicated maven plugin
-- Via the CLI
+- Via the command line interface (CLI)
 - By instantiating and invoking it at runtime
 
 The maven plugin is usually the recommended way as it integrates nicely with most project setups and makes configuration easy. However, the other two approaches are available and all are documented below.
@@ -87,7 +87,7 @@ defaultValue="v4" values={[
 </TabItem>
 </Tabs>
 
-Lombok and dependency injections are used by the generated VDM classes, that is why they are needed but only with the scope _provided_.
+Lombok and dependency injections are used by the generated typed OData client classes, that is why they are needed but only with the scope _provided_.
 
 
 ### Using the OData Generator Maven Plugin ###
@@ -312,8 +312,6 @@ More information is also available in the Javadoc of the generator implementatio
 |`--package-name-prefix <arg>`|`-p`| - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` --> | Package name for the generated sources |
 
 For details leverage the `--help` option. More information is also available in the Javadoc of the generator implementation ([OData v2](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odata/generator/DataModelGenerator.html), [OData v4](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html?com/sap/cloud/sdk/datamodel/odatav4/generator/DataModelGenerator.html)).
-
-</TabItem>
 
 </TabItem>
 <TabItem value="java">

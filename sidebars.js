@@ -35,6 +35,13 @@ module.exports = {
           },
           {
             type: 'category',
+            label: 'Multitenancy',
+            items: [
+              'java/features/multi-tenancy/multi-tenancy-thread-context'
+            ]
+          },
+          {
+            type: 'category',
             label: 'REST',
             items: [
               'java/features/rest/overview',

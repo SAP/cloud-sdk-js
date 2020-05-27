@@ -1,0 +1,14 @@
+var swa = {
+  pubToken: '84bf4b8e-f8b0-42e7-8c8a-e03377786443',
+  baseUrl: 'https://webanalytics2.cfapps.eu10.hana.ondemand.com/tracker/',
+  owner: null,
+  loggingEnabled: true,
+  consentDeferTimeout: '864000',
+  consentStyle: 'popup'
+};
+
+(function(){
+  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+  g.type='text/javascript'; g.defer=true; g.async=true; g.src=swa.baseUrl+'js/track.js';
+  s.parentNode.insertBefore(g,s);
+})();

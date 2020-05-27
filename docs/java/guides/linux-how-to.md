@@ -4,7 +4,6 @@ title: Getting started on Linux
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: SAP Cloud SDK on Linux
-custom_edit_url: https://github.com
 description: Get up and started to build with SAP Cloud SDK on Linux
 keywords:
 - sap

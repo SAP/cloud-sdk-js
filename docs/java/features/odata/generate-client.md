@@ -1,9 +1,9 @@
 ---
-id: java-generate-odata-vmd-v2-v4
-title: Typed OData client generator for Java
+id: generate-typed-odata-v2-and-v4-client-for-java
+title: Generate a typed OData client for Java
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Generate a typed OData client for OData
+sidebar_label: Generate a typed OData client for Java
 description: This article describes how to leverage the OData Generator to obtain Java classes from a service definition. These classes can then be used to build type-safe OData requests.
 keywords:
 - sap

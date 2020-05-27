@@ -8,6 +8,9 @@ import {
 } from '../../common/selectable';
 import { Constructable } from '../../common';
 
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
 export class CollectionField<EntityT extends Entity> extends Field<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;

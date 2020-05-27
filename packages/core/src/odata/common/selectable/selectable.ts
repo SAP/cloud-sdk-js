@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase, ODataVersion } from '../entity';
+import { CollectionField } from '../../v4/selectable/collection-field';
 import { AllFields } from './all-fields';
 import { ComplexTypeField } from './complex-type-field';
 import { CustomFieldBase } from './custom-field';
@@ -28,4 +29,5 @@ export type Selectable<EntityT extends EntityBase> = ODataVersion<
       | ComplexTypeField<EntityT>
       | CustomFieldBase<EntityT>
       | AllFields<EntityT>
+      | CollectionField<EntityT>
   : never;

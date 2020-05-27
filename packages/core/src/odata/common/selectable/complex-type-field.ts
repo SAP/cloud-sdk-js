@@ -70,11 +70,9 @@ export abstract class ComplexTypeField<
   }
 
   fieldPath(): string {
-    const value =
-      this.fieldOf instanceof ComplexTypeField
-        ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
-        : this._fieldName;
-    return value;
+    return this.fieldOf instanceof ComplexTypeField
+      ? `${this.fieldOf.fieldPath()}/${this._fieldName}`
+      : this._fieldName;
   }
 }
 
@@ -94,7 +92,7 @@ export function getEntityConstructor<EntityT extends EntityBase>(
 }
 
 /**
- * Convenience method to return the EDM type for the overloaed constructor e.g. ComplexTypeStringPropertyField
+ * Convenience method to return the EDM type for the overloaded constructor e.g. ComplexTypeStringPropertyField
  * @param arg1 - Contains either the type name or the EdmType
  * @param arg2 - Contains either the EdmType or undefined
  * @returns EdmType

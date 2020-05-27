@@ -13,12 +13,13 @@ import {
   isExpandedProperty,
   EntityBase
 } from '../common';
+import { CollectionField } from '../v4/selectable/collection-field';
 
 // eslint-disable-next-line valid-jsdoc
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function enityDeserializer(edmToTs) {
+export function entityDeserializer(edmToTs) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
    * In this context, a custom fields is every property that is not known in the corresponding entity class.
@@ -100,6 +101,9 @@ export function enityDeserializer(edmToTs) {
     if (field instanceof ComplexTypeField) {
       return deserializeComplexType(json[field._fieldName], field);
     }
+    if (field instanceof CollectionField) {
+      return deserializeCollectionType(json[field._fieldName], field);
+    }
   }
 
   function getLinkFromJson<
@@ -163,6 +167,23 @@ export function enityDeserializer(edmToTs) {
       }, {});
   }
 
+  function deserializeCollectionType<EntityT extends EntityBase>(
+    json: any[],
+    selectable: CollectionField<EntityT>
+  ) {
+    if (selectable._fieldType instanceof EdmTypeField) {
+      const edmType = selectable._fieldType.edmType;
+      return json.map(v => edmToTs(v, edmType));
+    }
+    if (selectable._fieldType instanceof ComplexTypeField) {
+      const complexTypeField = selectable._fieldType;
+      return json.map(v => deserializeComplexType(v, complexTypeField));
+    }
+  }
+
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing
-  return { extractCustomFields, deserializeEntity };
+  return {
+    extractCustomFields,
+    deserializeEntity
+  };
 }

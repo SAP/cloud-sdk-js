@@ -10,6 +10,7 @@ import {
   ComplexTypeField,
   EntityBase
 } from '../common';
+import { CollectionField } from '../v4/selectable/collection-field';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -69,6 +70,11 @@ export function entitySerializer(tsToEdm) {
           field,
           fieldValue
         );
+      } else if (field instanceof CollectionField) {
+        serialized[field._fieldName] = serializeCollectionField(
+          fieldValue,
+          field
+        );
       }
 
       return serialized;
@@ -97,5 +103,24 @@ export function entitySerializer(tsToEdm) {
     );
   }
 
-  return { serializeEntity, serializeEntityNonCustomFields };
+  function serializeCollectionField<EntityT extends EntityBase>(
+    fieldValue: any[],
+    selectable: CollectionField<EntityT>
+  ) {
+    if (selectable._fieldType instanceof EdmTypeField) {
+      const edmType = selectable._fieldType.edmType;
+      return fieldValue.map(v => tsToEdm(v, edmType));
+    }
+    if (selectable._fieldType instanceof ComplexTypeField) {
+      const complexTypeField = selectable._fieldType;
+      return fieldValue.map(v =>
+        serializeComplexTypeField(complexTypeField, v)
+      );
+    }
+  }
+
+  return {
+    serializeEntity,
+    serializeEntityNonCustomFields
+  };
 }

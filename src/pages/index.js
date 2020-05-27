@@ -75,7 +75,7 @@ function Feature ({ imageUrl, link, title, description, badge }) {
         </div>
       )}
       <h3>{title}</h3>
-      {badge ? badge : ''}
+      {badge || ''}
       <p>{description}</p>
     </div>
   )

@@ -30,7 +30,7 @@ describe('GetAllRequestBuilder', () => {
 
   describe('url', () => {
     it('is built correctly', async () => {
-      const expected = '/testination/TripPinRESTierService/Person?$format=json';
+      const expected = '/testination/TripPinRESTierService/People?$format=json';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });

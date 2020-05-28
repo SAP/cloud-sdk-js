@@ -20,7 +20,7 @@ SAP Cloud SDK for Java is prepared to generate a typesafe clients using [Open AP
 with various REST APIs available at [SAP API Hub](https://api.sap.com/)
 
 :::info Open API Generator is not released for public use 
-If you're interested in a typed REST API client for SAP service contact us via [cloudsdk@sap.com](mailto:cloudsdk@sap.com) 
+If you're interested in a typed REST API client for a specific SAP application or service contact us via [cloudsdk@sap.com](mailto:cloudsdk@sap.com) 
 :::
 
 ### Pre-generated typesafe REST API client ###

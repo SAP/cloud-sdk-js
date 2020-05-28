@@ -37,6 +37,7 @@ function getExpandAsString<EntityT extends Entity>(
   if (expand instanceof Link) {
     params = {
       ...params,
+      // todo why? should delete?
       ...getSelect(expand._selects),
       ...getExpand(expand._expand, expand._linkedEntity)
     };
@@ -52,8 +53,9 @@ function getExpandAsString<EntityT extends Entity>(
     const subQuery = Object.entries(params)
       .map(([key, value]) => `${prependDollar(key)}=${value}`)
       .join(',');
+    const subQueryWithBrackets = subQuery ? `(${subQuery})` : '';
 
-    return `${expand._linkedEntity._entityName}(${subQuery})`;
+    return `${expand._fieldName}${subQueryWithBrackets}`;
   }
 
   return '';

@@ -102,7 +102,7 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it('should resolve for all field', async () => {
+  it('should select all fields and expand multiple navigation properties', async () => {
     nock(destination.url, {
       reqheaders: {
         authorization: basicCredentials(destination),
@@ -110,12 +110,13 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$select=*`)
+      .get(`${servicePath}/${entityName}?$format=json&$select=*&$expand=BestFriend,Friends`)
       .reply(200, getAllResponse);
 
     const request = Person.requestBuilder()
       .getAll()
       .select(Person.ALL_FIELDS)
+      .expand(Person.BEST_FRIEND, Person.FRIEND)
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();

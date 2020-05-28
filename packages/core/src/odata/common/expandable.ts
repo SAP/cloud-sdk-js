@@ -15,5 +15,4 @@ export type Expandable<EntityT extends EntityBase> = ODataVersion<
   ? never
   :
       | OneToOneLink<EntityT, any>
-      | OneToManyLink<EntityT, any>
-      | AllFields<EntityT>;
+      | OneToManyLink<EntityT, any>;

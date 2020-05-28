@@ -1,7 +1,15 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { basicCredentials } from './destination-encoder';
 
-export function mockCsrfTokenRequest(host: string, sapClient: string, servicePath: string = '/sap/opu/odata/sap/API_TEST_SRV', username: string = 'username', password: string = 'password', csrfToken: string= 'CSRFTOKEN') {
+export function mockCsrfTokenRequest(
+  host: string,
+  sapClient: string,
+  servicePath = '/sap/opu/odata/sap/API_TEST_SRV',
+  username = 'username',
+  password = 'password',
+  csrfToken = 'CSRFTOKEN'
+) {
   nock(host, {
     reqheaders: {
       authorization: basicCredentials({ username, password }),

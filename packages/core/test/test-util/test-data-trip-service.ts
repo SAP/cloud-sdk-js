@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { Person } from './test-services/v4/trip-service/Person';
 
 export function createPersonJson1() {

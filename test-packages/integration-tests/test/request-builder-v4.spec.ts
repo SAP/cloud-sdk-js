@@ -1,27 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  TestEntity,
-  TestEntityMultiLink
-} from '@sap-cloud-sdk/test-services/test-service';
+
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import {
-  mockInstanceDestinationsCall,
-  mockSubaccountDestinationsCall
-} from '../../../packages/core/test/test-util/destination-service-mocks';
-import {
-  destinationServiceUri,
-  mockDestinationServiceBinding,
-  mockServiceBindings,
-  providerXsuaaUrl
-} from '../../../packages/core/test/test-util/environment-mocks';
-import { privateKey } from '../../../packages/core/test/test-util/keys';
-import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
-import { singleTestEntityMultiLinkResponse } from './test-data/single-test-entity-multi-link-response';
-import { singleTestEntityResponse } from './test-data/single-test-entity-response';
-import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
-import { basicCredentials } from './test-util/destination-encoder';
 import { Person } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/trip-service/Person';
+import { destinationServiceUri } from '../../../packages/core/test/test-util/environment-mocks';
+import { privateKey } from '../../../packages/core/test/test-util/keys';
+import { basicCredentials } from './test-util/destination-encoder';
 import { personGetAllResponse } from './test-data/person-get-all-response';
 
 const servicePath = '/TripPinRESTierService';
@@ -64,7 +48,7 @@ describe('Request Builder', () => {
         accept: 'application/json',
         'content-type': 'application/json'
       }
-    }).log(console.log)
+    })
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
@@ -126,9 +110,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(
-        `${servicePath}/${entityName}?$format=json&$select=*`
-      )
+      .get(`${servicePath}/${entityName}?$format=json&$select=*`)
       .reply(200, getAllResponse);
 
     const request = Person.requestBuilder()

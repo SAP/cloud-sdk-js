@@ -4,7 +4,7 @@ title: Overview
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Overview
-description: SAP Cloud SDK offers typesafe client generatore for REST (Open API) services
+description: SAP Cloud SDK offers typesafe client generators for REST (Open API) services
 keywords:
 - sap
 - cloud

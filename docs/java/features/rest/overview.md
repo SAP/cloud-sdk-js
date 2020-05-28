@@ -50,7 +50,7 @@ Reach out to us via internal communication channels and we'll provide you with i
 ## Do you plan to release Open API generator? Like you've done for OData? ##
 Because of less deterministic standard and huge variety of Open API services we decided not to release it as of yet. We
 might reconsider this decision if we see a strong use-case and great value for our customers behind such commitment. The
-value should outweight an effort to provide and support such a feature in general public availability.
+value should outweigh an effort to provide and support such a feature in general public availability.
 
 Reach out to us if you have any feedback on this.
 

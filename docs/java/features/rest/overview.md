@@ -27,7 +27,7 @@ If you're interested in a typed REST API client for a specific SAP application o
 We ship pre-generated typesafe REST API clients as modules in collaboration with popular SAP services available on SAP
 Cloud Platform and beyond.
 
-Depending on the scope modules could be available only internally within SAP or publicly released. [SCP Workflow
+Depending on the scope modules could be available only internally within SAP or publicly released. [SAP Cloud Platform Workflow
 API](../clients/scp-workflow-rest-api) is an example of publicly released API module.
 
 In case you need information on REST or other services shipped only internally, please, approach us directly via

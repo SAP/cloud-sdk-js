@@ -1,10 +1,10 @@
 ---
-id: use-generated-odata-vdm-v2-v4
-title: Use the typed OData client to consume OData Services
+id: use-typed-odata-v2-and-v4-client-for-java
+title: Typed client to consume OData Services for Java
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Consume OData Services
-description: This article describes how the SAP Cloud SDK for Java can be used to build and run OData requests.
+sidebar_label: Type-safe consumption of OData services
+description: Use SAP Cloud SDK for Java to build and run OData requests in a typesafe way.
 keywords:
 - sap
 - cloud

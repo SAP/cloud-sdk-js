@@ -16,7 +16,7 @@ image:
 ---
 
 ## Typesafe client for RESTful services in Java  ##
-Cloud SDK for Java allows to generate a typesafe client using [Open API](https://www.openapis.org/) to conveniently work
+SAP Cloud SDK for Java is prepared to generate a typesafe clients using [Open API](https://www.openapis.org/) to conveniently work
 with various REST APIs available at [SAP API Hub](https://api.sap.com/)
 
 :::info Open API Generator is not released for public use 

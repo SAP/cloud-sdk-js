@@ -21,28 +21,13 @@ import { singleTestEntityMultiLinkResponse } from './test-data/single-test-entit
 import { singleTestEntityResponse } from './test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
 import { basicCredentials } from './test-util/destination-encoder';
+import { mockCsrfTokenRequest } from './test-util/request-mocker';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-const csrfToken = 'CSRFTOKEN';
 const entityName = 'A_TestEntity';
 const username = 'username';
 const password = 'password';
 const url = 'https://example.com';
-
-function mockCsrfTokenRequest(host: string, sapClient: string) {
-  nock(host, {
-    reqheaders: {
-      authorization: basicCredentials({ username, password }),
-      'x-csrf-token': 'Fetch',
-      'sap-client': sapClient
-    }
-  })
-    .get(servicePath)
-    .reply(200, '', {
-      'x-csrf-token': csrfToken,
-      'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
-    });
-}
 
 const getAllResponse = testEntityCollectionResponse();
 

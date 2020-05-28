@@ -1,13 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
-import { Destination, oDataUri } from '../../src';
+import { Constructable, Destination, EntityBase, oDataUri } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
 import { ODataRequest } from '../../src/odata/common/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
 import { TestEntity } from './test-services/v2/test-service';
+import { Person } from './test-services/v4/trip-service/Person';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -108,7 +109,7 @@ export function mockUpdateRequest(
 
 export function mockGetRequest(
   params: MockRequestParams,
-  entityConstructor = TestEntity
+  entityConstructor: Constructable<any> = TestEntity
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
     entityConstructor,
@@ -157,7 +158,7 @@ export function mockRequest(
 
   mockHeaderRequest({ request });
 
-  return nock(host, getRequestHeaders(method, additionalHeaders))
+  return nock(host, getRequestHeaders(method, additionalHeaders)).log(console.log)
     [method](
       path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
       body

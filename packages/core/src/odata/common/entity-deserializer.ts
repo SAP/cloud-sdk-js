@@ -66,6 +66,18 @@ export function entityDeserializer(edmToTs) {
     requestHeader?: any
   ): EntityT {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
+    const a = (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]);
+    const b = (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
+      .filter(field => isSelectedProperty(json, field));
+    const c = (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
+      .filter(field => isSelectedProperty(json, field))
+      .reduce((entity, staticField) => {
+        entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
+          json,
+          staticField
+        );
+        return entity;
+      }, new entityConstructor());
     return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
@@ -99,7 +111,7 @@ export function entityDeserializer(edmToTs) {
       return getLinkFromJson(json, field);
     }
     if (field instanceof ComplexTypeField) {
-      return deserializeComplexType(json[field._fieldName], field);
+      return json[field._fieldName]? deserializeComplexType(json[field._fieldName], field) : undefined;
     }
     if (field instanceof CollectionField) {
       return deserializeCollectionType(json[field._fieldName], field);

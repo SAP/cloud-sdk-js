@@ -19,6 +19,7 @@ import { MethodRequestBuilderBase } from '../../common/request-builder/request-b
 import { ODataGetAllRequestConfig } from '../../common/request/odata-get-all-request-config';
 import { Expandable } from '../../common/expandable';
 import { oDataUri } from '../uri-conversion';
+import { entityDeserializer } from '../../common/entity-deserializer';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -116,7 +117,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        response.data.d.results.map(json =>
+        response.data.value.map(json =>
           deserializeEntity(json, this._entityConstructor, response.headers)
         )
       );

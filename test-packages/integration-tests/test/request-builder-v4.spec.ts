@@ -68,7 +68,7 @@ describe('Request Builder', () => {
       .query({
         $format: 'json',
         $select: '*',
-        $expand: `to_SingleLink,to_MultiLink`
+        $expand: 'to_SingleLink,to_MultiLink'
       })
       .reply(200, getAllResponse);
 

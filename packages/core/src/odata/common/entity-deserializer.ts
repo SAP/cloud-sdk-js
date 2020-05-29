@@ -99,7 +99,9 @@ export function entityDeserializer(edmToTs) {
       return getLinkFromJson(json, field);
     }
     if (field instanceof ComplexTypeField) {
-      return deserializeComplexType(json[field._fieldName], field);
+      return json[field._fieldName]
+        ? deserializeComplexType(json[field._fieldName], field)
+        : undefined;
     }
     if (field instanceof CollectionField) {
       return deserializeCollectionType(json[field._fieldName], field);

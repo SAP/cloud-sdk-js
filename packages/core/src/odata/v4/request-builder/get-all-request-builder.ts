@@ -116,7 +116,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        response.data.d.results.map(json =>
+        response.data.value.map(json =>
           deserializeEntity(json, this._entityConstructor, response.headers)
         )
       );

@@ -7,7 +7,11 @@ import {
   unmockDestinationsEnv
 } from '../test-util/request-mocker';
 import { TestEntity } from '../test-util/test-services/v4/test-service';
-import { createOriginalTestEntityData1, createOriginalTestEntityData2, createTestEntity } from '../test-util/test-data';
+import {
+  createOriginalTestEntityData1,
+  createOriginalTestEntityData2,
+  createTestEntity
+} from '../test-util/test-data';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity>;
@@ -26,7 +30,8 @@ describe('GetAllRequestBuilder', () => {
 
   describe('url', () => {
     it('is built correctly', async () => {
-      const expected = '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
@@ -47,7 +52,10 @@ describe('GetAllRequestBuilder', () => {
       const actual = await new GetAllRequestBuilder(TestEntity).execute(
         defaultDestination
       );
-      expect(actual).toEqual([createTestEntity(testEntity1), createTestEntity(testEntity2)]);
+      expect(actual).toEqual([
+        createTestEntity(testEntity1),
+        createTestEntity(testEntity2)
+      ]);
     });
 
     it('top(1) returns the first entity', async () => {

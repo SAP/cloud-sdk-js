@@ -7,7 +7,6 @@ export const testEntityCollectionResponse = () => ({
     'https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata#A_TestEntity',
   value: [
     {
-
       KeyPropertyGuid: 'aaaabbbb-cccc-dddd-eeee-ffff00001111',
       KeyPropertyString: 'abcd1234',
       StringProperty: 'someString',

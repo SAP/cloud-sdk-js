@@ -2,11 +2,11 @@
 
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
+import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
 import { destinationServiceUri } from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { basicCredentials } from './test-util/destination-encoder';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response-v4';
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';

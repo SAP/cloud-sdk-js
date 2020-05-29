@@ -2,19 +2,19 @@
 
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { Person } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/trip-service/Person';
 import { destinationServiceUri } from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { basicCredentials } from './test-util/destination-encoder';
-import { personGetAllResponse } from './test-data/person-get-all-response';
+import { testEntityCollectionResponse } from './test-data/test-entity-collection-response-v4';
+import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
 
-const servicePath = '/TripPinRESTierService';
-const entityName = 'People';
+const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const entityName = 'A_TestEntity';
 const username = 'username';
 const password = 'password';
 const url = 'https://example.com';
 
-const getAllResponse = personGetAllResponse();
+const getAllResponse = testEntityCollectionResponse();
 
 const providerToken = jwt.sign({ zid: 'provider_token' }, privateKey(), {
   algorithm: 'RS512'
@@ -52,52 +52,7 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = Person.requestBuilder().getAll().execute(destination);
-
-    await expect(request).resolves.not.toThrow();
-  });
-  // todo duplicate
-  it('should resolve without authentication when only destination url is specified', async () => {
-    nock(destinationServiceUri, {
-      reqheaders: {
-        accept: 'application/json',
-        'content-type': 'application/json'
-      }
-    })
-      .get(`${servicePath}/${entityName}?$format=json`)
-      .reply(200, getAllResponse);
-
-    const request = Person.requestBuilder().getAll().execute({
-      url: destinationServiceUri
-    });
-
-    await expect(request).resolves.not.toThrow();
-  });
-  // todo duplicate
-  it('should use destination from env variables when only destinationName is specified', async () => {
-    process.env.destinations = JSON.stringify([
-      {
-        name: 'Testination',
-        url: destinationServiceUri
-      }
-    ]);
-
-    nock(destinationServiceUri, {
-      reqheaders: {
-        authorization: 'customcustom',
-        accept: 'application/json',
-        'content-type': 'application/json'
-      }
-    })
-      .get(`${servicePath}/${entityName}?$format=json`)
-      .reply(200, getAllResponse);
-
-    const request = Person.requestBuilder()
-      .getAll()
-      .withCustomHeaders({ authorization: 'customcustom' })
-      .execute({
-        destinationName: 'Testination'
-      });
+    const request = TestEntity.requestBuilder().getAll().execute(destination);
 
     await expect(request).resolves.not.toThrow();
   });
@@ -113,9 +68,9 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json&$select=*`)
       .reply(200, getAllResponse);
 
-    const request = Person.requestBuilder()
+    const request = TestEntity.requestBuilder()
       .getAll()
-      .select(Person.ALL_FIELDS)
+      .select(TestEntity.ALL_FIELDS)
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();
@@ -132,7 +87,7 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = Person.requestBuilder()
+    const request = TestEntity.requestBuilder()
       .getAll()
       .withCustomHeaders({
         authorization: 'customcustom'
@@ -153,7 +108,7 @@ describe('Request Builder', () => {
       })
       .reply(200, getAllResponse);
 
-    const request = Person.requestBuilder()
+    const request = TestEntity.requestBuilder()
       .getAll()
       .withCustomQueryParameters({
         testParameter: 'customcustom'

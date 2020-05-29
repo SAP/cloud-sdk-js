@@ -1,10 +1,10 @@
 ---
 id: scp-workflow-rest-api
-title: Consume the SAP Cloud Platform Workflow REST API
+title: Typesafe client for SAP Cloud Platform Workflow REST API
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Consume SCP Workflow
-description: This article describes how you can consume the SCP Workflow REST API with the SAP Cloud SDK
+sidebar_label: SCP Workflow API
+description: Learn how to access the SCP Workflow REST API with the typesafe client from the SAP Cloud SDK for Java
 keywords:
 - sap
 - cloud

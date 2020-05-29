@@ -14,7 +14,7 @@ module.exports = {
       'java/getting-started',
       {
         type: 'category',
-        label: 'Core Features',
+        label: 'Features',
         items: [
           // authorization & authentication
           // resilience & caching
@@ -29,6 +29,18 @@ module.exports = {
           },
           {
             type: 'category',
+            label: 'REST',
+            items: [
+              'java/features/rest/overview',
+              {
+                type: 'category',
+                label: 'Released clients',
+                items: ['java/features/rest/clients/scp-workflow-rest-api']
+              }
+            ]
+          },
+          {
+            type: 'category',
             label: 'Connectivity',
             items: [
               'java/features/connectivity/sdk-connectivity-destination-service'
@@ -39,18 +51,6 @@ module.exports = {
             label: 'Multitenancy',
             items: [
               'java/features/multi-tenancy/multi-tenancy-thread-context'
-            ]
-          },
-          {
-            type: 'category',
-            label: 'REST',
-            items: [
-              'java/features/rest/overview',
-              {
-                type: 'category',
-                label: 'Released clients',
-                items: ['java/features/rest/clients/scp-workflow-rest-api']
-              }
             ]
           }
         ]

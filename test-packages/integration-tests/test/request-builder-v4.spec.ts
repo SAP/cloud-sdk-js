@@ -57,7 +57,7 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it('should resolve for all field', async () => {
+  it('should resolve when ALL_FIELDS is selected', async () => {
     nock(destination.url, {
       reqheaders: {
         authorization: basicCredentials(destination),

@@ -7,7 +7,7 @@ sidebar_label: Tutorials Overview
 description: This document will give you an overview of the different tutorials for the SAP Cloud SDK for Java.
 ---
 
-This document gives you an overview of which tutorials, tutorial groups and tutorial missions are available for the SAP Cloud SDK for Java.
+To give you a quick and easy start into developing with Cloud SDK for Java we created a set of comprehensive tutorials split into missions and groups for a convenient learning path. They'll help you kick-start your project and get you up to speed with the most frequent use-cases and valuable features of the SDK.
 
 ## Tutorial Overview
 

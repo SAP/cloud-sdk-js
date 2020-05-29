@@ -59,9 +59,9 @@
 
       <EntityType Name="A_TestEntityOtherMultiLinkType" sap:content-version="1">
         <Key>
-          <PropertyRef Name="KeyPropertyString"/>
+          <PropertyRef Name="KeyProperty"/>
         </Key>
-        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
       </EntityType>
 
       <EntityType Name="A_TestEntitySingleLinkType" sap:content-version="1">

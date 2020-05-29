@@ -30,7 +30,7 @@ Groups are a collection of topic-based tutorials.
 [Create a Simple Cloud Foundry App Using SAP Cloud SDK](https://developers.sap.com/group.s4sdk-cloud-foundry.html)
 
 
-### Tutorials
+### Tutorials quick links
 Use links below to quickly access your favorite tutorial and refresh your knowledge.
 [Connect to OData Service on Cloud Foundry Using SAP Cloud SDK](https://developers.sap.com/tutorials/s4sdk-odata-service-cloud-foundry.html)
 

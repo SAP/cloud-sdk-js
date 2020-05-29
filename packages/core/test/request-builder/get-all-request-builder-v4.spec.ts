@@ -6,15 +6,15 @@ import {
   mockGetRequest,
   unmockDestinationsEnv
 } from '../test-util/request-mocker';
+import { TestEntity } from '../test-util/test-services/v4/test-service';
 import {
-  createPerson,
-  createPersonJson1,
-  createPersonJson2
-} from '../test-util/test-data-trip-service';
-import { Person } from '../test-util/test-services/v4/trip-service/Person';
+  createOriginalTestEntityData1,
+  createOriginalTestEntityData2,
+  createTestEntity
+} from '../test-util/test-data';
 
 describe('GetAllRequestBuilder', () => {
-  let requestBuilder: GetAllRequestBuilder<Person>;
+  let requestBuilder: GetAllRequestBuilder<TestEntity>;
 
   beforeAll(() => {
     muteLoggers('http-agent', 'destination-accessor', 'environment-accessor');
@@ -25,12 +25,13 @@ describe('GetAllRequestBuilder', () => {
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilder(Person);
+    requestBuilder = new GetAllRequestBuilder(TestEntity);
   });
 
   describe('url', () => {
     it('is built correctly', async () => {
-      const expected = '/testination/TripPinRESTierService/People?$format=json';
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
@@ -38,47 +39,50 @@ describe('GetAllRequestBuilder', () => {
 
   describe('execute', () => {
     it('returns all entities', async () => {
-      const person1 = createPersonJson1();
-      const person2 = createPersonJson2();
+      const testEntity1 = createOriginalTestEntityData1();
+      const testEntity2 = createOriginalTestEntityData2();
 
       mockGetRequest(
         {
-          responseBody: { value: [person1, person2] }
+          responseBody: { value: [testEntity1, testEntity2] }
         },
-        Person
+        TestEntity
       );
 
-      const actual = await new GetAllRequestBuilder(Person).execute(
+      const actual = await new GetAllRequestBuilder(TestEntity).execute(
         defaultDestination
       );
-      expect(actual).toEqual([createPerson(person1), createPerson(person2)]);
+      expect(actual).toEqual([
+        createTestEntity(testEntity1),
+        createTestEntity(testEntity2)
+      ]);
     });
 
     it('top(1) returns the first entity', async () => {
-      const entityData1 = createPersonJson1();
+      const testEntity1 = createOriginalTestEntityData1();
       mockGetRequest(
         {
           query: { $top: 1 },
-          responseBody: { value: [entityData1] }
+          responseBody: { value: [testEntity1] }
         },
-        Person
+        TestEntity
       );
 
       const actual = await requestBuilder.top(1).execute(defaultDestination);
-      expect(actual).toEqual([createPerson(entityData1)]);
+      expect(actual).toEqual([createTestEntity(testEntity1)]);
     });
 
     it('skip(1) skips the first entity', async () => {
-      const entityData2 = createPersonJson2();
+      const testEntity2 = createOriginalTestEntityData2();
       mockGetRequest(
         {
           query: { $skip: 1 },
-          responseBody: { value: [entityData2] }
+          responseBody: { value: [testEntity2] }
         },
-        Person
+        TestEntity
       );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
-      expect(actual).toEqual([createPerson(entityData2)]);
+      expect(actual).toEqual([createTestEntity(testEntity2)]);
     });
   });
 });

@@ -31,7 +31,7 @@ Groups are a collection of topic-based tutorials.
 
 
 ### Tutorials
-
+Use links below to quickly access your favorite tutorial and refresh your knowledge.
 [Connect to OData Service on Cloud Foundry Using SAP Cloud SDK](https://developers.sap.com/tutorials/s4sdk-odata-service-cloud-foundry.html)
 
 [Connect to OData service on Neo using SAP Cloud SDK](https://developers.sap.com/tutorials/s4sdk-odata-service-neo.html)

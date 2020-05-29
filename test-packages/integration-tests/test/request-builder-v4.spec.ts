@@ -3,7 +3,6 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
-import { destinationServiceUri } from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { basicCredentials } from './test-util/destination-encoder';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response-v4';
@@ -65,57 +64,17 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$select=*`)
+      .get(`${servicePath}/${entityName}`)
+      .query({
+        $format: 'json',
+        $select: '*'
+      })
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()
       .getAll()
       .select(TestEntity.ALL_FIELDS)
       .execute(destination);
-
-    await expect(request).resolves.not.toThrow();
-  });
-
-  it('should allow setting custom headers', async () => {
-    nock(destinationServiceUri, {
-      reqheaders: {
-        authorization: 'customcustom',
-        accept: 'application/json',
-        'content-type': 'application/json'
-      }
-    })
-      .get(`${servicePath}/${entityName}?$format=json`)
-      .reply(200, getAllResponse);
-
-    const request = TestEntity.requestBuilder()
-      .getAll()
-      .withCustomHeaders({
-        authorization: 'customcustom'
-      })
-      .execute({
-        url: destinationServiceUri
-      });
-
-    await expect(request).resolves.not.toThrow();
-  });
-
-  it('should allow setting custom query parameters', async () => {
-    nock(destinationServiceUri)
-      .get(`${servicePath}/${entityName}`)
-      .query({
-        $format: 'json',
-        testParameter: 'customcustom'
-      })
-      .reply(200, getAllResponse);
-
-    const request = TestEntity.requestBuilder()
-      .getAll()
-      .withCustomQueryParameters({
-        testParameter: 'customcustom'
-      })
-      .execute({
-        url: destinationServiceUri
-      });
 
     await expect(request).resolves.not.toThrow();
   });

@@ -11,7 +11,7 @@ To give you a quick and easy start into developing with Cloud SDK for Java we cr
 
 ## Tutorial Overview
 
-Tutorials can be grouped. A group is a series of individual tutorials. A mission consists of groups and/or individual tutorials. In this way you can carry out a more extensive and meaningful task.
+Tutorials can be grouped. A group is a series of individual tutorials. A mission consists of groups and/or individual tutorials. In this way, you can carry out more extensive and meaningful learning experience. We recommend creating an account to keep track of your progress.
 
 ### Missions
 

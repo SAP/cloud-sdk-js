@@ -37,7 +37,6 @@ function getExpandAsString<EntityT extends Entity>(
   if (expand instanceof Link) {
     params = {
       ...params,
-      // todo why? should delete?
       ...getSelect(expand._selects),
       ...getExpand(expand._expand, expand._linkedEntity)
     };

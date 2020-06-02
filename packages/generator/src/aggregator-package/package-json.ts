@@ -26,7 +26,7 @@ export function packageJson(
           return deps;
         }, {}),
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${versionInPackageJson || generatorVersion}`
+          '@sap-cloud-sdk/core': `^${generatorVersion}`
         }
       },
       null,

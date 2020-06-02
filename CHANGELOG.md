@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix the core dependency version when genertating aggregated packages
 
 
 # 1.21.0

@@ -30,7 +30,7 @@ describe('package-json', () => {
       '    "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0"\n' +
       '  },\n' +
       '  "peerDependencies": {\n' +
-      '    "@sap-cloud-sdk/core": "^2.0.0"\n' +
+      '    "@sap-cloud-sdk/core": "^1.17.4-alpha.8"\n' +
       '  }\n' +
       '}\n';
     expect(actual).toEqual(expected);

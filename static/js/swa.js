@@ -3,12 +3,12 @@ var swa = {
   baseUrl: 'https://webanalytics2.cfapps.eu10.hana.ondemand.com/tracker/',
   owner: null,
   loggingEnabled: true,
-  consentDeferTimeout: '864000',
+  // consentDeferTimeout: '864000',
   consentStyle: 'popup'
 };
 
-(function(){
-  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-  g.type='text/javascript'; g.defer=true; g.async=true; g.src=swa.baseUrl+'js/track.js';
-  s.parentNode.insertBefore(g,s);
-})();
+(function () {
+  var d = document; var g = d.createElement('script'); var s = d.getElementsByTagName('script')[0]
+  g.type = 'text/javascript'; g.defer = true; g.async = true; g.src = swa.baseUrl + 'js/track.js'
+  s.parentNode.insertBefore(g, s)
+})()

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { OneToOneLink } from './selectable';
+import { AllFields, OneToOneLink } from './selectable';
 import { EntityBase, ODataVersion } from './entity';
 import { OneToManyLink } from './selectable/one-to-many-link';
 
@@ -13,4 +13,6 @@ export type Expandable<EntityT extends EntityBase> = ODataVersion<
   EntityT
 > extends 'v2'
   ? never
-  : OneToOneLink<EntityT, any> | OneToManyLink<EntityT, any>;
+  : | OneToOneLink<EntityT, any>
+  | OneToManyLink<EntityT, any>
+  | AllFields<EntityT>;

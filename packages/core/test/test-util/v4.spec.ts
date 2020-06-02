@@ -89,6 +89,8 @@ describe('v4', () => {
       .getAll()
       .expand(
         /* SHOULD WORK */
+        /* All Fields should work */
+        TestEntity.ALL_FIELDS,
 
         /* Single Link should work */
         TestEntity.TO_SINGLE_LINK,

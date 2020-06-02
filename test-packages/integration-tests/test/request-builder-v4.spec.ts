@@ -56,7 +56,7 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it('should resolve when ALL_FIELDS is selected and expand with multiple navigation properties', async () => {
+  it('should resolve when ALL_FIELDS is selected and links are expanded', async () => {
     nock(destination.url, {
       reqheaders: {
         authorization: basicCredentials(destination),

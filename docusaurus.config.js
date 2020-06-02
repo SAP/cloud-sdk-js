@@ -166,7 +166,7 @@ module.exports = {
           showLastUpdateTime: true,
           editUrl:
           'https://github.com/SAP/cloud-sdk/edit/documentation',
-	  routeBasePath: 'docs'
+          routeBasePath: 'docs'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')

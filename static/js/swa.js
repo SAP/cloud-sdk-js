@@ -2,7 +2,7 @@ var swa = {
   pubToken: '84bf4b8e-f8b0-42e7-8c8a-e03377786443',
   baseUrl: 'https://webanalytics2.cfapps.eu10.hana.ondemand.com/tracker/',
   owner: null,
-  loggingEnabled: true,
+  // loggingEnabled: true,
   // consentDeferTimeout: '864000',
   consentStyle: 'popup'
 };

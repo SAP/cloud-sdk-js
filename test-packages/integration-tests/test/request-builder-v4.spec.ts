@@ -56,7 +56,7 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it('should resolve when ALL_FIELDS is selected', async () => {
+  it('should resolve when ALL_FIELDS is selected and links are expanded', async () => {
     nock(destination.url, {
       reqheaders: {
         authorization: basicCredentials(destination),
@@ -67,13 +67,15 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}`)
       .query({
         $format: 'json',
-        $select: '*'
+        $select: '*',
+        $expand: 'to_SingleLink,to_MultiLink'
       })
       .reply(200, getAllResponse);
 
     const request = TestEntity.requestBuilder()
       .getAll()
       .select(TestEntity.ALL_FIELDS)
+      .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();

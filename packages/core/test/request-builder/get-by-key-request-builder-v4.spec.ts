@@ -23,14 +23,17 @@ describe('GetByKeyRequestBuilder', () => {
       const entityData = createOriginalTestEntityData1();
       const expected = createTestEntity(entityData);
 
-      mockGetRequest({
-        path: testEntityResourcePath(
-          expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          convertToUriFormat
-        ),
-        responseBody: entityData
-      }, TestEntity);
+      mockGetRequest(
+        {
+          path: testEntityResourcePath(
+            expected.keyPropertyGuid,
+            expected.keyPropertyString,
+            convertToUriFormat
+          ),
+          responseBody: entityData
+        },
+        TestEntity
+      );
 
       const actual = await new GetByKeyRequestBuilder(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,

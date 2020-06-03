@@ -1,8 +1,11 @@
 var swa = {
   pubToken: '84bf4b8e-f8b0-42e7-8c8a-e03377786443',
   baseUrl: 'https://webanalytics2.cfapps.eu10.hana.ondemand.com/tracker/',
-  owner: null
+  owner: null,
   // set this to a function that returns the identifier of the tracked user
+  loggingEnabled: true,
+  consentDeferTimeout: '864000',
+  consentStyle: 'popup'
 };
 (function () {
   var d = document; var g = d.createElement('script'); var s = d.getElementsByTagName('script')[0]

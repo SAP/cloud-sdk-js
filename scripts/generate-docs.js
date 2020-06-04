@@ -79,12 +79,13 @@ function removeUnderlinePrefixFromFileName(filePath) {
   fs.renameSync(filePath, newPath);
 }
 
-function addCopyrightNotice() {
+function insertCopyrightAndTracking() {
   const filePaths = flatten(readDir(path.resolve(apiDocPath, version))).filter(
     isHtmlFile
   );
   filePaths.forEach(filePath => {
     const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
+    const trackingTag = `<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>`
     transformFile(filePath, file => {
       const lines = file.split('\n');
       // Inplace insert the copyright div before the line including </footer> #yikes
@@ -92,6 +93,11 @@ function addCopyrightNotice() {
         lines.findIndex(line => line.includes('</footer>')),
         0,
         copyrightDiv
+      );
+      lines.splice(
+        lines.findIndex(line => line.includes('</head>')),
+        0,
+        trackingTag
       );
       return lines.join('\n');
     });
@@ -140,7 +146,7 @@ function generateDocs() {
   });
   validateLogs(generationLogs);
   adjustForGitHubPages();
-  addCopyrightNotice();
+  insertCopyrightAndTracking();
   writeVersions();
 }
 

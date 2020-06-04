@@ -121,7 +121,7 @@ For simplicity an optional argument of the destination lookup has been neglected
 ```
 .execute({"destinationName": 'myDestination', jwt: 'yourJWT})
 ```  
-The `jwt` argument takes the JSON web token (JWT) issued by an XSUAA as an input.  
+The `jwt` argument takes the JSON web token (JWT) issued by an XSUAA as input.  
 If the JWT was issued by a XSUAA of a subscriber account it is possible to fetch the destination of this account.
 For fetching destinations of the provider accounts no JWT is needed because the application has a service binding to the destination service instance. 
 

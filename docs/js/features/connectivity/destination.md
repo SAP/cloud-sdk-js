@@ -41,7 +41,7 @@ BusinessPartner.requestBuilder()
   .execute(yourDestination);
 ```
 where `yourDestination` is a [`Destination` object](https://sap.github.io/cloud-sdk/api/1.21.0/interfaces/sap_cloud_sdk_core.destination).
-In principle you could create a destination object or read it from somewhere and then pass it to the `execute()` method.
+In principle, you could create a destination object yourself or read it from somewhere and then pass it to the `execute()` method.
 However, this would not be very flexible and convenient as discussed above.
 The SDK provides some help for this problem. 
 If just a destinationName is provided i.e.:

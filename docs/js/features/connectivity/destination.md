@@ -31,7 +31,7 @@ This object can be obtained at runtime of the application and contains informati
 The Cloud SDK helps you receiving this object and provides also options for local testing outside the SCP.
 
 The SDK provides a generator to create a client or data model based on a service definition.
-For S/4 HANA this client has been created and published to npm. 
+For S/4HANA this client has been created and published to npm. 
 In this [tutorial series](https://developers.sap.com/group.s4sdk-js-cloud-foundry.html) a detailed step-by-step guide how to use the data model is presented.
 A simple request to receive some business-partners from an S/4 HANA system would look like:
 ```TypeScript

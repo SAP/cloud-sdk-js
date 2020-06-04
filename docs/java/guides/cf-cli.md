@@ -4,7 +4,6 @@ title: SAP Cloud Foundry
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Cloud Foundry CLI
-custom_edit_url: https://github.com
 description: Configure you Cloud Foundry CLI and bind it to SAP Cloud Platform
 keywords:
 - sap

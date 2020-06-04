@@ -1,3 +1,4 @@
+
 module.exports = {
   someSidebar: {
     // Dzen: ['dzen/getting-started', 'dzen/how-to-write-documentation'],
@@ -13,7 +14,7 @@ module.exports = {
       'java/getting-started',
       {
         type: 'category',
-        label: 'Core Features',
+        label: 'Features',
         items: [
           // authorization & authentication
           // resilience & caching
@@ -22,8 +23,20 @@ module.exports = {
             label: 'OData',
             items: [
               'java/features/odata/overview',
-              'java/features/odata/java-generate-odata-vmd-v2-v4',
-              'java/features/odata/use-generated-odata-vdm-v2-v4'
+              'java/features/odata/generate-typed-odata-v2-and-v4-client-for-java',
+              'java/features/odata/use-typed-odata-v2-and-v4-client-for-java'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'REST',
+            items: [
+              'java/features/rest/overview',
+              {
+                type: 'category',
+                label: 'Released clients',
+                items: ['java/features/rest/clients/scp-workflow-rest-api']
+              }
             ]
           },
           {
@@ -38,18 +51,6 @@ module.exports = {
             label: 'Multitenancy',
             items: [
               'java/features/multi-tenancy/multi-tenancy-thread-context'
-            ]
-          },
-          {
-            type: 'category',
-            label: 'REST',
-            items: [
-              'java/features/rest/overview',
-              {
-                type: 'category',
-                label: 'Released clients',
-                items: ['java/features/rest/clients/scp-workflow-rest-api']
-              }
             ]
           }
         ]

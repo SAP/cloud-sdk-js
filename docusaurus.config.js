@@ -165,8 +165,8 @@ module.exports = {
           // Equivalent to `enableUpdateTime`.
           showLastUpdateTime: true,
           editUrl:
-          'https://github.com/SAP/cloud-sdk/tree/documentation',
-	  routeBasePath: 'docs'
+          'https://github.com/SAP/cloud-sdk/edit/documentation',
+          routeBasePath: 'docs'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')

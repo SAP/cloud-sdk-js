@@ -48,7 +48,7 @@ If just a destinationName is provided i.e.:
 ```
 .execute({"destinationName": 'myDestination'})
 ```
-the SDK tries to lookup the destination for you.
+the SDK tries to look the destination up for you.
 The details on this process are explained in the next chapters.
 
 ## The Lookup Flow ##

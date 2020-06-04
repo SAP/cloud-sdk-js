@@ -22,9 +22,6 @@ describe('package-json', () => {
       '    "type": "git",\n' +
       '    "url": ""\n' +
       '  },\n' +
-      '  "scripts": {\n' +
-      '    "version": "node ../../../after-version-update.js"\n' +
-      '  },\n' +
       '  "dependencies": {\n' +
       '    "@sap/cloud-sdk-vdm-business-area-service": "^2.0.0",\n' +
       '    "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0"\n' +

@@ -18,9 +18,6 @@ export function packageJson(
           type: 'git',
           url: ''
         },
-        scripts: {
-          version: 'node ../../../after-version-update.js'
-        },
         dependencies: dependencies.reduce((deps, service) => {
           deps[service] = `^${versionInPackageJson || generatorVersion}`;
           return deps;

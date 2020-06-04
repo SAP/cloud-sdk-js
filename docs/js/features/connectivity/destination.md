@@ -4,7 +4,7 @@ title: Destinations in the Cloud SDK for JS
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Destinations
-description: This article describes how the SDK handles the destination lookup and what are the different options to configure destinations.
+description: This article describes how the SDK handles the destination lookup and what the different options to configure destinations are.
 keywords:
 - sap
 - cloud

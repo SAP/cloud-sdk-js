@@ -104,7 +104,7 @@ Currently two services types are supported out of the box `business-logging` and
 ### Destination Service ###
 
 This is the normal case in a productive environment. 
-The SDK will get an access token from the XSUAA. 
+In order to access the destination service, the SDK will first fetch an access token from the XSUAA service.
 This token is used to make a call to the destination service returning the destinations.
 Up to now, we have not discussed which destination are returned by the service.
 

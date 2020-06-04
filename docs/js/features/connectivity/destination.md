@@ -126,7 +126,7 @@ If the JWT was issued by a XSUAA of a subscriber account it is possible to fetch
 For fetching destinations of the provider accounts no JWT is needed because the application has a service binding to the destination service instance. 
 
 There are three selection strategies defined in the SDK: `alwaysSubscriber`, `alwaysProvider` and `subscriberFirst`.
-The selection strategy can be passed as an optional option to the `.execute()` method. 
+The selection strategy can be passed as an optional argument to the `.execute()` method. 
 The default value is `subscriberFirst`.
 The selection strategies can be used to control for which account a destination lookup is attempted:
 - alwaysSubscriber: Only try to get destinations from the subscriber account.

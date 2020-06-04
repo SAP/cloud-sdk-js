@@ -63,7 +63,7 @@ So local env beats service instance beats destination service in case all contai
 
 ### Local Environment Variable ###
 
-This options is present for deployment and testing in an local environment outside the SCP where no destination services are available.
+This option is present for deployment and testing in a local environment outside the SCP where no destination services are available.
 The SDK provides a `mockDestinationsEnv(...destinations)` method which takes a list of destination objects, transforms it to a JSON array and assigns it to the `process.env.destinations`.
 From there they are read in at runtime and found by the request executor.
 If a destination with the same name as the one given as `destinationName` is found it is taken for example:

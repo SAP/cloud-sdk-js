@@ -23,7 +23,7 @@ The Cloud SDK for JavaScript offers a convenient way to connect to various syste
 
 For different systems like SuccessFactors, C4C, and many others you can generate a type-safe client yourself. All you have to do it look up an API definition on [SAP API BusinessHub](https://api.sap.com/) and invoke a generator that supplied with [SAP Cloud SDK for Javascript](https://github.com/SAP/cloud-sdk). This [comprehensive tutorial](https://developers.sap.com/tutorials/cloudsdk-js-generator.html) will guide you through this process step by step.
 
-## Making first API call ##
+## Making a first API call ##
 
 Once you have a type-safe client generated, this is how you make your first API call. This example uses **BusinessPartner** service from S4/HANA suit.
 
@@ -34,10 +34,17 @@ BusinessPartner.requestBuilder()
   .execute(yourDestination);
 ```
 
-and the SDK hides away many things from you. 
-A detailed step by step guide on how to use the client is given in this [tutorial series](https://developers.sap.com/group.s4sdk-js-cloud-foundry.html).
-Under the hood it takes care of destination fetching, etag handling, serializing and deserializing of the request etc.. 
-In this document we focus on the proxy part and will explain how proxies are handled by the SDK.
+SDK does a lot of heavy lifting under the hood to take care of complexity so that you can fully concentrate on your App's logic. A detailed step by step guide on using a type-safe client is provided in this [tutorial series](https://developers.sap.com/group.s4sdk-js-cloud-foundry.html).
+
+**To name a few things handled by Cloud SDK for Javascript:**
+
+- destination fetching
+- handling of ETag
+- handling of CSRF token
+- serializing and deserializing of the request
+- and more...
+
+In this document, we focus on the **proxy** part and explain how proxies are handled by the SDK.
 
 ## What kind of Proxies are there? ##
 

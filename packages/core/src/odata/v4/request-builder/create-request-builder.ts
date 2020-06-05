@@ -86,7 +86,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
       .then(request => request.execute())
       .then(response =>
         deserializeEntity(
-          response.data.d,
+          response.data,
           this._entityConstructor,
           response.headers
         )

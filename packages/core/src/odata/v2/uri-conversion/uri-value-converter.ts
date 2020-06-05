@@ -15,9 +15,10 @@ export const uriConverters: UriConverterMapping = {
   'Edm.DateTime': value =>
     `datetime'${edmToTs(value, 'Edm.DateTime')
       .toISOString()
-      .replace(/Z$/, '')}'`, //
+      .replace(/Z$/, '')}'`,
   'Edm.DateTimeOffset': value =>
-    `datetimeoffset'${edmToTs(value, 'Edm.DateTimeOffset').toISOString()}'`, //
+    `datetimeoffset'${edmToTs(value, 'Edm.DateTimeOffset').toISOString()}'`,
+  'Edm.Decimal': value => `${value}M`,
   'Edm.Time': value => `time'${value}'`,
   'Edm.Guid': value => `guid'${value}'`
 };

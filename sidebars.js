@@ -117,10 +117,9 @@ module.exports = {
     JavaScript: [
       'js/introduction',
       'js/getting-started',
-      'js/api-reference-js-ts',
       {
         type: 'category',
-        label: 'Core Features',
+        label: 'Features',
         items: [
           {
             type: 'category',
@@ -131,7 +130,8 @@ module.exports = {
             ]
           }
         ]
-      }
+      },
+      'js/api-reference-js-ts'
     ],
     'Continuous Delivery': ['devops/getting-started'],
     // FAQ: ['faq/frequently-asked-questions'],

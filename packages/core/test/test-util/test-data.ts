@@ -34,8 +34,12 @@ export function createTestEntity(originalData): TestEntity {
     .setOrInitializeRemoteState();
 }
 
-export function testEntityResourcePath(guid, str): string {
-  return `A_TestEntity(KeyPropertyGuid=${convertToUriFormat(
+export function testEntityResourcePath(
+  guid,
+  str,
+  toUriFormat = convertToUriFormat
+): string {
+  return `A_TestEntity(KeyPropertyGuid=${toUriFormat(
     guid,
     'Edm.Guid'
   )},KeyPropertyString='${str}')`;

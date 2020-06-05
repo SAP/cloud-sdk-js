@@ -7,8 +7,9 @@ import {
   defaultDestination, mockCreateRequestV4
 } from '../test-util/request-mocker';
 import {
-  TestEntity
+  TestEntity, TestEntitySingleLink
 } from '../test-util/test-services/v4/test-service';
+import { testPostRequestOutcome } from '../test-util/testPostRequestOutcome';
 
 describe('CreateRequestBuilder', () => {
   beforeAll(() => {
@@ -40,157 +41,24 @@ describe('CreateRequestBuilder', () => {
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
 
-  // it('should set the remote state and etag', async () => {
-  //   const stringProp = 'etagTest';
-  //   const eTag = 'someEtag';
-  //
-  //   const postBody = {
-  //     StringProperty: stringProp
-  //   };
-  //
-  //   mockCreateRequest({
-  //     body: postBody,
-  //     responseBody: {
-  //       ...postBody,
-  //       __metadata: { etag: eTag }
-  //     }
-  //   });
-  //
-  //   const entity = TestEntity.builder().stringProperty(stringProp).build();
-  //   const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-  //     defaultDestination
-  //   );
-  //
-  //   expect(actual['_versionIdentifier']).toBe(eTag);
-  //   expect(actual['remoteState']).toEqual(entity);
-  // });
+  it('create an entity with a single link property', async () => {
+    const stringProp = 'test';
+    const postBody = { to_SingleLink: { StringProperty: stringProp } };
 
-  // it('create an entity with a single link property', async () => {
-  //   const stringProp = 'test';
-  //   const postBody = { to_SingleLink: { StringProperty: stringProp } };
-  //
-  //   mockCreateRequest({
-  //     body: postBody
-  //   });
-  //
-  //   const entity = TestEntity.builder()
-  //     .toSingleLink(
-  //       TestEntitySingleLink.builder().stringProperty(stringProp).build()
-  //     )
-  //     .build();
-  //
-  //   const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-  //     defaultDestination
-  //   );
-  //
-  //   testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
-  // });
+    mockCreateRequestV4({
+      responseBody: postBody
+    });
 
-  // it('create an entity with a multi link property', async () => {
-  //   const keyProp = 'test';
-  //   const stringProp = 'someStr';
-  //
-  //   const linkedEntityBody = [
-  //     { KeyProperty: keyProp, StringProperty: stringProp }
-  //   ];
-  //
-  //   mockCreateRequest({
-  //     body: { to_MultiLink: linkedEntityBody },
-  //     responseBody: { to_MultiLink: { results: linkedEntityBody } }
-  //   });
-  //
-  //   const entity = TestEntity.builder()
-  //     .toMultiLink([
-  //       TestEntityMultiLink.builder()
-  //         .keyProperty(keyProp)
-  //         .stringProperty(stringProp)
-  //         .build()
-  //     ])
-  //     .build();
-  //
-  //   const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-  //     defaultDestination
-  //   );
-  //
-  //   testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
-  // });
+    const entity = TestEntity.builder()
+      .toSingleLink(
+        TestEntitySingleLink.builder().stringProperty(stringProp).build()
+      )
+      .build();
 
-  // it('create an entity with custom fields', async () => {
-  //   const keyProp = uuid();
-  //   const stringProp = 'test';
-  //
-  //   const customFields = {
-  //     CustomField1: 'abcd',
-  //     CustomField2: 1234,
-  //     CustomField3: { Attribute1: '1', Attribute2: false }
-  //   };
-  //
-  //   const postBody = {
-  //     KeyPropertyGuid: keyProp,
-  //     StringProperty: stringProp,
-  //     ...customFields
-  //   };
-  //
-  //   mockCreateRequest({
-  //     body: postBody
-  //   });
-  //
-  //   const entity = TestEntity.builder()
-  //     .keyPropertyGuid(keyProp)
-  //     .stringProperty(stringProp)
-  //     .withCustomFields(customFields)
-  //     .build();
-  //
-  //   const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-  //     defaultDestination
-  //   );
-  //
-  //   testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
-  // });
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
-  // it('create entity as a child of an entity', async () => {
-  //   const booleanProp = false;
-  //   const int16Prop = 17;
-  //   const parentKeyGuid = uuid();
-  //   const parentKeyString = 'test-key';
-  //
-  //   const childEntity = TestEntityMultiLink.builder()
-  //     .booleanProperty(booleanProp)
-  //     .int16Property(int16Prop)
-  //     .build();
-  //
-  //   const parentEntity = TestEntity.builder()
-  //     .keyPropertyGuid(parentKeyGuid)
-  //     .keyPropertyString(parentKeyString)
-  //     .build();
-  //
-  //   const postBody = { BooleanProperty: booleanProp, Int16Property: int16Prop };
-  //
-  //   const toChildPath = `${testEntityResourcePath(
-  //     parentKeyGuid,
-  //     parentKeyString
-  //   )}/to_MultiLink`;
-  //
-  //   mockCreateRequest({
-  //     body: postBody,
-  //     path: toChildPath
-  //   });
-  //
-  //   const actual = await new CreateRequestBuilder(
-  //     TestEntityMultiLink,
-  //     childEntity
-  //   )
-  //     .asChildOf(parentEntity, TestEntity.TO_MULTI_LINK)
-  //     .execute(defaultDestination);
-  //
-  //   testPostRequestOutcome(actual, childEntity.setOrInitializeRemoteState());
-  // });
-
+    testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
+  });
 });
-
-function testPostRequestOutcome(actual, expected) {
-  expect(actual).toEqual(expected);
-  // Due to non-enumerable property, mocha can not iterate detect "_customFields", we force here matching between both
-  expect(actual['remoteState']).toEqual(expected['remoteState']);
-  expect(actual.getCustomFields()).toEqual(expected.getCustomFields());
-}

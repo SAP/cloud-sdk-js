@@ -19,14 +19,15 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Introduction ##
 
-The Cloud SDK for JavaScript offers a convenient way for connection to various systems offering public APIs.
-The most prominent one is of course the S/4 HANA which comes in two flavors Cloud and OnPremise. 
-But there are also other systems like SuccessFactors, C4C, etc. where the SDK helps you with the connection.
-This is done by generating a data model or client based on the service definition of the API. 
-For S/4 HANA APIs these clients are generated and published to `https://npm.sap.com` for your convenience.
+The Cloud SDK for JavaScript offers a convenient way to connect to various systems offering public APIs. The most famous one is S/4 HANA which comes in two flavors Cloud and OnPremise. We pre-generate type-safe clients for S/4 HANA APIs publish them to https://npm.sap.com for your convenience.
 
-Once you have the client you code the desired call using the fluid API like:
-```TypeScript
+For different systems like SuccessFactors, C4C, and many others you can generate a type-safe client yourself. All you have to do it look up an API definition on [SAP API BusinessHub](https://api.sap.com/) and invoke a generator that supplied with [SAP Cloud SDK for Javascript](https://github.com/SAP/cloud-sdk). This [comprehensive tutorial](https://developers.sap.com/tutorials/cloudsdk-js-generator.html) will guide you through this process step by step.
+
+## Making first API call ##
+
+Once you have a type-safe client generated, this is how you make your first API call. This example uses **BusinessPartner** service from S4/HANA suit.
+
+```js
 BusinessPartner.requestBuilder()
   .getAll().filter(BusinessPartner.BUSINESS_PARTNER_CATEGORY.equals('1'))
   .top(5)

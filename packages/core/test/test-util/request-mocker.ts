@@ -7,9 +7,9 @@ import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-d
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
 import { ODataRequest } from '../../src/odata/common/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
+import { oDataUri as oDataUriV4 } from '../../src/odata/v4/uri-conversion/odata-uri';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';
 import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
-import {oDataUri as oDataUriV4} from '../../src/odata/v4/uri-conversion/odata-uri';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -151,7 +151,7 @@ export function mockHeaderRequest({
   host = defaultHost,
   responseHeaders = mockedBuildHeaderResponse
 }: MockHeaderRequestParams) {
-  return nock(host).log(console.log)
+  return nock(host)
     .get(request.serviceUrl())
     .reply(200, undefined, responseHeaders);
 }
@@ -175,7 +175,7 @@ export function mockRequest(
 
   mockHeaderRequest({ request });
 
-  return nock(host, getRequestHeaders(method, additionalHeaders)).log(console.log)
+  return nock(host, getRequestHeaders(method, additionalHeaders))
     [method](
       path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
       body

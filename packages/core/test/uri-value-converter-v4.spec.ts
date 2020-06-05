@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment from 'moment';
-import { convertToUriFormat } from '../src/v4';
 import BigNumber from 'bignumber.js';
+import { convertToUriFormat } from '../src/v4';
 
 describe('convertToUriFormat', () => {
   it('should convert guid', () => {
@@ -38,6 +38,8 @@ describe('convertToUriFormat', () => {
   });
 
   it('should convert Edm.Decimal', () => {
-    expect(convertToUriFormat(new BigNumber('99.99'), 'Edm.Decimal')).toBe('99.99');
+    expect(convertToUriFormat(new BigNumber('99.99'), 'Edm.Decimal')).toBe(
+      '99.99'
+    );
   });
 });

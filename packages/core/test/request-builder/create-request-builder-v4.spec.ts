@@ -4,10 +4,12 @@ import { v4 as uuid } from 'uuid';
 import { CreateRequestBuilder } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
-  defaultDestination, mockCreateRequestV4
+  defaultDestination,
+  mockCreateRequestV4
 } from '../test-util/request-mocker';
 import {
-  TestEntity, TestEntitySingleLink
+  TestEntity,
+  TestEntitySingleLink
 } from '../test-util/test-services/v4/test-service';
 import { testPostRequestOutcome } from '../test-util/testPostRequestOutcome';
 

@@ -6,6 +6,8 @@ import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { basicCredentials } from './test-util/destination-encoder';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response-v4';
+import { singleTestEntityResponse } from './test-data/single-test-entity-response-v4';
+import { mockCsrfTokenRequest } from './test-util/request-mocker';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';
@@ -76,6 +78,38 @@ describe('Request Builder', () => {
       .getAll()
       .select(TestEntity.ALL_FIELDS)
       .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
+      .execute(destination);
+
+    await expect(request).resolves.not.toThrow();
+  });
+
+  it('should resolve for create request', async () => {
+    const response = singleTestEntityResponse();
+
+    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicCredentials(destination),
+        accept: 'application/json',
+        'content-type': 'application/json',
+        cookie: 'key1=val1;key2=val2;key3=val3'
+      }
+    })
+      .post(`${servicePath}/${entityName}`, {
+        StringProperty: 'someProperty',
+        Int16Property: 16,
+        BooleanProperty: false
+      })
+      .reply(200, response);
+
+    const request = TestEntity.requestBuilder()
+      .create(
+        TestEntity.builder()
+          .stringProperty('someProperty')
+          .int16Property(16)
+          .booleanProperty(false)
+          .build()
+      )
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();

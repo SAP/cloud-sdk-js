@@ -13,6 +13,7 @@
     "@docusaurus/preset-classic": "^2.0.0-alpha.55",
     "classnames": "^2.2.6",
     "react": "^16.8.4",
+    "react-calendar-timeline": "^0.27.0",
     "react-dom": "^16.8.4"
   },
   "browserslist": {

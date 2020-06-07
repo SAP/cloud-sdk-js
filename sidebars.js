@@ -117,6 +117,20 @@ module.exports = {
     JavaScript: [
       'js/introduction',
       'js/getting-started',
+      {
+        type: 'category',
+        label: 'Features',
+        items: [
+          {
+            type: 'category',
+            label: 'Connectivity',
+            items: [
+              'js/features/connectivity/proxy-js-sdk',
+              'js/features/connectivity/destination-js-sdk'
+            ]
+          }
+        ]
+      },
       'js/api-reference-js-ts'
     ],
     'Continuous Delivery': ['devops/getting-started'],

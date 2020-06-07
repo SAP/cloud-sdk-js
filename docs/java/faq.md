@@ -90,4 +90,4 @@ SAP Cloud SDK for Java has first-class support for [SCP Cloud Foundry](https://w
 
 - **Do you support SAP Cloud Platform - Neo?**
 
-We still provide fully-fledged support Neo environment. However, we do not recommend starting new projects with SAP Cloud Platform Neo as Cloud Foundry is better suited for Apps and S/4HANA extensions development. To make the right choice for your project check this [SAP Blog](https://blogs.sap.com/2019/02/24/sap-cloud-platform-environment-cloud-foundry-vs-neo/) 
+We still provide fully-fledged support Neo environment. However, we do not recommend starting new projects with SAP Cloud Platform Neo as Cloud Foundry is better suited for Apps and S/4HANA extensions development.

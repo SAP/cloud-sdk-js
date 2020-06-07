@@ -13,12 +13,17 @@ module.exports = {
       theme: require('prism-react-renderer/themes/github'),
       darkTheme: require('prism-react-renderer/themes/dracula')
     },
+    // ***************************************************************
+    // Activate this announcement bar for global urgent notifications
+    // ***************************************************************
+    //
     // announcementBar: {
     //   id: 'WIP', // Any value that will identify this message
     //   content:
     //     '~~~WIP~~~ Cloud SDK Documentation is work in progress. Use on your own discretion.',
     //   backgroundColor: '#ed2939', // Defaults to `#fff`
     //   textColor: '#000' // Defaults to `#000`
+    // },
     navbar: {
       title: 'SAP Cloud SDK',
       logo: {

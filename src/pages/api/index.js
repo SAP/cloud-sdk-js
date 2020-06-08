@@ -1,7 +1,7 @@
 import React from 'react'
-import {Redirect} from '@docusaurus/router'
+import { Redirect } from '@docusaurus/router'
 
-function Api() {
+function Api () {
   return <Redirect to="/cloud-sdk/docs/js/api-documentation" />
 }
 

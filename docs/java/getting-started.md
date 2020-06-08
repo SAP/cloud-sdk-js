@@ -101,9 +101,9 @@ application  cx-server  integration-tests  Jenkinsfile  manifest.yml  pom.xml  u
 **Congratulations! You've just configured your application with Cloud SDK for Java.**
 
 ## Next steps ##
-- [Configure you IDE](how-to/recommended-ide )
-- [Get and bind SAP Cloud Foundry CLI](how-to/cf-cli )
+- [Configure you IDE](../guides/recommended-ide )
+- [Get and bind SAP Cloud Foundry CLI](../guides/cf-cli )
 - [Check tutorials for Cloud SDK for Java](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:java )
-- Check our `How To` section from the menu
+- Check out key **Features** and **Guides** sections
 - Review [JavaDoc](api-documentation )
 - Check [what's new](../overview/what-is-new ) and [release notes](https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html )

@@ -106,4 +106,4 @@ application  cx-server  integration-tests  Jenkinsfile  manifest.yml  pom.xml  u
 - [Check tutorials for Cloud SDK for Java](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:java )
 - Check out key **Features** and **Guides** sections
 - Review [JavaDoc](api-documentation )
-- Check [what's new](../overview/what-is-new ) and [release notes](https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html )
+- Check [what's new](../../overview/what-is-new ) and [release notes](https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html )

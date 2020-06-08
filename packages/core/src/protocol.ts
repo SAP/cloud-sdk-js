@@ -1,6 +1,4 @@
-/**
- * Protocol enumeration, either 'http' or 'https'.
- */
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'

@@ -1,6 +1,6 @@
-
-import { Protocol } from './protocol';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
+import { Protocol } from './protocol';
 import { Destination } from './scp-cf';
 
 const logger = createLogger({

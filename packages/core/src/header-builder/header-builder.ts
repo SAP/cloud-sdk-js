@@ -1,16 +1,5 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { MapType } from '@sap-cloud-sdk/util';
-import { Destination } from '../scp-cf';
-import { ODataRequestConfig, isWithETag } from '../odata/common/request';
-import { ODataRequest } from '../odata/common/request/odata-request';
-import { buildAuthorizationHeaders } from './authorization-header';
-import { buildCsrfHeaders } from './csrf-token-header';
-import {
-  getHeader,
-  replaceDuplicateKeys,
-  filterNullishValues
-} from './headers-util';
+import { ODataRequest, ODataRequestConfig } from '../odata/common/request';
 
 /**
  * Create object containing all headers, including custom headers for a given  OData request configuration and destination.
@@ -28,62 +17,4 @@ export async function buildHeaders<RequestT extends ODataRequestConfig>(
   }
 
   return request.headers();
-}
-
-async function getAuthHeaders(
-  destination: Destination,
-  customHeaders?: MapType<any>
-): Promise<MapType<string>> {
-  const customAuthHeaders = getHeader('authorization', customHeaders);
-  return Object.keys(customAuthHeaders).length
-    ? customAuthHeaders
-    : buildAuthorizationHeaders(destination);
-}
-
-async function getCsrfHeaders<RequestT extends ODataRequestConfig>(
-  request: ODataRequest<RequestT>,
-  destinationRelatedHeaders: MapType<string>,
-  customHeaders?: MapType<any>
-): Promise<MapType<string>> {
-  if (!request.destination) {
-    throw Error('The request destination is undefined.');
-  }
-
-  const customCsrfHeaders = getHeader('x-csrf-token', customHeaders);
-  return Object.keys(customCsrfHeaders).length
-    ? customCsrfHeaders
-    : buildCsrfHeaders(request.destination, {
-        headers: destinationRelatedHeaders,
-        url: request.relativeServiceUrl()
-      });
-}
-
-/**
- * Builds the authorization, proxy authorization and SAP headers for a given destination.
- *
- * @param destination - A destination.
- * @param customHeaders - Custom default headers for the resulting HTTP headers.
- * @returns HTTP headers for the given destination.
- */
-export async function buildHeadersForDestination(
-  destination: Destination,
-  customHeaders?: MapType<any>
-): Promise<MapType<string>> {
-  const authHeaders = await getAuthHeaders(destination, customHeaders);
-
-  const sapHeaders = replaceDuplicateKeys(
-    filterNullishValues({
-      'sap-client': destination.sapClient,
-      'SAP-Connectivity-SCC-Location_ID': destination.cloudConnectorLocationId
-    }),
-    customHeaders
-  );
-
-  return { ...authHeaders, ...sapHeaders };
-}
-
-function getETagHeaderValue(config: ODataRequestConfig): string | undefined {
-  if (isWithETag(config)) {
-    return config.versionIdentifierIgnored ? '*' : config.eTag;
-  }
 }

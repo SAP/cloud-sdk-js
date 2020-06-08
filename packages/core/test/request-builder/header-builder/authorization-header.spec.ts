@@ -18,7 +18,7 @@ import {
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { buildHeadersForDestination } from '../../../src/header-builder/header-builder';
+import { buildHeadersForDestination } from '../../../src/header-builder/header-builder-for-destination';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {

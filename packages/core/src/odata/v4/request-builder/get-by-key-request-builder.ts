@@ -17,8 +17,8 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
 import { Expandable } from '../../common/expandable';
-import { HttpReponse } from '../../../http-client';
 import { oDataUri } from '../uri-conversion';
+import { HttpReponse } from '../../../http-client';
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,
  * where no selection is equal to selecting all fields.
@@ -88,10 +88,6 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
   }
 }
 
-/*
-C4C response to getByKey requests with the collection response format instead of the single element one
-To account for this, we test for this and use the normal format if `.result` return undefined.
-*/
 function extractData(response: HttpReponse): MapType<any> {
-  return response.data.d.results || response.data.d;
+  return response.data;
 }

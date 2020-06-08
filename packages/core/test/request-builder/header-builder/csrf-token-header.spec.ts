@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  addCsrfTokenAndCookies,
   buildCsrfHeaders
 } from '../../../src/header-builder';
 import {
@@ -15,6 +14,7 @@ import {
   mockHeaderRequest
 } from '../../test-util/request-mocker';
 import { muteLoggers } from '../../test-util/mute-logger';
+import { addCsrfTokenAndCookies } from '../../../src/header-builder/add-csrf-token-and-cookies';
 
 const standardHeaders = {
   accept: 'application/json',

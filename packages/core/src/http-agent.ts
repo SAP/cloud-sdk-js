@@ -6,6 +6,9 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { assoc, last, pipe } from 'rambda';
 import { Destination, DestinationCertificate } from './scp-cf';
 import { proxyAgent } from './util/proxy-util';
+import { Protocol } from './protocol';
+import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
+import { getProtocolOrDefault } from './get-protocal';
 
 const logger = createLogger({
   package: 'core',
@@ -35,20 +38,6 @@ export function getAgentConfig(
 enum AgentType {
   DEFAULT,
   PROXY
-}
-
-/**
- * Interface for the http-agent within the Axios request config.
- */
-export interface HttpAgentConfig {
-  httpAgent: http.Agent;
-}
-
-/**
- * Interface for the https-agent within the Axios request config.
- */
-export interface HttpsAgentConfig {
-  httpsAgent: http.Agent;
 }
 
 function createProxyAgent(
@@ -151,32 +140,6 @@ function createDefaultAgent(
 }
 
 /**
- * Extracts the http protocol from the destination url. The default value is http if no protocol is given.
- *
- * @param destination - URL of this destination is parsed
- * @throws Error in case a unsupported protocol is given in the destination URL like rfc://example.com.
- * @returns The protocol, either https or http.
- */
-export function getProtocolOrDefault(destination: Destination): Protocol {
-  const protocol = destination?.url?.toLowerCase()?.split('://');
-
-  if (!protocol || protocol.length === 1) {
-    logger.warn(
-      `URL of the provided destination (${destination.url}) has no protocol specified! Assuming HTTPS.`
-    );
-    return Protocol.HTTPS;
-  }
-  const casted = Protocol.of(protocol[0]);
-  if (casted) {
-    return casted;
-  }
-
-  throw new Error(
-    `Protocol of the provided destination (${destination.url}) is not supported! Currently only HTTP and HTTPS are supported.`
-  );
-}
-
-/**
  * @deprecated Since v1.5.1. use getProtocolOrDefault instead
  * Takes the destination URL and return everything before the '://'.
  *
@@ -188,31 +151,6 @@ export function getUrlProtocol(destination: Destination): Protocol | undefined {
     const urlParts = destination.url.toLowerCase().split('://');
     if (urlParts.length > 1) {
       return urlParts[0] as Protocol;
-    }
-  }
-}
-
-/**
- * Protocol enumeration, either 'http' or 'https'.
- */
-export enum Protocol {
-  HTTP = 'http',
-  HTTPS = 'https'
-}
-
-/* eslint-disable-next-line no-redeclare */
-export namespace Protocol {
-  /**
-   * Get [[Protocol]] from its string representation.
-   * @param protocol Protocol as string, either 'http' or 'https'.
-   * @returns Either the matching protocol or undefined
-   */
-  export function of(protocol: string): Protocol | undefined {
-    if (protocol.toLowerCase() === Protocol.HTTP) {
-      return Protocol.HTTP;
-    }
-    if (protocol.toLowerCase() === Protocol.HTTPS) {
-      return Protocol.HTTPS;
     }
   }
 }

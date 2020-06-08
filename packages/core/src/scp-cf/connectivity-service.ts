@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
-import { Protocol } from '../http-agent';
+import { Protocol } from '../protocol';
 import { ProxyConfiguration } from './connectivity-service-types';
 import { Destination } from './destination-service-types';
 import { EnvironmentAccessor } from './environment-accessor';

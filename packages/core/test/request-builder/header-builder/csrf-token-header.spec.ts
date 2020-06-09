@@ -12,7 +12,7 @@ import {
   mockHeaderRequest
 } from '../../test-util/request-mocker';
 import { muteLoggers } from '../../test-util/mute-logger';
-import { addCsrfTokenAndCookies } from '../../../src/header-builder/add-csrf-token-and-cookies';
+import { addCsrfTokenAndCookies } from '../../../src/header-builder/legacy-csrf-token-header';
 
 const standardHeaders = {
   accept: 'application/json',

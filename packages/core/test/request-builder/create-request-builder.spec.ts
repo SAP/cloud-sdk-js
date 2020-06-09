@@ -13,6 +13,7 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
+import { testPostRequestOutcome } from '../test-util/testPostRequestOutcome';
 
 describe('CreateRequestBuilder', () => {
   beforeAll(() => {
@@ -206,10 +207,3 @@ describe('CreateRequestBuilder', () => {
     await expect(createRequest).rejects.toThrowErrorMatchingSnapshot();
   });
 });
-
-function testPostRequestOutcome(actual, expected) {
-  expect(actual).toEqual(expected);
-  // Due to non-enumerable property, mocha can not iterate detect "_customFields", we force here matching between both
-  expect(actual['remoteState']).toEqual(expected['remoteState']);
-  expect(actual.getCustomFields()).toEqual(expected.getCustomFields());
-}

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, Link } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataCreateRequestConfig } from '../../common/request/odata-create-request-config';
@@ -13,6 +13,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUri } from '../uri-conversion';
+import { HttpReponse } from '../../../http-client';
 /**
  * Create OData request to create an entity.
  *
@@ -86,7 +87,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
       .then(request => request.execute())
       .then(response =>
         deserializeEntity(
-          response.data.d,
+          extractData(response),
           this._entityConstructor,
           response.headers
         )
@@ -95,4 +96,8 @@ export class CreateRequestBuilder<EntityT extends Entity>
         Promise.reject(errorWithCause('Create request failed!', error))
       );
   }
+}
+
+function extractData(response: HttpReponse): MapType<any> {
+  return response.data;
 }

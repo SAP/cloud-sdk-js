@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment from 'moment';
+import BigNumber from 'bignumber.js';
 import { convertToUriFormat } from '../src/v4';
 
 describe('convertToUriFormat', () => {
@@ -33,6 +34,12 @@ describe('convertToUriFormat', () => {
   it('should convert date', () => {
     expect(convertToUriFormat(moment(1589887303000), 'Edm.Date')).toBe(
       '2020-05-19'
+    );
+  });
+
+  it('should convert Edm.Decimal', () => {
+    expect(convertToUriFormat(new BigNumber('99.99'), 'Edm.Decimal')).toBe(
+      '99.99'
     );
   });
 });

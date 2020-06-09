@@ -31,5 +31,5 @@ export type EdmTypeShared<VersionT extends 'v2' | 'v4' | 'any'> =
 
 export type EdmTypeSameConvertersUri = Exclude<
   EdmTypeSameConverters,
-  'Edm.Guid'
+  'Edm.Guid' | 'Edm.Decimal'
 >;

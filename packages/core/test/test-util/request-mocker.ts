@@ -7,7 +7,9 @@ import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-d
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
 import { ODataRequest } from '../../src/odata/common/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
-import { TestEntity } from './test-services/v2/test-service';
+import { oDataUri as oDataUriV4 } from '../../src/odata/v4/uri-conversion/odata-uri';
+import { TestEntity } from './test-services/v2/test-service/TestEntity';
+import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -73,6 +75,22 @@ export function mockCreateRequest(
     statusCode: params.statusCode || 200,
     method: params.method || 'post',
     responseBody: { d: params.responseBody || params.body }
+  });
+}
+
+export function mockCreateRequestV4(
+  params: MockRequestParams,
+  entityConstructor = TestEntityV4
+) {
+  const requestConfig = new ODataCreateRequestConfig(
+    entityConstructor,
+    oDataUriV4
+  );
+  return mockRequest(requestConfig, {
+    ...params,
+    statusCode: params.statusCode || 200,
+    method: params.method || 'post',
+    responseBody: params.responseBody
   });
 }
 

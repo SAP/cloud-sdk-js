@@ -16,6 +16,7 @@ export const uriConverters: UriConverterMapping = {
   'Edm.Date': identity,
   'Edm.DateTimeOffset': identity,
   'Edm.TimeOfDay': identity,
+  'Edm.Decimal': value => String(value),
   'Edm.Duration': value => `duration'${value}'`,
   'Edm.Guid': identity
 };

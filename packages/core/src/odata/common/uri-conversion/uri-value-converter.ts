@@ -17,7 +17,6 @@ export const uriConvertersCommon: UriConverterMapping = {
   'Edm.Int32': value => String(value),
   'Edm.SByte': value => String(value),
   'Edm.Int64': value => `${value}L`,
-  'Edm.Decimal': value => `${value}M`,
   'Edm.Double': value => (isInfOrNan(value) ? value : `${value}D`),
   'Edm.Single': value => (isInfOrNan(value) ? value : `${value}F`),
   'Edm.Float': value => (isInfOrNan(value) ? value : `${value}F`),

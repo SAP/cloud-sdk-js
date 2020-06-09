@@ -15,7 +15,7 @@ import {
 // TODO: The buildCsrfHeaders import cannot be combined with the rest of the other headers due to circular dependencies
 import { buildCsrfHeaders } from '../../../header-builder/csrf-token-header';
 // TODO: The buildHeadersForDestination import cannot be combined with the rest of the other headers due to circular dependencies
-import { buildHeadersForDestination } from '../../../header-builder/header-builder';
+import { buildHeadersForDestination } from '../../../header-builder/header-builder-for-destination';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 

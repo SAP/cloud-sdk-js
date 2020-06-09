@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Protocol } from '../http-agent';
+import { Protocol } from '../protocol';
 
 /**
  * Proxy settings for connecting to an on-premise destination via connectivity proxy or web proxies.

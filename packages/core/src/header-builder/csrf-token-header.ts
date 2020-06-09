@@ -2,9 +2,7 @@
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
-import { ODataRequestConfig } from '../odata/common/request';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
-import { ODataRequest } from '../odata/common/request/odata-request';
 import { filterNullishValues, getHeader, getHeaderValue } from './headers-util';
 
 const logger = createLogger({
@@ -77,36 +75,4 @@ function buildCookieHeaderValue(cookies?: string[]): string | undefined {
   if (cookies && cookies.length) {
     return cookies.map((cookie: string) => cookie.split(';')[0]).join(';');
   }
-}
-
-/**
- * @deprecated Since v1.20.0, use [[buildCsrfHeaders]] instead.
- *
- * Add CSRF token and cookies for a request to destination related headers.
- * @param request The request to get CSRF headers for.
- * @param headers Destination related headers to include in the request.
- * @returns A promise to an object containing the CSRF related headers
- */
-export async function addCsrfTokenAndCookies<
-  RequestT extends ODataRequestConfig
->(
-  request: ODataRequest<RequestT>,
-  headers: MapType<string>
-): Promise<MapType<string>> {
-  if (!request.destination) {
-    throw Error('The request destination is undefined.');
-  }
-  if (
-    request.config.method === 'get' ||
-    Object.keys(headers).includes('x-csrf-token')
-  ) {
-    return headers;
-  }
-  return {
-    ...(await buildCsrfHeaders(request.destination, {
-      headers,
-      url: request.relativeServiceUrl()
-    })),
-    ...headers
-  };
 }

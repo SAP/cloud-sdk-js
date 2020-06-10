@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix missing validation of URL used for obtaining the JWT verification key.
 
 
 # 1.21.1

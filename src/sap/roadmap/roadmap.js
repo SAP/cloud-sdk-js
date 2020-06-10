@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
-import Timeline from 'react-calendar-timeline'
-// make sure you include the timeline stylesheet or the timeline will not be styled
 import 'react-calendar-timeline/lib/Timeline.css'
 import config from './config'
 import { groups, items, keys } from './roadmap-java'
+import Timeline, {
+  TimelineMarkers,
+  CustomMarker,
+  TodayMarker,
+  CursorMarker
+} from 'react-calendar-timeline'
+import moment from 'moment'
 
 export default class Roadmap extends Component {
   constructor (props) {
@@ -67,7 +72,51 @@ export default class Roadmap extends Component {
             onItemResize: this.handleItemResize.bind(this)
           }
         }
-      />
+      >
+        <TimelineMarkers>
+          <CustomMarker date={moment().year(2020).month('Mar').date(31)} >
+            {({ styles, date }) => {
+              const customStyles = {
+                ...styles,
+                backgroundColor: 'lightgreen',
+                width: '4px'
+              }
+              return <div style={customStyles} />
+            }}
+          </CustomMarker>
+          <CustomMarker date={moment().year(2020).month('Jun').date(31)} >
+            {({ styles, date }) => {
+              const customStyles = {
+                ...styles,
+                backgroundColor: 'lightgreen',
+                width: '4px'
+              }
+              return <div style={customStyles} />
+            }}
+          </CustomMarker>
+          <CustomMarker date={moment().year(2020).month('Sep').date(31)} >
+            {({ styles, date }) => {
+              const customStyles = {
+                ...styles,
+                backgroundColor: 'lightgreen',
+                width: '4px'
+              }
+              return <div style={customStyles} />
+            }}
+          </CustomMarker>
+          <CustomMarker date={moment()}>
+            {({ styles, date }) => {
+              const customStyles = {
+                ...styles,
+                backgroundColor: 'deeppink',
+                width: '4px'
+              }
+              return <div style={customStyles} />
+            }}
+          </CustomMarker>
+          <CursorMarker />
+        </TimelineMarkers>
+      </Timeline>
     )
   }
 }

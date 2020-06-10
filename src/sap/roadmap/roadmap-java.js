@@ -30,8 +30,9 @@ export const groups = [
   { id: 'docs', title: 'SDK Documentation' },
   { id: 'support', title: 'Analyze and scale support' },
   { id: 'cap', title: 'One SAP' },
-  { id: 'top', title: 'Quality and excellence' },
-  { id: 'future', title: 'Future shots' }
+  { id: 'top', title: 'Developer happiness' },
+  { id: 'future', title: 'Future shots' },
+  { id: 'scp', title: 'SAP Cloud Platform'}
 ]
 
 export const items = [
@@ -57,7 +58,7 @@ export const items = [
     group: 'odata',
     title: 'Release advanced OData v4 features',
     start: moment().year(2020).month('Jan').date(1),
-    end: moment().year(2020).month('Mar').date(32),
+    end: moment().year(2020).month('Aug').date(32),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -74,7 +75,7 @@ export const items = [
     group: 'odata',
     title: 'Release unified programming model for OData v2/4.',
     start: moment().year(2020).month('Apr').date(1),
-    end: moment().year(2020).month('Jun').date(31),
+    end: moment().year(2020).month('Aug').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -107,8 +108,8 @@ export const items = [
     id: 5,
     group: 'rest',
     title: 'Release Open API type-safe client generator',
-    start: moment().year(2020).month('Apr').date(1),
-    end: moment().year(2020).month('Jun').date(31),
+    start: moment().year(2020).month('Oct').date(1),
+    end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -122,10 +123,10 @@ export const items = [
   },
   {
     id: 6,
-    group: 'rest',
+    group: 'libs',
     title: 'Pre-generated clients for Core, Job Scheduler, etc.',
-    start: moment().year(2020).month('Apr').date(1),
-    end: moment().year(2020).month('Jun').date(31),
+    start: moment().year(2020).month('Oct').date(1),
+    end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -206,7 +207,7 @@ export const items = [
     }
   },
   {
-    id: 21,
+    id: 11,
     group: 'oss',
     title: 'Get approval to Open Source Cloud SDK for Java',
     start: moment().year(2020).month('Jul').date(1),
@@ -223,10 +224,61 @@ export const items = [
     }
   },
   {
-    id: 15,
+    id: 12,
     group: 'oss',
     title: 'Release Open Source version of SAP Cloud SDK for Java',
-    start: moment().year(2020).month('Jul').date(1),
+    start: moment().year(2021).month('Jan').date(1),
+    end: moment().year(2021).month('Mar').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 13,
+    group: 'oss',
+    title: 'Achieve a split between Open Source and Closed Source parts of the SDK',
+    start: moment().year(2021).month('Jan').date(1),
+    end: moment().year(2021).month('Mar').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 14,
+    group: 'infra',
+    title: 'Native support for K8s in Java',
+    start: moment().year(2020).month('Sep').date(1),
+    end: moment().year(2020).month('Nov').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 15,
+    group: 's4',
+    title: 'Generate OData v4 libraries for S/4HANA 2008 release',
+    start: moment().year(2020).month('Aug').date(1),
     end: moment().year(2020).month('Sep').date(31),
     itemProps: {
       'aria-hidden': true,
@@ -240,10 +292,112 @@ export const items = [
     }
   },
   {
+    id: 16,
+    group: 's4',
+    title: 'Type-safe client for S/4HANA on premise',
+    start: moment().year(2020).month('Aug').date(20),
+    end: moment().year(2020).month('Oct').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 17,
+    group: 's4',
+    title: 'Type-safe client for S/4HANA Enterprise Messaging',
+    start: moment().year(2020).month('Aug').date(20),
+    end: moment().year(2020).month('Dec').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 18,
+    group: 'scp',
+    title: 'Keep up with change rate of SCP development',
+    start: moment().year(2020).month('Jul').date(20),
+    end: moment().year(2020).month('Dec').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
     id: 19,
-    group: 'oss',
-    title: 'Achieve a split between Open Source and Closed Source parts of the SDK',
-    start: moment().year(2020).month('Jul').date(1),
+    group: 'saas',
+    title: 'Automate release for existing libraries via Pipeline',
+    start: moment().year(2020).month('Oct').date(1),
+    end: moment().year(2020).month('Dec').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 20,
+    group: 'infra',
+    title: 'Improve service discovery and connectivity to enable new run times and rest client',
+    start: moment().year(2020).month('Oct').date(20),
+    end: moment().year(2020).month('Dec').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+   id: 21,
+    group: 'odata',
+    title: 'Ongoing support and refinement for OData v4/v2',
+    start: moment().year(2020).month('Sep').date(1),
+    end: moment().year(2020).month('Dec').date(32),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 22,
+    group: 'libs',
+    title: 'Currency Conversion contribution',
+    start: moment().year(2020).month('Feb').date(1),
     end: moment().year(2020).month('Sep').date(31),
     itemProps: {
       'aria-hidden': true,
@@ -255,5 +409,108 @@ export const items = [
         })
       }
     }
+  },
+  {
+    id: 23,
+    group: 'libs',
+    title: 'Blockchain library contribution',
+    start: moment().year(2020).month('Apr').date(1),
+    end: moment().year(2020).month('Aug').date(32),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 24,
+    group: 'support',
+    title: 'Introduce support metrics',
+    start: moment().year(2020).month('Aug').date(1),
+    end: moment().year(2020).month('Sep').date(32),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+   {
+    id: 25,
+    group: 'cap',
+    title: 'Regular alignment between CAP and SAP to achieve synergies',
+    start: moment().year(2020).month('Mar').date(1),
+    end: moment().year(2020).month('Dec').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+   {
+    id: 26,
+    group: 'libs',
+    title: 'Logging with SAP passport for Performance monitoring',
+    start: moment().year(2020).month('Jul').date(1),
+    end: moment().year(2020).month('Aug').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+   },
+   {
+    id: 27,
+    group: 'top',
+    title: 'Improve logging and debugging capabilities',
+    start: moment().year(2020).month('Sep').date(1),
+    end: moment().year(2021).month('Mar').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+   },
+   {
+    id: 28,
+    group: 'top',
+    title: 'Introduce quality measurement for SDK deliveries (regressions, bugs, stability, support load)',
+    start: moment().year(2020).month('Sep').date(1),
+    end: moment().year(2021).month('Mar').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
   }
+
 ]

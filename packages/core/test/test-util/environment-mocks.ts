@@ -21,7 +21,7 @@ export const mockXsuaaBinding: Service = {
     clientid: 'clientid',
     clientsecret: 'clientsecret',
     verificationkey: publicKey(),
-    uaadomain : "authentication.sap.hana.ondemand.com"
+    uaadomain: 'authentication.sap.hana.ondemand.com'
   }
 };
 

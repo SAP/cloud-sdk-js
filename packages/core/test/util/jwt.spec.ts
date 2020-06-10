@@ -97,7 +97,7 @@ describe('jwt', () => {
     };
 
     const xsuaaUrl = 'https://example.com';
-    const jku =  'https://my-jku-url.authentication.sap.hana.ondemand.com';
+    const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
 
     beforeEach(() => {
       process.env.VCAP_SERVICES = JSON.stringify({
@@ -142,7 +142,12 @@ describe('jwt', () => {
     });
 
     it('fails for jku URL and xsuaa different domain', done => {
-      verifyJwt(signedJwtForVerification(jwtPayload, 'https://my-jku-url.some.wrong.domain.com'))
+      verifyJwt(
+        signedJwtForVerification(
+          jwtPayload,
+          'https://my-jku-url.some.wrong.domain.com'
+        )
+      )
         .then(() => done('Should have failed.'))
         .catch(error => {
           expect(error.message).toContain(

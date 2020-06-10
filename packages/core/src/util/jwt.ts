@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { IncomingMessage } from 'http';
+import * as url from 'url';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosRequestConfig } from 'axios';
 import jwt from 'jsonwebtoken';
@@ -101,6 +102,24 @@ function validateAuthHeader(header: string | undefined): boolean {
 }
 
 /**
+ * The URL for fetching the verfication certificate should have the same domain as the XSUAA. So if the UUA domain is "authentication.sap.hana.ondemand.com" the URL should be like
+ * http://something.authentication.sap.hana.ondemand.com/somePath so the host should end with the domain.
+ * @param verificationKeyURL URL used for obtaining the verification key
+ * @param uaaDomain domain given in the XSUAA credentials
+ */
+function checkDomainVerificationKeyURL(
+  verificationKeyURL: string,
+  uaaDomain: string
+): void {
+  const jkuDomain = url.parse(verificationKeyURL).hostname;
+  if (!uaaDomain || !jkuDomain || !jkuDomain.endsWith(uaaDomain)) {
+    throw new Error(
+      `The domains of the XSUAA and verification URL do not match - XSUUA domain is ${uaaDomain} and the URL provided in JWT (field jku) to receive validation certificate is ${jkuDomain}.`
+    );
+  }
+}
+
+/**
  * Verifies the given JWT and returns the decoded payload.
  *
  * @param token - JWT to be verified
@@ -115,6 +134,9 @@ export async function verifyJwt(
 
   const creds = getXsuaaServiceCredentials(token);
   const verificationKeyURL = getVerificationKeyURL(token);
+  if (verificationKeyURL) {
+    checkDomainVerificationKeyURL(verificationKeyURL, creds.uaadomain);
+  }
 
   if (
     options.cacheVerificationKeys &&

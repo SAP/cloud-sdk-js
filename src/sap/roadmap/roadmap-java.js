@@ -2,9 +2,8 @@ import moment from 'moment'
 import randomColor from 'randomcolor'
 
 const style = {
-  'fontSize': '0.9rem'
+  fontSize: '0.9rem'
 }
-
 
 export const keys = {
   groupIdKey: 'id',
@@ -24,9 +23,9 @@ export const groups = [
   { id: 'saas', title: 'SDK as a Service' },
   { id: 'libs', title: 'SAP Eco-system' },
   { id: 'rest', title: 'Open API type-safe client' },
-  { id: 'infra', title: 'Azure, AWS, GCP and beyond' },
+  { id: 'oss', title: 'Open Source SDK for Java' },
+  { id: 'infra', title: 'K8s, Azure, AWS, GCP and beyond' },
   { id: 's4', title: 'S/4HANA API libraries' },
-  { id: 'kube', title: 'First-class K8s integration' },
   { id: 'lobs', title: 'LoB Solutions' },
   { id: 'docs', title: 'SDK Documentation' },
   { id: 'support', title: 'Analyze and scale support' },
@@ -48,8 +47,8 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
@@ -65,8 +64,8 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
@@ -82,12 +81,12 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
-   {
+  {
     id: 4,
     group: 'rest',
     title: 'Release type-safe client for SCP Workflow service ',
@@ -99,12 +98,12 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
-   {
+  {
     id: 5,
     group: 'rest',
     title: 'Release Open API type-safe client generator',
@@ -116,12 +115,12 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
-   {
+  {
     id: 6,
     group: 'rest',
     title: 'Pre-generated clients for Core, Job Scheduler, etc.',
@@ -133,8 +132,8 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
@@ -150,8 +149,8 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
@@ -167,8 +166,8 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
@@ -184,8 +183,8 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
       }
     }
   },
@@ -201,8 +200,59 @@ export const items = [
       style: {
         ...style,
         background: randomColor({
-   luminosity: 'dark'
-})
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 21,
+    group: 'oss',
+    title: 'Get approval to Open Source Cloud SDK for Java',
+    start: moment().year(2020).month('Jul').date(1),
+    end: moment().year(2020).month('Sep').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 15,
+    group: 'oss',
+    title: 'Release Open Source version of SAP Cloud SDK for Java',
+    start: moment().year(2020).month('Jul').date(1),
+    end: moment().year(2020).month('Sep').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
+      }
+    }
+  },
+  {
+    id: 19,
+    group: 'oss',
+    title: 'Achieve a split between Open Source and Closed Source parts of the SDK',
+    start: moment().year(2020).month('Jul').date(1),
+    end: moment().year(2020).month('Sep').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style,
+        background: randomColor({
+          luminosity: 'dark'
+        })
       }
     }
   }

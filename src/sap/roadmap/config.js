@@ -12,7 +12,7 @@ const config = {
   canChangeGroup: true,
   fullUpdate: true,
   itemTouchSendsClick: true,
-  stackItems: true,
+  stackItems: true
 }
 
 export default config

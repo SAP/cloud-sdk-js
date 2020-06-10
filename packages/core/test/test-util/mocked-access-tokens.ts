@@ -28,7 +28,7 @@ export const subscriberServiceToken = signedJwt(subscriberServiceTokenPayload);
 
 export const subscriberServiceTokenWithVerificationURL = signedJwtForVerification(
   subscriberServiceTokenPayload,
-  'https://some-jku-url.com'
+  'https://my-jku-url.authentication.sap.hana.ondemand.com'
 );
 
 const userApprovedProviderTokenPayload = {

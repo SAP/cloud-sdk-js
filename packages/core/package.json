@@ -46,6 +46,7 @@
     "opossum": "^5.0.0",
     "rambda": "^5.0.0",
     "uuid": "^7.0.3",
+    "url" : "^0.11.0",
     "voca": "^1.4.0"
   },
   "devDependencies": {

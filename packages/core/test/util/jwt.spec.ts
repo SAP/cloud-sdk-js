@@ -97,7 +97,7 @@ describe('jwt', () => {
     };
 
     const xsuaaUrl = 'https://example.com';
-    const jku = 'https://my-verification-url.com';
+    const jku =  'https://my-jku-url.authentication.sap.hana.ondemand.com';
 
     beforeEach(() => {
       process.env.VCAP_SERVICES = JSON.stringify({
@@ -106,7 +106,8 @@ describe('jwt', () => {
             credentials: {
               clientid: 'clientid',
               clientsecret: 'clientsecret',
-              url: xsuaaUrl
+              url: xsuaaUrl,
+              uaadomain: 'authentication.sap.hana.ondemand.com'
             },
             name: 'my-xsuaa',
             plan: 'application',
@@ -135,6 +136,17 @@ describe('jwt', () => {
           );
           expect(error.stack).toContain(
             'No verification keys have been returned by the XSUAA service!'
+          );
+          done();
+        });
+    });
+
+    it('fails for jku URL and xsuaa different domain', done => {
+      verifyJwt(signedJwtForVerification(jwtPayload, 'https://my-jku-url.some.wrong.domain.com'))
+        .then(() => done('Should have failed.'))
+        .catch(error => {
+          expect(error.message).toContain(
+            'The domains of the XSUAA and verification URL do not match'
           );
           done();
         });

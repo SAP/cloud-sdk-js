@@ -1,7 +1,7 @@
 ---
 id: sdk-java-common-problems
 title: Some common problems and how to address them
-hide_title: false
+hide_title: true
 hide_table_of_contents: false
 sidebar_label: Frequently Debuged Problems
 description: This article is a collection of frequently occuring symptoms and a short quidance on how to address them.
@@ -16,8 +16,6 @@ keywords:
 image:
 ---
 
-## Destinations
-
 ### Provider instead of Subscriber Account used
 
 **Symptom:** Destinations are returned only for the provider account, but not for a subscriber account.
@@ -25,11 +23,12 @@ image:
 Possible causes:
 
 - A subscriber based JWT is passed in but it's validation fails, causing the SDK to fall back to the provider account.
-  See []().
-- The destination is retrieved in an asynchronous manner without propagating the `ThreadContext`.
-  See [Running Asynchronous Operations](docs/java/features/multi-tenancy/multi-tenancy-thread-context#running-asynchronous-operations).
+  
+  See [JWT validation fails](#jwt-validation-fails).
 
-## Multi Tenancy
+- The destination is retrieved in an asynchronous manner without propagating the `ThreadContext`.
+  
+  See [Running Asynchronous Operations](docs/java/features/multi-tenancy/multi-tenancy-thread-context#running-asynchronous-operations).
 
 ### JWT Validation fails
 

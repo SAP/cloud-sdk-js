@@ -86,7 +86,10 @@ module.exports = {
       {
         type: 'category',
         label: 'Tips & Tricks',
-        items: ['java/tips-and-tricks/change-log-level']
+        items: [
+          'java/tips-and-tricks/change-log-level',
+          'java/tips-and-tricks/sdk-java-common-problems'
+      ]
       },
       {
         type: 'category',
@@ -95,8 +98,7 @@ module.exports = {
           'java/guides/sap-cloud-sdk-linux-how-to',
           'java/guides/cf-cli',
           'java/guides/cf-deploy',
-          'java/guides/logging-overview',
-          'java/guides/sdk-java-common-problems'
+          'java/guides/logging-overview'
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',

@@ -7,12 +7,13 @@ import {
   EdmxAssociation,
   EdmxEntityType
 } from './parser-types-v2';
-import { navigationPropertyBase, stripNamespace } from './parser-util';
+import { stripNamespace } from './parser-util';
 import { JoinedEntityMetadata } from './parser-types-common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
-  transformEntity
+  transformEntity,
+  navigationPropertyBase
 } from './edmx-to-vdm-common';
 import { ParsedServiceMetadata } from '.';
 

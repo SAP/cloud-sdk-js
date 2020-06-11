@@ -9,7 +9,8 @@ import {
   VdmProperty,
   VdmFunctionImport,
   VdmFunctionImportReturnType,
-  VdmFunctionImportReturnTypeCategory
+  VdmFunctionImportReturnTypeCategory,
+  VdmNavigationProperty
 } from '../vdm-types';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import {
@@ -37,6 +38,7 @@ import {
   EdmxComplexType,
   SwaggerPath
 } from './parser-types-common';
+import { isCollection, parseTypeName } from './parser-util';
 import { ParsedServiceMetadata } from '.';
 
 const logger = createLogger({
@@ -139,7 +141,9 @@ function properties(
       entity.entitySet.Name,
       p.Name
     );
-    const isComplex = isComplexType(p.Type);
+    const isMulti = isCollection(p.Type);
+    const type = parseTypeName(p.Type);
+    const isComplex = isComplexType(type);
     return {
       originalName: p.Name,
       instancePropertyName,
@@ -148,16 +152,15 @@ function properties(
         p.Name
       ),
       propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
-      edmType: p.Type,
-      jsType:
-        propertyJsType(p.Type) || complexTypeForName(p.Type, complexTypes),
+      edmType: type,
+      jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
       fieldType:
-        propertyFieldType(p.Type) ||
-        complexTypeFieldForName(p.Type, complexTypes),
+        propertyFieldType(type) || complexTypeFieldForName(type, complexTypes),
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
-      isComplex
+      isComplex,
+      isMulti
     };
   });
 }
@@ -284,6 +287,33 @@ function checkCollectionKind(property: EdmxProperty) {
   }
 }
 
+export function navigationPropertyBase(
+  navPropName: string,
+  entitySetName: string,
+  formatter: ServiceNameFormatter
+): Pick<
+  VdmNavigationProperty,
+  | 'originalName'
+  | 'instancePropertyName'
+  | 'staticPropertyName'
+  | 'propertyNameAsParam'
+> {
+  const instancePropertyName = formatter.originalToNavigationPropertyName(
+    entitySetName,
+    navPropName
+  );
+
+  return {
+    originalName: navPropName,
+    instancePropertyName,
+    staticPropertyName: formatter.originalToStaticPropertyName(
+      entitySetName,
+      navPropName
+    ),
+    propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName)
+  };
+}
+
 export function transformComplexTypes(
   complexTypes: EdmxComplexType[],
   formatter: ServiceNameFormatter,
@@ -309,8 +339,10 @@ export function transformComplexTypes(
           c.Name,
           p.Name
         );
-        const isComplex = isComplexType(p.Type);
-        const parsedType = parseType(p.Type);
+        const isMulti = isCollection(p.Type);
+        const type = parseTypeName(p.Type);
+        const isComplex = isComplexType(type);
+        const parsedType = parseType(type);
         return {
           originalName: p.Name,
           instancePropertyName,
@@ -324,12 +356,13 @@ export function transformComplexTypes(
           description: propertyDescription(p),
           technicalName: p.Name,
           nullable: isNullableProperty(p),
-          edmType: isComplex ? p.Type : parsedType,
-          jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(p.Type),
+          edmType: isComplex ? type : parsedType,
+          jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(type),
           fieldType: isComplex
             ? formattedTypes[parsedType] + 'Field'
-            : edmToComplexPropertyType(p.Type),
-          isComplex
+            : edmToComplexPropertyType(type),
+          isComplex,
+          isMulti
         };
       })
     };
@@ -386,7 +419,7 @@ function parseReturnType(
 }
 
 function isMultiReturnType(returnType: string): boolean {
-  return returnType.startsWith('Collection');
+  return isCollection(returnType);
 }
 
 export function transformFunctionImports(

@@ -5,7 +5,8 @@ import {
   EdmxEntityTypeBase,
   EdmxEntitySetBase,
   EdmxFunctionImportBase,
-  EdmxComplexType
+  EdmxComplexType,
+  EdmxNamed
 } from './parser-types-common';
 
 export interface EdmxMetadata extends EdmxMetadataBase {
@@ -22,7 +23,7 @@ export function isV4Metadata(
   return metadata.oDataVersion === 'v4';
 }
 
-export interface EdmxEnumType {
+export interface EdmxEnumType extends EdmxNamed {
   Member: EdmxEnumMember[];
 }
 

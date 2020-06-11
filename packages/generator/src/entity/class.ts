@@ -99,7 +99,7 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
-    type: prop.jsType,
+    type: prop.isMulti ? `${prop.jsType}[]` : prop.jsType,
     docs: [
       addLeadingNewline(
         getPropertyDescription(prop, {

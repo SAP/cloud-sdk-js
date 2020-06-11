@@ -2,12 +2,13 @@
 import { VdmNavigationProperty, VdmComplexType, VdmEntity } from '../vdm-types';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import { EdmxEntityType, EdmxEntitySet } from './parser-types-v4';
-import { navigationPropertyBase } from './parser-util';
+import { isCollection } from './parser-util';
 import { JoinedEntityMetadata } from './parser-types-common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
-  transformEntity
+  transformEntity,
+  navigationPropertyBase
 } from './edmx-to-vdm-common';
 import { ParsedServiceMetadata } from '.';
 
@@ -30,7 +31,7 @@ function navigationProperties(
       );
     }
 
-    const isCollection = /Collection\((?<toType>.*)\)/.test(navProp.Type);
+    const isMulti = isCollection(navProp.Type);
 
     // const toType = isCollection
     //   ? navProp.Type.match(collectionRegExp)?.groups?.toType
@@ -52,8 +53,8 @@ function navigationProperties(
       from: entityMetadata.entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
-      multiplicity: isCollection ? '1 - *' : '1 - 1',
-      isMultiLink: isCollection
+      multiplicity: isMulti ? '1 - *' : '1 - 1',
+      isMultiLink: isMulti
     };
   });
 }

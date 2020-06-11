@@ -51,6 +51,7 @@ export interface VdmProperty
     VdmMappedEdmType {
   fieldType: string;
   description: string;
+  isMulti: boolean;
 }
 
 // Navigation Properties

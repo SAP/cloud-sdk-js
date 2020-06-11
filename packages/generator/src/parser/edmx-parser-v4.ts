@@ -1,14 +1,19 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { forceArray } from '../generator-utils';
-import { EdmxEntitySet, EdmxMetadata, EdmxEntityType } from './parser-types-v4';
+import {
+  EdmxEntitySet,
+  EdmxMetadata,
+  EdmxEntityType,
+  EdmxEnumType
+} from './parser-types-v4';
 import {
   parseEntityTypes,
   parseBaseMetadata,
   parseFunctionImports,
   parseComplexTypes
 } from './edmx-parser-common';
-import { stripNamespace } from './parser-util';
+import { stripNamespace, parseTypeName } from './parser-util';
 
 function joinEntityTypesWithBaseTypes(entityTypes: EdmxEntityType[]) {
   return entityTypes.map(entityType =>
@@ -60,13 +65,30 @@ function joinEntityTypes(
   };
 }
 
+// TODO: Filters enum properties as long as those are not supported
+function filterEnumProperties(
+  entityTypes: EdmxEntityType[],
+  enumTypes: EdmxEnumType[]
+): EdmxEntityType[] {
+  const enumTypeNames = enumTypes.map(enumType => enumType.Name);
+  return entityTypes.map(entityType => ({
+    ...entityType,
+    Property: entityType.Property.filter(
+      prop => !enumTypeNames.includes(stripNamespace(parseTypeName(prop.Type)))
+    )
+  }));
+}
+
 export function parseEdmxV4(
   root
 ): Omit<EdmxMetadata, keyof ReturnType<typeof parseBaseMetadata>> {
+  const enumTypes = forceArray(root.EnumType);
   return {
-    entityTypes: joinEntityTypesWithBaseTypes(parseEntityTypes(root)),
+    entityTypes: joinEntityTypesWithBaseTypes(
+      filterEnumProperties(parseEntityTypes(root), enumTypes)
+    ),
     entitySets: parseEntitySets(root),
-    enumTypes: forceArray(root.EnumType),
+    enumTypes,
     functionImports: parseFunctionImports(root),
     complexTypes: parseComplexTypes(root)
   };

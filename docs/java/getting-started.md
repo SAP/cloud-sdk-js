@@ -4,7 +4,7 @@ title: Getting started - SDK for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Getting started
-description: Get up to spead with SAP Cloud SDK for Java in no time
+description: Get up to speed with SAP Cloud SDK for Java in no time
 keywords:
 - sap
 - cloud

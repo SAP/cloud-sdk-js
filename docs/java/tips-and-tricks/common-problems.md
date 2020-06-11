@@ -3,8 +3,8 @@ id: sdk-java-common-problems
 title: Some common problems and how to address them
 hide_title: true
 hide_table_of_contents: false
-sidebar_label: Frequently Debuged Problems
-description: This article is a collection of frequently occuring symptoms and a short quidance on how to address them.
+sidebar_label: Frequently Debugged Problems
+description: This article is a collection of frequently occurring symptoms and a short guidance on how to address them.
 keywords:
 - sap
 - cloud

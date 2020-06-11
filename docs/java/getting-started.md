@@ -156,7 +156,7 @@ If you want to connect to an S/4HANA system via the OData protocol you should al
 
 In general, the Cloud SDK for Java integrates natively into the [Spring Boot](https://spring.io/projects/spring-boot) and [TomEE](https://tomee.apache.org/) frameworks.
 
-In particular the SDK provides listeners that can extract tenant and principal information from an incoming request. To ensure these listeners are present please configure your project accordingly.
+In particular the [SDK provides listeners](features/multi-tenancy/thread-context.md) that can extract tenant and principal information from an incoming request. To ensure these listeners are present please configure your project accordingly.
 
 <Tabs groupId="frameworks" defaultValue="spring" values={[
 { label: 'Spring', value: 'spring', },
@@ -176,7 +176,7 @@ Check the logs on application startup to ensure the listeners got registered. Al
 </TabItem>
 <TabItem value="tomee">
 
-For a TomEE based project the filters should be registered automatically. Check the logs on application startup to ensure the listeners got registered.
+For a TomEE based project the filters should be registered automatically. They are part of the `servlet` module which comes into the dependency tree through `scp-cf` or `scp-neo` automatically. Check the logs on application startup to ensure the listeners are being registered.
 
 </TabItem>
 </Tabs>

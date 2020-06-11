@@ -20,7 +20,7 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 
 To get started with the SAP Cloud SDK for Java you can either create a new project or integrate the SDK into your existing one.
 
-To start of with a clean, new project you can select [one of our archetypes](https://search.maven.org/artifact/com.sap.cloud.sdk.archetypes/archetypes-parent) and build upon it. Alternatively you can follow these instructions to integrate the SDK into your existing setup.
+To start of with a clean, new project you can select [one of our archetypes](https://search.maven.org/artifact/com.sap.cloud.sdk.archetypes/archetypes-parent) and build upon it. Alternatively you can follow [these instructions](#integrate-the-cloud-sdk-for-java-into-your-project) to integrate the SDK into your existing setup.
 
 ## Generating a project from a maven Archetype ##
 
@@ -106,6 +106,42 @@ application  cx-server  integration-tests  Jenkinsfile  manifest.yml  pom.xml  u
 
 ## Integrate the Cloud SDK for Java into your Project
 
+To get started include the _SDK BOM_ in the _dependency management_ of your project:
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.sap.cloud.sdk</groupId>
+            <artifactId>sdk-bom</artifactId>
+            <version>use-latest-version-here</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>        
+</dependencyManagement>
+```
+
+If your application is running on SAP Cloud Platform please also include either:
+
+```xml
+<dependency>
+    <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+    <artifactId>scp-cf</artifactId>
+</dependency>
+```
+
+or:
+
+```xml
+<dependency>
+    <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+    <artifactId>scp-neo</artifactId>
+</dependency>
+```
+
+### Framework integration
+
 In general, the Cloud SDK for Java integrates natively into the [Spring Boot](https://spring.io/projects/spring-boot) and [TomEE](https://tomee.apache.org/) frameworks.
 
 In particular the SDK provides listeners that can extract tenant and principal information from an incoming request. To ensure these listeners are present please configure your project accordingly.
@@ -122,13 +158,24 @@ For a Spring based project please ensure that the application is annotated to sc
 @ServletComponentScan({"com.sap.cloud.sdk", "your.own.package"})
 ```
 
-Check the logs on application startup to ensure the listeners got registered.
+Check the logs on application startup to ensure the listeners got registered. Also please check the spring version declared in the SDK BOM doesn't clash with your version of Spring.
 
 </TabItem>
 <TabItem value="tomee">
 
+For a TomEE based project the filters should be registered automatically. Check the logs on application startup to ensure the listeners got registered.
+
 </TabItem>
 </Tabs>
+
+If you want to connect to an S/4HANA system via the OData protocol you should also add a dependency to the client library of the SDK:
+
+```xml
+<dependency>
+    <groupId>com.sap.cloud.sdk.s4hana</groupId
+    <artifactId>s4hana-all</artifactId>
+</dependency>
+```
 
 ## Next steps ##
 - [Configure you IDE](../guides/recommended-ide )

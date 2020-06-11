@@ -25,9 +25,9 @@ export const keys = {
 
 export const groups = [
   { id: 'odata', title: 'OData v2/4 type-safe client' },
-  { id: 'saas', title: 'SDK as a Service' },
-  { id: 'libs', title: 'SAP Eco-system' },
+  { id: 'advanced', title: 'Advanced value-add features' },
   { id: 'rest', title: 'Open API type-safe client' },
+  { id: 'libs', title: 'SAP Eco-system' },
   { id: 'infra', title: 'K8s, Azure, AWS, GCP and beyond' },
   { id: 's4', title: 'S/4HANA API libraries' },
   { id: 'lobs', title: 'LoB Solutions' },
@@ -73,8 +73,8 @@ export const items = [
     id: 5,
     group: 'rest',
     title: 'Release Open API type-safe client generator',
-    start: moment().year(2020).month('Jul').date(0),
-    end: moment().year(2020).month('Sep').date(31),
+    start: moment().year(2020).month('Aug').date(0),
+    end: moment().year(2020).month('Nov').date(15),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -88,8 +88,8 @@ export const items = [
     id: 6,
     group: 'libs',
     title: 'Pre-generated clients for WorkFlow Service.',
-    start: moment().year(2020).month('Aug').date(1),
-    end: moment().year(2020).month('Oct').date(31),
+    start: moment().year(2020).month('Oct').date(1),
+    end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -103,8 +103,8 @@ export const items = [
     id: 7,
     group: 'libs',
     title: 'Pre-generated clients for Graph, Kernel Service, Job Scheduler, etc.',
-    start: moment().year(2020).month('Oct').date(1),
-    end: moment().year(2020).month('Dec').date(31),
+    start: moment().year(2020).month('Nov').date(15),
+    end: moment().year(2021).month('Apr').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -145,35 +145,35 @@ export const items = [
       }
     }
   },
-  {
-    id: 10,
-    group: 'odata',
-    title: 'Build reference CAP application to test OData v2/4',
-    start: moment().year(2020).month('June').date(1),
-    end: moment().year(2020).month('Dec').date(31),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...style
+  // {
+  //   id: 10,
+  //   group: 'odata',
+  //   title: 'Build reference CAP application to test OData v2/4',
+  //   start: moment().year(2020).month('June').date(1),
+  //   end: moment().year(2020).month('Dec').date(31),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...style
 
-      }
-    }
-  },
-  {
-    id: 14,
-    group: 'infra',
-    title: 'Native support for K8s in Java',
-    start: moment().year(2020).month('Sep').date(1),
-    end: moment().year(2020).month('Nov').date(31),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...style
-      }
-    }
-  },
+  //     }
+  //   }
+  // },
+  // {
+  //   id: 14,
+  //   group: 'infra',
+  //   title: 'Native support for K8s in Java',
+  //   start: moment().year(2020).month('Sap').date(1),
+  //   end: moment().year(2020).month('Nov').date(31),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...style
+  //     }
+  //   }
+  // },
   {
     id: 15,
     group: 's4',
@@ -184,7 +184,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus
+        ...style
 
       }
     }
@@ -233,27 +233,27 @@ export const items = [
       }
     }
   },
-  {
-    id: 19,
-    group: 'saas',
-    title: 'Automate release for existing libraries via Pipeline',
-    start: moment().year(2021).month('Jan').date(0),
-    end: moment().year(2021).month('Mar').date(31),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...styleFocus
+  // {
+  //   id: 19,
+  //   group: 'saas',
+  //   title: 'Automate release for existing libraries via Pipeline',
+  //   start: moment().year(2021).month('Jan').date(0),
+  //   end: moment().year(2021).month('Mar').date(31),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...styleFocus
 
-      }
-    }
-  },
+  //     }
+  //   }
+  // },
   {
     id: 20,
     group: 'infra',
     title: 'Improve service discovery and connectivity to enable new run times and rest client capabilities',
-    start: moment().year(2020).month('Oct').date(20),
-    end: moment().year(2020).month('Dec').date(31),
+    start: moment().year(2021).month('Feb').date(31),
+    end: moment().year(2021).month('Mar').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -289,7 +289,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus
+        ...style
 
       }
     }
@@ -326,10 +326,10 @@ export const items = [
   },
   {
     id: 29,
-    group: 'top',
+    group: 'advanced',
     title: 'Caching & resilience w/ multi-tenancy',
-    start: moment().year(2020).month('Aug').date(20),
-    end: moment().year(2020).month('Nov').date(31),
+    start: moment().year(2021).month('Jan').date(1),
+    end: moment().year(2021).month('Mar').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },

@@ -152,6 +152,32 @@ If you want to connect to an S/4HANA system via the OData protocol you should al
 </dependency>
 ```
 
+Last but not least we recommend that you include the following plugin:
+
+```xml
+<plugin>
+    <groupId>com.sap.cloud.sdk.plugins</groupId>
+    <artifactId>usage-analytics-maven-plugin</artifactId>
+    <version>use-latest-version-here</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>usage-analytics</goal>
+            </goals>
+            <configuration>
+                <skipUsageAnalytics>false</skipUsageAnalytics>
+                <generateSalt>true</generateSalt>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+It sends _[anonymized usage data](https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/)_ such as the SDK version used and helps us with improving the SDK.
+Furthermore the plugin is capable of generating a report with useful information about the project setup. 
+Invoking `diagnosis-report` will print out the SDK modules used and their version but also other information like the Java and Maven version.
+This is helpful when you are facing an issue and are reaching out to us for help.
+
 ### Framework integration
 
 In general, the Cloud SDK for Java integrates natively into the [Spring Boot](https://spring.io/projects/spring-boot) and [TomEE](https://tomee.apache.org/) frameworks.
@@ -171,7 +197,7 @@ For a Spring based project please ensure that the application is annotated to sc
 @ServletComponentScan({"com.sap.cloud.sdk", "your.own.package"})
 ```
 
-Check the logs on application startup to ensure the listeners got registered. Also please check the spring version declared in the SDK BOM doesn't clash with your version of Spring.
+Check the logs on application startup to ensure the listeners got registered. Also please check [the Spring version](https://mvnrepository.com/artifact/com.sap.cloud.sdk/sdk-bom/latest) declared in the SDK BOM doesn't clash with your version of Spring.
 
 </TabItem>
 <TabItem value="tomee">

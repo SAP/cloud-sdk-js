@@ -51,9 +51,9 @@ Possible causes:
 
 ### Connecting to an ERP System fails
 
-**Symptom:** The SAP Client and Locale headers are missing.
+**Symptom:** The ERP system unexpectedly responds with _401: Unauthorized_.
 
 Possible causes:
 
-- The `Destination` is not an `ErpHttpDestination`.
+- The SAP Client and Locale headers will be missing if the `Destination` is not an `ErpHttpDestination`.
   See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).

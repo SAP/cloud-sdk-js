@@ -22,7 +22,7 @@ image:
 
 Possible causes:
 
-- A subscriber based JWT is passed in but it's validation fails, causing the SDK to fall back to the provider account.
+- A subscriber based JWT is passed in but its validation fails, causing the SDK to fall back to the provider account.
   See [JWT validation fails](#jwt-validation-fails).
 
 - An operation is performed in an asynchronous manner without propagating the `ThreadContext`.
@@ -57,4 +57,3 @@ Possible causes:
 
 - The `Destination` is not an `ErpHttpDestination`.
   See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
-

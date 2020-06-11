@@ -18,6 +18,10 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 
 <MvnBadge />
 
+To get started with the SAP Cloud SDK for Java you can either create a new project or integrate the SDK into your existing one.
+
+To start of with a clean, new project you can select [one of our archetypes](https://search.maven.org/artifact/com.sap.cloud.sdk.archetypes/archetypes-parent) and build upon it. Alternatively you can follow these instructions to integrate the SDK into your existing setup.
+
 ## Generating a project from a maven Archetype ##
 
 To generate you project from `maven` archetype you have to provide:
@@ -99,6 +103,32 @@ application  cx-server  integration-tests  Jenkinsfile  manifest.yml  pom.xml  u
 ```
 
 **Congratulations! You've just configured your application with Cloud SDK for Java.**
+
+## Integrate the Cloud SDK for Java into your Project
+
+In general, the Cloud SDK for Java integrates natively into the [Spring Boot](https://spring.io/projects/spring-boot) and [TomEE](https://tomee.apache.org/) frameworks.
+
+In particular the SDK provides listeners that can extract tenant and principal information from an incoming request. To ensure these listeners are present please configure your project accordingly.
+
+<Tabs groupId="frameworks" defaultValue="spring" values={[
+{ label: 'Spring Boot', value: 'spring', },
+{ label: 'Tomee', value: 'tomee', }]}>
+<TabItem value="spring">
+
+For a Spring based project please ensure that the application is annotated to scan for components of the SDK:
+
+```java
+@ComponentScan({"com.sap.cloud.sdk", "your.own.package"})
+@ServletComponentScan({"com.sap.cloud.sdk", "your.own.package"})
+```
+
+Check the logs on application startup to ensure the listeners got registered.
+
+</TabItem>
+<TabItem value="tomee">
+
+</TabItem>
+</Tabs>
 
 ## Next steps ##
 - [Configure you IDE](../guides/recommended-ide )

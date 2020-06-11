@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, Entity, Time } from '@sap-cloud-sdk/core';
+import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, Entity, FieldType, Time } from '@sap-cloud-sdk/core';
 /**
  * TestComplexType
  */
@@ -179,7 +179,7 @@ export declare class TestComplexTypeField<EntityT extends Entity> extends Comple
 }
 export declare namespace TestComplexType {
     function build(json: {
-        [keys: string]: BigNumber | Moment | TestNestedComplexType | Time | boolean | null | number | string | undefined;
+        [keys: string]: FieldType | TestNestedComplexType;
     }): TestComplexType;
 }
 //# sourceMappingURL=TestComplexType.d.ts.map

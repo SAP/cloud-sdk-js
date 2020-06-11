@@ -36,7 +36,7 @@ export class TestNestedComplexOnlyPrimitiveTypeField<EntityT extends Entity> ext
 }
 
 export namespace TestNestedComplexOnlyPrimitiveType {
-  export function build(json: { [keys: string]: null | string | undefined }): TestNestedComplexOnlyPrimitiveType {
+  export function build(json: { [keys: string]: FieldType }): TestNestedComplexOnlyPrimitiveType {
     return createComplexType(json, {
       StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') })
     });

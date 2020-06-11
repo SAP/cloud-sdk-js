@@ -1,4 +1,4 @@
-import { ComplexTypeField, ComplexTypeStringPropertyField, Entity } from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType } from '@sap-cloud-sdk/core';
 /**
  * TestNestedComplexOnlyPrimitiveType
  */
@@ -26,7 +26,7 @@ export declare class TestNestedComplexOnlyPrimitiveTypeField<EntityT extends Ent
 }
 export declare namespace TestNestedComplexOnlyPrimitiveType {
     function build(json: {
-        [keys: string]: null | string | undefined;
+        [keys: string]: FieldType;
     }): TestNestedComplexOnlyPrimitiveType;
 }
 //# sourceMappingURL=TestNestedComplexOnlyPrimitiveType.d.ts.map

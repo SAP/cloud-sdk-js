@@ -18,7 +18,7 @@ describe('namespace', () => {
           parameters: [
             {
               name: 'json',
-              type: '{ [keys: string]: null | number | string | undefined }'
+              type: '{ [keys: string]: FieldType }'
             }
           ],
           statements:
@@ -43,8 +43,7 @@ describe('namespace', () => {
           parameters: [
             {
               name: 'json',
-              type:
-                '{ [keys: string]: ComplexDesert | null | number | undefined }'
+              type: '{ [keys: string]: FieldType | ComplexDesert }'
             }
           ],
           statements:

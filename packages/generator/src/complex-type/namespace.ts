@@ -33,21 +33,17 @@ function factoryFunction(
 }
 
 function getJsonType(complexType: VdmComplexType): string {
-  const unionOfAllPropertyTypes = complexType.properties
-    .map(prop => prop.jsType)
-    .reduce(
-      (uniqueList: string[], item) =>
-        uniqueList.includes(item) ? uniqueList : [...uniqueList, item],
-      ['undefined', 'null']
-    )
-    .sort()
-    .reduce(
-      (typeList, item) =>
-        typeList.length === 0 ? item : typeList + ' | ' + item,
-      ''
-    );
+  const complexTypes = new Set(
+    complexType.properties
+      .filter(prop => prop.isComplex)
+      .map(prop => prop.jsType)
+      .sort()
+  );
+  const unionOfAllTypes = ['FieldType', ...Array.from(complexTypes)].join(
+    ' | '
+  );
 
-  return `{ [keys: string]: ${unionOfAllPropertyTypes} }`;
+  return `{ [keys: string]: ${unionOfAllTypes} }`;
 }
 
 function getConverter(complexType: VdmComplexType): string {

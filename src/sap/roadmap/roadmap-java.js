@@ -33,11 +33,11 @@ export const groups = [
   { id: 's4', title: 'S/4HANA API libraries' },
   { id: 'lobs', title: 'LoB Solutions' },
   { id: 'docs', title: 'SDK Documentation' },
-  { id: 'support', title: 'Analyze and scale support' },
+  //  { id: 'support', title: 'Analyze and scale support' },
   { id: 'cap', title: 'One SAP' },
   { id: 'top', title: 'Developer happiness' },
   { id: 'future', title: 'Future shots' },
-  { id: 'scp', title: 'SAP Cloud Platform'}
+  { id: 'scp', title: 'SAP Cloud Platform' }
 ]
 
 export const items = [
@@ -51,7 +51,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
       }
     }
   },
@@ -65,7 +65,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -80,7 +80,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -95,7 +95,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -110,7 +110,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -125,7 +125,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -140,7 +140,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -155,7 +155,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -165,12 +165,12 @@ export const items = [
     group: 'docs',
     title: 'Reach 70% of coverage for docs. Raise quality. Improve analytics',
     start: moment().year(2020).month('Jul').date(1),
-    end: moment().year(2020).month('Sep').date(31),
+    end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -185,7 +185,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -200,7 +200,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -215,7 +215,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -230,7 +230,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -245,7 +245,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
       }
     }
   },
@@ -259,7 +259,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -274,7 +274,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -289,7 +289,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -304,7 +304,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -319,7 +319,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -334,13 +334,13 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
   },
   {
-   id: 21,
+    id: 21,
     group: 'odata',
     title: 'Ongoing support and refinement for OData v4/v2',
     start: moment().year(2020).month('Sep').date(1),
@@ -349,7 +349,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -364,7 +364,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
@@ -379,7 +379,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
@@ -399,7 +399,7 @@ export const items = [
   //     }
   //   }
   // },
-   {
+  {
     id: 25,
     group: 'cap',
     title: 'Regular alignment between CAP and SAP to achieve synergies',
@@ -409,12 +409,12 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus,
+        ...styleFocus
 
       }
     }
   },
-   {
+  {
     id: 26,
     group: 'libs',
     title: 'Logging with SAP passport for Performance monitoring',
@@ -424,12 +424,12 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
-   },
-   {
+  },
+  {
     id: 27,
     group: 'top',
     title: 'Improve logging and debugging capabilities',
@@ -439,12 +439,12 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
+        ...style
 
       }
     }
-   },
-   // {
+  }
+  // {
   //   id: 28,
   //   group: 'top',
   //   title: 'Introduce quality measurement for SDK deliveries (regressions, bugs, stability, support load)',

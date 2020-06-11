@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import 'react-calendar-timeline/lib/Timeline.css'
 import config from './config'
-import { groups, items, keys } from './roadmap-java'
 import Timeline, {
   TimelineMarkers,
   CustomMarker,
@@ -13,10 +12,11 @@ import moment from 'moment'
 export default class Roadmap extends Component {
   constructor (props) {
     super(props)
-
+    const { groups, items, keys } = props
     this.state = {
       items,
-      groups
+      groups,
+      keys
     }
   }
 
@@ -58,7 +58,7 @@ export default class Roadmap extends Component {
   }
 
   render () {
-    const { groups, items } = this.state
+    const { groups, items, keys } = this.state
 
     return (
       <Timeline
@@ -74,7 +74,7 @@ export default class Roadmap extends Component {
         }
       >
         <TimelineMarkers>
-          <CustomMarker date={moment().year(2020).month('Mar').date(31)} >
+          <CustomMarker date={moment().year(2020).month('Mar').date(31)}>
             {({ styles, date }) => {
               const customStyles = {
                 ...styles,
@@ -84,7 +84,7 @@ export default class Roadmap extends Component {
               return <div style={customStyles} />
             }}
           </CustomMarker>
-          <CustomMarker date={moment().year(2020).month('Jun').date(31)} >
+          <CustomMarker date={moment().year(2020).month('Jun').date(31)}>
             {({ styles, date }) => {
               const customStyles = {
                 ...styles,
@@ -94,7 +94,7 @@ export default class Roadmap extends Component {
               return <div style={customStyles} />
             }}
           </CustomMarker>
-          <CustomMarker date={moment().year(2020).month('Sep').date(31)} >
+          <CustomMarker date={moment().year(2020).month('Sep').date(31)}>
             {({ styles, date }) => {
               const customStyles = {
                 ...styles,

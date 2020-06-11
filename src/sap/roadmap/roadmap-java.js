@@ -51,7 +51,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style
+        ...styleFocus
       }
     }
   },
@@ -75,7 +75,7 @@ export const items = [
     group: 'odata',
     title: 'Release unified programming model for OData v2/4.',
     start: moment().year(2020).month('Apr').date(1),
-    end: moment().year(2020).month('Aug').date(31),
+    end: moment().year(2020).month('Sep').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -95,7 +95,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style
+        ...styleFocus
 
       }
     }
@@ -163,7 +163,7 @@ export const items = [
   {
     id: 9,
     group: 'docs',
-    title: 'Reach 70% of coverage for docs. Raise quality. Improve analytics',
+    title: 'Reach 90% of coverage for docs. Raise quality.',
     start: moment().year(2020).month('Jul').date(1),
     end: moment().year(2020).month('Dec').date(31),
     itemProps: {
@@ -298,7 +298,7 @@ export const items = [
     id: 18,
     group: 'scp',
     title: 'Keep up with change rate of SCP development',
-    start: moment().year(2020).month('Jul').date(20),
+    start: moment().year(2020).month('Jul').date(0),
     end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
@@ -328,7 +328,7 @@ export const items = [
     id: 20,
     group: 'infra',
     title: 'Improve service discovery and connectivity to enable new run times and rest client capabilities',
-    start: moment().year(2020).month('Oct').date(20),
+    start: moment().year(2020).month('Oct').date(0),
     end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
@@ -343,7 +343,7 @@ export const items = [
     id: 21,
     group: 'odata',
     title: 'Ongoing support and refinement for OData v4/v2',
-    start: moment().year(2020).month('Sep').date(1),
+    start: moment().year(2020).month('Oct').date(1),
     end: moment().year(2020).month('Dec').date(32),
     itemProps: {
       'aria-hidden': true,
@@ -374,7 +374,7 @@ export const items = [
     group: 'libs',
     title: 'Blockchain library contribution',
     start: moment().year(2020).month('Apr').date(1),
-    end: moment().year(2020).month('Aug').date(32),
+    end: moment().year(2020).month('June').date(32),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },

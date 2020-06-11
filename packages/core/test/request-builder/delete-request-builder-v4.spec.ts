@@ -9,7 +9,7 @@ import {
 import { TestEntity } from '../test-util/test-services/v4/test-service';
 import { DeleteRequestBuilder } from '../../src/odata/v4/request-builder';
 import { testEntityResourcePath } from '../test-util/test-data';
-import {convertToUriFormat} from '../../src/odata/v4'
+import { convertToUriFormat } from '../../src/odata/v4';
 
 describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
@@ -25,10 +25,12 @@ describe('DeleteRequestBuilder', () => {
 
   it('should resolve if only the key is given.', async () => {
     mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString,convertToUriFormat)
+      path: testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        convertToUriFormat
+      )
     });
-    const fpp = testEntityResourcePath(keyPropGuid, keyPropString)
-    // http://localhost:80/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=d374b315-39f3-45d7-942e-88a13558c162,KeyPropertyString='TEST_ID') to DELETE http://localhost:80/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'd374b315-39f3-45d7-942e-88a13558c162',KeyPropertyString='TEST_ID'): false
 
     const deleteRequest = new DeleteRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
@@ -47,7 +49,11 @@ describe('DeleteRequestBuilder', () => {
       .setVersionIdentifier(versionId);
 
     mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString),
+      path: testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        convertToUriFormat
+      ),
       additionalHeaders: {
         'if-match': versionId
       }

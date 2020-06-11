@@ -150,13 +150,13 @@ describe('Request Builder', () => {
   it('should resolve for delete request using key fields', async () => {
     mockCsrfTokenRequest(destination.url, destination.sapClient!);
 
-    const entity =         TestEntity.builder()
+    const entity = TestEntity.builder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
       .keyPropertyString('abcd1234')
       .stringProperty('someContent')
       .build();
 
-    const entityJson = entity.toJSON()
+    const entityJson = entity.toJSON();
 
     nock(destination.url, {
       reqheaders: {
@@ -166,17 +166,15 @@ describe('Request Builder', () => {
         cookie: 'key1=val1;key2=val2;key3=val3'
       }
     })
-      .log(console.log)
       .delete(
         `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
       )
-      .reply(200,entityJson);
+      .reply(200, entityJson);
 
     const request = TestEntity.requestBuilder()
-      .delete(entity.keyPropertyGuid,entity.keyPropertyString)
+      .delete(entity.keyPropertyGuid, entity.keyPropertyString)
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();
-    await expect(request).resolves.toEqual(entityJson)
   });
 });

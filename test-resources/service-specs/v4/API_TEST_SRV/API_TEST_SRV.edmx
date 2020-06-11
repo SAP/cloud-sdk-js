@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+<edmx:Edmx Version="4.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
   <edmx:DataServices m:DataServiceVersion="2.0">
     <Schema Namespace="API_TEST_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-
       <EntityType Name="A_TestEntityType" sap:content-version="1">
         <Key>
           <PropertyRef Name="KeyPropertyGuid"/>
@@ -136,18 +135,32 @@
       </EnumType>
 
       <EntityContainer Name="API_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
-        <EntitySet Name="A_TestEntity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
-        <EntitySet Name="A_TestEntityMultiLink" EntityType="API_TEST_SRV.A_TestEntityMultiLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityMultiLink"/>
+          <NavigationPropertyBinding Path="to_OtherMultiLink" Target="A_TestEntityMultiLink"/>
+          <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
+        </EntitySet>
+        <EntitySet Name="A_TestEntityMultiLink" EntityType="API_TEST_SRV.A_TestEntityMultiLinkType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityLvl2MultiLink"/>
+          <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntityLvl2SingleLink"/>
+        </EntitySet>
         <EntitySet Name="A_TestEntityOtherMultiLink" EntityType="API_TEST_SRV.A_TestEntityOtherMultiLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityLvl2MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" sap:content-version="1"/>
-        <EntitySet Name="A_TestEntitySingleLink" EntityType="API_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntitySingleLink" EntityType="API_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityLvl2MultiLink"/>
+          <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntityLvl2SingleLink"/>
+        </EntitySet>
         <EntitySet Name="A_TestEntityLvl2SingleLink" EntityType="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" sap:content-version="1"/>
 
         <!-- circular_links
           Due to circular linking, we had a bug, where one of the links was undefined. Note, that there is only one association.
         -->
-        <EntitySet Name="A_TestEntityCircularLinkParent" EntityType="API_TEST_SRV.A_TestEntityCircularLinkParentType" sap:content-version="1"/>
-        <EntitySet Name="A_TestEntityCircularLinkChild" EntityType="API_TEST_SRV.A_TestEntityCircularLinkChildType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityCircularLinkParent" EntityType="API_TEST_SRV.A_TestEntityCircularLinkParentType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_Child" Target="A_TestEntityCircularLinkChild"/>
+        </EntitySet>
+        <EntitySet Name="A_TestEntityCircularLinkChild" EntityType="API_TEST_SRV.A_TestEntityCircularLinkChildType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_Parent" Target="A_TestEntityCircularLinkParent"/>
+        </EntitySet>
 
         <!-- collection_suffix
           In some C4C APIs there are entity sets, whose type is unrelated to the entity set name. Entity set names ending with collection should have class names without the collection suffix,

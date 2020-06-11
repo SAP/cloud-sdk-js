@@ -23,6 +23,7 @@ export * from './TestEntityCircularLinkParentRequestBuilder';
 export * from './TestEntityCircularLinkChildRequestBuilder';
 export * from './TestEntityEndsWithRequestBuilder';
 export * from './TestEntityEndsWithSomethingElseRequestBuilder';
+export * from './TestComplexBaseType';
 export * from './TestComplexType';
 export * from './TestNestedComplexType';
 export * from './function-imports';

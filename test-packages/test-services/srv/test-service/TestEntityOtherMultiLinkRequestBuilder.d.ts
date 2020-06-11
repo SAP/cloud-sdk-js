@@ -6,10 +6,10 @@ import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 export declare class TestEntityOtherMultiLinkRequestBuilder extends RequestBuilder<TestEntityOtherMultiLink> {
     /**
      * Returns a request builder for retrieving one `TestEntityOtherMultiLink` entity based on its keys.
-     * @param keyPropertyString Key property. See [[TestEntityOtherMultiLink.keyPropertyString]].
+     * @param keyProperty Key property. See [[TestEntityOtherMultiLink.keyProperty]].
      * @returns A request builder for creating requests to retrieve one `TestEntityOtherMultiLink` entity based on its keys.
      */
-    getByKey(keyPropertyString: string): GetByKeyRequestBuilder<TestEntityOtherMultiLink>;
+    getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntityOtherMultiLink>;
     /**
      * Returns a request builder for querying all `TestEntityOtherMultiLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityOtherMultiLink` entities.
@@ -29,10 +29,10 @@ export declare class TestEntityOtherMultiLinkRequestBuilder extends RequestBuild
     update(entity: TestEntityOtherMultiLink): UpdateRequestBuilder<TestEntityOtherMultiLink>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntityOtherMultiLink`.
-     * @param keyPropertyString Key property. See [[TestEntityOtherMultiLink.keyPropertyString]].
+     * @param keyProperty Key property. See [[TestEntityOtherMultiLink.keyProperty]].
      * @returns A request builder for creating requests that delete an entity of type `TestEntityOtherMultiLink`.
      */
-    delete(keyPropertyString: string): DeleteRequestBuilder<TestEntityOtherMultiLink>;
+    delete(keyProperty: string): DeleteRequestBuilder<TestEntityOtherMultiLink>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntityOtherMultiLink`.
      * @param entity Pass the entity to be deleted.

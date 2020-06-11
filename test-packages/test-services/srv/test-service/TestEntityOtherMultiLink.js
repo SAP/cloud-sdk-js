@@ -86,15 +86,15 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
 exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
 (function (TestEntityOtherMultiLink) {
     /**
-     * Static representation of the [[keyPropertyString]] property for query construction.
+     * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityOtherMultiLink.KEY_PROPERTY_STRING = new core_1.StringField('KeyPropertyString', TestEntityOtherMultiLink, 'Edm.String');
+    TestEntityOtherMultiLink.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
     /**
      * All fields of the TestEntityOtherMultiLink entity.
      */
     TestEntityOtherMultiLink._allFields = [
-        TestEntityOtherMultiLink.KEY_PROPERTY_STRING
+        TestEntityOtherMultiLink.KEY_PROPERTY
     ];
     /**
      * All fields selector.
@@ -103,7 +103,7 @@ exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
     /**
      * All key fields of the TestEntityOtherMultiLink entity.
      */
-    TestEntityOtherMultiLink._keyFields = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
+    TestEntityOtherMultiLink._keyFields = [TestEntityOtherMultiLink.KEY_PROPERTY];
     /**
      * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
      */

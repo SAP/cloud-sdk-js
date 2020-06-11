@@ -24,9 +24,10 @@ export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherM
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * Key Property String.
+   * Key Property.
+   * Maximum length: 10.
    */
-  keyPropertyString!: string;
+  keyProperty!: string;
 
   /**
    * Returns an entity builder to construct instances `TestEntityOtherMultiLink`.
@@ -63,24 +64,24 @@ export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherM
 }
 
 export interface TestEntityOtherMultiLinkType {
-  keyPropertyString: string;
+  keyProperty: string;
 }
 
 export interface TestEntityOtherMultiLinkTypeForceMandatory {
-  keyPropertyString: string;
+  keyProperty: string;
 }
 
 export namespace TestEntityOtherMultiLink {
   /**
-   * Static representation of the [[keyPropertyString]] property for query construction.
+   * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntityOtherMultiLink> = new StringField('KeyPropertyString', TestEntityOtherMultiLink, 'Edm.String');
+  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> = new StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
   export const _allFields: Array<StringField<TestEntityOtherMultiLink>> = [
-    TestEntityOtherMultiLink.KEY_PROPERTY_STRING
+    TestEntityOtherMultiLink.KEY_PROPERTY
   ];
   /**
    * All fields selector.
@@ -89,7 +90,7 @@ export namespace TestEntityOtherMultiLink {
   /**
    * All key fields of the TestEntityOtherMultiLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */

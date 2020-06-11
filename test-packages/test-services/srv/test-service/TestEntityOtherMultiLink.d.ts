@@ -18,9 +18,9 @@ export declare class TestEntityOtherMultiLink extends Entity implements TestEnti
      */
     static _defaultServicePath: string;
     /**
-     * Key Property String.
+     * Key Property.
      */
-    keyPropertyString: string;
+    keyProperty: string;
     /**
      * Returns an entity builder to construct instances `TestEntityOtherMultiLink`.
      * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
@@ -46,17 +46,17 @@ export declare class TestEntityOtherMultiLink extends Entity implements TestEnti
     };
 }
 export interface TestEntityOtherMultiLinkType {
-    keyPropertyString: string;
+    keyProperty: string;
 }
 export interface TestEntityOtherMultiLinkTypeForceMandatory {
-    keyPropertyString: string;
+    keyProperty: string;
 }
 export declare namespace TestEntityOtherMultiLink {
     /**
-     * Static representation of the [[keyPropertyString]] property for query construction.
+     * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const KEY_PROPERTY_STRING: StringField<TestEntityOtherMultiLink>;
+    const KEY_PROPERTY: StringField<TestEntityOtherMultiLink>;
     /**
      * All fields of the TestEntityOtherMultiLink entity.
      */

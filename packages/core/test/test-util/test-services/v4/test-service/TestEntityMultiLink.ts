@@ -24,11 +24,6 @@ export class TestEntityMultiLink extends Entity implements TestEntityMultiLinkTy
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * Key Property.
-   * Maximum length: 10.
-   */
-  keyProperty!: string;
-  /**
    * String Property.
    * Maximum length: 10.
    * @nullable
@@ -49,6 +44,11 @@ export class TestEntityMultiLink extends Entity implements TestEntityMultiLinkTy
    * @nullable
    */
   int16Property?: number;
+  /**
+   * Key Property.
+   * Maximum length: 10.
+   */
+  keyProperty!: string;
   /**
    * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
    */
@@ -96,31 +96,26 @@ import { TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType } from './TestEnti
 import { TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType } from './TestEntityLvl2SingleLink';
 
 export interface TestEntityMultiLinkType {
-  keyProperty: string;
   stringProperty?: string;
   booleanProperty?: boolean;
   guidProperty?: string;
   int16Property?: number;
+  keyProperty: string;
   toMultiLink: TestEntityLvl2MultiLinkType[];
   toSingleLink: TestEntityLvl2SingleLinkType;
 }
 
 export interface TestEntityMultiLinkTypeForceMandatory {
-  keyProperty: string;
   stringProperty: string;
   booleanProperty: boolean;
   guidProperty: string;
   int16Property: number;
+  keyProperty: string;
   toMultiLink: TestEntityLvl2MultiLinkType[];
   toSingleLink: TestEntityLvl2SingleLinkType;
 }
 
 export namespace TestEntityMultiLink {
-  /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const KEY_PROPERTY: StringField<TestEntityMultiLink> = new StringField('KeyProperty', TestEntityMultiLink, 'Edm.String');
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -142,6 +137,11 @@ export namespace TestEntityMultiLink {
    */
   export const INT_16_PROPERTY: NumberField<TestEntityMultiLink> = new NumberField('Int16Property', TestEntityMultiLink, 'Edm.Int16');
   /**
+   * Static representation of the [[keyProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const KEY_PROPERTY: StringField<TestEntityMultiLink> = new StringField('KeyProperty', TestEntityMultiLink, 'Edm.String');
+  /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -155,11 +155,11 @@ export namespace TestEntityMultiLink {
    * All fields of the TestEntityMultiLink entity.
    */
   export const _allFields: Array<StringField<TestEntityMultiLink> | BooleanField<TestEntityMultiLink> | NumberField<TestEntityMultiLink> | OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>> = [
-    TestEntityMultiLink.KEY_PROPERTY,
     TestEntityMultiLink.STRING_PROPERTY,
     TestEntityMultiLink.BOOLEAN_PROPERTY,
     TestEntityMultiLink.GUID_PROPERTY,
     TestEntityMultiLink.INT_16_PROPERTY,
+    TestEntityMultiLink.KEY_PROPERTY,
     TestEntityMultiLink.TO_MULTI_LINK,
     TestEntityMultiLink.TO_SINGLE_LINK
   ];

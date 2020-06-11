@@ -37,10 +37,13 @@ export function createTestEntity(originalData): TestEntity {
 export function testEntityResourcePath(
   guid,
   str,
-  toUriFormat = convertToUriFormat
+  toUriFormat
 ): string {
+
   return `A_TestEntity(KeyPropertyGuid=${toUriFormat(
     guid,
     'Edm.Guid'
   )},KeyPropertyString='${str}')`;
 }
+
+//v4 toUriFormat

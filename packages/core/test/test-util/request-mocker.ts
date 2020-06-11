@@ -175,7 +175,7 @@ export function mockRequest(
 
   mockHeaderRequest({ request });
 
-  return nock(host, getRequestHeaders(method, additionalHeaders))
+  return nock(host, getRequestHeaders(method, additionalHeaders)).log(console.log)
     [method](
       path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
       body

@@ -111,7 +111,7 @@ export function mockDeleteRequest(
 
 export function mockUpdateRequest(
   params: MockRequestParams,
-  entityConstructor = TestEntity
+  entityConstructor: Constructable<any> = TestEntity
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
     entityConstructor,

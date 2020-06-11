@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { convertToUriFormat, UpdateRequestBuilder } from '../../src';
+import { UpdateRequestBuilder } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -20,13 +20,6 @@ function createTestEntity() {
     .keyPropertyString(keyPropString)
     .int32Property(int32Prop)
     .build();
-}
-
-function resourcePath(entity: TestEntity) {
-  return `(KeyPropertyGuid=${convertToUriFormat(
-    entity.keyPropertyGuid,
-    'Edm.Guid'
-  )},KeyPropertyString='${entity.keyPropertyString}')`;
 }
 
 describe('UpdateRequestBuilder', () => {
@@ -207,7 +200,7 @@ describe('UpdateRequestBuilder', () => {
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
-  it('update request should contain verson identifier when set on request', async () => {
+  it('update request should contain version identifier when set on request', async () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
     const requestBody = { Int32Property: entity.int32Property };
     const customVersionIdentifier = 'custom-version-identifier';

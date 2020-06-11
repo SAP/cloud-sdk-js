@@ -31,7 +31,7 @@
 
 # 1.21.2
 
-Release Date: TBD<br>
+Release Date: Jun 11, 2020<br>
 API Docs: https://sap.github.io/cloud-sdk/api/1.21.2<br>
 Blog: TBD<br>
 
@@ -41,13 +41,13 @@ Blog: TBD<br>
 
 # 1.21.1
 
-Release Date: TBD<br>
+Release Date: Jun 2, 2020<br>
 API Docs: https://sap.github.io/cloud-sdk/api/1.21.1<br>
 Blog: TBD<br>
 
 ## Fixed Issues
 
-- Fix the core dependency version when genertaing aggregated packages.
+- Fix the core dependency version when generating aggregated packages.
 
 # 1.21.0
 

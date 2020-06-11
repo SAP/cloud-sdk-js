@@ -26,8 +26,18 @@
 
 ## Fixed Issues
 
-- Fix missing validation of URL used for obtaining the JWT verification key.
+-
 
+
+# 1.21.2
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.21.2<br>
+Blog: TBD<br>
+
+## Fixed Issues
+
+- Fix missing validation of URL used for obtaining the JWT verification key.
 
 # 1.21.1
 
@@ -37,7 +47,7 @@ Blog: TBD<br>
 
 ## Fixed Issues
 
-- Fix the core dependency version when genertating aggregated packages
+- Fix the core dependency version when genertaing aggregated packages.
 
 # 1.21.0
 

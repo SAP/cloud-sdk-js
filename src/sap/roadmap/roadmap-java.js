@@ -5,6 +5,11 @@ const style = {
   fontSize: '0.9rem'
 }
 
+const styleFocus = {
+  fontSize: '0.9rem',
+  background: 'indigo'
+}
+
 export const keys = {
   groupIdKey: 'id',
   groupTitleKey: 'title',
@@ -47,9 +52,6 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
       }
     }
   },
@@ -64,9 +66,7 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -80,10 +80,8 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -98,9 +96,7 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -108,33 +104,29 @@ export const items = [
     id: 5,
     group: 'rest',
     title: 'Release Open API type-safe client generator',
-    start: moment().year(2020).month('Oct').date(1),
-    end: moment().year(2020).month('Dec').date(31),
+    start: moment().year(2021).month('Jan').date(0),
+    end: moment().year(2021).month('Mar').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
   {
     id: 6,
     group: 'libs',
-    title: 'Pre-generated clients for Core, Job Scheduler, etc.',
+    title: 'Pre-generated clients for Graph, Kernel Service, Job Scheduler, etc.',
     start: moment().year(2020).month('Oct').date(1),
     end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -148,27 +140,23 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
   {
     id: 8,
     group: 'docs',
-    title: 'Build analytics system for Documentation',
+    title: 'Build analytics and feedback system for Documentation',
     start: moment().year(2020).month('Apr').date(1),
-    end: moment().year(2020).month('Jun').date(31),
+    end: moment().year(2020).month('Sep').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -183,26 +171,22 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
   {
     id: 10,
     group: 'future',
-    title: 'Spring WebFlux - Web on Reactive Stack',
-    start: moment().year(2020).month('Jul').date(1),
-    end: moment().year(2020).month('Sep').date(31),
+    title: 'PoC: Spring WebFlux - Web on Reactive Stack',
+    start: moment().year(2020).month('Sep').date(1),
+    end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -210,16 +194,14 @@ export const items = [
     id: 11,
     group: 'oss',
     title: 'Get approval to Open Source Cloud SDK for Java',
-    start: moment().year(2020).month('Jul').date(1),
-    end: moment().year(2020).month('Sep').date(31),
+    start: moment().year(2020).month('Nov').date(1),
+    end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -234,9 +216,7 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -251,9 +231,7 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -268,9 +246,6 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
       }
     }
   },
@@ -279,15 +254,13 @@ export const items = [
     group: 's4',
     title: 'Generate OData v4 libraries for S/4HANA 2008 release',
     start: moment().year(2020).month('Aug').date(1),
-    end: moment().year(2020).month('Sep').date(31),
+    end: moment().year(2020).month('Aug').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -301,10 +274,8 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -312,16 +283,14 @@ export const items = [
     id: 17,
     group: 's4',
     title: 'Type-safe client for S/4HANA Enterprise Messaging',
-    start: moment().year(2020).month('Aug').date(20),
-    end: moment().year(2020).month('Dec').date(31),
+    start: moment().year(2021).month('Jan').date(0),
+    end: moment().year(2021).month('Mar').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -336,9 +305,7 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -352,27 +319,23 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
   {
     id: 20,
     group: 'infra',
-    title: 'Improve service discovery and connectivity to enable new run times and rest client',
+    title: 'Improve service discovery and connectivity to enable new run times and rest client capabilities',
     start: moment().year(2020).month('Oct').date(20),
     end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -387,9 +350,7 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
@@ -403,10 +364,8 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -421,29 +380,25 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
   },
-  {
-    id: 24,
-    group: 'support',
-    title: 'Introduce support metrics',
-    start: moment().year(2020).month('Aug').date(1),
-    end: moment().year(2020).month('Sep').date(32),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
-      }
-    }
-  },
+  // {
+  //   id: 24,
+  //   group: 'support',
+  //   title: 'Introduce support metrics',
+  //   start: moment().year(2020).month('Aug').date(1),
+  //   end: moment().year(2020).month('Sep').date(32),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...style,
+
+  //     }
+  //   }
+  // },
    {
     id: 25,
     group: 'cap',
@@ -454,10 +409,8 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+        ...styleFocus,
+
       }
     }
   },
@@ -472,9 +425,7 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
    },
@@ -489,28 +440,24 @@ export const items = [
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
         ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
+
       }
     }
    },
-   {
-    id: 28,
-    group: 'top',
-    title: 'Introduce quality measurement for SDK deliveries (regressions, bugs, stability, support load)',
-    start: moment().year(2020).month('Sep').date(1),
-    end: moment().year(2021).month('Mar').date(31),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...style,
-        background: randomColor({
-          luminosity: 'dark'
-        })
-      }
-    }
-  }
+   // {
+  //   id: 28,
+  //   group: 'top',
+  //   title: 'Introduce quality measurement for SDK deliveries (regressions, bugs, stability, support load)',
+  //   start: moment().year(2020).month('Sep').date(1),
+  //   end: moment().year(2021).month('Mar').date(31),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...style,
+
+  //     }
+  //   }
+  // }
 
 ]

@@ -47,7 +47,7 @@ Blog: TBD<br>
 
 ## Fixed Issues
 
-- Fix the core dependency version when genertating aggregated packages
+- Fix the core dependency version when genertaing aggregated packages.
 
 # 1.21.0
 

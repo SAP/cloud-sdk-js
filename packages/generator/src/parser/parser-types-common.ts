@@ -2,74 +2,47 @@
 
 import { PathLike } from 'fs';
 
-export interface ParsedServiceMetadata {
-  edmx: EdmxMetadata;
-  swagger?: SwaggerMetadata;
-}
-
-export interface EdmxMetadata {
+export interface EdmxMetadataBase {
   path: PathLike;
+  oDataVersion: 'v2' | 'v4';
   fileName: string;
   namespace: string;
-  entityTypes: EdmxEntityType[];
-  entitySets: EdmxEntitySet[];
-  associationSets: EdmxAssociationSet[];
-  associations: EdmxAssociation[];
-  functionImports: EdmxFunctionImport[];
-  complexTypes: EdmxComplexType[];
   selfLink?: string;
 }
 
-export interface EdmxAssociation {
-  Name: string;
+export interface EdmxMetadataBaseExtended extends EdmxMetadataBase {
+  entitySets: EdmxEntitySetBase[];
+  entityTypes: EdmxEntityTypeBase[];
+  complexTypes: EdmxComplexType[];
+  functionImports: EdmxFunctionImportBase[];
+}
+
+export interface EdmxEntityTypeBase extends EdmxNamed {
+  Key: EdmxKey;
+  Property: EdmxProperty[];
+  NavigationProperty: any[];
   'sap:content-version': string;
-  End: EdmxAssociationEnd[];
+  'sap:label'?: string;
 }
 
-interface EdmxAssociationEnd {
-  Type: string;
-  Multiplicity: string;
-  Role: string;
-}
-
-export interface EdmxAssociationSet {
-  Name: string;
-  Association: string;
-  'sap:creatable': string;
-  'sap:updatable': string;
-  'sap:deletable': string;
-  'sap:content-version': string;
-  End: EdmxAssociationSetEnd[];
-}
-
-interface EdmxAssociationSetEnd {
-  Role: string;
-  EntitySet: string;
-}
-
-export interface EdmxFunctionImport {
-  Name: string;
+export interface EdmxFunctionImportBase extends EdmxNamed {
   ReturnType: string;
-  'm:HttpMethod': string;
   'sap:action-for': string;
   Parameter: EdmxParameter[];
   EntitySet?: string;
 }
 
-export interface EdmxParameter extends EdmxDocumented {
-  Name: string;
+export interface EdmxParameter extends EdmxDocumented, EdmxNamed {
   Type: string;
   Nullable: string;
 }
 
-export interface EdmxComplexType {
-  Name: string;
+export interface EdmxComplexType extends EdmxNamed {
   Property: EdmxProperty[];
 }
 
-export interface EdmxEntitySet {
+export interface EdmxEntitySetBase extends EdmxNamed {
   EntityType: string;
-  Name: string;
   'sap:content-version': string;
   'sap:creatable': string;
   'sap:deletable': string;
@@ -77,33 +50,16 @@ export interface EdmxEntitySet {
   'sap:updatable': string;
 }
 
-export interface EdmxEntityType {
-  Name: string;
-  Key: EdmxKey;
-  NavigationProperty: EdmxNavigationProperty[];
-  Property: EdmxProperty[];
-  'sap:content-version': string;
-  'sap:label'?: string;
+export interface EdmxKey {
+  PropertyRef: EdmxNamed[];
 }
 
-interface EdmxKey {
-  PropertyRef: EdmxPropertyRef[];
-}
-
-export interface EdmxPropertyRef {
+export interface EdmxNamed {
   Name: string;
 }
 
-interface EdmxNavigationProperty {
-  FromRole: string;
-  Name: string;
-  Relationship: string;
-  ToRole: string;
-}
-
-export interface EdmxProperty extends EdmxDocumented {
+export interface EdmxProperty extends EdmxDocumented, EdmxNamed {
   MaxLength: string;
-  Name: string;
   Nullable: string;
   'sap:creatable': string;
   'sap:filterable': string;
@@ -162,4 +118,10 @@ export interface SwaggerPathParameter extends SwaggerDescribed {
 
 export interface SwaggerDescribed {
   description?: string;
+}
+
+export interface JoinedEntityMetadata {
+  entitySet: EdmxEntitySetBase;
+  entityType: EdmxEntityTypeBase;
+  swaggerDefinition?: SwaggerEntity;
 }

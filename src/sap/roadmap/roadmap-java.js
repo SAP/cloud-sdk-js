@@ -215,7 +215,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style
+        ...styleFocus
 
       }
     }
@@ -250,6 +250,20 @@ export const items = [
     }
   },
   {
+    id: 29,
+    group: 'infra',
+    title: 'Improved support for other run times. Example Apps.',
+    start: moment().year(2021).month('Jan').date(1),
+    end: moment().year(2021).month('Mar').date(31),
+    itemProps: {
+      'aria-hidden': true,
+      onDoubleClick: () => { console.log('You clicked double!') },
+      style: {
+        ...style
+      }
+    }
+  },
+  {
     id: 15,
     group: 's4',
     title: 'Generate OData v4 libraries for S/4HANA 2008 release',
@@ -259,7 +273,7 @@ export const items = [
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...styleFocus
+        ...style
 
       }
     }

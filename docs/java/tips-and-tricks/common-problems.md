@@ -42,7 +42,7 @@ Possible causes:
 
 ### JWT Validation fails
 
-**Symptom:** Logs show JWT validation errors, Tenant information is not available.
+**Symptom:** Logs show JWT validation exceptions, Tenant information is not available.
 
 Possible causes:
 

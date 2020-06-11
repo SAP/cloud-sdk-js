@@ -39,7 +39,7 @@ Possible causes:
 - The SDK version might be outdated.
   Check with the [latest SDK version](https://search.maven.org/artifact/com.sap.cloud.sdk/sdk-bom).
 
-### Tenant and Principal not available
+### Tenant or Principal not available
 
 **Symptom:** No Tenant and Principal information is available, the `ThreadContext` is empty.
 
@@ -47,5 +47,17 @@ Possible causes:
 
 - The SDK components are not registered as listeners on incoming requests.
   
+  See [Framework Support](../getting-started#framework-integration).
+
 - There was no JWT in the authorization header.
+
+### Connecting to an ERP System fails
+
+**Symptom:** The SAP Client and Locale headers are missing.
+
+Possible causes:
+
+- The `Destination` is not an `ErpHttpDestination`.
+  
+  See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
 

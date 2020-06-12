@@ -33,17 +33,6 @@ function navigationProperties(
 
     const isMulti = isCollection(navProp.Type);
 
-    // const toType = isCollection
-    //   ? navProp.Type.match(collectionRegExp)?.groups?.toType
-    //   : navProp.Type;
-
-    // if (!toType) {
-    //   throw new Error(`Navigation property ${navProp.Name} has unknown type.`);
-    // }
-
-    // const toEntityType = stripNamespace(toType);
-    // // serviceMedatadata.edmx.entitySets.
-
     return {
       ...navigationPropertyBase(
         navProp.Name,
@@ -64,10 +53,6 @@ export function transformEntitiesV4(
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
-  // TODO: move higher, this is needed in more places than here
-  // serviceMetadata.edmx.entityTypes = joinEntityTypesWithBaseTypes(
-  //   serviceMetadata.edmx.entityTypes
-  // );
   const entitiesMetadata = joinEntityMetadata(serviceMetadata);
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 

@@ -15,7 +15,7 @@ import {
   transformEntity,
   navigationPropertyBase
 } from './edmx-to-vdm-common';
-import { ParsedServiceMetadata } from '.';
+import { ParsedServiceMetadata } from './parsed-service-metadata';
 
 export function joinAssociationMetadata(
   associationSets: EdmxAssociationSet[],

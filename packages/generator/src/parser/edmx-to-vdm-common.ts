@@ -39,7 +39,7 @@ import {
   SwaggerPath
 } from './parser-types-common';
 import { isCollection, parseTypeName } from './parser-util';
-import { ParsedServiceMetadata } from '.';
+import { ParsedServiceMetadata } from './parsed-service-metadata';
 
 const logger = createLogger({
   package: 'generator',

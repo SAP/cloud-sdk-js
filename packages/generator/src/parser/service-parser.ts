@@ -17,47 +17,22 @@ import {
 } from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import { ApiBusinessHubMetadata, VdmServiceMetadata } from '../vdm-types';
-import {
-  SwaggerMetadata,
-  EdmxFunctionImportBase,
-  EdmxMetadataBaseExtended
-} from './parser-types-common';
+import { SwaggerMetadata, EdmxFunctionImportBase } from './parser-types-common';
 import { parseSwaggerFromPath } from './swagger-parser';
-import {
-  isV2Metadata,
-  EdmxMetadata as EdmxMetadataV2
-} from './parser-types-v2';
+import { isV2Metadata } from './parser-types-v2';
 import { transformEntitiesV4 } from './edmx-to-vdm-v4';
 import { transformEntitiesV2 } from './edmx-to-vdm-v2';
-import { EdmxMetadata as EdmxMetadataV4 } from './parser-types-v4';
 import { parseEdmxFromPath } from './edmx-parser';
 import {
   transformComplexTypes,
   transformFunctionImports
 } from './edmx-to-vdm-common';
+import { ParsedServiceMetadata } from './parsed-service-metadata';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'service-parser'
 });
-
-// TODO: move somewhere else
-export interface ParsedServiceMetadata<
-  T extends 'v2' | 'v4' | unknown = unknown
-> {
-  edmx: T extends 'v2'
-    ? EdmxMetadataV2
-    : T extends 'v4'
-    ? EdmxMetadataV4
-    : EdmxMetadataBaseExtended;
-  swagger?: SwaggerMetadata;
-}
-
-export function isV2ServiceMetadata(
-  metadata: ParsedServiceMetadata<'v2' | 'v4'>
-): metadata is ParsedServiceMetadata<'v2'> {
-  return metadata.edmx.oDataVersion === 'v2';
-}
 
 export function parseAllServices(
   options: GeneratorOptions

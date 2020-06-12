@@ -12,7 +12,7 @@ describe('generator', () => {
     );
     const files = project!.getSourceFiles();
 
-    expect(files.length).toBe(27);
+    expect(files.length).toBe(28);
 
     const testEntityFile = files.find(
       file => file.getBaseName() === 'TestEntity.ts'

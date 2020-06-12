@@ -15,7 +15,12 @@ describe('namespace', () => {
           kind: StructureKind.Function,
           name: 'build',
           returnType: 'ComplexMealType',
-          parameters: [{ name: 'json', type: '{ [keys: string]: FieldType }' }],
+          parameters: [
+            {
+              name: 'json',
+              type: '{ [keys: string]: FieldType }'
+            }
+          ],
           statements:
             "return createComplexType(json, {\nComplexity: (complexity: string) => ({ complexity: edmToTs(complexity, 'Edm.String') }),\nAmount: (amount: number) => ({ amount: edmToTs(amount, 'Edm.Int16') })\n});",
           isExported: true
@@ -35,7 +40,12 @@ describe('namespace', () => {
           kind: StructureKind.Function,
           name: 'build',
           returnType: 'ComplexMealWithDesertType',
-          parameters: [{ name: 'json', type: '{ [keys: string]: FieldType }' }],
+          parameters: [
+            {
+              name: 'json',
+              type: '{ [keys: string]: FieldType | ComplexDesert }'
+            }
+          ],
           statements:
             "return createComplexType(json, {\nComplexDesert: (complexDesert: ComplexDesert) => ({ complexDesert: ComplexDesert.build(complexDesert) }),\nAmount: (amount: number) => ({ amount: edmToTs(amount, 'Edm.Int16') })\n});",
           isExported: true

@@ -47,7 +47,7 @@ describe('edmx-parser', () => {
     expect(metadataEdmx.entitySets.length).toBe(10);
     expect(metadataEdmx.entityTypes.length).toBe(11);
     expect(metadataEdmx.functionImports.length).toBe(12);
-    expect(metadataEdmx.complexTypes.length).toBe(3);
+    expect(metadataEdmx.complexTypes.length).toBe(4);
     expect(metadataEdmx.enumTypes.length).toBe(1);
 
     metadataEdmx.entitySets.forEach(e => {

@@ -127,6 +127,11 @@
 
       <ComplexType Name="A_TestNestedComplexType">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestLvl2NestedComplexType"/>
+      </ComplexType>
+
+      <ComplexType Name="A_TestLvl2NestedComplexType">
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
       </ComplexType>
 
       <EnumType Name="A_TestEnumType">

@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var TestNestedComplexOnlyPrimitiveType_1 = require("./TestNestedComplexOnlyPrimitiveType");
+var TestLvl2NestedComplexType_1 = require("./TestLvl2NestedComplexType");
 var core_1 = require("@sap-cloud-sdk/core");
 /**
  * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
@@ -44,7 +44,7 @@ var TestNestedComplexTypeField = /** @class */ (function (_super) {
          * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.complexTypeProperty = new TestNestedComplexOnlyPrimitiveType_1.TestNestedComplexOnlyPrimitiveTypeField('ComplexTypeProperty', _this);
+        _this.complexTypeProperty = new TestLvl2NestedComplexType_1.TestLvl2NestedComplexTypeField('ComplexTypeProperty', _this);
         return _this;
     }
     return TestNestedComplexTypeField;
@@ -55,7 +55,7 @@ var TestNestedComplexType;
     function build(json) {
         return core_1.createComplexType(json, {
             StringProperty: function (stringProperty) { return ({ stringProperty: core_1.edmToTs(stringProperty, 'Edm.String') }); },
-            ComplexTypeProperty: function (complexTypeProperty) { return ({ complexTypeProperty: TestNestedComplexOnlyPrimitiveType_1.TestNestedComplexOnlyPrimitiveType.build(complexTypeProperty) }); }
+            ComplexTypeProperty: function (complexTypeProperty) { return ({ complexTypeProperty: TestLvl2NestedComplexType_1.TestLvl2NestedComplexType.build(complexTypeProperty) }); }
         });
     }
     TestNestedComplexType.build = build;

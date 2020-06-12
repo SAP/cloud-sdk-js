@@ -20,37 +20,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@sap-cloud-sdk/core");
 /**
- * @deprecated Since v1.6.0. Use [[TestNestedComplexOnlyPrimitiveType.build]] instead.
+ * @deprecated Since v1.6.0. Use [[TestLvl2NestedComplexType.build]] instead.
  */
-function createTestNestedComplexOnlyPrimitiveType(json) {
-    return TestNestedComplexOnlyPrimitiveType.build(json);
+function createTestLvl2NestedComplexType(json) {
+    return TestLvl2NestedComplexType.build(json);
 }
-exports.createTestNestedComplexOnlyPrimitiveType = createTestNestedComplexOnlyPrimitiveType;
+exports.createTestLvl2NestedComplexType = createTestLvl2NestedComplexType;
 /**
- * TestNestedComplexOnlyPrimitiveTypeField
+ * TestLvl2NestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-var TestNestedComplexOnlyPrimitiveTypeField = /** @class */ (function (_super) {
-    __extends(TestNestedComplexOnlyPrimitiveTypeField, _super);
-    function TestNestedComplexOnlyPrimitiveTypeField() {
+var TestLvl2NestedComplexTypeField = /** @class */ (function (_super) {
+    __extends(TestLvl2NestedComplexTypeField, _super);
+    function TestLvl2NestedComplexTypeField() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         /**
-         * Representation of the [[TestNestedComplexOnlyPrimitiveType.stringProperty]] property for query construction.
+         * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
         _this.stringProperty = new core_1.ComplexTypeStringPropertyField('StringProperty', _this, 'Edm.String');
         return _this;
     }
-    return TestNestedComplexOnlyPrimitiveTypeField;
+    return TestLvl2NestedComplexTypeField;
 }(core_1.ComplexTypeField));
-exports.TestNestedComplexOnlyPrimitiveTypeField = TestNestedComplexOnlyPrimitiveTypeField;
-var TestNestedComplexOnlyPrimitiveType;
-(function (TestNestedComplexOnlyPrimitiveType) {
+exports.TestLvl2NestedComplexTypeField = TestLvl2NestedComplexTypeField;
+var TestLvl2NestedComplexType;
+(function (TestLvl2NestedComplexType) {
     function build(json) {
         return core_1.createComplexType(json, {
             StringProperty: function (stringProperty) { return ({ stringProperty: core_1.edmToTs(stringProperty, 'Edm.String') }); }
         });
     }
-    TestNestedComplexOnlyPrimitiveType.build = build;
-})(TestNestedComplexOnlyPrimitiveType = exports.TestNestedComplexOnlyPrimitiveType || (exports.TestNestedComplexOnlyPrimitiveType = {}));
-//# sourceMappingURL=TestNestedComplexOnlyPrimitiveType.js.map
+    TestLvl2NestedComplexType.build = build;
+})(TestLvl2NestedComplexType = exports.TestLvl2NestedComplexType || (exports.TestLvl2NestedComplexType = {}));
+//# sourceMappingURL=TestLvl2NestedComplexType.js.map

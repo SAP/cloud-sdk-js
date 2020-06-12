@@ -16,6 +16,14 @@ keywords:
 image:
 ---
 
+## Frequently Debugged Problems
+
+This article lists common problems that can be encountered when using the SDK for Java.
+The linked resources provide more information on the subject.
+
+If not covered here also search for any issue you might face on [Stack Overflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk).
+There you can also reach out to us by [asking a question](https://stackoverflow.com/questions/ask) (be sure to tag it with `sap-cloud-sdk`).
+
 ### Tenant or Principal not available
 
 **Symptom:** Tenant or principal information is not available or an incorrect tenant is used.

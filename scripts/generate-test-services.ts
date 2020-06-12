@@ -65,14 +65,7 @@ async function generateTestServicesWithLocalCoreModules(
     readServiceDirectory(serviceDirectory).then(files =>
       files.forEach(file =>
         readServiceFile(serviceDirectory, file).then(data => {
-          const fileContent =
-            version === 'v4'
-              ? ((data as unknown) as string).replace(
-                  /\bLink\b/g,
-                  'OneToManyLink'
-                )
-              : data;
-          replaceWithLocalModules(serviceDirectory, file, fileContent);
+          replaceWithLocalModules(serviceDirectory, file, data);
         })
       )
     )

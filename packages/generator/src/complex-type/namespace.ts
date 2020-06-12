@@ -5,6 +5,7 @@ import {
   NamespaceDeclarationStructure,
   StructureKind
 } from 'ts-morph';
+import { unique } from '@sap-cloud-sdk/util';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 
 export function complexTypeNamespace(
@@ -33,15 +34,14 @@ function factoryFunction(
 }
 
 function getJsonType(complexType: VdmComplexType): string {
-  const complexTypes = new Set(
-    complexType.properties
-      .filter(prop => prop.isComplex)
-      .map(prop => prop.jsType)
-      .sort()
-  );
-  const unionOfAllTypes = ['FieldType', ...Array.from(complexTypes)].join(
-    ' | '
-  );
+  const unionOfAllTypes = [
+    'FieldType',
+    ...unique(
+      complexType.properties
+        .filter(prop => prop.isComplex)
+        .map(prop => prop.jsType)
+    ).sort()
+  ].join(' | ');
 
   return `{ [keys: string]: ${unionOfAllTypes} }`;
 }

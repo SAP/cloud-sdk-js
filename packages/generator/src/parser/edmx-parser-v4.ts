@@ -5,7 +5,9 @@ import {
   EdmxEntitySet,
   EdmxMetadata,
   EdmxEntityType,
-  EdmxEnumType
+  EdmxEnumType,
+  EdmxDerivedType,
+  EdmxComplexType
 } from './parser-types-v4';
 import {
   parseEntityTypes,
@@ -15,36 +17,33 @@ import {
 } from './edmx-parser-common';
 import { stripNamespace, parseTypeName } from './parser-util';
 
-function joinEntityTypesWithBaseTypes(entityTypes: EdmxEntityType[]) {
-  return entityTypes.map(entityType =>
-    entityType.BaseType
-      ? addBaseTypeToEntityType(entityType, entityTypes)
-      : entityType
+function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
+  types: T[],
+  joinTypes: (type: T, baseType: T) => T
+) {
+  return types.map(type =>
+    type.BaseType ? addBaseTypeToType(type, types, joinTypes) : type
   );
 }
 
-function addBaseTypeToEntityType(
-  entityType: EdmxEntityType,
-  entityTypes: EdmxEntityType[]
+function addBaseTypeToType<T extends EdmxDerivedType>(
+  type: T,
+  types: T[],
+  joinTypes: (type: T, baseType: T) => T
 ) {
-  const baseType = entityTypes.find(
-    e => e.Name === stripNamespace(entityType.BaseType!)
-  );
+  const baseType = types.find(e => e.Name === stripNamespace(type.BaseType!));
 
   if (!baseType) {
     throw new Error(
-      `EntityType ${entityType.BaseType} not found, but defined as BaseType of EntityType ${entityType.Name}.`
+      `Type ${type.BaseType} not found, but defined as BaseType of Type ${type.Name}.`
     );
   }
 
   if (baseType.BaseType) {
-    return joinEntityTypes(
-      entityType,
-      addBaseTypeToEntityType(baseType, entityTypes)
-    );
+    return joinTypes(type, addBaseTypeToType(baseType, types, joinTypes));
   }
 
-  return joinEntityTypes(entityType, baseType);
+  return joinTypes(type, baseType);
 }
 
 function joinEntityTypes(
@@ -62,6 +61,16 @@ function joinEntityTypes(
       ...entityType.NavigationProperty,
       ...baseType.NavigationProperty
     ]
+  };
+}
+
+function joinComplexTypes(
+  complexType: EdmxComplexType,
+  baseType: EdmxComplexType
+): EdmxComplexType {
+  return {
+    ...complexType,
+    Property: [...complexType.Property, ...baseType.Property]
   };
 }
 
@@ -84,13 +93,17 @@ export function parseEdmxV4(
 ): Omit<EdmxMetadata, keyof ReturnType<typeof parseBaseMetadata>> {
   const enumTypes = forceArray(root.EnumType);
   return {
-    entityTypes: joinEntityTypesWithBaseTypes(
-      filterEnumProperties(parseEntityTypes(root), enumTypes)
+    entityTypes: joinTypesWithBaseTypes(
+      filterEnumProperties(parseEntityTypes(root), enumTypes),
+      joinEntityTypes
     ),
     entitySets: parseEntitySets(root),
     enumTypes,
     functionImports: parseFunctionImports(root),
-    complexTypes: parseComplexTypes(root)
+    complexTypes: joinTypesWithBaseTypes(
+      parseComplexTypes(root),
+      joinComplexTypes
+    )
   };
 }
 

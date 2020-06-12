@@ -5,7 +5,7 @@ import {
   EdmxEntityTypeBase,
   EdmxFunctionImportBase,
   EdmxEntitySetBase,
-  EdmxComplexType
+  EdmxComplexTypeBase
 } from './parser-types-common';
 
 export interface EdmxMetadata extends EdmxMetadataBase {
@@ -14,7 +14,7 @@ export interface EdmxMetadata extends EdmxMetadataBase {
   associationSets: EdmxAssociationSet[];
   associations: EdmxAssociation[];
   functionImports: EdmxFunctionImport[];
-  complexTypes: EdmxComplexType[];
+  complexTypes: EdmxComplexTypeBase[];
 }
 
 export function isV2Metadata(

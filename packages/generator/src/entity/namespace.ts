@@ -5,7 +5,9 @@ import {
   NamespaceDeclarationStructure,
   StructureKind,
   VariableDeclarationKind,
-  VariableStatementStructure
+  VariableStatementStructure,
+  OptionalKind,
+  VariableDeclarationStructure
 } from 'ts-morph';
 import { linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
@@ -44,28 +46,64 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
   return entity.properties.map(prop => property(prop, entity));
 }
 
-function property(
+function getPropertyFieldClassName(prop: VdmProperty): string {
+  return prop.isMulti ? 'CollectionField' : prop.fieldType;
+}
+
+function getPropertyFieldInitializer(
   prop: VdmProperty,
-  entity: VdmEntity
-): VariableStatementStructure {
+  entityClassName: string
+): OptionalKind<VariableDeclarationStructure> {
   const type = `'${
     prop.edmType.startsWith('Edm')
       ? prop.edmType
       : prop.edmType.split('.').pop()
   }'`;
-  const initializer = prop.isComplex
-    ? `new ${prop.fieldType}('${prop.originalName}', ${entity.className})`
-    : `new ${prop.fieldType}('${prop.originalName}', ${entity.className}, ${type})`;
+
+  const className = getPropertyFieldClassName(prop);
+  const thirdParameterSingle = prop.isComplex ? undefined : type;
+  const thirdParameter = prop.isMulti
+    ? createPropertyFieldInitializer(
+        prop.fieldType,
+        '',
+        entityClassName,
+        thirdParameterSingle
+      )
+    : thirdParameterSingle;
+
+  return {
+    name: prop.staticPropertyName,
+    type: `${className}<${entityClassName}>`,
+    initializer: createPropertyFieldInitializer(
+      className,
+      prop.originalName,
+      entityClassName,
+      thirdParameter
+    )
+  };
+}
+
+function createPropertyFieldInitializer(
+  className: string,
+  originalFieldName: string,
+  entityClassName: string,
+  thirdParameter?: string
+) {
+  return `new ${className}(${[
+    `'${originalFieldName}'`,
+    entityClassName,
+    ...(typeof thirdParameter === 'undefined' ? [] : [thirdParameter])
+  ].join(', ')})`;
+}
+
+function property(
+  prop: VdmProperty,
+  entity: VdmEntity
+): VariableStatementStructure {
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,
-    declarations: [
-      {
-        name: prop.staticPropertyName,
-        type: `${prop.fieldType}<${entity.className}>`,
-        initializer
-      }
-    ],
+    declarations: [getPropertyFieldInitializer(prop, entity.className)],
     docs: [getStaticPropertyDescription(prop)],
     isExported: true
   };
@@ -117,7 +155,9 @@ function navigationProperty(
 
 function allFields(entity: VdmEntity): VariableStatementStructure {
   const fieldTypes = unique([
-    ...entity.properties.map(p => `${p.fieldType}<${entity.className}>`),
+    ...entity.properties.map(
+      p => `${getPropertyFieldClassName(p)}<${entity.className}>`
+    ),
     ...entity.navigationProperties.map(
       p => `${linkClass(p)}<${entity.className},${p.toEntityClassName}>`
     )

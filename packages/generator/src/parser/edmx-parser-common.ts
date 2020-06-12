@@ -7,7 +7,7 @@ import { forceArray } from '../generator-utils';
 import {
   EdmxMetadataBase,
   EdmxEntityTypeBase,
-  EdmxComplexType,
+  EdmxComplexTypeBase,
   EdmxFunctionImportBase
 } from './parser-types-common';
 
@@ -49,7 +49,7 @@ export function parseFunctionImports(root): EdmxFunctionImportBase[] {
   });
 }
 
-export function parseComplexTypes(root): EdmxComplexType[] {
+export function parseComplexTypes(root): EdmxComplexTypeBase[] {
   return forceArray(root.ComplexType).map(c => {
     c.Property = forceArray(c.Property);
     return c;

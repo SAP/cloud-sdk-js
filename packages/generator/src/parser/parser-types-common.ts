@@ -13,7 +13,7 @@ export interface EdmxMetadataBase {
 export interface EdmxMetadataBaseExtended extends EdmxMetadataBase {
   entitySets: EdmxEntitySetBase[];
   entityTypes: EdmxEntityTypeBase[];
-  complexTypes: EdmxComplexType[];
+  complexTypes: EdmxComplexTypeBase[];
   functionImports: EdmxFunctionImportBase[];
 }
 
@@ -37,7 +37,7 @@ export interface EdmxParameter extends EdmxDocumented, EdmxNamed {
   Nullable: string;
 }
 
-export interface EdmxComplexType extends EdmxNamed {
+export interface EdmxComplexTypeBase extends EdmxNamed {
   Property: EdmxProperty[];
 }
 

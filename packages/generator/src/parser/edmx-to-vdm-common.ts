@@ -35,7 +35,7 @@ import {
   EdmxParameter,
   SwaggerPathParameter,
   EdmxNamed,
-  EdmxComplexType,
+  EdmxComplexTypeBase,
   SwaggerPath
 } from './parser-types-common';
 import { isCollection, parseTypeName } from './parser-util';
@@ -315,7 +315,7 @@ export function navigationPropertyBase(
 }
 
 export function transformComplexTypes(
-  complexTypes: EdmxComplexType[],
+  complexTypes: EdmxComplexTypeBase[],
   formatter: ServiceNameFormatter,
   reservedNames: Set<string>
 ): VdmComplexType[] {

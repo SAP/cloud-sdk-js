@@ -29,6 +29,7 @@ export function importDeclarations(
         ...coreNavPropertyFieldTypeImportNames(entity.navigationProperties),
         'AllFields',
         'CustomField',
+        'CollectionField',
         'Entity',
         'EntityBuilderType',
         'Field'

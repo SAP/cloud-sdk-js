@@ -5,7 +5,7 @@ import {
   EdmxEntityTypeBase,
   EdmxEntitySetBase,
   EdmxFunctionImportBase,
-  EdmxComplexType,
+  EdmxComplexTypeBase,
   EdmxNamed
 } from './parser-types-common';
 
@@ -14,8 +14,13 @@ export interface EdmxMetadata extends EdmxMetadataBase {
   entityTypes: EdmxEntityType[];
   enumTypes: EdmxEnumType[];
   functionImports: EdmxFunctionImportBase[];
-  complexTypes: EdmxComplexType[];
+  complexTypes: EdmxComplexTypeBase[];
 }
+export interface EdmxDerivedType extends EdmxNamed {
+  BaseType?: string;
+}
+
+export interface EdmxComplexType extends EdmxComplexTypeBase, EdmxDerivedType {}
 
 export function isV4Metadata(
   metadata: EdmxMetadataBase
@@ -32,8 +37,7 @@ export interface EdmxEnumMember {
   Value: string;
 }
 
-export interface EdmxEntityType extends EdmxEntityTypeBase {
-  BaseType?: string;
+export interface EdmxEntityType extends EdmxEntityTypeBase, EdmxDerivedType {
   NavigationProperty: EdmxNavigationProperty[];
 }
 

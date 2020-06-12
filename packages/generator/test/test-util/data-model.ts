@@ -18,7 +18,8 @@ export const entityName: VdmProperty = {
   originalName: 'EntityName',
   edmType: 'Edm.String',
   description: 'The name of the entity.',
-  nullable: false
+  nullable: false,
+  isMulti: false
 };
 
 export const numberOfEggs: VdmProperty = {
@@ -30,7 +31,8 @@ export const numberOfEggs: VdmProperty = {
   originalName: 'A_noEggs',
   edmType: 'Edm.Decimal',
   description: 'The number of eggs for breakfast.',
-  nullable: true
+  nullable: true,
+  isMulti: false
 };
 
 export const breakfastTime: VdmProperty = {
@@ -42,7 +44,8 @@ export const breakfastTime: VdmProperty = {
   originalName: 'BreakfastTime',
   edmType: 'Edm.DateTime',
   description: 'The time of breakfast.',
-  nullable: false
+  nullable: false,
+  isMulti: false
 };
 
 export const brunchEntity: VdmEntity = {
@@ -112,7 +115,8 @@ export const complexMeal: VdmComplexType = {
       instancePropertyName: 'complexity',
       propertyNameAsParam: 'complexity',
       jsType: 'string',
-      staticPropertyName: 'COMPLEXITY'
+      staticPropertyName: 'COMPLEXITY',
+      isMulti: false
     },
     {
       originalName: 'Amount',
@@ -123,7 +127,8 @@ export const complexMeal: VdmComplexType = {
       instancePropertyName: 'amount',
       propertyNameAsParam: 'amount',
       jsType: 'number',
-      staticPropertyName: 'AMOUNT'
+      staticPropertyName: 'AMOUNT',
+      isMulti: false
     }
   ]
 };
@@ -143,7 +148,8 @@ export const complexDesert: VdmComplexType = {
       instancePropertyName: 'amount',
       propertyNameAsParam: 'amount',
       jsType: 'number',
-      staticPropertyName: 'AMOUNT'
+      staticPropertyName: 'AMOUNT',
+      isMulti: false
     },
     {
       originalName: 'Name',
@@ -154,7 +160,8 @@ export const complexDesert: VdmComplexType = {
       instancePropertyName: 'name',
       propertyNameAsParam: 'name',
       jsType: 'string',
-      staticPropertyName: 'NAME'
+      staticPropertyName: 'NAME',
+      isMulti: false
     }
   ]
 };
@@ -175,7 +182,8 @@ export const complexMealWithDesert: VdmComplexType = {
       propertyNameAsParam: 'complexDesert',
       jsType: 'ComplexDesert',
       staticPropertyName: 'COMPLEX_DESERT',
-      isComplex: true
+      isComplex: true,
+      isMulti: false
     },
     {
       originalName: 'Amount',
@@ -186,7 +194,8 @@ export const complexMealWithDesert: VdmComplexType = {
       instancePropertyName: 'amount',
       propertyNameAsParam: 'amount',
       jsType: 'number',
-      staticPropertyName: 'AMOUNT'
+      staticPropertyName: 'AMOUNT',
+      isMulti: false
     }
   ]
 };

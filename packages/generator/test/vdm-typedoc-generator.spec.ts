@@ -17,7 +17,8 @@ describe('typedoc', () => {
       fieldType: 'string',
       instancePropertyName: 'onePropertyName',
       staticPropertyName: 'ONE_PROPERTY_NAME',
-      propertyNameAsParam: 'onePropertyName'
+      propertyNameAsParam: 'onePropertyName',
+      isMulti: false
     };
 
     expect(getPropertyDescription(property)).toBe(property.description);
@@ -33,7 +34,8 @@ describe('typedoc', () => {
       fieldType: 'string',
       instancePropertyName: 'onePropertyName',
       staticPropertyName: 'ONE_PROPERTY_NAME',
-      propertyNameAsParam: 'onePropertyName'
+      propertyNameAsParam: 'onePropertyName',
+      isMulti: false
     };
     expect(getPropertyDescription(property)).toBe('One Property Name.');
   });
@@ -81,7 +83,8 @@ describe('typedoc', () => {
       fieldType: 'string',
       instancePropertyName: 'onePropertyName',
       staticPropertyName: 'ONE_PROPERTY_NAME',
-      propertyNameAsParam: 'onePropertyName'
+      propertyNameAsParam: 'onePropertyName',
+      isMulti: false
     };
     expect(getPropertyDescription(property, { nullable: true })).toBe(
       'Property Description\n@nullable'

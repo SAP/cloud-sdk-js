@@ -58,7 +58,8 @@ describe('request builder class', () => {
       originalName: 'With',
       edmType: 'Edm.String',
       description: 'Breakfast accompaniment.',
-      nullable: false
+      nullable: false,
+      isMulti: false
     };
     corruptedEntity.properties.push(accompaniment);
     corruptedEntity.keys.push(accompaniment);

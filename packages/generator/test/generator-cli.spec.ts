@@ -7,13 +7,9 @@ describe('generator-cli', () => {
   const pathToGenerator = path.resolve(process.cwd(), 'src/generator-cli.ts');
   const inputDir = path.resolve(
     process.cwd(),
-    '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
+    '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
   );
   const outputDir = path.resolve(process.cwd(), 'test/generator-test-output');
-  const pathToGeneratorPackageJson = path.resolve(
-    process.cwd(),
-    'package.json'
-  );
 
   beforeEach(() => {
     if (!fs.existsSync(outputDir)) {

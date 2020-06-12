@@ -20,6 +20,7 @@ export * from './TestEntityEndsWithRequestBuilder';
 export * from './TestEntityEndsWithSomethingElseRequestBuilder';
 export * from './TestComplexType';
 export * from './TestNestedComplexType';
+export * from './TestNestedComplexOnlyPrimitiveType';
 export * from './function-imports';
 export * from './BatchRequest';
 //# sourceMappingURL=index.d.ts.map

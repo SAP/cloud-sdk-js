@@ -189,7 +189,7 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
 }
 
 export namespace TestComplexType {
-  export function build(json: { [keys: string]: FieldType }): TestComplexType {
+  export function build(json: { [keys: string]: FieldType | TestNestedComplexType }): TestComplexType {
     return createComplexType(json, {
       StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') }),
       BooleanProperty: (booleanProperty: boolean) => ({ booleanProperty: edmToTs(booleanProperty, 'Edm.Boolean') }),

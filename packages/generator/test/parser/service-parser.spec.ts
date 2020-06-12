@@ -168,7 +168,7 @@ describe('service-parser', () => {
       const complexTypes = services[0].complexTypes;
       const complexType = complexTypes[0];
 
-      expect(complexTypes.length).toBe(2);
+      expect(complexTypes.length).toBe(3);
       expect(complexType.typeName).toBe('TestComplexType');
       expect(complexType.originalName).toBe('A_TestComplexType');
       expect(complexType.factoryName).toBe('createTestComplexType_1');

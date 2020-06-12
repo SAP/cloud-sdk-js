@@ -26,5 +26,6 @@ export * from './TestEntityEndsWithSomethingElseRequestBuilder';
 export * from './TestComplexBaseType';
 export * from './TestComplexType';
 export * from './TestNestedComplexType';
+export * from './TestNestedComplexOnlyPrimitiveType';
 export * from './function-imports';
 export * from './BatchRequest';

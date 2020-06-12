@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix the generator so that the builder function for nested complex types is correctly typed. 
 
 
 # 1.21.2

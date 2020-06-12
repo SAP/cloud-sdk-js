@@ -12,7 +12,7 @@ describe('edmx-parser', () => {
     expect(metadataEdmx.entitySets.length).toBe(10);
     expect(metadataEdmx.entityTypes.length).toBe(10);
     expect(metadataEdmx.functionImports.length).toBe(12);
-    expect(metadataEdmx.complexTypes.length).toBe(2);
+    expect(metadataEdmx.complexTypes.length).toBe(3);
     expect(metadataEdmx.associationSets.length).toBe(8);
     expect(metadataEdmx.associations.length).toBe(8);
 

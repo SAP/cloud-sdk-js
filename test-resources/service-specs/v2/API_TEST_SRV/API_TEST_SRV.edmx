@@ -148,6 +148,11 @@
 
       <ComplexType Name="A_TestNestedComplexType">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexOnlyPrimitiveType"/>
+      </ComplexType>
+
+      <ComplexType Name="A_TestNestedComplexOnlyPrimitiveType">
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
       </ComplexType>
 
       <Association Name="assoc_TestEntityToMultiLink" sap:content-version="1">

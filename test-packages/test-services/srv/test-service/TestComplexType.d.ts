@@ -179,7 +179,7 @@ export declare class TestComplexTypeField<EntityT extends Entity> extends Comple
 }
 export declare namespace TestComplexType {
     function build(json: {
-        [keys: string]: FieldType;
+        [keys: string]: FieldType | TestNestedComplexType;
     }): TestComplexType;
 }
 //# sourceMappingURL=TestComplexType.d.ts.map

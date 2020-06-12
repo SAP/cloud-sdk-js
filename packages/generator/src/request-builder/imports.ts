@@ -6,17 +6,21 @@ import {
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmEntity } from '../vdm-types';
+import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 export function importDeclarations(
-  entity: VdmEntity
+  entity: VdmEntity,
+  service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(entity.keys),
-    coreImportDeclaration([
-      ...corePropertyTypeImportNames(entity.keys),
-      ...requestBuilderCoreImportDeclarations(entity)
-    ]),
+    coreImportDeclaration(
+      [
+        ...corePropertyTypeImportNames(entity.keys),
+        ...requestBuilderCoreImportDeclarations(entity)
+      ],
+      service.oDataVersion
+    ),
     entityImportDeclaration(entity)
   ];
 }

@@ -87,6 +87,7 @@ export const breakfastEntity: VdmEntity = {
 };
 
 export const foodService: VdmServiceMetadata = {
+  oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
   namespace: 'FOOD_SERVICE',
   servicePath: 'some/path/to/food',

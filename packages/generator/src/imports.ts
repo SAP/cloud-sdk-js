@@ -6,7 +6,8 @@ import { linkClass } from './generator-utils';
 import {
   VdmMappedEdmType,
   VdmNavigationProperty,
-  VdmProperty
+  VdmProperty,
+  VdmServiceMetadata
 } from './vdm-types';
 
 const potentialExternalImportDeclarations = [
@@ -41,11 +42,13 @@ export function externalImportDeclaration(
 }
 
 export function coreImportDeclaration(
-  namedImports: string[]
+  namedImports: string[],
+  oDataVersion: 'v2' | 'v4'
 ): ImportDeclarationStructure {
+  const moduleSuffix = oDataVersion === 'v4' ? '/v4' : '';
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: '@sap-cloud-sdk/core',
+    moduleSpecifier: `@sap-cloud-sdk/core${moduleSuffix}`,
     namedImports: unique(namedImports)
   };
 }
@@ -59,15 +62,17 @@ export function corePropertyTypeImportNames(
 export function corePropertyFieldTypeImportNames(
   properties: VdmProperty[]
 ): string[] {
-  return unique(
-    properties.filter(prop => !prop.isComplex).map(prop => prop.fieldType)
-  );
+  return unique([
+    ...properties.filter(prop => !prop.isComplex).map(prop => prop.fieldType),
+    ...(properties.some(prop => prop.isMulti) ? ['CollectionField'] : [])
+  ]);
 }
 
 export function coreNavPropertyFieldTypeImportNames(
-  navProperties: VdmNavigationProperty[]
+  navProperties: VdmNavigationProperty[],
+  service: VdmServiceMetadata
 ): string[] {
-  return unique(navProperties.map(navProp => linkClass(navProp)));
+  return unique(navProperties.map(navProp => linkClass(navProp, service)));
 }
 
 export function complexTypeImportDeclarations(

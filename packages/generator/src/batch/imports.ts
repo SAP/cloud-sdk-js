@@ -8,15 +8,18 @@ export function importBatchDeclarations(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   return [
-    coreImportDeclaration([
-      'CreateRequestBuilder',
-      'DeleteRequestBuilder',
-      'GetAllRequestBuilder',
-      'GetByKeyRequestBuilder',
-      'ODataBatchChangeSet',
-      'ODataBatchRequestBuilder',
-      'UpdateRequestBuilder'
-    ]),
+    coreImportDeclaration(
+      [
+        'CreateRequestBuilder',
+        'DeleteRequestBuilder',
+        'GetAllRequestBuilder',
+        'GetByKeyRequestBuilder',
+        'ODataBatchChangeSet',
+        'ODataBatchRequestBuilder',
+        'UpdateRequestBuilder'
+      ],
+      service.oDataVersion
+    ),
     {
       kind: StructureKind.ImportDeclaration,
       moduleSpecifier: './index',

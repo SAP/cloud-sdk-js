@@ -26,21 +26,24 @@ export function importDeclarations(
   );
   return [
     ...externalImportDeclarations(functionImportParameters),
-    coreImportDeclaration([
-      ...corePropertyTypeImportNames(functionImportParameters),
-      ...returnTypes.map(returnType =>
-        responseTransformerFunctionName(returnType)
-      ),
-      ...(returnTypes.some(
-        returnType =>
-          returnType.returnTypeCategory ===
-          VdmFunctionImportReturnTypeCategory.EDM_TYPE
-      )
-        ? ['edmToTs']
-        : []),
-      'FunctionImportRequestBuilder',
-      'FunctionImportParameter'
-    ]),
+    coreImportDeclaration(
+      [
+        ...corePropertyTypeImportNames(functionImportParameters),
+        ...returnTypes.map(returnType =>
+          responseTransformerFunctionName(returnType)
+        ),
+        ...(returnTypes.some(
+          returnType =>
+            returnType.returnTypeCategory ===
+            VdmFunctionImportReturnTypeCategory.EDM_TYPE
+        )
+          ? ['edmToTs']
+          : []),
+        'FunctionImportRequestBuilder',
+        'FunctionImportParameter'
+      ],
+      service.oDataVersion
+    ),
     ...returnTypeImports(returnTypes)
   ];
 }

@@ -1,11 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { StructureKind } from 'ts-morph';
 import { complexTypeSourceFile } from '../../src/complex-type';
-import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
+import {
+  complexMeal,
+  complexMealWithDesert,
+  foodService
+} from '../test-util/data-model';
 
 describe('file', () => {
   it('complexTypeSourceFile', () => {
-    const actual = complexTypeSourceFile(complexMeal);
+    const actual = complexTypeSourceFile(complexMeal, foodService);
     const imports = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.ImportDeclaration
     );
@@ -32,7 +36,7 @@ describe('file', () => {
   });
 
   it('complexTypeSourceFile with nested complex types', () => {
-    const actual = complexTypeSourceFile(complexMealWithDesert);
+    const actual = complexTypeSourceFile(complexMealWithDesert, foodService);
     const imports = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.ImportDeclaration
     );

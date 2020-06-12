@@ -12,7 +12,8 @@ import {
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 export function importDeclarations(
-  entity: VdmEntity
+  entity: VdmEntity,
+  service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   return [
     {
@@ -26,14 +27,17 @@ export function importDeclarations(
       [
         ...corePropertyTypeImportNames(entity.properties),
         ...corePropertyFieldTypeImportNames(entity.properties),
-        ...coreNavPropertyFieldTypeImportNames(entity.navigationProperties),
+        ...coreNavPropertyFieldTypeImportNames(
+          entity.navigationProperties,
+          service
+        ),
         'AllFields',
         'CustomField',
-        'CollectionField',
         'Entity',
         'EntityBuilderType',
         'Field'
-      ].sort()
+      ].sort(),
+      service.oDataVersion
     )
   ];
 }

@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { StructureKind } from 'ts-morph';
 import { importDeclarations } from '../../src/request-builder';
-import { breakfastEntity } from '../test-util/data-model';
+import { breakfastEntity, foodService } from '../test-util/data-model';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity);
+    const actual = importDeclarations(breakfastEntity, foodService);
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,

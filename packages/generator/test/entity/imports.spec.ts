@@ -4,7 +4,7 @@ import { breakfastEntity, foodService } from '../test-util/data-model';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity);
+    const actual = importDeclarations(breakfastEntity, foodService);
 
     expect(
       actual.map(imports => ({
@@ -39,7 +39,6 @@ const expectedEntityImports = [
     namedImports: [
       'AllFields',
       'BigNumberField',
-      'CollectionField',
       'CustomField',
       'Entity',
       'EntityBuilderType',

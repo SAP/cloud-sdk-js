@@ -3,6 +3,7 @@
 import { PathLike } from 'fs';
 
 export interface VdmServiceMetadata {
+  oDataVersion: 'v2' | 'v4';
   namespace: string;
   originalFileName: string;
   servicePath: string;

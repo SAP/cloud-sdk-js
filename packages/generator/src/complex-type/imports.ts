@@ -8,11 +8,12 @@ import {
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmComplexType, VdmProperty } from '../vdm-types';
+import { VdmComplexType, VdmProperty, VdmServiceMetadata } from '../vdm-types';
 import { hasEdmTypeProperty } from './util';
 
 export function importDeclarations(
-  complexType: VdmComplexType
+  complexType: VdmComplexType,
+  service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(complexType.properties),
@@ -26,7 +27,8 @@ export function importDeclarations(
         'createComplexType',
         'Entity',
         'FieldType'
-      ].sort()
+      ].sort(),
+      service.oDataVersion
     )
   ];
 }

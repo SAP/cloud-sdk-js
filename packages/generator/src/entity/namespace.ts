@@ -34,7 +34,7 @@ export function entityNamespace(
     statements: [
       ...properties(entity),
       ...navigationProperties(entity, service),
-      allFields(entity),
+      allFields(entity, service),
       allFieldSelector(entity),
       keyFields(entity),
       keys(entity)
@@ -142,10 +142,10 @@ function navigationProperty(
     declarations: [
       {
         name: navProp.staticPropertyName,
-        type: `${linkClass(navProp)}<${entity.className},${toEntity}>`,
-        initializer: `new ${linkClass(navProp)}('${navProp.originalName}', ${
-          entity.className
-        }, ${toEntity})`
+        type: `${linkClass(navProp, service)}<${entity.className},${toEntity}>`,
+        initializer: `new ${linkClass(navProp, service)}('${
+          navProp.originalName
+        }', ${entity.className}, ${toEntity})`
       }
     ],
     docs: [getStaticNavPropertyDescription(navProp)],
@@ -153,13 +153,17 @@ function navigationProperty(
   };
 }
 
-function allFields(entity: VdmEntity): VariableStatementStructure {
+function allFields(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): VariableStatementStructure {
   const fieldTypes = unique([
     ...entity.properties.map(
       p => `${getPropertyFieldClassName(p)}<${entity.className}>`
     ),
     ...entity.navigationProperties.map(
-      p => `${linkClass(p)}<${entity.className},${p.toEntityClassName}>`
+      p =>
+        `${linkClass(p, service)}<${entity.className},${p.toEntityClassName}>`
     )
   ]);
   return {

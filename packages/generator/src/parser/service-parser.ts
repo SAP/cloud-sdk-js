@@ -143,6 +143,7 @@ function transformServiceMetadata(
     : transformEntitiesV4;
 
   const vdmService = {
+    oDataVersion: metadata.edmx.oDataVersion,
     namespace,
     originalFileName: metadata.edmx.fileName,
     directoryName,

@@ -3,7 +3,7 @@
 import { EdmType } from '@sap-cloud-sdk/core';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { VdmNavigationProperty } from './vdm-types';
+import { VdmNavigationProperty, VdmServiceMetadata } from './vdm-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -134,8 +134,15 @@ export function endWithDot(text: string): string {
   return !text || text.endsWith('.') || text.endsWith(':') ? text : `${text}.`;
 }
 
-export function linkClass(navProperty: VdmNavigationProperty): string {
-  return navProperty.isMultiLink ? 'Link' : 'OneToOneLink';
+export function linkClass(
+  navProperty: VdmNavigationProperty,
+  service: VdmServiceMetadata
+): string {
+  return navProperty.isMultiLink
+    ? service.oDataVersion === 'v4'
+      ? 'OneToManyLink'
+      : 'Link'
+    : 'OneToOneLink';
 }
 
 /**

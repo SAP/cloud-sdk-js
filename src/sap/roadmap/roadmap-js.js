@@ -28,9 +28,9 @@ export const groups = [
   { id: 'advanced', title: 'Advanced value-add features' },
   { id: 'rest', title: 'Open API type-safe client' },
   { id: 'libs', title: 'SAP Eco-system' },
-  { id: 'infra', title: 'K8s, Azure, AWS, GCP and beyond' },
   { id: 's4', title: 'S/4HANA API libraries' },
   { id: 'lobs', title: 'LoB Solutions' },
+  { id: 'infra', title: 'K8s, Azure, AWS, GCP and beyond' },
   { id: 'docs', title: 'SDK Documentation' },
   //  { id: 'support', title: 'Analyze and scale support' },
   { id: 'cap', title: 'One SAP' },
@@ -43,7 +43,7 @@ export const items = [
   {
     id: 1,
     group: 'odata',
-    title: 'Reach feature parity between OData V2/4 type-safe clients',
+    title: 'Reach feature parity between OData v2/4 type-safe clients',
     start: moment().year(2020).month('Mar').date(1),
     end: moment().year(2020).month('Jul').date(32),
     itemProps: {
@@ -73,8 +73,8 @@ export const items = [
     id: 5,
     group: 'rest',
     title: 'Release Open API type-safe client generator',
-    start: moment().year(2020).month('Aug').date(0),
-    end: moment().year(2020).month('Nov').date(15),
+    start: moment().year(2020).month('Oct').date(0),
+    end: moment().year(2020).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -87,7 +87,7 @@ export const items = [
   {
     id: 6,
     group: 'libs',
-    title: 'Pre-generated clients for WorkFlow Service.',
+    title: 'Pre-generated clients for SCP Workflow Service.',
     start: moment().year(2020).month('Oct').date(1),
     end: moment().year(2020).month('Dec').date(31),
     itemProps: {
@@ -103,8 +103,8 @@ export const items = [
     id: 7,
     group: 'libs',
     title: 'Pre-generated clients for Graph, Kernel Service, Job Scheduler, etc.',
-    start: moment().year(2020).month('Nov').date(15),
-    end: moment().year(2021).month('Apr').date(31),
+    start: moment().year(2020).month('Oct').date(1),
+    end: moment().year(2021).month('Dec').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -266,7 +266,7 @@ export const items = [
   {
     id: 21,
     group: 'odata',
-    title: 'Ongoing support and refinement for OData v4/v2',
+    title: 'Ongoing support and refinement for OData v2/4',
     start: moment().year(2020).month('Sep').date(1),
     end: moment().year(2020).month('Dec').date(32),
     itemProps: {

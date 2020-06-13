@@ -11,7 +11,8 @@ keywords:
 - sdk
 - odata
 - java
-- VDM
+- typed
+- client
 - generate
 ---
 

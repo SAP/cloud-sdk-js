@@ -81,3 +81,13 @@ Yes, we do. We do not release a public REST client generator as of yet. We have 
 with Cloud SDK for Java. Some of them are available only for SAP internal use, others like Workflow service on Cloud
 Foundry are released publicly. Check our [REST capabilities](../features/rest/overview) and let us know if you need a library for an
 SAP service that you use and know to be providing REST API.
+
+## Questions about SAP Cloud Platform 
+
+- **Do you support SAP Cloud Platform - Cloud Foundry?**
+
+SAP Cloud SDK for Java has first-class support for [SCP Cloud Foundry](https://www.sap.com/products/cloud-platform.html). We provide plenty of helpful abstractions for [connectivity](../feature/connectivity/sdk-connectivity-destination-service) and authentication that make developing Apps a pleasant and rewarding experience. Let us know if you're missing any features about SCP Cloud Foundry support from SAP Cloud SDK for Java.
+
+- **Do you support SAP Cloud Platform - Neo?**
+
+We still provide fully-fledged support Neo environment. However, we do not recommend starting new projects with SAP Cloud Platform Neo as Cloud Foundry is better suited for Apps and S/4HANA extensions development.

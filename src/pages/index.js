@@ -87,7 +87,7 @@ function Home () {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description='SAP Cloud SDK is a one stop shop for developing and extending SAP applications in a Cloud <head />'
+      description='SAP Cloud SDK is a one stop shop for developing and extending SAP applications in a Cloud'
     >
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className='container'>

@@ -18,6 +18,37 @@ The SAP Cloud SDK offers some basic functionality that helps with connecting to 
 
 This concept is integrated with the [Destination Service](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/7e306250e08340f89d6c103e28840f30.html) that is available on SAP Cloud Platform. If the application has a service binding to this service in place the SDK will provide access to these destinations.
 
+## Accessing All Destinations in Cloud Foundry ##
+ 
+ Inorder to fetch all destinations from Destination Service you need to do the following steps: 
+
+ 1) Invoke the `ScpCfDestinationLoader` with the `DestinationService` and `XsuaaService` instances.
+
+```java
+ final ScpCfDestinationLoader destinationLoader = new ScpCfDestinationLoader(destinationService, xsuaaService);
+```
+
+ 2) Build `DestinationOptions` object based on the retrieval strategy for your particular use case. Retieval strategy can be `ALWAYS_SUBSCRIBER`, `ALWAYS_PROVIDER` or `SUBSCRIBER_THEN_PROVIDER`. Refer the code below for better understanding:  
+
+ ```java
+ // in case of Subscriber Tenant
+ final DestinationOptions options =
+            DestinationOptions
+                .builder()
+                .augmentBuilder(
+                    ScpCfDestinationOptionsAugmenter.augmenter().retrievalStrategy(
+                        ScpCfDestinationRetrievalStrategy.SUBSCRIBER_THEN_PROVIDER))
+                .build();;
+```
+
+3) Finally, make call to `tryGetAllDestinations` and pass the `DestinationOptions` object.
+
+```java
+ final Try<Iterable<ScpCfDestination>> destinations = destinationLoader.tryGetAllDestinations(options);
+```
+
+The method `tryGetAllDestinations` requests the [Destination Service API](https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/overview) and retrieves all the destinations available at the service instance and sub account level. In case there is a destination available on both the levels with the same name, then this method prioritize the destination at the service instance level.
+
 ## Accessing Destinations ##
 
 In general destinations are accessed through the `DestinationAccessor`:

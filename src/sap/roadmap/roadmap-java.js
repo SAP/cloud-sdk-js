@@ -44,7 +44,7 @@ export const items = [
   {
     id: 1,
     group: 'odata',
-    title: 'Reach feature parity between OData V2/4 type-safe clients',
+    title: 'Reach feature parity between OData v2/4 type-safe clients',
     start: moment().year(2020).month('Jan').date(1),
     end: moment().year(2020).month('Mar').date(32),
     itemProps: {
@@ -118,7 +118,7 @@ export const items = [
   {
     id: 6,
     group: 'libs',
-    title: 'Pre-generated clients for Graph, Kernel Service, Job Scheduler, etc.',
+    title: 'Pre-generated clients for SAP Graph, kernel services, Job Scheduler, etc.',
     start: moment().year(2020).month('Oct').date(1),
     end: moment().year(2020).month('Dec').date(31),
     itemProps: {
@@ -220,53 +220,53 @@ export const items = [
       }
     }
   },
-  {
-    id: 13,
-    group: 'oss',
-    title: 'Achieve a split between Open Source and Closed Source parts of the SDK',
-    start: moment().year(2021).month('Jan').date(1),
-    end: moment().year(2021).month('Mar').date(31),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...style
+  // {
+  //   id: 13,
+  //   group: 'oss',
+  //   title: 'Achieve a split between Open Source and Closed Source parts of the SDK',
+  //   start: moment().year(2021).month('Jan').date(1),
+  //   end: moment().year(2021).month('Mar').date(31),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...style
 
-      }
-    }
-  },
+  //     }
+  //   }
+  // },
   {
     id: 14,
     group: 'infra',
     title: 'Native support for K8s in Java',
-    start: moment().year(2020).month('Sep').date(1),
-    end: moment().year(2020).month('Nov').date(31),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...style
-      }
-    }
-  },
-  {
-    id: 29,
-    group: 'infra',
-    title: 'Improved support for other run times. Example Apps.',
     start: moment().year(2021).month('Jan').date(1),
-    end: moment().year(2021).month('Mar').date(31),
+    end: moment().year(2021).month('Feb').date(29),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
       style: {
-        ...style
+        ...styleFocus
       }
     }
   },
+  // {
+  //   id: 29,
+  //   group: 'infra',
+  //   title: 'Improved support for other run times. Example Apps.',
+  //   start: moment().year(2021).month('Jan').date(1),
+  //   end: moment().year(2021).month('Mar').date(31),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...style
+  //     }
+  //   }
+  // },
   {
     id: 15,
     group: 's4',
-    title: 'Generate OData v4 libraries for S/4HANA 2008 release',
+    title: 'S4HC 2008 VDM (incl v4 services)',
     start: moment().year(2020).month('Aug').date(1),
     end: moment().year(2020).month('Aug').date(31),
     itemProps: {
@@ -281,9 +281,9 @@ export const items = [
   {
     id: 16,
     group: 's4',
-    title: 'Type-safe client for S/4HANA on premise',
+    title: 'VDM for S4OP (SAP S/4HANA on premise)',
     start: moment().year(2020).month('Aug').date(20),
-    end: moment().year(2020).month('Oct').date(31),
+    end: moment().year(2020).month('Sep').date(31),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -323,27 +323,27 @@ export const items = [
       }
     }
   },
-  {
-    id: 19,
-    group: 'saas',
-    title: 'Automate release for existing libraries via Pipeline',
-    start: moment().year(2020).month('Oct').date(1),
-    end: moment().year(2020).month('Dec').date(31),
-    itemProps: {
-      'aria-hidden': true,
-      onDoubleClick: () => { console.log('You clicked double!') },
-      style: {
-        ...styleFocus
+  // {
+  //   id: 19,
+  //   group: 'saas',
+  //   title: 'Automate release for existing libraries via Pipeline',
+  //   start: moment().year(2020).month('Oct').date(1),
+  //   end: moment().year(2020).month('Dec').date(31),
+  //   itemProps: {
+  //     'aria-hidden': true,
+  //     onDoubleClick: () => { console.log('You clicked double!') },
+  //     style: {
+  //       ...styleFocus
 
-      }
-    }
-  },
+  //     }
+  //   }
+  // },
   {
     id: 20,
     group: 'infra',
     title: 'Improve service discovery and connectivity to enable new run times and rest client capabilities',
-    start: moment().year(2020).month('Oct').date(0),
-    end: moment().year(2020).month('Dec').date(31),
+    start: moment().year(2020).month('Oct').date(1),
+    end: moment().year(2020).month('Dec').date(32),
     itemProps: {
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') },
@@ -356,7 +356,7 @@ export const items = [
   {
     id: 21,
     group: 'odata',
-    title: 'Ongoing support and refinement for OData v4/v2',
+    title: 'Ongoing support and refinement for OData v2/4',
     start: moment().year(2020).month('Oct').date(1),
     end: moment().year(2020).month('Dec').date(32),
     itemProps: {

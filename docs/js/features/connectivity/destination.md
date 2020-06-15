@@ -4,7 +4,7 @@ title: Destinations in the Cloud SDK for JS
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Destinations
-description: This article describes how the SDK handles the destination lookup and what the different options to configure destinations are.
+description: This article describes how destinations are fetched in the SDK and how they can be configured.
 keywords:
 - sap
 - cloud
@@ -19,10 +19,11 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Introduction ##
 
-When developing cloud applications it is necessary to abstract the details where something is retrieved from your code base.
-The reasons for this abstraction are manifold: URLs defining a resource may change, in case of a multi customer application the locations depends on the customer, etc..
+Most applications developed on SAP Cloud Platform (SCP) will integrate in some way with other LoB solutions and systems.
+Integration means the exchange of data and it is necessary to abstract the details on the data exchange from your code base.
+The reasons for this abstraction are manifold: URLs defining a resource may change, authentication information should not be part of code, in case of a multi customer application the locations depends on the customer, etc..
 
-On SAP Cloud Platform (SCP) this abstraction is provided by a so called destination object. 
+On SCP this abstraction is provided by a so called destination object. 
 This object can be obtained at runtime of the application and contains information like:
 - URL
 - Authentication
@@ -106,25 +107,41 @@ Currently two services types are supported out of the box `business-logging` and
 This is the normal case in a productive environment. 
 In order to access the destination service, the SDK will first fetch an access token from the XSUAA service.
 This token is used to make a call to the destination service returning the destinations.
-Up to now, we have not discussed which destination are returned by the service.
+For a simple service this would be the end of the story.
+However, the destination service is special in a way that it is a `tenant aware serive`.
+Such services make it possible to build multi tenant applications.
+So what defines a tenant aware service?
 
-Depending on the access token issued by the XSUAA this can be either a destination from the provider or subscriber account.
-We define an subscriber account as one using an application hosted within a provider account. 
-In this document we can not explain all details on multi-tenant applications.
-Assume a simple example of an application showing the 5 newes business-partner in an S/4 system.
-Of course every subscriber/customer will have its own S/4 system and a destination with a defined name is maintained in their account to pointing to that system.
+Assume you want to build a simple application showing the 5 newest business-partner in an S/4 system.
+You want to offer this application as a service to customers.
+Of course you want to make this service cost efficient and host it only once and let multiple customers use it.
+This leads now naturally to the requirement that your service needs to return the data related to the specific customers.
+A customer is represented by an account on SCP and a service considering the account is a `tenant aware service`. 
+ 
+Tenant aware services on SCP are offered to customers via an `subscription` which works on a high level as follows:
+If a customer wants to use a service, a subscription is created linking the customer account and the one account hosting the service.
+In the following the term `subscriber account` will be used for the accounts using a service and `provider account` for the one hosting it.
 
-At runtime the application has to lookup the right destination which is the one related to the subscriber account the request is coming from.
-The question is now, how does the service return the right destination?
-
+After this little definition detour, let's go back to the destination service and the SDK.
 For simplicity an optional argument of the destination lookup has been neglected in the beginning:
 ```
-.execute({"destinationName": 'myDestination', jwt: 'yourJWT})
+.execute({destinationName: 'myDestination', jwt: 'yourJWT'})
 ```  
-The `jwt` argument takes the JSON web token (JWT) issued by an XSUAA as input.  
-If the JWT was issued by a XSUAA of a subscriber account it is possible to fetch the destination of this account.
-For fetching destinations of the provider accounts no JWT is needed because the application has a service binding to the destination service instance. 
-
+The `jwt` argument takes the JSON web token (JWT) issued by an XSUAA as input. 
+This token contains a field `zid` holding the tenant id which will be used in the lookup process.
+The lookup process done by the SDK involves the following steps:
+- Request an access token for the destination service and a given tenant id from the XSUAA. 
+- Due to the subscription between provider and subscriber, the XSUAA is allowed to issue the token.
+- The token allows for calling the destination service on behalf of the given tenant.
+The tenant and service information are encoded in the access token.
+- Make a call to the destination service using the obtained access token.
+- The destination maintained in the given tenant are returned.
+  
+If no token is given or the destination is not found in the subscriber account the provider account is used as a fallback.
+In order to control this fallback behaviour a selection strategy can be passed to the destination lookup:
+```
+.execute({destinationName: 'myDestination', jwt: 'yourJWT'},{selectionStrategy:'alwaysSubscriber'})
+```
 There are three selection strategies defined in the SDK: `alwaysSubscriber`, `alwaysProvider` and `subscriberFirst`.
 The selection strategy can be passed as an optional argument to the `.execute()` method. 
 The default value is `subscriberFirst`.

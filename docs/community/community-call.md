@@ -21,7 +21,7 @@ https://community.sap.com/resources/community-calls
 
 ## Topics Backlog
 
-* Build an application usind SAP Cloud SDK in SAP Bussiness Application Studio
+* Build an application using SAP Cloud SDK in SAP Business Application Studio
 
 ## Upcoming Dates 2020
 

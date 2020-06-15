@@ -227,6 +227,6 @@ Henceforth, the library supports the SCP Workflow service on Cloud Foundry, whil
 Related to Cloud Foundry, you might know that environment variable VCAP_SERVICES contains information about your bound service instances. In the current state, it is required to create a destination manually instead of letting the library consume VCAP_SERVICES directly.
 
 ### Video tutorial
-This video tutorial will help you get up to speed with SAP Cloud SDK for Java and Workflow API in no time.
+This video tutorial by the developer advocate team of SAP Cloud Platform will help you get up to speed with SAP Cloud SDK for Java and Workflow API in 60 minutes.
 
 <iframe width="1236" height="695" src="https://www.youtube.com/embed/ug2UcXK2lH4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

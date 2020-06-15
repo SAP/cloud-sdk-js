@@ -125,3 +125,8 @@ export interface JoinedEntityMetadata {
   entityType: EdmxEntityTypeBase;
   swaggerDefinition?: SwaggerEntity;
 }
+
+export interface ParsedServiceMetadata {
+  edmx: EdmxMetadataBaseExtended;
+  swagger?: SwaggerMetadata;
+}

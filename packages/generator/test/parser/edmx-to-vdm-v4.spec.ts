@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { transformEntitiesV4 } from '../../src/parser/edmx-to-vdm-v4';
-import { ParsedServiceMetadata } from '../../src/parser/parsed-service-metadata';
 import { ServiceNameFormatter } from '../../src/service-name-formatter';
 import {
   EdmxProperty,
@@ -8,9 +7,11 @@ import {
 } from '../../src/parser/parser-types-common';
 import {
   EdmxEntitySet,
-  EdmxEntityType
+  EdmxEntityType,
+  EdmxMetadata
 } from '../../src/parser/parser-types-v4';
 import { transformComplexTypes } from '../../src/parser/edmx-to-vdm-common';
+import { ParsedServiceMetadata } from '../../src/parser/parsed-service-metadata';
 
 describe('edmx-to-vdm-v4', () => {
   it('transforms collection type properties for primitive types', () => {
@@ -146,7 +147,7 @@ describe('edmx-to-vdm-v4', () => {
   });
 });
 
-function getFormatter(service: ParsedServiceMetadata<'v4'>) {
+function getFormatter(service: ParsedServiceMetadata) {
   return new ServiceNameFormatter(
     service.edmx.entitySets.map(entitySet => entitySet.Name),
     service.edmx.complexTypes.map(complexType => complexType.Name),
@@ -159,8 +160,8 @@ function getFormatter(service: ParsedServiceMetadata<'v4'>) {
 function createTestServiceData(
   entityTypes: EdmxEntityType[],
   entitySets: EdmxEntitySet[]
-): ParsedServiceMetadata<'v4'> {
-  const service: ParsedServiceMetadata<'v4'> = {
+): ParsedServiceMetadata {
+  const service: ParsedServiceMetadata = {
     edmx: {
       complexTypes: [
         {
@@ -176,7 +177,7 @@ function createTestServiceData(
       enumTypes: [],
       entityTypes,
       entitySets
-    }
+    } as EdmxMetadata
   };
 
   return service;

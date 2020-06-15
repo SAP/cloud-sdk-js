@@ -17,7 +17,11 @@ import {
 } from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import { ApiBusinessHubMetadata, VdmServiceMetadata } from '../vdm-types';
-import { SwaggerMetadata, EdmxFunctionImportBase } from './parser-types-common';
+import {
+  SwaggerMetadata,
+  EdmxFunctionImportBase,
+  ParsedServiceMetadata
+} from './parser-types-common';
 import { parseSwaggerFromPath } from './swagger-parser';
 import { isV2Metadata } from './parser-types-v2';
 import { transformEntitiesV4 } from './edmx-to-vdm-v4';
@@ -27,7 +31,6 @@ import {
   transformComplexTypes,
   transformFunctionImports
 } from './edmx-to-vdm-common';
-import { ParsedServiceMetadata } from './parsed-service-metadata';
 
 const logger = createLogger({
   package: 'generator',

@@ -5,17 +5,20 @@ import { VdmNavigationProperty, VdmComplexType, VdmEntity } from '../vdm-types';
 import {
   EdmxAssociationSet,
   EdmxAssociation,
-  EdmxEntityType
+  EdmxEntityType,
+  EdmxMetadata
 } from './parser-types-v2';
 import { stripNamespace } from './parser-util';
-import { JoinedEntityMetadata } from './parser-types-common';
+import {
+  JoinedEntityMetadata,
+  ParsedServiceMetadata
+} from './parser-types-common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
   transformEntity,
   navigationPropertyBase
 } from './edmx-to-vdm-common';
-import { ParsedServiceMetadata } from './parsed-service-metadata';
 
 export function joinAssociationMetadata(
   associationSets: EdmxAssociationSet[],
@@ -52,16 +55,17 @@ export function joinAssociationMetadata(
 }
 
 export function transformEntitiesV2(
-  serviceMetadata: ParsedServiceMetadata<'v2'>,
+  serviceMetadata: ParsedServiceMetadata,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
+  const edmxMetadata = serviceMetadata.edmx as EdmxMetadata;
   const entitiesMetadata = joinEntityMetadata(serviceMetadata);
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
   const associations = joinAssociationMetadata(
-    serviceMetadata.edmx.associationSets,
-    serviceMetadata.edmx.associations
+    edmxMetadata.associationSets,
+    edmxMetadata.associations
   );
 
   return entitiesMetadata.map(entityMetadata => ({

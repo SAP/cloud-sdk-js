@@ -3,14 +3,16 @@ import { VdmNavigationProperty, VdmComplexType, VdmEntity } from '../vdm-types';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import { EdmxEntityType, EdmxEntitySet } from './parser-types-v4';
 import { isCollection } from './parser-util';
-import { JoinedEntityMetadata } from './parser-types-common';
+import {
+  JoinedEntityMetadata,
+  ParsedServiceMetadata
+} from './parser-types-common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
   transformEntity,
   navigationPropertyBase
 } from './edmx-to-vdm-common';
-import { ParsedServiceMetadata } from './parsed-service-metadata';
 
 function navigationProperties(
   entityMetadata: JoinedEntityMetadata,
@@ -49,7 +51,7 @@ function navigationProperties(
 }
 
 export function transformEntitiesV4(
-  serviceMetadata: ParsedServiceMetadata<'v4'>,
+  serviceMetadata: ParsedServiceMetadata,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {

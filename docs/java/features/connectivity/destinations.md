@@ -47,7 +47,7 @@ This concept is integrated with the [Destination Service](https://help.sap.com/v
  final Try<Iterable<ScpCfDestination>> destinations = destinationLoader.tryGetAllDestinations(options);
 ```
 
-The method `tryGetAllDestinations` requests the [Destination Service API](https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/overview) and retrieves all the destinations available at the service instance and sub account level. In case there is a destination available on both the levels with the same name, then this method prioritize the destination at the service instance level.
+The method `tryGetAllDestinations` requests the [Destination Service API](https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/overview) and retrieves all the destinations available at the service instance and sub-account level. In case there is a destination available on both the levels with the same name, then this method prioritizes the destination at the service instance level.
 
 ## Accessing Destinations ##
 

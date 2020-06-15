@@ -32,6 +32,15 @@
         <NavigationProperty Name="to_SingleLink" Relationship="API_TEST_SRV.assoc_TestEntityToSingleLink" FromRole="FromRole_assoc_TestEntityToSingleLink" ToRole="ToRole_assoc_TestEntityToSingleLink"/>
       </EntityType>
 
+
+      <EntityType Name="A_TypeForNameClash" sap:content-version="1">
+          <Key>
+            <PropertyRef Name="KeyProperty"/>
+         </Key>
+          <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+      </EntityType>
+
       <EntityType Name="A_TestEntityMultiLinkType" sap:content-version="1">
         <Key>
           <PropertyRef Name="KeyProperty"/>
@@ -203,6 +212,16 @@
         <EntitySet Name="A_TestEntityLvl2MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntitySingleLink" EntityType="API_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityLvl2SingleLink" EntityType="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" sap:content-version="1"/>
+
+        <!--
+         Since we add a "Type" for the interface name the order is important to provoke a clash:
+         (1)  A_TestClashType blocking the names A_TestClashType,A_TestClashTypeType,A_TestClashTypeForceMandatory
+         (2)  A_TestClash is checked also including the related interface names e.g. A_TestClashType -> suffix is added
+         (3)  A_TestClash tests the situation where a class name is already there and a  suffix is added.
+        -->
+        <EntitySet Name="A_TestClashType" EntityType="API_TEST_SRV.A_TypeForNameClash" sap:content-version="1"/>
+        <EntitySet Name="A_TestClash" EntityType="API_TEST_SRV.A_TypeForNameClash" sap:content-version="1"/>
+        <EntitySet Name="A_TestClash" EntityType="API_TEST_SRV.A_TypeForNameClash" sap:content-version="1"/>
 
         <!-- circular_links
           Due to circular linking, we had a bug, where one of the links was undefined. Note, that there is only one association.

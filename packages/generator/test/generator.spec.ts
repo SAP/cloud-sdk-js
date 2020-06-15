@@ -1,9 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { generateProject } from '../src';
 import { createOptions } from './test-util/create-generator-options';
+import { SourceFile } from 'ts-morph';
 
 describe('generator', () => {
-  it('generates expected files', async () => {
+  let files: SourceFile[] = [];
+  beforeAll(async ()=>{
     const project = await generateProject(
       createOptions({
         inputDir: '../../test-resources/service-specs/API_TEST_SRV',
@@ -11,7 +13,9 @@ describe('generator', () => {
       })
     );
     const files = project!.getSourceFiles();
+  })
 
+  it('should generates important expected files', async () => {
     expect(files.length).toBe(28);
 
     const testEntityFile = files.find(
@@ -43,4 +47,9 @@ describe('generator', () => {
     const entityNamespace = testEntityFile!.getNamespace('TestEntity');
     expect(entityNamespace!.getVariableDeclarations().length).toBe(25);
   });
-});
+
+  it('should handle the name clash correctly', async () => {
+      expect(files.find(file=>file.getBaseName() === 'TestClashType.ts')).toBeDefined();
+    expect(files.find(file=>file.getBaseName() === 'TestClash_1.ts')).toBeDefined();
+    expect(files.find(file=>file.getBaseName() === 'TestClash_1_2.ts')).toBeDefined();
+  });

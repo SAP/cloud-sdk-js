@@ -9,6 +9,8 @@ import {
   numberOfEggs,
   toBrunch
 } from '../test-util/data-model';
+import { applySuffixOnConflictUnderscore } from '../../src/name-formatting-strategies';
+import { getInterfaceNames, ServiceNameFormatter } from '../../src/service-name-formatter';
 
 describe('entity class generator', () => {
   it('creates a class', () => {
@@ -41,4 +43,27 @@ describe('entity class generator', () => {
       'toJSON'
     ]);
   });
+
+  it('should avoid name clashes with name, type and type Force Mandatory', ()=> {
+
+    let newName = applySuffixOnConflictUnderscore('MyClass',['MyClass'])
+    expect(newName).toBe('MyClass_1')
+
+    newName = applySuffixOnConflictUnderscore('MyClass', ['MyClassType'])
+    expect(newName).toBe('MyClass_1')
+
+    newName = applySuffixOnConflictUnderscore('MyClass',['MyClassTypeForceMandatory'])
+    expect(newName).toBe('MyClass_1')
+  });
+
+  it('should update the name cash to avoid future clashes',()=>{
+    const serviceNameFormatter = new ServiceNameFormatter([],[],[])
+
+    serviceNameFormatter.originalToEntityClassName('MyClassType')
+    let expectedList = ['MyClassType',...getInterfaceNames('MyClassType')]
+    expect(serviceNameFormatter['staticPropertyNamesCache']).toBe(expectedList)
+
+
+
+  })
 });

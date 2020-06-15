@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import voca from 'voca';
+import { getInterfaceNames } from './service-name-formatter';
 
 // FIXME: this function has a side effect and it is not obvious that the cache is updated
 const applySuffixOnConflict = (separator: string) => (
@@ -8,8 +9,13 @@ const applySuffixOnConflict = (separator: string) => (
   previouslyGeneratedNames: string[]
 ): string => {
   let newName = name;
+  const objectsRelatedToNewName = [...getInterfaceNames(newName), newName];
+  const nameClashDetected =
+    previouslyGeneratedNames.filter(previouslyGeneratedName =>
+      objectsRelatedToNewName.includes(previouslyGeneratedName)
+    ).length > 0;
   if (
-    previouslyGeneratedNames.includes(name) ||
+    nameClashDetected ||
     reservedVdmKeywords.has(name) ||
     reservedObjectPrototypeKeywords.has(name)
   ) {
@@ -18,7 +24,6 @@ const applySuffixOnConflict = (separator: string) => (
       previouslyGeneratedNames
     )}`;
   }
-  previouslyGeneratedNames.push(newName);
   return newName;
 };
 

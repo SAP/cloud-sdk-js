@@ -17,7 +17,7 @@ module.exports = {
       apiKey: '84d46c71e9f2445436400effad7c4e1b',
       indexName: 'sap_cloud-sdk',
       // appId: 'app-id', // Optional, if you run the DocSearch crawler on your own
-    //  algoliaOptions: {}, // Optional, if provided by Algolia
+      algoliaOptions: {}, // Optional, if provided by Algolia
     },
     // ***************************************************************
     // Activate this announcement bar for global urgent notifications

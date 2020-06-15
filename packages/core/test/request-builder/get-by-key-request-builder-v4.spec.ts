@@ -42,4 +42,50 @@ describe('GetByKeyRequestBuilder', () => {
       expect(actual).toEqual(expected);
     });
   });
+
+  it('etag should be pulled from @odata.etag', async () => {
+    const entityData = createOriginalTestEntityData1();
+    const versionIdentifier = 'etagInMetadata';
+    entityData['@odata.etag'] = versionIdentifier;
+    const expected = createTestEntity(entityData);
+
+    mockGetRequest({
+      path: testEntityResourcePath(
+        expected.keyPropertyGuid,
+        expected.keyPropertyString,
+        convertToUriFormat
+      ),
+      responseBody: entityData
+    });
+
+    const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      KeyPropertyGuid: expected.keyPropertyGuid,
+      KeyPropertyString: expected.keyPropertyString
+    }).execute(defaultDestination);
+    expected.setVersionIdentifier(versionIdentifier);
+    expect(actual).toEqual(expected);
+  });
+
+  it('etag should be pulled from response header when json payload has no @odata.etag property', async () => {
+    const entityData = createOriginalTestEntityData1();
+    const expected = createTestEntity(entityData);
+    const versionIdentifier = 'etagInHeader';
+    expected.setVersionIdentifier(versionIdentifier);
+
+    mockGetRequest({
+      path: testEntityResourcePath(
+        expected.keyPropertyGuid,
+        expected.keyPropertyString,
+        convertToUriFormat
+      ),
+      responseBody: entityData ,
+      responseHeaders: { Etag: versionIdentifier }
+    });
+
+    const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      KeyPropertyGuid: expected.keyPropertyGuid,
+      KeyPropertyString: expected.keyPropertyString
+    }).execute(defaultDestination);
+    expect(actual).toEqual(expected);
+  });
 });

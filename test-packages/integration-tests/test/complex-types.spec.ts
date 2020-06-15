@@ -3,7 +3,7 @@ import { asc, Destination } from '@sap-cloud-sdk/core';
 import {
   TestComplexType,
   TestEntity
-} from '@sap-cloud-sdk/test-services/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';

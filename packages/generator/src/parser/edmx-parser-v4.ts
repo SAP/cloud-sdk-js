@@ -50,7 +50,7 @@ function joinEntityTypes(
   entityType: EdmxEntityType,
   baseType: EdmxEntityType
 ): EdmxEntityType {
-  // TODO: only join properties of the respective type
+  // TODO: only join properties / nav properties of the respective type
   return {
     ...entityType,
     Key: {

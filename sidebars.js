@@ -139,7 +139,7 @@ module.exports = {
     'Continuous Delivery': ['devops/getting-started'],
     // FAQ: ['faq/frequently-asked-questions'],
     // Support: ['support/support'],
-    'Community calls': ['community-calls/community-calls-2020'],
+    'Community': ['community/community-call'],
     'Related projects': [
       'related-projects/cloud-application-model'
       //   'related-projects/sap-cloud-for-realestate',

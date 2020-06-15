@@ -86,7 +86,10 @@ module.exports = {
       {
         type: 'category',
         label: 'Tips & Tricks',
-        items: ['java/tips-and-tricks/change-log-level']
+        items: [
+          'java/tips-and-tricks/change-log-level',
+          'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems'
+      ]
       },
       {
         type: 'category',

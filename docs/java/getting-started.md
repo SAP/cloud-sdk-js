@@ -4,7 +4,7 @@ title: Getting started - SDK for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Getting started
-description: Get up to spead with SAP Cloud SDK for Java in no time
+description: Get up to speed with SAP Cloud SDK for Java in no time
 keywords:
 - sap
 - cloud
@@ -15,12 +15,18 @@ keywords:
 image:
 ---
 import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 <MvnBadge />
 
+To get started with the SAP Cloud SDK for Java you can either create a new project or integrate the SDK into your existing one.
+
+To start of with a clean, new project you can select [one of our archetypes](https://search.maven.org/artifact/com.sap.cloud.sdk.archetypes/archetypes-parent) and build upon it. Alternatively you can follow [these instructions](#integrate-the-cloud-sdk-for-java-into-your-project) to integrate the SDK into your existing setup.
+
 ## Generating a project from a maven Archetype ##
 
-To generate you project from `maven` archetype you have to provide:
+To generate your project from a `maven` archetype you have to provide:
 
 - `groupId` - usually serves as your organization identifier, i.e. `foo.bar.cloud.app`
 - `artifactId` - it's your application's name, i.e. `mydreamapp`
@@ -32,7 +38,9 @@ Now run:
 ```bash
 mvn archetype:generate "-DarchetypeGroupId=com.sap.cloud.sdk.archetypes" "-DarchetypeArtifactId=scp-cf-tomee" "-DarchetypeVersion=RELEASE"
 ```
+
 After providing all the interactive values to the CLI it will generate you first Cloud SDK application
+
 ```bash
 [INFO] Scanning for projects...
 [INFO]
@@ -47,9 +55,8 @@ After providing all the interactive values to the CLI it will generate you first
 [INFO]
 [INFO] --- maven-archetype-plugin:3.1.2:generate (default-cli) @ standalone-pom ---
 [INFO] Generating project in Interactive mode
-[INFO] Archetype repository not defined. Using the one from [com.sap.cloud.sdk.archetypes:scp-cf-tomee:3.0.0 -> http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones] found in catalog remote
-Downloading from scp-cf-tomee-repo: http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones/com/sap/cloud/sdk/archetypes/scp-cf-tomee/maven-metadata.xml
-Downloaded from scp-cf-tomee-repo: http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones/com/sap/cloud/sdk/archetypes/scp-cf-tomee/maven-metadata.xml (1.9 kB at 6.7 kB/s)
+[INFO] ....
+[INFO] ....
 Define value for property 'groupId': foo.bar.cloud.app
 Define value for property 'artifactId' (should match expression '[^_]+'): mydreamapp
 [INFO] Using property: artifactId = mydreamapp
@@ -99,6 +106,107 @@ application  cx-server  integration-tests  Jenkinsfile  manifest.yml  pom.xml  u
 ```
 
 **Congratulations! You've just configured your application with Cloud SDK for Java.**
+
+## Integrate the Cloud SDK for Java into your Project
+
+To get started include the _SDK BOM_ in the _dependency management_ of your project:
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.sap.cloud.sdk</groupId>
+            <artifactId>sdk-bom</artifactId>
+            <version>use-latest-version-here</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>        
+</dependencyManagement>
+```
+
+If your application is running on SAP Cloud Platform please also include either:
+
+```xml
+<dependency>
+    <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+    <artifactId>scp-cf</artifactId>
+</dependency>
+```
+
+or:
+
+```xml
+<dependency>
+    <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+    <artifactId>scp-neo</artifactId>
+</dependency>
+```
+
+If you want to connect to an S/4HANA system via the OData protocol you should also add a dependency to the client library of the SDK:
+
+```xml
+<dependency>
+    <groupId>com.sap.cloud.sdk.s4hana</groupId>
+    <artifactId>s4hana-all</artifactId>
+</dependency>
+```
+
+Last but not least we recommend that you include the following plugin:
+
+```xml
+<plugin>
+    <groupId>com.sap.cloud.sdk.plugins</groupId>
+    <artifactId>usage-analytics-maven-plugin</artifactId>
+    <version>use-latest-version-here</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>usage-analytics</goal>
+            </goals>
+            <configuration>
+                <skipUsageAnalytics>false</skipUsageAnalytics>
+                <generateSalt>true</generateSalt>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+It sends _[anonymized usage data](https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/)_ such as the SDK version used and helps us with improving the SDK.
+Furthermore the plugin is capable of generating a report with useful information about the project setup. 
+Invoking `diagnosis-report` will print out the SDK modules used and their version but also other information like the Java and Maven version.
+This is helpful when you are facing an issue and are reaching out to us for help.
+
+### Framework integration
+
+In general, the Cloud SDK for Java integrates natively into the [Spring Boot](https://spring.io/projects/spring-boot) and [TomEE](https://tomee.apache.org/) frameworks.
+
+In particular the [SDK provides listeners](features/multi-tenancy/thread-context.md) that can extract tenant and principal information from an incoming request. To ensure these listeners are present please configure your project accordingly.
+
+<Tabs groupId="frameworks" defaultValue="spring" values={[
+{ label: 'Spring', value: 'spring', },
+{ label: 'TomEE', value: 'tomee', }]}>
+
+<TabItem value="spring">
+
+For a Spring based project please ensure that the application is annotated to scan for components of the SDK:
+
+```java
+@ComponentScan({"com.sap.cloud.sdk", "your.own.package"})
+@ServletComponentScan({"com.sap.cloud.sdk", "your.own.package"})
+```
+
+Check the logs on application startup to ensure the listeners got registered. Also please check [the Spring version](https://mvnrepository.com/artifact/com.sap.cloud.sdk/sdk-bom/latest) declared in the SDK BOM doesn't clash with your version of Spring.
+
+</TabItem>
+<TabItem value="tomee">
+
+For a TomEE based project the filters should be registered automatically. They are part of the `servlet` module which comes into the dependency tree through `scp-cf` or `scp-neo` automatically. Check the logs on application startup to ensure the listeners are being registered.
+
+</TabItem>
+</Tabs>
+
 
 ## Next steps ##
 - [Configure you IDE](../guides/recommended-ide )

@@ -36,7 +36,7 @@ Check out the [documentation of SAP Cloud SDK for Continuous Delivery](https://s
 
 ## Where to look next? ##
 
-### Learn about Project "Piper" ###
+### Learn about project "Piper" ###
 
 For more information on continuous integration and continuous delivery (CI/CD) in the SAP ecosystem, please refer to the documentation of [project "Piper"](https://sap.github.io/jenkins-library).
 

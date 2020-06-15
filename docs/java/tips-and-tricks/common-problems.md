@@ -1,9 +1,9 @@
 ---
-id: sdk-java-common-problems
-title: Some common problems and how to address them
+id: sdk-java-troubleshooting-frequent-problems
+title: Troubleshooting Frequent Problems
 hide_title: true
 hide_table_of_contents: false
-sidebar_label: Frequently Debugged Problems
+sidebar_label: Troubleshooting frequent problems
 description: This article is a collection of frequently occurring symptoms and a short guidance on how to address them.
 keywords:
 - sap
@@ -16,7 +16,7 @@ keywords:
 image:
 ---
 
-## Frequently Debugged Problems
+## Troubleshooting Frequent Problems
 
 This article lists common problems that can be encountered when using the SDK for Java.
 The linked resources provide more information on the subject.

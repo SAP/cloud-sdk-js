@@ -14,7 +14,7 @@ export interface EdmxMetadata extends EdmxMetadataBase {
   entityTypes: EdmxEntityType[];
   enumTypes: EdmxEnumType[];
   functionImports: EdmxFunctionImportBase[];
-  complexTypes: EdmxComplexTypeBase[];
+  complexTypes: EdmxComplexType[];
 }
 export interface EdmxDerivedType extends EdmxNamed {
   BaseType?: string;

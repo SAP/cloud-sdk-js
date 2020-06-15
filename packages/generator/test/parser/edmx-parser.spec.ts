@@ -67,12 +67,22 @@ describe('edmx-parser', () => {
     const entityWithBaseType = metadataEdmx.entityTypes.find(
       e => e.BaseType && e.BaseType.endsWith(baseType!.Name)
     );
-
     baseType?.Property.forEach(p => {
       expect(entityWithBaseType?.Property).toContain(p);
     });
     baseType?.NavigationProperty.forEach(n => {
       expect(entityWithBaseType?.NavigationProperty).toContain(n);
+    });
+
+    const baseComplexType = metadataEdmx.complexTypes.find(
+      c => (c.Name = 'A_TestComplexBaseType')
+    );
+    const complexTypeWithBaseType = metadataEdmx.complexTypes.find(
+      c => c.BaseType && c.BaseType.endsWith(baseComplexType!.Name)
+    );
+
+    baseComplexType?.Property.forEach(p => {
+      expect(complexTypeWithBaseType?.Property).toContain(p);
     });
 
     metadataEdmx.functionImports.forEach(f => {

@@ -78,7 +78,7 @@ describe('GetByKeyRequestBuilder', () => {
         expected.keyPropertyString,
         convertToUriFormat
       ),
-      responseBody: entityData ,
+      responseBody: entityData,
       responseHeaders: { Etag: versionIdentifier }
     });
 

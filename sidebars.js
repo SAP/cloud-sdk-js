@@ -86,7 +86,10 @@ module.exports = {
       {
         type: 'category',
         label: 'Tips & Tricks',
-        items: ['java/tips-and-tricks/change-log-level']
+        items: [
+          'java/tips-and-tricks/change-log-level',
+          'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems'
+      ]
       },
       {
         type: 'category',
@@ -118,12 +121,26 @@ module.exports = {
     JavaScript: [
       'js/introduction',
       'js/getting-started',
+      {
+        type: 'category',
+        label: 'Features',
+        items: [
+          {
+            type: 'category',
+            label: 'Connectivity',
+            items: [
+              'js/features/connectivity/proxy-js-sdk',
+              'js/features/connectivity/destination-js-sdk'
+            ]
+          }
+        ]
+      },
       'js/api-reference-js-ts'
     ],
     'Continuous Delivery': ['devops/getting-started'],
     // FAQ: ['faq/frequently-asked-questions'],
     // Support: ['support/support'],
-    'Community calls': ['community-calls/community-calls-2020'],
+    'Community': ['community/community-call'],
     'Related projects': [
       'related-projects/cloud-application-model'
       //   'related-projects/sap-cloud-for-realestate',

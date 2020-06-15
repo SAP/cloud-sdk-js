@@ -38,13 +38,16 @@ const generatorConfig = {
   s4hanaCloud: false
 };
 
-function generateTestServicesPackage(outputDir, version: 'v2' | 'v4') {
+function generateTestServicesPackage(outputDir: string, version: 'v2' | 'v4') {
   generate({
     ...generatorConfig,
     inputDir: path.join(serviceSpecsDir, version),
-    outputDir,
+    outputDir: `${outputDir}/${version}`,
     generateJs: true
   });
+}
+
+function generateLegacyTestService() {
   exec(
     'cp -r test-packages/test-services/test-service-legacy test-packages/test-services/srv/test-service-legacy'
   );
@@ -109,5 +112,7 @@ async function generateTestServicesWithLocalCoreModules(
 }
 
 generateTestServicesPackage(packageOutputDir, 'v2');
+generateTestServicesPackage(packageOutputDir, 'v4');
+generateLegacyTestService();
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');

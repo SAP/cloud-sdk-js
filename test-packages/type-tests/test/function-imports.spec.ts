@@ -6,7 +6,7 @@ import {
   testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection
-} from '@sap-cloud-sdk/test-services/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 
 // $ExpectType FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeParameters, boolean>
 const edmReturnTypeRequestBuilder = testFunctionImportEdmReturnType({});

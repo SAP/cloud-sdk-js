@@ -35,7 +35,7 @@ The SDK provides a generator to create a client or data model based on a service
 For S/4HANA this client has been created and published to npm. 
 In this [tutorial series](https://developers.sap.com/group.s4sdk-js-cloud-foundry.html) a detailed step-by-step guide how to use the data model is presented.
 A simple request to receive some business-partners from an S/4 HANA system would look like:
-```TypeScript
+```js
 BusinessPartner.requestBuilder()
   .getAll().filter(BusinessPartner.BUSINESS_PARTNER_CATEGORY.equals('1'))
   .top(5)
@@ -46,7 +46,7 @@ In principle, you could create a destination object yourself or read it from som
 However, this would not be very flexible and convenient as discussed above.
 The SDK provides some help for this problem. 
 If just a destinationName is provided i.e.:
-```
+```js
 .execute({"destinationName": 'myDestination'})
 ```
 the SDK tries to look the destination up for you.
@@ -68,7 +68,7 @@ This option is present for deployment and testing in a local environment outside
 The SDK provides a `mockDestinationsEnv(...destinations)` method which takes a list of destination objects, transforms it to a JSON array and assigns it to the `process.env.destinations`.
 At runtime, the SDK will check whether a destination with the given is present and use it, if it is.
 If a destination with the same name as the one given as `destinationName` is found it is taken for example:
-```
+```js
 mockDestinationsEnv({
   authTokens: [],
   authentication: 'NoAuthentication',
@@ -84,7 +84,7 @@ would set a destination with name `TESTINATION`.
 It is possible that the service credentials in other words `VCAP_SERVICES` environment variables contain a destination.
 If you want to use this information the name of the service instance must be provided as destination name.
 Currently two services types are supported out of the box `business-logging` and `s4-hana-cloud` with the following transformation functions:
-```
+```js
 //business-logging
 (serviceBinding) => { 
     url: serviceBinding.credentials.writeUrl,
@@ -124,7 +124,7 @@ In the following the term `subscriber account` will be used for the accounts usi
 
 After this little definition detour, let's go back to the destination service and the SDK.
 For simplicity an optional argument of the destination lookup has been neglected in the beginning:
-```
+```js
 .execute({destinationName: 'myDestination', jwt: 'yourJWT'})
 ```  
 The `jwt` argument takes the JSON web token (JWT) issued by an XSUAA as input. 
@@ -139,7 +139,7 @@ The tenant and service information are encoded in the access token.
   
 If no token is given or the destination is not found in the subscriber account the provider account is used as a fallback.
 In order to control this fallback behaviour a selection strategy can be passed to the destination lookup:
-```
+```js
 .execute({destinationName: 'myDestination', jwt: 'yourJWT'},{selectionStrategy:'alwaysSubscriber'})
 ```
 There are three selection strategies defined in the SDK: `alwaysSubscriber`, `alwaysProvider` and `subscriberFirst`.

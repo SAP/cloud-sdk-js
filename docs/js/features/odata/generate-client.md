@@ -46,7 +46,7 @@ The generator is included in the SAP cloud-sdk-cli, if you have it installed you
 The generator is primarily meant to be used on the command line:
 
 ```sh
-generate-odata-client --inputDir path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
+generate-odata-client --inputDir path/to/your/service-specification(s) --outputDir path/to/store/generated/modules
 ```
 
 Run `generate-odata-client --help` for further options.

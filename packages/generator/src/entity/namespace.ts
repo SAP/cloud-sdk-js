@@ -46,11 +46,11 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
   return entity.properties.map(prop => property(prop, entity));
 }
 
-function getPropertyFieldClassName(prop: VdmProperty): string {
+function getFieldClassName(prop: VdmProperty): string {
   return prop.isCollection ? 'CollectionField' : prop.fieldType;
 }
 
-function getPropertyFieldInitializer(
+function getFieldInitializer(
   prop: VdmProperty,
   entityClassName: string
 ): OptionalKind<VariableDeclarationStructure> {
@@ -60,7 +60,7 @@ function getPropertyFieldInitializer(
       : prop.edmType.split('.').pop()
   }'`;
 
-  const className = getPropertyFieldClassName(prop);
+  const className = getFieldClassName(prop);
   const thirdParameterSingle = prop.isComplex ? undefined : type;
   const thirdParameter = prop.isCollection
     ? createPropertyFieldInitializer(
@@ -103,7 +103,7 @@ function property(
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,
-    declarations: [getPropertyFieldInitializer(prop, entity.className)],
+    declarations: [getFieldInitializer(prop, entity.className)],
     docs: [getStaticPropertyDescription(prop)],
     isExported: true
   };
@@ -142,8 +142,10 @@ function navigationProperty(
     declarations: [
       {
         name: navProp.staticPropertyName,
-        type: `${linkClass(navProp, service)}<${entity.className},${toEntity}>`,
-        initializer: `new ${linkClass(navProp, service)}('${
+        type: `${linkClass(navProp, service.oDataVersion)}<${
+          entity.className
+        },${toEntity}>`,
+        initializer: `new ${linkClass(navProp, service.oDataVersion)}('${
           navProp.originalName
         }', ${entity.className}, ${toEntity})`
       }
@@ -159,11 +161,13 @@ function allFields(
 ): VariableStatementStructure {
   const fieldTypes = unique([
     ...entity.properties.map(
-      p => `${getPropertyFieldClassName(p)}<${entity.className}>`
+      p => `${getFieldClassName(p)}<${entity.className}>`
     ),
     ...entity.navigationProperties.map(
       p =>
-        `${linkClass(p, service)}<${entity.className},${p.toEntityClassName}>`
+        `${linkClass(p, service.oDataVersion)}<${entity.className},${
+          p.toEntityClassName
+        }>`
     )
   ]);
   return {

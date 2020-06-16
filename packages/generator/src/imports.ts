@@ -6,8 +6,7 @@ import { linkClass } from './generator-utils';
 import {
   VdmMappedEdmType,
   VdmNavigationProperty,
-  VdmProperty,
-  VdmServiceMetadata
+  VdmProperty
 } from './vdm-types';
 
 const potentialExternalImportDeclarations = [
@@ -70,9 +69,9 @@ export function corePropertyFieldTypeImportNames(
 
 export function coreNavPropertyFieldTypeImportNames(
   navProperties: VdmNavigationProperty[],
-  service: VdmServiceMetadata
+  oDataVersion: ODataVersion
 ): string[] {
-  return unique(navProperties.map(navProp => linkClass(navProp, service)));
+  return unique(navProperties.map(navProp => linkClass(navProp, oDataVersion)));
 }
 
 export function complexTypeImportDeclarations(

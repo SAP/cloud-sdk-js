@@ -15,7 +15,7 @@ export function complexTypeSourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...importDeclarations(complexType, service),
+      ...importDeclarations(complexType, service.oDataVersion),
       complexTypeInterface(complexType),
       builderFunction(complexType),
       fieldTypeClass(complexType),

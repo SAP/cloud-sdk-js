@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   coreImportDeclaration,
@@ -13,7 +14,7 @@ import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 export function importDeclarations(
   entity: VdmEntity,
-  service: VdmServiceMetadata
+  oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
     {
@@ -37,7 +38,7 @@ export function importDeclarations(
         'EntityBuilderType',
         'Field'
       ].sort(),
-      service.oDataVersion
+      oDataVersion
     )
   ];
 }

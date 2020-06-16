@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EdmType } from '@sap-cloud-sdk/core';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { VdmNavigationProperty, VdmServiceMetadata } from './vdm-types';
+import { VdmNavigationProperty } from './vdm-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -136,10 +136,10 @@ export function endWithDot(text: string): string {
 
 export function linkClass(
   navProperty: VdmNavigationProperty,
-  service: VdmServiceMetadata
+  oDataVersion: ODataVersion
 ): string {
   return navProperty.isCollection
-    ? service.oDataVersion === 'v4'
+    ? oDataVersion === 'v4'
       ? 'OneToManyLink'
       : 'Link'
     : 'OneToOneLink';

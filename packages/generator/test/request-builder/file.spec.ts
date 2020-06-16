@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { StructureKind } from 'ts-morph';
 import { requestBuilderSourceFile } from '../../src/request-builder';
-import { breakfastEntity, foodService } from '../test-util/data-model';
+import { breakfastEntity } from '../test-util/data-model';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = requestBuilderSourceFile(breakfastEntity, foodService);
+    const actual = requestBuilderSourceFile(breakfastEntity, 'v2');
     expect(actual.kind).toBe(StructureKind.SourceFile);
 
     const imports = (actual.statements as any[]).filter(

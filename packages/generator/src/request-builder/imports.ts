@@ -1,16 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   coreImportDeclaration,
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
+import { VdmEntity } from '../vdm-types';
 
 export function importDeclarations(
   entity: VdmEntity,
-  service: VdmServiceMetadata
+  oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(entity.keys),
@@ -19,7 +20,7 @@ export function importDeclarations(
         ...corePropertyTypeImportNames(entity.keys),
         ...requestBuilderCoreImportDeclarations(entity)
       ],
-      service.oDataVersion
+      oDataVersion
     ),
     entityImportDeclaration(entity)
   ];

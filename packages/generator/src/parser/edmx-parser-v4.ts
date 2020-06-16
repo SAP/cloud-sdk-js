@@ -20,7 +20,7 @@ import { EdmxMetadataBase } from './parser-types-common';
 function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],
   joinTypes: (type: T, baseType: T) => T
-) {
+): T[] {
   return types.map(type =>
     type.BaseType ? addBaseTypeToType(type, types, joinTypes) : type
   );
@@ -30,7 +30,7 @@ function addBaseTypeToType<T extends EdmxDerivedType>(
   type: T,
   types: T[],
   joinTypes: (type: T, baseType: T) => T
-) {
+): T {
   const baseType = types.find(e => e.Name === stripNamespace(type.BaseType!));
 
   if (!baseType) {

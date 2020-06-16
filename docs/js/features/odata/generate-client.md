@@ -41,7 +41,7 @@ The generator is included in the SAP cloud-sdk-cli, if you have it installed you
 
 ## Usage
 
-### Using the CLI
+### From the Command Line
 
 The generator is primarily meant to be used on the command line:
 

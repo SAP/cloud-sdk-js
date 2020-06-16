@@ -25,10 +25,11 @@ The community update calls take place on every first Tuesday of a month. On this
 
 ### What do you want to learn?
 
-Our community call series is as good as the value it bring to the community. If you are interested in a particular topic, feel free to request it by contacting us and we'll do our best to deliver a session in the near future.
+Our community call series is as good as the value it bring to the community. If you are interested in a particular topic, feel free to request it by [contacting us](mailto:cloudsdk@sap.com) and we'll do our best to deliver a session in the near future.
 
-## Topics Backlog
+### Topics Backlog
 
+We consider holding a session in the future about these topics:
 * Build an application using SAP Cloud SDK in SAP Business Application Studio
 
 ## Upcoming Dates 2020
@@ -45,7 +46,7 @@ Our community call series is as good as the value it bring to the community. If 
 ### 2020
 
 * Jun 2 - JavaScript Linting with SAP Cloud SDK for Continuous Delivery
-* May 5 - [Consuming OData v4 Services using SAP Cloud SDK](https://www.youtube.com/watch?v=p_JTapzii_I)
+* May 5 - [Consuming OData v4 Services using SAP Cloud SDK for Java](https://www.youtube.com/watch?v=p_JTapzii_I)
 * Apr 7 - [SAP Cloud SDK for JavaScript goes open source](https://www.youtube.com/watch?v=nRWXlxgdnmk)
 * Mar 3 - [Get from Zero to Production with SAP Cloud SDK](https://www.youtube.com/watch?v=f3XG4hFiWdM)
 * Feb 4 - [Consume APIs of SAP Solutions with Ease](https://www.youtube.com/watch?v=RqdBKZBO76I)
@@ -56,5 +57,5 @@ Our community call series is as good as the value it bring to the community. If 
 * Nov 5 - [What’s New in SAP Cloud SDK for JavaScript](https://www.youtube.com/watch?v=jv-bS9lK8zk)
 * Oct 1 - [Continuous Delivery](https://www.youtube.com/watch?v=M2chjvlrsF8)
 * Sep 3 - [SAP Cloud SDK for Java version 3](https://www.youtube.com/watch?v=l3P9-wqIhYA)
-* Aug 6 - [SCP Extension Factory](https://www.youtube.com/watch?v=aTuNXF-Alp4)
+* Aug 6 - [SAP Cloud Platform Extension Factory](https://www.youtube.com/watch?v=aTuNXF-Alp4)
 * Jul 2 - [SAP Cloud SDK Introduction](https://www.youtube.com/watch?v=jNovhlGzg78)

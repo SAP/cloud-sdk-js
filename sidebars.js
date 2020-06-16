@@ -134,6 +134,13 @@ module.exports = {
           }
         ]
       },
+      {
+        type: 'category',
+        label: 'Guides',
+        items: [
+          'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript'
+        ],
+      },
       'js/api-reference-js-ts'
     ],
     'Continuous Delivery': ['devops/getting-started'],

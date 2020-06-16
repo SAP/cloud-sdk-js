@@ -40,7 +40,7 @@ Our community call series is as good as the value it bring to the community. If 
 * Nov 3
 * Dec 1
 
-## Past Sessions Replays
+## Past Sessions
 
 ### 2020
 

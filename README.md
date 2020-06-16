@@ -53,7 +53,7 @@ We use GitHub Pages for our API documentations, the link can be found [here](htt
 
 ## How to switch to the Open Source version of the SAP Cloud SDK
 Please ignore this section, if you have never used the SAP Cloud SDK with a version `< 1.18.0`.
-If you are using an old version of the SAP Cloud SDK, you might want to read [how to migrate to this Open Source version of the SAP Cloud SDK](./knowledge-base/how-to-switch-to-os-cloud-sdk.md).
+If you are using an old version of the SAP Cloud SDK, you might want to read [how to migrate to this Open Source version of the SAP Cloud SDK](./knowledge-base/how-tos/how-to-switch-to-os-cloud-sdk.md).
 
 ## Related Projects
 

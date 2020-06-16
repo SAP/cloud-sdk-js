@@ -76,6 +76,7 @@ You can also use the generator programmatically. You will have to provide the op
 import { generateProject } from '@sap-cloud-sdk/generator';
 
 //Create your options, adapt the input & output directory as well as the package name according to your setup.
+//PLACEHOLDER
 const options: GeneratorOptions = initializeOptions();
 
 //Create your project datastructure with all sourcefiles based on your options

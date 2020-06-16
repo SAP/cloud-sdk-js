@@ -1,7 +1,7 @@
 ---
 id: migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript
 title: Migrate to Open Source version of SDK for JS/TS
-sidebar_label: Migrate to Open Source version
+sidebar_label: Migrate to Open Source
 description: We open sourced SAP Cloud SDK for JS/TS in the beginning of 2020. This guide will help you with migration to the Open Source version.
 keywords:
 - sap

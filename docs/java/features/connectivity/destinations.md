@@ -48,7 +48,7 @@ Below is the sample call to `tryGetAllDestinations`:
                 .augmentBuilder(
                     ScpCfDestinationOptionsAugmenter.augmenter().retrievalStrategy(
                         ScpCfDestinationRetrievalStrategy.SUBSCRIBER_THEN_PROVIDER))
-                .build();;
+                .build();
 ```
 
 

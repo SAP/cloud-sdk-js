@@ -1,6 +1,6 @@
 ---
 id: proxy-js-sdk
-title: Proxies in the Cloud SDK for JS
+title: Proxies in the Cloud SDK for JS/TS
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Proxies

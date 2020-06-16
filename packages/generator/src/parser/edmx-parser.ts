@@ -4,7 +4,10 @@ import { PathLike, readFileSync } from 'fs';
 import path from 'path';
 import { parse } from 'fast-xml-parser';
 import { ODataVersion } from '@sap-cloud-sdk/util';
-import { EdmxMetadata as EdmxMetadataV2 } from './parser-types-v2';
+import {
+  EdmxMetadata as EdmxMetadataV2,
+  isV2Metadata
+} from './parser-types-v2';
 import { EdmxMetadata as EdmxMetadataV4 } from './parser-types-v4';
 import { parseBaseMetadata, getRoot } from './edmx-parser-common';
 import { parseEdmxV2 } from './edmx-parser-v2';
@@ -36,7 +39,7 @@ function parseEdmxFile(
 
   return {
     ...metaData,
-    ...(metaData.oDataVersion === 'v2' ? parseEdmxV2(root) : parseEdmxV4(root))
+    ...(isV2Metadata(metaData) ? parseEdmxV2(root) : parseEdmxV4(root))
   };
 }
 

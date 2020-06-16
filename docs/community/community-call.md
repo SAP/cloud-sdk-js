@@ -40,7 +40,7 @@ Our community call series is as good as the value it bring to the community. If 
 * Nov 3
 * Dec 1
 
-## History
+## Past Sessions and Replays
 
 ### 2020
 
@@ -52,9 +52,9 @@ Our community call series is as good as the value it bring to the community. If 
 
 ### 2019
 
-* Dec 3 - SAP Cloud SDK at TechEd 2019
-* Nov 5 - What’s New in SAP Cloud SDK for JavaScript
-* Oct 1 - Continuous Delivery
-* Sep 3 - SAP Cloud SDK for Java version 3
-* Aug 6 - SCP Extension Factory
-* Jul 2 - SAP Cloud SDK Introduction
+* Dec 3 - [SAP Cloud SDK at TechEd 2019](https://www.youtube.com/watch?v=TlNZy8-07ss&t=10s)
+* Nov 5 - [What’s New in SAP Cloud SDK for JavaScript](https://www.youtube.com/watch?v=jv-bS9lK8zk)
+* Oct 1 - [Continuous Delivery](https://www.youtube.com/watch?v=M2chjvlrsF8)
+* Sep 3 - [SAP Cloud SDK for Java version 3](https://www.youtube.com/watch?v=l3P9-wqIhYA)
+* Aug 6 - [SCP Extension Factory](https://www.youtube.com/watch?v=aTuNXF-Alp4)
+* Jul 2 - [SAP Cloud SDK Introduction](https://www.youtube.com/watch?v=jNovhlGzg78)

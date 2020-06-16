@@ -32,13 +32,7 @@ export function importDeclarations(
         ...returnTypes.map(returnType =>
           responseTransformerFunctionName(returnType)
         ),
-        ...(returnTypes.some(
-          returnType =>
-            returnType.returnTypeCategory ===
-            VdmFunctionImportReturnTypeCategory.EDM_TYPE
-        )
-          ? ['edmToTs']
-          : []),
+        ...edmRelatedImports(returnTypes),
         'FunctionImportRequestBuilder',
         'FunctionImportParameter'
       ],
@@ -46,6 +40,16 @@ export function importDeclarations(
     ),
     ...returnTypeImports(returnTypes)
   ];
+}
+
+function edmRelatedImports(returnTypes: VdmFunctionImportReturnType[]) {
+  return returnTypes.some(
+    returnType =>
+      returnType.returnTypeCategory ===
+      VdmFunctionImportReturnTypeCategory.EDM_TYPE
+  )
+    ? ['edmToTs']
+    : [];
 }
 
 function returnTypeImports(

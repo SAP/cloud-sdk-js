@@ -30,7 +30,7 @@ export function importDeclarations(
         ...corePropertyFieldTypeImportNames(entity.properties),
         ...coreNavPropertyFieldTypeImportNames(
           entity.navigationProperties,
-          service
+          oDataVersion
         ),
         'AllFields',
         'CustomField',

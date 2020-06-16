@@ -25,7 +25,7 @@ The community update calls take place on every first Tuesday of a month. On this
 
 ### What do you want to learn?
 
-Our community call series is as good as the value it bring to the community. If you are interested in a particular topic, feel free to request it here and we'll do our best to prepare a session in the near future.
+Our community call series is as good as the value it bring to the community. If you are interested in a particular topic, feel free to request it by contacting us and we'll do our best to deliver a session in the near future.
 
 ## Topics Backlog
 

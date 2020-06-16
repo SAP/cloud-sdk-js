@@ -25,7 +25,7 @@ In order to fetch all destinations from the Destination Service you need to perf
  1) Invoke the `ScpCfDestinationLoader` with the `DestinationService` and `XsuaaService` instances.
 
 ```java
- final ScpCfDestinationLoader destinationLoader = new ScpCfDestinationLoader(destinationService, xsuaaService);
+ final ScpCfDestinationLoader destinationLoader = new ScpCfDestinationLoader();
 ```
 
  2) Build a `DestinationOptions` object based on the retrieval strategy for your particular use case. The Retieval strategy can be `ALWAYS_SUBSCRIBER`, `ALWAYS_PROVIDER` or `SUBSCRIBER_THEN_PROVIDER`. E.g. for `SUBSCRIBER_THEN_PROVIDER` use:

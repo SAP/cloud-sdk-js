@@ -24,6 +24,11 @@ export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2Si
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
+   * Key Property.
+   * Maximum length: 10.
+   */
+  keyProperty!: string;
+  /**
    * String Property.
    * Maximum length: 10.
    * @nullable
@@ -44,11 +49,6 @@ export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2Si
    * @nullable
    */
   int16Property?: number;
-  /**
-   * Key Property.
-   * Maximum length: 10.
-   */
-  keyProperty!: string;
 
   /**
    * Returns an entity builder to construct instances `TestEntityLvl2SingleLink`.
@@ -85,22 +85,27 @@ export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2Si
 }
 
 export interface TestEntityLvl2SingleLinkType {
+  keyProperty: string;
   stringProperty?: string;
   booleanProperty?: boolean;
   guidProperty?: string;
   int16Property?: number;
-  keyProperty: string;
 }
 
 export interface TestEntityLvl2SingleLinkTypeForceMandatory {
+  keyProperty: string;
   stringProperty: string;
   booleanProperty: boolean;
   guidProperty: string;
   int16Property: number;
-  keyProperty: string;
 }
 
 export namespace TestEntityLvl2SingleLink {
+  /**
+   * Static representation of the [[keyProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const KEY_PROPERTY: StringField<TestEntityLvl2SingleLink> = new StringField('KeyProperty', TestEntityLvl2SingleLink, 'Edm.String');
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -122,19 +127,14 @@ export namespace TestEntityLvl2SingleLink {
    */
   export const INT_16_PROPERTY: NumberField<TestEntityLvl2SingleLink> = new NumberField('Int16Property', TestEntityLvl2SingleLink, 'Edm.Int16');
   /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const KEY_PROPERTY: StringField<TestEntityLvl2SingleLink> = new StringField('KeyProperty', TestEntityLvl2SingleLink, 'Edm.String');
-  /**
    * All fields of the TestEntityLvl2SingleLink entity.
    */
   export const _allFields: Array<StringField<TestEntityLvl2SingleLink> | BooleanField<TestEntityLvl2SingleLink> | NumberField<TestEntityLvl2SingleLink>> = [
+    TestEntityLvl2SingleLink.KEY_PROPERTY,
     TestEntityLvl2SingleLink.STRING_PROPERTY,
     TestEntityLvl2SingleLink.BOOLEAN_PROPERTY,
     TestEntityLvl2SingleLink.GUID_PROPERTY,
-    TestEntityLvl2SingleLink.INT_16_PROPERTY,
-    TestEntityLvl2SingleLink.KEY_PROPERTY
+    TestEntityLvl2SingleLink.INT_16_PROPERTY
   ];
   /**
    * All fields selector.

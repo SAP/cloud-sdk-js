@@ -2,7 +2,7 @@
 import {
   TestEntity,
   TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';
 import {
   testEntityKeyPropGuid,

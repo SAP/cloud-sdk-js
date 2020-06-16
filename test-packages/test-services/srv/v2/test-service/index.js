@@ -30,7 +30,6 @@ __export(require("./TestEntityEndsWithRequestBuilder"));
 __export(require("./TestEntityEndsWithSomethingElseRequestBuilder"));
 __export(require("./TestComplexType"));
 __export(require("./TestNestedComplexType"));
-__export(require("./TestLvl2NestedComplexType"));
 __export(require("./function-imports"));
 __export(require("./BatchRequest"));
 //# sourceMappingURL=index.js.map

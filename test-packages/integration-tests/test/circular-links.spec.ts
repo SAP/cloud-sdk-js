@@ -2,7 +2,7 @@
 import {
   TestEntityCircularLinkChild,
   TestEntityCircularLinkParent
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/test-service';
 
 describe('Cyclic links', () => {
   it('should be defined', () => {

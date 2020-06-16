@@ -92,11 +92,6 @@ export interface TestComplexType {
    * @nullable
    */
   complexTypeProperty?: TestNestedComplexType;
-  /**
-   * Base String Property.
-   * @nullable
-   */
-  baseStringProperty?: string;
 }
 
 /**
@@ -191,15 +186,10 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   complexTypeProperty: TestNestedComplexTypeField<EntityT> = new TestNestedComplexTypeField('ComplexTypeProperty', this);
-  /**
-   * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'filter' in the fluent request API.
-   */
-  baseStringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('BaseStringProperty', this, 'Edm.String');
 }
 
 export namespace TestComplexType {
-  export function build(json: { [keys: string]: FieldType | TestNestedComplexType }): TestComplexType {
+  export function build(json: { [keys: string]: FieldType }): TestComplexType {
     return createComplexType(json, {
       StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') }),
       BooleanProperty: (booleanProperty: boolean) => ({ booleanProperty: edmToTs(booleanProperty, 'Edm.Boolean') }),
@@ -216,8 +206,7 @@ export namespace TestComplexType {
       DateTimeOffSetProperty: (dateTimeOffSetProperty: Moment) => ({ dateTimeOffSetProperty: edmToTs(dateTimeOffSetProperty, 'Edm.DateTimeOffset') }),
       ByteProperty: (byteProperty: number) => ({ byteProperty: edmToTs(byteProperty, 'Edm.Byte') }),
       SByteProperty: (sByteProperty: number) => ({ sByteProperty: edmToTs(sByteProperty, 'Edm.SByte') }),
-      ComplexTypeProperty: (complexTypeProperty: TestNestedComplexType) => ({ complexTypeProperty: TestNestedComplexType.build(complexTypeProperty) }),
-      BaseStringProperty: (baseStringProperty: string) => ({ baseStringProperty: edmToTs(baseStringProperty, 'Edm.String') })
+      ComplexTypeProperty: (complexTypeProperty: TestNestedComplexType) => ({ complexTypeProperty: TestNestedComplexType.build(complexTypeProperty) })
     });
   }
 }

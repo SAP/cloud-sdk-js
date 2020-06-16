@@ -9,7 +9,7 @@ import {
   Destination
 } from '@sap-cloud-sdk/core';
 import httpProxy from 'http-proxy';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';
 import { setTestDestination } from '@sap-cloud-sdk/test-util';
 import axios from '../../../packages/core/node_modules/axios';

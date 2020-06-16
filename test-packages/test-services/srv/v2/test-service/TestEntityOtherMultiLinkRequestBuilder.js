@@ -30,11 +30,11 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `TestEntityOtherMultiLink` entity based on its keys.
-     * @param keyProperty Key property. See [[TestEntityOtherMultiLink.keyProperty]].
+     * @param keyPropertyString Key property. See [[TestEntityOtherMultiLink.keyPropertyString]].
      * @returns A request builder for creating requests to retrieve one `TestEntityOtherMultiLink` entity based on its keys.
      */
-    TestEntityOtherMultiLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new core_1.GetByKeyRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, { KeyProperty: keyProperty });
+    TestEntityOtherMultiLinkRequestBuilder.prototype.getByKey = function (keyPropertyString) {
+        return new core_1.GetByKeyRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, { KeyPropertyString: keyPropertyString });
     };
     /**
      * Returns a request builder for querying all `TestEntityOtherMultiLink` entities.
@@ -59,8 +59,8 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
     TestEntityOtherMultiLinkRequestBuilder.prototype.update = function (entity) {
         return new core_1.UpdateRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, entity);
     };
-    TestEntityOtherMultiLinkRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new core_1.DeleteRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, keyPropertyOrEntity instanceof TestEntityOtherMultiLink_1.TestEntityOtherMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+    TestEntityOtherMultiLinkRequestBuilder.prototype.delete = function (keyPropertyStringOrEntity) {
+        return new core_1.DeleteRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, keyPropertyStringOrEntity instanceof TestEntityOtherMultiLink_1.TestEntityOtherMultiLink ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity });
     };
     return TestEntityOtherMultiLinkRequestBuilder;
 }(core_1.RequestBuilder));

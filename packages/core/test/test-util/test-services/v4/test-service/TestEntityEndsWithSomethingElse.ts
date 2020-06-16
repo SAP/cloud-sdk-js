@@ -25,7 +25,6 @@ export class TestEntityEndsWithSomethingElse extends Entity implements TestEntit
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * Key Property.
-   * Maximum length: 10.
    */
   keyProperty!: string;
 

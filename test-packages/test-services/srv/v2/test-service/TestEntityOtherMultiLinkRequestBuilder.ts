@@ -12,11 +12,11 @@ import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 export class TestEntityOtherMultiLinkRequestBuilder extends RequestBuilder<TestEntityOtherMultiLink> {
   /**
    * Returns a request builder for retrieving one `TestEntityOtherMultiLink` entity based on its keys.
-   * @param keyProperty Key property. See [[TestEntityOtherMultiLink.keyProperty]].
+   * @param keyPropertyString Key property. See [[TestEntityOtherMultiLink.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `TestEntityOtherMultiLink` entity based on its keys.
    */
-  getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntityOtherMultiLink> {
-    return new GetByKeyRequestBuilder(TestEntityOtherMultiLink, { KeyProperty: keyProperty });
+  getByKey(keyPropertyString: string): GetByKeyRequestBuilder<TestEntityOtherMultiLink> {
+    return new GetByKeyRequestBuilder(TestEntityOtherMultiLink, { KeyPropertyString: keyPropertyString });
   }
 
   /**
@@ -47,17 +47,17 @@ export class TestEntityOtherMultiLinkRequestBuilder extends RequestBuilder<TestE
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntityOtherMultiLink`.
-   * @param keyProperty Key property. See [[TestEntityOtherMultiLink.keyProperty]].
+   * @param keyPropertyString Key property. See [[TestEntityOtherMultiLink.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityOtherMultiLink`.
    */
-  delete(keyProperty: string): DeleteRequestBuilder<TestEntityOtherMultiLink>;
+  delete(keyPropertyString: string): DeleteRequestBuilder<TestEntityOtherMultiLink>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityOtherMultiLink`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityOtherMultiLink` by taking the entity as a parameter.
    */
   delete(entity: TestEntityOtherMultiLink): DeleteRequestBuilder<TestEntityOtherMultiLink>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityOtherMultiLink> {
-    return new DeleteRequestBuilder(TestEntityOtherMultiLink, keyPropertyOrEntity instanceof TestEntityOtherMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+  delete(keyPropertyStringOrEntity: any): DeleteRequestBuilder<TestEntityOtherMultiLink> {
+    return new DeleteRequestBuilder(TestEntityOtherMultiLink, keyPropertyStringOrEntity instanceof TestEntityOtherMultiLink ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity! });
   }
 }

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { Destination } from '@sap-cloud-sdk/core';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/test-service';
 import nock from 'nock';
 import { singleTestEntityResponse } from './test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';

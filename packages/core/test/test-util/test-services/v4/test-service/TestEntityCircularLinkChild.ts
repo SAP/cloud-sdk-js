@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, OneToOneLink, StringField } from '../../../../../src/v4';
+import { AllFields, CustomField, Entity, EntityBuilderType, Field, OneToManyLink, StringField } from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
@@ -25,13 +25,12 @@ export class TestEntityCircularLinkChild extends Entity implements TestEntityCir
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * Key Property.
-   * Maximum length: 10.
    */
   keyProperty!: string;
   /**
-   * One-to-one navigation property to the [[TestEntityCircularLinkParent]] entity.
+   * One-to-many navigation property to the [[TestEntityCircularLinkChild]] entity.
    */
-  toParent!: TestEntityCircularLinkParent;
+  toParent!: TestEntityCircularLinkChild[];
 
   /**
    * Returns an entity builder to construct instances `TestEntityCircularLinkChild`.
@@ -67,16 +66,14 @@ export class TestEntityCircularLinkChild extends Entity implements TestEntityCir
   }
 }
 
-import { TestEntityCircularLinkParent, TestEntityCircularLinkParentType } from './TestEntityCircularLinkParent';
-
 export interface TestEntityCircularLinkChildType {
   keyProperty: string;
-  toParent: TestEntityCircularLinkParentType;
+  toParent: TestEntityCircularLinkChildType[];
 }
 
 export interface TestEntityCircularLinkChildTypeForceMandatory {
   keyProperty: string;
-  toParent: TestEntityCircularLinkParentType;
+  toParent: TestEntityCircularLinkChildType[];
 }
 
 export namespace TestEntityCircularLinkChild {
@@ -86,14 +83,14 @@ export namespace TestEntityCircularLinkChild {
    */
   export const KEY_PROPERTY: StringField<TestEntityCircularLinkChild> = new StringField('KeyProperty', TestEntityCircularLinkChild, 'Edm.String');
   /**
-   * Static representation of the one-to-one navigation property [[toParent]] for query construction.
+   * Static representation of the one-to-many navigation property [[toParent]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_PARENT: OneToOneLink<TestEntityCircularLinkChild, TestEntityCircularLinkParent> = new OneToOneLink('to_Parent', TestEntityCircularLinkChild, TestEntityCircularLinkParent);
+  export const TO_PARENT: OneToManyLink<TestEntityCircularLinkChild, TestEntityCircularLinkChild> = new OneToManyLink('to_Parent', TestEntityCircularLinkChild, TestEntityCircularLinkChild);
   /**
    * All fields of the TestEntityCircularLinkChild entity.
    */
-  export const _allFields: Array<StringField<TestEntityCircularLinkChild> | OneToOneLink<TestEntityCircularLinkChild, TestEntityCircularLinkParent>> = [
+  export const _allFields: Array<StringField<TestEntityCircularLinkChild> | OneToManyLink<TestEntityCircularLinkChild, TestEntityCircularLinkChild>> = [
     TestEntityCircularLinkChild.KEY_PROPERTY,
     TestEntityCircularLinkChild.TO_PARENT
   ];

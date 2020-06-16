@@ -24,6 +24,11 @@ export class TestEntityLvl2MultiLink extends Entity implements TestEntityLvl2Mul
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
+   * Key Property.
+   * Maximum length: 10.
+   */
+  keyProperty!: string;
+  /**
    * String Property.
    * Maximum length: 10.
    * @nullable
@@ -44,11 +49,6 @@ export class TestEntityLvl2MultiLink extends Entity implements TestEntityLvl2Mul
    * @nullable
    */
   int16Property?: number;
-  /**
-   * Key Property.
-   * Maximum length: 10.
-   */
-  keyProperty!: string;
 
   /**
    * Returns an entity builder to construct instances `TestEntityLvl2MultiLink`.
@@ -85,22 +85,27 @@ export class TestEntityLvl2MultiLink extends Entity implements TestEntityLvl2Mul
 }
 
 export interface TestEntityLvl2MultiLinkType {
+  keyProperty: string;
   stringProperty?: string;
   booleanProperty?: boolean;
   guidProperty?: string;
   int16Property?: number;
-  keyProperty: string;
 }
 
 export interface TestEntityLvl2MultiLinkTypeForceMandatory {
+  keyProperty: string;
   stringProperty: string;
   booleanProperty: boolean;
   guidProperty: string;
   int16Property: number;
-  keyProperty: string;
 }
 
 export namespace TestEntityLvl2MultiLink {
+  /**
+   * Static representation of the [[keyProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const KEY_PROPERTY: StringField<TestEntityLvl2MultiLink> = new StringField('KeyProperty', TestEntityLvl2MultiLink, 'Edm.String');
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -122,19 +127,14 @@ export namespace TestEntityLvl2MultiLink {
    */
   export const INT_16_PROPERTY: NumberField<TestEntityLvl2MultiLink> = new NumberField('Int16Property', TestEntityLvl2MultiLink, 'Edm.Int16');
   /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const KEY_PROPERTY: StringField<TestEntityLvl2MultiLink> = new StringField('KeyProperty', TestEntityLvl2MultiLink, 'Edm.String');
-  /**
    * All fields of the TestEntityLvl2MultiLink entity.
    */
   export const _allFields: Array<StringField<TestEntityLvl2MultiLink> | BooleanField<TestEntityLvl2MultiLink> | NumberField<TestEntityLvl2MultiLink>> = [
+    TestEntityLvl2MultiLink.KEY_PROPERTY,
     TestEntityLvl2MultiLink.STRING_PROPERTY,
     TestEntityLvl2MultiLink.BOOLEAN_PROPERTY,
     TestEntityLvl2MultiLink.GUID_PROPERTY,
-    TestEntityLvl2MultiLink.INT_16_PROPERTY,
-    TestEntityLvl2MultiLink.KEY_PROPERTY
+    TestEntityLvl2MultiLink.INT_16_PROPERTY
   ];
   /**
    * All fields selector.

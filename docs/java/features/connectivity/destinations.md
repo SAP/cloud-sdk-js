@@ -18,6 +18,32 @@ The SAP Cloud SDK offers some basic functionality that helps with connecting to 
 
 This concept is integrated with the [Destination Service](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/7e306250e08340f89d6c103e28840f30.html) that is available on SAP Cloud Platform. If the application has a service binding to this service in place the SDK will provide access to these destinations.
 
+## Accessing Destinations ##
+
+In general destinations are accessed through the `DestinationAccessor`:
+
+```java
+DestinationAccessor.getDestination("my-destination");
+```
+
+This will lookup the destination in the destination service, if the application is running on SAP Cloud Platform. But
+also other sources like the environment variables are considered.
+
+### Connect to on-premise S/4HANA system ###
+If your destination is exposing an on-premise S/4HANA service via a **[Cloud
+Connector](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/e6c7616abb5710148cfcf3e75d96d596.html)**
+you need to decorate the destination with `DefaultErpHttpDestination`
+
+```java
+final HttpDestination httpDestination =
+destination.asHttp().decorate(DefaultErpHttpDestination::new);
+
+```
+
+## Testing ##
+
+For testing purposes the SDK provides functionality to provide such a destination in a local development environment. Refer to [these tutorial steps](https://developers.sap.com/tutorials/s4sdk-odata-service-cloud-foundry.html#b77d53b0-2d8b-449c-9a9a-9df80ee09a4e) on how to mock destinations for local development and testing.
+
 ## Retrieve all destinations from the Destination Service on Cloud Foundry  ##
  
 In order to fetch all destinations from the Destination Service you need to make a call to `tryGetAllDestinations`.The method queries the [Destination Service API](https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/overview) and retrieves all the destinations available at the service instance and sub-account level. In case there is a destination available on both the levels with the same name, then this method prioritizes the destination at the service instance level.
@@ -49,32 +75,3 @@ final DestinationOptions options =
                        ScpCfDestinationRetrievalStrategy.SUBSCRIBER_THEN_PROVIDER))
                .build();
 ```
-
-
-
-
-## Accessing Destinations ##
-
-In general destinations are accessed through the `DestinationAccessor`:
-
-```java
-DestinationAccessor.getDestination("my-destination");
-```
-
-This will lookup the destination in the destination service, if the application is running on SAP Cloud Platform. But
-also other sources like the environment variables are considered.
-
-### Connect to on-premise S/4HANA system ###
-If your destination is exposing an on-premise S/4HANA service via a **[Cloud
-Connector](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/e6c7616abb5710148cfcf3e75d96d596.html)**
-you need to decorate the destination with `DefaultErpHttpDestination`
-
-```java
-final HttpDestination httpDestination =
-destination.asHttp().decorate(DefaultErpHttpDestination::new);
-
-```
-
-## Testing ##
-
-For testing purposes the SDK provides functionality to provide such a destination in a local development environment. Refer to [these tutorial steps](https://developers.sap.com/tutorials/s4sdk-odata-service-cloud-foundry.html#b77d53b0-2d8b-449c-9a9a-9df80ee09a4e) on how to mock destinations for local development and testing.

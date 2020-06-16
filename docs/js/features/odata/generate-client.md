@@ -36,7 +36,7 @@ npm install -g @sap-cloud-sdk/generator
 ```
 
 :::note
-The generator is included in the SAP cloud-sdk-cli, if you have it installed you don't need to install the generator.
+The generator is included in the SAP cloud-sdk-cli, if you have it installed you don't need to install the generator separately.
 :::
 
 ## Usage

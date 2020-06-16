@@ -1,6 +1,6 @@
 ---
 id: generator-js-sdk
-title: Generate a typed OData client for JavaScript
+title: Generate an OData client for JavaScript
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Generate an OData client for JavaScript
@@ -18,13 +18,11 @@ author: Charles Dubois
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Generate a typed OData client with the OData Generator
+## Generate a typed OData client with the SAP Cloud SDK generator
 
-The generator allows you to generate a custom OData client library for any service. You can then easily access these services via the client libraries.
+The generator allows you to generate custom OData clients libraries for OData services. You can then easily access these services via the client libraries.
 
-There are two ways to use the generator:
-- Via the command line interface (CLI)
-- By instantiating and invoking it at runtime
+The SAP Cloud SDK generator can both be used as a command line interface (CLI) and programmatically.
 
 For any of them you need to have an `EDMX` file holding the service metadata.
 
@@ -36,7 +34,7 @@ npm install -g @sap-cloud-sdk/generator
 ```
 
 :::note
-The generator is included in the SAP cloud-sdk-cli, if you have it installed you don't need to install the generator separately.
+The generator is included in the SAP Cloud SDK CLI, if you have it installed you don't need to install the generator separately.
 :::
 
 ## Usage
@@ -49,43 +47,11 @@ The generator is primarily meant to be used on the command line:
 generate-odata-client --inputDir path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
 ```
 
-Run `generate-odata-client --help` for further options.
-
-### Invoke the generator programmatically
-
-You can also use the generator programmatically. You will have to provide the options anyways.
-
-1. Import the generator in your project.
-```ts
-import { generateProject } from '@sap-cloud-sdk/generator';
-```
-
-2. Create your options, adapt the input & output directory as well as the package name according to your setup.
-```ts
-const options: GeneratorOptions = initializeOptions();
-```
-3. Create your project datastructure with all sourcefiles based on your options
-```ts
-const project = generateProject(options);
-```
-
-4. Modify your project if you need to, then save the files at the specified location.
-```ts
-project.save();
-```
-3. & 4. Alternatively you can generate and save the project in one step with:
-```ts
-generate(options)
-```
-
 ## Options
 
-:::note
-All parameters can be used in the command line, even if they have no alias:  
-```sh
-generate-odata-client --forceOverwrite --no-generateNpmrc
-```
-:::
+
+Run `generate-odata-client --help` for further options.
+
 
 |   Parameter       | Alias | Default |   Description |
 |:------------------|:-----:|:----  -:|:--------------|
@@ -100,3 +66,23 @@ generate-odata-client --forceOverwrite --no-generateNpmrc
 |`versionInPackageJson`| - | `true?` | By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version. |
 |`generateJs`| - | `true` | Generates transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files. |
 |`generateCSN`| - | `false` | A CSN file will be generated for each service definition in the output directory. |
+
+
+### Invoke the generator programmatically
+
+You can also use the generator programmatically. You will have to provide the options.
+
+```ts
+import { generateProject } from '@sap-cloud-sdk/generator';
+
+//Create your options, adapt the input & output directory as well as the package name according to your setup.
+const options: GeneratorOptions = initializeOptions();
+
+//Create your project datastructure with all sourcefiles based on your options
+const project = generateProject(options);
+
+//Modify your project if you need to, then save the files at the specified location.
+project.save();
+
+//Alternatively you can generate and save the project in one step with: generate(options)
+```

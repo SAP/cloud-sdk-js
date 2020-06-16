@@ -100,16 +100,3 @@ generate-odata-client --forceOverwrite --no-generateNpmrc
 |`versionInPackageJson`| - | `true?` | By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version. |
 |`generateJs`| - | `true` | Generates transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files. |
 |`generateCSN`| - | `false` | A CSN file will be generated for each service definition in the output directory. |
-
-
-## Hidden Options
-
-|   Parameter       | Default |   Description |
-|:------------------|:----  -:|:--------------|
-|`useSwagger`| `false` | Augment parsed information with information from swagger definition files. Files are expected to have the same name as the edmx file, but with .json as suffix. |
-|`writeReadme`| `false` | When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true". |
-|`changelogFile`| - | 'Path to file that will be copied into the generated packages under the filename CHANGELOG.md. |
-|`aggregatorNpmPackageName`| - | When provided, the generator will generate an additional package with the provided name that has dependencies to all other generated packages. |
-|`aggregatorDirectoryName`| - | Hack for cloud-sdk-vdm package |
-|`sdkAfterVersionScript`| `true` | The package.json of generated services will have the after-version script to internally keep the versions in sync. |
-|`s4hanaCloud`| `true` | The description of the generated packages will be specific to S/4HANA Cloud. |

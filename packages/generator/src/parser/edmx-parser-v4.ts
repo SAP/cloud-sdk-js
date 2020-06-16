@@ -21,29 +21,33 @@ function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],
   joinTypes: (type: T, baseType: T) => T
 ): T[] {
-  return types.map(type =>
-    type.BaseType ? addBaseTypeToType(type, types, joinTypes) : type
-  );
+  return types.map(type => joinTypeWithBaseType(type, types, joinTypes));
 }
 
-function addBaseTypeToType<T extends EdmxDerivedType>(
+/**
+ * Recursively adds the base type data to the current type
+ * @param type An EDMX type that can have a base type (e. g. EntityType or ComplexType)
+ * @param types All parsed EDMX types
+ * @param joinTypes Function to ultimatively join types
+ * @returns The enriched type (type + basetype)
+ */
+function joinTypeWithBaseType<T extends EdmxDerivedType>(
   type: T,
   types: T[],
   joinTypes: (type: T, baseType: T) => T
 ): T {
-  const baseType = types.find(e => e.Name === stripNamespace(type.BaseType!));
+  if (type.BaseType) {
+    const baseType = types.find(e => e.Name === stripNamespace(type.BaseType!));
 
-  if (!baseType) {
-    throw new Error(
-      `Type ${type.BaseType} not found, but defined as BaseType of Type ${type.Name}.`
-    );
+    if (!baseType) {
+      throw new Error(
+        `Type ${type.BaseType} not found, but defined as BaseType of Type ${type.Name}.`
+      );
+    }
+
+    return joinTypes(type, joinTypeWithBaseType(baseType, types, joinTypes));
   }
-
-  if (baseType.BaseType) {
-    return joinTypes(type, addBaseTypeToType(baseType, types, joinTypes));
-  }
-
-  return joinTypes(type, baseType);
+  return type;
 }
 
 function joinEntityTypes(

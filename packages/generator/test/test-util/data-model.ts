@@ -19,7 +19,7 @@ export const entityName: VdmProperty = {
   edmType: 'Edm.String',
   description: 'The name of the entity.',
   nullable: false,
-  isMulti: false
+  isCollection: false
 };
 
 export const numberOfEggs: VdmProperty = {
@@ -32,7 +32,7 @@ export const numberOfEggs: VdmProperty = {
   edmType: 'Edm.Decimal',
   description: 'The number of eggs for breakfast.',
   nullable: true,
-  isMulti: false
+  isCollection: false
 };
 
 export const breakfastTime: VdmProperty = {
@@ -45,7 +45,7 @@ export const breakfastTime: VdmProperty = {
   edmType: 'Edm.DateTime',
   description: 'The time of breakfast.',
   nullable: false,
-  isMulti: false
+  isCollection: false
 };
 
 export const brunchEntity: VdmEntity = {
@@ -117,7 +117,7 @@ export const complexMeal: VdmComplexType = {
       propertyNameAsParam: 'complexity',
       jsType: 'string',
       staticPropertyName: 'COMPLEXITY',
-      isMulti: false
+      isCollection: false
     },
     {
       originalName: 'Amount',
@@ -129,7 +129,7 @@ export const complexMeal: VdmComplexType = {
       propertyNameAsParam: 'amount',
       jsType: 'number',
       staticPropertyName: 'AMOUNT',
-      isMulti: false
+      isCollection: false
     }
   ]
 };
@@ -150,7 +150,7 @@ export const complexDesert: VdmComplexType = {
       propertyNameAsParam: 'amount',
       jsType: 'number',
       staticPropertyName: 'AMOUNT',
-      isMulti: false
+      isCollection: false
     },
     {
       originalName: 'Name',
@@ -162,7 +162,7 @@ export const complexDesert: VdmComplexType = {
       propertyNameAsParam: 'name',
       jsType: 'string',
       staticPropertyName: 'NAME',
-      isMulti: false
+      isCollection: false
     }
   ]
 };
@@ -184,7 +184,7 @@ export const complexMealWithDesert: VdmComplexType = {
       jsType: 'ComplexDesert',
       staticPropertyName: 'COMPLEX_DESERT',
       isComplex: true,
-      isMulti: false
+      isCollection: false
     },
     {
       originalName: 'Amount',
@@ -196,7 +196,7 @@ export const complexMealWithDesert: VdmComplexType = {
       propertyNameAsParam: 'amount',
       jsType: 'number',
       staticPropertyName: 'AMOUNT',
-      isMulti: false
+      isCollection: false
     }
   ]
 };
@@ -220,7 +220,7 @@ export const orderBreakfast: VdmFunctionImport = {
   returnType: {
     builderFunction: '(val) => edmToTs(val, Edm.String)',
     returnType: 'string',
-    isMulti: false,
+    isCollection: false,
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE
   }
 };

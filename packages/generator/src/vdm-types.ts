@@ -53,7 +53,7 @@ export interface VdmProperty
     VdmMappedEdmType {
   fieldType: string;
   description: string;
-  isMulti: boolean;
+  isCollection: boolean;
 }
 
 // Navigation Properties
@@ -87,7 +87,11 @@ export interface VdmFunctionImport {
 export interface VdmFunctionImportReturnType {
   builderFunction: string;
   returnType: string;
-  isMulti: boolean;
+  /**
+   * @deprecated
+   */
+  isMulti?: boolean;
+  isCollection: boolean;
   returnTypeCategory: VdmFunctionImportReturnTypeCategory;
 }
 

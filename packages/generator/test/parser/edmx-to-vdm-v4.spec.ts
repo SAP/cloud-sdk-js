@@ -26,7 +26,7 @@ describe('edmx-to-vdm-v4', () => {
 
     const entity = transformEntitiesV4(service, [], getFormatter(service))[0];
     expect(entity.properties[0]).toMatchObject({
-      isMulti: true,
+      isCollection: true,
       edmType: 'Edm.String',
       jsType: 'string',
       fieldType: 'StringField'
@@ -52,7 +52,7 @@ describe('edmx-to-vdm-v4', () => {
 
     const entity = transformEntitiesV4(service, vdmComplexTypes, formatter)[0];
     expect(entity.properties[0]).toMatchObject({
-      isMulti: true,
+      isCollection: true,
       isComplex: true,
       edmType: 'namespace.TestComplexType',
       jsType: 'TestComplexType',
@@ -139,7 +139,7 @@ describe('edmx-to-vdm-v4', () => {
     const entity = transformEntitiesV4(service, [], getFormatter(service))[0];
     expect(entity.properties.length).toBe(3);
     expect(entity.properties[2]).toMatchObject({
-      isMulti: true,
+      isCollection: true,
       edmType: 'Edm.String',
       jsType: 'string',
       fieldType: 'StringField'

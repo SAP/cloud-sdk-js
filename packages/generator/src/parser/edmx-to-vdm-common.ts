@@ -141,7 +141,6 @@ function properties(
       entity.entitySet.Name,
       p.Name
     );
-    const isMulti = isCollection(p.Type);
     const type = parseTypeName(p.Type);
     const isComplex = isComplexType(type);
     return {
@@ -160,7 +159,7 @@ function properties(
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
       isComplex,
-      isMulti
+      isCollection: isCollection(p.Type)
     };
   });
 }
@@ -339,7 +338,6 @@ export function transformComplexTypes(
           c.Name,
           p.Name
         );
-        const isMulti = isCollection(p.Type);
         const type = parseTypeName(p.Type);
         const isComplex = isComplexType(type);
         const parsedType = parseType(type);
@@ -362,7 +360,7 @@ export function transformComplexTypes(
             ? formattedTypes[parsedType] + 'Field'
             : edmToComplexPropertyType(type),
           isComplex,
-          isMulti
+          isCollection: isCollection(p.Type)
         };
       })
     };
@@ -379,19 +377,19 @@ function parseReturnType(
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
       returnType: 'undefined',
       builderFunction: '(val) => undefined',
-      isMulti: false
+      isMulti: false,
+      isCollection: false
     };
   }
-  const isMulti = isMultiReturnType(returnType);
-  if (isMulti) {
-    returnType = returnType.replace('Collection(', '').replace(')', '');
-  }
+  const isCollectionReturnType = isCollection(returnType);
+  returnType = parseTypeName(returnType);
   if (returnType.startsWith('Edm.')) {
     return {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
       returnType: propertyJsType(returnType)!,
       builderFunction: `(val) => edmToTs(val, '${returnType}')`,
-      isMulti
+      isMulti: isCollectionReturnType,
+      isCollection: isCollectionReturnType
     };
   }
   const parsedReturnType = returnType.split('.').slice(-1)[0];
@@ -401,7 +399,8 @@ function parseReturnType(
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
       returnType: entity.className,
       builderFunction: entity.className,
-      isMulti
+      isMulti: isCollectionReturnType,
+      isCollection: isCollectionReturnType
     };
   }
   const complexType = complexTypes.find(
@@ -414,12 +413,9 @@ function parseReturnType(
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
     builderFunction: `${complexType.typeName}.build`,
-    isMulti
+    isMulti: isCollectionReturnType,
+    isCollection: isCollectionReturnType
   };
-}
-
-function isMultiReturnType(returnType: string): boolean {
-  return isCollection(returnType);
 }
 
 export function transformFunctionImports(

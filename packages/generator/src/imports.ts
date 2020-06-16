@@ -64,7 +64,7 @@ export function corePropertyFieldTypeImportNames(
 ): string[] {
   return unique([
     ...properties.filter(prop => !prop.isComplex).map(prop => prop.fieldType),
-    ...(properties.some(prop => prop.isMulti) ? ['CollectionField'] : [])
+    ...(properties.some(prop => prop.isCollection) ? ['CollectionField'] : [])
   ]);
 }
 

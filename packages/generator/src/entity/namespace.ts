@@ -47,7 +47,7 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
 }
 
 function getPropertyFieldClassName(prop: VdmProperty): string {
-  return prop.isMulti ? 'CollectionField' : prop.fieldType;
+  return prop.isCollection ? 'CollectionField' : prop.fieldType;
 }
 
 function getPropertyFieldInitializer(
@@ -62,7 +62,7 @@ function getPropertyFieldInitializer(
 
   const className = getPropertyFieldClassName(prop);
   const thirdParameterSingle = prop.isComplex ? undefined : type;
-  const thirdParameter = prop.isMulti
+  const thirdParameter = prop.isCollection
     ? createPropertyFieldInitializer(
         prop.fieldType,
         '',

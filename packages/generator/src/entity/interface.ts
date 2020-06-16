@@ -53,7 +53,7 @@ function property(prop: VdmProperty): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
-    type: prop.isMulti ? `${prop.jsType}[]` : prop.jsType
+    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType
   };
 }
 
@@ -61,7 +61,7 @@ function propertyForceMandatory(prop: VdmProperty): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName,
-    type: prop.isMulti ? `${prop.jsType}[]` : prop.jsType
+    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType
   };
 }
 

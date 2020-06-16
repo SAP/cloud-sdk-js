@@ -33,7 +33,7 @@ function navigationProperties(
       );
     }
 
-    const isMulti = isCollection(navProp.Type);
+    const isCollectionType = isCollection(navProp.Type);
 
     return {
       ...navigationPropertyBase(
@@ -44,8 +44,8 @@ function navigationProperties(
       from: entityMetadata.entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
-      multiplicity: isMulti ? '1 - *' : '1 - 1',
-      isMultiLink: isMulti
+      multiplicity: isCollectionType ? '1 - *' : '1 - 1',
+      isMultiLink: isCollectionType
     };
   });
 }

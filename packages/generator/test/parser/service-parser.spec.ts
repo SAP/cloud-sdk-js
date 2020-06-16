@@ -199,7 +199,7 @@ describe('service-parser', () => {
         description: '',
         nullable: true,
         isComplex: true,
-        isMulti: false,
+        isCollection: false,
         maxLength: undefined
       };
       expect(complexProperty).toEqual(expected);
@@ -227,6 +227,7 @@ describe('service-parser', () => {
         returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
         returnType: 'TestComplexType',
         builderFunction: 'TestComplexType.build',
+        isCollection: false,
         isMulti: false
       };
 

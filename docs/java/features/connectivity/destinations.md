@@ -20,7 +20,7 @@ This concept is integrated with the [Destination Service](https://help.sap.com/v
 
 ## Get a List of all Destination in Cloud Foundry  ##
  
- In order to fetch all destinations from Destination Service you need to do the following steps: 
+In order to fetch all destinations from the Destination Service you need to perform the following steps: 
 
  1) Invoke the `ScpCfDestinationLoader` with the `DestinationService` and `XsuaaService` instances.
 

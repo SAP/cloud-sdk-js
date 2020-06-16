@@ -21,9 +21,7 @@ In this series of calls for SAP Community, we will give you regular updates on t
 
 The community update calls take place on every first Tuesday of a month. On this page, you can find the schedule as well as a history of past sessions below.
 
-Register for the series
-
-https://community.sap.com/resources/community-calls
+[Register for the series](https://sap-se.zoom.us/webinar/register/WN_dBtYmF5IR7Gb8TMjHqEvhw)
 
 ### What do you want to learn?
 

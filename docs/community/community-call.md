@@ -40,15 +40,15 @@ Our community call series is as good as the value it bring to the community. If 
 * Nov 3
 * Dec 1
 
-## Past Sessions and Replays
+## Past Sessions Replays
 
 ### 2020
 
 * Jun 2 - JavaScript Linting with SAP Cloud SDK for Continuous Delivery
-* May 5 - Consuming OData v4 Services using SAP Cloud SDK
-* Apr 7 - SAP Cloud SDK for JavaScript goes open source
-* Mar 4 - Get from Zero to Production with SAP Cloud SDK
-* Feb 4 - Consume APIs of SAP Solutions with Ease
+* May 5 - [Consuming OData v4 Services using SAP Cloud SDK](https://www.youtube.com/watch?v=p_JTapzii_I)
+* Apr 7 - [SAP Cloud SDK for JavaScript goes open source](https://www.youtube.com/watch?v=nRWXlxgdnmk)
+* Mar 3 - [Get from Zero to Production with SAP Cloud SDK](https://www.youtube.com/watch?v=f3XG4hFiWdM)
+* Feb 4 - [Consume APIs of SAP Solutions with Ease](https://www.youtube.com/watch?v=RqdBKZBO76I)
 
 ### 2019
 

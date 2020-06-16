@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 The generator allows you to generate a custom OData client library for any service. You can then easily access these services via the client libraries.
 
-There are two way to use the generator:
+There are two ways to use the generator:
 - Via the command line interface (CLI)
 - By instantiating and invoking it at runtime
 

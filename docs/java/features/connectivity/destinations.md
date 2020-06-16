@@ -20,22 +20,28 @@ This concept is integrated with the [Destination Service](https://help.sap.com/v
 
 ## Get a List of all destinations from Destination Service on Cloud Foundry  ##
  
-In order to fetch all destinations from the Destination Service you need to perform the following steps: 
+In order to fetch all destinations from the Destination Service you need to make a call to `tryGetAllDestinations`.The method queries the [Destination Service API](https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/overview) and retrieves all the destinations available at the service instance and sub-account level. In case there is a destination available on both the levels with the same name, then this method prioritizes the destination at the service instance level.
 
- 1) Invoke the `ScpCfDestinationLoader` with the `DestinationService` and `XsuaaService` instances.
+Below is the sample call to `tryGetAllDestinations`:
 
 ```java
- final ScpCfDestinationLoader destinationLoader = new ScpCfDestinationLoader();
+ final Try<Iterable<ScpCfDestination>> destinations = destinationLoader.tryGetAllDestinations(options);
 ```
 
- 2) For the upcoming call build a `DestinationOptions` object. It contains the configuration on how the destination service is being queried. If you have a simple application without provider/subscriber setup, then your initial configuration may look like this:
+
+
+ In the above call, `destinationLoader` is the instance of `ScpCfDestinationLoader`.
+ 
+  Also, you need to build a `DestinationOptions` object and pass it as a parameter. It contains the configuration on how the destination service is being queried. If you have a simple application without provider/subscriber setup, then your initial configuration may look like as follows:
+
     ```java
     final DestinationOptions options = DestinationOptions.builder().build();
     ```
-  If you have a provider/subscriber setup, a retrieval strategy must be chosen according to your particular use case. The retrieval strategy can be `ALWAYS_SUBSCRIBER`, `ALWAYS_PROVIDER` or `SUBSCRIBER_THEN_PROVIDER`. E.g. for `SUBSCRIBER_THEN_PROVIDER` use:
+  If you have a provider/subscriber setup, a retrieval strategy must be chosen according to your particular use case. The retrieval strategy can be `ALWAYS_SUBSCRIBER`, `ALWAYS_PROVIDER` or `SUBSCRIBER_THEN_PROVIDER`.
+  
+  Example for `SUBSCRIBER_THEN_PROVIDER` use:
 
  ```java
- // in case of Subscriber Tenant
  final DestinationOptions options =
             DestinationOptions
                 .builder()
@@ -45,13 +51,8 @@ In order to fetch all destinations from the Destination Service you need to perf
                 .build();;
 ```
 
-3) Finally, make call to `tryGetAllDestinations` and pass the `DestinationOptions` object.
 
-```java
- final Try<Iterable<ScpCfDestination>> destinations = destinationLoader.tryGetAllDestinations(options);
-```
 
-The method `tryGetAllDestinations` queries the [Destination Service API](https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/overview) and retrieves all the destinations available at the service instance and sub-account level. In case there is a destination available on both the levels with the same name, then this method prioritizes the destination at the service instance level.
 
 ## Accessing Destinations ##
 

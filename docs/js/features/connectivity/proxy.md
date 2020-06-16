@@ -1,6 +1,6 @@
 ---
 id: proxy-js-sdk
-title: Proxies in the Cloud SDK for JS
+title: Proxies in the Cloud SDK for JS/TS
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Proxies
@@ -63,7 +63,7 @@ If you provide the destination name the SDK will try to lookup as described [her
 
 In productive use the manual configuration will not be useful, but for testing it might be valuable. 
 The destination object contains a field `proxyConfiguration` in which you can configure a proxy.
-```TypeScript
+```js
 {
 url: "https://MyDestinationURL.com"
 proxyConfiguration?: {
@@ -111,7 +111,7 @@ The value of the two proxy variables is just a simple string following this patt
 The user and password are obviously optional and if they are left out no authentication header is added.
 The protocol is also optional and the default value is `http` since most proxies do not use an encryption layer for communication.
 The default for the port is `80` for `http` and `443` for `https`. Example of a valid values would be:
-```shell script
+```bash script
 http://John:SecurePassword@some.host.com:1234
 https://some.host.com:1234 -> will use 443 as default
 some.host.com:1234 -> will use http as default
@@ -150,7 +150,3 @@ If a proxy becomes necessary or is configured by the discussed environment varia
 ``` 
 and adds them to the axios config. The agents contain the proxy configuration.
 The standard [http and https agents](https://www.npmjs.com/package/http-proxy-agent) are used.
- 
-
-
-

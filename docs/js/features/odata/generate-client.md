@@ -24,7 +24,7 @@ The generator allows you to generate custom OData clients libraries for OData se
 
 The SAP Cloud SDK generator can both be used as a command line interface (CLI) and programmatically.
 
-For any of them you need to have an `EDMX` file holding the service metadata.
+All you need to use it is a service metadata specification in the `EDMX` format (file ending can be `.edmx` or `.xml`).
 
 ## Installation
 
@@ -44,7 +44,7 @@ The generator is included in the SAP Cloud SDK CLI, if you have it installed you
 The generator is primarily meant to be used on the command line:
 
 ```sh
-generate-odata-client --inputDir path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
+generate-odata-client --inputDir path/to/your/service-specification(s) --outputDir path/to/store/generated/modules
 ```
 
 ## Options

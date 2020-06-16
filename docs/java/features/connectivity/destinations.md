@@ -18,7 +18,7 @@ The SAP Cloud SDK offers some basic functionality that helps with connecting to 
 
 This concept is integrated with the [Destination Service](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/7e306250e08340f89d6c103e28840f30.html) that is available on SAP Cloud Platform. If the application has a service binding to this service in place the SDK will provide access to these destinations.
 
-## Get a List of all Destination in Cloud Foundry  ##
+## Get a List of all destinations from Destination Service on Cloud Foundry  ##
  
 In order to fetch all destinations from the Destination Service you need to perform the following steps: 
 

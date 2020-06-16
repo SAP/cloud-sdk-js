@@ -26,7 +26,7 @@ There are two ways to use the generator:
 - Via the command line interface (CLI)
 - By instantiating and invoking it at runtime
 
-For any of them you need to have an `EDMX` file holding the service metadata.
+All you need to use it is a service metadata specification in the `EDMX` format (file ending can be `.edmx` or `.xml`).
 
 ## Installation
 

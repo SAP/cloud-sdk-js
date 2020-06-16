@@ -11,11 +11,11 @@ import {
 } from './parser-types-v4';
 import {
   parseEntityTypes,
-  parseBaseMetadata,
   parseFunctionImports,
   parseComplexTypes
 } from './edmx-parser-common';
 import { stripNamespace, parseTypeName } from './parser-util';
+import { EdmxMetadataBase } from './parser-types-common';
 
 function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],
@@ -88,9 +88,7 @@ function filterEnumProperties(
   }));
 }
 
-export function parseEdmxV4(
-  root
-): Omit<EdmxMetadata, keyof ReturnType<typeof parseBaseMetadata>> {
+export function parseEdmxV4(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
   const enumTypes = forceArray(root.EnumType);
   return {
     entityTypes: joinTypesWithBaseTypes(

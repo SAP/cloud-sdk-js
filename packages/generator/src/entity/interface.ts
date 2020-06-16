@@ -90,6 +90,6 @@ function navProperty(
   return {
     kind: StructureKind.PropertySignature,
     name: navProp.instancePropertyName,
-    type: entity.className + 'Type' + (navProp.isMultiLink ? '[]' : '')
+    type: entity.className + 'Type' + (navProp.isCollection ? '[]' : '')
   };
 }

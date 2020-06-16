@@ -138,7 +138,7 @@ export function linkClass(
   navProperty: VdmNavigationProperty,
   service: VdmServiceMetadata
 ): string {
-  return navProperty.isMultiLink
+  return navProperty.isCollection
     ? service.oDataVersion === 'v4'
       ? 'OneToManyLink'
       : 'Link'

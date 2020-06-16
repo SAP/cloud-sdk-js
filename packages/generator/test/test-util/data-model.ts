@@ -65,6 +65,7 @@ export const toBrunch: VdmNavigationProperty = {
   from: 'Breakfast',
   to: brunchEntity.entitySetName,
   isMultiLink: false,
+  isCollection: false,
   instancePropertyName: 'toBrunch',
   staticPropertyName: 'TO_BRUNCH',
   propertyNameAsParam: 'toBrunch',

@@ -135,7 +135,7 @@ function navProperty(
   return {
     kind: StructureKind.Property,
     name: navProp.instancePropertyName + '!',
-    type: entity.className + (navProp.isMultiLink ? '[]' : ''),
+    type: entity.className + (navProp.isCollection ? '[]' : ''),
     docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
   };
 }

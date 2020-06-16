@@ -82,7 +82,7 @@ describe('edmx-to-vdm-v4', () => {
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
       multiplicity: '1 - 1',
-      isMultiLink: false
+      isCollection: false
     });
   });
 
@@ -108,7 +108,7 @@ describe('edmx-to-vdm-v4', () => {
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
       multiplicity: '1 - *',
-      isMultiLink: true
+      isCollection: true
     });
   });
 

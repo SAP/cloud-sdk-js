@@ -45,7 +45,8 @@ function navigationProperties(
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
       multiplicity: isCollectionType ? '1 - *' : '1 - 1',
-      isMultiLink: isCollectionType
+      isMultiLink: isCollectionType,
+      isCollection: isCollectionType
     };
   });
 }

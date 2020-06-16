@@ -50,11 +50,11 @@ const timeProperty = {
 } as VdmProperty;
 
 const multiLink = {
-  isMultiLink: true
+  isCollection: true
 } as VdmNavigationProperty;
 
 const oneToOneLink = {
-  isMultiLink: false
+  isCollection: false
 } as VdmNavigationProperty;
 
 const service = {

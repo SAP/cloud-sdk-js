@@ -40,6 +40,7 @@ export interface VdmPropertyDescriptor {
   propertyNameAsParam: string;
   staticPropertyName: string;
   isComplex?: boolean;
+  isCollection: boolean;
 }
 
 export interface VdmPropertyValueConstraints {
@@ -53,7 +54,6 @@ export interface VdmProperty
     VdmMappedEdmType {
   fieldType: string;
   description: string;
-  isCollection: boolean;
 }
 
 // Navigation Properties
@@ -61,7 +61,13 @@ export interface VdmNavigationProperty extends VdmPropertyDescriptor {
   from: string;
   to: string;
   toEntityClassName: string;
-  multiplicity: string;
+  /**
+   * @deprecated
+   */
+  multiplicity?: string;
+  /**
+   * @deprecated
+   */
   isMultiLink?: boolean;
 }
 

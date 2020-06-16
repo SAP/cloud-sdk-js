@@ -15,7 +15,7 @@ keywords:
 ---
 
 ## Goal of this Documentation
-In the following we cover the SAP Cloud SDK Java client library (Beta) for the SCP Workflow REST API. After a brief introduction in the SCP Workflow service, we explain in detail how the developer can use this client library. Thereby we touch in particular upon all necessary configuration steps and the app development.
+In the following, we cover the SAP Cloud SDK Java client library (Beta) for the SCP Workflow REST API. After a brief introduction to the SCP Workflow service, we explain in detail how the developer can use this client library. Thereby we touch in particular upon all necessary configuration steps and the app development.
 
 ## How SCP Workflow and Cloud SDK play together
 The [SAP Cloud Platform (SCP) Workflow service](https://help.sap.com/viewer/product/WORKFLOW_SERVICE/Cloud/en-US) is available on the Cloud Foundry environment [since April 2019](https://blogs.sap.com/2019/04/03/workflow-and-business-rules-now-available-in-cloud-foundry-environment-of-sap-cloud-platform/). It helps you build, run and manage workflows to model processes that span from simple approval steps to complex business scenarios with several involved parties.
@@ -25,9 +25,9 @@ Imagine a business scenario with multiple involved parties, complex validation l
 Refer to [this blog post](https://blogs.sap.com/2018/01/09/sap-cloud-platform-workflow-developer-center/) for an overview of all resources in the realm of the SCP Workflow Service.
 
 ## An Example Use Case
-Let us sketch an example use case to gain better understanding when we would want to use this client library.
+Let us sketch an example use case to gain a better understanding when we would want to use this client library.
 
-Imagine a use case comprising a business scenario with multiple involved parties, complex validation logic and parallel execution flows. These requirements can be met with the SCP Workflow service. It allows to model the workflows in a visual editor. In addition, you develop a cloud application leveraging the SAP Cloud SDK that covers the main part of the business logic and orchestrates the workflow processing in the background. For this purpose, your app communicates with the SCP Workflow service through its REST API. To make your life easier when it comes to developing against the REST API, you utilize the respective client library.
+Imagine a use case comprising a business scenario with multiple involved parties, complex validation logic, and parallel execution flows. These requirements can be met with the SCP Workflow service. It allows us to model the workflows in a visual editor. In addition, you develop a cloud application leveraging the SAP Cloud SDK that covers the main part of the business logic and orchestrates the workflow processing in the background. For this purpose, your app communicates with the SCP Workflow service through its REST API. To make your life easier when it comes to developing against the REST API, you utilize the respective client library.
  
 
 ## Consume the SCP Workflow REST API
@@ -39,7 +39,7 @@ There are some configuration steps on Cloud Foundry necessary to run this scenar
 
 #### Bind App to SCP Workflow Service Instance
 
-Refer to the documentation on [help.sap.com](https://help.sap.com/viewer/e157c391253b4ecd93647bf232d18a83/Cloud/en-US/e8d88dd056f14c75af59e68d6b20345f.html) for the full picture. We will outline the essential pieces in the following. Also we assume that you are sure about:
+Refer to the documentation on [help.sap.com](https://help.sap.com/viewer/e157c391253b4ecd93647bf232d18a83/Cloud/en-US/e8d88dd056f14c75af59e68d6b20345f.html) for the full picture. We will outline the essential pieces in the following. Also, we assume that you are sure about:
 - Which Cloud Foundry subaccount and space you want to use,
 - That the entitlement for the SCP Workflow Service is in place,
 - That you possess all necessary authorizations on Cloud Foundry to perform the following procedures and that
@@ -63,7 +63,7 @@ Remember where you've saved the file, you'll need it later.
 
 Open the command line and authenticate at your Cloud Foundry organization by invoking `cf login`.
 
-Consider specifying the respective subaccount, organization and space with `cf target` if necessary.
+Consider specifying the respective subaccount, organization, and space with `cf target` if necessary.
 
 Use `cd` to navigate to the directory that contains the JSON file created beforehand.
 Being in that directory, create the service instance as follows:
@@ -101,35 +101,35 @@ Redeploy your app with `cf push`.
 ##### Take Note of API endpoint and OAuth Credentials
 After the deployment of the app happened, go to your CF space and navigate to `Services` and thereafter to `Service Instances`. You should see the service instance you created along with the information that is is bound to your application.
 
-Click on the service instance name, for instance `my-workflow`, in the upcoming screen you should see the headline `Service Instance: my-workflow - Referencing Apps`. Make sure that the entry belong to your app is selected in the table below, given that multiple apps are bound to the same service instance.
+Click on the service instance name, for instance `my-workflow`, in the upcoming screen you should see the headline `Service Instance: my-workflow - Referencing Apps`. Make sure that the entry belongs to your app is selected in the table below, given that multiple apps are bound to the same service instance.
 
-Consider the JSON content below the table. For your convenience we recommend copying that JSON to a text editor. Here is one example for your reference:
+Consider the JSON content below the table. For your convenience, we recommend copying that JSON to a text editor. Here is one example for your reference:
 ```json
 {
-	"endpoints": {
-		"workflow_odata_url": "foo",
-		"workflow_rest_url": "bar"
-	},
-	"html5-apps-repo": {
-		"app_host_id": "foo"
-	},
-	"uaa": {
-		"uaadomain": "bar",
-		"tenantmode": "dedicated",
-		"sburl": "bar",
-		"clientid": "foo",
-		"verificationkey": "bar",
-		"apiurl": "foo",
-		"xsappname": "bar",
-		"identityzone": "foo",
-		"identityzoneid": "bar",
-		"clientsecret": "foo",
-		"tenantid": "bar",
-		"url": "foo"
-	},
-	"sap.cloud.service": "com.sap.bpm.workflow",
-	"saasregistryappname": "workflow",
-	"content_endpoint": "foo"
+    "endpoints": {
+        "workflow_odata_url": "foo",
+        "workflow_rest_url": "bar"
+    },
+    "html5-apps-repo": {
+        "app_host_id": "foo"
+    },
+    "uaa": {
+        "uaadomain": "bar",
+        "tenantmode": "dedicated",
+        "sburl": "bar",
+        "clientid": "foo",
+        "verificationkey": "bar",
+        "apiurl": "foo",
+        "xsappname": "bar",
+        "identityzone": "foo",
+        "identityzoneid": "bar",
+        "clientsecret": "foo",
+        "tenantid": "bar",
+        "url": "foo"
+    },
+    "sap.cloud.service": "com.sap.bpm.workflow",
+    "saasregistryappname": "workflow",
+    "content_endpoint": "foo"
 }
 ```
 
@@ -142,7 +142,7 @@ At next, carefully look at the JSON content and collect the values for the follo
 You'll need the values in the next step.
 
 #### Maintain HTTP Destination 
-Go to your CF subaccount, navigate to `Connectivity` and `Destinations` in the left-hand side menu and create a new HTTP destination with the following properties:
+Go to your CF subaccount, navigate to `Connectivity` and `Destinations` in the left-hand side menu, and create a new HTTP destination with the following properties:
 - Name: Workflow-Api
 - Type: HTTP
 - URL: The value of `workflow_rest_url`
@@ -183,7 +183,7 @@ You can refer to the Java client library for the SCP Workflow service with the f
     <artifactId>scp-workflow-cf</artifactId>
 </dependency>
 ```
-Add that dependency into your pom file and invoke `mvn clean install` to check if Maven is able to pick that dependency up.
+Add that dependency into your pom file and invoke `mvn clean install` to check if Maven can pick that dependency up.
 
 ### Invoke the Java Client Library
 We know the name of the HTTP destination that we configured in the SCP cockpit.
@@ -192,7 +192,7 @@ At first, we obtain a Java representation of that destination.
 final String destinationName = "Workflow-Api";
 final HttpDestination httpDestination = DestinationAccessor.getDestination(destinationName).asHttp();
 ```
-Secondly, we go ahead and invoke the Java API class for the workflow definitions. More specifically, we invoke the method to obtain the list of all existing workflow definitions. We pass the HTTP destination as argument to the constructor of the API class.
+Secondly, we go ahead and invoke the Java API class for the workflow definitions. More specifically, we invoke the method to obtain the list of all existing workflow definitions. We pass the HTTP destination as an argument to the constructor of the API class.
 ```java
 final List<WorkflowDefinition> workflowDefinitions =
         new WorkflowDefinitionsApi(httpDestination).getWorkflowDefinitions();
@@ -213,7 +213,7 @@ workflowDefinition.getJobs().forEach(job -> {
     log.info(job.getPurpose().toString());
 });
 ```
-After this demo of the client library we'll cover its general capabilities and limitations in the next sections.
+After this demo of the client library, we'll cover its general capabilities and limitations in the next sections.
 ### Client Library Capabilities 
 The Java client library for SCP Workflow enables the developer to invoke the REST API in a type-safe and convenient manner. It provides Java abstractions for all REST API endpoints along with the respective model classes. Essentially, the library relieves the developer from all the HTTP-related development work (e.g., interpreting status codec, JSON de-/serialization) and lets him/her focus on the real business logic.
 
@@ -225,3 +225,8 @@ We have published the client library in a Beta state. That is, we verified its f
 Henceforth, the library supports the SCP Workflow service on Cloud Foundry, while it does not cover the SCP Workflow service on the Neo landscape on SCP. 
 
 Related to Cloud Foundry, you might know that environment variable VCAP_SERVICES contains information about your bound service instances. In the current state, it is required to create a destination manually instead of letting the library consume VCAP_SERVICES directly.
+
+### Video tutorial
+This video tutorial by the developer advocate team of SAP Cloud Platform will help you get up to speed with SAP Cloud SDK for Java and Workflow API in 60 minutes.
+
+<iframe width="1236" height="695" src="https://www.youtube.com/embed/ug2UcXK2lH4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

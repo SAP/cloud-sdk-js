@@ -28,15 +28,14 @@ Below is the sample call to `tryGetAllDestinations`:
  final Try<Iterable<ScpCfDestination>> destinations = destinationLoader.tryGetAllDestinations(options);
 ```
 
-
-
- In the above call, `destinationLoader` is the instance of `ScpCfDestinationLoader`.
+ In the above call `destinationLoader` needs to be an instance of `ScpCfDestinationLoader`.
  
   Also, you need to build a `DestinationOptions` object and pass it as a parameter. It contains the configuration on how the destination service is being queried. If you have a simple application without provider/subscriber setup, then your initial configuration may look like as follows:
 
  ```java
     final DestinationOptions options = DestinationOptions.builder().build();
  ```
+
   If you have a provider/subscriber setup, a retrieval strategy must be chosen according to your particular use case. The retrieval strategy can be `ALWAYS_SUBSCRIBER`, `ALWAYS_PROVIDER` or `SUBSCRIBER_THEN_PROVIDER`.
   
   Example for `SUBSCRIBER_THEN_PROVIDER` use:

@@ -7,7 +7,7 @@ import { Constructable } from './constructable';
 import { EntityBuilder } from './entity-builder';
 import { Link, Field } from './selectable';
 
-export type ODataVersion<T extends EntityBase> = T['_oDataVersion'];
+export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
 export type EntityBuilderType<
   EntityT extends EntityBase,

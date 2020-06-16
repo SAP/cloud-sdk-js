@@ -1,9 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { PathLike } from 'fs';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 
 export interface VdmServiceMetadata {
-  oDataVersion: 'v2' | 'v4';
+  oDataVersion: ODataVersion;
   namespace: string;
   originalFileName: string;
   servicePath: string;

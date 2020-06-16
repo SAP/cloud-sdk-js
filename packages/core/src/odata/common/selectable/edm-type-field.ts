@@ -2,7 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersion } from '../entity';
+import { EntityBase, ODataVersionOf } from '../entity';
 import { Filter } from '../filter';
 import { Field, FieldType } from './field';
 
@@ -34,7 +34,7 @@ export abstract class EdmTypeField<
   constructor(
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
-    readonly edmType: EdmTypeShared<ODataVersion<EntityT>>
+    readonly edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {
     super(fieldName, entityConstructor);
   }

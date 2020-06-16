@@ -2,7 +2,7 @@
 
 import { PathLike } from 'fs';
 import { basename } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
 import {
   EdmxMetadataBase,
@@ -18,7 +18,7 @@ const logger = createLogger({
 
 export function parseBaseMetadata(
   root,
-  oDataVersion: 'v2' | 'v4',
+  oDataVersion: ODataVersion,
   edmxPath: PathLike
 ): EdmxMetadataBase {
   return {

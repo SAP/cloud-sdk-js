@@ -5,6 +5,7 @@ import path from 'path';
 import util from 'util';
 import { exec } from 'child_process';
 import { generate } from '../packages/generator/src';
+import { ODataVersion } from '../packages/util/src';
 
 type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
 const [readFile, readdir, writeFile] = [
@@ -38,7 +39,7 @@ const generatorConfig = {
   s4hanaCloud: false
 };
 
-function generateTestServicesPackage(outputDir: string, version: 'v2' | 'v4') {
+function generateTestServicesPackage(outputDir: string, version: ODataVersion) {
   generate({
     ...generatorConfig,
     inputDir: path.join(serviceSpecsDir, version),
@@ -55,7 +56,7 @@ function generateLegacyTestService() {
 
 async function generateTestServicesWithLocalCoreModules(
   outputDirBase,
-  version: 'v2' | 'v4'
+  version: ODataVersion
 ) {
   const outputDir = path.resolve(outputDirBase, version);
   await generate({

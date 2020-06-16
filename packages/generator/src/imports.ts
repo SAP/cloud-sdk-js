@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { unique } from '@sap-cloud-sdk/util';
+import { unique, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { linkClass } from './generator-utils';
 import {
@@ -43,7 +43,7 @@ export function externalImportDeclaration(
 
 export function coreImportDeclaration(
   namedImports: string[],
-  oDataVersion: 'v2' | 'v4'
+  oDataVersion: ODataVersion
 ): ImportDeclarationStructure {
   const moduleSuffix = oDataVersion === 'v4' ? '/v4' : '';
   return {

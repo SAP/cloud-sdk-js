@@ -62,11 +62,11 @@ export interface VdmNavigationProperty extends VdmPropertyDescriptor {
   to: string;
   toEntityClassName: string;
   /**
-   * @deprecated Since v1.21.3. Will not be replaced.
+   * @deprecated Since v1.22.0. Will not be replaced.
    */
   multiplicity?: string;
   /**
-   * @deprecated Since v1.21.3. Use `isCollection` instead.
+   * @deprecated Since v1.22.0. Use `isCollection` instead.
    */
   isMultiLink?: boolean;
 }
@@ -94,7 +94,7 @@ export interface VdmFunctionImportReturnType {
   builderFunction: string;
   returnType: string;
   /**
-   * @deprecated Since v1.21.3. Use `isCollection` instead.
+   * @deprecated Since v1.22.0. Use `isCollection` instead.
    */
   isMulti?: boolean;
   isCollection: boolean;

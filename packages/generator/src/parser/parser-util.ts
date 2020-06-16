@@ -15,7 +15,7 @@ export function parseTypeName(typeName: string): string {
   return isCollection(typeName) ? parseCollectionTypeName(typeName) : typeName;
 }
 
-export function parseCollectionTypeName(typeName: string): string {
+function parseCollectionTypeName(typeName: string): string {
   const name = typeName.match(collectionRegExp)?.groups?.collectionType;
   if (!name) {
     throw new Error(`Cannot parse type name ${typeName}.`);

@@ -128,16 +128,13 @@ describe('imports', () => {
 
     it('contains unique multilink import', () => {
       expect(
-        coreNavPropertyFieldTypeImportNames([multiLink, multiLink], service)
+        coreNavPropertyFieldTypeImportNames([multiLink, multiLink], 'v2')
       ).toEqual(['Link']);
     });
 
     it('contains unique one to one link import', () => {
       expect(
-        coreNavPropertyFieldTypeImportNames(
-          [oneToOneLink, oneToOneLink],
-          service
-        )
+        coreNavPropertyFieldTypeImportNames([oneToOneLink, oneToOneLink], 'v2')
       ).toEqual(['OneToOneLink']);
     });
   });

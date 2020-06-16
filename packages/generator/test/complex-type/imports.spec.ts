@@ -2,15 +2,11 @@
 import { StructureKind } from 'ts-morph';
 import { importDeclarations } from '../../src/complex-type';
 import { VdmComplexType } from '../../src/vdm-types';
-import {
-  complexMeal,
-  complexMealWithDesert,
-  foodService
-} from '../test-util/data-model';
+import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
 
 describe('complex type imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(complexMeal, foodService);
+    const actual = importDeclarations(complexMeal, 'v2');
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
@@ -29,7 +25,7 @@ describe('complex type imports', () => {
   });
 
   it('importDeclarations for a complex type that includes a complex type', () => {
-    const actual = importDeclarations(complexMealWithDesert, foodService);
+    const actual = importDeclarations(complexMealWithDesert, 'v2');
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
@@ -60,7 +56,7 @@ describe('complex type imports', () => {
     };
     const actual = importDeclarations(
       complexMealWithDesertWithoutEdmProperty,
-      foodService
+      'v2'
     );
     expect(actual).toEqual([
       {

@@ -4,7 +4,7 @@ import { breakfastEntity, foodService } from '../test-util/data-model';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity, foodService);
+    const actual = importDeclarations(breakfastEntity, 'v2');
 
     expect(
       actual.map(imports => ({

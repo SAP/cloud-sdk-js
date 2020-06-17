@@ -12,7 +12,11 @@ keywords:
 - sap cloud sdk
 ---
 
-Cloud Native applications are no peace of cake when you have to connect to **On Premise** systems and deliver Apps or extensions on top of that. Well, in SAP Cloud SDK for Java we think otherwise! To prove it we provide convenient abstractions over destinations to let you seamlessly connect to your **On Premise** system from you cloud App. What to know how? Watch this comprehensive video tutorial by [Max Streifeneder](https://www.youtube.com/channel/UCkzNZP9fzLxRyhnGT2ziSRw) and check our docs on [connectivity](../features/connectivity/sdk-connectivity-destination-service)
+Cloud Native applications are no piece of cake when you have to connect to **On Premise** systems and deliver Apps or extensions on top of that.
+Well, in SAP Cloud SDK for Java we think otherwise!
+To prove it we provide convenient abstractions over destinations to let you seamlessly connect to your **On Premise** system from your cloud app.
+What to know how?
+Watch this comprehensive video tutorial by [Max Streifeneder](https://www.youtube.com/channel/UCkzNZP9fzLxRyhnGT2ziSRw) and check our docs on [connectivity](../features/connectivity/sdk-connectivity-destination-service)
 
 <div class="sdk-video-container">
 <iframe class="sdk-video" src="https://www.youtube.com/embed/Ky1R0Yq-zKg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

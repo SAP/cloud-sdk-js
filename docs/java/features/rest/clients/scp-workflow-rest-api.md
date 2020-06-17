@@ -229,4 +229,6 @@ Related to Cloud Foundry, you might know that environment variable VCAP_SERVICES
 ### Video tutorial
 This video tutorial by the developer advocate team of SAP Cloud Platform will help you get up to speed with SAP Cloud SDK for Java and Workflow API in 60 minutes.
 
-<iframe width="1236" height="695" src="https://www.youtube.com/embed/ug2UcXK2lH4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="sdk-video-container">
+<iframe class='sdk-video' src="https://www.youtube.com/embed/ug2UcXK2lH4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>

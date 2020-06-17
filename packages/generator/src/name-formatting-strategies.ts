@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import voca from 'voca';
-import { getInterfaceNames } from './service-name-formatter';
 
 // FIXME: this function has a side effect and it is not obvious that the cache is updated
 const applySuffixOnConflict = (separator: string) => (
@@ -9,13 +8,8 @@ const applySuffixOnConflict = (separator: string) => (
   previouslyGeneratedNames: string[]
 ): string => {
   let newName = name;
-  const objectsRelatedToNewName = [...getInterfaceNames(newName), newName];
-  const nameClashDetected =
-    previouslyGeneratedNames.filter(previouslyGeneratedName =>
-      objectsRelatedToNewName.includes(previouslyGeneratedName)
-    ).length > 0;
   if (
-    nameClashDetected ||
+    previouslyGeneratedNames.includes(name) ||
     reservedVdmKeywords.has(name) ||
     reservedObjectPrototypeKeywords.has(name)
   ) {
@@ -24,6 +18,7 @@ const applySuffixOnConflict = (separator: string) => (
       previouslyGeneratedNames
     )}`;
   }
+  previouslyGeneratedNames.push(newName);
   return newName;
 };
 
@@ -31,8 +26,13 @@ const applyPrefixOnJSReservedWords = (prefix: string) => (
   param: string
 ): string =>
   reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
-
+/**
+ * @deprecated This method changes the 'previouslyGeneratedNames' passed to it.
+ */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
+/**
+ * @deprecated This method changes the 'previouslyGeneratedNames' passed to it. Use [[get]]
+ */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
 export const applyPrefixOnJsConfictParam = applyPrefixOnJSReservedWords('p');
 export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords(
@@ -80,55 +80,4 @@ function last<T>(array: T[]): T {
   return array[array.length - 1];
 }
 
-const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
-  Object.getOwnPropertyNames(Object.prototype)
-);
-const reservedVdmKeywords: Set<string> = new Set<string>([
-  'builder',
-  'entityBuilder',
-  'requestBuilder'
-]);
 
-const reservedJSKeywords: Set<string> = new Set<string>([
-  'break',
-  'case',
-  'catch',
-  'class',
-  'const',
-  'continue',
-  'debugger',
-  'default',
-  'delete',
-  'do',
-  'else',
-  'enum',
-  'export',
-  'extends',
-  'false',
-  'finally',
-  'for',
-  'function',
-  'if',
-  'implements',
-  'in',
-  'instanceof',
-  'let',
-  'new',
-  'null',
-  'protected',
-  'public',
-  'return',
-  'static',
-  'super',
-  'switch',
-  'symbol',
-  'this',
-  'true',
-  'try',
-  'typeof',
-  'var',
-  'void',
-  'while',
-  'with',
-  'yield'
-]);

@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { ServiceNameFormatter } from '../src/service-name-formatter';
+import { getInterfaceNames, ServiceNameFormatter } from '../src/service-name-formatter';
+import { applySuffixOnConflictUnderscore } from '../src/name-formatting-strategies';
 
 describe('name-formatter', () => {
   describe('formats name for', () => {
@@ -90,6 +91,58 @@ describe('name-formatter', () => {
       ).toBe('Business Partner Service');
     });
   });
+
+  it('should hande names containing a _1 correctly',()=>{
+    let newName = applySuffixOnConflictUnderscore('MyClass_1',['MyClass_1'])
+    expect(newName).toBe('MyClass_2')
+  })
+
+  it('should avoid name clashes with name, type and type Force Mandatory', ()=> {
+
+    let newName = originalToEntityClassName('MyClass',['MyClass'])
+    expect(newName).toBe('MyClass_1')
+
+    newName = originalToEntityClassName('MyClass', ['MyClassType'])
+    expect(newName).toBe('MyClass_1')
+
+    newName = originalToEntityClassName('MyClass',['MyClassTypeForceMandatory'])
+    expect(newName).toBe('MyClass_1')
+
+    newName = originalToEntityClassName('MyClass',['MyClass,MyClass_1Type'])
+    expect(newName).toBe('MyClass_2')
+
+  });
+
+  it('should update the name cash to avoid future clashes for entity class',()=>{
+    const serviceNameFormatter = new ServiceNameFormatter([],[],[])
+
+    serviceNameFormatter.originalToEntityClassName('MyClassType')
+    let expectedList = ['MyClassType',...getInterfaceNames('MyClassType')]
+    expectedList.forEach(ele=>expect(serviceNameFormatter['serviceWideNamesCache']).toContain(ele))
+  })
+
+
+  it('should update the name cash to avoid future clashes for function import',()=>{
+    expect(1).toBe(0) check the updated values to be only one
+  })
+
+  it('should handle mixed suffixes ok MyClass-1 MyClass_1',()=>{
+    expect(1).toBe(0) check the updated values to be only one
+  })
+
+
+  it('should handle also cases greater 1 i.e unsorted already a few things there',()=>{
+    expect(1).toBe(0) check the updated values to be only one
+  })
+
+  it('should handle MyClass_1Type already in list and MyClass is added ',()=>{
+    expect(1).toBe(0) check the updated values to be only one
+  })
+
+
+  it('should handle MyClass_3Type already in list and MyClass is added higher suffix for all ',()=>{
+    expect(1).toBe(0) check the updated values to be only one
+  })
 
   describe('enforces unique names for', () => {
     it('entities', () => {

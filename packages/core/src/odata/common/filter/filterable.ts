@@ -5,6 +5,7 @@ import { FieldType } from '../selectable';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
+import { FilterLambdaExpression } from './filter-lambda-expression';
 
 /**
  * A union of all types that can be used for filtering.
@@ -14,7 +15,8 @@ import { FilterList } from './filter-list';
 export type Filterable<EntityT extends EntityBase> =
   | Filter<EntityT, FieldType>
   | FilterLink<EntityT>
-  | FilterList<EntityT>;
+  | FilterList<EntityT>
+  | FilterLambdaExpression<EntityT, FieldType>;
 
 /**
  * Create a [[FilterList]] by combining [[Filterable]]s with logical `and`.

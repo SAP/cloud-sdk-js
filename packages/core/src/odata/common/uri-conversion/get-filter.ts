@@ -8,7 +8,7 @@ import {
   isFilterLink,
   isFilter,
   FilterFunction,
-  FilterFunctionParameterType
+  FilterFunctionParameterType, Filter
 } from '../filter';
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
@@ -19,6 +19,7 @@ import {
 } from '../selectable';
 import { UriConverter } from '../request';
 import { convertToUriForEdmString } from './uri-value-converter';
+import { FilterLambdaExpression, isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -130,6 +131,31 @@ export function createGetFilter(uriConverter: UriConverter) {
         uriConverter.convertToUriFormat(filter.value, filter.edmType!)
       ].join(' ');
     }
+
+    if(isFilterLambdaExpression(filter)){
+      return getODataFilterExpressionWhenBeingFilterLambdaExpression(filter, parentFieldNames, targetEntityConstructor);
+    }
+  }
+
+  function getODataFilterExpressionWhenBeingFilterLambdaExpression<FilterEntityT extends EntityBase>(
+    filter: FilterLambdaExpression<FilterEntityT, FieldType>,
+    parentFieldNames: string[] = [],
+    targetEntityConstructor: Constructable<any>){
+    const alias = 'a';
+    if (typeof filter.innerFilter.field !== 'string') {
+      throw new Error(`The type of the field: ${filter.innerFilter.field} is not string, but ${typeof filter.innerFilter.field}.`);
+    }
+    const field = retrieveField(
+      filter.innerFilter.field,
+      targetEntityConstructor,
+      filter.innerFilter.edmType
+    );
+    const filterExp = [
+      [...parentFieldNames, filter.innerFilter.field].join('/'),
+      filter.innerFilter.operator,
+      uriConverter.convertToUriFormat(filter.innerFilter.value, field.edmType)
+    ].join(' ');
+    return `${filter.navigationPropertyName}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(

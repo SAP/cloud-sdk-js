@@ -1,9 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase } from '../entity';
-import { Filterable, and, FilterList } from '../filter';
+import { Filterable, and, FilterList, Filter } from '../filter';
 import { Orderable } from '../order';
 import { Link } from './link';
+import { FieldType } from './field';
+import { FilterLambdaExpression } from '../filter/filter-lambda-expression';
 
 /**
  * @experimental
@@ -72,5 +74,19 @@ export class OneToManyLink<
     const link = this.clone();
     link._skip = skip;
     return link;
+  }
+
+  /**
+   * @experimental This is experimental and is subject to change. Use with caution.
+   */
+  any<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<LinkedEntityT, FieldT>{
+    return new FilterLambdaExpression(__filename, filter, 'any');
+  }
+
+  /**
+   * @experimental This is experimental and is subject to change. Use with caution.
+   */
+  all<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<LinkedEntityT, FieldT>{
+    return new FilterLambdaExpression(__filename, filter, 'all');
   }
 }

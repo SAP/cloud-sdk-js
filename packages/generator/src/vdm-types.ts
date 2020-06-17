@@ -1,8 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { PathLike } from 'fs';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 
 export interface VdmServiceMetadata {
+  oDataVersion: ODataVersion;
   namespace: string;
   originalFileName: string;
   servicePath: string;
@@ -38,6 +40,7 @@ export interface VdmPropertyDescriptor {
   propertyNameAsParam: string;
   staticPropertyName: string;
   isComplex?: boolean;
+  isCollection: boolean;
 }
 
 export interface VdmPropertyValueConstraints {
@@ -58,7 +61,13 @@ export interface VdmNavigationProperty extends VdmPropertyDescriptor {
   from: string;
   to: string;
   toEntityClassName: string;
-  multiplicity: string;
+  /**
+   * @deprecated Since v1.22.0. Will not be replaced.
+   */
+  multiplicity?: string;
+  /**
+   * @deprecated Since v1.22.0. Use `isCollection` instead.
+   */
   isMultiLink?: boolean;
 }
 
@@ -84,7 +93,11 @@ export interface VdmFunctionImport {
 export interface VdmFunctionImportReturnType {
   builderFunction: string;
   returnType: string;
-  isMulti: boolean;
+  /**
+   * @deprecated Since v1.22.0. Use `isCollection` instead.
+   */
+  isMulti?: boolean;
+  isCollection: boolean;
   returnTypeCategory: VdmFunctionImportReturnTypeCategory;
 }
 

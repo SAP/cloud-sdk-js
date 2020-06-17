@@ -5,7 +5,7 @@ import { breakfastEntity } from '../test-util/data-model';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity);
+    const actual = importDeclarations(breakfastEntity, 'v2');
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,

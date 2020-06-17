@@ -2,7 +2,7 @@
 
 import { PathLike, readFileSync } from 'fs';
 import path from 'path';
-import { SwaggerMetadata } from './parser-types';
+import { SwaggerMetadata } from './parser-types-common';
 
 export function parseSwaggerFromPath(swaggerPath: PathLike): SwaggerMetadata {
   const swaggerFile = readFileSync(path.resolve(swaggerPath.toString()), {

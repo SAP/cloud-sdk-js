@@ -6,7 +6,7 @@ import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
 
 describe('complex type imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(complexMeal);
+    const actual = importDeclarations(complexMeal, 'v2');
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
@@ -25,7 +25,7 @@ describe('complex type imports', () => {
   });
 
   it('importDeclarations for a complex type that includes a complex type', () => {
-    const actual = importDeclarations(complexMealWithDesert);
+    const actual = importDeclarations(complexMealWithDesert, 'v2');
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
@@ -54,7 +54,10 @@ describe('complex type imports', () => {
       ...complexMealWithDesert,
       ...{ properties: [complexMealWithDesert.properties[0]] }
     };
-    const actual = importDeclarations(complexMealWithDesertWithoutEdmProperty);
+    const actual = importDeclarations(
+      complexMealWithDesertWithoutEdmProperty,
+      'v2'
+    );
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,

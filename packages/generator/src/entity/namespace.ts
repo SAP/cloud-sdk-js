@@ -5,7 +5,9 @@ import {
   NamespaceDeclarationStructure,
   StructureKind,
   VariableDeclarationKind,
-  VariableStatementStructure
+  VariableStatementStructure,
+  OptionalKind,
+  VariableDeclarationStructure
 } from 'ts-morph';
 import { linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
@@ -32,7 +34,7 @@ export function entityNamespace(
     statements: [
       ...properties(entity),
       ...navigationProperties(entity, service),
-      allFields(entity),
+      allFields(entity, service),
       allFieldSelector(entity),
       keyFields(entity),
       keys(entity)
@@ -44,28 +46,64 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
   return entity.properties.map(prop => property(prop, entity));
 }
 
-function property(
+function getFieldClassName(prop: VdmProperty): string {
+  return prop.isCollection ? 'CollectionField' : prop.fieldType;
+}
+
+function getFieldInitializer(
   prop: VdmProperty,
-  entity: VdmEntity
-): VariableStatementStructure {
+  entityClassName: string
+): OptionalKind<VariableDeclarationStructure> {
   const type = `'${
     prop.edmType.startsWith('Edm')
       ? prop.edmType
       : prop.edmType.split('.').pop()
   }'`;
-  const initializer = prop.isComplex
-    ? `new ${prop.fieldType}('${prop.originalName}', ${entity.className})`
-    : `new ${prop.fieldType}('${prop.originalName}', ${entity.className}, ${type})`;
+
+  const className = getFieldClassName(prop);
+  const thirdParameterSingle = prop.isComplex ? undefined : type;
+  const thirdParameter = prop.isCollection
+    ? createPropertyFieldInitializer(
+        prop.fieldType,
+        '',
+        entityClassName,
+        thirdParameterSingle
+      )
+    : thirdParameterSingle;
+
+  return {
+    name: prop.staticPropertyName,
+    type: `${className}<${entityClassName}>`,
+    initializer: createPropertyFieldInitializer(
+      className,
+      prop.originalName,
+      entityClassName,
+      thirdParameter
+    )
+  };
+}
+
+function createPropertyFieldInitializer(
+  className: string,
+  originalFieldName: string,
+  entityClassName: string,
+  thirdParameter?: string
+) {
+  return `new ${className}(${[
+    `'${originalFieldName}'`,
+    entityClassName,
+    ...(typeof thirdParameter === 'undefined' ? [] : [thirdParameter])
+  ].join(', ')})`;
+}
+
+function property(
+  prop: VdmProperty,
+  entity: VdmEntity
+): VariableStatementStructure {
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,
-    declarations: [
-      {
-        name: prop.staticPropertyName,
-        type: `${prop.fieldType}<${entity.className}>`,
-        initializer
-      }
-    ],
+    declarations: [getFieldInitializer(prop, entity.className)],
     docs: [getStaticPropertyDescription(prop)],
     isExported: true
   };
@@ -104,10 +142,12 @@ function navigationProperty(
     declarations: [
       {
         name: navProp.staticPropertyName,
-        type: `${linkClass(navProp)}<${entity.className},${toEntity}>`,
-        initializer: `new ${linkClass(navProp)}('${navProp.originalName}', ${
+        type: `${linkClass(navProp, service.oDataVersion)}<${
           entity.className
-        }, ${toEntity})`
+        },${toEntity}>`,
+        initializer: `new ${linkClass(navProp, service.oDataVersion)}('${
+          navProp.originalName
+        }', ${entity.className}, ${toEntity})`
       }
     ],
     docs: [getStaticNavPropertyDescription(navProp)],
@@ -115,11 +155,19 @@ function navigationProperty(
   };
 }
 
-function allFields(entity: VdmEntity): VariableStatementStructure {
+function allFields(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): VariableStatementStructure {
   const fieldTypes = unique([
-    ...entity.properties.map(p => `${p.fieldType}<${entity.className}>`),
+    ...entity.properties.map(
+      p => `${getFieldClassName(p)}<${entity.className}>`
+    ),
     ...entity.navigationProperties.map(
-      p => `${linkClass(p)}<${entity.className},${p.toEntityClassName}>`
+      p =>
+        `${linkClass(p, service.oDataVersion)}<${entity.className},${
+          p.toEntityClassName
+        }>`
     )
   ]);
   return {

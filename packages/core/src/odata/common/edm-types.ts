@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
+import { ODataVersion } from '@sap-cloud-sdk/util';
 export type EdmTypeCommon = EdmTypeSameConverters | EdmTypeDifferentConverters;
 
 export type EdmTypeSameConverters =
@@ -24,7 +24,7 @@ export type EdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
 export type EdmTypeV4 = 'Edm.Date' | 'Edm.Duration' | 'Edm.TimeOfDay';
 
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of typescript.
-export type EdmTypeShared<VersionT extends 'v2' | 'v4' | 'any'> =
+export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   | EdmTypeCommon
   | EdmTypeV2
   | EdmTypeV4;

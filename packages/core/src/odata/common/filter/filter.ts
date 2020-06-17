@@ -2,7 +2,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, EntityIdentifiable, ODataVersion } from '../entity';
+import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity';
 import { FieldType } from '../selectable';
 import { FilterFunction } from './filter-function';
 import { Filterable } from './filterable';
@@ -65,7 +65,7 @@ export class Filter<EntityT extends EntityBase, FieldT extends FieldType>
     public field: string | FilterFunction<EntityT, FieldT>,
     public operator: FilterOperator,
     public value: FieldT,
-    public edmType?: EdmTypeShared<ODataVersion<EntityT>>
+    public edmType?: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {
     this._fieldName = field;
   }

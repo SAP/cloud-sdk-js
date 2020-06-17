@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure } from 'ts-morph';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   coreImportDeclaration,
@@ -12,7 +13,8 @@ import { VdmComplexType, VdmProperty } from '../vdm-types';
 import { hasEdmTypeProperty } from './util';
 
 export function importDeclarations(
-  complexType: VdmComplexType
+  complexType: VdmComplexType,
+  oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(complexType.properties),
@@ -26,7 +28,8 @@ export function importDeclarations(
         'createComplexType',
         'Entity',
         'FieldType'
-      ].sort()
+      ].sort(),
+      oDataVersion
     )
   ];
 }

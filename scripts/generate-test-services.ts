@@ -3,8 +3,8 @@
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
-import { exec } from 'child_process';
 import { generate } from '../packages/generator/src';
+import { ODataVersion } from '../packages/util/src';
 
 type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
 const [readFile, readdir, writeFile] = [
@@ -13,7 +13,7 @@ const [readFile, readdir, writeFile] = [
   fs.writeFile
 ].map((fsModule: fsTypes) => util.promisify(fsModule));
 
-const inputDir = path.join('test-resources', 'service-specs');
+const serviceSpecsDir = path.join('test-resources', 'service-specs');
 const packageOutputDir = path.resolve('test-packages', 'test-services', 'srv');
 const coreUnitTestOutputDir = path.resolve(
   'packages',
@@ -24,7 +24,6 @@ const coreUnitTestOutputDir = path.resolve(
 );
 
 const generatorConfig = {
-  inputDir,
   forceOverwrite: true,
   generateJs: false,
   useSwagger: false,
@@ -39,32 +38,31 @@ const generatorConfig = {
   s4hanaCloud: false
 };
 
-function generateTestServicesPackage(outputDir) {
-  generate({ ...generatorConfig, outputDir, generateJs: true });
-  exec(
-    'cp -r test-packages/test-services/test-service-legacy test-packages/test-services/srv/test-service-legacy'
-  );
+function generateTestServicesPackage(outputDir: string, version: ODataVersion) {
+  generate({
+    ...generatorConfig,
+    inputDir: path.join(serviceSpecsDir, version),
+    outputDir: `${outputDir}/${version}`,
+    generateJs: true
+  });
 }
 
 async function generateTestServicesWithLocalCoreModules(
   outputDirBase,
-  version: 'v2' | 'v4'
+  version: ODataVersion
 ) {
   const outputDir = path.resolve(outputDirBase, version);
-  await generate({ ...generatorConfig, outputDir });
+  await generate({
+    ...generatorConfig,
+    inputDir: path.join(serviceSpecsDir, version),
+    outputDir
+  });
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
     readServiceDirectory(serviceDirectory).then(files =>
       files.forEach(file =>
         readServiceFile(serviceDirectory, file).then(data => {
-          const fileContent =
-            version === 'v4'
-              ? ((data as unknown) as string).replace(
-                  /\bLink\b/g,
-                  'OneToManyLink'
-                )
-              : data;
-          replaceWithLocalModules(serviceDirectory, file, fileContent, version);
+          replaceWithLocalModules(serviceDirectory, file, data);
         })
       )
     )
@@ -92,11 +90,10 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function replaceWithLocalModules(serviceDirectory, file, data, v) {
-    const versionSuffix = v === 'v4' ? '/v4' : '';
+  function replaceWithLocalModules(serviceDirectory, file, data) {
     return writeFile(
       path.resolve(outputDir, serviceDirectory, file),
-      data.replace('@sap-cloud-sdk/core', `../../../../../src${versionSuffix}`),
+      data.replace('@sap-cloud-sdk/core', '../../../../../src'),
       {
         encoding: 'utf8'
       }
@@ -106,69 +103,9 @@ async function generateTestServicesWithLocalCoreModules(
       );
     });
   }
-
-  function replaceWithLocalModules2(serviceDirectory, file, data) {
-    const lines = data.split('\n');
-    const importLineIndex = lines.findIndex(l =>
-      l.includes('@sap-cloud-sdk/core')
-    );
-    if (!lines[importLineIndex]) {
-      return;
-    }
-    const commonImportLine = lines[importLineIndex].replace(
-      '@sap-cloud-sdk/core',
-      '../../../../../src/common'
-    );
-    const [preamble, contentAndPostAmble] = commonImportLine.split('{');
-    const [content, postamble] = contentAndPostAmble.split('}');
-    const imports = content.split(',').map(c => c.trim());
-    const potentialLocalImports = [
-      'Entity',
-      'CreateRequestBuilder',
-      'CustomField',
-      'DeleteRequestBuilder',
-      'FunctionImportRequestBuilder',
-      'GetAllRequestBuilder',
-      'GetByKeyRequestBuilder',
-      'UpdateRequestBuilder',
-      'ODataBatchRequestBuilder',
-      'ODataBatchChangeSet',
-      'transformReturnValueForUndefined',
-      'transformReturnValueForEdmType',
-      'transformReturnValueForEdmTypeList',
-      'transformReturnValueForEntity',
-      'transformReturnValueForEntityList',
-      'transformReturnValueForComplexType',
-      'transformReturnValueForComplexTypeList',
-      'edmToTs'
-    ];
-    const commonImports = imports.filter(
-      i => !potentialLocalImports.includes(i)
-    );
-    const localImports = imports.filter(i => potentialLocalImports.includes(i));
-    const newCommonImportLine = commonImports.length
-      ? `import {${commonImports.join(',')}} from '../../../../../src/common'`
-      : '';
-    const localImportLine = localImports.length
-      ? `import {${localImports.join(
-          ','
-        )}} from '../../../../../src/${version}'`
-      : '';
-
-    lines.splice(importLineIndex, 1, newCommonImportLine, localImportLine);
-
-    const newData = lines.join('\n');
-
-    return writeFile(path.resolve(outputDir, serviceDirectory, file), newData, {
-      encoding: 'utf8'
-    }).catch(fileWriteErr => {
-      throw Error(
-        `Writing test service file' ${file}' failed: ${fileWriteErr}`
-      );
-    });
-  }
 }
 
-generateTestServicesPackage(packageOutputDir);
+generateTestServicesPackage(packageOutputDir, 'v2');
+generateTestServicesPackage(packageOutputDir, 'v4');
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');

@@ -226,7 +226,7 @@ export async function generateSourcesForService(
     sourceFile(
       serviceDir,
       `${entity.className}RequestBuilder`,
-      requestBuilderSourceFile(entity),
+      requestBuilderSourceFile(entity, service.oDataVersion),
       options.forceOverwrite
     );
   });
@@ -236,7 +236,7 @@ export async function generateSourcesForService(
     sourceFile(
       serviceDir,
       complexType.typeName,
-      complexTypeSourceFile(complexType),
+      complexTypeSourceFile(complexType, service.oDataVersion),
       options.forceOverwrite
     );
   });

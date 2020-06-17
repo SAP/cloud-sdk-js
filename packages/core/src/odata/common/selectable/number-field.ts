@@ -3,7 +3,7 @@
 
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersion } from '../entity';
+import { EntityBase, ODataVersionOf } from '../entity';
 import { Filter } from '../filter';
 import {
   ComplexTypeField,
@@ -97,7 +97,7 @@ export class ComplexTypeNumberPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    edmType: EdmTypeShared<ODataVersion<EntityT>>
+    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 
   /**
@@ -114,7 +114,7 @@ export class ComplexTypeNumberPropertyField<
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
     parentTypeName: string,
-    edmType: EdmTypeShared<ODataVersion<EntityT>>
+    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 
   /*
@@ -123,8 +123,8 @@ export class ComplexTypeNumberPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    arg3: string | EdmTypeShared<ODataVersion<EntityT>>,
-    arg4?: EdmTypeShared<ODataVersion<EntityT>>
+    arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
+    arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {
     super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
     this.fieldOf = fieldOf;

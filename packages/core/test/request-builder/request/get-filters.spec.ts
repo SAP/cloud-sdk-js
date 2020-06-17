@@ -15,9 +15,11 @@ import {
   testFilterFunctionSubstring,
   testFilterFunctionSubstringOf,
   testFilterGuid,
-  testFilterInt16, testFilterLambdaExpression,
+  testFilterInt16,
+  testFilterLambdaExpressionOnLink,
   testFilterSingleLink,
-  testFilterString, testFilterStringV4
+  testFilterString,
+  testFilterStringV4
 } from '../../test-util/filter-factory';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '../../test-util/test-services/v4/test-service';
@@ -164,11 +166,11 @@ describe('get filters', () => {
       ).toBe(`${testFilterString.odataStr}`);
     });
 
-    it('for lambda expression', () => {
+    it('for lambda expression on one-to-many navigation property', () => {
       expect(
-        getFilter(testFilterLambdaExpression.filter, TestEntityV4)
+        getFilter(testFilterLambdaExpressionOnLink.filter, TestEntityV4)
           .filter
-      ).toBe(testFilterLambdaExpression.odataStr);
+      ).toBe(testFilterLambdaExpressionOnLink.odataStr);
     });
   });
 });

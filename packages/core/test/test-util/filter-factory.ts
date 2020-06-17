@@ -1,13 +1,18 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment = require('moment');
 import { v4 as uuid } from 'uuid';
-import { filterFunction, substring, substringOf } from '../../src';
+import { any, filterFunction, substring, substringOf } from '../../src';
 import {
   TestEntity,
   TestEntitySingleLink
 } from './test-services/v2/test-service';
 
-import { TestEntity as TestEntityV4, TestEntityMultiLink as TestEntityMultiLinkV4 } from './test-services/v4/test-service';
+import {
+  TestComplexTypeField,
+  TestEntity as TestEntityV4,
+  TestEntityMultiLink as TestEntityMultiLinkV4
+} from './test-services/v4/test-service';
+import { CollectionFieldComplexType } from '../../src/odata/v4/selectable/collection-field';
 
 export const testFilterString = {
   filter: TestEntity.STRING_PROPERTY.equals('test'),
@@ -117,10 +122,10 @@ export const testFilterFunctionNested = {
     '(substringof(to_SingleLink/StringProperty, to_SingleLink/KeyProperty) eq false)'
 };
 
-export const testFilterLambdaExpression = {
-  filter: TestEntityV4.TO_MULTI_LINK.any(
+export const testFilterLambdaExpressionOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(any(
     TestEntityMultiLinkV4.STRING_PROPERTY.equals('test')
-  ),
+  )),
   odataStr:
     "to_MultiLink/any(a:a/StringProperty eq 'test')"
 };

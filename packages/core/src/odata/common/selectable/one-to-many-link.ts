@@ -76,17 +76,17 @@ export class OneToManyLink<
     return link;
   }
 
-  /**
-   * @experimental This is experimental and is subject to change. Use with caution.
-   */
-  any<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
-    return new FilterLambdaExpression(this._fieldName, filter, 'any');
-  }
-
-  /**
-   * @experimental This is experimental and is subject to change. Use with caution.
-   */
-  all<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
-    return new FilterLambdaExpression(this._fieldName, filter, 'all');
-  }
+  // /**
+  //  * @experimental This is experimental and is subject to change. Use with caution.
+  //  */
+  // any<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
+  //   return new FilterLambdaExpression(this._fieldName, filter, 'any');
+  // }
+  //
+  // /**
+  //  * @experimental This is experimental and is subject to change. Use with caution.
+  //  */
+  // all<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
+  //   return new FilterLambdaExpression(this._fieldName, filter, 'all');
+  // }
 }

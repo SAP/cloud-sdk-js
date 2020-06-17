@@ -69,3 +69,10 @@ export function or<EntityT extends EntityBase>(
 // Export function not<EntityT extends Entity>(expression: Filterable<EntityT>): Filterable<EntityT> {
 //   Return new FilterList([], expressions);
 // }
+
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
+export function any<EntityT extends EntityBase, FieldT extends FieldType, LinkedEntityT extends EntityBase>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
+  return new FilterLambdaExpression(filter, 'any');
+}

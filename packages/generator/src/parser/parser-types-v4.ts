@@ -47,10 +47,10 @@ interface EdmxNavigationProperty {
 }
 
 export interface EdmxEntitySet extends EdmxEntitySetBase {
-  NavigationPropertyBinding: NavigationPropertyBinding[];
+  NavigationPropertyBinding: EdmxNavigationPropertyBinding[];
 }
 
-export interface NavigationPropertyBinding {
+export interface EdmxNavigationPropertyBinding {
   Path: string;
   Target: string;
 }

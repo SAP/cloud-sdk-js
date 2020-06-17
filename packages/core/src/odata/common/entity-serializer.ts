@@ -8,9 +8,9 @@ import {
   OneToOneLink,
   Link,
   ComplexTypeField,
+  CollectionField,
   EntityBase
 } from '../common';
-import { CollectionField } from '../v4/selectable/collection-field';
 
 // eslint-disable-next-line valid-jsdoc
 /**

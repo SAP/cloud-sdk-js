@@ -2,12 +2,12 @@
 import {
   changeset as otherServiceChangeset,
   MultiSchemaTestEntity
-} from '@sap-cloud-sdk/test-services/multiple-schemas-service';
+} from '@sap-cloud-sdk/test-services/v2/multiple-schemas-service';
 import {
   batch,
   changeset as testEntityChangeset,
   TestEntity
-} from '@sap-cloud-sdk/test-services/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 
 const createTestEntity = TestEntity.requestBuilder().create(
   TestEntity.builder().build()

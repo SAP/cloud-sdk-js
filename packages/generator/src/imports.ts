@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { unique } from '@sap-cloud-sdk/util';
+import { unique, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { linkClass } from './generator-utils';
 import {
@@ -41,11 +41,13 @@ export function externalImportDeclaration(
 }
 
 export function coreImportDeclaration(
-  namedImports: string[]
+  namedImports: string[],
+  oDataVersion: ODataVersion
 ): ImportDeclarationStructure {
+  const moduleSuffix = oDataVersion === 'v4' ? '/v4' : '';
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: '@sap-cloud-sdk/core',
+    moduleSpecifier: `@sap-cloud-sdk/core${moduleSuffix}`,
     namedImports: unique(namedImports)
   };
 }
@@ -59,15 +61,17 @@ export function corePropertyTypeImportNames(
 export function corePropertyFieldTypeImportNames(
   properties: VdmProperty[]
 ): string[] {
-  return unique(
-    properties.filter(prop => !prop.isComplex).map(prop => prop.fieldType)
-  );
+  return unique([
+    ...properties.filter(prop => !prop.isComplex).map(prop => prop.fieldType),
+    ...(properties.some(prop => prop.isCollection) ? ['CollectionField'] : [])
+  ]);
 }
 
 export function coreNavPropertyFieldTypeImportNames(
-  navProperties: VdmNavigationProperty[]
+  navProperties: VdmNavigationProperty[],
+  oDataVersion: ODataVersion
 ): string[] {
-  return unique(navProperties.map(navProp => linkClass(navProp)));
+  return unique(navProperties.map(navProp => linkClass(navProp, oDataVersion)));
 }
 
 export function complexTypeImportDeclarations(

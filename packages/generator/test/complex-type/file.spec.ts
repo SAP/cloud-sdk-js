@@ -5,7 +5,7 @@ import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
 
 describe('file', () => {
   it('complexTypeSourceFile', () => {
-    const actual = complexTypeSourceFile(complexMeal);
+    const actual = complexTypeSourceFile(complexMeal, 'v2');
     const imports = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.ImportDeclaration
     );
@@ -32,7 +32,7 @@ describe('file', () => {
   });
 
   it('complexTypeSourceFile with nested complex types', () => {
-    const actual = complexTypeSourceFile(complexMealWithDesert);
+    const actual = complexTypeSourceFile(complexMealWithDesert, 'v2');
     const imports = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.ImportDeclaration
     );

@@ -9,11 +9,11 @@ import {
   Link,
   EdmTypeField,
   ComplexTypeField,
+  CollectionField,
   OneToOneLink,
   isExpandedProperty,
   EntityBase
 } from '../common';
-import { CollectionField } from '../v4/selectable/collection-field';
 
 // eslint-disable-next-line valid-jsdoc
 /**

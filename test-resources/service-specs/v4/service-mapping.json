@@ -1,0 +1,7 @@
+{
+  "API_TEST_SRV": {
+    "directoryName": "test-service",
+    "servicePath": "/sap/opu/odata/sap/API_TEST_SRV",
+    "npmPackageName": "test-service"
+  }
+}

@@ -18,7 +18,8 @@ export const entityName: VdmProperty = {
   originalName: 'EntityName',
   edmType: 'Edm.String',
   description: 'The name of the entity.',
-  nullable: false
+  nullable: false,
+  isCollection: false
 };
 
 export const numberOfEggs: VdmProperty = {
@@ -30,7 +31,8 @@ export const numberOfEggs: VdmProperty = {
   originalName: 'A_noEggs',
   edmType: 'Edm.Decimal',
   description: 'The number of eggs for breakfast.',
-  nullable: true
+  nullable: true,
+  isCollection: false
 };
 
 export const breakfastTime: VdmProperty = {
@@ -42,7 +44,8 @@ export const breakfastTime: VdmProperty = {
   originalName: 'BreakfastTime',
   edmType: 'Edm.DateTime',
   description: 'The time of breakfast.',
-  nullable: false
+  nullable: false,
+  isCollection: false
 };
 
 export const brunchEntity: VdmEntity = {
@@ -62,6 +65,7 @@ export const toBrunch: VdmNavigationProperty = {
   from: 'Breakfast',
   to: brunchEntity.entitySetName,
   isMultiLink: false,
+  isCollection: false,
   instancePropertyName: 'toBrunch',
   staticPropertyName: 'TO_BRUNCH',
   propertyNameAsParam: 'toBrunch',
@@ -84,6 +88,7 @@ export const breakfastEntity: VdmEntity = {
 };
 
 export const foodService: VdmServiceMetadata = {
+  oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
   namespace: 'FOOD_SERVICE',
   servicePath: 'some/path/to/food',
@@ -112,7 +117,8 @@ export const complexMeal: VdmComplexType = {
       instancePropertyName: 'complexity',
       propertyNameAsParam: 'complexity',
       jsType: 'string',
-      staticPropertyName: 'COMPLEXITY'
+      staticPropertyName: 'COMPLEXITY',
+      isCollection: false
     },
     {
       originalName: 'Amount',
@@ -123,7 +129,8 @@ export const complexMeal: VdmComplexType = {
       instancePropertyName: 'amount',
       propertyNameAsParam: 'amount',
       jsType: 'number',
-      staticPropertyName: 'AMOUNT'
+      staticPropertyName: 'AMOUNT',
+      isCollection: false
     }
   ]
 };
@@ -143,7 +150,8 @@ export const complexDesert: VdmComplexType = {
       instancePropertyName: 'amount',
       propertyNameAsParam: 'amount',
       jsType: 'number',
-      staticPropertyName: 'AMOUNT'
+      staticPropertyName: 'AMOUNT',
+      isCollection: false
     },
     {
       originalName: 'Name',
@@ -154,7 +162,8 @@ export const complexDesert: VdmComplexType = {
       instancePropertyName: 'name',
       propertyNameAsParam: 'name',
       jsType: 'string',
-      staticPropertyName: 'NAME'
+      staticPropertyName: 'NAME',
+      isCollection: false
     }
   ]
 };
@@ -175,7 +184,8 @@ export const complexMealWithDesert: VdmComplexType = {
       propertyNameAsParam: 'complexDesert',
       jsType: 'ComplexDesert',
       staticPropertyName: 'COMPLEX_DESERT',
-      isComplex: true
+      isComplex: true,
+      isCollection: false
     },
     {
       originalName: 'Amount',
@@ -186,7 +196,8 @@ export const complexMealWithDesert: VdmComplexType = {
       instancePropertyName: 'amount',
       propertyNameAsParam: 'amount',
       jsType: 'number',
-      staticPropertyName: 'AMOUNT'
+      staticPropertyName: 'AMOUNT',
+      isCollection: false
     }
   ]
 };
@@ -210,7 +221,7 @@ export const orderBreakfast: VdmFunctionImport = {
   returnType: {
     builderFunction: '(val) => edmToTs(val, Edm.String)',
     returnType: 'string',
-    isMulti: false,
+    isCollection: false,
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE
   }
 };

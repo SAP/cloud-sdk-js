@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase } from '../entity';
@@ -97,7 +98,7 @@ export function getEntityConstructor<EntityT extends EntityBase>(
  * @param arg2 - Contains either the EdmType or undefined
  * @returns EdmType
  */
-export function getEdmType<T extends 'v2' | 'v4'>(
+export function getEdmType<T extends ODataVersion>(
   arg1: string | EdmTypeShared<T>,
   arg2: EdmTypeShared<T> | undefined
 ): EdmTypeShared<T> {

@@ -4,7 +4,7 @@ import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 
 // $ExpectType Filter<TestEntity, string>
 const stringProp = TestEntity.STRING_PROPERTY.equals('test');

@@ -3,7 +3,6 @@
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
-import { exec } from 'child_process';
 import { generate } from '../packages/generator/src';
 import { ODataVersion } from '../packages/util/src';
 
@@ -46,12 +45,6 @@ function generateTestServicesPackage(outputDir: string, version: ODataVersion) {
     outputDir: `${outputDir}/${version}`,
     generateJs: true
   });
-}
-
-function generateLegacyTestService() {
-  exec(
-    'cp -r test-packages/test-services/test-service-legacy test-packages/test-services/srv/test-service-legacy'
-  );
 }
 
 async function generateTestServicesWithLocalCoreModules(
@@ -114,6 +107,5 @@ async function generateTestServicesWithLocalCoreModules(
 
 generateTestServicesPackage(packageOutputDir, 'v2');
 generateTestServicesPackage(packageOutputDir, 'v4');
-generateLegacyTestService();
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');

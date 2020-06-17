@@ -2,7 +2,7 @@
 import {
   TestEntity,
   TestEntityMultiLink
-} from '@sap-cloud-sdk/test-services/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import {

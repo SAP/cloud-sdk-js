@@ -14,11 +14,12 @@
 
 ## Compatibility Notes
 
--
+- The properties `isMulti` of the type`VdmFunctionImportReturnType` and `isMultiLink` as well as `multiplicity` of `VdmNavigationProperty` were deprecated and replaced by `isCollection`.
+- The interface `VdmServiceMetadata` now also contains a property `oDataVersion` that is mandatory.
 
 ## New Functionality
 
--
+- Add experimental support for OData v4 to the generator.
 
 ## Improvements
 
@@ -26,7 +27,7 @@
 
 ## Fixed Issues
 
-- Fix the generator so that the builder function for nested complex types is correctly typed. 
+- Fix the generator so that the builder function for nested complex types is correctly typed.
 
 
 # 1.21.2

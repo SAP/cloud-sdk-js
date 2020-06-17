@@ -7,8 +7,15 @@ import {
   TestEntitySingleLink
 } from './test-services/v2/test-service';
 
+import { TestEntity as TestEntityV4, TestEntityMultiLink as TestEntityMultiLinkV4 } from './test-services/v4/test-service';
+
 export const testFilterString = {
   filter: TestEntity.STRING_PROPERTY.equals('test'),
+  odataStr: "StringProperty eq 'test'"
+};
+
+export const testFilterStringV4 = {
+  filter: TestEntityV4.STRING_PROPERTY.equals('test'),
   odataStr: "StringProperty eq 'test'"
 };
 
@@ -108,4 +115,12 @@ export const testFilterFunctionNested = {
   ),
   odataStr:
     '(substringof(to_SingleLink/StringProperty, to_SingleLink/KeyProperty) eq false)'
+};
+
+export const testFilterLambdaExpression = {
+  filter: TestEntityV4.TO_MULTI_LINK.any(
+    TestEntityMultiLinkV4.STRING_PROPERTY.equals('test')
+  ),
+  odataStr:
+    "to_MultiLink/any(a:a/StringProperty eq 'test')"
 };

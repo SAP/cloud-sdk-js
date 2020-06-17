@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { and, or } from '../../../src';
 import { getQueryParametersForFilter } from '../../../src/odata/v2/uri-conversion/get-filter';
+import { getFilter } from '../../../src/odata/v4/uri-conversion/get-filter';
 import {
   testFilterBoolean,
   testFilterComplexType,
@@ -14,11 +15,12 @@ import {
   testFilterFunctionSubstring,
   testFilterFunctionSubstringOf,
   testFilterGuid,
-  testFilterInt16,
+  testFilterInt16, testFilterLambdaExpression,
   testFilterSingleLink,
-  testFilterString
+  testFilterString, testFilterStringV4
 } from '../../test-util/filter-factory';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
+import { TestEntity as TestEntityV4 } from '../../test-util/test-services/v4/test-service';
 
 describe('get filters', () => {
   it('for simple filters', () => {
@@ -150,5 +152,23 @@ describe('get filters', () => {
       getQueryParametersForFilter(testFilterFunctionNested.filter, TestEntity)
         .filter
     ).toBe(testFilterFunctionNested.odataStr);
+  });
+
+  describe('odata v4', () => {
+    it('for simple filters', () => {
+      expect(
+        getFilter(
+          testFilterStringV4.filter,
+          TestEntityV4
+        ).filter
+      ).toBe(`${testFilterString.odataStr}`);
+    });
+
+    it('for lambda expression', () => {
+      expect(
+        getFilter(testFilterLambdaExpression.filter, TestEntityV4)
+          .filter
+      ).toBe(testFilterLambdaExpression.odataStr);
+    });
   });
 });

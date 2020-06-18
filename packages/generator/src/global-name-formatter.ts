@@ -2,7 +2,7 @@
 
 import { propertyExists } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { applySuffixOnConflictDash } from './name-formatting-strategies';
+import { getUniqueNameOnConflictDash } from './name-formatting-strategies';
 import { ServiceMapping, VdmMapping } from './service-mapping';
 
 export class GlobalNameFormatter {
@@ -58,7 +58,12 @@ export class GlobalNameFormatter {
   };
 
   private transformIfNecessary = (cache: string[]) => (name: string): string =>
-    cache.includes(name) ? applySuffixOnConflictDash(name, cache) : name;
+    cache.includes(name)
+      ? getUniqueNameOnConflictDash({
+          nameToCheckForUniqueness: name,
+          alreadyUsedNames: cache
+        }).uniqueName
+      : name;
 
   private directoryNameFromMapping(
     originalFileName: string

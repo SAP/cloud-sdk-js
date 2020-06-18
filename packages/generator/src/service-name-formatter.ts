@@ -5,7 +5,7 @@ import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
 import {
   applyPrefixOnJsConfictFunctionImports,
-  applySuffixOnConflictUnderscore
+  getUniqueNameOnConflictUnderscore
 } from './name-formatting-strategies';
 
 export class ServiceNameFormatter {
@@ -73,10 +73,17 @@ export class ServiceNameFormatter {
     const transformedName = toStaticPropertyFormat(
       stripPrefix(originalPropertyName)
     );
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.staticPropertyNamesCache[originalContainerTypeName]
+    if (!this.staticPropertyNamesCache[originalContainerTypeName]) {
+      this.staticPropertyNamesCache[originalContainerTypeName] = [];
+    }
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: transformedName,
+      alreadyUsedNames: this.staticPropertyNamesCache[originalContainerTypeName]
+    });
+    this.staticPropertyNamesCache[originalContainerTypeName].push(
+      newName.uniqueName
     );
+    return newName.uniqueName;
   }
 
   originalToInstancePropertyName(
@@ -84,20 +91,29 @@ export class ServiceNameFormatter {
     originalPropertyName: string
   ): string {
     const transformedName = toPropertyFormat(stripPrefix(originalPropertyName));
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.instancePropertyNamesCache[originalContainerTypeName]
+    if (!this.instancePropertyNamesCache[originalContainerTypeName]) {
+      this.instancePropertyNamesCache[originalContainerTypeName] = [];
+    }
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: transformedName,
+      alreadyUsedNames: this.instancePropertyNamesCache[
+        originalContainerTypeName
+      ]
+    });
+    this.instancePropertyNamesCache[originalContainerTypeName].push(
+      newName.uniqueName
     );
+    return newName.uniqueName;
   }
 
   originalToFunctionImportName(str: string): string {
     const transformedName = voca.camelCase(str);
-    return applyPrefixOnJsConfictFunctionImports(
-      applySuffixOnConflictUnderscore(
-        transformedName,
-        this.serviceWideNamesCache
-      )
-    );
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: transformedName,
+      alreadyUsedNames: this.serviceWideNamesCache
+    });
+    this.serviceWideNamesCache.push(newName.uniqueName);
+    return applyPrefixOnJsConfictFunctionImports(newName.uniqueName);
   }
 
   originalToComplexTypeName(str: string): string {
@@ -105,10 +121,12 @@ export class ServiceNameFormatter {
       '_',
       ''
     );
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.serviceWideNamesCache
-    );
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: transformedName,
+      alreadyUsedNames: this.serviceWideNamesCache
+    });
+    this.serviceWideNamesCache.push(newName.uniqueName);
+    return newName.uniqueName;
   }
 
   typeNameToFactoryName(str: string, reservedNames: Set<string>): string {
@@ -118,10 +136,12 @@ export class ServiceNameFormatter {
       factoryName = `${factoryName}_${index}`;
       index += 1;
     }
-    return applySuffixOnConflictUnderscore(
-      factoryName,
-      this.serviceWideNamesCache
-    );
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: factoryName,
+      alreadyUsedNames: this.serviceWideNamesCache
+    });
+    this.serviceWideNamesCache.push(newName.uniqueName);
+    return newName.uniqueName;
   }
 
   originalToNavigationPropertyName(
@@ -129,10 +149,12 @@ export class ServiceNameFormatter {
     originalPropertyName: string
   ): string {
     const transformedName = voca.camelCase(originalPropertyName);
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.instancePropertyNamesCache[entitySetName]
-    );
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: transformedName,
+      alreadyUsedNames: this.instancePropertyNamesCache[entitySetName]
+    });
+    this.instancePropertyNamesCache[entitySetName].push(newName.uniqueName);
+    return newName.uniqueName;
   }
 
   originalToParameterName(
@@ -140,10 +162,14 @@ export class ServiceNameFormatter {
     originalParameterName: string
   ): string {
     const transformedName = voca.camelCase(originalParameterName);
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.parameterNamesCache[originalFunctionImportName]
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: transformedName,
+      alreadyUsedNames: this.parameterNamesCache[originalFunctionImportName]
+    });
+    this.parameterNamesCache[originalFunctionImportName].push(
+      newName.uniqueName
     );
+    return newName.uniqueName;
   }
 
   originalToEntityClassName(entitySetName: string): string {
@@ -153,13 +179,17 @@ export class ServiceNameFormatter {
     }
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
-    const newName = applySuffixOnConflictUnderscore(
-      transformedName,
-      this.serviceWideNamesCache
+    const newName = getUniqueNameOnConflictUnderscore({
+      nameToCheckForUniqueness: transformedName,
+      alreadyUsedNames: this.serviceWideNamesCache,
+      relatedNamesBuilder: getInterfaceNames
+    });
+
+    this.serviceWideNamesCache.push(
+      newName.uniqueName,
+      ...newName.relatedUniqueNames
     );
-    // E.g., Both <newName>Type and <newName>TypeForceMandatory are generated by the generator. Therefore, they are added to the cache, so that new entity names will not face naming conflicts.
-    this.serviceWideNamesCache.push(...getInterfaceNames(newName));
-    return newName;
+    return newName.uniqueName;
   }
 
   directoryToSpeakingModuleName(packageName: string): string {
@@ -185,6 +215,7 @@ function stripAUnderscore(name: string) {
   return name.startsWith('A_') ? name.substring(2, name.length) : name;
 }
 
+// TODO discuss how to use this in a test without exporting
 export function getInterfaceNames(entitySetName: string): string[] {
   return [`${entitySetName}Type`, `${entitySetName}TypeForceMandatory`];
 }

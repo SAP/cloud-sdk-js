@@ -38,17 +38,20 @@ const applyPrefixOnJSReservedWords = (prefix: string) => (
  * Use [[getUniqueNameOnConflictUnderscore]] instead.
  */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
-export const getUniqueNameOnConflictUnderscore = (
-  findUniqueName: FindUniqueName
-) => getUniqueName(findUniqueName, '_');
 
 /**
  * @deprecated This method changes the 'previouslyGeneratedNames' passed to it.
  *  * Use [[getUniqueNameOnConflictDash]] instead.
  */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
+
 export const getUniqueNameOnConflictDash = (findUniqueName: FindUniqueName) =>
   getUniqueName(findUniqueName, '-');
+
+export const getUniqueNameOnConflictUnderscore = (
+  findUniqueName: FindUniqueName
+) => getUniqueName(findUniqueName, '_');
+
 export const applyPrefixOnJsConfictParam = applyPrefixOnJSReservedWords('p');
 export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords(
   'f'

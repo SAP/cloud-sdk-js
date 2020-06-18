@@ -212,26 +212,24 @@ describe('name-formatter', () => {
       return new ServiceNameFormatter([], [], ['FunctionImport']);
     }
 
-    it('should add class, classType and classTypeForceMandatory to cache.', () => {
+    it('should add class, classType and classTypeForceMandatory to service wide names cache.', () => {
       const formatter = getFreshNameFormatter();
       const newName = formatter.originalToEntityClassName('MyClass');
-      expect(formatter['serviceWideNamesCache'].slice(-3)).toBe([
+      expect(formatter['serviceWideNamesCache'].slice(-3)).toEqual([
         newName,
         ...getInterfaceNames(newName)
       ]);
     });
 
-    // originalToParameterName  this.parameterNamesCache[originalFunctionImportName]
-    it('should add the function import parameter to the cache.', () => {
+    it('should add the function import parameter to the parameter names cache.', () => {
       const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
       formatter.originalToParameterName('FunctionImport', 'SomeParam');
-      expect(formatter['parameterNamesCache']['FunctionImport']).toBe([
-        'SomeParam'
+      expect(formatter['parameterNamesCache']['FunctionImport']).toEqual([
+        'someParam'
       ]);
     });
 
-    // originalToNavigationPropertyName this.instancePropertyNamesCache[entitySetName]
-    it('should add the navigational  parameter to the cache.', () => {
+    it('should add the navigational  parameter to the instance property names cache.', () => {
       const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
       expect(
         formatter.originalToNavigationPropertyName(
@@ -239,45 +237,37 @@ describe('name-formatter', () => {
           'to_SomeEntity'
         )
       ).toBe('toSomeEntity');
-      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toBe([
-        'to_SomeEntity'
+      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toEqual([
+        'toSomeEntity'
       ]);
     });
 
-    // originalToComplexTypeName   this.serviceWideNamesCache
     it('should add the complex type parameter to the service wide cache', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToComplexTypeName('MyComplexType');
       expect(formatter['serviceWideNamesCache'].pop()).toBe('MyComplexType');
     });
 
-    // originalToFunctionImportName this.serviceWideNamesCache
     it('should add the function inport name to the service wide cache', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToFunctionImportName('MyFunctionInport');
-      expect(formatter['serviceWideNamesCache'].pop()).toBe('MyFunctionInport');
+      expect(formatter['serviceWideNamesCache'].pop()).toBe('myFunctionInport');
     });
 
-    // originalToInstancePropertyName  this.instancePropertyNamesCache[originalContainerTypeName]
     it('should add the instance property parameter to the instance property cache.', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToInstancePropertyName('A_SomeEntity', 'MyProperty');
-      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toBe([
-        'MyProperty'
+      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toEqual([
+        'myProperty'
       ]);
     });
 
-    // originalToStaticPropertyName  this.staticPropertyNamesCache[originalContainerTypeName]
     it('should add the static property parameter to the static property cache.', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToStaticPropertyName('A_SomeEntity', 'MyProperty');
-      expect(formatter['staticPropertyNamesCache']['A_SomeEntity']).toBe([
-        'MyProperty'
+      expect(formatter['staticPropertyNamesCache']['A_SomeEntity']).toEqual([
+        'MY_PROPERTY'
       ]);
-    });
-
-    it('should add class, classType and classTypeForceMandatory to cache..', () => {
-      expect(0).toBe(1); // Add test cases for all orginal methods to check the cache is working.
     });
   });
 });

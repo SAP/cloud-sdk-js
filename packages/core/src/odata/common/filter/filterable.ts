@@ -19,7 +19,7 @@ export type Filterable<EntityT extends EntityBase> =
   | Filter<EntityT, FieldType>
   | FilterLink<EntityT>
   | FilterList<EntityT>
-  | FilterLambdaExpression<EntityT, FieldType>;
+  | FilterLambdaExpression<FieldType>;
 
 /**
  * Create a [[FilterList]] by combining [[Filterable]]s with logical `and`.
@@ -102,4 +102,8 @@ export interface FilterWithLambdaOperator<
 > {
   filter: Filter<LinkedEntityT, FieldT>;
   lambdaOperator: FilterLambdaOperator;
+}
+
+export function isFilterWithLambdaOperator(obj: any): obj is FilterWithLambdaOperator<EntityBase, FieldType>{
+  return  'filter' in obj && 'lambdaOperator' in obj;
 }

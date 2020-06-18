@@ -147,7 +147,7 @@ export function createGetFilter(uriConverter: UriConverter) {
   function getODataFilterExpressionWhenBeingFilterLambdaExpression<
     FilterEntityT extends EntityBase
   >(
-    filter: FilterLambdaExpression<FilterEntityT, FieldType>,
+    filter: FilterLambdaExpression<FieldType>,
     parentFieldNames: string[] = [],
     targetEntityConstructor: Constructable<any>
   ) {
@@ -169,7 +169,7 @@ export function createGetFilter(uriConverter: UriConverter) {
       filter.innerFilter.operator,
       uriConverter.convertToUriFormat(filter.innerFilter.value, field.edmType)
     ].join(' ');
-    return `${filter.link._fieldName}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
+    return `${filter.rootFiledName}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(

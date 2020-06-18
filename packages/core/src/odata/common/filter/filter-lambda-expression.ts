@@ -14,12 +14,11 @@ export type FilterLambdaOperator = 'any' | 'all';
  * @experimental This is experimental and is subject to change. Use with caution.
  */
 export class FilterLambdaExpression<
-  EntityT extends EntityBase,
   FieldT extends FieldType,
   LinkedEntityT extends EntityBase = any
 > {
   constructor(
-    public link: OneToManyLink<EntityT, LinkedEntityT>,
+    public rootFiledName: string,
     public innerFilter: Filter<LinkedEntityT, FieldT>,
     public lambdaOperator: FilterLambdaOperator
   ) {}
@@ -34,9 +33,9 @@ export function isFilterLambdaExpression<
   FieldT extends FieldType
 >(
   filterable: Filterable<EntityT>
-): filterable is FilterLambdaExpression<EntityT, FieldT> {
+): filterable is FilterLambdaExpression<FieldT> {
   return (
-    typeof filterable['link'] !== 'undefined' &&
+    typeof filterable['rootFiledName'] !== 'undefined' &&
     typeof filterable['innerFilter'] !== 'undefined' &&
     typeof filterable['lambdaOperator'] !== 'undefined'
   );

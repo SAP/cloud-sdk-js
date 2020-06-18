@@ -1,14 +1,22 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { ServiceNameFormatter } from '../service-name-formatter';
-import { VdmNavigationProperty, VdmComplexType, VdmEntity } from '../vdm-types';
+import {
+  VdmNavigationProperty,
+  VdmComplexType,
+  VdmEntity,
+  VdmFunctionImport
+} from '../vdm-types';
+import { edmToTsType, isNullableParameter } from '../generator-utils';
 import {
   EdmxAssociationSet,
   EdmxAssociation,
   EdmxEntityType,
-  EdmxMetadata
+  EdmxMetadata,
+  EdmxFunctionImport
 } from './parser-types-v2';
-import { stripNamespace } from './parser-util';
+import { stripNamespace, parseTypeName } from './parser-util';
 import {
   JoinedEntityMetadata,
   ParsedServiceMetadata
@@ -17,7 +25,11 @@ import {
   joinEntityMetadata,
   createEntityClassNames,
   transformEntity,
-  navigationPropertyBase
+  navigationPropertyBase,
+  swaggerDefinitionForFunctionImport,
+  parameterDescription,
+  parseReturnType,
+  functionImportDescription
 } from './edmx-to-vdm-common';
 
 export function joinAssociationMetadata(
@@ -77,6 +89,56 @@ export function transformEntitiesV2(
       formatter
     )
   }));
+}
+
+export function transformFunctionImportsV2(
+  serviceMetadata: ParsedServiceMetadata,
+  entities: VdmEntity[],
+  complexTypes: VdmComplexType[],
+  formatter: ServiceNameFormatter
+): VdmFunctionImport[] {
+  const edmxFunctionImports = serviceMetadata.edmx
+    .functionImports as EdmxFunctionImport[];
+
+  return edmxFunctionImports.map(f => {
+    const functionName = formatter.originalToFunctionImportName(f.Name);
+    const functionImport = {
+      httpMethod: f['m:HttpMethod'].toLowerCase(),
+      originalName: f.Name,
+      functionName,
+      returnType: parseReturnType(f.ReturnType, entities, complexTypes),
+      parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
+    };
+
+    const swaggerDefinition = swaggerDefinitionForFunctionImport(
+      serviceMetadata,
+      functionImport.originalName,
+      functionImport.httpMethod
+    );
+
+    const parameters = f.Parameter.map(p => {
+      const swaggerParameter = swaggerDefinition
+        ? swaggerDefinition.parameters.find(param => param.name === p.Name)
+        : undefined;
+      return {
+        originalName: p.Name,
+        parameterName: formatter.originalToParameterName(f.Name, p.Name),
+        edmType: parseTypeName(p.Type),
+        jsType: edmToTsType(p.Type),
+        nullable: isNullableParameter(p),
+        description: parameterDescription(p, swaggerParameter)
+      };
+    });
+
+    return {
+      ...functionImport,
+      parameters,
+      description: functionImportDescription(
+        swaggerDefinition,
+        functionImport.originalName
+      )
+    };
+  });
 }
 
 function navigationProperties(

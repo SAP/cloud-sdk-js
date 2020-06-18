@@ -7,13 +7,10 @@ import {
   EdmxEntityType,
   EdmxEnumType,
   EdmxDerivedType,
-  EdmxComplexType
+  EdmxComplexType,
+  EdmxFunction
 } from './parser-types-v4';
-import {
-  parseEntityTypes,
-  parseFunctionImports,
-  parseComplexTypes
-} from './edmx-parser-common';
+import { parseEntityTypes, parseComplexTypes } from './edmx-parser-common';
 import { stripNamespace, parseTypeName } from './parser-util';
 import { EdmxMetadataBase } from './parser-types-common';
 
@@ -101,7 +98,8 @@ export function parseEdmxV4(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
     ),
     entitySets: parseEntitySets(root),
     enumTypes,
-    functionImports: parseFunctionImports(root),
+    functions: parseFunctions(root),
+    functionImports: forceArray(root.EntityContainer.FunctionImport),
     complexTypes: joinTypesWithBaseTypes(
       parseComplexTypes(root),
       joinComplexTypes
@@ -109,7 +107,14 @@ export function parseEdmxV4(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
   };
 }
 
-export function parseEntitySets(root): EdmxEntitySet[] {
+function parseFunctions(root): EdmxFunction[] {
+  return forceArray(root.Function).map(f => {
+    f.Parameter = forceArray(f.Parameter);
+    return f;
+  });
+}
+
+function parseEntitySets(root): EdmxEntitySet[] {
   return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
     ...entitySet,
     NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)

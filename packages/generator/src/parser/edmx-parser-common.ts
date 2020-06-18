@@ -42,7 +42,7 @@ export function parseEntityTypes(root): EdmxEntityTypeBase[] {
   });
 }
 
-export function parseFunctionImports(root): EdmxFunctionImportBase[] {
+export function parseFunctionImportsBase(root): EdmxFunctionImportBase[] {
   return forceArray(root.EntityContainer.FunctionImport).map(f => {
     f.Parameter = forceArray(f.Parameter);
     return f;

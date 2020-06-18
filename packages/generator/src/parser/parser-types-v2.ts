@@ -5,7 +5,8 @@ import {
   EdmxEntityTypeBase,
   EdmxFunctionImportBase,
   EdmxEntitySetBase,
-  EdmxComplexTypeBase
+  EdmxComplexTypeBase,
+  EdmxParameter
 } from './parser-types-common';
 
 export interface EdmxMetadata extends EdmxMetadataBase {
@@ -30,6 +31,9 @@ export interface EdmxEntityType extends EdmxEntityTypeBase {
 }
 
 export interface EdmxFunctionImport extends EdmxFunctionImportBase {
+  ReturnType: string;
+  'sap:action-for': string;
+  Parameter: EdmxParameter[];
   'm:HttpMethod': string;
 }
 

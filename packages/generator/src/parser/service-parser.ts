@@ -24,13 +24,16 @@ import {
 } from './parser-types-common';
 import { parseSwaggerFromPath } from './swagger-parser';
 import { isV2Metadata } from './parser-types-v2';
-import { transformEntitiesV4 } from './edmx-to-vdm-v4';
-import { transformEntitiesV2 } from './edmx-to-vdm-v2';
-import { parseEdmxFromPath } from './edmx-parser';
 import {
-  transformComplexTypes,
-  transformFunctionImports
-} from './edmx-to-vdm-common';
+  transformEntitiesV4,
+  transformFunctionImportsV4
+} from './edmx-to-vdm-v4';
+import {
+  transformEntitiesV2,
+  transformFunctionImportsV2
+} from './edmx-to-vdm-v2';
+import { parseEdmxFromPath } from './edmx-parser';
+import { transformComplexTypes } from './edmx-to-vdm-common';
 
 const logger = createLogger({
   package: 'generator',
@@ -132,6 +135,9 @@ function transformServiceMetadata(
     edmxPath: serviceDefinitionPaths.edmxPath
   };
 
+  const transformFunctionImports = isV2Metadata(metadata.edmx)
+    ? transformFunctionImportsV2
+    : transformFunctionImportsV4;
   const functionImports = transformFunctionImports(
     metadata,
     vdmService.entities,

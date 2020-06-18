@@ -89,7 +89,7 @@ module.exports = {
         items: [
           'java/tips-and-tricks/change-log-level',
           'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems'
-      ]
+        ]
       },
       {
         type: 'category',
@@ -113,6 +113,15 @@ module.exports = {
           //       'java/how-to/app-router',
           //       'java/how-to/configure-ide'
         ]
+      },
+      {
+        type: 'category',
+        label: 'Video tutorials',
+        items: [
+          'java/video/video-tutorial-about-getting-started-with-sap-cloudsdk-for-java',
+          'java/video/video-tutorial-about-type-safe-client-generator-for-odata-with-sap-cloudsdk-for-java',
+          'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java'
+        ],
       },
       'java/api-reference-java',
       'java/frequently-asked-questions'

@@ -88,14 +88,9 @@ module.exports = {
         label: 'Tips & Tricks',
         items: [
           'java/tips-and-tricks/change-log-level',
-<<<<<<< HEAD
-          'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems'
-        ]
-=======
           'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems',
           'java/tips-and-tricks/use-bapi-with-cloud-sdk-for-java'
-      ]
->>>>>>> Tip on BAPI pointing to SO
+        ]
       },
       {
         type: 'category',

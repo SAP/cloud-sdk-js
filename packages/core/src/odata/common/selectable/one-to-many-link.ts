@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase } from '../entity';
-import { Filterable, and, FilterList, Filter } from '../filter';
+import { Filterable, and, FilterList, Filter, FilterWithLambdaOperator } from '../filter';
 import { Orderable } from '../order';
 import { Link } from './link';
 import { FieldType } from './field';
@@ -29,15 +29,11 @@ export class OneToManyLink<
   }
 
   /**
-   * Add filter statements to the request.
-   *
-   * @param expressions - Filter expressions to restrict the response
-   * @returns The request builder itself, to facilitate method chaining
+   * @experimental This is experimental and is subject to change. Use with caution.
    */
-  filter(...expressions: Filterable<LinkedEntityT>[]): this {
-    const link = this.clone();
-    link._filters = and(...expressions);
-    return link;
+  filter(...expressions: FilterWithLambdaOperator<LinkedEntityT, FieldType>[]): FilterList<EntityT> {
+    const filterLambdaExps = expressions.map(e => new FilterLambdaExpression(this, e.filter,e.lambdaOperator));
+    return and(...filterLambdaExps);
   }
 
   /**
@@ -75,18 +71,4 @@ export class OneToManyLink<
     link._skip = skip;
     return link;
   }
-
-  // /**
-  //  * @experimental This is experimental and is subject to change. Use with caution.
-  //  */
-  // any<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
-  //   return new FilterLambdaExpression(this._fieldName, filter, 'any');
-  // }
-  //
-  // /**
-  //  * @experimental This is experimental and is subject to change. Use with caution.
-  //  */
-  // all<FieldT extends FieldType>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
-  //   return new FilterLambdaExpression(this._fieldName, filter, 'all');
-  // }
 }

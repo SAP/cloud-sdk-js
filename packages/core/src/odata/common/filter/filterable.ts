@@ -5,7 +5,7 @@ import { FieldType } from '../selectable';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
-import { FilterLambdaExpression } from './filter-lambda-expression';
+import { FilterLambdaExpression, FilterLambdaOperator } from './filter-lambda-expression';
 
 /**
  * A union of all types that can be used for filtering.
@@ -73,6 +73,21 @@ export function or<EntityT extends EntityBase>(
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function any<EntityT extends EntityBase, FieldT extends FieldType, LinkedEntityT extends EntityBase>(filter: Filter<LinkedEntityT, FieldT>): FilterLambdaExpression<EntityT, FieldT>{
-  return new FilterLambdaExpression(filter, 'any');
+export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(filter: Filter<LinkedEntityT, FieldT>): FilterWithLambdaOperator<LinkedEntityT, FieldType>{
+  return {filter, lambdaOperator: 'any'};
+}
+
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
+export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(filter: Filter<LinkedEntityT, FieldT>): FilterWithLambdaOperator<LinkedEntityT, FieldType>{
+  return {filter, lambdaOperator: 'all'};
+}
+
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
+export interface FilterWithLambdaOperator<LinkedEntityT extends EntityBase, FieldT extends FieldType>{
+  filter: Filter<LinkedEntityT, FieldT>;
+  lambdaOperator: FilterLambdaOperator;
 }

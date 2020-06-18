@@ -11,7 +11,7 @@ export type FilterLambdaOperator = 'any' | 'all';
  */
 export class FilterLambdaExpression<EntityT extends EntityBase, FieldT extends FieldType, LinkedEntityT extends EntityBase = any>{
   constructor(
-    // public property: OneToManyLink<EntityT, LinkedEntityT>,
+    public link: OneToManyLink<EntityT, LinkedEntityT>,
               public innerFilter: Filter<LinkedEntityT, FieldT>, public lambdaOperator: FilterLambdaOperator){
   }
 }
@@ -21,7 +21,7 @@ export class FilterLambdaExpression<EntityT extends EntityBase, FieldT extends F
  */
 export function isFilterLambdaExpression<EntityT extends EntityBase, FieldT extends FieldType>(filterable: Filterable<EntityT>): filterable is FilterLambdaExpression<EntityT, FieldT>{
   return (
-    // typeof filterable['propertyName'] !== 'undefined' &&
+    typeof filterable['link'] !== 'undefined' &&
     typeof filterable['innerFilter'] !== 'undefined' &&
     typeof filterable['lambdaOperator'] !== 'undefined'
   );

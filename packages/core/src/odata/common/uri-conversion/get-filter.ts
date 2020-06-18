@@ -155,7 +155,7 @@ export function createGetFilter(uriConverter: UriConverter) {
       filter.innerFilter.operator,
       uriConverter.convertToUriFormat(filter.innerFilter.value, field.edmType)
     ].join(' ');
-    return `${filter.navigationPropertyName}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
+    return `${filter.link._fieldName}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EntityBase, ODataVersion } from '../entity';
-import { CollectionField } from '../../v4/selectable/collection-field';
+import { EntityBase, ODataVersionOf } from '../entity';
+import { CollectionField } from './collection-field';
 import { AllFields } from './all-fields';
 import { ComplexTypeField } from './complex-type-field';
 import { CustomFieldBase } from './custom-field';
@@ -14,7 +14,7 @@ import { SimpleTypeFields } from './simple-type-fields';
  * @typeparam EntityT - Type of the entity to be selected on
  */
 
-export type Selectable<EntityT extends EntityBase> = ODataVersion<
+export type Selectable<EntityT extends EntityBase> = ODataVersionOf<
   EntityT
 > extends 'v2'
   ?
@@ -22,12 +22,13 @@ export type Selectable<EntityT extends EntityBase> = ODataVersion<
       | Link<EntityT, any>
       | ComplexTypeField<EntityT>
       | CustomFieldBase<EntityT>
+      | CollectionField<EntityT>
       | AllFields<EntityT>
-  : ODataVersion<EntityT> extends 'v4'
+  : ODataVersionOf<EntityT> extends 'v4'
   ?
       | SimpleTypeFields<EntityT>
       | ComplexTypeField<EntityT>
       | CustomFieldBase<EntityT>
-      | AllFields<EntityT>
       | CollectionField<EntityT>
+      | AllFields<EntityT>
   : never;

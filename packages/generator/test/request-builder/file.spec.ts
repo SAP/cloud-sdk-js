@@ -5,7 +5,7 @@ import { breakfastEntity } from '../test-util/data-model';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = requestBuilderSourceFile(breakfastEntity);
+    const actual = requestBuilderSourceFile(breakfastEntity, 'v2');
     expect(actual.kind).toBe(StructureKind.SourceFile);
 
     const imports = (actual.statements as any[]).filter(

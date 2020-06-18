@@ -53,7 +53,7 @@ function property(prop: VdmProperty): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
-    type: prop.jsType
+    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType
   };
 }
 
@@ -61,7 +61,7 @@ function propertyForceMandatory(prop: VdmProperty): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName,
-    type: prop.jsType
+    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType
   };
 }
 
@@ -90,6 +90,6 @@ function navProperty(
   return {
     kind: StructureKind.PropertySignature,
     name: navProp.instancePropertyName,
-    type: entity.className + 'Type' + (navProp.isMultiLink ? '[]' : '')
+    type: entity.className + 'Type' + (navProp.isCollection ? '[]' : '')
   };
 }

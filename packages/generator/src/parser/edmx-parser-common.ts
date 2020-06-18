@@ -1,0 +1,83 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
+import { PathLike } from 'fs';
+import { basename } from 'path';
+import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
+import { forceArray } from '../generator-utils';
+import {
+  EdmxMetadataBase,
+  EdmxEntityTypeBase,
+  EdmxComplexTypeBase,
+  EdmxFunctionImportBase
+} from './parser-types-common';
+
+const logger = createLogger({
+  package: 'generator',
+  messageContext: 'edmx-parser'
+});
+
+export function parseBaseMetadata(
+  root,
+  oDataVersion: ODataVersion,
+  edmxPath: PathLike
+): EdmxMetadataBase {
+  return {
+    path: edmxPath,
+    oDataVersion,
+    fileName: basename(edmxPath.toString()).split('.')[0],
+    namespace: root.Namespace,
+    selfLink: parseLink(root)
+  };
+}
+
+export function parseEntityTypes(root): EdmxEntityTypeBase[] {
+  return forceArray(root.EntityType).map(e => {
+    if (!e.Key) {
+      e.Key = {};
+    }
+    e.Key.PropertyRef = forceArray(e.Key.PropertyRef);
+    e.NavigationProperty = forceArray(e.NavigationProperty);
+    e.Property = forceArray(e.Property);
+    return e;
+  });
+}
+
+export function parseFunctionImports(root): EdmxFunctionImportBase[] {
+  return forceArray(root.EntityContainer.FunctionImport).map(f => {
+    f.Parameter = forceArray(f.Parameter);
+    return f;
+  });
+}
+
+export function parseComplexTypes(root): EdmxComplexTypeBase[] {
+  return forceArray(root.ComplexType).map(c => {
+    c.Property = forceArray(c.Property);
+    return c;
+  });
+}
+
+function parseLink(root): string | undefined {
+  const links = forceArray(root['atom:link']);
+  const selfLink = links.find(link => link.rel === 'self');
+  if (selfLink) {
+    return selfLink.href;
+  }
+}
+
+export function getRoot(edmx) {
+  const schema = edmx['edmx:Edmx']['edmx:DataServices'].Schema;
+  if (schema.length > 1) {
+    if (schema.length > 2) {
+      throw new Error(
+        'There are more than two schemas in the input metadata file.'
+      );
+    }
+    // We assume SFSF edmx files to always have multiple schema tags
+    logger.info(`${schema.length} schemas found. Schemas will be merged.`);
+    return schema.reduce(
+      (mergedSchemas, schemaEntry) => ({ ...mergedSchemas, ...schemaEntry }),
+      {}
+    );
+  }
+  return schema;
+}

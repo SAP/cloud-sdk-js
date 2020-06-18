@@ -73,7 +73,7 @@ export function getNavPropertyDescription(
   property: VdmNavigationProperty
 ): string {
   return `${
-    property.isMultiLink ? 'One-to-many' : 'One-to-one'
+    property.isCollection ? 'One-to-many' : 'One-to-one'
   } navigation property to the [[${
     property.toEntityClassName
   }]] entity.`.trim();
@@ -94,7 +94,7 @@ export function getStaticNavPropertyDescription(
   property: VdmNavigationProperty
 ): string {
   return `Static representation of the ${
-    property.isMultiLink ? 'one-to-many' : 'one-to-one'
+    property.isCollection ? 'one-to-many' : 'one-to-one'
   } navigation property [[${
     property.instancePropertyName
   }]] for query construction.\nUse to reference this property in query operations such as 'select' in the fluent request API.`;

@@ -8,7 +8,7 @@ describe('generator', () => {
   beforeAll(async () => {
     const project = await generateProject(
       createOptions({
-        inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+        inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
         useSwagger: false
       })
     );

@@ -7,7 +7,7 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, OneToManyLink, NumberField, OneToOneLink, StringField, Time, TimeField } from '../../../../../src/v4';
+import { AllFields, BigNumberField, BooleanField, CollectionField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -111,18 +111,29 @@ export class TestEntity extends Entity implements TestEntityType {
    */
   sByteProperty?: number;
   /**
+   * Collection Property.
+   * Maximum length: 10.
+   * @nullable
+   */
+  collectionProperty?: string[];
+  /**
    * Complex Type Property.
    * @nullable
    */
   complexTypeProperty?: TestComplexType;
   /**
+   * Complex Type Collection Property.
+   * @nullable
+   */
+  complexTypeCollectionProperty?: TestComplexType[];
+  /**
    * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
    */
   toMultiLink!: TestEntityMultiLink[];
   /**
-   * One-to-many navigation property to the [[TestEntityOtherMultiLink]] entity.
+   * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
    */
-  toOtherMultiLink!: TestEntityOtherMultiLink[];
+  toOtherMultiLink!: TestEntityMultiLink[];
   /**
    * One-to-one navigation property to the [[TestEntitySingleLink]] entity.
    */
@@ -163,7 +174,6 @@ export class TestEntity extends Entity implements TestEntityType {
 }
 
 import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
-import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
 import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
 
 export interface TestEntityType {
@@ -184,9 +194,11 @@ export interface TestEntityType {
   dateTimeOffSetProperty?: Moment;
   byteProperty?: number;
   sByteProperty?: number;
+  collectionProperty?: string[];
   complexTypeProperty?: TestComplexType;
+  complexTypeCollectionProperty?: TestComplexType[];
   toMultiLink: TestEntityMultiLinkType[];
-  toOtherMultiLink: TestEntityOtherMultiLinkType[];
+  toOtherMultiLink: TestEntityMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;
 }
 
@@ -208,9 +220,11 @@ export interface TestEntityTypeForceMandatory {
   dateTimeOffSetProperty: Moment;
   byteProperty: number;
   sByteProperty: number;
+  collectionProperty: string[];
   complexTypeProperty: TestComplexType;
+  complexTypeCollectionProperty: TestComplexType[];
   toMultiLink: TestEntityMultiLinkType[];
-  toOtherMultiLink: TestEntityOtherMultiLinkType[];
+  toOtherMultiLink: TestEntityMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;
 }
 
@@ -301,10 +315,20 @@ export namespace TestEntity {
    */
   export const S_BYTE_PROPERTY: NumberField<TestEntity> = new NumberField('SByteProperty', TestEntity, 'Edm.SByte');
   /**
+   * Static representation of the [[collectionProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const COLLECTION_PROPERTY: CollectionField<TestEntity> = new CollectionField('CollectionProperty', TestEntity, new StringField('', TestEntity, 'Edm.String'));
+  /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> = new TestComplexTypeField('ComplexTypeProperty', TestEntity);
+  /**
+   * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity> = new CollectionField('ComplexTypeCollectionProperty', TestEntity, new TestComplexTypeField('', TestEntity));
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -314,7 +338,7 @@ export namespace TestEntity {
    * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_OTHER_MULTI_LINK: OneToManyLink<TestEntity, TestEntityOtherMultiLink> = new OneToManyLink('to_OtherMultiLink', TestEntity, TestEntityOtherMultiLink);
+  export const TO_OTHER_MULTI_LINK: OneToManyLink<TestEntity, TestEntityMultiLink> = new OneToManyLink('to_OtherMultiLink', TestEntity, TestEntityMultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -323,7 +347,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToManyLink<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | CollectionField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -341,7 +365,9 @@ export namespace TestEntity {
     TestEntity.DATE_TIME_OFF_SET_PROPERTY,
     TestEntity.BYTE_PROPERTY,
     TestEntity.S_BYTE_PROPERTY,
+    TestEntity.COLLECTION_PROPERTY,
     TestEntity.COMPLEX_TYPE_PROPERTY,
+    TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
     TestEntity.TO_MULTI_LINK,
     TestEntity.TO_OTHER_MULTI_LINK,
     TestEntity.TO_SINGLE_LINK

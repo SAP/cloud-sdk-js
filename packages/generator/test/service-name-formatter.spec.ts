@@ -1,6 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { getInterfaceNames, ServiceNameFormatter } from '../src/service-name-formatter';
-import { applySuffixOnConflictUnderscore } from '../src/name-formatting-strategies';
+import {
+  getInterfaceNames,
+  ServiceNameFormatter
+} from '../src/service-name-formatter';
 
 describe('name-formatter', () => {
   describe('formats name for', () => {
@@ -91,58 +93,6 @@ describe('name-formatter', () => {
       ).toBe('Business Partner Service');
     });
   });
-
-  it('should hande names containing a _1 correctly',()=>{
-    let newName = applySuffixOnConflictUnderscore('MyClass_1',['MyClass_1'])
-    expect(newName).toBe('MyClass_2')
-  })
-
-  it('should avoid name clashes with name, type and type Force Mandatory', ()=> {
-
-    let newName = originalToEntityClassName('MyClass',['MyClass'])
-    expect(newName).toBe('MyClass_1')
-
-    newName = originalToEntityClassName('MyClass', ['MyClassType'])
-    expect(newName).toBe('MyClass_1')
-
-    newName = originalToEntityClassName('MyClass',['MyClassTypeForceMandatory'])
-    expect(newName).toBe('MyClass_1')
-
-    newName = originalToEntityClassName('MyClass',['MyClass,MyClass_1Type'])
-    expect(newName).toBe('MyClass_2')
-
-  });
-
-  it('should update the name cash to avoid future clashes for entity class',()=>{
-    const serviceNameFormatter = new ServiceNameFormatter([],[],[])
-
-    serviceNameFormatter.originalToEntityClassName('MyClassType')
-    let expectedList = ['MyClassType',...getInterfaceNames('MyClassType')]
-    expectedList.forEach(ele=>expect(serviceNameFormatter['serviceWideNamesCache']).toContain(ele))
-  })
-
-
-  it('should update the name cash to avoid future clashes for function import',()=>{
-    expect(1).toBe(0) check the updated values to be only one
-  })
-
-  it('should handle mixed suffixes ok MyClass-1 MyClass_1',()=>{
-    expect(1).toBe(0) check the updated values to be only one
-  })
-
-
-  it('should handle also cases greater 1 i.e unsorted already a few things there',()=>{
-    expect(1).toBe(0) check the updated values to be only one
-  })
-
-  it('should handle MyClass_1Type already in list and MyClass is added ',()=>{
-    expect(1).toBe(0) check the updated values to be only one
-  })
-
-
-  it('should handle MyClass_3Type already in list and MyClass is added higher suffix for all ',()=>{
-    expect(1).toBe(0) check the updated values to be only one
-  })
 
   describe('enforces unique names for', () => {
     it('entities', () => {
@@ -254,6 +204,80 @@ describe('name-formatter', () => {
       expect(formatter.originalToEntityClassName('SomeEntityType')).toBe(
         'SomeEntityType_1'
       );
+    });
+  });
+
+  describe('updates the cache to avoid clashes in the future', () => {
+    function getFreshNameFormatter(): ServiceNameFormatter {
+      return new ServiceNameFormatter([], [], ['FunctionImport']);
+    }
+
+    it('should add class, classType and classTypeForceMandatory to cache.', () => {
+      const formatter = getFreshNameFormatter();
+      const newName = formatter.originalToEntityClassName('MyClass');
+      expect(formatter['serviceWideNamesCache'].slice(-3)).toBe([
+        newName,
+        ...getInterfaceNames(newName)
+      ]);
+    });
+
+    // originalToParameterName  this.parameterNamesCache[originalFunctionImportName]
+    it('should add the function import parameter to the cache.', () => {
+      const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
+      formatter.originalToParameterName('FunctionImport', 'SomeParam');
+      expect(formatter['parameterNamesCache']['FunctionImport']).toBe([
+        'SomeParam'
+      ]);
+    });
+
+    // originalToNavigationPropertyName this.instancePropertyNamesCache[entitySetName]
+    it('should add the navigational  parameter to the cache.', () => {
+      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+      expect(
+        formatter.originalToNavigationPropertyName(
+          'A_SomeEntity',
+          'to_SomeEntity'
+        )
+      ).toBe('toSomeEntity');
+      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toBe([
+        'to_SomeEntity'
+      ]);
+    });
+
+    // originalToComplexTypeName   this.serviceWideNamesCache
+    it('should add the complex type parameter to the service wide cache', () => {
+      const formatter = getFreshNameFormatter();
+      formatter.originalToComplexTypeName('MyComplexType');
+      expect(formatter['serviceWideNamesCache'].pop()).toBe('MyComplexType');
+    });
+
+    // originalToFunctionImportName this.serviceWideNamesCache
+    it('should add the function inport name to the service wide cache', () => {
+      const formatter = getFreshNameFormatter();
+      formatter.originalToFunctionImportName('MyFunctionInport');
+      expect(formatter['serviceWideNamesCache'].pop()).toBe('MyFunctionInport');
+    });
+
+    // originalToInstancePropertyName  this.instancePropertyNamesCache[originalContainerTypeName]
+    it('should add the instance property parameter to the instance property cache.', () => {
+      const formatter = getFreshNameFormatter();
+      formatter.originalToInstancePropertyName('A_SomeEntity', 'MyProperty');
+      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toBe([
+        'MyProperty'
+      ]);
+    });
+
+    // originalToStaticPropertyName  this.staticPropertyNamesCache[originalContainerTypeName]
+    it('should add the static property parameter to the static property cache.', () => {
+      const formatter = getFreshNameFormatter();
+      formatter.originalToStaticPropertyName('A_SomeEntity', 'MyProperty');
+      expect(formatter['staticPropertyNamesCache']['A_SomeEntity']).toBe([
+        'MyProperty'
+      ]);
+    });
+
+    it('should add class, classType and classTypeForceMandatory to cache..', () => {
+      expect(0).toBe(1); // Add test cases for all orginal methods to check the cache is working.
     });
   });
 });

@@ -9,8 +9,6 @@ import {
   numberOfEggs,
   toBrunch
 } from '../test-util/data-model';
-import { applySuffixOnConflictUnderscore } from '../../src/name-formatting-strategies';
-import { getInterfaceNames, ServiceNameFormatter } from '../../src/service-name-formatter';
 
 describe('entity class generator', () => {
   it('creates a class', () => {
@@ -43,6 +41,4 @@ describe('entity class generator', () => {
       'toJSON'
     ]);
   });
-
-
 });

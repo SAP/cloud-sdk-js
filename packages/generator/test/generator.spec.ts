@@ -5,7 +5,7 @@ import { SourceFile } from 'ts-morph';
 
 describe('generator', () => {
   let files: SourceFile[] = [];
-  beforeAll(async ()=>{
+  beforeAll(async () => {
     const project = await generateProject(
       createOptions({
         inputDir: '../../test-resources/service-specs/API_TEST_SRV',
@@ -49,7 +49,8 @@ describe('generator', () => {
   });
 
   it('should handle the name clash correctly', async () => {
-      expect(files.find(file=>file.getBaseName() === 'TestClashType.ts')).toBeDefined();
-    expect(files.find(file=>file.getBaseName() === 'TestClash_1.ts')).toBeDefined();
-    expect(files.find(file=>file.getBaseName() === 'TestClash_1_2.ts')).toBeDefined();
+    expect(files.find(file => file.getBaseName() === 'TestClashType.ts')).toBeDefined();
+    expect(files.find(file => file.getBaseName() === 'TestClash_1.ts')).toBeDefined();
+    expect(files.find(file => file.getBaseName() === 'TestClash_1_2.ts')).toBeDefined();
   });
+})

@@ -1,6 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import voca from 'voca';
+import { FindUniqueName, getUniqueName } from './name-formatting-util';
+import {
+  reservedJSKeywords,
+  reservedObjectPrototypeKeywords,
+  reservedVdmKeywords
+} from './name-formatting-reserved-key-words';
 
 // FIXME: this function has a side effect and it is not obvious that the cache is updated
 const applySuffixOnConflict = (separator: string) => (
@@ -26,14 +32,23 @@ const applyPrefixOnJSReservedWords = (prefix: string) => (
   param: string
 ): string =>
   reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
+
 /**
  * @deprecated This method changes the 'previouslyGeneratedNames' passed to it.
+ * Use [[getUniqueNameOnConflictUnderscore]] instead.
  */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
+export const getUniqueNameOnConflictUnderscore = (
+  findUniqueName: FindUniqueName
+) => getUniqueName(findUniqueName, '_');
+
 /**
- * @deprecated This method changes the 'previouslyGeneratedNames' passed to it. Use [[get]]
+ * @deprecated This method changes the 'previouslyGeneratedNames' passed to it.
+ *  * Use [[getUniqueNameOnConflictDash]] instead.
  */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
+export const getUniqueNameOnConflictDash = (findUniqueName: FindUniqueName) =>
+  getUniqueName(findUniqueName, '-');
 export const applyPrefixOnJsConfictParam = applyPrefixOnJSReservedWords('p');
 export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords(
   'f'
@@ -79,5 +94,3 @@ function sortByIntegerSuffix(array: string[]): string[] {
 function last<T>(array: T[]): T {
   return array[array.length - 1];
 }
-
-

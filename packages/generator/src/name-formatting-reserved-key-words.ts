@@ -1,10 +1,11 @@
-const reservedVdmKeywords: Set<string> = new Set<string>([
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+export const reservedVdmKeywords: Set<string> = new Set<string>([
   'builder',
   'entityBuilder',
   'requestBuilder'
 ]);
 
-const reservedJSKeywords: Set<string> = new Set<string>([
+export const reservedJSKeywords: Set<string> = new Set<string>([
   'break',
   'case',
   'catch',
@@ -48,6 +49,6 @@ const reservedJSKeywords: Set<string> = new Set<string>([
   'yield'
 ]);
 
-const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
+export const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
   Object.getOwnPropertyNames(Object.prototype)
 );

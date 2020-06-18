@@ -8,7 +8,7 @@ import {
   isFilterLink,
   isFilter,
   FilterFunction,
-  FilterFunctionParameterType, Filter
+  FilterFunctionParameterType
 } from '../filter';
 import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
@@ -18,8 +18,11 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
+import {
+  FilterLambdaExpression,
+  isFilterLambdaExpression
+} from '../filter/filter-lambda-expression';
 import { convertToUriForEdmString } from './uri-value-converter';
-import { FilterLambdaExpression, isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -132,18 +135,29 @@ export function createGetFilter(uriConverter: UriConverter) {
       ].join(' ');
     }
 
-    if(isFilterLambdaExpression(filter)){
-      return getODataFilterExpressionWhenBeingFilterLambdaExpression(filter, parentFieldNames, targetEntityConstructor);
+    if (isFilterLambdaExpression(filter)) {
+      return getODataFilterExpressionWhenBeingFilterLambdaExpression(
+        filter,
+        parentFieldNames,
+        targetEntityConstructor
+      );
     }
   }
 
-  function getODataFilterExpressionWhenBeingFilterLambdaExpression<FilterEntityT extends EntityBase>(
+  function getODataFilterExpressionWhenBeingFilterLambdaExpression<
+    FilterEntityT extends EntityBase
+  >(
     filter: FilterLambdaExpression<FilterEntityT, FieldType>,
     parentFieldNames: string[] = [],
-    targetEntityConstructor: Constructable<any>){
+    targetEntityConstructor: Constructable<any>
+  ) {
     const alias = 'a';
     if (typeof filter.innerFilter.field !== 'string') {
-      throw new Error(`The type of the field: ${filter.innerFilter.field} is not string, but ${typeof filter.innerFilter.field}.`);
+      throw new Error(
+        `The type of the field: ${
+          filter.innerFilter.field
+        } is not string, but ${typeof filter.innerFilter.field}.`
+      );
     }
     const field = retrieveField(
       filter.innerFilter.field,

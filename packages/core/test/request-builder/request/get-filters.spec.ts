@@ -158,18 +158,14 @@ describe('get filters', () => {
 
   describe('odata v4', () => {
     it('for simple filters', () => {
-      expect(
-        getFilter(
-          testFilterStringV4.filter,
-          TestEntityV4
-        ).filter
-      ).toBe(`${testFilterString.odataStr}`);
+      expect(getFilter(testFilterStringV4.filter, TestEntityV4).filter).toBe(
+        `${testFilterString.odataStr}`
+      );
     });
 
     it('for lambda expression on one-to-many navigation property', () => {
       expect(
-        getFilter(testFilterLambdaExpressionOnLink.filter, TestEntityV4)
-          .filter
+        getFilter(testFilterLambdaExpressionOnLink.filter, TestEntityV4).filter
       ).toBe(testFilterLambdaExpressionOnLink.odataStr);
     });
   });

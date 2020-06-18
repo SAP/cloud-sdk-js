@@ -5,7 +5,10 @@ import { FieldType } from '../selectable';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
-import { FilterLambdaExpression, FilterLambdaOperator } from './filter-lambda-expression';
+import {
+  FilterLambdaExpression,
+  FilterLambdaOperator
+} from './filter-lambda-expression';
 
 /**
  * A union of all types that can be used for filtering.
@@ -70,24 +73,33 @@ export function or<EntityT extends EntityBase>(
 //   Return new FilterList([], expressions);
 // }
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(filter: Filter<LinkedEntityT, FieldT>): FilterWithLambdaOperator<LinkedEntityT, FieldType>{
-  return {filter, lambdaOperator: 'any'};
+export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
+  filter: Filter<LinkedEntityT, FieldT>
+): FilterWithLambdaOperator<LinkedEntityT, FieldType> {
+  return { filter, lambdaOperator: 'any' };
+}
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
+export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
+  filter: Filter<LinkedEntityT, FieldT>
+): FilterWithLambdaOperator<LinkedEntityT, FieldType> {
+  return { filter, lambdaOperator: 'all' };
 }
 
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(filter: Filter<LinkedEntityT, FieldT>): FilterWithLambdaOperator<LinkedEntityT, FieldType>{
-  return {filter, lambdaOperator: 'all'};
-}
-
-/**
- * @experimental This is experimental and is subject to change. Use with caution.
- */
-export interface FilterWithLambdaOperator<LinkedEntityT extends EntityBase, FieldT extends FieldType>{
+export interface FilterWithLambdaOperator<
+  LinkedEntityT extends EntityBase,
+  FieldT extends FieldType
+> {
   filter: Filter<LinkedEntityT, FieldT>;
   lambdaOperator: FilterLambdaOperator;
 }

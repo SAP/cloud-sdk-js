@@ -6,7 +6,6 @@ import {
   TestEntity,
   TestEntitySingleLink
 } from './test-services/v2/test-service';
-
 import {
   TestEntity as TestEntityV4,
   TestEntityMultiLink as TestEntityMultiLinkV4
@@ -122,12 +121,8 @@ export const testFilterFunctionNested = {
 
 export const testFilterLambdaExpressionOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
-    any(
-    TestEntityMultiLinkV4.STRING_PROPERTY.equals('test1')
-    ),
-    all(
-      TestEntityMultiLinkV4.STRING_PROPERTY.equals('test2')
-    )
+    any(TestEntityMultiLinkV4.STRING_PROPERTY.equals('test1')),
+    all(TestEntityMultiLinkV4.STRING_PROPERTY.equals('test2'))
   ),
   odataStr:
     "(to_MultiLink/any(a:a/StringProperty eq 'test1') and to_MultiLink/all(a:a/StringProperty eq 'test2'))"

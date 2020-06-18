@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase } from '../entity';
-import { Filterable, and, FilterList, Filter, FilterWithLambdaOperator } from '../filter';
+import { and, FilterList, FilterWithLambdaOperator } from '../filter';
 import { Orderable } from '../order';
+import { FilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { Link } from './link';
 import { FieldType } from './field';
-import { FilterLambdaExpression } from '../filter/filter-lambda-expression';
 
 /**
  * @experimental
@@ -28,11 +28,16 @@ export class OneToManyLink<
     return clonedLink;
   }
 
+  // eslint-disable-next-line valid-jsdoc
   /**
    * @experimental This is experimental and is subject to change. Use with caution.
    */
-  filter(...expressions: FilterWithLambdaOperator<LinkedEntityT, FieldType>[]): FilterList<EntityT> {
-    const filterLambdaExps = expressions.map(e => new FilterLambdaExpression(this, e.filter,e.lambdaOperator));
+  filter(
+    ...expressions: FilterWithLambdaOperator<LinkedEntityT, FieldType>[]
+  ): FilterList<EntityT> {
+    const filterLambdaExps = expressions.map(
+      e => new FilterLambdaExpression(this, e.filter, e.lambdaOperator)
+    );
     return and(...filterLambdaExps);
   }
 

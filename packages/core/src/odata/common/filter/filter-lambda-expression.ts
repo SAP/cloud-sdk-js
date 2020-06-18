@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { EntityBase } from '../entity';
 import { FieldType } from '../selectable';
-import { OneToManyLink } from '../selectable/one-to-many-link';
 import { Filter } from './filter';
 import { Filterable } from './filterable';
 
@@ -35,8 +34,8 @@ export function isFilterLambdaExpression<
   filterable: Filterable<EntityT>
 ): filterable is FilterLambdaExpression<FieldT> {
   return (
-    typeof filterable['rootFiledName'] !== 'undefined' &&
-    typeof filterable['innerFilter'] !== 'undefined' &&
-    typeof filterable['lambdaOperator'] !== 'undefined'
+    'rootFiledName' in filterable &&
+    'innerFilter' in filterable &&
+    'lambdaOperator' in filterable
   );
 }

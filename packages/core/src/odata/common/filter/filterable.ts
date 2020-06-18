@@ -104,6 +104,8 @@ export interface FilterWithLambdaOperator<
   lambdaOperator: FilterLambdaOperator;
 }
 
-export function isFilterWithLambdaOperator(obj: any): obj is FilterWithLambdaOperator<EntityBase, FieldType>{
-  return  'filter' in obj && 'lambdaOperator' in obj;
+export function isFilterWithLambdaOperator(
+  obj: any
+): obj is FilterWithLambdaOperator<EntityBase, FieldType> {
+  return 'filter' in obj && 'lambdaOperator' in obj;
 }

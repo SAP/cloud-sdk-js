@@ -1,7 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase } from '../entity';
-import { and, Filterable, FilterList, FilterWithLambdaOperator, isFilterWithLambdaOperator } from '../filter';
+import {
+  and,
+  Filterable,
+  FilterList,
+  FilterWithLambdaOperator,
+  isFilterWithLambdaOperator
+} from '../filter';
 import { Orderable } from '../order';
 import { FilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { Link } from './link';
@@ -33,17 +39,21 @@ export class OneToManyLink<
    * @experimental This is experimental and is subject to change. Use with caution.
    */
   filter(
-    ...expressions: (Filterable<LinkedEntityT> | FilterWithLambdaOperator<LinkedEntityT, FieldType>)[]
+    ...expressions: (
+      | Filterable<LinkedEntityT>
+      | FilterWithLambdaOperator<LinkedEntityT, FieldType>
+    )[]
   ): this {
-
-    const filterLambdaExps = expressions.map(
-      e => {
-        if(isFilterWithLambdaOperator(e)) {
-          return new FilterLambdaExpression(this._fieldName, e.filter, e.lambdaOperator);
-        }
-        return e;
+    const filterLambdaExps = expressions.map(e => {
+      if (isFilterWithLambdaOperator(e)) {
+        return new FilterLambdaExpression(
+          this._fieldName,
+          e.filter,
+          e.lambdaOperator
+        );
       }
-    );
+      return e;
+    });
 
     const link = this.clone();
     link._filters = and(...filterLambdaExps);

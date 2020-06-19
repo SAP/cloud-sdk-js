@@ -207,9 +207,6 @@
         <EntitySet Name="A_TestEntityEndsWithCollection" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityEndsWithSomethingElse" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
 
-        <FunctionImport Name="TestFunctionImportNoReturnType" Function="API_TEST_SRV.TestFunctionImportNoReturnType">
-        </FunctionImport>
-
         <FunctionImport Name="TestFunctionImportEdmReturnType" Function="API_TEST_SRV.TestFunctionImportEdmReturnType">
         </FunctionImport>
 

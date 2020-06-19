@@ -59,7 +59,7 @@ export interface EdmxNavigationPropertyBinding {
 }
 
 export interface EdmxFunction extends EdmxNamed {
-  ReturnType: string;
+  ReturnType: { Type: string };
   Parameter: EdmxParameter[];
   IsBound: boolean;
 }

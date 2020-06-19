@@ -176,7 +176,8 @@ function createTestServiceData(
       oDataVersion: 'v4',
       enumTypes: [],
       entityTypes,
-      entitySets
+      entitySets,
+      functions: []
     } as EdmxMetadata
   };
 

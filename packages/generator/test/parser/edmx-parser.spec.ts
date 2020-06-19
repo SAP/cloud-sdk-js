@@ -46,7 +46,7 @@ describe('edmx-parser', () => {
 
     expect(metadataEdmx.entitySets.length).toBe(10);
     expect(metadataEdmx.entityTypes.length).toBe(11);
-    expect(metadataEdmx.functionImports.length).toBe(9);
+    expect(metadataEdmx.functionImports.length).toBe(8);
     expect(metadataEdmx.functions.length).toBe(8);
     expect(metadataEdmx.complexTypes.length).toBe(4);
     expect(metadataEdmx.enumTypes.length).toBe(1);
@@ -88,10 +88,6 @@ describe('edmx-parser', () => {
 
     metadataEdmx.functions.forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
-    });
-
-    metadataEdmx.functionImports.forEach(f => {
-      expect(f.Function).toBeInstanceOf(Array);
     });
 
     metadataEdmx.complexTypes.forEach(c => {

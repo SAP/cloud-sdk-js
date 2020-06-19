@@ -106,7 +106,7 @@ export function transformFunctionImportsV4(
       originalName: fnImport.Name,
       functionName,
       returnType: parseReturnType(
-        edmxFunction.ReturnType,
+        edmxFunction.ReturnType?.Type,
         entities,
         complexTypes
       ),

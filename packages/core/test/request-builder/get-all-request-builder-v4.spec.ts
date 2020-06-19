@@ -6,7 +6,7 @@ import {
   mockGetRequest,
   unmockDestinationsEnv
 } from '../test-util/request-mocker';
-import { TestEntity } from '../test-util/test-services/v4/test-service';
+import { TestEntity, TestEntitySingleLink } from '../test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
@@ -82,6 +82,23 @@ describe('GetAllRequestBuilder', () => {
         TestEntity
       );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
+      expect(actual).toEqual([createTestEntity(testEntity2)]);
+    });
+
+    it('should resolve when ALL_FIELDS is selected and links are expanded', async () => {
+      const testEntity2 = createOriginalTestEntityData2();
+      mockGetRequest(
+        {
+          query: {
+            $select: '*',
+            $expand: 'to_SingleLink,to_MultiLink'
+          },
+          responseBody: { value: [testEntity2] }
+        },
+        TestEntity
+      );
+      const actual = await requestBuilder.select(TestEntity.ALL_FIELDS)
+        .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK).execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(testEntity2)]);
     });
   });

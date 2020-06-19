@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { last } from 'rambda';
-import { toTitleFormat } from '@sap-cloud-sdk/core';
+import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import {
   VdmComplexType,
@@ -9,7 +9,8 @@ import {
   VdmProperty,
   VdmFunctionImportReturnType,
   VdmFunctionImportReturnTypeCategory,
-  VdmNavigationProperty
+  VdmNavigationProperty,
+  VdmFunctionImport
 } from '../vdm-types';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import {
@@ -21,7 +22,8 @@ import {
   edmToTsType,
   endWithDot,
   ensureString,
-  edmToComplexPropertyType
+  edmToComplexPropertyType,
+  isNullableParameter
 } from '../generator-utils';
 import { applyPrefixOnJsConfictParam } from '../name-formatting-strategies';
 import {
@@ -34,7 +36,8 @@ import {
   SwaggerPathParameter,
   EdmxNamed,
   EdmxComplexTypeBase,
-  SwaggerPath
+  SwaggerPath,
+  EdmxFunctionImportBase
 } from './parser-types-common';
 import { isCollection, parseTypeName } from './parser-util';
 import { ParsedServiceMetadata } from './parsed-service-metadata';
@@ -258,7 +261,7 @@ function propertyDescription(
   return `${short}\n${long}`.trim();
 }
 
-export function parameterDescription(
+function parameterDescription(
   parameter: EdmxParameter,
   swaggerParameter?: SwaggerPathParameter
 ): string {
@@ -416,54 +419,47 @@ export function parseReturnType(
   };
 }
 
-// export function transformFunctionImports(
-//   serviceMetadata: ParsedServiceMetadata,
-//   entities: VdmEntity[],
-//   complexTypes: VdmComplexType[],
-//   formatter: ServiceNameFormatter
-// ): VdmFunctionImport[] {
-//   const edmxFunctionImports = serviceMetadata.edmx.functionImports;
+export function transformFunctionImportBase(
+  edmxFunctionImport: EdmxFunctionImportBase,
+  edmxParameters: EdmxParameter[],
+  swaggerDefinition: SwaggerPath | undefined,
+  formatter: ServiceNameFormatter
+): Omit<VdmFunctionImport, 'returnType' | 'httpMethod'> {
+  const functionName = formatter.originalToFunctionImportName(
+    edmxFunctionImport.Name
+  );
+  const functionImport = {
+    originalName: edmxFunctionImport.Name,
+    functionName,
+    parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
+  };
 
-//   return edmxFunctionImports.map(f => {
-//     const functionName = formatter.originalToFunctionImportName(f.Name);
-//     const functionImport = {
-//       httpMethod: f['m:HttpMethod'].toLowerCase(),
-//       originalName: f.Name,
-//       functionName,
-//       returnType: parseReturnType(f.ReturnType, entities, complexTypes),
-//       parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
-//     };
+  const parameters = edmxParameters.map(p => {
+    const swaggerParameter = swaggerDefinition
+      ? swaggerDefinition.parameters.find(param => param.name === p.Name)
+      : undefined;
+    return {
+      originalName: p.Name,
+      parameterName: formatter.originalToParameterName(
+        edmxFunctionImport.Name,
+        p.Name
+      ),
+      edmType: parseType(p.Type),
+      jsType: edmToTsType(p.Type),
+      nullable: isNullableParameter(p),
+      description: parameterDescription(p, swaggerParameter)
+    };
+  });
 
-//     const swaggerDefinition = swaggerDefinitionForFunctionImport(
-//       serviceMetadata,
-//       functionImport.originalName,
-//       functionImport.httpMethod
-//     );
-
-//     const parameters = f.Parameter.map(p => {
-//       const swaggerParameter = swaggerDefinition
-//         ? swaggerDefinition.parameters.find(param => param.name === p.Name)
-//         : undefined;
-//       return {
-//         originalName: p.Name,
-//         parameterName: formatter.originalToParameterName(f.Name, p.Name),
-//         edmType: parseType(p.Type),
-//         jsType: edmToTsType(p.Type),
-//         nullable: isNullableParameter(p),
-//         description: parameterDescription(p, swaggerParameter)
-//       };
-//     });
-
-//     return {
-//       ...functionImport,
-//       parameters,
-//       description: functionImportDescription(
-//         swaggerDefinition,
-//         functionImport.originalName
-//       )
-//     };
-//   });
-// }
+  return {
+    ...functionImport,
+    parameters,
+    description: functionImportDescription(
+      swaggerDefinition,
+      functionImport.originalName
+    )
+  };
+}
 
 export function swaggerDefinitionForFunctionImport(
   serviceMetadata: ParsedServiceMetadata,
@@ -486,7 +482,7 @@ export function swaggerDefinitionForFunctionImport(
   }
 }
 
-export function functionImportDescription(
+function functionImportDescription(
   swaggerDefinition: SwaggerPath | undefined,
   originalName: string
 ): string {

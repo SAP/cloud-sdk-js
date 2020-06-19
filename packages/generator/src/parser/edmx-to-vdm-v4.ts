@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { toTypeNameFormat } from '@sap-cloud-sdk/core';
+
 import {
   VdmNavigationProperty,
   VdmComplexType,
@@ -7,9 +7,8 @@ import {
   VdmFunctionImport
 } from '../vdm-types';
 import { ServiceNameFormatter } from '../service-name-formatter';
-import { edmToTsType, isNullableParameter } from '../generator-utils';
 import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types-v4';
-import { isCollection, parseTypeName, stripNamespace } from './parser-util';
+import { isCollection, stripNamespace } from './parser-util';
 import {
   JoinedEntityMetadata,
   ParsedServiceMetadata
@@ -21,8 +20,7 @@ import {
   navigationPropertyBase,
   parseReturnType,
   swaggerDefinitionForFunctionImport,
-  parameterDescription,
-  functionImportDescription
+  transformFunctionImportBase
 } from './edmx-to-vdm-common';
 
 function navigationProperties(
@@ -91,54 +89,35 @@ export function transformFunctionImportsV4(
 
   const edmxFunctions = edmxMetadata.functions;
 
-  return edmxFunctionImports.map(fnImport => {
-    const functionName = formatter.originalToFunctionImportName(fnImport.Name);
+  return edmxFunctionImports.map(f => {
     const edmxFunction = edmxFunctions.find(
-      fn => stripNamespace(fnImport.Function) === fn.Name
+      fn => stripNamespace(f.Function) === fn.Name
     );
     if (!edmxFunction) {
       throw Error(
-        `Unable to find a function with name: ${fnImport.Function}, but specified in function import ${fnImport.Name}`
+        `Unable to find a function with name: ${f.Function}, but specified in function import ${f.Name}`
       );
     }
-    const functionImport = {
-      httpMethod: 'get',
-      originalName: fnImport.Name,
-      functionName,
+
+    const httpMethod = 'get';
+    const swaggerDefinition = swaggerDefinitionForFunctionImport(
+      serviceMetadata,
+      f.Name,
+      httpMethod
+    );
+
+    return {
+      ...transformFunctionImportBase(
+        f,
+        edmxFunction.Parameter,
+        swaggerDefinition,
+        formatter
+      ),
+      httpMethod,
       returnType: parseReturnType(
         edmxFunction.ReturnType?.Type,
         entities,
         complexTypes
-      ),
-      parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
-    };
-
-    const swaggerDefinition = swaggerDefinitionForFunctionImport(
-      serviceMetadata,
-      functionImport.originalName,
-      functionImport.httpMethod
-    );
-
-    const parameters = edmxFunction.Parameter.map(p => {
-      const swaggerParameter = swaggerDefinition
-        ? swaggerDefinition.parameters.find(param => param.name === p.Name)
-        : undefined;
-      return {
-        originalName: p.Name,
-        parameterName: formatter.originalToParameterName(fnImport.Name, p.Name),
-        edmType: parseTypeName(p.Type),
-        jsType: edmToTsType(p.Type),
-        nullable: isNullableParameter(p),
-        description: parameterDescription(p, swaggerParameter)
-      };
-    });
-
-    return {
-      ...functionImport,
-      parameters,
-      description: functionImportDescription(
-        swaggerDefinition,
-        functionImport.originalName
       )
     };
   });

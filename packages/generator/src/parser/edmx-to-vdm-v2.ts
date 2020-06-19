@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { ServiceNameFormatter } from '../service-name-formatter';
 import {
   VdmNavigationProperty,
@@ -8,7 +7,6 @@ import {
   VdmEntity,
   VdmFunctionImport
 } from '../vdm-types';
-import { edmToTsType, isNullableParameter } from '../generator-utils';
 import {
   EdmxAssociationSet,
   EdmxAssociation,
@@ -16,7 +14,7 @@ import {
   EdmxMetadata,
   EdmxFunctionImport
 } from './parser-types-v2';
-import { stripNamespace, parseTypeName } from './parser-util';
+import { stripNamespace } from './parser-util';
 import {
   JoinedEntityMetadata,
   ParsedServiceMetadata
@@ -27,9 +25,8 @@ import {
   transformEntity,
   navigationPropertyBase,
   swaggerDefinitionForFunctionImport,
-  parameterDescription,
   parseReturnType,
-  functionImportDescription
+  transformFunctionImportBase
 } from './edmx-to-vdm-common';
 
 export function joinAssociationMetadata(
@@ -101,42 +98,22 @@ export function transformFunctionImportsV2(
     .functionImports as EdmxFunctionImport[];
 
   return edmxFunctionImports.map(f => {
-    const functionName = formatter.originalToFunctionImportName(f.Name);
-    const functionImport = {
-      httpMethod: f['m:HttpMethod'].toLowerCase(),
-      originalName: f.Name,
-      functionName,
-      returnType: parseReturnType(f.ReturnType, entities, complexTypes),
-      parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
-    };
-
+    const httpMethod = f['m:HttpMethod'].toLowerCase();
     const swaggerDefinition = swaggerDefinitionForFunctionImport(
       serviceMetadata,
-      functionImport.originalName,
-      functionImport.httpMethod
+      f.Name,
+      httpMethod
     );
 
-    const parameters = f.Parameter.map(p => {
-      const swaggerParameter = swaggerDefinition
-        ? swaggerDefinition.parameters.find(param => param.name === p.Name)
-        : undefined;
-      return {
-        originalName: p.Name,
-        parameterName: formatter.originalToParameterName(f.Name, p.Name),
-        edmType: parseTypeName(p.Type),
-        jsType: edmToTsType(p.Type),
-        nullable: isNullableParameter(p),
-        description: parameterDescription(p, swaggerParameter)
-      };
-    });
-
     return {
-      ...functionImport,
-      parameters,
-      description: functionImportDescription(
+      ...transformFunctionImportBase(
+        f,
+        f.Parameter,
         swaggerDefinition,
-        functionImport.originalName
-      )
+        formatter
+      ),
+      httpMethod,
+      returnType: parseReturnType(f.ReturnType, entities, complexTypes)
     };
   });
 }

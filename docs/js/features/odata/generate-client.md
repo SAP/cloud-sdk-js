@@ -41,11 +41,18 @@ The generator is included in the SAP Cloud SDK CLI, if you have it installed you
 
 ### From the Command Line
 
-The generator is primarily meant to be used on the command line:
+The SAP Cloud SDK generator is primarily intended to be used on the command line.
+Run
 
-```sh
-generate-odata-client --inputDir path/to/your/service-specification(s) --outputDir path/to/store/generated/modules
+```shell
+generate-odata-client --inputDir path/to/your/service-specifications --outputDir path/to/store/generated/modules
 ```
+
+This will generate OData clients for all your service specifications within the `path/to/your/service-specifications` directory in `EDMX` format and write the to the `path/to/store/generated/modules directory`.
+
+<!--TODO: I think at least explaining that those are the mandatory parameters and what they do in textual form might be helpful for understanding what to do.-->
+
+In the output directory you
 
 ## Options
 

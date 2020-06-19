@@ -113,8 +113,8 @@ function getUniqueNameUsingSuffix(
 ): UniqueName {
   let suffix = 1;
   const prepared = prepareDataForSuffixSearch(findUniqueName, separator);
-  // This allgorithm as order N**2 for N identical names. With a sort you could get it down to N*log(N)
-  // However with the related items in mind this is much easier and N should be small.
+  // This algorithm has order N**2 for N identical names. With a sort you could get it down to N*log(N)
+  // However with the related items in mind this is much easier and N should be small anyway.
   while (suffix < MAXIMUM_NUMBER_OF_SUFFIX) {
     const newName = addSuffix(prepared, suffix, separator);
     if (isNameAndRelatedUnique(newName)) {

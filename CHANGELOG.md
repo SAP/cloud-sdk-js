@@ -28,6 +28,7 @@
 ## Fixed Issues
 
 - Fix the generator so that the builder function for nested complex types is correctly typed.
+- Fix the generator so that entity names ending with the word `Type` do not lead to name clashes anymore.
 
 
 # 1.21.2

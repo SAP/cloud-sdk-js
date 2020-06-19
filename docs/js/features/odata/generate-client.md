@@ -20,7 +20,7 @@ import TabItem from '@theme/TabItem';
 
 ## Generate a typed OData client with the SAP Cloud SDK generator
 
-The generator allows you to generate custom OData clients libraries for OData services. You can then easily access these services via the client libraries.
+The generator allows you to generate custom OData client libraries for OData services. You can then easily access these services via the client libraries.
 
 The SAP Cloud SDK generator can both be used as a command line interface (CLI) and programmatically.
 

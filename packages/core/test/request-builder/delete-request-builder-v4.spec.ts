@@ -65,17 +65,4 @@ describe('DeleteRequestBuilder', () => {
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });
-
-  it('should throw an error when request execution fails', async () => {
-    mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString),
-      statusCode: 500
-    });
-
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
-      KeyPropertyGuid: keyPropGuid
-    }).execute(defaultDestination);
-
-    await expect(deleteRequest).rejects.toThrowErrorMatchingSnapshot();
-  });
 });

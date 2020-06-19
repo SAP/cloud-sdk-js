@@ -19,4 +19,259 @@ author: Charles Dubois
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-test
+## Build and execute OData Requests with the typed OData client
+
+The typed OData client allows to build type-safe OData requests for a given service. All requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
+
+## Using the Fluent API ##
+
+The typed OData client consists of a service and a controller. The service mirrors the API provided by the OData service and serves as an entry point for creating requests. It provides a builder which allows for adding further parameters in a fluent way.
+
+First, import the generated service:
+
+```ts
+import { <YourData> } from 'odata-client/sfo-data-service';
+```
+
+On an abstract level requests are generally build up according to the following pattern:
+
+```ts
+return <YourData>.requestBuilder()
+    .withParameter()
+    .execute({
+        url: '<yourURL>'
+    });
+```
+
+- _requestBuilder_ to construct requests for operations.
+- _withParameter_ corresponds to:
+    - OData query parameters e.g. `filter` or `orderby`
+    - Or other modifiers like custom headers
+- Which OData parameters are available depends on the operation. For example when updating entities the `$filter` parameter is not available.
+
+Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA Virtual Data Model (VDM). The following code snippets assume that an instance of this service is set up:
+
+```ts
+constructor(private readonly businessPartnerService: BusinessPartnerService) {}
+```
+
+:::tip Organisation
+All of the following code can be organised in service files, e.g., `YourData.service.ts`
+:::
+
+## OData Features ##
+
+### Basic CRUD Operations ###
+
+Create, Read, Update and Delete operations on entities are usually built inside the service class:
+
+```ts
+BusinessPartner.requestBuilder().create(partner);
+BusinessPartner.requestBuilder().getByKey("id");
+BusinessPartner.requestBuilder().getAll();
+BusinessPartner.requestBuilder().update(partner);
+//It is not possible to delete a business partner via the business partner service
+```
+
+Each of the above statements returns a builder object that allows for specifying certain request parameters, depending on the operation.
+
+The following query parameters and request options are available for these operations:
+
+Query parameters:
+- `$select` and `$expand` are available on reading a single or multiple entities
+- `$filter`, `$top`, `$skip` and `$orderby` are available only when reading a collection of entities
+
+Request parameters:
+- Update and delete operations allow to modify how ETags are handled:
+   - By default an ETag is send if one is present on the entity being modified.
+   - `ignoreVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
+- All operations allow for adding custom headers via `withCustomHeaders(...)`
+
+
+#### Handling of ETags ####
+
+An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SDK will try to read version identifiers from responses and set them when sending OData requests.
+
+Consider the following example:
+
+```ts
+//the function containing this code must be async
+const partner = BusinessPartner.requestBuilder()
+    .getByKey("id")
+    .execute({
+        url: '<yourURL>'
+    });
+BusinessPartner.requestBuilder()
+    .update(await partner)
+    .execute({
+        url: '<yourURL>'
+    });
+```
+
+On the read request the SDK will automatically try to extract the version identifier from the response and store it within the `partner` object. When updating it will be taken from there and sent with the `If-match` header.
+
+:::note
+If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.
+:::
+
+#### Handling of CSRF tokens ####
+
+For create, update and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution the request will try to fetch a token first before issuing the actual create request. Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
+
+### Select ###
+
+When reading entities the API offers `select( ... )` on the builders. Through it the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
+
+The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
+
+
+```ts
+BusinessPartner.requestBuilder()
+    .getByKey("id")
+    .select(
+        BusinessPartner.FIRST_NAME,
+        BusinessPartner.LAST_NAME,
+        BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
+    )
+    .execute({
+        url: '<yourURL>'
+    });
+```
+
+The above translates to the following query parameters:
+
+```sql
+$select=FirstName,LastName&$expand=to_BusinessPartnerAddress
+```
+
+One can also apply select again to the expanded object:
+
+```ts
+BusinessPartner.requestBuilder()
+    .getByKey("id")
+    .select(
+        BusinessPartner.FIRST_NAME,
+        BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS.select(
+            BusinessPartnerAddress.ADDRESS_ID,
+            BusinessPartnerAddress.CITY_CODE
+        )
+    )
+    .execute({
+        url: '<yourURL>'
+    });
+```
+
+The above translates to the following `expand` query parameters:
+
+```sql
+$select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/CityCode&$expand=to_BusinessPartnerAddress
+```
+
+### Filter WORK IN PROGRESS ###
+
+When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also build via the static property fields on entities.
+
+The following example:
+
+<!-- This seems false and I couldn't find the .and and .or functions -->
+```ts
+/*
+Get all business partners that either:
+  - Have first name 'Alice' but not last name 'Bob'
+  - Or have first name 'Mallory'
+*/
+BusinessPartner.requestBuilder()
+    .getAll()
+    .filter(
+        or(
+            and(
+                BusinessPartner.FIRST_NAME.equals("Alice"),
+                BusinessPartner.LAST_NAME.notEquals("Bob")
+            ),
+            BusinessPartner.FIRST_NAME.equals("Mallory")
+        )
+    )
+    .execute({
+        url: '<yourURL>'
+    });
+```
+
+Will translate to this filter parameter:
+```sql
+$filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mallory'))
+```
+
+Take note of the order of `and` and `or`. As `or` is invoked on the result of `and` it will form the outer expression while `and` is an inner expression in the first branch of `or`.
+
+To achieve a different order with `and` as the top level statement one would nest the `or` within `and(...)`:
+
+```ts
+and(
+    or(
+        BusinessPartner.FIRST_NAME.equals("Alice"),
+        BusinessPartner.LAST_NAME.notEquals("Bob")
+    ),
+    BusinessPartner.FIRST_NAME.equals("Mallory")
+)
+```
+
+#### Available Filter Expressions ####
+
+<!-- TODO: Explain filters on complex types and navigational properties -->
+
+The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) allows for a wide range of filter expressions. A detailed list of what is available in the SDK can be obtained from [the documention](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts/). The functionality can also be discovered through the fluent API.
+
+The below example leverages OData v4 exclusive features to build a more complex request:
+
+```ts
+/*
+Fetch all business partners where:
+- the last name is at least twice as long as the first name
+- AND the combined string of first and last name does not contain 'bob'
+*/
+BusinessPartner.requestBuilder()
+    .getAll()
+    .filter(
+        and(
+            filterFunction('multiply', 'int', filterFunction('length', 'int', BusinessPartner.FIRST_NAME), '2')
+                .lessThan(BusinessPartner.LAST_NAME.edmType.length)
+            ,substringOf(
+                filterFunction('concat', 'string', BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME._fieldName),
+                "bob")
+                    .equals(true)
+        )
+    )
+    .execute({
+        url: '<yourURL>'
+    });
+```
+
+<!--
+### Count WIP ###
+
+### Batch Requests WIP ###
+
+OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with, when you want to execute a large number of requests.
+
+```ts
+async updateAddreses(businessPartnerAddresses: BusinessPartnerAddress[]): Promise<BusinessPartnerAddress[]> {
+    const updateRequests = businessPartnerAddresses.map(
+        address => BusinessPartnerAddress.requestBuilder().update(address)
+    );
+    const retrieveRequests = businessPartnerAddresses.map(
+        address => BusinessPartnerAddress.requestBuilder().getByKey(address.businessPartner, address.addressId)
+    );
+
+    const [updateChangesetResponse, ...retrieveResponses] = await batch(changeset(...updateRequests), ...retrieveRequests)
+        .execute({
+            url: 'http://localhost:8080'
+        });
+
+    return retrieveResponses.reduce((addresses, response: ReadResponse) => [...addresses, ...response.as(BusinessPartnerAddress)], []);
+}
+```
+
+### Advanced OData Features ###
+
+Function Imports / Functions & Actions
+-->

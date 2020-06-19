@@ -9,17 +9,6 @@ var v4_1 = require("@sap-cloud-sdk/core/v4");
 var TestEntity_1 = require("./TestEntity");
 var TestComplexType_1 = require("./TestComplexType");
 /**
- * Test Function Import No Return Type.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportNoReturnType(parameters) {
-    var params = {};
-    return new v4_1.FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNoReturnType', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
-}
-exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
-/**
  * Test Function Import Edm Return Type.
  *
  * @param parameters - Object containing all parameters for the function import.
@@ -86,32 +75,6 @@ function testFunctionImportComplexReturnTypeCollection(parameters) {
 }
 exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
 /**
- * Test Function Import Get.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportGet(parameters) {
-    var params = {
-        simpleParam: new v4_1.FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
-    };
-    return new v4_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
-}
-exports.testFunctionImportGet = testFunctionImportGet;
-/**
- * Test Function Import Post.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportPost(parameters) {
-    var params = {
-        simpleParam: new v4_1.FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
-    };
-    return new v4_1.FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
-}
-exports.testFunctionImportPost = testFunctionImportPost;
-/**
  * Test Function Import Multiple Params.
  *
  * @param parameters - Object containing all parameters for the function import.
@@ -120,45 +83,31 @@ exports.testFunctionImportPost = testFunctionImportPost;
 function testFunctionImportMultipleParams(parameters) {
     var params = {
         stringParam: new v4_1.FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
-        booleanParam: new v4_1.FunctionImportParameter('BooleanParam', 'Edm.Boolean', parameters.booleanParam)
+        nonNullableStringParam: new v4_1.FunctionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
+        nullableBooleanParam: new v4_1.FunctionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
     };
     return new v4_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
 }
 exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 /**
- * Create Test Complex Type.
+ * Test Function Import With Different Name.
  *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-function createTestComplexType(parameters) {
+function testFunctionImportWithDifferentName(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', function (data) { return v4_1.transformReturnValueForComplexType(data, TestComplexType_1.TestComplexType.build); }, params);
+    return new v4_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
 }
-exports.createTestComplexType = createTestComplexType;
-/**
- * Continue.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function fContinue(parameters) {
-    var params = {};
-    return new v4_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
-}
-exports.fContinue = fContinue;
+exports.testFunctionImportWithDifferentName = testFunctionImportWithDifferentName;
 exports.functionImports = {
-    testFunctionImportNoReturnType: testFunctionImportNoReturnType,
     testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
     testFunctionImportEdmReturnTypeCollection: testFunctionImportEdmReturnTypeCollection,
     testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
     testFunctionImportEntityReturnTypeCollection: testFunctionImportEntityReturnTypeCollection,
     testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
     testFunctionImportComplexReturnTypeCollection: testFunctionImportComplexReturnTypeCollection,
-    testFunctionImportGet: testFunctionImportGet,
-    testFunctionImportPost: testFunctionImportPost,
     testFunctionImportMultipleParams: testFunctionImportMultipleParams,
-    createTestComplexType: createTestComplexType,
-    fContinue: fContinue
+    testFunctionImportWithDifferentName: testFunctionImportWithDifferentName
 };
 //# sourceMappingURL=function-imports.js.map

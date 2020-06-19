@@ -9,7 +9,7 @@ export function responseTransformerFunctionName(
   returnType: VdmFunctionImportReturnType
 ): string {
   const transformationFn = singleTransformationFunction(returnType);
-  return returnType.isMulti ? `${transformationFn}List` : transformationFn;
+  return returnType.isCollection ? `${transformationFn}List` : transformationFn;
 }
 
 function singleTransformationFunction(

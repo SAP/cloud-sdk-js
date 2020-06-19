@@ -6,6 +6,7 @@ describe('service-mapping', () => {
   it('generates a valid VdmMapping from service metadata', () => {
     const serviceMetadata: VdmServiceMetadata[] = [
       {
+        oDataVersion: 'v2',
         originalFileName: 'API_A_SERV',
         directoryName: 'a-serv',
         npmPackageName: '@sap/a-serv',
@@ -19,6 +20,7 @@ describe('service-mapping', () => {
         edmxPath: 'fghjkl'
       },
       {
+        oDataVersion: 'v2',
         originalFileName: 'API_B_SERV',
         directoryName: 'b-serv',
         npmPackageName: '@sap/b-serv',

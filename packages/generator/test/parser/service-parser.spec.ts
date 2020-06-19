@@ -2,7 +2,10 @@
 import { GlobalNameFormatter } from '../../src/global-name-formatter';
 import { parseAllServices, parseService } from '../../src/parser';
 import { ServiceMapping } from '../../src/service-mapping';
-import { VdmFunctionImportReturnTypeCategory } from '../../src/vdm-types';
+import {
+  VdmFunctionImportReturnTypeCategory,
+  VdmProperty
+} from '../../src/vdm-types';
 import { createOptions } from '../test-util/create-generator-options';
 
 describe('service-parser', () => {
@@ -11,7 +14,7 @@ describe('service-parser', () => {
       const serviceMetadata = parseService(
         {
           edmxPath:
-            '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
+            '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
         },
         createOptions(),
         {},
@@ -30,7 +33,7 @@ describe('service-parser', () => {
       const serviceMetadata = parseService(
         {
           edmxPath:
-            '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx'
+            '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
         },
         createOptions(),
         {
@@ -51,7 +54,7 @@ describe('service-parser', () => {
     it('generates vdm from edmx', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
       );
@@ -66,7 +69,7 @@ describe('service-parser', () => {
     it('generates vdm from edmx using swagger', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: true
         })
       );
@@ -80,7 +83,7 @@ describe('service-parser', () => {
     it('entities are read correctly', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV'
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
       );
 
@@ -158,14 +161,14 @@ describe('service-parser', () => {
     it('complex types are parsed correctly', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV'
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
       );
 
       const complexTypes = services[0].complexTypes;
       const complexType = complexTypes[0];
 
-      expect(complexTypes.length).toBe(2);
+      expect(complexTypes.length).toBe(3);
       expect(complexType.typeName).toBe('TestComplexType');
       expect(complexType.originalName).toBe('A_TestComplexType');
       expect(complexType.factoryName).toBe('createTestComplexType_1');
@@ -176,7 +179,7 @@ describe('service-parser', () => {
     it('complex type properties are read correctly', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
       );
@@ -185,7 +188,7 @@ describe('service-parser', () => {
       const complexProperty = testEntity.properties.find(
         prop => prop.originalName === 'ComplexTypeProperty'
       );
-      const expected = {
+      const expected: VdmProperty = {
         instancePropertyName: 'complexTypeProperty',
         staticPropertyName: 'COMPLEX_TYPE_PROPERTY',
         propertyNameAsParam: 'complexTypeProperty',
@@ -195,7 +198,9 @@ describe('service-parser', () => {
         fieldType: 'TestComplexTypeField',
         description: '',
         nullable: true,
-        isComplex: true
+        isComplex: true,
+        isCollection: false,
+        maxLength: undefined
       };
       expect(complexProperty).toEqual(expected);
     });
@@ -203,7 +208,7 @@ describe('service-parser', () => {
     it('does not clash with complex type builder function', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
       );
@@ -222,6 +227,7 @@ describe('service-parser', () => {
         returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
         returnType: 'TestComplexType',
         builderFunction: 'TestComplexType.build',
+        isCollection: false,
         isMulti: false
       };
 
@@ -235,7 +241,7 @@ describe('service-parser', () => {
     it('does not clash with reserved JavaScript keywords', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
       );
@@ -250,7 +256,7 @@ describe('service-parser', () => {
     it('function imports edm return types are read correctly', () => {
       const [service] = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
       );
@@ -270,7 +276,7 @@ describe('service-parser', () => {
     it('should parse C4C service definitions with proper class names.', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
       );
@@ -294,7 +300,7 @@ describe('service-parser', () => {
   it('should skip entity types when not defined in any entity sets', () => {
     const services = parseAllServices(
       createOptions({
-        inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+        inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
         useSwagger: false
       })
     );
@@ -309,7 +315,8 @@ describe('service-parser', () => {
   it('parses multiple schemas', () => {
     const services = parseAllServices(
       createOptions({
-        inputDir: '../../test-resources/service-specs/API_MULTIPLE_SCHEMAS_SRV',
+        inputDir:
+          '../../test-resources/service-specs/v2/API_MULTIPLE_SCHEMAS_SRV',
         useSwagger: false
       })
     );

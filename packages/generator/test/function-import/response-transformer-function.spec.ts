@@ -6,14 +6,14 @@ import { orderBreakfast } from '../test-util/data-model';
 const returnTypeEntity = {
   builderFunction: '',
   returnType: 'Entity',
-  isMulti: false,
+  isCollection: false,
   returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY
 };
 
 const returnTypeComplexType = {
   builderFunction: '',
   returnType: 'ComplexType',
-  isMulti: true,
+  isCollection: true,
   returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE
 };
 

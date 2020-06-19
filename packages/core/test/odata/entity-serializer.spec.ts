@@ -131,13 +131,13 @@ describe('entity-serializer', () => {
   });
 
   it('should serialize collection field', () => {
-    const collectionPropertyWithString = ['abc', 'def'];
+    const collectionProperty = ['abc', 'def'];
     const testEntity = TestEntityV4.builder()
-      .collectionPropertyWithString(collectionPropertyWithString)
+      .collectionProperty(collectionProperty)
       .build();
 
     expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
-      CollectionPropertyWithString: collectionPropertyWithString
+      CollectionProperty: collectionProperty
     });
   });
 
@@ -149,14 +149,14 @@ describe('entity-serializer', () => {
     const collectionPropWithComplexType = [complexType1, complexType2];
     const testEntity = TestEntityV4.builder()
       .complexTypeProperty(complexType1)
-      .collectionPropertyWithComplexType(collectionPropWithComplexType)
+      .complexTypeCollectionProperty(collectionPropWithComplexType)
       .build();
 
     expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProp1
       },
-      CollectionPropertyWithComplexType: [
+      ComplexTypeCollectionProperty: [
         {
           StringProperty: stringProp1
         },

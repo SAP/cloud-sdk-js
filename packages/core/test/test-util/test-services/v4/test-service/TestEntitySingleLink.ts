@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, OneToManyLink, NumberField, OneToOneLink, StringField } from '../../../../../src/v4';
+import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField } from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
@@ -23,11 +23,6 @@ export class TestEntitySingleLink extends Entity implements TestEntitySingleLink
    * Default url path for the according service.
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-  /**
-   * Key Property.
-   * Maximum length: 10.
-   */
-  keyProperty!: string;
   /**
    * String Property.
    * Maximum length: 10.
@@ -49,6 +44,11 @@ export class TestEntitySingleLink extends Entity implements TestEntitySingleLink
    * @nullable
    */
   int16Property?: number;
+  /**
+   * Key Property.
+   * Maximum length: 10.
+   */
+  keyProperty!: string;
   /**
    * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
    */
@@ -96,31 +96,26 @@ import { TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType } from './TestEnti
 import { TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType } from './TestEntityLvl2SingleLink';
 
 export interface TestEntitySingleLinkType {
-  keyProperty: string;
   stringProperty?: string;
   booleanProperty?: boolean;
   guidProperty?: string;
   int16Property?: number;
+  keyProperty: string;
   toMultiLink: TestEntityLvl2MultiLinkType[];
   toSingleLink: TestEntityLvl2SingleLinkType;
 }
 
 export interface TestEntitySingleLinkTypeForceMandatory {
-  keyProperty: string;
   stringProperty: string;
   booleanProperty: boolean;
   guidProperty: string;
   int16Property: number;
+  keyProperty: string;
   toMultiLink: TestEntityLvl2MultiLinkType[];
   toSingleLink: TestEntityLvl2SingleLinkType;
 }
 
 export namespace TestEntitySingleLink {
-  /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const KEY_PROPERTY: StringField<TestEntitySingleLink> = new StringField('KeyProperty', TestEntitySingleLink, 'Edm.String');
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -142,6 +137,11 @@ export namespace TestEntitySingleLink {
    */
   export const INT_16_PROPERTY: NumberField<TestEntitySingleLink> = new NumberField('Int16Property', TestEntitySingleLink, 'Edm.Int16');
   /**
+   * Static representation of the [[keyProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const KEY_PROPERTY: StringField<TestEntitySingleLink> = new StringField('KeyProperty', TestEntitySingleLink, 'Edm.String');
+  /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -155,11 +155,11 @@ export namespace TestEntitySingleLink {
    * All fields of the TestEntitySingleLink entity.
    */
   export const _allFields: Array<StringField<TestEntitySingleLink> | BooleanField<TestEntitySingleLink> | NumberField<TestEntitySingleLink> | OneToManyLink<TestEntitySingleLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>> = [
-    TestEntitySingleLink.KEY_PROPERTY,
     TestEntitySingleLink.STRING_PROPERTY,
     TestEntitySingleLink.BOOLEAN_PROPERTY,
     TestEntitySingleLink.GUID_PROPERTY,
     TestEntitySingleLink.INT_16_PROPERTY,
+    TestEntitySingleLink.KEY_PROPERTY,
     TestEntitySingleLink.TO_MULTI_LINK,
     TestEntitySingleLink.TO_SINGLE_LINK
   ];

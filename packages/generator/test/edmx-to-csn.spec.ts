@@ -4,7 +4,8 @@ import { GeneratorOptions } from '../src/generator-options';
 import * as csnGeneration from '../src/service/csn';
 
 const testGeneratorOptions: GeneratorOptions = {
-  inputDir: '../../test-resources/service-specs/API_TEST_SRV/API_TEST_SRV.edmx',
+  inputDir:
+    '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx',
   outputDir: 'foo',
   useSwagger: false,
   writeReadme: false,

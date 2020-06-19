@@ -23,7 +23,7 @@ export function functionImportFunction(
     returnType: `FunctionImportRequestBuilder<${
       functionImport.parametersTypeName
     }, ${functionImport.returnType.returnType}${
-      functionImport.returnType.isMulti ? '[]' : ''
+      functionImport.returnType.isCollection ? '[]' : ''
     }>`,
 
     statements: getFunctionImportStatements(functionImport, service),

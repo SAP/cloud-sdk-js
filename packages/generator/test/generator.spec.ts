@@ -6,13 +6,13 @@ describe('generator', () => {
   it('generates expected files', async () => {
     const project = await generateProject(
       createOptions({
-        inputDir: '../../test-resources/service-specs/API_TEST_SRV',
+        inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
         useSwagger: false
       })
     );
     const files = project!.getSourceFiles();
 
-    expect(files.length).toBe(27);
+    expect(files.length).toBe(28);
 
     const testEntityFile = files.find(
       file => file.getBaseName() === 'TestEntity.ts'

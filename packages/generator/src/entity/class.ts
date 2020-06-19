@@ -99,7 +99,7 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
-    type: prop.jsType,
+    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType,
     docs: [
       addLeadingNewline(
         getPropertyDescription(prop, {
@@ -135,7 +135,7 @@ function navProperty(
   return {
     kind: StructureKind.Property,
     name: navProp.instancePropertyName + '!',
-    type: entity.className + (navProp.isMultiLink ? '[]' : ''),
+    type: entity.className + (navProp.isCollection ? '[]' : ''),
     docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
   };
 }

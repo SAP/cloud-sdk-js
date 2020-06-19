@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { TestLvl2NestedComplexType, TestLvl2NestedComplexTypeField } from './TestLvl2NestedComplexType';
 import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType, createComplexType, edmToTs } from '../../../../../src/v4';
 
 /**
@@ -14,6 +15,11 @@ export interface TestNestedComplexType {
    * @nullable
    */
   stringProperty?: string;
+  /**
+   * Complex Type Property.
+   * @nullable
+   */
+  complexTypeProperty?: TestLvl2NestedComplexType;
 }
 
 /**
@@ -33,12 +39,18 @@ export class TestNestedComplexTypeField<EntityT extends Entity> extends ComplexT
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   stringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
+  /**
+   * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT> = new TestLvl2NestedComplexTypeField('ComplexTypeProperty', this);
 }
 
 export namespace TestNestedComplexType {
-  export function build(json: { [keys: string]: FieldType }): TestNestedComplexType {
+  export function build(json: { [keys: string]: FieldType | TestLvl2NestedComplexType }): TestNestedComplexType {
     return createComplexType(json, {
-      StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') })
+      StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') }),
+      ComplexTypeProperty: (complexTypeProperty: TestLvl2NestedComplexType) => ({ complexTypeProperty: TestLvl2NestedComplexType.build(complexTypeProperty) })
     });
   }
 }

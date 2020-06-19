@@ -116,12 +116,12 @@ describe('entity-deserializer', () => {
     });
 
     it('should deserialize an entity with collection of string properties', () => {
-      const collectionPropertyWithString = ['abc', 'def'];
+      const collectionProperty = ['abc', 'def'];
       const testEntity = new TestEntityV4();
-      testEntity.collectionPropertyWithString = collectionPropertyWithString;
+      testEntity.collectionProperty = collectionProperty;
 
       const response = {
-        CollectionPropertyWithString: collectionPropertyWithString
+        CollectionProperty: collectionProperty
       };
 
       expect(deserializeEntityV4(response, TestEntityV4)).toEqual(testEntity);
@@ -135,7 +135,7 @@ describe('entity-deserializer', () => {
       expectedWithCollection.complexTypeProperty = {
         stringProperty: stringProp1
       };
-      expectedWithCollection.collectionPropertyWithComplexType = [
+      expectedWithCollection.complexTypeCollectionProperty = [
         { stringProperty: stringProp1 },
         { stringProperty: stringProp2 }
       ];
@@ -145,7 +145,7 @@ describe('entity-deserializer', () => {
           ComplexTypeProperty: {
             StringProperty: stringProp1
           },
-          CollectionPropertyWithComplexType: [
+          ComplexTypeCollectionProperty: [
             {
               StringProperty: stringProp1
             },

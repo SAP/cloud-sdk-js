@@ -9,17 +9,17 @@ import {
   Link,
   EdmTypeField,
   ComplexTypeField,
+  CollectionField,
   OneToOneLink,
   isExpandedProperty,
   EntityBase
 } from '../common';
-import { CollectionField } from '../v4/selectable/collection-field';
 
 // eslint-disable-next-line valid-jsdoc
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function entityDeserializer(edmToTs) {
+export function entityDeserializer(edmToTs, extractODataETag) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
    * In this context, a custom fields is every property that is not known in the corresponding entity class.
@@ -82,10 +82,6 @@ export function entityDeserializer(edmToTs) {
 
   function extractEtagFromHeader(headers: any): string | undefined {
     return headers ? headers['Etag'] || headers['etag'] : undefined;
-  }
-
-  function extractODataETag(json: MapType<any>): string | undefined {
-    return '__metadata' in json ? json['__metadata']['etag'] : undefined;
   }
 
   function getFieldValue<EntityT extends EntityBase, JsonT>(

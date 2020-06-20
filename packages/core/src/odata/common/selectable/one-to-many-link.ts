@@ -2,16 +2,10 @@
 
 import { EntityBase } from '../entity';
 import {
-  and,
-  Filterable,
-  FilterList,
-  FilterWithLambdaOperator,
-  isFilterWithLambdaOperator
+  Filterable, FilterLink,
 } from '../filter';
 import { Orderable } from '../order';
-import { FilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { Link } from './link';
-import { FieldType } from './field';
 
 /**
  * @experimental
@@ -20,7 +14,7 @@ export class OneToManyLink<
   EntityT extends EntityBase,
   LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
-  _filters: FilterList<LinkedEntityT>;
+  _filters: FilterLink<EntityT, LinkedEntityT>;
   _orderBy: Orderable<LinkedEntityT>[] = [];
   _top: number;
   _skip: number;
@@ -41,22 +35,11 @@ export class OneToManyLink<
   filter(
     ...expressions: (
       | Filterable<LinkedEntityT>
-      | FilterWithLambdaOperator<LinkedEntityT, FieldType>
     )[]
   ): this {
-    const filterLambdaExps = expressions.map(e => {
-      if (isFilterWithLambdaOperator(e)) {
-        return new FilterLambdaExpression(
-          this._fieldName,
-          e.filter,
-          e.lambdaOperator
-        );
-      }
-      return e;
-    });
 
     const link = this.clone();
-    link._filters = and(...filterLambdaExps);
+    link._filters = new FilterLink(this, expressions);
     return link;
   }
 

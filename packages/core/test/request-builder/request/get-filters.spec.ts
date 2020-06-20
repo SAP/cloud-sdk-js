@@ -170,7 +170,7 @@ describe('get filters', () => {
       expect(
         getFilter(
           testFilterLambdaExpressionOnLink.filter,
-          TestEntityMultiLinkV4
+          TestEntityV4
         ).filter
       ).toBe(testFilterLambdaExpressionOnLink.odataStr);
     });

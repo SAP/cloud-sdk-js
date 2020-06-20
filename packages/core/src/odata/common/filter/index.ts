@@ -6,5 +6,6 @@ export * from './filter-function';
 export * from './filter-link';
 export * from './filter-list';
 export * from './filterable';
+export * from './filter-lambda-expression'
 export * from './number-filter-function';
 export * from './string-filter-function';

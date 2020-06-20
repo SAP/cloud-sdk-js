@@ -136,40 +136,24 @@ export function createGetFilter(uriConverter: UriConverter) {
     }
 
     if (isFilterLambdaExpression(filter)) {
-      return getODataFilterExpressionWhenBeingFilterLambdaExpression(
-        filter,
-        parentFieldNames,
-        targetEntityConstructor
-      );
+      const alias = 'a';
+      filter.validate();
+      if(parentFieldNames.length !== 1){
+        throw new Error(
+          `The number of the parent fields: ${parentFieldNames} must be 1, when building a filter lambda expression.`
+        )
+      }
+      const filterExp = filter.filters.map(subFilter =>
+        getODataFilterExpression(
+          subFilter,
+          [],
+          targetEntityConstructor
+        )
+      )
+        .filter(f => !!f)
+        .join(' and ');
+      return `${parentFieldNames.pop()}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
     }
-  }
-
-  function getODataFilterExpressionWhenBeingFilterLambdaExpression<
-    FilterEntityT extends EntityBase
-  >(
-    filter: FilterLambdaExpression<FieldType>,
-    parentFieldNames: string[] = [],
-    targetEntityConstructor: Constructable<any>
-  ) {
-    const alias = 'a';
-    if (typeof filter.innerFilter.field !== 'string') {
-      throw new Error(
-        `The type of the field: ${
-          filter.innerFilter.field
-        } is not string, but ${typeof filter.innerFilter.field}.`
-      );
-    }
-    const field = retrieveField(
-      filter.innerFilter.field,
-      targetEntityConstructor,
-      filter.innerFilter.edmType
-    );
-    const filterExp = [
-      [...parentFieldNames, filter.innerFilter.field].join('/'),
-      filter.innerFilter.operator,
-      uriConverter.convertToUriFormat(filter.innerFilter.value, field.edmType)
-    ].join(' ');
-    return `${filter.rootFiledName}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(

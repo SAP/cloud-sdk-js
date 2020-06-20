@@ -7,7 +7,6 @@ import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
 import {
   FilterLambdaExpression,
-  FilterLambdaOperator
 } from './filter-lambda-expression';
 
 /**
@@ -19,7 +18,7 @@ export type Filterable<EntityT extends EntityBase> =
   | Filter<EntityT, FieldType>
   | FilterLink<EntityT>
   | FilterList<EntityT>
-  | FilterLambdaExpression<FieldType>;
+  | FilterLambdaExpression<EntityT, FieldType>;
 
 /**
  * Create a [[FilterList]] by combining [[Filterable]]s with logical `and`.
@@ -78,9 +77,9 @@ export function or<EntityT extends EntityBase>(
  * @experimental This is experimental and is subject to change. Use with caution.
  */
 export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  filter: Filter<LinkedEntityT, FieldT>
-): FilterWithLambdaOperator<LinkedEntityT, FieldType> {
-  return { filter, lambdaOperator: 'any' };
+  ...filters: (Filter<LinkedEntityT, FieldT> | FilterLink<LinkedEntityT> | FilterList<LinkedEntityT>)[]
+): FilterLambdaExpression<LinkedEntityT, FieldType> {
+  return new FilterLambdaExpression(filters, 'any');
 }
 
 // eslint-disable-next-line valid-jsdoc
@@ -88,24 +87,7 @@ export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
  * @experimental This is experimental and is subject to change. Use with caution.
  */
 export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  filter: Filter<LinkedEntityT, FieldT>
-): FilterWithLambdaOperator<LinkedEntityT, FieldType> {
-  return { filter, lambdaOperator: 'all' };
-}
-
-/**
- * @experimental This is experimental and is subject to change. Use with caution.
- */
-export interface FilterWithLambdaOperator<
-  LinkedEntityT extends EntityBase,
-  FieldT extends FieldType
-> {
-  filter: Filter<LinkedEntityT, FieldT>;
-  lambdaOperator: FilterLambdaOperator;
-}
-
-export function isFilterWithLambdaOperator(
-  obj: any
-): obj is FilterWithLambdaOperator<EntityBase, FieldType> {
-  return 'filter' in obj && 'lambdaOperator' in obj;
+  ...filters: (Filter<LinkedEntityT, FieldT> | FilterLink<LinkedEntityT> | FilterList<LinkedEntityT>)[]
+): FilterLambdaExpression<LinkedEntityT, FieldType> {
+  return new FilterLambdaExpression(filters, 'all');
 }

@@ -22,10 +22,7 @@ import {
   testFilterStringV4
 } from '../../test-util/filter-factory';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import {
-  TestEntity as TestEntityV4,
-  TestEntityMultiLink as TestEntityMultiLinkV4
-} from '../../test-util/test-services/v4/test-service';
+import { TestEntity as TestEntityV4 } from '../../test-util/test-services/v4/test-service';
 
 describe('get filters', () => {
   it('for simple filters', () => {
@@ -168,10 +165,7 @@ describe('get filters', () => {
 
     it('for lambda expression on one-to-many navigation property', () => {
       expect(
-        getFilter(
-          testFilterLambdaExpressionOnLink.filter,
-          TestEntityV4
-        ).filter
+        getFilter(testFilterLambdaExpressionOnLink.filter, TestEntityV4).filter
       ).toBe(testFilterLambdaExpressionOnLink.odataStr);
     });
   });

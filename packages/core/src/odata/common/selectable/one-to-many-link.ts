@@ -1,9 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase } from '../entity';
-import {
-  Filterable, FilterLink,
-} from '../filter';
+import { Filterable, FilterLink } from '../filter';
 import { Orderable } from '../order';
 import { Link } from './link';
 
@@ -32,12 +30,7 @@ export class OneToManyLink<
   /**
    * @experimental This is experimental and is subject to change. Use with caution.
    */
-  filter(
-    ...expressions: (
-      | Filterable<LinkedEntityT>
-    )[]
-  ): this {
-
+  filter(...expressions: Filterable<LinkedEntityT>[]): this {
     const link = this.clone();
     link._filters = new FilterLink(this, expressions);
     return link;

@@ -19,17 +19,21 @@ export class FilterLambdaExpression<
   FieldT extends FieldType
 > {
   constructor(
-    public filters: (Filter<EntityT, FieldT> | FilterLink<EntityT> | FilterList<EntityT>)[],
+    public filters: (
+      | Filter<EntityT, FieldT>
+      | FilterLink<EntityT>
+      | FilterList<EntityT>
+    )[],
     public lambdaOperator: FilterLambdaOperator
   ) {}
 
-  validate(){
-    this.filters.forEach( f => {
+  validate() {
+    this.filters.forEach(f => {
       if (isFilter(f) && typeof f.field !== 'string') {
         throw new Error(
           `The type of the field: ${
             f.field
-            } is not string, but ${typeof f.field}.`
+          } is not string, but ${typeof f.field}.`
         );
       }
     });
@@ -46,8 +50,5 @@ export function isFilterLambdaExpression<
 >(
   filterable: Filterable<EntityT>
 ): filterable is FilterLambdaExpression<EntityT, FieldT> {
-  return (
-    'filters' in filterable &&
-    'lambdaOperator' in filterable
-  );
+  return 'filters' in filterable && 'lambdaOperator' in filterable;
 }

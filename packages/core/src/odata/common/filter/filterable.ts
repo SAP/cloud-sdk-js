@@ -5,9 +5,7 @@ import { FieldType } from '../selectable';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
-import {
-  FilterLambdaExpression,
-} from './filter-lambda-expression';
+import { FilterLambdaExpression } from './filter-lambda-expression';
 
 /**
  * A union of all types that can be used for filtering.
@@ -77,7 +75,11 @@ export function or<EntityT extends EntityBase>(
  * @experimental This is experimental and is subject to change. Use with caution.
  */
 export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  ...filters: (Filter<LinkedEntityT, FieldT> | FilterLink<LinkedEntityT> | FilterList<LinkedEntityT>)[]
+  ...filters: (
+    | Filter<LinkedEntityT, FieldT>
+    | FilterLink<LinkedEntityT>
+    | FilterList<LinkedEntityT>
+  )[]
 ): FilterLambdaExpression<LinkedEntityT, FieldType> {
   return new FilterLambdaExpression(filters, 'any');
 }
@@ -87,7 +89,11 @@ export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
  * @experimental This is experimental and is subject to change. Use with caution.
  */
 export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  ...filters: (Filter<LinkedEntityT, FieldT> | FilterLink<LinkedEntityT> | FilterList<LinkedEntityT>)[]
+  ...filters: (
+    | Filter<LinkedEntityT, FieldT>
+    | FilterLink<LinkedEntityT>
+    | FilterList<LinkedEntityT>
+  )[]
 ): FilterLambdaExpression<LinkedEntityT, FieldType> {
   return new FilterLambdaExpression(filters, 'all');
 }

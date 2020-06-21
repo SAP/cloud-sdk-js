@@ -18,10 +18,7 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
-import {
-  FilterLambdaExpression,
-  isFilterLambdaExpression
-} from '../filter/filter-lambda-expression';
+import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { convertToUriForEdmString } from './uri-value-converter';
 
 // eslint-disable-next-line valid-jsdoc
@@ -138,21 +135,20 @@ export function createGetFilter(uriConverter: UriConverter) {
     if (isFilterLambdaExpression(filter)) {
       const alias = 'a';
       filter.validate();
-      if(parentFieldNames.length !== 1){
+      if (parentFieldNames.length !== 1) {
         throw new Error(
           `The number of the parent fields: ${parentFieldNames} must be 1, when building a filter lambda expression.`
-        )
+        );
       }
-      const filterExp = filter.filters.map(subFilter =>
-        getODataFilterExpression(
-          subFilter,
-          [],
-          targetEntityConstructor
+      const filterExp = filter.filters
+        .map(subFilter =>
+          getODataFilterExpression(subFilter, [], targetEntityConstructor)
         )
-      )
         .filter(f => !!f)
         .join(' and ');
-      return `${parentFieldNames.pop()}/${filter.lambdaOperator}(${alias}:${alias}/${filterExp})`;
+      return `${parentFieldNames.pop()}/${
+        filter.lambdaOperator
+      }(${alias}:${alias}/${filterExp})`;
     }
   }
 

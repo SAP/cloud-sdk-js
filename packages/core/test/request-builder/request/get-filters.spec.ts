@@ -15,7 +15,9 @@ import {
   testFilterFunctionSubstring,
   testFilterFunctionSubstringOf,
   testFilterGuid,
-  testFilterInt16, testFilterLambdaExpressionFilterListOnLink,
+  testFilterInt16,
+  testFilterLambdaExpressionFilterLinkOnLink,
+  testFilterLambdaExpressionFilterListOnLink,
   testFilterLambdaExpressionOnLink,
   testFilterSingleLink,
   testFilterString,
@@ -163,7 +165,7 @@ describe('get filters', () => {
       );
     });
 
-    it('should get filter for lambda expression on one-to-many navigation property', () => {
+    it('should get filter for lambda expression with simple filter on one-to-many navigation property', () => {
       expect(
         getFilter(testFilterLambdaExpressionOnLink.filter, TestEntityV4).filter
       ).toBe(testFilterLambdaExpressionOnLink.odataStr);
@@ -171,8 +173,20 @@ describe('get filters', () => {
 
     it('should get filter for lambda expression with FilterList on one-to-many navigation property', () => {
       expect(
-        getFilter(testFilterLambdaExpressionFilterListOnLink.filter, TestEntityV4).filter
+        getFilter(
+          testFilterLambdaExpressionFilterListOnLink.filter,
+          TestEntityV4
+        ).filter
       ).toBe(testFilterLambdaExpressionFilterListOnLink.odataStr);
+    });
+
+    it('should get filter for lambda expression with FilterLink on one-to-many navigation property', () => {
+      expect(
+        getFilter(
+          testFilterLambdaExpressionFilterLinkOnLink.filter,
+          TestEntityV4
+        ).filter
+      ).toBe(testFilterLambdaExpressionFilterLinkOnLink.odataStr);
     });
   });
 });

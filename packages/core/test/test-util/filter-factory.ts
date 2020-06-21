@@ -9,6 +9,7 @@ import {
 } from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
+  TestEntityLvl2SingleLink,
   TestEntityMultiLink as TestEntityMultiLinkV4
 } from './test-services/v4/test-service';
 
@@ -131,8 +132,24 @@ export const testFilterLambdaExpressionOnLink = {
 
 export const testFilterLambdaExpressionFilterListOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
-    any(or(TestEntityMultiLinkV4.STRING_PROPERTY.equals('test1'), TestEntityMultiLinkV4.INT_16_PROPERTY.equals(1)))
+    any(
+      or(
+        TestEntityMultiLinkV4.STRING_PROPERTY.equals('test1'),
+        TestEntityMultiLinkV4.INT_16_PROPERTY.equals(1)
+      )
+    )
   )._filters,
   odataStr:
     "(to_MultiLink/any(a:a/(StringProperty eq 'test1' or Int16Property eq 1)))"
+};
+
+export const testFilterLambdaExpressionFilterLinkOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(
+      TestEntityMultiLinkV4.TO_SINGLE_LINK.filter(
+        TestEntityLvl2SingleLink.STRING_PROPERTY.equals('test1')
+      )
+    )
+  )._filters,
+  odataStr: "(to_MultiLink/any(a:a/(to_SingleLink/StringProperty eq 'test1')))"
 };

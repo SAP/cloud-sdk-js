@@ -15,7 +15,7 @@ import {
   testFilterFunctionSubstring,
   testFilterFunctionSubstringOf,
   testFilterGuid,
-  testFilterInt16,
+  testFilterInt16, testFilterLambdaExpressionFilterListOnLink,
   testFilterLambdaExpressionOnLink,
   testFilterSingleLink,
   testFilterString,
@@ -167,6 +167,12 @@ describe('get filters', () => {
       expect(
         getFilter(testFilterLambdaExpressionOnLink.filter, TestEntityV4).filter
       ).toBe(testFilterLambdaExpressionOnLink.odataStr);
+    });
+
+    it('should get filter for lambda expression with FilterList on one-to-many navigation property', () => {
+      expect(
+        getFilter(testFilterLambdaExpressionFilterListOnLink.filter, TestEntityV4).filter
+      ).toBe(testFilterLambdaExpressionFilterListOnLink.odataStr);
     });
   });
 });

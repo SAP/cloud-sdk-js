@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment = require('moment');
 import { v4 as uuid } from 'uuid';
-import { filterFunction, substring, substringOf } from '../../src';
+import { filterFunction, or, substring, substringOf } from '../../src';
 import { all, any } from '../../src/odata/v4';
 import {
   TestEntity,
@@ -127,4 +127,12 @@ export const testFilterLambdaExpressionOnLink = {
   )._filters,
   odataStr:
     "(to_MultiLink/any(a:a/StringProperty eq 'test1') and to_MultiLink/all(a:a/StringProperty eq 'test2'))"
+};
+
+export const testFilterLambdaExpressionFilterListOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(or(TestEntityMultiLinkV4.STRING_PROPERTY.equals('test1'), TestEntityMultiLinkV4.INT_16_PROPERTY.equals(1)))
+  )._filters,
+  odataStr:
+    "(to_MultiLink/any(a:a/(StringProperty eq 'test1' or Int16Property eq 1)))"
 };

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { GetAllRequestBuilder } from '../../src/odata/v4/request-builder/get-all-request-builder';
+import { GetAllRequestBuilder } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,

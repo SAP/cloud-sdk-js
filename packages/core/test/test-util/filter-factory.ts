@@ -1,7 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment = require('moment');
 import { v4 as uuid } from 'uuid';
-import { all, any, filterFunction, substring, substringOf } from '../../src';
+import { filterFunction, substring, substringOf } from '../../src';
+import { all, any } from '../../src/odata/v4';
 import {
   TestEntity,
   TestEntitySingleLink

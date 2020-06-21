@@ -18,7 +18,7 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
-import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
+import { isFilterLambdaExpression } from '../../v4';
 import { convertToUriForEdmString } from './uri-value-converter';
 
 // eslint-disable-next-line valid-jsdoc

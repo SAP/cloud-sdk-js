@@ -157,13 +157,13 @@ describe('get filters', () => {
   });
 
   describe('odata v4', () => {
-    it('for simple filters', () => {
+    it('should get filter for simple filters', () => {
       expect(getFilter(testFilterStringV4.filter, TestEntityV4).filter).toBe(
         `${testFilterString.odataStr}`
       );
     });
 
-    it('for lambda expression on one-to-many navigation property', () => {
+    it('should get filter for lambda expression on one-to-many navigation property', () => {
       expect(
         getFilter(testFilterLambdaExpressionOnLink.filter, TestEntityV4).filter
       ).toBe(testFilterLambdaExpressionOnLink.odataStr);

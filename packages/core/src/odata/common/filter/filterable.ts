@@ -2,10 +2,10 @@
 
 import { EntityBase } from '../entity';
 import { FieldType } from '../selectable';
+import { FilterLambdaExpression } from '../../v4';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
-import { FilterLambdaExpression } from './filter-lambda-expression';
 
 /**
  * A union of all types that can be used for filtering.
@@ -69,31 +69,3 @@ export function or<EntityT extends EntityBase>(
 // Export function not<EntityT extends Entity>(expression: Filterable<EntityT>): Filterable<EntityT> {
 //   Return new FilterList([], expressions);
 // }
-
-// eslint-disable-next-line valid-jsdoc
-/**
- * @experimental This is experimental and is subject to change. Use with caution.
- */
-export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  ...filters: (
-    | Filter<LinkedEntityT, FieldT>
-    | FilterLink<LinkedEntityT>
-    | FilterList<LinkedEntityT>
-  )[]
-): FilterLambdaExpression<LinkedEntityT, FieldType> {
-  return new FilterLambdaExpression(filters, 'any');
-}
-
-// eslint-disable-next-line valid-jsdoc
-/**
- * @experimental This is experimental and is subject to change. Use with caution.
- */
-export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  ...filters: (
-    | Filter<LinkedEntityT, FieldT>
-    | FilterLink<LinkedEntityT>
-    | FilterList<LinkedEntityT>
-  )[]
-): FilterLambdaExpression<LinkedEntityT, FieldType> {
-  return new FilterLambdaExpression(filters, 'all');
-}

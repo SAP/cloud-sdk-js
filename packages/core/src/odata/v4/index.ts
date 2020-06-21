@@ -13,3 +13,4 @@ export * from './selectable/custom-field';
 export * from './uri-conversion';
 export * from '../common';
 export * from '../common/selectable/one-to-many-link';
+export * from './filter/filter-lambda-expression';

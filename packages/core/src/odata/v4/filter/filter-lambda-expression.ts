@@ -1,10 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { EntityBase } from '../entity';
-import { FieldType } from '../selectable';
-import { Filter, isFilter } from './filter';
-import { Filterable } from './filterable';
-import { FilterLink } from './filter-link';
-import { FilterList } from './filter-list';
+import { FieldType } from '../../common/selectable';
+import {
+  Filter,
+  Filterable,
+  FilterLink,
+  FilterList,
+  isFilter
+} from '../../common/filter';
+import { EntityBase } from '../../common';
 
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
@@ -51,4 +54,32 @@ export function isFilterLambdaExpression<
   filterable: Filterable<EntityT>
 ): filterable is FilterLambdaExpression<EntityT, FieldT> {
   return 'filters' in filterable && 'lambdaOperator' in filterable;
+}
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
+export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
+  ...filters: (
+    | Filter<LinkedEntityT, FieldT>
+    | FilterLink<LinkedEntityT>
+    | FilterList<LinkedEntityT>
+  )[]
+): FilterLambdaExpression<LinkedEntityT, FieldType> {
+  return new FilterLambdaExpression(filters, 'any');
+}
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @experimental This is experimental and is subject to change. Use with caution.
+ */
+export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
+  ...filters: (
+    | Filter<LinkedEntityT, FieldT>
+    | FilterLink<LinkedEntityT>
+    | FilterList<LinkedEntityT>
+  )[]
+): FilterLambdaExpression<LinkedEntityT, FieldType> {
+  return new FilterLambdaExpression(filters, 'all');
 }

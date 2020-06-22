@@ -33,7 +33,7 @@ First, import the generated service:
 import { <YourData> } from '<outputDir>/<npmPackageName>';
 ```
 
-Where `<outputDir>` is the directory you speified when generating the service and `<npmPackageName>` was specified inside the `serviceMapping.json` file wich is inside your input directory
+Where `<outputDir>` is the directory you specified when generating the service and `<npmPackageName>` was specified inside the `serviceMapping.json` file which is inside your input directory.
 On an abstract level requests are generally build up according to the following pattern:
 
 ```ts

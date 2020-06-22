@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import { importDeclarations, otherEntityImports } from '../../src/entity';
 import { breakfastEntity, foodService } from '../test-util/data-model';
 
@@ -11,7 +12,7 @@ describe('imports', () => {
         moduleSpecifier: imports.moduleSpecifier,
         namedImports: imports.namedImports
       }))
-    ).toEqual(expectedEntityImports);
+    ).toEqual(getExpectedEntityImports());
   });
 
   it('otherEntityImports', () => {
@@ -23,33 +24,51 @@ describe('imports', () => {
       }))
     ).toEqual(expectedOtherEntityImports);
   });
+
+  describe('odata v4', () => {
+    it('importDeclarations', () => {
+      const actual = importDeclarations(breakfastEntity, 'v4');
+
+      expect(
+        actual.map(imports => ({
+          moduleSpecifier: imports.moduleSpecifier,
+          namedImports: imports.namedImports
+        }))
+      ).toEqual(getExpectedEntityImports('v4'));
+    });
+  });
 });
 
-const expectedEntityImports = [
-  {
-    moduleSpecifier: './BreakfastRequestBuilder',
-    namedImports: ['BreakfastRequestBuilder']
-  },
-  {
-    moduleSpecifier: 'bignumber.js',
-    namedImports: ['BigNumber']
-  },
-  {
-    moduleSpecifier: '@sap-cloud-sdk/core',
-    namedImports: [
-      'AllFields',
-      'BigNumberField',
-      'CustomField',
-      'Entity',
-      'EntityBuilderType',
-      'Field',
-      'OneToOneLink',
-      'StringField',
-      'Time',
-      'TimeField'
-    ]
-  }
-];
+function getExpectedEntityImports(version: ODataVersion = 'v2') {
+  return [
+    {
+      moduleSpecifier: './BreakfastRequestBuilder',
+      namedImports: ['BreakfastRequestBuilder']
+    },
+    {
+      moduleSpecifier: 'bignumber.js',
+      namedImports: ['BigNumber']
+    },
+    {
+      moduleSpecifier:
+        version === 'v2'
+          ? '@sap-cloud-sdk/core'
+          : '@sap-cloud-sdk/core/src/odata/v4',
+      namedImports: [
+        'AllFields',
+        'BigNumberField',
+        'CustomField',
+        'Entity',
+        'EntityBuilderType',
+        'Field',
+        'OneToOneLink',
+        'StringField',
+        'Time',
+        'TimeField'
+      ]
+    }
+  ];
+}
 
 const expectedOtherEntityImports = [
   {

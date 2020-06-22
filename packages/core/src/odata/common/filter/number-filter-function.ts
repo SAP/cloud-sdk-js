@@ -2,7 +2,10 @@
 
 import { EntityBase } from '../entity';
 import { Filter } from './filter';
-import { FilterFunction, FilterFunctionParameterType } from './filter-function';
+import {
+  FilterFunction,
+  FilterFunctionParameterType
+} from './filter-function-base';
 
 /**
  * Representation of a filter function, that returns a value of type number. This supports int, double and decimal values.

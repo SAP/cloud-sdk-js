@@ -3,7 +3,7 @@ id: use-typed-odata-v4-client-for-js
 title: Use the type-safe client to consume OData Services for JS/TS
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Type-safe consumption of OData services
+sidebar_label: Use the type-safe client to consume OData Services for JS/TS
 description: Use SAP Cloud SDK for JavaScript to build and run OData requests in a typesafe way.
 keywords:
 - sap
@@ -50,13 +50,13 @@ return <YourData>.requestBuilder()
     - Or other modifiers like custom headers
 - Which OData parameters are available depends on the operation. For example when updating entities the `$filter` parameter is not available.
 
-Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. It is represented by the `BusinessPartnerService` class which is part of the pre-generated S/4HANA Virtual Data Model (VDM). The following code snippets assume that an instance of this service is set up:
+Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example. The following code snippets assume that an instance of this service is set up:
 
 ```ts
 constructor(private readonly businessPartnerService: BusinessPartnerService) {}
 ```
 
-:::tip Organisation
+:::tip Structure your code
 All of the following code can be organised in service files, e.g., `YourData.service.ts`
 :::
 
@@ -246,9 +246,11 @@ BusinessPartner.requestBuilder()
     });
 ```
 
-<!--
-### Count WIP ###
+### Count ###
 
+Not yet available.
+
+<!--
 ### Batch Requests WIP ###
 
 OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with, when you want to execute a large number of requests.
@@ -271,6 +273,7 @@ async updateAddreses(businessPartnerAddresses: BusinessPartnerAddress[]): Promis
 }
 ```
 
+<!--
 ### Advanced OData Features ###
 
 Function Imports / Functions & Actions

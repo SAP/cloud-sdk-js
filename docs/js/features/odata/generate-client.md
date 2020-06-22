@@ -77,7 +77,7 @@ By default, the generated module contains the following sources:
 - `typedoc.json`
 - `tsconfig.json`
 
-Depending on which of those files you need, you can skip the generation of most of those.
+Depending on which of those files you need, you can skip the generation of most of those - see the options below.
 
 #### Options
 

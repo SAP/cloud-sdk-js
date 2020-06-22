@@ -30,9 +30,10 @@ The typed OData client consists of a service and a controller. The service mirro
 First, import the generated service:
 
 ```ts
-import { <YourData> } from 'odata-client/sfo-data-service';
+import { <YourData> } from '<outputDir>/<npmPackageName>';
 ```
 
+Where `<outputDir>` is the directory you speified when generating the service and `<npmPackageName>` was specified inside the `serviceMapping.json` file wich is inside your input directory
 On an abstract level requests are generally build up according to the following pattern:
 
 ```ts
@@ -173,7 +174,6 @@ When operating on a collection of entities the API offers `filter( ... )` on the
 
 The following example:
 
-<!-- This seems false and I couldn't find the .and and .or functions -->
 ```ts
 /*
 Get all business partners that either:

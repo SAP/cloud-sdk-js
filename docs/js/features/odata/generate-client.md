@@ -37,24 +37,46 @@ npm install -g @sap-cloud-sdk/generator
 The generator is included in the SAP Cloud SDK CLI. If you installed the CLI, you don't need to install the generator separately.
 :::
 
-## Usage
+## Using the OData Generator
 
-### From the Command Line
+### Using the Command Line Interface
 
 The SAP Cloud SDK generator is primarily intended to be used on the command line.
-Run
 
+Run
 ```shell
 generate-odata-client --inputDir path/to/your/service-specifications --outputDir path/to/store/generated/modules
 ```
 
-This will generate OData clients for all your service specifications within the `path/to/your/service-specifications` directory in `EDMX` format and write the to the `path/to/store/generated/modules directory`.
+Adapt the `path/to/your/service-specifications` to the directory containing your service specifications in `EDMX` format, for example `service-specifications/`. Also adapt `path/to/store/generated/modules` to your OData client directory for example `odata-client`.
 
-<!--TODO: I think at least explaining that those are the mandatory parameters and what they do in textual form might be helpful for understanding what to do.-->
+This will generate OData clients for all your service specifications, but also in the inputDir a new file is created: `serviceMapping.json`.
 
-In the output directory you
+Inside this file, the `servicePath` has to be defined manually. Depending on the service that you are using, your `serviceMapping.json` could look like this:
 
-## Options
+```json
+{
+  "RCMCandidate": {
+    "directoryName": "sfo-data-service",
+    "servicePath": "/odata/v2",
+    "npmPackageName": "sfo-data-service"
+  }
+}
+```
+
+By default, the generated module contains the following sources:
+- TypeScript code `.ts`
+- Transpiled JavaScript code `.js`
+- Type definition files `.d.ts`
+- Source map files `.js.map` and `.d.ts.map`
+- `.npmrc`
+- `package.json`
+- `typedoc.json`
+- `tsconfig.json`
+
+Depending on which of those files you need, you can skip the generation of most of those.
+
+#### Options
 
 
 Run `generate-odata-client --help` for further options.
@@ -80,17 +102,42 @@ Run `generate-odata-client --help` for further options.
 You can also use the generator programmatically. You will have to provide the options.
 
 ```ts
-import { generateProject } from '@sap-cloud-sdk/generator';
+import { generate } from '@sap-cloud-sdk/generator';
+import path from 'path';
 
-//Create your options, adapt the input & output directory as well as the package name according to your setup.
-//PLACEHOLDER
-const options: GeneratorOptions = initializeOptions();
+//Create your options, adapt the input & output directory
+//as well as the package name according to your setup.
+const serviceSpecsDir = path.join('test-resources', 'service-specs');
+const outputDir = "odata-client";
 
 //Create your project datastructure with all sourcefiles based on your options
-const project = generateProject(options);
+const generatorConfig = {
+  forceOverwrite: true,
+  generateJs: false,
+  useSwagger: false,
+  writeReadme: false,
+  clearOutputDir: true,
+  generateNpmrc: false,
+  generateTypedocJson: false,
+  generatePackageJson: false,
+  generateCSN: false,
+  // Unnecessary options
+  sdkAfterVersionScript: false,
+  s4hanaCloud: false
+  /*optional:
+  serviceMapping: "test/directory",
+  changelogFile: "test/directory",
+  aggregatorNpmPackageName: "test",
+  aggregatorDirectoryName: "test",
+  versionInPackageJson: "version"
+  */
+};
 
-//Modify your project if you need to, then save the files at the specified location.
-project.save();
-
-//Alternatively you can generate and save the project in one step with: generate(options)
+//generate your project, you can also redefine options like generateJs for example
+generate({
+  ...generatorConfig,
+  inputDir: serviceSpecsDir,
+  outputDir,
+  generateJs: true
+});
 ```

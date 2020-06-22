@@ -135,11 +135,10 @@ const generatorConfig = {
   */
 };
 
-//generate your project, you can also redefine options like generateJs for example
+//generate your project, you can also redefine options
 generate({
   ...generatorConfig,
   inputDir,
-  outputDir,
-  generateJs: true
+  outputDir
 });
 ```

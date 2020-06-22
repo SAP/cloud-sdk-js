@@ -168,7 +168,7 @@ The above translates to the following `expand` query parameters:
 $select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/CityCode&$expand=to_BusinessPartnerAddress
 ```
 
-### Filter WORK IN PROGRESS ###
+### Filter ###
 
 When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also build via the static property fields on entities.
 

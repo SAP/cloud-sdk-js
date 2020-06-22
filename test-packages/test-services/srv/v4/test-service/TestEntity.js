@@ -31,7 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var TestEntityRequestBuilder_1 = require("./TestEntityRequestBuilder");
 var TestComplexType_1 = require("./TestComplexType");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var v4_1 = require("@sap-cloud-sdk/core/src/odata/v4");
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */

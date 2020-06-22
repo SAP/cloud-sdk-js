@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var v4_1 = require("@sap-cloud-sdk/core/src/odata/v4");
 var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
 /**
  * Request builder class for operations supported on the [[TestEntityCircularLinkChild]] entity.

@@ -1,6 +1,6 @@
 ---
 id: use-typed-odata-v4-client-for-js
-title: Typed client to consume OData Services for JavaScript
+title: Use the type-safe client to consume OData Services for JS/TS
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Type-safe consumption of OData services

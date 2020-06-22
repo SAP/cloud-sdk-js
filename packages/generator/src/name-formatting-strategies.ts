@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import voca from 'voca';
-import { FindUniqueName, getUniqueName } from './name-formatting-util';
 import {
   reservedJSKeywords,
   reservedObjectPrototypeKeywords,
@@ -35,22 +34,15 @@ const applyPrefixOnJSReservedWords = (prefix: string) => (
 
 /**
  * @deprecated This method changes the 'previouslyGeneratedNames' passed to it.
- * Use [[getUniqueNameOnConflictUnderscore]] instead.
+ * Use [[UniqueNameFinder]] instead.
  */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
 
 /**
  * @deprecated This method changes the 'previouslyGeneratedNames' passed to it.
- *  * Use [[getUniqueNameOnConflictDash]] instead.
+ *  * Use [[UniqueNameFinder]] instead.
  */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
-
-export const getUniqueNameOnConflictDash = (findUniqueName: FindUniqueName) =>
-  getUniqueName(findUniqueName, '-');
-
-export const getUniqueNameOnConflictUnderscore = (
-  findUniqueName: FindUniqueName
-) => getUniqueName(findUniqueName, '_');
 
 export const applyPrefixOnJsConfictParam = applyPrefixOnJSReservedWords('p');
 export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords(

@@ -2,8 +2,8 @@
 
 import { propertyExists } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { getUniqueNameOnConflictDash } from './name-formatting-strategies';
 import { ServiceMapping, VdmMapping } from './service-mapping';
+import { UniqueNameFinder } from './unique-name-finder';
 
 export class GlobalNameFormatter {
   private directoryNamesCache: string[] = [];
@@ -59,10 +59,10 @@ export class GlobalNameFormatter {
 
   private transformIfNecessary = (cache: string[]) => (name: string): string =>
     cache.includes(name)
-      ? getUniqueNameOnConflictDash({
-          nameToCheckForUniqueness: name,
-          alreadyUsedNames: cache
-        }).uniqueName
+      ? UniqueNameFinder.getInstance()
+          .withSeparator('-')
+          .withAlreadyUsedNames(cache)
+          .findUniqueName(name).uniqueName
       : name;
 
   private directoryNameFromMapping(

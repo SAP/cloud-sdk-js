@@ -3,10 +3,8 @@
 import { toPropertyFormat, toStaticPropertyFormat } from '@sap-cloud-sdk/core';
 import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
-import {
-  applyPrefixOnJsConfictFunctionImports,
-  getUniqueNameOnConflictUnderscore
-} from './name-formatting-strategies';
+import { applyPrefixOnJsConfictFunctionImports } from './name-formatting-strategies';
+import { UniqueNameFinder } from './unique-name-finder';
 
 export class ServiceNameFormatter {
   private serviceWideNamesCache: string[] = [
@@ -73,16 +71,14 @@ export class ServiceNameFormatter {
     const transformedName = toStaticPropertyFormat(
       stripPrefix(originalPropertyName)
     );
-    if (!this.staticPropertyNamesCache[originalContainerTypeName]) {
-      this.staticPropertyNamesCache[originalContainerTypeName] = [];
-    }
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: transformedName,
-      alreadyUsedNames: this.staticPropertyNamesCache[originalContainerTypeName]
-    });
-    this.staticPropertyNamesCache[originalContainerTypeName].push(
-      newName.uniqueName
+    const cache = this.getAndInitStaticPropertyNameCache(
+      originalContainerTypeName
     );
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(cache)
+      .findUniqueName(transformedName);
+
+    cache.push(newName.uniqueName);
     return newName.uniqueName;
   }
 
@@ -91,27 +87,24 @@ export class ServiceNameFormatter {
     originalPropertyName: string
   ): string {
     const transformedName = toPropertyFormat(stripPrefix(originalPropertyName));
-    if (!this.instancePropertyNamesCache[originalContainerTypeName]) {
-      this.instancePropertyNamesCache[originalContainerTypeName] = [];
-    }
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: transformedName,
-      alreadyUsedNames: this.instancePropertyNamesCache[
-        originalContainerTypeName
-      ]
-    });
-    this.instancePropertyNamesCache[originalContainerTypeName].push(
-      newName.uniqueName
+
+    const cache = this.getAndInitInstancePropertyNameCache(
+      originalContainerTypeName
     );
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(cache)
+      .findUniqueName(transformedName);
+
+    cache.push(newName.uniqueName);
     return newName.uniqueName;
   }
 
   originalToFunctionImportName(str: string): string {
     const transformedName = voca.camelCase(str);
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: transformedName,
-      alreadyUsedNames: this.serviceWideNamesCache
-    });
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(this.serviceWideNamesCache)
+      .findUniqueName(transformedName);
+
     this.serviceWideNamesCache.push(newName.uniqueName);
     return applyPrefixOnJsConfictFunctionImports(newName.uniqueName);
   }
@@ -121,10 +114,11 @@ export class ServiceNameFormatter {
       '_',
       ''
     );
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: transformedName,
-      alreadyUsedNames: this.serviceWideNamesCache
-    });
+
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(this.serviceWideNamesCache)
+      .findUniqueName(transformedName);
+
     this.serviceWideNamesCache.push(newName.uniqueName);
     return newName.uniqueName;
   }
@@ -136,10 +130,10 @@ export class ServiceNameFormatter {
       factoryName = `${factoryName}_${index}`;
       index += 1;
     }
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: factoryName,
-      alreadyUsedNames: this.serviceWideNamesCache
-    });
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(this.serviceWideNamesCache)
+      .findUniqueName(factoryName);
+
     this.serviceWideNamesCache.push(newName.uniqueName);
     return newName.uniqueName;
   }
@@ -149,11 +143,13 @@ export class ServiceNameFormatter {
     originalPropertyName: string
   ): string {
     const transformedName = voca.camelCase(originalPropertyName);
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: transformedName,
-      alreadyUsedNames: this.instancePropertyNamesCache[entitySetName]
-    });
-    this.instancePropertyNamesCache[entitySetName].push(newName.uniqueName);
+
+    const cache = this.getAndInitInstancePropertyNameCache(entitySetName);
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(cache)
+      .findUniqueName(transformedName);
+
+    cache.push(newName.uniqueName);
     return newName.uniqueName;
   }
 
@@ -162,13 +158,13 @@ export class ServiceNameFormatter {
     originalParameterName: string
   ): string {
     const transformedName = voca.camelCase(originalParameterName);
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: transformedName,
-      alreadyUsedNames: this.parameterNamesCache[originalFunctionImportName]
-    });
-    this.parameterNamesCache[originalFunctionImportName].push(
-      newName.uniqueName
-    );
+
+    const cache = this.getAndInitParameterNameCache(originalFunctionImportName);
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(cache)
+      .findUniqueName(transformedName);
+
+    cache.push(newName.uniqueName);
     return newName.uniqueName;
   }
 
@@ -179,12 +175,11 @@ export class ServiceNameFormatter {
     }
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
-    const newName = getUniqueNameOnConflictUnderscore({
-      nameToCheckForUniqueness: transformedName,
-      alreadyUsedNames: this.serviceWideNamesCache,
-      relatedNamesBuilder: getInterfaceNames
-    });
 
+    const newName = UniqueNameFinder.getInstance()
+      .withAlreadyUsedNames(this.serviceWideNamesCache)
+      .withRelatedNames(getInterfaceNames)
+      .findUniqueName(transformedName);
     this.serviceWideNamesCache.push(
       newName.uniqueName,
       ...newName.relatedUniqueNames
@@ -194,6 +189,30 @@ export class ServiceNameFormatter {
 
   directoryToSpeakingModuleName(packageName: string): string {
     return voca.titleCase(packageName.replace(/-/g, ' '));
+  }
+
+  private getAndInitStaticPropertyNameCache(name: string) {
+    if (this.staticPropertyNamesCache[name]) {
+      return this.staticPropertyNamesCache[name];
+    }
+    this.staticPropertyNamesCache[name] = [];
+    return this.staticPropertyNamesCache[name];
+  }
+
+  private getAndInitInstancePropertyNameCache(name: string) {
+    if (this.instancePropertyNamesCache[name]) {
+      return this.instancePropertyNamesCache[name];
+    }
+    this.instancePropertyNamesCache[name] = [];
+    return this.instancePropertyNamesCache[name];
+  }
+
+  private getAndInitParameterNameCache(name: string) {
+    if (this.parameterNamesCache[name]) {
+      return this.parameterNamesCache[name];
+    }
+    this.parameterNamesCache[name] = [];
+    return this.parameterNamesCache[name];
   }
 }
 

@@ -21,11 +21,11 @@ import TabItem from '@theme/TabItem';
 
 ## Build and execute OData Requests with the typed OData client
 
-The typed OData client allows to build type-safe OData requests for a given service. All requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
+The typed OData client allows to build type-safe OData requests for a given service.
 
 ## Using the Fluent API ##
 
-The typed OData client consists of a service and a controller. The service mirrors the API provided by the OData service and serves as an entry point for creating requests. It provides a builder which allows for adding further parameters in a fluent way.
+SAP Cloud SDK’s OData data model is a set of client code libraries that abstract OData services. The service mirrors the API provided by the OData service and serves as an entry point for creating requests. It provides a builder which allows for adding further parameters in a fluent way.
 
 First, import the generated service:
 
@@ -68,7 +68,7 @@ Create, Read, Update and Delete operations on entities are usually built inside 
 
 ```ts
 BusinessPartner.requestBuilder().create(partner);
-BusinessPartner.requestBuilder().getByKey("id");
+BusinessPartner.requestBuilder().getByKey('id');
 BusinessPartner.requestBuilder().getAll();
 BusinessPartner.requestBuilder().update(partner);
 //It is not possible to delete a business partner via the business partner service
@@ -98,7 +98,7 @@ Consider the following example:
 ```ts
 //the function containing this code must be async
 const partner = BusinessPartner.requestBuilder()
-    .getByKey("id")
+    .getByKey('id')
     .execute({
         url: '<yourURL>'
     });
@@ -128,7 +128,7 @@ The properties that can be selected or expanded are represented via static _fiel
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getByKey("id")
+    .getByKey('id')
     .select(
         BusinessPartner.FIRST_NAME,
         BusinessPartner.LAST_NAME,
@@ -149,7 +149,7 @@ One can also apply select again to the expanded object:
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getByKey("id")
+    .getByKey('id')
     .select(
         BusinessPartner.FIRST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS.select(
@@ -185,10 +185,10 @@ BusinessPartner.requestBuilder()
     .filter(
         or(
             and(
-                BusinessPartner.FIRST_NAME.equals("Alice"),
-                BusinessPartner.LAST_NAME.notEquals("Bob")
+                BusinessPartner.FIRST_NAME.equals('Alice'),
+                BusinessPartner.LAST_NAME.notEquals('Bob')
             ),
-            BusinessPartner.FIRST_NAME.equals("Mallory")
+            BusinessPartner.FIRST_NAME.equals('Mallory')
         )
     )
     .execute({
@@ -208,10 +208,10 @@ To achieve a different order with `and` as the top level statement one would nes
 ```ts
 and(
     or(
-        BusinessPartner.FIRST_NAME.equals("Alice"),
-        BusinessPartner.LAST_NAME.notEquals("Bob")
+        BusinessPartner.FIRST_NAME.equals('Alice'),
+        BusinessPartner.LAST_NAME.notEquals('Bob')
     ),
-    BusinessPartner.FIRST_NAME.equals("Mallory")
+    BusinessPartner.FIRST_NAME.equals('Mallory')
 )
 ```
 
@@ -237,7 +237,7 @@ BusinessPartner.requestBuilder()
                 .lessThan(BusinessPartner.LAST_NAME.edmType.length)
             ,substringOf(
                 filterFunction('concat', 'string', BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME._fieldName),
-                "bob")
+                'bob')
                     .equals(true)
         )
     )

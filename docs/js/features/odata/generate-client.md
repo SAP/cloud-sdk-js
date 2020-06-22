@@ -108,7 +108,7 @@ import path from 'path';
 //Create your options, adapt the input & output directory
 //as well as the package name according to your setup.
 const serviceSpecsDir = path.join('test-resources', 'service-specs');
-const outputDir = "odata-client";
+const outputDir = 'odata-client';
 
 //Create your project datastructure with all sourcefiles based on your options
 const generatorConfig = {
@@ -125,11 +125,11 @@ const generatorConfig = {
   sdkAfterVersionScript: false,
   s4hanaCloud: false
   /*optional:
-  serviceMapping: "test/directory",
-  changelogFile: "test/directory",
-  aggregatorNpmPackageName: "test",
-  aggregatorDirectoryName: "test",
-  versionInPackageJson: "version"
+  serviceMapping: 'test/directory',
+  changelogFile: 'test/directory',
+  aggregatorNpmPackageName: 'test',
+  aggregatorDirectoryName: 'test',
+  versionInPackageJson: 'version'
   */
 };
 

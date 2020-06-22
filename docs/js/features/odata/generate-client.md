@@ -111,7 +111,7 @@ import path from 'path';
 //Create your options, adapt the input & output directory
 //as well as the package name according to your setup.
 const inputDir = path.join('service-specifications');
-const outputDir = "odata-client";
+const outputDir = 'odata-client';
 
 //Create your project datastructure with all sourcefiles based on your options
 const generatorConfig = {

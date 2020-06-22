@@ -122,7 +122,7 @@ export class UniqueNameFinder {
 
     // This algorithm has order N**2 for N identical names. With a sort you could get it down to N*log(N)
     // However with the related items in mind this is much easier and N should be small anyway.
-    while (suffix < this.MAXIMUM_NUMBER_OF_SUFFIX) {
+    while (suffix < UniqueNameFinder.MAXIMUM_NUMBER_OF_SUFFIX) {
       const newName = this.addSuffix(name, suffix);
       if (this.isNameUnique(newName, alreadyUsedNames)) {
         return suffix;

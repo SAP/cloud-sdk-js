@@ -50,19 +50,22 @@ generate-odata-client --inputDir path/to/your/service-specifications --outputDir
 
 Adapt the `path/to/your/service-specifications` to the directory containing your service specifications in `EDMX` format, for example `service-specifications/`. Also adapt `path/to/store/generated/modules` to your OData client directory for example `odata-client`.
 
-This will generate OData clients for all your service specifications, but also in the inputDir a new file is created: `serviceMapping.json`.
+This will generate OData clients for all your service specifications and create a `serviceMapping.json` in your input directory. This file is used for generation and contains a mapping from the original file name to the following information:
+* `directoryName` - the name of the subdirectory the client code will be generated to.
+* `servicePath` - the url path to be prepended before every request. This is read from the EDMX file if available, otherwise the value here will be `VALUE_IS_UNDEFINED`. In that case it should be adjusted manually.
+* `npmPackageName` - the name of the npm package, if a package json is generated. This information is optional.
 
-Inside this file, the `servicePath` has to be defined manually. Depending on the service that you are using, your `serviceMapping.json` could look like this:
+These information can be adjusted manually and ensure that every run of the generator produces the same names for the generation.
 
+Example:
 ```json
 {
-  "RCMCandidate": {
-    "directoryName": "sfo-data-service",
+  "MyService": {
+    "directoryName": "my-service",
     "servicePath": "/odata/v2",
-    "npmPackageName": "sfo-data-service"
+    "npmPackageName": "my-service"
   }
 }
-```
 
 By default, the generated module contains the following sources:
 - TypeScript code `.ts`
@@ -74,7 +77,7 @@ By default, the generated module contains the following sources:
 - `typedoc.json`
 - `tsconfig.json`
 
-Depending on which of those files you need, you can skip the generation of most of those.
+Depending on which of those files you need, you can skip the generation of most of those - see the options below.
 
 #### Options
 
@@ -107,7 +110,7 @@ import path from 'path';
 
 //Create your options, adapt the input & output directory
 //as well as the package name according to your setup.
-const serviceSpecsDir = path.join('test-resources', 'service-specs');
+const inputDir = path.join('service-specifications');
 const outputDir = 'odata-client';
 
 //Create your project datastructure with all sourcefiles based on your options
@@ -121,7 +124,6 @@ const generatorConfig = {
   generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
-  // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false
   /*optional:
@@ -136,7 +138,7 @@ const generatorConfig = {
 //generate your project, you can also redefine options like generateJs for example
 generate({
   ...generatorConfig,
-  inputDir: serviceSpecsDir,
+  inputDir,
   outputDir,
   generateJs: true
 });

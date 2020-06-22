@@ -124,7 +124,6 @@ const generatorConfig = {
   generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
-  // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false
   /*optional:

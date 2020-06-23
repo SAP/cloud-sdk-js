@@ -178,7 +178,7 @@ export class ServiceNameFormatter {
 
     const newNames = UniqueNameFinder.getInstance()
       .withAlreadyUsedNames(this.serviceWideNamesCache)
-      .findUniqueNameWithSuffixes(transformedName,getInterfaceNamesSuffixes());
+      .findUniqueNameWithSuffixes(transformedName, getInterfaceNamesSuffixes());
     this.serviceWideNamesCache.push(...newNames);
     return newNames[0];
   }

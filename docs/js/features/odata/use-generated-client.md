@@ -38,8 +38,8 @@ On an abstract level, creating a request using the fluent api always follows the
 
 ```ts
 return MyEntity.requestBuilder()
-    .requestType()
-    .additionalRequestConfiguration()
+    .<requestType>(...)
+    .<additionalRequestConfiguration>(...)
     .execute(myDestination);
 ```
 

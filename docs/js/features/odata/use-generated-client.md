@@ -156,15 +156,13 @@ The properties that can be selected or expanded are represented via static field
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getByKey('id')
+    .getAll()
     .select(
         BusinessPartner.FIRST_NAME,
         BusinessPartner.LAST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
     )
-    .execute({
-        url: '<yourURL>'
-    });
+    .execute(destination);
 ```
 
 The above translates to the following query parameters:

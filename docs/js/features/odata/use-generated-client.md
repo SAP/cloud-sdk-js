@@ -175,7 +175,7 @@ One can also apply select again to the expanded object:
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getByKey('id')
+    .getAll()
     .select(
         BusinessPartner.FIRST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS.select(
@@ -183,9 +183,7 @@ BusinessPartner.requestBuilder()
             BusinessPartnerAddress.CITY_CODE
         )
     )
-    .execute({
-        url: '<yourURL>'
-    });
+    .execute(destination);
 ```
 
 The above translates to the following `expand` query parameters:

@@ -186,7 +186,7 @@ BusinessPartner.requestBuilder()
     .execute(destination);
 ```
 
-The above translates to the following `expand` query parameters:
+The above translates to the following query parameters:
 
 ```sql
 $select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/CityCode&$expand=to_BusinessPartnerAddress

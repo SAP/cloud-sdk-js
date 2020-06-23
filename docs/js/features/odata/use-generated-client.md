@@ -121,17 +121,20 @@ An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a v
 Consider the following example:
 
 ```ts
-//the function containing this code must be async
-const partner = BusinessPartner.requestBuilder()
-    .getByKey('id')
-    .execute({
-        url: '<yourURL>'
-    });
-BusinessPartner.requestBuilder()
-    .update(await partner)
-    .execute({
-        url: '<yourURL>'
-    });
+async function modifyBusinessPartner(id) {
+  const destination = { url: 'https://my.s4-system.com' };
+  
+  const partner = await BusinessPartner.requestBuilder()
+      .getByKey(id)
+      .execute(destination);
+      
+  // do some modification
+  applyModification(partner);
+  
+  return BusinessPartner.requestBuilder()
+      .update(partner)
+      .execute(destination);
+}
 ```
 
 On the read request the SDK will automatically try to extract the version identifier from the response and store it within the `partner` object. When updating it will be taken from there and sent with the `If-match` header.

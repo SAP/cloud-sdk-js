@@ -1,9 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { applyPrefixOnJsConfictParam } from '../src/name-formatting-strategies';
-import { getInterfaceNames } from '../src/service-name-formatter';
 import { UniqueNameFinder } from '../src/unique-name-finder';
-import get = Reflect.get;
 
 describe('Name formatting strategies', () => {
   it('should add prefix if a conflict with js reserved keyword occurs', () => {
@@ -22,19 +20,18 @@ describe('Name formatting strategies', () => {
     finder.withAlreadyUsedNames(['MyClass_1']);
     expect(finder.findUniqueName('MyClass_1')).toBe('MyClass_2');
 
-    finder
-      .withAlreadyUsedNames(['MyClass_1', 'MyClass_2Type'])
-    expect(finder.findUniqueNameWithSuffixes('MyClass_1',['Type'])).toBe(['MyClass_3','MyClass_3Type']);
-
+    finder.withAlreadyUsedNames(['MyClass_1', 'MyClass_2Type']);
+    expect(finder.findUniqueNameWithSuffixes('MyClass_1', ['Type'])).toEqual([
+      'MyClass_3',
+      'MyClass_3Type'
+    ]);
   });
 
   it('should handel names containing a _1 somewhere in the middle.', () => {
     const finder = UniqueNameFinder.getInstance().withAlreadyUsedNames([
       'MyClass_1'
     ]);
-    expect(finder.findUniqueName('MyClass_1ABC')).toBe(
-      'MyClass_1ABC'
-    );
+    expect(finder.findUniqueName('MyClass_1ABC')).toBe('MyClass_1ABC');
   });
 
   it('should handle mixed suffixes - and _ correctly.', () => {
@@ -44,9 +41,14 @@ describe('Name formatting strategies', () => {
     ]);
     expect(finder.findUniqueName('MyClass')).toBe('MyClass_1');
 
-    finder
-      .withAlreadyUsedNames(['MyClassType', 'MyClass_1Type', 'MyClass-2Type'])
-    expect(finder.findUniqueNameWithSuffixes('MyClass',['Type'])[0]).toBe('MyClass_2');
+    finder.withAlreadyUsedNames([
+      'MyClassType',
+      'MyClass_1Type',
+      'MyClass-2Type'
+    ]);
+    expect(finder.findUniqueNameWithSuffixes('MyClass', ['Type'])[0]).toBe(
+      'MyClass_2'
+    );
   });
 
   it('should correctly count up the suffix.', () => {
@@ -68,15 +70,21 @@ describe('Name formatting strategies', () => {
     finder.withAlreadyUsedNames(['MyClass_1', 'MyClass_2', 'MyClass_4']);
     expect(finder.findUniqueName('MyClass_1')).toBe('MyClass_3');
 
-    finder
-      .withAlreadyUsedNames([
-        'MyClassType',
-        'MyClass_1',
-        'MyClass_2TypeForceMandatory'
-      ])
-    expect(finder.findUniqueNameWithSuffixes('MyClass',['Type','TypeForceMandatory'])[0]).toBe('MyClass_3');
+    finder.withAlreadyUsedNames([
+      'MyClassType',
+      'MyClass_1',
+      'MyClass_2TypeForceMandatory'
+    ]);
+    expect(
+      finder.findUniqueNameWithSuffixes('MyClass', [
+        'Type',
+        'TypeForceMandatory'
+      ])[0]
+    ).toBe('MyClass_3');
 
     finder.withAlreadyUsedNames(['MyClass', 'MyClass_1Type']);
-    expect(finder.findUniqueNameWithSuffixes('MyClass',['Type'])[0]).toBe('MyClass_2');
+    expect(finder.findUniqueNameWithSuffixes('MyClass', ['Type'])[0]).toBe(
+      'MyClass_2'
+    );
   });
 });

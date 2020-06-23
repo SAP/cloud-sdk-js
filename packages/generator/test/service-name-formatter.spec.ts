@@ -1,8 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  getInterfaceNames,
-  ServiceNameFormatter
-} from '../src/service-name-formatter';
+import { ServiceNameFormatter } from '../src/service-name-formatter';
 
 describe('name-formatter', () => {
   describe('formats name for', () => {
@@ -217,7 +214,8 @@ describe('name-formatter', () => {
       const newName = formatter.originalToEntityClassName('MyClass');
       expect(formatter['serviceWideNamesCache'].slice(-3)).toEqual([
         newName,
-        ...getInterfaceNames(newName)
+        `${newName}Type`,
+        `${newName}TypeForceMandatory`
       ]);
     });
 

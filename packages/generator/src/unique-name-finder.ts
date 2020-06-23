@@ -42,7 +42,7 @@ export class UniqueNameFinder {
    * @returns Unique name
    */
   public findUniqueName(name: string): string {
-    return this.findUniqueNameWithSuffixes(name,[])[0];
+    return this.findUniqueNameWithSuffixes(name, [])[0];
   }
 
   /**
@@ -53,17 +53,25 @@ export class UniqueNameFinder {
    * @param suffixes Additional name suffixed to be considered
    * @returns Unique names. The length of this array is one plus the number of suffixes provided. The zeros entry corresponds to the given name.
    */
-  public findUniqueNameWithSuffixes(name: string,suffixes:string[]): string[] {
+  public findUniqueNameWithSuffixes(
+    name: string,
+    suffixes: string[]
+  ): string[] {
     const relevantAlreadyUsedNames = this.removeUnnecessaryUsedNames(name);
-    if (this.areNamesFree([name], relevantAlreadyUsedNames)) {
-      return [name,...this.addNameSuffixes(name,suffixes)]
+    if (
+      this.areNamesFree(
+        this.getAllNames(name, suffixes),
+        relevantAlreadyUsedNames
+      )
+    ) {
+      return [name, ...this.getAllNames(name, suffixes)];
     }
     const suffix = this.getUniqueNameUsingSuffix(
       name,
       relevantAlreadyUsedNames,
       suffixes
     );
-    return this.addSuffixes(name, suffix,suffixes);
+    return this.addSuffixes(name, suffix, suffixes);
   }
 
   private areNamesFree(names: string[], alreadyUsedNames: string[]): boolean {
@@ -80,19 +88,25 @@ export class UniqueNameFinder {
     return nameSuffixRemoved;
   }
 
-  private addSuffixes(name: string, suffix: number,nameSuffixes:string[]): string[] {
+  private addSuffixes(
+    name: string,
+    suffix: number,
+    nameSuffixes: string[]
+  ): string[] {
     const nameWithoutSuffix = this.removeSuffixIfPresent(name);
     const numberSuffix = `${nameWithoutSuffix}${this.separator}${suffix}`;
-    return [numberSuffix,...this.addNameSuffixes(name,nameSuffixes)]
+    return this.getAllNames(numberSuffix, nameSuffixes);
   }
 
-  private addNameSuffixes(name:string,suffixes:string[]):string[]{
-    return suffixes.map(nameSuffix=>`${name}${nameSuffix}`)
+  private getAllNames(name: string, suffixes: string[]): string[] {
+    return [name, ...suffixes.map(nameSuffix => `${name}${nameSuffix}`)];
   }
 
   private removeUnnecessaryUsedNames(name: string): string[] {
     const nameSuffixRemoved = this.removeSuffixIfPresent(name);
-    return this.alreadyUsedNames.filter(used => used.startsWith(nameSuffixRemoved))
+    return this.alreadyUsedNames.filter(used =>
+      used.startsWith(nameSuffixRemoved)
+    );
   }
 
   private getUniqueNameUsingSuffix(
@@ -105,8 +119,8 @@ export class UniqueNameFinder {
     // This algorithm has order N**2 for N identical names. With a sort you could get it down to N*log(N)
     // However with the related items in mind this is much easier and N should be small anyway.
     while (suffix < UniqueNameFinder.MAXIMUM_NUMBER_OF_SUFFIX) {
-      const newName = this.addSuffixes(name, suffix,nameSuffixes);
-      if (this.areNamesFree(newName, alreadyUsedNames)) {
+      const newNames = this.addSuffixes(name, suffix, nameSuffixes);
+      if (this.areNamesFree(newNames, alreadyUsedNames)) {
         return suffix;
       }
       suffix++;

@@ -229,7 +229,7 @@ describe('name-formatter', () => {
       ]);
     });
 
-    it('should add the navigational  parameter to the instance property names cache.', () => {
+    it('should add the navigational parameter to the instance property names cache.', () => {
       const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
       expect(
         formatter.originalToNavigationPropertyName(

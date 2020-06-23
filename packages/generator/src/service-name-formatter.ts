@@ -64,7 +64,7 @@ export class ServiceNameFormatter {
     const transformedName = toStaticPropertyFormat(
       stripPrefix(originalPropertyName)
     );
-    const finder = this.getAndInitStaticPropertyNameCache(
+    const finder = this.getOrInitStaticPropertyNameFinder(
       originalContainerTypeName
     );
     const newName = finder.findUniqueName(transformedName);
@@ -169,7 +169,7 @@ export class ServiceNameFormatter {
     return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 
-  private getAndInitStaticPropertyNameCache(name: string): UniqueNameFinder {
+  private getOrInitStaticPropertyNameFinder(name: string): UniqueNameFinder {
     if (this.staticPropertyNamesFinder[name]) {
       return this.staticPropertyNamesFinder[name];
     }

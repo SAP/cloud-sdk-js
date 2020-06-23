@@ -116,7 +116,7 @@ Request parameters:
 
 #### Handling of ETags
 
-An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SDK will try to read version identifiers from responses and set them when sending OData requests.
+An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SAP Cloud SDK will try to read version identifiers from responses and set them when sending OData requests.
 
 Consider the following example:
 

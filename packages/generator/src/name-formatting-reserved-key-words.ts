@@ -53,7 +53,7 @@ export const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
   Object.getOwnPropertyNames(Object.prototype)
 );
 
-export const reservedServiceKeywords:string[]=[
+export const reservedServiceKeywords: string[] = [
   'BinaryField',
   'NumberField',
   'Moment',
@@ -72,4 +72,4 @@ export const reservedServiceKeywords:string[]=[
   'Link',
   'Time',
   'TimeField'
-]
+];

@@ -8,11 +8,13 @@ import { UniqueNameFinder } from './unique-name-finder';
 import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
 
 export class ServiceNameFormatter {
+  private finderServiceWide = UniqueNameFinder.getInstance().withAlreadyUsedNames(
+    reservedServiceKeywords
+  );
 
-  private finderServiceWide = UniqueNameFinder.getInstance().withAlreadyUsedNames(reservedServiceKeywords);
-
-  private parameterNamesFinder: { [functionImportName: string]: UniqueNameFinder } = {};
-
+  private parameterNamesFinder: {
+    [functionImportName: string]: UniqueNameFinder;
+  } = {};
 
   private staticPropertyNamesFinder: {
     [entitySetOrComplexTypeName: string]: UniqueNameFinder;
@@ -29,13 +31,19 @@ export class ServiceNameFormatter {
     // Here we assume that entitysets and complextypes cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
-        this.staticPropertyNamesFinder[entitySetOrComplexTypeName] = UniqueNameFinder.getInstance();
-        this.instancePropertyNamesFinder[entitySetOrComplexTypeName] = UniqueNameFinder.getInstance();
+        this.staticPropertyNamesFinder[
+          entitySetOrComplexTypeName
+        ] = UniqueNameFinder.getInstance();
+        this.instancePropertyNamesFinder[
+          entitySetOrComplexTypeName
+        ] = UniqueNameFinder.getInstance();
       }
     );
 
     functionImportNames.forEach(functionImportName => {
-      this.parameterNamesFinder[functionImportName] = UniqueNameFinder.getInstance();
+      this.parameterNamesFinder[
+        functionImportName
+      ] = UniqueNameFinder.getInstance();
     });
   }
 
@@ -82,8 +90,7 @@ export class ServiceNameFormatter {
 
   originalToFunctionImportName(str: string): string {
     const transformedName = voca.camelCase(str);
-    const newName = this.finderServiceWide
-      .findUniqueName(transformedName);
+    const newName = this.finderServiceWide.findUniqueName(transformedName);
 
     this.finderServiceWide.addToAlreadyUsedNames(newName);
     return applyPrefixOnJsConfictFunctionImports(newName);
@@ -133,7 +140,9 @@ export class ServiceNameFormatter {
   ): string {
     const transformedName = voca.camelCase(originalParameterName);
 
-    const finder = this.getOrInitParameterNameFinder(originalFunctionImportName);
+    const finder = this.getOrInitParameterNameFinder(
+      originalFunctionImportName
+    );
     const newName = finder.findUniqueName(transformedName);
 
     finder.addToAlreadyUsedNames(newName);
@@ -148,8 +157,10 @@ export class ServiceNameFormatter {
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
 
-    const newNames = this.finderServiceWide
-      .findUniqueNameWithSuffixes(transformedName, getInterfaceNamesSuffixes());
+    const newNames = this.finderServiceWide.findUniqueNameWithSuffixes(
+      transformedName,
+      getInterfaceNamesSuffixes()
+    );
     this.finderServiceWide.addToAlreadyUsedNames(newNames);
     return newNames[0];
   }
@@ -158,7 +169,7 @@ export class ServiceNameFormatter {
     return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 
-  private getAndInitStaticPropertyNameCache(name: string):UniqueNameFinder {
+  private getAndInitStaticPropertyNameCache(name: string): UniqueNameFinder {
     if (this.staticPropertyNamesFinder[name]) {
       return this.staticPropertyNamesFinder[name];
     }
@@ -166,7 +177,7 @@ export class ServiceNameFormatter {
     return this.staticPropertyNamesFinder[name];
   }
 
-  private getOrInitInstancePropertyNameFinder(name: string):UniqueNameFinder {
+  private getOrInitInstancePropertyNameFinder(name: string): UniqueNameFinder {
     if (this.instancePropertyNamesFinder[name]) {
       return this.instancePropertyNamesFinder[name];
     }
@@ -174,7 +185,7 @@ export class ServiceNameFormatter {
     return this.instancePropertyNamesFinder[name];
   }
 
-  private getOrInitParameterNameFinder(name: string):UniqueNameFinder {
+  private getOrInitParameterNameFinder(name: string): UniqueNameFinder {
     if (this.parameterNamesFinder[name]) {
       return this.parameterNamesFinder[name];
     }

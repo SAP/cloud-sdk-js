@@ -1,23 +1,26 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { propertyExists } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
 import { ServiceMapping, VdmMapping } from './service-mapping';
 import { UniqueNameFinder } from './unique-name-finder';
 
 export class GlobalNameFormatter {
-  private directoryNameFinder: UniqueNameFinder = UniqueNameFinder.getInstance().withSeparator('-')
-  private npmPackageNameFinder: UniqueNameFinder = UniqueNameFinder.getInstance().withSeparator('-')
+  private directoryNameFinder: UniqueNameFinder = UniqueNameFinder.getInstance().withSeparator(
+    '-'
+  );
+  private npmPackageNameFinder: UniqueNameFinder = UniqueNameFinder.getInstance().withSeparator(
+    '-'
+  );
   private vdmMapping: VdmMapping;
 
   constructor(vdmMapping: VdmMapping | undefined) {
     this.vdmMapping = vdmMapping || {};
-    this.directoryNameFinder.addToAlreadyUsedNames(Object.entries(this.vdmMapping).map(
-      ([k, v]) => v.directoryName
-    ));
-    this.npmPackageNameFinder.addToAlreadyUsedNames(Object.entries(this.vdmMapping).map(
-      ([k, v]) => v.npmPackageName
-    ));
+    this.directoryNameFinder.addToAlreadyUsedNames(
+      Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName)
+    );
+    this.npmPackageNameFinder.addToAlreadyUsedNames(
+      Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName)
+    );
   }
 
   public uniqueDirectoryName(
@@ -41,14 +44,14 @@ export class GlobalNameFormatter {
   }
 
   private transformAndCacheDirectoryName(directoryName: string): string {
-    const newName = this.directoryNameFinder.findUniqueName(directoryName)
-    this.directoryNameFinder.addToAlreadyUsedNames(newName)
+    const newName = this.directoryNameFinder.findUniqueName(directoryName);
+    this.directoryNameFinder.addToAlreadyUsedNames(newName);
     return newName;
   }
 
   private transformAndCacheNpmPackageName(npmPackageName: string): string {
-    const newName = this.npmPackageNameFinder.findUniqueName(npmPackageName)
-    this.npmPackageNameFinder.addToAlreadyUsedNames(newName)
+    const newName = this.npmPackageNameFinder.findUniqueName(npmPackageName);
+    this.npmPackageNameFinder.addToAlreadyUsedNames(newName);
     return newName;
   }
 

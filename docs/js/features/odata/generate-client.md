@@ -66,6 +66,7 @@ Example:
     "npmPackageName": "my-service"
   }
 }
+```
 
 By default, the generated module contains the following sources:
 - TypeScript code `.ts`

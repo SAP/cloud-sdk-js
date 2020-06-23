@@ -47,15 +47,8 @@ return MyEntity.requestBuilder()
 - _requestType_ can be one of `create`, `getAll`, `getByKey`, `update`, `delete`.
 - _additionalRequestConfiguration_ depends on _requestType_:
     - for all of them:
-        - `execute` executes the query (cannot be used on `getAll` alone).
         - `withCustomHeaders` passes the API key for example.
         - `withCustomQueryParameters` adds key-value pairs.
-        - `build` builds an ODataRequest that holds essential configuration for the service request and executes it.
-        - other requests (`url`, `withCustomServicePath`, `relativeUrl`)
-    - for `create` only:
-        - `asChilOf` specifies the parent of the entity to create.
-    - for `create` and `update`:
-        - `prepare` builds the payload of the query.
     - for `update` and `delete`:
         - `ignoreVersionIdentifier` instructs the request to force an overwrite of the entity by [sending an 'If-Match: *' header instead of sending the ETag version identifier](#Handling-of-ETags).
     - for `delete` only:
@@ -71,7 +64,12 @@ return MyEntity.requestBuilder()
 var myDestination : {url: '<yourURL>'}
 ```
 
+<!--TODO
+explain `url` and `relativeUrl`
+-->
+
 Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example.
+
 <!--The following code snippets assume that an instance of this service is set up:
 
 ```ts
@@ -90,11 +88,12 @@ All of the following code can be organised in service files, e.g., `MyEntity.ser
 Create, Read, Update and Delete operations on entities are usually built inside the service class:
 
 ```ts
-BusinessPartnerAddress.requestBuilder().create(partner);
-BusinessPartnerAddress.requestBuilder().getAll();
-BusinessPartnerAddress.requestBuilder().getByKey('id');
-BusinessPartnerAddress.requestBuilder().update(partner);
-BusinessPartnerAddress.requestBuilder().delete();
+BusinessPartner.requestBuilder().create(partner);
+BusinessPartner.requestBuilder().getAll();
+BusinessPartner.requestBuilder().getByKey('id');
+BusinessPartner.requestBuilder().update(partner);
+//you can't delete a businness partner, this is only for the example.
+BusinessPartner.requestBuilder().delete(partner);
 ```
 
 Each of the above statements returns a builder object that allows for specifying certain request parameters, depending on the operation.

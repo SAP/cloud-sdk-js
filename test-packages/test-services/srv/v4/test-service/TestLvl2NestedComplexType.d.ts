@@ -1,4 +1,4 @@
-import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType } from '@sap-cloud-sdk/core/src/odata/v4';
+import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType } from '@sap-cloud-sdk/core/v4';
 /**
  * TestLvl2NestedComplexType
  */

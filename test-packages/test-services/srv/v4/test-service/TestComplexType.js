@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var TestNestedComplexType_1 = require("./TestNestedComplexType");
-var v4_1 = require("@sap-cloud-sdk/core/src/odata/v4");
+var v4_1 = require("@sap-cloud-sdk/core/v4");
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
  */

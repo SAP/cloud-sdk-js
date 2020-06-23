@@ -19,7 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestLvl2NestedComplexType_1 = require("./TestLvl2NestedComplexType");
-var v4_1 = require("@sap-cloud-sdk/core/src/odata/v4");
+var v4_1 = require("@sap-cloud-sdk/core/v4");
 /**
  * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
  */

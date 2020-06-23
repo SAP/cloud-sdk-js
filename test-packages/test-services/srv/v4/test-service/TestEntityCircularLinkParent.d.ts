@@ -1,5 +1,5 @@
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, OneToOneLink, StringField } from '@sap-cloud-sdk/core/src/odata/v4';
+import { AllFields, CustomField, Entity, EntityBuilderType, Field, OneToOneLink, StringField } from '@sap-cloud-sdk/core/v4';
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */

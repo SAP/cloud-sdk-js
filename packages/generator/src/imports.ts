@@ -44,7 +44,7 @@ export function coreImportDeclaration(
   namedImports: string[],
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure {
-  const moduleSuffix = oDataVersion === 'v4' ? '/src/odata/v4' : '';
+  const moduleSuffix = oDataVersion === 'v4' ? '/v4' : '';
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier: `@sap-cloud-sdk/core${moduleSuffix}`,

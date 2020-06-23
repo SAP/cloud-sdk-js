@@ -1,4 +1,4 @@
-import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core/src/odata/v4';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core/v4';
 import { TestEntityEndsWith } from './TestEntityEndsWith';
 /**
  * Request builder class for operations supported on the [[TestEntityEndsWith]] entity.

@@ -6,10 +6,6 @@ import {
 
 type Separator = '-' | '_';
 
-export interface UniqueName {
-  uniqueName: string;
-  relatedUniqueNames: string[];
-}
 export class UniqueNameFinder {
   private static readonly MAXIMUM_NUMBER_OF_SUFFIX = 1000;
 
@@ -39,51 +35,38 @@ export class UniqueNameFinder {
     this.alreadyUsedNames = names;
     return this;
   }
+
   /**
-   * In some cases a name is related to a set of names. For example an entity with name "MyEntity" will also need the name "MyEntityType" to be free.
-   * This method creates all names related to a given input. Per default (s:string)=>[] is considered.
-   * @param relatedNamesGetter Method returning the related names to a given one.
-   * @returns The instance of the finder.
+   * Find a unique name by appending a suffix of the form this.separator\d+ if necessary. If the name is already unique nothing is appended.
+   * @param name The name to get a unique name from
+   * @returns Unique name
    */
-  public withRelatedNames(relatedNamesGetter: (s: string) => string[]) {
-    this.relatedNamesGetter = relatedNamesGetter;
-    return this;
+  public findUniqueName(name: string): string {
+    return this.findUniqueNameWithSuffixes(name,[])[0];
   }
 
   /**
    * Find a unique name by appending a suffix of the form this.separator\d+ if necessary. If the name is already unique nothing is appended.
-   * The result contains also the addiotional related names with respect to the input with suffix if needed.
+   * The suffixes are a list of strings appended to the name and this build name is also checked for uniqueness.
+   *
    * @param name The name to get a unique name from
-   * @returns Unique name
+   * @param suffixes Additional name suffixed to be considered
+   * @returns Unique names. The length of this array is one plus the number of suffixes provided. The zeros entry corresponds to the given name.
    */
-  public findUniqueName(name: string): UniqueName {
+  public findUniqueNameWithSuffixes(name: string,suffixes:string[]): string[] {
     const relevantAlreadyUsedNames = this.removeUnnecessaryUsedNames(name);
-    if (this.isNameUnique(name, relevantAlreadyUsedNames)) {
-      return this.toUniqueName(name);
+    if (this.areNamesFree([name], relevantAlreadyUsedNames)) {
+      return [name,...this.addNameSuffixes(name,suffixes)]
     }
     const suffix = this.getUniqueNameUsingSuffix(
       name,
-      relevantAlreadyUsedNames
+      relevantAlreadyUsedNames,
+      suffixes
     );
-    return this.toUniqueName(this.addSuffix(name, suffix));
+    return this.addSuffixes(name, suffix,suffixes);
   }
 
-  private relatedNamesGetter: (s: string) => string[] = (s: string) => [];
-
-  private getNameWithRelatedNames(name: string): string[] {
-    return [name, ...this.relatedNamesGetter(name)];
-  }
-
-  private toUniqueName(name: string): UniqueName {
-    return {
-      uniqueName: name,
-      relatedUniqueNames: this.relatedNamesGetter(name)
-    };
-  }
-
-  private isNameUnique(name: string, alreadyUsedNames: string[]): boolean {
-    const names = this.getNameWithRelatedNames(name);
-
+  private areNamesFree(names: string[], alreadyUsedNames: string[]): boolean {
     return !names.some(
       nameToTest =>
         alreadyUsedNames.includes(nameToTest) ||
@@ -97,40 +80,39 @@ export class UniqueNameFinder {
     return nameSuffixRemoved;
   }
 
-  private addSuffix(name: string, suffix: number): string {
+  private addSuffixes(name: string, suffix: number,nameSuffixes:string[]): string[] {
     const nameWithoutSuffix = this.removeSuffixIfPresent(name);
-    return `${nameWithoutSuffix}${this.separator}${suffix}`;
+    const numberSuffix = `${nameWithoutSuffix}${this.separator}${suffix}`;
+    return [numberSuffix,...this.addNameSuffixes(name,nameSuffixes)]
+  }
+
+  private addNameSuffixes(name:string,suffixes:string[]):string[]{
+    return suffixes.map(nameSuffix=>`${name}${nameSuffix}`)
   }
 
   private removeUnnecessaryUsedNames(name: string): string[] {
     const nameSuffixRemoved = this.removeSuffixIfPresent(name);
-    const relatedNames = this.getNameWithRelatedNames(nameSuffixRemoved);
-    return relatedNames.reduce(
-      (collected, current) => [
-        ...collected,
-        ...this.alreadyUsedNames.filter(used => used.startsWith(current))
-      ],
-      []
-    );
+    return this.alreadyUsedNames.filter(used => used.startsWith(nameSuffixRemoved))
   }
 
   private getUniqueNameUsingSuffix(
     name: string,
-    alreadyUsedNames: string[]
+    alreadyUsedNames: string[],
+    nameSuffixes: string[]
   ): number {
     let suffix = 1;
 
     // This algorithm has order N**2 for N identical names. With a sort you could get it down to N*log(N)
     // However with the related items in mind this is much easier and N should be small anyway.
     while (suffix < UniqueNameFinder.MAXIMUM_NUMBER_OF_SUFFIX) {
-      const newName = this.addSuffix(name, suffix);
-      if (this.isNameUnique(newName, alreadyUsedNames)) {
+      const newName = this.addSuffixes(name, suffix,nameSuffixes);
+      if (this.areNamesFree(newName, alreadyUsedNames)) {
         return suffix;
       }
       suffix++;
     }
     throw new Error(
-      `Unable to find a unique name for ${name} within the range of 1000 suffixes.`
+      `Unable to find a unique name for ${name} within the range of ${UniqueNameFinder.MAXIMUM_NUMBER_OF_SUFFIX} suffixes.`
     );
   }
 }

@@ -62,7 +62,7 @@ export class GlobalNameFormatter {
       ? UniqueNameFinder.getInstance()
           .withSeparator('-')
           .withAlreadyUsedNames(cache)
-          .findUniqueName(name).uniqueName
+          .findUniqueName(name)
       : name;
 
   private directoryNameFromMapping(

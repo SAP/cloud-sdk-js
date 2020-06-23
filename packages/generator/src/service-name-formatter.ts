@@ -78,8 +78,8 @@ export class ServiceNameFormatter {
       .withAlreadyUsedNames(cache)
       .findUniqueName(transformedName);
 
-    cache.push(newName.uniqueName);
-    return newName.uniqueName;
+    cache.push(newName);
+    return newName;
   }
 
   originalToInstancePropertyName(
@@ -95,8 +95,8 @@ export class ServiceNameFormatter {
       .withAlreadyUsedNames(cache)
       .findUniqueName(transformedName);
 
-    cache.push(newName.uniqueName);
-    return newName.uniqueName;
+    cache.push(newName);
+    return newName;
   }
 
   originalToFunctionImportName(str: string): string {
@@ -105,8 +105,8 @@ export class ServiceNameFormatter {
       .withAlreadyUsedNames(this.serviceWideNamesCache)
       .findUniqueName(transformedName);
 
-    this.serviceWideNamesCache.push(newName.uniqueName);
-    return applyPrefixOnJsConfictFunctionImports(newName.uniqueName);
+    this.serviceWideNamesCache.push(newName);
+    return applyPrefixOnJsConfictFunctionImports(newName);
   }
 
   originalToComplexTypeName(str: string): string {
@@ -119,8 +119,8 @@ export class ServiceNameFormatter {
       .withAlreadyUsedNames(this.serviceWideNamesCache)
       .findUniqueName(transformedName);
 
-    this.serviceWideNamesCache.push(newName.uniqueName);
-    return newName.uniqueName;
+    this.serviceWideNamesCache.push(newName);
+    return newName;
   }
 
   typeNameToFactoryName(str: string, reservedNames: Set<string>): string {
@@ -134,8 +134,8 @@ export class ServiceNameFormatter {
       .withAlreadyUsedNames(this.serviceWideNamesCache)
       .findUniqueName(factoryName);
 
-    this.serviceWideNamesCache.push(newName.uniqueName);
-    return newName.uniqueName;
+    this.serviceWideNamesCache.push(newName);
+    return newName;
   }
 
   originalToNavigationPropertyName(
@@ -149,8 +149,8 @@ export class ServiceNameFormatter {
       .withAlreadyUsedNames(cache)
       .findUniqueName(transformedName);
 
-    cache.push(newName.uniqueName);
-    return newName.uniqueName;
+    cache.push(newName);
+    return newName;
   }
 
   originalToParameterName(
@@ -164,8 +164,8 @@ export class ServiceNameFormatter {
       .withAlreadyUsedNames(cache)
       .findUniqueName(transformedName);
 
-    cache.push(newName.uniqueName);
-    return newName.uniqueName;
+    cache.push(newName);
+    return newName;
   }
 
   originalToEntityClassName(entitySetName: string): string {
@@ -176,15 +176,11 @@ export class ServiceNameFormatter {
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
 
-    const newName = UniqueNameFinder.getInstance()
+    const newNames = UniqueNameFinder.getInstance()
       .withAlreadyUsedNames(this.serviceWideNamesCache)
-      .withRelatedNames(getInterfaceNames)
-      .findUniqueName(transformedName);
-    this.serviceWideNamesCache.push(
-      newName.uniqueName,
-      ...newName.relatedUniqueNames
-    );
-    return newName.uniqueName;
+      .findUniqueNameWithSuffixes(transformedName,getInterfaceNamesSuffixes());
+    this.serviceWideNamesCache.push(...newNames);
+    return newNames[0];
   }
 
   directoryToSpeakingModuleName(packageName: string): string {
@@ -234,7 +230,6 @@ function stripAUnderscore(name: string) {
   return name.startsWith('A_') ? name.substring(2, name.length) : name;
 }
 
-// TODO discuss how to use this in a test without exporting
-export function getInterfaceNames(entitySetName: string): string[] {
-  return [`${entitySetName}Type`, `${entitySetName}TypeForceMandatory`];
+function getInterfaceNamesSuffixes(): string[] {
+  return ['Type', 'TypeForceMandatory'];
 }

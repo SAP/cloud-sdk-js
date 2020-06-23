@@ -17,26 +17,22 @@ describe('Name formatting strategies', () => {
     const finder = UniqueNameFinder.getInstance().withAlreadyUsedNames([
       'MyClass'
     ]);
-    expect(finder.findUniqueName('MyClass').uniqueName).toBe('MyClass_1');
+    expect(finder.findUniqueName('MyClass')).toBe('MyClass_1');
 
     finder.withAlreadyUsedNames(['MyClass_1']);
-    expect(finder.findUniqueName('MyClass_1').uniqueName).toBe('MyClass_2');
+    expect(finder.findUniqueName('MyClass_1')).toBe('MyClass_2');
 
     finder
       .withAlreadyUsedNames(['MyClass_1', 'MyClass_2Type'])
-      .withRelatedNames(getInterfaceNames);
-    expect(finder.findUniqueName('MyClass_1').uniqueName).toBe('MyClass_3');
-    expect(finder.findUniqueName('MyClass_1').relatedUniqueNames).toEqual([
-      'MyClass_3Type',
-      'MyClass_3TypeForceMandatory'
-    ]);
+    expect(finder.findUniqueNameWithSuffixes('MyClass_1',['Type'])).toBe(['MyClass_3','MyClass_3Type']);
+
   });
 
   it('should handel names containing a _1 somewhere in the middle.', () => {
     const finder = UniqueNameFinder.getInstance().withAlreadyUsedNames([
       'MyClass_1'
     ]);
-    expect(finder.findUniqueName('MyClass_1ABC').uniqueName).toBe(
+    expect(finder.findUniqueName('MyClass_1ABC')).toBe(
       'MyClass_1ABC'
     );
   });
@@ -46,12 +42,11 @@ describe('Name formatting strategies', () => {
       'MyClass',
       'MyClass-1'
     ]);
-    expect(finder.findUniqueName('MyClass').uniqueName).toBe('MyClass_1');
+    expect(finder.findUniqueName('MyClass')).toBe('MyClass_1');
 
     finder
       .withAlreadyUsedNames(['MyClassType', 'MyClass_1Type', 'MyClass-2Type'])
-      .withRelatedNames(getInterfaceNames);
-    expect(finder.findUniqueName('MyClass').uniqueName).toBe('MyClass_2');
+    expect(finder.findUniqueNameWithSuffixes('MyClass',['Type'])[0]).toBe('MyClass_2');
   });
 
   it('should correctly count up the suffix.', () => {
@@ -59,8 +54,8 @@ describe('Name formatting strategies', () => {
       'MyClass_1',
       'MyClass_2'
     ]);
-    expect(finder.findUniqueName('MyClass').uniqueName).toBe('MyClass');
-    expect(finder.findUniqueName('MyClass_1').uniqueName).toBe('MyClass_3');
+    expect(finder.findUniqueName('MyClass')).toBe('MyClass');
+    expect(finder.findUniqueName('MyClass_1')).toBe('MyClass_3');
 
     finder.withAlreadyUsedNames([
       'MyClass_1',
@@ -68,10 +63,10 @@ describe('Name formatting strategies', () => {
       'MyClass_3',
       'SomethingElse'
     ]);
-    expect(finder.findUniqueName('MyClass_2').uniqueName).toBe('MyClass_2');
+    expect(finder.findUniqueName('MyClass_2')).toBe('MyClass_2');
 
     finder.withAlreadyUsedNames(['MyClass_1', 'MyClass_2', 'MyClass_4']);
-    expect(finder.findUniqueName('MyClass_1').uniqueName).toBe('MyClass_3');
+    expect(finder.findUniqueName('MyClass_1')).toBe('MyClass_3');
 
     finder
       .withAlreadyUsedNames([
@@ -79,10 +74,9 @@ describe('Name formatting strategies', () => {
         'MyClass_1',
         'MyClass_2TypeForceMandatory'
       ])
-      .withRelatedNames(getInterfaceNames);
-    expect(finder.findUniqueName('MyClass').uniqueName).toBe('MyClass_3');
+    expect(finder.findUniqueNameWithSuffixes('MyClass',['Type','TypeForceMandatory'])[0]).toBe('MyClass_3');
 
     finder.withAlreadyUsedNames(['MyClass', 'MyClass_1Type']);
-    expect(finder.findUniqueName('MyClass').uniqueName).toBe('MyClass_2');
+    expect(finder.findUniqueNameWithSuffixes('MyClass',['Type'])[0]).toBe('MyClass_2');
   });
 });

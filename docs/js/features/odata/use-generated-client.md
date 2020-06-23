@@ -137,7 +137,7 @@ async function modifyBusinessPartner(id) {
 }
 ```
 
-On the read request the SDK will automatically try to extract the version identifier from the response and store it within the `partner` object. When updating it will be taken from there and sent with the `If-match` header.
+When executing `getAll` and `getByKey` requests the SAP Cloud SDK will automatically attempt to extract the version identifier from the response and store it within the returned entity (`partner` in the example above). When executing `update` requests the version identifier will be sent in the `If-match` request header.
 
 :::note
 If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.

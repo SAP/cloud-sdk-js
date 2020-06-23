@@ -38,8 +38,8 @@ On an abstract level, creating a request using the fluent api always follows the
 
 ```ts
 return MyEntity.requestBuilder()
-    .requestType()
-    .additionalRequestConfiguration()
+    .<requestType>(...)
+    .<additionalRequestConfiguration>(...)
     .execute(myDestination);
 ```
 
@@ -115,25 +115,28 @@ Request parameters:
 
 #### Handling of ETags
 
-An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SDK will try to read version identifiers from responses and set them when sending OData requests.
+An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SAP Cloud SDK will try to read version identifiers from responses and set them when sending OData requests.
 
 Consider the following example:
 
 ```ts
-//the function containing this code must be async
-const partner = BusinessPartner.requestBuilder()
-    .getByKey('id')
-    .execute({
-        url: '<yourURL>'
-    });
-BusinessPartner.requestBuilder()
-    .update(await partner)
-    .execute({
-        url: '<yourURL>'
-    });
+async function modifyBusinessPartner(id) {
+  const destination = { url: 'https://my.s4-system.com' };
+  
+  const partner = await BusinessPartner.requestBuilder()
+      .getByKey(id)
+      .execute(destination);
+      
+  // do some modification
+  applyModification(partner);
+  
+  return BusinessPartner.requestBuilder()
+      .update(partner)
+      .execute(destination);
+}
 ```
 
-On the read request the SDK will automatically try to extract the version identifier from the response and store it within the `partner` object. When updating it will be taken from there and sent with the `If-match` header.
+When executing `getAll` and `getByKey` requests the SAP Cloud SDK will automatically attempt to extract the version identifier from the response and store it within the returned entity (`partner` in the example above). When executing `update` requests the version identifier will be sent in the `If-match` request header.
 
 :::note
 If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.

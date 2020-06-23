@@ -32,7 +32,29 @@ export class UniqueNameFinder {
    * @returns The instance of the finder.
    */
   public withAlreadyUsedNames(names: string[]) {
-    this.alreadyUsedNames = names;
+    this.alreadyUsedNames = names.slice();
+    return this;
+  }
+
+  /**
+   * Adds the names to the already used names.
+   * @param names Names to be added
+   * @returns The instance of the finder.
+   */
+  public addToAlreadyUsedNames(names: string[])
+  /**
+   * Adds the name to the already used names.
+   * @param name Name to be added
+   * @returns The instance of the finder.
+   */
+  public addToAlreadyUsedNames(name: string)
+  public addToAlreadyUsedNames(nameOrnames: string[]|string) {
+    if(typeof nameOrnames === 'string'){
+      this.alreadyUsedNames.push(nameOrnames)
+    }else{
+      this.alreadyUsedNames.push(...nameOrnames);
+    }
+
     return this;
   }
 

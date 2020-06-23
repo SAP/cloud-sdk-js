@@ -5,35 +5,20 @@ import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
 import { applyPrefixOnJsConfictFunctionImports } from './name-formatting-strategies';
 import { UniqueNameFinder } from './unique-name-finder';
+import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
 
 export class ServiceNameFormatter {
-  private serviceWideNamesCache: string[] = [
-    'BinaryField',
-    'NumberField',
-    'Moment',
-    'BigNumber',
-    'BigNumberField',
-    'StringField',
-    'DateField',
-    'AllFields',
-    'CustomField',
-    'Entity',
-    'EntityBuilderType',
-    'Field',
-    'Selectable',
-    'OneToOneLink',
-    'BooleanField',
-    'Link',
-    'Time',
-    'TimeField'
-  ];
 
-  private parameterNamesCache: { [functionImportName: string]: string[] } = {};
-  private staticPropertyNamesCache: {
-    [entitySetOrComplexTypeName: string]: string[];
+  private finderServiceWide = UniqueNameFinder.getInstance().withAlreadyUsedNames(reservedServiceKeywords);
+
+  private parameterNamesFinder: { [functionImportName: string]: UniqueNameFinder } = {};
+
+
+  private staticPropertyNamesFinder: {
+    [entitySetOrComplexTypeName: string]: UniqueNameFinder;
   } = {};
-  private instancePropertyNamesCache: {
-    [entitySetOrComplexTypeName: string]: string[];
+  private instancePropertyNamesFinder: {
+    [entitySetOrComplexTypeName: string]: UniqueNameFinder;
   } = {};
 
   constructor(
@@ -44,13 +29,13 @@ export class ServiceNameFormatter {
     // Here we assume that entitysets and complextypes cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
-        this.staticPropertyNamesCache[entitySetOrComplexTypeName] = [];
-        this.instancePropertyNamesCache[entitySetOrComplexTypeName] = [];
+        this.staticPropertyNamesFinder[entitySetOrComplexTypeName] = UniqueNameFinder.getInstance();
+        this.instancePropertyNamesFinder[entitySetOrComplexTypeName] = UniqueNameFinder.getInstance();
       }
     );
 
     functionImportNames.forEach(functionImportName => {
-      this.parameterNamesCache[functionImportName] = [];
+      this.parameterNamesFinder[functionImportName] = UniqueNameFinder.getInstance();
     });
   }
 
@@ -71,14 +56,12 @@ export class ServiceNameFormatter {
     const transformedName = toStaticPropertyFormat(
       stripPrefix(originalPropertyName)
     );
-    const cache = this.getAndInitStaticPropertyNameCache(
+    const finder = this.getAndInitStaticPropertyNameCache(
       originalContainerTypeName
     );
-    const newName = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(cache)
-      .findUniqueName(transformedName);
+    const newName = finder.findUniqueName(transformedName);
 
-    cache.push(newName);
+    finder.addToAlreadyUsedNames(newName);
     return newName;
   }
 
@@ -88,24 +71,21 @@ export class ServiceNameFormatter {
   ): string {
     const transformedName = toPropertyFormat(stripPrefix(originalPropertyName));
 
-    const cache = this.getAndInitInstancePropertyNameCache(
+    const finder = this.getOrInitInstancePropertyNameFinder(
       originalContainerTypeName
     );
-    const newName = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(cache)
-      .findUniqueName(transformedName);
+    const newName = finder.findUniqueName(transformedName);
 
-    cache.push(newName);
+    finder.addToAlreadyUsedNames(newName);
     return newName;
   }
 
   originalToFunctionImportName(str: string): string {
     const transformedName = voca.camelCase(str);
-    const newName = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(this.serviceWideNamesCache)
+    const newName = this.finderServiceWide
       .findUniqueName(transformedName);
 
-    this.serviceWideNamesCache.push(newName);
+    this.finderServiceWide.addToAlreadyUsedNames(newName);
     return applyPrefixOnJsConfictFunctionImports(newName);
   }
 
@@ -115,11 +95,9 @@ export class ServiceNameFormatter {
       ''
     );
 
-    const newName = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(this.serviceWideNamesCache)
-      .findUniqueName(transformedName);
+    const newName = this.finderServiceWide.findUniqueName(transformedName);
 
-    this.serviceWideNamesCache.push(newName);
+    this.finderServiceWide.addToAlreadyUsedNames(newName);
     return newName;
   }
 
@@ -130,11 +108,9 @@ export class ServiceNameFormatter {
       factoryName = `${factoryName}_${index}`;
       index += 1;
     }
-    const newName = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(this.serviceWideNamesCache)
-      .findUniqueName(factoryName);
+    const newName = this.finderServiceWide.findUniqueName(factoryName);
 
-    this.serviceWideNamesCache.push(newName);
+    this.finderServiceWide.addToAlreadyUsedNames(newName);
     return newName;
   }
 
@@ -144,12 +120,10 @@ export class ServiceNameFormatter {
   ): string {
     const transformedName = voca.camelCase(originalPropertyName);
 
-    const cache = this.getAndInitInstancePropertyNameCache(entitySetName);
-    const newName = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(cache)
-      .findUniqueName(transformedName);
+    const finder = this.getOrInitInstancePropertyNameFinder(entitySetName);
+    const newName = finder.findUniqueName(transformedName);
 
-    cache.push(newName);
+    finder.addToAlreadyUsedNames(newName);
     return newName;
   }
 
@@ -159,12 +133,10 @@ export class ServiceNameFormatter {
   ): string {
     const transformedName = voca.camelCase(originalParameterName);
 
-    const cache = this.getAndInitParameterNameCache(originalFunctionImportName);
-    const newName = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(cache)
-      .findUniqueName(transformedName);
+    const finder = this.getOrInitParameterNameFinder(originalFunctionImportName);
+    const newName = finder.findUniqueName(transformedName);
 
-    cache.push(newName);
+    finder.addToAlreadyUsedNames(newName);
     return newName;
   }
 
@@ -176,10 +148,9 @@ export class ServiceNameFormatter {
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
 
-    const newNames = UniqueNameFinder.getInstance()
-      .withAlreadyUsedNames(this.serviceWideNamesCache)
+    const newNames = this.finderServiceWide
       .findUniqueNameWithSuffixes(transformedName, getInterfaceNamesSuffixes());
-    this.serviceWideNamesCache.push(...newNames);
+    this.finderServiceWide.addToAlreadyUsedNames(newNames);
     return newNames[0];
   }
 
@@ -187,28 +158,28 @@ export class ServiceNameFormatter {
     return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 
-  private getAndInitStaticPropertyNameCache(name: string) {
-    if (this.staticPropertyNamesCache[name]) {
-      return this.staticPropertyNamesCache[name];
+  private getAndInitStaticPropertyNameCache(name: string):UniqueNameFinder {
+    if (this.staticPropertyNamesFinder[name]) {
+      return this.staticPropertyNamesFinder[name];
     }
-    this.staticPropertyNamesCache[name] = [];
-    return this.staticPropertyNamesCache[name];
+    this.staticPropertyNamesFinder[name] = UniqueNameFinder.getInstance();
+    return this.staticPropertyNamesFinder[name];
   }
 
-  private getAndInitInstancePropertyNameCache(name: string) {
-    if (this.instancePropertyNamesCache[name]) {
-      return this.instancePropertyNamesCache[name];
+  private getOrInitInstancePropertyNameFinder(name: string):UniqueNameFinder {
+    if (this.instancePropertyNamesFinder[name]) {
+      return this.instancePropertyNamesFinder[name];
     }
-    this.instancePropertyNamesCache[name] = [];
-    return this.instancePropertyNamesCache[name];
+    this.instancePropertyNamesFinder[name] = UniqueNameFinder.getInstance();
+    return this.instancePropertyNamesFinder[name];
   }
 
-  private getAndInitParameterNameCache(name: string) {
-    if (this.parameterNamesCache[name]) {
-      return this.parameterNamesCache[name];
+  private getOrInitParameterNameFinder(name: string):UniqueNameFinder {
+    if (this.parameterNamesFinder[name]) {
+      return this.parameterNamesFinder[name];
     }
-    this.parameterNamesCache[name] = [];
-    return this.parameterNamesCache[name];
+    this.parameterNamesFinder[name] = UniqueNameFinder.getInstance();
+    return this.parameterNamesFinder[name];
   }
 }
 

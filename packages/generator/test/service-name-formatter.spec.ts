@@ -212,7 +212,7 @@ describe('name-formatter', () => {
     it('should add class, classType and classTypeForceMandatory to service wide names cache.', () => {
       const formatter = getFreshNameFormatter();
       const newName = formatter.originalToEntityClassName('MyClass');
-      expect(formatter['serviceWideNamesCache'].slice(-3)).toEqual([
+      expect(formatter['finderServiceWide']['alreadyUsedNames'].slice(-3)).toEqual([
         newName,
         `${newName}Type`,
         `${newName}TypeForceMandatory`
@@ -222,7 +222,7 @@ describe('name-formatter', () => {
     it('should add the function import parameter to the parameter names cache.', () => {
       const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
       formatter.originalToParameterName('FunctionImport', 'SomeParam');
-      expect(formatter['parameterNamesCache']['FunctionImport']).toEqual([
+      expect(formatter['parameterNamesFinder']['FunctionImport']['alreadyUsedNames']).toEqual([
         'someParam'
       ]);
     });
@@ -235,7 +235,7 @@ describe('name-formatter', () => {
           'to_SomeEntity'
         )
       ).toBe('toSomeEntity');
-      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toEqual([
+      expect(formatter['instancePropertyNamesFinder']['A_SomeEntity']['alreadyUsedNames']).toEqual([
         'toSomeEntity'
       ]);
     });
@@ -243,19 +243,19 @@ describe('name-formatter', () => {
     it('should add the complex type parameter to the service wide cache', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToComplexTypeName('MyComplexType');
-      expect(formatter['serviceWideNamesCache'].pop()).toBe('MyComplexType');
+      expect(formatter['finderServiceWide']['alreadyUsedNames'].pop()).toBe('MyComplexType');
     });
 
     it('should add the function inport name to the service wide cache', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToFunctionImportName('MyFunctionInport');
-      expect(formatter['serviceWideNamesCache'].pop()).toBe('myFunctionInport');
+      expect(formatter['finderServiceWide']['alreadyUsedNames'].pop()).toBe('myFunctionInport');
     });
 
     it('should add the instance property parameter to the instance property cache.', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToInstancePropertyName('A_SomeEntity', 'MyProperty');
-      expect(formatter['instancePropertyNamesCache']['A_SomeEntity']).toEqual([
+      expect(formatter['instancePropertyNamesFinder']['A_SomeEntity']['alreadyUsedNames']).toEqual([
         'myProperty'
       ]);
     });
@@ -263,7 +263,7 @@ describe('name-formatter', () => {
     it('should add the static property parameter to the static property cache.', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToStaticPropertyName('A_SomeEntity', 'MyProperty');
-      expect(formatter['staticPropertyNamesCache']['A_SomeEntity']).toEqual([
+      expect(formatter['staticPropertyNamesFinder']['A_SomeEntity']['alreadyUsedNames']).toEqual([
         'MY_PROPERTY'
       ]);
     });

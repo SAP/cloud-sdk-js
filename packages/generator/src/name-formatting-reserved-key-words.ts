@@ -52,3 +52,24 @@ export const reservedJSKeywords: Set<string> = new Set<string>([
 export const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
   Object.getOwnPropertyNames(Object.prototype)
 );
+
+export const reservedServiceKeywords:string[]=[
+  'BinaryField',
+  'NumberField',
+  'Moment',
+  'BigNumber',
+  'BigNumberField',
+  'StringField',
+  'DateField',
+  'AllFields',
+  'CustomField',
+  'Entity',
+  'EntityBuilderType',
+  'Field',
+  'Selectable',
+  'OneToOneLink',
+  'BooleanField',
+  'Link',
+  'Time',
+  'TimeField'
+]

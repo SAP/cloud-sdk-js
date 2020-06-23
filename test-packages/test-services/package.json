@@ -14,10 +14,6 @@
     "access": "restricted",
     "directory": "srv"
   },
-  "scripts": {
-    "compile": "npx tsc",
-    "prepare": "npm run compile"
-  },
   "license": "Apache-2.0",
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.21.2",

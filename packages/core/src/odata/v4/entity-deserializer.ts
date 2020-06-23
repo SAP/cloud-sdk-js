@@ -2,7 +2,8 @@
 
 import { entityDeserializer } from '../common/entity-deserializer';
 import { edmToTs } from './payload-value-converter';
-const deserializer = entityDeserializer(edmToTs);
+import { extractODataETag } from './extract-odata-etag';
+const deserializer = entityDeserializer(edmToTs, extractODataETag);
 
 export const extractCustomFields = deserializer.extractCustomFields;
 export const deserializeEntity = deserializer.deserializeEntity;

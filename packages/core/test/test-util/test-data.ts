@@ -44,3 +44,5 @@ export function testEntityResourcePath(
     'Edm.Guid'
   )},KeyPropertyString='${str}')`;
 }
+
+// v4 toUriFormat

@@ -151,7 +151,7 @@ For create, update and delete requests the SDK will try to send a [CSRF token](h
 
 When reading entities the API offers `select( ... )` on the builders. Through it the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
 
-The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
+The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS ` as representation of a navigation property.
 
 
 ```ts

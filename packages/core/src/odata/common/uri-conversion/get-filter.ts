@@ -137,7 +137,7 @@ export function createGetFilter(uriConverter: UriConverter) {
       filter.validate();
       if (parentFieldNames.length !== 1) {
         throw new Error(
-          `The number of the parent fields: ${parentFieldNames} must be 1, when building a filter lambda expression.`
+          'Nested lambda filter expressions are not supported.'
         );
       }
       const filterExp = filter.filters

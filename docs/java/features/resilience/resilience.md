@@ -34,15 +34,76 @@ The [Resilience Decorator](https://help.sap.com/http.svc/rc/b579bf8578954412aea2
 
 ### Executing Operations
 
-Some `operation()` may be run in a resilient manner via the following code:
+Consider the following code:
 
 ```java
-configuration = ResilienceConfiguration.of(MyClass.class);
 result = ResilienceDecorator.executeSupplier(() -> operation(), configuration);
 ```
 
-Here a new configuration based on default values is used.
+This code executes `operation()` in a resilient manner according to a `ResilienceConfiguration`.
+The decorator will apply all in `configuration` configured patterns and all logic that is needed to combine these patterns.
 
+#### Operations
+
+The decorator operates with two kinds of operations:
+
+<!-- Markdown doesn't allow tables without headers, thus the inline HTML -->
+<table><tbody>
+<tr>
+    <td><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html">Callable</a></td>
+    <td>May throw checked Exceptions</td>
+</tr><tr>
+    <td><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html">Supplier</a></td><td>May only throw unchecked Exceptions</td>
+</tr>
+</tbody></table>
+
+Noticeable is the difference in signatures: _Callable_ throws a _checked exception_ while _Supplier_ does not.
+So you can choose whatever fits your use case best.
+
+#### Executions
+
+The decorator allows for three different ways of applying a configuration: 
+
+<table><tbody>
+<tr>
+    <td><em>Execute</em></td>
+    <td>Immediately runs the operation</td>
+</tr><tr>
+    <td><em>Decorate</em></td>
+    <td>Returns a new operation to be run later</td>
+</tr><tr>
+    <td><em>Queue</em></td>
+    <td>Immediately runs the operation asynchronously</td>
+</tr>
+</tbody></table>
+
+In case your operation should run asynchronously we highly recommend you leverage the `queue` functionality. The decorator will ensure the [Thread Context](../multi-tenancy/thread-context.md) with Tenant and Principal information is propagated correctly to new Threads.
+
+:::note
+Note that the Resilience Decorator will try to propagate the current [Thread Context](../multi-tenancy/thread-context.md) at the _time the decorator is invoked_. This is important when you are decorating a Callable or Supplier and running it later. The Thread Context must be available whenever `decorateCallable` or `decorateSupplier` is evaluated. So if the call to `ResilienceDecorator` should take place asynchronously you should [follow these steps](../multi-tenancy/thread-context.md#running-asynchronous-operations) to ensure the Thread Context is available.
+:::
+
+#### Failures and Fallbacks
+
+An operation might fail for two reasons:
+
+1. The operation itself encounters a failure and throws an error or exception
+2. A resilience pattern causes the operation to fail (e.g. the circuit breaker prevents further invocations)
+
+The SDK wraps all kind of checked and unchecked exceptions into a `ResilienceRuntimeException` and throws them.
+
+To deal with failures one can either catch the `ResilienceRuntimeException` or provide a fallback function:
+
+```java
+executeCallable(() -> operation(), configuration,
+(throwable) -> {
+    log.debug("Encountered a failure in operation: ", throwable);
+    log.debug("Proceeding with fallback value: ", fallback);
+    return fallback;
+});
+```
+
+In the case of Callable this relieves you of the need to catch the exception at the outer level.
 
 ### Building a Resilience Configuration
 

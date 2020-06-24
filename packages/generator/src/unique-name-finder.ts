@@ -40,7 +40,7 @@ export class UniqueNameFinder {
    * Adds the name(s) to the already used names.
    * @param nameOrnames Names to be added
    * @returns The instance of the finder.
-   */ public addToAlreadyUsedNames(nameOrnames: string | string[] | string) {
+   */ public addToAlreadyUsedNames(...names: string[]) {
     if (typeof nameOrnames === 'string') {
       this.alreadyUsedNames.push(nameOrnames);
     } else {

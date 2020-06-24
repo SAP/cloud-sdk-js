@@ -1,4 +1,3 @@
-
 module.exports = {
   someSidebar: {
     // Dzen: ['dzen/getting-started', 'dzen/how-to-write-documentation'],

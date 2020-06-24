@@ -40,7 +40,7 @@ Please be aware that OData v2 and OData v4 service definitions are not interchan
 
 Regardless of how the generator is invoked the generated code requires some dependencies to be present. Therefore it is required to ensure the following dependencies are present in your project:
 
-<Tabs 
+<Tabs
 groupId="odataVersion"
 defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },
@@ -87,7 +87,9 @@ defaultValue="v4" values={[
 </TabItem>
 </Tabs>
 
+:::caution Lombok and Dependency injection are mandatory!
 Lombok and dependency injections are used by the generated typed OData client classes, that is why they are needed but only with the scope _provided_.
+:::
 
 
 ### Using the OData Generator Maven Plugin ###
@@ -192,7 +194,7 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 
 ### Using the CLI
 
-<Tabs 
+<Tabs
 groupId="odataVersion"
 defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },

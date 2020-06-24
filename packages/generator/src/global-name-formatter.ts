@@ -1,22 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { propertyExists } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
-import { applySuffixOnConflictDash } from './name-formatting-strategies';
 import { ServiceMapping, VdmMapping } from './service-mapping';
+import { UniqueNameFinder } from './unique-name-finder';
 
 export class GlobalNameFormatter {
-  private directoryNamesCache: string[] = [];
-  private npmPackageNamesCache: string[] = [];
+  private directoryNameFinder: UniqueNameFinder = new UniqueNameFinder('-');
+  private npmPackageNameFinder: UniqueNameFinder = new UniqueNameFinder('-');
   private vdmMapping: VdmMapping;
 
   constructor(vdmMapping: VdmMapping | undefined) {
     this.vdmMapping = vdmMapping || {};
-    this.directoryNamesCache = Object.entries(this.vdmMapping).map(
-      ([k, v]) => v.directoryName
+    this.directoryNameFinder.addToAlreadyUsedNames(
+      ...Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName)
     );
-    this.npmPackageNamesCache = Object.entries(this.vdmMapping).map(
-      ([k, v]) => v.npmPackageName
+    this.npmPackageNameFinder.addToAlreadyUsedNames(
+      ...Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName)
     );
   }
 
@@ -41,24 +40,16 @@ export class GlobalNameFormatter {
   }
 
   private transformAndCacheDirectoryName(directoryName: string): string {
-    return this.transformAndCache(directoryName, this.directoryNamesCache);
+    const newName = this.directoryNameFinder.findUniqueName(directoryName);
+    this.directoryNameFinder.addToAlreadyUsedNames(newName);
+    return newName;
   }
 
   private transformAndCacheNpmPackageName(npmPackageName: string): string {
-    return this.transformAndCache(npmPackageName, this.npmPackageNamesCache);
+    const newName = this.npmPackageNameFinder.findUniqueName(npmPackageName);
+    this.npmPackageNameFinder.addToAlreadyUsedNames(newName);
+    return newName;
   }
-
-  private transformAndCache(name: string, cache: string[]): string {
-    return pipe(this.transformIfNecessary(cache), this.addToCache(cache))(name);
-  }
-
-  private addToCache = (cache: string[]) => (name: string): string => {
-    cache.push(name);
-    return name;
-  };
-
-  private transformIfNecessary = (cache: string[]) => (name: string): string =>
-    cache.includes(name) ? applySuffixOnConflictDash(name, cache) : name;
 
   private directoryNameFromMapping(
     originalFileName: string

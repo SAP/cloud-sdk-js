@@ -19,8 +19,6 @@ author: Charles Dubois
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
-
 ## Making a request with the generated OData client
 
 The typed OData client allows to build type-safe OData requests for a given service.
@@ -33,86 +31,78 @@ import { MyEntity } from './outputDir/my-service';
 ```
 
 Where `outputDir` is the directory you specified when generating the service and `my-service` was the ` directoryName` specified in the `serviceMapping.json` file which is inside your input directory.
+
 On an abstract level, creating a request using the fluent api always follows the same simple structure:
 
 ```ts
 return MyEntity.requestBuilder()
     .<requestType>(...)
     .<additionalRequestConfiguration>(...)
-    .execute(myDestination);
+    .execute(destination);
 ```
 
-Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the `getAll` request type. Potential request types (denoted by `requestType` in the example above) are `create`, `getAll`, `getByKey`, `update` and `delete`. (*1) Note, that some entities do not support all of the request types, which in turn won't be available through the API.
+Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the [`getAll`](#GetAll) request type.
 
-The request can further be configured by chaining additional configuration functions (denoted by `additionalRequestConfiguration` in the example above). All requests can be configured by setting custom request headers, custom query parameters and a custom service path. (*2)
+Potential request types (denoted by `requestType` in the example above) are [`create`](#Create), [`getAll`](#GetAll), [`getByKey`](#getByKey), [`update`](#Update) and [`delete`](#Delete).
+
+:::note
+Some entities do not support all of the request types, which in turn won't be available through the API.
+:::
+
+The request can further be configured by chaining additional configuration functions (denoted by `additionalRequestConfiguration` in the example above). All requests can be configured by setting [custom request headers](#Setting-custom-request-headers), [custom query parameters](#Setting-custom-query-parameters) and a [custom service path](#Setting-custom-service-path).
+
 Each request type has additional request specific configuration options:
 
-Creating  an entity `asChildOf` another entity for `create` requests (*3), [ETag handling](#Handling-of-ETags) for `update` and `delete` requests as well set operations for `getAll` requests and `select`ing properties for `getAll` and `getByKey` requests.
+Creating  an entity `asChildOf` another entity for [`create`](#Create) requests, [ETag handling](#Handling-of-ETags) for [`update`](#Update) and [`delete`](#Delete) requests, as well as set operations for [`getAll`](#GetAll) requests and [`select`](#Select)ing properties for [`getAll`](#GetAll) and [`getByKey`](#GetByKey) requests.
+<!--
+*3 if there was a specific section on create this should rather be explained there and in more detail.
+-->
 
-The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured chain the `execute` function and pass a destination (*4) to it.
+The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured, chain the `execute` function and pass a [destination](/cloud-sdk/docs/js/features/connectivity/destination-js-sdk/) to it.
 
 ### Setting custom request headers
 
-Write a few sentences, give an example (explain the example). Also mention, that setting `authorization` (and `apikey`) headers will overwrite any automatic authorization header building that the sdk normally would do. You could also mention, that this is useful for the api business hub. (You can also add parts of my proposals as a TODO for this section in a comment if you don't have time to go this far ;) ).
+To use the SAP API Business Hub sandbox for your requests, you will need to pass the `apikey` using the `withCustomHeaders` method. You can also set the `authorization` with this method.
 
-```
+:::caution
+Setting `authorization` (and `apikey`) headers will overwrite any automatic authorization header building that the SDK would normally do.
+:::
+
+Checkout the following example:
+
+```ts
 MyEntity.requestBuilder()
-  .getAll()
-  .withCustomHeaders({
-    apikey: 'my-api-key'
-  });
+    .getAll()
+    .withCustomHeaders({
+        apikey: 'my-api-key'
+    });
 ```
 
 ### Setting custom query parameters
 
-Again, write a few sentences, give an example (explain the example) and explain that this overwrites any other configuration that might have been created by the SDK.
+This method allows you to set key-value pairs in the request
+Key-value pairs denoting additional custom query parameters to be set in the request
 
-```
+:::caution
+Setting custom query parameters overwrites any other configuration that might have been created by the SDK.
+:::
+
+```ts
 MyEntity.requestBuilder()
-  .getAll()
-  .withCustomQueryParameters({
-    language: 'en'
-  });
+    .getAll()
+    .withCustomQueryParameters({
+        language: 'en'
+    });
 ```
 
 ### Setting a custom service path
 
-Same drill as above
+Replace the default service path with the given custom path. In case of the S/4HANA APIs, the servicePath defaults to `'/sap/opu/odata/sap/'` and can be overwritten here.
 
-```
-MyEntity.requestBuilder()
-  .getAll()
-  .withCustomServicePath('my/custom/service/path');
-```
-
-
-
-<!--
-*1 Ideally we would have links to the sections where we describe those request types in detail.
-*2 add links
-*3 if there was a specific section on create this should rather be explained there and in more detail.
-*4 add a link to the destination documentation
--->
-
-- _requestBuilder_ to construct requests for operations.
-- _requestType_ can be one of `create`, `getAll`, `getByKey`, `update`, `delete`.
-- _additionalRequestConfiguration_ depends on _requestType_:
-    - for all of them:
-        - `withCustomHeaders` passes the API key for example.
-        - `withCustomQueryParameters` adds key-value pairs.
-    - for `update` and `delete`:
-        - `ignoreVersionIdentifier` instructs the request to force an overwrite of the entity by [sending an 'If-Match: *' header instead of sending the ETag version identifier](#Handling-of-ETags).
-    - for `delete` only:
-        - `setVersionIdentifier` adds an ETag version identifier in the delete request header.
-    - for `getAll`, they are mainly OData query parameters:
-        - [`select`](#Select) restricts the response to the given selection of properties in the request. (also used by getByKey)
-        - [`filter`](#Filter) Add filter statements to the request.
-        - `orderBy`
-        - `skip` skips number of entities. Useful for paging.
-        - `top` limits number of returned entities.
-- _myDestination_ is an URL of the server, it can be declared as
 ```ts
-var myDestination : {url: '<yourURL>'};
+MyEntity.requestBuilder()
+    .getAll()
+    .withCustomServicePath('my/custom/service/path');
 ```
 
 <!--TODO
@@ -120,104 +110,28 @@ explain how to get `url` and `relativeUrl` of the request
 custom configuration stuff
 -->
 
-Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example.
-
-<!--The following code snippets assume that an instance of this service is set up:
-
-```ts
-constructor(private readonly businessPartnerService: BusinessPartnerService) {}
-```
-
-:::tip Structure your code
-All of the following code can be organised in service files, e.g., `MyEntity.service.ts`
-:::
--->
-
 ## OData Features
+
+Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example.
 
 ### Basic CRUD Operations
 
-OData, as RESTful API protocol, follows the CRUD model: Create, Read, Update, Delete.
+OData, as RESTful API protocol, follows the CRUD model: Create, Read, Update, Delete. These models return a builder object that allows for specifying certain request parameters, depending on the operation.
+
+### GetAll
+
+Queries all BusinessPartner entities.
 
 ```ts
-BusinessPartner.requestBuilder().create(partner);
 BusinessPartner.requestBuilder().getAll();
-BusinessPartner.requestBuilder().getByKey('id');
-BusinessPartner.requestBuilder().update(partner);
-//you can't delete a businness partner, this is only for the example.
-BusinessPartner.requestBuilder().delete(partner);
 ```
 
-redo this section like that:
-* GetAll
-  * Select
-  * Filter
-  * OrderBy
-  * Other Set operations
-* GetByKey (reference select from above)
-* Create
-* Update (reference etag handling
-* Delete (reference etag handling)
-* Etag handling
+#### Select
 
-Each of the above statements returns a builder object that allows for specifying certain request parameters, depending on the operation.
-
-<!--Maybe the Query parameters and Request parameters are redundant because already explained previously?
-and
-It does not become clear that those are the parameters that are created in the url and not functions of the SDK. Also I don't really see the relevance here.
-
-The following query parameters and request options are available for these operations:
-
-Query parameters:
-- `$select` and `$expand` are available on reading a single or multiple entities
-- `$filter`, `$top`, `$skip` and `$orderby` are available only when reading a collection of entities
-
-Request parameters:
-- Update and delete operations allow to modify how ETags are handled:
-   - By default an ETag is send if one is present on the entity being modified.
-   - `ignoreVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
-- All operations allow for adding custom headers via `withCustomHeaders(...)`
--->
-
-#### Handling of ETags
-
-An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SAP Cloud SDK will try to read version identifiers from responses and set them when sending OData requests.
-
-Consider the following example:
-
-```ts
-async function modifyBusinessPartner(id) {
-    const destination = { url: 'https://my.s4-system.com' };
-
-    const partner = await BusinessPartner.requestBuilder()
-        .getByKey(id)
-        .execute(myDestination);
-        
-    // do some modification
-    applyModification(partner);
-
-    return BusinessPartner.requestBuilder()
-        .update(partner)
-        .execute(myDestination);
-}
-```
-
-When executing `getAll` and `getByKey` requests the SAP Cloud SDK will automatically attempt to extract the version identifier from the response and store it within the returned entity (`partner` in the example above). When executing `update` requests the version identifier will be sent in the `If-match` request header.
-
-:::note
-If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.
-:::
-
-#### Handling of CSRF tokens
-
-For create, update and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution the request will try to fetch a token first before issuing the actual create request. Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
-
-### Select
-
-When reading entities the API offers `select( ... )` on the builders. Through it the query parameter `$select` is set. It takes in properties of the entity being queried.
+When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameter `$select` is set. It restricts the response to the given selection of properties in the request.
 
 <!-- OData v4
-When reading entities the API offers `select( ... )` on the builders. Through it the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
+When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
 -->
 
 The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS ` as representation of a navigation property.
@@ -231,7 +145,7 @@ BusinessPartner.requestBuilder()
         BusinessPartner.LAST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
     )
-    .execute(myDestination);
+    .execute(destination);
 ```
 
 The above translates to the following query parameters:
@@ -258,7 +172,7 @@ BusinessPartner.requestBuilder()
             BusinessPartnerAddress.CITY_CODE
         )
     )
-    .execute(myDestination);
+    .execute(destination);
 ```
 
 The above translates to the following query parameters:
@@ -290,7 +204,7 @@ BusinessPartner.requestBuilder()
             BusinessPartner.FIRST_NAME.equals('Mallory')
         )
     )
-    .execute(myDestination);
+    .execute(destination);
 ```
 
 Will translate to this filter parameter:
@@ -300,7 +214,7 @@ $filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mall
 
 Take note of the order of `and` and `or`. As `or` is invoked on the result of `and` it will form the outer expression while `and` is an inner expression in the first branch of `or`.
 
-It's also possible to add multiple filters in the same filter function without using `and`, as they will be concatenated.
+It's also possible to add multiple filters in the same filter function without using `and`, as they will be concatenated. This example:
 
 ```ts
 .filter(
@@ -311,7 +225,7 @@ It's also possible to add multiple filters in the same filter function without u
 )
 ```
 
-Can be reduced to:
+Can be reduced to this:
 
 ```ts
 .filter(
@@ -320,6 +234,89 @@ Can be reduced to:
 )
 ```
 
+More advanced filter can be found [here](#Available-Filter-Expressions)
+
+#### OrderBy
+
+Add order-by statements to the request.
+
+#### Other Set operations
+
+- `skip` skips a number of entities. Useful for paging.
+- `top` limits the number of returned entities.
+
+### GetByKey
+
+Like [GetAll](#GetAll) but it only retrieves one entity based on its key.
+
+```ts
+BusinessPartner.requestBuilder().getByKey('id');
+```
+
+### Create
+
+```ts
+BusinessPartner.requestBuilder().create(partner);
+```
+
+You can also create  an entity `asChildOf` another entity.
+
+### Update
+
+```ts
+BusinessPartner.requestBuilder().update(partner);
+```
+
+`ignoreVersionIdentifier()` Instructs the request to force an overwrite of the entity.
+Update allow to modify how [ETags](#Handling-of-ETags) are handled.
+
+### Delete
+
+```ts
+//this is only for the example, oyu can't delete a BusinessPartner
+BusinessPartner.requestBuilder().update(partner);
+```
+
+`ignoreVersionIdentifier()` Instructs the request to force an overwrite of the entity.
+`setVersionIdentifier` adds an ETag version identifier in the delete request header.
+Delete allow to modify how [ETags](#Handling-of-ETags) are handled.
+
+### Handling of ETags
+
+An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SAP Cloud SDK will try to read version identifiers from responses and set them when sending OData requests.
+
+Consider the following example:
+
+```ts
+async function modifyBusinessPartner(id) {
+    const destination = { url: 'https://my.s4-system.com' };
+
+    const partner = await BusinessPartner.requestBuilder()
+        .getByKey(id)
+        .execute(myDestination);
+        
+    // do some modification
+    applyModification(partner);
+
+    return BusinessPartner.requestBuilder()
+        .update(partner)
+        .execute(destination);
+}
+```
+
+When executing `getAll` and `getByKey` requests the SAP Cloud SDK will automatically attempt to extract the version identifier from the response and store it within the returned entity (`partner` in the example above). When executing `update` requests the version identifier will be sent in the `If-match` request header.
+
+:::note
+If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.
+
+By default an ETag is sent if it's present on the entity being modified. `ignoreVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
+:::
+
+
+### Handling of CSRF tokens
+
+For create, update and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution the request will try to fetch a token first before issuing the actual create request. Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
+
 #### Available Filter Expressions
 
 <!-- TODO: Explain filters on complex types and navigational properties, and update for v4
@@ -327,7 +324,7 @@ Can be reduced to:
 The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) allows for a wide range of filter expressions. A detailed list of what is available in the SDK can be obtained from [the documention](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts/). The functionality can also be discovered through the fluent API.
 -->
 
-There are predefined filter functions e. g. `length`, `substring`, `substringOf`, that allows for a wide range of filtre expressions:
+There are predefined filter functions e. g. `length`, `substring`, `substringOf` in the core library, that allows for a wide range of filtre expressions:
 
 ```ts
 /*
@@ -336,38 +333,36 @@ Fetch all business partners who have a first name shorter than 5 letters
 BusinessPartner.requestBuilder()
     .getAll()
     .filter(length(BusinessPartner.FIRST_NAME).lessThan(5))
-    .execute(myDestination);
+    .execute(destination);
 ```
 
-TODO: construction of additional filter functions
+<!--TODO: construction of additional filter functions
 
 The below example leverages OData v4 exclusive features to build a more complex request:
 (to change, might not work)
+
 ```ts
-/*
-Fetch all business partners where:
-- the last name is at least twice as long as the first name
-- AND the combined string of first and last name does not contain 'bob'
-*/
+//Fetch all business partners where:
+//- the last name is at least twice as long as the first name
+//- AND the combined string of first and last name does not contain 'bob'
 BusinessPartner.requestBuilder()
     .getAll()
     .filter(
         filterFunction('multiply', 'int', length(BusinessPartner.FIRST_NAME), '2')
             .lessThan(length(BusinessPartner.LAST_NAME)),
         substringOf(
-            concat(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME),'bob'
+            concat(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME),
+            'bob'
         )
             .equals(true)
     )
-    .execute(myDestination);
+    .execute(destination);
 ```
--->
 
 ### Count
 
 Not yet available.
 
-<!--
 ### Batch Requests WIP
 
 OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with, when you want to execute a large number of requests.
@@ -382,9 +377,7 @@ async updateAddreses(businessPartnerAddresses: BusinessPartnerAddress[]): Promis
     );
 
     const [updateChangesetResponse, ...retrieveResponses] = await batch(changeset(...updateRequests), ...retrieveRequests)
-        .execute({
-            url: 'http://localhost:8080'
-        });
+        .execute(destination);
 
     return retrieveResponses.reduce((addresses, response: ReadResponse) => [...addresses, ...response.as(BusinessPartnerAddress)], []);
 }

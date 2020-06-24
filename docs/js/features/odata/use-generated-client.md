@@ -31,14 +31,14 @@ On an abstract level, creating a request using the fluent API always follows the
 import { MyEntity } from './outputDir/my-service';
 
 return MyEntity.requestBuilder()
-    .<requestType>(...)
-    .<additionalRequestConfiguration>(...)
-    .execute(destination);
+  .<requestType>(...)
+  .<additionalRequestConfiguration>(...)
+  .execute(destination);
 ```
 First, import the entity from the service directory (`my-service`) within the output directory you specified when generating the service (`outputDir`). The service directory corresponds to the `directoryName` specified in the `serviceMapping.json` in your input directory.
-Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the [`getAll`](#GetAll) request type.
+Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the [`getAll`](#GetAll-Request-Builer) request type.
 
-Potential request types (denoted by `requestType` in the example above) are [`create`](#Create), [`getAll`](#GetAll), [`getByKey`](#getByKey), [`update`](#Update) and [`delete`](#Delete).
+Potential request types (denoted by `requestType` in the example above) are [`getAll`](#GetAll-Request-Builder), [`getByKey`](#GetByKey-Request-Builder), [`create`](#Create-Request-Builder), [`update`](#Update-Request-Builder) and [`delete`](#Delete-Request-Builder).
 
 :::note
 Some entities do not support all of the request types, which in turn won't be available through the API.
@@ -48,10 +48,7 @@ The request can further be configured by chaining additional configuration funct
 
 Each request type has additional request specific configuration options:
 
-Creating  an entity `asChildOf` another entity for [`create`](#Create) requests, [ETag handling](#Handling-of-ETags) for [`update`](#Update) and [`delete`](#Delete) requests, as well as set operations for [`getAll`](#GetAll) requests and [`select`](#Select)ing properties for [`getAll`](#GetAll) and [`getByKey`](#GetByKey) requests.
-<!--
-*3 if there was a specific section on create this should rather be explained there and in more detail.
--->
+Creating  an entity `asChildOf` another entity for [`create`](#Create-Request-Builer) requests, [ETag handling](#Handling-of-ETags) for [`update`](#Update-Request-Builer) and [`delete`](#Delete-Request-Builer) requests, as well as set operations for [`getAll`](#GetAll-Request-Builer) requests and [`select`](#Select)ing properties for [`getAll`](#GetAll-Request-Builer) and [`getByKey`](#GetByKey-Request-Builer) requests.
 
 The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured, chain the `execute` function and pass a [destination](/cloud-sdk/docs/js/features/connectivity/destination-js-sdk/) to it.
 
@@ -67,10 +64,10 @@ Checkout the following example:
 
 ```ts
 MyEntity.requestBuilder()
-    .getAll()
-    .withCustomHeaders({
-        apikey: 'my-api-key'
-    });
+  .getAll()
+  .withCustomHeaders({
+    apikey: 'my-api-key'
+  });
 ```
 
 ### Setting custom query parameters
@@ -80,10 +77,10 @@ The SAP Cloud SDK automatically sets some necessary request headers on every req
 
 ```ts
 MyEntity.requestBuilder()
-    .getAll()
-    .withCustomHeaders({
-        apikey: 'my-api-key'
-    });
+  .getAll()
+  .withCustomHeaders({
+    apikey: 'my-api-key'
+  });
 
 ```
 
@@ -100,8 +97,8 @@ If a service specification contains a specification for the servicePath, the SAP
 
 ```ts
 MyEntity.requestBuilder()
-    .getAll()
-    .withCustomServicePath('my/custom/service/path');
+  .getAll()
+  .withCustomServicePath('my/custom/service/path');
 ```
 This will add the custom service path to your request. Executing the example request above against a destination with url 'https://my.s4-system.com' would then execute the request against something like this: 'https://my.s4-system.com/my/custom/service/path/MyEntity'.
 <!--TODO
@@ -111,19 +108,19 @@ custom configuration stuff
 
 ## OData Features
 
-Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example.
+Below different OData features supported by the SAP Cloud SDK are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) of SAP S/4HANA as an example.
 
-### Basic CRUD Operations
 
-OData, as RESTful API protocol, follows the CRUD model: Create, Read, Update, Delete. These models return a builder object that allows for specifying certain request parameters, depending on the operation.
+### GetAll Request Builder
 
-### GetAll
-
-Queries all BusinessPartner entities.
+The GetAll request builder allows you to create a request to retrieve all entities that match the request configuration.
 
 ```ts
 BusinessPartner.requestBuilder().getAll();
 ```
+
+The example above creates a request to get all BusinessPartner entites.
+
 
 #### Select
 
@@ -138,13 +135,13 @@ The properties that can be selected or expanded are represented via static field
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getAll()
-    .select(
-        BusinessPartner.FIRST_NAME,
-        BusinessPartner.LAST_NAME,
-        BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
-    )
-    .execute(destination);
+  .getAll()
+  .select(
+    BusinessPartner.FIRST_NAME,
+    BusinessPartner.LAST_NAME,
+    BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
+  )
+  .execute(destination);
 ```
 
 The above translates to the following query parameters:
@@ -163,15 +160,15 @@ One can also select properties of the expanded object:
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getAll()
-    .select(
-        BusinessPartner.FIRST_NAME,
-        BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS.select(
-            BusinessPartnerAddress.ADDRESS_ID,
-            BusinessPartnerAddress.CITY_CODE
-        )
+  .getAll()
+  .select(
+    BusinessPartner.FIRST_NAME,
+    BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS.select(
+      BusinessPartnerAddress.ADDRESS_ID,
+      BusinessPartnerAddress.CITY_CODE
     )
-    .execute(destination);
+  )
+  .execute(destination);
 ```
 
 The above translates to the following query parameters:
@@ -191,17 +188,17 @@ Get all business partners that either:
   - Or have first name 'Mallory'
 */
 BusinessPartner.requestBuilder()
-    .getAll()
-    .filter(
-        or(
-            and(
-                BusinessPartner.FIRST_NAME.equals('Alice'),
-                BusinessPartner.LAST_NAME.notEquals('Bob')
-            ),
-            BusinessPartner.FIRST_NAME.equals('Mallory')
-        )
+  .getAll()
+  .filter(
+    or(
+      and(
+        BusinessPartner.FIRST_NAME.equals('Alice'),
+        BusinessPartner.LAST_NAME.notEquals('Bob')
+      ),
+      BusinessPartner.FIRST_NAME.equals('Mallory')
     )
-    .execute(destination);
+  )
+  .execute(destination);
 ```
 
 The example above will translate to this filter parameter:
@@ -215,10 +212,10 @@ It is also possible to pass multiple filters to the same filter function without
 
 ```ts
 .filter(
-    and(
-        BusinessPartner.FIRST_NAME.equals('Alice'),
-        BusinessPartner.LAST_NAME.notEquals('Bob')
-    )
+  and(
+    BusinessPartner.FIRST_NAME.equals('Alice'),
+    BusinessPartner.LAST_NAME.notEquals('Bob')
+  )
 )
 ```
 
@@ -226,8 +223,8 @@ The example above can be shortened to:
 
 ```ts
 .filter(
-    BusinessPartner.FIRST_NAME.equals('Alice'),
-    BusinessPartner.LAST_NAME.notEquals('Bob')
+  BusinessPartner.FIRST_NAME.equals('Alice'),
+  BusinessPartner.LAST_NAME.notEquals('Bob')
 )
 ```
 
@@ -239,46 +236,114 @@ TBD
 Add order-by statements to the request.
 -->
 
-#### Other Set operations
+#### Skip
 
-- `skip` skips a number of entities. Useful for paging.
-- `top` limits the number of returned entities.
+`skip` allows you to skip a number of results in the requested set. It can be useful for paging:
 
-### GetByKey
+```ts
+BusinessPartner.requestBuilder().
+  .getAll()
+  .skip(10)
+```
 
-Like [GetAll](#GetAll) but it only retrieves one entity based on its key.
+The example above retrieves all BusinessPartner entities except for the first 10 results.
+
+#### Top
+
+`top` limits the number of returned results. This can also be useful for paging:
+```ts
+BusinessPartner.requestBuilder().
+  .getAll()
+  .top(10)
+```
+
+The example above retrieves the first 10 BusinessPartner entities.
+
+### GetByKey Request Builder
+
+The GetByKey request builder allows you to create a request to retrieve one entity based on its key:
 
 ```ts
 BusinessPartner.requestBuilder().getByKey('id');
 ```
 
-### Create
+The example above retrieves the BusinessPartner with the id 'id'.
+
+The result can be retricted by applying the [select](#Select) function, same as in the [GetAll](#GetAll-Request-Builer) request.
+
+### Create Request Builder
+
+The Create request builder allows you to send a `POST` request to create a new entity:
+<!-- TODO: Add more details on how to create a business partner entity -->
+<!-- TODO: Mention deep create -->
 
 ```ts
-BusinessPartner.requestBuilder().create(partner);
+const businessPartner = BusinessPartner.builder().build();
+BusinessPartner.requestBuilder().create(businessPartner);
 ```
 
-You can also create  an entity `asChildOf` another entity.
+In the example above we created an instance of BusinessPartner and sent it to the BusinessPartner service in a `POST` request.
 
-### Update
+You can also create an entity `asChildOf` another entity.
+<!-- TODO: Add more details and an example. -->
+
+### Update Request Builder
+
+The Update request builder allows you to sent `PUT` or `PATCH` requests. By default `PATCH` is used to only update the changed fields:
 
 ```ts
-BusinessPartner.requestBuilder().update(partner);
+BusinessPartner.requestBuilder().update(businessPartner);
 ```
 
-`ignoreVersionIdentifier()` Instructs the request to force an overwrite of the entity.
-Update allow to modify how [ETags](#Handling-of-ETags) are handled.
+In the example above only the changed fields of the given `businessPartner` instance are sent to the BusinessPartner service using `PATCH`.
 
-### Delete
+To update the whole entity use `replaceWholeEntityWithPut`:
 
 ```ts
-//this is only for the example, oyu can't delete a BusinessPartner
-BusinessPartner.requestBuilder().update(partner);
+BusinessPartner.requestBuilder()
+  .update(businessPartner)
+  .replaceWholeEntityWithPut();
 ```
 
-`ignoreVersionIdentifier()` Instructs the request to force an overwrite of the entity.
-`setVersionIdentifier` adds an ETag version identifier in the delete request header.
-Delete allow to modify how [ETags](#Handling-of-ETags) are handled.
+This will send a `PUT` request and thereby replace the whole entity.
+
+Entities can only be updated if [ETags](#Handling-of-ETags) match. If you want to force an update of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
+
+```ts
+BusinessPartner.requestBuilder()
+  .update(businessPartner)
+  .ignoreVersionIdentifier();
+```
+
+### Delete Request Builder
+
+The Delete request builder allows you to create `DELETE` requests, that delete entities.
+
+```ts
+/*
+  The following won't work on the real SAP S/4HANA BusinessPartner service because BusinessPartners cannot be deleted.
+  We added this only for the sake of the example.
+*/
+BusinessPartner.requestBuilder().delete(businessPartner);
+```
+
+Entities can only be deleted if [ETags](#Handling-of-ETags) match. If you want to force deletion of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
+
+```ts
+BusinessPartner.requestBuilder()
+  .delete(businessPartner)
+  .ignoreVersionIdentifier();
+```
+
+You can also overwrite ETags using `setVersionIdentifier`:
+
+```ts
+BusinessPartner.requestBuilder()
+  .delete(businessPartner)
+  .setVersionIdentifier('etag');
+```
+
+In the example above the ETag 'etag' is being used instead of the original one.
 
 ### Handling of ETags
 
@@ -288,18 +353,18 @@ Consider the following example:
 
 ```ts
 async function modifyBusinessPartner(id) {
-    const destination = { url: 'https://my.s4-system.com' };
+  const destination = { url: 'https://my.s4-system.com' };
 
-    const partner = await BusinessPartner.requestBuilder()
-        .getByKey(id)
-        .execute(myDestination);
+  const partner = await BusinessPartner.requestBuilder()
+    .getByKey(id)
+    .execute(myDestination);
         
-    // do some modification
-    applyModification(partner);
+  // do some modification
+  applyModification(partner);
 
-    return BusinessPartner.requestBuilder()
-        .update(partner)
-        .execute(destination);
+  return BusinessPartner.requestBuilder()
+    .update(partner)
+    .execute(destination);
 }
 ```
 
@@ -310,7 +375,6 @@ If a service requires this header to be sent: Fetching the entity from the servi
 
 By default an ETag is sent if it's present on the entity being modified. `ignoreVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 :::
-
 
 ### Handling of CSRF tokens
 
@@ -323,16 +387,16 @@ For create, update and delete requests the SDK will try to send a [CSRF token](h
 The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) allows for a wide range of filter expressions. A detailed list of what is available in the SDK can be obtained from [the documention](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts/). The functionality can also be discovered through the fluent API.
 -->
 
-There are predefined filter functions e. g. `length`, `substring`, `substringOf` in the core library, that allows for a wide range of filtre expressions:
+There are predefined filter functions e. g. `length`, `substring`, `substringOf` in the core library, that allow for a wide range of filter expressions:
 
 ```ts
 /*
 Fetch all business partners who have a first name shorter than 5 letters
 */
 BusinessPartner.requestBuilder()
-    .getAll()
-    .filter(length(BusinessPartner.FIRST_NAME).lessThan(5))
-    .execute(destination);
+  .getAll()
+  .filter(length(BusinessPartner.FIRST_NAME).lessThan(5))
+  .execute(destination);
 ```
 
 <!--TODO: construction of additional filter functions
@@ -345,43 +409,45 @@ The below example leverages OData v4 exclusive features to build a more complex 
 //- the last name is at least twice as long as the first name
 //- AND the combined string of first and last name does not contain 'bob'
 BusinessPartner.requestBuilder()
-    .getAll()
-    .filter(
-        filterFunction('multiply', 'int', length(BusinessPartner.FIRST_NAME), '2')
-            .lessThan(length(BusinessPartner.LAST_NAME)),
-        substringOf(
+  .getAll()
+  .filter(
+     filterFunction('multiply', 'int', length(BusinessPartner.FIRST_NAME), '2')
+       .lessThan(length(BusinessPartner.LAST_NAME)),
+          substringOf(
             concat(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME),
             'bob'
-        )
-            .equals(true)
-    )
-    .execute(destination);
+          )
+          .equals(true)
+  )
+  .execute(destination);
 ```
 
 ### Count
 
 Not yet available.
 
+<!--
 ### Batch Requests WIP
 
 OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with, when you want to execute a large number of requests.
 
 ```ts
 async updateAddreses(businessPartnerAddresses: BusinessPartnerAddress[]): Promise<BusinessPartnerAddress[]> {
-    const updateRequests = businessPartnerAddresses.map(
-        address => BusinessPartnerAddress.requestBuilder().update(address)
-    );
-    const retrieveRequests = businessPartnerAddresses.map(
-        address => BusinessPartnerAddress.requestBuilder().getByKey(address.businessPartner, address.addressId)
-    );
+  const updateRequests = businessPartnerAddresses.map(
+    address => BusinessPartnerAddress.requestBuilder().update(address)
+  );
+  
+  const retrieveRequests = businessPartnerAddresses.map(
+    address => BusinessPartnerAddress.requestBuilder().getByKey(address.businessPartner, address.addressId)
+  );
 
-    const [updateChangesetResponse, ...retrieveResponses] = await batch(changeset(...updateRequests), ...retrieveRequests)
-        .execute(destination);
+  const [updateChangesetResponse, ...retrieveResponses] = await batch(changeset(...updateRequests), ...retrieveRequests)
+    .execute(destination);
 
-    return retrieveResponses.reduce((addresses, response: ReadResponse) => [...addresses, ...response.as(BusinessPartnerAddress)], []);
+  return retrieveResponses.reduce((addresses, response: ReadResponse) => [...addresses, ...response.as(BusinessPartnerAddress)], []);
 }
 ```
-
+-->
 <!--
 ### Advanced OData Features ###
 

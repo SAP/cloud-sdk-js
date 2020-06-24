@@ -42,6 +42,56 @@ return MyEntity.requestBuilder()
     .execute(myDestination);
 ```
 
+Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the `getAll` request type. Potential request types (denoted by `requestType` in the example above) are `create`, `getAll`, `getByKey`, `update` and `delete`. (*1) Note, that some entities do not support all of the request types, which in turn won't be available through the API.
+The request can further be configured by chaining additional configuration functions (denoted by `additionalRequestConfiguration` in the example above). All requests can be configured by setting custom request headers, custom query parameters and a custom service path. (*2)
+Each request type has additional request specific configuration options:
+Creating  an entity `asChildOf` another entity for `create` requests (*3), [ETag handling](#Handling-of-ETags) for `update` and `delete` requests as well set operations for `getAll` requests and `select`ing properties for `getAll` and `getByKey` requests.
+
+The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured chain the `execute` function and pass a destination (*4) to it.
+
+### Setting custom request headers
+
+Write a few sentences, give an example (explain the example). Also mention, that setting `authorization` (and `apikey`) headers will overwrite any automatic authorization header building that the sdk normally would do. You could also mention, that this is useful for the api business hub. (You can also add parts of my proposals as a TODO for this section in a comment if you don't have time to go this far ;) ).
+
+```
+MyEntity.requestBuilder()
+  .getAll()
+  .withCustomHeaders({
+    apikey: 'my-api-key'
+  });
+```
+
+### Setting custom query parameters
+
+Again, write a few sentences, give an example (explain the example) and explain that this overwrites any other configuration that might have been created by the SDK.
+
+```
+MyEntity.requestBuilder()
+  .getAll()
+  .withCustomQueryParameters({
+    language: 'en'
+  });
+```
+
+### Setting a custom service path
+
+Same drill as above
+
+```
+MyEntity.requestBuilder()
+  .getAll()
+  .withCustomServicePath('my/custom/service/path');
+```
+
+
+
+<!--
+*1 Ideally we would have links to the sections where we describe those request types in detail.
+*2 add links
+*3 if there was a specific section on create this should rather be explained there and in more detail.
+*4 add a link to the destination documentation
+-->
+
 - _requestBuilder_ to construct requests for operations.
 - _requestType_ can be one of `create`, `getAll`, `getByKey`, `update`, `delete`.
 - _additionalRequestConfiguration_ depends on _requestType_:
@@ -64,7 +114,8 @@ var myDestination : {url: '<yourURL>'}
 ```
 
 <!--TODO
-explain `url` and `relativeUrl`
+explain how to get `url` and `relativeUrl` of the request
+custom configuration stuff
 -->
 
 Below different OData features are documented using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) on S/4HANA as an example.
@@ -84,7 +135,7 @@ All of the following code can be organised in service files, e.g., `MyEntity.ser
 
 ### Basic CRUD Operations
 
-Create, Read, Update and Delete operations on entities are usually built inside the service class:
+OData, as RESTful API protocol, follows the CRUD model: Create, Read, Update, Delete.
 
 ```ts
 BusinessPartner.requestBuilder().create(partner);
@@ -95,9 +146,23 @@ BusinessPartner.requestBuilder().update(partner);
 BusinessPartner.requestBuilder().delete(partner);
 ```
 
+redo this section like that:
+* GetAll
+  * Select
+  * Filter
+  * OrderBy
+  * Other Set operations
+* GetByKey (reference select from above)
+* Create
+* Update (reference etag handling
+* Delete (reference etag handling)
+* Etag handling
+
 Each of the above statements returns a builder object that allows for specifying certain request parameters, depending on the operation.
 
-<!--Maybe the Query parameters and Request parameters are redundant because already explained previously?-->
+<!--Maybe the Query parameters and Request parameters are redundant because already explained previously?
+and
+It does not become clear that those are the parameters that are created in the url and not functions of the SDK. Also I don't really see the relevance here.
 
 The following query parameters and request options are available for these operations:
 
@@ -110,7 +175,7 @@ Request parameters:
    - By default an ETag is send if one is present on the entity being modified.
    - `ignoreVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 - All operations allow for adding custom headers via `withCustomHeaders(...)`
-
+-->
 
 #### Handling of ETags
 
@@ -147,7 +212,11 @@ For create, update and delete requests the SDK will try to send a [CSRF token](h
 
 ### Select
 
+When reading entities the API offers `select( ... )` on the builders. Through it the query parameter `$select` is set. It takes in properties of the entity being queried.
+
+<!-- OData V4
 When reading entities the API offers `select( ... )` on the builders. Through it the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
+-->
 
 The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
 
@@ -168,8 +237,14 @@ BusinessPartner.requestBuilder()
 The above translates to the following query parameters:
 
 ```sql
+$select=FirstName,LastName,to_BusinessPartnerAddress
+```
+
+<!-- OData V4
+```sql
 $select=FirstName,LastName&$expand=to_BusinessPartnerAddress
 ```
+-->
 
 One can also apply select again to the expanded object:
 

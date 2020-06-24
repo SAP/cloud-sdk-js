@@ -3,13 +3,13 @@
 import { PathLike } from 'fs';
 import { basename } from 'path';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
-import { forceArray } from '../generator-utils';
+import { forceArray } from '../../generator-utils';
 import {
   EdmxMetadataBase,
   EdmxEntityTypeBase,
   EdmxComplexTypeBase,
   EdmxFunctionImportBase
-} from './parser-types-common';
+} from './parser-types';
 
 const logger = createLogger({
   package: 'generator',

@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { forceArray } from '../generator-utils';
-import { EdmxMetadata, EdmxFunctionImport } from './parser-types-v2';
+import { forceArray } from '../../generator-utils';
 import {
   parseEntityTypes,
   parseFunctionImportsBase,
   parseComplexTypes
-} from './edmx-parser-common';
-import { EdmxMetadataBase } from './parser-types-common';
+} from '../common/edmx-parser';
+import { EdmxMetadataBase } from '../common';
+import { EdmxMetadata, EdmxFunctionImport } from './parser-types';
 
 export function parseEdmxV2(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
   return {

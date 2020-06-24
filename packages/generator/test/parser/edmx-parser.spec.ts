@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { parseEdmxFromPath } from '../../src/parser';
-import { EdmxMetadata as EdmxMetadataV2 } from '../../src/parser/parser-types-v2';
-import { EdmxMetadata as EdmxMetadataV4 } from '../../src/parser/parser-types-v4';
+import { EdmxMetadata as EdmxMetadataV2 } from '../../src/parser/v2';
+import { EdmxMetadata as EdmxMetadataV4 } from '../../src/parser/v4';
 
 describe('edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {

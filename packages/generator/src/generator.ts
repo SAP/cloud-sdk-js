@@ -28,7 +28,7 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from './package-description';
-import { parseAllServices } from './parser/service-parser';
+import { parseAllServices } from './parser';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';

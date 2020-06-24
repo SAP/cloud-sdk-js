@@ -1,24 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { ServiceNameFormatter } from '../service-name-formatter';
+import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   VdmNavigationProperty,
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport
-} from '../vdm-types';
-import {
-  EdmxAssociationSet,
-  EdmxAssociation,
-  EdmxEntityType,
-  EdmxMetadata,
-  EdmxFunctionImport
-} from './parser-types-v2';
-import { stripNamespace } from './parser-util';
-import {
-  JoinedEntityMetadata,
-  ParsedServiceMetadata
-} from './parser-types-common';
+} from '../../vdm-types';
+import { stripNamespace } from '../parser-util';
+import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
@@ -27,7 +17,14 @@ import {
   swaggerDefinitionForFunctionImport,
   parseReturnType,
   transformFunctionImportBase
-} from './edmx-to-vdm-common';
+} from '../common/edmx-to-vdm';
+import {
+  EdmxAssociationSet,
+  EdmxAssociation,
+  EdmxEntityType,
+  EdmxMetadata,
+  EdmxFunctionImport
+} from './parser-types';
 
 export function joinAssociationMetadata(
   associationSets: EdmxAssociationSet[],

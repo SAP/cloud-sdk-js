@@ -7,7 +7,7 @@ import {
   EdmxEntitySetBase,
   EdmxComplexTypeBase,
   EdmxParameter
-} from './parser-types-common';
+} from '../common';
 
 export interface EdmxMetadata extends EdmxMetadataBase {
   entitySets: EdmxEntitySet[];

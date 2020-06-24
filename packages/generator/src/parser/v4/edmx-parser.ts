@@ -1,6 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { forceArray } from '../generator-utils';
+import { forceArray } from '../../generator-utils';
+import { parseEntityTypes, parseComplexTypes } from '../common/edmx-parser';
+import { stripNamespace, parseTypeName } from '../parser-util';
+import { EdmxMetadataBase } from '../common';
 import {
   EdmxEntitySet,
   EdmxMetadata,
@@ -9,10 +12,7 @@ import {
   EdmxDerivedType,
   EdmxComplexType,
   EdmxFunction
-} from './parser-types-v4';
-import { parseEntityTypes, parseComplexTypes } from './edmx-parser-common';
-import { stripNamespace, parseTypeName } from './parser-util';
-import { EdmxMetadataBase } from './parser-types-common';
+} from './parser-types';
 
 function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],

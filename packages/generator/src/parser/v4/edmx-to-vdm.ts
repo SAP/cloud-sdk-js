@@ -5,14 +5,10 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport
-} from '../vdm-types';
-import { ServiceNameFormatter } from '../service-name-formatter';
-import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types-v4';
-import { isCollection, stripNamespace } from './parser-util';
-import {
-  JoinedEntityMetadata,
-  ParsedServiceMetadata
-} from './parser-types-common';
+} from '../../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { isCollection, stripNamespace } from '../parser-util';
+import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
@@ -21,7 +17,8 @@ import {
   parseReturnType,
   swaggerDefinitionForFunctionImport,
   transformFunctionImportBase
-} from './edmx-to-vdm-common';
+} from '../common/edmx-to-vdm';
+import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 
 function navigationProperties(
   entityMetadata: JoinedEntityMetadata,

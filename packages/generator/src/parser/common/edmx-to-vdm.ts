@@ -11,8 +11,8 @@ import {
   VdmFunctionImportReturnTypeCategory,
   VdmNavigationProperty,
   VdmFunctionImport
-} from '../vdm-types';
-import { ServiceNameFormatter } from '../service-name-formatter';
+} from '../../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   isCreatable,
   isUpdatable,
@@ -24,8 +24,10 @@ import {
   ensureString,
   edmToComplexPropertyType,
   isNullableParameter
-} from '../generator-utils';
-import { applyPrefixOnJsConfictParam } from '../name-formatting-strategies';
+} from '../../generator-utils';
+import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
+import { isCollection, parseTypeName } from '../parser-util';
+import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import {
   JoinedEntityMetadata,
   EdmxProperty,
@@ -38,9 +40,7 @@ import {
   EdmxComplexTypeBase,
   SwaggerPath,
   EdmxFunctionImportBase
-} from './parser-types-common';
-import { isCollection, parseTypeName } from './parser-util';
-import { ParsedServiceMetadata } from './parsed-service-metadata';
+} from './parser-types';
 
 const logger = createLogger({
   package: 'generator',

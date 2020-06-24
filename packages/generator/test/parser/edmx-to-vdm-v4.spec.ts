@@ -1,17 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { transformEntitiesV4 } from '../../src/parser/edmx-to-vdm-v4';
 import { ServiceNameFormatter } from '../../src/service-name-formatter';
 import {
   EdmxProperty,
-  EdmxFunctionImportBase
-} from '../../src/parser/parser-types-common';
+  EdmxFunctionImportBase,
+  transformComplexTypes
+} from '../../src/parser/common';
 import {
   EdmxEntitySet,
   EdmxEntityType,
-  EdmxMetadata
-} from '../../src/parser/parser-types-v4';
-import { transformComplexTypes } from '../../src/parser/edmx-to-vdm-common';
-import { ParsedServiceMetadata } from '../../src/parser/parsed-service-metadata';
+  EdmxMetadata,
+  transformEntitiesV4
+} from '../../src/parser/v4';
+import { ParsedServiceMetadata } from '../../src/parser';
 
 describe('edmx-to-vdm-v4', () => {
   it('transforms collection type properties for primitive types', () => {

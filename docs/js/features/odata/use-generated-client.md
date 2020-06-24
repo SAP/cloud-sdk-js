@@ -35,7 +35,7 @@ return MyEntity.requestBuilder()
     .<additionalRequestConfiguration>(...)
     .execute(destination);
 ```
-First, import the entity from the service directory (`my-service`) within the output directory you specified when generating the service (`outputDir`). The service directory corresponds to the ` directoryName` specified in the `serviceMapping.json` in your input directory.
+First, import the entity from the service directory (`my-service`) within the output directory you specified when generating the service (`outputDir`). The service directory corresponds to the `directoryName` specified in the `serviceMapping.json` in your input directory.
 Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the [`getAll`](#GetAll) request type.
 
 Potential request types (denoted by `requestType` in the example above) are [`create`](#Create), [`getAll`](#GetAll), [`getByKey`](#getByKey), [`update`](#Update) and [`delete`](#Delete).
@@ -91,19 +91,19 @@ The keys and values of the passed object correspond with the header names and va
 In the example above we pass an `apikey`, which is necessary if you want to make use of the SAP API Business Hub sandbox.
 
 :::caution
-Setting an `authorization` or `apikey` header (independent of lowercase or uppercase spellint) will skip any automatic authorization header building that the SAP Cloud SDK would normally do.
+Setting an `authorization` or `apikey` header (regardless of lowercase or uppercase spelling) will skip any automatic authorization header building that the SAP Cloud SDK would normally do.
 :::
 
 ### Setting a custom service path
 
-Replace the default service path with the given custom path. In case of the S/4HANA APIs, the servicePath defaults to `'/sap/opu/odata/sap/'` and can be overwritten here.
+If a service specification contains a specification for the servicePath, the SAP Cloud SDK generator generates an OData client with a default service path according to the specification (typically `'/sap/opu/odata/sap/'` for SAP S/4HANA services). When there is no such path defined in the specification it can be manually set in the `service-mapping.json`. It can also be adjusted per request by using the `withCustomServicePath` function:
 
 ```ts
 MyEntity.requestBuilder()
     .getAll()
     .withCustomServicePath('my/custom/service/path');
 ```
-
+This will add the custom service path to your request. Executing the example request above against a destination with url 'https://my.s4-system.com' would then execute the request against something like this: 'https://my.s4-system.com/my/custom/service/path/MyEntity'.
 <!--TODO
 explain how to get `url` and `relativeUrl` of the request
 custom configuration stuff
@@ -182,9 +182,7 @@ $select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/
 
 ### Filter
 
-When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also build via the static property fields on entities.
-
-The following example:
+When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also built via the static property fields on entities:
 
 ```ts
 /*
@@ -206,14 +204,14 @@ BusinessPartner.requestBuilder()
     .execute(destination);
 ```
 
-Will translate to this filter parameter:
+The example above will translate to this filter parameter:
 ```sql
 $filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mallory'))
 ```
 
 Take note of the order of `and` and `or`. As `or` is invoked on the result of `and` it will form the outer expression while `and` is an inner expression in the first branch of `or`.
 
-It's also possible to add multiple filters in the same filter function without using `and`, as they will be concatenated. This example:
+It is also possible to pass multiple filters to the same filter function without concatenating them with `and` or `or`. They will be concatenated with `and` by default. The two following examples are equal:
 
 ```ts
 .filter(
@@ -224,7 +222,7 @@ It's also possible to add multiple filters in the same filter function without u
 )
 ```
 
-Can be reduced to this:
+The example above can be shortened to:
 
 ```ts
 .filter(
@@ -233,11 +231,13 @@ Can be reduced to this:
 )
 ```
 
-More advanced filter can be found [here](#Available-Filter-Expressions)
+More advanced filter expressions can be found [here](#Available-Filter-Expressions).
 
+<!--
 #### OrderBy
-
+TBD
 Add order-by statements to the request.
+-->
 
 #### Other Set operations
 

@@ -147,8 +147,7 @@ module.exports = {
             type: 'category',
             label: 'OData',
             items: [
-              'js/features/odata/generator-js-sdk',
-              'js/features/odata/use-typed-odata-client-for-js'
+              'js/features/odata/generator-js-sdk'
             ]
           }
         ]

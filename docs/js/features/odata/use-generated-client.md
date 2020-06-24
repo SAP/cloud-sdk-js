@@ -43,8 +43,10 @@ return MyEntity.requestBuilder()
 ```
 
 Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the `getAll` request type. Potential request types (denoted by `requestType` in the example above) are `create`, `getAll`, `getByKey`, `update` and `delete`. (*1) Note, that some entities do not support all of the request types, which in turn won't be available through the API.
+
 The request can further be configured by chaining additional configuration functions (denoted by `additionalRequestConfiguration` in the example above). All requests can be configured by setting custom request headers, custom query parameters and a custom service path. (*2)
 Each request type has additional request specific configuration options:
+
 Creating  an entity `asChildOf` another entity for `create` requests (*3), [ETag handling](#Handling-of-ETags) for `update` and `delete` requests as well set operations for `getAll` requests and `select`ing properties for `getAll` and `getByKey` requests.
 
 The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured chain the `execute` function and pass a destination (*4) to it.
@@ -110,7 +112,7 @@ MyEntity.requestBuilder()
         - `top` limits number of returned entities.
 - _myDestination_ is an URL of the server, it can be declared as
 ```ts
-var myDestination : {url: '<yourURL>'}
+var myDestination : {url: '<yourURL>'};
 ```
 
 <!--TODO
@@ -185,18 +187,18 @@ Consider the following example:
 
 ```ts
 async function modifyBusinessPartner(id) {
-  const destination = { url: 'https://my.s4-system.com' };
-  
-  const partner = await BusinessPartner.requestBuilder()
-      .getByKey(id)
-      .execute(destination);
-      
-  // do some modification
-  applyModification(partner);
-  
-  return BusinessPartner.requestBuilder()
-      .update(partner)
-      .execute(destination);
+    const destination = { url: 'https://my.s4-system.com' };
+
+    const partner = await BusinessPartner.requestBuilder()
+        .getByKey(id)
+        .execute(myDestination);
+        
+    // do some modification
+    applyModification(partner);
+
+    return BusinessPartner.requestBuilder()
+        .update(partner)
+        .execute(myDestination);
 }
 ```
 
@@ -214,7 +216,7 @@ For create, update and delete requests the SDK will try to send a [CSRF token](h
 
 When reading entities the API offers `select( ... )` on the builders. Through it the query parameter `$select` is set. It takes in properties of the entity being queried.
 
-<!-- OData V4
+<!-- OData v4
 When reading entities the API offers `select( ... )` on the builders. Through it the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
 -->
 
@@ -229,7 +231,7 @@ BusinessPartner.requestBuilder()
         BusinessPartner.LAST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
     )
-    .execute(destination);
+    .execute(myDestination);
 ```
 
 The above translates to the following query parameters:
@@ -238,7 +240,7 @@ The above translates to the following query parameters:
 $select=FirstName,LastName,to_BusinessPartnerAddress
 ```
 
-<!-- OData V4
+<!-- OData v4
 ```sql
 $select=FirstName,LastName&$expand=to_BusinessPartnerAddress
 ```
@@ -256,7 +258,7 @@ BusinessPartner.requestBuilder()
             BusinessPartnerAddress.CITY_CODE
         )
     )
-    .execute(destination);
+    .execute(myDestination);
 ```
 
 The above translates to the following query parameters:
@@ -288,9 +290,7 @@ BusinessPartner.requestBuilder()
             BusinessPartner.FIRST_NAME.equals('Mallory')
         )
     )
-    .execute({
-        url: '<yourURL>'
-    });
+    .execute(myDestination);
 ```
 
 Will translate to this filter parameter:
@@ -300,26 +300,49 @@ $filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mall
 
 Take note of the order of `and` and `or`. As `or` is invoked on the result of `and` it will form the outer expression while `and` is an inner expression in the first branch of `or`.
 
-To achieve a different order with `and` as the top level statement one would nest the `or` within `and(...)`:
+It's also possible to add multiple filters in the same filter function without using `and`, as they will be concatenated.
 
 ```ts
-and(
-    or(
+.filter(
+    and(
         BusinessPartner.FIRST_NAME.equals('Alice'),
         BusinessPartner.LAST_NAME.notEquals('Bob')
-    ),
-    BusinessPartner.FIRST_NAME.equals('Mallory')
+    )
+)
+```
+
+Can be reduced to:
+
+```ts
+.filter(
+    BusinessPartner.FIRST_NAME.equals('Alice'),
+    BusinessPartner.LAST_NAME.notEquals('Bob')
 )
 ```
 
 #### Available Filter Expressions
 
-<!-- TODO: Explain filters on complex types and navigational properties -->
+<!-- TODO: Explain filters on complex types and navigational properties, and update for v4
 
 The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) allows for a wide range of filter expressions. A detailed list of what is available in the SDK can be obtained from [the documention](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts/). The functionality can also be discovered through the fluent API.
+-->
+
+There are predefined filter functions e. g. `length`, `substring`, `substringOf`, that allows for a wide range of filtre expressions:
+
+```ts
+/*
+Fetch all business partners who have a first name shorter than 5 letters
+*/
+BusinessPartner.requestBuilder()
+    .getAll()
+    .filter(length(BusinessPartner.FIRST_NAME).lessThan(5))
+    .execute(myDestination);
+```
+
+TODO: construction of additional filter functions
 
 The below example leverages OData v4 exclusive features to build a more complex request:
-
+(to change, might not work)
 ```ts
 /*
 Fetch all business partners where:
@@ -329,19 +352,16 @@ Fetch all business partners where:
 BusinessPartner.requestBuilder()
     .getAll()
     .filter(
-        and(
-            filterFunction('multiply', 'int', filterFunction('length', 'int', BusinessPartner.FIRST_NAME), '2')
-                .lessThan(BusinessPartner.LAST_NAME.edmType.length)
-            ,substringOf(
-                filterFunction('concat', 'string', BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME._fieldName),
-                'bob')
-                    .equals(true)
+        filterFunction('multiply', 'int', length(BusinessPartner.FIRST_NAME), '2')
+            .lessThan(length(BusinessPartner.LAST_NAME)),
+        substringOf(
+            concat(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME),'bob'
         )
+            .equals(true)
     )
-    .execute({
-        url: '<yourURL>'
-    });
+    .execute(myDestination);
 ```
+-->
 
 ### Count
 

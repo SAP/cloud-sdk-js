@@ -8,7 +8,8 @@ import { UniqueNameFinder } from './unique-name-finder';
 import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
 
 export class ServiceNameFormatter {
-  private finderServiceWide = UniqueNameFinder.getInstance().withAlreadyUsedNames(
+  private finderServiceWide = new UniqueNameFinder(
+    '_',
     reservedServiceKeywords
   );
 
@@ -33,17 +34,15 @@ export class ServiceNameFormatter {
       entitySetOrComplexTypeName => {
         this.staticPropertyNamesFinder[
           entitySetOrComplexTypeName
-        ] = UniqueNameFinder.getInstance();
+        ] = new UniqueNameFinder();
         this.instancePropertyNamesFinder[
           entitySetOrComplexTypeName
-        ] = UniqueNameFinder.getInstance();
+        ] = new UniqueNameFinder();
       }
     );
 
     functionImportNames.forEach(functionImportName => {
-      this.parameterNamesFinder[
-        functionImportName
-      ] = UniqueNameFinder.getInstance();
+      this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
     });
   }
 
@@ -161,7 +160,7 @@ export class ServiceNameFormatter {
       transformedName,
       getInterfaceNamesSuffixes()
     );
-    this.finderServiceWide.addToAlreadyUsedNames(newNames);
+    this.finderServiceWide.addToAlreadyUsedNames(...newNames);
     return newNames[0];
   }
 
@@ -173,7 +172,7 @@ export class ServiceNameFormatter {
     if (this.staticPropertyNamesFinder[name]) {
       return this.staticPropertyNamesFinder[name];
     }
-    this.staticPropertyNamesFinder[name] = UniqueNameFinder.getInstance();
+    this.staticPropertyNamesFinder[name] = new UniqueNameFinder();
     return this.staticPropertyNamesFinder[name];
   }
 
@@ -181,7 +180,7 @@ export class ServiceNameFormatter {
     if (this.instancePropertyNamesFinder[name]) {
       return this.instancePropertyNamesFinder[name];
     }
-    this.instancePropertyNamesFinder[name] = UniqueNameFinder.getInstance();
+    this.instancePropertyNamesFinder[name] = new UniqueNameFinder();
     return this.instancePropertyNamesFinder[name];
   }
 
@@ -189,7 +188,7 @@ export class ServiceNameFormatter {
     if (this.parameterNamesFinder[name]) {
       return this.parameterNamesFinder[name];
     }
-    this.parameterNamesFinder[name] = UniqueNameFinder.getInstance();
+    this.parameterNamesFinder[name] = new UniqueNameFinder();
     return this.parameterNamesFinder[name];
   }
 }

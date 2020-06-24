@@ -5,21 +5,17 @@ import { ServiceMapping, VdmMapping } from './service-mapping';
 import { UniqueNameFinder } from './unique-name-finder';
 
 export class GlobalNameFormatter {
-  private directoryNameFinder: UniqueNameFinder = UniqueNameFinder.getInstance().withSeparator(
-    '-'
-  );
-  private npmPackageNameFinder: UniqueNameFinder = UniqueNameFinder.getInstance().withSeparator(
-    '-'
-  );
+  private directoryNameFinder: UniqueNameFinder = new UniqueNameFinder('-');
+  private npmPackageNameFinder: UniqueNameFinder = new UniqueNameFinder('-');
   private vdmMapping: VdmMapping;
 
   constructor(vdmMapping: VdmMapping | undefined) {
     this.vdmMapping = vdmMapping || {};
     this.directoryNameFinder.addToAlreadyUsedNames(
-      Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName)
+      ...Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName)
     );
     this.npmPackageNameFinder.addToAlreadyUsedNames(
-      Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName)
+      ...Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName)
     );
   }
 

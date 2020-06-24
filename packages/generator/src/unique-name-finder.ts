@@ -9,31 +9,16 @@ type Separator = '-' | '_';
 export class UniqueNameFinder {
   private static readonly MAXIMUM_NUMBER_OF_SUFFIX = 1000;
 
-  public static getInstance(): UniqueNameFinder {
-    return new UniqueNameFinder();
-  }
-
-  private separator: Separator = '_';
-  private alreadyUsedNames: string[] = [];
-
   /**
-   * Changes the default separator "_" to a different value.
+   *
    * @param separator The separator to be used
-   * @returns The instance of the finder.
+   * @param alreadyUsedNames Sets the already used names considered in the finding process. Reserved TS keywords are always checked.
    */
-  public withSeparator(separator: Separator): UniqueNameFinder {
-    this.separator = separator;
-    return this;
-  }
-
-  /**
-   * Sets the already used names considered in the finding process. Reserved TS keywords are always checked.
-   * @param names List of already used names
-   * @returns The instance of the finder.
-   */
-  public withAlreadyUsedNames(names: string[]) {
-    this.alreadyUsedNames = names.slice();
-    return this;
+  public constructor(
+    private separator: Separator = '_',
+    private alreadyUsedNames: string[] = []
+  ) {
+    this.alreadyUsedNames = alreadyUsedNames.slice();
   }
 
   /**
@@ -41,12 +26,7 @@ export class UniqueNameFinder {
    * @param nameOrnames Names to be added
    * @returns The instance of the finder.
    */ public addToAlreadyUsedNames(...names: string[]) {
-    if (typeof nameOrnames === 'string') {
-      this.alreadyUsedNames.push(nameOrnames);
-    } else {
-      this.alreadyUsedNames.push(...nameOrnames);
-    }
-
+    this.alreadyUsedNames.push(...names);
     return this;
   }
 
@@ -73,7 +53,7 @@ export class UniqueNameFinder {
   ): string[] {
     const relevantAlreadyUsedNames = this.removeUnnecessaryUsedNames(name);
     if (
-      this.areNamesFree(
+      !this.areNamesAlreadyUsed(
         this.getAllNames(name, suffixes),
         relevantAlreadyUsedNames
       )
@@ -88,18 +68,20 @@ export class UniqueNameFinder {
     return this.addSuffixes(name, suffix, suffixes);
   }
 
-  private areNamesFree(names: string[], alreadyUsedNames: string[]): boolean {
-    return !names.some(
-      nameToTest =>
-        alreadyUsedNames.includes(nameToTest) ||
-        reservedVdmKeywords.has(nameToTest) ||
-        reservedObjectPrototypeKeywords.has(nameToTest)
+  private areNamesAlreadyUsed(
+    names: string[],
+    alreadyUsedNames: string[]
+  ): boolean {
+    return names.some(
+      name =>
+        alreadyUsedNames.includes(name) ||
+        reservedVdmKeywords.has(name) ||
+        reservedObjectPrototypeKeywords.has(name)
     );
   }
 
   private removeSuffixIfPresent(name: string): string {
-    const nameSuffixRemoved = name.replace(new RegExp('_\\d+$'), '');
-    return nameSuffixRemoved;
+    return name.replace(new RegExp('_\\d+$'), '');
   }
 
   private addSuffixes(
@@ -134,7 +116,7 @@ export class UniqueNameFinder {
     // However with the related items in mind this is much easier and N should be small anyway.
     while (suffix < UniqueNameFinder.MAXIMUM_NUMBER_OF_SUFFIX) {
       const newNames = this.addSuffixes(name, suffix, nameSuffixes);
-      if (this.areNamesFree(newNames, alreadyUsedNames)) {
+      if (!this.areNamesAlreadyUsed(newNames, alreadyUsedNames)) {
         return suffix;
       }
       suffix++;

@@ -218,20 +218,18 @@ When reading entities the API offers `select( ... )` on the builders. Through it
 When reading entities the API offers `select( ... )` on the builders. Through it the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
 -->
 
-The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
+The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS ` as representation of a navigation property.
 
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getByKey('id')
+    .getAll()
     .select(
         BusinessPartner.FIRST_NAME,
         BusinessPartner.LAST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
     )
-    .execute({
-        url: '<yourURL>'
-    });
+    .execute(destination);
 ```
 
 The above translates to the following query parameters:
@@ -246,11 +244,11 @@ $select=FirstName,LastName&$expand=to_BusinessPartnerAddress
 ```
 -->
 
-One can also apply select again to the expanded object:
+One can also select properties of the expanded object:
 
 ```ts
 BusinessPartner.requestBuilder()
-    .getByKey('id')
+    .getAll()
     .select(
         BusinessPartner.FIRST_NAME,
         BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS.select(
@@ -258,12 +256,10 @@ BusinessPartner.requestBuilder()
             BusinessPartnerAddress.CITY_CODE
         )
     )
-    .execute({
-        url: '<yourURL>'
-    });
+    .execute(destination);
 ```
 
-The above translates to the following `expand` query parameters:
+The above translates to the following query parameters:
 
 ```sql
 $select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/CityCode&$expand=to_BusinessPartnerAddress

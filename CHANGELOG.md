@@ -16,6 +16,8 @@
 
 - The properties `isMulti` of the type`VdmFunctionImportReturnType` and `isMultiLink` as well as `multiplicity` of `VdmNavigationProperty` were deprecated and replaced by `isCollection`.
 - The interface `VdmServiceMetadata` now also contains a property `oDataVersion` that is mandatory.
+- Due to the fix in the generator regarding the name clash it is possible that the order of suffixes could change.
+If you regenerate a VDM with a name clash the Enitiy_1 and Entity_2 could swap.
 
 ## New Functionality
 

@@ -171,7 +171,7 @@ The above translates to the following query parameters:
 $select=FirstName,LastName&$expand=to_BusinessPartnerAddress
 ```
 
-One can also apply select again to the expanded object:
+One can also select properties of the expanded object:
 
 ```ts
 BusinessPartner.requestBuilder()

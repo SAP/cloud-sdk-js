@@ -112,7 +112,7 @@ import { generate } from '@sap-cloud-sdk/generator';
 const inputDir = 'service-specifications';
 const outputDir = 'odata-client';
 
-//Create your project datastructure with all sourcefiles based on your options
+// Create your project datastructure with all sourcefiles based on your options
 const generatorConfig = {
   forceOverwrite: true,
   generateJs: false,

@@ -107,14 +107,12 @@ You can also use the generator programmatically. You will have to provide the op
 
 ```ts
 import { generate } from '@sap-cloud-sdk/generator';
-import path from 'path';
 
-//Create your options, adapt the input & output directory
-//as well as the package name according to your setup.
-const inputDir = path.join('service-specifications');
+// Create your options, adapt the input & output directory as well as the package name according to your setup.
+const inputDir = 'service-specifications';
 const outputDir = 'odata-client';
 
-//Create your project datastructure with all sourcefiles based on your options
+// Create your project datastructure with all sourcefiles based on your options
 const generatorConfig = {
   forceOverwrite: true,
   generateJs: false,
@@ -127,16 +125,16 @@ const generatorConfig = {
   generateCSN: false,
   sdkAfterVersionScript: false,
   s4hanaCloud: false
-  /*optional:
-  serviceMapping: 'test/directory',
-  changelogFile: 'test/directory',
-  aggregatorNpmPackageName: 'test',
-  aggregatorDirectoryName: 'test',
-  versionInPackageJson: 'version'
+  /* optional:
+    serviceMapping: 'test/directory',
+    changelogFile: 'test/directory',
+    aggregatorNpmPackageName: 'test',
+    aggregatorDirectoryName: 'test',
+    versionInPackageJson: 'version'
   */
 };
 
-//generate your project, you can also redefine options
+// generate your project, you can also redefine options
 generate({
   ...generatorConfig,
   inputDir,

@@ -66,8 +66,11 @@ Possible causes:
 - The SAP Client and Locale headers will be missing if the `Destination` is not an `ErpHttpDestination`.
   See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
 
-### After generating a [custom type-safe](features/odata/generate-typed-odata-v2-and-v4-client-for-java)  client some `Getters/Setters` are missing
+### The generated VDM for an OData service doesn't compile
 
-Possible solution:
+**Symptom:** Compilation fails due to missing _Getters_ and _Setters_ on entity objects.
 
-You should include `Lombok` and `dependency injections` because they used to generate odata client. Check this [section](http://localhost:3000/cloud-sdk/docs/java/features/odata/generate-typed-odata-v2-and-v4-client-for-java#using-the-odata-generator) for more details
+Possible causes:
+
+- Getters and Setters will be missing if there is no dependency to Lombok specified in your project.
+  See [Using the OData Generator](http://localhost:3000/cloud-sdk/docs/java/features/odata/generate-typed-odata-v2-and-v4-client-for-java#using-the-odata-generator).

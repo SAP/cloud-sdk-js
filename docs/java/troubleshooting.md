@@ -66,7 +66,7 @@ Possible causes:
 - The SAP Client and Locale headers will be missing if the `Destination` is not an `ErpHttpDestination`.
   See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
 
-### A generated VDM for an OData Service doesn't compile
+### Classes generated for an OData Service don't compile
 
 **Symptom:** Compilation fails due to missing _Getters_ and _Setters_ on entity objects.
 

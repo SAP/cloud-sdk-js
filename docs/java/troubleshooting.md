@@ -3,7 +3,7 @@ id: sdk-java-troubleshooting-frequent-problems
 title: Troubleshooting Frequent Problems
 hide_title: true
 hide_table_of_contents: false
-sidebar_label: Troubleshooting frequent problems
+sidebar_label: Troubleshooting
 description: This article is a collection of frequently occurring symptoms and a short guidance on how to address them.
 keywords:
 - sap
@@ -65,3 +65,9 @@ Possible causes:
 
 - The SAP Client and Locale headers will be missing if the `Destination` is not an `ErpHttpDestination`.
   See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
+
+### After generating a [custom type-safe](features/odata/generate-typed-odata-v2-and-v4-client-for-java)  client some `Getters/Setters` are missing
+
+Possible solution:
+
+You should include `Lombok` and `dependency injections` because they used to generate odata client. Check this [section](http://localhost:3000/cloud-sdk/docs/java/features/odata/generate-typed-odata-v2-and-v4-client-for-java#using-the-odata-generator) for more details

@@ -134,7 +134,7 @@ const generatorConfig = {
   */
 };
 
-//generate your project, you can also redefine options
+// generate your project, you can also redefine options
 generate({
   ...generatorConfig,
   inputDir,

@@ -125,12 +125,12 @@ const generatorConfig = {
   generateCSN: false,
   sdkAfterVersionScript: false,
   s4hanaCloud: false
-  /*optional:
-  serviceMapping: 'test/directory',
-  changelogFile: 'test/directory',
-  aggregatorNpmPackageName: 'test',
-  aggregatorDirectoryName: 'test',
-  versionInPackageJson: 'version'
+  /* optional:
+    serviceMapping: 'test/directory',
+    changelogFile: 'test/directory',
+    aggregatorNpmPackageName: 'test',
+    aggregatorDirectoryName: 'test',
+    versionInPackageJson: 'version'
   */
 };
 

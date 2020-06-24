@@ -107,7 +107,6 @@ You can also use the generator programmatically. You will have to provide the op
 
 ```ts
 import { generate } from '@sap-cloud-sdk/generator';
-import path from 'path';
 
 //Create your options, adapt the input & output directory
 //as well as the package name according to your setup.

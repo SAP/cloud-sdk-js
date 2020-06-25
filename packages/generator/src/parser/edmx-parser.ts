@@ -6,12 +6,11 @@ import { parse } from 'fast-xml-parser';
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   EdmxMetadata as EdmxMetadataV2,
-  isV2Metadata
-} from './parser-types-v2';
-import { EdmxMetadata as EdmxMetadataV4 } from './parser-types-v4';
-import { parseBaseMetadata, getRoot } from './edmx-parser-common';
-import { parseEdmxV2 } from './edmx-parser-v2';
-import { parseEdmxV4 } from './edmx-parser-v4';
+  isV2Metadata,
+  parseEdmxV2
+} from './v2';
+import { EdmxMetadata as EdmxMetadataV4, parseEdmxV4 } from './v4';
+import { parseBaseMetadata, getRoot } from './common';
 
 export function parseEdmxFromPath(
   edmxPath: PathLike

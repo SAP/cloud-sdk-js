@@ -7,12 +7,12 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmProperty,
-  VdmFunctionImport,
   VdmFunctionImportReturnType,
   VdmFunctionImportReturnTypeCategory,
-  VdmNavigationProperty
-} from '../vdm-types';
-import { ServiceNameFormatter } from '../service-name-formatter';
+  VdmNavigationProperty,
+  VdmFunctionImport
+} from '../../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   isCreatable,
   isUpdatable,
@@ -24,8 +24,10 @@ import {
   ensureString,
   edmToComplexPropertyType,
   isNullableParameter
-} from '../generator-utils';
-import { applyPrefixOnJsConfictParam } from '../name-formatting-strategies';
+} from '../../generator-utils';
+import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
+import { isCollection, parseTypeName } from '../parser-util';
+import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import {
   JoinedEntityMetadata,
   EdmxProperty,
@@ -36,10 +38,9 @@ import {
   SwaggerPathParameter,
   EdmxNamed,
   EdmxComplexTypeBase,
-  SwaggerPath
-} from './parser-types-common';
-import { isCollection, parseTypeName } from './parser-util';
-import { ParsedServiceMetadata } from './parsed-service-metadata';
+  SwaggerPath,
+  EdmxFunctionImportBase
+} from './parser-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -367,7 +368,7 @@ export function transformComplexTypes(
   });
 }
 
-function parseReturnType(
+export function parseReturnType(
   returnType: string,
   entities: VdmEntity[],
   complexTypes: VdmComplexType[]
@@ -418,56 +419,49 @@ function parseReturnType(
   };
 }
 
-export function transformFunctionImports(
-  serviceMetadata: ParsedServiceMetadata,
-  entities: VdmEntity[],
-  complexTypes: VdmComplexType[],
+export function transformFunctionImportBase(
+  edmxFunctionImport: EdmxFunctionImportBase,
+  edmxParameters: EdmxParameter[],
+  swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
-): VdmFunctionImport[] {
-  const edmxFunctionImports = serviceMetadata.edmx.functionImports;
+): Omit<VdmFunctionImport, 'returnType' | 'httpMethod'> {
+  const functionName = formatter.originalToFunctionImportName(
+    edmxFunctionImport.Name
+  );
+  const functionImport = {
+    originalName: edmxFunctionImport.Name,
+    functionName,
+    parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
+  };
 
-  return edmxFunctionImports.map(f => {
-    const functionName = formatter.originalToFunctionImportName(f.Name);
-    const functionImport = {
-      httpMethod: f['m:HttpMethod'].toLowerCase(),
-      originalName: f.Name,
-      functionName,
-      returnType: parseReturnType(f.ReturnType, entities, complexTypes),
-      parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
-    };
-
-    const swaggerDefinition = swaggerDefinitionForFunctionImport(
-      serviceMetadata,
-      functionImport.originalName,
-      functionImport.httpMethod
-    );
-
-    const parameters = f.Parameter.map(p => {
-      const swaggerParameter = swaggerDefinition
-        ? swaggerDefinition.parameters.find(param => param.name === p.Name)
-        : undefined;
-      return {
-        originalName: p.Name,
-        parameterName: formatter.originalToParameterName(f.Name, p.Name),
-        edmType: parseType(p.Type),
-        jsType: edmToTsType(p.Type),
-        nullable: isNullableParameter(p),
-        description: parameterDescription(p, swaggerParameter)
-      };
-    });
-
+  const parameters = edmxParameters.map(p => {
+    const swaggerParameter = swaggerDefinition
+      ? swaggerDefinition.parameters.find(param => param.name === p.Name)
+      : undefined;
     return {
-      ...functionImport,
-      parameters,
-      description: functionImportDescription(
-        swaggerDefinition,
-        functionImport.originalName
-      )
+      originalName: p.Name,
+      parameterName: formatter.originalToParameterName(
+        edmxFunctionImport.Name,
+        p.Name
+      ),
+      edmType: parseType(p.Type),
+      jsType: edmToTsType(p.Type),
+      nullable: isNullableParameter(p),
+      description: parameterDescription(p, swaggerParameter)
     };
   });
+
+  return {
+    ...functionImport,
+    parameters,
+    description: functionImportDescription(
+      swaggerDefinition,
+      functionImport.originalName
+    )
+  };
 }
 
-function swaggerDefinitionForFunctionImport(
+export function swaggerDefinitionForFunctionImport(
   serviceMetadata: ParsedServiceMetadata,
   originalName: string,
   httpMethod: string

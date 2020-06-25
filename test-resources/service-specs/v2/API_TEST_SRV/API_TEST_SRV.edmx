@@ -213,8 +213,8 @@
         <!-- collection_suffix
           In some C4C APIs there are entity sets, whose type is unrelated to the entity set name. Entity set names ending with collection should have class names without the collection suffix,
         -->
-        <EntitySet Name="A_TestEntityEndsWithCollection" EntityType="API_TEST_ARV.Unrelated" sap:content-version="1"/>
-        <EntitySet Name="A_TestEntityEndsWithSomethingElse" EntityType="API_TEST_ARV.Unrelated" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityEndsWithCollection" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityEndsWithSomethingElse" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
 
         <AssociationSet Name="assoc_TestEntityToMultiLink" Association="API_TEST_SRV.assoc_TestEntityToMultiLink" sap:content-version="1">
           <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToMultiLink"/>
@@ -286,15 +286,11 @@
 
         <FunctionImport Name="TestFunctionImportPOST" ReturnType="Edm.Boolean" m:HttpMethod="POST">
           <Parameter Name="SimpleParam" Type="Edm.String" Mode="In"/>
-          <!-- <Parameter Name="ComplexTypeParam" Type="API_TEST_SRV.A_TestComplexType" Mode="In"/>
-          <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityType" Mode="In"/> -->
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportMultipleParams" ReturnType="Edm.Boolean" m:HttpMethod="GET">
           <Parameter Name="StringParam" Type="Edm.String" Mode="In"/>
           <Parameter Name="BooleanParam" Type="Edm.Boolean" Mode="In"/>
-          <!-- <Parameter Name="ComplexTypeParam" Type="API_TEST_SRV.A_TestComplexType" Mode="In"/>
-          <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityType" Mode="In"/> -->
         </FunctionImport>
 
         <!-- clash_complex_type_factory_fn_import

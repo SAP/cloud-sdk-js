@@ -95,7 +95,7 @@ export interface TestComplexType {
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
  */
-export declare function createTestComplexType_1(json: any): TestComplexType;
+export declare function createTestComplexType(json: any): TestComplexType;
 /**
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.

@@ -1,21 +1,18 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { forceArray } from '../generator-utils';
+import { forceArray } from '../../generator-utils';
+import { parseEntityTypes, parseComplexTypes } from '../common/edmx-parser';
+import { stripNamespace, parseTypeName } from '../parser-util';
+import { EdmxMetadataBase } from '../common';
 import {
   EdmxEntitySet,
   EdmxMetadata,
   EdmxEntityType,
   EdmxEnumType,
   EdmxDerivedType,
-  EdmxComplexType
-} from './parser-types-v4';
-import {
-  parseEntityTypes,
-  parseFunctionImports,
-  parseComplexTypes
-} from './edmx-parser-common';
-import { stripNamespace, parseTypeName } from './parser-util';
-import { EdmxMetadataBase } from './parser-types-common';
+  EdmxComplexType,
+  EdmxFunction
+} from './parser-types';
 
 function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],
@@ -101,7 +98,8 @@ export function parseEdmxV4(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
     ),
     entitySets: parseEntitySets(root),
     enumTypes,
-    functionImports: parseFunctionImports(root),
+    functions: parseFunctions(root),
+    functionImports: forceArray(root.EntityContainer.FunctionImport),
     complexTypes: joinTypesWithBaseTypes(
       parseComplexTypes(root),
       joinComplexTypes
@@ -109,7 +107,14 @@ export function parseEdmxV4(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
   };
 }
 
-export function parseEntitySets(root): EdmxEntitySet[] {
+function parseFunctions(root): EdmxFunction[] {
+  return forceArray(root.Function).map(f => {
+    f.Parameter = forceArray(f.Parameter);
+    return f;
+  });
+}
+
+function parseEntitySets(root): EdmxEntitySet[] {
   return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
     ...entitySet,
     NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)

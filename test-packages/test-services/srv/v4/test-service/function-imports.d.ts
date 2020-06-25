@@ -2,18 +2,6 @@ import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/core/v4';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 /**
- * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
- */
-export interface TestFunctionImportNoReturnTypeParameters {
-}
-/**
- * Test Function Import No Return Type.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-export declare function testFunctionImportNoReturnType(parameters: TestFunctionImportNoReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, undefined>;
-/**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */
 export interface TestFunctionImportEdmReturnTypeParameters {
@@ -86,38 +74,6 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {
  */
 export declare function testFunctionImportComplexReturnTypeCollection(parameters: TestFunctionImportComplexReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>;
 /**
- * Type of the parameters to be passed to [[testFunctionImportGet]].
- */
-export interface TestFunctionImportGetParameters {
-    /**
-     * Simple Param.
-     */
-    simpleParam: string;
-}
-/**
- * Test Function Import Get.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-export declare function testFunctionImportGet(parameters: TestFunctionImportGetParameters): FunctionImportRequestBuilder<TestFunctionImportGetParameters, boolean>;
-/**
- * Type of the parameters to be passed to [[testFunctionImportPost]].
- */
-export interface TestFunctionImportPostParameters {
-    /**
-     * Simple Param.
-     */
-    simpleParam: string;
-}
-/**
- * Test Function Import Post.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-export declare function testFunctionImportPost(parameters: TestFunctionImportPostParameters): FunctionImportRequestBuilder<TestFunctionImportPostParameters, boolean>;
-/**
  * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
  */
 export interface TestFunctionImportMultipleParamsParameters {
@@ -126,9 +82,13 @@ export interface TestFunctionImportMultipleParamsParameters {
      */
     stringParam: string;
     /**
-     * Boolean Param.
+     * Non Nullable String Param.
      */
-    booleanParam: boolean;
+    nonNullableStringParam: string;
+    /**
+     * Nullable Boolean Param.
+     */
+    nullableBooleanParam?: boolean;
 }
 /**
  * Test Function Import Multiple Params.
@@ -138,41 +98,25 @@ export interface TestFunctionImportMultipleParamsParameters {
  */
 export declare function testFunctionImportMultipleParams(parameters: TestFunctionImportMultipleParamsParameters): FunctionImportRequestBuilder<TestFunctionImportMultipleParamsParameters, boolean>;
 /**
- * Type of the parameters to be passed to [[createTestComplexType]].
+ * Type of the parameters to be passed to [[testFunctionImportWithDifferentName]].
  */
-export interface CreateTestComplexTypeParameters {
+export interface TestFunctionImportWithDifferentNameParameters {
 }
 /**
- * Create Test Complex Type.
+ * Test Function Import With Different Name.
  *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function createTestComplexType(parameters: CreateTestComplexTypeParameters): FunctionImportRequestBuilder<CreateTestComplexTypeParameters, TestComplexType>;
-/**
- * Type of the parameters to be passed to [[fContinue]].
- */
-export interface FContinueParameters {
-}
-/**
- * Continue.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-export declare function fContinue(parameters: FContinueParameters): FunctionImportRequestBuilder<FContinueParameters, boolean>;
+export declare function testFunctionImportWithDifferentName(parameters: TestFunctionImportWithDifferentNameParameters): FunctionImportRequestBuilder<TestFunctionImportWithDifferentNameParameters, undefined>;
 export declare const functionImports: {
-    testFunctionImportNoReturnType: typeof testFunctionImportNoReturnType;
     testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;
     testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;
     testFunctionImportEntityReturnType: typeof testFunctionImportEntityReturnType;
     testFunctionImportEntityReturnTypeCollection: typeof testFunctionImportEntityReturnTypeCollection;
     testFunctionImportComplexReturnType: typeof testFunctionImportComplexReturnType;
     testFunctionImportComplexReturnTypeCollection: typeof testFunctionImportComplexReturnTypeCollection;
-    testFunctionImportGet: typeof testFunctionImportGet;
-    testFunctionImportPost: typeof testFunctionImportPost;
     testFunctionImportMultipleParams: typeof testFunctionImportMultipleParams;
-    createTestComplexType: typeof createTestComplexType;
-    fContinue: typeof fContinue;
+    testFunctionImportWithDifferentName: typeof testFunctionImportWithDifferentName;
 };
 //# sourceMappingURL=function-imports.d.ts.map

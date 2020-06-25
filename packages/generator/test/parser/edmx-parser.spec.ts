@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { parseEdmxFromPath } from '../../src/parser';
-import { EdmxMetadata as EdmxMetadataV2 } from '../../src/parser/parser-types-v2';
-import { EdmxMetadata as EdmxMetadataV4 } from '../../src/parser/parser-types-v4';
+import { EdmxMetadata as EdmxMetadataV2 } from '../../src/parser/v2';
+import { EdmxMetadata as EdmxMetadataV4 } from '../../src/parser/v4';
 
 describe('edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {
@@ -46,7 +46,8 @@ describe('edmx-parser', () => {
 
     expect(metadataEdmx.entitySets.length).toBe(10);
     expect(metadataEdmx.entityTypes.length).toBe(11);
-    expect(metadataEdmx.functionImports.length).toBe(12);
+    expect(metadataEdmx.functionImports.length).toBe(8);
+    expect(metadataEdmx.functions.length).toBe(8);
     expect(metadataEdmx.complexTypes.length).toBe(4);
     expect(metadataEdmx.enumTypes.length).toBe(1);
 
@@ -85,7 +86,7 @@ describe('edmx-parser', () => {
       expect(complexTypeWithBaseType?.Property).toContain(p);
     });
 
-    metadataEdmx.functionImports.forEach(f => {
+    metadataEdmx.functions.forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 

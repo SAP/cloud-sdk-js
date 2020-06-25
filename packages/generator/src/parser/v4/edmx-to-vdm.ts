@@ -1,18 +1,24 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { VdmNavigationProperty, VdmComplexType, VdmEntity } from '../vdm-types';
-import { ServiceNameFormatter } from '../service-name-formatter';
-import { EdmxEntityType, EdmxEntitySet } from './parser-types-v4';
-import { isCollection } from './parser-util';
+
 import {
-  JoinedEntityMetadata,
-  ParsedServiceMetadata
-} from './parser-types-common';
+  VdmNavigationProperty,
+  VdmComplexType,
+  VdmEntity,
+  VdmFunctionImport
+} from '../../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { isCollection, stripNamespace } from '../parser-util';
+import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
   transformEntity,
-  navigationPropertyBase
-} from './edmx-to-vdm-common';
+  navigationPropertyBase,
+  parseReturnType,
+  swaggerDefinitionForFunctionImport,
+  transformFunctionImportBase
+} from '../common/edmx-to-vdm';
+import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 
 function navigationProperties(
   entityMetadata: JoinedEntityMetadata,
@@ -67,4 +73,49 @@ export function transformEntitiesV4(
       formatter
     )
   }));
+}
+
+export function transformFunctionImportsV4(
+  serviceMetadata: ParsedServiceMetadata,
+  entities: VdmEntity[],
+  complexTypes: VdmComplexType[],
+  formatter: ServiceNameFormatter
+): VdmFunctionImport[] {
+  const edmxMetadata = serviceMetadata.edmx as EdmxMetadata;
+  const edmxFunctionImports = edmxMetadata.functionImports;
+
+  const edmxFunctions = edmxMetadata.functions;
+
+  return edmxFunctionImports.map(f => {
+    const edmxFunction = edmxFunctions.find(
+      fn => stripNamespace(f.Function) === fn.Name
+    );
+    if (!edmxFunction) {
+      throw Error(
+        `Unable to find a function with name: ${f.Function}, but specified in function import ${f.Name}`
+      );
+    }
+
+    const httpMethod = 'get';
+    const swaggerDefinition = swaggerDefinitionForFunctionImport(
+      serviceMetadata,
+      f.Name,
+      httpMethod
+    );
+
+    return {
+      ...transformFunctionImportBase(
+        f,
+        edmxFunction.Parameter,
+        swaggerDefinition,
+        formatter
+      ),
+      httpMethod,
+      returnType: parseReturnType(
+        edmxFunction.ReturnType?.Type,
+        entities,
+        complexTypes
+      )
+    };
+  });
 }

@@ -27,9 +27,6 @@ export interface EdmxEntityTypeBase extends EdmxNamed {
 }
 
 export interface EdmxFunctionImportBase extends EdmxNamed {
-  ReturnType: string;
-  'sap:action-for': string;
-  Parameter: EdmxParameter[];
   EntitySet?: string;
 }
 

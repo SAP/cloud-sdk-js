@@ -1,24 +1,30 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { ServiceNameFormatter } from '../service-name-formatter';
-import { VdmNavigationProperty, VdmComplexType, VdmEntity } from '../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
-  EdmxAssociationSet,
-  EdmxAssociation,
-  EdmxEntityType,
-  EdmxMetadata
-} from './parser-types-v2';
-import { stripNamespace } from './parser-util';
-import {
-  JoinedEntityMetadata,
-  ParsedServiceMetadata
-} from './parser-types-common';
+  VdmNavigationProperty,
+  VdmComplexType,
+  VdmEntity,
+  VdmFunctionImport
+} from '../../vdm-types';
+import { stripNamespace } from '../parser-util';
+import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,
   createEntityClassNames,
   transformEntity,
-  navigationPropertyBase
-} from './edmx-to-vdm-common';
+  navigationPropertyBase,
+  swaggerDefinitionForFunctionImport,
+  parseReturnType,
+  transformFunctionImportBase
+} from '../common/edmx-to-vdm';
+import {
+  EdmxAssociationSet,
+  EdmxAssociation,
+  EdmxEntityType,
+  EdmxMetadata,
+  EdmxFunctionImport
+} from './parser-types';
 
 export function joinAssociationMetadata(
   associationSets: EdmxAssociationSet[],
@@ -77,6 +83,36 @@ export function transformEntitiesV2(
       formatter
     )
   }));
+}
+
+export function transformFunctionImportsV2(
+  serviceMetadata: ParsedServiceMetadata,
+  entities: VdmEntity[],
+  complexTypes: VdmComplexType[],
+  formatter: ServiceNameFormatter
+): VdmFunctionImport[] {
+  const edmxFunctionImports = serviceMetadata.edmx
+    .functionImports as EdmxFunctionImport[];
+
+  return edmxFunctionImports.map(f => {
+    const httpMethod = f['m:HttpMethod'].toLowerCase();
+    const swaggerDefinition = swaggerDefinitionForFunctionImport(
+      serviceMetadata,
+      f.Name,
+      httpMethod
+    );
+
+    return {
+      ...transformFunctionImportBase(
+        f,
+        f.Parameter,
+        swaggerDefinition,
+        formatter
+      ),
+      httpMethod,
+      returnType: parseReturnType(f.ReturnType, entities, complexTypes)
+    };
+  });
 }
 
 function navigationProperties(

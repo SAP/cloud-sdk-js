@@ -181,9 +181,9 @@ When operating on a collection of entities the API offers `filter( ... )` on the
 
 ```ts
 /*
-Get all business partners that either:
-  - Have first name 'Alice' but not last name 'Bob'
-  - Or have first name 'Mallory'
+  Get all business partners that either:
+    - Have first name 'Alice' but not last name 'Bob'
+    - Or have first name 'Mallory'
 */
 BusinessPartner.requestBuilder()
   .getAll()
@@ -353,15 +353,15 @@ Consider the following example:
 async function modifyBusinessPartner(id) {
   const destination = { url: 'https://my.s4-system.com' };
 
-  const partner = await BusinessPartner.requestBuilder()
+  const businessPartner = await BusinessPartner.requestBuilder()
     .getByKey(id)
     .execute(myDestination);
 
   // do some modification
-  applyModification(partner);
+  applyModification(businessPartner);
 
   return BusinessPartner.requestBuilder()
-    .update(partner)
+    .update(businessPartner)
     .execute(destination);
 }
 ```
@@ -389,7 +389,7 @@ There are predefined filter functions e. g. `length`, `substring`, `substringOf`
 
 ```ts
 /*
-Fetch all business partners who have a first name shorter than 5 letters
+  Fetch all business partners who have a first name shorter than 5 letters
 */
 BusinessPartner.requestBuilder()
   .getAll()
@@ -403,9 +403,11 @@ The below example leverages OData v4 exclusive features to build a more complex 
 (to change, might not work)
 
 ```ts
-//Fetch all business partners where:
-//- the last name is at least twice as long as the first name
-//- AND the combined string of first and last name does not contain 'bob'
+/*
+  Fetch all business partners where:
+    - the last name is at least twice as long as the first name
+    - AND the combined string of first and last name does not contain 'bob'
+*/
 BusinessPartner.requestBuilder()
   .getAll()
   .filter(

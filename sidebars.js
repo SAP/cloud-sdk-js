@@ -1,4 +1,3 @@
-
 module.exports = {
   someSidebar: {
     // Dzen: ['dzen/getting-started', 'dzen/how-to-write-documentation'],
@@ -95,7 +94,6 @@ module.exports = {
         label: 'Tips & Tricks',
         items: [
           'java/tips-and-tricks/change-log-level',
-          'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems',
           'java/tips-and-tricks/use-bapi-with-cloud-sdk-for-java'
         ]
       },
@@ -132,6 +130,7 @@ module.exports = {
           'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java'
         ],
       },
+      'java/sdk-java-troubleshooting-frequent-problems',
       'java/api-reference-java',
       'java/frequently-asked-questions'
     ],
@@ -148,6 +147,14 @@ module.exports = {
             items: [
               'js/features/connectivity/proxy-js-sdk',
               'js/features/connectivity/destination-js-sdk'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'OData',
+            items: [
+              'js/features/odata/generator-js-sdk',
+              'js/features/odata/use-typed-odata-client-for-js'
             ]
           }
         ]

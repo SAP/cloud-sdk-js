@@ -407,7 +407,7 @@ The below example leverages OData v4 exclusive features to build a more complex 
   Fetch all business partners where:
     - the last name is at least twice as long as the first name
     - AND the combined string of first and last name does not contain 'bob'
-*/
+*\/ TODO: remove \
 BusinessPartner.requestBuilder()
   .getAll()
   .filter(
@@ -421,7 +421,7 @@ BusinessPartner.requestBuilder()
   )
   .execute(destination);
 ```
-
+-->
 ### Count
 
 Not yet available.

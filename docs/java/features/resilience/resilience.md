@@ -24,7 +24,7 @@ Also check out our [dedicated tutorial](https://developers.sap.com/tutorials/s4s
 ## Consuming the Resilience API
 
 The SDK allows to run any code in the context of one or more resilience patterns.
-The are two essential building blocks to achieving this:
+There are two essential building blocks for achieving this:
 
 1. The `ResilienceConfiguration` that determines which patterns should be applied.
 2. The `ResilienceDecorator` which is capable of applying the configuration to an operation.
@@ -198,5 +198,4 @@ Be aware that the patterns interact with each other. They are applied in the fol
 This means that every individual attempt triggered by retries will be limited by the timeout.
 Every failed retry will be accounted for in the circuit breaker.
 Only if all retries failed the fallback function will be considered.
-
 

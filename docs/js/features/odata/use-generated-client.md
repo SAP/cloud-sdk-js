@@ -257,6 +257,10 @@ BusinessPartner.requestBuilder().
 
 The example above retrieves the first 10 BusinessPartner entities.
 
+#### Count
+
+Not yet available.
+
 ### GetByKey Request Builder
 
 The GetByKey request builder allows you to create a request to retrieve one entity based on its key:
@@ -422,9 +426,6 @@ BusinessPartner.requestBuilder()
   .execute(destination);
 ```
 -->
-### Count
-
-Not yet available.
 
 <!--
 ### Batch Requests WIP

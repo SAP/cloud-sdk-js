@@ -75,7 +75,7 @@ Setting an `authorization` or `apikey` header (regardless of lowercase or upperc
 
 The SAP Cloud SDK adds necessary query parameters for a request based on your configuration. You can add custom parameters by using the `withCustomQueryParameters` function. Custom query parameters take precedence over those created by the SAP Cloud SDK.
 
-In the example below an additional query parameter `language=en` will be added to the request:
+In the example below an additional query parameter `language=en` will be added to the request url:
 
 ```ts
 MyEntity.requestBuilder()

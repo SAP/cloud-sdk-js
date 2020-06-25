@@ -51,7 +51,7 @@ The decorator operates with two kinds of operations:
 <table><tbody>
 <tr>
     <td><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html">Callable</a></td>
-    <td>May throw checked Exceptions</td>
+    <td>May throw checked or unchecked Exceptions</td>
 </tr><tr>
     <td><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html">Supplier</a></td><td>May only throw unchecked Exceptions</td>
 </tr>
@@ -98,7 +98,7 @@ To deal with failures one can either catch the `ResilienceRuntimeException` or p
 executeCallable(() -> operation(), configuration,
 (throwable) -> {
     log.debug("Encountered a failure in operation: ", throwable);
-    log.debug("Proceeding with fallback value: ", fallback);
+    log.debug("Proceeding with fallback value: {}", fallback);
     return fallback;
 });
 ```
@@ -133,7 +133,7 @@ Consider for example the Bulkhead pattern which limits the amount of parallel ex
 If the operation is tenant specific one would probably want to avoid one tenant blocking all others.
 
 For this reason the SDK _by default_ isolates resilience patterns based on tenant and principal, if they are available.
-This strategy can be configured, e.g. for no isolation use:
+This strategy can be configured, e.g. for running _without any isolation_ use:
 
 ```java
 configuration.isolationMode(ResilienceIsolationMode.NO_ISOLATION);
@@ -157,39 +157,41 @@ The following resilience patterns are available and can be configured in a Resil
 
 <table><tbody>
 <tr>
-    <td><em>Timeout</em></td>
+    <td>Timeout</td>
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.TimeLimiterConfiguration.html">TimeLimiterConfiguration</a></em></td>
     <td>Limit how long an operation may run before it should be interrupted</td>
 </tr><tr>
-    <td><em>Retry</em></td>
+    <td>Retry</td>
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.RetryConfiguration.html">RetryConfiguration</a></em></td>
     <td>Retry a failed operation a limited amount of times before failing</td>
 </tr><tr>
-    <td><em>Circuit Breaker</em></td>
+    <td>Circuit Breaker</td>
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.CircuitBreakerConfiguration.html">CircuitBreakerConfiguration</a></em></td>
-    <td>Reject attempts if too many failures occurred</td>
+    <td>Reject attempts if too many failures occurred in the past</td>
 </tr><tr>
-    <td><em>Bulkhead</em></td>
+    <td>Bulkhead</td>
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.BulkheadConfiguration.html">BulkheadConfiguration</a></em></td>
     <td>Limit how many instances of this operation may run in parallel</td>
 </tr>
+</tbody></table>
+
 <!-- Caching is not documented yet, leave it out for now
 <tr>
     <td><em>Caching</em></td>
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.CacheConfiguration.html">CacheConfiguration</a></em></td>
     <td>Enables caching. See the dedicated article on caching.</td> 
-    -->
 </tr>
-</tbody></table>
+-->
 
 You can find good explanations on how the individual patterns behave on the [documentation of resilience4j](https://resilience4j.readme.io/docs/) which the SDK uses under the hood to perform resilient operations.
 
 Be aware that the patterns interact with each other. They are applied in the following order:
 
 1. Timeouts
-2. Retries
-3. Circuit Breaker & Bulkhead
-4. Fallbacks
+2. Bulkhead
+3. Circuit Breaker
+4. Retries
+5. Fallbacks
 
 This means that every individual attempt triggered by retries will be limited by the timeout.
 Every failed retry will be accounted for in the circuit breaker.

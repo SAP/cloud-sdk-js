@@ -48,7 +48,7 @@ Possible causes:
 Possible causes:
 - The SDK defaults back to the provider account if no tenant information is available. See the above section on [Tenant or Principal not available](#tenant-or-principal-not-available).
 
-### JWT Validation fails
+### JWT validation fails
 
 **Symptom:** Logs show JWT validation exceptions, Tenant information is not available.
 
@@ -66,8 +66,11 @@ Possible causes:
 - The SAP Client and Locale headers will be missing if the `Destination` is not an `ErpHttpDestination`.
   See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
 
-### After generating a [custom type-safe](features/odata/generate-typed-odata-v2-and-v4-client-for-java)  client some `Getters/Setters` are missing
+### Classes generated for an OData Service don't compile
 
-Possible solution:
+**Symptom:** Compilation fails due to missing _Getters_ and _Setters_ on entity objects.
 
-You should include `Lombok` and `dependency injections` because they used to generate odata client. Check this [section](http://localhost:3000/cloud-sdk/docs/java/features/odata/generate-typed-odata-v2-and-v4-client-for-java#using-the-odata-generator) for more details
+Possible causes:
+
+- Getters and Setters will be missing if [Lombok](https://projectlombok.org/) is not present in the dependency tree of your project.
+  See [Using the OData Generator](http://localhost:3000/cloud-sdk/docs/java/features/odata/generate-typed-odata-v2-and-v4-client-for-java#using-the-odata-generator).

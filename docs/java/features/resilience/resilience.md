@@ -132,7 +132,7 @@ For details see the list of [Resilience Capabilities](#resilience-capabilities) 
 
 The SDK is capable of applying the different resilience patterns in a tenant and principal aware manner.
 Consider for example the Bulkhead pattern which limits the amount of parallel executions.
-If the operation is tenant specific one would probably want to avoid one tenant blocking all others.
+If the operation is tenant specific then you would probably want to avoid one tenant blocking all others.
 
 For this reason the SDK _by default_ isolates resilience patterns based on tenant and principal, if they are available.
 This strategy can be configured, e.g. for running _without any isolation_ use:
@@ -198,4 +198,3 @@ Be aware that the patterns interact with each other. They are applied in the fol
 This means that every individual attempt triggered by retries will be limited by the timeout.
 Every failed retry will be accounted for in the circuit breaker.
 Only if all retries failed the fallback function will be considered.
-

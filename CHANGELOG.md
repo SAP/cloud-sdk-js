@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.22.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.22.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - The properties `isMulti` of the type`VdmFunctionImportReturnType` and `isMultiLink` as well as `multiplicity` of `VdmNavigationProperty` were deprecated and replaced by `isCollection`.
 - The interface `VdmServiceMetadata` now also contains a property `oDataVersion` that is mandatory.
 - Due to the fix in the generator regarding the name clash it is possible that the order of suffixes could change.
@@ -23,15 +46,10 @@ If you regenerate a VDM with a name clash the Enitiy_1 and Entity_2 could swap.
 
 - Add experimental support for OData v4 to the generator.
 
-## Improvements
-
--
-
 ## Fixed Issues
 
 - Fix the generator so that the builder function for nested complex types is correctly typed.
 - Fix the generator so that entity names ending with the word `Type` do not lead to name clashes anymore.
-
 
 # 1.21.2
 

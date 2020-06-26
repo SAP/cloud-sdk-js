@@ -45,6 +45,26 @@ result = ResilienceDecorator.executeSupplier(() -> operation(), configuration);
 This code executes `operation()` in a resilient manner according to a `ResilienceConfiguration`.
 The decorator will apply all in `configuration` configured patterns and all logic that is needed to combine these patterns.
 
+Some resilience patterns are applied over multiple executions of the same operation.
+For example the circuit breaker will prevent further executions, if a significant portion of previous attempts failed.
+
+Consider the following usage:
+
+```java
+configuration1 = ResilienceConfiguration.of("config-id-1");
+configuration2 = ResilienceConfiguration.of("config-id-1");
+configuration3 = ResilienceConfiguration.of("config-id-2");
+
+ResilienceDecorator.executeSupplier(() -> operation(), configuration1);
+ResilienceDecorator.executeSupplier(() -> operation(), configuration1);
+ResilienceDecorator.executeSupplier(() -> operation(), configuration2);
+ResilienceDecorator.executeSupplier(() -> operation(), configuration3);
+```
+
+Here executions one, two and three will share the same _state_.
+This means that they will share the same instance of a circuit breaker or bulkhead.
+So the state is shared via [the identifier](#building-a-resilience-configuration) of the associated configuration.
+
 #### Operations
 
 The decorator operates with two kinds of operations:
@@ -117,6 +137,7 @@ configuration = ResilienceConfiguration.of("identifier");
 
 The identifier can be either a string or a class.
 In case of the latter the (full) classname will be used as identifier.
+The identifier will be used to apply resilience patterns across [multiple invocations to operations](#executing-operations).
 
 Check [the JavaDoc](https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.html#of-java.lang.String-) for which patterns and parameters will be applied by default.
 You can also create a configuration with all patterns disabled:

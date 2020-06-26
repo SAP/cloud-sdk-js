@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { and, length, or, substring } from '@sap-cloud-sdk/core';
+import { and, or } from '@sap-cloud-sdk/core';
 import {
   TestEntity,
   TestEntityMultiLink,
@@ -43,23 +43,3 @@ TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
 
 // $ExpectError
 TestEntity.COMPLEX_TYPE_PROPERTY.equals('test');
-
-// $ExpectType StringFilterFunction<TestEntity>
-const substringFn = substring(
-  TestEntity.STRING_PROPERTY,
-  TestEntity.INT_16_PROPERTY
-);
-
-// $ExpectType Filter<TestEntity, string>
-const substringFnFilter = substringFn.equals('test');
-
-// $ExpectType GetAllRequestBuilder<TestEntity>
-TestEntity.requestBuilder().getAll().filter(substringFnFilter);
-
-TestEntitySingleLink.requestBuilder().getAll().filter(substringFnFilter); // $ExpectError
-
-// $ExpectError
-substring(TestEntitySingleLink.STRING_PROPERTY, TestEntity.STRING_PROPERTY);
-
-// $ExpectType Filter<TestEntity, number>
-length(TestEntity.STRING_PROPERTY).greaterThan(1);

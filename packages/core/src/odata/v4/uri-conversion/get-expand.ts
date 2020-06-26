@@ -51,7 +51,7 @@ function getExpandAsString<EntityT extends Entity>(
     }
     const subQuery = Object.entries(params)
       .map(([key, value]) => `${prependDollar(key)}=${value}`)
-      .join(',');
+      .join(';');
     const subQueryWithBrackets = subQuery ? `(${subQuery})` : '';
 
     return `${expand._fieldName}${subQueryWithBrackets}`;

@@ -18,10 +18,10 @@ var v4_1 = require("@sap-cloud-sdk/core/v4");
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
  */
-function createTestComplexType_1(json) {
+function createTestComplexType(json) {
     return TestComplexType.build(json);
 }
-exports.createTestComplexType_1 = createTestComplexType_1;
+exports.createTestComplexType = createTestComplexType;
 /**
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.

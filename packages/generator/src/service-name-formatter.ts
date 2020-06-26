@@ -3,39 +3,25 @@
 import { toPropertyFormat, toStaticPropertyFormat } from '@sap-cloud-sdk/core';
 import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
-import {
-  applyPrefixOnJsConfictFunctionImports,
-  applySuffixOnConflictUnderscore
-} from './name-formatting-strategies';
+import { applyPrefixOnJsConfictFunctionImports } from './name-formatting-strategies';
+import { UniqueNameFinder } from './unique-name-finder';
+import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
 
 export class ServiceNameFormatter {
-  private serviceWideNamesCache: string[] = [
-    'BinaryField',
-    'NumberField',
-    'Moment',
-    'BigNumber',
-    'BigNumberField',
-    'StringField',
-    'DateField',
-    'AllFields',
-    'CustomField',
-    'Entity',
-    'EntityBuilderType',
-    'Field',
-    'Selectable',
-    'OneToOneLink',
-    'BooleanField',
-    'Link',
-    'Time',
-    'TimeField'
-  ];
+  private finderServiceWide = new UniqueNameFinder(
+    '_',
+    reservedServiceKeywords
+  );
 
-  private parameterNamesCache: { [functionImportName: string]: string[] } = {};
-  private staticPropertyNamesCache: {
-    [entitySetOrComplexTypeName: string]: string[];
+  private parameterNamesFinder: {
+    [functionImportName: string]: UniqueNameFinder;
   } = {};
-  private instancePropertyNamesCache: {
-    [entitySetOrComplexTypeName: string]: string[];
+
+  private staticPropertyNamesFinder: {
+    [entitySetOrComplexTypeName: string]: UniqueNameFinder;
+  } = {};
+  private instancePropertyNamesFinder: {
+    [entitySetOrComplexTypeName: string]: UniqueNameFinder;
   } = {};
 
   constructor(
@@ -46,13 +32,17 @@ export class ServiceNameFormatter {
     // Here we assume that entitysets and complextypes cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
-        this.staticPropertyNamesCache[entitySetOrComplexTypeName] = [];
-        this.instancePropertyNamesCache[entitySetOrComplexTypeName] = [];
+        this.staticPropertyNamesFinder[
+          entitySetOrComplexTypeName
+        ] = new UniqueNameFinder();
+        this.instancePropertyNamesFinder[
+          entitySetOrComplexTypeName
+        ] = new UniqueNameFinder();
       }
     );
 
     functionImportNames.forEach(functionImportName => {
-      this.parameterNamesCache[functionImportName] = [];
+      this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
     });
   }
 
@@ -73,10 +63,13 @@ export class ServiceNameFormatter {
     const transformedName = toStaticPropertyFormat(
       stripPrefix(originalPropertyName)
     );
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.staticPropertyNamesCache[originalContainerTypeName]
+    const finder = this.getOrInitStaticPropertyNameFinder(
+      originalContainerTypeName
     );
+    const newName = finder.findUniqueName(transformedName);
+
+    finder.addToAlreadyUsedNames(newName);
+    return newName;
   }
 
   originalToInstancePropertyName(
@@ -84,20 +77,22 @@ export class ServiceNameFormatter {
     originalPropertyName: string
   ): string {
     const transformedName = toPropertyFormat(stripPrefix(originalPropertyName));
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.instancePropertyNamesCache[originalContainerTypeName]
+
+    const finder = this.getOrInitInstancePropertyNameFinder(
+      originalContainerTypeName
     );
+    const newName = finder.findUniqueName(transformedName);
+
+    finder.addToAlreadyUsedNames(newName);
+    return newName;
   }
 
   originalToFunctionImportName(str: string): string {
     const transformedName = voca.camelCase(str);
-    return applyPrefixOnJsConfictFunctionImports(
-      applySuffixOnConflictUnderscore(
-        transformedName,
-        this.serviceWideNamesCache
-      )
-    );
+    const newName = this.finderServiceWide.findUniqueName(transformedName);
+
+    this.finderServiceWide.addToAlreadyUsedNames(newName);
+    return applyPrefixOnJsConfictFunctionImports(newName);
   }
 
   originalToComplexTypeName(str: string): string {
@@ -105,10 +100,11 @@ export class ServiceNameFormatter {
       '_',
       ''
     );
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.serviceWideNamesCache
-    );
+
+    const newName = this.finderServiceWide.findUniqueName(transformedName);
+
+    this.finderServiceWide.addToAlreadyUsedNames(newName);
+    return newName;
   }
 
   typeNameToFactoryName(str: string, reservedNames: Set<string>): string {
@@ -118,10 +114,10 @@ export class ServiceNameFormatter {
       factoryName = `${factoryName}_${index}`;
       index += 1;
     }
-    return applySuffixOnConflictUnderscore(
-      factoryName,
-      this.serviceWideNamesCache
-    );
+    const newName = this.finderServiceWide.findUniqueName(factoryName);
+
+    this.finderServiceWide.addToAlreadyUsedNames(newName);
+    return newName;
   }
 
   originalToNavigationPropertyName(
@@ -129,10 +125,12 @@ export class ServiceNameFormatter {
     originalPropertyName: string
   ): string {
     const transformedName = voca.camelCase(originalPropertyName);
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.instancePropertyNamesCache[entitySetName]
-    );
+
+    const finder = this.getOrInitInstancePropertyNameFinder(entitySetName);
+    const newName = finder.findUniqueName(transformedName);
+
+    finder.addToAlreadyUsedNames(newName);
+    return newName;
   }
 
   originalToParameterName(
@@ -140,10 +138,14 @@ export class ServiceNameFormatter {
     originalParameterName: string
   ): string {
     const transformedName = voca.camelCase(originalParameterName);
-    return applySuffixOnConflictUnderscore(
-      transformedName,
-      this.parameterNamesCache[originalFunctionImportName]
+
+    const finder = this.getOrInitParameterNameFinder(
+      originalFunctionImportName
     );
+    const newName = finder.findUniqueName(transformedName);
+
+    finder.addToAlreadyUsedNames(newName);
+    return newName;
   }
 
   originalToEntityClassName(entitySetName: string): string {
@@ -153,17 +155,41 @@ export class ServiceNameFormatter {
     }
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
-    const newName = applySuffixOnConflictUnderscore(
+
+    const newNames = this.finderServiceWide.findUniqueNameWithSuffixes(
       transformedName,
-      this.serviceWideNamesCache
+      getInterfaceNamesSuffixes()
     );
-    // E.g., Both <newName>Type and <newName>TypeForceMandatory are generated by the generator. Therefore, they are added to the cache, so that new entity names will not face naming conflicts.
-    this.serviceWideNamesCache.push(...getInterfaceNames(newName));
-    return newName;
+    this.finderServiceWide.addToAlreadyUsedNames(...newNames);
+    return newNames[0];
   }
 
   directoryToSpeakingModuleName(packageName: string): string {
     return voca.titleCase(packageName.replace(/-/g, ' '));
+  }
+
+  private getOrInitStaticPropertyNameFinder(name: string): UniqueNameFinder {
+    if (this.staticPropertyNamesFinder[name]) {
+      return this.staticPropertyNamesFinder[name];
+    }
+    this.staticPropertyNamesFinder[name] = new UniqueNameFinder();
+    return this.staticPropertyNamesFinder[name];
+  }
+
+  private getOrInitInstancePropertyNameFinder(name: string): UniqueNameFinder {
+    if (this.instancePropertyNamesFinder[name]) {
+      return this.instancePropertyNamesFinder[name];
+    }
+    this.instancePropertyNamesFinder[name] = new UniqueNameFinder();
+    return this.instancePropertyNamesFinder[name];
+  }
+
+  private getOrInitParameterNameFinder(name: string): UniqueNameFinder {
+    if (this.parameterNamesFinder[name]) {
+      return this.parameterNamesFinder[name];
+    }
+    this.parameterNamesFinder[name] = new UniqueNameFinder();
+    return this.parameterNamesFinder[name];
   }
 }
 
@@ -185,6 +211,6 @@ function stripAUnderscore(name: string) {
   return name.startsWith('A_') ? name.substring(2, name.length) : name;
 }
 
-function getInterfaceNames(entitySetName: string): string[] {
-  return [`${entitySetName}Type`, `${entitySetName}TypeForceMandatory`];
+function getInterfaceNamesSuffixes(): string[] {
+  return ['Type', 'TypeForceMandatory'];
 }

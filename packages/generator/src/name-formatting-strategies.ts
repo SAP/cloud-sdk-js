@@ -1,6 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import voca from 'voca';
+import {
+  reservedJSKeywords,
+  reservedObjectPrototypeKeywords,
+  reservedVdmKeywords
+} from './name-formatting-reserved-key-words';
 
 // FIXME: this function has a side effect and it is not obvious that the cache is updated
 const applySuffixOnConflict = (separator: string) => (
@@ -27,8 +32,18 @@ const applyPrefixOnJSReservedWords = (prefix: string) => (
 ): string =>
   reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
 
+/**
+ * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it.
+ * Use [[UniqueNameFinder]] instead.
+ */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
+
+/**
+ * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it.
+ *  * Use [[UniqueNameFinder]] instead.
+ */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
+
 export const applyPrefixOnJsConfictParam = applyPrefixOnJSReservedWords('p');
 export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords(
   'f'
@@ -74,56 +89,3 @@ function sortByIntegerSuffix(array: string[]): string[] {
 function last<T>(array: T[]): T {
   return array[array.length - 1];
 }
-
-const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
-  Object.getOwnPropertyNames(Object.prototype)
-);
-const reservedVdmKeywords: Set<string> = new Set<string>([
-  'builder',
-  'entityBuilder',
-  'requestBuilder'
-]);
-
-const reservedJSKeywords: Set<string> = new Set<string>([
-  'break',
-  'case',
-  'catch',
-  'class',
-  'const',
-  'continue',
-  'debugger',
-  'default',
-  'delete',
-  'do',
-  'else',
-  'enum',
-  'export',
-  'extends',
-  'false',
-  'finally',
-  'for',
-  'function',
-  'if',
-  'implements',
-  'in',
-  'instanceof',
-  'let',
-  'new',
-  'null',
-  'protected',
-  'public',
-  'return',
-  'static',
-  'super',
-  'switch',
-  'symbol',
-  'this',
-  'true',
-  'try',
-  'typeof',
-  'var',
-  'void',
-  'while',
-  'with',
-  'yield'
-]);

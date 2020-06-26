@@ -20,17 +20,17 @@ import { ApiBusinessHubMetadata, VdmServiceMetadata } from '../vdm-types';
 import {
   SwaggerMetadata,
   EdmxFunctionImportBase,
-  ParsedServiceMetadata
-} from './parser-types-common';
+  ParsedServiceMetadata,
+  transformComplexTypes
+} from './common';
 import { parseSwaggerFromPath } from './swagger-parser';
-import { isV2Metadata } from './parser-types-v2';
-import { transformEntitiesV4 } from './edmx-to-vdm-v4';
-import { transformEntitiesV2 } from './edmx-to-vdm-v2';
-import { parseEdmxFromPath } from './edmx-parser';
+import { transformEntitiesV4, transformFunctionImportsV4 } from './v4';
 import {
-  transformComplexTypes,
-  transformFunctionImports
-} from './edmx-to-vdm-common';
+  transformEntitiesV2,
+  transformFunctionImportsV2,
+  isV2Metadata
+} from './v2';
+import { parseEdmxFromPath } from './edmx-parser';
 
 const logger = createLogger({
   package: 'generator',
@@ -132,6 +132,9 @@ function transformServiceMetadata(
     edmxPath: serviceDefinitionPaths.edmxPath
   };
 
+  const transformFunctionImports = isV2Metadata(metadata.edmx)
+    ? transformFunctionImportsV2
+    : transformFunctionImportsV4;
   const functionImports = transformFunctionImports(
     metadata,
     vdmService.entities,

@@ -1,6 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { EntityBase } from '../entity';
-import { FilterFunction, FilterFunctionParameterType } from './filter-function';
+import {
+  FilterFunction,
+  FilterFunctionParameterType
+} from './filter-function-base';
 
 /**
  * Representation of a filter function, that returns a value of type boolean.

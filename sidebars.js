@@ -126,6 +126,7 @@ module.exports = {
         ],
       },
       'java/sdk-java-troubleshooting-frequent-problems',
+      'java/release-notes-sap-cloud-sdk-for-java',
       'java/api-reference-java',
       'java/frequently-asked-questions'
     ],

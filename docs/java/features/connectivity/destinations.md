@@ -33,7 +33,7 @@ also, other sources like the environment variables are considered.
 Depending on the use case, one needs to wrap the accessed destination before issuing a request to a system. This is to make sure all required destination properties are correctly set before invoking the actual request.
 
 ### HTTP Destinations
-In case of HTTP connections one needs to wrap the retrieved destination as `DefaultHttpDestination` using `asHttp()`: 
+In case of HTTP connections one needs to wrap the retrieved destination as `HttpDestination` using `asHttp()`:
 
 ```java
 DestinationAccessor.getDestination("my-destination").asHttp();

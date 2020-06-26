@@ -48,7 +48,7 @@ The decorator will apply all in `configuration` configured patterns and all logi
 Some resilience patterns are applied over multiple executions of the same operation.
 For example the circuit breaker will prevent further executions, if a significant portion of previous attempts failed.
 
-Consider the following usage:
+To understand how the SDK applies this concept consider the following snippet:
 
 ```java
 configuration1 = ResilienceConfiguration.of("config-id-1");
@@ -61,11 +61,11 @@ ResilienceDecorator.executeSupplier(() -> operation(), configuration2);
 ResilienceDecorator.executeSupplier(() -> operation(), configuration3);
 ```
 
-Here executions one, two and three will share the same _state_.
+Here executions one, two and three will all share the same "resilience state".
 This means that they will share the same instance of a circuit breaker or bulkhead.
 So the state is shared via [the identifier](#building-a-resilience-configuration) of the associated configuration.
 
-#### Operations
+#### Operation Types
 
 The decorator operates with two kinds of operations:
 
@@ -82,7 +82,7 @@ The decorator operates with two kinds of operations:
 Noticeable is the difference in signatures: _Callable_ throws a _checked exception_ while _Supplier_ does not.
 So you can choose whatever fits your use case best.
 
-#### Executions
+#### Execution Variants
 
 The decorator allows for three different ways of applying a configuration: 
 

@@ -33,7 +33,7 @@ export function startsWith<EntityT extends EntityBase>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   prefix: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('startsWith', 'bool', str, prefix);
+  return filterFunction('startswith', 'bool', str, prefix);
 }
 
 /**

@@ -18,7 +18,8 @@
 
 ## New Functionality
 
--
+- Add the option `--developerLicenceFile <PathToLicenceFile>` to the generator.
+If specified the given file is copied as DEVELOPER_LICENCE.md to the service directories.    
 
 ## Improvements
 

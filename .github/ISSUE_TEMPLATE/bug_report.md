@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+<!-- Please note that this repository is for JavaScript / TypeScript related issues only. If you have a question about the SAP Cloud SDK for Java open a question on StackOverflow: https://stackoverflow.com/questions/tagged/sap-cloud-sdk+java -->
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 

@@ -190,7 +190,7 @@ export function isOf<EntityT extends EntityBase>(
   type?: string
 ): BooleanFilterFunction<EntityT> {
   if (type) {
-    return filterFunction('substringof', 'bool', expressionOrType, type);
+    return filterFunction('isof', 'bool', expressionOrType, type);
   }
-  return filterFunction('substringof', 'bool', expressionOrType);
+  return filterFunction('isof', 'bool', expressionOrType);
 }

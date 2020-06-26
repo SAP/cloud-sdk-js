@@ -15,3 +15,7 @@ export * from './uri-conversion';
 export * from './legacy-request-configs';
 export * from './extract-odata-etag';
 export * from '../common';
+export * as filterFunctions from './filter-functions';
+
+/* Export some filter functions for backwards compatibility */
+export { substringOf, length, substring } from './filter-functions';

@@ -56,7 +56,8 @@ export function createGetFilter(uriConverter: UriConverter) {
   function getODataFilterExpression<FilterEntityT extends EntityBase>(
     filter: Filterable<FilterEntityT>,
     parentFieldNames: string[] = [],
-    targetEntityConstructor: Constructable<any>
+    targetEntityConstructor: Constructable<any>,
+    lambdaExpressionLevel: number = 0
   ): string | undefined {
     if (isFilterList(filter)) {
       filter.flatten();
@@ -66,7 +67,8 @@ export function createGetFilter(uriConverter: UriConverter) {
           getODataFilterExpression(
             subFilter,
             parentFieldNames,
-            targetEntityConstructor
+            targetEntityConstructor,
+            lambdaExpressionLevel
           )
         )
         .filter(f => !!f)
@@ -78,7 +80,8 @@ export function createGetFilter(uriConverter: UriConverter) {
           getODataFilterExpression(
             subFilter,
             parentFieldNames,
-            targetEntityConstructor
+            targetEntityConstructor,
+            lambdaExpressionLevel
           )
         )
         .filter(f => !!f)
@@ -103,7 +106,8 @@ export function createGetFilter(uriConverter: UriConverter) {
           getODataFilterExpression(
             subFilter,
             [...parentFieldNames, filter.link._fieldName],
-            filter.link._linkedEntity
+            filter.link._linkedEntity,
+            lambdaExpressionLevel
           )
         )
         .filter(f => !!f)
@@ -133,12 +137,12 @@ export function createGetFilter(uriConverter: UriConverter) {
     }
 
     if (isFilterLambdaExpression(filter)) {
-      const alias = 'a';
+      const alias = `a${lambdaExpressionLevel}`;
       filter.validate();
       // todo use filter list in the exp so here to reuse the path from filter list
       const filterExp = filter.filters
         .map(subFilter =>
-          getODataFilterExpression(subFilter, [], targetEntityConstructor)
+          getODataFilterExpression(subFilter, [], targetEntityConstructor, lambdaExpressionLevel + 1)
         )
         .filter(f => !!f)
         .join(' and ');

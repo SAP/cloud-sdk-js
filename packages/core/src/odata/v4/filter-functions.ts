@@ -16,27 +16,24 @@ import { Entity } from './entity';
  *
  * @returns The newly created filter function
  */
-export function substringOf<EntityT extends Entity>(
+export function contains<EntityT extends Entity>(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('substringof', 'bool', substr, str);
+  return filterFunction('contains', 'bool', substr, str);
 }
 
 /**
- * Build a filter function to replace the occurence of a search string with another string. Evaluates to string.
+ * Build a filter function to test whether a string matches a pattern. Evaluates to string.
  * @param str - The string to get the index from. This can either be a string, a reference to a field or another filter function.
- * @param searchStr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
- * @param replaceStr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
- *
+ * @param regex - The pattern to test against. This shoult be a regular expression as a string.
  * @returns The newly created filter function
  */
-export function replace<EntityT extends Entity>(
+export function matchesPattern<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  searchStr: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  replaceStr: string | Field<EntityT> | StringFilterFunction<EntityT>
-): StringFilterFunction<EntityT> {
-  return filterFunction('replace', 'string', str, searchStr, replaceStr);
+  regex: string
+): BooleanFilterFunction<EntityT> {
+  return filterFunction('matchesPattern', 'bool', str, regex);
 }
 
 export * from '../common/filter/filter-functions';

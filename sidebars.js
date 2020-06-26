@@ -87,7 +87,6 @@ module.exports = {
         label: 'Tips & Tricks',
         items: [
           'java/tips-and-tricks/change-log-level',
-          'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems',
           'java/tips-and-tricks/use-bapi-with-cloud-sdk-for-java'
         ]
       },
@@ -124,6 +123,8 @@ module.exports = {
           'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java'
         ],
       },
+      'java/sdk-java-troubleshooting-frequent-problems',
+      'java/release-notes-sap-cloud-sdk-for-java',
       'java/api-reference-java',
       'java/frequently-asked-questions'
     ],
@@ -146,7 +147,8 @@ module.exports = {
             type: 'category',
             label: 'OData',
             items: [
-              'js/features/odata/generator-js-sdk'
+              'js/features/odata/generator-js-sdk',
+              'js/features/odata/use-typed-odata-client-for-js'
             ]
           }
         ]

@@ -3,7 +3,7 @@ id: sdk-java-troubleshooting-frequent-problems
 title: Troubleshooting Frequent Problems
 hide_title: true
 hide_table_of_contents: false
-sidebar_label: Troubleshooting frequent problems
+sidebar_label: Troubleshooting
 description: This article is a collection of frequently occurring symptoms and a short guidance on how to address them.
 keywords:
 - sap
@@ -48,7 +48,7 @@ Possible causes:
 Possible causes:
 - The SDK defaults back to the provider account if no tenant information is available. See the above section on [Tenant or Principal not available](#tenant-or-principal-not-available).
 
-### JWT Validation fails
+### JWT validation fails
 
 **Symptom:** Logs show JWT validation exceptions, Tenant information is not available.
 
@@ -65,3 +65,15 @@ Possible causes:
 
 - The SAP Client and Locale headers will be missing if the `Destination` is not an `ErpHttpDestination`.
   See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
+
+### Compilation failures in generated OData VDM classes
+
+**Symptom:** Compilation fails due to missing _Getters_ and _Setters_ on entity objects.
+
+Possible causes:
+
+- Getters and Setters will be missing if [Lombok](https://projectlombok.org/) is not present in the dependency tree of your project.
+  See [Using the OData Generator](http://localhost:3000/cloud-sdk/docs/java/features/odata/generate-typed-odata-v2-and-v4-client-for-java#using-the-odata-generator).
+- Getters and Setters will be shown red if your IDE does not support Lombok. Hence, install the Lombok plugin for your IDE.
+  - For IntelliJ, install [the Lombok plugin](https://plugins.jetbrains.com/plugin/6317-lombok).
+  - For Eclipse, follow [this guide](https://projectlombok.org/setup/eclipse).

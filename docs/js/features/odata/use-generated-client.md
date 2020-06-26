@@ -36,19 +36,19 @@ return MyEntity.requestBuilder()
 ```
 
 First, import the entity from the service directory (`my-service`) within the output directory you specified when generating the service (`outputDir`). The service directory corresponds to the `directoryName` specified in the `serviceMapping.json` in your input directory.
-Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the [`getAll`](#GetAll-Request-Builer) request type.
+Every entity has a `requestBuilder` function, that allows to chain all types of request builders that are available for this entity, e. g. `MyEntity.requestBuilder().getAll()` for the [`getAll`](#getall-request-builder) request type.
 
-Potential request types (denoted by `requestType` in the example above) are [`getAll`](#GetAll-Request-Builder), [`getByKey`](#GetByKey-Request-Builder), [`create`](#Create-Request-Builder), [`update`](#Update-Request-Builder) and [`delete`](#Delete-Request-Builder).
+Potential request types (denoted by `requestType` in the example above) are [`getAll`](#getall-request-builder), [`getByKey`](#getbykey-request-builder), [`create`](#create-request-builder), [`update`](#update-request-builder) and [`delete`](#delete-request-builder).
 
 :::note
 Some entities do not support all of the request types, which in turn won't be available through the API.
 :::
 
-The request can further be configured by chaining additional configuration functions (denoted by `additionalRequestConfiguration` in the example above). All requests can be configured by setting [custom request headers](#Setting-custom-request-headers), [custom query parameters](#Setting-custom-query-parameters) and a [custom service path](#Setting-custom-service-path).
+The request can further be configured by chaining additional configuration functions (denoted by `additionalRequestConfiguration` in the example above). All requests can be configured by setting [custom request headers](#setting-custom-request-headers), [custom query parameters](#setting-custom-query-parameters) and a [custom service path](#setting-a-custom-service-path).
 
 Each request type has additional request specific configuration options:
 
-Creating  an entity `asChildOf` another entity for [`create`](#Create-Request-Builer) requests, [ETag handling](#Handling-of-ETags) for [`update`](#Update-Request-Builer) and [`delete`](#Delete-Request-Builer) requests, as well as set operations for [`getAll`](#GetAll-Request-Builer) requests and [`select`](#Select)ing properties for [`getAll`](#GetAll-Request-Builer) and [`getByKey`](#GetByKey-Request-Builer) requests.
+Creating  an entity `asChildOf` another entity for [`create`](#create-request-builder) requests, [ETag handling](#handling-of-etags) for [`update`](#update-request-builder) and [`delete`](#delete-request-builder) requests, as well as set operations for [`getAll`](#getall-request-builder) requests and [`select`](#select)ing properties for [`getAll`](#getall-request-builder) and [`getByKey`](#getbykey-request-builder) requests.
 
 The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured, chain the `execute` function and pass a [destination](/cloud-sdk/docs/js/features/connectivity/destination-js-sdk/) to it.
 
@@ -80,6 +80,7 @@ In the example below an additional query parameter `language=en` will be added t
 ```ts
 MyEntity.requestBuilder()
   .getAll()
+
   .withCustomQueryParameters({
     language: 'en'
   });
@@ -226,7 +227,7 @@ The example above can be shortened to:
 )
 ```
 
-More advanced filter expressions can be found [here](#Available-Filter-Expressions).
+More advanced filter expressions can be found [here](#available-filter-expressions).
 
 <!--
 #### OrderBy
@@ -271,7 +272,7 @@ BusinessPartner.requestBuilder().getByKey('id');
 
 The example above retrieves the BusinessPartner with the id 'id'.
 
-The result can be retricted by applying the [select](#Select) function, same as in the [GetAll](#GetAll-Request-Builer) request.
+The result can be retricted by applying the [select](#select) function, same as in the [GetAll](#getall-request-builder) request.
 
 ### Create Request Builder
 
@@ -309,7 +310,7 @@ BusinessPartner.requestBuilder()
 
 This will send a `PUT` request and thereby replace the whole entity.
 
-Entities can only be updated if [ETags](#Handling-of-ETags) match. If you want to force an update of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
+Entities can only be updated if [ETags](#handling-of-etags) match. If you want to force an update of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
 
 ```ts
 BusinessPartner.requestBuilder()
@@ -329,7 +330,7 @@ The Delete request builder allows you to create `DELETE` requests, that delete e
 BusinessPartner.requestBuilder().delete(businessPartner);
 ```
 
-Entities can only be deleted if [ETags](#Handling-of-ETags) match. If you want to force deletion of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
+Entities can only be deleted if [ETags](#handling-of-etags) match. If you want to force deletion of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
 
 ```ts
 BusinessPartner.requestBuilder()

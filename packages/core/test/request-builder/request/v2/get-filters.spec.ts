@@ -1,24 +1,20 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { and, or } from '../../../src';
-import { getQueryParametersForFilter } from '../../../src/odata/v2/uri-conversion/get-filter';
+import moment from 'moment';
+import {
+  and,
+  or,
+  filterFunction,
+  filterFunctions
+} from '../../../../src/odata/v2';
+import { getQueryParametersForFilter } from '../../../../src/odata/v2/uri-conversion/get-filter';
 import {
   testFilterBoolean,
-  testFilterComplexType,
-  testFilterCustomFieldBoolean,
-  testFilterCustomFieldDateTime,
-  testFilterCustomFieldDouble,
-  testFilterCustomFieldString,
-  testFilterCustomFieldTime,
-  testFilterFunctionCustom,
-  testFilterFunctionNested,
-  testFilterFunctionSubstring,
-  testFilterFunctionSubstringOf,
   testFilterGuid,
   testFilterInt16,
   testFilterSingleLink,
   testFilterString
-} from '../../test-util/filter-factory';
-import { TestEntity } from '../../test-util/test-services/v2/test-service';
+} from '../../../test-util/filter-factory';
+import { TestEntity } from '../../../test-util/test-services/v2/test-service';
 
 describe('get filters', () => {
   it('for simple filters', () => {
@@ -72,83 +68,97 @@ describe('get filters', () => {
 
   it('for complex types', () => {
     expect(
-      getQueryParametersForFilter(testFilterComplexType.filter, TestEntity)
-        .filter
-    ).toBe(testFilterComplexType.odataStr);
+      getQueryParametersForFilter(
+        TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
+        TestEntity
+      ).filter
+    ).toBe("ComplexTypeProperty/StringProperty eq 'test'");
   });
+});
 
+describe('get-filter for custom fields', () => {
   it('for custom string field', () => {
     expect(
       getQueryParametersForFilter(
-        testFilterCustomFieldString.filter,
+        TestEntity.customField('CustomFieldString')
+          .edmString()
+          .notEquals('customFieldTest'),
         TestEntity
       ).filter
-    ).toBe(testFilterCustomFieldString.odataStr);
+    ).toBe("CustomFieldString ne 'customFieldTest'");
   });
 
   it('for custom double field', () => {
     expect(
       getQueryParametersForFilter(
-        testFilterCustomFieldDouble.filter,
+        TestEntity.customField('CustomFieldDouble')
+          .edmDouble()
+          .greaterOrEqual(13),
         TestEntity
       ).filter
-    ).toBe(testFilterCustomFieldDouble.odataStr);
+    ).toBe('CustomFieldDouble ge 13D');
   });
 
   it('for custom moment field', () => {
     expect(
       getQueryParametersForFilter(
-        testFilterCustomFieldDateTime.filter,
+        TestEntity.customField('CustomFieldDateTime')
+          .edmDateTime()
+          .equals(moment.utc('2015-12-31', 'YYYY-MM-DD')),
         TestEntity
       ).filter
-    ).toBe(testFilterCustomFieldDateTime.odataStr);
+    ).toBe("CustomFieldDateTime eq datetime'2015-12-31T00:00:00.000'");
   });
 
   it('for custom time field', () => {
     expect(
-      getQueryParametersForFilter(testFilterCustomFieldTime.filter, TestEntity)
-        .filter
-    ).toBe(testFilterCustomFieldTime.odataStr);
+      getQueryParametersForFilter(
+        TestEntity.customField('CustomFieldTime')
+          .edmTime()
+          .equals({ hours: 1, minutes: 1, seconds: 1 }),
+        TestEntity
+      ).filter
+    ).toBe("CustomFieldTime eq time'PT01H01M01S'");
   });
 
   it('for custom boolean field', () => {
     expect(
       getQueryParametersForFilter(
-        testFilterCustomFieldBoolean.filter,
+        TestEntity.customField('CustomFieldBoolean').edmBoolean().equals(true),
         TestEntity
       ).filter
-    ).toBe(testFilterCustomFieldBoolean.odataStr);
+    ).toBe('CustomFieldBoolean eq true');
   });
+});
 
-  it('for filter function substringof', () => {
-    expect(
-      getQueryParametersForFilter(
-        testFilterFunctionSubstringOf.filter,
-        TestEntity
-      ).filter
-    ).toBe(testFilterFunctionSubstringOf.odataStr);
-  });
-
-  it('for filter function substring', () => {
-    expect(
-      getQueryParametersForFilter(
-        testFilterFunctionSubstring.filter,
-        TestEntity
-      ).filter
-    ).toBe(testFilterFunctionSubstring.odataStr);
-  });
-
+describe('get-filter for filter functions', () => {
   it('for custom filter function', () => {
-    expect(
-      getQueryParametersForFilter(testFilterFunctionCustom.filter, TestEntity)
-        .filter
-    ).toBe(testFilterFunctionCustom.odataStr);
+    const fn = filterFunction(
+      'fn',
+      'int',
+      'str',
+      1,
+      TestEntity.DOUBLE_PROPERTY
+    );
+    expect(getQueryParametersForFilter(fn.equals(1), TestEntity).filter).toBe(
+      "fn('str', 1, DoubleProperty)"
+    );
   });
 
-  it('for filter function with navigation', () => {
+  it('for custom nested filter function', () => {
+    const fnNested = filterFunction('fnNested', 'bool');
+    const fn = filterFunction('fn', 'string', fnNested);
     expect(
-      getQueryParametersForFilter(testFilterFunctionNested.filter, TestEntity)
-        .filter
-    ).toBe(testFilterFunctionNested.odataStr);
+      getQueryParametersForFilter(fn.equals('test'), TestEntity).filter
+    ).toBe("fn(fnNested()) eq 'test'");
+  });
+
+  it('for length filter function', () => {
+    expect(
+      getQueryParametersForFilter(
+        filterFunctions.length(TestEntity.STRING_PROPERTY).equals(3),
+        TestEntity
+      ).filter
+    ).toBe('length(StringProperty) eq 3');
   });
 });

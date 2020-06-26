@@ -10,7 +10,7 @@ import { Link } from './link';
  */
 export class OneToManyLink<
   EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  LinkedEntityT extends EntityBase = any
 > extends Link<EntityT, LinkedEntityT> {
   _filters: FilterLink<EntityT, LinkedEntityT>;
   _orderBy: Orderable<LinkedEntityT>[] = [];

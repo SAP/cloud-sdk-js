@@ -8,7 +8,7 @@ import {
   TestEntitySingleLink
 } from './test-services/v2/test-service';
 import {
-  TestEntity as TestEntityV4,
+  TestEntity as TestEntityV4, TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink as TestEntityMultiLinkV4
 } from './test-services/v4/test-service';
@@ -152,4 +152,17 @@ export const testFilterLambdaExpressionFilterLinkOnLink = {
     )
   )._filters,
   odataStr: "(to_MultiLink/any(a:a/(to_SingleLink/StringProperty eq 'test1')))"
+};
+
+export const testNestedFilterLambdaExpressionOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(
+      TestEntityMultiLinkV4.TO_MULTI_LINK.filter(
+        any(
+          TestEntityLvl2MultiLink.STRING_PROPERTY.equals('test')
+        )
+      )
+    )
+  )._filters,
+  odataStr: "to_MultiLink/any(a:a/to_MultiLink/any(a:a/StringProperty eq 'test'))"
 };

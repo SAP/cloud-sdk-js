@@ -8,6 +8,7 @@ import {
   isFilter
 } from '../../common/filter';
 import { EntityBase } from '../../common';
+import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
@@ -22,14 +23,16 @@ export class FilterLambdaExpression<
   FieldT extends FieldType
 > {
   constructor(
+    //TODO support all filterable
     public filters: (
       | Filter<EntityT, FieldT>
       | FilterLink<EntityT>
-      | FilterList<EntityT>
+      | FilterList<EntityT> | FilterLambdaExpression<EntityT, FieldType>
     )[],
     public lambdaOperator: FilterLambdaOperator
   ) {}
 
+  // todo enable filter function
   validate() {
     this.filters.forEach(f => {
       if (isFilter(f) && typeof f.field !== 'string') {
@@ -60,26 +63,30 @@ export function isFilterLambdaExpression<
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function any<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  ...filters: (
-    | Filter<LinkedEntityT, FieldT>
-    | FilterLink<LinkedEntityT>
-    | FilterList<LinkedEntityT>
-  )[]
-): FilterLambdaExpression<LinkedEntityT, FieldType> {
-  return new FilterLambdaExpression(filters, 'any');
+export function any<FieldT extends FieldType, EntityT extends EntityBase>(
+  ...filters: (Filterable<EntityT> | OneToManyLink<EntityT>)[]
+): FilterLambdaExpression<EntityT, FieldType> {
+  return new FilterLambdaExpression(toFilterable(filters), 'any');
 }
 
 // eslint-disable-next-line valid-jsdoc
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function all<FieldT extends FieldType, LinkedEntityT extends EntityBase>(
-  ...filters: (
-    | Filter<LinkedEntityT, FieldT>
-    | FilterLink<LinkedEntityT>
-    | FilterList<LinkedEntityT>
-  )[]
-): FilterLambdaExpression<LinkedEntityT, FieldType> {
-  return new FilterLambdaExpression(filters, 'all');
+export function all<FieldT extends FieldType, EntityT extends EntityBase>(
+  ...filters: (Filterable<EntityT> | OneToManyLink<EntityT>)[]
+): FilterLambdaExpression<EntityT, FieldType> {
+  return new FilterLambdaExpression(toFilterable(filters), 'all');
+}
+
+function toFilterable<FieldT extends FieldType, EntityT extends EntityBase>(filters: (
+  | Filterable<EntityT>
+  | OneToManyLink<EntityT>
+  )[]): Filterable<EntityT>[]{
+  return filters.map(f => {
+    if(f instanceof OneToManyLink){
+      return f._filters;
+    }
+    return f;
+  });
 }

@@ -21,7 +21,7 @@ import {
   testFilterLambdaExpressionOnLink,
   testFilterSingleLink,
   testFilterString,
-  testFilterStringV4
+  testFilterStringV4, testNestedFilterLambdaExpressionOnLink
 } from '../../test-util/filter-factory';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '../../test-util/test-services/v4/test-service';
@@ -187,6 +187,15 @@ describe('get filters', () => {
           TestEntityV4
         ).filter
       ).toBe(testFilterLambdaExpressionFilterLinkOnLink.odataStr);
+    });
+
+    it('should get filter for nested lambda expression on one-to-many navigation property', () => {
+      expect(
+        getFilter(
+          testNestedFilterLambdaExpressionOnLink.filter,
+          TestEntityV4
+        ).filter
+      ).toBe(testNestedFilterLambdaExpressionOnLink.odataStr);
     });
   });
 });

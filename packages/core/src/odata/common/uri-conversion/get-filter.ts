@@ -135,11 +135,7 @@ export function createGetFilter(uriConverter: UriConverter) {
     if (isFilterLambdaExpression(filter)) {
       const alias = 'a';
       filter.validate();
-      if (parentFieldNames.length !== 1) {
-        throw new Error(
-          'Nested lambda filter expressions are not supported.'
-        );
-      }
+      // todo use filter list in the exp so here to reuse the path from filter list
       const filterExp = filter.filters
         .map(subFilter =>
           getODataFilterExpression(subFilter, [], targetEntityConstructor)

@@ -1,7 +1,7 @@
 ---
 id: bapi-and-rfc-overview
 title: Call a BAPI/RFC Module with SAP Cloud SDK for Java
-sidebar_label: Overview
+sidebar_label: BAPI/RFC
 description: Call a BAPI/RFC Module with SAP Cloud SDK for Java
 keywords:
 - sap
@@ -19,9 +19,9 @@ The SAP Cloud SDK provides an easy-to-use API that you can use in your cloud app
 
 ## What is a BAPI/an RFC Module?
 
-As per the [official SAP documentation](https://help.sap.com/saphelp_46c/helpdata/en/a5/3ec8464ac011d1894e0000e829fbbd/content.htm?no_cache=true), a BAPI is an *precisely defined interface providing access to processes and data in business application systems*. That is, BAPIs allow external systems to integrate with SAP S/4HANA by reading and writing business data through the BAPI as interface. By contrast, an RFC module can also be used for such integrations. However, the recommended approach is to leverage BAPIs wherever possible as BAPIs guarantee more stable and intuitive interfaces.
+As per the [official SAP documentation](https://help.sap.com/saphelp_46c/helpdata/en/a5/3ec8464ac011d1894e0000e829fbbd/content.htm?no_cache=true), a BAPI (Business Application Programming Interface) is an *precisely defined interface providing access to processes and data in business application systems*. That is, BAPIs allow external systems to integrate with SAP S/4HANA by reading and writing business data through the BAPI as interface. By contrast, an RFC module can also be used for such integrations. However, the recommended approach is to leverage BAPIs wherever possible as BAPIs guarantee more stable and intuitive interfaces.
 
-On the technical level, both BAPIs and RFC modules allow for invocation from external systems through the RFC protocol. As opposed to HTTP, RFC is a binary protocol highly-optimized for fast data transfer between enterprise systems.
+On the technical level, both BAPIs and RFC modules allow for invocation from external systems through the [RFC protocol](https://help.sap.com/doc/saphelp_nw73/7.3.16/en-US/48/88068ad9134076e10000000a42189d/content.htm) (Remote Function Call). As opposed to HTTP, RFC is a binary protocol highly-optimized for fast data transfer between enterprise systems.
 
 You can find more differences between BAPI and RFC module on the programming model. Here is a brief overview:
 - BAPIs have names that **always** start with "BAPI". RFC modules have more flexible naming conventions.

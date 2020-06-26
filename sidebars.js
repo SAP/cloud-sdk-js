@@ -38,13 +38,9 @@ module.exports = {
               }
             ]
           },
-          {
-            type: 'category',
-            label: 'BAPI/RFC',
-            items: [
+         
               'java/features/bapi-and-rfc/bapi-and-rfc-overview'
-            ]
-          },
+,
           {
             type: 'category',
             label: 'Connectivity',

@@ -146,9 +146,11 @@ export function createGetFilter(uriConverter: UriConverter) {
         )
         .filter(f => !!f)
         .join(' and ');
+      //todo currently, we wrap brackets for all FilterLink/FilterList without checking, because before the lambda, both cases (with/without brackets) work fine.
+      // This should be handled in the caller to avoid unnecessary brackets, to avoid this work around.
       return `${parentFieldNames.pop()}/${
         filter.lambdaOperator
-      }(${alias}:${alias}/${filterExp})`;
+      }(${alias}:${alias}/${removeBrackets(filterExp)})`;
     }
   }
 
@@ -200,6 +202,10 @@ export function createGetFilter(uriConverter: UriConverter) {
       return filterFunctionToString(param, parentFieldNames);
     }
     return [...parentFieldNames, param._fieldName].join('/');
+  }
+
+  function removeBrackets(filterExp: string){
+    return filterExp.startsWith('(') && filterExp.endsWith(')')? filterExp.substr(1, filterExp.length - 2) : filterExp;
   }
 
   return {

@@ -141,7 +141,7 @@ describe('get-filter for filter functions', () => {
       TestEntity.DOUBLE_PROPERTY
     );
     expect(getQueryParametersForFilter(fn.equals(1), TestEntity).filter).toBe(
-      "fn('str', 1, DoubleProperty)"
+      "fn('str', 1, DoubleProperty) eq 1"
     );
   });
 
@@ -160,5 +160,23 @@ describe('get-filter for filter functions', () => {
         TestEntity
       ).filter
     ).toBe('length(StringProperty) eq 3');
+  });
+
+  it('for round filter function with default double', () => {
+    expect(
+      getQueryParametersForFilter(
+        filterFunctions.round(10.1).equals(3),
+        TestEntity
+      ).filter
+    ).toBe('round(10.1) eq 3D');
+  });
+
+  it('for round filter function with decimal', () => {
+    expect(
+      getQueryParametersForFilter(
+        filterFunctions.round(10.1, 'decimal').equals(3),
+        TestEntity
+      ).filter
+    ).toBe('round(10.1) eq 3M');
   });
 });

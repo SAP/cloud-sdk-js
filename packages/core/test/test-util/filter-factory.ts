@@ -67,7 +67,7 @@ export const testFilterLambdaExpressionFilterListOnLink = {
     )
   )._filters,
   odataStr:
-    "(to_MultiLink/any(a0:a0/(StringProperty eq 'test1' or Int16Property eq 1)))"
+    "(to_MultiLink/any(a0:a0/StringProperty eq 'test1' or Int16Property eq 1))"
 };
 
 export const testFilterLambdaExpressionFilterLinkOnLink = {
@@ -78,7 +78,7 @@ export const testFilterLambdaExpressionFilterLinkOnLink = {
       )
     )
   )._filters,
-  odataStr: "(to_MultiLink/any(a0:a0/(to_SingleLink/StringProperty eq 'test1')))"
+  odataStr: "(to_MultiLink/any(a0:a0/to_SingleLink/StringProperty eq 'test1'))"
 };
 
 export const testNestedFilterLambdaExpressionOnLink = {
@@ -91,5 +91,5 @@ export const testNestedFilterLambdaExpressionOnLink = {
       )
     )
   )._filters,
-  odataStr: "to_MultiLink/any(a0:a0/to_MultiLink/any(a1:a1/StringProperty eq 'test'))"
+  odataStr: "(to_MultiLink/any(a0:a0/to_MultiLink/any(a1:a1/StringProperty eq 'test')))"
 };

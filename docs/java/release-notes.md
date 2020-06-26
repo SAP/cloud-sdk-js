@@ -1,5 +1,5 @@
 ---
-id: release-notes-java
+id: release-notes-sap-cloud-sdk-for-java
 title: Release notes - SDK for Java
 sidebar_label: Release notes
 description: Release notes of SAP Cloud SDK for Java, stay up to date with the recent features, fixes, dependency updates and recommendedations.

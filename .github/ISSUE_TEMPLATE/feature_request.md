@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+<!-- Please note that this repository is for JavaScript / TypeScript related issues only. If you have a question about the SAP Cloud SDK for Java open a question on StackOverflow: https://stackoverflow.com/questions/tagged/sap-cloud-sdk+java -->
+
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 

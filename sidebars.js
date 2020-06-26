@@ -1,4 +1,3 @@
-
 module.exports = {
   someSidebar: {
     // Dzen: ['dzen/getting-started', 'dzen/how-to-write-documentation'],
@@ -88,8 +87,8 @@ module.exports = {
         label: 'Tips & Tricks',
         items: [
           'java/tips-and-tricks/change-log-level',
-          'java/tips-and-tricks/sdk-java-troubleshooting-frequent-problems'
-      ]
+          'java/tips-and-tricks/use-bapi-with-cloud-sdk-for-java'
+        ]
       },
       {
         type: 'category',
@@ -98,7 +97,8 @@ module.exports = {
           'java/guides/sap-cloud-sdk-linux-how-to',
           'java/guides/cf-cli',
           'java/guides/cf-deploy',
-          'java/guides/logging-overview'
+          'java/guides/logging-overview',
+          'java/guides/tutorial-overview-sdk-java'
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',
@@ -114,6 +114,17 @@ module.exports = {
           //       'java/how-to/configure-ide'
         ]
       },
+      {
+        type: 'category',
+        label: 'Video tutorials',
+        items: [
+          'java/video/video-tutorial-about-getting-started-with-sap-cloudsdk-for-java',
+          'java/video/video-tutorial-about-type-safe-client-generator-for-odata-with-sap-cloudsdk-for-java',
+          'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java'
+        ],
+      },
+      'java/sdk-java-troubleshooting-frequent-problems',
+      'java/release-notes-sap-cloud-sdk-for-java',
       'java/api-reference-java',
       'java/frequently-asked-questions'
     ],
@@ -130,6 +141,14 @@ module.exports = {
             items: [
               'js/features/connectivity/proxy-js-sdk',
               'js/features/connectivity/destination-js-sdk'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'OData',
+            items: [
+              'js/features/odata/generator-js-sdk',
+              'js/features/odata/use-typed-odata-client-for-js'
             ]
           }
         ]

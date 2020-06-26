@@ -16,7 +16,6 @@ keywords:
 - continuous integration
 - continuous delivery
 - project "Piper"
-image:
 ---
 
 ## Best DevOps practices at SAP ##
@@ -46,4 +45,6 @@ Check **Week 3** of [Create and Deliver Cloud-Native SAP S/4HANA Extensions](htt
 ### Video tutorial ###
 This video tutorial is a good example of SAP Cloud SDK for continuous delivery used with [SAP Cloud Programming Model](https://cap.cloud.sap/docs/)
 
-<iframe width="1236" height="695" src="https://www.youtube.com/embed/Ss0mFfaE5t4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="sdk-video-container">
+<iframe class='sdk-video' src="https://www.youtube.com/embed/Ss0mFfaE5t4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>

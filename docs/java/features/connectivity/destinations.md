@@ -29,16 +29,37 @@ DestinationAccessor.getDestination("my-destination");
 This will look up the destination in the destination service if the application is running on SAP Cloud Platform. But
 also, other sources like the environment variables are considered.
 
+## Decorating Destinations ##
+Depending on the use case, one needs to wrap the accessed destination before making a request to any system. This is to make sure all required destination properties are correctly set before invoking the actual request. 
+
+### HTTP Destinations
+In case of HTTP connections one needs to wrap the retrieved destination as `DefaultHttpDestination` using `asHttp()`: 
+
+```java
+DestinationAccessor.getDestination("my-destination").asHttp();
+```
+
+This method ensures that the required destination properties are all set to make the HTTP connection.
+With the resulting destination instance depending on the use case one can run HTTP queries for ODATA or REST.
+
+### BAPI Destinations
+Similarly, for BAPI endpoints you need to use `asRfc()`:
+
+```java
+DestinationAccessor.getDestination("my-destination").asRfc();
+```
+
 ### Connect to on-premise S/4HANA system ###
 If your destination is exposing an on-premise S/4HANA service via a **[Cloud
 Connector](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/e6c7616abb5710148cfcf3e75d96d596.html)**
-you need to decorate the destination with `DefaultErpHttpDestination`
+you need to decorate the destination with `DefaultErpHttpDestination`:
 
 ```java
 final HttpDestination httpDestination =
 destination.asHttp().decorate(DefaultErpHttpDestination::new);
-
 ```
+
+This ensures the mapping of all S/4 properties like `sap-client` and `sap-locale` as HTTP request headers.
 
 ## Testing destinations in local environment ##
 

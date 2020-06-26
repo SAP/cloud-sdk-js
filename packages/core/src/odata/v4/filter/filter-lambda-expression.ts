@@ -23,27 +23,11 @@ export class FilterLambdaExpression<
   FieldT extends FieldType
 > {
   constructor(
-    //TODO support all filterable
     public filters: (
-      | Filter<EntityT, FieldT>
-      | FilterLink<EntityT>
-      | FilterList<EntityT> | FilterLambdaExpression<EntityT, FieldType>
+      | Filterable<EntityT> | FilterLambdaExpression<EntityT, FieldType>
     )[],
     public lambdaOperator: FilterLambdaOperator
   ) {}
-
-  // todo enable filter function
-  validate() {
-    this.filters.forEach(f => {
-      if (isFilter(f) && typeof f.field !== 'string') {
-        throw new Error(
-          `The type of the field: ${
-            f.field
-          } is not string, but ${typeof f.field}.`
-        );
-      }
-    });
-  }
 }
 
 // eslint-disable-next-line valid-jsdoc

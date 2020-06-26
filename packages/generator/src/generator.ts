@@ -177,6 +177,13 @@ function generateAggregatorPackage(
       );
       copyChangelog(aggregatorPackageDir, options);
     }
+
+    if (options.developerLicenceFile) {
+      logger.info(
+        `Generating DEVELOPER_LICENCE.md for project: ${aggregatorPackageDir}...`
+      );
+      copyDeveloperLicence(aggregatorPackageDir, options);
+    }
   }
 }
 
@@ -263,6 +270,13 @@ export async function generateSourcesForService(
       readme(service, options.s4hanaCloud),
       options.forceOverwrite
     );
+  }
+
+  if (options.developerLicenceFile) {
+    logger.info(
+      `Generating developer licence file for service: ${service.namespace}...`
+    );
+    copyDeveloperLicence(serviceDir, options);
   }
 
   if (options.changelogFile) {
@@ -362,6 +376,20 @@ function copyChangelog(
     copyFile(
       options.changelogFile.toString(),
       'CHANGELOG.md',
+      toDirectory,
+      options.forceOverwrite
+    );
+  }
+}
+
+function copyDeveloperLicence(
+  toDirectory: Directory,
+  options: GeneratorOptions
+): void {
+  if (options.developerLicenceFile) {
+    copyFile(
+      options.developerLicenceFile.toString(),
+      'DEVELOPER_LICENCE.md',
       toDirectory,
       options.forceOverwrite
     );

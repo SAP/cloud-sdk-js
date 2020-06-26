@@ -14,6 +14,7 @@ export interface GeneratorOptions {
   useSwagger: boolean;
   writeReadme: boolean;
   changelogFile?: PathLike;
+  developerLicenceFile?: PathLike;
   forceOverwrite: boolean;
   clearOutputDir: boolean;
   aggregatorNpmPackageName?: string;
@@ -80,6 +81,14 @@ export const generatorOptionsCli: KeysToOptions = {
   changelogFile: {
     describe:
       'Path to file that will be copied into the generated packages under the filename CHANGELOG.md.',
+    type: 'string',
+    coerce: resolve,
+    normalize: true,
+    hidden: true
+  },
+  developerLicenceFile: {
+    describe:
+      'Path to file that will be copied into the generated packages under the filename DEVELOPER_LICENCE.md.',
     type: 'string',
     coerce: resolve,
     normalize: true,

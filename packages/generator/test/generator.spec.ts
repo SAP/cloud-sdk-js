@@ -1,11 +1,44 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import * as path from 'path';
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { SourceFile, ClassDeclaration, FunctionDeclaration } from 'ts-morph';
-import { generateProject } from '../src';
+import { generateProject, GeneratorOptions } from '../src';
 import { createOptions } from './test-util/create-generator-options';
 
 describe('generator', () => {
   let files: SourceFile[];
+
+  const pathToTestFile = path.resolve(
+    process.cwd(),
+    '../../test-resources/some-test-markdown.md'
+  );
+  it('generates the developer licence file', async () => {
+    const project = await generateProject(
+      createOptions({
+        inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
+        developerLicenceFile: pathToTestFile
+      })
+    );
+    expect(
+      project!
+        .getSourceFiles()
+        .find(file => file.getBaseName() === 'DEVELOPER_LICENCE.md')
+    ).toBeDefined();
+  });
+
+  it('generates the changelog file', async () => {
+    const project = await generateProject(
+      createOptions({
+        inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
+        changelogFile: pathToTestFile
+      })
+    );
+    expect(
+      project!
+        .getSourceFiles()
+        .find(file => file.getBaseName() === 'CHANGELOG.md')
+    ).toBeDefined();
+  });
 
   describe('v2', () => {
     beforeAll(async () => {
@@ -101,7 +134,8 @@ function checkStaticProperties(entityClass: ClassDeclaration): void {
 }
 
 async function getGeneratedFiles(
-  oDataVersion: ODataVersion
+  oDataVersion: ODataVersion,
+  generatorOptionsX?: GeneratorOptions
 ): Promise<SourceFile[]> {
   const project = await generateProject(
     createOptions({

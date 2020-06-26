@@ -30,7 +30,7 @@ This will look up the destination in the destination service if the application 
 also, other sources like the environment variables are considered.
 
 ## Decorating Destinations ##
-Depending on the use case, one needs to wrap the accessed destination before making a request to any system. This is to make sure all required destination properties are correctly set before invoking the actual request. 
+Depending on the use case, one needs to wrap the accessed destination before issuing a request to a system. This is to make sure all required destination properties are correctly set before invoking the actual request.
 
 ### HTTP Destinations
 In case of HTTP connections one needs to wrap the retrieved destination as `DefaultHttpDestination` using `asHttp()`: 

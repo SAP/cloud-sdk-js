@@ -2,6 +2,7 @@
 import { v4 as uuid } from 'uuid';
 import { or} from '../../src';
 import { all, any } from '../../src/odata/v4';
+import { filterFunctions } from '../../src/odata/v4';
 import {
   TestEntity,
   TestEntitySingleLink
@@ -67,7 +68,7 @@ export const testFilterLambdaExpressionFilterListOnLink = {
     )
   )._filters,
   odataStr:
-    "(to_MultiLink/any(a0:a0/StringProperty eq 'test1' or Int16Property eq 1))"
+    "(to_MultiLink/any(a0:a0/StringProperty eq 'test1' or a0/Int16Property eq 1))"
 };
 
 export const testFilterLambdaExpressionFilterLinkOnLink = {
@@ -92,4 +93,12 @@ export const testNestedFilterLambdaExpressionOnLink = {
     )
   )._filters,
   odataStr: "(to_MultiLink/any(a0:a0/to_MultiLink/any(a1:a1/StringProperty eq 'test')))"
+};
+
+export const testFilterLambdaExpressionFilterFunctionOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(filterFunctions.substring(TestEntityMultiLinkV4.STRING_PROPERTY, 1).equals('test'))
+  )._filters,
+  odataStr:
+    "(to_MultiLink/any(a0:substring(a0/StringProperty, 1) eq 'test'))"
 };

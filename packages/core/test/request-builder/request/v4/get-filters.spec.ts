@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { getFilter } from '../../../../src/odata/v4/uri-conversion/get-filter';
 import {
+  testFilterLambdaExpressionFilterFunctionOnLink,
   testFilterLambdaExpressionFilterLinkOnLink,
   testFilterLambdaExpressionFilterListOnLink,
   testFilterLambdaExpressionOnLink,
@@ -48,4 +49,13 @@ describe('get filters', () => {
         ).filter
       ).toBe(testNestedFilterLambdaExpressionOnLink.odataStr);
     });
+
+  it('for lambda expression with filter function on one-to-many navigation property', () => {
+    expect(
+      getFilter(
+        testFilterLambdaExpressionFilterFunctionOnLink.filter,
+        TestEntity
+      ).filter
+    ).toBe(testFilterLambdaExpressionFilterFunctionOnLink.odataStr);
+  });
 });

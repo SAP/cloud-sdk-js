@@ -141,15 +141,15 @@ export function createGetFilter(uriConverter: UriConverter) {
       // todo use filter list in the exp so here to reuse the path from filter list
       const filterExp = filter.filters
         .map(subFilter =>
-          getODataFilterExpression(subFilter, [], targetEntityConstructor, lambdaExpressionLevel + 1)
+          getODataFilterExpression(subFilter, [alias], targetEntityConstructor, lambdaExpressionLevel + 1)
         )
         .filter(f => !!f)
         .join(' and ');
       //todo currently, we wrap brackets for all FilterLink/FilterList without checking, because before the lambda, both cases (with/without brackets) work fine.
       // This should be handled in the caller to avoid unnecessary brackets, to avoid this work around.
-      return `${parentFieldNames.pop()}/${
+      return `${parentFieldNames.join('/')}/${
         filter.lambdaOperator
-      }(${alias}:${alias}/${removeBrackets(filterExp)})`;
+      }(${alias}:${removeBrackets(filterExp)})`;
     }
   }
 

@@ -9,7 +9,6 @@ module.exports = {
       // 'overview/what-is-new'
     ],
     Java: [
-      'java/introduction',
       'java/getting-started',
       {
         type: 'category',
@@ -56,21 +55,6 @@ module.exports = {
       },
       //   {
       //     type: 'category',
-      //     label: 'Features',
-      //     items: [
-      //       'cli',
-      //       'project-archetype',
-      //       'vdm',
-      //       'odata',
-      //       'generate-client',
-      //       'cloud-abstractions',
-      //       'pipeline',
-      //       'caching',
-      //       'resilience'
-      //     ]
-      //   },
-      //   {
-      //     type: 'category',
       //     label: 'Advanced features',
       //     items: [
       //       'untyped-client',
@@ -82,14 +66,7 @@ module.exports = {
       //     ]
       //   },
       //   'client-libraries',
-      {
-        type: 'category',
-        label: 'Tips & Tricks',
-        items: [
-          'java/tips-and-tricks/change-log-level',
-          'java/tips-and-tricks/use-bapi-with-cloud-sdk-for-java'
-        ]
-      },
+
       {
         type: 'category',
         label: 'Guides',

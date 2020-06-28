@@ -36,7 +36,7 @@ Check [JavaDoc links from the release notes](https://help.sap.com/doc/6c02295dfa
 ## SDK Version 2  ##
 :::caution
 Cloud **SDK for Java V2** is in maintenance. No major updates and bug-fixing is planned.
-To continue using the latest feature, please, migrate to **SDK for Java V3**
+To continue using the latest feature, please, [migrate to **SDK for Java V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html)
 :::
 
 - [2.28.0](https://help.sap.com/doc/3e8c7a614a8b49a8806bd0392e7b78d6/1.0/en-US/index.html)

@@ -89,6 +89,7 @@ defaultValue="v4" values={[
 
 :::caution Lombok and Dependency injection are mandatory!
 Lombok and dependency injections are used by the generated typed OData client classes, that is why they are needed but only with the scope _provided_.
+Furthermore, some common IDEs (e.g. IntelliJ, Eclipse) require plugins to recognize these annotations. See the note on [Missing Getters/Setters](../../troubleshooting.md#compilation-failures-in-generated-odata-vdm-classes)
 :::
 
 

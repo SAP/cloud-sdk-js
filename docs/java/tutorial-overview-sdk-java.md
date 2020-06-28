@@ -56,11 +56,11 @@ Use links below to quickly access your favorite tutorial and refresh your knowle
 
 [Set Up Your Local Infrastructure to Develop with SAP Cloud SDK](https://developers.sap.com/tutorials/s4sdk-setup.html)
 
-### Further Material
+## Further Material
 
 [Max Streifeneder](https://www.linkedin.com/in/max-streifeneder-72a0955b/) shows the Cloud SDK in a couple of video-guides.
 
-#### Getting started
+### Getting started
 
 This great **Getting Started** video-guide by [Max Streifeneder](https://www.youtube.com/channel/UCkzNZP9fzLxRyhnGT2ziSRw) will help you to familiarize yourself with Cloud SDK development model and give an example of consuming Workflow service via its REST API on SAP Cloud Platform.
 
@@ -71,7 +71,7 @@ This great **Getting Started** video-guide by [Max Streifeneder](https://www.you
 
 </div>
 
-#### Destinations and Cloud Connector
+### Destinations and Cloud Connector
 
 Cloud Native applications are no piece of cake when you have to connect to **On Premise** systems and deliver Apps or extensions on top of that.
 Well, in SAP Cloud SDK for Java we think otherwise!
@@ -83,7 +83,7 @@ Watch this comprehensive video tutorial by [Max Streifeneder](https://www.youtub
 <iframe class="sdk-video" src="https://www.youtube.com/embed/Ky1R0Yq-zKg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-#### Generating an OData Client
+### Generating an OData Client
 
 Imagine you need to develop an App that integrates with OData service.
 Maybe you also want to host it on SAP Cloud Platform?
@@ -101,6 +101,6 @@ Enjoy the video!
 </div>
 
 
-#### Looking for more? ##
+### Looking for more? ##
 
 Check out [Max's channel](https://www.youtube.com/channel/UCkzNZP9fzLxRyhnGT2ziSRw) for other videos on Cloud SDK and other SAP technologies. He speaks easy about difficult enterprise software topics and helps to navigate vast SAP Cloud ecosystem to help you deliver beautiful Apps and Extensions for S/4HANA and other popular SAP products.

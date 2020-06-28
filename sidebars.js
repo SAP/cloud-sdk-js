@@ -75,6 +75,7 @@ module.exports = {
           'java/guides/cf-cli',
           'java/guides/cf-deploy',
           'java/guides/logging-overview',
+          'java/guides/change-log-level',
           'java/guides/tutorial-overview-sdk-java'
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',

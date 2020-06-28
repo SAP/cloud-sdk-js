@@ -109,7 +109,7 @@ defaultValue="v4" values={[
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-v4-generator-maven-plugin</artifactId>
         <!-- Please use the latest version here-->
-        <version>3.18.0</version>
+        <version>3.XX.X</version>
         <executions>
             <execution>
                 <id>generate-consumption</id>
@@ -139,7 +139,7 @@ defaultValue="v4" values={[
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-generator-maven-plugin</artifactId>
         <!-- Please use the latest version here-->
-        <version>3.18.0</version>
+        <version>3.XX.X</version>
         <executions>
             <execution>
                 <id>generate-consumption</id>

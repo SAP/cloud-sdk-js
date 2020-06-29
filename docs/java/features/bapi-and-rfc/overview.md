@@ -240,7 +240,7 @@ Open the SCP cockpit on the subaccount level. Navigate to `Connectivity` -> `Des
   - `jco.client.sysnr`: Enter the SAP S/4HANA instance number
 
 ### Call the Test App
-Recall that our test app has the two servlet parameters `destinationName` and `controllingArea`. Suppose our destination has the name `BAPI-TEST` and we intend to read cost centers from controlling area `0001`, we'd call the test app with the relative path `hello?destinationName=BAPI-TEST&controllingArea=0001`.
+Our test app has the two servlet parameters `destinationName` and `controllingArea`. Suppose our destination has the name `BAPI-TEST` and we intend to read cost centers from controlling area `0001`, we'd call the test app with the relative path `hello?destinationName=BAPI-TEST&controllingArea=0001`.
 
 Access the test app through your browser with the address comprising of the full host name plus the relative path. You should see the login prompt of the protected backend. After authentication, the servlet is invoked and you should see the servlet response printing the cost center details.
 

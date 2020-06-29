@@ -9,6 +9,7 @@ module.exports = {
       // 'overview/what-is-new'
     ],
     Java: [
+      'java/introduction',
       'java/getting-started',
       {
         type: 'category',

@@ -139,18 +139,18 @@ module.exports = {
         items: [
           {
             type: 'category',
-            label: 'Connectivity',
-            items: [
-              'js/features/connectivity/proxy-js-sdk',
-              'js/features/connectivity/destination-js-sdk'
-            ]
-          },
-          {
-            type: 'category',
             label: 'OData',
             items: [
               'js/features/odata/generator-js-sdk',
               'js/features/odata/use-typed-odata-client-for-js'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'Connectivity',
+            items: [
+              'js/features/connectivity/proxy-js-sdk',
+              'js/features/connectivity/destination-js-sdk'
             ]
           }
         ]

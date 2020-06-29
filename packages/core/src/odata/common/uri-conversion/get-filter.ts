@@ -18,8 +18,8 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
-import { isFilterLambdaExpression } from '../../v4';
 import { convertToUriForEdmString } from './uri-value-converter';
+import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -58,7 +58,7 @@ export function createGetFilter(uriConverter: UriConverter) {
     parentFieldNames: string[] = [],
     targetEntityConstructor: Constructable<any>,
     lambdaExpressionLevel: number = 0
-  ): string | undefined {
+  ): string {
     if (isFilterList(filter)) {
       filter.flatten();
 
@@ -138,13 +138,7 @@ export function createGetFilter(uriConverter: UriConverter) {
 
     if (isFilterLambdaExpression(filter)) {
       const alias = `a${lambdaExpressionLevel}`;
-      // todo use filter list in the exp so here to reuse the path from filter list
-      const filterExp = filter.filters
-        .map(subFilter =>
-          getODataFilterExpression(subFilter, [alias], targetEntityConstructor, lambdaExpressionLevel + 1)
-        )
-        .filter(f => !!f)
-        .join(' and ');
+      const filterExp = getODataFilterExpression(filter.filters, [alias], targetEntityConstructor, lambdaExpressionLevel + 1);
       //todo currently, we wrap brackets for all FilterLink/FilterList without checking, because before the lambda, both cases (with/without brackets) work fine.
       // This should be handled in the caller to avoid unnecessary brackets, to avoid this work around.
       return `${parentFieldNames.join('/')}/${

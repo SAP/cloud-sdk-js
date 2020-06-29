@@ -1,48 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { FieldType } from '../../common/selectable';
 import {
-  Filter,
-  Filterable,
-  FilterLink,
-  FilterList,
-  isFilter
+  Filterable, FilterList
 } from '../../common/filter';
 import { EntityBase } from '../../common';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
-
-/**
- * @experimental This is experimental and is subject to change. Use with caution.
- */
-export type FilterLambdaOperator = 'any' | 'all';
-
-/**
- * @experimental This is experimental and is subject to change. Use with caution.
- */
-export class FilterLambdaExpression<
-  EntityT extends EntityBase,
-  FieldT extends FieldType
-> {
-  constructor(
-    public filters: (
-      | Filterable<EntityT> | FilterLambdaExpression<EntityT, FieldType>
-    )[],
-    public lambdaOperator: FilterLambdaOperator
-  ) {}
-}
-
-// eslint-disable-next-line valid-jsdoc
-/**
- * @experimental This is experimental and is subject to change. Use with caution.
- */
-export function isFilterLambdaExpression<
-  EntityT extends EntityBase,
-  FieldT extends FieldType
->(
-  filterable: Filterable<EntityT>
-): filterable is FilterLambdaExpression<EntityT, FieldT> {
-  return 'filters' in filterable && 'lambdaOperator' in filterable;
-}
-
+import { FilterLambdaExpression } from '../../common/filter/filter-lambda-expression';
 // eslint-disable-next-line valid-jsdoc
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
@@ -66,11 +29,11 @@ export function all<FieldT extends FieldType, EntityT extends EntityBase>(
 function toFilterable<FieldT extends FieldType, EntityT extends EntityBase>(filters: (
   | Filterable<EntityT>
   | OneToManyLink<EntityT>
-  )[]): Filterable<EntityT>[]{
-  return filters.map(f => {
+  )[]): FilterList<EntityT>{
+  return new FilterList(filters.map(f => {
     if(f instanceof OneToManyLink){
       return f._filters;
     }
     return f;
-  });
+  }));
 }

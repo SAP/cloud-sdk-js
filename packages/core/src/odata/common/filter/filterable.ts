@@ -2,10 +2,10 @@
 
 import { EntityBase } from '../entity';
 import { FieldType } from '../selectable';
-import { FilterLambdaExpression } from '../../v4';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
+import { FilterLambdaExpression } from './filter-lambda-expression';
 
 /**
  * A union of all types that can be used for filtering.

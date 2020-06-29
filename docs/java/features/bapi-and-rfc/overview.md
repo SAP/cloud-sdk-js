@@ -215,7 +215,7 @@ Invoke `cf push` from the directory root to deploy the app to your SAP Cloud Fou
 ### Configure SCP
 
 #### Prerequisites
-Here is what you have to provide or to possess to make reasonable progress throughout the next steps.
+Here is what you'll need to make progress throughout the next steps.
 - Node installed on your own machine
 - User in SAP S/4HANA target system
 - SCP Cloud Foundry subaccount with entitlements for XSUAA, destination and connectivity service

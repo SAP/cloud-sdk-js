@@ -252,19 +252,13 @@ The JCO classes are available on the JVM classpath at runtime. If not, the excep
 
 Possible reasons and resolutions:
 - There have been issues with finding JCo classes in a Spring Boot project. In such cases using the "traditional deployment" of Spring solved the problem. Thereby you deploy a war file instead of a jar file and you use Tomcat as the servlet container.
-- On SCP Cloud Foundry, the SAP Java Build Pack brings JCo as dependency. The problem arises when the build pack is not used. That is, you must declare its usage in your deployment descriptor `manifest.yml` as such:
+- On SCP Cloud Foundry, the SAP Java Build Pack brings JCo as a dependency. The problem arises when the build pack is not used. That is, you must declare its usage in your deployment descriptor `manifest.yml` as such:
 ```yaml
 - name: testapp
 ...
   buildpacks:
     - sap_java_buildpack
 ...
-```
-
-### JCo requires User Information to be set
-JCo throws an `java.lang.IllegalStateException: User information is not set` if the application is not protected. That is, the incoming request must contain a JWT that identifies the user. As a solution, protect your backend with an app router to let the app user login.
-
-
 ### Decoration of RFC Destinations
 In the realm of HTTP, destinations allow decoration to add further features to them. For instance, an `ErpHttpDestination` can decorate an `HttpDestination` which introduces the enhancement of request headers with S/4HANA-specific destination properties (e.g., `sap-client`).
 ```java

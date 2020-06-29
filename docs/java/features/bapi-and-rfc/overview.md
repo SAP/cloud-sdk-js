@@ -212,7 +212,7 @@ The presented code works for RFC modules too. The only difference is to use alte
 ### Deploy app to SCP
 Invoke `cf push` from the directory root to deploy the app to your SAP Cloud Foundry space.
 
-### Configure SCP
+### Configure SAP Cloud Platform - Cloud Foundry
 
 #### Prerequisites
 Here is what you'll need to make progress throughout the next steps.

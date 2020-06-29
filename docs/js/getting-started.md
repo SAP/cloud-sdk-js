@@ -142,9 +142,7 @@ Since `nest` was started in watch mode, it should detect this change and restart
 
 ### Installation
 
-You will need the `Cloud Foundry` command line interface (`cf` CLI) to later deploy your application to SAP Cloud Platform. To see whether it is already installed, you can run `cf -v` on your command line. If the command fails, you will need to install it.
-
-You can find installation instructions for all common platforms in the [`Cloud Foundry documentation`](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). Again, we recommend to use a `package manager` for that. If you are using `chocolatey` on Windows, please find the instructions [here](https://chocolatey.org/packages/cloudfoundry-cli).
+The `Cloud Foundry` CLI deploys your application to SAP Cloud Platform. You can find installation instructions for all common platforms in the [`Cloud Foundry documentation`](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). We recommend to use a `package manager` for that. If you are using `chocolatey` on Windows, please find the instructions [here](https://chocolatey.org/packages/cloudfoundry-cli).
 
 ### Login
 <!--Do i need to explain this with more detail?-->
@@ -156,12 +154,17 @@ cf login
 ### Before deploying
 - Make sure that your app listens to port 8080
 - Build your app if necessary
+- In productive environments:
+  - Transpile the application from TypeScript to JavaScript using the `ci-build` script
+  - Package the deployment using the `ci-package` script.
 
-<!--I don't understand this command, it wqs in the original doc but is not in the tutorial-->
+<!--
+I don't understand this command, it wqs in the original doc but is not in the tutorial
 Then run:
 ```shell
 sap-cloud-sdk package
 ```
+-->
 
 ### Deployment
 Push to Cloud Foundry:
@@ -169,26 +172,78 @@ Push to Cloud Foundry:
 cf push
 ```
 
+#### Manual deployments
+For manual deployments, run:
+```Shell
+npm run deploy
+```
+
+This command will use your local sources for transpiling, packaging and deployment, but will omit packaging your local `node_modules` as those can be system dependent. Dependencies will instead be installed automatically when deploying to `Cloud Foundry`.
+
+The Cloud Foundry CLI will automatically pick up the `manifest.yml` of the project when deploying your application. The file should look like this (where `<YOUR-APPLICATION-NAME>` is replaced by the name you specified when initializing the project):
+
+```YAML
+applications:
+  - name: <YOUR-APPLICATION-NAME>
+    path: deployment/
+    buildpacks:
+      - nodejs_buildpack
+    memory: 256M
+    command: npm run start:prod
+    random-route: true
+```
+
+- The specified `path` instructs Cloud Foundry to upload all the files from the `deployment/` folder.
+- The command specified under the `command` attribute tells the `buildpack` what command to issue to start the application.
+
+When everything works as expected, you should get output that looks something like this:
+
+```shell
+Waiting for app to start...
+
+name:              <YOUR-APPLICATION-NAME>
+requested state:   started
+routes:            <YOUR-APPLICATION-NAME>.cfapps.eu10.hana.ondemand.com
+last uploaded:     Thu 21 Mar 14:05:32 CET 2019
+stack:             cflinuxfs3
+buildpacks:        nodejs
+
+type:            web
+instances:       1/1
+memory usage:    256M
+start command:   node index.js
+     state     since                  cpu    memory        disk           details
+#0   running   2019-03-21T13:05:47Z   0.0%   16M of 256M   126.8M of 1G
+```
+
+Make sure that the application works correctly by running the start command, this command can be different than the one shown above.
+
+
+Should the application not work for whatever reason, you can call the following command to access the logs:
+
+```Shell
+cf logs <YOUR-APPLICATION-NAME> --recent
+```
+
 <!--TODO:
 Destination
 Bind destination
 XSUAA
+
+what was written at the end before:
+
+For productive use, your app should implement user authentication and authorization.
+For SAP Cloud Foundry, this is usually done by using the approuter and xsuaa service.
+Start by running [`sap-cloud-sdk add-approuter`](#sap-cloud-sdk-add-approuter) and configure the xsuaa service accordingly.
+
 -->
-Do i need to go more in depth about xsuaa?
-like this:
 ### Configure destination
 
-Now that we have deployed our application, we need to configure a destination in the Cloud Cockpit so that it can be used by our application.
+Login the [Cloud Cockpit](https://account.hana.ondemand.com), navigate to your respective subaccount (in case of a trial account it should be called `trial`). In the menu bar on the left, there should be a section `Connectivity` with an entry called `Destinations`. Click `Destinations`. On the page that opens, click `New Destination` and fill in the details below.
 
-Start by opening the [Cloud Cockpit](https://account.hana.ondemand.com) in your browser and logging in.
+For `Name`, choose a name that describes your system. For the exemple, we will go with `MockServer`.
 
-Next, navigate to your respective subaccount (in case of a trial account it should be called **trial**). In the menu bar on the left, there should be a section **Connectivity** with an entry called **Destinations**. Click **Destinations**. On the page that opens, click **New Destination** and fill in the details below.
-
-![SAP_Cloud_Platform_Cockpit](sap_cloud_platform_cockpit.png)
-
-For **Name**, choose a name that describes your system. For the tutorial, we will go with **`MockServer`**.
-
-If you use the Business Partner mock server, enter for **URL** the URL that you have saved from the previous step and use **`NoAuthentication`** for **Authentication**. If you use an SAP S/4HANA Cloud system, enter the systems URL in the **URL** field and choose **`BasicAuthentication`** as authentication type. This will make the fields **User** and **Password** appear. Enter here the credentials of a technical user for your SAP S/4HANA Cloud system.
+If you use the Business Partner mock server, enter for `URL` the URL that you have saved from the previous step and use `NoAuthentication` for `Authentication`. If you use an SAP S/4HANA Cloud system, enter the systems URL in the `URL` field and choose `BasicAuthentication` as authentication type. This will make the fields `User` and `Password` appear. Enter here the credentials of a technical user for your SAP S/4HANA Cloud system.
 
 ### Bind destination service
 
@@ -200,7 +255,7 @@ To create an instance of the destination service, execute the following command 
 cf create-service destination lite my-destination
 ```
 
-This tells `Cloud Foundry in SAP Cloud Platform` to create an instance of the destination service with service plan **lite** and make it accessible under the name **my-destination**. We can now use the name to bind this service to our application. To do this, open your `manifest.yml` and add a section called `services`, under which you can then add the name of the just created service.
+This tells `Cloud Foundry in SAP Cloud Platform` to create an instance of the destination service with service plan `lite` and make it accessible under the name `my-destination`. We can now use the name to bind this service to our application. To do this, open your `manifest.yml` and add a section called `services`, under which you can then add the name of the just created service.
 
 The resulting `manifest.yml` should look like this:
 
@@ -267,13 +322,3 @@ function getAllBusinessPartners(): Promise<BusinessPartner[]> {
 ```
 
 We replaced the parameter of `execute` with an object whose key `destinationName` refers to the name of the destination we defined earlier. If you chose a different name than `MockServer`, make sure to use it here accordingly.
-
-Now we can recompile and redeploy the application. In your command line, run:
-```shell
-npm run deploy
-```
-
-## TEST
-For productive use, your app should implement user authentication and authorization.
-For SAP Cloud Foundry, this is usually done by using the approuter and xsuaa service.
-Start by running [`sap-cloud-sdk add-approuter`](#sap-cloud-sdk-add-approuter) and configure the xsuaa service accordingly.

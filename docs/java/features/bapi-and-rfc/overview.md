@@ -14,9 +14,6 @@ keywords:
 - rfc
 ---
 
-## Context ##
-The SAP Cloud SDK provides an easy-to-use API that you can use in your cloud app to develop calls to BAPIs and RFC modules inside SAP S/4HANA. This documentation presents the usage of that API, outlines the technical background and touches upon the relevant boundary conditions.
-
 ## What is a BAPI/an RFC Module?
 
 As per the [official SAP documentation](https://help.sap.com/saphelp_46c/helpdata/en/a5/3ec8464ac011d1894e0000e829fbbd/content.htm?no_cache=true), a BAPI (Business Application Programming Interface) is a *precisely defined interface providing access to processes and data in business application systems*. BAPIs allow external systems to integrate with SAP S/4HANA by reading and writing business data through the BAPI as an interface. By contrast, an RFC module can also be used for such integrations. However, the recommended approach is to leverage BAPIs wherever possible as BAPIs guarantee more stable and intuitive interfaces.

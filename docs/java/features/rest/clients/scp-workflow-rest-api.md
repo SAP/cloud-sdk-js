@@ -28,7 +28,7 @@ Refer to [this blog post](https://blogs.sap.com/2018/01/09/sap-cloud-platform-wo
 Let us sketch an example use case to gain a better understanding when we would want to use this client library.
 
 Imagine a use case comprising a business scenario with multiple involved parties, complex validation logic, and parallel execution flows. These requirements can be met with the SCP Workflow service. It allows us to model the workflows in a visual editor. In addition, you develop a cloud application leveraging the SAP Cloud SDK that covers the main part of the business logic and orchestrates the workflow processing in the background. For this purpose, your app communicates with the SCP Workflow service through its REST API. To make your life easier when it comes to developing against the REST API, you utilize the respective client library.
- 
+
 
 ## Consume the SCP Workflow REST API
 ### Application Use Case
@@ -141,7 +141,7 @@ At next, carefully look at the JSON content and collect the values for the follo
 
 You'll need the values in the next step.
 
-#### Maintain HTTP Destination 
+#### Maintain HTTP Destination
 Go to your CF subaccount, navigate to `Connectivity` and `Destinations` in the left-hand side menu, and create a new HTTP destination with the following properties:
 - Name: Workflow-Api
 - Type: HTTP
@@ -165,16 +165,16 @@ In addition, we assume that your have the SAP Cloud SDK Bill-of-Material (BOM) i
     <dependency>
       <groupId>com.sap.cloud.sdk</groupId>
       <artifactId>sdk-bom</artifactId>
-      <!-- use at least version 3.19.1 -->
-      <version>3.19.1</version>
+      <!-- WF API is supported in ver 3.19.1 of the SDK and above -->
+      <version>3.XX.X</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
   </dependencies>
 </dependencyManagement>
-``` 
+```
 
-#### Add Maven Dependency 
+#### Add Maven Dependency
 
 You can refer to the Java client library for the SCP Workflow service with the following Maven dependency:
 ```xml
@@ -214,7 +214,7 @@ workflowDefinition.getJobs().forEach(job -> {
 });
 ```
 After this demo of the client library, we'll cover its general capabilities and limitations in the next sections.
-### Client Library Capabilities 
+### Client Library Capabilities
 The Java client library for SCP Workflow enables the developer to invoke the REST API in a type-safe and convenient manner. It provides Java abstractions for all REST API endpoints along with the respective model classes. Essentially, the library relieves the developer from all the HTTP-related development work (e.g., interpreting status codec, JSON de-/serialization) and lets him/her focus on the real business logic.
 
 Moreover, we integrated the library with the SAP Cloud SDK capabilities, such as the tenant-aware destination retrieval.
@@ -222,7 +222,7 @@ Moreover, we integrated the library with the SAP Cloud SDK capabilities, such as
 ### Client Library Limitations
 We have published the client library in a Beta state. That is, we verified its functional correctness to the best of our knowledge, but you should still not use the library for productive use cases. Once the library is mature enough we will announce that explicitly.
 
-Henceforth, the library supports the SCP Workflow service on Cloud Foundry, while it does not cover the SCP Workflow service on the Neo landscape on SCP. 
+Henceforth, the library supports the SCP Workflow service on Cloud Foundry, while it does not cover the SCP Workflow service on the Neo landscape on SCP.
 
 Related to Cloud Foundry, you might know that environment variable VCAP_SERVICES contains information about your bound service instances. In the current state, it is required to create a destination manually instead of letting the library consume VCAP_SERVICES directly.
 

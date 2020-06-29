@@ -44,14 +44,9 @@ On the SCP Neo landscape JCO is automatically provided by the infrastructure, on
 
 ## Call a BAPI in SAP S/4HANA
 
-### Generate a Java project
-Generate a fresh Java project based on the CF Tomee archetype with this command. Make sure to specify the latest SDK version (replace the current value `3.22.0`) at the end by looking it up from the [SDK release notes](https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html).
-```bash
-mvn archetype:generate "-DarchetypeGroupId=com.sap.cloud.sdk.archetypes" "-DarchetypeArtifactId=scp-cf-tomee" "-DarchetypeVersion=3.22.0"
-```
-Enter the group id, the artifact id, the package name and the app version and let the project be generated. 
-
-Thereafter, `cd` into the new directory and invoke `mvn clean install` to ensure that the project builds succesfully.
+:::tip Generate SDK project
+If you're starting from scratch, generate a `Tomee` project following the steps in the [Getting started](https://sap.github.io/cloud-sdk/docs/java/getting-started#generating-a-project-from-a-maven-archetype) guide.
+:::
 
 ### Implement an Example BAPI Call
 

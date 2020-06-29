@@ -4,7 +4,7 @@ title: Resilience Capabilities of the SAP Cloud SDK for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Resilience
-description: This article describes how the SAP Cloud SDK for Java can be used to introduce resilience patterns into an application.
+description: How to use SAP Cloud SDK for Java to introduce resilience patterns into your application.
 keywords:
 - sap
 - cloud

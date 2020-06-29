@@ -206,7 +206,7 @@ export function createGetFilter(uriConverter: UriConverter) {
 
   function removeBrackets(filterExp: string) {
     return filterExp.startsWith('(') && filterExp.endsWith(')')
-      ? filterExp.substr(1, filterExp.length - 2)
+      ? removeBrackets(filterExp.substr(1, filterExp.length - 2))
       : filterExp;
   }
 

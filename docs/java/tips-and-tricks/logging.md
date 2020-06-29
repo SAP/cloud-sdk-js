@@ -15,8 +15,20 @@ keywords:
 image:
 ---
 
-## When debugging locally ##
-To quickly change `log levels` while debugging your Cloud SDK application locally add this argument to your `mvn` run command:
+## When running app/debugging on localhost ##
+
+For applications that run on localhost you can influence the log level settings via Maven.
+
+### Change Default Log Level
+
+To change the default log level, add this argument to your `mvn` run command:
+```makefile
+-Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+```
+
+
+### Change Log Level for specific Package
+To change the log level for a specific package and all its sub packages, add this argument to your `mvn` run command:
 
 ```makefile
 -Dorg.slf4j.simpleLogger.log.package.to.change.log.level.for=debug

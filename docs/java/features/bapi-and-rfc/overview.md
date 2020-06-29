@@ -36,7 +36,7 @@ To improve readability, we use the term *BAPI* in the remainder only but always 
 
 SAP offers the [SAP Java Connector](https://support.sap.com/en/product/connectors/jco.html) library, hereafter referred to as *JCo* in short, that allows native access to BAPIs inside SAP systems. That means, one can also invoke BAPIs without using the SAP Cloud SDK by solely leveraging JCo.
 
-However, the SAP Cloud SDK offers a convenient Java API on top of JCo that integrates with other SDK core concepts, such as the destination retrieval on SCP, as well as a nice way to mapping Java entity classes to BAPI input parameters and result sets.
+SAP Cloud SDK offers a convenient Java API on top of JCo that integrates with other SDK core concepts, such as the destination retrieval on SCP, as well as a nice way to mapping Java entity classes to BAPI input parameters and result sets.
 
 The distinction between SAP Cloud SDK and JCo is important, as the SAP Cloud SDK does *not* package JCo as library with its dependencies. The SDK rather assumes that JCo is available on the JVM classpath. 
 

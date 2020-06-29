@@ -42,3 +42,6 @@ filterFunctions.length(TestEntity.STRING_PROPERTY).greaterThan(1);
 
 // $ExpectType Filter<TestEntity, number>
 filterFunctions.round(TestEntity.STRING_PROPERTY).greaterThan(1);
+
+// $ExpectType NumberFilterFunction<TestEntity>
+filterFunctions.day(TestEntity.STRING_PROPERTY);

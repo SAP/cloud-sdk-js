@@ -1,10 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { Moment } from 'moment';
 import {
   Field,
   StringFilterFunction,
   BooleanFilterFunction,
-  filterFunction
+  filterFunction,
+  NumberFilterFunction
 } from '../common';
 import { Entity } from './entity';
 
@@ -35,5 +37,32 @@ export function matchesPattern<EntityT extends Entity>(
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('matchesPattern', 'bool', str, regex);
 }
+
+/* Date Functions */
+/**
+ * Build a filter function to get the fractional seconds of a date. Evaluates to int.
+ * @param date - The date to get the fractional seconds for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function fractionalSeconds<EntityT extends Entity>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('fractionalseconds', 'decimal', date);
+}
+
+/**
+ * Build a filter function to get the signed number of minutes in the time zone offset. Evaluates to int.
+ * @param date - The date to get the offset minutes for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function totalOffsetMinutes<EntityT extends Entity>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('totaloffsetminutes', 'decimal', date);
+}
+
+/**
+ * TODO: totalseconds, maxdatetime, mindatetime, now, time
+ */
 
 export * from '../common/filter/filter-functions';

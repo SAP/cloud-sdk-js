@@ -19,7 +19,8 @@ image:
 The SAP Cloud SDK for Java provides abstractions for some frequently used resilience patterns like timeout, retry or circuit breaker.
 Applying such patterns helps making an application more resilient against failures it might encounter.
 
-Also check out our [dedicated tutorial](https://developers.sap.com/tutorials/s4sdk-resilience.html) on the topic!
+The following article describes which resilience features the SDK offers and how to apply them.
+If you are looking for a quick start with resilience also check out our [dedicated tutorial](https://developers.sap.com/tutorials/s4sdk-resilience.html) on the topic!
 
 ## Consuming the Resilience API
 

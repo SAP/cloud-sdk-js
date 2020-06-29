@@ -211,7 +211,7 @@ The presented code works for RFC modules too. The only difference is to use alte
 - `RfmRequest` instead of `BapiRequest`
 - `RfmRequestResult` instead of `BapiRequestResult`
 
-### Deploy app to SCP
+### Deploy to SAP Cloud Platform - Cloud Foundry
 Invoke `cf push` from the directory root to deploy the app to your SAP Cloud Foundry space.
 
 ### Configure SAP Cloud Platform - Cloud Foundry

@@ -40,8 +40,7 @@ However, the SAP Cloud SDK offers a convenient Java API on top of JCo that integ
 
 The distinction between SAP Cloud SDK and JCo is important, as the SAP Cloud SDK does *not* package JCo as library with its dependencies. The SDK rather assumes that JCo is available on the JVM classpath. 
 
-On the SCP Neo landscape JCO is automatically provided by the infrastructure, on the SCP Cloud Foundry landscape one must use the SAP Java Build Pack during app deployment. There are other edge cases that we'll cover later in this documentation.
-
+On the SCP Neo landscape, JCO is automatically provided by the infrastructure, on the SCP Cloud Foundry landscape one must use the SAP Java Build Pack during app deployment. There are other edge cases that we'll cover later.
 ## Call a BAPI in SAP S/4HANA
 
 :::tip Generate SDK project

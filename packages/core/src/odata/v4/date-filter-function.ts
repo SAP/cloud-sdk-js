@@ -1,30 +1,30 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EntityBase } from '../entity';
-import { Filter } from './filter';
+import { EntityBase } from '../common/entity';
 import {
+  Filter,
   FilterFunction,
   FilterFunctionParameterType
-} from './filter-function-base';
+} from '../common/filter';
 
 /**
- * Representation of a filter function, that returns a value of type number. This supports int, double and decimal values.
+ * Representation of a filter function, that returns a value of type date. This supports DateTimeOffset values.
  */
-export class NumberFilterFunction<
+export class DateFilterFunction<
   EntityT extends EntityBase
 > extends FilterFunction<EntityT, number> {
   /**
-   * Creates an instance of NumberFilterFunction.
+   * Creates an instance of DateFilterFunction.
    * @param functionName - Name of the function that returns a numeric value
    * @param parameters - Representation of the parameters passed to the filter function
    * @param edmType - Type of the returned numeric value. This influences the formatting of the returned value.
    */
   constructor(
     functionName: string,
-    parameters: FilterFunctionParameterType<EntityT>[],
-    public edmType: 'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
+    parameters: FilterFunctionParameterType<EntityT>[]
   ) {
     super(functionName, parameters);
+    this.edmType = 'Edm.DateTimeOffset';
   }
 
   /**

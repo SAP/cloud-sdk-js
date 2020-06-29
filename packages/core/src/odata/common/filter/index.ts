@@ -2,7 +2,6 @@
 
 export * from './boolean-filter-function';
 export * from './filter';
-export * from './filter-function';
 export * from './filter-function-base';
 export * from './filter-link';
 export * from './filter-list';

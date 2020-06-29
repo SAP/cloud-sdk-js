@@ -162,17 +162,19 @@ This strategy can be configured, e.g. for running _without any isolation_ use:
 configuration.isolationMode(ResilienceIsolationMode.NO_ISOLATION);
 ```
 
-Other than no isolation there are essentially two modes for tenant/principal isolation:
+Other than no isolation there are essentially two modes for tenant and/or principal isolation:
 
 <table><tbody>
 <tr>
     <td>Required</td>
-    <td>Always isolates on tenant/principal level, will throw an exception if no tenant/principal is available</td>
+    <td>Always isolates on tenant and/or principal level, will throw an exception if no tenant/principal is available</td>
 </tr><tr>
     <td>Optional</td>
-    <td>Only isolates if tenant/principal information is available</td>
+    <td>Only isolates if tenant and/or principal information is available</td>
 </tr>
 </tbody></table>
+
+Details can be found on the API reference of [ResilienceIsolationMode](https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceIsolationMode.html).
 
 ## Resilience Capabilities
 

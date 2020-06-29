@@ -126,7 +126,7 @@ export function concat<EntityT extends EntityBase>(
 
 /* Math Functions */
 /**
- * Build a filter function to round a number. Evaluates to double or decimalx`x.
+ * Build a filter function to round a number. Evaluates to double or decimal, defaults to double.
  * @param num - The number to round. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
@@ -139,7 +139,7 @@ export function round<EntityT extends EntityBase>(
 }
 
 /**
- * Build a filter function to floor a number. Evaluates to double or decimalx`x.
+ * Build a filter function to floor a number. Evaluates to double or decimal, defaults to double.
  * @param num - The number to floor. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
@@ -152,7 +152,7 @@ export function floor<EntityT extends EntityBase>(
 }
 
 /**
- * Build a filter function to ceil a number. Evaluates to double or decimalx`x.
+ * Build a filter function to ceil a number. Evaluates to double or decimal, defaults to double.
  * @param num - The number to ceil. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function

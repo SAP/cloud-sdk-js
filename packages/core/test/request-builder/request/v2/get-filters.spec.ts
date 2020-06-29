@@ -179,4 +179,12 @@ describe('get-filter for filter functions', () => {
       ).filter
     ).toBe('round(10.1) eq 3M');
   });
+
+  it('for filter function with date', () => {
+    const date = moment.utc().year(2000).month(0).date(1).startOf('date');
+    const dateFn = filterFunction('fn', 'int', date).equals(1);
+    expect(getQueryParametersForFilter(dateFn, TestEntity).filter).toEqual(
+      "fn(datetimeoffset'2000-01-01T00:00:00.000Z') eq 1"
+    );
+  });
 });

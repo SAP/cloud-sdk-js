@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { Moment, isMoment } from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity';
 import { Field, FieldType } from '../selectable';
@@ -80,6 +81,11 @@ export abstract class FilterFunction<
     if (typeof param === 'string') {
       return `'${param.replace(/'/g, "''")}'`;
     }
+    if (isMoment(param)) {
+      throw new Error(
+        'Date parameters are not supported in the deprecated `transformParameter` method. Use `get-filter` instead.'
+      );
+    }
     if (param instanceof FilterFunction) {
       return param.toString(parentFieldNames);
     }
@@ -93,5 +99,6 @@ export abstract class FilterFunction<
 export type FilterFunctionParameterType<EntityT extends EntityBase> =
   | number
   | string
+  | Moment
   | Field<EntityT>
   | FilterFunction<EntityT, FieldType>;

@@ -38,7 +38,8 @@ SAP offers the [SAP Java Connector](https://support.sap.com/en/product/connector
 
 SAP Cloud SDK offers a convenient Java API on top of JCo that integrates with other SDK core concepts, such as the destination retrieval on SCP, as well as a nice way to mapping Java entity classes to BAPI input parameters and result sets.
 
-The distinction between SAP Cloud SDK and JCo is important, as the SAP Cloud SDK does *not* package JCo as library with its dependencies. The SDK rather assumes that JCo is available on the JVM classpath. 
+:::caution JCo is not packaged with SAP Cloud SDK
+SAP Cloud SDK does *not* package JCo as library with its dependencies. The SDK assumes that JCo is available on the JVM classpath. 
 
 On the SCP Neo landscape, JCO is automatically provided by the infrastructure, on the SCP Cloud Foundry landscape one must use the SAP Java Build Pack during app deployment. There are other edge cases that we'll cover later.
 ## Call a BAPI in SAP S/4HANA

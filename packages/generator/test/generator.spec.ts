@@ -12,32 +12,23 @@ describe('generator', () => {
     process.cwd(),
     '../../test-resources/some-test-markdown.md'
   );
-  it('generates the developer licence file', async () => {
+  it('copies the additional files matching the glob.', async () => {
     const project = await generateProject(
       createOptions({
         inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
-        developerLicenceFile: pathToTestFile
+        additionalFiles: '../../test-resources/*.md'
       })
     );
-    expect(
-      project!
-        .getSourceFiles()
-        .find(file => file.getBaseName() === 'DEVELOPER_LICENCE.md')
-    ).toBeDefined();
-  });
 
-  it('generates the changelog file', async () => {
-    const project = await generateProject(
-      createOptions({
-        inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
-        changelogFile: pathToTestFile
-      })
-    );
     expect(
       project!
         .getSourceFiles()
-        .find(file => file.getBaseName() === 'CHANGELOG.md')
-    ).toBeDefined();
+        .filter(
+          file =>
+            file.getBaseName() === 'some-test-markdown.md' ||
+            file.getBaseName() === 'CHANGELOG.md'
+        ).length
+    ).toBe(2);
   });
 
   describe('v2', () => {

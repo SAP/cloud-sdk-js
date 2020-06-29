@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { PathLike, readFileSync } from 'fs';
-import { relative, resolve } from 'path';
+import { relative, resolve, basename } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
@@ -15,6 +15,7 @@ import {
   ScriptTarget
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
+import { GlobSync } from 'glob';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';
@@ -127,7 +128,7 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  generateAggregatorPackage(services, options, project);
+  await generateAggregatorPackage(services, options, project);
 
   return project;
 }
@@ -171,18 +172,12 @@ function generateAggregatorPackage(
       );
     }
 
-    if (options.changelogFile) {
+    if (options.additionalFiles) {
       logger.info(
-        `Generating CHANGELOG.md for project: ${aggregatorPackageDir}...`
+        `Copying additional files matching ${options.additionalFiles} for project: ${aggregatorPackageDir}...`
       );
-      copyChangelog(aggregatorPackageDir, options);
-    }
 
-    if (options.developerLicenceFile) {
-      logger.info(
-        `Generating DEVELOPER_LICENCE.md for project: ${aggregatorPackageDir}...`
-      );
-      copyDeveloperLicence(aggregatorPackageDir, options);
+      copyAdditionalFiles(aggregatorPackageDir, options);
     }
   }
 }
@@ -272,18 +267,11 @@ export async function generateSourcesForService(
     );
   }
 
-  if (options.developerLicenceFile) {
+  if (options.additionalFiles) {
     logger.info(
-      `Generating developer licence file for service: ${service.namespace}...`
+      `Copying additional files matching ${options.additionalFiles} for project: ${serviceDir}...`
     );
-    copyDeveloperLicence(serviceDir, options);
-  }
-
-  if (options.changelogFile) {
-    logger.info(
-      `Generating change log file for service: ${service.namespace}...`
-    );
-    copyChangelog(serviceDir, options);
+    copyAdditionalFiles(serviceDir, options);
   }
 
   if (options.generateNpmrc) {
@@ -368,31 +356,19 @@ function getGeneratorVersion(): string {
     .version;
 }
 
-function copyChangelog(
+function copyAdditionalFiles(
   toDirectory: Directory,
   options: GeneratorOptions
-): void {
-  if (options.changelogFile) {
-    copyFile(
-      options.changelogFile.toString(),
-      'CHANGELOG.md',
-      toDirectory,
-      options.forceOverwrite
-    );
-  }
-}
-
-function copyDeveloperLicence(
-  toDirectory: Directory,
-  options: GeneratorOptions
-): void {
-  if (options.developerLicenceFile) {
-    copyFile(
-      options.developerLicenceFile.toString(),
-      'DEVELOPER_LICENCE.md',
-      toDirectory,
-      options.forceOverwrite
-    );
+) {
+  if (options.additionalFiles) {
+    new GlobSync(options.additionalFiles).found.forEach(filePath => {
+      copyFile(
+        filePath,
+        basename(filePath),
+        toDirectory,
+        options.forceOverwrite
+      );
+    });
   }
 }
 

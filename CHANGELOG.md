@@ -14,12 +14,13 @@
 
 ## Compatibility Notes
 
--
+- Removed the hidden generator opntion `changelogFile`.
+Use the more flexible options `additionalFiles` instead.
 
 ## New Functionality
 
-- Add the option `--developerLicenceFile <PathToLicenceFile>` to the generator.
-If specified the given file is copied as DEVELOPER_LICENCE.md to the service directories.    
+- Add the option `--additionalFiles <GlobToFiles>` to the generator.
+If specified all files matching the glob will be copied to each generated service directory.    
 
 ## Improvements
 

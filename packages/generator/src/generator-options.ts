@@ -13,8 +13,7 @@ export interface GeneratorOptions {
   serviceMapping?: PathLike;
   useSwagger: boolean;
   writeReadme: boolean;
-  changelogFile?: PathLike;
-  developerLicenceFile?: PathLike;
+  additionalFiles?: string;
   forceOverwrite: boolean;
   clearOutputDir: boolean;
   aggregatorNpmPackageName?: string;
@@ -78,17 +77,9 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false,
     hidden: true
   },
-  changelogFile: {
+  additionalFiles: {
     describe:
-      'Path to file that will be copied into the generated packages under the filename CHANGELOG.md.',
-    type: 'string',
-    coerce: resolve,
-    normalize: true,
-    hidden: true
-  },
-  developerLicenceFile: {
-    describe:
-      'Path to file that will be copied into the generated packages under the filename DEVELOPER_LICENCE.md.',
+      'Glob describing additional files to be added to the each generated service directory.',
     type: 'string',
     coerce: resolve,
     normalize: true,

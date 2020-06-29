@@ -259,6 +259,11 @@ Possible reasons and resolutions:
   buildpacks:
     - sap_java_buildpack
 ...
+```
+
+### JCo requires User Information to be set	
+JCo throws an `java.lang.IllegalStateException: User information is not set` if the application is not protected. That is, the incoming request must contain a JWT that identifies the user. As a solution, protect your backend with an app router to let the app user login.
+
 ### Decoration of RFC Destinations
 In the realm of HTTP, destinations allow decoration to add further features to them. For instance, an `ErpHttpDestination` can decorate an `HttpDestination` which introduces the enhancement of request headers with S/4HANA-specific destination properties (e.g., `sap-client`).
 ```java

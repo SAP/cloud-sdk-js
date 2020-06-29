@@ -28,7 +28,9 @@ You can find more differences between BAPI and RFC module on the programming mod
 - BAPIs do not throw exceptions, but leverage return tables to transfer messages to the caller. 
 - BAPIs do not use changing parameters, while RFC modules may do.
 
-To improve readablity, we use the term *BAPI* in the remainder only, but always refer to both BAPIs and RFC modules.
+:::info
+To improve readability, we use the term *BAPI* in the remainder only but always refer to both BAPIs and RFC modules.
+:::
 
 ## Technical Overview
 

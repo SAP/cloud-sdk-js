@@ -37,8 +37,9 @@ SAP Cloud SDK offers a convenient Java API on top of JCo that integrates with ot
 
 :::caution JCo is not packaged with SAP Cloud SDK
 SAP Cloud SDK does *not* package JCo as library with its dependencies. The SDK assumes that JCo is available on the JVM classpath. 
+:::
 
-On the SCP Neo landscape, JCO is automatically provided by the infrastructure, on the SCP Cloud Foundry landscape one must use the SAP Java Build Pack during app deployment. There are other edge cases that we'll cover later.
+On the SCP Neo landscape, JCo is automatically provided by the infrastructure, on the SCP Cloud Foundry landscape one must use the SAP Java Build Pack during app deployment. There are other edge cases that we'll cover later.
 ## Call a BAPI in SAP S/4HANA
 
 :::tip Generate SDK project
@@ -78,7 +79,7 @@ public class CostCenter {
     String description;
 }
 ```
-The annotation `@Value` is a class-level annotation that comes from [Lombok](https://projectlombok.org/), check outs its [documentation](https://projectlombok.org/features/Value) when curious. Thereby we declare all fields as `private` and `final`, receive getter and setter methods and also a well-crafted `toString()` method. It is a neat way of defining immutable classes that serve as entity abstractions.
+The annotation `@Value` is a class-level annotation that comes from [Lombok](https://projectlombok.org/), check outs its [documentation](https://projectlombok.org/features/Value) when curious. 
 
 We annotate every class member with `@ElementName` declaring the respective ABAP field name. The SDK uses this meta data to map the ABAP field to the Java field. You can look up the ABAP field name in S/4HANA transaction SE37 by opening the BAPI parameter list.
 
@@ -163,36 +164,26 @@ Before deploying the app, let's point out more possibilites to access the BAPI r
 - Use `getErrorMessages()`, `getSuccessMessages()`, `getWarningMessages()` and `getInformationMessages` to access the returned messages.
 - Use `hasFailed()` to figure out if the BAPI call was in it self working. Note that this is a convenient method for checking if `getErrorMessages()` is empty. That is, the intepretation whether the BAPI call was successful highly depends on the business context and you could implement your own logic for that purpose.
 
-You might notice that the `execute` method declares to throw a `RequestExecutionException` in case of a failure at runtime. That requires encapsulating the BAPI call in a try-catch block. Find now the whole `doGet` implementation as a summary.
+You might notice that the `execute` method declares to throw a `RequestExecutionException` in case of a failure at runtime. That requires encapsulating the BAPI call in a try-catch block.
 
 ```java
-@Override
-protected void doGet(final HttpServletRequest request, final HttpServletResponse response )
-        throws IOException
-{
-    final String destinationName = request.getParameter("destinationName");
-    final String controllingArea = request.getParameter("controllingArea");
+try {
+    final BapiRequestResult result = new BapiRequest("BAPI_COSTCENTER_GETLIST1")
+            .withExporting("CONTROLLINGAREA", "BAPI0012_GEN-CO_AREA", controllingArea)
+            .withTable("COSTCENTERLIST", "BAPI0012_CCLIST").end()
+            .withTableAsReturn("BAPIRET2")
+            .execute(destination);
 
-    final Destination destination = DestinationAccessor.getDestination(destinationName);
+    final List<CostCenter> costCenterList = result
+            .get("COSTCENTERLIST")
+            .getAsCollection()
+            .asList(CostCenter.class);
 
-    try {
-        final BapiRequestResult result = new BapiRequest("BAPI_COSTCENTER_GETLIST1")
-                .withExporting("CONTROLLINGAREA", "BAPI0012_GEN-CO_AREA", controllingArea)
-                .withTable("COSTCENTERLIST", "BAPI0012_CCLIST").end()
-                .withTableAsReturn("BAPIRET2")
-                .execute(destination);
-
-        final List<CostCenter> costCenterList = result
-                .get("COSTCENTERLIST")
-                .getAsCollection()
-                .asList(CostCenter.class);
-
-        for (final CostCenter costCenter : costCenterList) {
-            response.getWriter().write(costCenter.toString());
-        }
-    } catch (final RequestExecutionException e) {
-        e.printStackTrace(response.getWriter());
+    for (final CostCenter costCenter : costCenterList) {
+        response.getWriter().write(costCenter.toString());
     }
+} catch (final RequestExecutionException e) {
+    e.printStackTrace(response.getWriter());
 }
 ```
 
@@ -242,7 +233,7 @@ Access the test app through your browser with the address comprising of the full
 ## Boundary Conditions and Edge Cases
 
 ### JCo Classes not found at Runtime
-The JCO classes are available on the JVM classpath at runtime. If not, the exception in such cases reads like `java.lang.NoClassDefFoundError: com/sap/conn/jco/JCoException`.
+The JCo classes are available on the JVM classpath at runtime. If not, the exception in such cases reads like `java.lang.NoClassDefFoundError: com/sap/conn/jco/JCoException`.
 
 Possible reasons and resolutions:
 - There have been issues with finding JCo classes in a Spring Boot project. In such cases using the "traditional deployment" of Spring solved the problem. Thereby you deploy a war file instead of a jar file and you use Tomcat as the servlet container.

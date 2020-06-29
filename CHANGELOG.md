@@ -14,11 +14,11 @@
 
 ## Compatibility Notes
 
--
+- Importing filter functions directly is deprecated, import using `filterFunctions` instead.
 
 ## New Functionality
 
--
+- Support all string, number and date related filter functions. Import `filterFunctions` and use in a filter, e. g.  `.filter(filterFunctions.startsWith(BusinessPartner.FIRST_NAME).equals(true))`.
 
 ## Improvements
 

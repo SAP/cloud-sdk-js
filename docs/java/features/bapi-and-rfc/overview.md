@@ -158,7 +158,7 @@ final List<CostCenter> costCenterList = result
                 .getAsCollection()
                 .asList(CostCenter.class);
 ```
-This nicely demonstrates the convenience you gain by the Cloud SDK. You automatically retrieve `List<CostCenter>` and can access the output in a type-safe way. On the return type of `result.get("COSTCENTERLIST")` you call `getAsCollection()` to treat this parameter as a collection and then you instruct the SDK to transfer the contained entries into individual `CostCenter` instances with `asList(...)`.
+This helps you automatically retrieve `List<CostCenter>` and can access the output in a type-safe way. On the return type of `result.get("COSTCENTERLIST")` you call `getAsCollection()` to treat this parameter as a collection and then you instruct the SDK to transfer the contained entries into individual `CostCenter` instances with `asList(...)`.
 
 Further processing depends on the use case. For example, we could simply print the cost centers to the servlet response.
 ```java

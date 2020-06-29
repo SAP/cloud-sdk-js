@@ -144,8 +144,6 @@ export function createGetFilter(uriConverter: UriConverter) {
         targetEntityConstructor,
         lambdaExpressionLevel + 1
       );
-      // todo currently, we wrap brackets for all FilterLink/FilterList without checking, because before the lambda, both cases (with/without brackets) work fine.
-      // This should be handled in the caller to avoid unnecessary brackets, to avoid this work around.
       return `${parentFieldNames.join('/')}/${
         filter.lambdaOperator
       }(${alias}:${removeBrackets(filterExp)})`;

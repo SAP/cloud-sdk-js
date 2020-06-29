@@ -246,7 +246,6 @@ Access the test app through your browser with the address comprising of the full
 
 
 ## Boundary Conditions and Edge Cases
-The BAPI call with JCo requires some assumption to be met. We'll outline typical pitfalls and its resolution in the following.
 
 ### JCo Classes not found at Runtime
 The JCO classes are available on the JVM classpath at runtime. If not, the exception in such cases reads like `java.lang.NoClassDefFoundError: com/sap/conn/jco/JCoException`.

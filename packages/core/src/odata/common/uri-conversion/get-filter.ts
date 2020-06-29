@@ -18,8 +18,8 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
-import { convertToUriForEdmString } from './uri-value-converter';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
+import { convertToUriForEdmString } from './uri-value-converter';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -57,7 +57,7 @@ export function createGetFilter(uriConverter: UriConverter) {
     filter: Filterable<FilterEntityT>,
     parentFieldNames: string[] = [],
     targetEntityConstructor: Constructable<any>,
-    lambdaExpressionLevel: number = 0
+    lambdaExpressionLevel = 0
   ): string {
     if (isFilterList(filter)) {
       filter.flatten();
@@ -138,13 +138,20 @@ export function createGetFilter(uriConverter: UriConverter) {
 
     if (isFilterLambdaExpression(filter)) {
       const alias = `a${lambdaExpressionLevel}`;
-      const filterExp = getODataFilterExpression(filter.filters, [alias], targetEntityConstructor, lambdaExpressionLevel + 1);
-      //todo currently, we wrap brackets for all FilterLink/FilterList without checking, because before the lambda, both cases (with/without brackets) work fine.
+      const filterExp = getODataFilterExpression(
+        filter.filters,
+        [alias],
+        targetEntityConstructor,
+        lambdaExpressionLevel + 1
+      );
+      // todo currently, we wrap brackets for all FilterLink/FilterList without checking, because before the lambda, both cases (with/without brackets) work fine.
       // This should be handled in the caller to avoid unnecessary brackets, to avoid this work around.
       return `${parentFieldNames.join('/')}/${
         filter.lambdaOperator
       }(${alias}:${removeBrackets(filterExp)})`;
     }
+
+    throw new Error(`Filter: ${filter} is not valid.`);
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(
@@ -197,8 +204,10 @@ export function createGetFilter(uriConverter: UriConverter) {
     return [...parentFieldNames, param._fieldName].join('/');
   }
 
-  function removeBrackets(filterExp: string){
-    return filterExp.startsWith('(') && filterExp.endsWith(')')? filterExp.substr(1, filterExp.length - 2) : filterExp;
+  function removeBrackets(filterExp: string) {
+    return filterExp.startsWith('(') && filterExp.endsWith(')')
+      ? filterExp.substr(1, filterExp.length - 2)
+      : filterExp;
   }
 
   return {

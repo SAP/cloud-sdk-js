@@ -1,14 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
-import { or} from '../../src';
-import { all, any } from '../../src/odata/v4';
-import { filterFunctions } from '../../src/odata/v4';
+import { or } from '../../src';
+import { all, any, filterFunctions } from '../../src/odata/v4';
 import {
   TestEntity,
   TestEntitySingleLink
 } from './test-services/v2/test-service';
 import {
-  TestEntity as TestEntityV4, TestEntityLvl2MultiLink,
+  TestEntity as TestEntityV4,
+  TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink as TestEntityMultiLinkV4
 } from './test-services/v4/test-service';
@@ -86,19 +86,21 @@ export const testNestedFilterLambdaExpressionOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
     any(
       TestEntityMultiLinkV4.TO_MULTI_LINK.filter(
-        any(
-          TestEntityLvl2MultiLink.STRING_PROPERTY.equals('test')
-        )
+        any(TestEntityLvl2MultiLink.STRING_PROPERTY.equals('test'))
       )
     )
   )._filters,
-  odataStr: "(to_MultiLink/any(a0:a0/to_MultiLink/any(a1:a1/StringProperty eq 'test')))"
+  odataStr:
+    "(to_MultiLink/any(a0:a0/to_MultiLink/any(a1:a1/StringProperty eq 'test')))"
 };
 
 export const testFilterLambdaExpressionFilterFunctionOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
-    any(filterFunctions.substring(TestEntityMultiLinkV4.STRING_PROPERTY, 1).equals('test'))
+    any(
+      filterFunctions
+        .substring(TestEntityMultiLinkV4.STRING_PROPERTY, 1)
+        .equals('test')
+    )
   )._filters,
-  odataStr:
-    "(to_MultiLink/any(a0:substring(a0/StringProperty, 1) eq 'test'))"
+  odataStr: "(to_MultiLink/any(a0:substring(a0/StringProperty, 1) eq 'test'))"
 };

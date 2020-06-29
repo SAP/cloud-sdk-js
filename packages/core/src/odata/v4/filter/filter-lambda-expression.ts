@@ -1,8 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { FieldType } from '../../common/selectable';
-import {
-  Filterable, FilterList
-} from '../../common/filter';
+import { Filterable, FilterList } from '../../common/filter';
 import { EntityBase } from '../../common';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { FilterLambdaExpression } from '../../common/filter/filter-lambda-expression';
@@ -26,14 +24,15 @@ export function all<FieldT extends FieldType, EntityT extends EntityBase>(
   return new FilterLambdaExpression(toFilterable(filters), 'all');
 }
 
-function toFilterable<FieldT extends FieldType, EntityT extends EntityBase>(filters: (
-  | Filterable<EntityT>
-  | OneToManyLink<EntityT>
-  )[]): FilterList<EntityT>{
-  return new FilterList(filters.map(f => {
-    if(f instanceof OneToManyLink){
-      return f._filters;
-    }
-    return f;
-  }));
+function toFilterable<FieldT extends FieldType, EntityT extends EntityBase>(
+  filters: (Filterable<EntityT> | OneToManyLink<EntityT>)[]
+): FilterList<EntityT> {
+  return new FilterList(
+    filters.map(f => {
+      if (f instanceof OneToManyLink) {
+        return f._filters;
+      }
+      return f;
+    })
+  );
 }

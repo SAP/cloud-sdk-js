@@ -14,8 +14,8 @@
 
 ## Compatibility Notes
 
-- Removed the hidden generator opntion `changelogFile`.
-Use the more flexible options `additionalFiles` instead.
+- _OData client generator_: Remove the hidden generator option `changelogFile`.
+Use the new more general options `additionalFiles` instead.
 
 ## New Functionality
 

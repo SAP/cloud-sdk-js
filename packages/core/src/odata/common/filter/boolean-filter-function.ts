@@ -20,7 +20,6 @@ export class BooleanFilterFunction<
     functionName: string,
     parameters: FilterFunctionParameterType<EntityT>[]
   ) {
-    super(functionName, parameters);
-    this.edmType = 'Edm.Boolean';
+    super(functionName, parameters, 'Edm.Boolean');
   }
 }

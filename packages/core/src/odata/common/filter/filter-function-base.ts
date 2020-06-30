@@ -15,18 +15,15 @@ export abstract class FilterFunction<
   ReturnT extends FieldType
 > {
   /**
-   * EdmType of the return type of the filter function.
-   */
-  public edmType: EdmTypeShared<ODataVersionOf<EntityT>>;
-
-  /**
    * Creates an instance of FilterFunction.
-   * @param functionName - Name of the function
-   * @param parameters - Representation of the parameters passed to the filter function
+   * @param functionName - Name of the function.
+   * @param parameters - Representation of the parameters passed to the filter function.
+   * @param edmType - EdmType of the return type of the filter function.
    */
   constructor(
-    public functionName: string,
-    public parameters: FilterFunctionParameterType<EntityT>[]
+    readonly functionName: string,
+    readonly parameters: FilterFunctionParameterType<EntityT>[],
+    readonly edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {}
 
   /**

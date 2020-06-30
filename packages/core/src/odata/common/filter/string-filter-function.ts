@@ -21,7 +21,6 @@ export class StringFilterFunction<
     functionName: string,
     parameters: FilterFunctionParameterType<EntityT>[]
   ) {
-    super(functionName, parameters);
-    this.edmType = 'Edm.String';
+    super(functionName, parameters, 'Edm.String');
   }
 }

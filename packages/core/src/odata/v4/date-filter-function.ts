@@ -23,8 +23,7 @@ export class DateFilterFunction<
     functionName: string,
     parameters: FilterFunctionParameterType<EntityT>[]
   ) {
-    super(functionName, parameters);
-    this.edmType = 'Edm.DateTimeOffset';
+    super(functionName, parameters, 'Edm.DateTimeOffset');
   }
 
   /**

@@ -22,9 +22,9 @@ export class NumberFilterFunction<
   constructor(
     functionName: string,
     parameters: FilterFunctionParameterType<EntityT>[],
-    public edmType: 'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
+    edmType: 'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
   ) {
-    super(functionName, parameters);
+    super(functionName, parameters, edmType);
   }
 
   /**

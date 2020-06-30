@@ -20,15 +20,9 @@ describe('generator', () => {
       })
     );
 
-    expect(
-      project!
-        .getSourceFiles()
-        .filter(
-          file =>
-            file.getBaseName() === 'some-test-markdown.md' ||
-            file.getBaseName() === 'CHANGELOG.md'
-        ).length
-    ).toBe(2);
+    const files = project!.getSourceFiles();
+    expect(files.find(file => file.getBaseName() === 'some-test-markdown.md')).toBeDefined();
+    expect(files.find(file => file.getBaseName() === 'CHANGELOG.md')).toBeDefined();
   });
 
   describe('v2', () => {

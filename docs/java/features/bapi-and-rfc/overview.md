@@ -256,3 +256,35 @@ final HttpDestination httpDestination = DestinationAccessor.getDestination(desti
 final DefaultErpHttpDestination erpHttpDestination = httpDestination.decorate(DefaultErpHttpDestination::new);
 ```
 Simply speaking, for RFC destinations such decorations do not exist.
+
+### Local Deployment
+It is possible to execute BAPI calls from a Java app that runs on localhost. That requires few configuration steps.
+
+#### Download and Install JCo Library
+- Download the JCO library from the official [product page](https://support.sap.com/en/product/connectors/jco.html).
+- Extract the downloaded archive and note the JCo version (e.g., `3.1.2`) from the `Readme.txt` file.
+- Install the JAR file to your local Maven cache by running the following command:
+:::tip 
+Before running the command, replace `<sapjco-version>` with the JCo version you downloaded.
+:::
+`mvn install:install-file -Dfile=sapjco3.jar -DgroupId=com.sap.conn.jco -DartifactId=com.sap.conn.jco.sapjco3 -Dversion=<sapjco-version> -Dpackaging=jar`
+- Now Maven uses the JCo JAR file when declaring the dependency in your pom file.
+
+#### Add Dependency to you POM
+- Add this new dependency to your `pom.xml` in the `application` folder:
+```xml
+<dependency>
+    <groupId>com.sap.conn.jco</groupId>
+    <artifactId>com.sap.conn.jco.sapjco3</artifactId>
+    <version>${sapjco-version}</version>
+</dependency>
+```
+:::tip 
+Replace the placeholder `${sapjco-version}` with the JCo version you downloaded.
+:::
+
+#### Add JCo Library to System Path
+- Add the directory which contains the downloaded JCo archive to the system environment variable `Path`.
+
+#### Create a Destination
+- This depends on which solution to use.

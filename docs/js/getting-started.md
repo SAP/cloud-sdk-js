@@ -245,16 +245,14 @@ what was written at the end before:
 For productive use, your app should implement user authentication and authorization.
 For SAP Cloud Foundry, this is usually done by using the approuter and xsuaa service.
 Start by running [`sap-cloud-sdk add-approuter`](#sap-cloud-sdk-add-approuter) and configure the xsuaa service accordingly.
-
-from here on it's not polished
 -->
 ### Configure destination
 
 Login the [Cloud Cockpit](https://account.hana.ondemand.com), navigate to your respective subaccount (in case of a trial account it should be called `trial`). In the menu bar on the left, there should be a section `Connectivity` with an entry called `Destinations`. Click `Destinations`. On the page that opens, click `New Destination` and fill in the details below.
 
-For `Name`, choose a name that describes your system. For the exemple, we will go with `MockServer`.
+For `Name`, choose a name that describes your system. For the exemple, we will go with `Server`.
 
-If you use the Business Partner mock server, enter for `URL` the URL that you have saved from the previous step and use `NoAuthentication` for `Authentication`. If you use an SAP S/4HANA Cloud system, enter the systems URL in the `URL` field and choose `BasicAuthentication` as authentication type. This will make the fields `User` and `Password` appear. Enter here the credentials of a technical user for your SAP S/4HANA Cloud system.
+If you use the Business Partner mock server, enter for `URL` the URL that you have saved from the [previous step](#login) and use `NoAuthentication` for `Authentication`. If you use an SAP S/4HANA Cloud system, enter the systems URL in the `URL` field and choose `BasicAuthentication` as authentication type. This will make the fields `User` and `Password` appear. Enter here the credentials of a technical user for your SAP S/4HANA Cloud system.
 
 ### Bind destination service
 
@@ -282,6 +280,8 @@ applications:
     services:
       - my-destination
 ```
+
+#### XSUAA Service
 
 Secondly, we need an instance of the `XSUAA service`. The `XSUAA service` is responsible for issuing access tokens that are necessary to talk to other services, like the destination service. For this service, we will need a bit of extra configuration in the form of a configuration file. Create a file called `xs-security.json` with the following content:
 
@@ -318,18 +318,12 @@ applications:
       - my-xsuaa
 ```
 
-Finally, we need to adapt the `getAllBusinessPartners` function in `business-partner.controller.ts` to use the destination defined in the Cloud Platform Cockpit.
+Finally, we can replace the parameter of `execute` with an object whose key `destinationName` refers to the name of the destination we defined earlier. If you chose a different name than `Server`, make sure to use it here accordingly.
 
 The new function now looks like this:
 
 ```ts
-function getAllBusinessPartners(): Promise<BusinessPartner[]> {
-  return BusinessPartner.requestBuilder()
-    .getAll()
-    .execute({
-      destinationName: 'MockServer'
-    });
-}
+.execute({
+  destinationName: 'Server'
+});
 ```
-
-We replaced the parameter of `execute` with an object whose key `destinationName` refers to the name of the destination we defined earlier. If you chose a different name than `MockServer`, make sure to use it here accordingly.

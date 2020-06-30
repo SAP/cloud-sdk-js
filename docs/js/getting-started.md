@@ -145,13 +145,23 @@ Since `nest` was started in watch mode, it should detect this change and restart
 The `Cloud Foundry` CLI deploys your application to SAP Cloud Platform. You can find installation instructions for all common platforms in the [`Cloud Foundry documentation`](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). We recommend to use a `package manager` for that. If you are using `chocolatey` on Windows, please find the instructions [here](https://chocolatey.org/packages/cloudfoundry-cli).
 
 ### Login
-<!--Do i need to explain this with more detail?-->
+
+<!--Do i need to explain this part with more detail?-->
+:::note
+If you don't have a [SAP Cloud Platform](https://account.hana.ondemand.com/) account you need to create one.
+:::
+
+In order to deploy our application, we first need to login to Cloud Foundry in SAP Cloud Platform using the `cf` CLI. First we need to set an `API endpoint`. The exact URL of this API endpoint depends on the region your subaccount is in. Open the [SAP Cloud Platform Cockpit](https://account.hana.ondemand.com/) and navigate to the subaccount you are planning to deploy your application to. Click on “Overview” on the left and you can see the URL of the API endpoint.
+
+Copy the URL and paste it into the following command in your command line:
+
 ```shell
 cf api https://api.cf.<region>.hana.ondemand.com
 cf login
 ```
 
 ### Before deploying
+
 - Make sure that your app listens to port 8080
 - Build your app if necessary
 - In productive environments:
@@ -236,6 +246,7 @@ For productive use, your app should implement user authentication and authorizat
 For SAP Cloud Foundry, this is usually done by using the approuter and xsuaa service.
 Start by running [`sap-cloud-sdk add-approuter`](#sap-cloud-sdk-add-approuter) and configure the xsuaa service accordingly.
 
+from here on it's not polished
 -->
 ### Configure destination
 

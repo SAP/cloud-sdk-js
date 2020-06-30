@@ -32,5 +32,5 @@ export function isFilterLambdaExpression<
 >(
   filterable: Filterable<EntityT>
 ): filterable is FilterLambdaExpression<EntityT, FieldT> {
-  return 'filters' in filterable && 'lambdaOperator' in filterable;
+  return 'lambdaOperator' in filterable;
 }

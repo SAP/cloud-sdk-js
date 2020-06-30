@@ -146,10 +146,10 @@ export function createGetFilter(uriConverter: UriConverter) {
       );
       return `${parentFieldNames.join('/')}/${
         filter.lambdaOperator
-      }(${alias}:${removeBrackets(filterExp)})`;
+      }(${alias}:${filterExp})`;
     }
 
-    throw new Error(`Filter: ${filter} is not valid.`);
+    throw new Error(`Could not construct from filter. Filter is not valid: ${filter}`);
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(
@@ -200,12 +200,6 @@ export function createGetFilter(uriConverter: UriConverter) {
       return filterFunctionToString(param, parentFieldNames);
     }
     return [...parentFieldNames, param._fieldName].join('/');
-  }
-
-  function removeBrackets(filterExp: string) {
-    return filterExp.startsWith('(') && filterExp.endsWith(')')
-      ? removeBrackets(filterExp.substr(1, filterExp.length - 2))
-      : filterExp;
   }
 
   return {

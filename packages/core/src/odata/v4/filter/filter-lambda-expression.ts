@@ -11,7 +11,7 @@ import { FilterLambdaExpression } from '../../common/filter/filter-lambda-expres
 export function any<FieldT extends FieldType, EntityT extends EntityBase>(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
-  return new FilterLambdaExpression(toFilterable(filters), 'any');
+  return new FilterLambdaExpression(toFilterList(filters), 'any');
 }
 
 // eslint-disable-next-line valid-jsdoc
@@ -21,10 +21,10 @@ export function any<FieldT extends FieldType, EntityT extends EntityBase>(
 export function all<FieldT extends FieldType, EntityT extends EntityBase>(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
-  return new FilterLambdaExpression(toFilterable(filters), 'all');
+  return new FilterLambdaExpression(toFilterList(filters), 'all');
 }
 
-function toFilterable<FieldT extends FieldType, EntityT extends EntityBase>(
+function toFilterList<FieldT extends FieldType, EntityT extends EntityBase>(
   filters: (Filterable<EntityT> | OneToManyLink<EntityT>)[]
 ): FilterList<EntityT> {
   return new FilterList(

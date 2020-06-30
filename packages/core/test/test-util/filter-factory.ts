@@ -55,7 +55,7 @@ export const testFilterLambdaExpressionOnLink = {
     all(TestEntityMultiLinkV4.STRING_PROPERTY.equals('test2'))
   )._filters,
   odataStr:
-    "(to_MultiLink/any(a0:a0/StringProperty eq 'test1') and to_MultiLink/all(a0:a0/StringProperty eq 'test2'))"
+    "(to_MultiLink/any(a0:(a0/StringProperty eq 'test1')) and to_MultiLink/all(a0:(a0/StringProperty eq 'test2')))"
 };
 
 export const testFilterLambdaExpressionFilterListOnLink = {
@@ -68,7 +68,7 @@ export const testFilterLambdaExpressionFilterListOnLink = {
     )
   )._filters,
   odataStr:
-    "(to_MultiLink/any(a0:a0/StringProperty eq 'test1' or a0/Int16Property eq 1))"
+    "(to_MultiLink/any(a0:((a0/StringProperty eq 'test1' or a0/Int16Property eq 1))))"
 };
 
 export const testFilterLambdaExpressionFilterLinkOnLink = {
@@ -79,7 +79,7 @@ export const testFilterLambdaExpressionFilterLinkOnLink = {
       )
     )
   )._filters,
-  odataStr: "(to_MultiLink/any(a0:a0/to_SingleLink/StringProperty eq 'test1'))"
+  odataStr: "(to_MultiLink/any(a0:((a0/to_SingleLink/StringProperty eq 'test1'))))"
 };
 
 export const testNestedFilterLambdaExpressionOnLink = {
@@ -91,7 +91,7 @@ export const testNestedFilterLambdaExpressionOnLink = {
     )
   )._filters,
   odataStr:
-    "(to_MultiLink/any(a0:a0/to_MultiLink/any(a1:a1/StringProperty eq 'test')))"
+    "(to_MultiLink/any(a0:((a0/to_MultiLink/any(a1:(a1/StringProperty eq 'test'))))))"
 };
 
 export const testFilterLambdaExpressionFilterFunctionOnLink = {
@@ -102,5 +102,5 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
         .equals('test')
     )
   )._filters,
-  odataStr: "(to_MultiLink/any(a0:substring(a0/StringProperty, 1) eq 'test'))"
+  odataStr: "(to_MultiLink/any(a0:(substring(a0/StringProperty, 1) eq 'test')))"
 };

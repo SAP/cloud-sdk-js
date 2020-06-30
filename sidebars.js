@@ -38,6 +38,7 @@ module.exports = {
               }
             ]
           },
+              'java/features/bapi-and-rfc/bapi-and-rfc-overview',
           {
             type: 'category',
             label: 'Connectivity',
@@ -67,7 +68,6 @@ module.exports = {
       //     ]
       //   },
       //   'client-libraries',
-
       {
         type: 'category',
         label: 'Guides',

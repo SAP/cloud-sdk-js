@@ -40,17 +40,7 @@ export function filterFunction<EntityT extends EntityBase>(
   | BooleanFilterFunction<EntityT>
   | NumberFilterFunction<EntityT>
   | StringFilterFunction<EntityT> {
-  if (returnType === 'boolean' || returnType === 'bool') {
-    return new BooleanFilterFunction(functionName, parameters);
-  }
-  if (returnType === 'string') {
-    return new StringFilterFunction(functionName, parameters);
-  }
-  return new NumberFilterFunction(
-    functionName,
-    parameters,
-    numberReturnTypeMapping[returnType]
-  );
+  return createFilterFunction(functionName, returnType, ...parameters);
 }
 
 // eslint-disable-next-line valid-jsdoc

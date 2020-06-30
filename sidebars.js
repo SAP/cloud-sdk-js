@@ -33,6 +33,9 @@ module.exports = {
               'java/features/connectivity/sdk-connectivity-destination-service'
             ]
           },
+         
+              'java/features/bapi-and-rfc/bapi-and-rfc-overview'
+,
           {
             type: 'category',
             label: 'Multitenancy',
@@ -93,8 +96,7 @@ module.exports = {
         type: 'category',
         label: 'Tips & Tricks',
         items: [
-          'java/tips-and-tricks/change-log-level',
-          'java/tips-and-tricks/use-bapi-with-cloud-sdk-for-java'
+          'java/tips-and-tricks/change-log-level'
         ]
       },
       {

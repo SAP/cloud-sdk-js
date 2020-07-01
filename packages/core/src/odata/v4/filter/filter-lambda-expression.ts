@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { FieldType } from '../../common/selectable';
-import { Filterable, FilterList } from '../../common/filter';
+import { and, Filterable, FilterList } from '../../common/filter';
 import { EntityBase } from '../../common';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { FilterLambdaExpression } from '../../common/filter/filter-lambda-expression';
@@ -39,5 +39,7 @@ function toFilterList<
 >(
   filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterList<EntityT> {
-  return and(filters.map(f => f instanceof OneToManyLink ? f._filters : f));
+  return and(
+    ...filters.map(f => (f instanceof OneToManyLink ? f._filters : f))
+  );
 }

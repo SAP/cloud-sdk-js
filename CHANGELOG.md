@@ -20,7 +20,7 @@ Use the new more general options `additionalFiles` instead.
 ## New Functionality
 
 - Add the option `--additionalFiles <GlobToFiles>` to the generator.
-If specified all files matching the glob will be copied to each generated service directory.    
+If specified, all files matching the glob will be copied to each generated service directory.    
 
 ## Improvements
 

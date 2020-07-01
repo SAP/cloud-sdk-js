@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { Moment } from 'moment';
 import { EntityBase } from '../entity';
 import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';
@@ -126,7 +127,7 @@ export function concat<EntityT extends EntityBase>(
 
 /* Math Functions */
 /**
- * Build a filter function to round a number. Evaluates to double or decimalx`x.
+ * Build a filter function to round a number. Evaluates to double or decimal, defaults to double.
  * @param num - The number to round. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
@@ -139,7 +140,7 @@ export function round<EntityT extends EntityBase>(
 }
 
 /**
- * Build a filter function to floor a number. Evaluates to double or decimalx`x.
+ * Build a filter function to floor a number. Evaluates to double or decimal, defaults to double.
  * @param num - The number to floor. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
@@ -152,7 +153,7 @@ export function floor<EntityT extends EntityBase>(
 }
 
 /**
- * Build a filter function to ceil a number. Evaluates to double or decimalx`x.
+ * Build a filter function to ceil a number. Evaluates to double or decimal, defaults to double.
  * @param num - The number to ceil. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
@@ -162,6 +163,73 @@ export function ceiling<EntityT extends EntityBase>(
   returnType: 'double' | 'decimal' = 'double'
 ): NumberFilterFunction<EntityT> {
   return filterFunction('ceiling', returnType, num);
+}
+
+/* Date Functions */
+/**
+ * Build a filter function to get the day of a date. Evaluates to int.
+ * @param date - The date to get the day for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function day<EntityT extends EntityBase>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('day', 'int', date);
+}
+
+/**
+ * Build a filter function to get the hour of a date. Evaluates to int.
+ * @param date - The date to get the hour for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function hour<EntityT extends EntityBase>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('hour', 'int', date);
+}
+
+/**
+ * Build a filter function to get the minute of a date. Evaluates to int.
+ * @param date - The date to get the minute for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function minute<EntityT extends EntityBase>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('minute', 'int', date);
+}
+
+/**
+ * Build a filter function to get the month of a date. Evaluates to int.
+ * @param date - The date to get the month for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function month<EntityT extends EntityBase>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('month', 'int', date);
+}
+
+/**
+ * Build a filter function to get the second of a date. Evaluates to int.
+ * @param date - The date to get the second for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function second<EntityT extends EntityBase>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('second', 'int', date);
+}
+
+/**
+ * Build a filter function to get the year of a date. Evaluates to int.
+ * @param date - The date to get the year for. This can either be a date (Moment) or a reference to a field.
+ * @returns The newly created filter function
+ */
+export function year<EntityT extends EntityBase>(
+  date: Moment | Field<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunction('year', 'int', date);
 }
 
 /* Type Functions */

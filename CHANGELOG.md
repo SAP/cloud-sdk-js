@@ -14,11 +14,13 @@
 
 ## Compatibility Notes
 
--
+- Importing filter functions directly is deprecated, import using `filterFunctions` instead.
+- _OData client generator_: Remove the hidden generator option `changelogFile`. Use the new more general options `additionalFiles` instead.
 
 ## New Functionality
 
--
+- Support all string, number and date related filter functions. Import `filterFunctions` and use in a filter, e. g.  `.filter(filterFunctions.startsWith(BusinessPartner.FIRST_NAME).equals(true))`.
+- Add the option `--additionalFiles <GlobToFiles>` to the generator. If specified, all files matching the glob will be copied to each generated service directory.    
 
 ## Improvements
 

@@ -1,11 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import {
-  Field,
-  StringFilterFunction,
-  BooleanFilterFunction,
-  filterFunction
-} from '../common';
+import { Field, StringFilterFunction, BooleanFilterFunction } from '../common';
+import { filterFunction } from '../common/filter/filter-function';
 import { Entity } from './entity';
 
 /* String Functions */

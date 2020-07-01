@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { readFile } from 'fs';
+import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
@@ -45,19 +45,14 @@ export function copyFile(
   toDirectory: Directory,
   overwrite: boolean
 ): void {
-  return readFile(
-    resolve(fromPath),
-    { encoding: 'utf8' },
-    (err, changeLogContents) => {
-      if (err) {
-        logger.error(err);
-      } else {
-        toDirectory.createSourceFile(toRelativePath, changeLogContents, {
-          overwrite
-        });
-      }
-    }
-  );
+  try {
+    const fileContent = readFileSync(resolve(fromPath), { encoding: 'utf8' });
+    toDirectory.createSourceFile(toRelativePath, fileContent, {
+      overwrite
+    });
+  } catch (err) {
+    logger.error(err);
+  }
 }
 
 function addFileComment(content: SourceFileStructure): SourceFileStructure {

@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { Moment } from 'moment';
 import { EntityBase } from '../common/entity';
 import {
   Filter,
@@ -12,7 +13,7 @@ import {
  */
 export class DateFilterFunction<
   EntityT extends EntityBase
-> extends FilterFunction<EntityT, number> {
+> extends FilterFunction<EntityT, Moment> {
   /**
    * Creates an instance of DateFilterFunction.
    * @param functionName - Name of the function that returns a numeric value
@@ -33,7 +34,7 @@ export class DateFilterFunction<
    * @param edmType - EdmType of the field to filter on
    * @returns The resulting filter
    */
-  greaterThan(value: number): Filter<EntityT, number> {
+  greaterThan(value: Moment): Filter<EntityT, Moment> {
     return new Filter(this, 'gt', value, this.edmType);
   }
 
@@ -44,7 +45,7 @@ export class DateFilterFunction<
    * @param edmType - EdmType of the field to filter on
    * @returns The resulting filter
    */
-  greaterOrEqual(value: number): Filter<EntityT, number> {
+  greaterOrEqual(value: Moment): Filter<EntityT, Moment> {
     return new Filter(this, 'ge', value, this.edmType);
   }
 
@@ -55,7 +56,7 @@ export class DateFilterFunction<
    * @param edmType - EdmType of the field to filter on
    * @returns The resulting filter
    */
-  lessThan(value: number): Filter<EntityT, number> {
+  lessThan(value: Moment): Filter<EntityT, Moment> {
     return new Filter(this, 'lt', value, this.edmType);
   }
 
@@ -66,7 +67,7 @@ export class DateFilterFunction<
    * @param edmType - EdmType of the field to filter on
    * @returns The resulting filter
    */
-  lessOrEqual(value: number): Filter<EntityT, number> {
+  lessOrEqual(value: Moment): Filter<EntityT, Moment> {
     return new Filter(this, 'le', value, this.edmType);
   }
 }

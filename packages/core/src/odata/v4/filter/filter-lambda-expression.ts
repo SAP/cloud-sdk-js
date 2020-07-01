@@ -8,7 +8,11 @@ import { FilterLambdaExpression } from '../../common/filter/filter-lambda-expres
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function any<EntityT extends EntityBase, FieldT extends FieldType, LinkedEntityT extends EntityBase>(
+export function any<
+  EntityT extends EntityBase,
+  FieldT extends FieldType,
+  LinkedEntityT extends EntityBase
+>(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
   return new FilterLambdaExpression(toFilterList(filters), 'any');
@@ -18,13 +22,21 @@ export function any<EntityT extends EntityBase, FieldT extends FieldType, Linked
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function all<EntityT extends EntityBase, FieldT extends FieldType, LinkedEntityT extends EntityBase>(
+export function all<
+  EntityT extends EntityBase,
+  FieldT extends FieldType,
+  LinkedEntityT extends EntityBase
+>(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
   return new FilterLambdaExpression(toFilterList(filters), 'all');
 }
 
-function toFilterList<EntityT extends EntityBase, FieldT extends FieldType, LinkedEntityT extends EntityBase>(
+function toFilterList<
+  EntityT extends EntityBase,
+  FieldT extends FieldType,
+  LinkedEntityT extends EntityBase
+>(
   filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterList<EntityT> {
   return new FilterList(

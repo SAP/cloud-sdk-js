@@ -79,7 +79,8 @@ export const testFilterLambdaExpressionFilterLinkOnLink = {
       )
     )
   )._filters,
-  odataStr: "(to_MultiLink/any(a0:((a0/to_SingleLink/StringProperty eq 'test1'))))"
+  odataStr:
+    "(to_MultiLink/any(a0:((a0/to_SingleLink/StringProperty eq 'test1'))))"
 };
 
 export const testNestedFilterLambdaExpressionOnLink = {

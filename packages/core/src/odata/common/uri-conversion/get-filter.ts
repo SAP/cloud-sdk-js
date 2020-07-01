@@ -44,7 +44,7 @@ export function createGetFilter(uriConverter: UriConverter) {
         [],
         entityConstructor
       );
-      if(filterExpression) {
+      if (filterExpression) {
         return {
           filter: filterExpression
         };
@@ -149,7 +149,9 @@ export function createGetFilter(uriConverter: UriConverter) {
       }(${alias}:${filterExp})`;
     }
 
-    throw new Error(`Could not construct query parameters from filter. Filter is not valid: ${filter}`);
+    throw new Error(
+      `Could not construct query parameters from filter. Filter is not valid: ${filter}`
+    );
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(

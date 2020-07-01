@@ -34,29 +34,56 @@ export function filterFunction<EntityT extends EntityBase>(
  */
 export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
-  returnType: 'boolean' | 'bool' | 'int' | 'double' | 'decimal' | 'string',
+  returnType: FilterFunctionReturnType,
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ):
   | BooleanFilterFunction<EntityT>
   | NumberFilterFunction<EntityT>
   | StringFilterFunction<EntityT> {
-  if (returnType === 'boolean' || returnType === 'bool') {
-    return new BooleanFilterFunction(functionName, parameters);
-  }
-  if (returnType === 'string') {
-    return new StringFilterFunction(functionName, parameters);
-  }
-  return new NumberFilterFunction(
-    functionName,
-    parameters,
-    returnTypeToEdmType[returnType]
-  );
+  return createFilterFunction(functionName, returnType, ...parameters);
 }
 
-const returnTypeToEdmType: MapType<
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @hidden
+ */
+export function createFilterFunction<EntityT extends EntityBase>(
+  functionName: string,
+  returnType: FilterFunctionReturnType,
+  ...parameters: FilterFunctionParameterType<EntityT>[]
+):
+  | BooleanFilterFunction<EntityT>
+  | NumberFilterFunction<EntityT>
+  | StringFilterFunction<EntityT> {
+  switch (returnType) {
+    case 'bool':
+    case 'boolean':
+      return new BooleanFilterFunction(functionName, parameters);
+    case 'string':
+      return new StringFilterFunction(functionName, parameters);
+    case 'int':
+    case 'double':
+    case 'decimal':
+      return new NumberFilterFunction(
+        functionName,
+        parameters,
+        numberReturnTypeMapping[returnType]
+      );
+  }
+}
+
+const numberReturnTypeMapping: MapType<
   'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
 > = {
   int: 'Edm.Int32',
   double: 'Edm.Double',
   decimal: 'Edm.Decimal'
 };
+
+export type FilterFunctionReturnType =
+  | 'boolean'
+  | 'bool'
+  | 'int'
+  | 'double'
+  | 'decimal'
+  | 'string';

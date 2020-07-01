@@ -39,12 +39,5 @@ function toFilterList<
 >(
   filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterList<EntityT> {
-  return new FilterList(
-    filters.map(f => {
-      if (f instanceof OneToManyLink) {
-        return f._filters;
-      }
-      return f;
-    })
-  );
+  return and(filters.map(f => f instanceof OneToManyLink ? f._filters : f));
 }

@@ -15,4 +15,5 @@ export * from './extract-odata-etag';
 export * from '../common';
 export * from '../common/selectable/one-to-many-link';
 
+export { filterFunction } from './filter-function';
 export * as filterFunctions from './filter-functions';

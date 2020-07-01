@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { isMoment } from 'moment';
 import { EntityBase } from '../entity';
 import { toStaticPropertyFormat } from '../../../util';
 import {
@@ -18,7 +19,6 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
-import { convertToUriForEdmString } from './uri-value-converter';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -174,10 +174,13 @@ export function createGetFilter(uriConverter: UriConverter) {
       return param.toString();
     }
     if (typeof param === 'string') {
-      return convertToUriForEdmString(param);
+      return uriConverter.convertToUriFormat(param, 'Edm.String');
     }
     if (param instanceof FilterFunction) {
       return filterFunctionToString(param, parentFieldNames);
+    }
+    if (isMoment(param)) {
+      return uriConverter.convertToUriFormat(param, 'Edm.DateTimeOffset');
     }
     return [...parentFieldNames, param._fieldName].join('/');
   }

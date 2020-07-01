@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { Moment, isMoment } from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity';
 import { Field, FieldType } from '../selectable';
@@ -14,18 +15,15 @@ export abstract class FilterFunction<
   ReturnT extends FieldType
 > {
   /**
-   * EdmType of the return type of the filter function.
-   */
-  public edmType: EdmTypeShared<ODataVersionOf<EntityT>>;
-
-  /**
    * Creates an instance of FilterFunction.
-   * @param functionName - Name of the function
-   * @param parameters - Representation of the parameters passed to the filter function
+   * @param functionName - Name of the function.
+   * @param parameters - Representation of the parameters passed to the filter function.
+   * @param edmType - EdmType of the return type of the filter function.
    */
   constructor(
-    public functionName: string,
-    public parameters: FilterFunctionParameterType<EntityT>[]
+    readonly functionName: string,
+    readonly parameters: FilterFunctionParameterType<EntityT>[],
+    readonly edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {}
 
   /**
@@ -80,6 +78,11 @@ export abstract class FilterFunction<
     if (typeof param === 'string') {
       return `'${param.replace(/'/g, "''")}'`;
     }
+    if (isMoment(param)) {
+      throw new Error(
+        'Date parameters are not supported in the deprecated `transformParameter` method. Use `get-filter` instead.'
+      );
+    }
     if (param instanceof FilterFunction) {
       return param.toString(parentFieldNames);
     }
@@ -93,5 +96,6 @@ export abstract class FilterFunction<
 export type FilterFunctionParameterType<EntityT extends EntityBase> =
   | number
   | string
+  | Moment
   | Field<EntityT>
   | FilterFunction<EntityT, FieldType>;

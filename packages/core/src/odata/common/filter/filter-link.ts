@@ -49,7 +49,7 @@ export class FilterLink<
 export function isFilterLink<
   EntityT extends EntityBase,
   LinkedT extends EntityBase
->(filterable: Filterable<EntityT>): filterable is FilterLink<EntityT> {
+>(filterable: Filterable<EntityT>): filterable is FilterLink<EntityT, LinkedT> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

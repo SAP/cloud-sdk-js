@@ -55,17 +55,21 @@ export function createFilterFunction<EntityT extends EntityBase>(
   | BooleanFilterFunction<EntityT>
   | NumberFilterFunction<EntityT>
   | StringFilterFunction<EntityT> {
-  if (returnType === 'boolean' || returnType === 'bool') {
-    return new BooleanFilterFunction(functionName, parameters);
+  switch (returnType) {
+    case 'bool':
+    case 'boolean':
+      return new BooleanFilterFunction(functionName, parameters);
+    case 'string':
+      return new StringFilterFunction(functionName, parameters);
+    case 'int':
+    case 'double':
+    case 'decimal':
+      return new NumberFilterFunction(
+        functionName,
+        parameters,
+        numberReturnTypeMapping[returnType]
+      );
   }
-  if (returnType === 'string') {
-    return new StringFilterFunction(functionName, parameters);
-  }
-  return new NumberFilterFunction(
-    functionName,
-    parameters,
-    numberReturnTypeMapping[returnType]
-  );
 }
 
 const numberReturnTypeMapping: MapType<

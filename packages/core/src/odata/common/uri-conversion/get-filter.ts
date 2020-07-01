@@ -44,9 +44,11 @@ export function createGetFilter(uriConverter: UriConverter) {
         [],
         entityConstructor
       );
-      return {
-        filter: filterExpression
-      };
+      if(filterExpression) {
+        return {
+          filter: filterExpression
+        };
+      }
     }
     return {};
   }

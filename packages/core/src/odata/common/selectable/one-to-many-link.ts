@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase } from '../entity';
-import { Filterable, and, FilterList } from '../filter';
+import { Filterable, FilterLink } from '../filter';
 import { Orderable } from '../order';
 import { Link } from './link';
 
@@ -12,7 +12,7 @@ export class OneToManyLink<
   EntityT extends EntityBase,
   LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
-  _filters: FilterList<LinkedEntityT>;
+  _filters: FilterLink<EntityT, LinkedEntityT>;
   _orderBy: Orderable<LinkedEntityT>[] = [];
   _top: number;
   _skip: number;
@@ -26,15 +26,13 @@ export class OneToManyLink<
     return clonedLink;
   }
 
+  // eslint-disable-next-line valid-jsdoc
   /**
-   * Add filter statements to the request.
-   *
-   * @param expressions - Filter expressions to restrict the response
-   * @returns The request builder itself, to facilitate method chaining
+   * @experimental This is experimental and is subject to change. Use with caution.
    */
   filter(...expressions: Filterable<LinkedEntityT>[]): this {
     const link = this.clone();
-    link._filters = and(...expressions);
+    link._filters = new FilterLink(this, expressions);
     return link;
   }
 

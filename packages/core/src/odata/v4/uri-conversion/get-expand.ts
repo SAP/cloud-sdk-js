@@ -2,7 +2,7 @@
 
 import { Entity } from '../entity';
 import { Expandable } from '../../common/expandable';
-import { Constructable, AllFields, Link } from '../../common';
+import { Constructable, AllFields, Link, and } from '../../common';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { getFilter } from './get-filter';
 import { getSelect } from './get-select';
@@ -44,7 +44,7 @@ function getExpandAsString<EntityT extends Entity>(
     if (expand instanceof OneToManyLink) {
       params = {
         ...params,
-        ...getFilter(expand._filters, entityConstructor),
+        ...getFilter(and(...expand._filters?.filters), entityConstructor),
         ...(expand._skip && { skip: expand._skip }),
         ...(expand._top && { top: expand._top })
       };

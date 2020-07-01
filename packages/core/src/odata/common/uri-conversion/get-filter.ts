@@ -19,6 +19,7 @@ import {
   FieldType
 } from '../selectable';
 import { UriConverter } from '../request';
+import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -55,8 +56,9 @@ export function createGetFilter(uriConverter: UriConverter) {
   function getODataFilterExpression<FilterEntityT extends EntityBase>(
     filter: Filterable<FilterEntityT>,
     parentFieldNames: string[] = [],
-    targetEntityConstructor: Constructable<any>
-  ): string | undefined {
+    targetEntityConstructor: Constructable<any>,
+    lambdaExpressionLevel = 0
+  ): string {
     if (isFilterList(filter)) {
       filter.flatten();
 
@@ -65,7 +67,8 @@ export function createGetFilter(uriConverter: UriConverter) {
           getODataFilterExpression(
             subFilter,
             parentFieldNames,
-            targetEntityConstructor
+            targetEntityConstructor,
+            lambdaExpressionLevel
           )
         )
         .filter(f => !!f)
@@ -77,7 +80,8 @@ export function createGetFilter(uriConverter: UriConverter) {
           getODataFilterExpression(
             subFilter,
             parentFieldNames,
-            targetEntityConstructor
+            targetEntityConstructor,
+            lambdaExpressionLevel
           )
         )
         .filter(f => !!f)
@@ -102,7 +106,8 @@ export function createGetFilter(uriConverter: UriConverter) {
           getODataFilterExpression(
             subFilter,
             [...parentFieldNames, filter.link._fieldName],
-            filter.link._linkedEntity
+            filter.link._linkedEntity,
+            lambdaExpressionLevel
           )
         )
         .filter(f => !!f)
@@ -130,6 +135,23 @@ export function createGetFilter(uriConverter: UriConverter) {
         uriConverter.convertToUriFormat(filter.value, filter.edmType!)
       ].join(' ');
     }
+
+    if (isFilterLambdaExpression(filter)) {
+      const alias = `a${lambdaExpressionLevel}`;
+      const filterExp = getODataFilterExpression(
+        filter.filters,
+        [alias],
+        targetEntityConstructor,
+        lambdaExpressionLevel + 1
+      );
+      return `${parentFieldNames.join('/')}/${
+        filter.lambdaOperator
+      }(${alias}:${filterExp})`;
+    }
+
+    throw new Error(
+      `Could not construct query parameters from filter. Filter is not valid: ${filter}`
+    );
   }
 
   function retrieveField<FilterEntityT extends EntityBase>(

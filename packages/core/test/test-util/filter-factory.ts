@@ -1,13 +1,25 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import moment = require('moment');
 import { v4 as uuid } from 'uuid';
+import { or } from '../../src';
+import { all, any, filterFunctions } from '../../src/odata/v4';
 import {
   TestEntity,
   TestEntitySingleLink
 } from './test-services/v2/test-service';
+import {
+  TestEntity as TestEntityV4,
+  TestEntityLvl2MultiLink,
+  TestEntityLvl2SingleLink,
+  TestEntityMultiLink as TestEntityMultiLinkV4
+} from './test-services/v4/test-service';
 
 export const testFilterString = {
   filter: TestEntity.STRING_PROPERTY.equals('test'),
+  odataStr: "StringProperty eq 'test'"
+};
+
+export const testFilterStringV4 = {
+  filter: TestEntityV4.STRING_PROPERTY.equals('test'),
   odataStr: "StringProperty eq 'test'"
 };
 
@@ -35,4 +47,61 @@ export const testFilterSingleLink = {
   ),
   odataStr:
     "to_SingleLink/KeyProperty eq 'test' and to_SingleLink/BooleanProperty eq false"
+};
+
+export const testFilterLambdaExpressionOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(TestEntityMultiLinkV4.STRING_PROPERTY.equals('test1')),
+    all(TestEntityMultiLinkV4.STRING_PROPERTY.equals('test2'))
+  )._filters,
+  odataStr:
+    "(to_MultiLink/any(a0:(a0/StringProperty eq 'test1')) and to_MultiLink/all(a0:(a0/StringProperty eq 'test2')))"
+};
+
+export const testFilterLambdaExpressionFilterListOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(
+      or(
+        TestEntityMultiLinkV4.STRING_PROPERTY.equals('test1'),
+        TestEntityMultiLinkV4.INT_16_PROPERTY.equals(1)
+      )
+    )
+  )._filters,
+  odataStr:
+    "(to_MultiLink/any(a0:((a0/StringProperty eq 'test1' or a0/Int16Property eq 1))))"
+};
+
+export const testFilterLambdaExpressionFilterLinkOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(
+      TestEntityMultiLinkV4.TO_SINGLE_LINK.filter(
+        TestEntityLvl2SingleLink.STRING_PROPERTY.equals('test1')
+      )
+    )
+  )._filters,
+  odataStr:
+    "(to_MultiLink/any(a0:((a0/to_SingleLink/StringProperty eq 'test1'))))"
+};
+
+export const testNestedFilterLambdaExpressionOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(
+      TestEntityMultiLinkV4.TO_MULTI_LINK.filter(
+        any(TestEntityLvl2MultiLink.STRING_PROPERTY.equals('test'))
+      )
+    )
+  )._filters,
+  odataStr:
+    "(to_MultiLink/any(a0:((a0/to_MultiLink/any(a1:(a1/StringProperty eq 'test'))))))"
+};
+
+export const testFilterLambdaExpressionFilterFunctionOnLink = {
+  filter: TestEntityV4.TO_MULTI_LINK.filter(
+    any(
+      filterFunctions
+        .substring(TestEntityMultiLinkV4.STRING_PROPERTY, 1)
+        .equals('test')
+    )
+  )._filters,
+  odataStr: "(to_MultiLink/any(a0:(substring(a0/StringProperty, 1) eq 'test')))"
 };

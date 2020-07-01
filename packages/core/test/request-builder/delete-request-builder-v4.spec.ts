@@ -1,15 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
+import { convertToUriFormat, DeleteRequestBuilder } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
   mockDeleteRequest
 } from '../test-util/request-mocker';
-import { TestEntity } from '../test-util/test-services/v4/test-service';
-import { DeleteRequestBuilder } from '../../src/odata/v4/request-builder';
 import { testEntityResourcePath } from '../test-util/test-data';
-import { convertToUriFormat } from '../../src/odata/v4';
+import { TestEntity } from '../test-util/test-services/v4/test-service';
 
 describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();

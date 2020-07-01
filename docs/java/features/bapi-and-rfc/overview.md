@@ -287,4 +287,26 @@ Replace the placeholder `${sapjco-version}` with the JCo version you downloaded.
 - Add the directory which contains the downloaded JCo archive to the system environment variable `Path`.
 
 #### Create a Destination
-- This depends on which solution to use.
+- Create a file `<destination-name>.jcoDestination` where you replace `<destination-name>` with the name of the destination.
+- Add the following properties to the file:
+```
+Name=<destination-name>
+Type=RFC
+jco.client.ashost=<hostname>
+jco.client.client=<spa-client>
+jco.client.sysnr=<instance-number>
+jco.client.user=<user>
+jco.client.passwd=<password>
+```
+:::tip
+Replace every placeholder `<placeholder` with the respective value.
+:::
+
+#### Point JCo to your Destination
+JCo considers the system property `jco.destinations.dir` to look for destination files. The property value must be the directory where the destination file resides.
+
+You can set the property in your Java code like so:
+```java
+`System.setProperty("jco.destinations.dir", "here-comes-the-directory-with-the-destination");
+```
+Alternatively, you can pass the property to the JVM via Maven with `-Djco.destinations.dir=here-comes-the-directory-with-the-destination`.

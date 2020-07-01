@@ -195,7 +195,7 @@ final HttpDestination httpDestination = DestinationAccessor.getDestination(desti
 Secondly, we go ahead and invoke the Java API class for the workflow definitions. More specifically, we invoke the method to obtain the list of all existing workflow definitions. We pass the HTTP destination as an argument to the constructor of the API class.
 ```java
 final List<WorkflowDefinition> workflowDefinitions =
-        new WorkflowDefinitionsApi(httpDestination).getWorkflowDefinitions();
+        new WorkflowDefinitionsApi(httpDestination).queryDefinitions();
 ```
 We have now invoked the REST API in a type-safe manner and furthermore gain type-safe access to the resulting objects. For instance, we can read particular details about each worklow definition (printed to the log here for demonstration purposes).
 ```java

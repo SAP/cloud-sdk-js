@@ -14,44 +14,52 @@ keywords:
 - workflow
 ---
 
-## Goal of this Documentation
-In the following, we cover the SAP Cloud SDK Java client library (Beta) for the SCP Workflow REST API. After a brief introduction to the SCP Workflow service, we explain in detail how the developer can use this client library. Thereby we touch in particular upon all necessary configuration steps and the app development.
-
-## How SCP Workflow and Cloud SDK play together
+## Overview
 The [SAP Cloud Platform (SCP) Workflow service](https://help.sap.com/viewer/product/WORKFLOW_SERVICE/Cloud/en-US) is available on the Cloud Foundry environment [since April 2019](https://blogs.sap.com/2019/04/03/workflow-and-business-rules-now-available-in-cloud-foundry-environment-of-sap-cloud-platform/). It helps you build, run and manage workflows to model processes that span from simple approval steps to complex business scenarios with several involved parties.
 
-Imagine a business scenario with multiple involved parties, complex validation logic, and parallel execution flows. SCP Workflow service solves exactly this problem. By integrating this service into your application via its REST API you get a seamless solution for this problem.
+Imagine a business scenario involving multiple parties, complex validation logic, and parallel execution flows. **SCP Workflow service** solves exactly this problem. To benefit from features offered by REST API of the SCP Workflow service you can leverage type-safe client library provided by **SAP Cloud SDK** and discover it via you IDE or [manually integrate it into you application](https://help.sap.com/viewer/e157c391253b4ecd93647bf232d18a83/Cloud/en-US/df943e71122448caaf3c49f5ffd80627.html).
 
-Refer to [this blog post](https://blogs.sap.com/2018/01/09/sap-cloud-platform-workflow-developer-center/) for an overview of all resources in the realm of the SCP Workflow Service.
+Refer to [this blog post](https://blogs.sap.com/2018/01/09/sap-cloud-platform-workflow-developer-center/) for an overview of all resources about the SCP Workflow Service.
 
-## An Example Use Case
-Let us sketch an example use case to gain a better understanding when we would want to use this client library.
+## Example Use Case for this guide
 
-Imagine a use case comprising a business scenario with multiple involved parties, complex validation logic, and parallel execution flows. These requirements can be met with the SCP Workflow service. It allows us to model the workflows in a visual editor. In addition, you develop a cloud application leveraging the SAP Cloud SDK that covers the main part of the business logic and orchestrates the workflow processing in the background. For this purpose, your app communicates with the SCP Workflow service through its REST API. To make your life easier when it comes to developing against the REST API, you utilize the respective client library.
+### Problem
+We need to model a business workflow involving multiple parties, complex validation logic, and parallel flows execution together with other business logic in your App hosted on the SAP Cloud Platform.
+
+### Solution
+Use SAP Cloud Platform Workflow service and its REST API. You can do workflows modeling using a convenient visual editor and call SCP Workflow REST API via type-safe client library module provided by SAP Cloud SDK for Java. Additionally, you'll get other benefits off SAP Cloud SDK like destinations and authentication handling, complete type-safety, multi-tenancy, easy resilience and caching configuration.
 
 
 ## Consume the SCP Workflow REST API
-### Application Use Case
-As described earlier, we have an existing SAP Cloud SDK-based Java app and we want to invoke the SCP Workflow REST API in our business logic. More specifically, we are interested in retrieving a list of all workflow definitions that exist in the connected SCP Workflow service instance. That requirement corresponds to the API endpoint `/v1/workflow-definitions` which you find under the section `Workflow Definitions` on the left-hand side.
 
-### Configuration Steps
-There are some configuration steps on Cloud Foundry necessary to run this scenario. Let's look at each of them in detail.
+### Installing dependencies
+Add the latest version of [SAP Cloud SDK](https://search.maven.org/artifact/com.sap.cloud.sdk/sdk-bom) to your Java application dependencies or [generate a new one from archetypes that we provide](../../../getting-started).
 
-#### Bind App to SCP Workflow Service Instance
+ an existing SAP Cloud SDK-based Java app and we want to invoke the SCP Workflow REST API in our business logic. More specifically, we are interested in retrieving a list of all workflow definitions that exist in the connected SCP Workflow service instance. That requirement corresponds to the API endpoint `/v1/workflow-definitions` which you find under the section `Workflow Definitions` on the left-hand side.
 
-Refer to the documentation on [help.sap.com](https://help.sap.com/viewer/e157c391253b4ecd93647bf232d18a83/Cloud/en-US/e8d88dd056f14c75af59e68d6b20345f.html) for the full picture. We will outline the essential pieces in the following. Also, we assume that you are sure about:
-- Which Cloud Foundry subaccount and space you want to use,
-- That the entitlement for the SCP Workflow Service is in place,
-- That you possess all necessary authorizations on Cloud Foundry to perform the following procedures and that
-- You have installed the Cloud Foundry Command Line Interface (CLI) on your machine.
+### Cloud Foundry configuration
+Let's look in details at all necessary steps of Cloud Foundry configuration to run this scenario.
 
-##### Identify necessary OAuth Scopes
-The REST API is protected and requires authenticating with an OAuth 2.0 access token. Each particular API endpoint requires the calling REST client to provide an access token valid for the respective endpoint. That is, the token must be issued for the respective OAuth scope that corresponds to the desired API endpoint.
+#### Bind App to SCP Workflow Service instance
 
-Let us figure out which OAuth scope is relevant for our application use case. We see on the [API documentation](https://api.sap.com/api/SAP_CP_Workflow_CF/resource) that the endpoint `/v1/workflow-definitions` is assigned to the scope `WORKFLOW_DEFINITION_GET`.
+Refer to the documentation on [help.sap.com](https://help.sap.com/viewer/e157c391253b4ecd93647bf232d18a83/Cloud/en-US/e8d88dd056f14c75af59e68d6b20345f.html) for the full picture. We'll outline essentials with assumption that you understand or have all of the following:
 
-##### Create Service Instance JSON Configuration
-Open a text editor of your choice and save a JSON file on your system with the following content:
+- Which Cloud Foundry subaccount and space you want to use
+- You have access to the SCP Workflow Service feature
+- You possess all necessary authorizations on Cloud Foundry
+- [You have installed the Cloud Foundry Command Line Interface (CLI) on your machine](../../../../guides/cf-cli).
+
+##### Identifying necessary OAuth Scopes
+:::tip
+The SCP Workflow REST API is protected and requires authenticating with an OAuth 2.0 access token. Each particular API endpoint requires the client to provide an access token valid for the respective endpoint. The token must be issued for the respective OAuth scope that corresponds to the desired API endpoint.
+:::
+
+Let's figure out which OAuth scope is relevant for our application. For that we have to check [SCP Workflow API documentation](https://api.sap.com/api/SAP_CP_Workflow_CF/resource) to find out that the endpoint `/v1/workflow-definitions` is assigned to the scope `WORKFLOW_DEFINITION_GET`.
+
+##### Create Service Instance Configuration
+
+Open a text editor and create a JSON file with the following content:
+
 ```json
 {
   "authorities": ["WORKFLOW_DEFINITION_GET"]
@@ -59,14 +67,14 @@ Open a text editor of your choice and save a JSON file on your system with the f
 ```
 Remember where you've saved the file, you'll need it later.
 
-##### Create Service Instance
+##### Create service instance
 
 Open the command line and authenticate at your Cloud Foundry organization by invoking `cf login`.
 
-Consider specifying the respective subaccount, organization, and space with `cf target` if necessary.
+Consider specifying the respective __subaccount__, __organization__, and __space__ with `cf target` if necessary.
 
-Use `cd` to navigate to the directory that contains the JSON file created beforehand.
-Being in that directory, create the service instance as follows:
+Use `cd` to navigate to the directory that contains JSON configuration file we created before and run the following to create the service instance:
+
 ```bash
 cf create-service workflow standard my-workflow-service -c <path-to-json-file>
 ```

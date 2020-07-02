@@ -22,6 +22,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - run: echo 'github.actor ${{ github.actor }}'
+      - run: echo 'github.repository ${{ github.repository }}'
       - run: npm ci
       - run: npm run test:unit
       - run: npm run test:integration

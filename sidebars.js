@@ -83,7 +83,8 @@ module.exports = {
           'java/guides/cf-cli',
           'java/guides/cf-deploy',
           'java/guides/logging-overview',
-          'java/guides/change-log-level'
+          'java/guides/change-log-level',
+          'java/tutorial-overview-sdk-java',
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',
@@ -99,7 +100,15 @@ module.exports = {
           //       'java/how-to/configure-ide'
         ]
       },
-      'java/tutorial-overview-sdk-java',
+      {
+        type: 'category',	
+        label: 'Video tutorials',	
+        items: [	
+          'java/video/video-tutorial-about-getting-started-with-sap-cloudsdk-for-java',	
+          'java/video/video-tutorial-about-type-safe-client-generator-for-odata-with-sap-cloudsdk-for-java',	
+          'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java'	
+        ],	
+      },
       'java/sdk-java-troubleshooting-frequent-problems',
       'java/release-notes-sap-cloud-sdk-for-java',
       'java/api-reference-java',

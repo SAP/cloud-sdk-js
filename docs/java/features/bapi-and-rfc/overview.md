@@ -258,7 +258,7 @@ final DefaultErpHttpDestination erpHttpDestination = httpDestination.decorate(De
 Simply speaking, for RFC destinations such decorations do not exist.
 
 ### Local Deployment
-It is possible to execute BAPI calls from a Java app that runs on localhost. That requires few configuration steps.
+It is possible to execute BAPI calls from a Java app that runs on `localhost`. That requires a few configuration steps.
 
 #### Download and Install JCo Library
 - Download the JCO library from the official [product page](https://support.sap.com/en/product/connectors/jco.html).

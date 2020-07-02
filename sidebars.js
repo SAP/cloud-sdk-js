@@ -28,6 +28,30 @@ module.exports = {
           },
           {
             type: 'category',
+            label: 'Connectivity',
+            items: [
+              'java/features/connectivity/sdk-connectivity-destination-service'
+            ]
+          },
+         
+              'java/features/bapi-and-rfc/bapi-and-rfc-overview'
+,
+          {
+            type: 'category',
+            label: 'Multitenancy',
+            items: [
+              'java/features/multi-tenancy/multi-tenancy-thread-context'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'Resilience & Caching',
+            items: [
+              'java/features/resilience/resilience'
+            ]
+          },
+          {
+            type: 'category',
             label: 'REST',
             items: [
               'java/features/rest/overview',
@@ -36,23 +60,6 @@ module.exports = {
                 label: 'Released clients',
                 items: ['java/features/rest/clients/scp-workflow-rest-api']
               }
-            ]
-          },
-         
-              'java/features/bapi-and-rfc/bapi-and-rfc-overview'
-,
-          {
-            type: 'category',
-            label: 'Connectivity',
-            items: [
-              'java/features/connectivity/sdk-connectivity-destination-service'
-            ]
-          },
-          {
-            type: 'category',
-            label: 'Multitenancy',
-            items: [
-              'java/features/multi-tenancy/multi-tenancy-thread-context'
             ]
           }
         ]

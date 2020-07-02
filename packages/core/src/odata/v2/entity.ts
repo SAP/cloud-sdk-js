@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EntityBase, Constructable } from '../common';
+import { EntityBase, Constructable } from '../common/entity';
 import { CustomField } from './selectable/custom-field';
 
 /**

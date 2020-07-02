@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { EntityBase } from '../entity';
-import { Constructable } from '../constructable';
+import { EntityBase, Constructable } from '../entity';
 import { toPropertyFormat } from '../../../util';
 import { Field } from '../../v2';
 

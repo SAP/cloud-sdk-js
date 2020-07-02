@@ -24,8 +24,8 @@ import { ODataRequestConfig } from '../common/request/odata-request-config';
 import { Entity } from './entity';
 import { deserializeEntity } from './entity-deserializer';
 import {
-  ODataBatchChangeSet,
-  toBatchChangeSet
+  toBatchChangeSet,
+  ODataBatchChangeSet
 } from './odata-batch-change-set';
 import { toBatchRetrieveBody } from './odata-batch-retrieve-request';
 import {
@@ -364,16 +364,6 @@ function getEndBatchWithLineBreak(batchId: string) {
   return `--batch_${batchId}--\n`;
 }
 
-function getMethod(
-  requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>
-) {
-  return requestBuilder.requestConfig.method;
-}
-
-function getUrl(requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>) {
-  return `/${requestBuilder.relativeUrl()}`;
-}
-
 function isChangeSet(response: string): boolean {
   return !!response.match(/Content-Type: multipart\/mixed;/);
 }
@@ -465,18 +455,4 @@ function buildRetrieveOrErrorResponse(
     };
   }
   return { httpCode, body: parsedBody, isSuccess: () => false };
-}
-
-/**
- * Generate the request line, containing method, url and http version from the request builder, e.g.:
- * GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1
- * @param requestBuilder - Reqeust builder holds the request information.
- * @returns the generated request line.
- */
-export function getRequestLine(
-  requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>
-): string {
-  return `${getMethod(requestBuilder).toUpperCase()} ${getUrl(
-    requestBuilder
-  )} ${http_version}`;
 }

@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from './constructable';
-import { EntityBase } from './entity';
+import { Constructable, EntityBase } from './entity';
 
 export type BatchResponse = ReadResponse | WriteResponses | ErrorResponse;
 

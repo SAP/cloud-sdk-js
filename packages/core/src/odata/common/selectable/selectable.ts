@@ -1,12 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase, ODataVersionOf } from '../entity';
-import { CollectionField } from './collection-field';
-import { AllFields } from './all-fields';
-import { ComplexTypeField } from './complex-type-field';
-import { CustomFieldBase } from './custom-field';
-import { Link } from './link';
-import { SimpleTypeFields } from './simple-type-fields';
+import type { CollectionField } from './collection-field';
+import type { AllFields } from './all-fields';
+import type { ComplexTypeField } from './complex-type-field';
+import type { CustomFieldBase } from './custom-field';
+import type { Link } from './link';
+import type { SimpleTypeFields } from './simple-type-fields';
 
 /**
  * Represents all selectables, i.e. everything that can be used in a `.select` statement.

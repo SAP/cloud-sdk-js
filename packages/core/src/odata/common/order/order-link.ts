@@ -2,7 +2,7 @@
 
 import { EntityBase } from '../entity';
 import { Link } from '../selectable/link';
-import { Orderable } from './orderable';
+import type { Orderable } from './orderable';
 
 /**
  * Link to represent an order by on a linked entity.

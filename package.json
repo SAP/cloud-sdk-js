@@ -27,7 +27,8 @@
     "check:license": "npx license-checker -direct --excludePackages \"@sap/edm-converters@1.0.21;@sap/xsenv@2.2.0;weak-map@1.0.5\" --onlyAllow \"MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense;Public Domain\"",
     "check:vulnerability": "npx audit-ci -h",
     "bump:patch": "npx lerna version patch --force-publish -y",
-    "bump:minor": "npx lerna version minor --force-publish -y"
+    "bump:minor": "npx lerna version minor --force-publish -y",
+    "check:circular": "madge --circular ./packages/core"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.3.8",
@@ -46,6 +47,7 @@
     "lerna": "^3.20.2",
     "license-checker": "^25.0.1",
     "nock": "^12.0.3",
+    "madge": "^3.9.2",
     "prettier": "^2.0.2",
     "ts-node": "^8.8.1",
     "typedoc": "^0.17.6",

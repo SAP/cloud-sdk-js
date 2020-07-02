@@ -174,7 +174,6 @@ module.exports = {
         ],
         "id-blacklist": "off",
         "id-match": "off",
-        "import/no-self-import" : "error",
         "import/no-extraneous-dependencies": "off",
         "import/no-internal-modules": "error",
         "import/order": "error",

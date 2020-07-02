@@ -22,7 +22,7 @@ Applying such patterns helps making an application more resilient against failur
 The following article describes which resilience features the SDK offers and how to apply them.
 If you are looking for a quick start with resilience also check out our [dedicated tutorial](https://developers.sap.com/tutorials/s4sdk-resilience.html) on the topic!
 
-## Consuming the Resilience API
+## Using the Resilience API
 
 The SDK allows to run any code in the context of one or more resilience patterns.
 There are two essential building blocks for achieving this:

@@ -1,11 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
-
 import type { Expandable } from '../expandable';
 import type { Selectable } from './selectable';
 
-export type LinkType<EntityT, LinkedEntityT extends EntityBase = any> = typeof Link
+export type LinkType<
+  EntityT,
+  LinkedEntityT extends EntityBase = any
+> = typeof Link;
 
 /**
  * Represents a navigation property of an OData entity.

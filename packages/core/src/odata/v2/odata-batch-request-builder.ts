@@ -11,7 +11,6 @@ import {
 } from '../../scp-cf';
 import {
   Constructable,
-  http_version,
   BatchResponse,
   WriteResponse,
   WriteResponses,
@@ -20,7 +19,6 @@ import {
 } from '../common';
 import { MethodRequestBuilderBase } from '../common/request-builder/request-builder-base';
 import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
-import { ODataRequestConfig } from '../common/request/odata-request-config';
 import { Entity } from './entity';
 import { deserializeEntity } from './entity-deserializer';
 import {

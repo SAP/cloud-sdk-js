@@ -2,7 +2,6 @@
 
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
 
-
 type OrderType = 'asc' | 'desc';
 
 /**

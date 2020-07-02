@@ -5,13 +5,13 @@ import {
   part_content_type_line,
   content_transfer_encoding_line
 } from '../common';
+import { getRequestLine } from '../common/request/odata-batch-request-util';
 import { Entity } from './entity';
 import {
   CreateRequestBuilder,
   DeleteRequestBuilder,
   UpdateRequestBuilder
 } from './request-builder';
-import { getRequestLine } from '../common/request/odata-batch-request-util';
 
 const batch_content_type_prefix =
   'Content-Type: multipart/mixed; boundary=changeset_';

@@ -4,12 +4,12 @@ import {
   part_content_type_line,
   content_transfer_encoding_line
 } from '../common';
+import { getRequestLine } from '../common/request/odata-batch-request-util';
 import { Entity } from './entity';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder
 } from './request-builder';
-import { getRequestLine } from '../common/request/odata-batch-request-util';
 
 /**
  * Build a string as the request body of the retrieve request.

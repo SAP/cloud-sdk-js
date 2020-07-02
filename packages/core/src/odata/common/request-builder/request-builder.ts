@@ -2,7 +2,6 @@
 
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
 
-
 type EntityBasedRequestBuilder<
   EntityCT extends Constructable<EntityBase>
 > = ReturnType<EntityCT['requestBuilder']>;

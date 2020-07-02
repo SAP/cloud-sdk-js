@@ -454,5 +454,3 @@ function buildRetrieveOrErrorResponse(
   }
   return { httpCode, body: parsedBody, isSuccess: () => false };
 }
-
-

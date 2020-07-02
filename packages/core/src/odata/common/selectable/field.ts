@@ -3,7 +3,6 @@
 import BigNumber from 'bignumber.js';
 import { Moment } from 'moment';
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
-
 import { Time } from '../time';
 
 /**

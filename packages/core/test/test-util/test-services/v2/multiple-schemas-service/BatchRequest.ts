@@ -3,8 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder,  UpdateRequestBuilder,ODataBatchChangeSet,ODataBatchRequestBuilder} from '../../../../../src/odata/v2';
-import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
+import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '../../../../../src';
+import { MultiSchemaTestEntity } from './index';
 
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.

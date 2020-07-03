@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
-import { EntityBase, EntityIdentifiable } from '../entity';
-import { Filterable } from './filterable';
+import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import type { Filterable } from './filterable';
 
 /**
  * Data structure to combine [[Filterable]]s conjunctively and / or disjunctively. A FilterList matches when all filterables within the `andFilters` match and when at least one filterable within the `orFilters` matches. Should not be used directly.

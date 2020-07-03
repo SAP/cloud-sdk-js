@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { isMoment } from 'moment';
-import { EntityBase } from '../entity';
+import { Constructable, EntityBase } from '../entity';
 import { toStaticPropertyFormat } from '../../../util';
 import {
   Filterable,
@@ -11,7 +11,6 @@ import {
   FilterFunction,
   FilterFunctionParameterType
 } from '../filter';
-import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
 import {
   ComplexTypeField,

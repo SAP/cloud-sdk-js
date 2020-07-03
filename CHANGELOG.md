@@ -22,11 +22,11 @@
 
 ## Improvements
 
--
+- Reduce the number of circular dependencies within the SDK Core.
 
 ## Fixed Issues
 
--
+- 
 
 
 # 1.23.0

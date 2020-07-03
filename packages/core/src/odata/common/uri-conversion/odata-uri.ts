@@ -3,8 +3,7 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { Selectable, FieldType } from '../selectable';
 import { Expandable } from '../expandable';
-import { EntityBase } from '../entity';
-import { Constructable } from '../constructable';
+import { EntityBase, Constructable } from '../entity';
 import { Filterable } from '../filter';
 import { Orderable } from '../order';
 import { EdmTypeShared } from '../edm-types';

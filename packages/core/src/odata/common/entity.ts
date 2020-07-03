@@ -3,11 +3,30 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { nonEnumerable, toPropertyFormat } from '../../util';
-import { Constructable } from './constructable';
 import { EntityBuilder } from './entity-builder';
-import { Link, Field } from './selectable';
+import { Link, Field, Selectable, CustomFieldBase } from './selectable';
+import { RequestBuilder } from './request-builder';
 
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
+
+/**
+ * @hidden
+ */
+export interface Constructable<
+  EntityT extends EntityBase,
+  EntityTypeForceMandatoryT = {}
+> {
+  _serviceName: string;
+  _entityName: string;
+  _defaultServicePath: string;
+  _allFields: (Selectable<EntityT> | Field<EntityT> | Link<EntityT>)[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _keyFields: (Selectable<EntityT> | Field<EntityT>)[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _keys: { [keys: string]: Selectable<EntityT> | Field<EntityT> }; // Selectable only here for backwards TODO: Remove in v2.0
+  new (...args: any[]): EntityT;
+  requestBuilder(): RequestBuilder<EntityT>;
+  builder(): EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
+  customField(fieldName: string): CustomFieldBase<EntityT>;
+}
 
 export type EntityBuilderType<
   EntityT extends EntityBase,

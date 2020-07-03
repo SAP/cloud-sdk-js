@@ -1,9 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
-import { EntityBase, EntityIdentifiable } from '../entity';
-import { Expandable } from '../expandable';
-import { Selectable } from './selectable';
+import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
+import type { Expandable } from '../expandable';
+import type { Selectable } from './selectable';
 
 /**
  * Represents a navigation property of an OData entity.

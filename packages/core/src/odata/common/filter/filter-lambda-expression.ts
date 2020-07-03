@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { FieldType } from '../selectable';
 import { EntityBase } from '../entity';
-import { Filterable } from './filterable';
 import { FilterList } from './filter-list';
+import type { Filterable } from './filterable';
 
 /**
  * @experimental This is experimental and is subject to change. Use with caution.

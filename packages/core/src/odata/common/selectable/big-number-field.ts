@@ -2,9 +2,8 @@
 /* eslint-disable max-classes-per-file */
 
 import { BigNumber } from 'bignumber.js';
-import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf } from '../entity';
+import { EntityBase, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import {
   ComplexTypeField,

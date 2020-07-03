@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import type { Entity } from '../entity';
 import { CustomFieldBase } from '../../common/selectable/custom-field';
 import { DateField } from '../../common';
 

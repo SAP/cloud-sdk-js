@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
-import { EntityBase } from '../entity';
+import { EntityBase, Constructable } from '../entity';
 import { BigNumberField } from './big-number-field';
 import { BooleanField } from './boolean-field';
 import { DateField } from './date-field';

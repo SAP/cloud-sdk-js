@@ -3,7 +3,6 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { toPropertyFormat } from '../../util';
 import {
-  Constructable,
   isSelectedProperty,
   Field,
   Link,
@@ -12,7 +11,8 @@ import {
   CollectionField,
   OneToOneLink,
   isExpandedProperty,
-  EntityBase
+  EntityBase,
+  Constructable
 } from '../common';
 
 // eslint-disable-next-line valid-jsdoc

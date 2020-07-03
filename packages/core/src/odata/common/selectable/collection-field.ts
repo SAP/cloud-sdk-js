@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EntityBase } from '../entity';
-import { Constructable } from '../constructable';
+import { EntityBase, Constructable } from '../entity';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { Field } from './field';
 import { ComplexTypeField } from './complex-type-field';

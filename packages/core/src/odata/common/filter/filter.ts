@@ -1,11 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Constructable } from '../constructable';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity';
+import {
+  Constructable,
+  EntityBase,
+  EntityIdentifiable,
+  ODataVersionOf
+} from '../entity';
 import { FieldType } from '../selectable';
-import { FilterFunction } from './filter-function-base';
-import { Filterable } from './filterable';
+import type { FilterFunction } from './filter-function-base';
+import type { Filterable } from './filterable';
 
 type FilterOperatorString = 'eq' | 'ne';
 type FilterOperatorBoolean = 'eq' | 'ne';

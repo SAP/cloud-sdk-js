@@ -4,8 +4,8 @@ import {
   part_content_type_line,
   content_transfer_encoding_line
 } from '../common';
+import { getRequestLine } from '../common/request/odata-batch-request-util';
 import { Entity } from './entity';
-import { getRequestLine } from './odata-batch-request-builder';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder

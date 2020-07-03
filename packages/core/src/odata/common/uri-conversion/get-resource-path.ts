@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
-import { EntityBase } from '../entity';
-import { Constructable } from '../constructable';
+import { EntityBase, Constructable } from '../entity';
 import { FieldType, Field } from '../selectable';
 import { toStaticPropertyFormat } from '../../../util';
 import { UriConverter } from '../../v2';

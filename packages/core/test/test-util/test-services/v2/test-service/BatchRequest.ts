@@ -4,7 +4,16 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '../../../../../src';
-import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLvl2MultiLink, TestEntitySingleLink, TestEntityLvl2SingleLink, TestEntityCircularLinkParent, TestEntityCircularLinkChild, TestEntityEndsWith, TestEntityEndsWithSomethingElse } from './index';
+import { TestEntity } from './TestEntity';
+import {  TestEntityMultiLink} from './TestEntityMultiLink'
+import {  TestEntityOtherMultiLink} from './TestEntityOtherMultiLink'
+import {  TestEntityLvl2MultiLink} from './TestEntityLvl2MultiLink'
+import {  TestEntitySingleLink} from './TestEntitySingleLink'
+import {  TestEntityLvl2SingleLink} from './TestEntityLvl2SingleLink'
+import {  TestEntityCircularLinkParent} from './TestEntityCircularLinkParent'
+import {  TestEntityEndsWith} from './TestEntityEndsWith'
+import {  TestEntityEndsWithSomethingElse} from './TestEntityEndsWithSomethingElse'
+import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 
 /**
  * Batch builder for operations supported on the Test Service.

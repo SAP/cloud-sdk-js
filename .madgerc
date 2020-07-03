@@ -2,8 +2,7 @@
     "fileExtensions" : ["ts"],
 	"detectiveOptions": {
 		"ts": {
-			"skipTypeImports": true,
-			"mixedImports": true
+			"skipTypeImports": true
 		}
 	}
 }

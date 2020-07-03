@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
@@ -136,6 +137,14 @@ export class TestEntity extends Entity implements TestEntityType {
   }
 
   /**
+   * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
+   * @returns A `TestEntity` request builder.
+   */
+  static requestBuilder(): TestEntityRequestBuilder {
+    return new TestEntityRequestBuilder();
+  }
+
+  /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntity`.
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
@@ -156,7 +165,6 @@ export class TestEntity extends Entity implements TestEntityType {
 import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
 import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
 import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
-import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
@@ -353,12 +361,4 @@ export namespace TestEntity {
     acc[field._fieldName] = field;
     return acc;
   }, {});
-
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
-   * @returns A `TestEntity` request builder.
-   */
-export function requestBuilder(): TestEntityRequestBuilder {
-    return new TestEntityRequestBuilder();
-  }
 }

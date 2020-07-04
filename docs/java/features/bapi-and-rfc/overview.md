@@ -299,7 +299,7 @@ jco.client.user=<user>
 jco.client.passwd=<password>
 ```
 :::tip
-Replace every placeholder `<placeholder` with the respective value.
+Replace every `<placeholder>` with the respective value.
 :::
 
 #### Point JCo to your Destination
@@ -307,6 +307,6 @@ JCo considers the system property `jco.destinations.dir` to look for destination
 
 You can set the property in your Java code like so:
 ```java
-`System.setProperty("jco.destinations.dir", "here-comes-the-directory-with-the-destination");
+System.setProperty("jco.destinations.dir", "here-comes-the-directory-with-the-destination");
 ```
 Alternatively, you can pass the property to the JVM via Maven with `-Djco.destinations.dir=here-comes-the-directory-with-the-destination`.

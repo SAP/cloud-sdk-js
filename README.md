@@ -1,12 +1,12 @@
 # SAP Cloud SDK documentation portal
 
-## Currently deployed version ##
+## Currently deployed documentation ##
 
 [SAP Cloud SDK Documentation](https://sap.github.io/cloud-sdk/ )
 
 ## Requirements ##
 
-- [Node.js](https://nodejs.org/en/download/) version >= 10.9.0 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm)  for managing multiple Node versions on a single machine installed
+- [Node.js](https://nodejs.org/en/download/). The latest LTS is recommended. Check you version with `node -v`. You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine.
 
 ## Getting started ##
 

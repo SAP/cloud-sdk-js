@@ -171,7 +171,7 @@ Go to your CF subaccount, navigate to `Connectivity\Destinations` in the left-ha
 - Client Secret: The value of `clientsecret`
 - Token Service URL: The value of `url` appended by `/oauth/token?grant_type=client_credentials`
 
-Restart your app.
+Click save. Restart your app by navigating to `Spaces\<you-space-name>\Applications`. Chose your App from the list by clicking on the link with its name and find restart button on the page that loads.
 
 ### Develop your App
 

@@ -51,8 +51,6 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
-      - name: deploy local db
-        run: npm run deploy:to-sqlite
       - name: Cypress tests
         uses: cypress-io/github-action@v2
         with:

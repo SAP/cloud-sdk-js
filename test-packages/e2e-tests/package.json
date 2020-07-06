@@ -1,0 +1,30 @@
+{
+  "name": "cap-odata-v4-app",
+  "version": "0.0.1",
+  "description": "cap-odata-v4-app.",
+  "dependencies": {
+    "@sap/cds": ">=3.33.1",
+    "express": "^4.17.1",
+    "sqlite3": "^4.2.0"
+  },
+  "scripts": {
+    "start": "cds run",
+    "watch": "cds watch",
+    "deploy:to-sqlite": "cds deploy --to sqlite",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "cds": {
+    "cdsc": {
+      "odataFormat": "structured"
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite"
+      }
+    }
+  },
+  "devDependencies": {
+    "cypress": "^4.9.0"
+  }
+}

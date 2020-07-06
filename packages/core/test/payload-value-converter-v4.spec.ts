@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment, { Duration, Moment } from 'moment';
-import { edmToTs, TimeFractionalSeconds, tsToEdm } from '../src/v4';
+import { edmToTs, tsToEdm } from '../src/v4';
 
 describe('edmToTs()', () => {
   it('should parse Edm.Date to moment', () => {
@@ -20,19 +20,19 @@ describe('edmToTs()', () => {
     const dateTimePrefix = '2020-05-13T16:14';
     const datePrefixUnix = 1589386440;
     let actual = edmToTs(`${dateTimePrefix}Z`, 'Edm.DateTimeOffset') as Moment;
-    expect(actual.unix()).toBe(1589386440);
+    expect(actual.unix()).toBe(datePrefixUnix);
 
     actual = edmToTs(`${dateTimePrefix}:24Z`, 'Edm.DateTimeOffset') as Moment;
-    expect(actual.unix()).toBe(1589386440 + 24);
+    expect(actual.unix()).toBe(datePrefixUnix + 24);
 
     actual = edmToTs(`${dateTimePrefix}+05:00`, 'Edm.DateTimeOffset') as Moment;
-    expect(actual.unix()).toBe(1589386440 - 3600 * 5);
+    expect(actual.unix()).toBe(datePrefixUnix - 3600 * 5);
 
     actual = edmToTs(
       `${dateTimePrefix}:17.987+03:00`,
       'Edm.DateTimeOffset'
     ) as Moment;
-    expect(actual.unix()).toBe(1589386440 - 3600 * 3 + 17);
+    expect(actual.unix()).toBe(datePrefixUnix - 3600 * 3 + 17);
     expect(actual.millisecond()).toBe(987);
   });
 
@@ -90,13 +90,12 @@ describe('edmToTs()', () => {
     );
   });
 
-  it('should parse Edm.TimeOfDay to moment.utc since there is proper time object', () => {
+  it('should parse Edm.TimeOfDay to Time', () => {
     let timeOfDay = '06:46:32';
-    let expected: TimeFractionalSeconds = {
+    let expected = {
       hours: 6,
       minutes: 46,
-      seconds: 32,
-      fractionalSeconds: undefined
+      seconds: 32
     };
     let actual = edmToTs(timeOfDay, 'Edm.TimeOfDay');
     expect(actual).toEqual(expected);
@@ -105,14 +104,14 @@ describe('edmToTs()', () => {
     expected = {
       hours: 6,
       minutes: 46,
-      seconds: 32,
-      fractionalSeconds: '065123'
+      seconds: 32.065123
     };
     actual = edmToTs(timeOfDay, 'Edm.TimeOfDay');
     expect(actual).toEqual(expected);
 
+    // This is the trailing zero corner case
     timeOfDay = '06:46:32.00';
-    expected = { hours: 6, minutes: 46, seconds: 32, fractionalSeconds: '00' };
+    expected = { hours: 6, minutes: 46, seconds: 32 };
     actual = edmToTs(timeOfDay, 'Edm.TimeOfDay');
     expect(actual).toEqual(expected);
   });
@@ -146,35 +145,32 @@ describe('tsToEdm()', () => {
 
   it('should convert time to Edm.TimeOfDay', () => {
     expect(
-      tsToEdm(
-        { hours: 18, minutes: 15, seconds: 57, fractionalSeconds: '0987' },
-        'Edm.TimeOfDay'
-      )
+      tsToEdm({ hours: 18, minutes: 15, seconds: 57.0987 }, 'Edm.TimeOfDay')
     ).toBe('18:15:57.0987');
   });
 });
 
 describe('edm to ts to edm does not lead to information loss', () => {
-  it('should not lose information for Edm.Date', () => {
+  it('should not loose information for Edm.Date', () => {
     const expected = '2020-05-13';
     expect(tsToEdm(edmToTs(expected, 'Edm.Date'), 'Edm.Date')).toBe(expected);
   });
 
-  it('should not lose information for Edm.DateTimeOffset', () => {
+  it('should not loose information for Edm.DateTimeOffset', () => {
     const expected = '2020-05-13T16:14:23.000Z';
     expect(
       tsToEdm(edmToTs(expected, 'Edm.DateTimeOffset'), 'Edm.DateTimeOffset')
     ).toBe(expected);
   });
 
-  it('should not lose information for Edm.Duration', () => {
+  it('should not loose information for Edm.Duration', () => {
     const expected = '-P3DT6H49.987S';
     expect(tsToEdm(edmToTs(expected, 'Edm.Duration'), 'Edm.Duration')).toBe(
       expected
     );
   });
 
-  it('should not lose information for Edm.TimeOfDay', () => {
+  it('should not loose information for Edm.TimeOfDay', () => {
     let expected = '18:27:32.12345678';
     expect(tsToEdm(edmToTs(expected, 'Edm.TimeOfDay'), 'Edm.TimeOfDay')).toBe(
       expected
@@ -185,8 +181,10 @@ describe('edm to ts to edm does not lead to information loss', () => {
       expected
     );
 
-    expected = '18:27:32.0';
-    expect(tsToEdm(edmToTs(expected, 'Edm.TimeOfDay'), 'Edm.TimeOfDay')).toBe(
+    // This one actually looses information. This is expected behavior as long as this does not cause other issues.
+    const input = '18:27:32.0';
+    expected = '18:27:32';
+    expect(tsToEdm(edmToTs(input, 'Edm.TimeOfDay'), 'Edm.TimeOfDay')).toBe(
       expected
     );
 

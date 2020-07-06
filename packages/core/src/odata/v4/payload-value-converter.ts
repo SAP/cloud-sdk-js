@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import moment, { Duration, Moment } from 'moment';
-import { Time, EdmTypeShared, TimeFractionalSeconds } from '../common';
+import { Time, EdmTypeShared } from '../common';
 import {
   deserializersCommon,
   serializersCommom
@@ -77,8 +77,8 @@ function edmDurationToMoment(value: string): Duration {
   return moment.duration(value);
 }
 
-function edmTimeOfDayToTime(value: string): TimeFractionalSeconds {
-  const timeComponents = /(\d{2,2}):(\d{2,2}):(\d{2,2})\.{0,1}(\d{1,12})?/.exec(
+function edmTimeOfDayToTime(value: string): Time {
+  const timeComponents = /(\d{2,2}):(\d{2,2}):(\d{2,2}(\.\d{1,12}){0,1})?/.exec(
     value
   );
   if (!timeComponents) {
@@ -87,10 +87,9 @@ function edmTimeOfDayToTime(value: string): TimeFractionalSeconds {
     );
   }
   return {
-    hours: parseInt(timeComponents[1], 10),
-    minutes: parseInt(timeComponents[2], 10),
-    seconds: parseInt(timeComponents[3], 10),
-    fractionalSeconds: timeComponents[4] || undefined
+    hours: parseInt(timeComponents[1]),
+    minutes: parseInt(timeComponents[2]),
+    seconds: parseFloat(timeComponents[3])
   };
 }
 
@@ -106,10 +105,7 @@ function durationToEdmDuration(value: Duration): string {
   return value.toISOString();
 }
 
-function timeToEdmTimeOfDay(value: TimeFractionalSeconds): string {
-  if (value.fractionalSeconds) {
-    return `${value.hours}:${value.minutes}:${value.seconds}.${value.fractionalSeconds}`;
-  }
+function timeToEdmTimeOfDay(value: Time): string {
   return `${value.hours}:${value.minutes}:${value.seconds}`;
 }
 

@@ -10,7 +10,7 @@ import {
 } from './vdm-types';
 
 const potentialExternalImportDeclarations = [
-  ['moment', 'Moment'],
+  ['moment', 'Moment', 'Duration'],
   ['bignumber.js', 'BigNumber']
 ];
 

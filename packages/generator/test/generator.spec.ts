@@ -81,12 +81,12 @@ describe('generator', () => {
       expect(testEntityFile!.getNamespaces().length).toBe(1);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(26);
+      expect(entityClass!.getProperties().length).toBe(27);
 
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getNamespace('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(27);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(28);
     });
 
     it('generates function-imports.ts file', () => {

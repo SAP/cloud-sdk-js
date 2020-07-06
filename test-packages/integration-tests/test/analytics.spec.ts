@@ -2,9 +2,8 @@
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { dirname, resolve, sep } from 'path';
 import * as analytics from '@sap-cloud-sdk/analytics/src/analytics-data';
-import {performUsageAnalytics} from '@sap-cloud-sdk/analytics/src/usage-analytics';
-import{generateConfig} from '@sap-cloud-sdk/analytics/src/config';
-
+import { performUsageAnalytics } from '@sap-cloud-sdk/analytics/src/usage-analytics';
+import { generateConfig } from '@sap-cloud-sdk/analytics/src/config';
 import nock from 'nock';
 
 describe('usage analytics', () => {
@@ -94,9 +93,7 @@ describe('usage analytics', () => {
     );
 
     const callerPath = '/node_modules'; // Pretend that we're a dependency
-    await expect(
-      performUsageAnalytics(callerPath)
-    ).resolves.toBeUndefined();
+    await expect(performUsageAnalytics(callerPath)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
 
     unlinkSync(rootConfigPath);
@@ -113,9 +110,7 @@ describe('usage analytics', () => {
       .reply(204);
 
     const callerPath = '/node_modules'; // Pretend that we're a dependency
-    await expect(
-      performUsageAnalytics(callerPath)
-    ).resolves.toBeUndefined();
+    await expect(performUsageAnalytics(callerPath)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
   });
 

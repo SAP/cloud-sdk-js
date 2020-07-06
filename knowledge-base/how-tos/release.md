@@ -1,5 +1,11 @@
 # Release Process
-All SAP Cloud SDK modules will be published with the same version regardless whether there where changes within the particular packages or not.
+All SAP Cloud SDK modules will be published with the same version regardless whether there were changes within the particular packages or not.
+
+## Preparations for a Release
+
+Sometimes external libraries introduce breaking changing in minor version options. 
+In order to ensure that the SDK works with the current versions of external libraries run `npm i` to update the package-lock.json.
+If changes are there commit them to master before releasing.
 
 ## How to trigger a release
 The release process can only be triggered by owners of the repository.

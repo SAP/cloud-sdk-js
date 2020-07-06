@@ -47,7 +47,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: cd test-packages/e2e-tests/ && npm install --build-from-source
+      - run: cd test-packages/e2e-tests/ && npm ci
       - name: deploy local db
         run: npm run deploy:to-sqlite
       - name: Cypress tests

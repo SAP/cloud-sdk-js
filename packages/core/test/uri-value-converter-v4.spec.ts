@@ -25,7 +25,7 @@ describe('convertToUriFormat', () => {
   it('should convert timeOfDay', () => {
     expect(
       convertToUriFormat(
-        { hours: 13, minutes: 21, seconds: 43, fractionalSeconds: 123 },
+        { hours: 13, minutes: 21, seconds: 43.123 },
         'Edm.TimeOfDay'
       )
     ).toBe('13:21:43.123');

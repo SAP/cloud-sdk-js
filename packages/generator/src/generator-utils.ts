@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EdmType } from '@sap-cloud-sdk/core';
+import { EdmTypeShared } from '@sap-cloud-sdk/core';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { VdmNavigationProperty } from './vdm-types';
@@ -42,7 +42,7 @@ export function isNullableParameter(parameter: any) {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
 
-type EdmTypeMapping = { [key in EdmType]: string };
+type EdmTypeMapping = { [key in EdmTypeShared<'any'>]: string };
 
 const edmToTsTypeMapping: EdmTypeMapping = {
   'Edm.String': 'string',
@@ -57,10 +57,17 @@ const edmToTsTypeMapping: EdmTypeMapping = {
   'Edm.Float': 'number', // ABAP CDS compatibility
   'Edm.Byte': 'number',
   'Edm.SByte': 'number',
-  'Edm.DateTime': 'Moment',
   'Edm.DateTimeOffset': 'Moment',
   'Edm.Binary': 'string',
-  'Edm.Time': 'Time'
+
+  // OData v2 specific
+  'Edm.DateTime': 'Moment',
+  'Edm.Time': 'Time',
+
+  // OData v4 specific
+  'Edm.Date': 'Moment',
+  'Edm.Duration': 'Duration',
+  'Edm.TimeOfDay': 'Time'
 };
 
 const edmToFieldTypeMapping: EdmTypeMapping = {
@@ -76,10 +83,17 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
   'Edm.Float': 'NumberField', // ABAP CDS compatibility
   'Edm.Byte': 'NumberField',
   'Edm.SByte': 'NumberField',
-  'Edm.DateTime': 'DateField',
   'Edm.DateTimeOffset': 'DateField',
   'Edm.Binary': 'BinaryField',
-  'Edm.Time': 'TimeField'
+
+  // OData v2 specific
+  'Edm.DateTime': 'DateField',
+  'Edm.Time': 'TimeField',
+
+  // OData v4 specific
+  'Edm.Date': 'DateField',
+  'Edm.Duration': 'DurationField',
+  'Edm.TimeOfDay': 'TimeField'
 };
 
 const fieldTypeToComplexPropertyTypeMapping = {

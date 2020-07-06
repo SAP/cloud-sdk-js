@@ -28,7 +28,9 @@ function navigationProperties(
   const entityType = entityMetadata.entityType as EdmxEntityType;
   const entitySet = entityMetadata.entitySet as EdmxEntitySet;
 
-  return entitySet.NavigationPropertyBinding.map(navBinding => {
+  return entitySet.NavigationPropertyBinding.filter(
+    navBinding => !navBinding.Path.includes('/')
+  ).map(navBinding => {
     const navProp = entityType.NavigationProperty.find(
       n => n.Name === navBinding.Path
     );

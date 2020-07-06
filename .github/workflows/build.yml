@@ -42,12 +42,15 @@ jobs:
         name: License Check
   e2e-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: test-packages/e2e-tests
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: cd test-packages/e2e-tests/ && npm ci
+      - run: npm ci
       - name: deploy local db
         run: npm run deploy:to-sqlite
       - name: Cypress tests

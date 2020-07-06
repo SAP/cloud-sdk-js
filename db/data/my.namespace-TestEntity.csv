@@ -1,5 +1,0 @@
-KeyPropertyInt;KeyPropertyString;StringProperty;GuidProperty;BooleanProperty;Int64Property;DoubleProperty;DecimalProperty;DateProperty;TimeOfDayProperty;DataTimeOffsetDataTimeProperty;DataTimeOffsetTimestampProperty
-101;abc;Emily Brontë;005056ba-23b6-1ed4-b0ca-a49649d05e98;true;64;12.34;6.78;"1809-01-19";06:46:32;"2020-06-11T07:42:32.464Z";"2020-06-11T07:42:32.464Z"
-107;def;Charlotte Brontë;105056ba-23b6-1ed4-b0ca-a49649d05e98;false;64;12.34;6.78;"1809-01-19";06:46:32.065123;"2020-06-11T07:42:32.464Z";"2020-06-11T07:42:32.464Z"
-150;ade;Edgar Allen Poe;205056ba-23b6-1ed4-b0ca-a49649d05e98;true;64;12.34;6.78;"1809-01-19";06:46:32.065123;"2020-06-11T07:42:32.464Z";"2020-06-11T07:42:32.464Z"
-170;bdf;Richard Carpenter;305056ba-23b6-1ed4-b0ca-a49649d05e98;false;64;12.34;6.78;"1809-01-19";06:46:32;"2020-06-11T07:42:32.464Z";"2020-06-11T07:42:32.464Z"

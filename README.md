@@ -42,3 +42,13 @@
 - Enjoy love and appreciation from community
 
 Check our additional materials and our documentation guide [here](https://sap.github.io/cloud-sdk/docs/dzen/getting-started )
+
+## Guidelines on documentation style
+
+## Adding yourself to SAP organization
+
+1. Navigate to: https://opensource-portal.tools.sap.corp/
+2. Authenticate
+3. Search for`cloud-sdk-team` and ask to be added
+4. Now you're a part of the team and can submit you `Pull requests` without mandatory forking of the repository
+5. You can get assigned to your colleagues pull requests.

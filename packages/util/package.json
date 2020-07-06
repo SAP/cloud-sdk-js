@@ -33,14 +33,14 @@
   "dependencies": {
     "async": "^3.2.0",
     "chalk": "^3.0.0",
-    "rambda": "^5.0.0",
-    "winston": "^3.3.2"
+    "rambda": "~5.8.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
     "jest": "^25.2.4",
     "jest-junit": "^10.0.0",
     "ts-jest": "^25.4.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.9.6"
   }
 }

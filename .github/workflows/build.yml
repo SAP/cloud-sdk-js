@@ -42,15 +42,11 @@ jobs:
         name: License Check
   e2e-tests:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: test-packages/e2e-tests
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: npm ci
       - name: Cypress tests
         uses: cypress-io/github-action@v2
         with:

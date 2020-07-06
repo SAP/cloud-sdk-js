@@ -271,7 +271,9 @@ function parameterDescription(
 }
 
 function parseType(type: string): string {
-  return type.startsWith('Edm') ? type : type.split('.')[1];
+  return type.startsWith('Edm')
+    ? type
+    : type.split('.')[type.split('.').length - 1];
 }
 
 function isComplexType(type: string): boolean {

@@ -10,15 +10,16 @@
 
 ## Known Issues
 
--
+- The internal deserialization and serialization of `Edm.TimeOfDay` representations is not lossless for corner cases where the fractional seconds contain trailing zeros. As a sideeffect `12:12:12.0` can potentially be transformed to `12:12:12` when performing a GET and PATCH / PUT request subsequently.
 
 ## Compatibility Notes
 
--
+- Experimental `fractionalSeconds` were removed from the `Time` representation and merged with `seconds` instead.
 
 ## New Functionality
 
--
+- Support OData v4 specific parsing of Edm types in the generator.
+- Add a static representation for durations on entity classes / namespaces.
 
 ## Improvements
 

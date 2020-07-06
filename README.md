@@ -43,7 +43,25 @@
 
 Check our additional materials and our documentation guide [here](https://sap.github.io/cloud-sdk/docs/dzen/getting-started )
 
-## Guidelines on documentation style
+## How we write
+
+- Being concise is a virtue. Write short and on purpose.
+- Provide only relevant context. Make a good assumption of readers' knowledge and make it your starting point for context.
+- Give a link whenever you mention 3rd party resources, library, concept, abbreviation, reference, etc.
+- Avoid abbreviations or introduce them unless it's absolutely obvious and widely adopted.
+- Build upon already available content and use it for reference. Create materials that could be leveraged by others.
+  - Think modular. Extract logically independent parts and link to them from larger scope materials.
+  - Use the same approach you do with coding when structuring your application
+  - Increase scalability so that others can leverage your work
+  - Generalize up to the level where it makes sense but not more
+- Ask if your peers understood what you meant
+- Be your reader, make it a candy
+- Don't sell, don't do marketing, the value comes from the content itself, not you words of accolade to our work. Leave that for Blogs and even there be humble.
+- Write incrementally. Every little update counts. It saves you time. Editing is easier than writing from scratch in most cases.
+- Use simple vocabulary and the most frequent words. Try thesaurus for matching your vocabulary.
+- Use spell checker at all times
+- Get inspiration from good documentation! Check documentation from the best companies in the area, prominent startups, and other quality sources to collect ideas and set yourself for success.
+- Give quality feedback to your colleagues. Suggest changes that improve our documentation quality.
 
 ## Adding yourself to SAP organization
 

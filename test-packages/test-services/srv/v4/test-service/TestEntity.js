@@ -149,20 +149,25 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      */
     TestEntity.FLOAT_PROPERTY = new v4_1.NumberField('FloatProperty', TestEntity, 'Edm.Float');
     /**
-     * Static representation of the [[timeProperty]] property for query construction.
+     * Static representation of the [[timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.TIME_PROPERTY = new v4_1.TimeField('TimeProperty', TestEntity, 'Edm.Time');
+    TestEntity.TIME_OF_DAY_PROPERTY = new v4_1.TimeField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
     /**
-     * Static representation of the [[dateTimeProperty]] property for query construction.
+     * Static representation of the [[dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.DATE_TIME_PROPERTY = new v4_1.DateField('DateTimeProperty', TestEntity, 'Edm.DateTime');
+    TestEntity.DATE_PROPERTY = new v4_1.DateField('DateProperty', TestEntity, 'Edm.Date');
     /**
      * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntity.DATE_TIME_OFF_SET_PROPERTY = new v4_1.DateField('DateTimeOffSetProperty', TestEntity, 'Edm.DateTimeOffset');
+    /**
+     * Static representation of the [[durationProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.DURATION_PROPERTY = new v4_1.DurationField('DurationProperty', TestEntity, 'Edm.Duration');
     /**
      * Static representation of the [[byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -219,9 +224,10 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
         TestEntity.SINGLE_PROPERTY,
         TestEntity.DOUBLE_PROPERTY,
         TestEntity.FLOAT_PROPERTY,
-        TestEntity.TIME_PROPERTY,
-        TestEntity.DATE_TIME_PROPERTY,
+        TestEntity.TIME_OF_DAY_PROPERTY,
+        TestEntity.DATE_PROPERTY,
         TestEntity.DATE_TIME_OFF_SET_PROPERTY,
+        TestEntity.DURATION_PROPERTY,
         TestEntity.BYTE_PROPERTY,
         TestEntity.S_BYTE_PROPERTY,
         TestEntity.COLLECTION_PROPERTY,

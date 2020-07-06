@@ -1,8 +1,8 @@
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { Moment } from 'moment';
+import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CollectionField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
@@ -80,20 +80,25 @@ export declare class TestEntity extends Entity implements TestEntityType {
      */
     floatProperty?: number;
     /**
-     * Time Property.
+     * Time Of Day Property.
      * @nullable
      */
-    timeProperty?: Time;
+    timeOfDayProperty?: Time;
     /**
-     * Date Time Property.
+     * Date Property.
      * @nullable
      */
-    dateTimeProperty?: Moment;
+    dateProperty?: Moment;
     /**
      * Date Time Off Set Property.
      * @nullable
      */
     dateTimeOffSetProperty?: Moment;
+    /**
+     * Duration Property.
+     * @nullable
+     */
+    durationProperty?: Duration;
     /**
      * Byte Property.
      * @nullable
@@ -171,9 +176,10 @@ export interface TestEntityType {
     singleProperty?: number;
     doubleProperty?: number;
     floatProperty?: number;
-    timeProperty?: Time;
-    dateTimeProperty?: Moment;
+    timeOfDayProperty?: Time;
+    dateProperty?: Moment;
     dateTimeOffSetProperty?: Moment;
+    durationProperty?: Duration;
     byteProperty?: number;
     sByteProperty?: number;
     collectionProperty?: string[];
@@ -196,9 +202,10 @@ export interface TestEntityTypeForceMandatory {
     singleProperty: number;
     doubleProperty: number;
     floatProperty: number;
-    timeProperty: Time;
-    dateTimeProperty: Moment;
+    timeOfDayProperty: Time;
+    dateProperty: Moment;
     dateTimeOffSetProperty: Moment;
+    durationProperty: Duration;
     byteProperty: number;
     sByteProperty: number;
     collectionProperty: string[];
@@ -270,20 +277,25 @@ export declare namespace TestEntity {
      */
     const FLOAT_PROPERTY: NumberField<TestEntity>;
     /**
-     * Static representation of the [[timeProperty]] property for query construction.
+     * Static representation of the [[timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const TIME_PROPERTY: TimeField<TestEntity>;
+    const TIME_OF_DAY_PROPERTY: TimeField<TestEntity>;
     /**
-     * Static representation of the [[dateTimeProperty]] property for query construction.
+     * Static representation of the [[dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const DATE_TIME_PROPERTY: DateField<TestEntity>;
+    const DATE_PROPERTY: DateField<TestEntity>;
     /**
      * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntity>;
+    /**
+     * Static representation of the [[durationProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const DURATION_PROPERTY: DurationField<TestEntity>;
     /**
      * Static representation of the [[byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -327,7 +339,7 @@ export declare namespace TestEntity {
     /**
      * All fields of the TestEntity entity.
      */
-    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | CollectionField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
+    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | CollectionField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
     /**
      * All fields selector.
      */

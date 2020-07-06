@@ -106,14 +106,10 @@ const fieldTypeToComplexPropertyTypeMapping = {
   TimeField: 'ComplexTypeTimePropertyField'
 };
 
-export function edmToTsType(edmType: string): string {
+export function edmToTsType(edmType: string): string | undefined {
   if (edmToTsTypeMapping[edmType]) {
     return edmToTsTypeMapping[edmType];
   }
-  logger.warn(
-    `No type mapping defined for edm type ${edmType}! Will use "any" instead.`
-  );
-  return 'any';
 }
 
 export function edmToFieldType(edmType: string): string {

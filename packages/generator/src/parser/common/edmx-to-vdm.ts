@@ -133,7 +133,7 @@ function properties(
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmProperty[] {
-  return entity.entityType.Property.map(p => {
+  return entity.entityType.Property.filter(filterUnknownEdmTypes).map(p => {
     checkCollectionKind(p);
     const swaggerProp = entity.swaggerDefinition
       ? entity.swaggerDefinition.properties[p.Name]
@@ -271,7 +271,9 @@ function parameterDescription(
 }
 
 function parseType(type: string): string {
-  return type.startsWith('Edm') ? type : type.split('.')[1];
+  return type.startsWith('Edm')
+    ? type
+    : type.split('.')[type.split('.').length - 1];
 }
 
 function isComplexType(type: string): boolean {
@@ -314,6 +316,17 @@ export function navigationPropertyBase(
   };
 }
 
+function filterUnknownEdmTypes(p: EdmxProperty): boolean {
+  const type = parseTypeName(p.Type);
+  const skip = type.startsWith('Edm.') && !edmToTsType(type);
+  if (skip) {
+    logger.warn(
+      `Edm Type ${type} not supported by the SAP Cloud SDK. Skipping generation of property ${p.Name}.`
+    );
+  }
+  return !skip;
+}
+
 export function transformComplexTypes(
   complexTypes: EdmxComplexTypeBase[],
   formatter: ServiceNameFormatter,
@@ -333,7 +346,7 @@ export function transformComplexTypes(
       originalName: c.Name,
       factoryName: formatter.typeNameToFactoryName(typeName, reservedNames),
       fieldType: complexTypeFieldType(typeName),
-      properties: c.Property.map(p => {
+      properties: c.Property.filter(filterUnknownEdmTypes).map(p => {
         checkCollectionKind(p);
         const instancePropertyName = formatter.originalToInstancePropertyName(
           c.Name,
@@ -434,7 +447,7 @@ export function transformFunctionImportBase(
     parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
   };
 
-  const parameters = edmxParameters.map(p => {
+  const parameters = edmxParameters.filter(filterUnknownEdmTypes).map(p => {
     const swaggerParameter = swaggerDefinition
       ? swaggerDefinition.parameters.find(param => param.name === p.Name)
       : undefined;
@@ -445,7 +458,7 @@ export function transformFunctionImportBase(
         p.Name
       ),
       edmType: parseType(p.Type),
-      jsType: edmToTsType(p.Type),
+      jsType: edmToTsType(p.Type)!,
       nullable: isNullableParameter(p),
       description: parameterDescription(p, swaggerParameter)
     };

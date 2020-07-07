@@ -4,10 +4,10 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { Moment } from 'moment';
+import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CollectionField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src/v4';
+import { AllFields, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -86,20 +86,25 @@ export class TestEntity extends Entity implements TestEntityType {
    */
   floatProperty?: number;
   /**
-   * Time Property.
+   * Time Of Day Property.
    * @nullable
    */
-  timeProperty?: Time;
+  timeOfDayProperty?: Time;
   /**
-   * Date Time Property.
+   * Date Property.
    * @nullable
    */
-  dateTimeProperty?: Moment;
+  dateProperty?: Moment;
   /**
    * Date Time Off Set Property.
    * @nullable
    */
   dateTimeOffSetProperty?: Moment;
+  /**
+   * Duration Property.
+   * @nullable
+   */
+  durationProperty?: Duration;
   /**
    * Byte Property.
    * @nullable
@@ -189,9 +194,10 @@ export interface TestEntityType {
   singleProperty?: number;
   doubleProperty?: number;
   floatProperty?: number;
-  timeProperty?: Time;
-  dateTimeProperty?: Moment;
+  timeOfDayProperty?: Time;
+  dateProperty?: Moment;
   dateTimeOffSetProperty?: Moment;
+  durationProperty?: Duration;
   byteProperty?: number;
   sByteProperty?: number;
   collectionProperty?: string[];
@@ -215,9 +221,10 @@ export interface TestEntityTypeForceMandatory {
   singleProperty: number;
   doubleProperty: number;
   floatProperty: number;
-  timeProperty: Time;
-  dateTimeProperty: Moment;
+  timeOfDayProperty: Time;
+  dateProperty: Moment;
   dateTimeOffSetProperty: Moment;
+  durationProperty: Duration;
   byteProperty: number;
   sByteProperty: number;
   collectionProperty: string[];
@@ -290,20 +297,25 @@ export namespace TestEntity {
    */
   export const FLOAT_PROPERTY: NumberField<TestEntity> = new NumberField('FloatProperty', TestEntity, 'Edm.Float');
   /**
-   * Static representation of the [[timeProperty]] property for query construction.
+   * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_PROPERTY: TimeField<TestEntity> = new TimeField('TimeProperty', TestEntity, 'Edm.Time');
+  export const TIME_OF_DAY_PROPERTY: TimeField<TestEntity> = new TimeField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
   /**
-   * Static representation of the [[dateTimeProperty]] property for query construction.
+   * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_TIME_PROPERTY: DateField<TestEntity> = new DateField('DateTimeProperty', TestEntity, 'Edm.DateTime');
+  export const DATE_PROPERTY: DateField<TestEntity> = new DateField('DateProperty', TestEntity, 'Edm.Date');
   /**
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntity> = new DateField('DateTimeOffSetProperty', TestEntity, 'Edm.DateTimeOffset');
+  /**
+   * Static representation of the [[durationProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const DURATION_PROPERTY: DurationField<TestEntity> = new DurationField('DurationProperty', TestEntity, 'Edm.Duration');
   /**
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -347,7 +359,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | CollectionField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | CollectionField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -360,9 +372,10 @@ export namespace TestEntity {
     TestEntity.SINGLE_PROPERTY,
     TestEntity.DOUBLE_PROPERTY,
     TestEntity.FLOAT_PROPERTY,
-    TestEntity.TIME_PROPERTY,
-    TestEntity.DATE_TIME_PROPERTY,
+    TestEntity.TIME_OF_DAY_PROPERTY,
+    TestEntity.DATE_PROPERTY,
     TestEntity.DATE_TIME_OFF_SET_PROPERTY,
+    TestEntity.DURATION_PROPERTY,
     TestEntity.BYTE_PROPERTY,
     TestEntity.S_BYTE_PROPERTY,
     TestEntity.COLLECTION_PROPERTY,

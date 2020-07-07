@@ -10,6 +10,7 @@ export * from './complex-type-property-fields';
 export * from './create-complex-type';
 export * from './custom-field';
 export * from './date-field';
+export * from './duration-field';
 export * from './edm-type-field';
 export * from './field';
 export * from './link';

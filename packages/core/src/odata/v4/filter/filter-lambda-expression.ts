@@ -10,7 +10,6 @@ import { FilterLambdaExpression } from '../../common/filter/filter-lambda-expres
  */
 export function any<
   EntityT extends EntityBase,
-  FieldT extends FieldType,
   LinkedEntityT extends EntityBase
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
@@ -24,7 +23,6 @@ export function any<
  */
 export function all<
   EntityT extends EntityBase,
-  FieldT extends FieldType,
   LinkedEntityT extends EntityBase
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
@@ -34,7 +32,6 @@ export function all<
 
 function toFilterList<
   EntityT extends EntityBase,
-  FieldT extends FieldType,
   LinkedEntityT extends EntityBase
 >(
   filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]

@@ -1,7 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { dirname, resolve, sep } from 'path';
-import * as analytics from '@sap-cloud-sdk/analytics';
+import * as analytics from '@sap-cloud-sdk/analytics/src/analytics-data';
+import { performUsageAnalytics } from '@sap-cloud-sdk/analytics/src/usage-analytics';
+import { generateConfig } from '@sap-cloud-sdk/analytics/src/config';
 import nock from 'nock';
 
 describe('usage analytics', () => {
@@ -67,7 +69,7 @@ describe('usage analytics', () => {
     const callerPath = '/node_modules'; // Pretend that we are a dependency
 
     await expect(
-      analytics.performUsageAnalytics(callerPath, options)
+      performUsageAnalytics(callerPath, options)
     ).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(true);
 
@@ -91,9 +93,7 @@ describe('usage analytics', () => {
     );
 
     const callerPath = '/node_modules'; // Pretend that we're a dependency
-    await expect(
-      analytics.performUsageAnalytics(callerPath)
-    ).resolves.toBeUndefined();
+    await expect(performUsageAnalytics(callerPath)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
 
     unlinkSync(rootConfigPath);
@@ -110,9 +110,7 @@ describe('usage analytics', () => {
       .reply(204);
 
     const callerPath = '/node_modules'; // Pretend that we're a dependency
-    await expect(
-      analytics.performUsageAnalytics(callerPath)
-    ).resolves.toBeUndefined();
+    await expect(performUsageAnalytics(callerPath)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
   });
 
@@ -146,7 +144,7 @@ describe('usage analytics', () => {
     const callerPath = '/node_modules'; // Pretend that we are a dependency
 
     await expect(
-      analytics.performUsageAnalytics(callerPath, options)
+      performUsageAnalytics(callerPath, options)
     ).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(true);
 
@@ -154,7 +152,7 @@ describe('usage analytics', () => {
   });
 
   it('generateConfig should generate a new config at the given path if none exists', () => {
-    analytics.generateConfig(resolve(__dirname));
+    generateConfig(resolve(__dirname));
 
     const generatedConfig = JSON.parse(
       readFileSync(resolve(__dirname, 'sap-cloud-sdk-analytics.json'), 'utf8')
@@ -172,7 +170,7 @@ describe('usage analytics', () => {
     };
     writeFileSync(rootConfigPath, JSON.stringify(existingConfig), 'utf8');
 
-    analytics.generateConfig(dirname(rootConfigPath));
+    generateConfig(dirname(rootConfigPath));
 
     const config = JSON.parse(readFileSync(rootConfigPath, 'utf8'));
     expect(config).toEqual(existingConfig);

@@ -19,11 +19,13 @@
         <Property Name="SingleProperty" Type="Edm.Single"/>
         <Property Name="DoubleProperty" Type="Edm.Double"/>
         <Property Name="FloatProperty" Type="Edm.Float"/>
-        <Property Name="TimeProperty" Type="Edm.Time" Precision="0"/>
-        <Property Name="DateTimeProperty" Type="Edm.DateTime" Precision="0" sap:display-format="Date"/>
+        <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay" Precision="0"/>
+        <Property Name="DateProperty" Type="Edm.Date" Precision="0" sap:display-format="Date"/>
         <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="DurationProperty" Type="Edm.Duration" Precision="0"/>
         <Property Name="ByteProperty" Type="Edm.Byte"/>
         <Property Name="SByteProperty" Type="Edm.SByte"/>
+        <Property Name="GeographyPointProperty" Type="Edm.GeographyPoint"/>
 
         <Property Name="CollectionProperty" Type="Collection(Edm.String)" MaxLength="10" sap:display-format="UpperCase"/>
 
@@ -122,6 +124,7 @@
         <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
         <Property Name="ByteProperty" Type="Edm.Byte"/>
         <Property Name="SByteProperty" Type="Edm.SByte"/>
+        <Property Name="GeographyPointProperty" Type="Edm.GeographyPoint"/>
         <Property CollectionKind="List" Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexType"/>
       </ComplexType>
 
@@ -170,6 +173,7 @@
         <Parameter Name="StringParam" Type="Edm.String"/>
         <Parameter Name="NonNullableStringParam" Type="Edm.String" Nullable="false"/>
         <Parameter Name="NullableBooleanParam" Type="Edm.Boolean" Nullable="true"/>
+        <Parameter Name="NullableGeographyPointParam" Type="Edm.GeographyPoint" Nullable="true"/>
         <ReturnType Type="Edm.Boolean"/>
       </Function>
 

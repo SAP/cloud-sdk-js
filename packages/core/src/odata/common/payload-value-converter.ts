@@ -27,7 +27,7 @@ const fromBigNumber = (value: BigNumber): string =>
 /**
  * @hidden
  */
-export function parseNumber(value: string | number): number {
+export function toNumberFromEdm(value: string | number): number {
   if (typeof value === 'number') {
     return value;
   }
@@ -45,25 +45,49 @@ export function parseNumber(value: string | number): number {
   const num = Number(value);
 
   if (Number.isNaN(num)) {
-    throw new Error(`Cannot create number from input "${value}"`);
+    throw new Error(`Edm->TS: Cannot create number from input "${value}"`);
   }
 
   return num;
 }
+
+/**
+ * @hidden
+ */
+export function toNumberFromTs(value: Number): number|string {
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  if (value === Number.POSITIVE_INFINITY) {
+    return 'INF';
+  }
+  if (value === Number.NEGATIVE_INFINITY) {
+    return '-INF';
+  }
+  if (value === Number.NaN) {
+    return 'NaN'
+  }
+
+  const num = Number(value);
+
+  throw new Error(`TS->edm: Cannot create number from input "${value}"`);
+}
+
 
 export const deserializersCommon: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
   'Edm.Decimal': toBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
+  'Edm.Double': toNumberFromEdm,
+  'Edm.Float': toNumberFromEdm,
   'Edm.Int16': toNumber,
   'Edm.Int32': toNumber,
   'Edm.Int64': toBigNumber,
   'Edm.Guid': toGuid,
   'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
+  'Edm.Single': toNumberFromEdm,
   'Edm.String': identity
 };
 
@@ -72,13 +96,13 @@ export const serializersCommom: EdmTypeMapping = {
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
   'Edm.Decimal': fromBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
+  'Edm.Double': toNumberFromTs,
+  'Edm.Float': toNumberFromTs,
   'Edm.Int16': toNumber,
   'Edm.Int32': toNumber,
   'Edm.Int64': fromBigNumber,
   'Edm.Guid': identity,
   'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
+  'Edm.Single': toNumberFromTs,
   'Edm.String': identity
 };

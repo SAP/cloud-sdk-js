@@ -11,6 +11,7 @@
 ## Known Issues
 
 - The internal deserialization and serialization of `Edm.TimeOfDay` representations is not lossless for corner cases where the fractional seconds contain trailing zeros. As a sideeffect `12:12:12.0` can potentially be transformed to `12:12:12` when performing a GET and PATCH / PUT request subsequently.
+- OData v4 edm types that are unknown to the SAP Cloud SDK are ignored, such that properties and parameters of those types are missing.
 
 ## Compatibility Notes
 
@@ -44,7 +45,7 @@ Blog: TBD<br>
 ## New Functionality
 
 - Support all string, number and date related filter functions. Import `filterFunctions` and use in a filter, e. g.  `.filter(filterFunctions.startsWith(BusinessPartner.FIRST_NAME).equals(true))`.
-- Add the option `--additionalFiles <GlobToFiles>` to the generator. If specified, all files matching the glob will be copied to each generated service directory.    
+- Add the option `--additionalFiles <GlobToFiles>` to the generator. If specified, all files matching the glob will be copied to each generated service directory.
 
 # 1.22.0
 

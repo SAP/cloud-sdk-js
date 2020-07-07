@@ -29,6 +29,7 @@
 ## Fixed Issues
 
 - Fix type error due to a breaking change from winston version 3.3.2 -> 3.3.3 [see here](https://github.com/winstonjs/winston/issues/1822#event-3508252985) for details.
+- Fix serialization error for number values 'INF','-INF' and 'NaN'.
 
 
 # 1.23.0

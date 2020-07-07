@@ -9,8 +9,8 @@ import {
   tsToEdm
 } from '../../src';
 import {
-  toNumberFromEdm,
-  toNumberFromTs
+  fromEdmToNumber,
+  fromNumberToEdm
 } from '../../src/odata/common/payload-value-converter';
 
 describe('edmToTs()', () => {
@@ -342,34 +342,34 @@ describe('edm to ts to edm does not lead to information loss', () => {
 
 describe('toNumber from edm type input', () => {
   it('parses a number from string or returns the corresponding Number construct for INF, -INF and NaN', () => {
-    expect(toNumberFromEdm('INF')).toEqual(Number.POSITIVE_INFINITY);
-    expect(toNumberFromEdm('-INF')).toEqual(Number.NEGATIVE_INFINITY);
-    expect(Number.isNaN(toNumberFromEdm('NaN'))).toBeTruthy();
-    expect(toNumberFromEdm('32')).toBe(32);
+    expect(fromEdmToNumber('INF')).toEqual(Number.POSITIVE_INFINITY);
+    expect(fromEdmToNumber('-INF')).toEqual(Number.NEGATIVE_INFINITY);
+    expect(Number.isNaN(fromEdmToNumber('NaN'))).toBeTruthy();
+    expect(fromEdmToNumber('32')).toBe(32);
   });
 
   it('can handle input in arbitrary cases', () => {
-    expect(toNumberFromEdm('InF')).toEqual(Number.POSITIVE_INFINITY);
-    expect(toNumberFromEdm('inf')).toEqual(Number.POSITIVE_INFINITY);
-    expect(toNumberFromEdm('iNF')).toEqual(Number.POSITIVE_INFINITY);
+    expect(fromEdmToNumber('InF')).toEqual(Number.POSITIVE_INFINITY);
+    expect(fromEdmToNumber('inf')).toEqual(Number.POSITIVE_INFINITY);
+    expect(fromEdmToNumber('iNF')).toEqual(Number.POSITIVE_INFINITY);
   });
 
   it('throws an error for non-numbers', () => {
-    expect(() => toNumberFromEdm('something something danger zone')).toThrow();
+    expect(() => fromEdmToNumber('something something danger zone')).toThrow();
   });
 });
 
 describe('toNumber from ts type input', () => {
   it('parses a number from string or returns the corresponding Number construct for INF, -INF and NaN', () => {
-    expect(toNumberFromTs(Number.POSITIVE_INFINITY)).toEqual('INF');
-    expect(toNumberFromTs(Number.NEGATIVE_INFINITY)).toEqual('-INF');
-    expect(toNumberFromTs(Number.NaN)).toEqual('NaN');
-    expect(toNumberFromTs(32)).toBe(32);
+    expect(fromNumberToEdm(Number.POSITIVE_INFINITY)).toEqual('INF');
+    expect(fromNumberToEdm(Number.NEGATIVE_INFINITY)).toEqual('-INF');
+    expect(fromNumberToEdm(Number.NaN)).toEqual('NaN');
+    expect(fromNumberToEdm(32)).toBe(32);
   });
 
   it('throws an error for non-numbers', () => {
     expect(() =>
-      toNumberFromTs('something something danger zone' as any)
+      fromNumberToEdm('something something danger zone' as any)
     ).toThrow();
   });
 });
@@ -447,5 +447,7 @@ function checkInfinityCasesToTs(edmType: EdmType) {
 }
 
 function checkInfinityCasesRoundTrip(edmType: EdmType) {
-  ['INF','-INF','NaN'].forEach(s => expect(tsToEdm(edmToTs(s, edmType), edmType)).toBe(s));
+  ['INF', '-INF', 'NaN'].forEach(s =>
+    expect(tsToEdm(edmToTs(s, edmType), edmType)).toBe(s)
+  );
 }

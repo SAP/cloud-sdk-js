@@ -27,7 +27,7 @@ const fromBigNumber = (value: BigNumber): string =>
 /**
  * @hidden
  */
-export function toNumberFromEdm(value: string | number): number {
+export function fromEdmToNumber(value: string | number): number {
   if (typeof value === 'number') {
     return value;
   }
@@ -54,7 +54,7 @@ export function toNumberFromEdm(value: string | number): number {
 /**
  * @hidden
  */
-export function toNumberFromTs(value: number): number | string {
+export function fromNumberToEdm(value: number): number | string {
   if (value === Number.POSITIVE_INFINITY) {
     return 'INF';
   }
@@ -77,14 +77,14 @@ export const deserializersCommon: EdmTypeMapping = {
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
   'Edm.Decimal': toBigNumber,
-  'Edm.Double': toNumberFromEdm,
-  'Edm.Float': toNumberFromEdm,
+  'Edm.Double': fromEdmToNumber,
+  'Edm.Float': fromEdmToNumber,
   'Edm.Int16': toNumber,
   'Edm.Int32': toNumber,
   'Edm.Int64': toBigNumber,
   'Edm.Guid': toGuid,
   'Edm.SByte': toNumber,
-  'Edm.Single': toNumberFromEdm,
+  'Edm.Single': fromEdmToNumber,
   'Edm.String': identity
 };
 
@@ -93,13 +93,13 @@ export const serializersCommom: EdmTypeMapping = {
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
   'Edm.Decimal': fromBigNumber,
-  'Edm.Double': toNumberFromTs,
-  'Edm.Float': toNumberFromTs,
+  'Edm.Double': fromNumberToEdm,
+  'Edm.Float': fromNumberToEdm,
   'Edm.Int16': toNumber,
   'Edm.Int32': toNumber,
   'Edm.Int64': fromBigNumber,
   'Edm.Guid': identity,
   'Edm.SByte': toNumber,
-  'Edm.Single': toNumberFromTs,
+  'Edm.Single': fromNumberToEdm,
   'Edm.String': identity
 };

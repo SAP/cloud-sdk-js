@@ -71,8 +71,8 @@ module.exports = {
           items: [
             {
               label: 'Java SDK',
-              href:
-                'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html'
+              to:
+                'docs/java/release-notes-sap-cloud-sdk-for-java'
             },
             {
               label: 'JS SDK',

@@ -30,7 +30,7 @@ it grew into a fully-fledged and [feature rich](key-features ) development libra
 - [Continuous delivery toolkit](../devops/getting-started )
 
 ### Organic part of SAP Cloud Ecosystem ###
-<img alt="SAP Cloud SDK as a part of SAP Cloud Applications ecosystem" src={useBaseUrl('img/cloud-sdk-under-the-hood.png')} />;
+<img alt="SAP Cloud SDK as a part of SAP Cloud Applications ecosystem" src={useBaseUrl('img/cloud-sdk-under-the-hood.png')} />
 
 ### Open Source ###
 The SAP Cloud SDK actively works in the direction of open-sourcing most of its code. We endorse best open standards and

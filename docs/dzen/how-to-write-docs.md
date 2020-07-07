@@ -28,7 +28,6 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 - If smth can't be fixed by you - notify an author or respective team.
 
 
-
 ## General notes on Writing ##
 People who do not write frequently often struggle with putting words to paper. It's normal. A mental-ease soon to come with practice.
 

@@ -28,6 +28,28 @@ module.exports = {
           },
           {
             type: 'category',
+            label: 'Connectivity',
+            items: [
+              'java/features/connectivity/sdk-connectivity-destination-service'
+            ]
+          },
+          'java/features/bapi-and-rfc/bapi-and-rfc-overview',
+          {
+            type: 'category',
+            label: 'Multitenancy',
+            items: [
+              'java/features/multi-tenancy/multi-tenancy-thread-context'
+            ]
+          },
+          {
+            type: 'category',
+            label: 'Resilience & Caching',
+            items: [
+              'java/features/resilience/resilience'
+            ]
+          },
+          {
+            type: 'category',
             label: 'REST',
             items: [
               'java/features/rest/overview',
@@ -37,41 +59,9 @@ module.exports = {
                 items: ['java/features/rest/clients/scp-workflow-rest-api']
               }
             ]
-          },
-         
-              'java/features/bapi-and-rfc/bapi-and-rfc-overview'
-,
-          {
-            type: 'category',
-            label: 'Connectivity',
-            items: [
-              'java/features/connectivity/sdk-connectivity-destination-service'
-            ]
-          },
-          {
-            type: 'category',
-            label: 'Multitenancy',
-            items: [
-              'java/features/multi-tenancy/multi-tenancy-thread-context'
-            ]
           }
         ]
       },
-      //   {
-      //     type: 'category',
-      //     label: 'Features',
-      //     items: [
-      //       'cli',
-      //       'project-archetype',
-      //       'vdm',
-      //       'odata',
-      //       'generate-client',
-      //       'cloud-abstractions',
-      //       'pipeline',
-      //       'caching',
-      //       'resilience'
-      //     ]
-      //   },
       //   {
       //     type: 'category',
       //     label: 'Advanced features',
@@ -87,20 +77,14 @@ module.exports = {
       //   'client-libraries',
       {
         type: 'category',
-        label: 'Tips & Tricks',
-        items: [
-          'java/tips-and-tricks/change-log-level'
-        ]
-      },
-      {
-        type: 'category',
         label: 'Guides',
         items: [
           'java/guides/sap-cloud-sdk-linux-how-to',
           'java/guides/cf-cli',
           'java/guides/cf-deploy',
           'java/guides/logging-overview',
-          'java/guides/tutorial-overview-sdk-java'
+          'java/guides/change-log-level',
+          'java/guides/tutorial-overview-sdk-java',
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',

@@ -6,7 +6,7 @@
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, StringField, any } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, StringField } from '@sap-cloud-sdk/core/v4';
 
 /**
  * This class represents the entity "TestEntity" of service "AdminService".
@@ -213,7 +213,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<NumberField<TestEntity> | StringField<TestEntity> | BooleanField<TestEntity> | BigNumberField<TestEntity> | any<TestEntity> | DateField < TestEntity >> =[
+  export const _allFields: Array<NumberField<TestEntity> | StringField<TestEntity> | BooleanField<TestEntity> | BigNumberField<TestEntity> | DateField < TestEntity >> =[
     TestEntity.KEY_PROP_INT,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,

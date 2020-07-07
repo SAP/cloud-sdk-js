@@ -428,25 +428,99 @@ BusinessPartner.requestBuilder()
 ```
 -->
 
-<!--
-### Batch Requests WIP
+### Batch Requests
 
 OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with, when you want to execute a large number of requests.
 
+An OData batch request can consist of a number of [retrieve requests](#retrieve-request) and [changesets](#changeset).
+
+#### Retrieve request
+
+A retrieve request is any HTTP `GET` request - in terms of the SAP Cloud SDK this includes all requests built by a [GetAllRequestBuilder](#getall-request-builder) and [GetByKeyRequestBuilder](#getbykey-request-builder).
+
+In the example below, a list of adresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the update requests, which are then passed to the batch function.
+
+The batch request will return a list of `Batchresponses`, which is stored in `retrieveResponses`.
+
 ```ts
-async updateAddreses(businessPartnerAddresses: BusinessPartnerAddress[]): Promise<BusinessPartnerAddress[]> {
+async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
+:Promise<BusinessPartnerAddress[]> {
+  const retrieveRequests = businessPartnerAddresses.map(
+      address => BusinessPartnerAddress
+        .requestBuilder()
+        .getByKey(address.businessPartner, address.addressId)
+  );
+
+  const [...retrieveResponses] = await batch(...retrieveRequests)
+    .execute(destination);
+      
+  return retrieveResponses.reduce(
+    (addresses, response: ReadResponse) =>
+      [...addresses, ...response.as(BusinessPartnerAddress)], []
+  );
+}
+```
+
+#### Changeset
+
+A changeset is a collection of HTTP `POST`, `PUT`, `PATCH` and `DELETE` operations - requests built by any [CreateRequestBuilder](#create-request-builder), [UpdateRequestBuilder](#update-request-builder) and [DeleteRequestBuilder](#delete-request-builder) in terms of the SAP Cloud SDK. The order of execution within a changeset is not defined as opposed to the whole batch request itself. Therefore the requests within a changeset should not depend on each other. If the execution of any of the requests within a changeset fails, the whole changeset will be reflected as an error in the response and will not be applied, much like a database transaction.
+
+In the example below, a list of adresses is mapped in an [UpdateRequestBuilder](#update-request-builder) to form the update requests, which are then wrapped in a changeset and passed to the batch function.
+
+The batch request will return a single `Batchresponse` in a list, which is stored in `updateChangesetResponse`.
+
+```ts
+updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
+:Promise<BusinessPartnerAddress[]> {
+  const updateRequests = businessPartnerAddresses.map(
+    address => BusinessPartnerAddress
+      .requestBuilder()
+      .update(address)
+  );
+
+  const [updateChangesetResponse] = await batch(changeset(...updateRequests))
+    .execute(destination);
+
+  return (updateChangesetResponse as WriteResponses)
+    .responses
+    .map(
+      response => response.as(BusinessPartnerAddress)
+    );
+}
+```
+<!--
+Use a type assertion (as) to inform the compiler that you are handling a response of type WriteResponses. This response provides all responses of the requests within the changeset as responses. Transform those to instances of BusinessPartnerAddress using the .as function of each WriteResponse. As a WriteResponse can belong to either create, update or delete requests, it is possible that there is no response to transform. Therefore you have to make sure to call as! with an exclamation mark, to inform the compiler, that we know that the write request we put into our changeset responds with data.
+-->
+
+#### Complete batch request
+
+:::note
+The changesets will be executed first and the retrieve requests will be executed sequentially afterwards. The order of execution within the changeset is not defined.
+The first `BatchResponse` will be the response to the changeset. The rest will be the responses for your retrieve requests.
+:::
+
+```ts
+async updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
+:Promise<BusinessPartnerAddress[]> {
   const updateRequests = businessPartnerAddresses.map(
     address => BusinessPartnerAddress.requestBuilder().update(address)
   );
-
   const retrieveRequests = businessPartnerAddresses.map(
-    address => BusinessPartnerAddress.requestBuilder().getByKey(address.businessPartner, address.addressId)
+    address => BusinessPartnerAddress
+      .requestBuilder()
+      .getByKey(address.businessPartner, address.addressId)
   );
 
-  const [updateChangesetResponse, ...retrieveResponses] = await batch(changeset(...updateRequests), ...retrieveRequests)
+  const [updateChangesetResponse, ...retrieveResponses] =
+    await batch(
+      changeset(...updateRequests),
+      ...retrieveRequests
+    )
     .execute(destination);
 
-  return retrieveResponses.reduce((addresses, response: ReadResponse) => [...addresses, ...response.as(BusinessPartnerAddress)], []);
+  return retrieveResponses.reduce((addresses, response: ReadResponse) =>
+    [...addresses, ...response.as(BusinessPartnerAddress)], []
+  );
 }
 ```
 -->

@@ -3,11 +3,15 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import {
   edmDateTimeToMoment,
-  edmToTs, EdmType,
+  edmToTs,
+  EdmType,
   momentToEdmDateTime,
   tsToEdm
 } from '../../src';
-import { toNumberFromEdm, toNumberFromTs } from '../../src/odata/common/payload-value-converter';
+import {
+  toNumberFromEdm,
+  toNumberFromTs
+} from '../../src/odata/common/payload-value-converter';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {
@@ -276,12 +280,9 @@ describe('edm to ts to edm does not lead to information loss', () => {
     checkInfinityCasesRoundTrip('Edm.Single');
   });
 
-
   it('Edm.Float', () => {
     const expected = 1234;
-    expect(tsToEdm(edmToTs(expected, 'Edm.Float'), 'Edm.Float')).toBe(
-      expected
-    );
+    expect(tsToEdm(edmToTs(expected, 'Edm.Float'), 'Edm.Float')).toBe(expected);
     checkInfinityCasesRoundTrip('Edm.Float');
   });
 
@@ -367,10 +368,11 @@ describe('toNumber from ts type input', () => {
   });
 
   it('throws an error for non-numbers', () => {
-    expect(() => toNumberFromTs('something something danger zone' as any)).toThrow();
+    expect(() =>
+      toNumberFromTs('something something danger zone' as any)
+    ).toThrow();
   });
 });
-
 
 describe('edm to moment and back', () => {
   describe('edm to moment', () => {
@@ -432,22 +434,18 @@ describe('edm to moment and back', () => {
   });
 });
 
-
-function checkInfinityCasesToEdm(edmType:EdmType){
+function checkInfinityCasesToEdm(edmType: EdmType) {
   expect(tsToEdm(Number.POSITIVE_INFINITY, edmType)).toBe('INF');
   expect(tsToEdm(Number.NEGATIVE_INFINITY, edmType)).toBe('-INF');
   expect(tsToEdm(Number.NaN, edmType)).toBe('NaN');
 }
 
-
-function checkInfinityCasesToTs(edmType:EdmType){
+function checkInfinityCasesToTs(edmType: EdmType) {
   expect(edmToTs('INF', edmType)).toBe(Number.POSITIVE_INFINITY);
   expect(edmToTs('-INF', edmType)).toBe(Number.NEGATIVE_INFINITY);
   expect(edmToTs('NaN', edmType)).toBe(Number.NaN);
 }
 
-function checkInfinityCasesRoundTrip(edmType:EdmType){
-  ['INF','-INF','NaN'].forEach(s=>expect(tsToEdm(edmToTs(s, edmType), edmType)).toBe(
-    s
-  ))
+function checkInfinityCasesRoundTrip(edmType: EdmType) {
+  ['NaN'].forEach(s => expect(tsToEdm(edmToTs(s, edmType), edmType)).toBe(s));
 }

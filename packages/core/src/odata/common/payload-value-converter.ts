@@ -54,26 +54,23 @@ export function toNumberFromEdm(value: string | number): number {
 /**
  * @hidden
  */
-export function toNumberFromTs(value: Number): number|string {
-  if (typeof value === 'number') {
-    return value;
-  }
-
+export function toNumberFromTs(value: number): number | string {
   if (value === Number.POSITIVE_INFINITY) {
     return 'INF';
   }
   if (value === Number.NEGATIVE_INFINITY) {
     return '-INF';
   }
-  if (value === Number.NaN) {
-    return 'NaN'
+  if (Number.isNaN(value)) {
+    return 'NaN';
   }
 
-  const num = Number(value);
+  if (typeof value === 'number') {
+    return value;
+  }
 
   throw new Error(`TS->edm: Cannot create number from input "${value}"`);
 }
-
 
 export const deserializersCommon: EdmTypeMapping = {
   'Edm.Binary': identity,

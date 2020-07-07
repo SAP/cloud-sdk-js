@@ -107,7 +107,8 @@ describe('edmToTsType', () => {
     expect(edmToTsType('Edm.Single')).toBe('number');
     expect(edmToTsType('Edm.DateTime')).toBe('Moment');
     expect(edmToTsType('Edm.Time')).toBe('Time');
-    expect(edmToTsType('Edm.Undefined')).toBe('any');
+    expect(edmToTsType('Edm.GeographyPoint')).toBeUndefined();
+    expect(edmToTsType('Edm.Undefined')).toBeUndefined();
   });
 });
 

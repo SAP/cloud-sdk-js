@@ -20,6 +20,11 @@ import {
 } from '../common/edmx-to-vdm';
 import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 
+// TODO: This should be removed once derived types are considered.
+function isDerivedNavBindingPath(path: string): boolean {
+  return path.includes('/');
+}
+
 function navigationProperties(
   entityMetadata: JoinedEntityMetadata,
   classNames: { [originalName: string]: string },
@@ -28,7 +33,9 @@ function navigationProperties(
   const entityType = entityMetadata.entityType as EdmxEntityType;
   const entitySet = entityMetadata.entitySet as EdmxEntitySet;
 
-  return entitySet.NavigationPropertyBinding.map(navBinding => {
+  return entitySet.NavigationPropertyBinding.filter(
+    navBinding => !isDerivedNavBindingPath(navBinding.Path)
+  ).map(navBinding => {
     const navProp = entityType.NavigationProperty.find(
       n => n.Name === navBinding.Path
     );

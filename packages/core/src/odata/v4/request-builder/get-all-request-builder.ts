@@ -13,12 +13,14 @@ import {
   Selectable,
   Filterable,
   and,
-  Orderable
+  Orderable,
+  FilterList
 } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetAllRequestConfig } from '../../common/request/odata-get-all-request-config';
 import { Expandable } from '../../common/expandable';
 import { oDataUri } from '../uri-conversion';
+import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -58,14 +60,17 @@ export class GetAllRequestBuilder<EntityT extends Entity>
     return this;
   }
 
+  // TODO: Reconsider the OneToManyLink here
   /**
    * Add filter statements to the request.
    *
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(...expressions: Filterable<EntityT>[]): this {
-    this.requestConfig.filter = and(...expressions);
+  filter(
+    ...expressions: (Filterable<EntityT> | OneToManyLink<EntityT, any>)[]
+  ): this {
+    this.requestConfig.filter = toFilterList(expressions);
     return this;
   }
 
@@ -121,4 +126,13 @@ export class GetAllRequestBuilder<EntityT extends Entity>
         )
       );
   }
+}
+
+// TODO: remove this code duplication
+function toFilterList<EntityT extends Entity, LinkedEntityT extends Entity>(
+  filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
+): FilterList<EntityT> {
+  return and(
+    ...filters.map(f => (f instanceof OneToManyLink ? f._filters : f))
+  );
 }

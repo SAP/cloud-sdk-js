@@ -24,26 +24,5 @@ For a quick start check [getting started](getting-started ) section.
 
 ## Why Cloud SDK for Java? ##
 
-SAP Cloud SDK for Java allows you develop, extend, and communicate wiht SAP solutions SAP S/4HANA Cloud, SAP
+SAP Cloud SDK for Java allows you develop, extend, and communicate with SAP solutions SAP S/4HANA Cloud, SAP
 SuccessFactors, and many others.
-
-## High-level architecture ##
-
-
-
-## Benefits ##
-
-TBD
-
-## Main features ##
-
-TBD
-
-
-
-## SDK as a service ##
-
-TBD link to contributions
-
-## Read next ##
--

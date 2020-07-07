@@ -59,7 +59,7 @@ Possible causes:
 
 ### Connecting to an ERP System fails
 
-**Symptom:** The ERP system unexpectedly responds with _401: Unauthorized_.
+**Symptom:** The ERP system unexpectedly responds with _401: Unauthorized_ or _403: Forbidden_.
 
 Possible causes:
 

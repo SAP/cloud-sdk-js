@@ -447,5 +447,5 @@ function checkInfinityCasesToTs(edmType: EdmType) {
 }
 
 function checkInfinityCasesRoundTrip(edmType: EdmType) {
-  ['NaN'].forEach(s => expect(tsToEdm(edmToTs(s, edmType), edmType)).toBe(s));
+  ['INF','-INF','NaN'].forEach(s => expect(tsToEdm(edmToTs(s, edmType), edmType)).toBe(s));
 }

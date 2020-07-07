@@ -109,3 +109,10 @@ generateTestServicesPackage(packageOutputDir, 'v2');
 generateTestServicesPackage(packageOutputDir, 'v4');
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
 generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
+
+generate({
+  ...generatorConfig,
+  inputDir: path.join('test-resources', 'service-specs-e2e', 'v4'),
+  outputDir: path.resolve('test-packages', 'test-services-e2e', 'srv', 'v4'),
+  generateJs: true
+});

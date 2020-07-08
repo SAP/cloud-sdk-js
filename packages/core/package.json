@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/core",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "description": "SAP Cloud SDK for JavaScript core",
   "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
@@ -36,8 +36,8 @@
     "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --config jest-local.json --runInBand --testNamePattern=\"$PATTERN\""
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.23.0",
-    "@sap-cloud-sdk/util": "^1.23.0",
+    "@sap-cloud-sdk/analytics": "^1.24.0",
+    "@sap-cloud-sdk/util": "^1.24.0",
     "@sap/xsenv": "^2.2.0",
     "axios": "^0.19.2",
     "bignumber.js": "^9.0.0",

@@ -133,36 +133,39 @@ function properties(
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmProperty[] {
-  return entity.entityType.Property.filter(filterUnknownEdmTypes).map(p => {
-    checkCollectionKind(p);
-    const swaggerProp = entity.swaggerDefinition
-      ? entity.swaggerDefinition.properties[p.Name]
-      : undefined;
-    const instancePropertyName = formatter.originalToInstancePropertyName(
-      entity.entitySet.Name,
-      p.Name
-    );
-    const type = parseTypeName(p.Type);
-    const isComplex = isComplexType(type);
-    return {
-      originalName: p.Name,
-      instancePropertyName,
-      staticPropertyName: formatter.originalToStaticPropertyName(
+  return entity.entityType.Property.filter(filterUnknownEdmTypes)
+    .map(p => {
+      checkCollectionKind(p);
+      const swaggerProp = entity.swaggerDefinition
+        ? entity.swaggerDefinition.properties[p.Name]
+        : undefined;
+      const instancePropertyName = formatter.originalToInstancePropertyName(
         entity.entitySet.Name,
         p.Name
-      ),
-      propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
-      edmType: type,
-      jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
-      fieldType:
-        propertyFieldType(type) || complexTypeFieldForName(type, complexTypes),
-      description: propertyDescription(p, swaggerProp),
-      nullable: isNullableProperty(p),
-      maxLength: p.MaxLength,
-      isComplex,
-      isCollection: isCollection(p.Type)
-    };
-  });
+      );
+      const type = parseTypeName(p.Type);
+      const isComplex = isComplexType(type);
+      return {
+        originalName: p.Name,
+        instancePropertyName,
+        staticPropertyName: formatter.originalToStaticPropertyName(
+          entity.entitySet.Name,
+          p.Name
+        ),
+        propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
+        edmType: type,
+        jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
+        fieldType:
+          propertyFieldType(type) ||
+          complexTypeFieldForName(type, complexTypes),
+        description: propertyDescription(p, swaggerProp),
+        nullable: isNullableProperty(p),
+        maxLength: p.MaxLength,
+        isComplex,
+        isCollection: isCollection(p.Type)
+      };
+    })
+    .filter(filterUnknownPropertyTypes);
 }
 
 const propertyFieldType = (type: string): string | undefined =>
@@ -327,6 +330,11 @@ function filterUnknownEdmTypes(p: EdmxProperty): boolean {
   return !skip;
 }
 
+// TODO: this should be removed once Enum types are implemented
+function filterUnknownPropertyTypes(p: VdmProperty): boolean {
+  return !(p.isComplex && typeof p.jsType === 'undefined');
+}
+
 export function transformComplexTypes(
   complexTypes: EdmxComplexTypeBase[],
   formatter: ServiceNameFormatter,
@@ -346,37 +354,39 @@ export function transformComplexTypes(
       originalName: c.Name,
       factoryName: formatter.typeNameToFactoryName(typeName, reservedNames),
       fieldType: complexTypeFieldType(typeName),
-      properties: c.Property.filter(filterUnknownEdmTypes).map(p => {
-        checkCollectionKind(p);
-        const instancePropertyName = formatter.originalToInstancePropertyName(
-          c.Name,
-          p.Name
-        );
-        const type = parseTypeName(p.Type);
-        const isComplex = isComplexType(type);
-        const parsedType = parseType(type);
-        return {
-          originalName: p.Name,
-          instancePropertyName,
-          staticPropertyName: formatter.originalToStaticPropertyName(
+      properties: c.Property.filter(filterUnknownEdmTypes)
+        .map(p => {
+          checkCollectionKind(p);
+          const instancePropertyName = formatter.originalToInstancePropertyName(
             c.Name,
             p.Name
-          ),
-          propertyNameAsParam: applyPrefixOnJsConfictParam(
-            instancePropertyName
-          ),
-          description: propertyDescription(p),
-          technicalName: p.Name,
-          nullable: isNullableProperty(p),
-          edmType: isComplex ? type : parsedType,
-          jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(type),
-          fieldType: isComplex
-            ? formattedTypes[parsedType] + 'Field'
-            : edmToComplexPropertyType(type),
-          isComplex,
-          isCollection: isCollection(p.Type)
-        };
-      })
+          );
+          const type = parseTypeName(p.Type);
+          const isComplex = isComplexType(type);
+          const parsedType = parseType(type);
+          return {
+            originalName: p.Name,
+            instancePropertyName,
+            staticPropertyName: formatter.originalToStaticPropertyName(
+              c.Name,
+              p.Name
+            ),
+            propertyNameAsParam: applyPrefixOnJsConfictParam(
+              instancePropertyName
+            ),
+            description: propertyDescription(p),
+            technicalName: p.Name,
+            nullable: isNullableProperty(p),
+            edmType: isComplex ? type : parsedType,
+            jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(type),
+            fieldType: isComplex
+              ? formattedTypes[parsedType] + 'Field'
+              : edmToComplexPropertyType(type),
+            isComplex,
+            isCollection: isCollection(p.Type)
+          };
+        })
+        .filter(filterUnknownPropertyTypes)
     };
   });
 }

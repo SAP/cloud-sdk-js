@@ -213,9 +213,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   private getETagHeader(): MapType<string> {
-    const eTag =
-      isWithETag(this.config) &&
-      (this.config.versionIdentifierIgnored ? '*' : this.config.eTag);
+    const eTag = isWithETag(this.config)
+      ? this.config.versionIdentifierIgnored
+        ? '*'
+        : this.config.eTag
+      : undefined;
     return filterNullishValues({ 'if-match': eTag });
   }
 

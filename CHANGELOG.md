@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Ignore enum properties in complex types to fix generation of OData v4 clients.
 
 
 # 1.24.0

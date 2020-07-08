@@ -1,7 +1,7 @@
 {
   "API-TEST_SRV": {
     "directoryName": "admin-service",
-    "servicePath": "VALUE_IS_UNDEFINED",
+    "servicePath": "/admin",
     "npmPackageName": "admin-service"
   }
 }

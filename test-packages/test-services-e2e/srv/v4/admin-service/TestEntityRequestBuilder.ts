@@ -1,12 +1,9 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  RequestBuilder,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '@sap-cloud-sdk/core/v4';
+/*
+ * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core/v4';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -15,16 +12,13 @@ import { TestEntity } from './TestEntity';
 export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-   * @param keyPropInt Key property. See [[TestEntity.keyPropInt]].
+   * @param keyPropertyInt Key property. See [[TestEntity.keyPropertyInt]].
    * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
-  getByKey(
-    keyPropInt: number,
-    keyPropertyString: string
-  ): GetByKeyRequestBuilder<TestEntity> {
+  getByKey(keyPropertyInt: number, keyPropertyString: string): GetByKeyRequestBuilder<TestEntity> {
     return new GetByKeyRequestBuilder(TestEntity, {
-      KeyPropInt: keyPropInt,
+      KeyPropertyInt: keyPropertyInt,
       KeyPropertyString: keyPropertyString
     });
   }
@@ -57,32 +51,21 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
-   * @param keyPropInt Key property. See [[TestEntity.keyPropInt]].
+   * @param keyPropertyInt Key property. See [[TestEntity.keyPropertyInt]].
    * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity`.
    */
-  delete(
-    keyPropInt: number,
-    keyPropertyString: string
-  ): DeleteRequestBuilder<TestEntity>;
+  delete(keyPropertyInt: number, keyPropertyString: string): DeleteRequestBuilder<TestEntity>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity` by taking the entity as a parameter.
    */
   delete(entity: TestEntity): DeleteRequestBuilder<TestEntity>;
-  delete(
-    keyPropIntOrEntity: any,
-    keyPropertyString?: string
-  ): DeleteRequestBuilder<TestEntity> {
-    return new DeleteRequestBuilder(
-      TestEntity,
-      keyPropIntOrEntity instanceof TestEntity
-        ? keyPropIntOrEntity
-        : {
-            KeyPropInt: keyPropIntOrEntity!,
-            KeyPropertyString: keyPropertyString!
-          }
-    );
+  delete(keyPropertyIntOrEntity: any, keyPropertyString?: string): DeleteRequestBuilder<TestEntity> {
+    return new DeleteRequestBuilder(TestEntity, keyPropertyIntOrEntity instanceof TestEntity ? keyPropertyIntOrEntity : {
+      KeyPropertyInt: keyPropertyIntOrEntity!,
+      KeyPropertyString: keyPropertyString!
+    });
   }
 }

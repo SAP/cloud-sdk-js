@@ -30,13 +30,13 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
     }
     /**
      * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-     * @param keyPropInt Key property. See [[TestEntity.keyPropInt]].
+     * @param keyPropertyInt Key property. See [[TestEntity.keyPropertyInt]].
      * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
      * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
      */
-    TestEntityRequestBuilder.prototype.getByKey = function (keyPropInt, keyPropertyString) {
+    TestEntityRequestBuilder.prototype.getByKey = function (keyPropertyInt, keyPropertyString) {
         return new v4_1.GetByKeyRequestBuilder(TestEntity_1.TestEntity, {
-            KeyPropInt: keyPropInt,
+            KeyPropertyInt: keyPropertyInt,
             KeyPropertyString: keyPropertyString
         });
     };
@@ -63,9 +63,9 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
     TestEntityRequestBuilder.prototype.update = function (entity) {
         return new v4_1.UpdateRequestBuilder(TestEntity_1.TestEntity, entity);
     };
-    TestEntityRequestBuilder.prototype.delete = function (keyPropIntOrEntity, keyPropertyString) {
-        return new v4_1.DeleteRequestBuilder(TestEntity_1.TestEntity, keyPropIntOrEntity instanceof TestEntity_1.TestEntity ? keyPropIntOrEntity : {
-            KeyPropInt: keyPropIntOrEntity,
+    TestEntityRequestBuilder.prototype.delete = function (keyPropertyIntOrEntity, keyPropertyString) {
+        return new v4_1.DeleteRequestBuilder(TestEntity_1.TestEntity, keyPropertyIntOrEntity instanceof TestEntity_1.TestEntity ? keyPropertyIntOrEntity : {
+            KeyPropertyInt: keyPropertyIntOrEntity,
             KeyPropertyString: keyPropertyString
         });
     };

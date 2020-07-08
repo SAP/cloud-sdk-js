@@ -80,16 +80,16 @@ var TestEntity = /** @class */ (function (_super) {
     /**
      * Default url path for the according service.
      */
-    TestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
+    TestEntity._defaultServicePath = '/admin';
     return TestEntity;
 }(v4_1.Entity));
 exports.TestEntity = TestEntity;
 (function (TestEntity) {
     /**
-     * Static representation of the [[keyPropInt]] property for query construction.
+     * Static representation of the [[keyPropertyInt]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.KEY_PROP_INT = new v4_1.NumberField('KeyPropInt', TestEntity, 'Edm.Int32');
+    TestEntity.KEY_PROPERTY_INT = new v4_1.NumberField('KeyPropertyInt', TestEntity, 'Edm.Int32');
     /**
      * Static representation of the [[keyPropertyString]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -125,10 +125,16 @@ exports.TestEntity = TestEntity;
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntity.DECIMAL_PROPERTY = new v4_1.BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
-    ;
-    new v4_1.any('DateProperty', TestEntity, 'Edm.Date');
-    ;
-    new v4_1.any('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
+    /**
+     * Static representation of the [[dateProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.DATE_PROPERTY = new v4_1.DateField('DateProperty', TestEntity, 'Edm.Date');
+    /**
+     * Static representation of the [[timeOfDayProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.TIME_OF_DAY_PROPERTY = new v4_1.TimeField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
     /**
      * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -139,9 +145,11 @@ exports.TestEntity = TestEntity;
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY = new v4_1.DateField('DataTimeOffsetTimestampProperty', TestEntity, 'Edm.DateTimeOffset');
-     | v4_1.DateField < TestEntity >> ;
-    [
-        TestEntity.KEY_PROP_INT,
+    /**
+     * All fields of the TestEntity entity.
+     */
+    TestEntity._allFields = [
+        TestEntity.KEY_PROPERTY_INT,
         TestEntity.KEY_PROPERTY_STRING,
         TestEntity.STRING_PROPERTY,
         TestEntity.GUID_PROPERTY,
@@ -161,7 +169,7 @@ exports.TestEntity = TestEntity;
     /**
      * All key fields of the TestEntity entity.
      */
-    TestEntity._keyFields = [TestEntity.KEY_PROP_INT, TestEntity.KEY_PROPERTY_STRING];
+    TestEntity._keyFields = [TestEntity.KEY_PROPERTY_INT, TestEntity.KEY_PROPERTY_STRING];
     /**
      * Mapping of all key field names to the respective static field property TestEntity.
      */

@@ -6,7 +6,7 @@
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
 
 /**
  * This class represents the entity "TestEntity" of service "AdminService".
@@ -24,11 +24,11 @@ export class TestEntity extends Entity implements TestEntityType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'VALUE_IS_UNDEFINED';
+  static _defaultServicePath = '/admin';
   /**
-   * Key Prop Int.
+   * Key Property Int.
    */
-  keyPropInt!: number;
+  keyPropertyInt!: number;
   /**
    * Key Property String.
    */
@@ -68,12 +68,12 @@ export class TestEntity extends Entity implements TestEntityType {
    * Date Property.
    * @nullable
    */
-  dateProperty?: any;
+  dateProperty?: Moment;
   /**
    * Time Of Day Property.
    * @nullable
    */
-  timeOfDayProperty?: any;
+  timeOfDayProperty?: Time;
   /**
    * Data Time Offset Data Time Property.
    * @nullable
@@ -120,7 +120,7 @@ export class TestEntity extends Entity implements TestEntityType {
 }
 
 export interface TestEntityType {
-  keyPropInt: number;
+  keyPropertyInt: number;
   keyPropertyString: string;
   stringProperty?: string;
   guidProperty?: string;
@@ -128,14 +128,14 @@ export interface TestEntityType {
   int64Property?: BigNumber;
   doubleProperty?: number;
   decimalProperty?: BigNumber;
-  dateProperty?: any;
-  timeOfDayProperty?: any;
+  dateProperty?: Moment;
+  timeOfDayProperty?: Time;
   dataTimeOffsetDataTimeProperty?: Moment;
   dataTimeOffsetTimestampProperty?: Moment;
 }
 
 export interface TestEntityTypeForceMandatory {
-  keyPropInt: number;
+  keyPropertyInt: number;
   keyPropertyString: string;
   stringProperty: string;
   guidProperty: string;
@@ -143,18 +143,18 @@ export interface TestEntityTypeForceMandatory {
   int64Property: BigNumber;
   doubleProperty: number;
   decimalProperty: BigNumber;
-  dateProperty: any;
-  timeOfDayProperty: any;
+  dateProperty: Moment;
+  timeOfDayProperty: Time;
   dataTimeOffsetDataTimeProperty: Moment;
   dataTimeOffsetTimestampProperty: Moment;
 }
 
 export namespace TestEntity {
   /**
-   * Static representation of the [[keyPropInt]] property for query construction.
+   * Static representation of the [[keyPropertyInt]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROP_INT: NumberField<TestEntity> = new NumberField('KeyPropInt', TestEntity, 'Edm.Int32');
+  export const KEY_PROPERTY_INT: NumberField<TestEntity> = new NumberField('KeyPropertyInt', TestEntity, 'Edm.Int32');
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -199,7 +199,7 @@ export namespace TestEntity {
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_OF_DAY_PROPERTY: DateField<TestEntity> = new DateField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
+  export const TIME_OF_DAY_PROPERTY: TimeField<TestEntity> = new TimeField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
   /**
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -213,8 +213,8 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<NumberField<TestEntity> | StringField<TestEntity> | BooleanField<TestEntity> | BigNumberField<TestEntity> | DateField < TestEntity >> =[
-    TestEntity.KEY_PROP_INT,
+  export const _allFields: Array<NumberField<TestEntity> | StringField<TestEntity> | BooleanField<TestEntity> | BigNumberField<TestEntity> | DateField<TestEntity> | TimeField<TestEntity>> = [
+    TestEntity.KEY_PROPERTY_INT,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
     TestEntity.GUID_PROPERTY,
@@ -234,7 +234,7 @@ export namespace TestEntity {
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Field<TestEntity>> = [TestEntity.KEY_PROP_INT, TestEntity.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntity>> = [TestEntity.KEY_PROPERTY_INT, TestEntity.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */

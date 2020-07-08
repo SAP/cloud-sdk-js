@@ -1,28 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
-   <edmx:DataServices>
-      <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="AdminService">
-         <EntityContainer Name="EntityContainer">
-            <EntitySet Name="TestEntity" EntityType="AdminService.TestEntity" />
-         </EntityContainer>
-         <EntityType Name="TestEntity">
-            <Key>
-               <PropertyRef Name="KeyPropInt" />
-               <PropertyRef Name="KeyPropertyString" />
-            </Key>
-            <Property Name="KeyPropInt" Type="Edm.Int32" Nullable="false" />
-            <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false" />
-            <Property Name="StringProperty" Type="Edm.String" MaxLength="111" />
-            <Property Name="GuidProperty" Type="Edm.Guid" />
-            <Property Name="BooleanProperty" Type="Edm.Boolean" />
-            <Property Name="Int64Property" Type="Edm.Int64" />
-            <Property Name="DoubleProperty" Type="Edm.Double" />
-            <Property Name="DecimalProperty" Type="Edm.Decimal" Scale="2" Precision="9" />
-            <Property Name="DateProperty" Type="Edm.Date" />
-            <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay" />
-            <Property Name="DataTimeOffsetDataTimeProperty" Type="Edm.DateTimeOffset" />
-            <Property Name="DataTimeOffsetTimestampProperty" Type="Edm.DateTimeOffset" Precision="7" />
-         </EntityType>
-      </Schema>
-   </edmx:DataServices>
+<edmx:Edmx
+    xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema
+            xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="AdminService">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="TestEntity" EntityType="AdminService.TestEntity"/>
+            </EntityContainer>
+            <EntityType Name="TestEntity">
+                <Key>
+                    <PropertyRef Name="KeyPropertyInt"/>
+                    <PropertyRef Name="KeyPropertyString"/>
+                </Key>
+                <Property Name="KeyPropertyInt" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+                <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty" Type="Edm.Boolean"/>
+                <Property Name="Int64Property" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty" Type="Edm.Double"/>
+                <Property Name="DecimalProperty" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty" Type="Edm.DateTimeOffset" Precision="7"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
 </edmx:Edmx>

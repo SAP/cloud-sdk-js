@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix an error that `if-match:false` is used as default in the header, which is now removed.
 
 
 # 1.24.0

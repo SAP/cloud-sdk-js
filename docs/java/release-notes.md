@@ -11,7 +11,7 @@ keywords:
 - cloud sdk
 - sap cloud sdk
 ---
-<!--
+
 ## 3.23.0
 
 - Release date: July 2, 2020
@@ -47,7 +47,6 @@ keywords:
 
 - Fix a memory leak that occurs when repeatedly using the [`AuthTokenBuilder`](https://help.sap.com/doc/e95b7f89bb45412b943760333df7a016/1.0/en-US/index.html?com/sap/cloud/sdk/cloudplatform/security/AuthTokenBuilder.html).
 - Fix an issue on SCP Neo with tenant-aware execution of a [`Callable`](https://docs.oracle.com/javase/8/docs/api/index.html?java/util/concurrent/Callable.html) when using [`TenantAccessor.executeWithTenant()`](https://help.sap.com/doc/e95b7f89bb45412b943760333df7a016/1.0/en-US/com/sap/cloud/sdk/cloudplatform/tenant/TenantAccessor.html#executeWithTenant-com.sap.cloud.sdk.cloudplatform.tenant.Tenant-java.util.concurrent.Callable-) in conjunction with a `DefaultTenant`
--->
 
 ## 3.22.0
 

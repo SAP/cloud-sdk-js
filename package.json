@@ -13,9 +13,12 @@
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
     "test": "npm run test:unit && npm run test:integration && npm run test:type",
-    "test:unit": "npx lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\"",
+    "test:unit": "npx lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\"",
     "test:integration": "npx lerna run test --scope \"@sap-cloud-sdk/integration-tests\"",
     "test:type": "npx lerna run test --scope \"@sap-cloud-sdk/type-tests\"",
+    "test:e2e": "npx lerna run test --scope \"@sap-cloud-sdk/e2e-tests\"",
+    "e2e-test:build": "cd test-packages/e2e-tests && npm run deploy:to-sqlite",
+    "e2e-test:start-server": "cd test-packages/e2e-tests && npm start",
     "generate:test-services": "npx ts-node scripts/generate-test-services.ts && npm run lint:fix && lerna link --force-local",
     "compile": "npx lerna run compile",
     "doc": "node scripts/generate-docs.js",

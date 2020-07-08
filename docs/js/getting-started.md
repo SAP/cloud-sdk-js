@@ -164,29 +164,23 @@ cf login
 
 - Make sure that your app listens to port 8080
 - Build your app if necessary
-- In productive environments:
-  - Transpile the application from TypeScript to JavaScript using the `ci-build` script
-  - Package the deployment using the `ci-package` script.
-
-<!--
-I don't understand this command, it wqs in the original doc but is not in the tutorial
-Then run:
-```shell
-sap-cloud-sdk package
-```
--->
 
 ### Deployment
-Push to Cloud Foundry:
-```ts
-cf push
-```
 
-#### Manual deployments
-For manual deployments, run:
+To deploy you app, run:
 ```Shell
 npm run deploy
 ```
+
+<!--This step consists of:
+
+- In productive environments:
+  - Transpile the application from TypeScript to JavaScript using the `ci-build` script
+  - Package the deployment using the `ci-package` script.
+  - Push to Cloud Foundry:
+```ts
+cf push
+```-->
 
 This command will use your local sources for transpiling, packaging and deployment, but will omit packaging your local `node_modules` as those can be system dependent. Dependencies will instead be installed automatically when deploying to `Cloud Foundry`.
 
@@ -226,8 +220,7 @@ start command:   node index.js
 #0   running   2019-03-21T13:05:47Z   0.0%   16M of 256M   126.8M of 1G
 ```
 
-Make sure that the application works correctly by running the start command, this command can be different than the one shown above.
-
+The application will be running at the `routes` URL, you can also make sure that the application works correctly by running the start command, this command can be different than the one shown above.
 
 Should the application not work for whatever reason, you can call the following command to access the logs:
 
@@ -235,17 +228,10 @@ Should the application not work for whatever reason, you can call the following 
 cf logs <YOUR-APPLICATION-NAME> --recent
 ```
 
-<!--TODO:
-Destination
-Bind destination
-XSUAA
+## Additional features
 
-what was written at the end before:
+For productive use, your app should be bound to a server, and also implement user authentication and authorization.
 
-For productive use, your app should implement user authentication and authorization.
-For SAP Cloud Foundry, this is usually done by using the approuter and xsuaa service.
-Start by running [`sap-cloud-sdk add-approuter`](#sap-cloud-sdk-add-approuter) and configure the xsuaa service accordingly.
--->
 ### Configure destination
 
 Login the [Cloud Cockpit](https://account.hana.ondemand.com), navigate to your respective subaccount (in case of a trial account it should be called `trial`). In the menu bar on the left, there should be a section `Connectivity` with an entry called `Destinations`. Click `Destinations`. On the page that opens, click `New Destination` and fill in the details below.

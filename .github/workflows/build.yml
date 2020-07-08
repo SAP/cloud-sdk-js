@@ -42,17 +42,20 @@ jobs:
         name: License Check
   e2e-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: test-packages/e2e-tests
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: Cypress tests
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: test-packages/e2e-tests
-          build: npm run deploy:to-sqlite
-          start: npm start
+      - run: npm ci
+      - name: Deploy local sqlite db
+        run: npm run deploy:to-sqlite
+      - name: Start odata v4 service
+        run: npm start
+      - run: npm run test
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest

@@ -82,47 +82,5 @@ export function transformEntitiesV4(
   }));
 }
 
-export function transformFunctionImportsV4(
-  serviceMetadata: ParsedServiceMetadata,
-  entities: VdmEntity[],
-  complexTypes: VdmComplexType[],
-  formatter: ServiceNameFormatter
-): VdmFunctionImport[] {
-  const edmxMetadata = serviceMetadata.edmx as EdmxMetadata;
-  const edmxFunctionImports = edmxMetadata.functionImports;
 
-  const edmxFunctions = edmxMetadata.functions;
-
-  return edmxFunctionImports.map(f => {
-    const edmxFunction = edmxFunctions.find(
-      fn => stripNamespace(f.Function) === fn.Name
-    );
-    if (!edmxFunction) {
-      throw Error(
-        `Unable to find a function with name: ${f.Function}, but specified in function import ${f.Name}`
-      );
-    }
-
-    const httpMethod = 'get';
-    const swaggerDefinition = swaggerDefinitionForFunctionImport(
-      serviceMetadata,
-      f.Name,
-      httpMethod
-    );
-
-    return {
-      ...transformFunctionImportBase(
-        f,
-        edmxFunction.Parameter,
-        swaggerDefinition,
-        formatter
-      ),
-      httpMethod,
-      returnType: parseReturnType(
-        edmxFunction.ReturnType?.Type,
-        entities,
-        complexTypes
-      )
-    };
-  });
 }

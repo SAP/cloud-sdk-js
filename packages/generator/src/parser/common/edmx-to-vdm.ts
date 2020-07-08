@@ -39,8 +39,9 @@ import {
   EdmxNamed,
   EdmxComplexTypeBase,
   SwaggerPath,
-  EdmxFunctionImportBase
+  EdmxFunctionImportBase, SwaggerMetadata
 } from './parser-types';
+import { longDescription } from './description-util';
 
 const logger = createLogger({
   package: 'generator',
@@ -193,7 +194,6 @@ function complexTypeForName(
   return 'any';
 }
 
-const complexTypeFieldType = (typeName: string) => typeName + 'Field';
 
 function complexTypeFieldForName(
   name: string,
@@ -209,20 +209,6 @@ function complexTypeFieldForName(
   return 'any';
 }
 
-function shortPropertyDescription(
-  property: EdmxProperty,
-  swaggerProperty?: SwaggerProperty
-): string {
-  let desc = '';
-  if (property['sap:quickinfo']) {
-    desc = property['sap:quickinfo'];
-  } else if (property['sap:label']) {
-    desc = property['sap:label'];
-  } else if (swaggerProperty && swaggerProperty.title) {
-    desc = swaggerProperty.title;
-  }
-  return endWithDot(desc.trim());
-}
 
 function entityDescription(
   entity: JoinedEntityMetadata,
@@ -236,58 +222,19 @@ function entityDescription(
     : toTitleFormat(className);
 }
 
-function longDescription(
-  documented: EdmxDocumented,
-  described?: SwaggerDescribed
-): string {
-  let docs = '';
-  if (documented.Documentation) {
-    const summmary = ensureString(documented.Documentation.Summary);
-    const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summmary}\n${longDesc}`.trim();
-  }
-  if (!docs && described) {
-    docs = ensureString(described.description);
-  }
-  return endWithDot(docs.trim());
-}
 
-function propertyDescription(
-  property: EdmxProperty,
-  swaggerProperty?: SwaggerProperty
-): string {
-  const short = shortPropertyDescription(property, swaggerProperty);
-  const long = longDescription(property, swaggerProperty);
-  return `${short}\n${long}`.trim();
-}
 
-function parameterDescription(
-  parameter: EdmxParameter,
-  swaggerParameter?: SwaggerPathParameter
-): string {
-  const short = endWithDot(toTitleFormat(parameter.Name));
-  const long = longDescription(parameter, swaggerParameter);
-  return endWithDot((long || short).trim());
-}
 
-function parseType(type: string): string {
-  return type.startsWith('Edm')
-    ? type
-    : type.split('.')[type.split('.').length - 1];
-}
+
+
+
 
 function isComplexType(type: string): boolean {
   const typeParts = type.split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;
 }
 
-function checkCollectionKind(property: EdmxProperty) {
-  if (property.hasOwnProperty('CollectionKind')) {
-    logger.warn(
-      `"CollectionKind" attribute found in the "${property.Name}" property. Currently, handling collection of properties is not supported by the generator.`
-    );
-  }
-}
+
 
 export function navigationPropertyBase(
   navPropName: string,
@@ -316,70 +263,6 @@ export function navigationPropertyBase(
   };
 }
 
-function filterUnknownEdmTypes(p: EdmxProperty): boolean {
-  const type = parseTypeName(p.Type);
-  const skip = type.startsWith('Edm.') && !edmToTsType(type);
-  if (skip) {
-    logger.warn(
-      `Edm Type ${type} not supported by the SAP Cloud SDK. Skipping generation of property ${p.Name}.`
-    );
-  }
-  return !skip;
-}
-
-export function transformComplexTypes(
-  complexTypes: EdmxComplexTypeBase[],
-  formatter: ServiceNameFormatter,
-  reservedNames: Set<string>
-): VdmComplexType[] {
-  const formattedTypes = complexTypes.reduce(
-    (formatted, c) => ({
-      ...formatted,
-      [c.Name]: formatter.originalToComplexTypeName(c.Name)
-    }),
-    {}
-  );
-  return complexTypes.map(c => {
-    const typeName = formattedTypes[c.Name];
-    return {
-      typeName,
-      originalName: c.Name,
-      factoryName: formatter.typeNameToFactoryName(typeName, reservedNames),
-      fieldType: complexTypeFieldType(typeName),
-      properties: c.Property.filter(filterUnknownEdmTypes).map(p => {
-        checkCollectionKind(p);
-        const instancePropertyName = formatter.originalToInstancePropertyName(
-          c.Name,
-          p.Name
-        );
-        const type = parseTypeName(p.Type);
-        const isComplex = isComplexType(type);
-        const parsedType = parseType(type);
-        return {
-          originalName: p.Name,
-          instancePropertyName,
-          staticPropertyName: formatter.originalToStaticPropertyName(
-            c.Name,
-            p.Name
-          ),
-          propertyNameAsParam: applyPrefixOnJsConfictParam(
-            instancePropertyName
-          ),
-          description: propertyDescription(p),
-          technicalName: p.Name,
-          nullable: isNullableProperty(p),
-          edmType: isComplex ? type : parsedType,
-          jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(type),
-          fieldType: isComplex
-            ? formattedTypes[parsedType] + 'Field'
-            : edmToComplexPropertyType(type),
-          isComplex,
-          isCollection: isCollection(p.Type)
-        };
-      })
-    };
-  });
-}
 
 export function parseReturnType(
   returnType: string,
@@ -432,55 +315,14 @@ export function parseReturnType(
   };
 }
 
-export function transformFunctionImportBase(
-  edmxFunctionImport: EdmxFunctionImportBase,
-  edmxParameters: EdmxParameter[],
-  swaggerDefinition: SwaggerPath | undefined,
-  formatter: ServiceNameFormatter
-): Omit<VdmFunctionImport, 'returnType' | 'httpMethod'> {
-  const functionName = formatter.originalToFunctionImportName(
-    edmxFunctionImport.Name
-  );
-  const functionImport = {
-    originalName: edmxFunctionImport.Name,
-    functionName,
-    parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
-  };
-
-  const parameters = edmxParameters.filter(filterUnknownEdmTypes).map(p => {
-    const swaggerParameter = swaggerDefinition
-      ? swaggerDefinition.parameters.find(param => param.name === p.Name)
-      : undefined;
-    return {
-      originalName: p.Name,
-      parameterName: formatter.originalToParameterName(
-        edmxFunctionImport.Name,
-        p.Name
-      ),
-      edmType: parseType(p.Type),
-      jsType: edmToTsType(p.Type)!,
-      nullable: isNullableParameter(p),
-      description: parameterDescription(p, swaggerParameter)
-    };
-  });
-
-  return {
-    ...functionImport,
-    parameters,
-    description: functionImportDescription(
-      swaggerDefinition,
-      functionImport.originalName
-    )
-  };
-}
 
 export function swaggerDefinitionForFunctionImport(
-  serviceMetadata: ParsedServiceMetadata,
   originalName: string,
-  httpMethod: string
+  httpMethod: string,
+  swaggerMetadata: SwaggerMetadata|undefined,
 ): SwaggerPath | undefined {
-  if (serviceMetadata.swagger) {
-    const paths = serviceMetadata.swagger.paths;
+  if (swaggerMetadata) {
+    const paths = swaggerMetadata.paths;
     const entryPath = Object.keys(paths).find(
       path => path === `/${originalName}`
     );
@@ -495,12 +337,12 @@ export function swaggerDefinitionForFunctionImport(
   }
 }
 
-function functionImportDescription(
-  swaggerDefinition: SwaggerPath | undefined,
-  originalName: string
-): string {
-  if (swaggerDefinition && swaggerDefinition.summary) {
-    return endWithDot(swaggerDefinition.summary);
-  }
-  return endWithDot(toTitleFormat(originalName));
-}
+// function functionImportDescription(
+//   swaggerDefinition: SwaggerPath | undefined,
+//   originalName: string
+// ): string {
+//   if (swaggerDefinition && swaggerDefinition.summary) {
+//     return endWithDot(swaggerDefinition.summary);
+//   }
+//   return endWithDot(toTitleFormat(originalName));
+// }

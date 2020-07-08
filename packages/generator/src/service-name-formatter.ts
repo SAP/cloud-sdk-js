@@ -46,7 +46,7 @@ export class ServiceNameFormatter {
     });
   }
 
-  originalToServiceName(name: string): string {
+  static originalToServiceName(name: string): string {
     let formattedName = name.replace(/\.|\//g, '_');
     formattedName = stripAPIUnderscore(formattedName);
     formattedName = stripUnderscoreSrv(formattedName);
@@ -107,13 +107,13 @@ export class ServiceNameFormatter {
     return newName;
   }
 
-  typeNameToFactoryName(str: string, reservedNames: Set<string>): string {
+  typeNameToFactoryName(str: string): string {
     let factoryName = `create${str}`;
-    let index = 1;
-    while (reservedNames.has(factoryName)) {
-      factoryName = `${factoryName}_${index}`;
-      index += 1;
-    }
+    // let index = 1;
+    // while (reservedNames.has(factoryName)) {
+    //   factoryName = `${factoryName}_${index}`;
+    //   index += 1;
+    // }
     const newName = this.finderServiceWide.findUniqueName(factoryName);
 
     this.finderServiceWide.addToAlreadyUsedNames(newName);
@@ -164,7 +164,7 @@ export class ServiceNameFormatter {
     return newNames[0];
   }
 
-  directoryToSpeakingModuleName(packageName: string): string {
+  static directoryToSpeakingModuleName(packageName: string): string {
     return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 

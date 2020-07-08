@@ -60,60 +60,31 @@ export function joinAssociationMetadata(
   });
 }
 
-export function transformEntitiesV2(
-  serviceMetadata: ParsedServiceMetadata,
-  complexTypes: VdmComplexType[],
-  formatter: ServiceNameFormatter
-): VdmEntity[] {
-  const edmxMetadata = serviceMetadata.edmx as EdmxMetadata;
-  const entitiesMetadata = joinEntityMetadata(serviceMetadata);
-  const classNames = createEntityClassNames(entitiesMetadata, formatter);
+// export function transformEntitiesV2(
+//   serviceMetadata: ParsedServiceMetadata,
+//   complexTypes: VdmComplexType[],
+//   formatter: ServiceNameFormatter
+// ): VdmEntity[] {
+//   const edmxMetadata = serviceMetadata.edmx as EdmxMetadata;
+//   const entitiesMetadata = joinEntityMetadata(serviceMetadata);
+//   const classNames = createEntityClassNames(entitiesMetadata, formatter);
+//
+//   const associations = joinAssociationMetadata(
+//     edmxMetadata.associationSets,
+//     edmxMetadata.associations
+//   );
+//
+//   return entitiesMetadata.map(entityMetadata => ({
+//     ...transformEntity(entityMetadata, classNames, complexTypes, formatter),
+//     navigationProperties: navigationProperties(
+//       entityMetadata,
+//       associations,
+//       classNames,
+//       formatter
+//     )
+//   }));
+// }
 
-  const associations = joinAssociationMetadata(
-    edmxMetadata.associationSets,
-    edmxMetadata.associations
-  );
-
-  return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntity(entityMetadata, classNames, complexTypes, formatter),
-    navigationProperties: navigationProperties(
-      entityMetadata,
-      associations,
-      classNames,
-      formatter
-    )
-  }));
-}
-
-export function transformFunctionImportsV2(
-  serviceMetadata: ParsedServiceMetadata,
-  entities: VdmEntity[],
-  complexTypes: VdmComplexType[],
-  formatter: ServiceNameFormatter
-): VdmFunctionImport[] {
-  const edmxFunctionImports = serviceMetadata.edmx
-    .functionImports as EdmxFunctionImport[];
-
-  return edmxFunctionImports.map(f => {
-    const httpMethod = f['m:HttpMethod'].toLowerCase();
-    const swaggerDefinition = swaggerDefinitionForFunctionImport(
-      serviceMetadata,
-      f.Name,
-      httpMethod
-    );
-
-    return {
-      ...transformFunctionImportBase(
-        f,
-        f.Parameter,
-        swaggerDefinition,
-        formatter
-      ),
-      httpMethod,
-      returnType: parseReturnType(f.ReturnType, entities, complexTypes)
-    };
-  });
-}
 
 function navigationProperties(
   entity: JoinedEntityMetadata,

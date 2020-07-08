@@ -127,6 +127,24 @@ describe('OData Request', () => {
       requestSpy.mockRestore();
     });
 
+    it('request config contains headers without etag value when there is no etag config', async () => {
+      const expectedConfigEntry = {
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json'
+        }
+      };
+      const destination: Destination = {
+        url: 'http://example.com'
+      };
+
+      await createRequest(ODataGetAllRequestConfig, destination).execute();
+
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfigEntry)
+      );
+    });
+
     it('request config contains httpAgent when destination URL uses "http" as protocol', async () => {
       const expectedConfigEntry = { httpAgent: expect.anything() };
       const httpDestination: Destination = {

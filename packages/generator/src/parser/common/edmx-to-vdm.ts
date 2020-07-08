@@ -165,7 +165,7 @@ function properties(
         isCollection: isCollection(p.Type)
       };
     })
-    .filter(filterEnumProperties);
+    .filter(filterUnknownPropertyTypes);
 }
 
 const propertyFieldType = (type: string): string | undefined =>
@@ -331,7 +331,7 @@ function filterUnknownEdmTypes(p: EdmxProperty): boolean {
 }
 
 // TODO: this should be removed once Enum types are implemented
-function filterEnumProperties(p: VdmProperty): boolean {
+function filterUnknownPropertyTypes(p: VdmProperty): boolean {
   return !(p.isComplex && typeof p.jsType === 'undefined');
 }
 
@@ -386,7 +386,7 @@ export function transformComplexTypes(
             isCollection: isCollection(p.Type)
           };
         })
-        .filter(filterEnumProperties)
+        .filter(filterUnknownPropertyTypes)
     };
   });
 }

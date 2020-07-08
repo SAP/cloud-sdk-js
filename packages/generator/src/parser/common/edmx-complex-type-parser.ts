@@ -1,4 +1,4 @@
-import { EdmxComplexTypeBase, EdmxMetadataBase, EdmxNamed, EdmxProperty, SwaggerProperty } from './parser-types';
+import {  EdmxNamed, EdmxProperty, SwaggerProperty } from './parser-types';
 import {
   edmToComplexPropertyType,
   edmToTsType,
@@ -11,7 +11,13 @@ import { VdmComplexType } from '../../vdm-types';
 import { isCollection, parseTypeName } from '../parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { longDescription } from './description-util';
+import {
+  checkCollectionKind,
+  filterUnknownEdmTypes,
+  isComplexType, parseType,
+  propertyDescription
+} from './some-util-find-good-name';
+import { EdmxMetadataBase } from '../edmx-parser';
 
 
 
@@ -37,7 +43,7 @@ export function getComplexTypeNames(edmxData:EdmxMetadataBase):string[]{
 
 
 export function transformComplexTypesBase(
-  complexTypes: EdmxComplexTypeBase[],
+  complexTypes: EdmxComplexType[],
   formatter: ServiceNameFormatter
   // reservedNames: Set<string>
 ): VdmComplexType[] {
@@ -92,35 +98,5 @@ export function transformComplexTypesBase(
 
 const complexTypeFieldType = (typeName: string) => typeName + 'Field';
 
-function checkCollectionKind(property: EdmxProperty) {
-  if (property.hasOwnProperty('CollectionKind')) {
-    logger.warn(
-      `"CollectionKind" attribute found in the "${property.Name}" property. Currently, handling collection of properties is not supported by the generator.`
-    );
-  }
-}
-
-function propertyDescription(
-  property: EdmxProperty,
-  swaggerProperty?: SwaggerProperty
-): string {
-  const short = shortPropertyDescription(property, swaggerProperty);
-  const long = longDescription(property, swaggerProperty);
-  return `${short}\n${long}`.trim();
-}
 
 
-function shortPropertyDescription(
-  property: EdmxProperty,
-  swaggerProperty?: SwaggerProperty
-): string {
-  let desc = '';
-  if (property['sap:quickinfo']) {
-    desc = property['sap:quickinfo'];
-  } else if (property['sap:label']) {
-    desc = property['sap:label'];
-  } else if (swaggerProperty && swaggerProperty.title) {
-    desc = swaggerProperty.title;
-  }
-  return endWithDot(desc.trim());
-}

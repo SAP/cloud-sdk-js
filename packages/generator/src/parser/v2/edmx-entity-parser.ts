@@ -1,12 +1,16 @@
 import { forceArray } from '../../generator-utils';
-import { EdmxEntityType } from '../common/edmx-entity-parser';
+import {
+  EdmxEntityType,
+  JoinedEntityMetadata,
+  joinEntityMetadata,
+  transformEntityBase
+} from '../common/edmx-entity-parser';
  import {EdmxEntitySetBase,parseEntitySetsBase,parseEntityTypesBase} from '../common/edmx-entity-parser'
 import { ParsedServiceMetadata } from '../parsed-service-metadata';
-import { VdmComplexType, VdmEntity } from '../../vdm-types';
+import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { EdmxMetadata } from './parser-types';
-import { createEntityClassNames, joinEntityMetadata, transformEntity } from '../common';
-import { joinAssociationMetadata } from './edmx-to-vdm';
+import { createEntityClassNames, navigationPropertyBase } from '../common';
+import { joinAssociationMetadata, JoinedAssociationMetadata } from './edmx-to-vdm';
 
 
 
@@ -21,7 +25,7 @@ interface EdmxNavigationProperty {
   ToRole: string;
 }
 
-function parseEntityType(root):EdmxEntityType<EdmxNavigationProperty>{
+function parseEntityType(root):EdmxEntityType<EdmxNavigationProperty>[]{
   return parseEntityTypesBase(root,{}as EdmxNavigationProperty)
 }
 
@@ -66,17 +70,18 @@ export function transformEntitiesV2(
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
-  const edmxMetadata = serviceMetadata.edmx as EdmxMetadata;
-  const entitiesMetadata = joinEntityMetadata(serviceMetadata);
+  const entitySets = parseEntitySets(serviceMetadata.edmx.root);
+  const entityTypes = parseEntityType(serviceMetadata.edmx.root);
+  const entitiesMetadata = joinEntityMetadata(entitySets,entityTypes,serviceMetadata.edmx.namespace,serviceMetadata.swagger);
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
   const associations = joinAssociationMetadata(
-    edmxMetadata.associationSets,
-    edmxMetadata.associations
+    parseAssociationSets(serviceMetadata.edmx.root),
+    parseAssociation(serviceMetadata.edmx.root)
   );
 
   return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntity(entityMetadata, classNames, complexTypes, formatter),
+    ...transformEntityBase(entityMetadata, classNames, complexTypes, formatter),
     navigationProperties: navigationProperties(
       entityMetadata,
       associations,
@@ -84,4 +89,49 @@ export function transformEntitiesV2(
       formatter
     )
   }));
+}
+
+
+function navigationProperties(
+  entity: JoinedEntityMetadata<EdmxNavigationProperty>,
+  associations: JoinedAssociationMetadata[],
+  classNames: { [originalName: string]: string },
+  formatter: ServiceNameFormatter
+): VdmNavigationProperty[] {
+  const entityType = entity.entityType;
+
+  return entityType.NavigationProperty.map(navProp => {
+    const relationship = navProp.Relationship.split('.').pop();
+    const association = associations
+      .filter(ass => ass.Name === relationship)
+      .pop();
+    if (!association) {
+      throw Error(
+        `Unable to find the association with the name: ${relationship}`
+      );
+    }
+    const from = association.Ends.find(end => end.Role === navProp.FromRole);
+    const to = association.Ends.find(end => end.Role === navProp.ToRole);
+
+    if (!from) {
+      throw Error(
+        `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.FromRole}`
+      );
+    }
+    if (!to) {
+      throw Error(
+        `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.ToRole}`
+      );
+    }
+
+    return {
+      ...navigationPropertyBase(navProp.Name, entity.entitySet.Name, formatter),
+      from: entity.entityType.Name,
+      to: to.EntitySet,
+      toEntityClassName: classNames[to.EntitySet],
+      multiplicity: from.Multiplicity + ' - ' + to.Multiplicity,
+      isMultiLink: to.Multiplicity.endsWith('*'),
+      isCollection: to.Multiplicity.endsWith('*')
+    };
+  });
 }

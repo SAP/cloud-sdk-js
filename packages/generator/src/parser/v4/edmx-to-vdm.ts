@@ -20,10 +20,6 @@ import {
 } from '../common/edmx-to-vdm';
 import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 
-// TODO: This should be removed once derived types are considered.
-function isDerivedNavBindingPath(path: string): boolean {
-  return path.includes('/');
-}
 
 function navigationProperties(
   entityMetadata: JoinedEntityMetadata,
@@ -64,23 +60,7 @@ function navigationProperties(
   });
 }
 
-export function transformEntitiesV4(
-  serviceMetadata: ParsedServiceMetadata,
-  complexTypes: VdmComplexType[],
-  formatter: ServiceNameFormatter
-): VdmEntity[] {
-  const entitiesMetadata = joinEntityMetadata(serviceMetadata);
-  const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
-  return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntity(entityMetadata, classNames, complexTypes, formatter),
-    navigationProperties: navigationProperties(
-      entityMetadata,
-      classNames,
-      formatter
-    )
-  }));
-}
 
 
 }

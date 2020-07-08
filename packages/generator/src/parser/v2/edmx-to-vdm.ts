@@ -1,30 +1,33 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  VdmNavigationProperty,
-  VdmComplexType,
-  VdmEntity,
-  VdmFunctionImport
-} from '../../vdm-types';
+// import { ServiceNameFormatter } from '../../service-name-formatter';
+// import {
+//   VdmNavigationProperty,
+//   VdmComplexType,
+//   VdmEntity,
+//   VdmFunctionImport
+// } from '../../vdm-types';
+// import { stripNamespace } from '../parser-util';
+// import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
+// import {
+//   joinEntityMetadata,
+//   createEntityClassNames,
+//   transformEntity,
+//   navigationPropertyBase,
+//   swaggerDefinitionForFunctionImport,
+//   parseReturnType,
+//   transformFunctionImportBase
+// } from '../common/edmx-to-vdm';
+// import {
+//   EdmxAssociationSet,
+//   EdmxAssociation,
+//   EdmxEntityType,
+//   EdmxMetadata,
+//   EdmxFunctionImport
+// } from './parser-types';
+
+import { EdmxAssociation, EdmxAssociationSet } from './edmx-entity-parser';
 import { stripNamespace } from '../parser-util';
-import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
-import {
-  joinEntityMetadata,
-  createEntityClassNames,
-  transformEntity,
-  navigationPropertyBase,
-  swaggerDefinitionForFunctionImport,
-  parseReturnType,
-  transformFunctionImportBase
-} from '../common/edmx-to-vdm';
-import {
-  EdmxAssociationSet,
-  EdmxAssociation,
-  EdmxEntityType,
-  EdmxMetadata,
-  EdmxFunctionImport
-} from './parser-types';
 
 export function joinAssociationMetadata(
   associationSets: EdmxAssociationSet[],
@@ -85,50 +88,50 @@ export function joinAssociationMetadata(
 //   }));
 // }
 
-
-function navigationProperties(
-  entity: JoinedEntityMetadata,
-  associations: JoinedAssociationMetadata[],
-  classNames: { [originalName: string]: string },
-  formatter: ServiceNameFormatter
-): VdmNavigationProperty[] {
-  const entityType = entity.entityType as EdmxEntityType;
-
-  return entityType.NavigationProperty.map(navProp => {
-    const relationship = navProp.Relationship.split('.').pop();
-    const association = associations
-      .filter(ass => ass.Name === relationship)
-      .pop();
-    if (!association) {
-      throw Error(
-        `Unable to find the association with the name: ${relationship}`
-      );
-    }
-    const from = association.Ends.find(end => end.Role === navProp.FromRole);
-    const to = association.Ends.find(end => end.Role === navProp.ToRole);
-
-    if (!from) {
-      throw Error(
-        `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.FromRole}`
-      );
-    }
-    if (!to) {
-      throw Error(
-        `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.ToRole}`
-      );
-    }
-
-    return {
-      ...navigationPropertyBase(navProp.Name, entity.entitySet.Name, formatter),
-      from: entity.entityType.Name,
-      to: to.EntitySet,
-      toEntityClassName: classNames[to.EntitySet],
-      multiplicity: from.Multiplicity + ' - ' + to.Multiplicity,
-      isMultiLink: to.Multiplicity.endsWith('*'),
-      isCollection: to.Multiplicity.endsWith('*')
-    };
-  });
-}
+//
+// function navigationProperties(
+//   entity: JoinedEntityMetadata,
+//   associations: JoinedAssociationMetadata[],
+//   classNames: { [originalName: string]: string },
+//   formatter: ServiceNameFormatter
+// ): VdmNavigationProperty[] {
+//   const entityType = entity.entityType as EdmxEntityType;
+//
+//   return entityType.NavigationProperty.map(navProp => {
+//     const relationship = navProp.Relationship.split('.').pop();
+//     const association = associations
+//       .filter(ass => ass.Name === relationship)
+//       .pop();
+//     if (!association) {
+//       throw Error(
+//         `Unable to find the association with the name: ${relationship}`
+//       );
+//     }
+//     const from = association.Ends.find(end => end.Role === navProp.FromRole);
+//     const to = association.Ends.find(end => end.Role === navProp.ToRole);
+//
+//     if (!from) {
+//       throw Error(
+//         `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.FromRole}`
+//       );
+//     }
+//     if (!to) {
+//       throw Error(
+//         `Unable to get the role property of the association ends: ${association.Ends} with the name: ${navProp.ToRole}`
+//       );
+//     }
+//
+//     return {
+//       ...navigationPropertyBase(navProp.Name, entity.entitySet.Name, formatter),
+//       from: entity.entityType.Name,
+//       to: to.EntitySet,
+//       toEntityClassName: classNames[to.EntitySet],
+//       multiplicity: from.Multiplicity + ' - ' + to.Multiplicity,
+//       isMultiLink: to.Multiplicity.endsWith('*'),
+//       isCollection: to.Multiplicity.endsWith('*')
+//     };
+//   });
+// }
 
 export interface JoinedAssociationMetadata {
   Name: string;

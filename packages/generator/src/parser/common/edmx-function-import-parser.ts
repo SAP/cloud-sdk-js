@@ -13,7 +13,7 @@ import { edmToTsType, endWithDot, ensureString, isNullableParameter } from '../.
 import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { parseTypeName } from '../parser-util';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { longDescription, parseType } from './some-util-find-good-name';
+import { filterUnknownEdmTypes, longDescription, parseType } from './some-util-find-good-name';
 
 
 const logger = createLogger({
@@ -87,16 +87,7 @@ function functionImportDescription(
   return endWithDot(toTitleFormat(originalName));
 }
 
-function filterUnknownEdmTypes(p: EdmxProperty): boolean {
-  const type = parseTypeName(p.Type);
-  const skip = type.startsWith('Edm.') && !edmToTsType(type);
-  if (skip) {
-    logger.warn(
-      `Edm Type ${type} not supported by the SAP Cloud SDK. Skipping generation of property ${p.Name}.`
-    );
-  }
-  return !skip;
-}
+
 
 
 

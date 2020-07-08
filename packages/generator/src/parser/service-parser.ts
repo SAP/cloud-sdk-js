@@ -16,25 +16,33 @@ import {
   VdmMapping
 } from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
-import { ApiBusinessHubMetadata, VdmServiceBody, VdmServiceMetadata, VdmServiceMetadataHeader } from '../vdm-types';
+import {
+  ApiBusinessHubMetadata,
+  VdmServiceMetadata,
+  VdmServiceMetadataBody,
+  VdmServiceMetadataHeader
+} from '../vdm-types';
 import {
   SwaggerMetadata,
-  EdmxFunctionImportBase,
-  ParsedServiceMetadata,
-  transformComplexTypes, getEntitySetNames, getComplexTypeNames, getFunctionImportNames1
+
 } from './common';
 import { parseSwaggerFromPath } from './swagger-parser';
-import { transformEntitiesV4, transformFunctionImportsV4 } from './v4';
+import { transformEntitiesV4 } from './v4';
 import {
-  transformEntitiesV2,
 
-  isV2Metadata
+
+
 } from './v2';
 import { parseEdmxFromPath } from './edmx-parser';
 import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
 import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/edmx-function-import-parser';
 import { transformComplexTypesV2 } from './v2/edmx-complex-type-parser';
 import { transformComplexTypesV4 } from './v4/edmx-compley-type-parser';
+import { isV2Metadata } from './common/some-util-find-good-name';
+import { getEntitySetNames } from './common/edmx-entity-parser';
+import { getComplexTypeNames } from './common/edmx-complex-type-parser';
+import { getFunctionImportNames1 } from './common/edmx-function-import-parser';
+import { transformEntitiesV2 } from './v2/edmx-entity-parser';
 
 const logger = createLogger({
   package: 'generator',
@@ -105,7 +113,7 @@ class ServiceParser{
   private transformServiceMetadata(
     serviceMetadata: ParsedServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths,
-  ): VdmServiceBody {
+  ): VdmServiceMetadata {
 
 
     const formatter = new ServiceNameFormatter(
@@ -126,18 +134,19 @@ class ServiceParser{
 
 
     const transformEntities = isV2Metadata(serviceMetadata.edmx)
-      ? transformEntitiesV2
-      : transformEntitiesV4;
+      ? transformEntitiesV2(serviceMetadata,complexTypes,formatter)
+      : transformEntitiesV4();
 
     const entities = transformEntities(serviceMetadata, complexTypes, formatter);
 
-
+    const header = this.buildServiceHeader(serviceMetadata,serviceDefinitionPaths)
 
     return {
-      entities,
+      ...header,
       complexTypes,
+      entities,
       functionImports
-    };
+    }
   }
 
 }

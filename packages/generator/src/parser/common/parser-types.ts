@@ -114,13 +114,7 @@ export interface SwaggerPathParameter extends SwaggerDescribed {
 export interface SwaggerDescribed {
   description?: string;
 }
-//
-// export interface JoinedEntityMetadata {
-//   entitySet: EdmxEntitySetBase;
-//   entityType: EdmxEntityTypeBase;
-//   swaggerDefinition?: SwaggerEntity;
-// }
-//
+
 export interface EdmxParameter extends EdmxDocumented, EdmxNamed {
   Type: string;
   Nullable: string;

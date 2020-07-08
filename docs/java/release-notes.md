@@ -15,6 +15,10 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 
 <MvnBadge />
 
+:::danger
+SAP Cloud SDK for Java V2 is in maintenance. To continue using the latest features, please, migrate to SDK V3.
+:::
+
 ## 3.23.0
 
 - Release date: July 2, 2020

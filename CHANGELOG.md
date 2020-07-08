@@ -26,6 +26,17 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.24.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.24.1<br>
+Blog: TBD<br>
+
+## Fixed Issues
+
 - Ignore enum properties in complex types to fix generation of OData v4 clients.
 - Fix setting ETags, when no ETag was specified by sending no `if-match` header instead of `if-match:false`.
 

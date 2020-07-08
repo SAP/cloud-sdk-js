@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix setting ETags, when no ETag was specified by sending no `if-match` header instead of `if-match:false`.
 
 
 # 1.24.0

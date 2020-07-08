@@ -238,7 +238,7 @@ Login the [Cloud Cockpit](https://account.hana.ondemand.com), navigate to your r
 
 For `Name`, choose a name that describes your system. For the exemple, we will go with `Server`.
 
-If you use the Business Partner mock server, enter for `URL` the URL that you have saved from the [previous step](#login) and use `NoAuthentication` for `Authentication`. If you use an SAP S/4HANA Cloud system, enter the systems URL in the `URL` field and choose `BasicAuthentication` as authentication type. This will make the fields `User` and `Password` appear. Enter here the credentials of a technical user for your SAP S/4HANA Cloud system.
+If you use the Business Partner mock server, enter for `URL` the URL that you have saved from the [previous step](#deployment) and use `NoAuthentication` for `Authentication`. If you use an SAP S/4HANA Cloud system, enter the systems URL in the `URL` field and choose `BasicAuthentication` as authentication type. This will make the fields `User` and `Password` appear. Enter here the credentials of a technical user for your SAP S/4HANA Cloud system.
 
 ### Bind destination service
 

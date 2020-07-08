@@ -128,12 +128,6 @@ describe('OData Request', () => {
     });
 
     it('request config contains headers without etag value when there is no etag config', async () => {
-      const expectedConfigEntry = {
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json'
-        }
-      };
       const destination: Destination = {
         url: 'http://example.com'
       };
@@ -141,7 +135,11 @@ describe('OData Request', () => {
       await createRequest(ODataGetAllRequestConfig, destination).execute();
 
       expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfigEntry)
+        expect.objectContaining({
+          headers: expect.not.objectContaining({
+            'if-match': expect.anything()
+          })
+        })
       );
     });
 

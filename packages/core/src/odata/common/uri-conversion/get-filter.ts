@@ -125,13 +125,13 @@ export function createGetFilter(uriConverter: UriConverter) {
         return [
           [...parentFieldNames, filter.field].join('/'),
           filter.operator,
-          convertFilterValue(filter.value, field.edmType)
+          uriConverter.convertToUriFormat(filter.value, field.edmType)
         ].join(' ');
       }
       return [
         filterFunctionToString(filter.field, parentFieldNames),
         filter.operator,
-        convertFilterValue(filter.value, filter.edmType!)
+        uriConverter.convertToUriFormat(filter.value, filter.edmType!)
       ].join(' ');
     }
 
@@ -203,23 +203,7 @@ export function createGetFilter(uriConverter: UriConverter) {
     if (isMoment(param)) {
       return uriConverter.convertToUriFormat(param, 'Edm.DateTimeOffset');
     }
-    if (Array.isArray(param)) {
-      return `[${param
-        .map(p => filterFunctionParameterToString(p, parentFieldNames))
-        .join(',')}]`;
-    }
     return [...parentFieldNames, param._fieldName].join('/');
-  }
-
-  function convertFilterValue(
-    value: any | any[],
-    edmType: EdmTypeShared<'any'>
-  ): string {
-    return Array.isArray(value)
-      ? `[${value
-          .map(v => uriConverter.convertToUriFormat(v, edmType))
-          .join(',')}]`
-      : uriConverter.convertToUriFormat(value, edmType);
   }
 
   return {

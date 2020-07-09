@@ -7,23 +7,11 @@ filterFunctions
   .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
   .equals('test');
 
-// $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctions.contains(TestEntity.STRING_PROPERTY, 'test');
-
-// $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctions.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
-
-// $ExpectError
-filterFunctions.hasSubset(['1'], [1]);
+// $ExpectType Filter<TestEntity, boolean>
+filterFunctions.contains(TestEntity.STRING_PROPERTY, 'test').equals(true);
 
 // $ExpectType BooleanFilterFunction<Entity>
 filterFunction('fn', 'bool');
 
 // $ExpectType DateFilterFunction<Entity>
 filterFunction('fn', 'datetimeoffset');
-
-// $ExpectType CollectionFilterFunction<Entity, number>
-filterFunction('fn', 'int[]');
-
-// $ExpectError
-filterFunction('fn', 'int[]').equals(['test']);

@@ -5,12 +5,8 @@ import {
   Field,
   StringFilterFunction,
   BooleanFilterFunction,
-  NumberFilterFunction,
-  FilterFunctionPrimitiveParameterType,
-  FieldType,
-  CollectionField
+  NumberFilterFunction
 } from '../common';
-import { CollectionFilterFunction } from '../common/filter/collection-filter-function';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
 
@@ -93,54 +89,6 @@ export function now<EntityT extends Entity>(): NumberFilterFunction<EntityT> {
   return filterFunction('now', 'decimal');
 }
 
-/* Collection functions */
-/**
- * Build a filter function to test whether a set is a subset of the other, i. e. wheter the second parameter can be transformed into the first by reordering and / or removing items. Evaluates to boolean.
- * @param subset - The subset to test for. This can either be an array, a reference to a field or another filter function.
- * @param set - The set to test. This can either be an array, a reference to a field or another filter function.
- *
- * @returns The newly created filter function
- */
-export function hasSubset<
-  EntityT extends Entity,
-  ParamT extends FilterFunctionPrimitiveParameterType,
-  ReturnT extends FieldType
->(
-  subset:
-    | ParamT[]
-    | CollectionField<EntityT>
-    | CollectionFilterFunction<EntityT, ReturnT>,
-  set:
-    | ParamT[]
-    | CollectionField<EntityT>
-    | CollectionFilterFunction<EntityT, ReturnT>
-): BooleanFilterFunction<EntityT> {
-  return filterFunction('hassubset', 'bool', subset, set);
-}
-
-/**
- * Build a filter function to test whether a set is a subsequence of the other, i. e. wheter the second parameter can be transformed into the first by removing items. Evaluates to boolean.
- * @param subsequence - The subsequence to test for. This can either be an array, a reference to a field or another filter function.
- * @param sequence - The sequence to test. This can either be an array, a reference to a field or another filter function.
- *
- * @returns The newly created filter function
- */
-export function hasSubsequence<
-  EntityT extends Entity,
-  ParamT extends FilterFunctionPrimitiveParameterType,
-  ReturnT extends FieldType
->(
-  subsequence:
-    | ParamT[]
-    | Field<EntityT>
-    | CollectionFilterFunction<EntityT, ReturnT>,
-  sequence:
-    | ParamT[]
-    | Field<EntityT>
-    | CollectionFilterFunction<EntityT, ReturnT>
-): BooleanFilterFunction<EntityT> {
-  return filterFunction('hassubsequence', 'bool', subsequence, sequence);
-}
 /**
  * TODO: totalseconds, time
  */

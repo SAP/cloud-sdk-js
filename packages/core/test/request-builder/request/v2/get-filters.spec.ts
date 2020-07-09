@@ -4,9 +4,9 @@ import {
   and,
   or,
   filterFunction,
-  filterFunctions,
-  oDataUri
+  filterFunctions
 } from '../../../../src/odata/v2';
+import { getQueryParametersForFilter } from '../../../../src/odata/v2/uri-conversion/get-filter';
 import {
   testFilterBoolean,
   testFilterGuid,
@@ -19,7 +19,7 @@ import { TestEntity } from '../../../test-util/test-services/v2/test-service';
 describe('get filters', () => {
   it('for simple filters', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         and(testFilterString.filter, testFilterBoolean.filter),
         TestEntity
       ).filter
@@ -28,7 +28,7 @@ describe('get filters', () => {
 
   it('for nested filters', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         and(
           testFilterString.filter,
           testFilterBoolean.filter,
@@ -43,7 +43,7 @@ describe('get filters', () => {
 
   it('for nested multidimensional filters', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         and(
           testFilterString.filter,
           testFilterBoolean.filter,
@@ -61,14 +61,14 @@ describe('get filters', () => {
   });
 
   it('for guids', () => {
-    expect(oDataUri.getFilter(testFilterGuid.filter, TestEntity).filter).toBe(
-      testFilterGuid.odataStr
-    );
+    expect(
+      getQueryParametersForFilter(testFilterGuid.filter, TestEntity).filter
+    ).toBe(testFilterGuid.odataStr);
   });
 
   it('for complex types', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
         TestEntity
       ).filter
@@ -79,7 +79,7 @@ describe('get filters', () => {
 describe('get-filter for custom fields', () => {
   it('for custom string field', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         TestEntity.customField('CustomFieldString')
           .edmString()
           .notEquals('customFieldTest'),
@@ -90,7 +90,7 @@ describe('get-filter for custom fields', () => {
 
   it('for custom double field', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         TestEntity.customField('CustomFieldDouble')
           .edmDouble()
           .greaterOrEqual(13),
@@ -101,7 +101,7 @@ describe('get-filter for custom fields', () => {
 
   it('for custom moment field', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         TestEntity.customField('CustomFieldDateTime')
           .edmDateTime()
           .equals(moment.utc('2015-12-31', 'YYYY-MM-DD')),
@@ -112,7 +112,7 @@ describe('get-filter for custom fields', () => {
 
   it('for custom time field', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         TestEntity.customField('CustomFieldTime')
           .edmTime()
           .equals({ hours: 1, minutes: 1, seconds: 1 }),
@@ -123,7 +123,7 @@ describe('get-filter for custom fields', () => {
 
   it('for custom boolean field', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         TestEntity.customField('CustomFieldBoolean').edmBoolean().equals(true),
         TestEntity
       ).filter
@@ -140,7 +140,7 @@ describe('get-filter for filter functions', () => {
       1,
       TestEntity.DOUBLE_PROPERTY
     );
-    expect(oDataUri.getFilter(fn.equals(1), TestEntity).filter).toBe(
+    expect(getQueryParametersForFilter(fn.equals(1), TestEntity).filter).toBe(
       "fn('str', 1, DoubleProperty) eq 1"
     );
   });
@@ -148,14 +148,14 @@ describe('get-filter for filter functions', () => {
   it('for custom nested filter function', () => {
     const fnNested = filterFunction('fnNested', 'bool');
     const fn = filterFunction('fn', 'string', fnNested);
-    expect(oDataUri.getFilter(fn.equals('test'), TestEntity).filter).toBe(
-      "fn(fnNested()) eq 'test'"
-    );
+    expect(
+      getQueryParametersForFilter(fn.equals('test'), TestEntity).filter
+    ).toBe("fn(fnNested()) eq 'test'");
   });
 
   it('for length filter function', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         filterFunctions.length(TestEntity.STRING_PROPERTY).equals(3),
         TestEntity
       ).filter
@@ -164,24 +164,26 @@ describe('get-filter for filter functions', () => {
 
   it('for round filter function with default double', () => {
     expect(
-      oDataUri.getFilter(filterFunctions.round(10.1).equals(3), TestEntity)
-        .filter
+      getQueryParametersForFilter(
+        filterFunctions.round(10.1).equals(3),
+        TestEntity
+      ).filter
     ).toBe('round(10.1) eq 3D');
   });
 
   it('for round filter function with decimal', () => {
     expect(
-      oDataUri.getFilter(
+      getQueryParametersForFilter(
         filterFunctions.round(10.1, 'decimal').equals(3),
         TestEntity
       ).filter
     ).toBe('round(10.1) eq 3M');
   });
 
-  it('for custom filter function with date', () => {
+  it('for filter function with date', () => {
     const date = moment.utc().year(2000).month(0).date(1).startOf('date');
     const dateFn = filterFunction('fn', 'int', date).equals(1);
-    expect(oDataUri.getFilter(dateFn, TestEntity).filter).toEqual(
+    expect(getQueryParametersForFilter(dateFn, TestEntity).filter).toEqual(
       "fn(datetimeoffset'2000-01-01T00:00:00.000Z') eq 1"
     );
   });

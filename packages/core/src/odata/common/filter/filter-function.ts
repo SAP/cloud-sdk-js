@@ -72,7 +72,7 @@ export function createFilterFunction<EntityT extends EntityBase>(
   }
 }
 
-export const numberReturnTypeMapping: MapType<
+const numberReturnTypeMapping: MapType<
   'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
 > = {
   int: 'Edm.Int32',

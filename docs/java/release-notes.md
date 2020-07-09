@@ -16,8 +16,16 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 <MvnBadge />
 
 :::danger
-SAP Cloud SDK for Java V2 is in maintenance. To continue using the latest features, please, migrate to SDK V3.
+SAP Cloud SDK for Java V2 is in maintenance. To continue using the latest features, please,  [migrate to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
 :::
+
+## Should I update?
+We highly recommend regularly updating to the latest SDK version. It will help you:
+
+- ensure access to the latest Cloud SDK features
+- keep up with the latest changes in SAP Cloud Platform
+- update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
+- protect yourself from bugs and breaking changes in the future
 
 ## 3.23.0
 

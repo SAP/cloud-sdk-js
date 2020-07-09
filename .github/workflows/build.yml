@@ -51,7 +51,7 @@ jobs:
       - name: Build odata v4 service
         run: npm run e2e-test:build
       - name: Start odata v4 service
-        run: npm run e2e-test:start-server
+        run: npm run e2e-test:start-server:deamo
       - run: npm run test:e2e
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')

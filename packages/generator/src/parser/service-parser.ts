@@ -21,7 +21,6 @@ import {
   VdmServiceMetadataBody,
   VdmServiceMetadataHeader
 } from '../vdm-types';
-import { SwaggerMetadata } from './common';
 import { parseSwaggerFromPath } from './swagger-parser';
 import { ParsedServiceMetadata, parseEdmxFromPath } from './edmx-parser';
 import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
@@ -31,7 +30,8 @@ import { isV2Metadata } from './common/some-util-find-good-name';
 import { parseReturnTypes } from './common/edmx-function-import-parser';
 import { transformEntitiesV2 } from './v2/edmx-entity-parser';
 import { transformEntitiesV4 } from './v4/edmx-entity-parser';
-import { transformComplexTypesV4 } from './v4';
+import { transformComplexTypesV4 } from './v4/edmx-complex-type-parser';
+import { SwaggerMetadata } from './common/swagger-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -204,7 +204,6 @@ function parseServiceMetadata(
       serviceDefinitionPaths.swaggerPath
     );
   }
-
   return serviceMetadata;
 }
 

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
+import { toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { EdmxMetadataBase } from '../edmx-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
@@ -7,25 +7,23 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport,
-  VdmFunctionImportReturnTypeNotParsed,
-  VdmFunctionImportReturnType,
   VdmFunctionImportReturnTypeCategory,
+  VdmFunctionImportReturnTypeNotParsed,
   VdmFunctionWithoutReturnType
 } from '../../vdm-types';
-import {
-  edmToTsType,
-  endWithDot,
-  isNullableParameter
-} from '../../generator-utils';
+import { edmToTsType, isNullableParameter } from '../../generator-utils';
 import { isCollection, parseTypeName } from '../parser-util';
 import {
   filterUnknownEdmTypes,
-  longDescription,
   parseType,
   propertyJsType
 } from './some-util-find-good-name';
 import { EdmxNamed, EdmxParameter } from './edmx-types';
-import { SwaggerPath, SwaggerPathParameter } from './swagger-types';
+import { SwaggerPath } from './swagger-types';
+import {
+  functionImportDescription,
+  parameterDescription
+} from './description-util';
 
 const logger = createLogger({
   package: 'generator',
@@ -76,25 +74,6 @@ export function transformFunctionImportBase<T extends EdmxNamed>(
       functionImport.originalName
     )
   };
-}
-
-function parameterDescription(
-  parameter: EdmxParameter,
-  swaggerParameter?: SwaggerPathParameter
-): string {
-  const short = endWithDot(toTitleFormat(parameter.Name));
-  const long = longDescription(parameter, swaggerParameter);
-  return endWithDot((long || short).trim());
-}
-
-function functionImportDescription(
-  swaggerDefinition: SwaggerPath | undefined,
-  originalName: string
-): string {
-  if (swaggerDefinition && swaggerDefinition.summary) {
-    return endWithDot(swaggerDefinition.summary);
-  }
-  return endWithDot(toTitleFormat(originalName));
 }
 
 export function parseReturnTypes(
@@ -206,55 +185,4 @@ export function parseReturnTypes(
     };
     return { ...f, returnType: vdmReturnType };
   }
-}
-
-export function parseReturnType(
-  returnType: string,
-  entities: VdmEntity[],
-  complexTypes: VdmComplexType[]
-): VdmFunctionImportReturnType {
-  if (!returnType) {
-    return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
-      returnType: 'undefined',
-      builderFunction: '(val) => undefined',
-      isMulti: false,
-      isCollection: false
-    };
-  }
-  const isCollectionReturnType = isCollection(returnType);
-  returnType = parseTypeName(returnType);
-  if (returnType.startsWith('Edm.')) {
-    return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
-      returnType: propertyJsType(returnType)!,
-      builderFunction: `(val) => edmToTs(val, '${returnType}')`,
-      isMulti: isCollectionReturnType,
-      isCollection: isCollectionReturnType
-    };
-  }
-  const parsedReturnType = returnType.split('.').slice(-1)[0];
-  const entity = entities.find(e => e.entityTypeName === parsedReturnType);
-  if (entity) {
-    return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
-      returnType: entity.className,
-      builderFunction: entity.className,
-      isMulti: isCollectionReturnType,
-      isCollection: isCollectionReturnType
-    };
-  }
-  const complexType = complexTypes.find(
-    c => c.originalName === parsedReturnType
-  );
-  if (!complexType) {
-    throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
-  }
-  return {
-    returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
-    returnType: complexType.typeName,
-    builderFunction: `${complexType.typeName}.build`,
-    isMulti: isCollectionReturnType,
-    isCollection: isCollectionReturnType
-  };
 }

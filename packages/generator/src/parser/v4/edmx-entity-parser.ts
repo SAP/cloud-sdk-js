@@ -2,7 +2,6 @@
 import { forceArray } from '../../generator-utils';
 import {
   createEntityClassNames,
-  EdmxEntityType,
   joinEntityMetadata,
   navigationPropertyBase,
   parseEntityTypesBase,
@@ -22,6 +21,7 @@ import {
   EdmxEnumType,
   EdmxNavigationProperty
 } from './edmx-types';
+import { EdmxEntityType } from '../common/edmx-types';
 
 export function parseEntitySets(root): EdmxEntitySet[] {
   return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
@@ -53,7 +53,7 @@ function filterEnumProperties(
   }));
 }
 
-function joinEntityTypes(
+export function joinEntityTypes(
   entityType: EdmxEntityType<EdmxNavigationProperty>,
   baseType: EdmxEntityType<EdmxNavigationProperty>
 ): EdmxEntityType<EdmxNavigationProperty> {

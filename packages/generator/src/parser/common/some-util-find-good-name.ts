@@ -1,36 +1,15 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
-import { edmToTsType, endWithDot, ensureString } from '../../generator-utils';
+import { edmToTsType } from '../../generator-utils';
 import { parseTypeName } from '../parser-util';
 import { EdmxMetadataBase } from '../edmx-parser';
-import { EdmxDocumented, EdmxProperty } from './edmx-types';
-import {
-  SwaggerDescribed,
-  SwaggerMetadata,
-  SwaggerPath,
-  SwaggerProperty
-} from './swagger-types';
+import { EdmxProperty } from './edmx-types';
+import { SwaggerMetadata, SwaggerPath } from './swagger-types';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'some-util-find-good-name'
 });
-
-export function longDescription(
-  documented: EdmxDocumented,
-  described?: SwaggerDescribed
-): string {
-  let docs = '';
-  if (documented.Documentation) {
-    const summmary = ensureString(documented.Documentation.Summary);
-    const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summmary}\n${longDesc}`.trim();
-  }
-  if (!docs && described) {
-    docs = ensureString(described.description);
-  }
-  return endWithDot(docs.trim());
-}
 
 export function parseType(type: string): string {
   return type.startsWith('Edm')
@@ -47,30 +26,6 @@ export function filterUnknownEdmTypes(p: EdmxProperty): boolean {
     );
   }
   return !skip;
-}
-
-export function propertyDescription(
-  property: EdmxProperty,
-  swaggerProperty?: SwaggerProperty
-): string {
-  const short = shortPropertyDescription(property, swaggerProperty);
-  const long = longDescription(property, swaggerProperty);
-  return `${short}\n${long}`.trim();
-}
-
-export function shortPropertyDescription(
-  property: EdmxProperty,
-  swaggerProperty?: SwaggerProperty
-): string {
-  let desc = '';
-  if (property['sap:quickinfo']) {
-    desc = property['sap:quickinfo'];
-  } else if (property['sap:label']) {
-    desc = property['sap:label'];
-  } else if (swaggerProperty && swaggerProperty.title) {
-    desc = swaggerProperty.title;
-  }
-  return endWithDot(desc.trim());
 }
 
 export function isComplexType(type: string): boolean {

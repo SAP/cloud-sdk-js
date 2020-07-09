@@ -118,13 +118,23 @@ export class ServiceNameFormatter {
     return newName;
   }
 
-  typeNameToFactoryName(str: string): string {
-    const factoryName = `create${str}`;
-    // let index = 1;
-    // while (reservedNames.has(factoryName)) {
-    //   factoryName = `${factoryName}_${index}`;
-    //   index += 1;
-    // }
+  typeNameToFactoryName(str: string);
+  /**
+   * @deprecated since version 1.25.0. In the refactored version of the generator the reserved names are obsolete.
+   * @param str
+   * @param reservedNames
+   */
+  /* eslint-disable-next-line  @typescript-eslint/unified-signatures */
+  typeNameToFactoryName(str: string, reservedNames: Set<string>);
+  typeNameToFactoryName(str: string, reservedNames?: Set<string>): string {
+    let factoryName = `create${str}`;
+    if (reservedNames) {
+      let index = 1;
+      while (reservedNames.has(factoryName)) {
+        factoryName = `${factoryName}_${index}`;
+        index += 1;
+      }
+    }
     const newName = this.finderServiceWide.findUniqueName(factoryName);
 
     this.finderServiceWide.addToAlreadyUsedNames(newName);

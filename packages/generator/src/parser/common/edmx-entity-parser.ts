@@ -1,5 +1,4 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { toTitleFormat } from '@sap-cloud-sdk/core';
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import {
@@ -10,7 +9,6 @@ import {
   isNullableProperty,
   isUpdatable
 } from '../../generator-utils';
-import { EdmxMetadataBase } from '../edmx-parser';
 import {
   VdmComplexType,
   VdmEntity,
@@ -24,44 +22,19 @@ import {
   checkCollectionKind,
   filterUnknownEdmTypes,
   isComplexType,
-  propertyDescription,
   propertyJsType
 } from './some-util-find-good-name';
-import { EdmxNamed, EdmxProperty } from './edmx-types';
+import { EdmxEntitySetBase, EdmxEntityType, EdmxNamed } from './edmx-types';
 import { SwaggerEntity, SwaggerMetadata } from './swagger-types';
+import { entityDescription, propertyDescription } from './description-util';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-entity-parser'
 });
 
-export interface EdmxEntitySetBase extends EdmxNamed {
-  EntityType: string;
-  'sap:content-version': string;
-  'sap:creatable': string;
-  'sap:deletable': string;
-  'sap:pageable': string;
-  'sap:updatable': string;
-}
-
 export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
   return forceArray(root.EntityContainer.EntitySet);
-}
-
-export function getEntitySetNames(edmxData: EdmxMetadataBase): string[] {
-  throw new Error('Not yet implemented');
-}
-
-export interface EdmxKey {
-  PropertyRef: EdmxNamed[];
-}
-
-export interface EdmxEntityType<NavigationType> extends EdmxNamed {
-  Key: EdmxKey;
-  Property: EdmxProperty[];
-  'sap:content-version': string;
-  'sap:label'?: string;
-  NavigationProperty: NavigationType[];
 }
 
 // TODO more elegant way to pass the type in?
@@ -107,18 +80,6 @@ export function transformEntityBase(
     keys: keys(entity.properties, entityMetadata.entityType.Key.PropertyRef),
     description: entityDescription(entityMetadata, entity.className)
   };
-}
-
-function entityDescription(
-  entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
-  className: string
-): string {
-  if (entity.entityType['sap:label']) {
-    return entity.entityType['sap:label'];
-  }
-  return entity.swaggerDefinition && entity.swaggerDefinition.title
-    ? entity.swaggerDefinition.title
-    : toTitleFormat(className);
 }
 
 function keys(props: VdmProperty[], edmxKeys: EdmxNamed[]): VdmProperty[] {

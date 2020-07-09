@@ -10,15 +10,14 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
 import { isCollection, parseTypeName } from '../parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { EdmxMetadataBase } from '../edmx-parser';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
   isComplexType,
-  parseType,
-  propertyDescription
+  parseType
 } from './some-util-find-good-name';
 import { EdmxNamed, EdmxProperty } from './edmx-types';
+import { propertyDescription } from './description-util';
 
 const logger = createLogger({
   package: 'generator',
@@ -34,10 +33,6 @@ export function parseComplexTypesBase(root): EdmxComplexType[] {
     c.Property = forceArray(c.Property);
     return c;
   });
-}
-
-export function getComplexTypeNames(edmxData: EdmxMetadataBase): string[] {
-  throw new Error('Not yet implemented');
 }
 
 export function transformComplexTypesBase(

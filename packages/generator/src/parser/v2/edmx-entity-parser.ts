@@ -2,8 +2,6 @@
 import { forceArray } from '../../generator-utils';
 import {
   createEntityClassNames,
-  EdmxEntitySetBase,
-  EdmxEntityType,
   JoinedEntityMetadata,
   joinEntityMetadata,
   navigationPropertyBase,
@@ -19,6 +17,7 @@ import {
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { ParsedServiceMetadata } from '../edmx-parser';
 import { stripNamespace } from '../parser-util';
+import { EdmxEntitySetBase, EdmxEntityType } from '../common';
 import {
   EdmxAssociation,
   EdmxAssociationSet,

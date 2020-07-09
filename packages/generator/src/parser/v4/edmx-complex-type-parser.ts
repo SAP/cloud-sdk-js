@@ -13,7 +13,7 @@ function parseComplexType(root): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);
 }
 
-function joinComplexTypes(
+export function joinComplexTypes(
   complexType: EdmxComplexType,
   baseType: EdmxComplexType
 ): EdmxComplexType {

@@ -13,7 +13,7 @@ import { FilterLambdaExpression } from './filter-lambda-expression';
  * @typeparam EntityT - Type of the entity to be filtered on
  */
 export type Filterable<EntityT extends EntityBase> =
-  | Filter<EntityT, FieldType>
+  | Filter<EntityT, FieldType | FieldType[]>
   | FilterLink<EntityT>
   | FilterList<EntityT>
   | FilterLambdaExpression<EntityT, FieldType>;

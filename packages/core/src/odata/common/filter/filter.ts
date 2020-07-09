@@ -37,8 +37,10 @@ export type FilterOperatorByType<
  * @typeparam EntityT - Type of the entity to be filtered on
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
-export class Filter<EntityT extends EntityBase, FieldT extends FieldType>
-  implements EntityIdentifiable<EntityT> {
+export class Filter<
+  EntityT extends EntityBase,
+  FieldT extends FieldType | FieldType[]
+> implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
    */

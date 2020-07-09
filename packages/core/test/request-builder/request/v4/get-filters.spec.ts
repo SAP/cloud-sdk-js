@@ -10,6 +10,7 @@ import {
   testNestedFilterLambdaExpressionOnLink
 } from '../../../test-util/filter-factory';
 import { TestEntity } from '../../../test-util/test-services/v4/test-service';
+import { oDataUri, filterFunctions, filterFunction } from '../../../../src/v4';
 
 describe('get filters', () => {
   it('for simple filters', () => {
@@ -52,5 +53,25 @@ describe('get filters', () => {
         TestEntity
       ).filter
     ).toBe(testFilterLambdaExpressionFilterFunctionOnLink.odataStr);
+  });
+
+  it('for hasSubset filter function with collection', () => {
+    expect(
+      oDataUri.getFilter(
+        filterFunctions
+          .hasSubset(['1', '2'], TestEntity.COLLECTION_PROPERTY)
+          .equals(true),
+        TestEntity
+      ).filter
+    ).toBe("hassubset(['1','2'], CollectionProperty) eq true");
+  });
+
+  it('for int collection filter function', () => {
+    expect(
+      oDataUri.getFilter(
+        filterFunction('fn', 'int[]').equals([1, 2, 3]),
+        TestEntity
+      ).filter
+    ).toBe('fn() eq [1,2,3]');
   });
 });

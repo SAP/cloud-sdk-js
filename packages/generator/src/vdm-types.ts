@@ -16,11 +16,14 @@ export interface VdmServiceMetadataHeader {
   edmxPath: PathLike;
 }
 
-export interface VdmServiceMetadata extends VdmServiceMetadataHeader {
+export interface VdmServiceMetadataBody {
   entities: VdmEntity[];
   complexTypes: VdmComplexType[];
   functionImports: VdmFunctionImport[];
 }
+
+export type VdmServiceMetadata = VdmServiceMetadataHeader &
+  VdmServiceMetadataBody;
 
 // Entity
 export interface VdmEntity {

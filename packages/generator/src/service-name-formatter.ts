@@ -8,6 +8,20 @@ import { UniqueNameFinder } from './unique-name-finder';
 import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
 
 export class ServiceNameFormatter {
+  static originalToServiceName(name: string): string {
+    let formattedName = name.replace(/\.|\//g, '_');
+    formattedName = stripAPIUnderscore(formattedName);
+    formattedName = stripUnderscoreSrv(formattedName);
+    formattedName = voca.kebabCase(formattedName);
+    return formattedName.endsWith('service')
+      ? formattedName
+      : `${formattedName}-service`;
+  }
+
+  static directoryToSpeakingModuleName(packageName: string): string {
+    return voca.titleCase(packageName.replace(/-/g, ' '));
+  }
+
   private finderServiceWide = new UniqueNameFinder(
     '_',
     reservedServiceKeywords
@@ -51,16 +65,6 @@ export class ServiceNameFormatter {
         this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
       });
     }
-  }
-
-  static originalToServiceName(name: string): string {
-    let formattedName = name.replace(/\.|\//g, '_');
-    formattedName = stripAPIUnderscore(formattedName);
-    formattedName = stripUnderscoreSrv(formattedName);
-    formattedName = voca.kebabCase(formattedName);
-    return formattedName.endsWith('service')
-      ? formattedName
-      : `${formattedName}-service`;
   }
 
   originalToStaticPropertyName(
@@ -169,10 +173,6 @@ export class ServiceNameFormatter {
     );
     this.finderServiceWide.addToAlreadyUsedNames(...newNames);
     return newNames[0];
-  }
-
-  static directoryToSpeakingModuleName(packageName: string): string {
-    return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 
   private getOrInitStaticPropertyNameFinder(name: string): UniqueNameFinder {

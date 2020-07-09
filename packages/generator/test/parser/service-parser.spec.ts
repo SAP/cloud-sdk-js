@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GlobalNameFormatter } from '../../src/global-name-formatter';
-import { parseService, ServiceParser } from '../../src/parser';
+import { ServiceParser } from '../../src/parser';
 import { ServiceMapping } from '../../src/service-mapping';
 import {
   VdmFunctionImportReturnTypeCategory,
@@ -11,15 +11,10 @@ import { createOptions } from '../test-util/create-generator-options';
 describe('service-parser', () => {
   describe('chooses package name source', () => {
     it('namespace by default', () => {
-      const serviceMetadata = parseService(
-        {
-          edmxPath:
-            '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
-        },
-        createOptions(),
-        {},
-        new GlobalNameFormatter(undefined)
-      );
+      const serviceMetadata = new ServiceParser(createOptions()).parseService({
+        edmxPath:
+          '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
+      });
       expect(serviceMetadata.directoryName).toBe('test-service');
     });
 
@@ -30,17 +25,15 @@ describe('service-parser', () => {
         npmPackageName: 'custom-package-name'
       };
 
-      const serviceMetadata = parseService(
-        {
+      const serviceMetadata = new ServiceParser(createOptions())
+        .withGlobalNameFormatter(
+          new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
+        )
+        .withServiceMapping({ API_TEST_SRV: serviceMapping })
+        .parseService({
           edmxPath:
             '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
-        },
-        createOptions(),
-        {
-          API_TEST_SRV: serviceMapping
-        },
-        new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
-      );
+        });
 
       expect(serviceMetadata.directoryName).toBe(serviceMapping.directoryName);
       expect(serviceMetadata.servicePath).toBe(serviceMapping.servicePath);

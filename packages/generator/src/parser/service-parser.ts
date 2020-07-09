@@ -18,6 +18,7 @@ import { ServiceNameFormatter } from '../service-name-formatter';
 import {
   ApiBusinessHubMetadata,
   VdmServiceMetadata,
+  VdmServiceMetadataBody,
   VdmServiceMetadataHeader
 } from '../vdm-types';
 import { SwaggerMetadata } from './common';
@@ -39,7 +40,6 @@ const logger = createLogger({
 
 export class ServiceParser {
   private globalNameFormatter: GlobalNameFormatter;
-  // private serviceNameFormatter:ServiceNameFormatter
   private serviceMapping: VdmMapping;
 
   constructor(readonly options: GeneratorOptions) {
@@ -53,8 +53,21 @@ export class ServiceParser {
     );
   }
 
+  public withServiceMapping(serviceMapping: VdmMapping) {
+    this.serviceMapping = serviceMapping;
+    return this;
+  }
+
+  public withGlobalNameFormatter(globalNameFormatter: GlobalNameFormatter) {
+    this.globalNameFormatter = globalNameFormatter;
+    return this;
+  }
+
   /**
+   * Only public for compatibility to [[parseService]]
    * @hidden
+   * @param serviceDefinitionPaths Path to the service definitions files.
+   * @returns the parsed service
    */
   public parseService(
     serviceDefinitionPaths: ServiceDefinitionPaths
@@ -65,7 +78,7 @@ export class ServiceParser {
       serviceMetadata,
       serviceDefinitionPaths
     );
-    const serviceBody = this.transformServiceMetadata(
+    const serviceBody = this.buildServiceBody(
       serviceMetadata,
       serviceDefinitionPaths
     );
@@ -110,15 +123,10 @@ export class ServiceParser {
     };
   }
 
-  private transformServiceMetadata(
+  private buildServiceBody(
     serviceMetadata: ParsedServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths
-  ): VdmServiceMetadata {
-    const header = this.buildServiceHeader(
-      serviceMetadata,
-      serviceDefinitionPaths
-    );
-
+  ): VdmServiceMetadataBody {
     const formatter = new ServiceNameFormatter();
     // getEntitySetNames(serviceMetadata.edmx),
     // getComplexTypeNames(serviceMetadata.edmx),
@@ -145,7 +153,6 @@ export class ServiceParser {
     );
 
     return {
-      ...header,
       complexTypes,
       entities,
       functionImports
@@ -156,22 +163,32 @@ export class ServiceParser {
 /**
  * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
  * @param options Generator options *
+ * @returns the parsed services
  */
-export function parseAllServices(options: GeneratorOptions) {
+export function parseAllServices(
+  options: GeneratorOptions
+): VdmServiceMetadata[] {
   return new ServiceParser(options).parseAllServices();
 }
 
 /**
  * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
- * @param options Generator options *
+ * @param serviceDefinitionPaths Path to the service definition
+ * @param options Generator options
+ * @param mappings mappings for VDM service names to desired name
+ * @param globalNameFormatter Instance of global name formatter to be used for the parsing process
+ * @returns the parsed service
  */
 export function parseService(
   serviceDefinitionPaths: ServiceDefinitionPaths,
   options: GeneratorOptions,
   mappings: VdmMapping,
   globalNameFormatter: GlobalNameFormatter
-) {
-  return new ServiceParser(options).parseService(serviceDefinitionPaths);
+): VdmServiceMetadata {
+  return new ServiceParser(options)
+    .withServiceMapping(mappings)
+    .withGlobalNameFormatter(globalNameFormatter)
+    .parseService(serviceDefinitionPaths);
 }
 
 // TODO split read and parse. Perhaps only read Parse later (for edmx clear also do for swagger)
@@ -282,9 +299,3 @@ function servicePathFromSwagger(swagger?: SwaggerMetadata): string | undefined {
     return swagger.basePath;
   }
 }
-//
-// function getFunctionImportNames(metadata: ParsedServiceMetadata) {
-//   return new Set(
-//     metadata.edmx.functionImports.map(f => voca.camelCase(f.Name))
-//   );
-// }

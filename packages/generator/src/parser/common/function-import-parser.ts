@@ -104,7 +104,7 @@ export function parseReturnTypes(
   function findEdmType(returnType: string): string | undefined {
     returnType = parseTypeName(returnType);
     if (returnType.startsWith('Edm.')) {
-      return propertyJsType(returnType);
+      return returnType;
     }
     return undefined;
   }
@@ -146,7 +146,7 @@ export function parseReturnTypes(
   ): VdmFunctionImport {
     const vdmReturnType = {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
-      returnType: edmxType,
+      returnType: propertyJsType(edmxType)!,
       builderFunction: `(val) => edmToTs(val, '${edmxType}')`,
       isMulti: isCollectionReturnType,
       isCollection: isCollectionReturnType

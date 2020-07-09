@@ -23,7 +23,7 @@ function parseFunctions(root): EdmxFunction[] {
   });
 }
 
-export function transformFunctionImportsWithoutReturnTypeV4(
+export function transformFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmFunctionImportReturnTypeNotParsed[] {

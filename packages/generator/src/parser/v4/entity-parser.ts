@@ -7,34 +7,16 @@ import {
   parseEntityTypesBase,
   transformEntityBase
 } from '../common/entity-parser';
-import {
-  VdmComplexType,
-  VdmEntity,
-  VdmNavigationProperty
-} from '../../vdm-types';
+import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  isCollection,
-  parseTypeName,
-  stripNamespace
-} from '../util/parser-util';
+import { isCollection, parseTypeName, stripNamespace } from '../util/parser-util';
 import { ServiceMetadata } from '../util/edmx-types';
 import { EdmxEntityType } from '../common/edmx-types';
-import {
-  EdmxEntitySet,
-  EdmxEnumType,
-  EdmxNavigationProperty
-} from './edmx-types';
+import { EdmxEntitySet, EdmxEnumType, EdmxNavigationProperty } from './edmx-types';
 import { joinTypesWithBaseTypes } from './function-import-parser';
+import { parseEntitySets } from './test-for-mocking';
 
-export function parseEntitySets(root): EdmxEntitySet[] {
-  return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
-    ...entitySet,
-    NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)
-  }));
-}
-
-function parseEntityType(root): EdmxEntityType<EdmxNavigationProperty>[] {
+export function parseEntityType(root): EdmxEntityType<EdmxNavigationProperty>[] {
   const entityTypes = parseEntityTypesBase(root, {} as EdmxNavigationProperty);
   const enumTypes = forceArray(root.EnumType);
   return joinTypesWithBaseTypes(

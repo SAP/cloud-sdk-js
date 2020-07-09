@@ -1,16 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { mockEntityTypes } from './edmx-file-mocks';
 import { ServiceNameFormatter } from '../../src/service-name-formatter';
 import {
-  EdmxProperty,
-  EdmxFunctionImportBase,
-  transformComplexTypes
-} from '../../src/parser/common';
-import {
-  EdmxEntitySet,
   EdmxEntityType,
-  EdmxMetadata,
-  transformEntitiesV4
-} from '../../src/parser/v4';
+  EdmxProperty
+} from '../../src/parser/common/edmx-types';
+import {
+  EdmxEntitySet, EdmxNavigationProperty
+} from '../../src/parser/v4/edmx-types';
+import { transformComplexTypesV4 } from '../../src/parser/v4/complex-type-parser';
+import { ServiceMetadata } from '../../src/parser/util/edmx-types';
+import { transformEntitiesV4 } from '../../src/parser/v4/entity-parser';
+
 
 describe('edmx-to-vdm-v4', () => {
   it('transforms collection type properties for primitive types', () => {
@@ -43,10 +44,9 @@ describe('edmx-to-vdm-v4', () => {
     );
 
     const formatter = getFormatter(service);
-    const vdmComplexTypes = transformComplexTypes(
-      service.edmx.complexTypes,
-      formatter,
-      new Set()
+    const vdmComplexTypes = transformComplexTypesV4(
+      service,
+      formatter
     );
 
     const entity = transformEntitiesV4(service, vdmComplexTypes, formatter)[0];
@@ -146,38 +146,32 @@ describe('edmx-to-vdm-v4', () => {
   });
 });
 
-function getFormatter(service: ParsedServiceMetadata) {
+function getFormatter(service: ServiceMetadata) {
   return new ServiceNameFormatter(
-    service.edmx.entitySets.map(entitySet => entitySet.Name),
-    service.edmx.complexTypes.map(complexType => complexType.Name),
-    (service.edmx.functionImports as EdmxFunctionImportBase[]).map(
-      functionImport => functionImport.Name
-    )
+    // service.edmx.entitySets.map(entitySet => entitySet.Name),
+    // service.edmx.complexTypes.map(complexType => complexType.Name),
+    // (service.edmx.functionImports as EdmxFunctionImportBase[]).map(
+    //   functionImport => functionImport.Name
+    // )
   );
 }
 
 function createTestServiceData(
-  entityTypes: EdmxEntityType[],
+  entityTypes: EdmxEntityType<EdmxNavigationProperty>[],
   entitySets: EdmxEntitySet[]
-): ParsedServiceMetadata {
-  const service: ParsedServiceMetadata = {
+): ServiceMetadata {
+  const service: ServiceMetadata = {
     edmx: {
-      complexTypes: [
-        {
-          Name: 'TestComplexType',
-          Property: [createTestProperty('ComplexTypeProp', 'Edm.String')]
-        }
-      ],
       fileName: '',
-      functionImports: [],
       namespace: '',
       path: '',
       oDataVersion: 'v4',
-      enumTypes: [],
-      entityTypes,
-      entitySets,
-      functions: []
-    } as EdmxMetadata
+      root: {
+        EntityContainer :{
+          EntitySet:entitySets
+        }
+      }
+    }
   };
 
   return service;
@@ -187,7 +181,7 @@ function createEntityType(
   name: string,
   properties: [string, string, boolean][],
   navigationProperties: [string, string][] = []
-): EdmxEntityType {
+): EdmxEntityType<EdmxNavigationProperty> {
   return {
     'sap:content-version': '',
     Key: {

@@ -16,12 +16,12 @@ import {
   VdmServiceMetadata,
   VdmServicePackageMetaData
 } from '../vdm-types';
-import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/function-import-parser';
+import { transformFunctionImportsV4 } from './v4/function-import-parser';
 import { transformEntitiesV4 } from './v4/entity-parser';
 import { transformComplexTypesV4 } from './v4/complex-type-parser';
 import { readEdmxFile } from './util/edmx-file-reader';
 import { parseReturnTypes } from './common/function-import-parser';
-import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/function-import-parser';
+import { transformFunctionImportsV2 } from './v2/function-import-parser';
 import { transformEntitiesV2 } from './v2/entity-parser';
 import { readSwaggerFile } from './swagger/swagger-parser';
 import { ServiceMetadata } from './util/edmx-types';
@@ -133,8 +133,8 @@ export class ServiceParser {
     // Do function imports before complex types so that function like createSomething get a nice name
     // The constructor function of a complex type is also called `createComplexType`.
     const functionImportsWithoutReturnType = isV2Metadata(serviceMetadata.edmx)
-      ? transformFunctionImportsWithoutReturnTypeV2(serviceMetadata, formatter)
-      : transformFunctionImportsWithoutReturnTypeV4(serviceMetadata, formatter);
+      ? transformFunctionImportsV2(serviceMetadata, formatter)
+      : transformFunctionImportsV4(serviceMetadata, formatter);
 
     const complexTypes = isV2Metadata(serviceMetadata.edmx)
       ? transformComplexTypesV2(serviceMetadata, formatter)

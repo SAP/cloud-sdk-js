@@ -1,11 +1,11 @@
 import { forceArray } from '../../generator-utils';
-import { EdmxEntitySetBase, JoinedEntityMetadata } from '../common/edmx-entity-parser';
+import { EdmxEntitySetBase, JoinedEntityMetadata, navigationPropertyBase } from '../common/edmx-entity-parser';
 import { EdmxEntityType, parseEntityTypesBase } from '../common/edmx-entity-parser';
 import { joinTypesWithBaseTypes } from './edmx-parser-util';
 import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { createEntityClassNames, joinEntityMetadata, transformEntity } from '../common/edmx-to-vdm';
+import { createEntityClassNames } from '../common/edmx-to-vdm';
 import { isCollection, parseTypeName, stripNamespace } from '../parser-util';
 import { EdmxNamed } from '../common';
 
@@ -99,12 +99,11 @@ export function transformEntitiesV4(
 }
 
 function navigationProperties(
-  entityMetadata: JoinedEntityMetadata<EdmxNavigationProperty>,
+  entityType:EdmxEntityType<EdmxNavigationProperty>,
+  entitySet:EdmxEntitySet,
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
 ): VdmNavigationProperty[] {
-  const entityType = entityMetadata.entityType as EdmxEntityType;
-  const entitySet = entityMetadata.entitySet as EdmxEntitySet;
 
   return entitySet.NavigationPropertyBinding.filter(
     navBinding => !isDerivedNavBindingPath(navBinding.Path)
@@ -124,10 +123,10 @@ function navigationProperties(
     return {
       ...navigationPropertyBase(
         navProp.Name,
-        entityMetadata.entitySet.Name,
+        entitySet.Name,
         formatter
       ),
-      from: entityMetadata.entityType.Name,
+      from: entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
       multiplicity: isCollectionType ? '1 - *' : '1 - 1',

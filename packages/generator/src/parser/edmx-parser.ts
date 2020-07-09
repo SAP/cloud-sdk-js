@@ -4,11 +4,7 @@ import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
 import { parse } from 'fast-xml-parser';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
-import {
-  EdmxMetadata as EdmxMetadataV2,
-  isV2Metadata,
-  parseEdmxV2
-} from './v2';
+
 import {  SwaggerMetadata } from './common';
 import { forceArray } from '../generator-utils';
 

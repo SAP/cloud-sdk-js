@@ -24,13 +24,19 @@ export class ServiceNameFormatter {
     [entitySetOrComplexTypeName: string]: UniqueNameFinder;
   } = {};
 
+  constructor()
   constructor(
     entitySetNames: string[],
     complexTypeNames: string[],
     functionImportNames: string[]
+  )
+  constructor(
+    entitySetNames?: string[],
+    complexTypeNames?: string[],
+    functionImportNames?: string[]
   ) {
     // Here we assume that entitysets and complextypes cannot have the same original name
-    [...entitySetNames, ...complexTypeNames].forEach(
+    [...entitySetNames||[], ...complexTypeNames||[]].forEach(
       entitySetOrComplexTypeName => {
         this.staticPropertyNamesFinder[
           entitySetOrComplexTypeName
@@ -40,10 +46,11 @@ export class ServiceNameFormatter {
         ] = new UniqueNameFinder();
       }
     );
-
-    functionImportNames.forEach(functionImportName => {
-      this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
-    });
+    if(functionImportNames) {
+      functionImportNames.forEach(functionImportName => {
+        this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
+      });
+    }
   }
 
   static originalToServiceName(name: string): string {

@@ -19,7 +19,6 @@ import { ServiceNameFormatter } from '../service-name-formatter';
 import {
   ApiBusinessHubMetadata,
   VdmServiceMetadata,
-  VdmServiceMetadataBody,
   VdmServiceMetadataHeader
 } from '../vdm-types';
 import {
@@ -27,22 +26,18 @@ import {
 
 } from './common';
 import { parseSwaggerFromPath } from './swagger-parser';
-import { transformEntitiesV4 } from './v4';
-import {
 
-
-
-} from './v2';
-import { parseEdmxFromPath } from './edmx-parser';
-import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
+import { ParsedServiceMetadata, parseEdmxFromPath } from './edmx-parser';
+import { parseFunctionImports, transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
 import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/edmx-function-import-parser';
 import { transformComplexTypesV2 } from './v2/edmx-complex-type-parser';
 import { transformComplexTypesV4 } from './v4/edmx-compley-type-parser';
 import { isV2Metadata } from './common/some-util-find-good-name';
 import { getEntitySetNames } from './common/edmx-entity-parser';
 import { getComplexTypeNames } from './common/edmx-complex-type-parser';
-import { getFunctionImportNames1 } from './common/edmx-function-import-parser';
+import { getFunctionImportNames1, parseReturnTypes } from './common/edmx-function-import-parser';
 import { transformEntitiesV2 } from './v2/edmx-entity-parser';
+import { transformEntitiesV4 } from './v4/edmx-entity-parser';
 
 const logger = createLogger({
   package: 'generator',
@@ -115,11 +110,12 @@ class ServiceParser{
     serviceDefinitionPaths: ServiceDefinitionPaths,
   ): VdmServiceMetadata {
 
+    const header = this.buildServiceHeader(serviceMetadata,serviceDefinitionPaths)
 
     const formatter = new ServiceNameFormatter(
-      getEntitySetNames(serviceMetadata.edmx),
-      getComplexTypeNames(serviceMetadata.edmx),
-      getFunctionImportNames1(serviceMetadata.edmx)
+      // getEntitySetNames(serviceMetadata.edmx),
+      // getComplexTypeNames(serviceMetadata.edmx),
+      // getFunctionImportNames1(serviceMetadata.edmx)
     );
 
     //Do function imports before complex types so that function like createSomething get a nice name
@@ -132,15 +128,13 @@ class ServiceParser{
     ? transformComplexTypesV2(serviceMetadata,formatter)
       : transformComplexTypesV4(serviceMetadata,formatter)
 
-
     const transformEntities = isV2Metadata(serviceMetadata.edmx)
       ? transformEntitiesV2(serviceMetadata,complexTypes,formatter)
-      : transformEntitiesV4();
+      : transformEntitiesV4(serviceMetadata,complexTypes,formatter);
 
     const entities = transformEntities(serviceMetadata, complexTypes, formatter);
 
-    const header = this.buildServiceHeader(serviceMetadata,serviceDefinitionPaths)
-
+    const functionImports = parseReturnTypes(functionImportsWithoutReturnType,entities,complexTypes)
 
 
     return {

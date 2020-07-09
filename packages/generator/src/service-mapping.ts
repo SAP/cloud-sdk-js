@@ -1,8 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { existsSync, PathLike, readFileSync } from 'fs';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
+import { ServiceMetadata } from './parser/util/edmx-types';
+import { servicePathFromSwagger } from './parser/swagger/swagger-util';
+
+const logger = createLogger({
+  package: 'generator',
+  messageContext: 'service-mapping'
+});
 
 export const VALUE_IS_UNDEFINED = 'VALUE_IS_UNDEFINED';
 
@@ -45,4 +53,35 @@ export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {
 
 export function serviceMappingFile(services: VdmServiceMetadata[]): string {
   return JSON.stringify(serviceMapping(services), null, 2) + '\n';
+}
+
+export function getServicePath(
+  metadata: ServiceMetadata,
+  serviceMappingIn?: ServiceMapping
+): string {
+  let servicePath =
+    serviceMappingIn?.servicePath ||
+    servicePathFromSelfLink(metadata.edmx.selfLink) ||
+    servicePathFromSwagger(metadata.swagger);
+  if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {
+    logger.warn(
+      'No service path could be determined from available metadata! ' +
+        'To avoid this in the future, you can provide the correct value in "service-mapping.json". ' +
+        'By default, the "service-mapping.json" file will be saved to and read from the input directory. ' +
+        'You can supply a custom path using the -s/--serviceMapping flag. '
+    );
+    servicePath = VALUE_IS_UNDEFINED;
+  }
+  return servicePath;
+}
+
+function servicePathFromSelfLink(
+  selfLink: string | undefined
+): string | undefined {
+  if (selfLink) {
+    return selfLink
+      .replace(/^https?:\/\//, '')
+      .replace(/\/\$metadata$/, '')
+      .replace(/^[^\/]+/, '');
+  }
 }

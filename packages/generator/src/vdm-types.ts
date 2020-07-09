@@ -22,8 +22,7 @@ export interface VdmServiceEntities {
   functionImports: VdmFunctionImport[];
 }
 
-export type VdmServiceMetadata = VdmServicePackageMetaData &
-  VdmServiceEntities;
+export type VdmServiceMetadata = VdmServicePackageMetaData & VdmServiceEntities;
 
 // Entity
 export interface VdmEntity {

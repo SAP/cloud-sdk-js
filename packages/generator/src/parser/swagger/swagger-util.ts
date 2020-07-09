@@ -1,6 +1,7 @@
-import { SwaggerMetadata } from './swagger-types';
-import { ApiBusinessHubMetadata } from '../../vdm-types';
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { propertyExists } from '@sap-cloud-sdk/util';
+import { ApiBusinessHubMetadata } from '../../vdm-types';
+import { SwaggerMetadata } from './swagger-types';
 
 export function apiBusinessHubMetadata(
   swagger?: SwaggerMetadata
@@ -41,7 +42,9 @@ function apiHubServiceName(swagger: SwaggerMetadata): string {
   return swagger.basePath.split('/').slice(-1)[0];
 }
 
-export function servicePathFromSwagger(swagger?: SwaggerMetadata): string | undefined {
+export function servicePathFromSwagger(
+  swagger?: SwaggerMetadata
+): string | undefined {
   if (swagger && propertyExists(swagger, 'basePath')) {
     return swagger.basePath;
   }

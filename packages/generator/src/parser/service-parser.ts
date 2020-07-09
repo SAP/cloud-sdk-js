@@ -1,13 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, propertyExists, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from '../generator-options';
 import { npmCompliantName } from '../generator-utils';
 import { GlobalNameFormatter } from '../global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from '../input-path-provider';
-import { readServiceMapping, ServiceMapping, VdmMapping } from '../service-mapping';
+import {
+  getServicePath,
+  readServiceMapping,
+  VdmMapping
+} from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
-import { VdmServiceMetadata, VdmServiceEntities, VdmServicePackageMetaData } from '../vdm-types';
+import {
+  VdmServiceEntities,
+  VdmServiceMetadata,
+  VdmServicePackageMetaData
+} from '../vdm-types';
 import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/function-import-parser';
 import { transformEntitiesV4 } from './v4/entity-parser';
 import { transformComplexTypesV4 } from './v4/complex-type-parser';
@@ -19,7 +27,7 @@ import { readSwaggerFile } from './swagger/swagger-parser';
 import { ServiceMetadata } from './util/edmx-types';
 import { transformComplexTypesV2 } from './v2/complex-type-parser';
 import { isV2Metadata } from './util/parser-util';
-import { apiBusinessHubMetadata, servicePathFromSwagger } from './swagger/swagger-util';
+import { apiBusinessHubMetadata } from './swagger/swagger-util';
 
 const logger = createLogger({
   package: 'generator',
@@ -82,7 +90,9 @@ export class ServiceParser {
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServicePackageMetaData {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
-      packageName(serviceMetadata, this.options),
+      ServiceNameFormatter.originalToServiceName(
+        serviceMetadata.edmx.namespace
+      ),
       serviceMetadata.edmx.fileName
     );
     const npmPackageName = this.globalNameFormatter.uniqueNpmPackageName(
@@ -193,50 +203,3 @@ export function parseService(
     .withGlobalNameFormatter(globalNameFormatter)
     .parseService(serviceDefinitionPaths);
 }
-
-
-
-function packageName(metadata: ServiceMetadata, options: GeneratorOptions) {
-  return ServiceNameFormatter.originalToServiceName(metadata.edmx.namespace);
-}
-
-function getServicePath(
-  metadata: ServiceMetadata,
-  serviceMapping?: ServiceMapping
-): string {
-  let servicePath =
-    servicePathFromMapping(serviceMapping) ||
-    servicePathFromSelfLink(metadata) ||
-    servicePathFromSwagger(metadata.swagger);
-  if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {
-    logger.warn(
-      'No service path could be determined from available metadata! ' +
-        'To avoid this in the future, you can provide the correct value in "service-mapping.json". ' +
-        'By default, the "service-mapping.json" file will be saved to and read from the input directory. ' +
-        'You can supply a custom path using the -s/--serviceMapping flag. '
-    );
-    servicePath = VALUE_IS_UNDEFINED;
-  }
-  return servicePath;
-}
-
-function servicePathFromMapping(
-  serviceMapping?: ServiceMapping
-): string | undefined {
-  return serviceMapping && propertyExists(serviceMapping, 'servicePath')
-    ? serviceMapping.servicePath
-    : undefined;
-}
-
-function servicePathFromSelfLink(
-  metadata: ServiceMetadata
-): string | undefined {
-  const selfLink = metadata.edmx.selfLink;
-  if (selfLink) {
-    return selfLink
-      .replace(/^https?:\/\//, '')
-      .replace(/\/\$metadata$/, '')
-      .replace(/^[^\/]+/, '');
-  }
-}
-

@@ -106,17 +106,17 @@ async function generateTestServicesWithLocalCoreModules(
 }
 
 const arg = process.argv[2];
-if(arg === 'v2' || arg === 'all'){
+if (arg === 'v2' || arg === 'all') {
   generateTestServicesPackage(packageOutputDir, 'v2');
   generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
 }
 
-if(arg === 'v4' || arg === 'all'){
+if (arg === 'v4' || arg === 'all') {
   generateTestServicesPackage(packageOutputDir, 'v4');
   generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
 }
 
-if(arg === 'e2e' || arg === 'all'){
+if (arg === 'e2e' || arg === 'all') {
   generate({
     ...generatorConfig,
     inputDir: path.join('test-resources', 'service-specs-e2e', 'v4'),

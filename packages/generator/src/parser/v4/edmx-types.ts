@@ -1,6 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EdmxEntitySetBase, EdmxNamed, EdmxParameter } from '../common/edmx-types';
+import {
+  EdmxEntitySetBase,
+  EdmxNamed,
+  EdmxParameter
+} from '../common/edmx-types';
 
 export interface EdmxNavigationProperty {
   Name: string;
@@ -34,4 +38,8 @@ export interface EdmxFunction extends EdmxNamed {
   ReturnType: { Type: string };
   Parameter: EdmxParameter[];
   IsBound: boolean;
+}
+
+export interface EdmxDerivedType extends EdmxNamed {
+  BaseType?: string;
 }

@@ -4,7 +4,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common/function-import-parser';
 import { VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
 import { ServiceMetadata } from '../util/edmx-types';
-import { swaggerDefinitionForFunctionImport } from '../util/some-util-find-good-name';
+import { swaggerDefinitionForFunctionImport } from '../swagger/swagger-parser';
 import { EdmxFunctionImport } from './edmx-types';
 
 export function parseFunctionImports(root): EdmxFunctionImport[] {

@@ -16,17 +16,26 @@ import {
   VdmProperty
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { isCollection, parseTypeName } from '../util/parser-util';
-import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
+  isCollection,
   isComplexType,
+  parseTypeName,
   propertyJsType
-} from '../util/some-util-find-good-name';
-import { EdmxEntitySetBase, EdmxEntityType, EdmxNamed } from './edmx-types';
-import { SwaggerEntity, SwaggerMetadata } from '../swagger/swagger-types';
-import { entityDescription, propertyDescription } from '../util/description-util';
+} from '../util/parser-util';
+import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
+import { SwaggerMetadata } from '../swagger/swagger-types';
+import {
+  entityDescription,
+  propertyDescription
+} from '../util/description-util';
+import {
+  EdmxEntitySetBase,
+  EdmxEntityType,
+  EdmxNamed,
+  JoinedEntityMetadata
+} from './edmx-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -162,15 +171,6 @@ function complexTypeFieldForName(
     `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
   );
   return 'any';
-}
-
-export interface JoinedEntityMetadata<
-  EntitySetType extends EdmxEntitySetBase,
-  NavigationPropertyType
-> {
-  entitySet: EntitySetType;
-  entityType: EdmxEntityType<NavigationPropertyType>;
-  swaggerDefinition?: SwaggerEntity;
 }
 
 export function joinEntityMetadata<

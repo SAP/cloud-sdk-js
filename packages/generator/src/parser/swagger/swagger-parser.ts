@@ -2,7 +2,7 @@
 
 import { PathLike, readFileSync } from 'fs';
 import path from 'path';
-import { SwaggerMetadata } from './swagger-types';
+import { SwaggerMetadata, SwaggerPath } from './swagger-types';
 
 export function readSwaggerFile(swaggerPath: PathLike): SwaggerMetadata {
   const swaggerFile = readFileSync(path.resolve(swaggerPath.toString()), {
@@ -17,4 +17,25 @@ function parseSwaggerFile(swaggerFile: string): SwaggerMetadata {
   swaggerMetaData.definitions =
     swaggerMetaData.definitions || swaggerMetaData?.components?.schemas;
   return swaggerMetaData;
+}
+
+export function swaggerDefinitionForFunctionImport(
+  originalName: string,
+  httpMethod: string,
+  swaggerMetadata: SwaggerMetadata | undefined
+): SwaggerPath | undefined {
+  if (swaggerMetadata) {
+    const paths = swaggerMetadata.paths;
+    const entryPath = Object.keys(paths).find(
+      path1 => path1 === `/${originalName}`
+    );
+    if (entryPath) {
+      const key = Object.keys(paths[entryPath]).find(
+        k => k.toLowerCase() === httpMethod.toLowerCase()
+      );
+      if (key) {
+        return paths[entryPath][key];
+      }
+    }
+  }
 }

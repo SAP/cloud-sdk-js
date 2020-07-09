@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
-  EdmxComplexType,
   parseComplexTypesBase,
   transformComplexTypesBase
 } from '../common/complex-type-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
 import { ServiceMetadata } from '../util/edmx-types';
-import { joinTypesWithBaseTypes } from './edmx-parser-util';
+import { EdmxComplexType } from '../common/edmx-types';
+import { joinTypesWithBaseTypes } from './function-import-parser';
 
 function parseComplexType(root): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);

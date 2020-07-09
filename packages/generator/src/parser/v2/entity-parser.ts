@@ -2,7 +2,6 @@
 import { forceArray } from '../../generator-utils';
 import {
   createEntityClassNames,
-  JoinedEntityMetadata,
   joinEntityMetadata,
   navigationPropertyBase,
   parseEntitySetsBase,
@@ -18,13 +17,17 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { ServiceMetadata } from '../util/edmx-types';
 import { stripNamespace } from '../util/parser-util';
 import {
+  EdmxEntitySetBase,
+  EdmxEntityType,
+  JoinedEntityMetadata
+} from '../common/edmx-types';
+import {
   EdmxAssociation,
   EdmxAssociationSet,
   EdmxNavigationProperty,
   End,
   JoinedAssociationMetadata
 } from './edmx-types';
-import { EdmxEntitySetBase, EdmxEntityType } from '../common/edmx-types';
 
 export function parseEntitySets(root): EdmxEntitySetBase[] {
   return parseEntitySetsBase(root);

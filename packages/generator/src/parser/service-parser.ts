@@ -1,38 +1,25 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import {
-  createLogger,
-  propertyExists,
-  VALUE_IS_UNDEFINED
-} from '@sap-cloud-sdk/util';
+import { createLogger, propertyExists, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from '../generator-options';
 import { npmCompliantName } from '../generator-utils';
 import { GlobalNameFormatter } from '../global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from '../input-path-provider';
-import {
-  readServiceMapping,
-  ServiceMapping,
-  VdmMapping
-} from '../service-mapping';
+import { readServiceMapping, ServiceMapping, VdmMapping } from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
-import {
-  ApiBusinessHubMetadata,
-  VdmServiceMetadata,
-  VdmServiceMetadataBody,
-  VdmServiceMetadataHeader
-} from '../vdm-types';
-import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/edmx-function-import-parser';
-import { transformEntitiesV4 } from './v4/edmx-entity-parser';
-import { transformComplexTypesV4 } from './v4/edmx-complex-type-parser';
+import { VdmServiceMetadata, VdmServiceEntities, VdmServicePackageMetaData } from '../vdm-types';
+import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/function-import-parser';
+import { transformEntitiesV4 } from './v4/entity-parser';
+import { transformComplexTypesV4 } from './v4/complex-type-parser';
 import { readEdmxFile } from './util/edmx-file-reader';
-import { isV2Metadata } from './util/some-util-find-good-name';
 import { parseReturnTypes } from './common/function-import-parser';
 import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/function-import-parser';
 import { transformEntitiesV2 } from './v2/entity-parser';
 import { readSwaggerFile } from './swagger/swagger-parser';
-import { SwaggerMetadata } from './swagger/swagger-types';
 import { ServiceMetadata } from './util/edmx-types';
 import { transformComplexTypesV2 } from './v2/complex-type-parser';
+import { isV2Metadata } from './util/parser-util';
+import { apiBusinessHubMetadata, servicePathFromSwagger } from './swagger/swagger-util';
 
 const logger = createLogger({
   package: 'generator',
@@ -73,13 +60,13 @@ export class ServiceParser {
   public parseService(
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadata {
-    const serviceMetadata = readEdmxAndSwaggerFile(serviceDefinitionPaths);
+    const serviceMetadata = this.readEdmxAndSwaggerFile(serviceDefinitionPaths);
 
-    const serviceHeader = this.buildServiceHeader(
+    const serviceHeader = this.buildServicePackageMetaData(
       serviceMetadata,
       serviceDefinitionPaths
     );
-    const serviceBody = this.buildServiceBody(
+    const serviceBody = this.buildServiceEntities(
       serviceMetadata,
       serviceDefinitionPaths
     );
@@ -90,10 +77,10 @@ export class ServiceParser {
     };
   }
 
-  private buildServiceHeader(
+  private buildServicePackageMetaData(
     serviceMetadata: ServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths
-  ): VdmServiceMetadataHeader {
+  ): VdmServicePackageMetaData {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
       packageName(serviceMetadata, this.options),
       serviceMetadata.edmx.fileName
@@ -124,10 +111,10 @@ export class ServiceParser {
     };
   }
 
-  private buildServiceBody(
+  private buildServiceEntities(
     serviceMetadata: ServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths
-  ): VdmServiceMetadataBody {
+  ): VdmServiceEntities {
     const formatter = new ServiceNameFormatter();
     // getEntitySetNames(serviceMetadata.edmx),
     // getComplexTypeNames(serviceMetadata.edmx),
@@ -158,6 +145,21 @@ export class ServiceParser {
       entities,
       functionImports
     };
+  }
+
+  private readEdmxAndSwaggerFile(
+    serviceDefinitionPaths: ServiceDefinitionPaths
+  ): ServiceMetadata {
+    const serviceMetadata: ServiceMetadata = {
+      // TODO: pass parameter
+      edmx: readEdmxFile(serviceDefinitionPaths.edmxPath)
+    };
+    if (serviceDefinitionPaths.swaggerPath) {
+      serviceMetadata.swagger = readSwaggerFile(
+        serviceDefinitionPaths.swaggerPath
+      );
+    }
+    return serviceMetadata;
   }
 }
 
@@ -192,65 +194,9 @@ export function parseService(
     .parseService(serviceDefinitionPaths);
 }
 
-// TODO split read and parse. Perhaps only read Parse later (for edmx clear also do for swagger)
-function readEdmxAndSwaggerFile(
-  serviceDefinitionPaths: ServiceDefinitionPaths
-): ServiceMetadata {
-  const serviceMetadata: ServiceMetadata = {
-    // TODO: pass parameter
-    edmx: readEdmxFile(serviceDefinitionPaths.edmxPath)
-  };
-  if (serviceDefinitionPaths.swaggerPath) {
-    serviceMetadata.swagger = readSwaggerFile(
-      serviceDefinitionPaths.swaggerPath
-    );
-  }
-  return serviceMetadata;
-}
 
-function apiBusinessHubMetadata(
-  swagger?: SwaggerMetadata
-): ApiBusinessHubMetadata | undefined {
-  if (!swagger || !swagger?.basePath) {
-    return undefined;
-  }
 
-  const metadata: ApiBusinessHubMetadata = {
-    communicationScenario: communicationScenario(swagger),
-    url: `https://api.sap.com/api/${apiHubServiceName(swagger)}`
-  };
-
-  if (swagger.externalDocs?.description === 'Business Documentation') {
-    metadata.businessDocumentationUrl = swagger.externalDocs.url;
-  }
-
-  return metadata;
-}
-
-function apiHubServiceName(swagger: SwaggerMetadata): string {
-  if (!swagger.basePath) {
-    throw Error('The swagger base path is undefined.');
-  }
-  return swagger.basePath.split('/').slice(-1)[0];
-}
-
-function communicationScenario(swagger: SwaggerMetadata): string | null {
-  if (!swagger['x-sap-ext-overview']) {
-    return null;
-  }
-
-  return (
-    swagger['x-sap-ext-overview']
-      .find(x => x.name === 'Communication Scenario')
-      .values.map(x => x.text)
-      .join(', ') || null
-  );
-}
-
-function packageName(
-  metadata: ServiceMetadata,
-  options: GeneratorOptions
-) {
+function packageName(metadata: ServiceMetadata, options: GeneratorOptions) {
   return ServiceNameFormatter.originalToServiceName(metadata.edmx.namespace);
 }
 
@@ -294,8 +240,3 @@ function servicePathFromSelfLink(
   }
 }
 
-function servicePathFromSwagger(swagger?: SwaggerMetadata): string | undefined {
-  if (swagger && propertyExists(swagger, 'basePath')) {
-    return swagger.basePath;
-  }
-}

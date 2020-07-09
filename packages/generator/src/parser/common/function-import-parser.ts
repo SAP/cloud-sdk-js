@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EdmxMetadataBase } from '../util/edmx-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   VdmComplexType,
@@ -12,24 +11,24 @@ import {
   VdmFunctionWithoutReturnType
 } from '../../vdm-types';
 import { edmToTsType, isNullableParameter } from '../../generator-utils';
+import { SwaggerPath } from '../swagger/swagger-types';
 import {
   filterUnknownEdmTypes,
+  isCollection,
   parseType,
+  parseTypeName,
   propertyJsType
-} from '../util/some-util-find-good-name';
+} from '../util/parser-util';
+import {
+  functionImportDescription,
+  parameterDescription
+} from '../util/description-util';
 import { EdmxNamed, EdmxParameter } from './edmx-types';
-import { SwaggerPath } from '../swagger/swagger-types';
-import { isCollection, parseTypeName } from '../util/parser-util';
-import { functionImportDescription, parameterDescription } from '../util/description-util';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-function-import-parser'
 });
-
-export function getFunctionImportNames1(edmxData: EdmxMetadataBase): string[] {
-  throw new Error('Not yet implemented');
-}
 
 export function transformFunctionImportBase<T extends EdmxNamed>(
   edmxFunctionImport: T,

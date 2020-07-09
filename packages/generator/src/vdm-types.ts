@@ -3,7 +3,7 @@
 import { PathLike } from 'fs';
 import { ODataVersion } from '@sap-cloud-sdk/util';
 
-export interface VdmServiceMetadataHeader {
+export interface VdmServicePackageMetaData {
   oDataVersion: ODataVersion;
   namespace: string;
   originalFileName: string;
@@ -16,14 +16,14 @@ export interface VdmServiceMetadataHeader {
   edmxPath: PathLike;
 }
 
-export interface VdmServiceMetadataBody {
+export interface VdmServiceEntities {
   entities: VdmEntity[];
   complexTypes: VdmComplexType[];
   functionImports: VdmFunctionImport[];
 }
 
-export type VdmServiceMetadata = VdmServiceMetadataHeader &
-  VdmServiceMetadataBody;
+export type VdmServiceMetadata = VdmServicePackageMetaData &
+  VdmServiceEntities;
 
 // Entity
 export interface VdmEntity {

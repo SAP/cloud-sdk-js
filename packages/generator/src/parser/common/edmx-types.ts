@@ -1,5 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { SwaggerEntity } from '../swagger/swagger-types';
+
 export interface EdmxNamed {
   Name: string;
 }
@@ -23,7 +25,6 @@ export interface EdmxDocumented {
     LongDescription: string;
   };
 }
-//
 
 export interface EdmxParameter extends EdmxDocumented, EdmxNamed {
   Type: string;
@@ -49,4 +50,17 @@ export interface EdmxEntityType<NavigationType> extends EdmxNamed {
   'sap:content-version': string;
   'sap:label'?: string;
   NavigationProperty: NavigationType[];
+}
+
+export interface EdmxComplexType extends EdmxNamed {
+  Property: EdmxProperty[];
+}
+
+export interface JoinedEntityMetadata<
+  EntitySetType extends EdmxEntitySetBase,
+  NavigationPropertyType
+> {
+  entitySet: EntitySetType;
+  entityType: EdmxEntityType<NavigationPropertyType>;
+  swaggerDefinition?: SwaggerEntity;
 }

@@ -5,7 +5,8 @@ import {
   EdmxDocumented,
   EdmxEntitySetBase,
   EdmxParameter,
-  EdmxProperty
+  EdmxProperty,
+  JoinedEntityMetadata
 } from '../common/edmx-types';
 import {
   SwaggerDescribed,
@@ -13,7 +14,6 @@ import {
   SwaggerPathParameter,
   SwaggerProperty
 } from '../swagger/swagger-types';
-import { JoinedEntityMetadata } from '../common/entity-parser';
 
 export function longDescription(
   documented: EdmxDocumented,

@@ -1,6 +1,7 @@
-import { SwaggerMetadata } from '../swagger/swagger-types';
-import { PathLike } from "fs";
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { PathLike } from 'fs';
 import { ODataVersion } from '@sap-cloud-sdk/util';
+import { SwaggerMetadata } from '../swagger/swagger-types';
 
 export interface ServiceMetadata {
   edmx: EdmxMetadataBase;

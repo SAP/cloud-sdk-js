@@ -13,15 +13,19 @@ import {
   VdmNavigationProperty
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { isCollection, parseTypeName, stripNamespace } from '../util/parser-util';
+import {
+  isCollection,
+  parseTypeName,
+  stripNamespace
+} from '../util/parser-util';
 import { ServiceMetadata } from '../util/edmx-types';
-import { joinTypesWithBaseTypes } from './edmx-parser-util';
+import { EdmxEntityType } from '../common/edmx-types';
 import {
   EdmxEntitySet,
   EdmxEnumType,
   EdmxNavigationProperty
 } from './edmx-types';
-import { EdmxEntityType } from '../common/edmx-types';
+import { joinTypesWithBaseTypes } from './function-import-parser';
 
 export function parseEntitySets(root): EdmxEntitySet[] {
   return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({

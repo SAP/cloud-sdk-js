@@ -8,25 +8,22 @@ import {
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
-import { isCollection, parseTypeName } from '../util/parser-util';
-import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
+  isCollection,
   isComplexType,
-  parseType
-} from '../util/some-util-find-good-name';
-import { EdmxNamed, EdmxProperty } from './edmx-types';
+  parseType,
+  parseTypeName
+} from '../util/parser-util';
+import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../util/description-util';
+import { EdmxComplexType } from './edmx-types';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-complex-type-parser'
 });
-
-export interface EdmxComplexType extends EdmxNamed {
-  Property: EdmxProperty[];
-}
 
 export function parseComplexTypesBase(root): EdmxComplexType[] {
   return forceArray(root.ComplexType).map(c => {
@@ -89,4 +86,6 @@ export function transformComplexTypesBase(
   });
 }
 
-const complexTypeFieldType = (typeName: string) => typeName + 'Field';
+function complexTypeFieldType(typeName: string) {
+  return typeName + 'Field';
+}

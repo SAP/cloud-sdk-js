@@ -13,20 +13,32 @@ describe('Request builder test', () => {
     expect(testEntities).toHaveLength(4);
     expect(testEntities).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ keyPropertyInt: 101, keyPropertyString: 'aaa' }),
-        expect.objectContaining({ keyPropertyInt: 102, keyPropertyString: 'aab' }),
-        expect.objectContaining({ keyPropertyInt: 103, keyPropertyString: 'aac' }),
-        expect.objectContaining({ keyPropertyInt: 104, keyPropertyString: 'aad' })
+        expect.objectContaining({
+          keyPropertyInt: 101,
+          keyPropertyString: 'aaa'
+        }),
+        expect.objectContaining({
+          keyPropertyInt: 102,
+          keyPropertyString: 'aab'
+        }),
+        expect.objectContaining({
+          keyPropertyInt: 103,
+          keyPropertyString: 'aac'
+        }),
+        expect.objectContaining({
+          keyPropertyInt: 104,
+          keyPropertyString: 'aad'
+        })
       ])
     );
   });
 
   it('should return an entity for get by key request', async () => {
-    const testEntity =  await TestEntity.requestBuilder()
+    const testEntity = await TestEntity.requestBuilder()
       .getByKey(101, 'aaa')
       .execute(destination);
     expect(testEntity).toEqual(
-        expect.objectContaining({ keyPropertyInt: 101, keyPropertyString: 'aaa' })
+      expect.objectContaining({ keyPropertyInt: 101, keyPropertyString: 'aaa' })
     );
   });
 });

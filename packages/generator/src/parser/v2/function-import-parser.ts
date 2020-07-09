@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { forceArray } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common/edmx-function-import-parser';
+import { transformFunctionImportBase } from '../common/function-import-parser';
 import { VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
-import { ParsedServiceMetadata } from '../edmx-parser';
-import { swaggerDefinitionForFunctionImport } from '../common/some-util-find-good-name';
+import { ServiceMetadata } from '../util/edmx-types';
+import { swaggerDefinitionForFunctionImport } from '../util/some-util-find-good-name';
 import { EdmxFunctionImport } from './edmx-types';
 
 export function parseFunctionImports(root): EdmxFunctionImport[] {
@@ -15,7 +15,7 @@ export function parseFunctionImports(root): EdmxFunctionImport[] {
 }
 
 export function transformFunctionImportsWithoutReturnTypeV2(
-  serviceMetadata: ParsedServiceMetadata,
+  serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmFunctionImportReturnTypeNotParsed[] {
   const edmxFunctionImports = parseFunctionImports(serviceMetadata.edmx.root);

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EdmxMetadataBase } from '../edmx-parser';
+import { EdmxMetadataBase } from '../util/edmx-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   VdmComplexType,
@@ -12,18 +12,15 @@ import {
   VdmFunctionWithoutReturnType
 } from '../../vdm-types';
 import { edmToTsType, isNullableParameter } from '../../generator-utils';
-import { isCollection, parseTypeName } from '../parser-util';
 import {
   filterUnknownEdmTypes,
   parseType,
   propertyJsType
-} from './some-util-find-good-name';
+} from '../util/some-util-find-good-name';
 import { EdmxNamed, EdmxParameter } from './edmx-types';
-import { SwaggerPath } from './swagger-types';
-import {
-  functionImportDescription,
-  parameterDescription
-} from './description-util';
+import { SwaggerPath } from '../swagger/swagger-types';
+import { isCollection, parseTypeName } from '../util/parser-util';
+import { functionImportDescription, parameterDescription } from '../util/description-util';
 
 const logger = createLogger({
   package: 'generator',

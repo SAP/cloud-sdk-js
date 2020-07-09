@@ -16,17 +16,17 @@ import {
   VdmProperty
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { isCollection, parseTypeName } from '../parser-util';
+import { isCollection, parseTypeName } from '../util/parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
   isComplexType,
   propertyJsType
-} from './some-util-find-good-name';
+} from '../util/some-util-find-good-name';
 import { EdmxEntitySetBase, EdmxEntityType, EdmxNamed } from './edmx-types';
-import { SwaggerEntity, SwaggerMetadata } from './swagger-types';
-import { entityDescription, propertyDescription } from './description-util';
+import { SwaggerEntity, SwaggerMetadata } from '../swagger/swagger-types';
+import { entityDescription, propertyDescription } from '../util/description-util';
 
 const logger = createLogger({
   package: 'generator',

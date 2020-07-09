@@ -11,7 +11,7 @@ import {
   EdmxMetadata,
   transformEntitiesV4
 } from '../../src/parser/v4';
-import { ParsedServiceMetadata } from '../../src/parser';
+import { ServiceMetadata } from '../../src/parser';
 
 describe('edmx-to-vdm-v4', () => {
   it('transforms collection type properties for primitive types', () => {

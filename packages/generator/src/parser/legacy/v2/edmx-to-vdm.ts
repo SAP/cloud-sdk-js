@@ -7,7 +7,7 @@ import {
   VdmEntity,
   VdmFunctionImport
 } from '../../../vdm-types';
-import { stripNamespace } from '../../parser-util';
+import { stripNamespace } from '../../util/parser-util';
 import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,

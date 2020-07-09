@@ -26,7 +26,7 @@ import {
   isNullableParameter
 } from '../../../generator-utils';
 import { applyPrefixOnJsConfictParam } from '../../../name-formatting-strategies';
-import { isCollection, parseTypeName } from '../../parser-util';
+import { isCollection, parseTypeName } from '../../util/parser-util';
 import {
   JoinedEntityMetadata,
   EdmxProperty,

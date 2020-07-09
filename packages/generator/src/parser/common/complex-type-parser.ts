@@ -8,16 +8,16 @@ import {
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
-import { isCollection, parseTypeName } from '../parser-util';
+import { isCollection, parseTypeName } from '../util/parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
   isComplexType,
   parseType
-} from './some-util-find-good-name';
+} from '../util/some-util-find-good-name';
 import { EdmxNamed, EdmxProperty } from './edmx-types';
-import { propertyDescription } from './description-util';
+import { propertyDescription } from '../util/description-util';
 
 const logger = createLogger({
   package: 'generator',

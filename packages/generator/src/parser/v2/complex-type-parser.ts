@@ -2,17 +2,17 @@
 import {
   parseComplexTypesBase,
   transformComplexTypesBase
-} from '../common/edmx-complex-type-parser';
+} from '../common/complex-type-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
-import { ParsedServiceMetadata } from '../edmx-parser';
+import { ServiceMetadata } from '../util/edmx-types';
 
 function parseComplexTypes(root) {
   return parseComplexTypesBase(root);
 }
 
 export function transformComplexTypesV2(
-  serviceMetadata: ParsedServiceMetadata,
+  serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmComplexType[] {
   return transformComplexTypesBase(

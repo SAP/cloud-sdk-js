@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import { edmToTsType } from '../../generator-utils';
-import { parseTypeName } from '../parser-util';
-import { EdmxMetadataBase } from '../edmx-parser';
-import { EdmxProperty } from './edmx-types';
-import { SwaggerMetadata, SwaggerPath } from './swagger-types';
+import { parseTypeName } from './parser-util';
+import { EdmxMetadataBase } from '../util/edmx-types';
+import { EdmxProperty } from '../common/edmx-types';
+import { SwaggerMetadata, SwaggerPath } from '../swagger/swagger-types';
 
 const logger = createLogger({
   package: 'generator',

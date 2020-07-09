@@ -21,17 +21,18 @@ import {
   VdmServiceMetadataBody,
   VdmServiceMetadataHeader
 } from '../vdm-types';
-import { parseSwaggerFromPath } from './swagger-parser';
-import { ParsedServiceMetadata, parseEdmxFromPath } from './edmx-parser';
-import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
 import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/edmx-function-import-parser';
-import { transformComplexTypesV2 } from './v2/edmx-complex-type-parser';
-import { isV2Metadata } from './common/some-util-find-good-name';
-import { parseReturnTypes } from './common/edmx-function-import-parser';
-import { transformEntitiesV2 } from './v2/edmx-entity-parser';
 import { transformEntitiesV4 } from './v4/edmx-entity-parser';
 import { transformComplexTypesV4 } from './v4/edmx-complex-type-parser';
-import { SwaggerMetadata } from './common/swagger-types';
+import { readEdmxFile } from './util/edmx-file-reader';
+import { isV2Metadata } from './util/some-util-find-good-name';
+import { parseReturnTypes } from './common/function-import-parser';
+import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/function-import-parser';
+import { transformEntitiesV2 } from './v2/entity-parser';
+import { readSwaggerFile } from './swagger/swagger-parser';
+import { SwaggerMetadata } from './swagger/swagger-types';
+import { ServiceMetadata } from './util/edmx-types';
+import { transformComplexTypesV2 } from './v2/complex-type-parser';
 
 const logger = createLogger({
   package: 'generator',
@@ -72,7 +73,7 @@ export class ServiceParser {
   public parseService(
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadata {
-    const serviceMetadata = parseServiceMetadata(serviceDefinitionPaths);
+    const serviceMetadata = readEdmxAndSwaggerFile(serviceDefinitionPaths);
 
     const serviceHeader = this.buildServiceHeader(
       serviceMetadata,
@@ -90,7 +91,7 @@ export class ServiceParser {
   }
 
   private buildServiceHeader(
-    serviceMetadata: ParsedServiceMetadata,
+    serviceMetadata: ServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadataHeader {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
@@ -124,7 +125,7 @@ export class ServiceParser {
   }
 
   private buildServiceBody(
-    serviceMetadata: ParsedServiceMetadata,
+    serviceMetadata: ServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadataBody {
     const formatter = new ServiceNameFormatter();
@@ -192,15 +193,15 @@ export function parseService(
 }
 
 // TODO split read and parse. Perhaps only read Parse later (for edmx clear also do for swagger)
-function parseServiceMetadata(
+function readEdmxAndSwaggerFile(
   serviceDefinitionPaths: ServiceDefinitionPaths
-): ParsedServiceMetadata {
-  const serviceMetadata: ParsedServiceMetadata = {
+): ServiceMetadata {
+  const serviceMetadata: ServiceMetadata = {
     // TODO: pass parameter
-    edmx: parseEdmxFromPath(serviceDefinitionPaths.edmxPath)
+    edmx: readEdmxFile(serviceDefinitionPaths.edmxPath)
   };
   if (serviceDefinitionPaths.swaggerPath) {
-    serviceMetadata.swagger = parseSwaggerFromPath(
+    serviceMetadata.swagger = readSwaggerFile(
       serviceDefinitionPaths.swaggerPath
     );
   }
@@ -247,14 +248,14 @@ function communicationScenario(swagger: SwaggerMetadata): string | null {
 }
 
 function packageName(
-  metadata: ParsedServiceMetadata,
+  metadata: ServiceMetadata,
   options: GeneratorOptions
 ) {
   return ServiceNameFormatter.originalToServiceName(metadata.edmx.namespace);
 }
 
 function getServicePath(
-  metadata: ParsedServiceMetadata,
+  metadata: ServiceMetadata,
   serviceMapping?: ServiceMapping
 ): string {
   let servicePath =
@@ -282,7 +283,7 @@ function servicePathFromMapping(
 }
 
 function servicePathFromSelfLink(
-  metadata: ParsedServiceMetadata
+  metadata: ServiceMetadata
 ): string | undefined {
   const selfLink = metadata.edmx.selfLink;
   if (selfLink) {

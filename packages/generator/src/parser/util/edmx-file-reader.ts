@@ -4,29 +4,15 @@ import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
 import { parse } from 'fast-xml-parser';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
-import { forceArray } from '../generator-utils';
-import { SwaggerMetadata } from './common';
+import { forceArray } from '../../generator-utils';
+import { EdmxMetadataBase } from './edmx-types';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-parser'
 });
 
-export interface ParsedServiceMetadata {
-  edmx: EdmxMetadataBase;
-  swagger?: SwaggerMetadata;
-}
-
-export interface EdmxMetadataBase {
-  path: PathLike;
-  oDataVersion: ODataVersion;
-  fileName: string;
-  namespace: string;
-  selfLink?: string;
-  root: any;
-}
-
-export function parseBaseMetadata(
+function parseMetadata(
   root,
   oDataVersion: ODataVersion,
   edmxPath: PathLike
@@ -41,7 +27,7 @@ export function parseBaseMetadata(
   };
 }
 
-export function parseEdmxFromPath(edmxPath: PathLike): EdmxMetadataBase {
+export function readEdmxFile(edmxPath: PathLike): EdmxMetadataBase {
   const edmxFile = readFileSync(path.resolve(edmxPath.toString()), {
     encoding: 'utf-8'
   });
@@ -54,19 +40,14 @@ function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadataBase {
     attributeNamePrefix: ''
   });
   const root = getRoot(parsedEdmx);
-  return parseBaseMetadata(root, getODataVersion(parsedEdmx), edmxPath);
-
-  // return {
-  //   ...metaData,
-  //   ...(isV2Metadata(metaData) ? parseEdmxV2(root) : parseEdmxV4(root))
-  // };
+  return parseMetadata(root, getODataVersion(parsedEdmx), edmxPath);
 }
 
 function getODataVersion(edmx): ODataVersion {
   return edmx['edmx:Edmx'].Version === '4.0' ? 'v4' : 'v2';
 }
 
-export function getRoot(edmx) {
+function getRoot(edmx) {
   const schema = edmx['edmx:Edmx']['edmx:DataServices'].Schema;
   if (schema.length > 1) {
     if (schema.length > 2) {

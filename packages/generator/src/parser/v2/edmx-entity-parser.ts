@@ -1,5 +1,6 @@
 import { forceArray } from '../../generator-utils';
 import {
+  createEntityClassNames,
   EdmxEntityType,
   JoinedEntityMetadata,
   joinEntityMetadata, navigationPropertyBase,
@@ -8,11 +9,8 @@ import {
  import {EdmxEntitySetBase,parseEntitySetsBase,parseEntityTypesBase} from '../common/edmx-entity-parser'
 import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { joinAssociationMetadata, JoinedAssociationMetadata } from './edmx-to-vdm';
 import { ParsedServiceMetadata } from '../edmx-parser';
-import { createEntityClassNames } from '../common';
-
-
+import { stripNamespace } from '../parser-util';
 
 export function parseEntitySets(root): EdmxEntitySetBase[] {
   return parseEntitySetsBase(root)
@@ -134,4 +132,55 @@ function navigationProperties(
       isCollection: to.Multiplicity.endsWith('*')
     };
   });
+}
+
+export function joinAssociationMetadata(
+  associationSets: EdmxAssociationSet[],
+  associations: EdmxAssociation[]
+): JoinedAssociationMetadata[] {
+  return associationSets.map(assocSet => {
+    const matchingAssoc = associations.find(
+      a => a.Name === stripNamespace(assocSet.Association)
+    );
+
+    if (!matchingAssoc) {
+      throw Error(
+        `Unable to match the association set: ${assocSet.Association} with associations: ${associations}.`
+      );
+    }
+
+    const ends = assocSet.End.map(
+      assocSetEnd =>
+        ({
+          ...assocSetEnd,
+          ...matchingAssoc.End.find(end => end.Role === assocSetEnd.Role)
+        } as End)
+    );
+
+    return {
+      Name: matchingAssoc.Name,
+      'sap:creatable': assocSet['sap:creatable'],
+      'sap:updatable': assocSet['sap:updatable'],
+      'sap:deletable': assocSet['sap:deletable'],
+      'sap:content-version': assocSet['sap:content-version'],
+      Ends: ends
+    };
+  });
+}
+
+
+export interface JoinedAssociationMetadata {
+  Name: string;
+  'sap:creatable': string;
+  'sap:updatable': string;
+  'sap:deletable': string;
+  'sap:content-version': string;
+  Ends: End[];
+}
+
+interface End {
+  EntitySet: string;
+  Type: string;
+  Multiplicity: string;
+  Role: string;
 }

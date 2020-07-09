@@ -1,8 +1,9 @@
-import { EdmxDocumented, EdmxProperty, SwaggerDescribed, SwaggerProperty } from './parser-types';
 import { edmToTsType, endWithDot, ensureString } from '../../generator-utils';
 import { parseTypeName } from '../parser-util';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { EdmxMetadataBase } from '../edmx-parser';
+import { EdmxDocumented, EdmxProperty } from './edmx-types';
+import { SwaggerDescribed, SwaggerMetadata, SwaggerPath, SwaggerProperty } from './swagger-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -90,4 +91,26 @@ export function isV2Metadata(
   metadata: EdmxMetadataBase
 ): boolean {
   return metadata.oDataVersion === 'v2';
+}
+
+
+export function swaggerDefinitionForFunctionImport(
+  originalName: string,
+  httpMethod: string,
+  swaggerMetadata: SwaggerMetadata|undefined,
+): SwaggerPath | undefined {
+  if (swaggerMetadata) {
+    const paths = swaggerMetadata.paths;
+    const entryPath = Object.keys(paths).find(
+      path => path === `/${originalName}`
+    );
+    if (entryPath) {
+      const key = Object.keys(paths[entryPath]).find(
+        k => k.toLowerCase() === httpMethod.toLowerCase()
+      );
+      if (key) {
+        return paths[entryPath][key];
+      }
+    }
+  }
 }

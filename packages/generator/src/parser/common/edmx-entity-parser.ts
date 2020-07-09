@@ -1,4 +1,3 @@
-import { EdmxNamed, EdmxProperty, SwaggerEntity, SwaggerMetadata } from './parser-types';
 import {
   edmToFieldType, edmToTsType,
   forceArray,
@@ -19,8 +18,10 @@ import {
   isComplexType,
   propertyDescription, propertyJsType
 } from './some-util-find-good-name';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
+import { EdmxNamed, EdmxProperty } from './edmx-types';
+import { SwaggerEntity, SwaggerMetadata } from './swagger-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -266,4 +267,16 @@ export function navigationPropertyBase(
     ),
     propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName)
   };
+}
+
+export function createEntityClassNames(
+  entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase,any>[],
+  formatter: ServiceNameFormatter
+): MapType<string> {
+  return entityMetadata.reduce((names, e) => {
+    names[e.entitySet.Name] = formatter.originalToEntityClassName(
+      e.entitySet.Name
+    );
+    return names;
+  }, {});
 }

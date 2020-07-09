@@ -1,7 +1,7 @@
 import { parseComplexTypesBase, transformComplexTypesBase } from '../common/edmx-complex-type-parser';
-import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType, VdmFunctionImport } from '../../vdm-types';
+import { ParsedServiceMetadata } from '../edmx-parser';
 
 
 function parseComplexTypes(root){

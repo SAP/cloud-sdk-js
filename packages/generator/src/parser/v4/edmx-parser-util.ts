@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { stripNamespace } from '../parser-util';
-import {  EdmxNamed } from '../common';
+import { EdmxNamed } from '../common/edmx-types';
 
 interface EdmxDerivedType extends EdmxNamed {
   BaseType?: string;

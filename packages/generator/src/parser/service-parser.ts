@@ -128,14 +128,11 @@ class ServiceParser{
     ? transformComplexTypesV2(serviceMetadata,formatter)
       : transformComplexTypesV4(serviceMetadata,formatter)
 
-    const transformEntities = isV2Metadata(serviceMetadata.edmx)
+    const entities = isV2Metadata(serviceMetadata.edmx)
       ? transformEntitiesV2(serviceMetadata,complexTypes,formatter)
       : transformEntitiesV4(serviceMetadata,complexTypes,formatter);
 
-    const entities = transformEntities(serviceMetadata, complexTypes, formatter);
-
     const functionImports = parseReturnTypes(functionImportsWithoutReturnType,entities,complexTypes)
-
 
     return {
       ...header,

@@ -1,4 +1,3 @@
-import {  EdmxNamed, EdmxProperty, SwaggerProperty } from './parser-types';
 import {
   edmToComplexPropertyType,
   edmToTsType,
@@ -18,6 +17,7 @@ import {
   propertyDescription
 } from './some-util-find-good-name';
 import { EdmxMetadataBase } from '../edmx-parser';
+import { EdmxNamed, EdmxProperty } from './edmx-types';
 
 
 

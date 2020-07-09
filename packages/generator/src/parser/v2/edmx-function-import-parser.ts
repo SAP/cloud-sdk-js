@@ -1,14 +1,11 @@
-import {
-  EdmxNamed,
-  EdmxParameter, parseReturnType,
-  swaggerDefinitionForFunctionImport
 
-} from '../common';
 import { forceArray } from '../../generator-utils';
-import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common/edmx-function-import-parser';
 import { VdmFunctionImport, VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
+import { EdmxNamed, EdmxParameter } from '../common/edmx-types';
+import { ParsedServiceMetadata } from '../edmx-parser';
+import { swaggerDefinitionForFunctionImport } from '../common/some-util-find-good-name';
 
 
 

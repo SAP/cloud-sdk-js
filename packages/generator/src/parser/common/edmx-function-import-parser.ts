@@ -37,7 +37,7 @@ export function transformFunctionImportBase<T extends EdmxNamed>(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
-): Omit<VdmFunctionWithoutReturnType,'httpMethod'>[] {
+): Omit<VdmFunctionWithoutReturnType,'httpMethod'> {
   const functionName = formatter.originalToFunctionImportName(
     edmxFunctionImport.Name
   );
@@ -146,45 +146,45 @@ export function parseReturnTypes(
     );
   }
   function withVoid(f:VdmFunctionImportReturnTypeNotParsed):VdmFunctionImport{
-    const returnType ={
+    const vdmReturnType ={
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
       returnType: 'undefined',
       builderFunction: '(val) => undefined',
       isMulti: false,
       isCollection: false
     };
-    return {...f,returnType}
+    return {...f,returnType:vdmReturnType}
   }
 
-  function withEdmx(f:VdmFunctionImportReturnTypeNotParsed,isCollectionReturnType:boolean,edmxType:String):VdmFunctionImport{
-    const returnType =  {
+  function withEdmx(f:VdmFunctionImportReturnTypeNotParsed,isCollectionReturnType:boolean,edmxType:string):VdmFunctionImport{
+    const vdmReturnType =  {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
       returnType: edmxType,
       builderFunction: `(val) => edmToTs(val, '${edmxType}')`,
       isMulti: isCollectionReturnType,
       isCollection: isCollectionReturnType
     };
-    return {...f,returnType}
+    return {...f,returnType:vdmReturnType}
   }
   function withEntity(f:VdmFunctionImportReturnTypeNotParsed,isCollectionReturnType:boolean,entity:VdmEntity):VdmFunctionImport{
-    const returnType =  {
+    const vdmReturnType =  {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
       returnType: entity.className,
       builderFunction: entity.className,
       isMulti: isCollectionReturnType,
       isCollection: isCollectionReturnType
     };
-    return {...f,returnType}
+    return {...f,returnType:vdmReturnType}
   }
   function withComplexType(f:VdmFunctionImportReturnTypeNotParsed,isCollectionReturnType:boolean,complexType:VdmComplexType):VdmFunctionImport {
-    const returnType = {
+    const vdmReturnType = {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
       returnType: complexType.typeName,
       builderFunction: `${complexType.typeName}.build`,
       isMulti: isCollectionReturnType,
       isCollection: isCollectionReturnType
     };
-    return {...f,returnType}
+    return {...f,returnType:vdmReturnType}
   }
 
 }

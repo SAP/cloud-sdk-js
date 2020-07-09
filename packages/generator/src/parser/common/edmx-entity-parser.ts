@@ -19,7 +19,6 @@ import {
   isComplexType,
   propertyDescription, propertyJsType
 } from './some-util-find-good-name';
-import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 
@@ -73,7 +72,7 @@ export function parseEntityTypesBase<NavigationType>(root,foo:NavigationType): E
 
 
 export function transformEntityBase(
-  entityMetadata: JoinedEntityMetadata<any>,
+  entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase,any>,
   classNames: {},
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
@@ -102,7 +101,7 @@ export function transformEntityBase(
 }
 
 function entityDescription(
-  entity: JoinedEntityMetadata<any>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase,any>,
   className: string
 ): string {
   if (entity.entityType['sap:label']) {
@@ -121,7 +120,7 @@ function keys(props: VdmProperty[], edmxKeys: EdmxNamed[]): VdmProperty[] {
 
 
 function properties(
-  entity: JoinedEntityMetadata<any>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase,any>,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmProperty[] {
@@ -198,19 +197,19 @@ function complexTypeFieldForName(
   return 'any';
 }
 
-export interface JoinedEntityMetadata<NavProp> {
-  entitySet: EdmxEntitySetBase;
-  entityType: EdmxEntityType<NavProp>;
+export interface JoinedEntityMetadata<EntitySetType extends EdmxEntitySetBase,NavigationPropertyType> {
+  entitySet: EntitySetType;
+  entityType: EdmxEntityType<NavigationPropertyType>;
   swaggerDefinition?: SwaggerEntity;
 }
 
 
-export function joinEntityMetadata<NavProp>(
-  entitySets:EdmxEntitySetBase[],
-  entityTypes:EdmxEntityType<NavProp>[],
+export function joinEntityMetadata<EntitySetType extends EdmxEntitySetBase,NavigationPropertyType>(
+  entitySets:EntitySetType[],
+  entityTypes:EdmxEntityType<NavigationPropertyType>[],
   namespace:string,
   swagger?:SwaggerMetadata
-): JoinedEntityMetadata<any>[] {
+): JoinedEntityMetadata<EntitySetType,NavigationPropertyType>[] {
   return entitySets.map(entitySet => {
     // We assume metadata files to have a maximum of two schemas currently
     // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
@@ -224,7 +223,7 @@ export function joinEntityMetadata<NavProp>(
       );
     }
 
-    const joined: JoinedEntityMetadata<any> = {
+    const joined: JoinedEntityMetadata<EntitySetType,NavigationPropertyType> = {
       entitySet,
       entityType
     };
@@ -241,7 +240,6 @@ export function joinEntityMetadata<NavProp>(
     return joined;
   });
 }
-
 
 export function navigationPropertyBase(
   navPropName: string,

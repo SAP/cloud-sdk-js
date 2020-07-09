@@ -2,15 +2,15 @@ import { forceArray } from '../../generator-utils';
 import {
   EdmxEntityType,
   JoinedEntityMetadata,
-  joinEntityMetadata,
+  joinEntityMetadata, navigationPropertyBase,
   transformEntityBase
 } from '../common/edmx-entity-parser';
  import {EdmxEntitySetBase,parseEntitySetsBase,parseEntityTypesBase} from '../common/edmx-entity-parser'
-import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { createEntityClassNames, navigationPropertyBase } from '../common';
 import { joinAssociationMetadata, JoinedAssociationMetadata } from './edmx-to-vdm';
+import { ParsedServiceMetadata } from '../edmx-parser';
+import { createEntityClassNames } from '../common';
 
 
 
@@ -93,7 +93,7 @@ export function transformEntitiesV2(
 
 
 function navigationProperties(
-  entity: JoinedEntityMetadata<EdmxNavigationProperty>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase,EdmxNavigationProperty>,
   associations: JoinedAssociationMetadata[],
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter

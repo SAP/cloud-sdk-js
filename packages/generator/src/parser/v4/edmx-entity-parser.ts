@@ -1,13 +1,18 @@
 import { forceArray } from '../../generator-utils';
-import { EdmxEntitySetBase, JoinedEntityMetadata, navigationPropertyBase } from '../common/edmx-entity-parser';
+import {
+  EdmxEntitySetBase,
+  JoinedEntityMetadata,
+  joinEntityMetadata,
+  navigationPropertyBase, transformEntityBase
+} from '../common/edmx-entity-parser';
 import { EdmxEntityType, parseEntityTypesBase } from '../common/edmx-entity-parser';
 import { joinTypesWithBaseTypes } from './edmx-parser-util';
-import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { createEntityClassNames } from '../common/edmx-to-vdm';
 import { isCollection, parseTypeName, stripNamespace } from '../parser-util';
-import { EdmxNamed } from '../common';
+import { EdmxNamed, SwaggerMetadata } from '../common';
+import { ParsedServiceMetadata } from '../edmx-parser';
 
 interface EdmxNavigationProperty {
   Name: string;
@@ -85,13 +90,16 @@ export function transformEntitiesV4(
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
-  const entitiesMetadata = joinEntityMetadata(serviceMetadata);
+  const entitySets = parseEntitySets(serviceMetadata.edmx.root);
+  const entityTypes = parseEntityType(serviceMetadata.edmx.root);
+
+  const entitiesMetadata = joinEntityMetadata(entitySets,entityTypes,serviceMetadata.edmx.namespace,serviceMetadata.swagger);
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
   return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntity(entityMetadata, classNames, complexTypes, formatter),
+    ...transformEntityBase(entityMetadata, classNames, complexTypes, formatter),
     navigationProperties: navigationProperties(
-      entityMetadata,
+      entityMetadata.entityType,entityMetadata.entitySet,
       classNames,
       formatter
     )

@@ -31,20 +31,20 @@ import { ParsedServiceMetadata, parseEdmxFromPath } from './edmx-parser';
 import { parseFunctionImports, transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
 import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/edmx-function-import-parser';
 import { transformComplexTypesV2 } from './v2/edmx-complex-type-parser';
-import { transformComplexTypesV4 } from './v4/edmx-compley-type-parser';
 import { isV2Metadata } from './common/some-util-find-good-name';
 import { getEntitySetNames } from './common/edmx-entity-parser';
 import { getComplexTypeNames } from './common/edmx-complex-type-parser';
 import { getFunctionImportNames1, parseReturnTypes } from './common/edmx-function-import-parser';
 import { transformEntitiesV2 } from './v2/edmx-entity-parser';
 import { transformEntitiesV4 } from './v4/edmx-entity-parser';
+import { transformComplexTypesV4 } from './v4';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'service-parser'
 });
 
-class ServiceParser{
+export class ServiceParser{
 
   private globalNameFormatter:GlobalNameFormatter
   // private serviceNameFormatter:ServiceNameFormatter
@@ -62,7 +62,10 @@ class ServiceParser{
     );
   }
 
-  private parseService(
+  /**
+   * @hidden
+   */
+  public parseService(
     serviceDefinitionPaths: ServiceDefinitionPaths,
   ): VdmServiceMetadata {
     const serviceMetadata = parseServiceMetadata(serviceDefinitionPaths);
@@ -144,16 +147,26 @@ class ServiceParser{
 
 }
 
-//TODO deprecate old and delegate to new class implementation
+/**
+ * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
+ * @param options Generator options *
+ */
 export function parseAllServices(
   options: GeneratorOptions
 ){
-
-
+    return new ServiceParser(options).parseAllServices();
 }
 
-export function parseService(){
 
+/**
+ * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
+ * @param options Generator options *
+ */
+export function parseService(serviceDefinitionPaths: ServiceDefinitionPaths,
+                             options: GeneratorOptions,
+                             mappings: VdmMapping,
+                             globalNameFormatter: GlobalNameFormatter){
+   return new ServiceParser(options).parseService(serviceDefinitionPaths);
 }
 
 

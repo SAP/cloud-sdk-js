@@ -29,7 +29,7 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from './package-description';
-import { parseAllServices } from './parser';
+import { ServiceParser } from './parser';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
@@ -332,7 +332,7 @@ function projectOptions(): ProjectOptions {
 }
 
 function readServices(options: GeneratorOptions): VdmServiceMetadata[] {
-  const services = parseAllServices(options);
+  const services = new ServiceParser(options).parseAllServices();
   if (!services.length) {
     logger.warn(
       `No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`

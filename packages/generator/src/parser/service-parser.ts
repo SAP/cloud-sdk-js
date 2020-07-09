@@ -5,7 +5,6 @@ import {
   propertyExists,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
-import voca from 'voca';
 import { GeneratorOptions } from '../generator-options';
 import { npmCompliantName } from '../generator-utils';
 import { GlobalNameFormatter } from '../global-name-formatter';
@@ -21,20 +20,14 @@ import {
   VdmServiceMetadata,
   VdmServiceMetadataHeader
 } from '../vdm-types';
-import {
-  SwaggerMetadata,
-
-} from './common';
+import { SwaggerMetadata } from './common';
 import { parseSwaggerFromPath } from './swagger-parser';
-
 import { ParsedServiceMetadata, parseEdmxFromPath } from './edmx-parser';
-import { parseFunctionImports, transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
+import { transformFunctionImportsWithoutReturnTypeV2 } from './v2/edmx-function-import-parser';
 import { transformFunctionImportsWithoutReturnTypeV4 } from './v4/edmx-function-import-parser';
 import { transformComplexTypesV2 } from './v2/edmx-complex-type-parser';
 import { isV2Metadata } from './common/some-util-find-good-name';
-import { getEntitySetNames } from './common/edmx-entity-parser';
-import { getComplexTypeNames } from './common/edmx-complex-type-parser';
-import { getFunctionImportNames1, parseReturnTypes } from './common/edmx-function-import-parser';
+import { parseReturnTypes } from './common/edmx-function-import-parser';
 import { transformEntitiesV2 } from './v2/edmx-entity-parser';
 import { transformEntitiesV4 } from './v4/edmx-entity-parser';
 import { transformComplexTypesV4 } from './v4';
@@ -44,14 +37,12 @@ const logger = createLogger({
   messageContext: 'service-parser'
 });
 
-export class ServiceParser{
-
-  private globalNameFormatter:GlobalNameFormatter
+export class ServiceParser {
+  private globalNameFormatter: GlobalNameFormatter;
   // private serviceNameFormatter:ServiceNameFormatter
-  private serviceMapping:VdmMapping
+  private serviceMapping: VdmMapping;
 
-
-  constructor(readonly options:GeneratorOptions) {
+  constructor(readonly options: GeneratorOptions) {
     this.serviceMapping = readServiceMapping(options);
     this.globalNameFormatter = new GlobalNameFormatter(this.serviceMapping);
   }
@@ -66,21 +57,29 @@ export class ServiceParser{
    * @hidden
    */
   public parseService(
-    serviceDefinitionPaths: ServiceDefinitionPaths,
+    serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadata {
     const serviceMetadata = parseServiceMetadata(serviceDefinitionPaths);
 
-
-    const serviceHeader = this.buildServiceHeader(serviceMetadata,serviceDefinitionPaths)
-    const serviceBody = this.transformServiceMetadata(serviceMetadata,serviceDefinitionPaths)
+    const serviceHeader = this.buildServiceHeader(
+      serviceMetadata,
+      serviceDefinitionPaths
+    );
+    const serviceBody = this.transformServiceMetadata(
+      serviceMetadata,
+      serviceDefinitionPaths
+    );
 
     return {
       ...serviceHeader,
       ...serviceBody
-    }
+    };
   }
 
-  private buildServiceHeader(serviceMetadata: ParsedServiceMetadata, serviceDefinitionPaths: ServiceDefinitionPaths):VdmServiceMetadataHeader{
+  private buildServiceHeader(
+    serviceMetadata: ParsedServiceMetadata,
+    serviceDefinitionPaths: ServiceDefinitionPaths
+  ): VdmServiceMetadataHeader {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
       packageName(serviceMetadata, this.options),
       serviceMetadata.edmx.fileName
@@ -101,78 +100,81 @@ export class ServiceParser{
       directoryName,
       npmPackageName,
       speakingModuleName,
-      servicePath: getServicePath(serviceMetadata,  this.serviceMapping[serviceMetadata.edmx.fileName]),
+      servicePath: getServicePath(
+        serviceMetadata,
+        this.serviceMapping[serviceMetadata.edmx.fileName]
+      ),
       edmxPath: serviceDefinitionPaths.edmxPath,
       apiBusinessHubMetadata: apiBusinessHubMetadata(serviceMetadata.swagger),
       className
-    }
+    };
   }
 
   private transformServiceMetadata(
     serviceMetadata: ParsedServiceMetadata,
-    serviceDefinitionPaths: ServiceDefinitionPaths,
+    serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadata {
-
-    const header = this.buildServiceHeader(serviceMetadata,serviceDefinitionPaths)
-
-    const formatter = new ServiceNameFormatter(
-      // getEntitySetNames(serviceMetadata.edmx),
-      // getComplexTypeNames(serviceMetadata.edmx),
-      // getFunctionImportNames1(serviceMetadata.edmx)
+    const header = this.buildServiceHeader(
+      serviceMetadata,
+      serviceDefinitionPaths
     );
 
-    //Do function imports before complex types so that function like createSomething get a nice name
-    //The constructor function of a complex type is also called `createComplexType`.
+    const formatter = new ServiceNameFormatter();
+    // getEntitySetNames(serviceMetadata.edmx),
+    // getComplexTypeNames(serviceMetadata.edmx),
+    // getFunctionImportNames1(serviceMetadata.edmx)
+
+    // Do function imports before complex types so that function like createSomething get a nice name
+    // The constructor function of a complex type is also called `createComplexType`.
     const functionImportsWithoutReturnType = isV2Metadata(serviceMetadata.edmx)
-      ? transformFunctionImportsWithoutReturnTypeV2(serviceMetadata,formatter)
-      : transformFunctionImportsWithoutReturnTypeV4(serviceMetadata,formatter);
+      ? transformFunctionImportsWithoutReturnTypeV2(serviceMetadata, formatter)
+      : transformFunctionImportsWithoutReturnTypeV4(serviceMetadata, formatter);
 
     const complexTypes = isV2Metadata(serviceMetadata.edmx)
-    ? transformComplexTypesV2(serviceMetadata,formatter)
-      : transformComplexTypesV4(serviceMetadata,formatter)
+      ? transformComplexTypesV2(serviceMetadata, formatter)
+      : transformComplexTypesV4(serviceMetadata, formatter);
 
     const entities = isV2Metadata(serviceMetadata.edmx)
-      ? transformEntitiesV2(serviceMetadata,complexTypes,formatter)
-      : transformEntitiesV4(serviceMetadata,complexTypes,formatter);
+      ? transformEntitiesV2(serviceMetadata, complexTypes, formatter)
+      : transformEntitiesV4(serviceMetadata, complexTypes, formatter);
 
-    const functionImports = parseReturnTypes(functionImportsWithoutReturnType,entities,complexTypes)
+    const functionImports = parseReturnTypes(
+      functionImportsWithoutReturnType,
+      entities,
+      complexTypes
+    );
 
     return {
       ...header,
       complexTypes,
       entities,
       functionImports
-    }
+    };
   }
-
 }
 
 /**
  * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
  * @param options Generator options *
  */
-export function parseAllServices(
-  options: GeneratorOptions
-){
-    return new ServiceParser(options).parseAllServices();
+export function parseAllServices(options: GeneratorOptions) {
+  return new ServiceParser(options).parseAllServices();
 }
-
 
 /**
  * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
  * @param options Generator options *
  */
-export function parseService(serviceDefinitionPaths: ServiceDefinitionPaths,
-                             options: GeneratorOptions,
-                             mappings: VdmMapping,
-                             globalNameFormatter: GlobalNameFormatter){
-   return new ServiceParser(options).parseService(serviceDefinitionPaths);
+export function parseService(
+  serviceDefinitionPaths: ServiceDefinitionPaths,
+  options: GeneratorOptions,
+  mappings: VdmMapping,
+  globalNameFormatter: GlobalNameFormatter
+) {
+  return new ServiceParser(options).parseService(serviceDefinitionPaths);
 }
 
-
-
-
-//TODO split read and parse. Perhaps only read Parse later (for edmx clear also do for swagger)
+// TODO split read and parse. Perhaps only read Parse later (for edmx clear also do for swagger)
 function parseServiceMetadata(
   serviceDefinitionPaths: ServiceDefinitionPaths
 ): ParsedServiceMetadata {
@@ -188,9 +190,6 @@ function parseServiceMetadata(
 
   return serviceMetadata;
 }
-
-
-
 
 function apiBusinessHubMetadata(
   swagger?: SwaggerMetadata
@@ -283,9 +282,9 @@ function servicePathFromSwagger(swagger?: SwaggerMetadata): string | undefined {
     return swagger.basePath;
   }
 }
-
-function getFunctionImportNames(metadata: ParsedServiceMetadata) {
-  return new Set(
-    metadata.edmx.functionImports.map(f => voca.camelCase(f.Name))
-  );
-}
+//
+// function getFunctionImportNames(metadata: ParsedServiceMetadata) {
+//   return new Set(
+//     metadata.edmx.functionImports.map(f => voca.camelCase(f.Name))
+//   );
+// }

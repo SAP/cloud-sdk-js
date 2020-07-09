@@ -7,7 +7,6 @@ interface EdmxDerivedType extends EdmxNamed {
   BaseType?: string;
 }
 
-
 export function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],
   joinTypes: (type: T, baseType: T) => T
@@ -40,35 +39,3 @@ function joinTypeWithBaseType<T extends EdmxDerivedType>(
   }
   return type;
 }
-
-
-
-
-
-//
-// export function parseEdmxV4(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
-//   const enumTypes = forceArray(root.EnumType);
-//   return {
-//     entityTypes: joinTypesWithBaseTypes(
-//       filterEnumProperties(parseEntityTypes(root), enumTypes),
-//       joinEntityTypes
-//     ),
-//     entitySets: parseEntitySets(root),
-//     enumTypes,
-//     functions: parseFunctions(root),
-//     functionImports: forceArray(root.EntityContainer.FunctionImport),
-//     complexTypes: joinTypesWithBaseTypes(
-//       parseComplexTypes(root),
-//       joinComplexTypes
-//     )
-//   };
-// }
-
-
-//
-// function parseEntitySets(root): EdmxEntitySet[] {
-//   return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
-//     ...entitySet,
-//     NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)
-//   }));
-// }

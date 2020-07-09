@@ -1,5 +1,9 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { toTitleFormat } from '@sap-cloud-sdk/core';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { last } from 'rambda';
 import {
-  edmToFieldType, edmToTsType,
+  edmToFieldType,
   forceArray,
   isCreatable,
   isDeletable,
@@ -7,19 +11,22 @@ import {
   isUpdatable
 } from '../../generator-utils';
 import { EdmxMetadataBase } from '../edmx-parser';
-import { VdmComplexType, VdmEntity, VdmNavigationProperty, VdmProperty } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmNavigationProperty,
+  VdmProperty
+} from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { isCollection, parseTypeName } from '../parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { toTitleFormat } from '@sap-cloud-sdk/core';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
   isComplexType,
-  propertyDescription, propertyJsType
+  propertyDescription,
+  propertyJsType
 } from './some-util-find-good-name';
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
-import { last } from 'rambda';
 import { EdmxNamed, EdmxProperty } from './edmx-types';
 import { SwaggerEntity, SwaggerMetadata } from './swagger-types';
 
@@ -38,13 +45,12 @@ export interface EdmxEntitySetBase extends EdmxNamed {
 }
 
 export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
-  return forceArray(root.EntityContainer.EntitySet)
+  return forceArray(root.EntityContainer.EntitySet);
 }
 
-export function getEntitySetNames(edmxData:EdmxMetadataBase):string[]{
-  throw new Error('Not yet implemented')
+export function getEntitySetNames(edmxData: EdmxMetadataBase): string[] {
+  throw new Error('Not yet implemented');
 }
-
 
 export interface EdmxKey {
   PropertyRef: EdmxNamed[];
@@ -55,11 +61,14 @@ export interface EdmxEntityType<NavigationType> extends EdmxNamed {
   Property: EdmxProperty[];
   'sap:content-version': string;
   'sap:label'?: string;
-  NavigationProperty:NavigationType[]
+  NavigationProperty: NavigationType[];
 }
 
-//TODO more elegant way to pass the type in?
-export function parseEntityTypesBase<NavigationType>(root,foo:NavigationType): EdmxEntityType<NavigationType>[] {
+// TODO more elegant way to pass the type in?
+export function parseEntityTypesBase<NavigationType>(
+  root,
+  foo: NavigationType
+): EdmxEntityType<NavigationType>[] {
   return forceArray(root.EntityType).map(e => {
     if (!e.Key) {
       e.Key = {};
@@ -71,9 +80,8 @@ export function parseEntityTypesBase<NavigationType>(root,foo:NavigationType): E
   });
 }
 
-
 export function transformEntityBase(
-  entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase,any>,
+  entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   classNames: {},
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
@@ -102,7 +110,7 @@ export function transformEntityBase(
 }
 
 function entityDescription(
-  entity: JoinedEntityMetadata<EdmxEntitySetBase,any>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   className: string
 ): string {
   if (entity.entityType['sap:label']) {
@@ -119,9 +127,8 @@ function keys(props: VdmProperty[], edmxKeys: EdmxNamed[]): VdmProperty[] {
     .filter(e => !!e) as VdmProperty[];
 }
 
-
 function properties(
-  entity: JoinedEntityMetadata<EdmxEntitySetBase,any>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmProperty[] {
@@ -159,7 +166,6 @@ function properties(
 const propertyFieldType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToFieldType(type) : undefined;
 
-
 const complexTypeName = (type: string) => last(type.split('.'));
 const complexTypeFieldType = (typeName: string) => typeName + 'Field';
 
@@ -183,7 +189,6 @@ function complexTypeForName(
   return 'any';
 }
 
-
 function complexTypeFieldForName(
   name: string,
   complexTypes: VdmComplexType[]
@@ -198,19 +203,24 @@ function complexTypeFieldForName(
   return 'any';
 }
 
-export interface JoinedEntityMetadata<EntitySetType extends EdmxEntitySetBase,NavigationPropertyType> {
+export interface JoinedEntityMetadata<
+  EntitySetType extends EdmxEntitySetBase,
+  NavigationPropertyType
+> {
   entitySet: EntitySetType;
   entityType: EdmxEntityType<NavigationPropertyType>;
   swaggerDefinition?: SwaggerEntity;
 }
 
-
-export function joinEntityMetadata<EntitySetType extends EdmxEntitySetBase,NavigationPropertyType>(
-  entitySets:EntitySetType[],
-  entityTypes:EdmxEntityType<NavigationPropertyType>[],
-  namespace:string,
-  swagger?:SwaggerMetadata
-): JoinedEntityMetadata<EntitySetType,NavigationPropertyType>[] {
+export function joinEntityMetadata<
+  EntitySetType extends EdmxEntitySetBase,
+  NavigationPropertyType
+>(
+  entitySets: EntitySetType[],
+  entityTypes: EdmxEntityType<NavigationPropertyType>[],
+  namespace: string,
+  swagger?: SwaggerMetadata
+): JoinedEntityMetadata<EntitySetType, NavigationPropertyType>[] {
   return entitySets.map(entitySet => {
     // We assume metadata files to have a maximum of two schemas currently
     // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
@@ -224,7 +234,10 @@ export function joinEntityMetadata<EntitySetType extends EdmxEntitySetBase,Navig
       );
     }
 
-    const joined: JoinedEntityMetadata<EntitySetType,NavigationPropertyType> = {
+    const joined: JoinedEntityMetadata<
+      EntitySetType,
+      NavigationPropertyType
+    > = {
       entitySet,
       entityType
     };
@@ -252,7 +265,7 @@ export function navigationPropertyBase(
   | 'instancePropertyName'
   | 'staticPropertyName'
   | 'propertyNameAsParam'
-  > {
+> {
   const instancePropertyName = formatter.originalToNavigationPropertyName(
     entitySetName,
     navPropName
@@ -270,7 +283,7 @@ export function navigationPropertyBase(
 }
 
 export function createEntityClassNames(
-  entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase,any>[],
+  entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>[],
   formatter: ServiceNameFormatter
 ): MapType<string> {
   return entityMetadata.reduce((names, e) => {

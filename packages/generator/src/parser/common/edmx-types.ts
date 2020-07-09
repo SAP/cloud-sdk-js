@@ -1,3 +1,4 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 export interface EdmxNamed {
   Name: string;
 }
@@ -22,7 +23,6 @@ export interface EdmxDocumented {
   };
 }
 //
-
 
 export interface EdmxParameter extends EdmxDocumented, EdmxNamed {
   Type: string;

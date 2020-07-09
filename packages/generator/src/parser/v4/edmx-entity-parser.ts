@@ -1,31 +1,27 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { forceArray } from '../../generator-utils';
 import {
-  EdmxEntitySetBase,
-  JoinedEntityMetadata,
+  createEntityClassNames,
+  EdmxEntityType,
   joinEntityMetadata,
-  navigationPropertyBase, transformEntityBase
+  navigationPropertyBase,
+  parseEntityTypesBase,
+  transformEntityBase
 } from '../common/edmx-entity-parser';
-import { EdmxEntityType, parseEntityTypesBase } from '../common/edmx-entity-parser';
-import { joinTypesWithBaseTypes } from './edmx-parser-util';
-import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmNavigationProperty
+} from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { createEntityClassNames } from '../common/edmx-to-vdm';
 import { isCollection, parseTypeName, stripNamespace } from '../parser-util';
-import { EdmxNamed, SwaggerMetadata } from '../common';
 import { ParsedServiceMetadata } from '../edmx-parser';
-
-interface EdmxNavigationProperty {
-  Name: string;
-  Type: string;
-}
-
-export interface EdmxEntitySet extends EdmxEntitySetBase {
-  NavigationPropertyBinding: EdmxNavigationPropertyBinding[];
-}
-export interface EdmxNavigationPropertyBinding {
-  Path: string;
-  Target: string;
-}
+import { joinTypesWithBaseTypes } from './edmx-parser-util';
+import {
+  EdmxEntitySet,
+  EdmxEnumType,
+  EdmxNavigationProperty
+} from './edmx-types';
 
 export function parseEntitySets(root): EdmxEntitySet[] {
   return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
@@ -34,23 +30,13 @@ export function parseEntitySets(root): EdmxEntitySet[] {
   }));
 }
 
-
-function parseEntityType(root):EdmxEntityType<EdmxNavigationProperty>[]{
-  const entityTypes = parseEntityTypesBase(root,{} as EdmxNavigationProperty)
+function parseEntityType(root): EdmxEntityType<EdmxNavigationProperty>[] {
+  const entityTypes = parseEntityTypesBase(root, {} as EdmxNavigationProperty);
   const enumTypes = forceArray(root.EnumType);
   return joinTypesWithBaseTypes(
     filterEnumProperties(entityTypes, enumTypes),
-    joinEntityTypes)
-}
-
-export interface EdmxEnumType extends EdmxNamed {
-  Member: EdmxEnumMember[];
-}
-
-
-export interface EdmxEnumMember {
-  Name: string;
-  Value: string;
+    joinEntityTypes
+  );
 }
 
 // TODO: Filters enum properties as long as those are not supported
@@ -93,13 +79,19 @@ export function transformEntitiesV4(
   const entitySets = parseEntitySets(serviceMetadata.edmx.root);
   const entityTypes = parseEntityType(serviceMetadata.edmx.root);
 
-  const entitiesMetadata = joinEntityMetadata(entitySets,entityTypes,serviceMetadata.edmx.namespace,serviceMetadata.swagger);
+  const entitiesMetadata = joinEntityMetadata(
+    entitySets,
+    entityTypes,
+    serviceMetadata.edmx.namespace,
+    serviceMetadata.swagger
+  );
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
   return entitiesMetadata.map(entityMetadata => ({
     ...transformEntityBase(entityMetadata, classNames, complexTypes, formatter),
     navigationProperties: navigationProperties(
-      entityMetadata.entityType,entityMetadata.entitySet,
+      entityMetadata.entityType,
+      entityMetadata.entitySet,
       classNames,
       formatter
     )
@@ -107,12 +99,11 @@ export function transformEntitiesV4(
 }
 
 function navigationProperties(
-  entityType:EdmxEntityType<EdmxNavigationProperty>,
-  entitySet:EdmxEntitySet,
+  entityType: EdmxEntityType<EdmxNavigationProperty>,
+  entitySet: EdmxEntitySet,
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
 ): VdmNavigationProperty[] {
-
   return entitySet.NavigationPropertyBinding.filter(
     navBinding => !isDerivedNavBindingPath(navBinding.Path)
   ).map(navBinding => {
@@ -129,11 +120,7 @@ function navigationProperties(
     const isCollectionType = isCollection(navProp.Type);
 
     return {
-      ...navigationPropertyBase(
-        navProp.Name,
-        entitySet.Name,
-        formatter
-      ),
+      ...navigationPropertyBase(navProp.Name, entitySet.Name, formatter),
       from: entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
@@ -148,4 +135,3 @@ function navigationProperties(
 function isDerivedNavBindingPath(path: string): boolean {
   return path.includes('/');
 }
-

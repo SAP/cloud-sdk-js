@@ -1,9 +1,15 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { createLogger } from '@sap-cloud-sdk/util';
 import { edmToTsType, endWithDot, ensureString } from '../../generator-utils';
 import { parseTypeName } from '../parser-util';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { EdmxMetadataBase } from '../edmx-parser';
 import { EdmxDocumented, EdmxProperty } from './edmx-types';
-import { SwaggerDescribed, SwaggerMetadata, SwaggerPath, SwaggerProperty } from './swagger-types';
+import {
+  SwaggerDescribed,
+  SwaggerMetadata,
+  SwaggerPath,
+  SwaggerProperty
+} from './swagger-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -52,7 +58,6 @@ export function propertyDescription(
   return `${short}\n${long}`.trim();
 }
 
-
 export function shortPropertyDescription(
   property: EdmxProperty,
   swaggerProperty?: SwaggerProperty
@@ -68,12 +73,10 @@ export function shortPropertyDescription(
   return endWithDot(desc.trim());
 }
 
-
 export function isComplexType(type: string): boolean {
   const typeParts = type.split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;
 }
-
 
 export function checkCollectionKind(property: EdmxProperty) {
   if (property.hasOwnProperty('CollectionKind')) {
@@ -86,18 +89,14 @@ export function checkCollectionKind(property: EdmxProperty) {
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
-
-export function isV2Metadata(
-  metadata: EdmxMetadataBase
-): boolean {
+export function isV2Metadata(metadata: EdmxMetadataBase): boolean {
   return metadata.oDataVersion === 'v2';
 }
-
 
 export function swaggerDefinitionForFunctionImport(
   originalName: string,
   httpMethod: string,
-  swaggerMetadata: SwaggerMetadata|undefined,
+  swaggerMetadata: SwaggerMetadata | undefined
 ): SwaggerPath | undefined {
   if (swaggerMetadata) {
     const paths = swaggerMetadata.paths;

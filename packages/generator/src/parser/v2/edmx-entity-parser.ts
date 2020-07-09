@@ -1,66 +1,46 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { forceArray } from '../../generator-utils';
 import {
   createEntityClassNames,
+  EdmxEntitySetBase,
   EdmxEntityType,
   JoinedEntityMetadata,
-  joinEntityMetadata, navigationPropertyBase,
+  joinEntityMetadata,
+  navigationPropertyBase,
+  parseEntitySetsBase,
+  parseEntityTypesBase,
   transformEntityBase
 } from '../common/edmx-entity-parser';
- import {EdmxEntitySetBase,parseEntitySetsBase,parseEntityTypesBase} from '../common/edmx-entity-parser'
-import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmNavigationProperty
+} from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { ParsedServiceMetadata } from '../edmx-parser';
 import { stripNamespace } from '../parser-util';
+import {
+  EdmxAssociation,
+  EdmxAssociationSet,
+  EdmxNavigationProperty,
+  End,
+  JoinedAssociationMetadata
+} from './edmx-types';
 
 export function parseEntitySets(root): EdmxEntitySetBase[] {
-  return parseEntitySetsBase(root)
+  return parseEntitySetsBase(root);
 }
 
-interface EdmxNavigationProperty {
-  FromRole: string;
-  Name: string;
-  Relationship: string;
-  ToRole: string;
+function parseEntityType(root): EdmxEntityType<EdmxNavigationProperty>[] {
+  return parseEntityTypesBase(root, {} as EdmxNavigationProperty);
 }
 
-function parseEntityType(root):EdmxEntityType<EdmxNavigationProperty>[]{
-  return parseEntityTypesBase(root,{}as EdmxNavigationProperty)
+export function parseAssociationSets(root): EdmxAssociationSet[] {
+  return forceArray(root.EntityContainer.AssociationSet);
 }
 
-interface EdmxAssociationEnd {
-  Type: string;
-  Multiplicity: string;
-  Role: string;
-}
-
-
-export interface EdmxAssociation {
-  Name: string;
-  'sap:content-version': string;
-  End: EdmxAssociationEnd[];
-}
-
-export interface EdmxAssociationSet {
-  Name: string;
-  Association: string;
-  'sap:creatable': string;
-  'sap:updatable': string;
-  'sap:deletable': string;
-  'sap:content-version': string;
-  End: EdmxAssociationSetEnd[];
-}
-
-interface EdmxAssociationSetEnd {
-  Role: string;
-  EntitySet: string;
-}
-
-export function parseAssociationSets(root):EdmxAssociationSet[]{
-  return forceArray(root.EntityContainer.AssociationSet)
-}
-
-export function parseAssociation(root):EdmxAssociation[]{
-  return forceArray(root.Association)
+export function parseAssociation(root): EdmxAssociation[] {
+  return forceArray(root.Association);
 }
 
 export function transformEntitiesV2(
@@ -70,7 +50,12 @@ export function transformEntitiesV2(
 ): VdmEntity[] {
   const entitySets = parseEntitySets(serviceMetadata.edmx.root);
   const entityTypes = parseEntityType(serviceMetadata.edmx.root);
-  const entitiesMetadata = joinEntityMetadata(entitySets,entityTypes,serviceMetadata.edmx.namespace,serviceMetadata.swagger);
+  const entitiesMetadata = joinEntityMetadata(
+    entitySets,
+    entityTypes,
+    serviceMetadata.edmx.namespace,
+    serviceMetadata.swagger
+  );
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
   const associations = joinAssociationMetadata(
@@ -89,9 +74,8 @@ export function transformEntitiesV2(
   }));
 }
 
-
 function navigationProperties(
-  entity: JoinedEntityMetadata<EdmxEntitySetBase,EdmxNavigationProperty>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase, EdmxNavigationProperty>,
   associations: JoinedAssociationMetadata[],
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
@@ -166,21 +150,4 @@ export function joinAssociationMetadata(
       Ends: ends
     };
   });
-}
-
-
-export interface JoinedAssociationMetadata {
-  Name: string;
-  'sap:creatable': string;
-  'sap:updatable': string;
-  'sap:deletable': string;
-  'sap:content-version': string;
-  Ends: End[];
-}
-
-interface End {
-  EntitySet: string;
-  Type: string;
-  Multiplicity: string;
-  Role: string;
 }

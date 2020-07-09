@@ -16,7 +16,7 @@ export interface VdmServiceMetadataHeader {
   edmxPath: PathLike;
 }
 
-export interface VdmServiceMetadata extends VdmServiceMetadataHeader{
+export interface VdmServiceMetadata extends VdmServiceMetadataHeader {
   entities: VdmEntity[];
   complexTypes: VdmComplexType[];
   functionImports: VdmFunctionImport[];
@@ -92,12 +92,12 @@ export interface VdmFunctionWithoutReturnType {
   description: string;
 }
 
-
-export interface VdmFunctionImportReturnTypeNotParsed extends VdmFunctionWithoutReturnType{
+export interface VdmFunctionImportReturnTypeNotParsed
+  extends VdmFunctionWithoutReturnType {
   returnTypeEdmx: string;
 }
 
-export interface VdmFunctionImport extends VdmFunctionWithoutReturnType{
+export interface VdmFunctionImport extends VdmFunctionWithoutReturnType {
   returnType: VdmFunctionImportReturnType;
 }
 

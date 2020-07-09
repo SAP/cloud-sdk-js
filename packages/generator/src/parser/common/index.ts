@@ -5,4 +5,3 @@ export * from './swagger-types';
 export * from './edmx-complex-type-parser';
 export * from './edmx-entity-parser';
 export * from './edmx-function-import-parser';
-

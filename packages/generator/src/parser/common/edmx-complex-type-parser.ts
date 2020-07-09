@@ -1,7 +1,8 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   edmToComplexPropertyType,
   edmToTsType,
-  endWithDot,
   forceArray,
   isNullableProperty
 } from '../../generator-utils';
@@ -9,17 +10,15 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
 import { isCollection, parseTypeName } from '../parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { EdmxMetadataBase } from '../edmx-parser';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
-  isComplexType, parseType,
+  isComplexType,
+  parseType,
   propertyDescription
 } from './some-util-find-good-name';
-import { EdmxMetadataBase } from '../edmx-parser';
 import { EdmxNamed, EdmxProperty } from './edmx-types';
-
-
 
 const logger = createLogger({
   package: 'generator',
@@ -37,10 +36,9 @@ export function parseComplexTypesBase(root): EdmxComplexType[] {
   });
 }
 
-export function getComplexTypeNames(edmxData:EdmxMetadataBase):string[]{
-  throw new Error('Not yet implemented')
+export function getComplexTypeNames(edmxData: EdmxMetadataBase): string[] {
+  throw new Error('Not yet implemented');
 }
-
 
 export function transformComplexTypesBase(
   complexTypes: EdmxComplexType[],
@@ -97,6 +95,3 @@ export function transformComplexTypesBase(
 }
 
 const complexTypeFieldType = (typeName: string) => typeName + 'Field';
-
-
-

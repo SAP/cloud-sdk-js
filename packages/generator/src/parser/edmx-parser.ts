@@ -4,9 +4,8 @@ import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
 import { parse } from 'fast-xml-parser';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
-
-import {  SwaggerMetadata } from './common';
 import { forceArray } from '../generator-utils';
+import { SwaggerMetadata } from './common';
 
 const logger = createLogger({
   package: 'generator',
@@ -24,7 +23,7 @@ export interface EdmxMetadataBase {
   fileName: string;
   namespace: string;
   selfLink?: string;
-  root: any
+  root: any;
 }
 
 export function parseBaseMetadata(
@@ -42,29 +41,20 @@ export function parseBaseMetadata(
   };
 }
 
-export function parseEdmxFromPath(
-  edmxPath: PathLike
-): EdmxMetadataBase {
+export function parseEdmxFromPath(edmxPath: PathLike): EdmxMetadataBase {
   const edmxFile = readFileSync(path.resolve(edmxPath.toString()), {
     encoding: 'utf-8'
   });
   return parseEdmxFile(edmxFile, edmxPath);
 }
 
-function parseEdmxFile(
-  edmx: string,
-  edmxPath: PathLike
-): EdmxMetadataBase {
+function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadataBase {
   const parsedEdmx = parse(edmx, {
     ignoreAttributes: false,
     attributeNamePrefix: ''
   });
   const root = getRoot(parsedEdmx);
-  return parseBaseMetadata(
-    root,
-    getODataVersion(parsedEdmx),
-    edmxPath
-  );
+  return parseBaseMetadata(root, getODataVersion(parsedEdmx), edmxPath);
 
   // return {
   //   ...metaData,
@@ -101,4 +91,3 @@ function parseLink(root): string | undefined {
     return selfLink.href;
   }
 }
-

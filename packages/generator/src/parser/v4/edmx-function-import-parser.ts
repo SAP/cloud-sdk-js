@@ -1,25 +1,15 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { forceArray } from '../../generator-utils';
-import { EdmxNamed, EdmxParameter, parseReturnType, swaggerDefinitionForFunctionImport } from '../common';
-import { ParsedServiceMetadata } from '../parsed-service-metadata';
-import { VdmFunctionImport, VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
+import { swaggerDefinitionForFunctionImport } from '../common';
+import { VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { stripNamespace } from '../parser-util';
 import { transformFunctionImportBase } from '../common/edmx-function-import-parser';
+import { ParsedServiceMetadata } from '../edmx-parser';
+import { EdmxFunction, EdmxFunctionImport } from './edmx-types';
 
-
-export interface EdmxFunctionImport extends EdmxNamed {
-   EntitySet?: string;
-   Function: string;
- }
-
-export interface EdmxFunction extends EdmxNamed {
-  ReturnType: { Type: string };
-  Parameter: EdmxParameter[];
-  IsBound: boolean;
-}
-
-function parseFunctionImports(root):EdmxFunctionImport[]{
-  return forceArray(root.EntityContainer.FunctionImport)
+function parseFunctionImports(root): EdmxFunctionImport[] {
+  return forceArray(root.EntityContainer.FunctionImport);
 }
 
 function parseFunctions(root): EdmxFunction[] {
@@ -33,8 +23,8 @@ export function transformFunctionImportsWithoutReturnTypeV4(
   serviceMetadata: ParsedServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmFunctionImportReturnTypeNotParsed[] {
-  const functions = parseFunctions(serviceMetadata.edmx.root)
-  const functionImports = parseFunctionImports(serviceMetadata.edmx.root)
+  const functions = parseFunctions(serviceMetadata.edmx.root);
+  const functionImports = parseFunctionImports(serviceMetadata.edmx.root);
 
   return functionImports.map(f => {
     const edmxFunction = functions.find(
@@ -61,7 +51,7 @@ export function transformFunctionImportsWithoutReturnTypeV4(
         formatter
       ),
       httpMethod,
-      returnTypeEdmx:f.ReturnType
+      returnTypeEdmx: edmxFunction.ReturnType?.Type
     };
   });
 }

@@ -141,6 +141,8 @@ class ServiceParser{
 
     const header = this.buildServiceHeader(serviceMetadata,serviceDefinitionPaths)
 
+
+
     return {
       ...header,
       complexTypes,

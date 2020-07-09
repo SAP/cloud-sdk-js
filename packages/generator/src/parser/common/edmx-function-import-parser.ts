@@ -8,7 +8,13 @@ import {
   SwaggerPathParameter
 } from './parser-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmFunctionImport } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmFunctionImport, VdmFunctionImportReturnTypeNotParsed,
+  VdmFunctionImportReturnType,
+  VdmFunctionImportReturnTypeCategory, VdmFunctionWithoutReturnType
+} from '../../vdm-types';
 import { edmToTsType, endWithDot, ensureString, isNullableParameter } from '../../generator-utils';
 import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { parseTypeName } from '../parser-util';
@@ -31,7 +37,7 @@ export function transformFunctionImportBase<T extends EdmxNamed>(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
-): Omit<VdmFunctionImport, 'returnType' | 'httpMethod'> {
+): Omit<VdmFunctionWithoutReturnType,'httpMethod'>[] {
   const functionName = formatter.originalToFunctionImportName(
     edmxFunctionImport.Name
   );
@@ -85,6 +91,63 @@ function functionImportDescription(
     return endWithDot(swaggerDefinition.summary);
   }
   return endWithDot(toTitleFormat(originalName));
+}
+
+
+export function addReturnTypes(
+  functionImports :VdmFunctionImportReturnTypeNotParsed[],
+  entities: VdmEntity[],
+  complexTypes: VdmComplexType[]
+): VdmFunctionImport[] {
+  functionImports.map(f=>{
+    if (!f.returnType) {
+      return {
+        returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
+        returnType: 'undefined',
+        builderFunction: '(val) => undefined',
+        isMulti: false,
+        isCollection: false
+      };
+    }
+    const isCollectionReturnType = isCollection(returnType);
+    returnType = parseTypeName(returnType);
+    if (returnType.startsWith('Edm.')) {
+      return {
+        returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
+        returnType: propertyJsType(returnType)!,
+        builderFunction: `(val) => edmToTs(val, '${returnType}')`,
+        isMulti: isCollectionReturnType,
+        isCollection: isCollectionReturnType
+      };
+    }
+    const parsedReturnType = returnType.split('.').slice(-1)[0];
+    const entity = entities.find(e => e.entityTypeName === parsedReturnType);
+    if (entity) {
+      return {
+        returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
+        returnType: entity.className,
+        builderFunction: entity.className,
+        isMulti: isCollectionReturnType,
+        isCollection: isCollectionReturnType
+      };
+    }
+    const complexType = complexTypes.find(
+      c => c.originalName === parsedReturnType
+    );
+    if (!complexType) {
+      throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
+    }
+    return {
+      returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
+      returnType: complexType.typeName,
+      builderFunction: `${complexType.typeName}.build`,
+      isMulti: isCollectionReturnType,
+      isCollection: isCollectionReturnType
+    };
+  })
+
+
+
 }
 
 

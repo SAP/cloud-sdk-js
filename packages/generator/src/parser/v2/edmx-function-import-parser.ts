@@ -8,7 +8,7 @@ import { forceArray } from '../../generator-utils';
 import { ParsedServiceMetadata } from '../parsed-service-metadata';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common/edmx-function-import-parser';
-import { VdmFunctionImport } from '../../vdm-types';
+import { VdmFunctionImport, VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
 
 
 
@@ -31,7 +31,7 @@ export function parseFunctionImports(root):EdmxFunctionImport[]{
 export function transformFunctionImportsWithoutReturnTypeV2(
   serviceMetadata: ParsedServiceMetadata,
   formatter: ServiceNameFormatter
-): Omit<VdmFunctionImport, 'returnType' >[] {
+): VdmFunctionImportReturnTypeNotParsed[] {
   const edmxFunctionImports = parseFunctionImports(serviceMetadata.edmx.root)
 
   return edmxFunctionImports.map(f => {
@@ -41,7 +41,6 @@ export function transformFunctionImportsWithoutReturnTypeV2(
       httpMethod,
       serviceMetadata.swagger
     );
-
     return {
       ...transformFunctionImportBase(
         f,
@@ -49,7 +48,8 @@ export function transformFunctionImportsWithoutReturnTypeV2(
         swaggerDefinition,
         formatter
       ),
-      httpMethod
+      httpMethod,
+      returnTypeEdmx:f.ReturnType
     };
   });
 }

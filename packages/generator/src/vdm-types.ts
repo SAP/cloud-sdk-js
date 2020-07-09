@@ -83,14 +83,22 @@ export interface VdmComplexType {
   fieldType: string;
 }
 
-export interface VdmFunctionImport {
+export interface VdmFunctionWithoutReturnType {
   httpMethod: string;
   originalName: string;
-  returnType: VdmFunctionImportReturnType;
   parameters: VdmParameter[];
   parametersTypeName: string;
   functionName: string;
   description: string;
+}
+
+
+export interface VdmFunctionImportReturnTypeNotParsed extends VdmFunctionWithoutReturnType{
+  returnTypeEdmx: string;
+}
+
+export interface VdmFunctionImport extends VdmFunctionWithoutReturnType{
+  returnType: VdmFunctionImportReturnType;
 }
 
 export interface VdmFunctionImportReturnType {

@@ -18,7 +18,7 @@ import { DateFilterFunction } from './date-filter-function';
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
-  returnType: 'boolean' | 'bool',
+  returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 

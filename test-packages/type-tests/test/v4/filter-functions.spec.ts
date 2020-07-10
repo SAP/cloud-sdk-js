@@ -17,7 +17,7 @@ filterFunctions.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
 filterFunctions.hasSubset(['1'], [1]);
 
 // $ExpectType BooleanFilterFunction<Entity>
-filterFunction('fn', 'bool');
+filterFunction('fn', 'boolean');
 
 // $ExpectType DateFilterFunction<Entity>
 filterFunction('fn', 'datetimeoffset');

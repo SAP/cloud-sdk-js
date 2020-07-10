@@ -146,7 +146,7 @@ describe('get-filter for filter functions', () => {
   });
 
   it('for custom nested filter function', () => {
-    const fnNested = filterFunction('fnNested', 'bool');
+    const fnNested = filterFunction('fnNested', 'boolean');
     const fn = filterFunction('fn', 'string', fnNested);
     expect(oDataUri.getFilter(fn.equals('test'), TestEntity).filter).toBe(
       "fn(fnNested()) eq 'test'"

@@ -20,7 +20,7 @@ export function endsWith<EntityT extends EntityBase>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   suffix: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('endswith', 'bool', str, suffix);
+  return filterFunction('endswith', 'boolean', str, suffix);
 }
 
 /**
@@ -34,7 +34,7 @@ export function startsWith<EntityT extends EntityBase>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   prefix: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('startswith', 'bool', str, prefix);
+  return filterFunction('startswith', 'boolean', str, prefix);
 }
 
 /**
@@ -258,7 +258,7 @@ export function isOf<EntityT extends EntityBase>(
   type?: string
 ): BooleanFilterFunction<EntityT> {
   if (type) {
-    return filterFunction('isof', 'bool', expressionOrType, type);
+    return filterFunction('isof', 'boolean', expressionOrType, type);
   }
-  return filterFunction('isof', 'bool', expressionOrType);
+  return filterFunction('isof', 'boolean', expressionOrType);
 }

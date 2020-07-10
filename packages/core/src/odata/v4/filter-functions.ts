@@ -26,7 +26,7 @@ export function contains<EntityT extends Entity>(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('contains', 'bool', substr, str);
+  return filterFunction('contains', 'boolean', substr, str);
 }
 
 /**
@@ -39,7 +39,7 @@ export function matchesPattern<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   regex: string
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('matchesPattern', 'bool', str, regex);
+  return filterFunction('matchesPattern', 'boolean', str, regex);
 }
 
 /* Date Functions */
@@ -115,7 +115,7 @@ export function hasSubset<
     | CollectionField<EntityT>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('hassubset', 'bool', subset, set);
+  return filterFunction('hassubset', 'boolean', subset, set);
 }
 
 /**
@@ -139,7 +139,7 @@ export function hasSubsequence<
     | Field<EntityT>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('hassubsequence', 'bool', subsequence, sequence);
+  return filterFunction('hassubsequence', 'boolean', subsequence, sequence);
 }
 /**
  * TODO: totalseconds, time

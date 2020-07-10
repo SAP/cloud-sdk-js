@@ -451,7 +451,7 @@ async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
         .getByKey(address.businessPartner, address.addressId)
   );
 
-  const [...retrieveResponses] = await batch(...retrieveRequests)
+  const retrieveResponses = await batch(...retrieveRequests)
     .execute(destination);
       
   return retrieveResponses.reduce(

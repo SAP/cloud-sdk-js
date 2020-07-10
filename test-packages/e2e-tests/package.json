@@ -16,7 +16,6 @@
   "scripts": {
     "start:daemon": "pm2 start start.js",
     "start": "cds run",
-    "watch": "cds watch",
     "deploy:to-sqlite": "cds deploy --to sqlite",
     "test": "npx jest --coverage"
   },

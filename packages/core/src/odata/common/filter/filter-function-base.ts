@@ -12,7 +12,7 @@ import { Filter } from './filter';
  */
 export abstract class FilterFunction<
   EntityT extends EntityBase,
-  ReturnT extends FieldType
+  ReturnT extends FieldType | FieldType[]
 > {
   /**
    * Creates an instance of FilterFunction.
@@ -86,16 +86,25 @@ export abstract class FilterFunction<
     if (param instanceof FilterFunction) {
       return param.toString(parentFieldNames);
     }
+    if (Array.isArray(param)) {
+      throw new Error(
+        'Collection parameters are not supported in the deprecated `transformParameter` method. Use `get-filter` instead.'
+      );
+    }
     return [...parentFieldNames, param._fieldName].join('/');
   }
 }
 
 /**
- * Type of a parameter of a filter function. This can either be an explicit value (string or number), a reference to a field or another filter function.
+ * Primitive type of a parameter of a filter function.
+ */
+export type FilterFunctionPrimitiveParameterType = number | string | Moment;
+
+/**
+ * Type of a parameter of a filter function. This can either be a primitive type, a reference to a field or another filter function.
  */
 export type FilterFunctionParameterType<EntityT extends EntityBase> =
-  | number
-  | string
-  | Moment
+  | FilterFunctionPrimitiveParameterType
   | Field<EntityT>
-  | FilterFunction<EntityT, FieldType>;
+  | FilterFunction<EntityT, FieldType | FieldType[]>
+  | FilterFunctionPrimitiveParameterType[];

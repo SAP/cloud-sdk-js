@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Support collection type filter functions
 
 ## Improvements
 

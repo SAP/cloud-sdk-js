@@ -492,7 +492,7 @@ updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
 Use a type assertion (as) to inform the compiler that you are handling a response of type WriteResponses. This response provides all responses of the requests within the changeset as responses. Transform those to instances of BusinessPartnerAddress using the .as function of each WriteResponse. As a WriteResponse can belong to either create, update or delete requests, it is possible that there is no response to transform. Therefore you have to make sure to call as! with an exclamation mark, to inform the compiler, that we know that the write request we put into our changeset responds with data.
 -->
 
-#### Complete batch request
+#### Combining changesets and retrieve requests
 
 :::note
 The changesets will be executed first and the retrieve requests will be executed sequentially afterwards. The order of execution within the changeset is not defined.

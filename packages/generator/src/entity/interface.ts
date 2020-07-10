@@ -10,7 +10,7 @@ import {
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
-} from '../vdm-types';
+} from '../service-vdm/vdm-types';
 
 export function entityTypeInterface(
   entity: VdmEntity,

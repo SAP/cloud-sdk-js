@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { SourceFileStructure, StructureKind } from 'ts-morph';
-import { VdmServiceMetadata } from '../vdm-types';
+import { VdmServiceMetadata } from '../service-vdm/vdm-types';
 import { batchFunction, changesetFunction } from './function';
 import { importBatchDeclarations } from './imports';
 import { readRequestType, writeReqeustType } from './type';

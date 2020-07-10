@@ -1,18 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { forceArray } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common/function-import-parser';
-import { VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
-import { ServiceMetadata } from '../util/edmx-types';
-import { swaggerDefinitionForFunctionImport } from '../swagger/swagger-parser';
-import { EdmxFunctionImport } from './edmx-types';
-
-export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return forceArray(root.EntityContainer.FunctionImport).map(f => {
-    f.Parameter = forceArray(f.Parameter);
-    return f;
-  });
-}
+import { transformFunctionImportBase } from '../common/function-import-vdm';
+import { VdmFunctionImportReturnTypeNotParsed } from '../vdm-types';
+import { ServiceMetadata } from '../../parser/util/edmx-types';
+import { swaggerDefinitionForFunctionImport } from '../../parser/swagger/swagger-parser';
+import { parseFunctionImports } from '../../parser/v2/edmx-parser';
 
 export function getFunctionImportsV2(
   serviceMetadata: ServiceMetadata,

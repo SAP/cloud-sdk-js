@@ -5,7 +5,7 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport
-} from '../../../vdm-types';
+} from '../../../service-vdm/vdm-types';
 import { ServiceNameFormatter } from '../../../service-name-formatter';
 import { isCollection, stripNamespace } from '../../util/parser-util';
 import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';

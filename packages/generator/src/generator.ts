@@ -29,7 +29,7 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from './package-description';
-import { ServiceParser } from './parser';
+import { ServiceVdmGenerator } from './service-vdm/';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
@@ -39,7 +39,7 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { typedocJson } from './service/typedoc-json';
-import { VdmServiceMetadata } from './vdm-types';
+import { VdmServiceMetadata } from './service-vdm/vdm-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -332,7 +332,7 @@ function projectOptions(): ProjectOptions {
 }
 
 function generateServices(options: GeneratorOptions): VdmServiceMetadata[] {
-  const services = new ServiceParser(options).parseAllServices();
+  const services = new ServiceVdmGenerator(options).getAllServices();
   if (!services.length) {
     logger.warn(
       `No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`

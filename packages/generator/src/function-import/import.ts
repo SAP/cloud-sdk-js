@@ -12,7 +12,7 @@ import {
   VdmFunctionImportReturnType,
   VdmFunctionImportReturnTypeCategory,
   VdmServiceMetadata
-} from '../vdm-types';
+} from '../service-vdm/vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 export function importDeclarations(

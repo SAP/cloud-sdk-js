@@ -15,26 +15,26 @@ import {
   VdmServiceEntities,
   VdmServiceMetadata,
   VdmServicePackageMetaData
-} from '../vdm-types';
-import { getFunctionImportsV4 } from './v4/function-import-parser';
-import { getEntitiesV4 } from './v4/entity-parser';
-import { getComplexTypesV4 } from './v4/complex-type-parser';
-import { readEdmxFile } from './util/edmx-file-reader';
-import { parseReturnTypes } from './common/function-import-parser';
-import { getFunctionImportsV2 } from './v2/function-import-parser';
-import { getEntitiesV2 } from './v2/entity-parser';
-import { readSwaggerFile } from './swagger/swagger-parser';
-import { ServiceMetadata } from './util/edmx-types';
-import { getComplexTypesV2 } from './v2/complex-type-parser';
-import { isV2Metadata } from './util/parser-util';
-import { apiBusinessHubMetadata } from './swagger/swagger-util';
+} from './vdm-types';
+import { getFunctionImportsV4 } from './v4/function-import-vdm';
+import { getEntitiesV4 } from './v4/entity-vdm';
+import { getComplexTypesV4 } from './v4/complex-type-vdm';
+import { readEdmxFile } from '../parser/util/edmx-file-reader';
+import { parseReturnTypes } from './common/function-import-vdm';
+import { getFunctionImportsV2 } from './v2/function-import-vdm';
+import { getEntitiesV2 } from './v2/entity-vdm';
+import { readSwaggerFile } from '../parser/swagger/swagger-parser';
+import { ServiceMetadata } from '../parser/util/edmx-types';
+import { getComplexTypesV2 } from './v2/complex-type-vdm';
+import { isV2Metadata } from '../parser/util/parser-util';
+import { apiBusinessHubMetadata } from '../parser/swagger/swagger-util';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'service-parser'
 });
 
-export class ServiceParser {
+export class ServiceVdmGenerator {
   private globalNameFormatter: GlobalNameFormatter;
   private serviceMapping: VdmMapping;
 
@@ -53,19 +53,19 @@ export class ServiceParser {
     return this;
   }
 
-  public parseAllServices(): VdmServiceMetadata[] {
+  public getAllServices(): VdmServiceMetadata[] {
     return inputPaths(this.options.inputDir, this.options.useSwagger).map(p =>
-      this.parseService(p)
+      this.getService(p)
     );
   }
 
   /**
-   * Only public for compatibility to older versions.
+   * Only public for compatibility to [[parseService]].
    * @hidden
    * @param serviceDefinitionPaths Path to the service definitions files.
    * @returns the parsed service
    */
-  public parseService(
+  public getService(
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadata {
     const serviceMetadata = this.readEdmxAndSwaggerFile(serviceDefinitionPaths);
@@ -180,7 +180,7 @@ export class ServiceParser {
 export function parseAllServices(
   options: GeneratorOptions
 ): VdmServiceMetadata[] {
-  return new ServiceParser(options).parseAllServices();
+  return new ServiceVdmGenerator(options).getAllServices();
 }
 
 /**
@@ -197,8 +197,8 @@ export function parseService(
   mappings: VdmMapping,
   globalNameFormatter: GlobalNameFormatter
 ): VdmServiceMetadata {
-  return new ServiceParser(options)
+  return new ServiceVdmGenerator(options)
     .withServiceMapping(mappings)
     .withGlobalNameFormatter(globalNameFormatter)
-    .parseService(serviceDefinitionPaths);
+    .getService(serviceDefinitionPaths);
 }

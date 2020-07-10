@@ -1,46 +1,32 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { forceArray } from '../../generator-utils';
 import {
   createEntityClassNames,
   joinEntityMetadata,
   navigationPropertyBase,
-  parseEntitySetsBase,
-  parseEntityTypesBase,
   transformEntityBase
-} from '../common/entity-parser';
+} from '../common/entity-vdm';
 import {
   VdmComplexType,
   VdmEntity,
   VdmNavigationProperty
-} from '../../vdm-types';
+} from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { ServiceMetadata } from '../util/edmx-types';
-import { stripNamespace } from '../util/parser-util';
-import { EdmxEntitySetBase, JoinedEntityMetadata } from '../common/edmx-types';
+import { ServiceMetadata } from '../../parser/util/edmx-types';
+import { stripNamespace } from '../../parser/util/parser-util';
+import { EdmxEntitySetBase, JoinedEntityMetadata } from '../../parser/common/edmx-types';
 import {
   EdmxAssociation,
   EdmxAssociationSet,
   EdmxEntityType,
-  EdmxNavigationProperty,
   End,
   JoinedAssociationMetadata
-} from './edmx-types';
-
-export function parseEntitySets(root): EdmxEntitySetBase[] {
-  return parseEntitySetsBase(root);
-}
-
-export function parseEntityTypes(root): EdmxEntityType[] {
-  return parseEntityTypesBase(root, {} as EdmxNavigationProperty);
-}
-
-export function parseAssociationSets(root): EdmxAssociationSet[] {
-  return forceArray(root.EntityContainer.AssociationSet);
-}
-
-export function parseAssociation(root): EdmxAssociation[] {
-  return forceArray(root.Association);
-}
+} from '../../parser/v2/edmx-types';
+import {
+  parseAssociation,
+  parseAssociationSets,
+  parseEntitySets,
+  parseEntityTypes
+} from '../../parser/v2/edmx-parser';
 
 export function getEntitiesV2(
   serviceMetadata: ServiceMetadata,

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
-import { VdmServiceMetadata } from '../vdm-types';
+import { VdmServiceMetadata } from '../service-vdm/vdm-types';
 
 export function readRequestType(
   service: VdmServiceMetadata

@@ -1,57 +1,20 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { forceArray } from '../../generator-utils';
 import {
   createEntityClassNames,
   joinEntityMetadata,
   navigationPropertyBase,
-  parseEntityTypesBase,
   transformEntityBase
-} from '../common/entity-parser';
+} from '../common/entity-vdm';
 import {
   VdmComplexType,
   VdmEntity,
   VdmNavigationProperty
-} from '../../vdm-types';
+} from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  isCollection,
-  parseTypeName,
-  stripNamespace
-} from '../util/parser-util';
-import { ServiceMetadata } from '../util/edmx-types';
-import {
-  EdmxEntitySet,
-  EdmxEntityType,
-  EdmxEnumType,
-  EdmxNavigationProperty
-} from './edmx-types';
-import { joinTypesWithBaseTypes } from './function-import-parser';
-
-export function parseEnumTypes(root): EdmxEnumType[] {
-  return forceArray(root.EnumType);
-}
-
-export function parseEntityType(root): EdmxEntityType[] {
-  const entityTypes = parseEntityTypesBase(root, {} as EdmxNavigationProperty);
-  return joinTypesWithBaseTypes(
-    filterEnumProperties(entityTypes, parseEnumTypes(root)),
-    joinEntityTypes
-  );
-}
-
-// TODO: Filters enum properties as long as those are not supported
-function filterEnumProperties(
-  entityTypes: EdmxEntityType[],
-  enumTypes: EdmxEnumType[]
-): EdmxEntityType[] {
-  const enumTypeNames = enumTypes.map(enumType => enumType.Name);
-  return entityTypes.map(entityType => ({
-    ...entityType,
-    Property: entityType.Property.filter(
-      prop => !enumTypeNames.includes(stripNamespace(parseTypeName(prop.Type)))
-    )
-  }));
-}
+import { isCollection } from '../../parser/util/parser-util';
+import { ServiceMetadata } from '../../parser/util/edmx-types';
+import { EdmxEntitySet, EdmxEntityType } from '../../parser/v4/edmx-types';
+import { parseEntitySets, parseEntityType } from '../../parser/v4/edmx-parser';
 
 export function joinEntityTypes(
   entityType: EdmxEntityType,
@@ -69,13 +32,6 @@ export function joinEntityTypes(
       ...baseType.NavigationProperty
     ]
   };
-}
-
-export function parseEntitySets(root): EdmxEntitySet[] {
-  return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
-    ...entitySet,
-    NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)
-  }));
 }
 
 export function getEntitiesV4(

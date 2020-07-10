@@ -3,11 +3,10 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   edmToComplexPropertyType,
   edmToTsType,
-  forceArray,
   isNullableProperty
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmComplexType, VdmProperty } from '../../vdm-types';
+import { VdmComplexType, VdmProperty } from '../vdm-types';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
@@ -15,22 +14,15 @@ import {
   isComplexType,
   parseType,
   parseTypeName
-} from '../util/parser-util';
+} from '../../parser/util/parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { propertyDescription } from '../util/description-util';
-import { EdmxComplexTypeBase } from './edmx-types';
+import { propertyDescription } from '../../parser/util/description-util';
+import { EdmxComplexTypeBase } from '../../parser/common/edmx-types';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-complex-type-parser'
 });
-
-export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
-  return forceArray(root.ComplexType).map(c => {
-    c.Property = forceArray(c.Property);
-    return c;
-  });
-}
 
 // TODO: this should be removed once Enum types are implemented
 function filterUnknownPropertyTypes(p: VdmProperty): boolean {

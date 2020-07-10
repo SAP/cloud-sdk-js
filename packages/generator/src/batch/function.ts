@@ -2,7 +2,7 @@
 
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { addLeadingNewline, getFunctionDoc } from '../typedoc';
-import { VdmServiceMetadata } from '../vdm-types';
+import { VdmServiceMetadata } from '../service-vdm/vdm-types';
 
 export function batchFunction(
   service: VdmServiceMetadata

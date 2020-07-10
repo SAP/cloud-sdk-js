@@ -3,7 +3,6 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import {
   edmToFieldType,
-  forceArray,
   isCreatable,
   isDeletable,
   isNullableProperty,
@@ -14,7 +13,7 @@ import {
   VdmEntity,
   VdmNavigationProperty,
   VdmProperty
-} from '../../vdm-types';
+} from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   checkCollectionKind,
@@ -23,44 +22,24 @@ import {
   isComplexType,
   parseTypeName,
   propertyJsType
-} from '../util/parser-util';
+} from '../../parser/util/parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { SwaggerMetadata } from '../swagger/swagger-types';
+import { SwaggerMetadata } from '../../parser/swagger/swagger-types';
 import {
   entityDescription,
   propertyDescription
-} from '../util/description-util';
+} from '../../parser/util/description-util';
 import {
   EdmxEntitySetBase,
   EdmxEntityTypeBase,
   EdmxNamed,
   JoinedEntityMetadata
-} from './edmx-types';
+} from '../../parser/common/edmx-types';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-entity-parser'
 });
-
-export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
-  return forceArray(root.EntityContainer.EntitySet);
-}
-
-// TODO more elegant way to pass the type in?
-export function parseEntityTypesBase<NavigationType>(
-  root,
-  foo: NavigationType
-): EdmxEntityTypeBase<NavigationType>[] {
-  return forceArray(root.EntityType).map(e => {
-    if (!e.Key) {
-      e.Key = {};
-    }
-    e.Key.PropertyRef = forceArray(e.Key.PropertyRef);
-    e.NavigationProperty = forceArray(e.NavigationProperty);
-    e.Property = forceArray(e.Property);
-    return e;
-  });
-}
 
 export function transformEntityBase(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,

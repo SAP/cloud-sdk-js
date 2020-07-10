@@ -1,23 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { readEdmxFile } from '../../src/parser/util/edmx-file-reader';
-import {
-  parseEntitySets as parseEntitySetsV4,
-  parseEntityType as parseEntityTypeV4,
-  parseEnumTypes
-} from '../../src/parser/v4/entity-parser';
-import { parseFunctionImports as parseFunctionImportsV2 } from '../../src/parser/v2/function-import-parser';
-import {
-  parseFunctionImports as parseFunctionImportsV4,
-  parseFunctions
-} from '../../src/parser/v4/function-import-parser';
-import { parseComplexTypesBase } from '../../src/parser/common/complex-type-parser';
+import { parseComplexTypesBase } from '../../src/parser/common/edmx-parser';
 import {
   parseAssociation,
   parseAssociationSets,
   parseEntitySets as parseEntitySetsV2,
-  parseEntityTypes as parseEntityTypesV2
-} from '../../src/parser/v2/entity-parser';
-import { parseComplexTypes } from '../../src/parser/v4/complex-type-parser';
+  parseEntityTypes as parseEntityTypesV2,
+  parseFunctionImports as parseFunctionImportsV2
+} from '../../src/parser/v2/edmx-parser';
+import {
+  parseComplexTypes,
+  parseEntitySets as parseEntitySetsV4,
+  parseEntityType as parseEntityTypeV4,
+  parseEnumTypes,
+  parseFunctionImports as parseFunctionImportsV4,
+  parseFunctions
+} from '../../src/parser/v4/edmx-parser';
 
 describe('edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {

@@ -2,7 +2,7 @@
 
 import { SourceFileStructure, StructureKind } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
-import { VdmComplexType } from '../vdm-types';
+import { VdmComplexType } from '../service-vdm/vdm-types';
 import { builderFunction } from './builder-function';
 import { fieldTypeClass } from './field-type-class';
 import { importDeclarations } from './imports';

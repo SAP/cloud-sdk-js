@@ -3,7 +3,7 @@
 import { existsSync, PathLike, readFileSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
-import { VdmServiceMetadata } from './vdm-types';
+import { VdmServiceMetadata } from './service-vdm/vdm-types';
 import { ServiceMetadata } from './parser/util/edmx-types';
 import { servicePathFromSwagger } from './parser/swagger/swagger-util';
 

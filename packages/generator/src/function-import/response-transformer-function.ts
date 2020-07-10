@@ -3,7 +3,7 @@
 import {
   VdmFunctionImportReturnType,
   VdmFunctionImportReturnTypeCategory
-} from '../vdm-types';
+} from '../service-vdm/vdm-types';
 
 export function responseTransformerFunctionName(
   returnType: VdmFunctionImportReturnType

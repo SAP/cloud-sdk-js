@@ -1,27 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { forceArray } from '../../generator-utils';
-import { VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
+import { VdmFunctionImportReturnTypeNotParsed } from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { ServiceMetadata } from '../util/edmx-types';
-import { stripNamespace } from '../util/parser-util';
-import { transformFunctionImportBase } from '../common/function-import-parser';
-import { swaggerDefinitionForFunctionImport } from '../swagger/swagger-parser';
-import {
-  EdmxDerivedType,
-  EdmxFunction,
-  EdmxFunctionImport
-} from './edmx-types';
-
-export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return forceArray(root.EntityContainer.FunctionImport);
-}
-
-export function parseFunctions(root): EdmxFunction[] {
-  return forceArray(root.Function).map(f => {
-    f.Parameter = forceArray(f.Parameter);
-    return f;
-  });
-}
+import { ServiceMetadata } from '../../parser/util/edmx-types';
+import { stripNamespace } from '../../parser/util/parser-util';
+import { transformFunctionImportBase } from '../common/function-import-vdm';
+import { swaggerDefinitionForFunctionImport } from '../../parser/swagger/swagger-parser';
+import { EdmxDerivedType } from '../../parser/v4/edmx-types';
+import { parseFunctionImports, parseFunctions } from '../../parser/v4/edmx-parser';
 
 export function getFunctionImportsV4(
   serviceMetadata: ServiceMetadata,

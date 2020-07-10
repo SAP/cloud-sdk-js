@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../src/service-name-formatter';
-import { EdmxProperty } from '../../src/parser/common/edmx-types';
-import { EdmxEntitySet, EdmxEntityType } from '../../src/parser/v4/edmx-types';
-import { getComplexTypesV4 } from '../../src/service-vdm/v4/complex-type-vdm';
-import { getEntitiesV4 } from '../../src/service-vdm/v4/entity-vdm';
-import { ServiceMetadata } from '../../src/parser/edmx-file-reader';
+import { EdmxProperty } from '../../src/edmx-parser/common/edmx-types';
+import { EdmxEntitySet, EdmxEntityType } from '../../src/edmx-parser/v4/edmx-types';
+import { getComplexTypesV4 } from '../../src/edmx-to-vdm/v4/complex-type';
+import { getEntitiesV4 } from '../../src/edmx-to-vdm/v4/entity';
+import { ServiceMetadata } from '../../src/edmx-parser/edmx-file-reader';
 
 describe('edmx-to-vdm-v4', () => {
   it('transforms collection type properties for primitive types', () => {

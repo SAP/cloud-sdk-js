@@ -5,7 +5,7 @@ import {
   VariableDeclarationKind,
   VariableStatementStructure
 } from 'ts-morph';
-import { VdmFunctionImport } from '../service-vdm/vdm-types';
+import { VdmFunctionImport } from '../edmx-to-vdm/vdm-types';
 
 export function exportStatement(
   functionImports: VdmFunctionImport[]

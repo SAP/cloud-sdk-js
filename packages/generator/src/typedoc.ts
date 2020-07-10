@@ -9,7 +9,7 @@ import {
   VdmProperty,
   VdmPropertyValueConstraints,
   VdmServiceMetadata
-} from './service-vdm/vdm-types';
+} from './edmx-to-vdm/vdm-types';
 
 export function getFunctionDoc(
   description: string,

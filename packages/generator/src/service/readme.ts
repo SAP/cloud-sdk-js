@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { VdmServiceMetadata } from '../service-vdm/vdm-types';
+import { VdmServiceMetadata } from '../edmx-to-vdm/vdm-types';
 
 function title(service: VdmServiceMetadata): string {
   return service.npmPackageName || service.speakingModuleName;

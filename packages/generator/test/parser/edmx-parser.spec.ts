@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { readEdmxFile } from '../../src/parser/edmx-file-reader';
-import { parseComplexTypesBase } from '../../src/parser/common/edmx-parser';
+import { readEdmxFile } from '../../src/edmx-parser/edmx-file-reader';
+import { parseComplexTypesBase } from '../../src/edmx-parser/common/edmx-parser';
 import {
   parseAssociation,
   parseAssociationSets,
   parseEntitySets as parseEntitySetsV2,
   parseEntityTypes as parseEntityTypesV2,
   parseFunctionImports as parseFunctionImportsV2
-} from '../../src/parser/v2/edmx-parser';
+} from '../../src/edmx-parser/v2/edmx-parser';
 import {
   parseComplexTypes,
   parseEntitySets as parseEntitySetsV4,
@@ -15,9 +15,9 @@ import {
   parseEnumTypes,
   parseFunctionImports as parseFunctionImportsV4,
   parseFunctions
-} from '../../src/parser/v4/edmx-parser';
+} from '../../src/edmx-parser/v4/edmx-parser';
 
-describe('edmx-parser', () => {
+describe('edmx-edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
       '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'

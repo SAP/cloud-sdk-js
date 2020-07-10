@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { responseTransformerFunctionName } from '../../src/function-import';
-import { VdmFunctionImportReturnTypeCategory } from '../../src/service-vdm/vdm-types';
+import { VdmFunctionImportReturnTypeCategory } from '../../src/edmx-to-vdm/vdm-types';
 import { orderBreakfast } from '../test-util/data-model';
 
 const returnTypeEntity = {

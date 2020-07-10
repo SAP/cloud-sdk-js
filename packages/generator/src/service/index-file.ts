@@ -5,7 +5,7 @@ import {
   SourceFileStructure,
   StructureKind
 } from 'ts-morph';
-import { VdmServiceMetadata } from '../service-vdm/vdm-types';
+import { VdmServiceMetadata } from '../edmx-to-vdm/vdm-types';
 
 export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
   return {

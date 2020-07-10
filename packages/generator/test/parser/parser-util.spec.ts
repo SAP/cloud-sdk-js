@@ -5,9 +5,9 @@ import {
   isCollection,
   parseTypeName,
   stripNamespace
-} from '../../src/service-vdm/vdm-util';
+} from '../../src/edmx-to-vdm/edmx-to-vdm-util';
 
-describe('parser-util', () => {
+describe('edmx-parser-util', () => {
   it('strips namespace', () => {
     expect(stripNamespace('namespace.name')).toEqual('name');
   });

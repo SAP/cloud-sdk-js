@@ -9,7 +9,7 @@ import {
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmComplexType, VdmProperty } from '../service-vdm/vdm-types';
+import { VdmComplexType, VdmProperty } from '../edmx-to-vdm/vdm-types';
 import { hasEdmTypeProperty } from './util';
 
 export function importDeclarations(

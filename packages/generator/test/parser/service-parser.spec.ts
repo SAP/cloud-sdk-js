@@ -1,17 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GlobalNameFormatter } from '../../src/global-name-formatter';
-import { ServiceVdmGenerator } from '../../src/service-vdm';
+import { ServiceGenerator } from '../../src/edmx-to-vdm';
 import { ServiceMapping } from '../../src/service-mapping';
 import {
   VdmFunctionImportReturnTypeCategory,
   VdmProperty
-} from '../../src/service-vdm/vdm-types';
+} from '../../src/edmx-to-vdm/vdm-types';
 import { createOptions } from '../test-util/create-generator-options';
 
-describe('service-parser', () => {
+describe('service-edmx-parser', () => {
   describe('chooses package name source', () => {
     it('namespace by default', () => {
-      const serviceMetadata = new ServiceVdmGenerator(
+      const serviceMetadata = new ServiceGenerator(
         createOptions()
       ).getService({
         edmxPath:
@@ -27,7 +27,7 @@ describe('service-parser', () => {
         npmPackageName: 'custom-package-name'
       };
 
-      const serviceMetadata = new ServiceVdmGenerator(createOptions())
+      const serviceMetadata = new ServiceGenerator(createOptions())
         .withGlobalNameFormatter(
           new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
         )
@@ -47,7 +47,7 @@ describe('service-parser', () => {
 
   describe('parses services', () => {
     it('generates vdm from edmx', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
@@ -62,7 +62,7 @@ describe('service-parser', () => {
     });
 
     it('generates vdm from edmx using swagger', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: true
@@ -76,7 +76,7 @@ describe('service-parser', () => {
     });
 
     it('entities are read correctly', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
@@ -154,7 +154,7 @@ describe('service-parser', () => {
     });
 
     it('complex types are parsed correctly', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
@@ -172,7 +172,7 @@ describe('service-parser', () => {
     });
 
     it('complex type properties are read correctly', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
@@ -201,7 +201,7 @@ describe('service-parser', () => {
     });
 
     it('does not clash with complex type builder function', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
@@ -234,7 +234,7 @@ describe('service-parser', () => {
     });
 
     it('does not clash with reserved JavaScript keywords', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
@@ -249,7 +249,7 @@ describe('service-parser', () => {
     });
 
     it('function imports edm return types are read correctly', () => {
-      const [service] = new ServiceVdmGenerator(
+      const [service] = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
@@ -269,7 +269,7 @@ describe('service-parser', () => {
     });
 
     it('should parse C4C service definitions with proper class names.', () => {
-      const services = new ServiceVdmGenerator(
+      const services = new ServiceGenerator(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
@@ -293,7 +293,7 @@ describe('service-parser', () => {
   });
 
   it('should skip entity types when not defined in any entity sets', () => {
-    const services = new ServiceVdmGenerator(
+    const services = new ServiceGenerator(
       createOptions({
         inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
         useSwagger: false
@@ -308,7 +308,7 @@ describe('service-parser', () => {
   });
 
   it('parses multiple schemas', () => {
-    const services = new ServiceVdmGenerator(
+    const services = new ServiceGenerator(
       createOptions({
         inputDir:
           '../../test-resources/service-specs/v2/API_MULTIPLE_SCHEMAS_SRV',

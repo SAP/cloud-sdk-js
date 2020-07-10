@@ -7,7 +7,7 @@ import {
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmEntity } from '../service-vdm/vdm-types';
+import { VdmEntity } from '../edmx-to-vdm/vdm-types';
 
 export function importDeclarations(
   entity: VdmEntity,

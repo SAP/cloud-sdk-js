@@ -21,7 +21,7 @@ import {
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
-} from '../service-vdm/vdm-types';
+} from '../edmx-to-vdm/vdm-types';
 
 export function entityNamespace(
   entity: VdmEntity,

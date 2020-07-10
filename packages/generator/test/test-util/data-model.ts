@@ -7,7 +7,7 @@ import {
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
-} from '../../src/service-vdm/vdm-types';
+} from '../../src/edmx-to-vdm/vdm-types';
 
 export const entityName: VdmProperty = {
   instancePropertyName: 'entityName',

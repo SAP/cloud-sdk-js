@@ -7,7 +7,7 @@ import {
   VdmMappedEdmType,
   VdmNavigationProperty,
   VdmProperty
-} from './service-vdm/vdm-types';
+} from './edmx-to-vdm/vdm-types';
 
 const potentialExternalImportDeclarations = [
   ['moment', 'Moment', 'Duration'],

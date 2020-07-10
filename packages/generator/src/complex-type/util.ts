@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { VdmProperty } from '../service-vdm/vdm-types';
+import { VdmProperty } from '../edmx-to-vdm/vdm-types';
 
 export function hasEdmTypeProperty(properties: VdmProperty[]): boolean {
   return properties.some(prop => !prop.isComplex);

@@ -440,7 +440,7 @@ A retrieve request is any HTTP `GET` request - in terms of the SAP Cloud SDK thi
 
 In the example below, a list of adresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the update requests, which are then passed to the batch function.
 
-The batch request will return a list of `Batchresponses`, which is stored in `retrieveResponses`.
+The batch request will return a list of `BatchResponse`s, which will be stored in the `retrieveResponses` variable.
 
 ```ts
 async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])

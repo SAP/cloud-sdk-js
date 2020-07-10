@@ -50,7 +50,7 @@ It can be used in the dependency management as follows:
 It helps in various ways:
 - minimizing the effort for updating SDK versions
 - ensuring all SDK components are used consistently with the same version
-- compatibility with some other key SAP libraries or frameworks like [XSUAA])https://github.com/SAP/cloud-security-xsuaa-integration) and [CAP](https://cap.cloud.sap/docs/).
+- compatibility with some other key SAP libraries or frameworks like [XSUAA](https://github.com/SAP/cloud-security-xsuaa-integration) and [CAP](https://cap.cloud.sap/docs/).
 - avoiding some potential dependency conflicts
 - checking which components & their respective version the SDK depends upon
 
@@ -77,8 +77,11 @@ We recommend increasing the SDK version in a dedicated change e.g. a pull reques
 Look out for `MethodNotFound` and `ClassDefNotFound` exceptions.
 - They are very typical when a library is provided with an unexpected version.
 
-Check out our release notes.
+Check out our [release notes](../release-notes.md).
 - Under improvements you will see all dependency changes.
+
+Use `mvn dependency:tree` to analyze the dependency tree.
+- It shows where dependencies are used and in which version.
 
 Google the error message.
 - Usually you will at least get an idea which library is causing the problems.

@@ -7,7 +7,7 @@ import {
   isNullableProperty
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmComplexType } from '../../vdm-types';
+import { VdmComplexType, VdmProperty } from '../../vdm-types';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
@@ -30,6 +30,11 @@ export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
     c.Property = forceArray(c.Property);
     return c;
   });
+}
+
+// TODO: this should be removed once Enum types are implemented
+function filterUnknownPropertyTypes(p: VdmProperty): boolean {
+  return !(p.isComplex && typeof p.jsType === 'undefined');
 }
 
 export function transformComplexTypesBase(
@@ -81,9 +86,9 @@ export function transformComplexTypesBase(
           isComplex,
           isCollection: isCollection(p.Type)
         };
-      })
+      }).filter(filterUnknownPropertyTypes)
     };
-  });
+  })
 }
 
 function complexTypeFieldType(typeName: string) {

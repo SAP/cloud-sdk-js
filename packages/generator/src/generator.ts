@@ -98,7 +98,7 @@ export async function generateProject(
   options: GeneratorOptions
 ): Promise<Project | undefined> {
   options = sanitizeOptions(options);
-  const services = readServices(options);
+  const services = generateServices(options);
 
   if (!services.length) {
     logger.warn(
@@ -331,7 +331,7 @@ function projectOptions(): ProjectOptions {
   };
 }
 
-function readServices(options: GeneratorOptions): VdmServiceMetadata[] {
+function generateServices(options: GeneratorOptions): VdmServiceMetadata[] {
   const services = new ServiceParser(options).parseAllServices();
   if (!services.length) {
     logger.warn(

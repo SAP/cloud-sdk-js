@@ -126,12 +126,11 @@ export class ServiceParser {
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceEntities {
     const formatter = new ServiceNameFormatter();
-    // getEntitySetNames(serviceMetadata.edmx),
-    // getComplexTypeNames(serviceMetadata.edmx),
-    // getFunctionImportNames1(serviceMetadata.edmx)
 
-    // Do function imports before complex types so that function like createSomething get a nice name
-    // The constructor function of a complex type is also called `createComplexType`.
+    /*
+    Do function imports before complex types so that function with name "createSomething" get a nice name,
+    because the constructor function of a complex type would also be called `create${ComplexTypeName}`.
+    */
     const functionImportsWithoutReturnType = isV2Metadata(serviceMetadata.edmx)
       ? transformFunctionImportsV2(serviceMetadata, formatter)
       : transformFunctionImportsV4(serviceMetadata, formatter);

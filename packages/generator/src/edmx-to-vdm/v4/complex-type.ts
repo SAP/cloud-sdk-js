@@ -2,19 +2,8 @@
 import { transformComplexTypesBase } from '../common/complex-type';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
-import { EdmxComplexType } from '../../edmx-parser/v4/edmx-types';
 import { parseComplexTypes } from '../../edmx-parser/v4/edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-
-export function joinComplexTypes(
-  complexType: EdmxComplexType,
-  baseType: EdmxComplexType
-): EdmxComplexType {
-  return {
-    ...complexType,
-    Property: [...complexType.Property, ...baseType.Property]
-  };
-}
 
 export function generateComplexTypesV4(
   serviceMetadata: ServiceMetadata,

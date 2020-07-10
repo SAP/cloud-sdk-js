@@ -165,7 +165,7 @@ export class ServiceGenerator {
 }
 
 /**
- * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
+ * @deprecated Since version 1.25.0. Use the ServiceParser class instead
  * @param options Generator options *
  * @returns the parsed services
  */
@@ -176,7 +176,7 @@ export function parseAllServices(
 }
 
 /**
- * @deprecated Sinve version 1.25.0. Use the ServiceParser class instead
+ * @deprecated Since version 1.25.0. Use the ServiceParser class instead
  * @param serviceDefinitionPaths Path to the service definition
  * @param options Generator options
  * @param mappings mappings for VDM service names to desired name

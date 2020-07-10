@@ -7,17 +7,17 @@ import {
 } from './edmx-types';
 
 export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
-  return forceArray(root.ComplexType).map(c => {
-    c.Property = forceArray(c.Property);
-    return c;
-  });
+  return forceArray(root.ComplexType).map(c => ({
+    ...c,
+    Property: forceArray(c.Property)
+  }));
 }
 
 // TODO more elegant way to pass the type in?
-export function parseEntityTypesBase<NavigationType>(
+export function parseEntityTypesBase<NavigationT>(
   root,
-  navigationType: NavigationType
-): EdmxEntityTypeBase<NavigationType>[] {
+  navigationType: NavigationT
+): EdmxEntityTypeBase<NavigationT>[] {
   return forceArray(root.EntityType).map(e => {
     if (!e.Key) {
       e.Key = {};

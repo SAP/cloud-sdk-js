@@ -44,12 +44,12 @@ export interface EdmxKey {
   PropertyRef: EdmxNamed[];
 }
 
-export interface EdmxEntityTypeBase<NavigationType> extends EdmxNamed {
+export interface EdmxEntityTypeBase<NavigationT> extends EdmxNamed {
   Key: EdmxKey;
   Property: EdmxProperty[];
   'sap:content-version': string;
   'sap:label'?: string;
-  NavigationProperty: NavigationType[];
+  NavigationProperty: NavigationT[];
 }
 
 export interface EdmxComplexTypeBase extends EdmxNamed {
@@ -57,10 +57,10 @@ export interface EdmxComplexTypeBase extends EdmxNamed {
 }
 
 export interface JoinedEntityMetadata<
-  EntitySetType extends EdmxEntitySetBase,
-  EntityTypeType extends EdmxEntityTypeBase<any>
+  EntitySetT extends EdmxEntitySetBase,
+  EntityTypeT extends EdmxEntityTypeBase<any>
 > {
-  entitySet: EntitySetType;
-  entityType: EntityTypeType;
+  entitySet: EntitySetT;
+  entityType: EntityTypeT;
   swaggerDefinition?: SwaggerEntity;
 }

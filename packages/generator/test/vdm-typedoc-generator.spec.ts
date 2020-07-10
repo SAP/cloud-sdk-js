@@ -4,10 +4,7 @@ import {
   getNavPropertyDescription,
   getPropertyDescription
 } from '../src/typedoc';
-import {
-  VdmNavigationProperty,
-  VdmProperty
-} from '../src/vdm-types';
+import { VdmNavigationProperty, VdmProperty } from '../src/vdm-types';
 
 describe('typedoc', () => {
   it('get normal property description', () => {

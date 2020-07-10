@@ -7,10 +7,7 @@ import {
   SourceFileStructure,
   StructureKind
 } from 'ts-morph';
-import {
-  VdmFunctionImport,
-  VdmServiceMetadata
-} from '../vdm-types';
+import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { exportStatement } from './export-statement';
 import { functionImportFunction } from './function';
 import { importDeclarations } from './import';

@@ -5,7 +5,11 @@ import {
   navigationPropertyBase,
   transformEntityBase
 } from '../common/entity';
-import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmNavigationProperty
+} from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   EdmxEntitySetBase,
@@ -27,7 +31,7 @@ import {
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { stripNamespace } from '../edmx-to-vdm-util';
 
-export function getEntitiesV2(
+export function generateEntitiesV2(
   serviceMetadata: ServiceMetadata,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter

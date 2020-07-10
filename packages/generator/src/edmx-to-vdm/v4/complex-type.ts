@@ -16,7 +16,7 @@ export function joinComplexTypes(
   };
 }
 
-export function getComplexTypesV4(
+export function generateComplexTypesV4(
   serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmComplexType[] {

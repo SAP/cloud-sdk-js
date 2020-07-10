@@ -332,7 +332,7 @@ function projectOptions(): ProjectOptions {
 }
 
 function generateServices(options: GeneratorOptions): VdmServiceMetadata[] {
-  const services = new ServiceGenerator(options).getAllServices();
+  const services = new ServiceGenerator(options).generateAllServices();
   if (!services.length) {
     logger.warn(
       `No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`

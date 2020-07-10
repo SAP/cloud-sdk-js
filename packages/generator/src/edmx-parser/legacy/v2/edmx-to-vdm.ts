@@ -119,7 +119,8 @@ export function transformFunctionImportsV2(
         formatter
       ),
       httpMethod,
-      returnType: parseReturnType(f.ReturnType, entities, complexTypes)
+      returnType: parseReturnType(f.ReturnType, entities, complexTypes),
+      returnTypeEdmx: f.ReturnType
     };
   });
 }

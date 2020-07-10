@@ -5,7 +5,7 @@ import { VdmComplexType } from '../../vdm-types';
 import { parseComplexTypes } from '../../edmx-parser/v2/edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 
-export function getComplexTypesV2(
+export function generateComplexTypesV2(
   serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmComplexType[] {

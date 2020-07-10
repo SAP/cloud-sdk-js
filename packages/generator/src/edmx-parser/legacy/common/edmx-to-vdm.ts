@@ -26,7 +26,10 @@ import {
   isNullableParameter
 } from '../../../generator-utils';
 import { applyPrefixOnJsConfictParam } from '../../../name-formatting-strategies';
-import { isCollection, parseTypeName } from '../../../edmx-to-vdm/edmx-to-vdm-util';
+import {
+  isCollection,
+  parseTypeName
+} from '../../../edmx-to-vdm/edmx-to-vdm-util';
 import {
   JoinedEntityMetadata,
   EdmxProperty,
@@ -461,7 +464,7 @@ export function transformFunctionImportBase(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
-): Omit<VdmFunctionImport, 'returnType' | 'httpMethod'> {
+): Omit<VdmFunctionImport, 'returnTypeEdmx' | 'httpMethod' | 'returnType'> {
   const functionName = formatter.originalToFunctionImportName(
     edmxFunctionImport.Name
   );

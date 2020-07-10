@@ -17,7 +17,10 @@ import {
   swaggerDefinitionForFunctionImport,
   transformFunctionImportBase
 } from '../common/edmx-to-vdm';
-import { isCollection, stripNamespace } from '../../../edmx-to-vdm/edmx-to-vdm-util';
+import {
+  isCollection,
+  stripNamespace
+} from '../../../edmx-to-vdm/edmx-to-vdm-util';
 import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 
 /* eslint-disable valid-jsdoc */
@@ -130,7 +133,8 @@ export function transformFunctionImportsV4(
         edmxFunction.ReturnType?.Type,
         entities,
         complexTypes
-      )
+      ),
+      returnTypeEdmx: edmxFunction.ReturnType?.Type
     };
   });
 }

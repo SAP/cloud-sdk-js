@@ -13,7 +13,7 @@ describe('service-edmx-parser', () => {
     it('namespace by default', () => {
       const serviceMetadata = new ServiceGenerator(
         createOptions()
-      ).getService({
+      ).generateService({
         edmxPath:
           '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
       });
@@ -32,7 +32,7 @@ describe('service-edmx-parser', () => {
           new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
         )
         .withServiceMapping({ API_TEST_SRV: serviceMapping })
-        .getService({
+        .generateService({
           edmxPath:
             '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
         });
@@ -52,7 +52,7 @@ describe('service-edmx-parser', () => {
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       expect(services[0].namespace).toBe('API_TEST_SRV');
       expect(services[0].directoryName).toBe('test-service');
@@ -67,7 +67,7 @@ describe('service-edmx-parser', () => {
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: true
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       expect(services[0].entities.length).toBe(10);
       expect(
@@ -80,7 +80,7 @@ describe('service-edmx-parser', () => {
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       expect(
         services[0].entities.map(entity => ({
@@ -158,7 +158,7 @@ describe('service-edmx-parser', () => {
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       const complexTypes = services[0].complexTypes;
       const complexType = complexTypes[0];
@@ -177,7 +177,7 @@ describe('service-edmx-parser', () => {
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       const testEntity = services[0].entities[0];
       const complexProperty = testEntity.properties.find(
@@ -206,7 +206,7 @@ describe('service-edmx-parser', () => {
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       const functionImport = services[0].functionImports.find(
         f => f.originalName === 'CreateTestComplexType'
@@ -239,7 +239,7 @@ describe('service-edmx-parser', () => {
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       const functionImport = services[0].functionImports.find(
         f => f.originalName === 'Continue'
@@ -254,7 +254,7 @@ describe('service-edmx-parser', () => {
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       const functionImport = service.functionImports.find(
         f => f.originalName === 'TestFunctionImportEdmReturnType'
@@ -274,7 +274,7 @@ describe('service-edmx-parser', () => {
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).getAllServices();
+      ).generateAllServices();
 
       const entities = services[0].entities;
 
@@ -298,7 +298,7 @@ describe('service-edmx-parser', () => {
         inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
         useSwagger: false
       })
-    ).getAllServices();
+    ).generateAllServices();
 
     const entity = services[0].entities.find(
       e => e.entityTypeName === 'Unused'
@@ -314,7 +314,7 @@ describe('service-edmx-parser', () => {
           '../../test-resources/service-specs/v2/API_MULTIPLE_SCHEMAS_SRV',
         useSwagger: false
       })
-    ).getAllServices();
+    ).generateAllServices();
 
     expect(services[0].entities.length).toBe(1);
   });

@@ -5,10 +5,17 @@ import {
   navigationPropertyBase,
   transformEntityBase
 } from '../common/entity';
-import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmNavigationProperty
+} from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxEntitySet, EdmxEntityType } from '../../edmx-parser/v4/edmx-types';
-import { parseEntitySets, parseEntityType } from '../../edmx-parser/v4/edmx-parser';
+import {
+  parseEntitySets,
+  parseEntityType
+} from '../../edmx-parser/v4/edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { isCollection } from '../edmx-to-vdm-util';
 
@@ -30,7 +37,7 @@ export function joinEntityTypes(
   };
 }
 
-export function getEntitiesV4(
+export function generateEntitiesV4(
   serviceMetadata: ServiceMetadata,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter

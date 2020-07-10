@@ -18,13 +18,13 @@ import {
   VdmServiceMetadata,
   VdmServicePackageMetaData
 } from './vdm-types';
-import { getFunctionImportsV4 } from './edmx-to-vdm/v4/function-import';
-import { getEntitiesV4 } from './edmx-to-vdm/v4/entity';
-import { getComplexTypesV4 } from './edmx-to-vdm/v4/complex-type';
+import { generateFunctionImportsV4 } from './edmx-to-vdm/v4/function-import';
+import { generateEntitiesV4 } from './edmx-to-vdm/v4/entity';
+import { generateComplexTypesV4 } from './edmx-to-vdm/v4/complex-type';
 import { parseReturnTypes } from './edmx-to-vdm/common/function-import';
-import { getFunctionImportsV2 } from './edmx-to-vdm/v2/function-import';
-import { getEntitiesV2 } from './edmx-to-vdm/v2/entity';
-import { getComplexTypesV2 } from './edmx-to-vdm/v2/complex-type';
+import { generateFunctionImportsV2 } from './edmx-to-vdm/v2/function-import';
+import { generateEntitiesV2 } from './edmx-to-vdm/v2/entity';
+import { generateComplexTypesV2 } from './edmx-to-vdm/v2/complex-type';
 import { isV2Metadata } from './edmx-to-vdm/edmx-to-vdm-util';
 
 export class ServiceGenerator {
@@ -46,9 +46,9 @@ export class ServiceGenerator {
     return this;
   }
 
-  public getAllServices(): VdmServiceMetadata[] {
+  public generateAllServices(): VdmServiceMetadata[] {
     return inputPaths(this.options.inputDir, this.options.useSwagger).map(p =>
-      this.getService(p)
+      this.generateService(p)
     );
   }
 
@@ -58,7 +58,7 @@ export class ServiceGenerator {
    * @param serviceDefinitionPaths Path to the service definitions files.
    * @returns the parsed service
    */
-  public getService(
+  public generateService(
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadata {
     const serviceMetadata = this.readEdmxAndSwaggerFile(serviceDefinitionPaths);
@@ -121,20 +121,19 @@ export class ServiceGenerator {
     const formatter = new ServiceNameFormatter();
 
     /*
-    Do function imports before complex types so that function with name "createSomething" get a nice name,
-    because the constructor function of a complex type would also be called `create${ComplexTypeName}`.
+    Do function imports before complex types so that function with name "createSomething" gets a nicer name, because the builder function of a complex type would also be called `create${ComplexTypeName}`.
     */
     const functionImportsWithoutReturnType = isV2Metadata(serviceMetadata.edmx)
-      ? getFunctionImportsV2(serviceMetadata, formatter)
-      : getFunctionImportsV4(serviceMetadata, formatter);
+      ? generateFunctionImportsV2(serviceMetadata, formatter)
+      : generateFunctionImportsV4(serviceMetadata, formatter);
 
     const complexTypes = isV2Metadata(serviceMetadata.edmx)
-      ? getComplexTypesV2(serviceMetadata, formatter)
-      : getComplexTypesV4(serviceMetadata, formatter);
+      ? generateComplexTypesV2(serviceMetadata, formatter)
+      : generateComplexTypesV4(serviceMetadata, formatter);
 
     const entities = isV2Metadata(serviceMetadata.edmx)
-      ? getEntitiesV2(serviceMetadata, complexTypes, formatter)
-      : getEntitiesV4(serviceMetadata, complexTypes, formatter);
+      ? generateEntitiesV2(serviceMetadata, complexTypes, formatter)
+      : generateEntitiesV4(serviceMetadata, complexTypes, formatter);
 
     const functionImports = parseReturnTypes(
       functionImportsWithoutReturnType,
@@ -173,7 +172,7 @@ export class ServiceGenerator {
 export function parseAllServices(
   options: GeneratorOptions
 ): VdmServiceMetadata[] {
-  return new ServiceGenerator(options).getAllServices();
+  return new ServiceGenerator(options).generateAllServices();
 }
 
 /**
@@ -193,5 +192,5 @@ export function parseService(
   return new ServiceGenerator(options)
     .withServiceMapping(mappings)
     .withGlobalNameFormatter(globalNameFormatter)
-    .getService(serviceDefinitionPaths);
+    .generateService(serviceDefinitionPaths);
 }

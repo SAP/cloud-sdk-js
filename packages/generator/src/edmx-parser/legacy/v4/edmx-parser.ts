@@ -3,7 +3,10 @@
 import { forceArray } from '../../../generator-utils';
 import { parseEntityTypes, parseComplexTypes } from '../common/edmx-parser';
 import { EdmxMetadataBase } from '../common';
-import { parseTypeName, stripNamespace } from '../../../edmx-to-vdm/edmx-to-vdm-util';
+import {
+  parseTypeName,
+  stripNamespace
+} from '../../../edmx-to-vdm/edmx-to-vdm-util';
 import {
   EdmxEntitySet,
   EdmxMetadata,

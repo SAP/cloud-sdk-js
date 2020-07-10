@@ -6,9 +6,7 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport,
-  VdmFunctionImportReturnTypeCategory,
-  VdmFunctionImportReturnTypeNotParsed,
-  VdmFunctionWithoutReturnType
+  VdmFunctionImportReturnTypeCategory
 } from '../../vdm-types';
 import { edmToTsType, isNullableParameter } from '../../generator-utils';
 import { SwaggerPath } from '../../edmx-parser/swagger/swagger-types';
@@ -35,7 +33,7 @@ export function transformFunctionImportBase<T extends EdmxNamed>(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
-): Omit<VdmFunctionWithoutReturnType, 'httpMethod'> {
+): Omit<VdmFunctionImport, 'httpMethod' | 'returnTypeEdmx' | 'returnType'> {
   const functionName = formatter.originalToFunctionImportName(
     edmxFunctionImport.Name
   );
@@ -73,7 +71,7 @@ export function transformFunctionImportBase<T extends EdmxNamed>(
 }
 
 export function parseReturnTypes(
-  functionImports: VdmFunctionImportReturnTypeNotParsed[],
+  functionImports: Omit<VdmFunctionImport, 'returnType'>[],
   entities: VdmEntity[],
   complexTypes: VdmComplexType[]
 ): VdmFunctionImport[] {
@@ -127,7 +125,7 @@ export function parseReturnTypes(
     return complexTypes.find(c => c.originalName === parsedReturnType);
   }
   function withVoid(
-    f: VdmFunctionImportReturnTypeNotParsed
+    f: Omit<VdmFunctionImport, 'returnType'>
   ): VdmFunctionImport {
     const vdmReturnType = {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
@@ -140,7 +138,7 @@ export function parseReturnTypes(
   }
 
   function withEdmx(
-    f: VdmFunctionImportReturnTypeNotParsed,
+    f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,
     edmxType: string
   ): VdmFunctionImport {
@@ -154,7 +152,7 @@ export function parseReturnTypes(
     return { ...f, returnType: vdmReturnType };
   }
   function withEntity(
-    f: VdmFunctionImportReturnTypeNotParsed,
+    f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,
     entity: VdmEntity
   ): VdmFunctionImport {
@@ -168,7 +166,7 @@ export function parseReturnTypes(
     return { ...f, returnType: vdmReturnType };
   }
   function withComplexType(
-    f: VdmFunctionImportReturnTypeNotParsed,
+    f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,
     complexType: VdmComplexType
   ): VdmFunctionImport {

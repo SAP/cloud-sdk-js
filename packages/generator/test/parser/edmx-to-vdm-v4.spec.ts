@@ -1,9 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../src/service-name-formatter';
 import { EdmxProperty } from '../../src/edmx-parser/common/edmx-types';
-import { EdmxEntitySet, EdmxEntityType } from '../../src/edmx-parser/v4/edmx-types';
-import { getComplexTypesV4 } from '../../src/edmx-to-vdm/v4/complex-type';
-import { getEntitiesV4 } from '../../src/edmx-to-vdm/v4/entity';
+import {
+  EdmxEntitySet,
+  EdmxEntityType
+} from '../../src/edmx-parser/v4/edmx-types';
+import { generateComplexTypesV4 } from '../../src/edmx-to-vdm/v4/complex-type';
+import { generateEntitiesV4 } from '../../src/edmx-to-vdm/v4/entity';
 import { ServiceMetadata } from '../../src/edmx-parser/edmx-file-reader';
 
 describe('edmx-to-vdm-v4', () => {
@@ -17,7 +20,7 @@ describe('edmx-to-vdm-v4', () => {
       [createTestEntitySet('TestEntity', 'TestEntityType')]
     );
 
-    const entity = getEntitiesV4(service, [], getFormatter(service))[0];
+    const entity = generateEntitiesV4(service, [], getFormatter(service))[0];
     expect(entity.properties[0]).toMatchObject({
       isCollection: true,
       edmType: 'Edm.String',
@@ -37,9 +40,9 @@ describe('edmx-to-vdm-v4', () => {
     );
 
     const formatter = getFormatter(service);
-    const vdmComplexTypes = getComplexTypesV4(service, formatter);
+    const vdmComplexTypes = generateComplexTypesV4(service, formatter);
 
-    const entity = getEntitiesV4(service, vdmComplexTypes, formatter)[0];
+    const entity = generateEntitiesV4(service, vdmComplexTypes, formatter)[0];
     expect(entity.properties[0]).toMatchObject({
       isCollection: true,
       isComplex: true,
@@ -65,7 +68,7 @@ describe('edmx-to-vdm-v4', () => {
       ]
     );
 
-    const entity = getEntitiesV4(service, [], getFormatter(service))[0];
+    const entity = generateEntitiesV4(service, [], getFormatter(service))[0];
     expect(entity.navigationProperties[0]).toMatchObject({
       from: 'TestEntityType',
       to: 'TestEntity',
@@ -91,7 +94,7 @@ describe('edmx-to-vdm-v4', () => {
       ]
     );
 
-    const entity = getEntitiesV4(service, [], getFormatter(service))[0];
+    const entity = generateEntitiesV4(service, [], getFormatter(service))[0];
     expect(entity.navigationProperties[0]).toMatchObject({
       from: 'TestEntityType',
       to: 'TestEntity',
@@ -125,7 +128,7 @@ describe('edmx-to-vdm-v4', () => {
       ]
     );
 
-    const entity = getEntitiesV4(service, [], getFormatter(service))[0];
+    const entity = generateEntitiesV4(service, [], getFormatter(service))[0];
     expect(entity.properties.length).toBe(3);
     expect(entity.properties[2]).toMatchObject({
       isCollection: true,

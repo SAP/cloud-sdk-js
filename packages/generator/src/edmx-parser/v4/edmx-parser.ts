@@ -7,7 +7,10 @@ import { forceArray } from '../../generator-utils';
 import { joinTypesWithBaseTypes } from '../../edmx-to-vdm/v4/function-import';
 import { joinComplexTypes } from '../../edmx-to-vdm/v4/complex-type';
 import { joinEntityTypes } from '../../edmx-to-vdm/v4/entity';
-import { parseTypeName, stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
+import {
+  parseTypeName,
+  stripNamespace
+} from '../../edmx-to-vdm/edmx-to-vdm-util';
 import {
   EdmxComplexType,
   EdmxEntitySet,

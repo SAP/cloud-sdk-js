@@ -150,14 +150,14 @@ function complexTypeFieldForName(
 }
 
 export function joinEntityMetadata<
-  EntitySetType extends EdmxEntitySetBase,
-  EntityTypeType extends EdmxEntityTypeBase<any>
+  EntitySetT extends EdmxEntitySetBase,
+  EntityTypeT extends EdmxEntityTypeBase<any>
 >(
-  entitySets: EntitySetType[],
-  entityTypes: EntityTypeType[],
+  entitySets: EntitySetT[],
+  entityTypes: EntityTypeT[],
   namespace: string,
   swagger?: SwaggerMetadata
-): JoinedEntityMetadata<EntitySetType, EntityTypeType>[] {
+): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
     // We assume metadata files to have a maximum of two schemas currently
     // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
@@ -171,7 +171,7 @@ export function joinEntityMetadata<
       );
     }
 
-    const joined: JoinedEntityMetadata<EntitySetType, EntityTypeType> = {
+    const joined: JoinedEntityMetadata<EntitySetT, EntityTypeT> = {
       entitySet,
       entityType
     };

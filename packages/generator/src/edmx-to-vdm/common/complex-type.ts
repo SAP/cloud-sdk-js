@@ -32,7 +32,6 @@ function filterUnknownPropertyTypes(p: VdmProperty): boolean {
 export function transformComplexTypesBase(
   complexTypes: EdmxComplexTypeBase[],
   formatter: ServiceNameFormatter
-  // reservedNames: Set<string>
 ): VdmComplexType[] {
   const formattedTypes = complexTypes.reduce(
     (formatted, c) => ({

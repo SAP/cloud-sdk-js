@@ -218,6 +218,7 @@ export const orderBreakfast: VdmFunctionImport = {
     }
   ],
   parametersTypeName: 'Params',
+  returnTypeEdmx: 'Edm.String',
   returnType: {
     builderFunction: '(val) => edmToTs(val, Edm.String)',
     returnType: 'string',

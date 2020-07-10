@@ -2,9 +2,10 @@
 
 import {
   EdmxComplexTypeBase,
-  EdmxEntitySetBase, EdmxEntityTypeBase,
+  EdmxEntitySetBase,
+  EdmxEntityTypeBase,
   EdmxNamed,
-  EdmxParameter, EdmxProperty
+  EdmxParameter
 } from '../common/edmx-types';
 
 export interface EdmxNavigationProperty {
@@ -17,7 +18,8 @@ export interface EdmxNavigationPropertyBinding {
   Target: string;
 }
 
-export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty> & EdmxDerivedType
+export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty> &
+  EdmxDerivedType;
 
 export interface EdmxEntitySet extends EdmxEntitySetBase {
   NavigationPropertyBinding: EdmxNavigationPropertyBinding[];
@@ -47,4 +49,4 @@ export interface EdmxDerivedType extends EdmxNamed {
   BaseType?: string;
 }
 
-export type EdmxComplexType = EdmxComplexTypeBase & EdmxDerivedType
+export type EdmxComplexType = EdmxComplexTypeBase & EdmxDerivedType;

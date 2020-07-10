@@ -14,7 +14,7 @@ export function parseFunctionImports(root): EdmxFunctionImport[] {
   });
 }
 
-export function transformFunctionImportsV2(
+export function getFunctionImportsV2(
   serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmFunctionImportReturnTypeNotParsed[] {

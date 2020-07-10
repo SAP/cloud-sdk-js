@@ -7,19 +7,31 @@ import {
   parseEntityTypesBase,
   transformEntityBase
 } from '../common/entity-parser';
-import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmNavigationProperty
+} from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { isCollection, parseTypeName, stripNamespace } from '../util/parser-util';
+import {
+  isCollection,
+  parseTypeName,
+  stripNamespace
+} from '../util/parser-util';
 import { ServiceMetadata } from '../util/edmx-types';
-import { EdmxEntityTypeBase } from '../common/edmx-types';
-import { EdmxDerivedType, EdmxEntitySet, EdmxEntityType, EdmxEnumType, EdmxNavigationProperty } from './edmx-types';
+import {
+  EdmxEntitySet,
+  EdmxEntityType,
+  EdmxEnumType,
+  EdmxNavigationProperty
+} from './edmx-types';
 import { joinTypesWithBaseTypes } from './function-import-parser';
 
-export function parseEnumTypes(root):EdmxEnumType[]{
+export function parseEnumTypes(root): EdmxEnumType[] {
   return forceArray(root.EnumType);
 }
 
-export function parseEntityType(root): EdmxEntityType[]{
+export function parseEntityType(root): EdmxEntityType[] {
   const entityTypes = parseEntityTypesBase(root, {} as EdmxNavigationProperty);
   return joinTypesWithBaseTypes(
     filterEnumProperties(entityTypes, parseEnumTypes(root)),
@@ -66,7 +78,7 @@ export function parseEntitySets(root): EdmxEntitySet[] {
   }));
 }
 
-export function transformEntitiesV4(
+export function getEntitiesV4(
   serviceMetadata: ServiceMetadata,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter

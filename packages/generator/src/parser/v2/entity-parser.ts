@@ -16,14 +16,11 @@ import {
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { ServiceMetadata } from '../util/edmx-types';
 import { stripNamespace } from '../util/parser-util';
-import {
-  EdmxEntitySetBase,
-  EdmxEntityTypeBase,
-  JoinedEntityMetadata
-} from '../common/edmx-types';
+import { EdmxEntitySetBase, JoinedEntityMetadata } from '../common/edmx-types';
 import {
   EdmxAssociation,
-  EdmxAssociationSet, EdmxEntityType,
+  EdmxAssociationSet,
+  EdmxEntityType,
   EdmxNavigationProperty,
   End,
   JoinedAssociationMetadata
@@ -45,7 +42,7 @@ export function parseAssociation(root): EdmxAssociation[] {
   return forceArray(root.Association);
 }
 
-export function transformEntitiesV2(
+export function getEntitiesV2(
   serviceMetadata: ServiceMetadata,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter

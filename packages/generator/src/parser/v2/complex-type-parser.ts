@@ -11,7 +11,7 @@ function parseComplexTypes(root) {
   return parseComplexTypesBase(root);
 }
 
-export function transformComplexTypesV2(
+export function getComplexTypesV2(
   serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmComplexType[] {

@@ -5,16 +5,16 @@ describe('name-formatter', () => {
   describe('formats name for', () => {
     it('service', () => {
       const formatter = new ServiceNameFormatter([], [], []);
-      expect(ServiceNameFormatter.originalToServiceName('API_BUSINESS_PARTNER')).toBe(
-        'business-partner-service'
-      );
+      expect(
+        ServiceNameFormatter.originalToServiceName('API_BUSINESS_PARTNER')
+      ).toBe('business-partner-service');
     });
 
     it("service ending with 'service'", () => {
       const formatter = new ServiceNameFormatter([], [], []);
-      expect(ServiceNameFormatter.originalToServiceName('API_SOME_SERVICE')).toBe(
-        'some-service'
-      );
+      expect(
+        ServiceNameFormatter.originalToServiceName('API_SOME_SERVICE')
+      ).toBe('some-service');
     });
 
     it('entity', () => {
@@ -83,10 +83,14 @@ describe('name-formatter', () => {
     it('speaking service name from package name', () => {
       const formatter = new ServiceNameFormatter([], [], []);
       expect(
-        ServiceNameFormatter.directoryToSpeakingModuleName('business-partner-service')
+        ServiceNameFormatter.directoryToSpeakingModuleName(
+          'business-partner-service'
+        )
       ).toBe('Business Partner Service');
       expect(
-        ServiceNameFormatter.directoryToSpeakingModuleName('business partner service')
+        ServiceNameFormatter.directoryToSpeakingModuleName(
+          'business partner service'
+        )
       ).toBe('Business Partner Service');
     });
   });

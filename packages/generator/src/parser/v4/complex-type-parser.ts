@@ -6,7 +6,6 @@ import {
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
 import { ServiceMetadata } from '../util/edmx-types';
-import { EdmxComplexTypeBase } from '../common/edmx-types';
 import { joinTypesWithBaseTypes } from './function-import-parser';
 import { EdmxComplexType } from './edmx-types';
 
@@ -24,7 +23,7 @@ export function joinComplexTypes(
   };
 }
 
-export function transformComplexTypesV4(
+export function getComplexTypesV4(
   serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
 ): VdmComplexType[] {

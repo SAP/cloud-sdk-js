@@ -195,10 +195,7 @@ export function joinEntityMetadata<
       );
     }
 
-    const joined: JoinedEntityMetadata<
-      EntitySetType,
-      EntityTypeType
-    > = {
+    const joined: JoinedEntityMetadata<EntitySetType, EntityTypeType> = {
       entitySet,
       entityType
     };

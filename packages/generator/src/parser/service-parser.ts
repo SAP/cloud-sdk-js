@@ -16,16 +16,16 @@ import {
   VdmServiceMetadata,
   VdmServicePackageMetaData
 } from '../vdm-types';
-import { transformFunctionImportsV4 } from './v4/function-import-parser';
-import { transformEntitiesV4 } from './v4/entity-parser';
-import { transformComplexTypesV4 } from './v4/complex-type-parser';
+import { getFunctionImportsV4 } from './v4/function-import-parser';
+import { getEntitiesV4 } from './v4/entity-parser';
+import { getComplexTypesV4 } from './v4/complex-type-parser';
 import { readEdmxFile } from './util/edmx-file-reader';
 import { parseReturnTypes } from './common/function-import-parser';
-import { transformFunctionImportsV2 } from './v2/function-import-parser';
-import { transformEntitiesV2 } from './v2/entity-parser';
+import { getFunctionImportsV2 } from './v2/function-import-parser';
+import { getEntitiesV2 } from './v2/entity-parser';
 import { readSwaggerFile } from './swagger/swagger-parser';
 import { ServiceMetadata } from './util/edmx-types';
-import { transformComplexTypesV2 } from './v2/complex-type-parser';
+import { getComplexTypesV2 } from './v2/complex-type-parser';
 import { isV2Metadata } from './util/parser-util';
 import { apiBusinessHubMetadata } from './swagger/swagger-util';
 
@@ -43,12 +43,6 @@ export class ServiceParser {
     this.globalNameFormatter = new GlobalNameFormatter(this.serviceMapping);
   }
 
-  public parseAllServices(): VdmServiceMetadata[] {
-    return inputPaths(this.options.inputDir, this.options.useSwagger).map(p =>
-      this.parseService(p)
-    );
-  }
-
   public withServiceMapping(serviceMapping: VdmMapping) {
     this.serviceMapping = serviceMapping;
     return this;
@@ -59,8 +53,14 @@ export class ServiceParser {
     return this;
   }
 
+  public parseAllServices(): VdmServiceMetadata[] {
+    return inputPaths(this.options.inputDir, this.options.useSwagger).map(p =>
+      this.parseService(p)
+    );
+  }
+
   /**
-   * Only public for compatibility to [[parseService]]
+   * Only public for compatibility to older versions.
    * @hidden
    * @param serviceDefinitionPaths Path to the service definitions files.
    * @returns the parsed service
@@ -70,11 +70,11 @@ export class ServiceParser {
   ): VdmServiceMetadata {
     const serviceMetadata = this.readEdmxAndSwaggerFile(serviceDefinitionPaths);
 
-    const serviceHeader = this.buildServicePackageMetaData(
+    const serviceHeader = this.getServicePackageMetaData(
       serviceMetadata,
       serviceDefinitionPaths
     );
-    const serviceBody = this.buildServiceEntities(
+    const serviceBody = this.getServiceEntities(
       serviceMetadata,
       serviceDefinitionPaths
     );
@@ -85,7 +85,7 @@ export class ServiceParser {
     };
   }
 
-  private buildServicePackageMetaData(
+  private getServicePackageMetaData(
     serviceMetadata: ServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServicePackageMetaData {
@@ -121,7 +121,7 @@ export class ServiceParser {
     };
   }
 
-  private buildServiceEntities(
+  private getServiceEntities(
     serviceMetadata: ServiceMetadata,
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceEntities {
@@ -132,16 +132,16 @@ export class ServiceParser {
     because the constructor function of a complex type would also be called `create${ComplexTypeName}`.
     */
     const functionImportsWithoutReturnType = isV2Metadata(serviceMetadata.edmx)
-      ? transformFunctionImportsV2(serviceMetadata, formatter)
-      : transformFunctionImportsV4(serviceMetadata, formatter);
+      ? getFunctionImportsV2(serviceMetadata, formatter)
+      : getFunctionImportsV4(serviceMetadata, formatter);
 
     const complexTypes = isV2Metadata(serviceMetadata.edmx)
-      ? transformComplexTypesV2(serviceMetadata, formatter)
-      : transformComplexTypesV4(serviceMetadata, formatter);
+      ? getComplexTypesV2(serviceMetadata, formatter)
+      : getComplexTypesV4(serviceMetadata, formatter);
 
     const entities = isV2Metadata(serviceMetadata.edmx)
-      ? transformEntitiesV2(serviceMetadata, complexTypes, formatter)
-      : transformEntitiesV4(serviceMetadata, complexTypes, formatter);
+      ? getEntitiesV2(serviceMetadata, complexTypes, formatter)
+      : getEntitiesV4(serviceMetadata, complexTypes, formatter);
 
     const functionImports = parseReturnTypes(
       functionImportsWithoutReturnType,

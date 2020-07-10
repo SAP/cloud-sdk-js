@@ -6,10 +6,17 @@ import {
   parseEnumTypes
 } from '../../src/parser/v4/entity-parser';
 import { parseFunctionImports as parseFunctionImportsV2 } from '../../src/parser/v2/function-import-parser';
-import { parseFunctionImports as parseFunctionImportsV4 ,parseFunctions} from '../../src/parser/v4/function-import-parser';
+import {
+  parseFunctionImports as parseFunctionImportsV4,
+  parseFunctions
+} from '../../src/parser/v4/function-import-parser';
 import { parseComplexTypesBase } from '../../src/parser/common/complex-type-parser';
-import { parseAssociation, parseAssociationSets, parseEntitySets as parseEntitySetsV2 } from '../../src/parser/v2/entity-parser';
-import {parseEntityTypes as parseEntityTypesV2} from '../../src/parser/v2/entity-parser';
+import {
+  parseAssociation,
+  parseAssociationSets,
+  parseEntitySets as parseEntitySetsV2,
+  parseEntityTypes as parseEntityTypesV2
+} from '../../src/parser/v2/entity-parser';
 import { parseComplexTypes } from '../../src/parser/v4/complex-type-parser';
 
 describe('edmx-parser', () => {
@@ -25,7 +32,7 @@ describe('edmx-parser', () => {
     expect(parseAssociationSets(metadataEdmx.root).length).toBe(8);
     expect(parseAssociation(metadataEdmx.root).length).toBe(8);
 
-    parseEntityTypesV2(metadataEdmx.root ).forEach(e => {
+    parseEntityTypesV2(metadataEdmx.root).forEach(e => {
       expect(e.Key.PropertyRef).toBeInstanceOf(Array);
       expect(e.NavigationProperty).toBeInstanceOf(Array);
       expect(e.Property).toBeInstanceOf(Array);
@@ -51,7 +58,7 @@ describe('edmx-parser', () => {
   it('v4: parses edmx file to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
       '../../test-resources/service-specs/v4/API_TEST_SRV/API_TEST_SRV.edmx'
-    )
+    );
 
     expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(10);
     expect(parseEntityTypeV4(metadataEdmx.root).length).toBe(11);

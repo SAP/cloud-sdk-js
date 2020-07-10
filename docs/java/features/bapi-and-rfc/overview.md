@@ -309,15 +309,10 @@ Replace every `<placeholder>` with the respective value.
 :::
 
 #### Point JCo to your Destination
-By default, JCo looks for destinations in the work directory of the JVM. When running your app on the local TomEE server, you can put your `.jcoDestination` file into the directory where the environment variable `CATALINE_HOME` points to. 
+JCo considers the system property `jco.destinations.dir` to look for destination files. The property value must be the directory where the destination file resides.
 
-Alternatively, JCo considers the system property `jco.destinations.dir` when it is set.  The property value must be the directory where the destination file resides.
 You can set the property in your Java code like so:
 ```java
 System.setProperty("jco.destinations.dir", "here-comes-the-directory-with-the-destination");
 ```
-
-As of SAP Cloud SDK version `X.Y.Z`, you can utilize the `destinations` environment variable to configure your RFC destination as you know it from HTTP destinations. Therefore you do not need to create a `.jcoDestination` file any longer. Here is you how you define the `destinations` environment variable:
-```bash
-setx destinations "[{\"name\":\"destination-name\",\"jco.client.ashost\":\"host-name\",\"jco.client.client\":\"123\",\"jco.client.sysnr\":\"01\",\"jco.client.user\":\"user\",\"jco.client.passwd\":\"password\"}]\"
-```
+Alternatively, you can pass the property to the JVM via Maven with `-Djco.destinations.dir=here-comes-the-directory-with-the-destination`.

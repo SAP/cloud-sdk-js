@@ -63,18 +63,18 @@ export class ServiceVdmGenerator {
   ): VdmServiceMetadata {
     const serviceMetadata = this.readEdmxAndSwaggerFile(serviceDefinitionPaths);
 
-    const serviceHeader = this.getServicePackageMetaData(
+    const vdmServicePackageMetaData = this.getServicePackageMetaData(
       serviceMetadata,
       serviceDefinitionPaths
     );
-    const serviceBody = this.getServiceEntities(
+    const vdmServiceEntities = this.getServiceEntities(
       serviceMetadata,
       serviceDefinitionPaths
     );
 
     return {
-      ...serviceHeader,
-      ...serviceBody
+      ...vdmServicePackageMetaData,
+      ...vdmServiceEntities
     };
   }
 

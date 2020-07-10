@@ -4,6 +4,10 @@ import {
   parseEntityTypesBase
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
+import { joinTypesWithBaseTypes } from '../../service-vdm/v4/function-import-vdm';
+import { joinComplexTypes } from '../../service-vdm/v4/complex-type-vdm';
+import { joinEntityTypes } from '../../service-vdm/v4/entity-vdm';
+import { parseTypeName, stripNamespace } from '../../service-vdm/vdm-util';
 import {
   EdmxComplexType,
   EdmxEntitySet,
@@ -13,10 +17,6 @@ import {
   EdmxFunctionImport,
   EdmxNavigationProperty
 } from './edmx-types';
-import { joinTypesWithBaseTypes } from '../../service-vdm/v4/function-import-vdm';
-import { joinComplexTypes } from '../../service-vdm/v4/complex-type-vdm';
-import { joinEntityTypes } from '../../service-vdm/v4/entity-vdm';
-import { parseTypeName, stripNamespace } from '../../service-vdm/vdm-util';
 
 export function parseComplexTypes(root): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);

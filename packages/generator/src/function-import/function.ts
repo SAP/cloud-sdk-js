@@ -1,7 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmFunctionImport, VdmServiceMetadata } from '../service-vdm/vdm-types';
+import {
+  VdmFunctionImport,
+  VdmServiceMetadata
+} from '../service-vdm/vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 const parameterName = 'parameters';

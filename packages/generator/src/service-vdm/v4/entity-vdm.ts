@@ -5,11 +5,7 @@ import {
   navigationPropertyBase,
   transformEntityBase
 } from '../common/entity-vdm';
-import {
-  VdmComplexType,
-  VdmEntity,
-  VdmNavigationProperty
-} from '../vdm-types';
+import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxEntitySet, EdmxEntityType } from '../../parser/v4/edmx-types';
 import { parseEntitySets, parseEntityType } from '../../parser/v4/edmx-parser';

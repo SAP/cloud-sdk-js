@@ -17,6 +17,7 @@ import {
   parseReturnType,
   transformFunctionImportBase
 } from '../common/edmx-to-vdm';
+import { stripNamespace } from '../../../service-vdm/vdm-util';
 import {
   EdmxAssociationSet,
   EdmxAssociation,
@@ -24,7 +25,6 @@ import {
   EdmxMetadata,
   EdmxFunctionImport
 } from './parser-types';
-import { stripNamespace } from '../../../service-vdm/vdm-util';
 
 /* eslint-disable valid-jsdoc */
 

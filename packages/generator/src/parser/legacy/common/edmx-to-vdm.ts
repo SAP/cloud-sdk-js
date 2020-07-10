@@ -26,6 +26,7 @@ import {
   isNullableParameter
 } from '../../../generator-utils';
 import { applyPrefixOnJsConfictParam } from '../../../name-formatting-strategies';
+import { isCollection, parseTypeName } from '../../../service-vdm/vdm-util';
 import {
   JoinedEntityMetadata,
   EdmxProperty,
@@ -40,7 +41,6 @@ import {
   EdmxFunctionImportBase,
   ParsedServiceMetadata
 } from './parser-types';
-import { isCollection, parseTypeName } from '../../../service-vdm/vdm-util';
 
 const logger = createLogger({
   package: 'generator',

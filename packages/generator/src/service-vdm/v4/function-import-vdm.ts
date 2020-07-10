@@ -4,7 +4,10 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common/function-import-vdm';
 import { swaggerDefinitionForFunctionImport } from '../../parser/swagger/swagger-parser';
 import { EdmxDerivedType } from '../../parser/v4/edmx-types';
-import { parseFunctionImports, parseFunctions } from '../../parser/v4/edmx-parser';
+import {
+  parseFunctionImports,
+  parseFunctions
+} from '../../parser/v4/edmx-parser';
 import { ServiceMetadata } from '../../parser/edmx-file-reader';
 import { stripNamespace } from '../vdm-util';
 

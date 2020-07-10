@@ -17,10 +17,7 @@ import {
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { SwaggerMetadata } from '../../parser/swagger/swagger-types';
-import {
-  entityDescription,
-  propertyDescription
-} from '../description-util';
+import { entityDescription, propertyDescription } from '../description-util';
 import {
   EdmxEntitySetBase,
   EdmxEntityTypeBase,

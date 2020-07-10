@@ -10,6 +10,9 @@ import {
   VdmMapping
 } from '../service-mapping';
 import { ServiceNameFormatter } from '../service-name-formatter';
+import { readEdmxFile, ServiceMetadata } from '../parser/edmx-file-reader';
+import { readSwaggerFile } from '../parser/swagger/swagger-parser';
+import { apiBusinessHubMetadata } from '../parser/swagger/swagger-util';
 import {
   VdmServiceEntities,
   VdmServiceMetadata,
@@ -18,13 +21,10 @@ import {
 import { getFunctionImportsV4 } from './v4/function-import-vdm';
 import { getEntitiesV4 } from './v4/entity-vdm';
 import { getComplexTypesV4 } from './v4/complex-type-vdm';
-import { readEdmxFile, ServiceMetadata } from '../parser/edmx-file-reader';
 import { parseReturnTypes } from './common/function-import-vdm';
 import { getFunctionImportsV2 } from './v2/function-import-vdm';
 import { getEntitiesV2 } from './v2/entity-vdm';
-import { readSwaggerFile } from '../parser/swagger/swagger-parser';
 import { getComplexTypesV2 } from './v2/complex-type-vdm';
-import { apiBusinessHubMetadata } from '../parser/swagger/swagger-util';
 import { isV2Metadata } from './vdm-util';
 
 export class ServiceVdmGenerator {

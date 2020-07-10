@@ -5,13 +5,12 @@ import {
   navigationPropertyBase,
   transformEntityBase
 } from '../common/entity-vdm';
-import {
-  VdmComplexType,
-  VdmEntity,
-  VdmNavigationProperty
-} from '../vdm-types';
+import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { EdmxEntitySetBase, JoinedEntityMetadata } from '../../parser/common/edmx-types';
+import {
+  EdmxEntitySetBase,
+  JoinedEntityMetadata
+} from '../../parser/common/edmx-types';
 import {
   EdmxAssociation,
   EdmxAssociationSet,

@@ -17,7 +17,13 @@ import {
   parameterDescription
 } from '../description-util';
 import { EdmxNamed, EdmxParameter } from '../../parser/common/edmx-types';
-import { filterUnknownEdmTypes, isCollection, parseType, parseTypeName, propertyJsType } from '../vdm-util';
+import {
+  filterUnknownEdmTypes,
+  isCollection,
+  parseType,
+  parseTypeName,
+  propertyJsType
+} from '../vdm-util';
 
 const logger = createLogger({
   package: 'generator',

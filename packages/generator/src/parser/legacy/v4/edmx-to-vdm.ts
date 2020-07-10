@@ -17,8 +17,8 @@ import {
   swaggerDefinitionForFunctionImport,
   transformFunctionImportBase
 } from '../common/edmx-to-vdm';
-import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 import { isCollection, stripNamespace } from '../../../service-vdm/vdm-util';
+import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 
 /* eslint-disable valid-jsdoc */
 

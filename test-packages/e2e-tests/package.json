@@ -1,0 +1,41 @@
+{
+  "name": "@sap-cloud-sdk/e2e-tests",
+  "version": "1.24.0",
+  "description": "End to end tests of the SAP Cloud SDK for JavaScript",
+  "homepage": "https://www.sap.com/cloud-sdk",
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": "github:SAP/cloud-sdk",
+  "dependencies": {
+    "@sap-cloud-sdk/core": "^1.24.0",
+    "@sap-cloud-sdk/test-services-e2e": "^1.24.0",
+    "@sap/cds": ">=3.33.1",
+    "express": "^4.17.1",
+    "sqlite3": "^4.2.0"
+  },
+  "scripts": {
+    "start:daemon": "pm2 start start.js",
+    "start": "cds run",
+    "deploy:to-sqlite": "cds deploy --to sqlite",
+    "test": "npx jest --coverage"
+  },
+  "cds": {
+    "cdsc": {
+      "odataFormat": "structured"
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite"
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.4",
+    "jest": "^25.2.4",
+    "jest-junit": "^10.0.0",
+    "ts-jest": "^25.4.0",
+    "typescript": "~3.8.3",
+    "axios": "^0.19.2",
+    "pm2": "^4.4.0"
+  }
+}

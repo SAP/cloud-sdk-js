@@ -6,7 +6,7 @@ import {
   StructureKind
 } from 'ts-morph';
 import { getPropertyDescription, addLeadingNewline } from '../typedoc';
-import { VdmComplexType, VdmProperty } from '../edmx-to-vdm/vdm-types';
+import { VdmComplexType, VdmProperty } from '../vdm-types';
 
 export function complexTypeInterface(
   complexType: VdmComplexType

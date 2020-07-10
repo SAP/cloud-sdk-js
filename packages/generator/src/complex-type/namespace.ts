@@ -6,7 +6,7 @@ import {
   StructureKind
 } from 'ts-morph';
 import { unique } from '@sap-cloud-sdk/util';
-import { VdmComplexType, VdmProperty } from '../edmx-to-vdm/vdm-types';
+import { VdmComplexType, VdmProperty } from '../vdm-types';
 
 export function complexTypeNamespace(
   complexType: VdmComplexType

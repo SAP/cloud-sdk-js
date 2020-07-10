@@ -19,7 +19,7 @@ import {
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
-} from '../edmx-to-vdm/vdm-types';
+} from '../vdm-types';
 
 export function entityClass(
   entity: VdmEntity,

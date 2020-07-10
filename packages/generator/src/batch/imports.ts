@@ -2,7 +2,7 @@
 
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { coreImportDeclaration } from '../imports';
-import { VdmServiceMetadata } from '../edmx-to-vdm/vdm-types';
+import { VdmServiceMetadata } from '../vdm-types';
 
 export function importBatchDeclarations(
   service: VdmServiceMetadata

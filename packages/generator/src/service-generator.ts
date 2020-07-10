@@ -17,7 +17,7 @@ import {
   VdmServiceEntities,
   VdmServiceMetadata,
   VdmServicePackageMetaData
-} from './edmx-to-vdm/vdm-types';
+} from './vdm-types';
 import { getFunctionImportsV4 } from './edmx-to-vdm/v4/function-import';
 import { getEntitiesV4 } from './edmx-to-vdm/v4/entity';
 import { getComplexTypesV4 } from './edmx-to-vdm/v4/complex-type';

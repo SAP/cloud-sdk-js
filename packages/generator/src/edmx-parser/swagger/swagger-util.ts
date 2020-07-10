@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { propertyExists } from '@sap-cloud-sdk/util';
-import { ApiBusinessHubMetadata } from '../../edmx-to-vdm/vdm-types';
+import { ApiBusinessHubMetadata } from '../../vdm-types';
 import { SwaggerMetadata } from './swagger-types';
 
 export function apiBusinessHubMetadata(

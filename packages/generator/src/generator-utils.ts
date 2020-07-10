@@ -3,7 +3,7 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/core';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { VdmNavigationProperty } from './edmx-to-vdm/vdm-types';
+import { VdmNavigationProperty } from './vdm-types';
 
 const logger = createLogger({
   package: 'generator',

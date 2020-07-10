@@ -13,7 +13,7 @@ import {
   getFunctionDoc,
   getRequestBuilderDescription
 } from '../typedoc';
-import { VdmEntity } from '../edmx-to-vdm/vdm-types';
+import { VdmEntity } from '../vdm-types';
 
 export function requestBuilderClass(
   entity: VdmEntity

@@ -7,7 +7,7 @@ import {
 import {
   VdmNavigationProperty,
   VdmProperty
-} from '../src/edmx-to-vdm/vdm-types';
+} from '../src/vdm-types';
 
 describe('typedoc', () => {
   it('get normal property description', () => {

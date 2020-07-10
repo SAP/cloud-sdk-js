@@ -13,7 +13,7 @@ import {
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
-} from '../src/edmx-to-vdm/vdm-types';
+} from '../src/vdm-types';
 import {
   bigNumberImport,
   momentImport

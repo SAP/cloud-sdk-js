@@ -9,7 +9,7 @@ import {
   getComplexTypeFieldDescription,
   getComplexTypePropertyDescription
 } from '../typedoc';
-import { VdmComplexType, VdmProperty } from '../edmx-to-vdm/vdm-types';
+import { VdmComplexType, VdmProperty } from '../vdm-types';
 
 export function fieldTypeClass(
   complexType: VdmComplexType

@@ -10,7 +10,7 @@ import {
 import {
   VdmFunctionImport,
   VdmServiceMetadata
-} from '../edmx-to-vdm/vdm-types';
+} from '../vdm-types';
 import { exportStatement } from './export-statement';
 import { functionImportFunction } from './function';
 import { importDeclarations } from './import';

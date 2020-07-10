@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { VdmFunctionImportReturnTypeNotParsed } from '../vdm-types';
+import { VdmFunctionImportReturnTypeNotParsed } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common/function-import';
 import { swaggerDefinitionForFunctionImport } from '../../edmx-parser/swagger/swagger-parser';

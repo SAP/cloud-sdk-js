@@ -39,7 +39,7 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { typedocJson } from './service/typedoc-json';
-import { VdmServiceMetadata } from './edmx-to-vdm/vdm-types';
+import { VdmServiceMetadata } from './vdm-types';
 
 const logger = createLogger({
   package: 'generator',

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { StructureKind } from 'ts-morph';
 import { importDeclarations } from '../../src/function-import/import';
-import { VdmServiceMetadata } from '../../src/edmx-to-vdm/vdm-types';
+import { VdmServiceMetadata } from '../../src/vdm-types';
 import { orderBreakfast } from '../test-util/data-model';
 
 describe('function-import generation', () => {

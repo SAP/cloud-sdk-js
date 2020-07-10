@@ -2,7 +2,7 @@
 
 import { SourceFileStructure, StructureKind } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
-import { VdmEntity } from '../edmx-to-vdm/vdm-types';
+import { VdmEntity } from '../vdm-types';
 import { requestBuilderClass } from './class';
 import { importDeclarations } from './imports';
 

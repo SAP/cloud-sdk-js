@@ -5,7 +5,7 @@ import { ServiceMapping } from '../../src/service-mapping';
 import {
   VdmFunctionImportReturnTypeCategory,
   VdmProperty
-} from '../../src/edmx-to-vdm/vdm-types';
+} from '../../src/vdm-types';
 import { createOptions } from '../test-util/create-generator-options';
 
 describe('service-edmx-parser', () => {

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { helpfulLinksSection } from '../service';
-import { VdmServiceMetadata } from '../edmx-to-vdm/vdm-types';
+import { VdmServiceMetadata } from '../vdm-types';
 
 export function readme(
   services: VdmServiceMetadata[],

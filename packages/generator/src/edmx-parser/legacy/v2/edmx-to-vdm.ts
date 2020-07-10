@@ -6,7 +6,7 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport
-} from '../../../edmx-to-vdm/vdm-types';
+} from '../../../vdm-types';
 import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,

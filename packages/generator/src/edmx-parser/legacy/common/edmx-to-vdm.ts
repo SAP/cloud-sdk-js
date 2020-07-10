@@ -11,7 +11,7 @@ import {
   VdmFunctionImportReturnTypeCategory,
   VdmNavigationProperty,
   VdmFunctionImport
-} from '../../../edmx-to-vdm/vdm-types';
+} from '../../../vdm-types';
 import { ServiceNameFormatter } from '../../../service-name-formatter';
 import {
   isCreatable,

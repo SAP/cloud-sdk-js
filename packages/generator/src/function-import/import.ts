@@ -12,7 +12,7 @@ import {
   VdmFunctionImportReturnType,
   VdmFunctionImportReturnTypeCategory,
   VdmServiceMetadata
-} from '../edmx-to-vdm/vdm-types';
+} from '../vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 export function importDeclarations(

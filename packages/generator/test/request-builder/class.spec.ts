@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { requestBuilderClass } from '../../src/request-builder';
-import { VdmProperty } from '../../src/edmx-to-vdm/vdm-types';
+import { VdmProperty } from '../../src/vdm-types';
 import { breakfastEntity } from '../test-util/data-model';
 
 describe('request builder class', () => {

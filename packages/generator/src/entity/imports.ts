@@ -10,7 +10,7 @@ import {
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmEntity, VdmServiceMetadata } from '../edmx-to-vdm/vdm-types';
+import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 export function importDeclarations(
   entity: VdmEntity,

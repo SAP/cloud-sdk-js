@@ -6,7 +6,7 @@ import {
   isNullableProperty
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmComplexType, VdmProperty } from '../vdm-types';
+import { VdmComplexType, VdmProperty } from '../../vdm-types';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common/edmx-types';

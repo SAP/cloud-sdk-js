@@ -3,7 +3,7 @@ import { readme } from '../../src/service';
 import {
   ApiBusinessHubMetadata,
   VdmServiceMetadata
-} from '../../src/edmx-to-vdm/vdm-types';
+} from '../../src/vdm-types';
 import { getExpectedHelpfulLinks } from '../test-util/readme-util';
 
 const npmPackageName = 'business-partner-service';

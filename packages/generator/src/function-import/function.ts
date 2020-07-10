@@ -4,7 +4,7 @@ import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import {
   VdmFunctionImport,
   VdmServiceMetadata
-} from '../edmx-to-vdm/vdm-types';
+} from '../vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 const parameterName = 'parameters';

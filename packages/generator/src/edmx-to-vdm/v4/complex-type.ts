@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { transformComplexTypesBase } from '../common/complex-type';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmComplexType } from '../vdm-types';
+import { VdmComplexType } from '../../vdm-types';
 import { EdmxComplexType } from '../../edmx-parser/v4/edmx-types';
 import { parseComplexTypes } from '../../edmx-parser/v4/edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';

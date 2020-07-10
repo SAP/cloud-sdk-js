@@ -13,7 +13,7 @@ import {
   VdmEntity,
   VdmNavigationProperty,
   VdmProperty
-} from '../vdm-types';
+} from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { SwaggerMetadata } from '../../edmx-parser/swagger/swagger-types';

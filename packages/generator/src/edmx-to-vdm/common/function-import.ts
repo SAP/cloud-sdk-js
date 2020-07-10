@@ -9,7 +9,7 @@ import {
   VdmFunctionImportReturnTypeCategory,
   VdmFunctionImportReturnTypeNotParsed,
   VdmFunctionWithoutReturnType
-} from '../vdm-types';
+} from '../../vdm-types';
 import { edmToTsType, isNullableParameter } from '../../generator-utils';
 import { SwaggerPath } from '../../edmx-parser/swagger/swagger-types';
 import {

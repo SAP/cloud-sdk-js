@@ -5,8 +5,12 @@ import {
   Field,
   StringFilterFunction,
   BooleanFilterFunction,
-  NumberFilterFunction
+  NumberFilterFunction,
+  FilterFunctionPrimitiveParameterType,
+  FieldType,
+  CollectionField
 } from '../common';
+import { CollectionFilterFunction } from '../common/filter/collection-filter-function';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
 
@@ -22,7 +26,7 @@ export function contains<EntityT extends Entity>(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('contains', 'bool', substr, str);
+  return filterFunction('contains', 'boolean', substr, str);
 }
 
 /**
@@ -35,7 +39,7 @@ export function matchesPattern<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   regex: string
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('matchesPattern', 'bool', str, regex);
+  return filterFunction('matchesPattern', 'boolean', str, regex);
 }
 
 /* Date Functions */
@@ -89,6 +93,54 @@ export function now<EntityT extends Entity>(): NumberFilterFunction<EntityT> {
   return filterFunction('now', 'decimal');
 }
 
+/* Collection functions */
+/**
+ * Build a filter function to test whether a set is a subset of the other, i. e. wheter the second parameter can be transformed into the first by reordering and / or removing items. Evaluates to boolean.
+ * @param subset - The subset to test for. This can either be an array, a reference to a field or another filter function.
+ * @param set - The set to test. This can either be an array, a reference to a field or another filter function.
+ *
+ * @returns The newly created filter function
+ */
+export function hasSubset<
+  EntityT extends Entity,
+  ParamT extends FilterFunctionPrimitiveParameterType,
+  ReturnT extends FieldType
+>(
+  subset:
+    | ParamT[]
+    | CollectionField<EntityT>
+    | CollectionFilterFunction<EntityT, ReturnT>,
+  set:
+    | ParamT[]
+    | CollectionField<EntityT>
+    | CollectionFilterFunction<EntityT, ReturnT>
+): BooleanFilterFunction<EntityT> {
+  return filterFunction('hassubset', 'boolean', subset, set);
+}
+
+/**
+ * Build a filter function to test whether a set is a subsequence of the other, i. e. wheter the second parameter can be transformed into the first by removing items. Evaluates to boolean.
+ * @param subsequence - The subsequence to test for. This can either be an array, a reference to a field or another filter function.
+ * @param sequence - The sequence to test. This can either be an array, a reference to a field or another filter function.
+ *
+ * @returns The newly created filter function
+ */
+export function hasSubsequence<
+  EntityT extends Entity,
+  ParamT extends FilterFunctionPrimitiveParameterType,
+  ReturnT extends FieldType
+>(
+  subsequence:
+    | ParamT[]
+    | Field<EntityT>
+    | CollectionFilterFunction<EntityT, ReturnT>,
+  sequence:
+    | ParamT[]
+    | Field<EntityT>
+    | CollectionFilterFunction<EntityT, ReturnT>
+): BooleanFilterFunction<EntityT> {
+  return filterFunction('hassubsequence', 'boolean', subsequence, sequence);
+}
 /**
  * TODO: totalseconds, time
  */

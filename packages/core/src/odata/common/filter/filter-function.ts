@@ -9,7 +9,7 @@ import { FilterFunctionParameterType } from './filter-function-base';
 
 export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
-  returnType: 'boolean' | 'bool',
+  returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
@@ -56,7 +56,6 @@ export function createFilterFunction<EntityT extends EntityBase>(
   | NumberFilterFunction<EntityT>
   | StringFilterFunction<EntityT> {
   switch (returnType) {
-    case 'bool':
     case 'boolean':
       return new BooleanFilterFunction(functionName, parameters);
     case 'string':
@@ -72,7 +71,7 @@ export function createFilterFunction<EntityT extends EntityBase>(
   }
 }
 
-const numberReturnTypeMapping: MapType<
+export const numberReturnTypeMapping: MapType<
   'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
 > = {
   int: 'Edm.Int32',
@@ -82,7 +81,6 @@ const numberReturnTypeMapping: MapType<
 
 export type FilterFunctionReturnType =
   | 'boolean'
-  | 'bool'
   | 'int'
   | 'double'
   | 'decimal'

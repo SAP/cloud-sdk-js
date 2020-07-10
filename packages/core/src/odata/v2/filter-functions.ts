@@ -16,7 +16,7 @@ export function substringOf<EntityT extends Entity>(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunction('substringof', 'bool', substr, str);
+  return filterFunction('substringof', 'boolean', substr, str);
 }
 
 /**

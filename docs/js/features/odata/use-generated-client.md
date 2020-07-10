@@ -467,7 +467,7 @@ A changeset is a collection of HTTP `POST`, `PUT`, `PATCH` and `DELETE` operatio
 
 In the example below, a list of adresses is mapped in an [UpdateRequestBuilder](#update-request-builder) to form the update requests, which are then wrapped in a changeset and passed to the batch function.
 
-The batch request will return a single `Batchresponse` in a list, which is stored in `updateChangesetResponse`.
+The batch request will return a single `BatchResponse` in a list, which is stored in the `updateChangesetResponse` variable.
 
 ```ts
 updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])

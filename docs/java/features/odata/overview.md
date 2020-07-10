@@ -1,10 +1,10 @@
 ---
 id: overview
-title: OData with the Cloud SDK for Java
+title: OData with Cloud SDK for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Overview
-description: This article provides an overview of how the SAP Cloud SDK for Java supports connecting to OData services. 
+description: This article provides an overview of how the SAP Cloud SDK for Java supports connecting to OData services.
 keywords:
 - sap
 - cloud
@@ -15,6 +15,13 @@ keywords:
 - client
 - generate
 ---
+
+## Supported OData versions
+| Version  | SAP Cloud SDK V3 |
+|----------|------------------|
+| OData v2 | &#10003;         |
+| OData v4 | &#10003;         |
+
 
 ## What is OData?
 
@@ -31,4 +38,51 @@ The Cloud SDK supports consumption of OData services through the following featu
 - A generator (available as command line interface and Maven plugin) that is capable of generating typed OData clients from service definitions (OData metadata documents)
 - Java Virtual Data Model (VDM): pre-generated typed OData client for [all OData services of SAP S/4HANA Cloud](https://api.sap.com/package/SAPS4HANACloud?section=Artifacts)
 
-The SDK supports both OData v2 and OData v4 protocols. However, parts of the v4 implementation are still in beta and not all features are supported yet.
+The SDK supports both OData v2 and OData v4 protocols.
+
+## OData features supported by SAP Cloud SDK for Java
+
+| Feature                             | OData V4 | OData V2 | Comment | Example Query |
+|-------------------------------------|----------|----------|---------|---------------|
+| GetAll                              | &#10003; | &#10003; |         |               |
+| GetByKey                            | &#10003; | &#10003; |         |               |
+| Create                              | &#10003; | &#10003; |         |               |
+| Update                              | &#10003; | &#10003; |         |               |
+| Delete                              | &#10003; | &#10003; |         |               |
+| Deep Create                         | &#10003; | &#10003; |         |               |
+| Deep Update                         | &#10003; | n/a      |         |               |
+| Deep Delete                         |          |          |         |               |
+| Basic Select                        | &#10003; | &#10003; |         |               |
+| Select on Navigation property       |          |          |         |               |
+| Basic Expand                        | &#10003; | &#10003; |         |               |
+| Expand on Navigation property       | &#10003; |          |         |               |
+| Basic Filter                        | &#10003; | &#10003; |         |               |
+| Filter on Enum property             |          |          |         |               |
+| Filter on Complex type              | &#10003; |          |         |               |
+| Filter on Navigation property       | &#10003; |          |         |               |
+| Basic OrderBy                       | &#10003; | &#10003; |         |               |
+| OrderBy on Navigation property      | &#10003; |          |         |               |
+| Create on Navigation property       | &#10003; |          |         |               |
+| Update on Navigation property       | &#10003; |          |         |               |
+| Delete on Navigation property       | &#10003; |          |         |               |
+| Top and Skip                        | &#10003; |          |         |               |
+| Top and Skip on Navigation property | &#10003; |          |         |               |
+| Count                               | &#10003; | &#10003; |         |               |
+| Count on Navigation property        | &#10003; |          |         |               |
+| Search                              | &#10003; |          |         |               |
+| Any/All for Entity collections      |          |          |         |               |
+| Any/All for Primitive types         | &#10003; |          |         |               |
+| Unbound Functions                   | &#10003; | &#10003; |         |               |
+| Bound Functions                     |          |          |         |               |
+| Unbound Actions                     | &#10003; |          |         |               |
+| Bound Actions                       |          |          |         |               |
+| Etag handling                       | &#10003; |          |         |               |
+| CSRF token handling                 | &#10003; |          |         |               |
+| Derived Entity (Inheritance)        | &#10003; |          |         |               |
+| Requesting Derived Entity           |          |          |         |               |
+| Filter on Derived Entity            |          |          |         |               |
+| Create on Derived Entity            |          |          |         |               |
+| Update on Derived Entity            |          |          |         |               |
+| Delete on Derive Entity             |          |          |         |               |
+| Batch                               |          | &#10003; |         |               |
+|                                     |          |          |         |               |

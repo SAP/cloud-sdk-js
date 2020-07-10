@@ -18,12 +18,12 @@ import { ServiceMetadata } from '../util/edmx-types';
 import { stripNamespace } from '../util/parser-util';
 import {
   EdmxEntitySetBase,
-  EdmxEntityType,
+  EdmxEntityTypeBase,
   JoinedEntityMetadata
 } from '../common/edmx-types';
 import {
   EdmxAssociation,
-  EdmxAssociationSet,
+  EdmxAssociationSet, EdmxEntityType,
   EdmxNavigationProperty,
   End,
   JoinedAssociationMetadata
@@ -33,7 +33,7 @@ export function parseEntitySets(root): EdmxEntitySetBase[] {
   return parseEntitySetsBase(root);
 }
 
-function parseEntityType(root): EdmxEntityType<EdmxNavigationProperty>[] {
+export function parseEntityTypes(root): EdmxEntityType[] {
   return parseEntityTypesBase(root, {} as EdmxNavigationProperty);
 }
 
@@ -51,7 +51,7 @@ export function transformEntitiesV2(
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
   const entitySets = parseEntitySets(serviceMetadata.edmx.root);
-  const entityTypes = parseEntityType(serviceMetadata.edmx.root);
+  const entityTypes = parseEntityTypes(serviceMetadata.edmx.root);
   const entitiesMetadata = joinEntityMetadata(
     entitySets,
     entityTypes,
@@ -77,7 +77,7 @@ export function transformEntitiesV2(
 }
 
 function navigationProperties(
-  entity: JoinedEntityMetadata<EdmxEntitySetBase, EdmxNavigationProperty>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase, EdmxEntityType>,
   associations: JoinedAssociationMetadata[],
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter

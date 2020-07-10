@@ -1,12 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { mockEntityTypes } from './edmx-file-mocks';
 import { ServiceNameFormatter } from '../../src/service-name-formatter';
 import {
-  EdmxEntityType,
   EdmxProperty
 } from '../../src/parser/common/edmx-types';
 import {
-  EdmxEntitySet, EdmxNavigationProperty
+  EdmxEntitySet, EdmxEntityType, EdmxNavigationProperty
 } from '../../src/parser/v4/edmx-types';
 import { transformComplexTypesV4 } from '../../src/parser/v4/complex-type-parser';
 import { ServiceMetadata } from '../../src/parser/util/edmx-types';
@@ -157,7 +155,7 @@ function getFormatter(service: ServiceMetadata) {
 }
 
 function createTestServiceData(
-  entityTypes: EdmxEntityType<EdmxNavigationProperty>[],
+  entityTypes: EdmxEntityType[],
   entitySets: EdmxEntitySet[]
 ): ServiceMetadata {
   const service: ServiceMetadata = {
@@ -169,7 +167,14 @@ function createTestServiceData(
       root: {
         EntityContainer :{
           EntitySet:entitySets
-        }
+        },
+        EntityType:entityTypes,
+        ComplexType: [
+          {
+            Name: 'TestComplexType',
+            Property: [createTestProperty('ComplexTypeProp', 'Edm.String')]
+          }
+        ]
       }
     }
   };
@@ -181,7 +186,7 @@ function createEntityType(
   name: string,
   properties: [string, string, boolean][],
   navigationProperties: [string, string][] = []
-): EdmxEntityType<EdmxNavigationProperty> {
+): EdmxEntityType {
   return {
     'sap:content-version': '',
     Key: {

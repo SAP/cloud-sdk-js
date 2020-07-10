@@ -18,14 +18,14 @@ import {
 } from '../util/parser-util';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../util/description-util';
-import { EdmxComplexType } from './edmx-types';
+import { EdmxComplexTypeBase } from './edmx-types';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-complex-type-parser'
 });
 
-export function parseComplexTypesBase(root): EdmxComplexType[] {
+export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
   return forceArray(root.ComplexType).map(c => {
     c.Property = forceArray(c.Property);
     return c;
@@ -33,7 +33,7 @@ export function parseComplexTypesBase(root): EdmxComplexType[] {
 }
 
 export function transformComplexTypesBase(
-  complexTypes: EdmxComplexType[],
+  complexTypes: EdmxComplexTypeBase[],
   formatter: ServiceNameFormatter
   // reservedNames: Set<string>
 ): VdmComplexType[] {

@@ -12,11 +12,11 @@ import {
   EdmxFunctionImport
 } from './edmx-types';
 
-function parseFunctionImports(root): EdmxFunctionImport[] {
+export function parseFunctionImports(root): EdmxFunctionImport[] {
   return forceArray(root.EntityContainer.FunctionImport);
 }
 
-function parseFunctions(root): EdmxFunction[] {
+export function parseFunctions(root): EdmxFunction[] {
   return forceArray(root.Function).map(f => {
     f.Parameter = forceArray(f.Parameter);
     return f;

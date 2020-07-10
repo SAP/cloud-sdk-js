@@ -11,25 +11,27 @@ import { VdmComplexType, VdmEntity, VdmNavigationProperty } from '../../vdm-type
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { isCollection, parseTypeName, stripNamespace } from '../util/parser-util';
 import { ServiceMetadata } from '../util/edmx-types';
-import { EdmxEntityType } from '../common/edmx-types';
-import { EdmxEntitySet, EdmxEnumType, EdmxNavigationProperty } from './edmx-types';
+import { EdmxEntityTypeBase } from '../common/edmx-types';
+import { EdmxDerivedType, EdmxEntitySet, EdmxEntityType, EdmxEnumType, EdmxNavigationProperty } from './edmx-types';
 import { joinTypesWithBaseTypes } from './function-import-parser';
-import { parseEntitySets } from './test-for-mocking';
 
-export function parseEntityType(root): EdmxEntityType<EdmxNavigationProperty>[] {
+export function parseEnumTypes(root):EdmxEnumType[]{
+  return forceArray(root.EnumType);
+}
+
+export function parseEntityType(root): EdmxEntityType[]{
   const entityTypes = parseEntityTypesBase(root, {} as EdmxNavigationProperty);
-  const enumTypes = forceArray(root.EnumType);
   return joinTypesWithBaseTypes(
-    filterEnumProperties(entityTypes, enumTypes),
+    filterEnumProperties(entityTypes, parseEnumTypes(root)),
     joinEntityTypes
   );
 }
 
 // TODO: Filters enum properties as long as those are not supported
 function filterEnumProperties(
-  entityTypes: EdmxEntityType<EdmxNavigationProperty>[],
+  entityTypes: EdmxEntityType[],
   enumTypes: EdmxEnumType[]
-): EdmxEntityType<EdmxNavigationProperty>[] {
+): EdmxEntityType[] {
   const enumTypeNames = enumTypes.map(enumType => enumType.Name);
   return entityTypes.map(entityType => ({
     ...entityType,
@@ -40,9 +42,9 @@ function filterEnumProperties(
 }
 
 export function joinEntityTypes(
-  entityType: EdmxEntityType<EdmxNavigationProperty>,
-  baseType: EdmxEntityType<EdmxNavigationProperty>
-): EdmxEntityType<EdmxNavigationProperty> {
+  entityType: EdmxEntityType,
+  baseType: EdmxEntityType
+): EdmxEntityType {
   // TODO: only join properties / nav properties of the respective type
   return {
     ...entityType,
@@ -55,6 +57,13 @@ export function joinEntityTypes(
       ...baseType.NavigationProperty
     ]
   };
+}
+
+export function parseEntitySets(root): EdmxEntitySet[] {
+  return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
+    ...entitySet,
+    NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)
+  }));
 }
 
 export function transformEntitiesV4(
@@ -85,7 +94,7 @@ export function transformEntitiesV4(
 }
 
 function navigationProperties(
-  entityType: EdmxEntityType<EdmxNavigationProperty>,
+  entityType: EdmxEntityType,
   entitySet: EdmxEntitySet,
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter

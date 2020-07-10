@@ -32,7 +32,7 @@ import {
 } from '../util/description-util';
 import {
   EdmxEntitySetBase,
-  EdmxEntityType,
+  EdmxEntityTypeBase,
   EdmxNamed,
   JoinedEntityMetadata
 } from './edmx-types';
@@ -50,7 +50,7 @@ export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
 export function parseEntityTypesBase<NavigationType>(
   root,
   foo: NavigationType
-): EdmxEntityType<NavigationType>[] {
+): EdmxEntityTypeBase<NavigationType>[] {
   return forceArray(root.EntityType).map(e => {
     if (!e.Key) {
       e.Key = {};
@@ -175,13 +175,13 @@ function complexTypeFieldForName(
 
 export function joinEntityMetadata<
   EntitySetType extends EdmxEntitySetBase,
-  NavigationPropertyType
+  EntityTypeType extends EdmxEntityTypeBase<any>
 >(
   entitySets: EntitySetType[],
-  entityTypes: EdmxEntityType<NavigationPropertyType>[],
+  entityTypes: EntityTypeType[],
   namespace: string,
   swagger?: SwaggerMetadata
-): JoinedEntityMetadata<EntitySetType, NavigationPropertyType>[] {
+): JoinedEntityMetadata<EntitySetType, EntityTypeType>[] {
   return entitySets.map(entitySet => {
     // We assume metadata files to have a maximum of two schemas currently
     // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
@@ -197,7 +197,7 @@ export function joinEntityMetadata<
 
     const joined: JoinedEntityMetadata<
       EntitySetType,
-      NavigationPropertyType
+      EntityTypeType
     > = {
       entitySet,
       entityType

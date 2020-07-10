@@ -6,10 +6,11 @@ import {
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
 import { ServiceMetadata } from '../util/edmx-types';
-import { EdmxComplexType } from '../common/edmx-types';
+import { EdmxComplexTypeBase } from '../common/edmx-types';
 import { joinTypesWithBaseTypes } from './function-import-parser';
+import { EdmxComplexType } from './edmx-types';
 
-function parseComplexType(root): EdmxComplexType[] {
+export function parseComplexTypes(root): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);
 }
 
@@ -28,7 +29,7 @@ export function transformComplexTypesV4(
   formatter: ServiceNameFormatter
 ): VdmComplexType[] {
   return transformComplexTypesBase(
-    parseComplexType(serviceMetadata.edmx.root),
+    parseComplexTypes(serviceMetadata.edmx.root),
     formatter
   );
 }

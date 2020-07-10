@@ -39,6 +39,13 @@ export class ServiceNameFormatter {
   } = {};
 
   constructor();
+  /**
+   * @deprecated since version 1.25.0. The name formatters for the sets, types and function imports are initialized lazy now so there is no need to pass the names beforehand.
+   * Use the argument free constructor instead.
+   * @param entitySetNames The entity set names.
+   * @param complexTypeNames The complex type names.
+   * @param functionImportNames Then function import names.
+   */
   constructor(
     entitySetNames: string[],
     complexTypeNames: string[],

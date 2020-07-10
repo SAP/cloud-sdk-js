@@ -1,9 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import {
-  EdmxEntitySetBase,
+  EdmxComplexTypeBase,
+  EdmxEntitySetBase, EdmxEntityTypeBase,
   EdmxNamed,
-  EdmxParameter
+  EdmxParameter, EdmxProperty
 } from '../common/edmx-types';
 
 export interface EdmxNavigationProperty {
@@ -15,6 +16,8 @@ export interface EdmxNavigationPropertyBinding {
   Path: string;
   Target: string;
 }
+
+export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty> & EdmxDerivedType
 
 export interface EdmxEntitySet extends EdmxEntitySetBase {
   NavigationPropertyBinding: EdmxNavigationPropertyBinding[];
@@ -43,3 +46,5 @@ export interface EdmxFunction extends EdmxNamed {
 export interface EdmxDerivedType extends EdmxNamed {
   BaseType?: string;
 }
+
+export type EdmxComplexType = EdmxComplexTypeBase & EdmxDerivedType

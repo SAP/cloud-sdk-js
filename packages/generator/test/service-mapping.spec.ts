@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { serviceMapping, VdmMapping } from '../src/service-mapping';
-import { VdmServiceMetadata } from '../src/vdm-types';
+import { VdmServiceMetadata } from '../src/service-vdm/vdm-types';
 
 describe('service-mapping', () => {
   it('generates a valid VdmMapping from service metadata', () => {

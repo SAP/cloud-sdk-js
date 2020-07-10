@@ -1,13 +1,11 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
+import { EdmxMetadataBase } from '../parser/edmx-file-reader';
+import { EdmxProperty } from '../parser/common/edmx-types';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EdmxProperty } from '../common/edmx-types';
-import { edmToTsType } from '../../generator-utils';
-import { EdmxMetadataBase } from './edmx-types';
+import { edmToTsType } from '../generator-utils';
 
 const logger = createLogger({
   package: 'generator',
-  messageContext: 'parser-util'
+  messageContext: 'vdm-util'
 });
 
 export function stripNamespace(name: string): string {
@@ -15,11 +13,11 @@ export function stripNamespace(name: string): string {
   return nameParts[nameParts.length - 1];
 }
 
-const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
-
 export function isCollection(typeName: string): boolean {
   return collectionRegExp.test(typeName);
 }
+
+export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 export function parseTypeName(typeName: string): string {
   return isCollection(typeName) ? parseCollectionTypeName(typeName) : typeName;

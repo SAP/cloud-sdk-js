@@ -7,7 +7,6 @@ import {
   VdmEntity,
   VdmFunctionImport
 } from '../../../service-vdm/vdm-types';
-import { stripNamespace } from '../../util/parser-util';
 import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,
@@ -25,6 +24,7 @@ import {
   EdmxMetadata,
   EdmxFunctionImport
 } from './parser-types';
+import { stripNamespace } from '../../../service-vdm/vdm-util';
 
 /* eslint-disable valid-jsdoc */
 

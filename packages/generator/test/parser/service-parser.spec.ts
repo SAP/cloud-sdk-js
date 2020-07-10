@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GlobalNameFormatter } from '../../src/global-name-formatter';
-import { ServiceVdmGenerator } from '../../src/parser';
+import { ServiceVdmGenerator } from '../../src/service-vdm';
 import { ServiceMapping } from '../../src/service-mapping';
 import {
   VdmFunctionImportReturnTypeCategory,
   VdmProperty
-} from '../../src/vdm-types';
+} from '../../src/service-vdm/vdm-types';
 import { createOptions } from '../test-util/create-generator-options';
 
 describe('service-parser', () => {

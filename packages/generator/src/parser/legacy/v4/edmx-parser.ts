@@ -2,7 +2,6 @@
 
 import { forceArray } from '../../../generator-utils';
 import { parseEntityTypes, parseComplexTypes } from '../common/edmx-parser';
-import { stripNamespace, parseTypeName } from '../../util/parser-util';
 import { EdmxMetadataBase } from '../common';
 import {
   EdmxEntitySet,
@@ -13,6 +12,7 @@ import {
   EdmxComplexType,
   EdmxFunction
 } from './parser-types';
+import { parseTypeName, stripNamespace } from '../../../service-vdm/vdm-util';
 
 /* eslint-disable valid-jsdoc */
 

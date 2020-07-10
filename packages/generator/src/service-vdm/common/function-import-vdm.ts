@@ -13,17 +13,11 @@ import {
 import { edmToTsType, isNullableParameter } from '../../generator-utils';
 import { SwaggerPath } from '../../parser/swagger/swagger-types';
 import {
-  filterUnknownEdmTypes,
-  isCollection,
-  parseType,
-  parseTypeName,
-  propertyJsType
-} from '../../parser/util/parser-util';
-import {
   functionImportDescription,
   parameterDescription
-} from '../../parser/util/description-util';
+} from '../description-util';
 import { EdmxNamed, EdmxParameter } from '../../parser/common/edmx-types';
+import { filterUnknownEdmTypes, isCollection, parseType, parseTypeName, propertyJsType } from '../vdm-util';
 
 const logger = createLogger({
   package: 'generator',

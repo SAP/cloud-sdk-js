@@ -1,19 +1,19 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { toTitleFormat } from '@sap-cloud-sdk/core';
-import { endWithDot, ensureString } from '../../generator-utils';
+import { endWithDot, ensureString } from '../generator-utils';
 import {
   EdmxDocumented,
   EdmxEntitySetBase,
   EdmxParameter,
   EdmxProperty,
   JoinedEntityMetadata
-} from '../common/edmx-types';
+} from '../parser/common/edmx-types';
 import {
   SwaggerDescribed,
   SwaggerPath,
   SwaggerPathParameter,
   SwaggerProperty
-} from '../swagger/swagger-types';
+} from '../parser/swagger/swagger-types';
 
 export function longDescription(
   documented: EdmxDocumented,

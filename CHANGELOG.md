@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- Refactored the service vdm generation and deprecated old flow.
 
 ## Fixed Issues
 

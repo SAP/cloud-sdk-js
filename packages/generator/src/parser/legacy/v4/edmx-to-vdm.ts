@@ -7,7 +7,6 @@ import {
   VdmFunctionImport
 } from '../../../service-vdm/vdm-types';
 import { ServiceNameFormatter } from '../../../service-name-formatter';
-import { isCollection, stripNamespace } from '../../util/parser-util';
 import { JoinedEntityMetadata, ParsedServiceMetadata } from '../common';
 import {
   joinEntityMetadata,
@@ -19,6 +18,7 @@ import {
   transformFunctionImportBase
 } from '../common/edmx-to-vdm';
 import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
+import { isCollection, stripNamespace } from '../../../service-vdm/vdm-util';
 
 /* eslint-disable valid-jsdoc */
 

@@ -1,11 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  isCollection,
-  parseTypeName,
-  stripNamespace
-} from '../../src/parser/util/parser-util';
+import { isCollection, parseTypeName, stripNamespace } from '../../src/service-vdm/vdm-util';
 
 describe('parser-util', () => {
   it('strips namespace', () => {

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { readEdmxFile } from '../../src/parser/util/edmx-file-reader';
+import { readEdmxFile } from '../../src/parser/edmx-file-reader';
 import { parseComplexTypesBase } from '../../src/parser/common/edmx-parser';
 import {
   parseAssociation,

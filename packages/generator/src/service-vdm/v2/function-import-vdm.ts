@@ -2,9 +2,9 @@
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common/function-import-vdm';
 import { VdmFunctionImportReturnTypeNotParsed } from '../vdm-types';
-import { ServiceMetadata } from '../../parser/util/edmx-types';
 import { swaggerDefinitionForFunctionImport } from '../../parser/swagger/swagger-parser';
 import { parseFunctionImports } from '../../parser/v2/edmx-parser';
+import { ServiceMetadata } from '../../parser/edmx-file-reader';
 
 export function getFunctionImportsV2(
   serviceMetadata: ServiceMetadata,

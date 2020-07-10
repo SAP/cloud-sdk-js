@@ -11,10 +11,10 @@ import {
   VdmNavigationProperty
 } from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { isCollection } from '../../parser/util/parser-util';
-import { ServiceMetadata } from '../../parser/util/edmx-types';
 import { EdmxEntitySet, EdmxEntityType } from '../../parser/v4/edmx-types';
 import { parseEntitySets, parseEntityType } from '../../parser/v4/edmx-parser';
+import { ServiceMetadata } from '../../parser/edmx-file-reader';
+import { isCollection } from '../vdm-util';
 
 export function joinEntityTypes(
   entityType: EdmxEntityType,

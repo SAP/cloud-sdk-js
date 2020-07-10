@@ -7,6 +7,9 @@ import {
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
+import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
+import { propertyDescription } from '../description-util';
+import { EdmxComplexTypeBase } from '../../parser/common/edmx-types';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
@@ -14,10 +17,7 @@ import {
   isComplexType,
   parseType,
   parseTypeName
-} from '../../parser/util/parser-util';
-import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { propertyDescription } from '../../parser/util/description-util';
-import { EdmxComplexTypeBase } from '../../parser/common/edmx-types';
+} from '../vdm-util';
 
 const logger = createLogger({
   package: 'generator',

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { readme } from '../../src/aggregator-package';
-import { VdmServiceMetadata } from '../../src/vdm-types';
+import { VdmServiceMetadata } from '../../src/service-vdm/vdm-types';
 import { getExpectedHelpfulLinks } from '../test-util/readme-util';
 
 describe('aggregator package readme', () => {

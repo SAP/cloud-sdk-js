@@ -11,8 +11,6 @@ import {
   VdmNavigationProperty
 } from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { ServiceMetadata } from '../../parser/util/edmx-types';
-import { stripNamespace } from '../../parser/util/parser-util';
 import { EdmxEntitySetBase, JoinedEntityMetadata } from '../../parser/common/edmx-types';
 import {
   EdmxAssociation,
@@ -27,6 +25,8 @@ import {
   parseEntitySets,
   parseEntityTypes
 } from '../../parser/v2/edmx-parser';
+import { ServiceMetadata } from '../../parser/edmx-file-reader';
+import { stripNamespace } from '../vdm-util';
 
 export function getEntitiesV2(
   serviceMetadata: ServiceMetadata,

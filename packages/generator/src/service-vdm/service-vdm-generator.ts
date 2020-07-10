@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from '../generator-options';
 import { npmCompliantName } from '../generator-utils';
 import { GlobalNameFormatter } from '../global-name-formatter';
@@ -19,20 +18,14 @@ import {
 import { getFunctionImportsV4 } from './v4/function-import-vdm';
 import { getEntitiesV4 } from './v4/entity-vdm';
 import { getComplexTypesV4 } from './v4/complex-type-vdm';
-import { readEdmxFile } from '../parser/util/edmx-file-reader';
+import { readEdmxFile, ServiceMetadata } from '../parser/edmx-file-reader';
 import { parseReturnTypes } from './common/function-import-vdm';
 import { getFunctionImportsV2 } from './v2/function-import-vdm';
 import { getEntitiesV2 } from './v2/entity-vdm';
 import { readSwaggerFile } from '../parser/swagger/swagger-parser';
-import { ServiceMetadata } from '../parser/util/edmx-types';
 import { getComplexTypesV2 } from './v2/complex-type-vdm';
-import { isV2Metadata } from '../parser/util/parser-util';
 import { apiBusinessHubMetadata } from '../parser/swagger/swagger-util';
-
-const logger = createLogger({
-  package: 'generator',
-  messageContext: 'service-parser'
-});
+import { isV2Metadata } from './vdm-util';
 
 export class ServiceVdmGenerator {
   private globalNameFormatter: GlobalNameFormatter;

@@ -3,8 +3,8 @@ import { ServiceNameFormatter } from '../../src/service-name-formatter';
 import { EdmxProperty } from '../../src/parser/common/edmx-types';
 import { EdmxEntitySet, EdmxEntityType } from '../../src/parser/v4/edmx-types';
 import { getComplexTypesV4 } from '../../src/service-vdm/v4/complex-type-vdm';
-import { ServiceMetadata } from '../../src/parser/util/edmx-types';
 import { getEntitiesV4 } from '../../src/service-vdm/v4/entity-vdm';
+import { ServiceMetadata } from '../../src/parser/edmx-file-reader';
 
 describe('edmx-to-vdm-v4', () => {
   it('transforms collection type properties for primitive types', () => {

@@ -4,13 +4,22 @@ import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
 import { parse } from 'fast-xml-parser';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
-import { forceArray } from '../../generator-utils';
-import { EdmxMetadataBase } from './edmx-types';
+import { forceArray } from '../generator-utils';
+import { SwaggerMetadata } from './swagger/swagger-types';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-parser'
 });
+
+export interface EdmxMetadataBase {
+  path: PathLike;
+  oDataVersion: ODataVersion;
+  fileName: string;
+  namespace: string;
+  selfLink?: string;
+  root: any;
+}
 
 function parseMetadata(
   root,
@@ -71,4 +80,9 @@ function parseLink(root): string | undefined {
   if (selfLink) {
     return selfLink.href;
   }
+}
+
+export interface ServiceMetadata {
+  edmx: EdmxMetadataBase;
+  swagger?: SwaggerMetadata;
 }

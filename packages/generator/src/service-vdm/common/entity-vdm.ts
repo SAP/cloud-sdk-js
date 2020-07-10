@@ -15,6 +15,18 @@ import {
   VdmProperty
 } from '../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
+import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
+import { SwaggerMetadata } from '../../parser/swagger/swagger-types';
+import {
+  entityDescription,
+  propertyDescription
+} from '../description-util';
+import {
+  EdmxEntitySetBase,
+  EdmxEntityTypeBase,
+  EdmxNamed,
+  JoinedEntityMetadata
+} from '../../parser/common/edmx-types';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
@@ -22,19 +34,7 @@ import {
   isComplexType,
   parseTypeName,
   propertyJsType
-} from '../../parser/util/parser-util';
-import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { SwaggerMetadata } from '../../parser/swagger/swagger-types';
-import {
-  entityDescription,
-  propertyDescription
-} from '../../parser/util/description-util';
-import {
-  EdmxEntitySetBase,
-  EdmxEntityTypeBase,
-  EdmxNamed,
-  JoinedEntityMetadata
-} from '../../parser/common/edmx-types';
+} from '../vdm-util';
 
 const logger = createLogger({
   package: 'generator',

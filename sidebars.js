@@ -124,8 +124,8 @@ module.exports = {
             type: 'category',
             label: 'OData',
             items: [
-              'js/features/odata/generator-js-sdk',
-              'js/features/odata/use-typed-odata-client-for-js'
+              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
+              'js/features/odata/use-typed-odata-client-for-javascript-and-typescript'
             ]
           },
           {

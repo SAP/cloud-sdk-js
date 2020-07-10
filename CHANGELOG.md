@@ -10,6 +10,44 @@
 
 ## Known Issues
 
+-
+
+## Compatibility Notes
+
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.24.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.24.1<br>
+Blog: TBD<br>
+
+## Fixed Issues
+
+- Ignore enum properties in complex types to fix generation of OData v4 clients.
+- Fix setting ETags, when no ETag was specified by sending no `if-match` header instead of `if-match:false`.
+
+# 1.24.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.24.0<br>
+Blog: TBD<br>
+
+## Known Issues
+
 - The internal deserialization and serialization of `Edm.TimeOfDay` representations is not lossless for corner cases where the fractional seconds contain trailing zeros. As a sideeffect `12:12:12.0` can potentially be transformed to `12:12:12` when performing a GET and PATCH / PUT request subsequently.
 - OData v4 edm types that are unknown to the SAP Cloud SDK are ignored, such that properties and parameters of those types are missing.
 
@@ -29,7 +67,7 @@
 ## Fixed Issues
 
 - Fix type error due to a breaking change from winston version 3.3.2 -> 3.3.3 [see here](https://github.com/winstonjs/winston/issues/1822#event-3508252985) for details.
-
+- Fix serialization error for number values 'INF','-INF' and 'NaN'.
 
 # 1.23.0
 

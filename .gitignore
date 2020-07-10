@@ -22,3 +22,5 @@ junit.xml
 packages/**/*.jar
 *.jar
 local-docs/_site
+
+sqlite.db

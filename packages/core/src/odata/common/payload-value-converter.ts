@@ -27,7 +27,7 @@ const fromBigNumber = (value: BigNumber): string =>
 /**
  * @hidden
  */
-export function parseNumber(value: string | number): number {
+export function fromEdmToNumber(value: string | number): number {
   if (typeof value === 'number') {
     return value;
   }
@@ -45,10 +45,31 @@ export function parseNumber(value: string | number): number {
   const num = Number(value);
 
   if (Number.isNaN(num)) {
-    throw new Error(`Cannot create number from input "${value}"`);
+    throw new Error(`Edm->TS: Cannot create number from input "${value}"`);
   }
 
   return num;
+}
+
+/**
+ * @hidden
+ */
+export function fromNumberToEdm(value: number): number | string {
+  if (value === Number.POSITIVE_INFINITY) {
+    return 'INF';
+  }
+  if (value === Number.NEGATIVE_INFINITY) {
+    return '-INF';
+  }
+  if (Number.isNaN(value)) {
+    return 'NaN';
+  }
+
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  throw new Error(`TS->edm: Cannot create number from input "${value}"`);
 }
 
 export const deserializersCommon: EdmTypeMapping = {
@@ -56,14 +77,14 @@ export const deserializersCommon: EdmTypeMapping = {
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
   'Edm.Decimal': toBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
+  'Edm.Double': fromEdmToNumber,
+  'Edm.Float': fromEdmToNumber,
   'Edm.Int16': toNumber,
   'Edm.Int32': toNumber,
   'Edm.Int64': toBigNumber,
   'Edm.Guid': toGuid,
   'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
+  'Edm.Single': fromEdmToNumber,
   'Edm.String': identity
 };
 
@@ -72,13 +93,13 @@ export const serializersCommom: EdmTypeMapping = {
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
   'Edm.Decimal': fromBigNumber,
-  'Edm.Double': parseNumber,
-  'Edm.Float': parseNumber,
+  'Edm.Double': fromNumberToEdm,
+  'Edm.Float': fromNumberToEdm,
   'Edm.Int16': toNumber,
   'Edm.Int32': toNumber,
   'Edm.Int64': fromBigNumber,
   'Edm.Guid': identity,
   'Edm.SByte': toNumber,
-  'Edm.Single': parseNumber,
+  'Edm.Single': fromNumberToEdm,
   'Edm.String': identity
 };

@@ -6,8 +6,10 @@
     "packages/test-util",
     "packages/util",
     "test-packages/integration-tests",
+    "test-packages/e2e-tests",
     "test-packages/test-services",
+    "test-packages/test-services-e2e",
     "test-packages/type-tests"
   ],
-  "version": "1.23.0"
+  "version": "1.24.1"
 }

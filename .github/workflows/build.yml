@@ -40,6 +40,19 @@ jobs:
         name: Dependency Vulnerability Check
       - run: npm run check:license
         name: License Check
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - name: Build odata v4 service
+        run: npm run e2e-test:build
+      - name: Start odata v4 service
+        run: npm run e2e-test:start-server:deamon
+      - run: npm run test:e2e
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest

@@ -1,5 +1,5 @@
 ---
-id: use-typed-odata-client-for-js
+id: use-typed-odata-client-for-javascript-and-typescript
 title: Consume OData clients for JS / TS
 hide_title: false
 hide_table_of_contents: false

@@ -89,3 +89,32 @@ Google the error message.
 Update the SDK version frequently.
 - This mitigates the risk per update and ensures you are up to date.
 
+### Overriding Dependency Versions of the SDK BOM
+
+Sometimes you may want to override the version of a specific dependency the SDK is using.
+You can achieve this by listing it in the dependency management _before the SDK BOM_.
+
+For example to override the version of SLF4J:
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>your-sfl4j-version</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sap.cloud.sdk</groupId>
+            <artifactId>sdk-bom</artifactId>
+            <version>latest-sdk-version</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+:::note
+Remember that including a dependency in the `<dependencyManagement>` section only enforces its version.
+It does not yet include it as a dependency into your project.
+:::

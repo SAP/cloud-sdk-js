@@ -1,6 +1,6 @@
 ---
 id: manage-dependencies
-title: Manage Dependencies
+title: Managing Dependencies
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Dependency Management

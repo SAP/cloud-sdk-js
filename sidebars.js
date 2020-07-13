@@ -84,6 +84,7 @@ module.exports = {
           'java/guides/cf-deploy',
           'java/guides/logging-overview',
           'java/guides/change-log-level',
+          'java/guides/manage-dependencies',
           'java/guides/tutorial-overview-sdk-java',
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
@@ -111,7 +112,6 @@ module.exports = {
       },
       'java/sdk-java-troubleshooting-frequent-problems',
       'java/release-notes-sap-cloud-sdk-for-java',
-      'java/api-reference-java',
       'java/frequently-asked-questions'
     ],
     JavaScript: [
@@ -125,8 +125,8 @@ module.exports = {
             type: 'category',
             label: 'OData',
             items: [
-              'js/features/odata/generator-js-sdk',
-              'js/features/odata/use-typed-odata-client-for-js'
+              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
+              'js/features/odata/use-typed-odata-client-for-javascript-and-typescript'
             ]
           },
           {

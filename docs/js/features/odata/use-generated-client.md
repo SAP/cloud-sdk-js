@@ -438,9 +438,13 @@ An OData batch request can consist of a number of [retrieve requests](#retrieve-
 
 A retrieve request is any HTTP `GET` request - in terms of the SAP Cloud SDK this includes all requests built by a [GetAllRequestBuilder](#getall-request-builder) and [GetByKeyRequestBuilder](#getbykey-request-builder).
 
-In the example below, a list of adresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the update requests, which are then passed to the batch function.
+In the example below, a list of adresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the read requests, which are then passed to the batch function.
 
-The batch request will return a list of `BatchResponse`s, which will be stored in the `retrieveResponses` variable.
+The batch request will return a list of `BatchResponse`s, which will be stored in the `retrieveResponses` variable. These `BatchResponse`s need to be parsed and converted to the expected entities.
+
+`ReadResponse` contains an httpCode, a body, an entity (in this case `BusinessPartnerAddress`) and functions like `as` to convert the response into the entity and `isSuccess`.
+
+The reduce function converts each of the ReadResponses to a BusinessPartnerAddress using the `as` function. The `addresses` variable is the accumulator and the `[]` is the initial value. We end up with a list of BusinessPartnerAddress.
 
 ```ts
 async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
@@ -453,10 +457,11 @@ async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
 
   const retrieveResponses = await batch(...retrieveRequests)
     .execute(destination);
-      
+
   return retrieveResponses.reduce(
     (addresses, response: ReadResponse) =>
-      [...addresses, ...response.as(BusinessPartnerAddress)], []
+      [...addresses, ...response.as(BusinessPartnerAddress)]
+      , []
   );
 }
 ```
@@ -468,6 +473,8 @@ A changeset is a collection of HTTP `POST`, `PUT`, `PATCH` and `DELETE` operatio
 In the example below, a list of adresses is mapped in an [UpdateRequestBuilder](#update-request-builder) to form the update requests, which are then wrapped in a changeset and passed to the batch function.
 
 The batch request will return a single `BatchResponse` in a list, which is stored in the `updateChangesetResponse` variable.
+
+`WriteResponses` contains the function `isSuccess` and the property `responses` which is a list of `WriteResponse` which contains an httpCode, and can contain a body, an entity (in this case `BusinessPartnerAddress`) and the function `as` to convert the response into the entity.
 
 ```ts
 updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
@@ -488,42 +495,27 @@ updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
     );
 }
 ```
-<!--
-Use a type assertion (as) to inform the compiler that you are handling a response of type WriteResponses. This response provides all responses of the requests within the changeset as responses. Transform those to instances of BusinessPartnerAddress using the .as function of each WriteResponse. As a WriteResponse can belong to either create, update or delete requests, it is possible that there is no response to transform. Therefore you have to make sure to call as! with an exclamation mark, to inform the compiler, that we know that the write request we put into our changeset responds with data.
--->
 
 #### Combining changesets and retrieve requests
 
-:::note
-The changesets will be executed first and the retrieve requests will be executed sequentially afterwards. The order of execution within the changeset is not defined.
+
+<!--
+Maybe just this small code snippet will be enough to show the reader that it's possible
+to add muliple request in the same batch function, I don't know what to add or how to add it
+-->
+
+In the example below, the changesets will be executed first and the retrieve requests will be executed sequentially afterwards. The order of execution within the changeset is not defined.
 The first `BatchResponse` will be the response to the changeset. The rest will be the responses for your retrieve requests.
-:::
 
 ```ts
-async updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
-:Promise<BusinessPartnerAddress[]> {
-  const updateRequests = businessPartnerAddresses.map(
-    address => BusinessPartnerAddress.requestBuilder().update(address)
-  );
-  const retrieveRequests = businessPartnerAddresses.map(
-    address => BusinessPartnerAddress
-      .requestBuilder()
-      .getByKey(address.businessPartner, address.addressId)
-  );
-
-  const [updateChangesetResponse, ...retrieveResponses] =
-    await batch(
-      changeset(...updateRequests),
-      ...retrieveRequests
-    )
-    .execute(destination);
-
-  return retrieveResponses.reduce((addresses, response: ReadResponse) =>
-    [...addresses, ...response.as(BusinessPartnerAddress)], []
-  );
-}
+const [updateChangesetResponse, ...retrieveResponses] =
+  await batch(
+    changeset(...updateRequests),
+    ...retrieveRequests
+  )
+  .execute(destination);
 ```
--->
+
 <!--
 ### Advanced OData Features ###
 

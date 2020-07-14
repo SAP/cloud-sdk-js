@@ -64,6 +64,7 @@ To take Logback as an example:
 	<groupId>ch.qos.logback</groupId>
 	<artifactId>logback-classic</artifactId>
 	<version>latest-logback-version</version>
+    <scope>runtime</scope>
 </dependency>
 ```
 
@@ -262,7 +263,7 @@ cf set-env logging-documentation SET_LOGGING_LEVEL '{ROOT: INFO, com.sap.cloud.s
 
 
 
-### Further Reading
+## Further Reading
 
 - How to use SLF4J with "legacy" logging frameworks: <http://www.slf4j.org/legacy.html>
 - Debug Logging of the Apache HttpClient: <https://hc.apache.org/httpcomponents-client-4.5.x/logging.html>

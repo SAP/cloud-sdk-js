@@ -123,4 +123,16 @@ if (arg === 'e2e' || arg === 'all') {
     outputDir: path.resolve('test-packages', 'test-services-e2e', 'srv', 'v4'),
     generateJs: true
   });
+
+  generate({
+    ...generatorConfig,
+    inputDir: path.join('test-resources', 'service-specs-e2e', 'TripPin'),
+    outputDir: path.resolve(
+      'test-packages',
+      'test-services-e2e',
+      'srv',
+      'TripPin'
+    ),
+    generateJs: true
+  });
 }

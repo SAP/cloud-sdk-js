@@ -49,6 +49,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - run: find . -name "node_modules"
+      - run: ls node_modules
       - run: npm run lint
         name: Static Code Check
       - run: npm run check:vulnerability

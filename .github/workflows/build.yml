@@ -26,7 +26,7 @@ jobs:
         id: cache
         with:
           path: ~/.npm
-          key: ${{ matrix.os }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.os }}-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci
       - run: npm run test:unit
       - run: npm run test:integration
@@ -42,7 +42,7 @@ jobs:
         id: cache
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-12.x-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci
       - run: npm run lint
         name: Static Code Check
@@ -61,7 +61,7 @@ jobs:
         id: cache
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-12.x-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci
       - name: Build odata v4 service
         run: npm run e2e-test:build

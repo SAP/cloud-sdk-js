@@ -64,7 +64,7 @@ To take Logback as an example:
 	<groupId>ch.qos.logback</groupId>
 	<artifactId>logback-classic</artifactId>
 	<version>latest-logback-version</version>
-    <scope>runtime</scope>
+	<scope>runtime</scope>
 </dependency>
 ```
 

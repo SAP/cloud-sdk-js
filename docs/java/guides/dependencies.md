@@ -101,7 +101,7 @@ For example to override the version of SLF4J:
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>your-sfl4j-version</version>
+            <version>your-slf4j-version</version>
         </dependency>
         <dependency>
             <groupId>com.sap.cloud.sdk</groupId>

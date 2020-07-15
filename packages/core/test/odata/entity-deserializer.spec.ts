@@ -6,7 +6,10 @@ import {
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
 import { deserializeEntity as deserializeEntityV4 } from '../../src/odata/v4/entity-deserializer';
-import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
+import {
+  TestEntity as TestEntityV4,
+  TestComplexType
+} from '../test-util/test-services/v4/test-service';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {
@@ -78,17 +81,25 @@ describe('entity-deserializer', () => {
     expected.complexTypeProperty = {
       stringProperty,
       int16Property,
-      booleanProperty
+      booleanProperty,
+      complexTypeProperty: {
+        stringProperty
+      }
     };
     expected.stringProperty = 'test';
 
     it('should deserialize', () => {
+      const t = TestComplexType;
       const actual = deserializeEntity(
         {
+          t,
           ComplexTypeProperty: {
             StringProperty: stringProperty,
             Int16Property: int16Property,
-            BooleanProperty: booleanProperty
+            BooleanProperty: booleanProperty,
+            ComplexTypeProperty: {
+              StringProperty: stringProperty
+            }
           },
           StringProperty: expected.stringProperty
         },
@@ -105,6 +116,9 @@ describe('entity-deserializer', () => {
             StringProperty: stringProperty,
             Int16Property: int16Property,
             BooleanProperty: booleanProperty,
+            ComplexTypeProperty: {
+              StringProperty: stringProperty
+            },
             UnknownKey: ''
           },
           StringProperty: expected.stringProperty

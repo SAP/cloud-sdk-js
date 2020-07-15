@@ -48,6 +48,7 @@ jobs:
           key: ${{ runner.os }}-12.x-${{ hashFiles('**/package-lock.json') }}
       - if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - run: find . -name "node_modules"
       - run: npm run lint
         name: Static Code Check
       - run: npm run check:vulnerability

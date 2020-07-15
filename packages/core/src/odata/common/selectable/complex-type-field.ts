@@ -83,29 +83,44 @@ export type ConstructorOrField<EntityT extends EntityBase> =
 /**
  * Convenience method to return the entity constructor in the complex extensions of the normal fields e.g. ComplexTypeStringPropertyField
  * @param arg - Contains either the entity containing the complex field or a complex field in case of nested fields.
- * @returns Constructable
+ * Convenience method to get the entity constructor of the parent of a complex type.
+ *
+ * @param fieldOf - Either an entity constructor or another complex type field.
+ * @returns The constructor of the transitive parent entity;
  */
-export function getEntityConstructor<EntityT extends EntityBase>(
-  arg: Constructable<EntityT> | ComplexTypeField<EntityT>
+export function getEntityConstructor<
+  EntityT extends EntityBase,
+  ComplexTypeNamespaceT extends ComplexTypeNamespace
+>(
+  fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>
 ): Constructable<EntityT> {
-  return arg instanceof ComplexTypeField ? arg._entityConstructor : arg;
+  return fieldOf instanceof ComplexTypeField
+    ? fieldOf._entityConstructor
+    : fieldOf;
 }
 
 /**
- * Convenience method to return the EDM type for the overloaded constructor e.g. ComplexTypeStringPropertyField
- * @param arg1 - Contains either the type name or the EdmType
- * @param arg2 - Contains either the EdmType or undefined
+ * Convenience method to get the [[EdmTypeShared]] from the overloaded constructor.
+ * @param complexTypeNameOrEdmType - Either the name of the complex type or the EdmType
+ * @param edmTypeOrUndefined - Either the EdmType or undefined.
  * @returns EdmType
  */
 export function getEdmType<T extends ODataVersion>(
-  arg1: string | EdmTypeShared<T>,
-  arg2: EdmTypeShared<T> | undefined
+  complexTypeNameOrEdmType: string | EdmTypeShared<T>,
+  edmTypeOrUndefined?: EdmTypeShared<T>
 ): EdmTypeShared<T> {
-  if ((arg1 as string).includes('Edm.') && !arg2) {
-    return arg1 as EdmTypeShared<T>;
+  if (edmTypeOrUndefined) {
+    if (
+      typeof complexTypeNameOrEdmType === 'string' &&
+      !isEdmType(complexTypeNameOrEdmType) &&
+      isEdmType(edmTypeOrUndefined)
+    ) {
+      return edmTypeOrUndefined;
+    }
+  } else if (isEdmType(complexTypeNameOrEdmType)) {
+    return complexTypeNameOrEdmType;
   }
-  if (typeof arg1 === 'string' && arg2 && (arg2 as string).includes('Edm.')) {
-    return arg2 as EdmTypeShared<T>;
-  }
-  throw new Error('Illegal argument exception!');
+  throw new Error(
+    `Failed to get edm type based on '${complexTypeNameOrEdmType}' and '${edmTypeOrUndefined}'.`
+  );
 }

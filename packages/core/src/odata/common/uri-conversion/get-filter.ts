@@ -12,11 +12,7 @@ import {
   FilterFunctionParameterType
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
-import {
-  ComplexTypeField,
-  ComplexTypePropertyFields,
-  FieldType
-} from '../selectable';
+import { ComplexTypeField, FieldType } from '../selectable';
 import { UriConverter } from '../request';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 
@@ -164,10 +160,7 @@ export function createGetFilter(uriConverter: UriConverter) {
     if (field instanceof ComplexTypeField) {
       return Object.values(field)
         .filter(pField => pField?.fieldPath) // Filter for ComplexTypePropertyFields only
-        .find(
-          (pField: ComplexTypePropertyFields<FilterEntityT>) =>
-            pField.fieldPath() === filterField
-        );
+        .find(pField => pField.fieldPath() === filterField);
     }
 
     // In case of custom field we infer then the returned field from the filter edmType property

@@ -20,14 +20,14 @@ export type Selectable<EntityT extends EntityBase> = ODataVersionOf<
   ?
       | SimpleTypeFields<EntityT>
       | Link<EntityT, any>
-      | ComplexTypeField<EntityT>
+      | ComplexTypeField<EntityT, any>
       | CustomFieldBase<EntityT>
       | CollectionField<EntityT>
       | AllFields<EntityT>
   : ODataVersionOf<EntityT> extends 'v4'
   ?
       | SimpleTypeFields<EntityT>
-      | ComplexTypeField<EntityT>
+      | ComplexTypeField<EntityT, any>
       | CustomFieldBase<EntityT>
       | CollectionField<EntityT>
       | AllFields<EntityT>

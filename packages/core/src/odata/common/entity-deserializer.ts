@@ -19,7 +19,11 @@ import {
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function entityDeserializer(edmToTs, extractODataETag, extractDataFromOneToManyLink) {
+export function entityDeserializer(
+  edmToTs,
+  extractODataETag,
+  extractDataFromOneToManyLink
+) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
    * In this context, a custom fields is every property that is not known in the corresponding entity class.

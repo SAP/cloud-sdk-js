@@ -11,6 +11,12 @@ xdescribe('Request builder test', () => {
       .getAll()
       .expand(People.FRIENDS)
       .execute(destination);
-    expect(people).toEqual(expect.arrayContaining([expect.objectContaining({friends: expect.arrayContaining([expect.anything()])})]))
+    expect(people).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          friends: expect.arrayContaining([expect.anything()])
+        })
+      ])
+    );
   });
 });

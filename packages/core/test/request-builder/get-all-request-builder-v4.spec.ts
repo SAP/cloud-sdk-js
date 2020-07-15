@@ -9,7 +9,8 @@ import {
 import { TestEntity } from '../test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
-  createOriginalTestEntityData2, createOriginalTestEntityData3,
+  createOriginalTestEntityData2,
+  createOriginalTestEntityData3,
   createTestEntityV4
 } from '../test-util/test-data';
 

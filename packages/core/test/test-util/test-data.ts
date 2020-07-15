@@ -2,7 +2,11 @@
 import { v4 as uuid } from 'uuid';
 import { convertToUriFormat } from '../../src';
 import { TestEntity } from './test-services/v2/test-service';
-import { TestEntity as TestEntityV4, TestEntityMultiLink, TestEntitySingleLink } from './test-services/v4/test-service';
+import {
+  TestEntity as TestEntityV4,
+  TestEntityMultiLink,
+  TestEntitySingleLink
+} from './test-services/v4/test-service';
 
 export function createOriginalTestEntityData1() {
   return {
@@ -28,12 +32,14 @@ export function createOriginalTestEntityData3() {
   return {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'abcde',
-    to_SingleLink:{
+    to_SingleLink: {
       KeyProperty: 'abc'
     },
-    to_MultiLink:[{
-      KeyProperty: 'def'
-    }]
+    to_MultiLink: [
+      {
+        KeyProperty: 'def'
+      }
+    ]
   };
 }
 
@@ -49,8 +55,12 @@ export function createTestEntityV2(originalData): TestEntity {
 }
 
 export function createTestEntityV4(originalData): TestEntityV4 {
-  const singleLink = TestEntitySingleLink.builder().keyProperty(originalData.to_SingleLink.KeyProperty).build();
-  const multiLink = originalData.to_MultiLink.map(ml => TestEntityMultiLink.builder().keyProperty(ml.KeyProperty).build());
+  const singleLink = TestEntitySingleLink.builder()
+    .keyProperty(originalData.to_SingleLink.KeyProperty)
+    .build();
+  const multiLink = originalData.to_MultiLink.map(ml =>
+    TestEntityMultiLink.builder().keyProperty(ml.KeyProperty).build()
+  );
   return TestEntityV4.builder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)

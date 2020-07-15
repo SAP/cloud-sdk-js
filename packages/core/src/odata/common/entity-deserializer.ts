@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
+import { MapType, createLogger } from '@sap-cloud-sdk/util';
 import { toPropertyFormat } from '../../util';
 import {
   isSelectedProperty,
@@ -12,8 +12,15 @@ import {
   OneToOneLink,
   isExpandedProperty,
   EntityBase,
-  Constructable
+  Constructable,
+  ComplexTypeNamespace,
+  isComplexTypeNameSpace
 } from '../common';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'entity-deserializer'
+});
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -95,9 +102,12 @@ export function entityDeserializer(edmToTs, extractODataETag) {
       return getLinkFromJson(json, field);
     }
     if (field instanceof ComplexTypeField) {
-      return json[field._fieldName]
-        ? deserializeComplexType(json[field._fieldName], field)
-        : undefined;
+      if (json[field._fieldName]) {
+        return field._complexType
+          ? deserializeComplexType(json[field._fieldName], field._complexType)
+          : deserializeComplexTypeLegacy(json[field._fieldName], field);
+      }
+      return undefined;
     }
     if (field instanceof CollectionField) {
       return deserializeCollectionType(json[field._fieldName], field);
@@ -146,23 +156,50 @@ export function entityDeserializer(edmToTs, extractODataETag) {
     }
   }
 
-  function deserializeComplexType<EntityT extends EntityBase>(
+  function deserializeComplexTypeLegacy<
+    EntityT extends EntityBase,
+    ComplexTypeNamespaceT extends ComplexTypeNamespace
+  >(
     json: MapType<any>,
-    complexTypeField: ComplexTypeField<EntityT>
+    complexTypeField: ComplexTypeField<EntityT, ComplexTypeNamespaceT>
   ): MapType<any> {
+    logger.warn(
+      'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'
+    );
     return Object.entries(complexTypeField)
       .filter(
         ([_, field]) =>
-          field instanceof EdmTypeField &&
+          (field instanceof EdmTypeField ||
+            field instanceof ComplexTypeField) &&
           typeof json[field._fieldName] !== 'undefined'
       )
-      .reduce((complexTypeObject, [fieldName, field]) => {
-        complexTypeObject[toPropertyFormat(fieldName)] = edmToTs(
-          json[field._fieldName],
-          field.edmType
-        );
-        return complexTypeObject;
-      }, {});
+      .reduce(
+        (complexTypeObject, [fieldName, field]) => ({
+          ...complexTypeObject,
+          [toPropertyFormat(fieldName)]:
+            field instanceof EdmTypeField
+              ? edmToTs(json[field._fieldName], field.edmType)
+              : deserializeComplexTypeLegacy(json[field._fieldName], field)
+        }),
+        {}
+      );
+  }
+
+  function deserializeComplexType<
+    ComplexTypeNamespaceT extends ComplexTypeNamespace
+  >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
+    return complexType._propertyMetadata
+      .map(property => ({
+        ...(json[property.originalName] && {
+          [property.name]: isComplexTypeNameSpace(property.type)
+            ? deserializeComplexType(json[property.originalName], property.type)
+            : edmToTs(json[property.originalName], property.type)
+        })
+      }))
+      .reduce((complexTypeInstance, property) => ({
+        ...complexTypeInstance,
+        ...property
+      }));
   }
 
   function deserializeCollectionType<EntityT extends EntityBase>(
@@ -175,13 +212,14 @@ export function entityDeserializer(edmToTs, extractODataETag) {
     }
     if (selectable._fieldType instanceof ComplexTypeField) {
       const complexTypeField = selectable._fieldType;
-      return json.map(v => deserializeComplexType(v, complexTypeField));
+      return json.map(v => deserializeComplexTypeLegacy(v, complexTypeField));
     }
   }
 
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing
   return {
     extractCustomFields,
-    deserializeEntity
+    deserializeEntity,
+    deserializeComplexType
   };
 }

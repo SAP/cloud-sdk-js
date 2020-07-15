@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
+import { MapType, createLogger } from '@sap-cloud-sdk/util';
 import { toStaticPropertyFormat } from '../../util';
 import {
   Constructable,
@@ -9,8 +9,15 @@ import {
   Link,
   ComplexTypeField,
   CollectionField,
-  EntityBase
+  EntityBase,
+  ComplexTypeNamespace,
+  isComplexTypeNameSpace
 } from '../common';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'entity-serializer'
+});
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -66,10 +73,17 @@ export function entitySerializer(tsToEdm) {
           serializeEntityNonCustomFields(linkedEntity, field._linkedEntity)
         );
       } else if (field instanceof ComplexTypeField) {
-        serialized[field._fieldName] = serializeComplexTypeField(
-          field,
-          fieldValue
-        );
+        if (field._complexType) {
+          serialized[field._fieldName] = serializeComplexType(
+            fieldValue,
+            field._complexType
+          );
+        } else {
+          serialized[field._fieldName] = serializeComplexTypeFieldLegacy(
+            field,
+            fieldValue
+          );
+        }
       } else if (field instanceof CollectionField) {
         serialized[field._fieldName] = serializeCollectionField(
           fieldValue,
@@ -81,26 +95,56 @@ export function entitySerializer(tsToEdm) {
     }, {});
   }
 
-  function serializeComplexTypeField<EntityT extends EntityBase>(
-    complexTypeField: ComplexTypeField<EntityT>,
+  function serializeComplexTypeFieldLegacy<
+    EntityT extends EntityBase,
+    ComplexTypeNamespaceT extends ComplexTypeNamespace
+  >(
+    complexTypeField: ComplexTypeField<EntityT, ComplexTypeNamespaceT>,
     fieldValue: any
   ): any {
-    return Object.entries(complexTypeField).reduce(
-      (complexTypeObject, [propertyKey, propertyValue]) => {
-        const value = fieldValue[propertyKey];
-        if (
-          propertyValue instanceof EdmTypeField &&
-          typeof value !== 'undefined'
-        ) {
-          complexTypeObject[propertyValue._fieldName] = tsToEdm(
-            fieldValue[propertyKey],
-            propertyValue.edmType
-          );
-        }
-        return complexTypeObject;
-      },
-      {}
+    logger.warn(
+      'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'
     );
+    return Object.entries(complexTypeField)
+      .filter(
+        ([propertyKey, propertyValue]) =>
+          (propertyValue instanceof EdmTypeField ||
+            propertyValue instanceof ComplexTypeField) &&
+          typeof fieldValue[propertyKey] !== 'undefined'
+      )
+      .reduce(
+        (complexTypeObject, [propertyKey, propertyValue]) => ({
+          ...complexTypeObject,
+          [propertyValue._fieldName]:
+            propertyValue instanceof EdmTypeField
+              ? tsToEdm(fieldValue[propertyKey], propertyValue.edmType)
+              : serializeComplexTypeFieldLegacy(
+                  propertyValue,
+                  fieldValue[propertyKey]
+                )
+        }),
+        {}
+      );
+  }
+
+  function serializeComplexType<
+    ComplexTypeNamespaceT extends ComplexTypeNamespace
+  >(fieldValue: any, complexType: ComplexTypeNamespaceT): any {
+    return complexType._propertyMetadata
+      .map(property => ({
+        ...(fieldValue[property.name] && {
+          [property.originalName]: isComplexTypeNameSpace(property.type)
+            ? serializeComplexType(fieldValue[property.name], property.type)
+            : tsToEdm(fieldValue[property.name], property.type)
+        })
+      }))
+      .reduce(
+        (complexTypeObject, property) => ({
+          ...complexTypeObject,
+          ...property
+        }),
+        {}
+      );
   }
 
   function serializeCollectionField<EntityT extends EntityBase>(
@@ -114,7 +158,7 @@ export function entitySerializer(tsToEdm) {
     if (selectable._fieldType instanceof ComplexTypeField) {
       const complexTypeField = selectable._fieldType;
       return fieldValue.map(v =>
-        serializeComplexTypeField(complexTypeField, v)
+        serializeComplexTypeFieldLegacy(complexTypeField, v)
       );
     }
   }

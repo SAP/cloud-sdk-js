@@ -9,8 +9,8 @@ import {
 import { TestEntity } from '../test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
-  createOriginalTestEntityData2,
-  createTestEntity
+  createOriginalTestEntityData2, createOriginalTestEntityData3,
+  createTestEntityV4
 } from '../test-util/test-data';
 
 describe('GetAllRequestBuilder', () => {
@@ -53,8 +53,8 @@ describe('GetAllRequestBuilder', () => {
         defaultDestination
       );
       expect(actual).toEqual([
-        createTestEntity(testEntity1),
-        createTestEntity(testEntity2)
+        createTestEntityV4(testEntity1),
+        createTestEntityV4(testEntity2)
       ]);
     });
 
@@ -69,7 +69,7 @@ describe('GetAllRequestBuilder', () => {
       );
 
       const actual = await requestBuilder.top(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(testEntity1)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity1)]);
     });
 
     it('skip(1) skips the first entity', async () => {
@@ -82,18 +82,18 @@ describe('GetAllRequestBuilder', () => {
         TestEntity
       );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(testEntity2)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity2)]);
     });
 
     it('should resolve when ALL_FIELDS is selected and links are expanded', async () => {
-      const testEntity2 = createOriginalTestEntityData2();
+      const testEntity3 = createOriginalTestEntityData3();
       mockGetRequest(
         {
           query: {
             $select: '*',
             $expand: 'to_SingleLink,to_MultiLink'
           },
-          responseBody: { value: [testEntity2] }
+          responseBody: { value: [testEntity3] }
         },
         TestEntity
       );
@@ -101,7 +101,7 @@ describe('GetAllRequestBuilder', () => {
         .select(TestEntity.ALL_FIELDS)
         .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
         .execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(testEntity2)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity3)]);
     });
   });
 });

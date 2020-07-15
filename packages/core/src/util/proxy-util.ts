@@ -5,7 +5,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { Destination, ProxyConfiguration } from '../scp-cf';
 import { basicHeader } from '../header-builder';
-import { getProtocolOrDefault } from '../get-protocal';
+import { getProtocolOrDefault } from '../get-protocol';
 import { Protocol } from '../protocol';
 import { HttpAgentConfig, HttpsAgentConfig } from '../agent-config';
 

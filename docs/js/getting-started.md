@@ -73,7 +73,7 @@ $ sap-cloud-sdk init
 It will guide you through the initialization, create the necessary files and add necessary dependencies.
 If you run it in an empty folder, it will ask if you want to initialize a project using [@nest/cli](https://github.com/nestjs/nest-cli).
 
-The CLI will already install all the necessary dependencies for the project, so this might take a minute. If everything worked correctly, you should see output like this:
+The CLI will already install all the necessary dependencies for the project, so this might take a minute. If everything worked correctly, you should see the following output:
 
 ```shell
 +---------------------------------------------------------------+

@@ -51,7 +51,7 @@ describe('field-type-class', () => {
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealType);'],
           docs: [
-            'Creates an instance of ComplexMealField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
+            '\nCreates an instance of ComplexMealField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
           ]
         }
       ]
@@ -101,7 +101,7 @@ describe('field-type-class', () => {
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealWithDesertType);'],
           docs: [
-            'Creates an instance of ComplexMealWithDesertField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
+            '\nCreates an instance of ComplexMealWithDesertField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
           ]
         }
       ],

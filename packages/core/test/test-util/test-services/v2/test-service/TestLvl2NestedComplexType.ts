@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType, createComplexType, edmToTs } from '../../../../../src';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '../../../../../src';
 
 /**
  * TestLvl2NestedComplexType
@@ -27,18 +27,35 @@ export function createTestLvl2NestedComplexType(json: any): TestLvl2NestedComple
  * TestLvl2NestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestLvl2NestedComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
+export class TestLvl2NestedComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, typeof TestLvl2NestedComplexType> {
   /**
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   stringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
+
+  /**
+   * Creates an instance of TestLvl2NestedComplexTypeField
+   *
+   * @param fieldName - Actual name of the field as used in the OData request.
+   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, typeof TestLvl2NestedComplexType>) {
+    super(fieldName, fieldOf, TestLvl2NestedComplexType);
+  }
 }
 
 export namespace TestLvl2NestedComplexType {
+  /**
+   * Metadata information on all properties of the `TestLvl2NestedComplexType` complex type.
+   */
+  export const _propertyMetadata: PropertyMetadata[] = [{
+    originalName: 'StringProperty',
+    name: 'stringProperty',
+    type: 'Edm.String'
+  }];
+
   export function build(json: { [keys: string]: FieldType }): TestLvl2NestedComplexType {
-    return createComplexType(json, {
-      StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') })
-    });
+    return deserializeComplexType(json, TestLvl2NestedComplexType);
   }
 }

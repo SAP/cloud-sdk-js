@@ -11,6 +11,9 @@ keywords:
 - cloud sdk
 - sap cloud sdk
 ---
+import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
+
+<MvnBadge />
 
 ## 3.23.0
 

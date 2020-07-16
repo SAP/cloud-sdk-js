@@ -30,7 +30,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 <MvnBadge />
 
-Check [JavaDoc links from the release notes](https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html).
+Check [JavaDoc links from the release notes](https://sap.github.io/cloud-sdk/docs/java/release-notes-sap-cloud-sdk-for-java).
 
 
 ## SDK Version 2  ##

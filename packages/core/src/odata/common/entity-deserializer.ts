@@ -189,7 +189,6 @@ export function entityDeserializer(edmToTs, extractODataETag) {
   function deserializeComplexType<
     ComplexTypeNamespaceT extends ComplexTypeNamespace
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
-    validateComplexTypeJson(json, complexType);
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof json[property.originalName] !== 'undefined' && {
@@ -202,22 +201,6 @@ export function entityDeserializer(edmToTs, extractODataETag) {
         ...complexTypeInstance,
         ...property
       }));
-  }
-
-  function validateComplexTypeJson<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
-  >(json: MapType<any>, complexType: ComplexTypeNamespaceT): void {
-    const knownProperties = complexType._propertyMetadata.map(
-      property => property.originalName
-    );
-    const unknownProperties = Object.keys(json).filter(
-      key => !knownProperties.includes(key)
-    );
-    if (unknownProperties.length) {
-      throw new Error(
-        `Cannot deserialize complex type. Unknown properties: ${unknownProperties}.`
-      );
-    }
   }
 
   function deserializeCollectionType<EntityT extends EntityBase>(

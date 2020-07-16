@@ -93,10 +93,4 @@ describe('Complex types', () => {
 
     expect(actual).toMatchObject(expected);
   });
-
-  it('should fail when passing unknown properties to the builder', () => {
-    expect(() =>
-      TestComplexType.build({ SomethingElse: 'Fails!' })
-    ).toThrowErrorMatchingSnapshot();
-  });
 });

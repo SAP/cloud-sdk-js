@@ -189,6 +189,7 @@ export function entityDeserializer(edmToTs, extractODataETag) {
   function deserializeComplexType<
     ComplexTypeNamespaceT extends ComplexTypeNamespace
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
+    validateComplexTypeJson(json, complexType);
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof json[property.originalName] !== 'undefined' && {

@@ -128,7 +128,6 @@ When reading entities, the API offers `select( ... )` on the builders. Through i
 <!-- OData v4
 When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
 
-maybe add this?
 To include navigation properties, OData offers the expand operation. The VDM allows you to use navigation properties in the select function just like normal properties.
 -->
 
@@ -316,6 +315,11 @@ BusinessPartner.requestBuilder()
   .create(businessPartner)
   .execute(myDestination);
 ```
+<!--
+for future reference:
+When reading this section I think, so what? That is exactly the behavior I would expect ;)
+Is there something special that we do? Is the url different than with the normal create? Is there some additional header that we set?
+-->
 
 You can also create an entity `asChildOf` another entity.
 <!-- TODO: Add more details and an example. -->
@@ -347,11 +351,11 @@ BusinessPartner.requestBuilder()
   .update(businessPartner)
   .ignoreVersionIdentifier();
 ```
-
+<!--OData V4
 #### Deep Update
 
 It is also possible to update an entity together with related entities in a single request, same as [deep create](#deep-create).
-
+-->
 ### Delete Request Builder
 
 The Delete request builder allows you to create `DELETE` requests, that delete entities.

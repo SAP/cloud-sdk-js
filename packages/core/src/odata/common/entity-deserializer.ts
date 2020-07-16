@@ -191,7 +191,7 @@ export function entityDeserializer(edmToTs, extractODataETag) {
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
-        ...(json[property.originalName] && {
+        ...(typeof json[property.originalName] !== 'undefined' && {
           [property.name]: isComplexTypeNameSpace(property.type)
             ? deserializeComplexType(json[property.originalName], property.type)
             : edmToTs(json[property.originalName], property.type)

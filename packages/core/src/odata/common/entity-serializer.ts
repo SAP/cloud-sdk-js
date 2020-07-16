@@ -133,7 +133,7 @@ export function entitySerializer(tsToEdm) {
   >(fieldValue: any, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
-        ...(fieldValue[property.name] && {
+        ...(typeof fieldValue[property.name] !== 'undefined' && {
           [property.originalName]: isComplexTypeNameSpace(property.type)
             ? serializeComplexType(fieldValue[property.name], property.type)
             : tsToEdm(fieldValue[property.name], property.type)

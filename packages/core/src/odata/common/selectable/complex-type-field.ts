@@ -32,7 +32,7 @@ export abstract class ComplexTypeField<
    * Note that this property is crucial, although not really used.
    * If it is removed this class becomes structural equivalent to e.g. ComplexTypeStringPropertyField which leads to unexpected behavior on the `selectable` list of objects.
    */
-  readonly complexTypeName?: string; // TODO: this can be removed?
+  readonly complexTypeName?: string;
 
   /**
    * The complex type of the complex type property represented by this.
@@ -43,7 +43,7 @@ export abstract class ComplexTypeField<
    * Creates an instance of ComplexTypeField.
    *
    * @param fieldName - Actual name of the field as used in the OData request.
-   * @param fieldOf - If the complex field is on root level of an entity it is the entity otherwise the parent complex type field.
+   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    * @param complexType - The complex type of the complex type property represented by this.
    */
   constructor(
@@ -71,7 +71,7 @@ export abstract class ComplexTypeField<
    * Creates an instance of ComplexTypeField.
    *
    * @param fieldName - Actual name of the field as used in the OData request.
-   * @param fieldOf - If the complex field is on root level of an entity it is the entity otherwise the parent complex type field.
+   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    * @param complexTypeOrName - The complex type of the complex type property represented by this or the name of the type of the field according to the metadata description. Using the name here is deprecated.
    */
   constructor(

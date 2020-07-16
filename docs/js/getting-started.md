@@ -101,7 +101,7 @@ The project contains the following files and folders, among others, to get you s
 #### TypeScript
 
 - **`tsconfig.json`**: Configuration file for `TypeScript`. This is not needed in the plain `JavaScript` version.
-- **`tslint.json`**: Configuration file for `tslint`, the de facto default linter for `TypeScript`.
+- **`tslint.json`**: Configuration file for `tslint`.
 
 #### Continuous Delivery
 

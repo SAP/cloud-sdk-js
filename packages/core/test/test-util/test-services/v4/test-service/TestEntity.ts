@@ -335,13 +335,12 @@ export namespace TestEntity {
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> = new TestComplexTypeField('ComplexTypeProperty', TestEntity, TestComplexType);
+  export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> = new TestComplexTypeField('ComplexTypeProperty', TestEntity);
   /**
    * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  // export const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity, TestComplexType> = new CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType);
-  export const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity> = new CollectionField('ComplexTypeCollectionProperty', TestEntity, new TestComplexTypeField('', TestEntity, TestComplexType));
+  export const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity> = new CollectionField('ComplexTypeCollectionProperty', TestEntity, new TestComplexTypeField('', TestEntity));
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

@@ -110,12 +110,32 @@ An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a v
 
 Consider the following example:
 
+<Tabs groupId="odataProtocol" defaultValue="v4" values={[
+{ label: 'OData V2', value: 'v2', },
+{ label: 'OData V4', value: 'v4', }]}>
+<TabItem value="v4">
+
+```java
+partner = service.getBusinessPartnerByKey("id")
+                 .execute(destination);
+response = service.updateBusinessPartner(partner)
+                 .execute(destination);
+partner = response.getResponseEntity()
+                .getOrElse(() -> partner);
+```
+
+</TabItem>
+<TabItem value="v2">
+
 ```java
 partner = service.getBusinessPartnerByKey("id")
                  .execute(destination);
 service.updateBusinessPartner(partner)
                  .execute(destination);
 ```
+
+</TabItem>
+</Tabs>
 
 On the read request the SDK will automatically try to extract the version identifier from the response and store it within the `partner` object. When updating it will be taken from there and sent with the `If-match` header.
 

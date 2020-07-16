@@ -15,10 +15,11 @@ describe('complex type imports', () => {
           'ComplexTypeField',
           'ComplexTypeNumberPropertyField',
           'ComplexTypeStringPropertyField',
+          'ConstructorOrField',
           'Entity',
           'FieldType',
-          'createComplexType',
-          'edmToTs'
+          'PropertyMetadata',
+          'deserializeComplexType'
         ]
       }
     ]);
@@ -38,10 +39,11 @@ describe('complex type imports', () => {
         namedImports: [
           'ComplexTypeField',
           'ComplexTypeNumberPropertyField',
+          'ConstructorOrField',
           'Entity',
           'FieldType',
-          'createComplexType',
-          'edmToTs'
+          'PropertyMetadata',
+          'deserializeComplexType'
         ]
       }
     ]);
@@ -69,9 +71,11 @@ describe('complex type imports', () => {
         moduleSpecifier: '@sap-cloud-sdk/core',
         namedImports: [
           'ComplexTypeField',
+          'ConstructorOrField',
           'Entity',
           'FieldType',
-          'createComplexType'
+          'PropertyMetadata',
+          'deserializeComplexType'
         ]
       }
     ]);

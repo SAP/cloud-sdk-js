@@ -230,7 +230,7 @@ cf logs <YOUR-APPLICATION-NAME> --recent
 
 ## Additional features
 
-For productive use, your app should be bound to a server, and also implement user authentication and authorization.
+For productive use, your app should be bound to a server and implement user authentication and authorization.
 
 ### Configure destination
 

@@ -148,7 +148,7 @@ The `Cloud Foundry` CLI deploys your application to SAP Cloud Platform. You can 
 
 <!--Do i need to explain this part with more detail?-->
 :::note
-If you don't have a [SAP Cloud Platform](https://account.hana.ondemand.com/) account you need to create one.
+If you don't have an [SAP Cloud Platform](https://account.hana.ondemand.com/) account you need to create one.
 :::
 
 In order to deploy our application, we first need to login to Cloud Foundry in SAP Cloud Platform using the `cf` CLI. First we need to set an `API endpoint`. The exact URL of this API endpoint depends on the region your subaccount is in. Open the [SAP Cloud Platform Cockpit](https://account.hana.ondemand.com/) and navigate to the subaccount you are planning to deploy your application to. Click on “Overview” on the left and you can see the URL of the API endpoint.

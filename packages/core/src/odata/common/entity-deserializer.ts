@@ -203,6 +203,22 @@ export function entityDeserializer(edmToTs, extractODataETag) {
       }));
   }
 
+  function validateComplexTypeJson<
+    ComplexTypeNamespaceT extends ComplexTypeNamespace
+  >(json: MapType<any>, complexType: ComplexTypeNamespaceT): void {
+    const knownProperties = complexType._propertyMetadata.map(
+      property => property.originalName
+    );
+    const unknownProperties = Object.keys(json).filter(
+      key => !knownProperties.includes(key)
+    );
+    if (unknownProperties.length) {
+      throw new Error(
+        `Cannot deserialize complex type. Unknown properties: ${unknownProperties}.`
+      );
+    }
+  }
+
   function deserializeCollectionType<EntityT extends EntityBase>(
     json: any[],
     selectable: CollectionField<EntityT>

@@ -142,7 +142,7 @@ Since `nest` was started in watch mode, it should detect this change and restart
 
 ### Installation
 
-The `Cloud Foundry` CLI deploys your application to SAP Cloud Platform. You can find installation instructions for all common platforms in the [`Cloud Foundry documentation`](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). We recommend to use a `package manager` for that. If you are using `chocolatey` on Windows, please find the instructions [here](https://chocolatey.org/packages/cloudfoundry-cli).
+The `Cloud Foundry` CLI deploys your application to SAP Cloud Platform. You can find installation instructions for all common platforms in the [`Cloud Foundry documentation`](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). We recommend to use a package manager for that. If you are using `chocolatey` on Windows, please find the instructions [here](https://chocolatey.org/packages/cloudfoundry-cli).
 
 ### Login
 

@@ -55,22 +55,25 @@ export function createTestEntityV2(originalData): TestEntity {
 }
 
 export function createTestEntityV4(originalData): TestEntityV4 {
-  const singleLink = TestEntitySingleLink.builder()
-    .keyProperty(originalData.to_SingleLink.KeyProperty)
-    .build();
-  const multiLink = originalData.to_MultiLink.map(ml =>
-    TestEntityMultiLink.builder().keyProperty(ml.KeyProperty).build()
-  );
-  return TestEntityV4.builder()
+  const entity = TestEntityV4.builder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)
     .stringProperty(originalData.StringProperty)
     .booleanProperty(originalData.BooleanProperty)
     .int16Property(originalData.Int16Property)
-    .toSingleLink(singleLink)
-    .toMultiLink(multiLink)
     .build()
     .setOrInitializeRemoteState();
+  if (originalData.to_SingleLink) {
+    entity.toSingleLink = TestEntitySingleLink.builder()
+      .keyProperty(originalData.to_SingleLink.KeyProperty)
+      .build();
+  }
+  if (originalData.to_MultiLink) {
+    entity.toMultiLink = originalData.to_MultiLink.map(ml =>
+      TestEntityMultiLink.builder().keyProperty(ml.KeyProperty).build()
+    );
+  }
+  return entity;
 }
 
 export function testEntityResourcePath(

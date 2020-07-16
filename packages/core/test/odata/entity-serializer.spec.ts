@@ -24,11 +24,13 @@ describe('entity-serializer', () => {
   });
 
   it('should serialize entity with complex type fields', () => {
+    const stringProperty1 = 'test';
+    const stringProperty2 = 'nest';
     const testEntity = TestEntity.builder()
       .complexTypeProperty({
-        stringProperty: 'test',
+        stringProperty: stringProperty1,
         complexTypeProperty: {
-          stringProperty: 'nest'
+          stringProperty: stringProperty2
         }
       })
       .int16Property(100)
@@ -36,9 +38,9 @@ describe('entity-serializer', () => {
 
     expect(serializeEntity(testEntity, TestEntity)).toEqual({
       ComplexTypeProperty: {
-        StringProperty: 'test',
+        StringProperty: stringProperty1,
         ComplexTypeProperty: {
-          StringProperty: 'nest'
+          StringProperty: stringProperty2
         }
       },
       Int16Property: testEntity.int16Property

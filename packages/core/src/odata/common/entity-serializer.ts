@@ -95,6 +95,7 @@ export function entitySerializer(tsToEdm) {
     }, {});
   }
 
+  // TODO: get rid of this function in v2.0
   function serializeComplexTypeFieldLegacy<
     EntityT extends EntityBase,
     ComplexTypeNamespaceT extends ComplexTypeNamespace

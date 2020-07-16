@@ -156,6 +156,7 @@ export function entityDeserializer(edmToTs, extractODataETag) {
     }
   }
 
+  // TODO: get rid of this function in v2.0
   function deserializeComplexTypeLegacy<
     EntityT extends EntityBase,
     ComplexTypeNamespaceT extends ComplexTypeNamespace

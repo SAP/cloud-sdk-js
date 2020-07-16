@@ -58,7 +58,7 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it('should resolve for create request', async () => {
+  it('should resolve for getByKey request', async () => {
     const response = singleTestEntityResponse();
 
     mockCsrfTokenRequest(destination.url, destination.sapClient!);

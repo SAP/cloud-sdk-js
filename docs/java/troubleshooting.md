@@ -77,3 +77,12 @@ Possible causes:
 - Getters and Setters will be shown red if your IDE does not support Lombok. Hence, install the Lombok plugin for your IDE.
   - For IntelliJ, install [the Lombok plugin](https://plugins.jetbrains.com/plugin/6317-lombok).
   - For Eclipse, follow [this guide](https://projectlombok.org/setup/eclipse).
+
+### Compilation or runtime failures after updating the SDK version
+
+**Symptom:** `MethodNotFound`, `ClassDefNotFound` or similar exceptions occur.
+
+Possible causes:
+
+- Conflicting dependency versions may cause such issues.
+  See the section on [Managing Dependencies](guides/dependencies.md#dealing-with-dependency-conflicts).

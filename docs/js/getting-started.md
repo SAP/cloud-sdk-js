@@ -19,9 +19,19 @@ import LicenseBadge from '../../src/sap/sdk-js/LicenseBadge'
 
 <> <BuildBadge /> { } <LicenseBadge /> </>
 
-## What is the CLI
+## Introduction
 
-The CLI can initialize a nest-based project or (the more common case) add everything you need to develop for SAP Cloud Platform to an existing project no matter what backend framework you use.
+### What is the SDK
+
+The SAP Cloud SDK supports you end-to-end when developing applications that communicate with SAP solutions and services such as SAP S/4HANA Cloud, SAP SuccessFactors, and many others.
+
+Using the SDK, you can reduce your effort when developing an application on SAP Cloud Platform by building on best practices delivered by the SDK. The SDK can provide JavaScript libraries and project templates.
+
+To create such an application we provide a command line interface, that allows you to scaffold or enhance an application with the missing parts to use the SDK.
+
+### What is the CLI.
+
+The CLI (command line interface) can initialize a nest-based project or (the more common case) add everything you need to develop for SAP Cloud Platform to an existing project no matter what backend framework you use.
 If there are any incompatibilities, please let us know in the [issues](https://github.com/SAP/cloud-sdk-cli/issues/new/choose)!
 
 ## Installation
@@ -87,7 +97,7 @@ The project contains the following files and folders, among others, to get you s
 
 #### NPM / Project
 
-- **`package.json`**: Specifies dependencies, metadata and user-defined scripts. The application comes with some predefined scripts and dependencies, that will be explained in detail in the course of this group of tutorials.
+- **`package.json`**: Specifies dependencies, metadata and user-defined scripts. The application comes with some predefined scripts and dependencies.
 - **`.npmrc`**: The **`npm`** configuration file. The SAP Cloud SDK consists of some generic libraries, that are available as Open Source Software and service libraries for the whitelisted SAP S/4HANA APIs, referred to as the Virtual Data Model (VDM). In the scaffolding we specify the registry for the `@sap` scope, where the VDM libraries are published.
 
 #### TypeScript
@@ -138,7 +148,6 @@ The `Cloud Foundry` CLI deploys your application to SAP Cloud Platform. You can 
 
 ### Login
 
-<!--Do i need to explain this part with more detail?-->
 :::note
 If you don't have a [SAP Cloud Platform](https://account.hana.ondemand.com/) account you need to create one.
 :::
@@ -222,13 +231,13 @@ cf logs <YOUR-APPLICATION-NAME> --recent
 
 ## Additional features
 
-For productive use, your app should be bound to a server, and also implement user authentication and authorization.
+For productive use, your app should be linked to one or more databases, and also implement user authentication and authorization.
 
 ### Configure destination
 
 Login the [Cloud Cockpit](https://account.hana.ondemand.com), navigate to your respective subaccount (in case of a trial account it should be called `trial`). In the menu bar on the left, there should be a section `Connectivity` with an entry called `Destinations`. Click `Destinations`. On the page that opens, click `New Destination` and fill in the details below.
 
-For `Name`, choose a name that describes your system. For the exemple, we will go with `Server`.
+For `Name`, choose a name that describes your system. For the exemple, we will go with `S4_SYSTEM`.
 
 If you use the Business Partner mock server, enter for `URL` the URL that you have saved from the [previous step](#deployment) and use `NoAuthentication` for `Authentication`. If you use an SAP S/4HANA Cloud system, enter the systems URL in the `URL` field and choose `BasicAuthentication` as authentication type. This will make the fields `User` and `Password` appear. Enter here the credentials of a technical user for your SAP S/4HANA Cloud system.
 
@@ -296,7 +305,7 @@ applications:
       - my-xsuaa
 ```
 
-Finally, we can replace the parameter of `execute` with an object whose key `destinationName` refers to the name of the destination we defined earlier. If you chose a different name than `Server`, make sure to use it here accordingly.
+Finally, we can replace the parameter of `execute` with an object whose key `destinationName` refers to the name of the destination we defined earlier. If you chose a different name than `S4_SYSTEM`, make sure to use it here accordingly.
 
 The new function now looks like this:
 

@@ -19,6 +19,11 @@ import LicenseBadge from '../../src/sap/sdk-js/LicenseBadge'
 
 <> <BuildBadge /> { } <LicenseBadge /> </>
 
+## What is the CLI
+
+The CLI can initialize a nest-based project or (the more common case) add everything you need to develop for SAP Cloud Platform to an existing project no matter what backend framework you use.
+If there are any incompatibilities, please let us know in the [issues](https://github.com/SAP/cloud-sdk-cli/issues/new/choose)!
+
 ## Installation
 
 To install the CLI globally, run:
@@ -33,19 +38,6 @@ As long as the CLI version is less than `1.0.0`, run the following to update to 
 
 ```shell
 $ npm install -g @sap-cloud-sdk/cli@latest
-```
-
-## CLI Usage
-
-The CLI can initialize a nest-based project or (the more common case) add everything you need to develop for SAP Cloud Platform to an existing project no matter what backend framework you use.
-If there are any incompatibilities, please let us know in the [issues](https://github.com/SAP/cloud-sdk-cli/issues/new/choose)!
-
-### Installation
-
-First run this command to install the CLI
-
-```shell
-npm install -g @sap-cloud-sdk/cli
 ```
 
 ### Usage

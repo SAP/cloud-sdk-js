@@ -27,7 +27,7 @@ export function swaggerDefinitionForFunctionImport(
   if (swaggerMetadata) {
     const paths = swaggerMetadata.paths;
     const entryPath = Object.keys(paths).find(
-      path1 => path1 === `/${originalName}`
+      p => p === `/${originalName}`
     );
     if (entryPath) {
       const key = Object.keys(paths[entryPath]).find(

@@ -23,6 +23,7 @@
 ## Improvements
 
 - Improve complex type handling and its representation in the generated OData clients.
+- Improve collection type handling and its representation in the generated OData clients.
 
 ## Fixed Issues
 

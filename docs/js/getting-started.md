@@ -132,13 +132,7 @@ To run the application locally, simply run the following command:
 npm run start:dev
 ```
 This will start a local server in watch mode, so that subsequent changes will automatically trigger a restart of the server.
-Go to `http://localhost:3000` and you should get a `Hello, World!` in response. Open `src/main.ts` and switch the port from `3000` to `8080`. The corresponding line should then look like this:
-
-```ts
-await app.listen(process.env.PORT || 8080);
-```
-
-Since `nest` was started in watch mode, it should detect this change and restart the server.
+Go to `http://localhost:3000` and you should get a `Hello, World!` in response.
 
 ## Deploy the project on Cloud Foundry
 
@@ -163,12 +157,11 @@ cf login
 
 ### Before deploying
 
-- Make sure that your app listens to port 8080
-- Build your app if necessary
+Build your app if necessary.
 
 ### Deployment
 
-To deploy you app, run:
+To deploy your app, run:
 ```Shell
 npm run deploy
 ```

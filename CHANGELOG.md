@@ -14,7 +14,9 @@
 
 ## Compatibility Notes
 
--
+- _OData client generator_: Reduce public API of the generator.
+Only the service generation remains public.
+The old API is obsolete due to a refactoring (see below) but remains available with status deprecated. 
 
 ## New Functionality
 
@@ -22,7 +24,7 @@
 
 ## Improvements
 
--
+- _OData client generator_: Refactor the service generation flow and deprecate the whole previous implementation.  
 
 ## Fixed Issues
 

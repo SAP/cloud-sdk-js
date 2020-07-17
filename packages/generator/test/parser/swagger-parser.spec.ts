@@ -1,9 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { parseSwaggerFromPath } from '../../src/parser';
+
+import { readSwaggerFile } from '../../src/swagger-parser/swagger-parser';
 
 describe('swagger-parser', () => {
   it('parseSwaggerFromPath should parse service info', () => {
-    const json = parseSwaggerFromPath(
+    const json = readSwaggerFile(
       '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.json'
     );
     expect(json).toBeDefined();

@@ -220,10 +220,10 @@ export function createEntityClassNames(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>[],
   formatter: ServiceNameFormatter
 ): MapType<string> {
-  return entityMetadata.reduce((names, e) => {
-    names[e.entitySet.Name] = formatter.originalToEntityClassName(
+  return entityMetadata.reduce((names, e) => ({
+    ...names,
+    [e.entitySet.Name]: formatter.originalToEntityClassName(
       e.entitySet.Name
-    );
-    return names;
-  }, {});
+    )
+  }), {});
 }

@@ -16,16 +16,14 @@ export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
 export function parseEntityTypesBase(
   root
 ): EdmxEntityTypeBase<any>[] {
-  return forceArray(root.EntityType).map(e => {
-    if (!e.Key) {
-      e.Key = {};
-    }
-    e.Key.PropertyRef = forceArray(e.Key.PropertyRef);
-    e.NavigationProperty = forceArray(e.NavigationProperty);
-    e.Property = forceArray(e.Property);
-    return e;
-  });
-}
+  return forceArray(root.EntityType).map(e => ({
+  ...e,
+  Key: {
+    PropertyRef: forceArray(e.Key?.PropertyRef)
+  },
+  NavigationProperty: forceArray(e.NavigationProperty),
+  Property: forceArray(e.Property)
+}));
 
 export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
   return forceArray(root.EntityContainer.EntitySet);

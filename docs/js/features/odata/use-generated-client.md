@@ -123,14 +123,17 @@ The example above creates a request to get all BusinessPartner entites.
 
 #### Select
 
-When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameter `$select` is set. It restricts the response to the given selection of properties in the request.
+When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameters `$select` and `$expand` are set. It restricts the response to the given selection of properties in the request.
 
 <!-- OData v4
 When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
+
+To include navigation properties, OData offers the expand operation. The VDM allows you to use navigation properties in the select function just like normal properties.
 -->
 
-The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS ` as representation of a navigation property.
+The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS` as representation of a navigation property.
 
+A navigation property means that there is a relation between a business partner and their addresses. In this case, one business partner can have multiple addresses. In SAP S/4HANA, navigation properties typically start with `TO_`.
 
 ```ts
 BusinessPartner.requestBuilder()
@@ -146,7 +149,7 @@ BusinessPartner.requestBuilder()
 The above translates to the following query parameters:
 
 ```sql
-$select=FirstName,LastName,to_BusinessPartnerAddress
+$select=FirstName,LastName,to_BusinessPartnerAddress/*&$expand=to_BusinessPartnerAddress
 ```
 
 <!-- OData v4
@@ -155,7 +158,7 @@ $select=FirstName,LastName&$expand=to_BusinessPartnerAddress
 ```
 -->
 
-One can also select properties of the expanded object:
+One can also select properties of the expanded navigation property:
 
 ```ts
 BusinessPartner.requestBuilder()
@@ -278,7 +281,6 @@ The result can be retricted by applying the [select](#select) function, same as 
 
 The Create request builder allows you to send a `POST` request to create a new entity:
 <!-- TODO: Add more details on how to create a business partner entity -->
-<!-- TODO: Mention deep create -->
 
 ```ts
 const businessPartner = BusinessPartner.builder().build();
@@ -286,6 +288,38 @@ BusinessPartner.requestBuilder().create(businessPartner);
 ```
 
 In the example above we created an instance of BusinessPartner and sent it to the BusinessPartner service in a `POST` request.
+
+#### Deep Create
+
+It is also possible to create an entity together with related entities in a single request:
+
+```ts
+// build a business partner instance with one linked address
+const businessPartner = BusinessPartner.builder()
+  .firstName('John')
+  .lastName('Doe')
+  .businessPartnerCategory('1')
+  .toBusinessPartnerAddress([
+    BusinessPartnerAddress.builder()
+      .country('DE')
+      .postalCode('14469')
+      .cityName('Potsdam')
+      .streetName('Konrad-Zuse-Ring')
+      .houseNumber('10')
+      .build()
+  ])
+  .build();
+
+// execute the create request
+BusinessPartner.requestBuilder()
+  .create(businessPartner)
+  .execute(myDestination);
+```
+<!--
+for future reference:
+When reading this section I think, so what? That is exactly the behavior I would expect ;)
+Is there something special that we do? Is the url different than with the normal create? Is there some additional header that we set?
+-->
 
 You can also create an entity `asChildOf` another entity.
 <!-- TODO: Add more details and an example. -->
@@ -317,7 +351,11 @@ BusinessPartner.requestBuilder()
   .update(businessPartner)
   .ignoreVersionIdentifier();
 ```
+<!--OData V4
+#### Deep Update
 
+It is also possible to update an entity together with related entities in a single request, same as [deep create](#deep-create).
+-->
 ### Delete Request Builder
 
 The Delete request builder allows you to create `DELETE` requests, that delete entities.

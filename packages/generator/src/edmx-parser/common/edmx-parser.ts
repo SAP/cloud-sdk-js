@@ -13,11 +13,9 @@ export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
   }));
 }
 
-// TODO more elegant way to pass the type in?
-export function parseEntityTypesBase<NavigationT>(
-  root,
-  navigationType: NavigationT
-): EdmxEntityTypeBase<NavigationT>[] {
+export function parseEntityTypesBase(
+  root
+): EdmxEntityTypeBase<any>[] {
   return forceArray(root.EntityType).map(e => {
     if (!e.Key) {
       e.Key = {};

@@ -6,6 +6,7 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport,
+  VdmFunctionImportReturnType,
   VdmFunctionImportReturnTypeCategory
 } from '../../vdm-types';
 import { edmToTsType, isNullableParameter } from '../../generator-utils';
@@ -71,116 +72,104 @@ export function transformFunctionImportBase<T extends EdmxNamed>(
 }
 
 export function parseReturnTypes(
-  functionImports: Omit<VdmFunctionImport, 'returnType'>[],
+  returnType: string,
   entities: VdmEntity[],
-  complexTypes: VdmComplexType[]
-): VdmFunctionImport[] {
-  return functionImports.map(f => {
-    const returnType = f.returnTypeEdmx;
-    if (!returnType) {
-      return withVoid(f);
-    }
-
-    const isCollectionReturnType = isCollection(returnType);
-    const edmType = findEdmType(returnType);
-    if (edmType) {
-      return withEdmType(f, isCollectionReturnType, edmType);
-    }
-
-    const entity = findEntityType(returnType, entities);
-    if (entity) {
-      return withEntity(f, isCollectionReturnType, entity);
-    }
-
-    const complexType = findComplexType(returnType, complexTypes);
-    if (complexType) {
-      return withComplexType(f, isCollectionReturnType, complexType);
-    }
-
-    throw Error(`Unable to find a return type for name ${returnType}.`);
-  });
-
-  function findEdmType(returnType: string): string | undefined {
-    returnType = parseTypeName(returnType);
-    if (returnType.startsWith('Edm.')) {
-      return returnType;
-    }
-    return undefined;
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+): VdmFunctionImportReturnType {
+  if (!returnType) {
+    return getVoidReturnType();
   }
 
-  function findEntityType(
-    returnType: string,
-    entites: VdmEntity[]
-  ): VdmEntity | undefined {
-    returnType = parseTypeName(returnType);
-    const parsedReturnType = returnType.split('.').slice(-1)[0];
-    return entities.find(e => e.entityTypeName === parsedReturnType);
+  const isCollectionReturnType = isCollection(returnType);
+  const edmType = findEdmType(returnType);
+  if (edmType) {
+    return getEdmReturnType(isCollectionReturnType, edmType);
   }
 
-  function findComplexType(
-    returnType: string,
-    entites: VdmComplexType[]
-  ): VdmComplexType | undefined {
-    returnType = parseTypeName(returnType);
-    const parsedReturnType = returnType.split('.').slice(-1)[0];
-    return complexTypes.find(c => c.originalName === parsedReturnType);
+  const entity = findEntityType(returnType, entities);
+  if (entity) {
+    return getEntityReturnType(isCollectionReturnType, entity);
   }
 
-  function withVoid(
-    f: Omit<VdmFunctionImport, 'returnType'>
-  ): VdmFunctionImport {
-    const vdmReturnType = {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
-      returnType: 'undefined',
-      builderFunction: '(val) => undefined',
-      isMulti: false,
-      isCollection: false
-    };
-    return { ...f, returnType: vdmReturnType };
+  const complexType = findComplexType(returnType, complexTypes);
+  if (complexType) {
+    return getComplexReturnType(isCollectionReturnType, complexType);
   }
 
-  function withEdmType(
-    f: Omit<VdmFunctionImport, 'returnType'>,
-    isCollectionReturnType: boolean,
-    edmType: string
-  ): VdmFunctionImport {
-    const vdmReturnType = {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
-      returnType: propertyJsType(edmType)!,
-      builderFunction: `(val) => edmToTs(val, '${edmType}')`,
-      isMulti: isCollectionReturnType,
-      isCollection: isCollectionReturnType
-    };
-    return { ...f, returnType: vdmReturnType };
-  }
+  throw Error(`Unable to find a return type for name ${returnType}.`);
+}
 
-  function withEntity(
-    f: Omit<VdmFunctionImport, 'returnType'>,
-    isCollectionReturnType: boolean,
-    entity: VdmEntity
-  ): VdmFunctionImport {
-    const vdmReturnType = {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
-      returnType: entity.className,
-      builderFunction: entity.className,
-      isMulti: isCollectionReturnType,
-      isCollection: isCollectionReturnType
-    };
-    return { ...f, returnType: vdmReturnType };
+function findEdmType(returnType: string): string | undefined {
+  returnType = parseTypeName(returnType);
+  if (returnType.startsWith('Edm.')) {
+    return returnType;
   }
+  return undefined;
+}
 
-  function withComplexType(
-    f: Omit<VdmFunctionImport, 'returnType'>,
-    isCollectionReturnType: boolean,
-    complexType: VdmComplexType
-  ): VdmFunctionImport {
-    const vdmReturnType = {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
-      returnType: complexType.typeName,
-      builderFunction: `${complexType.typeName}.build`,
-      isMulti: isCollectionReturnType,
-      isCollection: isCollectionReturnType
-    };
-    return { ...f, returnType: vdmReturnType };
-  }
+function findEntityType(
+  returnType: string,
+  entites: VdmEntity[]
+): VdmEntity | undefined {
+  returnType = parseTypeName(returnType);
+  const parsedReturnType = returnType.split('.').slice(-1)[0];
+  return entites.find(e => e.entityTypeName === parsedReturnType);
+}
+
+function findComplexType(
+  returnType: string,
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+): Omit<VdmComplexType, 'factoryName'> | undefined {
+  returnType = parseTypeName(returnType);
+  const parsedReturnType = returnType.split('.').slice(-1)[0];
+  return complexTypes.find(c => c.originalName === parsedReturnType);
+}
+
+function getVoidReturnType(): VdmFunctionImportReturnType {
+  return {
+    returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
+    returnType: 'undefined',
+    builderFunction: '(val) => undefined',
+    isMulti: false,
+    isCollection: false
+  };
+}
+
+function getEdmReturnType(
+  isCollectionReturnType: boolean,
+  edmType: string
+): VdmFunctionImportReturnType {
+  return {
+    returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
+    returnType: propertyJsType(edmType)!,
+    builderFunction: `(val) => edmToTs(val, '${edmType}')`,
+    isMulti: isCollectionReturnType,
+    isCollection: isCollectionReturnType
+  };
+}
+
+function getEntityReturnType(
+  isCollectionReturnType: boolean,
+  entity: VdmEntity
+): VdmFunctionImportReturnType {
+  return {
+    returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
+    returnType: entity.className,
+    builderFunction: entity.className,
+    isMulti: isCollectionReturnType,
+    isCollection: isCollectionReturnType
+  };
+}
+
+function getComplexReturnType(
+  isCollectionReturnType: boolean,
+  complexType: Omit<VdmComplexType, 'factoryName'>
+): VdmFunctionImportReturnType {
+  return {
+    returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
+    returnType: complexType.typeName,
+    builderFunction: `${complexType.typeName}.build`,
+    isMulti: isCollectionReturnType,
+    isCollection: isCollectionReturnType
+  };
 }

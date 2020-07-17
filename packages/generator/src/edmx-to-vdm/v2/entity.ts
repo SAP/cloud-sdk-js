@@ -31,7 +31,7 @@ import { stripNamespace } from '../edmx-to-vdm-util';
 
 export function generateEntitiesV2(
   serviceMetadata: ServiceMetadata,
-  complexTypes: VdmComplexType[],
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
   const entitySets = parseEntitySets(serviceMetadata.edmx.root);

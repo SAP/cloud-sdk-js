@@ -41,7 +41,7 @@ const logger = createLogger({
 export function transformEntityBase(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   classNames: {},
-  complexTypes: VdmComplexType[],
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
 ): Omit<VdmEntity, 'navigationProperties'> {
   const entity = {
@@ -75,7 +75,7 @@ function keys(props: VdmProperty[], edmxKeys: EdmxNamed[]): VdmProperty[] {
 
 function properties(
   entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
-  complexTypes: VdmComplexType[],
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
 ): VdmProperty[] {
   return entity.entityType.Property.filter(filterUnknownEdmTypes).map(p => {
@@ -117,13 +117,13 @@ const complexTypeFieldType = (typeName: string) => typeName + 'Field';
 
 const findComplexType = (
   name: string,
-  complexTypes: VdmComplexType[]
-): VdmComplexType | undefined =>
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+): Omit<VdmComplexType, 'factoryName'> | undefined =>
   complexTypes.find(c => c.originalName === complexTypeName(name));
 
 function complexTypeForName(
   name: string,
-  complexTypes: VdmComplexType[]
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): string {
   const complexType = findComplexType(name, complexTypes);
   if (complexType) {
@@ -137,7 +137,7 @@ function complexTypeForName(
 
 function complexTypeFieldForName(
   name: string,
-  complexTypes: VdmComplexType[]
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): string {
   const complexType = findComplexType(name, complexTypes);
   if (complexType) {

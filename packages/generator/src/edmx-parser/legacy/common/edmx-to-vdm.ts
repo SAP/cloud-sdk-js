@@ -408,7 +408,7 @@ export function transformComplexTypes(
 export function parseReturnType(
   returnType: string,
   entities: VdmEntity[],
-  complexTypes: VdmComplexType[]
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): VdmFunctionImportReturnType {
   if (!returnType) {
     return {

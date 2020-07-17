@@ -9,12 +9,15 @@ import {
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { stripNamespace } from '../edmx-to-vdm-util';
-import { VdmFunctionImport } from '../../vdm-types';
+import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
+import { parseReturnType } from '../../edmx-parser/legacy/common';
 
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
+  entities: VdmEntity[],
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
-): Omit<VdmFunctionImport, 'returnType'>[] {
+): VdmFunctionImport[] {
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImports(serviceMetadata.edmx.root);
 
@@ -43,7 +46,11 @@ export function generateFunctionImportsV4(
         formatter
       ),
       httpMethod,
-      returnTypeEdmx: edmxFunction.ReturnType?.Type
+      returnType: parseReturnType(
+        edmxFunction.ReturnType?.Type,
+        entities,
+        complexTypes
+      )
     };
   });
 }

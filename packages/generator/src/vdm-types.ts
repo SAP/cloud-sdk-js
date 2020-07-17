@@ -92,7 +92,6 @@ export interface VdmFunctionImport {
   parametersTypeName: string;
   functionName: string;
   description: string;
-  returnTypeEdmx: string;
   returnType: VdmFunctionImportReturnType;
 }
 

@@ -56,6 +56,8 @@ class ServiceGenerator {
       ? getServiceEntitiesV2(serviceMetadata)
       : getServiceEntitiesV4(serviceMetadata);
 
+    //
+
     return {
       ...vdmServicePackageMetaData,
       ...vdmServiceEntities

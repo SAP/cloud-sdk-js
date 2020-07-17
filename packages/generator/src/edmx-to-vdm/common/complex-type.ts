@@ -29,10 +29,21 @@ function filterUnknownPropertyTypes(p: VdmProperty): boolean {
   return !(p.isComplex && typeof p.jsType === 'undefined');
 }
 
+// TODO: this should be removed once the deprecated complex type factory is removed
+export function includeFactoryName(
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  formatter: ServiceNameFormatter
+): VdmComplexType[] {
+  return complexTypes.map(c => ({
+    ...c,
+    factoryName: formatter.typeNameToFactoryName(c.typeName)
+  }));
+}
+
 export function transformComplexTypesBase(
   complexTypes: EdmxComplexTypeBase[],
   formatter: ServiceNameFormatter
-): VdmComplexType[] {
+): Omit<VdmComplexType, 'factoryName'>[] {
   const formattedTypes = complexTypes.reduce(
     (formatted, c) => ({
       ...formatted,
@@ -45,7 +56,6 @@ export function transformComplexTypesBase(
     return {
       typeName,
       originalName: c.Name,
-      factoryName: formatter.typeNameToFactoryName(typeName),
       fieldType: complexTypeFieldType(typeName),
       properties: c.Property.filter(filterUnknownEdmTypes)
         .map(p => {

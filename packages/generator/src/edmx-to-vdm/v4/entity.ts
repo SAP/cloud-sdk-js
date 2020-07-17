@@ -40,7 +40,7 @@ export function joinEntityTypes(
 
 export function generateEntitiesV4(
   serviceMetadata: ServiceMetadata,
-  complexTypes: VdmComplexType[],
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
   const entitySets = parseEntitySets(serviceMetadata.edmx.root);

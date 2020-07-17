@@ -2,7 +2,7 @@
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmServiceEntities } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { parseReturnTypes } from '../common';
+import { includeFactoryName } from '../common';
 import { generateFunctionImportsV2 } from './function-import';
 import { generateComplexTypesV2 } from './complex-type';
 import { generateEntitiesV2 } from './entity';
@@ -12,26 +12,17 @@ export function getServiceEntitiesV2(
 ): VdmServiceEntities {
   const formatter = new ServiceNameFormatter();
 
-  /*
-  Do function imports before complex types so that function with name "createSomething" gets a nicer name, because the builder function of a complex type would also be called `create${ComplexTypeName}`.
-  */
-  const functionImportsWithoutReturnType = generateFunctionImportsV2(
+  const complexTypes = generateComplexTypesV2(serviceMetadata, formatter);
+  const entities = generateEntitiesV2(serviceMetadata, complexTypes, formatter);
+  const functionImports = generateFunctionImportsV2(
     serviceMetadata,
+    entities,
+    complexTypes,
     formatter
   );
 
-  const complexTypes = generateComplexTypesV2(serviceMetadata, formatter);
-
-  const entities = generateEntitiesV2(serviceMetadata, complexTypes, formatter);
-
-  const functionImports = parseReturnTypes(
-    functionImportsWithoutReturnType,
-    entities,
-    complexTypes
-  );
-
   return {
-    complexTypes,
+    complexTypes: includeFactoryName(complexTypes, formatter),
     entities,
     functionImports
   };

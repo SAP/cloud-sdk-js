@@ -330,7 +330,7 @@ export namespace TestEntity {
    * Static representation of the [[collectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COLLECTION_PROPERTY: CollectionField<TestEntity> = new CollectionField('CollectionProperty', TestEntity, new StringField('', TestEntity, 'Edm.String'));
+  export const COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.String'> = new CollectionField('CollectionProperty', TestEntity, 'Edm.String');
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -340,7 +340,7 @@ export namespace TestEntity {
    * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity> = new CollectionField('ComplexTypeCollectionProperty', TestEntity, new TestComplexTypeField('', TestEntity));
+  export const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity, typeof TestComplexType> = new CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType);
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -359,7 +359,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | CollectionField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, typeof TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,

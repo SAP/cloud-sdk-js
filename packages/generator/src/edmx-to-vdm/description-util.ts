@@ -13,7 +13,7 @@ import {
   SwaggerPath,
   SwaggerPathParameter,
   SwaggerProperty
-} from '../edmx-parser/swagger/swagger-types';
+} from '../swagger-parser/swagger-types';
 
 export function longDescription(
   documented: EdmxDocumented,

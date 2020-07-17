@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
-import { swaggerDefinitionForFunctionImport } from '../../edmx-parser/swagger/swagger-parser';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import {
   EdmxDerivedType,
   parseFunctionImports,

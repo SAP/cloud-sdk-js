@@ -2,7 +2,7 @@
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
 import { VdmFunctionImport } from '../../vdm-types';
-import { swaggerDefinitionForFunctionImport } from '../../edmx-parser/swagger/swagger-parser';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import { parseFunctionImports } from '../../edmx-parser/v2';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 

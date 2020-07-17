@@ -11,7 +11,7 @@ import {
   EdmxAssociationSet,
   EdmxEntityType,
   EdmxFunctionImport
-} from './edmx-types';
+} from './edm-types';
 
 export function parseComplexTypes(root) {
   return parseComplexTypesBase(root);

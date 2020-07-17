@@ -11,8 +11,8 @@ import {
 } from './service-mapping';
 import { ServiceNameFormatter } from './service-name-formatter';
 import { readEdmxFile, ServiceMetadata } from './edmx-parser/edmx-file-reader';
-import { readSwaggerFile } from './edmx-parser/swagger/swagger-parser';
-import { apiBusinessHubMetadata } from './edmx-parser/swagger/swagger-util';
+import { readSwaggerFile } from './swagger-parser/swagger-parser';
+import { apiBusinessHubMetadata } from './swagger-parser/swagger-util';
 import { VdmServiceMetadata, VdmServicePackageMetaData } from './vdm-types';
 import { isV2Metadata } from './edmx-to-vdm/edmx-to-vdm-util';
 import { getServiceEntitiesV2 } from './edmx-to-vdm/v2';

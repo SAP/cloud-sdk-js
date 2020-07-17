@@ -16,7 +16,6 @@ import {
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
-import { SwaggerMetadata } from '../../edmx-parser/swagger/swagger-types';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
   EdmxEntitySetBase,
@@ -32,6 +31,7 @@ import {
   parseTypeName,
   propertyJsType
 } from '../edmx-to-vdm-util';
+import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -220,10 +220,11 @@ export function createEntityClassNames(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>[],
   formatter: ServiceNameFormatter
 ): MapType<string> {
-  return entityMetadata.reduce((names, e) => ({
-    ...names,
-    [e.entitySet.Name]: formatter.originalToEntityClassName(
-      e.entitySet.Name
-    )
-  }), {});
+  return entityMetadata.reduce(
+    (names, e) => ({
+      ...names,
+      [e.entitySet.Name]: formatter.originalToEntityClassName(e.entitySet.Name)
+    }),
+    {}
+  );
 }

@@ -4,7 +4,7 @@ import { existsSync, PathLike, readFileSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
-import { servicePathFromSwagger } from './edmx-parser/swagger/swagger-util';
+import { servicePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
 
 const logger = createLogger({

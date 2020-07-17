@@ -9,7 +9,7 @@ import {
   VdmFunctionImportReturnTypeCategory
 } from '../../vdm-types';
 import { edmToTsType, isNullableParameter } from '../../generator-utils';
-import { SwaggerPath } from '../../edmx-parser/swagger/swagger-types';
+import { SwaggerPath } from '../../swagger-parser/swagger-types';
 import {
   functionImportDescription,
   parameterDescription
@@ -142,12 +142,12 @@ export function parseReturnTypes(
   function withEdmType(
     f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,
-    edmxType: string
+    edmType: string
   ): VdmFunctionImport {
     const vdmReturnType = {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
-      returnType: propertyJsType(edmxType)!,
-      builderFunction: `(val) => edmToTs(val, '${edmxType}')`,
+      returnType: propertyJsType(edmType)!,
+      builderFunction: `(val) => edmToTs(val, '${edmType}')`,
       isMulti: isCollectionReturnType,
       isCollection: isCollectionReturnType
     };

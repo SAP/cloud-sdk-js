@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { SwaggerEntity } from '../swagger/swagger-types';
+import { SwaggerEntity } from '../../swagger-parser/swagger-types';
 
 export interface EdmxNamed {
   Name: string;

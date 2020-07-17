@@ -16,7 +16,7 @@ import {
   EdmxEnumType,
   EdmxFunction,
   EdmxFunctionImport
-} from './edmx-types';
+} from './edm-types';
 
 export function joinComplexTypes(
   complexType: EdmxComplexType,

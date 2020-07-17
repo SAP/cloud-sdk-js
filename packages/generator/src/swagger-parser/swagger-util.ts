@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { propertyExists } from '@sap-cloud-sdk/util';
-import { ApiBusinessHubMetadata } from '../../vdm-types';
+
+import { ApiBusinessHubMetadata } from '../vdm-types';
 import { SwaggerMetadata } from './swagger-types';
 
 export function apiBusinessHubMetadata(
@@ -37,7 +37,7 @@ function communicationScenario(swagger: SwaggerMetadata): string | null {
 
 function apiHubServiceName(swagger: SwaggerMetadata): string {
   if (!swagger.basePath) {
-    throw Error('The swagger base path is undefined.');
+    throw Error('The swagger-parser base path is undefined.');
   }
   return swagger.basePath.split('/').slice(-1)[0];
 }

@@ -14,7 +14,9 @@ import {
   EntityBase,
   Constructable,
   ComplexTypeNamespace,
-  isComplexTypeNameSpace
+  isComplexTypeNameSpace,
+  EdmTypeShared,
+  isEdmType
 } from '../common';
 
 const logger = createLogger({
@@ -203,17 +205,16 @@ export function entityDeserializer(edmToTs, extractODataETag) {
       }));
   }
 
-  function deserializeCollectionType<EntityT extends EntityBase>(
-    json: any[],
-    selectable: CollectionField<EntityT>
-  ) {
-    if (selectable._fieldType instanceof EdmTypeField) {
-      const edmType = selectable._fieldType.edmType;
-      return json.map(v => edmToTs(v, edmType));
+  function deserializeCollectionType<
+    EntityT extends EntityBase,
+    FieldT extends EdmTypeShared<'any'> | ComplexTypeNamespace
+  >(json: any[], field: CollectionField<EntityT, FieldT>) {
+    const fieldType = field._fieldType;
+    if (isEdmType(fieldType)) {
+      return json.map(val => edmToTs(val, fieldType));
     }
-    if (selectable._fieldType instanceof ComplexTypeField) {
-      const complexTypeField = selectable._fieldType;
-      return json.map(v => deserializeComplexTypeLegacy(v, complexTypeField));
+    if (isComplexTypeNameSpace(fieldType)) {
+      return json.map(val => deserializeComplexType(val, fieldType));
     }
   }
 

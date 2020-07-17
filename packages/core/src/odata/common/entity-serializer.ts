@@ -11,7 +11,9 @@ import {
   CollectionField,
   EntityBase,
   ComplexTypeNamespace,
-  isComplexTypeNameSpace
+  isComplexTypeNameSpace,
+  EdmTypeShared,
+  isEdmType
 } from '../common';
 
 const logger = createLogger({
@@ -148,19 +150,16 @@ export function entitySerializer(tsToEdm) {
       );
   }
 
-  function serializeCollectionField<EntityT extends EntityBase>(
-    fieldValue: any[],
-    selectable: CollectionField<EntityT>
-  ) {
-    if (selectable._fieldType instanceof EdmTypeField) {
-      const edmType = selectable._fieldType.edmType;
-      return fieldValue.map(v => tsToEdm(v, edmType));
+  function serializeCollectionField<
+    EntityT extends EntityBase,
+    FieldT extends EdmTypeShared<'any'> | ComplexTypeNamespace
+  >(fieldValue: any[], field: CollectionField<EntityT, FieldT>) {
+    const fieldType = field._fieldType;
+    if (isEdmType(fieldType)) {
+      return fieldValue.map(val => tsToEdm(val, fieldType));
     }
-    if (selectable._fieldType instanceof ComplexTypeField) {
-      const complexTypeField = selectable._fieldType;
-      return fieldValue.map(v =>
-        serializeComplexTypeFieldLegacy(complexTypeField, v)
-      );
+    if (isComplexTypeNameSpace(fieldType)) {
+      return fieldValue.map(val => serializeComplexType(val, fieldType));
     }
   }
 

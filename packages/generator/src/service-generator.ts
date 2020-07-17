@@ -13,23 +13,10 @@ import { ServiceNameFormatter } from './service-name-formatter';
 import { readEdmxFile, ServiceMetadata } from './edmx-parser/edmx-file-reader';
 import { readSwaggerFile } from './edmx-parser/swagger/swagger-parser';
 import { apiBusinessHubMetadata } from './edmx-parser/swagger/swagger-util';
-import {
-  VdmServiceEntities,
-  VdmServiceMetadata,
-  VdmServicePackageMetaData
-} from './vdm-types';
-import {
-  generateComplexTypesV4,
-  generateFunctionImportsV4,
-  generateEntitiesV4
-} from './edmx-to-vdm/v4';
-import { parseReturnTypes } from './edmx-to-vdm/common';
-import {
-  generateFunctionImportsV2,
-  generateEntitiesV2,
-  generateComplexTypesV2
-} from './edmx-to-vdm/v2';
+import { VdmServiceMetadata, VdmServicePackageMetaData } from './vdm-types';
 import { isV2Metadata } from './edmx-to-vdm/edmx-to-vdm-util';
+import { getServiceEntitiesV2 } from './edmx-to-vdm/v2/service-entities';
+import { getServiceEntitiesV4 } from './edmx-to-vdm/v4/service-entities';
 
 class ServiceGenerator {
   private globalNameFormatter: GlobalNameFormatter;
@@ -65,10 +52,9 @@ class ServiceGenerator {
       serviceMetadata,
       serviceDefinitionPaths
     );
-    const vdmServiceEntities = this.getServiceEntities(
-      serviceMetadata,
-      serviceDefinitionPaths
-    );
+    const vdmServiceEntities = isV2Metadata(serviceMetadata.edmx)
+      ? getServiceEntitiesV2(serviceMetadata)
+      : getServiceEntitiesV4(serviceMetadata);
 
     return {
       ...vdmServicePackageMetaData,
@@ -109,40 +95,6 @@ class ServiceGenerator {
       edmxPath: serviceDefinitionPaths.edmxPath,
       apiBusinessHubMetadata: apiBusinessHubMetadata(serviceMetadata.swagger),
       className
-    };
-  }
-
-  private getServiceEntities(
-    serviceMetadata: ServiceMetadata,
-    serviceDefinitionPaths: ServiceDefinitionPaths
-  ): VdmServiceEntities {
-    const formatter = new ServiceNameFormatter();
-
-    /*
-    Do function imports before complex types so that function with name "createSomething" gets a nicer name, because the builder function of a complex type would also be called `create${ComplexTypeName}`.
-    */
-    const functionImportsWithoutReturnType = isV2Metadata(serviceMetadata.edmx)
-      ? generateFunctionImportsV2(serviceMetadata, formatter)
-      : generateFunctionImportsV4(serviceMetadata, formatter);
-
-    const complexTypes = isV2Metadata(serviceMetadata.edmx)
-      ? generateComplexTypesV2(serviceMetadata, formatter)
-      : generateComplexTypesV4(serviceMetadata, formatter);
-
-    const entities = isV2Metadata(serviceMetadata.edmx)
-      ? generateEntitiesV2(serviceMetadata, complexTypes, formatter)
-      : generateEntitiesV4(serviceMetadata, complexTypes, formatter);
-
-    const functionImports = parseReturnTypes(
-      functionImportsWithoutReturnType,
-      entities,
-      complexTypes
-    );
-
-    return {
-      complexTypes,
-      entities,
-      functionImports
     };
   }
 

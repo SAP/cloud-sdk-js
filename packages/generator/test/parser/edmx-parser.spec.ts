@@ -7,7 +7,7 @@ import {
   parseEntitySets as parseEntitySetsV2,
   parseEntityTypes as parseEntityTypesV2,
   parseFunctionImports as parseFunctionImportsV2
-} from '../../src/edmx-parser/v2/edmx-parser';
+} from '../../src/edmx-parser/v2';
 import {
   parseComplexTypes,
   parseEntitySets as parseEntitySetsV4,
@@ -15,7 +15,7 @@ import {
   parseEnumTypes,
   parseFunctionImports as parseFunctionImportsV4,
   parseFunctions
-} from '../../src/edmx-parser/v4/edmx-parser';
+} from '../../src/edmx-parser/v4';
 
 describe('edmx-edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {

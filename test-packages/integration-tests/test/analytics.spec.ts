@@ -1,3 +1,4 @@
+
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { dirname, resolve, sep } from 'path';

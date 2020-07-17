@@ -4,8 +4,7 @@ import {
   parseEntityTypesBase
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
-import { joinTypesWithBaseTypes } from '../../edmx-to-vdm/v4/function-import';
-import { joinEntityTypes } from '../../edmx-to-vdm/v4/entity';
+import { joinTypesWithBaseTypes, joinEntityTypes } from '../../edmx-to-vdm/v4';
 import {
   parseTypeName,
   stripNamespace
@@ -16,8 +15,7 @@ import {
   EdmxEntityType,
   EdmxEnumType,
   EdmxFunction,
-  EdmxFunctionImport,
-  EdmxNavigationProperty
+  EdmxFunctionImport
 } from './edmx-types';
 
 export function joinComplexTypes(
@@ -39,7 +37,7 @@ export function parseEnumTypes(root): EdmxEnumType[] {
 }
 
 export function parseEntityType(root): EdmxEntityType[] {
-  const entityTypes = parseEntityTypesBase(root, {} as EdmxNavigationProperty);
+  const entityTypes = parseEntityTypesBase(root);
   return joinTypesWithBaseTypes(
     filterEnumProperties(entityTypes, parseEnumTypes(root)),
     joinEntityTypes

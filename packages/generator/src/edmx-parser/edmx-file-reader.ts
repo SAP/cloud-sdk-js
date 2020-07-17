@@ -12,7 +12,7 @@ const logger = createLogger({
   messageContext: 'edmx-edmx-parser'
 });
 
-export interface EdmxMetadataBase {
+export interface EdmxMetadata {
   path: PathLike;
   oDataVersion: ODataVersion;
   fileName: string;
@@ -25,7 +25,7 @@ function parseMetadata(
   root,
   oDataVersion: ODataVersion,
   edmxPath: PathLike
-): EdmxMetadataBase {
+): EdmxMetadata {
   return {
     path: edmxPath,
     oDataVersion,
@@ -36,14 +36,14 @@ function parseMetadata(
   };
 }
 
-export function readEdmxFile(edmxPath: PathLike): EdmxMetadataBase {
+export function readEdmxFile(edmxPath: PathLike): EdmxMetadata {
   const edmxFile = readFileSync(path.resolve(edmxPath.toString()), {
     encoding: 'utf-8'
   });
   return parseEdmxFile(edmxFile, edmxPath);
 }
 
-function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadataBase {
+function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadata {
   const parsedEdmx = parse(edmx, {
     ignoreAttributes: false,
     attributeNamePrefix: ''
@@ -83,6 +83,6 @@ function parseLink(root): string | undefined {
 }
 
 export interface ServiceMetadata {
-  edmx: EdmxMetadataBase;
+  edmx: EdmxMetadata;
   swagger?: SwaggerMetadata;
 }

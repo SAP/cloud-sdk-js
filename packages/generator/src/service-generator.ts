@@ -18,16 +18,20 @@ import {
   VdmServiceMetadata,
   VdmServicePackageMetaData
 } from './vdm-types';
-import { generateFunctionImportsV4 } from './edmx-to-vdm/v4/function-import';
-import { generateEntitiesV4 } from './edmx-to-vdm/v4/entity';
-import { generateComplexTypesV4 } from './edmx-to-vdm/v4/complex-type';
-import { parseReturnTypes } from './edmx-to-vdm/common/function-import';
-import { generateFunctionImportsV2 } from './edmx-to-vdm/v2/function-import';
-import { generateEntitiesV2 } from './edmx-to-vdm/v2/entity';
-import { generateComplexTypesV2 } from './edmx-to-vdm/v2/complex-type';
+import {
+  generateComplexTypesV4,
+  generateFunctionImportsV4,
+  generateEntitiesV4
+} from './edmx-to-vdm/v4';
+import { parseReturnTypes } from './edmx-to-vdm/common';
+import {
+  generateFunctionImportsV2,
+  generateEntitiesV2,
+  generateComplexTypesV2
+} from './edmx-to-vdm/v2';
 import { isV2Metadata } from './edmx-to-vdm/edmx-to-vdm-util';
 
-export class ServiceGenerator {
+class ServiceGenerator {
   private globalNameFormatter: GlobalNameFormatter;
   private serviceMapping: VdmMapping;
 
@@ -52,12 +56,6 @@ export class ServiceGenerator {
     );
   }
 
-  /**
-   * Only public for compatibility to [[parseService]].
-   * @hidden
-   * @param serviceDefinitionPaths Path to the service definitions files.
-   * @returns the parsed service
-   */
   public generateService(
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): VdmServiceMetadata {
@@ -152,7 +150,6 @@ export class ServiceGenerator {
     serviceDefinitionPaths: ServiceDefinitionPaths
   ): ServiceMetadata {
     const serviceMetadata: ServiceMetadata = {
-      // TODO: pass parameter
       edmx: readEdmxFile(serviceDefinitionPaths.edmxPath)
     };
     if (serviceDefinitionPaths.swaggerPath) {
@@ -165,7 +162,6 @@ export class ServiceGenerator {
 }
 
 /**
- * @deprecated Since version 1.25.0. Use the ServiceParser class instead
  * @param options Generator options *
  * @returns the parsed services
  */
@@ -176,7 +172,6 @@ export function parseAllServices(
 }
 
 /**
- * @deprecated Since version 1.25.0. Use the ServiceParser class instead
  * @param serviceDefinitionPaths Path to the service definition
  * @param options Generator options
  * @param mappings mappings for VDM service names to desired name

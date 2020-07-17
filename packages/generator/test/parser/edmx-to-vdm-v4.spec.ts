@@ -1,12 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../src/service-name-formatter';
-import { EdmxProperty } from '../../src/edmx-parser/common/edmx-types';
+import { EdmxProperty } from '../../src/edmx-parser/common';
+import { EdmxEntitySet, EdmxEntityType } from '../../src/edmx-parser/v4';
 import {
-  EdmxEntitySet,
-  EdmxEntityType
-} from '../../src/edmx-parser/v4/edmx-types';
-import { generateComplexTypesV4 } from '../../src/edmx-to-vdm/v4/complex-type';
-import { generateEntitiesV4 } from '../../src/edmx-to-vdm/v4/entity';
+  generateComplexTypesV4,
+  generateEntitiesV4
+} from '../../src/edmx-to-vdm/v4';
 import { ServiceMetadata } from '../../src/edmx-parser/edmx-file-reader';
 
 describe('edmx-to-vdm-v4', () => {

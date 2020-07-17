@@ -1,22 +1,25 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GlobalNameFormatter } from '../../src/global-name-formatter';
-import { ServiceGenerator } from '../../src/edmx-to-vdm';
 import { ServiceMapping } from '../../src/service-mapping';
 import {
   VdmFunctionImportReturnTypeCategory,
   VdmProperty
 } from '../../src/vdm-types';
 import { createOptions } from '../test-util/create-generator-options';
+import { parseAllServices, parseService } from '../../src/service-generator';
 
-describe('service-edmx-parser', () => {
+describe('service-parser', () => {
   describe('chooses package name source', () => {
     it('namespace by default', () => {
-      const serviceMetadata = new ServiceGenerator(
-        createOptions()
-      ).generateService({
-        edmxPath:
-          '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
-      });
+      const serviceMetadata = parseService(
+        {
+          edmxPath:
+            '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
+        },
+        createOptions(),
+        {},
+        new GlobalNameFormatter(undefined)
+      );
       expect(serviceMetadata.directoryName).toBe('test-service');
     });
 
@@ -27,15 +30,17 @@ describe('service-edmx-parser', () => {
         npmPackageName: 'custom-package-name'
       };
 
-      const serviceMetadata = new ServiceGenerator(createOptions())
-        .withGlobalNameFormatter(
-          new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
-        )
-        .withServiceMapping({ API_TEST_SRV: serviceMapping })
-        .generateService({
+      const serviceMetadata = parseService(
+        {
           edmxPath:
             '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
-        });
+        },
+        createOptions(),
+        {
+          API_TEST_SRV: serviceMapping
+        },
+        new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
+      );
 
       expect(serviceMetadata.directoryName).toBe(serviceMapping.directoryName);
       expect(serviceMetadata.servicePath).toBe(serviceMapping.servicePath);
@@ -47,12 +52,12 @@ describe('service-edmx-parser', () => {
 
   describe('parses services', () => {
     it('generates vdm from edmx', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).generateAllServices();
+      );
 
       expect(services[0].namespace).toBe('API_TEST_SRV');
       expect(services[0].directoryName).toBe('test-service');
@@ -62,12 +67,12 @@ describe('service-edmx-parser', () => {
     });
 
     it('generates vdm from edmx using swagger', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: true
         })
-      ).generateAllServices();
+      );
 
       expect(services[0].entities.length).toBe(10);
       expect(
@@ -76,11 +81,11 @@ describe('service-edmx-parser', () => {
     });
 
     it('entities are read correctly', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
-      ).generateAllServices();
+      );
 
       expect(
         services[0].entities.map(entity => ({
@@ -154,11 +159,11 @@ describe('service-edmx-parser', () => {
     });
 
     it('complex types are parsed correctly', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
         })
-      ).generateAllServices();
+      );
 
       const complexTypes = services[0].complexTypes;
       const complexType = complexTypes[0];
@@ -172,12 +177,12 @@ describe('service-edmx-parser', () => {
     });
 
     it('complex type properties are read correctly', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).generateAllServices();
+      );
 
       const testEntity = services[0].entities[0];
       const complexProperty = testEntity.properties.find(
@@ -201,12 +206,12 @@ describe('service-edmx-parser', () => {
     });
 
     it('does not clash with complex type builder function', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).generateAllServices();
+      );
 
       const functionImport = services[0].functionImports.find(
         f => f.originalName === 'CreateTestComplexType'
@@ -234,12 +239,12 @@ describe('service-edmx-parser', () => {
     });
 
     it('does not clash with reserved JavaScript keywords', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).generateAllServices();
+      );
 
       const functionImport = services[0].functionImports.find(
         f => f.originalName === 'Continue'
@@ -249,12 +254,12 @@ describe('service-edmx-parser', () => {
     });
 
     it('function imports edm return types are read correctly', () => {
-      const [service] = new ServiceGenerator(
+      const [service] = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).generateAllServices();
+      );
 
       const functionImport = service.functionImports.find(
         f => f.originalName === 'TestFunctionImportEdmReturnType'
@@ -269,12 +274,12 @@ describe('service-edmx-parser', () => {
     });
 
     it('should parse C4C service definitions with proper class names.', () => {
-      const services = new ServiceGenerator(
+      const services = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
           useSwagger: false
         })
-      ).generateAllServices();
+      );
 
       const entities = services[0].entities;
 
@@ -293,12 +298,12 @@ describe('service-edmx-parser', () => {
   });
 
   it('should skip entity types when not defined in any entity sets', () => {
-    const services = new ServiceGenerator(
+    const services = parseAllServices(
       createOptions({
         inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
         useSwagger: false
       })
-    ).generateAllServices();
+    );
 
     const entity = services[0].entities.find(
       e => e.entityTypeName === 'Unused'
@@ -308,13 +313,13 @@ describe('service-edmx-parser', () => {
   });
 
   it('parses multiple schemas', () => {
-    const services = new ServiceGenerator(
+    const services = parseAllServices(
       createOptions({
         inputDir:
           '../../test-resources/service-specs/v2/API_MULTIPLE_SCHEMAS_SRV',
         useSwagger: false
       })
-    ).generateAllServices();
+    );
 
     expect(services[0].entities.length).toBe(1);
   });

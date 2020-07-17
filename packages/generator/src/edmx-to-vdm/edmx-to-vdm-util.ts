@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EdmxMetadataBase } from '../edmx-parser/edmx-file-reader';
-import { EdmxProperty } from '../edmx-parser/common/edmx-types';
+import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
+import { EdmxProperty } from '../edmx-parser/common';
 import { edmToTsType } from '../generator-utils';
 
 const logger = createLogger({
@@ -32,7 +32,7 @@ function parseCollectionTypeName(typeName: string): string {
   return name;
 }
 
-export function isV2Metadata(metadata: EdmxMetadataBase): boolean {
+export function isV2Metadata(metadata: EdmxMetadata): boolean {
   return metadata.oDataVersion === 'v2';
 }
 

@@ -6,7 +6,7 @@ import {
   EdmxEntityTypeBase,
   EdmxNamed,
   EdmxParameter
-} from '../common/edmx-types';
+} from '../common';
 
 export interface EdmxNavigationProperty {
   Name: string;

@@ -1,12 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common/function-import';
+import { transformFunctionImportBase } from '../common';
 import { swaggerDefinitionForFunctionImport } from '../../edmx-parser/swagger/swagger-parser';
-import { EdmxDerivedType } from '../../edmx-parser/v4/edmx-types';
 import {
+  EdmxDerivedType,
   parseFunctionImports,
   parseFunctions
-} from '../../edmx-parser/v4/edmx-parser';
+} from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { stripNamespace } from '../edmx-to-vdm-util';
 import { VdmFunctionImport } from '../../vdm-types';

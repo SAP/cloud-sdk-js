@@ -23,7 +23,7 @@ import {
   EdmxEntityTypeBase,
   EdmxNamed,
   JoinedEntityMetadata
-} from '../../edmx-parser/common/edmx-types';
+} from '../../edmx-parser/common';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,

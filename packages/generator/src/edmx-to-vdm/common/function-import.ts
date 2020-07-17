@@ -14,7 +14,7 @@ import {
   functionImportDescription,
   parameterDescription
 } from '../description-util';
-import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common/edmx-types';
+import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common';
 import {
   filterUnknownEdmTypes,
   isCollection,
@@ -84,7 +84,7 @@ export function parseReturnTypes(
     const isCollectionReturnType = isCollection(returnType);
     const edmxType = findEdmType(returnType);
     if (edmxType) {
-      return withEdmx(f, isCollectionReturnType, edmxType);
+      return withEdmxType(f, isCollectionReturnType, edmxType);
     }
 
     const entity = findEntityType(returnType, entities);
@@ -137,7 +137,7 @@ export function parseReturnTypes(
     return { ...f, returnType: vdmReturnType };
   }
 
-  function withEdmx(
+  function withEdmxType(
     f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,
     edmxType: string

@@ -15,7 +15,7 @@ import {
 
 const logger = createLogger({
   package: 'generator',
-  messageContext: 'edmx-edmx-parser'
+  messageContext: 'edmx-parser'
 });
 /**
  * @deprecated Since version 1.25.0 due to major generator refactoring.

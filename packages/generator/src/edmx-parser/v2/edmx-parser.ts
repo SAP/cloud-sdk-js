@@ -4,14 +4,13 @@ import {
   parseEntitySetsBase,
   parseEntityTypesBase
 } from '../common/edmx-parser';
-import { EdmxEntitySetBase } from '../common/edmx-types';
+import { EdmxEntitySetBase } from '../common';
 import { forceArray } from '../../generator-utils';
 import {
   EdmxAssociation,
   EdmxAssociationSet,
   EdmxEntityType,
-  EdmxFunctionImport,
-  EdmxNavigationProperty
+  EdmxFunctionImport
 } from './edmx-types';
 
 export function parseComplexTypes(root) {
@@ -23,7 +22,7 @@ export function parseEntitySets(root): EdmxEntitySetBase[] {
 }
 
 export function parseEntityTypes(root): EdmxEntityType[] {
-  return parseEntityTypesBase(root, {} as EdmxNavigationProperty);
+  return parseEntityTypesBase(root);
 }
 
 export function parseAssociation(root): EdmxAssociation[] {

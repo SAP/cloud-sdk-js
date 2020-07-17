@@ -13,17 +13,16 @@ export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
   }));
 }
 
-export function parseEntityTypesBase(
-  root
-): EdmxEntityTypeBase<any>[] {
+export function parseEntityTypesBase(root): EdmxEntityTypeBase<any>[] {
   return forceArray(root.EntityType).map(e => ({
-  ...e,
-  Key: {
-    PropertyRef: forceArray(e.Key?.PropertyRef)
-  },
-  NavigationProperty: forceArray(e.NavigationProperty),
-  Property: forceArray(e.Property)
-}));
+    ...e,
+    Key: {
+      PropertyRef: forceArray(e.Key?.PropertyRef)
+    },
+    NavigationProperty: forceArray(e.NavigationProperty),
+    Property: forceArray(e.Property)
+  }));
+}
 
 export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
   return forceArray(root.EntityContainer.EntitySet);

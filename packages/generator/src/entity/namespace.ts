@@ -54,26 +54,22 @@ function getFieldInitializer(
   prop: VdmProperty,
   entityClassName: string
 ): OptionalKind<VariableDeclarationStructure> {
-  const type = `'${
-    prop.edmType.startsWith('Edm')
-      ? prop.edmType
-      : prop.edmType.split('.').pop()
-  }'`;
+  const type = prop.isComplex
+    ? prop.jsType
+    : `'${
+        prop.edmType.startsWith('Edm')
+          ? prop.edmType
+          : prop.edmType.split('.').pop()
+      }'`;
 
   const className = getFieldClassName(prop);
-  const thirdParameterSingle = prop.isComplex ? undefined : type;
-  const thirdParameter = prop.isCollection
-    ? createPropertyFieldInitializer(
-        prop.fieldType,
-        '',
-        entityClassName,
-        thirdParameterSingle
-      )
-    : thirdParameterSingle;
+  const genericParameters = getGenericParameters(entityClassName, prop);
+  const thirdParameter =
+    prop.isComplex && !prop.isCollection ? undefined : type;
 
   return {
     name: prop.staticPropertyName,
-    type: `${className}<${entityClassName}>`,
+    type: `${className}<${genericParameters}>`,
     initializer: createPropertyFieldInitializer(
       className,
       prop.originalName,
@@ -81,6 +77,18 @@ function getFieldInitializer(
       thirdParameter
     )
   };
+}
+
+function getGenericParameters(
+  entityClassName: string,
+  prop: VdmProperty
+): string {
+  const param = prop.isCollection
+    ? prop.isComplex
+      ? [`typeof ${prop.jsType}`]
+      : [`'${prop.edmType}'`]
+    : [];
+  return [entityClassName, ...param].join(', ');
 }
 
 function createPropertyFieldInitializer(
@@ -161,7 +169,8 @@ function allFields(
 ): VariableStatementStructure {
   const fieldTypes = unique([
     ...entity.properties.map(
-      p => `${getFieldClassName(p)}<${entity.className}>`
+      p =>
+        `${getFieldClassName(p)}<${getGenericParameters(entity.className, p)}>`
     ),
     ...entity.navigationProperties.map(
       p =>

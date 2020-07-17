@@ -35,7 +35,11 @@ export function shortPropertyDescription(
   property: EdmxProperty,
   swaggerProperty?: SwaggerProperty
 ): string {
-  const desc = property['sap:quickinfo'] || property['sap:label'] || swaggerProperty?.title || '';
+  const desc =
+    property['sap:quickinfo'] ||
+    property['sap:label'] ||
+    swaggerProperty?.title ||
+    '';
   return endWithDot(desc.trim());
 }
 
@@ -68,5 +72,9 @@ export function entityDescription(
   entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   className: string
 ): string {
-  return entity.entityType['sap:label'] || entity.swaggerDefinition?.title || toTitleFormat(className);
+  return (
+    entity.entityType['sap:label'] ||
+    entity.swaggerDefinition?.title ||
+    toTitleFormat(className)
+  );
 }

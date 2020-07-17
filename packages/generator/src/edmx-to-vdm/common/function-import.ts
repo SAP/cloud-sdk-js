@@ -82,9 +82,9 @@ export function parseReturnTypes(
     }
 
     const isCollectionReturnType = isCollection(returnType);
-    const edmxType = findEdmType(returnType);
-    if (edmxType) {
-      return withEdmxType(f, isCollectionReturnType, edmxType);
+    const edmType = findEdmType(returnType);
+    if (edmType) {
+      return withEdmType(f, isCollectionReturnType, edmType);
     }
 
     const entity = findEntityType(returnType, entities);
@@ -137,7 +137,7 @@ export function parseReturnTypes(
     return { ...f, returnType: vdmReturnType };
   }
 
-  function withEdmxType(
+  function withEdmType(
     f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,
     edmxType: string

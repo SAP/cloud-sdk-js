@@ -45,7 +45,5 @@ function apiHubServiceName(swagger: SwaggerMetadata): string {
 export function servicePathFromSwagger(
   swagger?: SwaggerMetadata
 ): string | undefined {
-  if (swagger && propertyExists(swagger, 'basePath')) {
-    return swagger.basePath;
-  }
+  return swagger?.basePath;
 }

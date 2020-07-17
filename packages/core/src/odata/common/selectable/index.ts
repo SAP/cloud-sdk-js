@@ -5,6 +5,7 @@ export * from './big-number-field';
 export * from './binary-field';
 export * from './boolean-field';
 export * from './collection-field';
+export * from './complex-type-namespace';
 export * from './complex-type-field';
 export * from './complex-type-property-fields';
 export * from './create-complex-type';

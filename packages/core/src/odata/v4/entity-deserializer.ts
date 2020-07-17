@@ -7,3 +7,4 @@ const deserializer = entityDeserializer(edmToTs, extractODataETag);
 
 export const extractCustomFields = deserializer.extractCustomFields;
 export const deserializeEntity = deserializer.deserializeEntity;
+export const deserializeComplexType = deserializer.deserializeComplexType;

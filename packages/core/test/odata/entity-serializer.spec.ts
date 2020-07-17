@@ -23,6 +23,30 @@ describe('entity-serializer', () => {
     });
   });
 
+  it('should serialize entity with complex type fields', () => {
+    const stringProperty1 = 'test';
+    const stringProperty2 = 'nest';
+    const testEntity = TestEntity.builder()
+      .complexTypeProperty({
+        stringProperty: stringProperty1,
+        complexTypeProperty: {
+          stringProperty: stringProperty2
+        }
+      })
+      .int16Property(100)
+      .build();
+
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+      ComplexTypeProperty: {
+        StringProperty: stringProperty1,
+        ComplexTypeProperty: {
+          StringProperty: stringProperty2
+        }
+      },
+      Int16Property: testEntity.int16Property
+    });
+  });
+
   it('should serialize an empty entity', () => {
     const emptyEntity = TestEntity.builder().build();
     expect(serializeEntity(emptyEntity, TestEntity)).toEqual({});

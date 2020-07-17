@@ -12,6 +12,7 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ComplexTypeNamespace } from './complex-type-namespace';
 
 /**
  * Represents a property with a big number value.
@@ -80,12 +81,13 @@ export class BigNumberField<EntityT extends EntityBase>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeBigNumberPropertyField<
-  EntityT extends EntityBase
+  EntityT extends EntityBase,
+  ComplexTypeNamespaceT extends ComplexTypeNamespace = any
 > extends BigNumberFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT>;
+  readonly fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>;
 
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
@@ -96,7 +98,7 @@ export class ComplexTypeBigNumberPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
     edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 
@@ -122,7 +124,7 @@ export class ComplexTypeBigNumberPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
     arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {

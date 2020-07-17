@@ -33,3 +33,12 @@ export type EdmTypeSameConvertersUri = Exclude<
   EdmTypeSameConverters,
   'Edm.Guid' | 'Edm.Decimal'
 >;
+
+/**
+ * Check whether a value is an EdmType. This will yield positive results for every string starting with `Edm.`.
+ * @param val Value to test.
+ * @returns Whether the given value is of type [[EdmTypeShared]]
+ */
+export function isEdmType(val: any): val is EdmTypeShared<'any'> {
+  return typeof val === 'string' && val.startsWith('Edm.');
+}

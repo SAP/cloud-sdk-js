@@ -8,7 +8,7 @@ import { Destination, DestinationCertificate } from './scp-cf';
 import { proxyAgent } from './util/proxy-util';
 import { Protocol } from './protocol';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
-import { getProtocolOrDefault } from './get-protocal';
+import { getProtocolOrDefault } from './get-protocol';
 
 const logger = createLogger({
   package: 'core',

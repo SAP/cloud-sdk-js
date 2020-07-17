@@ -78,7 +78,10 @@ describe('entity-deserializer', () => {
     expected.complexTypeProperty = {
       stringProperty,
       int16Property,
-      booleanProperty
+      booleanProperty,
+      complexTypeProperty: {
+        stringProperty
+      }
     };
     expected.stringProperty = 'test';
 
@@ -88,7 +91,10 @@ describe('entity-deserializer', () => {
           ComplexTypeProperty: {
             StringProperty: stringProperty,
             Int16Property: int16Property,
-            BooleanProperty: booleanProperty
+            BooleanProperty: booleanProperty,
+            ComplexTypeProperty: {
+              StringProperty: stringProperty
+            }
           },
           StringProperty: expected.stringProperty
         },
@@ -105,6 +111,9 @@ describe('entity-deserializer', () => {
             StringProperty: stringProperty,
             Int16Property: int16Property,
             BooleanProperty: booleanProperty,
+            ComplexTypeProperty: {
+              StringProperty: stringProperty
+            },
             UnknownKey: ''
           },
           StringProperty: expected.stringProperty

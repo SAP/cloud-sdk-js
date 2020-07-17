@@ -8,7 +8,7 @@ import {
 // $ExpectType TestComplexTypeField<TestEntity>
 TestEntity.COMPLEX_TYPE_PROPERTY;
 
-// $ExpectType ComplexTypeStringPropertyField<TestEntity>
+// $ExpectType ComplexTypeStringPropertyField<TestEntity, any>
 TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty;
 
 // $ExpectType TestComplexType

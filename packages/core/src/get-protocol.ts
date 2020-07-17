@@ -5,7 +5,7 @@ import { Destination } from './scp-cf';
 
 const logger = createLogger({
   package: 'core',
-  messageContext: 'get-protocal'
+  messageContext: 'get-protocol'
 });
 
 /**

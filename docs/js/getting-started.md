@@ -66,7 +66,7 @@ $ sap-cloud-sdk --help
 
 ### Create a new project
 
-To create a new project run the CLI's init command in the project folder.
+To create a new project run the CLI's `init` command in the project folder.
 
 ```shell
 $ sap-cloud-sdk init
@@ -131,7 +131,7 @@ To run the application locally, simply run the following command:
 ```shell
 npm run start:dev
 ```
-
+This will start a local server in watch mode, so that subsequent changes will automatically trigger a restart of the server.
 Go to `http://localhost:3000` and you should get a `Hello, World!` in response. Open `src/main.ts` and switch the port from `3000` to `8080`. The corresponding line should then look like this:
 
 ```ts
@@ -142,9 +142,9 @@ Since `nest` was started in watch mode, it should detect this change and restart
 
 ## Deploy the project on Cloud Foundry
 
-### Installation
+### Prerequisites
 
-The `Cloud Foundry` CLI deploys your application to SAP Cloud Platform. You can find installation instructions for all common platforms in the [`Cloud Foundry documentation`](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). We recommend to use a package manager for that. If you are using `chocolatey` on Windows, please find the instructions [here](https://chocolatey.org/packages/cloudfoundry-cli).
+The Cloud Foundry CLI comes in handy when you want to deploy your application to SAP Cloud Platform. You can find installation instructions for all common platforms in the [`Cloud Foundry documentation`](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). We recommend to use a package manager for that. If you are using `chocolatey` on Windows, please find the instructions [here](https://chocolatey.org/packages/cloudfoundry-cli).
 
 ### Login
 

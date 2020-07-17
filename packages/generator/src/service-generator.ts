@@ -15,8 +15,8 @@ import { readSwaggerFile } from './edmx-parser/swagger/swagger-parser';
 import { apiBusinessHubMetadata } from './edmx-parser/swagger/swagger-util';
 import { VdmServiceMetadata, VdmServicePackageMetaData } from './vdm-types';
 import { isV2Metadata } from './edmx-to-vdm/edmx-to-vdm-util';
-import { getServiceEntitiesV2 } from './edmx-to-vdm/v2/service-entities';
-import { getServiceEntitiesV4 } from './edmx-to-vdm/v4/service-entities';
+import { getServiceEntitiesV2 } from './edmx-to-vdm/v2';
+import { getServiceEntitiesV4 } from './edmx-to-vdm/v4';
 
 class ServiceGenerator {
   private globalNameFormatter: GlobalNameFormatter;

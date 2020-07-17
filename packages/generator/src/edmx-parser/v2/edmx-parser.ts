@@ -34,8 +34,8 @@ export function parseAssociationSets(root): EdmxAssociationSet[] {
 }
 
 export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return forceArray(root.EntityContainer.FunctionImport).map(f => {
-    f.Parameter = forceArray(f.Parameter);
-    return f;
-  });
+  return forceArray(root.EntityContainer.FunctionImport).map(f => ({
+    ...f,
+    Parameter: forceArray(f.Parameter)
+  }));
 }

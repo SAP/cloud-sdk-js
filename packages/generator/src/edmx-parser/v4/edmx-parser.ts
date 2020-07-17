@@ -42,7 +42,9 @@ export function parseEntityType(root): EdmxEntityType[] {
     filterEnumProperties(entityTypes, parseEnumTypes(root)),
     joinEntityTypes
   );
-} // TODO: Filters enum properties as long as those are not supported
+}
+
+// TODO: Filters enum properties as long as those are not supported
 function filterEnumProperties(
   entityTypes: EdmxEntityType[],
   enumTypes: EdmxEnumType[]

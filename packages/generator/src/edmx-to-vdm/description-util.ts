@@ -35,14 +35,7 @@ export function shortPropertyDescription(
   property: EdmxProperty,
   swaggerProperty?: SwaggerProperty
 ): string {
-  let desc = '';
-  if (property['sap:quickinfo']) {
-    desc = property['sap:quickinfo'];
-  } else if (property['sap:label']) {
-    desc = property['sap:label'];
-  } else if (swaggerProperty && swaggerProperty.title) {
-    desc = swaggerProperty.title;
-  }
+  const desc = property['sap:quickinfo'] || property['sap:label'] || swaggerProperty?.title || '';
   return endWithDot(desc.trim());
 }
 
@@ -68,20 +61,12 @@ export function functionImportDescription(
   swaggerDefinition: SwaggerPath | undefined,
   originalName: string
 ): string {
-  if (swaggerDefinition && swaggerDefinition.summary) {
-    return endWithDot(swaggerDefinition.summary);
-  }
-  return endWithDot(toTitleFormat(originalName));
+  return endWithDot(swaggerDefinition?.summary || toTitleFormat(originalName));
 }
 
 export function entityDescription(
   entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   className: string
 ): string {
-  if (entity.entityType['sap:label']) {
-    return entity.entityType['sap:label'];
-  }
-  return entity.swaggerDefinition && entity.swaggerDefinition.title
-    ? entity.swaggerDefinition.title
-    : toTitleFormat(className);
+  return entity.entityType['sap:label'] || entity.swaggerDefinition?.title || toTitleFormat(className);
 }

@@ -125,6 +125,7 @@ export function parseReturnTypes(
     const parsedReturnType = returnType.split('.').slice(-1)[0];
     return complexTypes.find(c => c.originalName === parsedReturnType);
   }
+
   function withVoid(
     f: Omit<VdmFunctionImport, 'returnType'>
   ): VdmFunctionImport {
@@ -152,6 +153,7 @@ export function parseReturnTypes(
     };
     return { ...f, returnType: vdmReturnType };
   }
+
   function withEntity(
     f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,
@@ -166,6 +168,7 @@ export function parseReturnTypes(
     };
     return { ...f, returnType: vdmReturnType };
   }
+
   function withComplexType(
     f: Omit<VdmFunctionImport, 'returnType'>,
     isCollectionReturnType: boolean,

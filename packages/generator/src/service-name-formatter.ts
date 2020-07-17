@@ -57,7 +57,7 @@ export class ServiceNameFormatter {
     functionImportNames: string[] = []
   ) {
     // Here we assume that entitysets and complextypes cannot have the same original name
-    [...(entitySetNames || []), ...(complexTypeNames || [])].forEach(
+    [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
         this.staticPropertyNamesFinder[
           entitySetOrComplexTypeName

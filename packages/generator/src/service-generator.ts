@@ -116,7 +116,7 @@ class ServiceGenerator {
 }
 
 /**
- * @param options Generator options *
+ * @param options Generator options
  * @returns the parsed services
  */
 export function parseAllServices(

@@ -104,7 +104,6 @@ function findEdmType(returnType: string): string | undefined {
   if (returnType.startsWith('Edm.')) {
     return returnType;
   }
-  return undefined;
 }
 
 function findEntityType(

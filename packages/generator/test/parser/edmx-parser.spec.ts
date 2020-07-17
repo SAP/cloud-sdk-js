@@ -1,71 +1,85 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { parseEdmxFromPath } from '../../src/parser';
-import { EdmxMetadata as EdmxMetadataV2 } from '../../src/parser/v2';
-import { EdmxMetadata as EdmxMetadataV4 } from '../../src/parser/v4';
+import { readEdmxFile } from '../../src/edmx-parser/edmx-file-reader';
+import { parseComplexTypesBase } from '../../src/edmx-parser/common/edmx-parser';
+import {
+  parseAssociation,
+  parseAssociationSets,
+  parseEntitySets as parseEntitySetsV2,
+  parseEntityTypes as parseEntityTypesV2,
+  parseFunctionImports as parseFunctionImportsV2
+} from '../../src/edmx-parser/v2';
+import {
+  parseComplexTypes,
+  parseEntitySets as parseEntitySetsV4,
+  parseEntityType as parseEntityTypeV4,
+  parseEnumTypes,
+  parseFunctionImports as parseFunctionImportsV4,
+  parseFunctions
+} from '../../src/edmx-parser/v4';
 
-describe('edmx-parser', () => {
+describe('edmx-edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {
-    const metadataEdmx = parseEdmxFromPath(
+    const metadataEdmx = readEdmxFile(
       '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
-    ) as EdmxMetadataV2;
+    );
 
-    expect(metadataEdmx.entitySets.length).toBe(10);
-    expect(metadataEdmx.entityTypes.length).toBe(10);
-    expect(metadataEdmx.functionImports.length).toBe(12);
-    expect(metadataEdmx.complexTypes.length).toBe(3);
-    expect(metadataEdmx.associationSets.length).toBe(8);
-    expect(metadataEdmx.associations.length).toBe(8);
+    expect(parseEntitySetsV2(metadataEdmx.root).length).toBe(10);
+    expect(parseEntityTypesV2(metadataEdmx.root).length).toBe(10);
+    expect(parseFunctionImportsV2(metadataEdmx.root).length).toBe(12);
+    expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(3);
+    expect(parseAssociationSets(metadataEdmx.root).length).toBe(8);
+    expect(parseAssociation(metadataEdmx.root).length).toBe(8);
 
-    metadataEdmx.entityTypes.forEach(e => {
+    parseEntityTypesV2(metadataEdmx.root).forEach(e => {
       expect(e.Key.PropertyRef).toBeInstanceOf(Array);
       expect(e.NavigationProperty).toBeInstanceOf(Array);
       expect(e.Property).toBeInstanceOf(Array);
     });
 
-    metadataEdmx.associationSets.forEach(a => {
+    parseAssociationSets(metadataEdmx.root).forEach(a => {
       expect(a.End.length).toBe(2);
     });
 
-    metadataEdmx.associations.forEach(a => {
+    parseAssociation(metadataEdmx.root).forEach(a => {
       expect(a.End.length).toBe(2);
     });
 
-    metadataEdmx.functionImports.forEach(f => {
+    parseFunctionImportsV2(metadataEdmx.root).forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 
-    metadataEdmx.complexTypes.forEach(c => {
+    parseComplexTypesBase(metadataEdmx.root).forEach(c => {
       expect(c.Property).toBeInstanceOf(Array);
     });
   });
 
   it('v4: parses edmx file to JSON and coerces properties to arrays', () => {
-    const metadataEdmx = parseEdmxFromPath(
+    const metadataEdmx = readEdmxFile(
       '../../test-resources/service-specs/v4/API_TEST_SRV/API_TEST_SRV.edmx'
-    ) as EdmxMetadataV4;
+    );
 
-    expect(metadataEdmx.entitySets.length).toBe(10);
-    expect(metadataEdmx.entityTypes.length).toBe(11);
-    expect(metadataEdmx.functionImports.length).toBe(8);
-    expect(metadataEdmx.functions.length).toBe(8);
-    expect(metadataEdmx.complexTypes.length).toBe(4);
-    expect(metadataEdmx.enumTypes.length).toBe(1);
+    expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(10);
+    expect(parseEntityTypeV4(metadataEdmx.root).length).toBe(11);
+    expect(parseFunctionImportsV4(metadataEdmx.root).length).toBe(8);
+    expect(parseFunctions(metadataEdmx.root).length).toBe(8);
+    expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
+    expect(parseEnumTypes(metadataEdmx.root).length).toBe(1);
 
-    metadataEdmx.entitySets.forEach(e => {
+    parseEntitySetsV4(metadataEdmx.root).forEach(e => {
       expect(e.NavigationPropertyBinding).toBeInstanceOf(Array);
     });
 
-    metadataEdmx.entityTypes.forEach(e => {
+    parseEntityTypeV4(metadataEdmx.root).forEach(e => {
       expect(e.Key.PropertyRef).toBeInstanceOf(Array);
       expect(e.Key.PropertyRef.length).toBeGreaterThan(0);
       expect(e.NavigationProperty).toBeInstanceOf(Array);
       expect(e.Property).toBeInstanceOf(Array);
     });
 
-    const baseType = metadataEdmx.entityTypes.find(
+    const baseType = parseEntityTypeV4(metadataEdmx.root).find(
       e => e.Name === 'A_TestEntityBaseType'
     );
-    const entityWithBaseType = metadataEdmx.entityTypes.find(
+    const entityWithBaseType = parseEntityTypeV4(metadataEdmx.root).find(
       e => e.BaseType && e.BaseType.endsWith(baseType!.Name)
     );
     baseType?.Property.forEach(p => {
@@ -75,10 +89,10 @@ describe('edmx-parser', () => {
       expect(entityWithBaseType?.NavigationProperty).toContain(n);
     });
 
-    const baseComplexType = metadataEdmx.complexTypes.find(
+    const baseComplexType = parseComplexTypesBase(metadataEdmx.root).find(
       c => (c.Name = 'A_TestComplexBaseType')
     );
-    const complexTypeWithBaseType = metadataEdmx.complexTypes.find(
+    const complexTypeWithBaseType = parseComplexTypes(metadataEdmx.root).find(
       c => c.BaseType && c.BaseType.endsWith(baseComplexType!.Name)
     );
 
@@ -86,18 +100,18 @@ describe('edmx-parser', () => {
       expect(complexTypeWithBaseType?.Property).toContain(p);
     });
 
-    metadataEdmx.functions.forEach(f => {
+    parseFunctions(metadataEdmx.root).forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 
-    metadataEdmx.complexTypes.forEach(c => {
+    parseComplexTypes(metadataEdmx.root).forEach(c => {
       expect(c.Property).toBeInstanceOf(Array);
     });
   });
 
   it('does not fail for multiple schema entries in the edmx file', () => {
     expect(() =>
-      parseEdmxFromPath(
+      readEdmxFile(
         '../../test-resources/service-specs/v2/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
       )
     ).not.toThrow();

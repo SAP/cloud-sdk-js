@@ -29,7 +29,7 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from './package-description';
-import { parseAllServices } from './parser';
+import { parseAllServices } from './edmx-to-vdm/';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
@@ -98,7 +98,7 @@ export async function generateProject(
   options: GeneratorOptions
 ): Promise<Project | undefined> {
   options = sanitizeOptions(options);
-  const services = readServices(options);
+  const services = parseServices(options);
 
   if (!services.length) {
     logger.warn(
@@ -331,7 +331,7 @@ function projectOptions(): ProjectOptions {
   };
 }
 
-function readServices(options: GeneratorOptions): VdmServiceMetadata[] {
+function parseServices(options: GeneratorOptions): VdmServiceMetadata[] {
   const services = parseAllServices(options);
   if (!services.length) {
     logger.warn(

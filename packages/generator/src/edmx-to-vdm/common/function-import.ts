@@ -91,6 +91,7 @@ export function parseReturnTypes(
     if (entity) {
       return withEntity(f, isCollectionReturnType, entity);
     }
+
     const complexType = findComplexType(returnType, complexTypes);
     if (complexType) {
       return withComplexType(f, isCollectionReturnType, complexType);

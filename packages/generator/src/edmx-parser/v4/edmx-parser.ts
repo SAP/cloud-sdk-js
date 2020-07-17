@@ -68,8 +68,8 @@ export function parseFunctionImports(root): EdmxFunctionImport[] {
 }
 
 export function parseFunctions(root): EdmxFunction[] {
-  return forceArray(root.Function).map(f => {
-    f.Parameter = forceArray(f.Parameter);
-    return f;
-  });
+  return forceArray(root.Function).map(f => ({
+    ...f,
+    Parameter: forceArray(f.Parameter)
+  }));
 }

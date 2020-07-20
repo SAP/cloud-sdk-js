@@ -15,7 +15,7 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 
 <MvnBadge />
 
-:::danger
+:::info Migrate to SDK v3
 SAP Cloud SDK for Java V2 is in maintenance. To continue using the latest features, please,  [migrate to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
 :::
 

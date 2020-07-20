@@ -176,7 +176,8 @@ export function entityDeserializer(
         ([_, field]) =>
           (field instanceof EdmTypeField ||
             field instanceof ComplexTypeField) &&
-          typeof json[field._fieldName] !== 'undefined'
+          typeof json[field._fieldName] !== 'undefined' &&
+          json[field._fieldName] !== null
       )
       .reduce(
         (complexTypeObject, [fieldName, field]) => ({
@@ -195,11 +196,15 @@ export function entityDeserializer(
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
-        ...(typeof json[property.originalName] !== 'undefined' && {
-          [property.name]: isComplexTypeNameSpace(property.type)
-            ? deserializeComplexType(json[property.originalName], property.type)
-            : edmToTs(json[property.originalName], property.type)
-        })
+        ...(typeof json[property.originalName] !== 'undefined' &&
+          json[property.originalName] !== null && {
+            [property.name]: isComplexTypeNameSpace(property.type)
+              ? deserializeComplexType(
+                  json[property.originalName],
+                  property.type
+                )
+              : edmToTs(json[property.originalName], property.type)
+          })
       }))
       .reduce((complexTypeInstance, property) => ({
         ...complexTypeInstance,

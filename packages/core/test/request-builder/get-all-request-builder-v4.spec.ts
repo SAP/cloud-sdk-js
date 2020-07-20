@@ -1,12 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { GetAllRequestBuilder } from '../../src/odata/v4';
+import { any, GetAllRequestBuilder } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
   mockGetRequest,
   unmockDestinationsEnv
 } from '../test-util/request-mocker';
-import { TestEntity } from '../test-util/test-services/v4/test-service';
+import {
+  TestEntity,
+  TestEntityLvl2MultiLink,
+  TestEntityMultiLink
+} from '../test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
@@ -101,6 +105,31 @@ describe('GetAllRequestBuilder', () => {
       const actual = await requestBuilder
         .select(TestEntity.ALL_FIELDS)
         .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
+        .execute(defaultDestination);
+      expect(actual).toEqual([createTestEntityV4(testEntity)]);
+    });
+
+    it('should resolve when multi-link is expanded with lambda expression filter', async () => {
+      const testEntity = createOriginalTestEntityDataWithLinks();
+      mockGetRequest(
+        {
+          query: {
+            $expand:
+              "to_SingleLink,to_MultiLink($filter=((to_MultiLink/any(a0:(a0/StringProperty ne 'test')))))"
+          },
+          responseBody: { value: [testEntity] }
+        },
+        TestEntity
+      );
+      const actual = await requestBuilder
+        .expand(
+          TestEntity.TO_SINGLE_LINK,
+          TestEntity.TO_MULTI_LINK.filter(
+            TestEntityMultiLink.TO_MULTI_LINK.filter(
+              any(TestEntityLvl2MultiLink.STRING_PROPERTY.notEquals('test'))
+            )
+          )
+        )
         .execute(defaultDestination);
       expect(actual).toEqual([createTestEntityV4(testEntity)]);
     });

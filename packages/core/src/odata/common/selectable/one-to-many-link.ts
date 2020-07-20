@@ -30,9 +30,18 @@ export class OneToManyLink<
   /**
    * @experimental This is experimental and is subject to change. Use with caution.
    */
-  filter(...expressions: Filterable<LinkedEntityT>[]): this {
+  filter(
+    ...expressions: (
+      | Filterable<LinkedEntityT>
+      | OneToManyLink<LinkedEntityT, any>
+    )[]
+  ): this {
     const link = this.clone();
-    link._filters = new FilterLink(this, expressions);
+
+    link._filters = new FilterLink(
+      this,
+      expressions.map(e => (e instanceof OneToManyLink ? e._filters : e))
+    );
     return link;
   }
 

@@ -10,7 +10,7 @@ import {
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
-  createTestEntity
+  createTestEntityV2
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
 
@@ -49,8 +49,8 @@ describe('GetAllRequestBuilder', () => {
 
       const actual = await requestBuilder.execute(defaultDestination);
       expect(actual).toEqual([
-        createTestEntity(entityData1),
-        createTestEntity(entityData2)
+        createTestEntityV2(entityData1),
+        createTestEntityV2(entityData2)
       ]);
     });
 
@@ -62,7 +62,7 @@ describe('GetAllRequestBuilder', () => {
       });
 
       const actual = await requestBuilder.top(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(entityData1)]);
+      expect(actual).toEqual([createTestEntityV2(entityData1)]);
     });
 
     it('skip(1) skips the first entity', async () => {
@@ -72,7 +72,7 @@ describe('GetAllRequestBuilder', () => {
         responseBody: { d: { results: [entityData2] } }
       });
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(entityData2)]);
+      expect(actual).toEqual([createTestEntityV2(entityData2)]);
     });
 
     it('throws an error when the destination cannot be found', async () => {

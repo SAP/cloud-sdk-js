@@ -26,7 +26,11 @@ const logger = createLogger({
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  */
-export function entityDeserializer(edmToTs, extractODataETag) {
+export function entityDeserializer(
+  edmToTs,
+  extractODataETag,
+  extractDataFromOneToManyLink: (arg) => any[] | undefined
+) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
    * In this context, a custom fields is every property that is not known in the corresponding entity class.
@@ -149,7 +153,7 @@ export function entityDeserializer(edmToTs, extractODataETag) {
     link: Link<EntityT, LinkedEntityT>
   ): LinkedEntityT[] | undefined {
     if (isSelectedProperty(json, link)) {
-      const results = json[link._fieldName].results || [];
+      const results = extractDataFromOneToManyLink(json[link._fieldName]) || [];
       return results.map(linkJson =>
         deserializeEntity(linkJson, link._linkedEntity)
       );

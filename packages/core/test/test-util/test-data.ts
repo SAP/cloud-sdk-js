@@ -28,7 +28,7 @@ export function createOriginalTestEntityData2() {
   };
 }
 
-export function createOriginalTestEntityData3() {
+export function createOriginalTestEntityDataWithLinks() {
   return {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'abcde',

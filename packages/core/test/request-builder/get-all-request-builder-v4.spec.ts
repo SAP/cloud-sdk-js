@@ -10,7 +10,7 @@ import { TestEntity } from '../test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
-  createOriginalTestEntityData3,
+  createOriginalTestEntityDataWithLinks,
   createTestEntityV4
 } from '../test-util/test-data';
 
@@ -87,14 +87,14 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('should resolve when ALL_FIELDS is selected and links are expanded', async () => {
-      const testEntity3 = createOriginalTestEntityData3();
+      const testEntity = createOriginalTestEntityDataWithLinks();
       mockGetRequest(
         {
           query: {
             $select: '*',
             $expand: 'to_SingleLink,to_MultiLink'
           },
-          responseBody: { value: [testEntity3] }
+          responseBody: { value: [testEntity] }
         },
         TestEntity
       );
@@ -102,7 +102,7 @@ describe('GetAllRequestBuilder', () => {
         .select(TestEntity.ALL_FIELDS)
         .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
         .execute(defaultDestination);
-      expect(actual).toEqual([createTestEntityV4(testEntity3)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity)]);
     });
   });
 });

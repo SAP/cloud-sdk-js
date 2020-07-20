@@ -22,7 +22,7 @@ import {
 export function entityDeserializer(
   edmToTs,
   extractODataETag,
-  extractDataFromOneToManyLink
+  extractDataFromOneToManyLink: (arg) => any[] | undefined
 ) {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.

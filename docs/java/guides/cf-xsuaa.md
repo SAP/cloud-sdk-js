@@ -32,7 +32,7 @@ The Cloud SDK is not participating in the active development of this software an
 Some information may already be outdated.
 
 
-These are use cases`described below:
+These are use cases described below:
 - User Login: `Authorization Code Grant`
 - SCP Service Usage on behalf of User: `JWT Bearer Token Grant`
 - SCP Service Usage on behalf of service: `Client Credentials Grant`

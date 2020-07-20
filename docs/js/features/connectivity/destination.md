@@ -21,15 +21,16 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 Most applications developed on SAP Cloud Platform (SCP) will integrate in some way with other LoB solutions and systems.
 Integration means the exchange of data and it is necessary to abstract the details on the data exchange from your code base.
-The reasons for this abstraction are manifold: URLs defining a resource may change, authentication information should not be part of code, in case of a multi customer application the locations depends on the customer, etc..
+The reasons for this abstraction are manifold: URLs defining a resource may change, authentication information should not be part of code, in case of a multi customer application the locations depends on the customer, etc.
 
 On SCP this abstraction is provided by a so called destination object. 
 This object can be obtained at runtime of the application and contains information like:
 - URL
 - Authentication
 - Proxy Settings (see the [proxy documentation](./proxy.md) for more details)   
-...
-The Cloud SDK helps you receiving this object and provides also options for local testing outside the SCP.
+- ...
+
+The SAP Cloud SDK helps you receiving this object and provides also options for local testing outside the SCP.
 
 The SDK provides a generator to create a client or data model based on a service definition.
 For S/4HANA this client has been created and published to npm. 
@@ -54,7 +55,7 @@ The details on this process are explained in the next chapters.
 
 ## The Lookup Flow ##
 
-When given a destinationName the SDK tries three things to find a destination:
+When given a `destinationName` the SDK tries three things to find a destination:
 1. Checking local environment variables
 2. Checking a service instance
 3. Using the destination service

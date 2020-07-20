@@ -65,7 +65,7 @@ export const generatorOptionsCli: KeysToOptions = {
   },
   useSwagger: {
     describe:
-      'Augment parsed information with information from swagger definition files. Files are expected to have the same name as the edmx file, but with .json as suffix.',
+      'Augment parsed information with information from swagger-parser definition files. Files are expected to have the same name as the edmx file, but with .json as suffix.',
     type: 'boolean',
     default: false,
     hidden: true

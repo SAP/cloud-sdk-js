@@ -8,6 +8,20 @@ import { UniqueNameFinder } from './unique-name-finder';
 import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
 
 export class ServiceNameFormatter {
+  static originalToServiceName(name: string): string {
+    let formattedName = name.replace(/\.|\//g, '_');
+    formattedName = stripAPIUnderscore(formattedName);
+    formattedName = stripUnderscoreSrv(formattedName);
+    formattedName = voca.kebabCase(formattedName);
+    return formattedName.endsWith('service')
+      ? formattedName
+      : `${formattedName}-service`;
+  }
+
+  static directoryToSpeakingModuleName(packageName: string): string {
+    return voca.titleCase(packageName.replace(/-/g, ' '));
+  }
+
   private finderServiceWide = new UniqueNameFinder(
     '_',
     reservedServiceKeywords
@@ -24,10 +38,23 @@ export class ServiceNameFormatter {
     [entitySetOrComplexTypeName: string]: UniqueNameFinder;
   } = {};
 
+  constructor();
+  /**
+   * @deprecated since version 1.25.0. The name formatters for the sets, types and function imports are initialized lazy now so there is no need to pass the names beforehand.
+   * Use the argument free constructor instead.
+   * @param entitySetNames The entity set names.
+   * @param complexTypeNames The complex type names.
+   * @param functionImportNames Then function import names.
+   */
   constructor(
     entitySetNames: string[],
     complexTypeNames: string[],
     functionImportNames: string[]
+  );
+  constructor(
+    entitySetNames: string[] = [],
+    complexTypeNames: string[] = [],
+    functionImportNames: string[] = []
   ) {
     // Here we assume that entitysets and complextypes cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
@@ -40,20 +67,11 @@ export class ServiceNameFormatter {
         ] = new UniqueNameFinder();
       }
     );
-
-    functionImportNames.forEach(functionImportName => {
-      this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
-    });
-  }
-
-  originalToServiceName(name: string): string {
-    let formattedName = name.replace(/\.|\//g, '_');
-    formattedName = stripAPIUnderscore(formattedName);
-    formattedName = stripUnderscoreSrv(formattedName);
-    formattedName = voca.kebabCase(formattedName);
-    return formattedName.endsWith('service')
-      ? formattedName
-      : `${formattedName}-service`;
+    if (functionImportNames) {
+      functionImportNames.forEach(functionImportName => {
+        this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
+      });
+    }
   }
 
   originalToStaticPropertyName(
@@ -107,12 +125,22 @@ export class ServiceNameFormatter {
     return newName;
   }
 
-  typeNameToFactoryName(str: string, reservedNames: Set<string>): string {
+  typeNameToFactoryName(str: string);
+  /**
+   * @deprecated since version 1.25.0. In the refactored version of the generator the reserved names are obsolete.
+   * @param str
+   * @param reservedNames
+   */
+  /* eslint-disable-next-line  @typescript-eslint/unified-signatures */
+  typeNameToFactoryName(str: string, reservedNames: Set<string>);
+  typeNameToFactoryName(str: string, reservedNames?: Set<string>): string {
     let factoryName = `create${str}`;
-    let index = 1;
-    while (reservedNames.has(factoryName)) {
-      factoryName = `${factoryName}_${index}`;
-      index += 1;
+    if (reservedNames) {
+      let index = 1;
+      while (reservedNames.has(factoryName)) {
+        factoryName = `${factoryName}_${index}`;
+        index += 1;
+      }
     }
     const newName = this.finderServiceWide.findUniqueName(factoryName);
 
@@ -162,10 +190,6 @@ export class ServiceNameFormatter {
     );
     this.finderServiceWide.addToAlreadyUsedNames(...newNames);
     return newNames[0];
-  }
-
-  directoryToSpeakingModuleName(packageName: string): string {
-    return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 
   private getOrInitStaticPropertyNameFinder(name: string): UniqueNameFinder {

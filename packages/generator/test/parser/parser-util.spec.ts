@@ -1,8 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { stripNamespace, isCollection, parseTypeName } from '../../src/parser';
 
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-describe('parser-util', () => {
+import {
+  isCollection,
+  parseTypeName,
+  stripNamespace
+} from '../../src/edmx-to-vdm/edmx-to-vdm-util';
+
+describe('edmx-parser-util', () => {
   it('strips namespace', () => {
     expect(stripNamespace('namespace.name')).toEqual('name');
   });

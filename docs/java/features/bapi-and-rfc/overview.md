@@ -313,6 +313,14 @@ JCo considers the system property `jco.destinations.dir` to look for destination
 
 You can set the property in your Java code like so:
 ```java
-System.setProperty("jco.destinations.dir", "here-comes-the-directory-with-the-destination");
+System.setProperty("jco.destinations.dir", "here-comes-the-directory-with-destination");
 ```
-Alternatively, you can pass the property to the JVM via Maven with `-Djco.destinations.dir=here-comes-the-directory-with-the-destination`.
+Alternatively, you can pass the system property to the JVM via the Maven plugin configuration.
+```xml
+<plugin>
+    <groupId>org.apache.tomee.maven</groupId>
+    <artifactId>tomee-maven-plugin</artifactId>
+    <configuration>
+        <args>-Djco.destinations.dir=here-comes-the-directory-with-the-destination</args>
+...
+```

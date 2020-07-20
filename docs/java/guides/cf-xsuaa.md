@@ -66,7 +66,7 @@ You will likely need to run the following request in your browser and monitor th
 
 1. Request:
     ```
-    GET https://[xsaa.url]/oauth/authorize
+    GET https://[xsuaa.url]/oauth/authorize
     
     Query parameters:
     
@@ -96,7 +96,7 @@ With the authorization code we can now request a real access token from the OAut
 
 1. Request:
     ```
-    POST https://[xsaa.url]/oauth/token
+    POST https://[xsuaa.url]/oauth/token
     
     Headers
     Accept: application/json
@@ -138,7 +138,7 @@ Several services on SCP Cloud Foundry require a dedicated OAuth2 access token, e
    
 1. Request:
     ```
-    POST https://[xsaa.url]/oauth/token
+    POST https://[xsuaa.url]/oauth/token
     
     Headers
     Accept: application/json
@@ -165,14 +165,14 @@ Several services on SCP Cloud Foundry require a dedicated OAuth2 access token, e
 
 ## Client Credentials Grant
 
-Some applications require access to a platform service without active user sessions, with _technical user_ credentials.
+Some applications require access to a platform service without an active user sessions, with _technical user_ credentials.
 For example, reading a list of destinations does not require a user access token.
-Instead can request an access token on behalf of the service binding itself.
-Here we can use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#without-authorization).
+Instead we can request an access token on behalf of the service binding itself.
+Here we use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#without-authorization).
 
 1. Request:
     ```
-    POST https://[xsaa.url]/oauth/token
+    POST https://[xsuaa.url]/oauth/token
     
     Headers
     Accept: application/json
@@ -203,7 +203,7 @@ If the current access token is expired, a new one can be requested with the [Ref
    
 1. Request:
     ```
-    POST https://[xsaa.url]/oauth/token
+    POST https://[xsuaa.url]/oauth/token
     
     Headers
     Accept: application/json

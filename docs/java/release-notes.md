@@ -27,6 +27,15 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+## 3.24.0
+
+Release date: July 16, 2020 - [Documentation](https://help.sap.com/doc/f1983b8177f447fdb4a414b0312b7c2f/1.0/en-US/index.html) - [Blog](https://blogs.sap.com/?p=1146336)
+
+## Improvements
+
+- Minor stability improvements
+- Update [SAP Cloud Security Client](https://github.com/SAP/cloud-security-xsuaa-integration) from `2.7.2` to `2.7.3`
+
 ## 3.23.0
 
 - Release date: July 2, 2020

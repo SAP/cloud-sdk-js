@@ -47,11 +47,11 @@ In order to create a request, we need to parse the XSUAA connection data.
 
 1. Open the **system-provided** environment variables of your application on Cloud Foundry.
 
-1. In the JSON value, locate the object `VCAP_SERVICES.xsuaa[0].credentials`.
+1. Extract values "_url_", "_clientid_", "_clientsecret_" from the JSON value, located in the object `VCAP_SERVICES.xsuaa[0].credentials`.
    
-   *Note:* Depending on the scenario, the "xsuaa" array may have more than one entry. Your application can be bound to multiple instances, e.g. through different service plans.
-
-1. Extract values "_url_", "_clientid_", "_clientsecret_".
+:::tip
+Depending on your setup, the `xsuaa` array may have more than one entry. Because your application can be bound to multiple instances, e.g. through different service plans.
+:::
 
 ## Authorization Code Grant
 
@@ -65,7 +65,7 @@ This flow is split into two steps:
 
 You will likely need to run the following HTTP request in your browser and check the HTTP response.
 
-1. Request:
+1. Make the following request:
     ```
     GET https://[xsuaa.url]/oauth/authorize
     
@@ -79,7 +79,7 @@ You will likely need to run the following HTTP request in your browser and check
 Optional values can be set for "scope" and "login_hint"
 :::
 1. Submit login form via browser.
-2. Read HTTP response:
+1. Check the HTTP response and extract `[code]` from `Location` header.
     ```
     HTTP/1.1 302 Found
     Strict-Transport-Security: max-age=31536000
@@ -91,13 +91,12 @@ Optional values can be set for "scope" and "login_hint"
     X-Frame-Options: DENY
     X-Content-Type-Options: nosniff
     ```
-1. Extract `[code]` from `Location` header.
 
 ### Get OAuth2 Access Token
 
 With the authorization code we can now request a real access token from the OAuth2 service endpoint:
 
-1. Request:
+1. Make the following request:
     ```
     POST https://[xsuaa.url]/oauth/token
     
@@ -111,7 +110,7 @@ With the authorization code we can now request a real access token from the OAut
     code=[code]
     grant_type=authorization_code
     ```
-1. Response:
+1. Check the response:
     ```
     {
       "access_token": [access_token],
@@ -136,11 +135,10 @@ Several services on SCP Cloud Foundry require a dedicated OAuth2 access token, e
 
 1. Open the **system-provided** environment variables of your application.
 
-1. In the JSON value, locate the object `VCAP_SERVICES.destination[0].credentials`.
+1. In the JSON value, locate the object `VCAP_SERVICES.destination[0].credentials`. Make note of `clientid`, `clientsecret`, `uri`
 
-1. Read "clientid", "clientsecret", "uri".
    
-1. Request:
+1. Make the following request:
     ```
     POST https://[xsuaa.url]/oauth/token
     
@@ -154,7 +152,7 @@ Several services on SCP Cloud Foundry require a dedicated OAuth2 access token, e
     grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer
     response_type=token
     ```
-1. Response:
+1. Check the response:
     ```
     {
       "access_token": [destination_access_token],
@@ -174,7 +172,7 @@ For example, reading a list of destinations does not require a user access token
 Instead we can request an access token on behalf of the service binding itself.
 Here we use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#without-authorization).
 
-1. Request:
+1. Make a request:
     ```
     POST https://[xsuaa.url]/oauth/token
     
@@ -186,7 +184,7 @@ Here we use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa
     client_secret=[destination.clientsecret]
     grant_type=client_credentials
     ```
-1. Response:
+1. Check the response:
     ```
     {
       "access_token": [destination_access_token],
@@ -205,7 +203,7 @@ Here we use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa
 
 If the current access token is expired, a new one can be requested with the [Refresh Token](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#refresh-token).
    
-1. Request:
+1. Make a request:
     ```
     POST https://[xsuaa.url]/oauth/token
     
@@ -218,7 +216,7 @@ If the current access token is expired, a new one can be requested with the [Ref
     refresh_token=[refresh_token]
     grant_type=refresh_token
     ```
-1. Response:
+1. Check the response:
     ```
     {
       "access_token": [access_token],

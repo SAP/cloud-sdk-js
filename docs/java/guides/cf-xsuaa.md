@@ -201,7 +201,7 @@ Here we use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa
    
 ## Refresh Token Grant
 
-If the current access token is expired, a new one can be requested with the [Refresh Token](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#refresh-token).
+If the current access token is expired, a new one can be requested with the [Refresh Token flow](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#refresh-token).
    
 1. Make a request:
     ```

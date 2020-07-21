@@ -3,7 +3,12 @@
 import { entityDeserializer } from '../common/entity-deserializer';
 import { edmToTs } from './payload-value-converter';
 import { extractODataETag } from './extract-odata-etag';
-const deserializer = entityDeserializer(edmToTs, extractODataETag);
+import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-link';
+const deserializer = entityDeserializer(
+  edmToTs,
+  extractODataETag,
+  extractDataFromOneToManyLink
+);
 
 export const extractCustomFields = deserializer.extractCustomFields;
 export const deserializeEntity = deserializer.deserializeEntity;

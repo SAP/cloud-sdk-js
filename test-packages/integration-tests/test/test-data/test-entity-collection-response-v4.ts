@@ -1,7 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { testEntityKeyPropGuid, testEntityKeyPropString } from './keys';
-
 export const testEntityCollectionResponse = () => ({
   '@odata.context':
     'https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata#A_TestEntity',
@@ -67,21 +65,15 @@ export const testEntityCollectionResponse = () => ({
           SByteProperty: null
         }
       ],
-      to_MultiLink: {
-        __deferred: {
-          uri: `https://host:port/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')/to_MultiLink`
+      to_MultiLink: [
+        {
+          StringProperty: 'zzz'
         }
-      },
+      ],
       to_SingleLink: {
-        __deferred: {
-          uri: `https://host:port/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')/to_SingleLink`
-        }
+        StringProperty: 'yyy'
       },
-      to_OtherMultiLink: {
-        __deferred: {
-          uri: `https://host:port/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')/to_OtherMultiLink`
-        }
-      }
+      to_OtherMultiLink: []
     }
   ]
 });

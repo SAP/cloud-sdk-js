@@ -7,7 +7,7 @@ import {
 } from '../test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
-  createTestEntity,
+  createTestEntityV4,
   testEntityResourcePath
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v4/test-service';
@@ -21,7 +21,7 @@ describe('GetByKeyRequestBuilder', () => {
   describe('execute', () => {
     it('returns entity by key', async () => {
       const entityData = createOriginalTestEntityData1();
-      const expected = createTestEntity(entityData);
+      const expected = createTestEntityV4(entityData);
 
       mockGetRequest(
         {
@@ -47,7 +47,7 @@ describe('GetByKeyRequestBuilder', () => {
     const entityData = createOriginalTestEntityData1();
     const versionIdentifier = 'etagInMetadata';
     entityData['@odata.etag'] = versionIdentifier;
-    const expected = createTestEntity(entityData);
+    const expected = createTestEntityV4(entityData);
 
     mockGetRequest({
       path: testEntityResourcePath(
@@ -68,7 +68,7 @@ describe('GetByKeyRequestBuilder', () => {
 
   it('etag should be pulled from response header when json payload has no @odata.etag property', async () => {
     const entityData = createOriginalTestEntityData1();
-    const expected = createTestEntity(entityData);
+    const expected = createTestEntityV4(entityData);
     const versionIdentifier = 'etagInHeader';
     expected.setVersionIdentifier(versionIdentifier);
 

@@ -11,7 +11,7 @@ import {
   certificateSingleResponse
 } from '../test-util/example-destination-service-responses';
 
-describe('Destination parser', () => {
+describe('Destination edmx-parser', () => {
   it('destination is parsed correctly ', () => {
     const actual = parseDestination(basicMultipleResponse[0]);
 

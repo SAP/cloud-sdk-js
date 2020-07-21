@@ -21,8 +21,8 @@ image:
 
 ## XSUAA Usage on SCP Cloud Foundry
 
-When implementing and deploying an application it quickly becomes important to understand how authentication and authorizations works on SCP Cloud Foundry.
-In our tutorials and documentation pages we recommend using "approuter" as proxy service to handle authentication management to your implemented application.
+When developing and deploying an application it quickly becomes important to understand how authentication and authorizations work on SCP Cloud Foundry.
+In our tutorials and documentation, we recommend using "approuter" as a proxy service to handle authentication management to your implemented application.
 The following steps will show what happens behind the scenes. The requests can be manually reproduced by a REST client of your choice, e.g. Postman or Insomnia.
 
 We highly recommend checking the [official UAA documentation](https://docs.cloudfoundry.org/api/uaa/) for any questions and comprehensive documentation on the topic.

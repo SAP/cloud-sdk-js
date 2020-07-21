@@ -10,7 +10,7 @@ describe('field-type-class', () => {
     expect(actual).toEqual({
       kind: StructureKind.Class,
       name: 'ComplexMealField<EntityT extends Entity>',
-      extends: 'ComplexTypeField<EntityT>',
+      extends: 'ComplexTypeField<EntityT, typeof ComplexMealType>',
       isExported: true,
       properties: [
         {
@@ -36,6 +36,24 @@ describe('field-type-class', () => {
       ],
       docs: [
         'ComplexMealField\n@typeparam EntityT - Type of the entity the complex type field belongs to.'
+      ],
+      ctors: [
+        {
+          parameters: [
+            {
+              name: 'fieldName',
+              type: 'string'
+            },
+            {
+              name: 'fieldOf',
+              type: 'ConstructorOrField<EntityT, typeof ComplexMealType>'
+            }
+          ],
+          statements: ['super(fieldName, fieldOf, ComplexMealType);'],
+          docs: [
+            '\nCreates an instance of ComplexMealField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
+          ]
+        }
       ]
     });
   });
@@ -45,7 +63,7 @@ describe('field-type-class', () => {
     expect(actual).toEqual({
       kind: StructureKind.Class,
       name: 'ComplexMealWithDesertField<EntityT extends Entity>',
-      extends: 'ComplexTypeField<EntityT>',
+      extends: 'ComplexTypeField<EntityT, typeof ComplexMealWithDesertType>',
       isExported: true,
       properties: [
         {
@@ -65,6 +83,25 @@ describe('field-type-class', () => {
             "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
           docs: [
             "Representation of the [[ComplexMealWithDesertType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+          ]
+        }
+      ],
+      ctors: [
+        {
+          parameters: [
+            {
+              name: 'fieldName',
+              type: 'string'
+            },
+            {
+              name: 'fieldOf',
+              type:
+                'ConstructorOrField<EntityT, typeof ComplexMealWithDesertType>'
+            }
+          ],
+          statements: ['super(fieldName, fieldOf, ComplexMealWithDesertType);'],
+          docs: [
+            '\nCreates an instance of ComplexMealWithDesertField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
           ]
         }
       ],

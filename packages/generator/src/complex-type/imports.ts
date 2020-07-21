@@ -9,8 +9,7 @@ import {
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmComplexType, VdmProperty } from '../vdm-types';
-import { hasEdmTypeProperty } from './util';
+import { VdmComplexType } from '../vdm-types';
 
 export function importDeclarations(
   complexType: VdmComplexType,
@@ -23,17 +22,14 @@ export function importDeclarations(
       [
         ...corePropertyTypeImportNames(complexType.properties),
         ...corePropertyFieldTypeImportNames(complexType.properties),
-        ...edmTypeImportNames(complexType.properties),
         'ComplexTypeField',
-        'createComplexType',
+        'ConstructorOrField',
+        'deserializeComplexType',
         'Entity',
-        'FieldType'
+        'FieldType',
+        'PropertyMetadata'
       ].sort(),
       oDataVersion
     )
   ];
-}
-
-function edmTypeImportNames(properties: VdmProperty[]): string[] {
-  return hasEdmTypeProperty(properties) ? ['edmToTs'] : [];
 }

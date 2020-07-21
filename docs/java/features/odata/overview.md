@@ -42,6 +42,9 @@ The SDK supports both OData v2 and OData v4 protocols.
 
 ## OData features supported by SAP Cloud SDK for Java
 
+### Create, Read, Update, Delete - CRUD
+
+
 | Feature                             | OData V4 | OData V2 | Comment | Example Query |
 |-------------------------------------|----------|----------|---------|---------------|
 | GetAll                              | &#10003; | &#10003; |         |               |
@@ -52,6 +55,14 @@ The SDK supports both OData v2 and OData v4 protocols.
 | Deep Create                         | &#10003; | &#10003; |         |               |
 | Deep Update                         | &#10003; | n/a      |         |               |
 | Deep Delete                         |          |          |         |               |
+| Create on Navigation property       | &#10003; |          |         |               |
+| Update on Navigation property       | &#10003; |          |         |               |
+| Delete on Navigation property       | &#10003; |          |         |               |
+
+### Select, Expand, Filter, Search, OrderBy, Top, Skip and Count
+
+| Feature                             | OData V4 | OData V2 | Comment | Example Query |
+|-------------------------------------|----------|----------|---------|---------------|
 | Basic Select                        | &#10003; | &#10003; |         |               |
 | Select on Navigation property       |          |          |         |               |
 | Basic Expand                        | &#10003; | &#10003; |         |               |
@@ -62,9 +73,6 @@ The SDK supports both OData v2 and OData v4 protocols.
 | Filter on Navigation property       | &#10003; |          |         |               |
 | Basic OrderBy                       | &#10003; | &#10003; |         |               |
 | OrderBy on Navigation property      | &#10003; |          |         |               |
-| Create on Navigation property       | &#10003; |          |         |               |
-| Update on Navigation property       | &#10003; |          |         |               |
-| Delete on Navigation property       | &#10003; |          |         |               |
 | Top and Skip                        | &#10003; |          |         |               |
 | Top and Skip on Navigation property | &#10003; |          |         |               |
 | Count                               | &#10003; | &#10003; |         |               |
@@ -72,17 +80,37 @@ The SDK supports both OData v2 and OData v4 protocols.
 | Search                              | &#10003; |          |         |               |
 | Any/All for Entity collections      |          |          |         |               |
 | Any/All for Primitive types         | &#10003; |          |         |               |
+
+### Functions and Actions
+
+
+| Feature                             | OData V4 | OData V2 | Comment | Example Query |
+|-------------------------------------|----------|----------|---------|---------------|
 | Unbound Functions                   | &#10003; | &#10003; |         |               |
 | Bound Functions                     |          |          |         |               |
 | Unbound Actions                     | &#10003; |          |         |               |
 | Bound Actions                       |          |          |         |               |
+
+### ETag and CSRF token handling
+
+| Feature                             | OData V4 | OData V2 | Comment | Example Query |
+|-------------------------------------|----------|----------|---------|---------------|
 | Etag handling                       | &#10003; |          |         |               |
 | CSRF token handling                 | &#10003; |          |         |               |
+
+### Inheritance
+
+| Feature                             | OData V4 | OData V2 | Comment | Example Query |
+|-------------------------------------|----------|----------|---------|---------------|
 | Derived Entity (Inheritance)        | &#10003; |          |         |               |
 | Requesting Derived Entity           |          |          |         |               |
 | Filter on Derived Entity            |          |          |         |               |
 | Create on Derived Entity            |          |          |         |               |
 | Update on Derived Entity            |          |          |         |               |
 | Delete on Derive Entity             |          |          |         |               |
+
+### Batch
+
+| Feature                             | OData V4 | OData V2 | Comment | Example Query |
+|-------------------------------------|----------|----------|---------|---------------|
 | Batch                               |          | &#10003; |         |               |
-|                                     |          |          |         |               |

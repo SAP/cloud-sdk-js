@@ -18,7 +18,7 @@ import {
 import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common';
 import {
   filterUnknownEdmTypes,
-  isCollection,
+  isCollectionType,
   parseType,
   parseTypeName,
   propertyJsType
@@ -80,7 +80,7 @@ export function parseReturnTypes(
     return getVoidReturnType();
   }
 
-  const isCollectionReturnType = isCollection(returnType);
+  const isCollectionReturnType = isCollectionType(returnType);
   const edmType = findEdmType(returnType);
   if (edmType) {
     return getEdmReturnType(isCollectionReturnType, edmType);

@@ -61,10 +61,11 @@ export function corePropertyTypeImportNames(
 export function corePropertyFieldTypeImportNames(
   properties: VdmProperty[]
 ): string[] {
-  return unique([
-    ...properties.filter(prop => !prop.isComplex).map(prop => prop.fieldType),
-    ...(properties.some(prop => prop.isCollection) ? ['CollectionField'] : [])
-  ]);
+  return unique(
+    properties
+      .filter(prop => !prop.isComplex || prop.isCollection)
+      .map(prop => prop.fieldType)
+  );
 }
 
 export function coreNavPropertyFieldTypeImportNames(
@@ -140,6 +141,6 @@ function complexTypeImportDeclaration(
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier: `./${prop.jsType}`,
-    namedImports: [prop.jsType, prop.fieldType]
+    namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
   };
 }

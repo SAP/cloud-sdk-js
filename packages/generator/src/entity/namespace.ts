@@ -46,10 +46,6 @@ function properties(entity: VdmEntity): VariableStatementStructure[] {
   return entity.properties.map(prop => property(prop, entity));
 }
 
-function getFieldClassName(prop: VdmProperty): string {
-  return prop.isCollection ? 'CollectionField' : prop.fieldType;
-}
-
 function getFieldInitializer(
   prop: VdmProperty,
   entityClassName: string
@@ -62,7 +58,7 @@ function getFieldInitializer(
           : prop.edmType.split('.').pop()
       }'`;
 
-  const className = getFieldClassName(prop);
+  const className = prop.fieldType;
   const genericParameters = getGenericParameters(entityClassName, prop);
   const thirdParameter =
     prop.isComplex && !prop.isCollection ? undefined : type;
@@ -169,8 +165,7 @@ function allFields(
 ): VariableStatementStructure {
   const fieldTypes = unique([
     ...entity.properties.map(
-      p =>
-        `${getFieldClassName(p)}<${getGenericParameters(entity.className, p)}>`
+      p => `${p.fieldType}<${getGenericParameters(entity.className, p)}>`
     ),
     ...entity.navigationProperties.map(
       p =>

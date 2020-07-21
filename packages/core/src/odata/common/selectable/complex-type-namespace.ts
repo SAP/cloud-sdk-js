@@ -3,7 +3,6 @@ import { EdmTypeShared } from '../edm-types';
 
 export interface ComplexTypeNamespace {
   _propertyMetadata: PropertyMetadata[];
-  build;
 }
 
 export interface PropertyMetadata {

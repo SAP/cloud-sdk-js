@@ -25,9 +25,9 @@ import {
   edmToComplexPropertyType,
   isNullableParameter
 } from '../../../generator-utils';
-import { applyPrefixOnJsConfictParam } from '../../../name-formatting-strategies';
+import { applyPrefixOnJsConfictParam as applyPrefixOnJsConflictParam } from '../../../name-formatting-strategies';
 import {
-  isCollection,
+  isCollectionType,
   parseTypeName
 } from '../../../edmx-to-vdm/edmx-to-vdm-util';
 import {
@@ -166,7 +166,7 @@ function properties(
           entity.entitySet.Name,
           p.Name
         ),
-        propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
+        propertyNameAsParam: applyPrefixOnJsConflictParam(instancePropertyName),
         edmType: type,
         jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
         fieldType:
@@ -176,7 +176,7 @@ function properties(
         nullable: isNullableProperty(p),
         maxLength: p.MaxLength,
         isComplex,
-        isCollection: isCollection(p.Type)
+        isCollection: isCollectionType(p.Type)
       };
     })
     .filter(filterUnknownPropertyTypes);
@@ -329,7 +329,7 @@ export function navigationPropertyBase(
       entitySetName,
       navPropName
     ),
-    propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName)
+    propertyNameAsParam: applyPrefixOnJsConflictParam(instancePropertyName)
   };
 }
 
@@ -377,6 +377,7 @@ export function transformComplexTypes(
           );
           const type = parseTypeName(p.Type);
           const isComplex = isComplexType(type);
+          const isCollection = isCollectionType(p.Type);
           const parsedType = parseType(type);
           return {
             originalName: p.Name,
@@ -385,7 +386,7 @@ export function transformComplexTypes(
               c.Name,
               p.Name
             ),
-            propertyNameAsParam: applyPrefixOnJsConfictParam(
+            propertyNameAsParam: applyPrefixOnJsConflictParam(
               instancePropertyName
             ),
             description: propertyDescription(p),
@@ -393,11 +394,13 @@ export function transformComplexTypes(
             nullable: isNullableProperty(p),
             edmType: isComplex ? type : parsedType,
             jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(type),
-            fieldType: isComplex
+            fieldType: isCollection
+              ? 'CollectionField'
+              : isComplex
               ? formattedTypes[parsedType] + 'Field'
               : edmToComplexPropertyType(type),
             isComplex,
-            isCollection: isCollection(p.Type)
+            isCollection
           };
         })
         .filter(filterUnknownPropertyTypes)
@@ -419,7 +422,7 @@ export function parseReturnType(
       isCollection: false
     };
   }
-  const isCollectionReturnType = isCollection(returnType);
+  const isCollectionReturnType = isCollectionType(returnType);
   returnType = parseTypeName(returnType);
   if (returnType.startsWith('Edm.')) {
     return {

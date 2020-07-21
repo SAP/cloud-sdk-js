@@ -33,8 +33,14 @@ exports.createEventLocation = createEventLocation;
  */
 var EventLocationField = /** @class */ (function (_super) {
     __extends(EventLocationField, _super);
-    function EventLocationField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of EventLocationField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function EventLocationField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, EventLocation) || this;
         /**
          * Representation of the [[EventLocation.buildingInfo]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -57,12 +63,24 @@ var EventLocationField = /** @class */ (function (_super) {
 exports.EventLocationField = EventLocationField;
 var EventLocation;
 (function (EventLocation) {
+    /**
+     * Metadata information on all properties of the `EventLocation` complex type.
+     */
+    EventLocation._propertyMetadata = [{
+            originalName: 'BuildingInfo',
+            name: 'buildingInfo',
+            type: 'Edm.String'
+        }, {
+            originalName: 'Address',
+            name: 'address',
+            type: 'Edm.String'
+        }, {
+            originalName: 'City',
+            name: 'city',
+            type: City_1.City
+        }];
     function build(json) {
-        return v4_1.createComplexType(json, {
-            BuildingInfo: function (buildingInfo) { return ({ buildingInfo: v4_1.edmToTs(buildingInfo, 'Edm.String') }); },
-            Address: function (address) { return ({ address: v4_1.edmToTs(address, 'Edm.String') }); },
-            City: function (city) { return ({ city: City_1.City.build(city) }); }
-        });
+        return v4_1.deserializeComplexType(json, EventLocation);
     }
     EventLocation.build = build;
 })(EventLocation = exports.EventLocation || (exports.EventLocation = {}));

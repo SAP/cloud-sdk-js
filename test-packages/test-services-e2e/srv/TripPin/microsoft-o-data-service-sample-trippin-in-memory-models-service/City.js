@@ -32,8 +32,14 @@ exports.createCity = createCity;
  */
 var CityField = /** @class */ (function (_super) {
     __extends(CityField, _super);
-    function CityField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of CityField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function CityField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, City) || this;
         /**
          * Representation of the [[City.name]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -56,12 +62,24 @@ var CityField = /** @class */ (function (_super) {
 exports.CityField = CityField;
 var City;
 (function (City) {
+    /**
+     * Metadata information on all properties of the `City` complex type.
+     */
+    City._propertyMetadata = [{
+            originalName: 'Name',
+            name: 'name',
+            type: 'Edm.String'
+        }, {
+            originalName: 'CountryRegion',
+            name: 'countryRegion',
+            type: 'Edm.String'
+        }, {
+            originalName: 'Region',
+            name: 'region',
+            type: 'Edm.String'
+        }];
     function build(json) {
-        return v4_1.createComplexType(json, {
-            Name: function (name) { return ({ name: v4_1.edmToTs(name, 'Edm.String') }); },
-            CountryRegion: function (countryRegion) { return ({ countryRegion: v4_1.edmToTs(countryRegion, 'Edm.String') }); },
-            Region: function (region) { return ({ region: v4_1.edmToTs(region, 'Edm.String') }); }
-        });
+        return v4_1.deserializeComplexType(json, City);
     }
     City.build = build;
 })(City = exports.City || (exports.City = {}));

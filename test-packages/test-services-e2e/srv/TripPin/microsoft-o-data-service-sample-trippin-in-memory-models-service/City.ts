@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType, createComplexType, edmToTs } from '@sap-cloud-sdk/core/v4';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core/v4';
 
 /**
  * City
@@ -37,7 +37,7 @@ export function createCity(json: any): City {
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class CityField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
+export class CityField<EntityT extends Entity> extends ComplexTypeField<EntityT, typeof City> {
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -53,14 +53,37 @@ export class CityField<EntityT extends Entity> extends ComplexTypeField<EntityT>
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   region: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('Region', this, 'Edm.String');
+
+  /**
+   * Creates an instance of CityField.
+   *
+   * @param fieldName - Actual name of the field as used in the OData request.
+   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, typeof City>) {
+    super(fieldName, fieldOf, City);
+  }
 }
 
 export namespace City {
+  /**
+   * Metadata information on all properties of the `City` complex type.
+   */
+  export const _propertyMetadata: PropertyMetadata[] = [{
+    originalName: 'Name',
+    name: 'name',
+    type: 'Edm.String'
+  }, {
+    originalName: 'CountryRegion',
+    name: 'countryRegion',
+    type: 'Edm.String'
+  }, {
+    originalName: 'Region',
+    name: 'region',
+    type: 'Edm.String'
+  }];
+
   export function build(json: { [keys: string]: FieldType }): City {
-    return createComplexType(json, {
-      Name: (name: string) => ({ name: edmToTs(name, 'Edm.String') }),
-      CountryRegion: (countryRegion: string) => ({ countryRegion: edmToTs(countryRegion, 'Edm.String') }),
-      Region: (region: string) => ({ region: edmToTs(region, 'Edm.String') })
-    });
+    return deserializeComplexType(json, City);
   }
 }

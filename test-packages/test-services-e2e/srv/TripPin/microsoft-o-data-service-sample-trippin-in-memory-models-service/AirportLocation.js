@@ -33,8 +33,14 @@ exports.createAirportLocation = createAirportLocation;
  */
 var AirportLocationField = /** @class */ (function (_super) {
     __extends(AirportLocationField, _super);
-    function AirportLocationField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of AirportLocationField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function AirportLocationField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, AirportLocation) || this;
         /**
          * Representation of the [[AirportLocation.address]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -52,11 +58,20 @@ var AirportLocationField = /** @class */ (function (_super) {
 exports.AirportLocationField = AirportLocationField;
 var AirportLocation;
 (function (AirportLocation) {
+    /**
+     * Metadata information on all properties of the `AirportLocation` complex type.
+     */
+    AirportLocation._propertyMetadata = [{
+            originalName: 'Address',
+            name: 'address',
+            type: 'Edm.String'
+        }, {
+            originalName: 'City',
+            name: 'city',
+            type: City_1.City
+        }];
     function build(json) {
-        return v4_1.createComplexType(json, {
-            Address: function (address) { return ({ address: v4_1.edmToTs(address, 'Edm.String') }); },
-            City: function (city) { return ({ city: City_1.City.build(city) }); }
-        });
+        return v4_1.deserializeComplexType(json, AirportLocation);
     }
     AirportLocation.build = build;
 })(AirportLocation = exports.AirportLocation || (exports.AirportLocation = {}));

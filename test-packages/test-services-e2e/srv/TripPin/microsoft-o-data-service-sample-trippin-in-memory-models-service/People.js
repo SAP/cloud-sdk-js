@@ -115,12 +115,12 @@ exports.People = People;
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    People.EMAILS = new v4_1.CollectionField('Emails', People, new v4_1.StringField('', People, 'Edm.String'));
+    People.EMAILS = new v4_1.CollectionField('Emails', People, 'Edm.String');
     /**
      * Static representation of the [[addressInfo]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    People.ADDRESS_INFO = new v4_1.CollectionField('AddressInfo', People, new Location_1.LocationField('', People));
+    People.ADDRESS_INFO = new v4_1.CollectionField('AddressInfo', People, Location_1.Location);
     /**
      * Static representation of the [[homeAddress]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.

@@ -150,12 +150,12 @@ export namespace NewComePeople {
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS: CollectionField<NewComePeople> = new CollectionField('Emails', NewComePeople, new StringField('', NewComePeople, 'Edm.String'));
+  export const EMAILS: CollectionField<NewComePeople, 'Edm.String'> = new CollectionField('Emails', NewComePeople, 'Edm.String');
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ADDRESS_INFO: CollectionField<NewComePeople> = new CollectionField('AddressInfo', NewComePeople, new LocationField('', NewComePeople));
+  export const ADDRESS_INFO: CollectionField<NewComePeople, typeof Location> = new CollectionField('AddressInfo', NewComePeople, Location);
   /**
    * Static representation of the [[homeAddress]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -164,7 +164,7 @@ export namespace NewComePeople {
   /**
    * All fields of the NewComePeople entity.
    */
-  export const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople> | LocationField<NewComePeople>> = [
+  export const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, 'Edm.String'> | CollectionField<NewComePeople, typeof Location> | LocationField<NewComePeople>> = [
     NewComePeople.USER_NAME,
     NewComePeople.FIRST_NAME,
     NewComePeople.LAST_NAME,

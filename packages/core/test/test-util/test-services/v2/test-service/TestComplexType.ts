@@ -188,11 +188,7 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
   complexTypeProperty: TestNestedComplexTypeField<EntityT> = new TestNestedComplexTypeField('ComplexTypeProperty', this);
 
   /**
-<<<<<<< HEAD
-   * Creates an instance of TestComplexTypeField
-=======
    * Creates an instance of TestComplexTypeField.
->>>>>>> d53874887bb5ec161748644a2aa53a8b739b7ec2
    *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.

@@ -78,7 +78,7 @@ You will likely need to run the following HTTP request in your browser and check
 :::tip
 Optional values can be set for "scope" and "login_hint"
 :::
-1. Submit login form via browser.
+1. Submit login form via a browser or REST API debugging tools like POSTMAN or Insomnia.
 1. Check the HTTP response and extract `[code]` from `Location` header.
     ```
     HTTP/1.1 302 Found

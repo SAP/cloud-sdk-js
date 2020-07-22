@@ -120,8 +120,7 @@ partner = service.getBusinessPartnerByKey("id")
                  .execute(destination);
 response = service.updateBusinessPartner(partner)
                  .execute(destination);
-partner = response.getResponseEntity()
-                .getOrElse(() -> partner);
+partner = response.getModifiedEntity();
 ```
 
 </TabItem>

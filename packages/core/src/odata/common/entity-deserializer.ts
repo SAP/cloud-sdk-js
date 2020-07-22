@@ -163,12 +163,9 @@ export function entityDeserializer(
   }
 
   // TODO: get rid of this function in v2.0
-  function deserializeComplexTypeLegacy<
-    EntityT extends EntityBase,
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
-  >(
+  function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
     json: MapType<any>,
-    complexTypeField: ComplexTypeField<EntityT, ComplexTypeNamespaceT>
+    complexTypeField: ComplexTypeField<EntityT>
   ): MapType<any> {
     logger.warn(
       'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'
@@ -193,7 +190,7 @@ export function entityDeserializer(
   }
 
   function deserializeComplexType<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
+    ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
@@ -211,7 +208,7 @@ export function entityDeserializer(
 
   function deserializeCollectionType<
     EntityT extends EntityBase,
-    FieldT extends EdmTypeShared<'any'> | ComplexTypeNamespace
+    FieldT extends EdmTypeShared<'any'> | {}
   >(json: any[], field: CollectionField<EntityT, FieldT>) {
     const fieldType = field._fieldType;
     if (isEdmType(fieldType)) {

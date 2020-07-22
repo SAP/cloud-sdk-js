@@ -12,7 +12,6 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
-import { ComplexTypeNamespace } from './complex-type-namespace';
 
 /**
  * Represents a property with a time value.
@@ -82,12 +81,12 @@ export class TimeField<EntityT extends EntityBase> extends TimeFieldBase<
  */
 export class ComplexTypeTimePropertyField<
   EntityT extends EntityBase,
-  ComplexTypeNamespaceT extends ComplexTypeNamespace = any
+  ComplexT = any
 > extends TimeFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>;
+  readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
@@ -98,7 +97,7 @@ export class ComplexTypeTimePropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
+    fieldOf: ConstructorOrField<EntityT, ComplexT>,
     edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 
@@ -124,7 +123,7 @@ export class ComplexTypeTimePropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
+    fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
     arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {

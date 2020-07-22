@@ -70,6 +70,13 @@ var TestNestedComplexType;
             name: 'complexTypeProperty',
             type: TestLvl2NestedComplexType_1.TestLvl2NestedComplexType
         }];
+    /**
+     * Type reference to the according complex type.
+     */
+    TestNestedComplexType._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
         return core_1.deserializeComplexType(json, TestNestedComplexType);
     }

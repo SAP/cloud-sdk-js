@@ -98,11 +98,8 @@ export function entitySerializer(tsToEdm) {
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<
-    EntityT extends EntityBase,
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
-  >(
-    complexTypeField: ComplexTypeField<EntityT, ComplexTypeNamespaceT>,
+  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase>(
+    complexTypeField: ComplexTypeField<EntityT>,
     fieldValue: any
   ): any {
     logger.warn(
@@ -131,7 +128,7 @@ export function entitySerializer(tsToEdm) {
   }
 
   function serializeComplexType<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
+    ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(fieldValue: any, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
@@ -152,7 +149,7 @@ export function entitySerializer(tsToEdm) {
 
   function serializeCollectionField<
     EntityT extends EntityBase,
-    FieldT extends EdmTypeShared<'any'> | ComplexTypeNamespace
+    FieldT extends EdmTypeShared<'any'> | {}
   >(fieldValue: any[], field: CollectionField<EntityT, FieldT>) {
     const fieldType = field._fieldType;
     if (isEdmType(fieldType)) {

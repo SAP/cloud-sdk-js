@@ -37,7 +37,7 @@ export function createCity(json: any): City {
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class CityField<EntityT extends Entity> extends ComplexTypeField<EntityT, typeof City> {
+export class CityField<EntityT extends Entity> extends ComplexTypeField<EntityT, City> {
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -60,7 +60,7 @@ export class CityField<EntityT extends Entity> extends ComplexTypeField<EntityT,
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, typeof City>) {
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, City>) {
     super(fieldName, fieldOf, City);
   }
 }
@@ -82,7 +82,14 @@ export namespace City {
     name: 'region',
     type: 'Edm.String'
   }];
+  /**
+   * Type reference to the according complex type.
+   */
+  export const _complexType: City = {};
 
+  /**
+   * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+   */
   export function build(json: { [keys: string]: FieldType }): City {
     return deserializeComplexType(json, City);
   }

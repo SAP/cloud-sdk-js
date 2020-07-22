@@ -79,6 +79,13 @@ var EventLocation;
             name: 'city',
             type: City_1.City
         }];
+    /**
+     * Type reference to the according complex type.
+     */
+    EventLocation._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
         return v4_1.deserializeComplexType(json, EventLocation);
     }

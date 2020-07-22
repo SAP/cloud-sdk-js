@@ -167,7 +167,7 @@ function getComplexReturnType(
   return {
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
-    builderFunction: `${complexType.typeName}.build`,
+    builderFunction: `(data) => deserializeComplexType(data, ${complexType.typeName})`,
     isMulti: isCollectionReturnType,
     isCollection: isCollectionReturnType
   };

@@ -12,7 +12,7 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
  * Creates an instance of CollectionField.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
- * @typeparam FieldT - Type of the collection in the field
+ * @typeparam FieldT - Type of the entries of the collection in the field
  *
  * @param _fieldName - Actual name of the field used in the OData request
  * @param _entityConstructor - The constructor of the entity this field belongs to
@@ -20,13 +20,14 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
  */
 export class CollectionField<
   EntityT extends EntityBase,
-  FieldT extends EdmTypeShared<'any'> | ComplexTypeNamespace
+  FieldT extends EdmTypeShared<'any'> | Record<string, any> = any
 > extends Field<EntityT> implements SelectableEdmTypeField {
   readonly selectable: true;
+
   constructor(
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
-    readonly _fieldType: FieldT
+    readonly _fieldType: FieldT | ComplexTypeNamespace<FieldT>
   ) {
     super(fieldName, entityConstructor);
   }

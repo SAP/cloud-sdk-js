@@ -35,6 +35,19 @@ describe('namespace', () => {
           isExported: true
         },
         {
+          kind: StructureKind.VariableStatement,
+          declarationKind: VariableDeclarationKind.Const,
+          declarations: [
+            {
+              name: '_complexType',
+              initializer: '{}',
+              type: 'ComplexMealType'
+            }
+          ],
+          docs: ['\nType reference to the according complex type.'],
+          isExported: true
+        },
+        {
           kind: StructureKind.Function,
           name: 'build',
           returnType: 'ComplexMealType',
@@ -45,7 +58,10 @@ describe('namespace', () => {
             }
           ],
           statements: 'return deserializeComplexType(json, ComplexMealType);',
-          isExported: true
+          isExported: true,
+          docs: [
+            '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+          ]
         }
       ]
     });
@@ -82,6 +98,19 @@ describe('namespace', () => {
           isExported: true
         },
         {
+          kind: StructureKind.VariableStatement,
+          declarationKind: VariableDeclarationKind.Const,
+          declarations: [
+            {
+              name: '_complexType',
+              initializer: '{}',
+              type: 'ComplexMealWithDesertType'
+            }
+          ],
+          docs: ['\nType reference to the according complex type.'],
+          isExported: true
+        },
+        {
           kind: StructureKind.Function,
           name: 'build',
           returnType: 'ComplexMealWithDesertType',
@@ -93,7 +122,10 @@ describe('namespace', () => {
           ],
           statements:
             'return deserializeComplexType(json, ComplexMealWithDesertType);',
-          isExported: true
+          isExported: true,
+          docs: [
+            '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+          ]
         }
       ]
     });

@@ -10,7 +10,7 @@ describe('field-type-class', () => {
     expect(actual).toEqual({
       kind: StructureKind.Class,
       name: 'ComplexMealField<EntityT extends Entity>',
-      extends: 'ComplexTypeField<EntityT, typeof ComplexMealType>',
+      extends: 'ComplexTypeField<EntityT, ComplexMealType>',
       isExported: true,
       properties: [
         {
@@ -46,7 +46,7 @@ describe('field-type-class', () => {
             },
             {
               name: 'fieldOf',
-              type: 'ConstructorOrField<EntityT, typeof ComplexMealType>'
+              type: 'ConstructorOrField<EntityT, ComplexMealType>'
             }
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealType);'],
@@ -63,7 +63,7 @@ describe('field-type-class', () => {
     expect(actual).toEqual({
       kind: StructureKind.Class,
       name: 'ComplexMealWithDesertField<EntityT extends Entity>',
-      extends: 'ComplexTypeField<EntityT, typeof ComplexMealWithDesertType>',
+      extends: 'ComplexTypeField<EntityT, ComplexMealWithDesertType>',
       isExported: true,
       properties: [
         {
@@ -95,8 +95,7 @@ describe('field-type-class', () => {
             },
             {
               name: 'fieldOf',
-              type:
-                'ConstructorOrField<EntityT, typeof ComplexMealWithDesertType>'
+              type: 'ConstructorOrField<EntityT, ComplexMealWithDesertType>'
             }
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealWithDesertType);'],

@@ -81,7 +81,7 @@ function getGenericParameters(
 ): string {
   const param = prop.isCollection
     ? prop.isComplex
-      ? [`typeof ${prop.jsType}`]
+      ? [`${prop.jsType}`]
       : [`'${prop.edmType}'`]
     : [];
   return [entityClassName, ...param].join(', ');

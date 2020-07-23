@@ -27,7 +27,7 @@ export function createTestLvl2NestedComplexType(json: any): TestLvl2NestedComple
  * TestLvl2NestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestLvl2NestedComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, typeof TestLvl2NestedComplexType> {
+export class TestLvl2NestedComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, TestLvl2NestedComplexType> {
   /**
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -40,7 +40,7 @@ export class TestLvl2NestedComplexTypeField<EntityT extends Entity> extends Comp
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, typeof TestLvl2NestedComplexType>) {
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, TestLvl2NestedComplexType>) {
     super(fieldName, fieldOf, TestLvl2NestedComplexType);
   }
 }
@@ -54,7 +54,14 @@ export namespace TestLvl2NestedComplexType {
     name: 'stringProperty',
     type: 'Edm.String'
   }];
+  /**
+   * Type reference to the according complex type.
+   */
+  export const _complexType: TestLvl2NestedComplexType = {};
 
+  /**
+   * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+   */
   export function build(json: { [keys: string]: FieldType }): TestLvl2NestedComplexType {
     return deserializeComplexType(json, TestLvl2NestedComplexType);
   }

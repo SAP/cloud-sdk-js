@@ -13,7 +13,7 @@ import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
-  isCollection,
+  isCollectionType,
   isComplexType,
   parseType,
   parseTypeName
@@ -66,6 +66,7 @@ export function transformComplexTypesBase(
           );
           const type = parseTypeName(p.Type);
           const isComplex = isComplexType(type);
+          const isCollection = isCollectionType(p.Type);
           const parsedType = parseType(type);
           return {
             originalName: p.Name,
@@ -82,11 +83,13 @@ export function transformComplexTypesBase(
             nullable: isNullableProperty(p),
             edmType: isComplex ? type : parsedType,
             jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(type),
-            fieldType: isComplex
+            fieldType: isCollection
+              ? 'CollectionField'
+              : isComplex
               ? formattedTypes[parsedType] + 'Field'
               : edmToComplexPropertyType(type),
             isComplex,
-            isCollection: isCollection(p.Type)
+            isCollection: isCollectionType(p.Type)
           };
         })
         .filter(filterUnknownPropertyTypes)

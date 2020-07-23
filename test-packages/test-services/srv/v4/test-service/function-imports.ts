@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEdmType, transformReturnValueForEdmTypeList, transformReturnValueForEntity, transformReturnValueForEntityList, transformReturnValueForComplexType, transformReturnValueForComplexTypeList, transformReturnValueForUndefined, edmToTs, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core/v4';
+import { transformReturnValueForEdmType, transformReturnValueForEdmTypeList, transformReturnValueForEntity, transformReturnValueForEntityList, transformReturnValueForComplexType, transformReturnValueForComplexTypeList, transformReturnValueForUndefined, edmToTs, deserializeComplexType, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core/v4';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 

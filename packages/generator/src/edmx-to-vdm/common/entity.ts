@@ -26,7 +26,7 @@ import {
 import {
   checkCollectionKind,
   filterUnknownEdmTypes,
-  isCollection,
+  isCollectionType,
   isComplexType,
   parseTypeName,
   propertyJsType
@@ -89,6 +89,7 @@ function properties(
     );
     const type = parseTypeName(p.Type);
     const isComplex = isComplexType(type);
+    const isCollection = isCollectionType(p.Type);
     return {
       originalName: p.Name,
       instancePropertyName,
@@ -99,13 +100,15 @@ function properties(
       propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
       edmType: type,
       jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
-      fieldType:
-        propertyFieldType(type) || complexTypeFieldForName(type, complexTypes),
+      fieldType: isCollection
+        ? 'CollectionField'
+        : propertyFieldType(type) ||
+          complexTypeFieldForName(type, complexTypes),
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
       isComplex,
-      isCollection: isCollection(p.Type)
+      isCollection
     };
   });
 }

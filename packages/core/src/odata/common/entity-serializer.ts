@@ -11,7 +11,9 @@ import {
   CollectionField,
   EntityBase,
   ComplexTypeNamespace,
-  isComplexTypeNameSpace
+  isComplexTypeNameSpace,
+  EdmTypeShared,
+  isEdmType
 } from '../common';
 
 const logger = createLogger({
@@ -96,11 +98,8 @@ export function entitySerializer(tsToEdm) {
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<
-    EntityT extends EntityBase,
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
-  >(
-    complexTypeField: ComplexTypeField<EntityT, ComplexTypeNamespaceT>,
+  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase>(
+    complexTypeField: ComplexTypeField<EntityT>,
     fieldValue: any
   ): any {
     logger.warn(
@@ -129,7 +128,7 @@ export function entitySerializer(tsToEdm) {
   }
 
   function serializeComplexType<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
+    ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(fieldValue: any, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
@@ -148,19 +147,16 @@ export function entitySerializer(tsToEdm) {
       );
   }
 
-  function serializeCollectionField<EntityT extends EntityBase>(
-    fieldValue: any[],
-    selectable: CollectionField<EntityT>
-  ) {
-    if (selectable._fieldType instanceof EdmTypeField) {
-      const edmType = selectable._fieldType.edmType;
-      return fieldValue.map(v => tsToEdm(v, edmType));
+  function serializeCollectionField<
+    EntityT extends EntityBase,
+    FieldT extends EdmTypeShared<'any'> | {}
+  >(fieldValue: any[], field: CollectionField<EntityT, FieldT>) {
+    const fieldType = field._fieldType;
+    if (isEdmType(fieldType)) {
+      return fieldValue.map(val => tsToEdm(val, fieldType));
     }
-    if (selectable._fieldType instanceof ComplexTypeField) {
-      const complexTypeField = selectable._fieldType;
-      return fieldValue.map(v =>
-        serializeComplexTypeFieldLegacy(complexTypeField, v)
-      );
+    if (isComplexTypeNameSpace(fieldType)) {
+      return fieldValue.map(val => serializeComplexType(val, fieldType));
     }
   }
 

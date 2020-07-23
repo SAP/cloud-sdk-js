@@ -131,12 +131,12 @@ export declare namespace NewComePeople {
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const EMAILS: CollectionField<NewComePeople>;
+    const EMAILS: CollectionField<NewComePeople, 'Edm.String'>;
     /**
      * Static representation of the [[addressInfo]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const ADDRESS_INFO: CollectionField<NewComePeople>;
+    const ADDRESS_INFO: CollectionField<NewComePeople, Location>;
     /**
      * Static representation of the [[homeAddress]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -145,7 +145,7 @@ export declare namespace NewComePeople {
     /**
      * All fields of the NewComePeople entity.
      */
-    const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople> | LocationField<NewComePeople>>;
+    const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, 'Edm.String'> | CollectionField<NewComePeople, Location> | LocationField<NewComePeople>>;
     /**
      * All fields selector.
      */

@@ -33,6 +33,7 @@ export function importDeclarations(
           responseTransformerFunctionName(returnType)
         ),
         ...edmRelatedImports(returnTypes),
+        ...complexTypeRelatedImports(returnTypes),
         'FunctionImportRequestBuilder',
         'FunctionImportParameter'
       ],
@@ -52,6 +53,16 @@ function edmRelatedImports(returnTypes: VdmFunctionImportReturnType[]) {
     : [];
 }
 
+function complexTypeRelatedImports(returnTypes: VdmFunctionImportReturnType[]) {
+  return returnTypes.some(
+    returnType =>
+      returnType.returnTypeCategory ===
+      VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE
+  )
+    ? ['deserializeComplexType']
+    : [];
+}
+
 function returnTypeImports(
   returnTypes: VdmFunctionImportReturnType[]
 ): ImportDeclarationStructure[] {
@@ -60,12 +71,9 @@ function returnTypeImports(
       .filter(
         returnType =>
           returnType.returnTypeCategory !==
-          VdmFunctionImportReturnTypeCategory.EDM_TYPE
-      )
-      .filter(
-        returnType =>
+            VdmFunctionImportReturnTypeCategory.EDM_TYPE &&
           returnType.returnTypeCategory !==
-          VdmFunctionImportReturnTypeCategory.VOID
+            VdmFunctionImportReturnTypeCategory.VOID
       )
       .map(returnType => returnTypeImport(returnType))
   );

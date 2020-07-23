@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { convertToUriFormat } from '../../src/odata/v4';
+import { convertToUriFormat, UpdateRequestBuilder } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -9,7 +9,6 @@ import {
 } from '../test-util/request-mocker';
 import { testEntityResourcePath } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v4/test-service';
-import { UpdateRequestBuilder } from '../../src/odata/v4/';
 
 function createTestEntity() {
   const keyPropGuid = uuid();

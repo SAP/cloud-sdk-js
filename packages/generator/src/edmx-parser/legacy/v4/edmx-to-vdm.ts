@@ -18,8 +18,8 @@ import {
   transformFunctionImportBase
 } from '../common/edmx-to-vdm';
 import {
-  isCollection,
-  stripNamespace
+  stripNamespace,
+  isCollectionType
 } from '../../../edmx-to-vdm/edmx-to-vdm-util';
 import { EdmxEntityType, EdmxEntitySet, EdmxMetadata } from './parser-types';
 
@@ -51,7 +51,7 @@ function navigationProperties(
       );
     }
 
-    const isCollectionType = isCollection(navProp.Type);
+    const isCollection = isCollectionType(navProp.Type);
 
     return {
       ...navigationPropertyBase(
@@ -62,9 +62,9 @@ function navigationProperties(
       from: entityMetadata.entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
-      multiplicity: isCollectionType ? '1 - *' : '1 - 1',
-      isMultiLink: isCollectionType,
-      isCollection: isCollectionType
+      multiplicity: isCollection ? '1 - *' : '1 - 1',
+      isMultiLink: isCollection,
+      isCollection
     };
   });
 }

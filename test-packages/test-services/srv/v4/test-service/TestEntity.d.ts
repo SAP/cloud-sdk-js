@@ -310,7 +310,7 @@ export declare namespace TestEntity {
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const COLLECTION_PROPERTY: CollectionField<TestEntity>;
+    const COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.String'>;
     /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -320,7 +320,7 @@ export declare namespace TestEntity {
      * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity>;
+    const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity, TestComplexType>;
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -339,7 +339,7 @@ export declare namespace TestEntity {
     /**
      * All fields of the TestEntity entity.
      */
-    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | CollectionField<TestEntity> | TestComplexTypeField<TestEntity> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
+    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
     /**
      * All fields selector.
      */

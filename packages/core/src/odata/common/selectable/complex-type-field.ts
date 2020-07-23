@@ -5,8 +5,8 @@ import { EdmTypeShared, isEdmType } from '../edm-types';
 import { Constructable, EntityBase } from '../entity';
 import { Field } from './field';
 import {
-  ComplexTypeNamespace,
-  isComplexTypeNameSpace
+  isComplexTypeNameSpace,
+  ComplexTypeNamespace
 } from './complex-type-namespace';
 
 /**
@@ -25,7 +25,7 @@ import {
  */
 export abstract class ComplexTypeField<
   EntityT extends EntityBase,
-  ComplexTypeNamespaceT extends ComplexTypeNamespace = any
+  ComplexT = any
 > extends Field<EntityT> {
   /**
    * @hidden
@@ -37,7 +37,7 @@ export abstract class ComplexTypeField<
   /**
    * The complex type of the complex type property represented by this.
    */
-  readonly _complexType: ComplexTypeNamespaceT;
+  readonly _complexType: ComplexTypeNamespace<ComplexT>;
 
   /**
    * Creates an instance of ComplexTypeField.
@@ -48,8 +48,8 @@ export abstract class ComplexTypeField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
-    complexType?: ComplexTypeNamespaceT
+    fieldOf: ConstructorOrField<EntityT, ComplexT>,
+    complexType?: ComplexTypeNamespace<ComplexT>
   );
 
   /**
@@ -76,8 +76,8 @@ export abstract class ComplexTypeField<
    */
   constructor(
     fieldName: string,
-    readonly fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
-    complexTypeOrName?: ComplexTypeNamespaceT | string
+    readonly fieldOf: ConstructorOrField<EntityT, ComplexT>,
+    complexTypeOrName?: ComplexTypeNamespace<ComplexT> | string
   ) {
     super(fieldName, getEntityConstructor(fieldOf));
     if (typeof complexTypeOrName === 'string') {
@@ -101,10 +101,9 @@ export abstract class ComplexTypeField<
 /**
  * Union type to represent the parent of a complex type field. This can either be an entity constructor or another complex type field.
  */
-export type ConstructorOrField<
-  EntityT extends EntityBase,
-  ComplexTypeNamespaceT extends ComplexTypeNamespace
-> = Constructable<EntityT> | ComplexTypeField<EntityT, ComplexTypeNamespaceT>;
+export type ConstructorOrField<EntityT extends EntityBase, ComplexT> =
+  | Constructable<EntityT>
+  | ComplexTypeField<EntityT, ComplexT>;
 
 /**
  * Convenience method to get the entity constructor of the parent of a complex type.
@@ -112,11 +111,8 @@ export type ConstructorOrField<
  * @param fieldOf - Either an entity constructor or another complex type field.
  * @returns The constructor of the transitive parent entity;
  */
-export function getEntityConstructor<
-  EntityT extends EntityBase,
-  ComplexTypeNamespaceT extends ComplexTypeNamespace
->(
-  fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>
+export function getEntityConstructor<EntityT extends EntityBase, ComplexT>(
+  fieldOf: ConstructorOrField<EntityT, ComplexT>
 ): Constructable<EntityT> {
   return fieldOf instanceof ComplexTypeField
     ? fieldOf._entityConstructor

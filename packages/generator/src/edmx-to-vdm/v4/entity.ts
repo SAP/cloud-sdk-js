@@ -18,7 +18,7 @@ import {
   parseEntityType
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { isCollection } from '../edmx-to-vdm-util';
+import { isCollectionType } from '../edmx-to-vdm-util';
 
 export function joinEntityTypes(
   entityType: EdmxEntityType,
@@ -84,16 +84,16 @@ function navigationProperties(
       );
     }
 
-    const isCollectionType = isCollection(navProp.Type);
+    const isCollection = isCollectionType(navProp.Type);
 
     return {
       ...navigationPropertyBase(navProp.Name, entitySet.Name, formatter),
       from: entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
-      multiplicity: isCollectionType ? '1 - *' : '1 - 1',
-      isMultiLink: isCollectionType,
-      isCollection: isCollectionType
+      multiplicity: isCollection ? '1 - *' : '1 - 1',
+      isMultiLink: isCollection,
+      isCollection
     };
   });
 }

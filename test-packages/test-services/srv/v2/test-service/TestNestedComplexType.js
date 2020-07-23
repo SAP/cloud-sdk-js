@@ -33,8 +33,14 @@ exports.createTestNestedComplexType = createTestNestedComplexType;
  */
 var TestNestedComplexTypeField = /** @class */ (function (_super) {
     __extends(TestNestedComplexTypeField, _super);
-    function TestNestedComplexTypeField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of TestNestedComplexTypeField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function TestNestedComplexTypeField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, TestNestedComplexType) || this;
         /**
          * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -52,11 +58,27 @@ var TestNestedComplexTypeField = /** @class */ (function (_super) {
 exports.TestNestedComplexTypeField = TestNestedComplexTypeField;
 var TestNestedComplexType;
 (function (TestNestedComplexType) {
+    /**
+     * Metadata information on all properties of the `TestNestedComplexType` complex type.
+     */
+    TestNestedComplexType._propertyMetadata = [{
+            originalName: 'StringProperty',
+            name: 'stringProperty',
+            type: 'Edm.String'
+        }, {
+            originalName: 'ComplexTypeProperty',
+            name: 'complexTypeProperty',
+            type: TestLvl2NestedComplexType_1.TestLvl2NestedComplexType
+        }];
+    /**
+     * Type reference to the according complex type.
+     */
+    TestNestedComplexType._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
-        return core_1.createComplexType(json, {
-            StringProperty: function (stringProperty) { return ({ stringProperty: core_1.edmToTs(stringProperty, 'Edm.String') }); },
-            ComplexTypeProperty: function (complexTypeProperty) { return ({ complexTypeProperty: TestLvl2NestedComplexType_1.TestLvl2NestedComplexType.build(complexTypeProperty) }); }
-        });
+        return core_1.deserializeComplexType(json, TestNestedComplexType);
     }
     TestNestedComplexType.build = build;
 })(TestNestedComplexType = exports.TestNestedComplexType || (exports.TestNestedComplexType = {}));

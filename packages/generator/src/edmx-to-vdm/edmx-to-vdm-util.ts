@@ -14,14 +14,16 @@ export function stripNamespace(name: string): string {
   return nameParts[nameParts.length - 1];
 }
 
-export function isCollection(typeName: string): boolean {
+export function isCollectionType(typeName: string): boolean {
   return collectionRegExp.test(typeName);
 }
 
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 export function parseTypeName(typeName: string): string {
-  return isCollection(typeName) ? parseCollectionTypeName(typeName) : typeName;
+  return isCollectionType(typeName)
+    ? parseCollectionTypeName(typeName)
+    : typeName;
 }
 
 function parseCollectionTypeName(typeName: string): string {

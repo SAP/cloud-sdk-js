@@ -6,7 +6,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, Entity, FieldType, Time, createComplexType, edmToTs } from '@sap-cloud-sdk/core';
+import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexType
@@ -105,7 +105,7 @@ export function createTestComplexType_1(json: any): TestComplexType {
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
+export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, TestComplexType> {
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -186,27 +186,96 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   complexTypeProperty: TestNestedComplexTypeField<EntityT> = new TestNestedComplexTypeField('ComplexTypeProperty', this);
+
+  /**
+   * Creates an instance of TestComplexTypeField.
+   *
+   * @param fieldName - Actual name of the field as used in the OData request.
+   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, TestComplexType>) {
+    super(fieldName, fieldOf, TestComplexType);
+  }
 }
 
 export namespace TestComplexType {
+  /**
+   * Metadata information on all properties of the `TestComplexType` complex type.
+   */
+  export const _propertyMetadata: PropertyMetadata[] = [{
+    originalName: 'StringProperty',
+    name: 'stringProperty',
+    type: 'Edm.String'
+  }, {
+    originalName: 'BooleanProperty',
+    name: 'booleanProperty',
+    type: 'Edm.Boolean'
+  }, {
+    originalName: 'GuidProperty',
+    name: 'guidProperty',
+    type: 'Edm.Guid'
+  }, {
+    originalName: 'Int16Property',
+    name: 'int16Property',
+    type: 'Edm.Int16'
+  }, {
+    originalName: 'Int32Property',
+    name: 'int32Property',
+    type: 'Edm.Int32'
+  }, {
+    originalName: 'Int64Property',
+    name: 'int64Property',
+    type: 'Edm.Int64'
+  }, {
+    originalName: 'DecimalProperty',
+    name: 'decimalProperty',
+    type: 'Edm.Decimal'
+  }, {
+    originalName: 'SingleProperty',
+    name: 'singleProperty',
+    type: 'Edm.Single'
+  }, {
+    originalName: 'DoubleProperty',
+    name: 'doubleProperty',
+    type: 'Edm.Double'
+  }, {
+    originalName: 'FloatProperty',
+    name: 'floatProperty',
+    type: 'Edm.Float'
+  }, {
+    originalName: 'TimeProperty',
+    name: 'timeProperty',
+    type: 'Edm.Time'
+  }, {
+    originalName: 'DateTimeProperty',
+    name: 'dateTimeProperty',
+    type: 'Edm.DateTime'
+  }, {
+    originalName: 'DateTimeOffSetProperty',
+    name: 'dateTimeOffSetProperty',
+    type: 'Edm.DateTimeOffset'
+  }, {
+    originalName: 'ByteProperty',
+    name: 'byteProperty',
+    type: 'Edm.Byte'
+  }, {
+    originalName: 'SByteProperty',
+    name: 'sByteProperty',
+    type: 'Edm.SByte'
+  }, {
+    originalName: 'ComplexTypeProperty',
+    name: 'complexTypeProperty',
+    type: TestNestedComplexType
+  }];
+  /**
+   * Type reference to the according complex type.
+   */
+  export const _complexType: TestComplexType = {};
+
+  /**
+   * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+   */
   export function build(json: { [keys: string]: FieldType | TestNestedComplexType }): TestComplexType {
-    return createComplexType(json, {
-      StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') }),
-      BooleanProperty: (booleanProperty: boolean) => ({ booleanProperty: edmToTs(booleanProperty, 'Edm.Boolean') }),
-      GuidProperty: (guidProperty: string) => ({ guidProperty: edmToTs(guidProperty, 'Edm.Guid') }),
-      Int16Property: (int16Property: number) => ({ int16Property: edmToTs(int16Property, 'Edm.Int16') }),
-      Int32Property: (int32Property: number) => ({ int32Property: edmToTs(int32Property, 'Edm.Int32') }),
-      Int64Property: (int64Property: BigNumber) => ({ int64Property: edmToTs(int64Property, 'Edm.Int64') }),
-      DecimalProperty: (decimalProperty: BigNumber) => ({ decimalProperty: edmToTs(decimalProperty, 'Edm.Decimal') }),
-      SingleProperty: (singleProperty: number) => ({ singleProperty: edmToTs(singleProperty, 'Edm.Single') }),
-      DoubleProperty: (doubleProperty: number) => ({ doubleProperty: edmToTs(doubleProperty, 'Edm.Double') }),
-      FloatProperty: (floatProperty: number) => ({ floatProperty: edmToTs(floatProperty, 'Edm.Float') }),
-      TimeProperty: (timeProperty: Time) => ({ timeProperty: edmToTs(timeProperty, 'Edm.Time') }),
-      DateTimeProperty: (dateTimeProperty: Moment) => ({ dateTimeProperty: edmToTs(dateTimeProperty, 'Edm.DateTime') }),
-      DateTimeOffSetProperty: (dateTimeOffSetProperty: Moment) => ({ dateTimeOffSetProperty: edmToTs(dateTimeOffSetProperty, 'Edm.DateTimeOffset') }),
-      ByteProperty: (byteProperty: number) => ({ byteProperty: edmToTs(byteProperty, 'Edm.Byte') }),
-      SByteProperty: (sByteProperty: number) => ({ sByteProperty: edmToTs(sByteProperty, 'Edm.SByte') }),
-      ComplexTypeProperty: (complexTypeProperty: TestNestedComplexType) => ({ complexTypeProperty: TestNestedComplexType.build(complexTypeProperty) })
-    });
+    return deserializeComplexType(json, TestComplexType);
   }
 }

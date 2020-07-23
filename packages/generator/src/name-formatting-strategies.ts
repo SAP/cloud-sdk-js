@@ -33,21 +33,27 @@ const applyPrefixOnJSReservedWords = (prefix: string) => (
   reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
 
 /**
- * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it.
- * Use [[UniqueNameFinder]] instead.
+ * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameFinder]] instead.
  */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
 
 /**
- * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it.
- *  * Use [[UniqueNameFinder]] instead.
+ * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameFinder]] instead.
  */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
 
-export const applyPrefixOnJsConfictParam = applyPrefixOnJSReservedWords('p');
-export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJSReservedWords(
+export const applyPrefixOnJsConflictParam = applyPrefixOnJSReservedWords('p');
+/**
+ * @deprecated  Since v1.25.0. Use [[applyPrefixOnJsConflictParam]] instead.
+ */
+export const applyPrefixOnJsConfictParam = applyPrefixOnJsConflictParam;
+export const applyPrefixOnJsConflictFunctionImports = applyPrefixOnJSReservedWords(
   'f'
 );
+/**
+ * @deprecated  Since v1.25.0. Use [[applyPrefixOnJsConflictFunctionImports]] instead.
+ */
+export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJsConflictFunctionImports;
 
 function nextSuffix(name: string, previouslyGeneratedNames: string[]): number {
   const sortedList = sortByIntegerSuffix(

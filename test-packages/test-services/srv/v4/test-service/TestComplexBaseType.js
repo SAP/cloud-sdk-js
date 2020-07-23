@@ -32,8 +32,14 @@ exports.createTestComplexBaseType = createTestComplexBaseType;
  */
 var TestComplexBaseTypeField = /** @class */ (function (_super) {
     __extends(TestComplexBaseTypeField, _super);
-    function TestComplexBaseTypeField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of TestComplexBaseTypeField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function TestComplexBaseTypeField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, TestComplexBaseType) || this;
         /**
          * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -46,10 +52,23 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
 exports.TestComplexBaseTypeField = TestComplexBaseTypeField;
 var TestComplexBaseType;
 (function (TestComplexBaseType) {
+    /**
+     * Metadata information on all properties of the `TestComplexBaseType` complex type.
+     */
+    TestComplexBaseType._propertyMetadata = [{
+            originalName: 'BaseStringProperty',
+            name: 'baseStringProperty',
+            type: 'Edm.String'
+        }];
+    /**
+     * Type reference to the according complex type.
+     */
+    TestComplexBaseType._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
-        return v4_1.createComplexType(json, {
-            BaseStringProperty: function (baseStringProperty) { return ({ baseStringProperty: v4_1.edmToTs(baseStringProperty, 'Edm.String') }); }
-        });
+        return v4_1.deserializeComplexType(json, TestComplexBaseType);
     }
     TestComplexBaseType.build = build;
 })(TestComplexBaseType = exports.TestComplexBaseType || (exports.TestComplexBaseType = {}));

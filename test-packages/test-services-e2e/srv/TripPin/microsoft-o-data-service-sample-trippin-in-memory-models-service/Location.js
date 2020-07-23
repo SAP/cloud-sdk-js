@@ -33,8 +33,14 @@ exports.createLocation = createLocation;
  */
 var LocationField = /** @class */ (function (_super) {
     __extends(LocationField, _super);
-    function LocationField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of LocationField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function LocationField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, Location) || this;
         /**
          * Representation of the [[Location.address]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -52,11 +58,27 @@ var LocationField = /** @class */ (function (_super) {
 exports.LocationField = LocationField;
 var Location;
 (function (Location) {
+    /**
+     * Metadata information on all properties of the `Location` complex type.
+     */
+    Location._propertyMetadata = [{
+            originalName: 'Address',
+            name: 'address',
+            type: 'Edm.String'
+        }, {
+            originalName: 'City',
+            name: 'city',
+            type: City_1.City
+        }];
+    /**
+     * Type reference to the according complex type.
+     */
+    Location._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
-        return v4_1.createComplexType(json, {
-            Address: function (address) { return ({ address: v4_1.edmToTs(address, 'Edm.String') }); },
-            City: function (city) { return ({ city: City_1.City.build(city) }); }
-        });
+        return v4_1.deserializeComplexType(json, Location);
     }
     Location.build = build;
 })(Location = exports.Location || (exports.Location = {}));

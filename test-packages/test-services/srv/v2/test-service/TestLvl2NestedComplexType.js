@@ -32,8 +32,14 @@ exports.createTestLvl2NestedComplexType = createTestLvl2NestedComplexType;
  */
 var TestLvl2NestedComplexTypeField = /** @class */ (function (_super) {
     __extends(TestLvl2NestedComplexTypeField, _super);
-    function TestLvl2NestedComplexTypeField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of TestLvl2NestedComplexTypeField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function TestLvl2NestedComplexTypeField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, TestLvl2NestedComplexType) || this;
         /**
          * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -46,10 +52,23 @@ var TestLvl2NestedComplexTypeField = /** @class */ (function (_super) {
 exports.TestLvl2NestedComplexTypeField = TestLvl2NestedComplexTypeField;
 var TestLvl2NestedComplexType;
 (function (TestLvl2NestedComplexType) {
+    /**
+     * Metadata information on all properties of the `TestLvl2NestedComplexType` complex type.
+     */
+    TestLvl2NestedComplexType._propertyMetadata = [{
+            originalName: 'StringProperty',
+            name: 'stringProperty',
+            type: 'Edm.String'
+        }];
+    /**
+     * Type reference to the according complex type.
+     */
+    TestLvl2NestedComplexType._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
-        return core_1.createComplexType(json, {
-            StringProperty: function (stringProperty) { return ({ stringProperty: core_1.edmToTs(stringProperty, 'Edm.String') }); }
-        });
+        return core_1.deserializeComplexType(json, TestLvl2NestedComplexType);
     }
     TestLvl2NestedComplexType.build = build;
 })(TestLvl2NestedComplexType = exports.TestLvl2NestedComplexType || (exports.TestLvl2NestedComplexType = {}));

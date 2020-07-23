@@ -17,10 +17,28 @@ export function fieldTypeClass(
   return {
     kind: StructureKind.Class,
     name: `${complexType.fieldType}<EntityT extends Entity>`,
-    extends: 'ComplexTypeField<EntityT>',
+    extends: `ComplexTypeField<EntityT, ${complexType.typeName}>`,
     isExported: true,
     properties: properties(complexType),
-    docs: [getComplexTypeFieldDescription(complexType)]
+    docs: [getComplexTypeFieldDescription(complexType)],
+    ctors: [
+      {
+        parameters: [
+          {
+            name: 'fieldName',
+            type: 'string'
+          },
+          {
+            name: 'fieldOf',
+            type: `ConstructorOrField<EntityT, ${complexType.typeName}>`
+          }
+        ],
+        docs: [
+          `\nCreates an instance of ${complexType.fieldType}.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
+        ],
+        statements: [`super(fieldName, fieldOf, ${complexType.typeName});`]
+      }
+    ]
   };
 }
 

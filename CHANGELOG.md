@@ -26,6 +26,7 @@ The old API is obsolete due to a refactoring (see below) but remains available w
 ## Improvements
 
 - Improve complex type handling and its representation in the generated OData clients.
+- Improve collection type handling and its representation in the generated OData clients.
 - _OData client generator_: Refactor the service generation flow and deprecate the whole previous implementation.  
 
 ## Fixed Issues

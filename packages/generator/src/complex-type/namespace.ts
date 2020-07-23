@@ -3,10 +3,12 @@
 import {
   FunctionDeclarationStructure,
   NamespaceDeclarationStructure,
-  StructureKind
+  StructureKind,
+  VariableDeclarationKind,
+  VariableStatementStructure
 } from 'ts-morph';
 import { unique } from '@sap-cloud-sdk/util';
-import { VdmComplexType, VdmProperty } from '../vdm-types';
+import { VdmComplexType } from '../vdm-types';
 
 export function complexTypeNamespace(
   complexType: VdmComplexType
@@ -15,7 +17,11 @@ export function complexTypeNamespace(
     kind: StructureKind.Namespace,
     name: complexType.typeName,
     isExported: true,
-    statements: [factoryFunction(complexType)]
+    statements: [
+      propertyMetadata(complexType),
+      complexTypeDeclaration(complexType),
+      factoryFunction(complexType)
+    ]
   };
 }
 
@@ -27,9 +33,11 @@ function factoryFunction(
     name: 'build',
     returnType: complexType.typeName,
     parameters: [{ name: 'json', type: getJsonType(complexType) }],
-    statements:
-      'return createComplexType(json, ' + getConverter(complexType) + ');',
-    isExported: true
+    statements: `return deserializeComplexType(json, ${complexType.typeName});`,
+    isExported: true,
+    docs: [
+      '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+    ]
   };
 }
 
@@ -46,24 +54,53 @@ function getJsonType(complexType: VdmComplexType): string {
   return `{ [keys: string]: ${unionOfAllTypes} }`;
 }
 
-function getConverter(complexType: VdmComplexType): string {
-  return (
-    complexType.properties.reduce((converter, currentProperty) => {
-      if (converter !== '{\n') {
-        converter += ',\n';
-      }
-      converter += `${currentProperty.originalName}: (${
-        currentProperty.instancePropertyName
-      }: ${currentProperty.jsType}) => ({ ${
-        currentProperty.instancePropertyName
-      }: ${getConverterFunction(currentProperty)} })`;
-      return converter;
-    }, '{\n') + '\n}'
-  );
+function getPropertyMetadataInitializer(complexType: VdmComplexType): string {
+  return `[${complexType.properties
+    .map(
+      property =>
+        `{
+        originalName: '${property.originalName}',
+        name: '${property.instancePropertyName}',
+        type: ${property.isComplex ? property.jsType : `'${property.edmType}'`}
+      }`
+    )
+    .join(', ')}]`;
 }
 
-function getConverterFunction(property: VdmProperty): string {
-  return property.isComplex
-    ? `${property.jsType}.build(${property.instancePropertyName})`
-    : `edmToTs(${property.instancePropertyName}, '${property.edmType}')`;
+function propertyMetadata(
+  complexType: VdmComplexType
+): VariableStatementStructure {
+  return {
+    kind: StructureKind.VariableStatement,
+    declarationKind: VariableDeclarationKind.Const,
+    declarations: [
+      {
+        name: '_propertyMetadata',
+        initializer: getPropertyMetadataInitializer(complexType),
+        type: 'PropertyMetadata[]'
+      }
+    ],
+    docs: [
+      `\nMetadata information on all properties of the \`${complexType.typeName}\` complex type.`
+    ],
+    isExported: true
+  };
+}
+
+function complexTypeDeclaration(
+  complexType: VdmComplexType
+): VariableStatementStructure {
+  return {
+    kind: StructureKind.VariableStatement,
+    declarationKind: VariableDeclarationKind.Const,
+    declarations: [
+      {
+        name: '_complexType',
+        initializer: '{}',
+        type: complexType.typeName
+      }
+    ],
+    docs: ['\nType reference to the according complex type.'],
+    isExported: true
+  };
 }

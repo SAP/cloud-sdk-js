@@ -24,7 +24,7 @@ describe('edmx-to-vdm-v4', () => {
       isCollection: true,
       edmType: 'Edm.String',
       jsType: 'string',
-      fieldType: 'StringField'
+      fieldType: 'CollectionField'
     });
   });
 
@@ -47,7 +47,7 @@ describe('edmx-to-vdm-v4', () => {
       isComplex: true,
       edmType: 'namespace.TestComplexType',
       jsType: 'TestComplexType',
-      fieldType: 'TestComplexTypeField'
+      fieldType: 'CollectionField'
     });
   });
 
@@ -133,7 +133,7 @@ describe('edmx-to-vdm-v4', () => {
       isCollection: true,
       edmType: 'Edm.String',
       jsType: 'string',
-      fieldType: 'StringField'
+      fieldType: 'CollectionField'
     });
   });
 });

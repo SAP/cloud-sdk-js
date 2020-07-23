@@ -28,8 +28,14 @@ exports.createTestComplexType = createTestComplexType;
  */
 var TestComplexTypeField = /** @class */ (function (_super) {
     __extends(TestComplexTypeField, _super);
-    function TestComplexTypeField() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Creates an instance of TestComplexTypeField.
+     *
+     * @param fieldName - Actual name of the field as used in the OData request.
+     * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+     */
+    function TestComplexTypeField(fieldName, fieldOf) {
+        var _this = _super.call(this, fieldName, fieldOf, TestComplexType) || this;
         /**
          * Representation of the [[TestComplexType.stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -122,26 +128,87 @@ var TestComplexTypeField = /** @class */ (function (_super) {
 exports.TestComplexTypeField = TestComplexTypeField;
 var TestComplexType;
 (function (TestComplexType) {
+    /**
+     * Metadata information on all properties of the `TestComplexType` complex type.
+     */
+    TestComplexType._propertyMetadata = [{
+            originalName: 'StringProperty',
+            name: 'stringProperty',
+            type: 'Edm.String'
+        }, {
+            originalName: 'BooleanProperty',
+            name: 'booleanProperty',
+            type: 'Edm.Boolean'
+        }, {
+            originalName: 'GuidProperty',
+            name: 'guidProperty',
+            type: 'Edm.Guid'
+        }, {
+            originalName: 'Int16Property',
+            name: 'int16Property',
+            type: 'Edm.Int16'
+        }, {
+            originalName: 'Int32Property',
+            name: 'int32Property',
+            type: 'Edm.Int32'
+        }, {
+            originalName: 'Int64Property',
+            name: 'int64Property',
+            type: 'Edm.Int64'
+        }, {
+            originalName: 'DecimalProperty',
+            name: 'decimalProperty',
+            type: 'Edm.Decimal'
+        }, {
+            originalName: 'SingleProperty',
+            name: 'singleProperty',
+            type: 'Edm.Single'
+        }, {
+            originalName: 'DoubleProperty',
+            name: 'doubleProperty',
+            type: 'Edm.Double'
+        }, {
+            originalName: 'FloatProperty',
+            name: 'floatProperty',
+            type: 'Edm.Float'
+        }, {
+            originalName: 'TimeProperty',
+            name: 'timeProperty',
+            type: 'Edm.Time'
+        }, {
+            originalName: 'DateTimeProperty',
+            name: 'dateTimeProperty',
+            type: 'Edm.DateTime'
+        }, {
+            originalName: 'DateTimeOffSetProperty',
+            name: 'dateTimeOffSetProperty',
+            type: 'Edm.DateTimeOffset'
+        }, {
+            originalName: 'ByteProperty',
+            name: 'byteProperty',
+            type: 'Edm.Byte'
+        }, {
+            originalName: 'SByteProperty',
+            name: 'sByteProperty',
+            type: 'Edm.SByte'
+        }, {
+            originalName: 'ComplexTypeProperty',
+            name: 'complexTypeProperty',
+            type: TestNestedComplexType_1.TestNestedComplexType
+        }, {
+            originalName: 'BaseStringProperty',
+            name: 'baseStringProperty',
+            type: 'Edm.String'
+        }];
+    /**
+     * Type reference to the according complex type.
+     */
+    TestComplexType._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
-        return v4_1.createComplexType(json, {
-            StringProperty: function (stringProperty) { return ({ stringProperty: v4_1.edmToTs(stringProperty, 'Edm.String') }); },
-            BooleanProperty: function (booleanProperty) { return ({ booleanProperty: v4_1.edmToTs(booleanProperty, 'Edm.Boolean') }); },
-            GuidProperty: function (guidProperty) { return ({ guidProperty: v4_1.edmToTs(guidProperty, 'Edm.Guid') }); },
-            Int16Property: function (int16Property) { return ({ int16Property: v4_1.edmToTs(int16Property, 'Edm.Int16') }); },
-            Int32Property: function (int32Property) { return ({ int32Property: v4_1.edmToTs(int32Property, 'Edm.Int32') }); },
-            Int64Property: function (int64Property) { return ({ int64Property: v4_1.edmToTs(int64Property, 'Edm.Int64') }); },
-            DecimalProperty: function (decimalProperty) { return ({ decimalProperty: v4_1.edmToTs(decimalProperty, 'Edm.Decimal') }); },
-            SingleProperty: function (singleProperty) { return ({ singleProperty: v4_1.edmToTs(singleProperty, 'Edm.Single') }); },
-            DoubleProperty: function (doubleProperty) { return ({ doubleProperty: v4_1.edmToTs(doubleProperty, 'Edm.Double') }); },
-            FloatProperty: function (floatProperty) { return ({ floatProperty: v4_1.edmToTs(floatProperty, 'Edm.Float') }); },
-            TimeProperty: function (timeProperty) { return ({ timeProperty: v4_1.edmToTs(timeProperty, 'Edm.Time') }); },
-            DateTimeProperty: function (dateTimeProperty) { return ({ dateTimeProperty: v4_1.edmToTs(dateTimeProperty, 'Edm.DateTime') }); },
-            DateTimeOffSetProperty: function (dateTimeOffSetProperty) { return ({ dateTimeOffSetProperty: v4_1.edmToTs(dateTimeOffSetProperty, 'Edm.DateTimeOffset') }); },
-            ByteProperty: function (byteProperty) { return ({ byteProperty: v4_1.edmToTs(byteProperty, 'Edm.Byte') }); },
-            SByteProperty: function (sByteProperty) { return ({ sByteProperty: v4_1.edmToTs(sByteProperty, 'Edm.SByte') }); },
-            ComplexTypeProperty: function (complexTypeProperty) { return ({ complexTypeProperty: TestNestedComplexType_1.TestNestedComplexType.build(complexTypeProperty) }); },
-            BaseStringProperty: function (baseStringProperty) { return ({ baseStringProperty: v4_1.edmToTs(baseStringProperty, 'Edm.String') }); }
-        });
+        return v4_1.deserializeComplexType(json, TestComplexType);
     }
     TestComplexType.build = build;
 })(TestComplexType = exports.TestComplexType || (exports.TestComplexType = {}));

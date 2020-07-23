@@ -182,7 +182,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.COLLECTION_PROPERTY = new v4_1.CollectionField('CollectionProperty', TestEntity, new v4_1.StringField('', TestEntity, 'Edm.String'));
+    TestEntity.COLLECTION_PROPERTY = new v4_1.CollectionField('CollectionProperty', TestEntity, 'Edm.String');
     /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -192,7 +192,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY = new v4_1.CollectionField('ComplexTypeCollectionProperty', TestEntity, new TestComplexType_1.TestComplexTypeField('', TestEntity));
+    TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY = new v4_1.CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType_1.TestComplexType);
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.

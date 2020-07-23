@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType, createComplexType, edmToTs } from '../../../../../src/v4';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '../../../../../src/v4';
 
 /**
  * TestComplexBaseType
@@ -27,18 +27,42 @@ export function createTestComplexBaseType(json: any): TestComplexBaseType {
  * TestComplexBaseTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexBaseTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
+export class TestComplexBaseTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, TestComplexBaseType> {
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   baseStringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('BaseStringProperty', this, 'Edm.String');
+
+  /**
+   * Creates an instance of TestComplexBaseTypeField.
+   *
+   * @param fieldName - Actual name of the field as used in the OData request.
+   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, TestComplexBaseType>) {
+    super(fieldName, fieldOf, TestComplexBaseType);
+  }
 }
 
 export namespace TestComplexBaseType {
+  /**
+   * Metadata information on all properties of the `TestComplexBaseType` complex type.
+   */
+  export const _propertyMetadata: PropertyMetadata[] = [{
+    originalName: 'BaseStringProperty',
+    name: 'baseStringProperty',
+    type: 'Edm.String'
+  }];
+  /**
+   * Type reference to the according complex type.
+   */
+  export const _complexType: TestComplexBaseType = {};
+
+  /**
+   * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+   */
   export function build(json: { [keys: string]: FieldType }): TestComplexBaseType {
-    return createComplexType(json, {
-      BaseStringProperty: (baseStringProperty: string) => ({ baseStringProperty: edmToTs(baseStringProperty, 'Edm.String') })
-    });
+    return deserializeComplexType(json, TestComplexBaseType);
   }
 }

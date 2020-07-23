@@ -10,7 +10,6 @@ import {
   getEntityConstructor
 } from './complex-type-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
-import { ComplexTypeNamespace } from './complex-type-namespace';
 
 /**
  * Represents a property with a string value.
@@ -40,12 +39,12 @@ export class StringField<EntityT extends EntityBase>
  */
 export class ComplexTypeStringPropertyField<
   EntityT extends EntityBase,
-  ComplexTypeNamespaceT extends ComplexTypeNamespace = any
+  ComplexT = any
 > extends StringFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
-  readonly fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>;
+  readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
    * Creates an instance of ComplexTypeBigNumberPropertyField.
@@ -56,7 +55,7 @@ export class ComplexTypeStringPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
+    fieldOf: ConstructorOrField<EntityT, ComplexT>,
     edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 
@@ -82,7 +81,7 @@ export class ComplexTypeStringPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexTypeNamespaceT>,
+    fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
     arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {

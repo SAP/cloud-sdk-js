@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { StructureKind } from 'ts-morph';
+import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import { complexTypeNamespace } from '../../src/complex-type/namespace';
 import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
 
@@ -12,6 +12,42 @@ describe('namespace', () => {
       isExported: true,
       statements: [
         {
+          kind: StructureKind.VariableStatement,
+          declarationKind: VariableDeclarationKind.Const,
+          declarations: [
+            {
+              name: '_propertyMetadata',
+              initializer: `[{
+        originalName: 'Complexity',
+        name: 'complexity',
+        type: 'Edm.String'
+      }, {
+        originalName: 'Amount',
+        name: 'amount',
+        type: 'Edm.Int16'
+      }]`,
+              type: 'PropertyMetadata[]'
+            }
+          ],
+          docs: [
+            '\nMetadata information on all properties of the `ComplexMealType` complex type.'
+          ],
+          isExported: true
+        },
+        {
+          kind: StructureKind.VariableStatement,
+          declarationKind: VariableDeclarationKind.Const,
+          declarations: [
+            {
+              name: '_complexType',
+              initializer: '{}',
+              type: 'ComplexMealType'
+            }
+          ],
+          docs: ['\nType reference to the according complex type.'],
+          isExported: true
+        },
+        {
           kind: StructureKind.Function,
           name: 'build',
           returnType: 'ComplexMealType',
@@ -21,9 +57,11 @@ describe('namespace', () => {
               type: '{ [keys: string]: FieldType }'
             }
           ],
-          statements:
-            "return createComplexType(json, {\nComplexity: (complexity: string) => ({ complexity: edmToTs(complexity, 'Edm.String') }),\nAmount: (amount: number) => ({ amount: edmToTs(amount, 'Edm.Int16') })\n});",
-          isExported: true
+          statements: 'return deserializeComplexType(json, ComplexMealType);',
+          isExported: true,
+          docs: [
+            '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+          ]
         }
       ]
     });
@@ -37,6 +75,42 @@ describe('namespace', () => {
       isExported: true,
       statements: [
         {
+          kind: StructureKind.VariableStatement,
+          declarationKind: VariableDeclarationKind.Const,
+          declarations: [
+            {
+              name: '_propertyMetadata',
+              initializer: `[{
+        originalName: 'ComplexDesert',
+        name: 'complexDesert',
+        type: ComplexDesert
+      }, {
+        originalName: 'Amount',
+        name: 'amount',
+        type: 'Edm.Int16'
+      }]`,
+              type: 'PropertyMetadata[]'
+            }
+          ],
+          docs: [
+            '\nMetadata information on all properties of the `ComplexMealWithDesertType` complex type.'
+          ],
+          isExported: true
+        },
+        {
+          kind: StructureKind.VariableStatement,
+          declarationKind: VariableDeclarationKind.Const,
+          declarations: [
+            {
+              name: '_complexType',
+              initializer: '{}',
+              type: 'ComplexMealWithDesertType'
+            }
+          ],
+          docs: ['\nType reference to the according complex type.'],
+          isExported: true
+        },
+        {
           kind: StructureKind.Function,
           name: 'build',
           returnType: 'ComplexMealWithDesertType',
@@ -47,8 +121,11 @@ describe('namespace', () => {
             }
           ],
           statements:
-            "return createComplexType(json, {\nComplexDesert: (complexDesert: ComplexDesert) => ({ complexDesert: ComplexDesert.build(complexDesert) }),\nAmount: (amount: number) => ({ amount: edmToTs(amount, 'Edm.Int16') })\n});",
-          isExported: true
+            'return deserializeComplexType(json, ComplexMealWithDesertType);',
+          isExported: true,
+          docs: [
+            '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+          ]
         }
       ]
     });

@@ -43,6 +43,32 @@ export function entitySerializer(tsToEdm) {
     };
   }
 
+  function serializeField(field: any, fieldValue: any): any {
+    if (fieldValue === null || fieldValue === undefined) {
+      return null;
+    }
+    if (field instanceof EdmTypeField) {
+      return tsToEdm(fieldValue, field.edmType);
+    }
+    if (field instanceof OneToOneLink) {
+      return serializeEntityNonCustomFields(fieldValue, field._linkedEntity);
+    }
+    if (field instanceof Link) {
+      return fieldValue.map(linkedEntity =>
+        serializeEntityNonCustomFields(linkedEntity, field._linkedEntity)
+      );
+    }
+    if (field instanceof ComplexTypeField) {
+      if (field._complexType) {
+        return serializeComplexType(fieldValue, field._complexType);
+      }
+      return serializeComplexTypeFieldLegacy(field, fieldValue);
+    }
+    if (field instanceof CollectionField) {
+      return serializeCollectionField(fieldValue, field);
+    }
+  }
+
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service, ignoring custom fields.
    *
@@ -61,39 +87,16 @@ export function entitySerializer(tsToEdm) {
       const field = entityConstructor[toStaticPropertyFormat(key)];
       const fieldValue = entity[key];
 
-      if (fieldValue === null || fieldValue === undefined) {
-        serialized[field._fieldName] = null;
-      } else if (field instanceof EdmTypeField) {
-        serialized[field._fieldName] = tsToEdm(fieldValue, field.edmType);
-      } else if (field instanceof OneToOneLink) {
-        serialized[field._fieldName] = serializeEntityNonCustomFields(
-          fieldValue,
-          field._linkedEntity
+      const serializedValue = serializeField(field, fieldValue);
+
+      if (typeof serializedValue === 'undefined') {
+        logger.warn(
+          `Could not serialize value for unknown field: ${field}. Skipping field.`
         );
-      } else if (field instanceof Link) {
-        serialized[field._fieldName] = fieldValue.map(linkedEntity =>
-          serializeEntityNonCustomFields(linkedEntity, field._linkedEntity)
-        );
-      } else if (field instanceof ComplexTypeField) {
-        if (field._complexType) {
-          serialized[field._fieldName] = serializeComplexType(
-            fieldValue,
-            field._complexType
-          );
-        } else {
-          serialized[field._fieldName] = serializeComplexTypeFieldLegacy(
-            field,
-            fieldValue
-          );
-        }
-      } else if (field instanceof CollectionField) {
-        serialized[field._fieldName] = serializeCollectionField(
-          fieldValue,
-          field
-        );
+        return serialized;
       }
 
-      return serialized;
+      return { ...serialized, [field._fieldName]: serializedValue };
     }, {});
   }
 

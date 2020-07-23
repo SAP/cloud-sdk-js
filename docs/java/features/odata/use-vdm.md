@@ -288,13 +288,16 @@ To achieve a different order with `and` as the top level statement one would nes
     .or(BusinessPartner.FIRST_NAME.equalTo("Mallory"))
 )
 ```
+
 </TabItem>
 <TabItem value="v2">
+
 ```java
 .and(BusinessPartner.LAST_NAME.ne("Bob")
     .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
 )
 ```
+
 </TabItem>
 </Tabs>
 

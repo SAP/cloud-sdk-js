@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
+import nock = require('nock');
 import {
   audiences,
   retrieveJwt,
@@ -8,7 +9,6 @@ import {
   verifyJwt
 } from '../../src';
 import { publicKey, signedJwtForVerification } from '../test-util/keys';
-import nock = require('nock');
 
 const jwtPayload = {
   sub: '1234567890',

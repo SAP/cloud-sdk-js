@@ -50,17 +50,11 @@ function getFieldInitializer(
   prop: VdmProperty,
   entityClassName: string
 ): OptionalKind<VariableDeclarationStructure> {
-  const type = prop.isComplex
-    ? prop.jsType
-    : `'${
-        prop.edmType.startsWith('Edm')
-          ? prop.edmType
-          : prop.edmType.split('.').pop()
-      }'`;
+  const type = prop.isComplex ? prop.jsType : `'${prop.edmType}'`;
 
   const className = prop.fieldType;
   const genericParameters = getGenericParameters(entityClassName, prop);
-  const thirdParameter =
+  const collectionTypeParameter =
     prop.isComplex && !prop.isCollection ? undefined : type;
 
   return {
@@ -70,7 +64,7 @@ function getFieldInitializer(
       className,
       prop.originalName,
       entityClassName,
-      thirdParameter
+      collectionTypeParameter
     )
   };
 }

@@ -120,6 +120,7 @@ partner = service.getBusinessPartnerByKey("id")
                  .execute(destination);
 response = service.updateBusinessPartner(partner)
                  .execute(destination);
+// update the partner reference
 partner = response.getModifiedEntity();
 ```
 
@@ -131,6 +132,7 @@ partner = service.getBusinessPartnerByKey("id")
                  .execute(destination);
 service.updateBusinessPartner(partner)
                  .execute(destination);
+// the partner object is updated automatically
 ```
 
 </TabItem>

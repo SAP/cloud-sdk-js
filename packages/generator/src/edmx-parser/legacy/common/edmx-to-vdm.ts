@@ -25,7 +25,7 @@ import {
   edmToComplexPropertyType,
   isNullableParameter
 } from '../../../generator-utils';
-import { applyPrefixOnJsConfictParam as applyPrefixOnJsConflictParam } from '../../../name-formatting-strategies';
+import { applyPrefixOnJsConflictParam } from '../../../name-formatting-strategies';
 import {
   isCollectionType,
   parseTypeName

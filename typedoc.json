@@ -1,6 +1,6 @@
 {
   "mode": "modules",
-  "out": "docs/api/1.24.1",
+  "out": "docs/api/1.25.0",
   "exclude": [
     "**/index.ts",
     "scripts/*.ts",

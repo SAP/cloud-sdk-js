@@ -109,7 +109,7 @@ export function createEntityClassNames(
  */
 export function transformEntity(
   entityMetadata: JoinedEntityMetadata,
-  classNames: {},
+  classNames: Record<string, any>,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): Omit<VdmEntity, 'navigationProperties'> {

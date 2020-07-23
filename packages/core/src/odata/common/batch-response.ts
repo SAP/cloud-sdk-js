@@ -11,13 +11,13 @@ export interface WriteResponses {
 
 export interface ErrorResponse {
   httpCode: number;
-  body: object;
+  body: Record<string, any>;
   isSuccess: () => boolean;
 }
 
 export interface ReadResponse {
   httpCode: number;
-  body: object;
+  body: Record<string, any>;
   type: Constructable<EntityBase>;
   as: <T extends EntityBase>(constructor: Constructable<T>) => T[];
   isSuccess: () => boolean;
@@ -25,7 +25,7 @@ export interface ReadResponse {
 
 export interface WriteResponse {
   httpCode: number;
-  body?: object;
+  body?: Record<string, any>;
   type?: Constructable<EntityBase>;
   as?: <T extends EntityBase>(constructor: Constructable<T>) => T;
 }

@@ -422,15 +422,15 @@ export function parseReturnType(
       isCollection: false
     };
   }
-  const isCollectionReturnType = isCollectionType(returnType);
+  const isCollection = isCollectionType(returnType);
   returnType = parseTypeName(returnType);
   if (returnType.startsWith('Edm.')) {
     return {
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
       returnType: propertyJsType(returnType)!,
       builderFunction: `(val) => edmToTs(val, '${returnType}')`,
-      isMulti: isCollectionReturnType,
-      isCollection: isCollectionReturnType
+      isMulti: isCollection,
+      isCollection
     };
   }
   const parsedReturnType = returnType.split('.').slice(-1)[0];
@@ -440,8 +440,8 @@ export function parseReturnType(
       returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
       returnType: entity.className,
       builderFunction: entity.className,
-      isMulti: isCollectionReturnType,
-      isCollection: isCollectionReturnType
+      isMulti: isCollection,
+      isCollection
     };
   }
   const complexType = complexTypes.find(
@@ -454,8 +454,8 @@ export function parseReturnType(
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
     builderFunction: `${complexType.typeName}.build`,
-    isMulti: isCollectionReturnType,
-    isCollection: isCollectionReturnType
+    isMulti: isCollection,
+    isCollection
   };
 }
 

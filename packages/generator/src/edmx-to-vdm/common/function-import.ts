@@ -80,20 +80,20 @@ export function parseReturnTypes(
     return getVoidReturnType();
   }
 
-  const isCollectionReturnType = isCollectionType(returnType);
+  const isCollection = isCollectionType(returnType);
   const edmType = findEdmType(returnType);
   if (edmType) {
-    return getEdmReturnType(isCollectionReturnType, edmType);
+    return getEdmReturnType(isCollection, edmType);
   }
 
   const entity = findEntityType(returnType, entities);
   if (entity) {
-    return getEntityReturnType(isCollectionReturnType, entity);
+    return getEntityReturnType(isCollection, entity);
   }
 
   const complexType = findComplexType(returnType, complexTypes);
   if (complexType) {
-    return getComplexReturnType(isCollectionReturnType, complexType);
+    return getComplexReturnType(isCollection, complexType);
   }
 
   throw Error(`Unable to find a return type for name ${returnType}.`);
@@ -135,40 +135,40 @@ function getVoidReturnType(): VdmFunctionImportReturnType {
 }
 
 function getEdmReturnType(
-  isCollectionReturnType: boolean,
+  isCollection: boolean,
   edmType: string
 ): VdmFunctionImportReturnType {
   return {
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
     returnType: propertyJsType(edmType)!,
     builderFunction: `(val) => edmToTs(val, '${edmType}')`,
-    isMulti: isCollectionReturnType,
-    isCollection: isCollectionReturnType
+    isMulti: isCollection,
+    isCollection
   };
 }
 
 function getEntityReturnType(
-  isCollectionReturnType: boolean,
+  isCollection: boolean,
   entity: VdmEntity
 ): VdmFunctionImportReturnType {
   return {
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
     returnType: entity.className,
     builderFunction: entity.className,
-    isMulti: isCollectionReturnType,
-    isCollection: isCollectionReturnType
+    isMulti: isCollection,
+    isCollection
   };
 }
 
 function getComplexReturnType(
-  isCollectionReturnType: boolean,
+  isCollection: boolean,
   complexType: Omit<VdmComplexType, 'factoryName'>
 ): VdmFunctionImportReturnType {
   return {
     returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
     builderFunction: `(data) => deserializeComplexType(data, ${complexType.typeName})`,
-    isMulti: isCollectionReturnType,
-    isCollection: isCollectionReturnType
+    isMulti: isCollection,
+    isCollection
   };
 }

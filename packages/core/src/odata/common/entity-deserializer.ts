@@ -113,7 +113,7 @@ export function entityDeserializer(
           ? deserializeComplexType(json[field._fieldName], field._complexType)
           : deserializeComplexTypeLegacy(json[field._fieldName], field);
       }
-      return undefined;
+      return json[field._fieldName];
     }
     if (field instanceof CollectionField) {
       return deserializeCollectionType(json[field._fieldName], field);
@@ -166,10 +166,13 @@ export function entityDeserializer(
   function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
     json: MapType<any>,
     complexTypeField: ComplexTypeField<EntityT>
-  ): MapType<any> {
+  ): MapType<any> | null {
     logger.warn(
       'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'
     );
+    if (json === null) {
+      return null;
+    }
     return Object.entries(complexTypeField)
       .filter(
         ([_, field]) =>
@@ -192,6 +195,10 @@ export function entityDeserializer(
   function deserializeComplexType<
     ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
+    if (json === null) {
+      return null;
+    }
+
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof json[property.originalName] !== 'undefined' && {

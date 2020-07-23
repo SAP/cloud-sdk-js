@@ -152,7 +152,7 @@ export function entitySerializer(tsToEdm) {
 
   function serializeCollectionField<
     EntityT extends EntityBase,
-    FieldT extends EdmTypeShared<'any'> | {}
+    FieldT extends EdmTypeShared<'any'> | Record<string, any>
   >(fieldValue: any[], field: CollectionField<EntityT, FieldT>) {
     const fieldType = field._fieldType;
     if (isEdmType(fieldType)) {

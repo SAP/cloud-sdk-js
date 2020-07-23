@@ -208,7 +208,7 @@ export function entityDeserializer(
 
   function deserializeCollectionType<
     EntityT extends EntityBase,
-    FieldT extends EdmTypeShared<'any'> | {}
+    FieldT extends EdmTypeShared<'any'> | Record<string, any>
   >(json: any[], field: CollectionField<EntityT, FieldT>) {
     const fieldType = field._fieldType;
     if (isEdmType(fieldType)) {

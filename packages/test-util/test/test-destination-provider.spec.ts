@@ -7,9 +7,10 @@ import {
   getTestDestinations
 } from '../src/test-destination-provider';
 import { credentials, systems } from './test-util/test-destinations';
-
 // This replaces the fs module with the mocked one defined in __mock__/fs.js
 jest.mock('fs');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fs = require('fs');
 
 describe('test-destination-provider', () => {
   describe('getDestinations', () => {
@@ -186,21 +187,19 @@ describe('test-destination-provider', () => {
 
     it('throws a reasonable error when the JSON file cannot be found', () => {
       try {
-        require('fs').switchMockOn();
+        fs.switchMockOn();
         getTestDestinations();
       } catch (error) {
         expect(error.message).toMatch(
           /No systems\.json could be found when searching in directory .+ and upwards and no paths have been provided directly\./
         );
       } finally {
-        require('fs').switchMockOff();
+        fs.switchMockOff();
       }
     });
 
     it('throws a reasonable error when the file does not contain proper JSON', () => {
       try {
-        /* eslint-disable-next-line @typescript-eslint/no-var-requires */
-        const fs = require('fs');
         fs.switchMockOn();
         fs.setReadDirSync(['systems.json']);
         fs.setReadFileSync('not proper JSON');
@@ -209,7 +208,7 @@ describe('test-destination-provider', () => {
       } catch (error) {
         expect(error.message).toContain('is not valid JSON');
       } finally {
-        require('fs').switchMockOff();
+        fs.switchMockOff();
       }
     });
   });

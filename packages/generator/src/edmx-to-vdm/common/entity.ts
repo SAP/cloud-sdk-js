@@ -40,7 +40,7 @@ const logger = createLogger({
 
 export function transformEntityBase(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,
-  classNames: {},
+  classNames: Record<string, any>,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
 ): Omit<VdmEntity, 'navigationProperties'> {

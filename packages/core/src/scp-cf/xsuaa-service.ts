@@ -270,7 +270,9 @@ function encodeBase64(str: string): string {
   return Buffer.from(str).toString('base64');
 }
 
-function objectToXWwwUrlEncodedBodyString(bodyAsObject: object): string {
+function objectToXWwwUrlEncodedBodyString(
+  bodyAsObject: Record<string, any>
+): string {
   return Object.entries(bodyAsObject)
     .map(kv => kv.join('='))
     .join('&');

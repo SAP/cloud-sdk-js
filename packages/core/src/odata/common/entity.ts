@@ -14,7 +14,7 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
  */
 export interface Constructable<
   EntityT extends EntityBase,
-  EntityTypeForceMandatoryT = {}
+  EntityTypeForceMandatoryT = unknown
 > {
   _serviceName: string;
   _entityName: string;

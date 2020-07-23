@@ -292,7 +292,26 @@ Replace the placeholder `${sapjco-version}` with the JCo version you downloaded.
 :::
 
 #### Add JCo Library to System Path
-- Add the directory which contains the downloaded JCo archive to the system environment variable `Path`.
+Open the file `javadoc/installation.html` from the extracted JCo archive and follow the installation instructions. Essentially you have to add the directory where you extracted the JCo archive to to one system environment variable. The variable name depends on your operating system. 
+- For Windows, add the directory which contains the downloaded JCo archive to the system environment variable `PATH`.
+- For MacOS, add the directory which contains the downloaded JCo archive to the system environment variable `DYLD_LIBRARY_PATH`.
+
+If you face an exception like the following ones, then you must configure the classpath to contain the `sapjco3.jar` file to as shown hereafter.
+- `Could not initialize class com.sap.conn.jco.JCo`
+- `java.lang.UnsatisfiedLinkError: no sapjco3 in java.library.path`
+
+To overcome these exceptions, configure the classpath via the TomEE Maven plugin.
+```xml
+<plugin>
+    <groupId>org.apache.tomee.maven</groupId>
+    <artifactId>tomee-maven-plugin</artifactId>
+    <configuration>
+        ...
+        <classpaths>here-comes-the-path-to/sapjco3.jar</classpaths>
+        ...
+    </configuration>
+</plugin>
+```
 
 #### Create a Destination
 - Create a file `<destination-name>.jcoDestination` where you replace `<destination-name>` with the name of the destination.

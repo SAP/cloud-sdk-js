@@ -11,11 +11,35 @@ keywords:
 - cloud sdk
 - sap cloud sdk
 ---
-<!--
+import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
+
+<MvnBadge />
+
+:::info Migrate to SDK v3
+Version 2.x of the SAP Cloud SDK for Java V2 has reached its end of life and is now longer maintained. To continue using the latest features outlined in the release notes for version 3 below, please [migrate to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
+:::
+
+## Should I update?
+We highly recommend regularly updating to the latest SDK version. It will help you:
+
+- ensure access to the latest Cloud SDK features
+- keep up with the latest changes in SAP Cloud Platform
+- update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
+- protect yourself from bugs and breaking changes in the future
+
+## 3.24.0
+
+Release date: July 16, 2020 - [Documentation](https://help.sap.com/doc/f1983b8177f447fdb4a414b0312b7c2f/1.0/en-US/index.html) - [Blog](https://blogs.sap.com/?p=1146336)
+
+### Improvements
+
+- Minor stability improvements
+- Update [SAP Cloud Security Client](https://github.com/SAP/cloud-security-xsuaa-integration) from `2.7.2` to `2.7.3`
+
 ## 3.23.0
 
 - Release date: July 2, 2020
-- Documentation: https://help.sap.com/doc/e95b7f89bb45412b943760333df7a016/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/e95b7f89bb45412b943760333df7a016/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1130744
 
 ### Compatibility Notes
@@ -47,12 +71,11 @@ keywords:
 
 - Fix a memory leak that occurs when repeatedly using the [`AuthTokenBuilder`](https://help.sap.com/doc/e95b7f89bb45412b943760333df7a016/1.0/en-US/index.html?com/sap/cloud/sdk/cloudplatform/security/AuthTokenBuilder.html).
 - Fix an issue on SCP Neo with tenant-aware execution of a [`Callable`](https://docs.oracle.com/javase/8/docs/api/index.html?java/util/concurrent/Callable.html) when using [`TenantAccessor.executeWithTenant()`](https://help.sap.com/doc/e95b7f89bb45412b943760333df7a016/1.0/en-US/com/sap/cloud/sdk/cloudplatform/tenant/TenantAccessor.html#executeWithTenant-com.sap.cloud.sdk.cloudplatform.tenant.Tenant-java.util.concurrent.Callable-) in conjunction with a `DefaultTenant`
--->
 
 ## 3.22.0
 
 - Release date: June 18, 2020
-- Documentation: https://help.sap.com/doc/09e785cb1f214f36be539d2059cc2cb1/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/09e785cb1f214f36be539d2059cc2cb1/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1126097
 
 ### Compatibility Notes
@@ -95,7 +118,7 @@ The class supports entity request handling for _create_, _read_, _update_ and _d
 ## 3.21.0
 
 - Release date: June 4, 2020
-- Documentation: https://help.sap.com/doc/b41a577bf05c42fdabcaab04e31b3e5c/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/b41a577bf05c42fdabcaab04e31b3e5c/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1115317
 
 ### New Functionality
@@ -129,7 +152,7 @@ The class supports entity request handling for _create_, _read_, _update_ and _d
 ## 3.20.0
 
 - Release date: May 21, 2020
-- Documentation: https://help.sap.com/doc/aca0accb170e43b280ee6443ab829d34/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/aca0accb170e43b280ee6443ab829d34/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1106204
 
 ### New Functionality
@@ -163,7 +186,7 @@ The class supports entity request handling for _create_, _read_, _update_ and _d
 ## 3.19.1
 
 - Release date: May 7, 2020
-- Documentation: https://help.sap.com/doc/8acea3c74bce484ea95dc9483aad4d81/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/8acea3c74bce484ea95dc9483aad4d81/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1095583
 
 ### Compatibility Notes
@@ -260,7 +283,7 @@ allow to influence the submission of the version identifier (ETag) of the respec
 ## 3.18.0
 
 - Release date: April 23, 2020
-- Documentation: https://help.sap.com/doc/2e07eccb70364934adc2e01239828e6b/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/2e07eccb70364934adc2e01239828e6b/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1086336
 
 ### Compatibility Notes
@@ -319,7 +342,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.17.1
 
 - Release date: April 9, 2020
-- Documentation: https://help.sap.com/doc/a3be0ed889004b9485c980357ab6ad52/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/a3be0ed889004b9485c980357ab6ad52/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1075911
 
 ### Improvements
@@ -383,7 +406,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.16.1
 
 - Release date: March 26, 2019
-- Documentation: https://help.sap.com/doc/059aaed870b44d8e8e24938c505b8120/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/059aaed870b44d8e8e24938c505b8120/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1068438
 
 ### Compatibility Notes
@@ -418,7 +441,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.15.1
 
 - Release date: March 12, 2020
-- Documentation: https://help.sap.com/doc/19838225037e4e52ba36d2bb95176126/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/19838225037e4e52ba36d2bb95176126/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1060707
 
 ### Compatibility Notes
@@ -483,7 +506,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.14.0
 
 - Release date: February 27, 2020
-- Documentation: https://help.sap.com/doc/65849d56440245959d8929e0db23d3c4/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/65849d56440245959d8929e0db23d3c4/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1053508
 
 ### Compatibility Notes
@@ -506,7 +529,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.13.0
 
 - Release date: February 13, 2020
-- Documentation: https://help.sap.com/doc/e03ee6cbe2ea468f88e1970b61d55b62/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/e03ee6cbe2ea468f88e1970b61d55b62/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1047125
 
 ### Compatibility Notes
@@ -525,7 +548,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.12.0
 
 - Release date: January 30, 2020
-- Documentation: https://help.sap.com/doc/3ef4616701f642658f0a7be6b2aaf587/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/3ef4616701f642658f0a7be6b2aaf587/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1039650
 
 ### New Functionality
@@ -553,7 +576,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.11.0
 
 - Release date: January 16, 2020
-- Documentation: https://help.sap.com/http.svc/rc/4cc23f4c3bf147fe834fbd0e3413e5d5/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/4cc23f4c3bf147fe834fbd0e3413e5d5/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1031865
 
 ### Compatibility Notes
@@ -626,7 +649,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.10.0
 
 - Release date: December 19, 2019
-- Documentation: https://help.sap.com/http.svc/rc/0786ec6134c04c9bbafec959b6b737de/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/0786ec6134c04c9bbafec959b6b737de/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=1019658
 
 ### Compatibility Notes
@@ -660,7 +683,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.9.0
 
 - Release date: December 5, 2019
-- Documentation: https://help.sap.com/doc/0fb0e3755a6346ecbe5d8f62d34121f0/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/0fb0e3755a6346ecbe5d8f62d34121f0/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=906845
 
 ### Compatibility Notes
@@ -693,7 +716,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.8.0
 
 - Release date: November 21, 2019
-- Documentation: https://help.sap.com/http.svc/rc/76f123ce6fae40df911590552579e523/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/76f123ce6fae40df911590552579e523/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/?p=899516
 
 ### Compatibility Notes
@@ -718,7 +741,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.7.0
 
 - Release date: November 7, 2019
-- Documentation: https://help.sap.com/doc/e1e40a06a99c4b858481f11dcf336749/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/doc/e1e40a06a99c4b858481f11dcf336749/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/2019/11/07/new-versions-of-sap-cloud-sdk-3.7.0-and-for-java-1.12.0-for-javascript/
 
 ### Known Issues
@@ -756,7 +779,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.6.0
 
 - Release date: October 24, 2019
-- Documentation: https://help.sap.com/http.svc/rc/928ed32b5bb9437db72a90ee0c096f41/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/928ed32b5bb9437db72a90ee0c096f41/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/2019/10/24/new-versions-of-sap-cloud-sdk-3.6.0-for-java-and-1.11.3-for-javascript/
 
 ### Known Issues
@@ -799,7 +822,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.5.0
 
 - Release date: October 10, 2019
-- Documentation: https://help.sap.com/http.svc/rc/2656a317c96d481b9216b8882f1eadad/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/2656a317c96d481b9216b8882f1eadad/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/2019/08/10/new-versions-of-sap-cloud-sdk-3.5.0-for-java-1.11.2-for-javascript-and-v25-of-continuous-delivery-toolkit/
 
 ### Compatibility Notes
@@ -818,7 +841,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.4.0
 
 - Release date: September 26, 2019
-- Documentation: https://help.sap.com/http.svc/rc/d17b8bdb22f84c7eb7924408abeea492/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/d17b8bdb22f84c7eb7924408abeea492/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/2019/09/26/new-versions-of-sap-cloud-sdk-3.4.0-for-java-1.10.0-for-javascript-and-v24-of-continuous-delivery-toolkit/
 
 ### Compatibility Notes
@@ -835,7 +858,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.3.1
 
 - Release date: September 12, 2019
-- Documentation: https://help.sap.com/http.svc/rc/6599292dcb7243bc95071d9d1757a30f/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/6599292dcb7243bc95071d9d1757a30f/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/2019/09/12/new-versions-of-sap-cloud-sdk-3.3.1-for-java-and-1.9.0-for-javascript/
 
 ### Compatibility Notes
@@ -852,7 +875,7 @@ To still use the ruleset with standard pmd plugin, especially in the SAP Cloud S
 ## 3.2.0
 
 - Release date: August 29, 2019
-- Documentation: https://help.sap.com/http.svc/rc/ef9bbec49d7d4c229d5e4e6295476572/1.0/en-US/index.html
+- JavaDoc: https://help.sap.com/http.svc/rc/ef9bbec49d7d4c229d5e4e6295476572/1.0/en-US/index.html
 - Release blog: https://blogs.sap.com/2019/08/29/new-versions-of-sap-cloud-sdk-3.2.0-for-java-1.8.1-for-javascript-and-v23-of-continuous-delivery-toolkit/
 
 ### Compatibility Notes

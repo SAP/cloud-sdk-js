@@ -1,5 +1,5 @@
 ---
-id: use-typed-odata-client-for-js
+id: use-typed-odata-client-for-javascript-and-typescript
 title: Consume OData clients for JS / TS
 hide_title: false
 hide_table_of_contents: false
@@ -123,14 +123,17 @@ The example above creates a request to get all BusinessPartner entites.
 
 #### Select
 
-When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameter `$select` is set. It restricts the response to the given selection of properties in the request.
+When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameters `$select` and `$expand` are set. It restricts the response to the given selection of properties in the request.
 
 <!-- OData v4
 When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameters `$select` and `$expand` are set. It takes in properties of the entity being queried. Primitive properties are added to `$select` while complex and navigational properties are added to `$expand`. This handling is done automatically by the SDK.
+
+To include navigation properties, OData offers the expand operation. The VDM allows you to use navigation properties in the select function just like normal properties.
 -->
 
-The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS ` as representation of a navigation property.
+The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS` as representation of a navigation property.
 
+A navigation property means that there is a relation between a business partner and their addresses. In this case, one business partner can have multiple addresses. In SAP S/4HANA, navigation properties typically start with `TO_`.
 
 ```ts
 BusinessPartner.requestBuilder()
@@ -146,7 +149,7 @@ BusinessPartner.requestBuilder()
 The above translates to the following query parameters:
 
 ```sql
-$select=FirstName,LastName,to_BusinessPartnerAddress
+$select=FirstName,LastName,to_BusinessPartnerAddress/*&$expand=to_BusinessPartnerAddress
 ```
 
 <!-- OData v4
@@ -155,7 +158,7 @@ $select=FirstName,LastName&$expand=to_BusinessPartnerAddress
 ```
 -->
 
-One can also select properties of the expanded object:
+One can also select properties of the expanded navigation property:
 
 ```ts
 BusinessPartner.requestBuilder()
@@ -278,7 +281,6 @@ The result can be retricted by applying the [select](#select) function, same as 
 
 The Create request builder allows you to send a `POST` request to create a new entity:
 <!-- TODO: Add more details on how to create a business partner entity -->
-<!-- TODO: Mention deep create -->
 
 ```ts
 const businessPartner = BusinessPartner.builder().build();
@@ -286,6 +288,38 @@ BusinessPartner.requestBuilder().create(businessPartner);
 ```
 
 In the example above we created an instance of BusinessPartner and sent it to the BusinessPartner service in a `POST` request.
+
+#### Deep Create
+
+It is also possible to create an entity together with related entities in a single request:
+
+```ts
+// build a business partner instance with one linked address
+const businessPartner = BusinessPartner.builder()
+  .firstName('John')
+  .lastName('Doe')
+  .businessPartnerCategory('1')
+  .toBusinessPartnerAddress([
+    BusinessPartnerAddress.builder()
+      .country('DE')
+      .postalCode('14469')
+      .cityName('Potsdam')
+      .streetName('Konrad-Zuse-Ring')
+      .houseNumber('10')
+      .build()
+  ])
+  .build();
+
+// execute the create request
+BusinessPartner.requestBuilder()
+  .create(businessPartner)
+  .execute(myDestination);
+```
+<!--
+for future reference:
+When reading this section I think, so what? That is exactly the behavior I would expect ;)
+Is there something special that we do? Is the url different than with the normal create? Is there some additional header that we set?
+-->
 
 You can also create an entity `asChildOf` another entity.
 <!-- TODO: Add more details and an example. -->
@@ -317,7 +351,11 @@ BusinessPartner.requestBuilder()
   .update(businessPartner)
   .ignoreVersionIdentifier();
 ```
+<!--OData V4
+#### Deep Update
 
+It is also possible to update an entity together with related entities in a single request, same as [deep create](#deep-create).
+-->
 ### Delete Request Builder
 
 The Delete request builder allows you to create `DELETE` requests, that delete entities.
@@ -428,28 +466,94 @@ BusinessPartner.requestBuilder()
 ```
 -->
 
-<!--
-### Batch Requests WIP
+### Batch Requests
 
 OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with, when you want to execute a large number of requests.
 
+An OData batch request can consist of a number of [retrieve requests](#retrieve-request) and [changesets](#changeset).
+
+#### Retrieve request
+
+A retrieve request is any HTTP `GET` request - in terms of the SAP Cloud SDK this includes all requests built by a [GetAllRequestBuilder](#getall-request-builder) and [GetByKeyRequestBuilder](#getbykey-request-builder).
+
+In the example below, a list of adresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the read requests, which are then passed to the batch function.
+
+The batch request will return a list of `BatchResponse`s, which will be stored in the `retrieveResponses` variable. These `BatchResponse`s need to be parsed and converted to the expected entities.
+
+`ReadResponse` contains an httpCode, a body, an entity (in this case `BusinessPartnerAddress`) and functions like `as` to convert the response into the entity and `isSuccess`.
+
+The reduce function converts each of the ReadResponses to a BusinessPartnerAddress using the `as` function. The `addresses` variable is the accumulator and the `[]` is the initial value. We end up with a list of BusinessPartnerAddress.
+
 ```ts
-async updateAddreses(businessPartnerAddresses: BusinessPartnerAddress[]): Promise<BusinessPartnerAddress[]> {
-  const updateRequests = businessPartnerAddresses.map(
-    address => BusinessPartnerAddress.requestBuilder().update(address)
-  );
-
+async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
+:Promise<BusinessPartnerAddress[]> {
   const retrieveRequests = businessPartnerAddresses.map(
-    address => BusinessPartnerAddress.requestBuilder().getByKey(address.businessPartner, address.addressId)
+      address => BusinessPartnerAddress
+        .requestBuilder()
+        .getByKey(address.businessPartner, address.addressId)
   );
 
-  const [updateChangesetResponse, ...retrieveResponses] = await batch(changeset(...updateRequests), ...retrieveRequests)
+  const retrieveResponses = await batch(...retrieveRequests)
     .execute(destination);
 
-  return retrieveResponses.reduce((addresses, response: ReadResponse) => [...addresses, ...response.as(BusinessPartnerAddress)], []);
+  return retrieveResponses.reduce(
+    (addresses, response: ReadResponse) =>
+      [...addresses, ...response.as(BusinessPartnerAddress)]
+      , []
+  );
 }
 ```
+
+#### Changeset
+
+A changeset is a collection of HTTP `POST`, `PUT`, `PATCH` and `DELETE` operations - requests built by any [CreateRequestBuilder](#create-request-builder), [UpdateRequestBuilder](#update-request-builder) and [DeleteRequestBuilder](#delete-request-builder) in terms of the SAP Cloud SDK. The order of execution within a changeset is not defined as opposed to the whole batch request itself. Therefore the requests within a changeset should not depend on each other. If the execution of any of the requests within a changeset fails, the whole changeset will be reflected as an error in the response and will not be applied, much like a database transaction.
+
+In the example below, a list of adresses is mapped in an [UpdateRequestBuilder](#update-request-builder) to form the update requests, which are then wrapped in a changeset and passed to the batch function.
+
+The batch request will return a single `BatchResponse` in a list, which is stored in the `updateChangesetResponse` variable.
+
+`WriteResponses` contains the function `isSuccess` and the property `responses` which is a list of `WriteResponse` which contains an httpCode, and can contain a body, an entity (in this case `BusinessPartnerAddress`) and the function `as` to convert the response into the entity.
+
+```ts
+updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
+:Promise<BusinessPartnerAddress[]> {
+  const updateRequests = businessPartnerAddresses.map(
+    address => BusinessPartnerAddress
+      .requestBuilder()
+      .update(address)
+  );
+
+  const [updateChangesetResponse] = await batch(changeset(...updateRequests))
+    .execute(destination);
+
+  return (updateChangesetResponse as WriteResponses)
+    .responses
+    .map(
+      response => response.as(BusinessPartnerAddress)
+    );
+}
+```
+
+#### Combining changesets and retrieve requests
+
+
+<!--
+Maybe just this small code snippet will be enough to show the reader that it's possible
+to add muliple request in the same batch function, I don't know what to add or how to add it
 -->
+
+In the example below, the changesets will be executed first and the retrieve requests will be executed sequentially afterwards. The order of execution within the changeset is not defined.
+The first `BatchResponse` will be the response to the changeset. The rest will be the responses for your retrieve requests.
+
+```ts
+const [updateChangesetResponse, ...retrieveResponses] =
+  await batch(
+    changeset(...updateRequests),
+    ...retrieveRequests
+  )
+  .execute(destination);
+```
+
 <!--
 ### Advanced OData Features ###
 

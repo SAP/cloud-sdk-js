@@ -1,5 +1,5 @@
 ---
-id: generator-js-sdk
+id: generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript
 title: Generate an OData client for JavaScript
 hide_title: false
 hide_table_of_contents: false
@@ -9,7 +9,7 @@ keywords:
 - cloud
 - sdk
 - odata
-- JavaScript 
+- JavaScript
 - TypeScript
 - generate
 author: Charles Dubois

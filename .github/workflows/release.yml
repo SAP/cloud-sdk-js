@@ -12,11 +12,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
       - name: Stable Release
         run: |
           git update-index --assume-unchanged .npmrc
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-          npx lerna publish from-git -y
+          yarn lerna publish from-git -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

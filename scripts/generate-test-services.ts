@@ -14,7 +14,7 @@ const [readFile, readdir, writeFile] = [
 ].map((fsModule: fsTypes) => util.promisify(fsModule));
 
 const serviceSpecsDir = path.join('test-resources', 'service-specs');
-const packageOutputDir = path.resolve('test-packages', 'test-services', 'srv');
+const packageOutputDir = path.resolve('test-packages', 'test-services');
 const coreUnitTestOutputDir = path.resolve(
   'packages',
   'core',
@@ -120,19 +120,14 @@ if (arg === 'e2e' || arg === 'all') {
   generate({
     ...generatorConfig,
     inputDir: path.join('test-resources', 'service-specs-e2e', 'v4'),
-    outputDir: path.resolve('test-packages', 'test-services-e2e', 'srv', 'v4'),
+    outputDir: path.resolve('test-packages', 'test-services-e2e', 'v4'),
     generateJs: true
   });
 
   generate({
     ...generatorConfig,
     inputDir: path.join('test-resources', 'service-specs-e2e', 'TripPin'),
-    outputDir: path.resolve(
-      'test-packages',
-      'test-services-e2e',
-      'srv',
-      'TripPin'
-    ),
+    outputDir: path.resolve('test-packages', 'test-services-e2e', 'TripPin'),
     generateJs: true
   });
 }

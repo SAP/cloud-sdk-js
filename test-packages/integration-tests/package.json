@@ -7,10 +7,12 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
+    "compile": "npx tsc -b",
+    "pretest": "yarn run compile",
     "test": "npx jest --coverage",
-    "test:local": "npx jest --config ./jest-local.json",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
-    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
+    "test:local": "yarn run pretest && npx jest --config ./jest-local.json",
+    "test:debug": "yarn run pretest && node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "test:watch-debug": "yarn run pretest && node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.25.0",

@@ -11,6 +11,18 @@
     "sap-cloud-platform"
   ],
   "repository": "github:SAP/cloud-sdk",
+  "workspaces": [
+    "packages/analytics",
+    "packages/core",
+    "packages/generator",
+    "packages/test-util",
+    "packages/util",
+    "test-packages/integration-tests",
+    "test-packages/e2e-tests",
+    "test-packages/test-services",
+    "test-packages/test-services-e2e",
+    "test-packages/type-tests"
+  ],
   "scripts": {
     "test": "npm run test:unit && npm run test:integration && npm run test:type",
     "test:unit": "npx lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\"",
@@ -20,17 +32,17 @@
     "e2e-test:build": "cd test-packages/e2e-tests && npm run deploy:to-sqlite",
     "e2e-test:start-server": "cd test-packages/e2e-tests && npm start",
     "e2e-test:start-server:deamon": "cd test-packages/e2e-tests && npm run start:daemon",
-    "generate:test-services:v2": "npx ts-node scripts/generate-test-services.ts v2 && npm run lint:fix && lerna link --force-local",
-    "generate:test-services:v4": "npx ts-node scripts/generate-test-services.ts v4 && npm run lint:fix && lerna link --force-local",
-    "generate:test-services:e2e": "npx ts-node scripts/generate-test-services.ts e2e && npm run lint:fix && lerna link --force-local",
-    "generate:test-services": "npx ts-node scripts/generate-test-services.ts all && npm run lint:fix && lerna link --force-local",
-    "compile": "npx lerna run compile",
+    "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn install",
+    "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn install",
+    "generate:test-services:e2e": "yarn generate e2e && yarn lint:fix && yarn install",
+    "generate:test-services": "yarn generate all && yarn lint:fix && yarn install",
+    "generate": "yarn workspace @sap-cloud-sdk/generator run compile && yarn ts-node scripts/generate-test-services.ts",
+    "compile": "yarn workspaces compile",
     "doc": "node scripts/generate-docs.js",
-    "version": "node scripts/after-bump.js && npm run doc && git add .",
+    "version": "node scripts/after-bump.js && yarn doc && git add .",
     "lint": "npx eslint --ext .ts .",
     "lint:fix": "npm run lint -- --fix",
     "lint:fix-cached": "npm run lint:fix -- --cache",
-    "postinstall": "npx lerna bootstrap --force-local --strict",
     "check:license": "npx license-checker -direct --excludePackages \"@sap/edm-converters@1.0.21;@sap/xsenv@2.2.0;weak-map@1.0.5\" --onlyAllow \"MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense;Public Domain;GPL-3.0\"",
     "check:vulnerability": "npx audit-ci -h",
     "bump:patch": "npx lerna version patch --force-publish -y",
@@ -61,5 +73,8 @@
     "typedoc-plugin-lerna-packages": "^0.3.0",
     "typescript": "~3.9.6"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "resolutions": {
+    "@types/node": "^12.0.0"
+  }
 }

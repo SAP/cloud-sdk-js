@@ -16,7 +16,7 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 <MvnBadge />
 
 :::info Migrate to SDK v3
-SAP Cloud SDK for Java V2 is in maintenance. To continue using the latest features, please,  [migrate to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
+Version 2.x of the SAP Cloud SDK for Java V2 has reached its end of life and is now longer maintained. To continue using the latest features outlined in the release notes for version 3 below, please [migrate to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
 :::
 
 ## Should I update?
@@ -31,7 +31,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 Release date: July 16, 2020 - [Documentation](https://help.sap.com/doc/f1983b8177f447fdb4a414b0312b7c2f/1.0/en-US/index.html) - [Blog](https://blogs.sap.com/?p=1146336)
 
-## Improvements
+### Improvements
 
 - Minor stability improvements
 - Update [SAP Cloud Security Client](https://github.com/SAP/cloud-security-xsuaa-integration) from `2.7.2` to `2.7.3`

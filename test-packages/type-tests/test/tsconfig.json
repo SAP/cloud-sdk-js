@@ -5,6 +5,7 @@
     "strict": true,
     "noEmit": true
   },
+  "files": [],
   "references": [
     {"path": "../../../packages/core"}
   ]

@@ -7,7 +7,7 @@
     "composite": true
   },
   "include": [
-    "src/**/*.ts", "../../list.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "dist/**/*",

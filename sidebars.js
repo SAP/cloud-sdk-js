@@ -79,13 +79,12 @@ module.exports = {
         type: 'category',
         label: 'Guides',
         items: [
-          'java/guides/sap-cloud-sdk-linux-how-to',
-          'java/guides/cf-cli',
-          'java/guides/cf-deploy',
           'java/guides/logging-overview',
-          'java/guides/change-log-level',
           'java/guides/manage-dependencies',
+          'java/guides/cf-deploy',
+          'java/guides/cf-cli',
           'java/guides/tutorial-overview-sdk-java',
+          'java/guides/sap-cloud-sdk-linux-how-to',
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',
@@ -133,8 +132,8 @@ module.exports = {
             type: 'category',
             label: 'Connectivity',
             items: [
-              'js/features/connectivity/proxy-js-sdk',
-              'js/features/connectivity/destination-js-sdk'
+              'js/features/connectivity/destination-js-sdk',
+              'js/features/connectivity/proxy-js-sdk'
             ]
           }
         ]

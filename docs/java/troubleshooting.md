@@ -86,3 +86,16 @@ Possible causes:
 
 - Conflicting dependency versions may cause such issues.
   See the section on [Managing Dependencies](guides/dependencies.md#dealing-with-dependency-conflicts).
+
+### Java App has good performance on your local machine but utilizes 100% CPU on SCP Cloud Foundry
+
+**Symptom:**
+- Java App executes multiple threads and runs with good performance on a powerful local machine.
+- Performance significantly drops after App is deployed to SAP Cloud Platform - Cloud Foundry and CPU utilization is always around 100%.
+
+Possible causes:
+
+- A powerful developer's machine usually has much better CPU and Memory capacity than Cloud instance.
+- SCP Cloud Foundry provides 1/4 of CPU unit per every GB of memory. With maximum Memory per instance of 8 GB you can get maximum of 2 CPUs.
+- All the limitations are subject to change. Please check latest details about [SCP Cloud Foundry quotas and limitation](https://help.sap.com/viewer/3504ec5ef16548778610c7e89cc0eac3/Cloud/en-US/9c7092c7b7ae4d49bc8ae35fdd0e0b18.html#loio9809fa4f02cb4696baea5c23d6eaac94)
+- If even after achieving maximum vertical scale of your instance your App doesn't reach desired performance level, try to optimize it, consider scaling it horizontally or different custom solutions to boost performance where it lags.

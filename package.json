@@ -43,7 +43,7 @@
     "lint": "yarn eslint --ext .ts .",
     "lint:fix": "yarn lint -- --fix",
     "lint:fix-cached": "yarn lint:fix -- --cache",
-    "check:license": "yarn license-checker -direct --excludePackages \"@sap/edm-converters@1.0.21;@sap/xsenv@2.2.0;weak-map@1.0.5\" --onlyAllow \"MIT;Apache;ISC;BSD;WTFPL;Artistic;CC-BY;CC0;Unlicense;Public Domain;GPL-3.0\"",
+    "check:license": "node scripts/check-licenses.js",
     "check:vulnerability": "yarn audit-ci -h",
     "bump:patch": "yarn lerna version patch --force-publish -y",
     "bump:minor": "yarn lerna version minor --force-publish -y",

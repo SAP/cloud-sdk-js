@@ -24,6 +24,7 @@
     "test-packages/type-tests"
   ],
   "scripts": {
+    "postinstall": "yarn lerna run compile",
     "test": "yarn workspaces run test",
     "test:unit": "yarn lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\"",
     "test:integration": "yarn workspace @sap-cloud-sdk/integration-tests run test",

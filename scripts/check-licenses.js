@@ -16,31 +16,6 @@ const allowedLicenses = [
   'GPL-3.0'
 ];
 
-licenseChecker.init(
-  {
-    start: path.resolve(__dirname, '..'),
-    direct: true,
-    summary: true,
-    json: true
-  },
-  function (err, packages) {
-    if (err) {
-      throw new Error(`Could not check licenses. Error: ${err}`);
-    }
-    const notAllowed = Object.entries(packages)
-      .filter(
-        ([package, packageInfo]) => !isAllowedLicense(packageInfo.licenses)
-      )
-      .filter(([package, packageInfo]) => !isSapDependency(package));
-
-    if (notAllowed.length) {
-      throw new Error(
-        `Not allowed licenses found: ${JSON.stringify(notAllowed, '', 2)}`
-      );
-    }
-  }
-);
-
 async function getLicenses() {
   return new Promise((resolve, reject) => {
     licenseChecker.init(
@@ -83,3 +58,5 @@ async function checkLicenses() {
     );
   }
 }
+
+checkLicenses();

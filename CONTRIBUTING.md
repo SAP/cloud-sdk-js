@@ -3,7 +3,7 @@ Thank you for taking your time to contribute to the SAP Cloud SDK!
 
 ## Project Structure
 This project containes multiple packages, that are managed using [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).  Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
-All dependencies of the packages are hoisted into the root project. Some of the packages are interdependent, therefore `yarn install` won't work from within those packages. Run `yarn install` in the root directory instead.
+All dependencies that are used in more than one of the packages are hoisted into the root project. Dependencies, that occur only once and binaries will be placed in the node_modules of that specific package. Some of the packages are interdependent, therefore `yarn install` won't work from within those packages. Run `yarn install` in the root directory instead.
 
 ## Testing
 In order to run all tests, execute:

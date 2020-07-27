@@ -17,7 +17,7 @@ export function fieldTypeClass(
   return {
     kind: StructureKind.Class,
     name: `${complexType.fieldType}<EntityT extends Entity>`,
-    extends: `ComplexTypeField<EntityT, typeof ${complexType.typeName}>`,
+    extends: `ComplexTypeField<EntityT, ${complexType.typeName}>`,
     isExported: true,
     properties: properties(complexType),
     docs: [getComplexTypeFieldDescription(complexType)],
@@ -30,7 +30,7 @@ export function fieldTypeClass(
           },
           {
             name: 'fieldOf',
-            type: `ConstructorOrField<EntityT, typeof ${complexType.typeName}>`
+            type: `ConstructorOrField<EntityT, ${complexType.typeName}>`
           }
         ],
         docs: [

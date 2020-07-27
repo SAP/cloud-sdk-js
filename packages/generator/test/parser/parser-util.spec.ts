@@ -2,7 +2,7 @@
 
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import {
-  isCollection,
+  isCollectionType,
   parseTypeName,
   stripNamespace
 } from '../../src/edmx-to-vdm/edmx-to-vdm-util';
@@ -17,18 +17,18 @@ describe('edmx-parser-util', () => {
   });
 
   it('checks collection for edm types', () => {
-    expect(isCollection('Collection(Edm.String)')).toBe(true);
-    expect(isCollection('Edm.String')).toBe(false);
+    expect(isCollectionType('Collection(Edm.String)')).toBe(true);
+    expect(isCollectionType('Edm.String')).toBe(false);
   });
 
   it('checks collection for namespaced types', () => {
-    expect(isCollection('Collection(namespace.name)')).toBe(true);
-    expect(isCollection('namespace.name')).toBe(false);
+    expect(isCollectionType('Collection(namespace.name)')).toBe(true);
+    expect(isCollectionType('namespace.name')).toBe(false);
   });
 
   it('checks collection for types without namespace', () => {
-    expect(isCollection('Collection(name)')).toBe(true);
-    expect(isCollection('name')).toBe(false);
+    expect(isCollectionType('Collection(name)')).toBe(true);
+    expect(isCollectionType('name')).toBe(false);
   });
 
   it('parses type name for types with namespace', () => {

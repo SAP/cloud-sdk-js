@@ -17,7 +17,11 @@ export function complexTypeNamespace(
     kind: StructureKind.Namespace,
     name: complexType.typeName,
     isExported: true,
-    statements: [propertyMetadata(complexType), factoryFunction(complexType)]
+    statements: [
+      propertyMetadata(complexType),
+      complexTypeDeclaration(complexType),
+      factoryFunction(complexType)
+    ]
   };
 }
 
@@ -30,7 +34,10 @@ function factoryFunction(
     returnType: complexType.typeName,
     parameters: [{ name: 'json', type: getJsonType(complexType) }],
     statements: `return deserializeComplexType(json, ${complexType.typeName});`,
-    isExported: true
+    isExported: true,
+    docs: [
+      '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+    ]
   };
 }
 
@@ -76,6 +83,24 @@ function propertyMetadata(
     docs: [
       `\nMetadata information on all properties of the \`${complexType.typeName}\` complex type.`
     ],
+    isExported: true
+  };
+}
+
+function complexTypeDeclaration(
+  complexType: VdmComplexType
+): VariableStatementStructure {
+  return {
+    kind: StructureKind.VariableStatement,
+    declarationKind: VariableDeclarationKind.Const,
+    declarations: [
+      {
+        name: '_complexType',
+        initializer: '{}',
+        type: complexType.typeName
+      }
+    ],
+    docs: ['\nType reference to the according complex type.'],
     isExported: true
   };
 }

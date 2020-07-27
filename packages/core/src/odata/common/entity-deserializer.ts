@@ -14,7 +14,9 @@ import {
   EntityBase,
   Constructable,
   ComplexTypeNamespace,
-  isComplexTypeNameSpace
+  isComplexTypeNameSpace,
+  EdmTypeShared,
+  isEdmType
 } from '../common';
 
 const logger = createLogger({
@@ -111,7 +113,7 @@ export function entityDeserializer(
           ? deserializeComplexType(json[field._fieldName], field._complexType)
           : deserializeComplexTypeLegacy(json[field._fieldName], field);
       }
-      return undefined;
+      return json[field._fieldName];
     }
     if (field instanceof CollectionField) {
       return deserializeCollectionType(json[field._fieldName], field);
@@ -161,16 +163,16 @@ export function entityDeserializer(
   }
 
   // TODO: get rid of this function in v2.0
-  function deserializeComplexTypeLegacy<
-    EntityT extends EntityBase,
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
-  >(
+  function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
     json: MapType<any>,
-    complexTypeField: ComplexTypeField<EntityT, ComplexTypeNamespaceT>
-  ): MapType<any> {
+    complexTypeField: ComplexTypeField<EntityT>
+  ): MapType<any> | null {
     logger.warn(
       'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'
     );
+    if (json === null) {
+      return null;
+    }
     return Object.entries(complexTypeField)
       .filter(
         ([_, field]) =>
@@ -191,8 +193,12 @@ export function entityDeserializer(
   }
 
   function deserializeComplexType<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
+    ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
+    if (json === null) {
+      return null;
+    }
+
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof json[property.originalName] !== 'undefined' && {
@@ -207,17 +213,16 @@ export function entityDeserializer(
       }));
   }
 
-  function deserializeCollectionType<EntityT extends EntityBase>(
-    json: any[],
-    selectable: CollectionField<EntityT>
-  ) {
-    if (selectable._fieldType instanceof EdmTypeField) {
-      const edmType = selectable._fieldType.edmType;
-      return json.map(v => edmToTs(v, edmType));
+  function deserializeCollectionType<
+    EntityT extends EntityBase,
+    FieldT extends EdmTypeShared<'any'> | Record<string, any>
+  >(json: any[], field: CollectionField<EntityT, FieldT>) {
+    const fieldType = field._fieldType;
+    if (isEdmType(fieldType)) {
+      return json.map(val => edmToTs(val, fieldType));
     }
-    if (selectable._fieldType instanceof ComplexTypeField) {
-      const complexTypeField = selectable._fieldType;
-      return json.map(v => deserializeComplexTypeLegacy(v, complexTypeField));
+    if (isComplexTypeNameSpace(fieldType)) {
+      return json.map(val => deserializeComplexType(val, fieldType));
     }
   }
 

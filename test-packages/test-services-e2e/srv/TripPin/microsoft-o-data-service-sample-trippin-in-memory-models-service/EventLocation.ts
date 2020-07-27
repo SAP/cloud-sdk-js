@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
-import { ComplexTypeField, ComplexTypeStringPropertyField, Entity, FieldType, createComplexType, edmToTs } from '@sap-cloud-sdk/core/v4';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core/v4';
 
 /**
  * EventLocation
@@ -38,7 +38,7 @@ export function createEventLocation(json: any): EventLocation {
  * EventLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class EventLocationField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
+export class EventLocationField<EntityT extends Entity> extends ComplexTypeField<EntityT, EventLocation> {
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -54,14 +54,44 @@ export class EventLocationField<EntityT extends Entity> extends ComplexTypeField
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   city: CityField<EntityT> = new CityField('City', this);
+
+  /**
+   * Creates an instance of EventLocationField.
+   *
+   * @param fieldName - Actual name of the field as used in the OData request.
+   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
+   */
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, EventLocation>) {
+    super(fieldName, fieldOf, EventLocation);
+  }
 }
 
 export namespace EventLocation {
+  /**
+   * Metadata information on all properties of the `EventLocation` complex type.
+   */
+  export const _propertyMetadata: PropertyMetadata[] = [{
+    originalName: 'BuildingInfo',
+    name: 'buildingInfo',
+    type: 'Edm.String'
+  }, {
+    originalName: 'Address',
+    name: 'address',
+    type: 'Edm.String'
+  }, {
+    originalName: 'City',
+    name: 'city',
+    type: City
+  }];
+  /**
+   * Type reference to the according complex type.
+   */
+  export const _complexType: EventLocation = {};
+
+  /**
+   * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+   */
   export function build(json: { [keys: string]: FieldType | City }): EventLocation {
-    return createComplexType(json, {
-      BuildingInfo: (buildingInfo: string) => ({ buildingInfo: edmToTs(buildingInfo, 'Edm.String') }),
-      Address: (address: string) => ({ address: edmToTs(address, 'Edm.String') }),
-      City: (city: City) => ({ city: City.build(city) })
-    });
+    return deserializeComplexType(json, EventLocation);
   }
 }

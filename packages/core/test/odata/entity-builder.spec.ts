@@ -14,12 +14,12 @@ describe('EntityBuilder', () => {
   });
 
   it('should build an empty entity when no properties are defined', () => {
-    const builder = new EntityBuilder<TestEntity, {}>(TestEntity);
+    const builder = new EntityBuilder<TestEntity, unknown>(TestEntity);
     expect(builder.build()).toEqual(new TestEntity());
   });
 
   it('should build an entity with custom fields', () => {
-    const builder = new EntityBuilder<TestEntity, {}>(TestEntity);
+    const builder = new EntityBuilder<TestEntity, unknown>(TestEntity);
     const expected = { SomeCustomField: null };
     expect(
       builder
@@ -30,7 +30,7 @@ describe('EntityBuilder', () => {
   });
 
   it('ignores existing fields in custom fields', () => {
-    const builder = new EntityBuilder<TestEntity, {}>(TestEntity);
+    const builder = new EntityBuilder<TestEntity, unknown>(TestEntity);
     const expected = { SomeCustomField: null };
     expect(
       builder

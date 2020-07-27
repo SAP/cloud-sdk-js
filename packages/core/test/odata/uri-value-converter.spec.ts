@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import BigNumber from 'bignumber.js';
-import { convertToUriFormat, edmToTs } from '../../src';
 import moment = require('moment');
+import { convertToUriFormat, edmToTs } from '../../src';
 
 describe('convertToUriFormat', () => {
   it('Edm.Binary', () => {

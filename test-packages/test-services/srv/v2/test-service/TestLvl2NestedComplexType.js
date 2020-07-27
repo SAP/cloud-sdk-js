@@ -60,6 +60,13 @@ var TestLvl2NestedComplexType;
             name: 'stringProperty',
             type: 'Edm.String'
         }];
+    /**
+     * Type reference to the according complex type.
+     */
+    TestLvl2NestedComplexType._complexType = {};
+    /**
+     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     */
     function build(json) {
         return core_1.deserializeComplexType(json, TestLvl2NestedComplexType);
     }

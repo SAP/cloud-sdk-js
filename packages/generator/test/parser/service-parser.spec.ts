@@ -226,7 +226,8 @@ describe('service-parser', () => {
       const expectedReturnType = {
         returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
         returnType: 'TestComplexType',
-        builderFunction: 'TestComplexType.build',
+        builderFunction:
+          '(data) => deserializeComplexType(data, TestComplexType)',
         isCollection: false,
         isMulti: false
       };

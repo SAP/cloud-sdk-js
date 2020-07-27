@@ -10,7 +10,10 @@ import { MapType } from './types';
  * @param properties - Chained properties.
  * @returns True if the property chain leads to a truthy value, false otherwise.
  */
-export function propertyExists(obj: object, ...properties: string[]): boolean {
+export function propertyExists(
+  obj: Record<string, any>,
+  ...properties: string[]
+): boolean {
   if (!properties.length) {
     return true;
   }

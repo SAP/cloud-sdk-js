@@ -11,5 +11,5 @@
     "test-packages/test-services-e2e",
     "test-packages/type-tests"
   ],
-  "version": "1.24.1"
+  "version": "1.25.0"
 }

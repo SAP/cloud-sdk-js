@@ -11,7 +11,9 @@ import {
   CollectionField,
   EntityBase,
   ComplexTypeNamespace,
-  isComplexTypeNameSpace
+  isComplexTypeNameSpace,
+  EdmTypeShared,
+  isEdmType
 } from '../common';
 
 const logger = createLogger({
@@ -41,6 +43,32 @@ export function entitySerializer(tsToEdm) {
     };
   }
 
+  function serializeField(field: any, fieldValue: any): any {
+    if (fieldValue === null || fieldValue === undefined) {
+      return null;
+    }
+    if (field instanceof EdmTypeField) {
+      return tsToEdm(fieldValue, field.edmType);
+    }
+    if (field instanceof OneToOneLink) {
+      return serializeEntityNonCustomFields(fieldValue, field._linkedEntity);
+    }
+    if (field instanceof Link) {
+      return fieldValue.map(linkedEntity =>
+        serializeEntityNonCustomFields(linkedEntity, field._linkedEntity)
+      );
+    }
+    if (field instanceof ComplexTypeField) {
+      if (field._complexType) {
+        return serializeComplexType(fieldValue, field._complexType);
+      }
+      return serializeComplexTypeFieldLegacy(field, fieldValue);
+    }
+    if (field instanceof CollectionField) {
+      return serializeCollectionField(fieldValue, field);
+    }
+  }
+
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service, ignoring custom fields.
    *
@@ -59,48 +87,22 @@ export function entitySerializer(tsToEdm) {
       const field = entityConstructor[toStaticPropertyFormat(key)];
       const fieldValue = entity[key];
 
-      if (fieldValue === null || fieldValue === undefined) {
-        serialized[field._fieldName] = null;
-      } else if (field instanceof EdmTypeField) {
-        serialized[field._fieldName] = tsToEdm(fieldValue, field.edmType);
-      } else if (field instanceof OneToOneLink) {
-        serialized[field._fieldName] = serializeEntityNonCustomFields(
-          fieldValue,
-          field._linkedEntity
+      const serializedValue = serializeField(field, fieldValue);
+
+      if (typeof serializedValue === 'undefined') {
+        logger.warn(
+          `Could not serialize value for unknown field: ${field}. Skipping field.`
         );
-      } else if (field instanceof Link) {
-        serialized[field._fieldName] = fieldValue.map(linkedEntity =>
-          serializeEntityNonCustomFields(linkedEntity, field._linkedEntity)
-        );
-      } else if (field instanceof ComplexTypeField) {
-        if (field._complexType) {
-          serialized[field._fieldName] = serializeComplexType(
-            fieldValue,
-            field._complexType
-          );
-        } else {
-          serialized[field._fieldName] = serializeComplexTypeFieldLegacy(
-            field,
-            fieldValue
-          );
-        }
-      } else if (field instanceof CollectionField) {
-        serialized[field._fieldName] = serializeCollectionField(
-          fieldValue,
-          field
-        );
+        return serialized;
       }
 
-      return serialized;
+      return { ...serialized, [field._fieldName]: serializedValue };
     }, {});
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<
-    EntityT extends EntityBase,
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
-  >(
-    complexTypeField: ComplexTypeField<EntityT, ComplexTypeNamespaceT>,
+  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase>(
+    complexTypeField: ComplexTypeField<EntityT>,
     fieldValue: any
   ): any {
     logger.warn(
@@ -129,7 +131,7 @@ export function entitySerializer(tsToEdm) {
   }
 
   function serializeComplexType<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace
+    ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(fieldValue: any, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
@@ -148,19 +150,16 @@ export function entitySerializer(tsToEdm) {
       );
   }
 
-  function serializeCollectionField<EntityT extends EntityBase>(
-    fieldValue: any[],
-    selectable: CollectionField<EntityT>
-  ) {
-    if (selectable._fieldType instanceof EdmTypeField) {
-      const edmType = selectable._fieldType.edmType;
-      return fieldValue.map(v => tsToEdm(v, edmType));
+  function serializeCollectionField<
+    EntityT extends EntityBase,
+    FieldT extends EdmTypeShared<'any'> | Record<string, any>
+  >(fieldValue: any[], field: CollectionField<EntityT, FieldT>) {
+    const fieldType = field._fieldType;
+    if (isEdmType(fieldType)) {
+      return fieldValue.map(val => tsToEdm(val, fieldType));
     }
-    if (selectable._fieldType instanceof ComplexTypeField) {
-      const complexTypeField = selectable._fieldType;
-      return fieldValue.map(v =>
-        serializeComplexTypeFieldLegacy(complexTypeField, v)
-      );
+    if (isComplexTypeNameSpace(fieldType)) {
+      return fieldValue.map(val => serializeComplexType(val, fieldType));
     }
   }
 

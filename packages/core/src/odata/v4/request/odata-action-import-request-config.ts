@@ -12,7 +12,7 @@ export class ODataActionImportRequestConfig<
    * Creates an instance of ODataActionImportRequestConfig.
    *
    * @param defaultServicePath - Default path of the service
-   * @param actionImportName - The name of the function import.
+   * @param actionImportName - The name of the action import.
    * @param parameters - Object containing the parameters with a value and additional meta information
    */
   constructor(

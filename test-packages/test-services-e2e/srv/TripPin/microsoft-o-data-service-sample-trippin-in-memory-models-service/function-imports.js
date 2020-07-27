@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.getNearestAirport = exports.getPersonWithMostFriends = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -17,7 +16,7 @@ var Airports_1 = require("./Airports");
  */
 function getPersonWithMostFriends(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('get', 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', function (data) { return v4_1.transformReturnValueForEntity(data, People_1.People); }, params);
+    return new v4_1.FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', function (data) { return v4_1.transformReturnValueForEntity(data, People_1.People); }, params);
 }
 exports.getPersonWithMostFriends = getPersonWithMostFriends;
 /**
@@ -31,7 +30,7 @@ function getNearestAirport(parameters) {
         lat: new v4_1.FunctionImportParameter('lat', 'Edm.Double', parameters.lat),
         lon: new v4_1.FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
     };
-    return new v4_1.FunctionImportRequestBuilder('get', 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', function (data) { return v4_1.transformReturnValueForEntity(data, Airports_1.Airports); }, params);
+    return new v4_1.FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', function (data) { return v4_1.transformReturnValueForEntity(data, Airports_1.Airports); }, params);
 }
 exports.getNearestAirport = getNearestAirport;
 exports.functionImports = {

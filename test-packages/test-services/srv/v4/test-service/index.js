@@ -1,44 +1,37 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
-};
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-__exportStar(require("./TestEntity"), exports);
-__exportStar(require("./TestEntityMultiLink"), exports);
-__exportStar(require("./TestEntityOtherMultiLink"), exports);
-__exportStar(require("./TestEntityLvl2MultiLink"), exports);
-__exportStar(require("./TestEntitySingleLink"), exports);
-__exportStar(require("./TestEntityLvl2SingleLink"), exports);
-__exportStar(require("./TestEntityCircularLinkParent"), exports);
-__exportStar(require("./TestEntityCircularLinkChild"), exports);
-__exportStar(require("./TestEntityEndsWith"), exports);
-__exportStar(require("./TestEntityEndsWithSomethingElse"), exports);
-__exportStar(require("./TestEntityRequestBuilder"), exports);
-__exportStar(require("./TestEntityMultiLinkRequestBuilder"), exports);
-__exportStar(require("./TestEntityOtherMultiLinkRequestBuilder"), exports);
-__exportStar(require("./TestEntityLvl2MultiLinkRequestBuilder"), exports);
-__exportStar(require("./TestEntitySingleLinkRequestBuilder"), exports);
-__exportStar(require("./TestEntityLvl2SingleLinkRequestBuilder"), exports);
-__exportStar(require("./TestEntityCircularLinkParentRequestBuilder"), exports);
-__exportStar(require("./TestEntityCircularLinkChildRequestBuilder"), exports);
-__exportStar(require("./TestEntityEndsWithRequestBuilder"), exports);
-__exportStar(require("./TestEntityEndsWithSomethingElseRequestBuilder"), exports);
-__exportStar(require("./TestComplexBaseType"), exports);
-__exportStar(require("./TestComplexType"), exports);
-__exportStar(require("./TestNestedComplexType"), exports);
-__exportStar(require("./TestLvl2NestedComplexType"), exports);
-__exportStar(require("./function-imports"), exports);
-__exportStar(require("./BatchRequest"), exports);
+__export(require("./TestEntity"));
+__export(require("./TestEntityMultiLink"));
+__export(require("./TestEntityOtherMultiLink"));
+__export(require("./TestEntityLvl2MultiLink"));
+__export(require("./TestEntitySingleLink"));
+__export(require("./TestEntityLvl2SingleLink"));
+__export(require("./TestEntityCircularLinkParent"));
+__export(require("./TestEntityCircularLinkChild"));
+__export(require("./TestEntityEndsWith"));
+__export(require("./TestEntityEndsWithSomethingElse"));
+__export(require("./TestEntityRequestBuilder"));
+__export(require("./TestEntityMultiLinkRequestBuilder"));
+__export(require("./TestEntityOtherMultiLinkRequestBuilder"));
+__export(require("./TestEntityLvl2MultiLinkRequestBuilder"));
+__export(require("./TestEntitySingleLinkRequestBuilder"));
+__export(require("./TestEntityLvl2SingleLinkRequestBuilder"));
+__export(require("./TestEntityCircularLinkParentRequestBuilder"));
+__export(require("./TestEntityCircularLinkChildRequestBuilder"));
+__export(require("./TestEntityEndsWithRequestBuilder"));
+__export(require("./TestEntityEndsWithSomethingElseRequestBuilder"));
+__export(require("./TestComplexBaseType"));
+__export(require("./TestComplexType"));
+__export(require("./TestNestedComplexType"));
+__export(require("./TestLvl2NestedComplexType"));
+__export(require("./function-imports"));
+__export(require("./BatchRequest"));
 //# sourceMappingURL=index.js.map

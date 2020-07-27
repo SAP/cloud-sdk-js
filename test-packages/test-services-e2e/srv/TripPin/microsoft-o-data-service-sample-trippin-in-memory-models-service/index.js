@@ -1,32 +1,25 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
-};
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-__exportStar(require("./People"), exports);
-__exportStar(require("./Airlines"), exports);
-__exportStar(require("./Airports"), exports);
-__exportStar(require("./NewComePeople"), exports);
-__exportStar(require("./PeopleRequestBuilder"), exports);
-__exportStar(require("./AirlinesRequestBuilder"), exports);
-__exportStar(require("./AirportsRequestBuilder"), exports);
-__exportStar(require("./NewComePeopleRequestBuilder"), exports);
-__exportStar(require("./Location"), exports);
-__exportStar(require("./City"), exports);
-__exportStar(require("./AirportLocation"), exports);
-__exportStar(require("./EventLocation"), exports);
-__exportStar(require("./function-imports"), exports);
-__exportStar(require("./BatchRequest"), exports);
+__export(require("./People"));
+__export(require("./Airlines"));
+__export(require("./Airports"));
+__export(require("./NewComePeople"));
+__export(require("./PeopleRequestBuilder"));
+__export(require("./AirlinesRequestBuilder"));
+__export(require("./AirportsRequestBuilder"));
+__export(require("./NewComePeopleRequestBuilder"));
+__export(require("./Location"));
+__export(require("./City"));
+__export(require("./AirportLocation"));
+__export(require("./EventLocation"));
+__export(require("./function-imports"));
+__export(require("./BatchRequest"));
 //# sourceMappingURL=index.js.map

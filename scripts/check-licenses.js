@@ -16,7 +16,6 @@ const allowedLicenses = [
   'GPL-3.0'
 ];
 
-//  \"@sap/edm-converters@1.0.21;@sap/xsenv@2.2.0;weak-map@1.0.5\"
 checker.init(
   {
     start: path.resolve(__dirname, '..'),
@@ -49,5 +48,6 @@ function isAllowedLicense(licenses) {
 }
 
 function isSapDependency(dependency) {
-  return dependency.startsWith('@sap');
+  const [scope] = dependency.split('/');
+  return scope === '@sap' || scope === '@sap-cloud-sdk';
 }

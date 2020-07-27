@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.functionImports = exports.testFunctionImportWithDifferentName = exports.testFunctionImportMultipleParams = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *

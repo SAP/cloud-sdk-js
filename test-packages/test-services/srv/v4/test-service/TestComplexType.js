@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TestComplexType = exports.TestComplexTypeField = exports.createTestComplexType = void 0;
 var TestNestedComplexType_1 = require("./TestNestedComplexType");
 var v4_1 = require("@sap-cloud-sdk/core/v4");
 /**

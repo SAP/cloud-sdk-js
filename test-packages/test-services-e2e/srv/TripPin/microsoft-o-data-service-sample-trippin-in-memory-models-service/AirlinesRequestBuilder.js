@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AirlinesRequestBuilder = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *

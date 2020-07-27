@@ -1,8 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EdmTypeShared } from '../../common/edm-types';
+export {
+  FunctionImportParameter as ActionImportParameter,
+  FunctionImportParameters as ActionImportParameters
+} from '../../common/request';
 
-export {FunctionImportParameter as ActionImportParameter,FunctionImportParameters as ActionImportParameters} from '../../common/request'
-
-//TODO
-//base for request builder (v2 with method) get post fix for v4
+// TODO
+// base for request builder (v2 with method) get post fix for v4

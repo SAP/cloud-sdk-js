@@ -19,7 +19,7 @@ keywords:
 ## Supported OData versions
 | Version  | SAP Cloud SDK  |
 |----------|------------------|
-| OData v2 | &#10003;         |
+| OData 2.0 | &#10003;         |
 | OData v4 | &#10003;         |
 
 

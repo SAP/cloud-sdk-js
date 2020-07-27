@@ -292,7 +292,7 @@ Replace the placeholder `${sapjco-version}` with the JCo version you downloaded.
 :::
 
 #### Add JCo Library to System Path
-Open the file `javadoc/installation.html` from the extracted JCo archive and follow the installation instructions. Essentially you have to add the directory where you extracted the JCo archive to to one system environment variable. The variable name depends on your operating system. 
+Open the file `javadoc/installation.html` from the extracted JCo archive and follow the installation instructions. Essentially you have to add the directory where you extracted the JCo archive to one system environment variable. The variable name depends on your operating system. 
 - For Windows, add the directory which contains the downloaded JCo archive to the system environment variable `PATH`.
 - For MacOS, add the directory which contains the downloaded JCo archive to the system environment variable `DYLD_LIBRARY_PATH`.
 

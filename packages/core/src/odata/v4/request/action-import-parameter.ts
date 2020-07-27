@@ -2,28 +2,7 @@
 
 import { EdmTypeShared } from '../../common/edm-types';
 
-/**
- * Internal representation of action import parameters. It adds metadata to the value.
- * @typeparam ValueT - Type of the value
- */
-export class ActionImportParameter<ValueT> {
-  /**
-   * Creates an instance of ActionImportParameter.
-   * @param originalName - The original name of the parameter in the OData service
-   * @param edmType - Original edm Type
-   * @param value - Value to be used as parameter
-   */
-  constructor(
-    public originalName: string,
-    public edmType: EdmTypeShared<'any'>,
-    public value: ValueT
-  ) {}
-}
+export {FunctionImportParameter as ActionImportParameter,FunctionImportParameters as ActionImportParameters} from '../../common/request'
 
-/**
- * Internal representation of all parameters of a action import as a map
- * @typeparam ParametersT - External represenation of all parameters
- */
-export type ActionImportParameters<ParametersT> = {
-  [K in keyof ParametersT]: ActionImportParameter<ParametersT[K]>;
-};
+//TODO
+//base for request builder (v2 with method) get post fix for v4

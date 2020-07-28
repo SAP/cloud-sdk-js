@@ -30,7 +30,7 @@ describe('action import request builder', () => {
   it('should call simple action.', async () => {
     mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
 
-    nock(host).post(`${servicePath}/${actionName}`).reply(204);
+    nock(host).post(`${servicePath}/${actionName}?$format=json`).reply(204);
 
     const result = await myActionReturnVoid.execute(destination);
     expect(result).toBe(undefined);

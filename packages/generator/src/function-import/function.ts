@@ -56,7 +56,7 @@ function getFunctionImportStatements(
       ? getFunctionImportRequestBuilderArgumentsV2(functionImport, service)
       : getFunctionImportRequestBuilderArgumentsV4(functionImport, service);
   const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(
-    ','
+    ', '
   )});`;
 
   return context + '\n\n' + returnStatement;

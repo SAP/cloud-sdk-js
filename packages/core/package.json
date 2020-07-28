@@ -26,7 +26,7 @@
   ],
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
-    "compile": "yarn tsc -b",
+    "compile": "yarn tsc",
     "prepare": "yarn compile",
     "postinstall": "node usage-analytics.js",
     "test": "yarn jest --coverage",

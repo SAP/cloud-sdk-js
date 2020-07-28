@@ -23,7 +23,7 @@
   ],
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
-    "compile": "yarn tsc -b",
+    "compile": "yarn tsc",
     "prepare": "yarn compile",
     "test": "yarn jest --coverage",
     "test:local": "yarn jest --config ./jest-local.json",

@@ -7,5 +7,5 @@
 To run the tests simply execute:
 
 ```sh
-npm test
+yarn test
 ```

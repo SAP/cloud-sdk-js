@@ -23,10 +23,10 @@
   ],
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
-    "compile": "npx tsc",
-    "prepare": "npm run compile",
-    "test": "npx jest --coverage",
-    "test:local": "npx jest --config ./jest-local.json",
+    "compile": "yarn tsc -b",
+    "prepare": "yarn compile",
+    "test": "yarn jest --coverage",
+    "test:local": "yarn jest --config ./jest-local.json",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
     "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },

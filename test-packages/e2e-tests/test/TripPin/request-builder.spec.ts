@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { any } from '@sap-cloud-sdk/core/v4';
-import { People } from '../../../test-services-e2e/srv/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
+import { People } from '../../../test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
 
 const url = 'https://services.odata.org/';
 const destination = { url };

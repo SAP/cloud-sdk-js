@@ -13,5 +13,9 @@
     "test/**/*",
     "**/*.spec.ts",
     "node_modules/**/*"
+  ],
+  "references": [
+    {"path": "../core"},
+    {"path": "../util"}
   ]
 }

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "tsBuildInfoFile": "./dist/.tsbuildinfo"
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "composite": true
   },
   "include": [
     "src/**/*.ts"
@@ -13,5 +14,8 @@
     "test/**/*",
     "**/*.spec.ts",
     "node_modules/**/*"
+  ],
+  "references": [
+    {"path": "../util"}
   ]
 }

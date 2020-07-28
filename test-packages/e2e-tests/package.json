@@ -17,7 +17,7 @@
     "start:daemon": "pm2 start start.js",
     "start": "cds run",
     "deploy:to-sqlite": "cds deploy --to sqlite",
-    "test": "npx jest --coverage"
+    "test": "yarn jest --coverage"
   },
   "cds": {
     "cdsc": {

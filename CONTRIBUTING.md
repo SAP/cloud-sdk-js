@@ -2,13 +2,13 @@
 Thank you for taking your time to contribute to the SAP Cloud SDK!
 
 ## Project Structure
-This project containes multiple packages, that are managed using [lerna](https://github.com/lerna/lerna).  Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
-All dependencies of the packages are hoisted into the root project. Some of the packages are interdependent, therefore `npm install` won't work from within those packages. Run `npm install` in the root directory instead.
+This project containes multiple packages, that are managed using [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).  Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
+All dependencies that are used in more than one of the packages are hoisted into the root project. Dependencies, that occur only once and binaries will be placed in the node_modules of that specific package. Some of the packages are interdependent, therefore `yarn install` won't work from within those packages. Run `yarn install` in the root directory instead.
 
 ## Testing
 In order to run all tests, execute:
 ```sh-session
-$ npm t
+$ yarn test
 ```
 
 This will run unit tests for all our packages as well as integration tests and type tests. You can run those individually as described in the following.
@@ -17,13 +17,12 @@ This will run unit tests for all our packages as well as integration tests and t
 Unit tests shall test specific modules of a package, units that are tested for behavior.
 You can run all unit tests by executing:
 ```sh-session
-$ npm run test:unit
+$ yarn test:unit
 ```
 
-To run unit tests for a specific package enter the package directory and execute the tests there:
+To run unit tests for a specific package add the workspace name to the command. For the core package this would be:
 ```sh-session
-$ cd packages/core
-$ npm run test:unit
+$ yarn @sap-cloud-sdk/core run test
 ```
 
 ### Integration Tests
@@ -31,7 +30,7 @@ Integration tests shall test how modules behave in combination. The integration 
 
 To run the integration tests, execute:
 ```sh-session
-$ npm run test:integration
+$ yarn test:integration
 ```
 
 ### Type Tests
@@ -40,7 +39,7 @@ The type tests are located at [`test-packages/type-tests`](./test-packages/type-
 
 To run the integration tests, execute:
 ```sh-session
-$ npm run test:type
+$ yarn test:type
 ```
 
 ### Test Services
@@ -53,20 +52,13 @@ Second, we generate a transpiled version of a non-modified OData client based on
 
 If you need to extend the existing services, run the following to regenerate the OData clients.
 ```sh-session
-$ npm run generate:test-services
+$ yarn generate:test-services
 ```
-
-### Debugging tests
-You can run the tests in debug mode by running:
-```sh-session
-$ npm run test:watch-debug
-```
-The tests will then be executed on every change you make subsequently.
 
 ## Linting
 To fix all linting issues, run:
 ```sh-session
-$ npm run lint:fix
+$ yarn lint:fix
 ```
 
 ## How to contribute

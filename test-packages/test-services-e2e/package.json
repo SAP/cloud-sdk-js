@@ -3,16 +3,15 @@
   "version": "1.25.0",
   "description": "Custom Services for testing",
   "files": [
-    "srv/**/*.js",
-    "srv/**/*.js.map",
-    "srv/**/*.d.ts",
-    "srv/**/d.ts.map",
-    "srv/**/*-csn.json"
+    "**/*.js",
+    "**/*.js.map",
+    "**/*.d.ts",
+    "**/d.ts.map",
+    "**/*-csn.json"
   ],
   "private": true,
   "publishConfig": {
-    "access": "restricted",
-    "directory": "srv"
+    "access": "restricted"
   },
   "license": "Apache-2.0",
   "dependencies": {

@@ -2,7 +2,7 @@
 
 import { oDataUri } from '../uri-conversion';
 import { ActionImportParameters } from '../request/action-import-parameter';
-import { ActionAndFunctionImportRequestBuilderBase } from '../../common/request-builder/action-and-function-import-request-builder-base';
+import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
 
 /**
  * Create OData request to execute a action import.
@@ -12,7 +12,7 @@ import { ActionAndFunctionImportRequestBuilderBase } from '../../common/request-
 export class ActionImportRequestBuilder<
   ParametersT,
   ReturnT
-> extends ActionAndFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
+> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
   /**
    * Creates an instance of ActionImportRequestBuilder.
    * @param defaultServicePath - Default path for the service the action belongs to

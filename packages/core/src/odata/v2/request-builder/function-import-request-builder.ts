@@ -2,7 +2,7 @@
 
 import { FunctionImportParameters, RequestMethodType } from '../../common';
 import { oDataUri } from '../uri-conversion';
-import { ActionAndFunctionImportRequestBuilderBase } from '../../common/request-builder/action-and-function-import-request-builder-base';
+import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
 
 /**
  * Create OData request to execute a function import.
@@ -13,7 +13,7 @@ export class FunctionImportRequestBuilder<
   // reuse
   ParametersT,
   ReturnT
-> extends ActionAndFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
+> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param method - HTTP method to be used for the request

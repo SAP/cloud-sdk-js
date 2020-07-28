@@ -26,6 +26,12 @@ To start of with a clean, new project you can select [one of our archetypes](htt
 
 ## Generating a project from a maven Archetype ##
 
+
+<Tabs groupId="frameworks" defaultValue="spring" values={[
+{ label: 'Spring', value: 'spring', },
+{ label: 'TomEE', value: 'tomee', }]}>
+
+The SDK provides archetypes based on Spring and TomEE, so select whatever suits you best.
 To generate your project from a `maven` archetype you have to provide:
 
 - `groupId` - usually serves as your organization identifier, i.e. `foo.bar.cloud.app`
@@ -35,9 +41,21 @@ To generate your project from a `maven` archetype you have to provide:
 
 Now run:
 
+<TabItem value="spring">
+
+```bash
+mvn archetype:generate "-DarchetypeGroupId=com.sap.cloud.sdk.archetypes" "-DarchetypeArtifactId=scp-cf-spring" "-DarchetypeVersion=RELEASE"
+```
+
+</TabItem>
+<TabItem value="tomee">
+
 ```bash
 mvn archetype:generate "-DarchetypeGroupId=com.sap.cloud.sdk.archetypes" "-DarchetypeArtifactId=scp-cf-tomee" "-DarchetypeVersion=RELEASE"
 ```
+
+</TabItem>
+</Tabs>
 
 After providing all the interactive values to the CLI it will generate you first Cloud SDK application
 

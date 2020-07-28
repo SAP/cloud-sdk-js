@@ -20,7 +20,6 @@ import { ActionImportParameters } from '../../v4/request/action-import-parameter
  * @typeparam ReturnT - Type of the function import return value
  */
 export abstract class ActionFunctionImportRequestBuilderBase<
-  // reuse
   ParametersT,
   ReturnT
 > extends MethodRequestBuilderBase<

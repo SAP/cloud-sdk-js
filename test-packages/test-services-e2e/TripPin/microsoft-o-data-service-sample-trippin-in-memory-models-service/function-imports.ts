@@ -24,7 +24,7 @@ export function getPersonWithMostFriends(parameters: GetPersonWithMostFriendsPar
 
   }
 
-  return new FunctionImportRequestBuilder('get', 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', (data) => transformReturnValueForEntity(data, People), params);
+  return new FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', (data) => transformReturnValueForEntity(data, People), params);
 }
 
 /**
@@ -53,7 +53,7 @@ export function getNearestAirport(parameters: GetNearestAirportParameters): Func
     lon: new FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
   }
 
-  return new FunctionImportRequestBuilder('get', 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', (data) => transformReturnValueForEntity(data, Airports), params);
+  return new FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', (data) => transformReturnValueForEntity(data, Airports), params);
 }
 
 export const functionImports = {

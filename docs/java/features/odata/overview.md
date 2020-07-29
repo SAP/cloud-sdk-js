@@ -32,3 +32,7 @@ The Cloud SDK supports consumption of OData services through the following featu
 - Java Virtual Data Model (VDM): pre-generated typed OData client for [all OData services of SAP S/4HANA Cloud](https://api.sap.com/package/SAPS4HANACloud?section=Artifacts)
 
 The SDK supports both OData v2 and OData v4 protocols. However, parts of the v4 implementation are still in beta and not all features are supported yet.
+
+:::tip Improved OData VDM (Beta)
+The Cloud SDK for Java has published an improved OData VDM implementation (Beta) which boosts performance of your Java apps and lets you profit from faster innovations for both OData protocols. Check out the [VDM article](use-vdm.md) for details.
+:::

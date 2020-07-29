@@ -34,7 +34,7 @@
     "@sap-cloud-sdk/util": "^1.25.0"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^26.0.7",
     "jest": "^25.2.4",
     "jest-junit": "^11.1.0",
     "ts-jest": "^25.4.0",

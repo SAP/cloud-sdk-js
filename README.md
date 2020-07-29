@@ -49,8 +49,7 @@ $ npm install -D @sap-cloud-sdk/test-util
 ```
 
 ## Documentation
-Check out our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts)
-and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on [documentation portal](https://sap.github.io/cloud-sdk/)
+Check out our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
 
 ## How to switch to the Open Source version of the SAP Cloud SDK
 Please ignore this section, if you have never used the SAP Cloud SDK with a version `< 1.18.0`.

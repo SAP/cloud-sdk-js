@@ -21,12 +21,12 @@
   },
   "devDependencies": {
     "@types/http-proxy": "^1.17.4",
-    "@types/jest": "^26.0.7",
+    "@types/jest": "^25.1.4",
     "axios": "^0.19.2",
     "bignumber.js": "8.1.1",
     "http-proxy": "^1.18.1",
     "jest": "^25.2.4",
-    "jest-junit": "^11.1.0",
+    "jest-junit": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
     "ts-jest": "^25.4.0",
     "typescript": "~3.9.6"

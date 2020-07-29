@@ -7,9 +7,6 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
-import { serializeEntity as serializeEntityV4 } from '../../src/odata/v4/entity-serializer';
-import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
-
 describe('entity-serializer', () => {
   it('should serialize simple entity', () => {
     const testEntity = TestEntity.builder()
@@ -151,43 +148,6 @@ describe('entity-serializer', () => {
       SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',
       CustomField2: 1234
-    });
-  });
-
-  it('should serialize collection field', () => {
-    const collectionProperty = ['abc', 'def'];
-    const testEntity = TestEntityV4.builder()
-      .collectionProperty(collectionProperty)
-      .build();
-
-    expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
-      CollectionProperty: collectionProperty
-    });
-  });
-
-  it('should serialize collection field with complex type', () => {
-    const stringProp1 = 'string 1';
-    const stringProp2 = 'string 2';
-    const complexType1 = { stringProperty: stringProp1 };
-    const complexType2 = { stringProperty: stringProp2 };
-    const collectionPropWithComplexType = [complexType1, complexType2];
-    const testEntity = TestEntityV4.builder()
-      .complexTypeProperty(complexType1)
-      .complexTypeCollectionProperty(collectionPropWithComplexType)
-      .build();
-
-    expect(serializeEntityV4(testEntity, TestEntityV4)).toEqual({
-      ComplexTypeProperty: {
-        StringProperty: stringProp1
-      },
-      ComplexTypeCollectionProperty: [
-        {
-          StringProperty: stringProp1
-        },
-        {
-          StringProperty: stringProp2
-        }
-      ]
     });
   });
 });

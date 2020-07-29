@@ -11,7 +11,7 @@
     "@sap-cloud-sdk/test-services-e2e": "^1.24.0",
     "@sap/cds": ">=3.33.1",
     "express": "^4.17.1",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^4.2.0"
   },
   "scripts": {
     "start:daemon": "pm2 start start.js",
@@ -30,10 +30,10 @@
     }
   },
   "devDependencies": {
-    "@types/jest": "^26.0.7",
+    "@types/jest": "^25.1.4",
     "axios": "^0.19.2",
     "jest": "^25.2.4",
-    "jest-junit": "^11.1.0",
+    "jest-junit": "^10.0.0",
     "pm2": "^4.4.0",
     "ts-jest": "^25.4.0",
     "typescript": "~3.8.3"

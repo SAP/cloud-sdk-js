@@ -38,9 +38,6 @@ Below are generic steps for a successful contribution. The process can be adopte
 
     - Initial alignment and approvals
     - Plan contribution collaboration.
-      - Outline list of features
-      - Create delivery plan
-      -
     - Prepare and configure required assets (repositories, configuration, pipelines, etc).
     - Onboarding session with SDK team. Get to `Hello World!`
     - Start of development by the contribution team
@@ -50,7 +47,7 @@ Below are generic steps for a successful contribution. The process can be adopte
     - Iterative development process with SDK team contributing to PR reviews
     - Releasing the contribution as `Beta`
     - Iterative development. Stabilizing the API.
-    - Release the contribution as GA aka `General Availability`
+    - Release the contribution as GA `General Availability`
     - Keep functional scope up to date with customer requirements
     - Maintenance and support of the contribution by **Contribution Team** or their successors
 

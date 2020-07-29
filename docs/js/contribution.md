@@ -51,7 +51,9 @@ Below are generic steps for a successful contribution. The process can be adopte
     - Keep functional scope up to date with customer requirements
     - Maintenance and support of the contribution by **Contribution Team** or their successors
 
-## Coding convention
+## Development guidelines
+
+These section establishes best engineering practices for contributing team.
 
 ### Contribution programming language
 

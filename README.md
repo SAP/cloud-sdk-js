@@ -9,7 +9,7 @@ An SDK to reduce your development effort when building side-by-side extension ap
   - [@sap-cloud-sdk/core](#sap-cloud-sdkcore)
   - [@sap-cloud-sdk/generator](#sap-cloud-sdkgenerator)
   - [@sap-cloud-sdk/test-util](#sap-cloud-sdktest-util)
-- [API documentation](#api-documentation)
+- [API documentations](#api-documentations)
 - [How to switch to the Open Source version of the SAP Cloud SDK](#how-to-switch-to-the-open-source-version-of-the-sap-cloud-sdk)
 - [Related Projects](#related-projects)
   - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
@@ -48,8 +48,8 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
-## API documentation
-We use GitHub Pages for our API documentation, the link can be found [here](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts).
+## API documentations
+We use GitHub Pages for our API documentations, the link can be found [here](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts).
 
 ## How to switch to the Open Source version of the SAP Cloud SDK
 Please ignore this section, if you have never used the SAP Cloud SDK with a version `< 1.18.0`.

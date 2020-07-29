@@ -65,11 +65,13 @@ var Location;
     Location._propertyMetadata = [{
             originalName: 'Address',
             name: 'address',
-            type: 'Edm.String'
+            type: 'Edm.String',
+            isCollection: false
         }, {
             originalName: 'City',
             name: 'city',
-            type: City_1.City
+            type: City_1.City,
+            isCollection: false
         }];
     /**
      * Type reference to the according complex type.

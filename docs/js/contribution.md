@@ -38,7 +38,7 @@ Below are generic steps for a successful contribution. The process can be adopte
 
     - Initial alignment and approvals
     - Plan contribution collaboration.
-    - Prepare and configure required assets (repositories, configuration, pipelines, etc).
+    - Prepare and configure required assets (repositories, configuration, pipelines, etc). The SAP Cloud SDK provides templates for those assets.
     - Onboarding session with SDK team. Get to `Hello World!`
     - Start of development by the contribution team
     - SDK Team provides ongoing consulting

@@ -19,6 +19,7 @@ import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-ke
 import { Expandable } from '../../common/expandable';
 import { oDataUri } from '../uri-conversion';
 import { HttpReponse } from '../../../http-client';
+import { getSingleResult } from './response-data-accessor';
 /**
  * Create OData request to get a single entity based on its key properties. A `GetByKeyRequestBuilder` allows to restrict the response to a selection of fields,
  * where no selection is equal to selecting all fields.
@@ -75,7 +76,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
       .then(request => request.execute())
       .then(response =>
         deserializeEntity(
-          extractData(response),
+          getSingleResult(response.data),
           this._entityConstructor,
           response.headers
         )

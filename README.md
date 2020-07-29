@@ -61,7 +61,7 @@ If you are using an old version of the SAP Cloud SDK, you might want to read [ho
 To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Cloud Platform.
 
 ### Virtual Data Model (VDM)
-In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript pre-generated type-safe clients for the latest versions of the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer license. Those are not included in this project, but rely on modules from this project.
+In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the latest versions of the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer license. Those are not included in this project, but rely on modules from this project.
 
 To install an OData client for an SAP S/4HANA service run:
 

@@ -54,20 +54,6 @@ Below are generic steps for a successful contribution. The process can be adopte
     - Keep functional scope up to date with customer requirements
     - Maintenance and support of the contribution by **Contribution Team** or their successors
 
-
-### Contribution team
-
-#### Delivery plan
-  - What features
-  - Oder of feature delivery (so that we can anticipate PR sizes... else?)
-  - Basic architecture - some diagram and involved services
-  - Modules structure (CC, re-use module artifacts)
-
-
-- Setting up OS process?
-  - Coding and testing the feature?
-  - Aligning on release strategy?
-
 ## Coding convention
 
 ### Contribution programming language

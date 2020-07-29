@@ -61,8 +61,7 @@ function getPropertyMetadataInitializer(complexType: VdmComplexType): string {
         `{
         originalName: '${property.originalName}',
         name: '${property.instancePropertyName}',
-        type: ${property.isComplex ? property.jsType : `'${property.edmType}'`},
-        isCollection: ${property.isCollection}
+        type: ${property.isComplex ? property.jsType : `'${property.edmType}'`}
       }`
     )
     .join(', ')}]`;

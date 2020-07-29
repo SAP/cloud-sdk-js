@@ -101,7 +101,7 @@ export abstract class ComplexTypeField<
 /**
  * Union type to represent the parent of a complex type field. This can either be an entity constructor or another complex type field.
  */
-export type ConstructorOrField<EntityT extends EntityBase, ComplexT = any> =
+export type ConstructorOrField<EntityT extends EntityBase, ComplexT> =
   | Constructable<EntityT>
   | ComplexTypeField<EntityT, ComplexT>;
 

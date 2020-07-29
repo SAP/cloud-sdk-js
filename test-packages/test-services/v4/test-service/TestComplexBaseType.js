@@ -59,8 +59,7 @@ var TestComplexBaseType;
     TestComplexBaseType._propertyMetadata = [{
             originalName: 'BaseStringProperty',
             name: 'baseStringProperty',
-            type: 'Edm.String',
-            isCollection: false
+            type: 'Edm.String'
         }];
     /**
      * Type reference to the according complex type.

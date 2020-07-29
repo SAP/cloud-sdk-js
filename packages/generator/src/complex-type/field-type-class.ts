@@ -10,10 +10,6 @@ import {
   getComplexTypePropertyDescription
 } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
-import {
-  getGenericParameters,
-  createPropertyFieldInitializer
-} from '../generator-utils';
 
 export function fieldTypeClass(
   complexType: VdmComplexType
@@ -61,8 +57,19 @@ function property(
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName,
-    type: `${prop.fieldType}<${getGenericParameters('EntityT', prop)}>`,
-    initializer: createPropertyFieldInitializer(prop, 'this'),
+    type: `${prop.fieldType}<EntityT>`,
+    initializer: getInitializer(prop, complexType),
     docs: [getComplexTypePropertyDescription(prop, complexType.typeName)]
   };
+}
+
+// If the property is complex, we initialize the static helper with ComplexTypeField (requires only 2 parameters), otherwise we assign an Edm field constructor.
+// Keep in mind that the this pointer is the surrounding or parent field
+function getInitializer(
+  prop: VdmProperty,
+  complexType: VdmComplexType
+): string {
+  return prop.isComplex
+    ? `new ${prop.fieldType}('${prop.originalName}', this)`
+    : `new ${prop.fieldType}('${prop.originalName}', this, '${prop.edmType}')`;
 }

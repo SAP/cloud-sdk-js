@@ -73,18 +73,15 @@ export namespace EventLocation {
   export const _propertyMetadata: PropertyMetadata[] = [{
     originalName: 'BuildingInfo',
     name: 'buildingInfo',
-    type: 'Edm.String',
-    isCollection: false
+    type: 'Edm.String'
   }, {
     originalName: 'Address',
     name: 'address',
-    type: 'Edm.String',
-    isCollection: false
+    type: 'Edm.String'
   }, {
     originalName: 'City',
     name: 'city',
-    type: City,
-    isCollection: false
+    type: City
   }];
   /**
    * Type reference to the according complex type.

@@ -69,18 +69,15 @@ var City;
     City._propertyMetadata = [{
             originalName: 'Name',
             name: 'name',
-            type: 'Edm.String',
-            isCollection: false
+            type: 'Edm.String'
         }, {
             originalName: 'CountryRegion',
             name: 'countryRegion',
-            type: 'Edm.String',
-            isCollection: false
+            type: 'Edm.String'
         }, {
             originalName: 'Region',
             name: 'region',
-            type: 'Edm.String',
-            isCollection: false
+            type: 'Edm.String'
         }];
     /**
      * Type reference to the according complex type.

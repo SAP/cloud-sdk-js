@@ -5,6 +5,8 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
+import { deserializeEntity as deserializeEntityV4 } from '../../src/odata/v4/entity-deserializer';
+import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {
@@ -120,6 +122,51 @@ describe('entity-deserializer', () => {
       );
 
       expect(actual).toEqual(expected);
+    });
+
+    it('should deserialize an entity with collection of string properties', () => {
+      const collectionProperty = ['abc', 'def'];
+      const testEntity = new TestEntityV4();
+      testEntity.collectionProperty = collectionProperty;
+
+      const response = {
+        CollectionProperty: collectionProperty
+      };
+
+      expect(deserializeEntityV4(response, TestEntityV4)).toEqual(testEntity);
+    });
+
+    it('should deserialize an entity with collection of complex properties', () => {
+      const stringProp1 = 'string 1';
+      const stringProp2 = 'string 2';
+
+      const expectedWithCollection = new TestEntityV4();
+      expectedWithCollection.complexTypeProperty = {
+        stringProperty: stringProp1
+      };
+      expectedWithCollection.complexTypeCollectionProperty = [
+        { stringProperty: stringProp1 },
+        { stringProperty: stringProp2 }
+      ];
+
+      const actual = deserializeEntityV4(
+        {
+          ComplexTypeProperty: {
+            StringProperty: stringProp1
+          },
+          ComplexTypeCollectionProperty: [
+            {
+              StringProperty: stringProp1
+            },
+            {
+              StringProperty: stringProp2
+            }
+          ]
+        },
+        TestEntityV4
+      );
+
+      expect(actual).toEqual(expectedWithCollection);
     });
   });
 });

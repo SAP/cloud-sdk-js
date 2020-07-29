@@ -59,8 +59,7 @@ var TestLvl2NestedComplexType;
     TestLvl2NestedComplexType._propertyMetadata = [{
             originalName: 'StringProperty',
             name: 'stringProperty',
-            type: 'Edm.String',
-            isCollection: false
+            type: 'Edm.String'
         }];
     /**
      * Type reference to the according complex type.

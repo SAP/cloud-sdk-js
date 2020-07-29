@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { CollectionField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time } from '@sap-cloud-sdk/core/v4';
+import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time } from '@sap-cloud-sdk/core/v4';
 /**
  * TestComplexType
  */
@@ -86,16 +86,6 @@ export interface TestComplexType {
      * @nullable
      */
     complexTypeProperty?: TestNestedComplexType;
-    /**
-     * Collection String Property.
-     * @nullable
-     */
-    collectionStringProperty?: string[];
-    /**
-     * Collection Complex Type Property.
-     * @nullable
-     */
-    collectionComplexTypeProperty?: TestNestedComplexType[];
     /**
      * Base String Property.
      * @nullable
@@ -191,16 +181,6 @@ export declare class TestComplexTypeField<EntityT extends Entity> extends Comple
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     complexTypeProperty: TestNestedComplexTypeField<EntityT>;
-    /**
-     * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    collectionStringProperty: CollectionField<EntityT, 'Edm.String'>;
-    /**
-     * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    collectionComplexTypeProperty: CollectionField<EntityT, TestNestedComplexType>;
     /**
      * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

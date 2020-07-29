@@ -48,10 +48,7 @@
     "check:vulnerability": "yarn audit-ci -h",
     "bump:patch": "yarn lerna version patch --force-publish -y",
     "bump:minor": "yarn lerna version minor --force-publish -y",
-    "check:circular": "yarn madge --circular ./packages/core",
-    "core": "yarn workspace @sap-cloud-sdk/core",
-    "util": "yarn workspace @sap-cloud-sdk/util",
-    "generator": "yarn workspace @sap-cloud-sdk/generator"
+    "check:circular": "yarn madge --circular ./packages/core"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.3.8",

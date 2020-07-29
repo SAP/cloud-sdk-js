@@ -116,10 +116,7 @@ export function entityDeserializer(
       return json[field._fieldName];
     }
     if (field instanceof CollectionField) {
-      return deserializeCollectionType(
-        json[field._fieldName],
-        field._fieldType
-      );
+      return deserializeCollectionType(json[field._fieldName], field);
     }
   }
 
@@ -205,12 +202,7 @@ export function entityDeserializer(
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof json[property.originalName] !== 'undefined' && {
-          [property.name]: property.isCollection
-            ? deserializeCollectionType(
-                json[property.originalName],
-                property.type
-              )
-            : isComplexTypeNameSpace(property.type)
+          [property.name]: isComplexTypeNameSpace(property.type)
             ? deserializeComplexType(json[property.originalName], property.type)
             : edmToTs(json[property.originalName], property.type)
         })
@@ -222,8 +214,10 @@ export function entityDeserializer(
   }
 
   function deserializeCollectionType<
+    EntityT extends EntityBase,
     FieldT extends EdmTypeShared<'any'> | Record<string, any>
-  >(json: any[], fieldType: FieldT) {
+  >(json: any[], field: CollectionField<EntityT, FieldT>) {
+    const fieldType = field._fieldType;
     if (isEdmType(fieldType)) {
       return json.map(val => edmToTs(val, fieldType));
     }

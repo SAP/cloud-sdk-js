@@ -5,6 +5,5 @@ import { tsToEdm } from './payload-value-converter';
 const serializer = entitySerializer(tsToEdm);
 
 export const serializeEntity = serializer.serializeEntity;
-export const serializeComplexType = serializer.serializeComplexType;
 export const serializeEntityNonCustomFields =
   serializer.serializeEntityNonCustomFields;

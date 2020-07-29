@@ -10,7 +10,6 @@ export interface PropertyMetadata {
   name: string;
   originalName: string;
   type: EdmTypeShared<'any'> | ComplexTypeNamespace<any>;
-  isCollection?: boolean;
 }
 
 export function isComplexTypeNameSpace(

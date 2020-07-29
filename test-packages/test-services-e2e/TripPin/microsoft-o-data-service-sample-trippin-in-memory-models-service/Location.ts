@@ -63,13 +63,11 @@ export namespace Location {
   export const _propertyMetadata: PropertyMetadata[] = [{
     originalName: 'Address',
     name: 'address',
-    type: 'Edm.String',
-    isCollection: false
+    type: 'Edm.String'
   }, {
     originalName: 'City',
     name: 'city',
-    type: City,
-    isCollection: false
+    type: City
   }];
   /**
    * Type reference to the according complex type.

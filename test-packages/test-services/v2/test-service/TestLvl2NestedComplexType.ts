@@ -52,8 +52,7 @@ export namespace TestLvl2NestedComplexType {
   export const _propertyMetadata: PropertyMetadata[] = [{
     originalName: 'StringProperty',
     name: 'stringProperty',
-    type: 'Edm.String',
-    isCollection: false
+    type: 'Edm.String'
   }];
   /**
    * Type reference to the according complex type.

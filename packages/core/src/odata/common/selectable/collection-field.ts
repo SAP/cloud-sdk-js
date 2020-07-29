@@ -1,11 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EntityBase } from '../entity';
+import { EntityBase, Constructable } from '../entity';
 import { EdmTypeShared } from '../edm-types';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { Field } from './field';
 import { ComplexTypeNamespace } from './complex-type-namespace';
-import { ConstructorOrField, getEntityConstructor } from './complex-type-field';
 
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
@@ -27,9 +26,9 @@ export class CollectionField<
 
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    entityConstructor: Constructable<EntityT>,
     readonly _fieldType: FieldT | ComplexTypeNamespace<FieldT>
   ) {
-    super(fieldName, getEntityConstructor(fieldOf));
+    super(fieldName, entityConstructor);
   }
 }

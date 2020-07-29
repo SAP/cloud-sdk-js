@@ -89,8 +89,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |
-          git update-index --assume-unchanged .yarnrc
-          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .yarnrc
+          git update-index --assume-unchanged .yarnrc.yml
+          echo 'npmAuthToken: "${NPM_TOKEN}""' >> .yarnrc.yml
           npx lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid `git rev-parse --short HEAD` -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

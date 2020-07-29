@@ -65,7 +65,7 @@ To maintain a consistent API strategy, contribution and SDK teams align on the A
 
     - The repository is created on Github under SAP Organization by the contribution team
     - SDK and contribution team co-own the repository and have full access rights to it
-    - SDK team provides a repository structure if needed. It's preferable in most cases.
+    - SDK team provides a repository structure and initial content as needed. This helps the contribution team to kick-start their pipeline.
     - SDK team can audit repository settings and require reasonable updates to the configuration
 
 ### Introducing dependencies

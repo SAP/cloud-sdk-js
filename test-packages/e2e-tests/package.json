@@ -11,7 +11,7 @@
     "@sap-cloud-sdk/test-services-e2e": "^1.24.0",
     "@sap/cds": ">=3.33.1",
     "express": "^4.17.1",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^5.0.0"
   },
   "scripts": {
     "start:daemon": "pm2 start start.js",

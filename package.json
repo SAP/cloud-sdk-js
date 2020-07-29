@@ -67,7 +67,7 @@
     "glob": "^7.1.6",
     "jest": "^25.2.4",
     "jest-junit": "^11.1.0",
-    "lerna": "^3.20.2",
+    "lerna": "^3.22.1",
     "license-checker": "^25.0.1",
     "madge": "^3.9.2",
     "nock": "^13.0.2",
@@ -80,6 +80,7 @@
   },
   "dependencies": {},
   "resolutions": {
-    "@types/node": "^12.0.0"
+    "@types/node": "^12.0.0",
+    "dot-prop": "^5.1.1"
   }
 }

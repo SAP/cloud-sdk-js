@@ -103,7 +103,7 @@ Request parameters:
 - Update and delete operations allow to modify how ETags are handled:
    - By default an ETag is send if one is present on the entity being modified.
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
-- All operations allow for adding custom headers via `withheader(...)`
+- All operations allow for adding custom headers via `withHeader(...)`
 
 </TabItem>
 

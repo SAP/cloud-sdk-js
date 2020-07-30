@@ -27,7 +27,7 @@
     "prepare": "yarn compile",
     "test": "yarn jest --coverage --runInBand",
     "test:local": "yarn jest --config ./jest-local.json",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json"
+    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand --config ./jest-local.json"
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.25.0",

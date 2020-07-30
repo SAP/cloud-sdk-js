@@ -32,14 +32,6 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 [Release Blog](https://blogs.sap.com/?p=1154386)
 
-## Compatibility Notes
-
-- To use Integration Objects, consumers must upgrade the CAP versions to avoid any issues in consumption:
-```
-  <cds4j.version>1.11.0</cds4j.version>
-  <cds.services.version>1.7.0</cds.services.version>
-```
-
 ## New Functionality
 
 - OData 4.0: Extract version identifiers from the `ETag` header in case of create and update operations. Now result entities obtained via `ModificationRespnse#getResponseEntity()` will contain a version identifier. It will be sent as `IF-MATCH` header in subsequent update and delete operations.  

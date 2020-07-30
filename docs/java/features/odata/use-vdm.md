@@ -520,9 +520,6 @@ catch( ODataErrorResponseException e ) {
     // ...
 }
 ```
-
-Note that instead of applying `try/catch` one can also make use of `tryExecute` on the request builders.
-
 </TabItem>
 </Tabs>
 
@@ -633,7 +630,7 @@ POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartne
 ## Switch to improved OData VDM (Beta)
 The SAP Cloud SDK released an experimental new OData VDM implementation while the OData VDM API remains stable. The new implementation improves performance of your Java apps by avoiding unnecessary OData metadata calls and thereby saving roundtrips to the backend system. Also, the Cloud SDK team implemented an OData client library that serves both OData V2 and V4 protocols. Consequently, this approach allows for faster delivery of new features in the future. Note that this new implementation is in Beta state. We'll announce the production readiness explicitly in our release channels.
 
-Here is you how switch to use the implementation.
+Here is how to switch to the improved implementation:
 - For any operation type, replace any call to `execute` with `executeRequest`.
 ```java
 service.createBusinessPartner(partner).executeRequest(destination);

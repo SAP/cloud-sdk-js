@@ -1,7 +1,7 @@
 ---
-id: contribution-model-sap-cloud-sdk-for-javascript-typescript
-title: Contribution model
-sidebar_label: Contribution model
+id: extension-model-sap-cloud-sdk-for-javascript-typescript
+title: Extension model
+sidebar_label: Extension model
 description:
 keywords:
 - sap
@@ -10,13 +10,14 @@ keywords:
 - cloud native
 - cloud sdk
 - sap cloud sdk
+- extension
 ---
 
 ## Introduction
 
-SAP Cloud SDK for JavaScript welcomes contributions that bring value to SDK users by simplifying and/or improving cloud application development within the SAP ecosystem. The contributed feature or API library becomes a part of SDK and is released under the SAP Cloud SDK umbrella into `@sap-cloud-sdk` to the [npmjs.com](https://www.npmjs.com/).
+SAP Cloud SDK for JavaScript welcomes extensions that bring value to SDK users by simplifying and/or improving cloud application development within the SAP ecosystem. The contributed feature or API library becomes an extension of SDK and is released under the SAP Cloud SDK umbrella into the `@sap-cloud-sdk` scope in [npmjs.com](https://www.npmjs.com/).
 
-Most modules of the SAP Cloud SDK for JavaScript are Open Source released under Apache 2.0 license. It's preferred, but not mandatory that contribution happens under the same conditions.
+The core modules of the SAP Cloud SDK for JavaScript are released under the Apache 2.0 open source license. SAP Cloud SDK extensions should also be open source with Apache 2.0. If this is not possible, e. g. for legal reasons, licensing has to be clarified in person.
 
 ## Roles
 
@@ -45,9 +46,9 @@ Below are generic steps for a successful contribution. The process can be adopte
     - Regular syncs on development and organizational topics
     - Successful PoC
     - Iterative development process with SDK team contributing to PR reviews
-    - Releasing the contribution as `Beta`
+    - Releasing the contribution as "Beta"
     - Iterative development. Stabilizing the API.
-    - Release the contribution as GA `General Availability`
+    - Release the contribution with "General Availability" (GA)
     - Keep functional scope up to date with customer requirements
     - Maintenance and support of the contribution by **Contribution Team** or their successors
 
@@ -81,7 +82,6 @@ To maintain a consistent API strategy, contribution and SDK teams align on the A
     - Most of the coding convention rules should be enforced by automated code checkers and linters like ESLint and Prettier
     - Enforcement happens via continuous integration pipeline
     - SDK team provides guidelines on coding conventions that can't be automatically enforced
-    - SDK team shares documentation on standard patterns chosen by SDK for ... (what patterns do we use?)
 
 ### Pull requests
 
@@ -133,7 +133,7 @@ SAP Cloud SDK for JavaScript has two types of documentation:
 
     - Open-source modules of Cloud SDK for Java are licensed under Apache 2.0
     - The contribution must have the same license applied
-    - Other cases have to be explicitly discussed and approved by the SDK team
+    - Other cases have to be explicitly discussed
 
 
 ## Support

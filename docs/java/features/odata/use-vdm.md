@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 The typed OData client allows to build type-safe OData requests for a given service. The Java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
 
 :::tip Improved OData VDM (Beta)
-The Cloud SDK for Java has published an improved OData VDM implementation (Beta) which boosts performance of your Java apps by avoiding unncessary metadata calls. Also, both OData V2 and V4 implementations now share the same underlying odata client library and thereby you profit from faster innovations for both protocol versions. Check out the code snippets below under the tab _OData V2 (Beta)_ and the brief [migration guide](#migrate-to-improved-odata-vdm-beta).
+The Cloud SDK for Java has published an improved OData VDM implementation (Beta) which boosts performance of your Java apps by avoiding unncessary metadata calls. Also, both OData V2 and V4 implementations now share the same underlying odata client library and thereby you profit from faster innovations for both protocol versions. Check out the code snippets below under the tab _OData V2 (Beta)_ and the brief [adjustment guide](#switch-to-improved-odata-vdm-beta).
 :::
 
 ## Using the Fluent API ##

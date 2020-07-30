@@ -470,7 +470,7 @@ try { ... }
 }
 ```
 
-This handling is the most generic, handling all possible failures. For more specific information there are dedicated exceptions inheriting from `ODataException`. Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odatav4/exception/ODataException.html) for all the exception types.
+This handling is the most generic, handling all possible failures. For more specific information there are dedicated exceptions inheriting from `ODataException`. Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/client/exception/ODataException.html) for all the exception types.
 
 In order to handle different kinds of failure one can list multiple catch clauses to cover different levels or cases that might occur, e.g.:
 
@@ -495,7 +495,33 @@ Coming soon
 </TabItem>
 <TabItem value="v2-beta">
 
-Coming soon
+Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `execute` methods may throw a runtime exception (extending) `ODataException`. This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. To handle all kind of failures consider the following code:
+
+```java
+try { ... }
+ catch( final ODataException e ) {
+    ODataQueryGeneric query = e.getQuery();
+    logger.debug("The following query failed: {}", query);
+    // do something else
+}
+```
+
+This handling is the most generic, handling all possible failures. For more specific information there are dedicated exceptions inheriting from `ODataException`. Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/client/exception/ODataException.html) for all the exception types.
+
+In order to handle different kinds of failure one can list multiple catch clauses to cover different levels or cases that might occur, e.g.:
+
+```java
+try { ... }
+catch( ODataErrorResponseException e ) {
+    // ...
+} catch( ODataRequestException e ) {
+    // ...
+} catch( ODataDeserializationException e ) {
+    // ...
+}
+```
+
+Note that instead of applying `try/catch` one can also make use of `tryExecute` on the request builders.
 
 </TabItem>
 </Tabs>
@@ -604,35 +630,18 @@ POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartne
 </TabItem>
 </Tabs>
 
-## Migrate to improved OData VDM (Beta)
-The SAP Cloud SDK released an experimental new OData VDM implementation. It improves performance of your Java apps by avoiding unnecessary OData metadata calls and thereby saving roundtrips to the backend system. Also, the Cloud SDK team implemented an OData client library that serves both OData V2 and V4 protocols. Consequently, this approach allows for faster delivery of new features in the future. Note that this new implementation is in Beta state. We'll announce the production readiness explicitly in our release channels.
+## Switch to improved OData VDM (Beta)
+The SAP Cloud SDK released an experimental new OData VDM implementation while the OData VDM API remains stable. The new implementation improves performance of your Java apps by avoiding unnecessary OData metadata calls and thereby saving roundtrips to the backend system. Also, the Cloud SDK team implemented an OData client library that serves both OData V2 and V4 protocols. Consequently, this approach allows for faster delivery of new features in the future. Note that this new implementation is in Beta state. We'll announce the production readiness explicitly in our release channels.
 
-The following steps outline how to migrate your existing code to leverage the improved OData VDM implementation.
-
-:::note
-We  distinguish the operation types _Create_, _Delete_, _Update_, _Get All Entities_ and _Get Entity By Key_.
-:::
+Here is you how switch to use the 
 - For any operation type, replace any call to `execute` with `executeRequest`.
 ```java
-//Current OData VDM 
-service.createBusinessPartner(partner).execute(destination);
-
-//Improved OData VDM
 service.createBusinessPartner(partner).executeRequest(destination);
 ```
 - For _Create_ and _Update_ operations, call `getModifiedEntity()` to obtain the created entity representation.
 ```java
-//Current OData VDM - Create
-final BusinessPartner partner = service.createBusinessPartner(partner).execute(destination);
-//Current OData VDM - Update
-final BusinessPartner partner = service.updateBusinessPartner(partner).execute(destination);
-
-//Improved OData VDM - Create
 final BusinessPartner partner = service.createBusinessPartner(partner).executeRequest(destination).getModifiedEntity();
-//Improved OData VDM - Update
-final BusinessPartner partner = service.updateBusinessPartner(partner).executeRequest(destination).getModifiedEntity();
 ```
-- For _Delete_, _Get All Entities_ and _Get Entity By Key_ operations you do **not** need to call an additional method after `executeRequest`.
-- Remove any call to `cachingMetadata()` and `withoutCachingMetadata()` as they do not have any effect any longer.
-- Any `ErrorResultHandler` registered by `withErrorHandler()` does not have any effect. Hence, extend your error handling on a different level accordingly.
-- Unlike `execute` from the current VDM, `executeRequest` from the improved VDM does not declare a checked exception. Instead it throws the runtime exception `ODataException` or respective sub classes. Hence, adjust your exception handling as described under the tab _OData V4_ in the section [Error Handling](#error-handling)
+- `executeRequest` throws the runtime exception `ODataException` and respective sub classes. Hence, adjust your exception handling as described under the tab _OData V2 (Beta)_ in the section [Error Handling](#error-handling). Note that any `ErrorResultHandler` registered by `withErrorHandler()` is not considered.
+- Remove any call to `cachingMetadata()` and `withoutCachingMetadata()` as they are obsolete.
+

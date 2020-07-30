@@ -70,15 +70,18 @@ var EventLocation;
     EventLocation._propertyMetadata = [{
             originalName: 'BuildingInfo',
             name: 'buildingInfo',
-            type: 'Edm.String'
+            type: 'Edm.String',
+            isCollection: false
         }, {
             originalName: 'Address',
             name: 'address',
-            type: 'Edm.String'
+            type: 'Edm.String',
+            isCollection: false
         }, {
             originalName: 'City',
             name: 'city',
-            type: City_1.City
+            type: City_1.City,
+            isCollection: false
         }];
     /**
      * Type reference to the according complex type.

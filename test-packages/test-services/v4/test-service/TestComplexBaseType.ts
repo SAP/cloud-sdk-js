@@ -52,7 +52,8 @@ export namespace TestComplexBaseType {
   export const _propertyMetadata: PropertyMetadata[] = [{
     originalName: 'BaseStringProperty',
     name: 'baseStringProperty',
-    type: 'Edm.String'
+    type: 'Edm.String',
+    isCollection: false
   }];
   /**
    * Type reference to the according complex type.

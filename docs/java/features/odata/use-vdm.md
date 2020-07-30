@@ -633,14 +633,16 @@ POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartne
 ## Switch to improved OData VDM (Beta)
 The SAP Cloud SDK released an experimental new OData VDM implementation while the OData VDM API remains stable. The new implementation improves performance of your Java apps by avoiding unnecessary OData metadata calls and thereby saving roundtrips to the backend system. Also, the Cloud SDK team implemented an OData client library that serves both OData V2 and V4 protocols. Consequently, this approach allows for faster delivery of new features in the future. Note that this new implementation is in Beta state. We'll announce the production readiness explicitly in our release channels.
 
-Here is you how switch to use the 
+Here is you how switch to use the implementation.
 - For any operation type, replace any call to `execute` with `executeRequest`.
 ```java
 service.createBusinessPartner(partner).executeRequest(destination);
 ```
 - For _Create_ and _Update_ operations, call `getModifiedEntity()` to obtain the created entity representation.
 ```java
-final BusinessPartner partner = service.createBusinessPartner(partner).executeRequest(destination).getModifiedEntity();
+final BusinessPartner partner = service.createBusinessPartner(partner)
+                                       .executeRequest(destination)
+                                       .getModifiedEntity();
 ```
 - `executeRequest` throws the runtime exception `ODataException` and respective sub classes. Hence, adjust your exception handling as described under the tab _OData V2 (Beta)_ in the section [Error Handling](#error-handling). Note that any `ErrorResultHandler` registered by `withErrorHandler()` is not considered.
 - Remove any call to `cachingMetadata()` and `withoutCachingMetadata()` as they are obsolete.

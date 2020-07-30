@@ -90,7 +90,6 @@ jobs:
       - name: Canary Release
         run: |
           touch .npmrc
-          git update-index --assume-unchanged .npmrc
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid `git rev-parse --short HEAD` -y
         env:

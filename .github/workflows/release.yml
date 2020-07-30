@@ -16,7 +16,6 @@ jobs:
       - name: Stable Release
         run: |
           touch .npmrc
-          git update-index --assume-unchanged .npmrc
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish from-git -y
         env:

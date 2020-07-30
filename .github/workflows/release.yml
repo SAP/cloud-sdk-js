@@ -16,7 +16,7 @@ jobs:
       - name: Stable Release
         run: |
           git update-index --assume-unchanged .yarnrc.yml
-          echo 'npmAuthToken: "${NPM_TOKEN}""' >> .yarnrc.yml
+          echo 'npmAuthToken: "${NPM_TOKEN}"' >> .yarnrc.yml
           yarn lerna publish from-git -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

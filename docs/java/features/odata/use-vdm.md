@@ -103,7 +103,7 @@ Request parameters:
 - Update and delete operations allow to modify how ETags are handled:
    - By default an ETag is send if one is present on the entity being modified.
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
-- All operations allow for adding custom headers via `withheader(...)`
+- All operations allow for adding custom headers via `withHeader(...)`
 
 </TabItem>
 
@@ -118,7 +118,7 @@ Request parameters:
 - Update and delete operations allow to modify how ETags are handled:
    - By default an ETag is send if one is present on the entity being modified.
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
-- All operations allow for adding custom headers via `withheader(...)`
+- All operations allow for adding custom headers via `withHeader(...)`
 
 </TabItem>
 </Tabs>
@@ -643,4 +643,3 @@ final BusinessPartner partner = service.createBusinessPartner(partner)
 ```
 - `executeRequest` throws the runtime exception `ODataException` and respective sub classes. Hence, adjust your exception handling as described under the tab _OData V2 (Beta)_ in the section [Error Handling](#error-handling). Note that any `ErrorResultHandler` registered by `withErrorHandler()` is not considered.
 - Remove any call to `cachingMetadata()` and `withoutCachingMetadata()` as they are obsolete.
-

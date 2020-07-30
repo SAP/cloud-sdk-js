@@ -65,7 +65,7 @@ export function entitySerializer(tsToEdm) {
       return serializeComplexTypeFieldLegacy(field, fieldValue);
     }
     if (field instanceof CollectionField) {
-      return serializeCollectionField(fieldValue, field);
+      return serializeCollection(fieldValue, field._fieldType);
     }
   }
 
@@ -136,7 +136,9 @@ export function entitySerializer(tsToEdm) {
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof fieldValue[property.name] !== 'undefined' && {
-          [property.originalName]: isComplexTypeNameSpace(property.type)
+          [property.originalName]: property.isCollection
+            ? serializeCollection(fieldValue[property.name], property.type)
+            : isComplexTypeNameSpace(property.type)
             ? serializeComplexType(fieldValue[property.name], property.type)
             : tsToEdm(fieldValue[property.name], property.type)
         })
@@ -150,11 +152,9 @@ export function entitySerializer(tsToEdm) {
       );
   }
 
-  function serializeCollectionField<
-    EntityT extends EntityBase,
+  function serializeCollection<
     FieldT extends EdmTypeShared<'any'> | Record<string, any>
-  >(fieldValue: any[], field: CollectionField<EntityT, FieldT>) {
-    const fieldType = field._fieldType;
+  >(fieldValue: any[], fieldType: FieldT) {
     if (isEdmType(fieldType)) {
       return fieldValue.map(val => tsToEdm(val, fieldType));
     }
@@ -165,6 +165,7 @@ export function entitySerializer(tsToEdm) {
 
   return {
     serializeEntity,
+    serializeComplexType,
     serializeEntityNonCustomFields
   };
 }

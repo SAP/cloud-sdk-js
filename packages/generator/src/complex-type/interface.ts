@@ -25,10 +25,11 @@ function properties(complexType: VdmComplexType): PropertySignatureStructure[] {
 }
 
 function property(prop: VdmProperty): PropertySignatureStructure {
+  const type = prop.isCollection ? `${prop.jsType}[]` : prop.jsType;
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName,
-    type: prop.jsType,
+    type,
     hasQuestionToken: prop.nullable,
     docs: [
       addLeadingNewline(

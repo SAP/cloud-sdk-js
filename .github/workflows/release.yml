@@ -15,8 +15,9 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: Stable Release
         run: |
-          git update-index --assume-unchanged .yarnrc.yml
-          echo 'npmAuthToken: "${NPM_TOKEN}"' >> .yarnrc.yml
+          touch .npmrc
+          git update-index --assume-unchanged .npmrc
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish from-git -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

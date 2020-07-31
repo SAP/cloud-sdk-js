@@ -35,7 +35,14 @@ The general recommendation is _YES_. This way you'll reduce the effort to keep u
 development. We try to keep stable functionality consistent and explicitly notify about breaking changes. Be cautious
 about using features annotated as _Beta_ because their API can change with every release.
 
-- **Can I use features annotated as Beta in production**
+- **Which Java versions are supported by the SDK?**
+
+The SDK itself is compatible with Java 8 and 11.
+Other versions may work as well depending on your setup, but are not tested for by us.
+Note that SAP Cloud Plattform Cloud Foundry environment only supports Java 8 out of the box but can be configured to also run with Java 11.
+SAP Cloud Plattform Neo only supports Java 8.
+
+- **Can I use features annotated as Beta in production?**
 
 We **do not recommend** using API that is marked unstable in productive code. We do not guarantee any API compatibility
 for future updates and the features might be experimental. You can use these features to test cutting edge

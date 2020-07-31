@@ -21,6 +21,14 @@ import TabItem from '@theme/TabItem';
 <MvnBadge />
 
 To get started with the SAP Cloud SDK for Java you can either create a new project or integrate the SDK into your existing one.
+You will need an installation of Java and Maven.
+
+:::note Java Compatibility
+The SDK itself is compatible with Java 8 and 11.
+Other versions may work as well depending on your setup, but are not tested for by us.
+Note that SAP Cloud Plattform Cloud Foundry environment only supports Java 8 out of the box but can be configured to also run with Java 11.
+SAP Cloud Plattform Neo only supports Java 8.
+:::
 
 To start of with a clean, new project you can select [one of our archetypes](https://search.maven.org/artifact/com.sap.cloud.sdk.archetypes/archetypes-parent) and build upon it. Alternatively you can follow [these instructions](#integrate-the-cloud-sdk-for-java-into-your-project) to integrate the SDK into your existing setup.
 
@@ -31,15 +39,9 @@ To start of with a clean, new project you can select [one of our archetypes](htt
 { label: 'Spring', value: 'spring', },
 { label: 'TomEE', value: 'tomee', }]}>
 
-The SDK provides archetypes based on Spring and TomEE, so select whatever suits you best.
-To generate your project from a `maven` archetype you have to provide:
+The SDK provides archetypes based on [Spring](https://spring.io/) and [TomEE](https://tomee.apache.org/), so select whatever suits you best.
 
-- `groupId` - usually serves as your organization identifier, i.e. `foo.bar.cloud.app`
-- `artifactId` - it's your application's name, i.e. `mydreamapp`
-- `version` - we recommend keeping `1.0-SNAPSHOT` if you're just starting
-- `package` - by default this equals to `groupId`. Change it only if you know what you're doing
-
-Now run:
+Run:
 
 <TabItem value="spring">
 
@@ -57,7 +59,15 @@ mvn archetype:generate "-DarchetypeGroupId=com.sap.cloud.sdk.archetypes" "-Darch
 </TabItem>
 </Tabs>
 
-After providing all the interactive values to the CLI it will generate you first Cloud SDK application
+Maven will ask you to provide the following:
+
+- `groupId` - usually serves as your organization identifier, i.e. `foo.bar.cloud.app`
+- `artifactId` - it's your application's name, i.e. `mydreamapp`
+- `version` - we recommend keeping `1.0-SNAPSHOT` if you're just starting
+- `package` - by default this equals to `groupId`. Change it only if you know what you're doing
+
+
+After providing all the interactive values to the CLI it will generate your first Cloud SDK based application:
 
 ```bash
 [INFO] Scanning for projects...
@@ -114,16 +124,11 @@ skipUsageAnalytics: false
 [INFO] ------------------------------------------------------------------------
 ```
 
-Change to you `mydreamapp` root directory by:
-```bash
-cd mydreamapp/
+**Congratulations! You've just setup a brand new application with the SAP Cloud SDK for Java.**
 
-ls
-application  cx-server  integration-tests  Jenkinsfile  manifest.yml  pom.xml  unit-tests
-
-```
-
-**Congratulations! You've just configured your application with Cloud SDK for Java.**
+:::tip
+To change the Java version modify the `<java.version>` property in the root `pom.xml`. 
+:::
 
 ## Integrate the Cloud SDK for Java into your Project
 

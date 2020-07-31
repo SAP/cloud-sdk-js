@@ -155,7 +155,7 @@ module.exports = {
         "brace-style": "error",
         "camelcase": "off",
         "comma-dangle": "off",
-        "complexity": "off",
+        "complexity": ["warn",5],
         "constructor-super": "error",
         "curly": "error",
         "dot-notation": "off",

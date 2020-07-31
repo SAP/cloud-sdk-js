@@ -9,8 +9,8 @@
   "scripts": {
     "test": "yarn jest --coverage",
     "test:local": "yarn jest --config ./jest-local.json",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
-    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
+    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.25.0",

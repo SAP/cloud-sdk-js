@@ -18,6 +18,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUri } from '../uri-conversion';
+import { getCollectionResult } from './response-data-accessor';
 
 /**
  * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
@@ -110,7 +111,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        response.data.d.results.map(json =>
+        getCollectionResult(response.data).map(json =>
           deserializeEntity(json, this._entityConstructor, response.headers)
         )
       );

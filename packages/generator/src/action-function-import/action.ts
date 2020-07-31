@@ -6,7 +6,7 @@ import {
   VdmFunctionImport,
   VdmServiceMetadata
 } from '../vdm-types';
-import { responseTransformer } from './response-transformer-function';
+import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 
 const parameterName = 'parameters';
 
@@ -55,27 +55,10 @@ function getActionImportStatements(
       }, 'const params = {\n') + '\n}'
     : '{}';
 
-  const parameters = getActionImportRequestBuilderArguments(
-    actionImport,
-    service
-  );
-  const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(
+  const parameters = getRequestBuilderArgumentsBase(actionImport, service);
+  const returnStatement = `return new ActionImportRequestBuilder(${parameters.join(
     ', '
   )});`;
 
   return context + '\n\n' + returnStatement;
-}
-
-function getActionImportRequestBuilderArguments(
-  functionImport: VdmFunctionImport,
-  service: VdmServiceMetadata
-): string[] {
-  return [
-    `'${service.servicePath}'`,
-    `'${functionImport.originalName}'`,
-    `(data) => ${responseTransformer(functionImport.returnType)}(data, ${
-      functionImport.returnType.builderFunction
-    })`,
-    'params'
-  ];
 }

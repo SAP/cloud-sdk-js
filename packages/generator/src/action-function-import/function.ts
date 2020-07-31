@@ -2,7 +2,7 @@
 
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
-import { responseTransformer } from './response-transformer-function';
+import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 
 const parameterName = 'parameters';
 
@@ -51,37 +51,14 @@ function getFunctionImportStatements(
       }, 'const params = {\n') + '\n}'
     : '{}';
 
-  const parameters =
-    service.oDataVersion === 'v2'
-      ? getFunctionImportRequestBuilderArgumentsV2(functionImport, service)
-      : getFunctionImportRequestBuilderArgumentsV4(functionImport, service);
+  let parameters = getRequestBuilderArgumentsBase(functionImport, service);
+  if (service.oDataVersion === 'v2') {
+    parameters = [`'${functionImport.httpMethod}'`, ...parameters];
+  }
+
   const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(
     ', '
   )});`;
 
   return context + '\n\n' + returnStatement;
-}
-
-function getFunctionImportRequestBuilderArgumentsV4(
-  functionImport: VdmFunctionImport,
-  service: VdmServiceMetadata
-): string[] {
-  return [
-    `'${service.servicePath}'`,
-    `'${functionImport.originalName}'`,
-    `(data) => ${responseTransformer(functionImport.returnType)}(data, ${
-      functionImport.returnType.builderFunction
-    })`,
-    'params'
-  ];
-}
-
-function getFunctionImportRequestBuilderArgumentsV2(
-  functionImport: VdmFunctionImport,
-  service: VdmServiceMetadata
-): string[] {
-  return [
-    `'${functionImport.httpMethod}'`,
-    ...getFunctionImportRequestBuilderArgumentsV4(functionImport, service)
-  ];
 }

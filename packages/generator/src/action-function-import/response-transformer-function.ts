@@ -6,7 +6,7 @@ import {
   VdmReturnTypeCategory
 } from '../vdm-types';
 
-export function responseTransformer(
+export function responseTransformerFunctionName(
   returnType: VdmActionFunctionImportReturnType
 ): string {
   const transformationFn = singleTransformationFunction(returnType);

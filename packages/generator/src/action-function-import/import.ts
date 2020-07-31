@@ -13,7 +13,7 @@ import {
   externalImportDeclarations,
   mergeImportDeclarations
 } from '../imports';
-import { responseTransformer } from './response-transformer-function';
+import { responseTransformerFunctionName } from './response-transformer-function';
 
 function actionFunctionImportDeclarations(
   returnTypes: VdmActionFunctionImportReturnType[],
@@ -26,7 +26,9 @@ function actionFunctionImportDeclarations(
     coreImportDeclaration(
       [
         ...corePropertyTypeImportNames(parameters),
-        ...returnTypes.map(returnType => responseTransformer(returnType)),
+        ...returnTypes.map(returnType =>
+          responseTransformerFunctionName(returnType)
+        ),
         ...edmRelatedImports(returnTypes),
         ...complexTypeRelatedImports(returnTypes),
         ...additionalImports

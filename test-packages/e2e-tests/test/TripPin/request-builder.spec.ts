@@ -39,4 +39,8 @@ xdescribe('Request builder test', () => {
       ])
     );
   });
+
+  it('should execute the simple unbound action in present in the tripping service',()=>{
+    expect(false).toBe(true)
+  })
 });

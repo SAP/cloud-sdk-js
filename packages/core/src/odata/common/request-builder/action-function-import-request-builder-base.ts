@@ -13,6 +13,7 @@ import {
   RequestMethodType
 } from '../../common';
 import { ActionImportParameters } from '../../v4/request/action-import-parameter';
+import { ODataActionImportRequestConfig } from '../../v4/request';
 
 /**
  * Create OData request to execute a action or function import.
@@ -23,7 +24,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
   ParametersT,
   ReturnT
 > extends MethodRequestBuilderBase<
-  ODataFunctionImportRequestConfig<ParametersT>
+  ODataFunctionImportRequestConfig<ParametersT>| ODataActionImportRequestConfig<ParametersT>
 > {
   /**
    * Base class for function  and actions imports
@@ -35,24 +36,10 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @param oDataUri - Contains the v2/v4 specific URI conversions
    */
   protected constructor(
-    method: RequestMethodType,
-    defaultServicePath: string,
-    actionOrFunctionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
-    parameters:
-      | FunctionImportParameters<ParametersT>
-      | ActionImportParameters<ParametersT>,
-    oDataUri: ODataUri
+    requestConfig: ODataFunctionImportRequestConfig<ParametersT>| ODataActionImportRequestConfig<ParametersT>
   ) {
-    super(
-      new ODataFunctionImportRequestConfig(
-        method,
-        defaultServicePath,
-        actionOrFunctionImportName,
-        parameters,
-        oDataUri
-      )
-    );
+    super(requestConfig);
   }
 
   /**

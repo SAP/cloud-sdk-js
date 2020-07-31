@@ -2,7 +2,7 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { ODataUri } from '../../common/uri-conversion';
-import { FunctionImportParameters } from '../../common/request/function-import-parameter';
+import { ActionImportParameters } from '../../v4';
 import { ODataRequestConfig } from '../../common/request/odata-request-config';
 
 export class ODataActionImportRequestConfig<
@@ -13,15 +13,16 @@ export class ODataActionImportRequestConfig<
    *
    * @param defaultServicePath - Default path of the service
    * @param actionImportName - The name of the action import.
-   * @param parameters - Object containing the parameters with a value and additional meta information
+   * @param parameters - Object containing the parameters passed as the body
    */
   constructor(
     defaultServicePath: string,
     readonly actionImportName: string,
-    public parameters: FunctionImportParameters<ParametersT>,
+    parameters: ActionImportParameters<ParametersT>,
     private oDataUri: ODataUri
   ) {
     super('post', defaultServicePath);
+    this.payload = parameters
   }
 
   resourcePath(): string {

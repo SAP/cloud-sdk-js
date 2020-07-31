@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { oDataUri } from '../uri-conversion';
-import { ActionImportParameters } from '../request/action-import-parameter';
+import { ActionImportParameters, ODataActionImportRequestConfig } from '../request';
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
 
 /**
@@ -18,21 +18,14 @@ export class ActionImportRequestBuilder<
    * @param defaultServicePath - Default path for the service the action belongs to
    * @param actionImportName - The name of the function import.
    * @param responseTransformer - Transformation function for the response
-   * @param parameters - Parameters to be set in the action
+   * @param payload - Payload to be set in the action
    */
   constructor(
     defaultServicePath: string,
     actionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
-    parameters: ActionImportParameters<ParametersT>
+    payload: ActionImportParameters<ParametersT>
   ) {
-    super(
-      'post',
-      defaultServicePath,
-      actionImportName,
-      responseTransformer,
-      parameters,
-      oDataUri
-    );
+    super(responseTransformer,new ODataActionImportRequestConfig(defaultServicePath,actionImportName,payload,oDataUri))
   }
 }

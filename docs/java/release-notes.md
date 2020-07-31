@@ -27,6 +27,51 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+
+## 3.25.0
+
+[Release Blog](https://blogs.sap.com/?p=1154386)
+
+## New Functionality
+
+- OData 4.0: Extract version identifiers from the `ETag` header in case of create and update operations. Now result entities obtained via `ModificationRespnse#getResponseEntity()` will contain a version identifier. It will be sent as `IF-MATCH` header in subsequent update and delete operations.  
+
+- New experimental method `ScpCfDestinationLoader#tryGetDestination`.
+  It allows for custom request handling to resources on _SAP Cloud Platform Destination Service_.
+  With the handler acting as functional interface, you can conveniently manage your own HTTP interaction. E.g.
+
+  ```java
+  String destinationName;
+  String basePath;
+  String relativePath;
+  
+  Try<ScpCfDestination> destination = new ScpCfDestinationLoader()
+    .tryGetDestination(
+      destinationName, basePath, relativePath,
+      (uri) -> restTemplate.getForObject(uri, ScpCfDestinationServiceV1Response.class));
+  ``` 
+
+## Improvements
+
+- Update dependencies:
+  - Update [SAP Cloud Application Programming Model](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/00823f91779d4d42aa29a498e0535cdf.html) from version `1.40.2` to `1.40.6`
+  - Update [SAP Cloud Security Client](https://github.com/SAP/cloud-security-xsuaa-integration) from `2.7.3` to `2.7.5`
+- Update Maven plugins in Maven archetypes:
+  - Archetype `scp-cf-tomee`:
+    - Update `tomee-maven-plugin` from `8.0.1` to `8.0.3`
+  - Archetype `scp-cf-tomee` and `neo-javaee7`:
+    - Update `maven-war-plugin` from `3.2.3` to `3.3.1`
+- Add public enum `SoapNamespace` to `rfc` module, with experimental support to customize expected XML tag namespace from SOAP response messages. This can be useful if target SOAP service is not working with ABAP code.
+- The principal id can be extracted from authorization tokens of grant type `urn:ietf:params:oauth:grant-type:jwt-bearer`.
+
+## Fixed Issues
+
+- Fix an issue on SCP Neo with anonymous HTTP requests being blocked, when optional module `concurrency-scp-neo` was added as application dependency.
+- Fix an issue with SOAP wrapped RFC and BAPI calls that sends pure exporting parameters as empty tags in SOAP serialised requests. Exporting parameters are no longer sent in SOAP serialised requests.
+- Fix an issue with SOAP wrapped RFC and BAPI calls where de-serialisation failed when the exporting parameter is a list and is empty.
+- Fixed an issue with listeners where `FileWritingODataQueryListener` was inadvertently called for OData CRUD operations.
+
+
 ## 3.24.0
 
 Release date: July 16, 2020 - [Documentation](https://help.sap.com/doc/f1983b8177f447fdb4a414b0312b7c2f/1.0/en-US/index.html) - [Blog](https://blogs.sap.com/?p=1146336)

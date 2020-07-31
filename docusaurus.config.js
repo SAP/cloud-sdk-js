@@ -77,7 +77,7 @@ module.exports = {
             {
               label: 'JS SDK',
               href:
-                'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html'
+                'https://github.com/SAP/cloud-sdk/releases'
             },
             {
               label: 'CI/CD Toolkit',

@@ -7,10 +7,10 @@ import { Filter } from '../filter';
 import { Time } from '../time';
 import {
   ComplexTypeField,
-  ConstructorOrField,
   getEdmType,
   getEntityConstructor
 } from './complex-type-field';
+import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField } from './edm-type-field';
 
 /**

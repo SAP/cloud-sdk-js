@@ -5,7 +5,8 @@ import { EdmTypeShared } from '../edm-types';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { Field } from './field';
 import { ComplexTypeNamespace } from './complex-type-namespace';
-import { ConstructorOrField, getEntityConstructor } from './complex-type-field';
+import { getEntityConstructor } from './complex-type-field';
+import { ConstructorOrField } from './constructor-or-field';
 
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
@@ -26,9 +27,9 @@ export class CollectionField<
    *
    * Creates an instance of CollectionField.
    *
-   * @param fieldName - Actual name of the field used in the OData request
-   * @param fieldOf - The constructor of the entity or the complex type this field belongs to
-   * @param _fieldType - Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request.
+   * @param fieldOf - The constructor of the entity or the complex type field this field belongs to.
+   * @param _fieldType - Type of the field according to the metadata description.
    */
   constructor(
     fieldName: string,

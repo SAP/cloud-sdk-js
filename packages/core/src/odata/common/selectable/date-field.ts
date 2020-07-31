@@ -7,10 +7,10 @@ import { EntityBase, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import {
   ComplexTypeField,
-  ConstructorOrField,
   getEdmType,
   getEntityConstructor
 } from './complex-type-field';
+import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
 /**

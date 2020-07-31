@@ -9,7 +9,7 @@ const logger = createLogger({
 
 export function getCollectionResult(data): any[] {
   validateCollectionResult(data);
-  return data.value || [];
+  return isCollectionResult(data) ? data.value : [];
 }
 
 export function isCollectionResult(data): boolean {
@@ -26,11 +26,15 @@ function validateCollectionResult(data): void {
 
 export function getSingleResult(data): Record<string, any> {
   validateSingleResult(data);
-  return data || {};
+  return isSingleResult(data) ? data : {};
+}
+
+function isSingleResult(data): boolean {
+  return typeof data === 'object' && !Array.isArray(data);
 }
 
 function validateSingleResult(data): void {
-  if (!data) {
+  if (!isSingleResult(data)) {
     logger.warn(
       'The given reponse data does not have the standard OData v4 format for single results.'
     );

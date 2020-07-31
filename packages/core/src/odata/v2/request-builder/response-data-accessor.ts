@@ -9,11 +9,11 @@ const logger = createLogger({
 
 export function getCollectionResult(data): any[] {
   validateCollectionResult(data);
-  return data.d.results || [];
+  return isCollectionResult(data) ? data?.d?.results : [];
 }
 
 export function isCollectionResult(data): boolean {
-  return Array.isArray(data.d.results);
+  return Array.isArray(data?.d?.results);
 }
 
 function validateCollectionResult(data): void {
@@ -26,12 +26,12 @@ function validateCollectionResult(data): void {
 
 export function getSingleResult(data): Record<string, any> {
   validateSingleResult(data);
-  return isSingleResultAsCollection(data) ? data.d.results : data?.d || {};
+  return isSingleResultAsCollection(data) ? data?.d?.results : data?.d || {};
 }
 
 // Workaround to be compatible with services that wrongly implement the OData v2 protocol and serve single responses in the same format as collections
 function isSingleResultAsCollection(data): boolean {
-  return !!data.d?.results && !isCollectionResult(data);
+  return !!data?.d?.results && !isCollectionResult(data);
 }
 
 function validateSingleResult(data): void {

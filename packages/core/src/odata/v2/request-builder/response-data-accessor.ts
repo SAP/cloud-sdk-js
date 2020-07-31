@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-export function getCollectionResult(data): any[] | any {
+export function getCollectionResult(data): any[]s {
   return data.d.results;
 }
 
@@ -10,7 +10,7 @@ export function isCollectionResult(data): boolean {
 
 export function getSingleResult(data): Record<string, any> {
   return isSingleResultAsCollection(data)
-    ? getCollectionResult(data)
+    ? data.d.results
     : data?.d || {};
 }
 

@@ -5,31 +5,34 @@ import {
   VariableDeclarationKind,
   VariableStatementStructure
 } from 'ts-morph';
-import { VdmFunctionImport } from '../vdm-types';
+import { VdmFunctionImport, VdmActionImport } from '../vdm-types';
 
 export function exportStatement(
-  functionImports: VdmFunctionImport[]
+  actionAunctionImports: VdmFunctionImport[] | VdmActionImport[],
+  name: 'functionImports' | 'actionImports'
 ): VariableStatementStructure {
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,
     declarations: [
       {
-        name: 'functionImports',
-        initializer: exportsInitializer(functionImports)
+        name,
+        initializer: exportsInitializer(actionAunctionImports)
       }
     ],
     isExported: true
   };
 }
 
-function exportsInitializer(functionImports: VdmFunctionImport[]): string {
+function exportsInitializer(
+  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
+): string {
   return (
-    functionImports.reduce((initializer, currentImport) => {
+    actionFunctionImports.reduce((initializer, currentImport) => {
       if (initializer !== '{\n') {
         initializer += ',\n';
       }
-      initializer += `${currentImport.functionName}`;
+      initializer += `${currentImport.name}`;
       return initializer;
     }, '{\n') + '\n}'
   );

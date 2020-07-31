@@ -22,7 +22,6 @@ import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
 import { copyFile, otherFile, sourceFile } from './file-generator';
-import { functionImportSourceFile } from './function-import/file';
 import { GeneratorOptions } from './generator-options';
 import { cloudSdkVdmHack, npmCompliantName } from './generator-utils';
 import {
@@ -40,6 +39,10 @@ import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { typedocJson } from './service/typedoc-json';
 import { VdmServiceMetadata } from './vdm-types';
+import {
+  actionImportSourceFile,
+  functionImportSourceFile
+} from './action-function-import';
 
 const logger = createLogger({
   package: 'generator',
@@ -251,6 +254,18 @@ export async function generateSourcesForService(
       serviceDir,
       'function-imports',
       functionImportSourceFile(service),
+      options.forceOverwrite
+    );
+  }
+
+  if (service.actionsImports && service.actionsImports.length) {
+    logger.info(
+      `Generating action imports for service: ${service.namespace}...`
+    );
+    sourceFile(
+      serviceDir,
+      'action-imports',
+      actionImportSourceFile(service),
       options.forceOverwrite
     );
   }

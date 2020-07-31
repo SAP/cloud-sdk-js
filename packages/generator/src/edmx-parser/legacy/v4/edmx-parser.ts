@@ -19,7 +19,7 @@ import {
 
 /* eslint-disable valid-jsdoc */
 
-function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
+export function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],
   joinTypes: (type: T, baseType: T) => T
 ): T[] {

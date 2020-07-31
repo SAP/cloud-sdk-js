@@ -4,12 +4,15 @@ import {
   parseEntityTypesBase
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
-import { joinTypesWithBaseTypes, joinEntityTypes } from '../../edmx-to-vdm/v4';
+import { joinEntityTypes } from '../../edmx-to-vdm/v4';
 import {
   parseTypeName,
   stripNamespace
 } from '../../edmx-to-vdm/edmx-to-vdm-util';
+import { joinTypesWithBaseTypes } from '../legacy/v4';
 import {
+  EdmxAction,
+  EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
   EdmxEntityType,
@@ -69,9 +72,21 @@ export function parseFunctionImports(root): EdmxFunctionImport[] {
   return forceArray(root.EntityContainer.FunctionImport);
 }
 
+export function parseActionImport(root): EdmxActionImport[] {
+  return forceArray(root.EntityContainer.ActionImport);
+}
+
 export function parseFunctions(root): EdmxFunction[] {
   return forceArray(root.Function).map(f => ({
     ...f,
-    Parameter: forceArray(f.Parameter)
+    Parameter: forceArray(f.Parameter),
+    IsBound: false
+  }));
+}
+export function parseActions(root): EdmxAction[] {
+  return forceArray(root.Action).map(a => ({
+    ...a,
+    Parameter: forceArray(a.Parameter),
+    IsBound: false
   }));
 }

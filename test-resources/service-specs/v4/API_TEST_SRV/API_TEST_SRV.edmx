@@ -143,6 +143,31 @@
         <Member Name="Member2" Value="2"/>
       </EnumType>
 
+
+      <Action Name="TestActionImportNoParameterNoReturnType">
+      </Action>
+
+<!--
+      <Action Name="TestActionImportNoReturnType>
+        <Parameter Name="StringParam" Type="Edm.StringParam" Nullable="false"/>
+      </Action>
+
+      <Action Name="TestActionImportNoParameter>
+         <Parameter Name="StringParam" Type="Edm.StringParam" Nullable="false"/>
+      </Action>
+
+      <Action Name="TestActionImportEntityReturnType">
+        <ReturnType Type="API_TEST_SRV.A_TestEntityType"/>
+      </Action>
+-->
+      <Action Name="TestActionImportMultipleParameterComplexReturnType">
+        <Parameter Name="StringParam" Type="Edm.String"/>
+        <Parameter Name="NonNullableStringParam" Type="Edm.String" Nullable="false"/>
+        <Parameter Name="NullableBooleanParam" Type="Edm.Boolean" Nullable="true"/>
+        <Parameter Name="NullableGeographyPointParam" Type="Edm.GeographyPoint" Nullable="true"/>
+        <ReturnType Type="API_TEST_SRV.A_TestComplexType"/>
+      </Action>
+
       <Function Name="TestFunctionImportNoReturnType">
       </Function>
 
@@ -211,6 +236,12 @@
         -->
         <EntitySet Name="A_TestEntityEndsWithCollection" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityEndsWithSomethingElse" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
+
+        <ActionImport Name="TestActionImportNoParameterNoReturnType" Action="API_TEST_SRV.TestActionImportNoParameterNoReturnType">
+        </ActionImport>
+
+        <ActionImport Name="TestActionImportMultipleParameterComplexReturnType" Action="API_TEST_SRV.TestActionImportMultipleParameterComplexReturnType">
+        </ActionImport>
 
         <FunctionImport Name="TestFunctionImportEdmReturnType" Function="API_TEST_SRV.TestFunctionImportEdmReturnType">
         </FunctionImport>

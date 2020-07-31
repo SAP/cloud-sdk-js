@@ -1,37 +1,42 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
-import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
-import { parseFunctionImports } from '../../edmx-parser/v2';
+import { parseActionImport, parseActions } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { VdmActionImport, VdmComplexType, VdmEntity } from '../../vdm-types';
+import { parseActionImportReturnTypes } from '../common/action-function-return-types';
+import { findActionForActionImport } from './action-function-util';
 
-export function generateFunctionImportsV2(
+export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
-): VdmFunctionImport[] {
-  const edmxFunctionImports = parseFunctionImports(serviceMetadata.edmx.root);
+): VdmActionImport[] {
+  const actions = parseActions(serviceMetadata.edmx.root);
+  const actionImports = parseActionImport(serviceMetadata.edmx.root);
 
-  return edmxFunctionImports.map(f => {
-    const httpMethod = f['m:HttpMethod'].toLowerCase();
+  return actionImports.map(actionImport => {
+    const edmxAction = findActionForActionImport(actions, actionImport);
+
+    const httpMethod = 'post';
     const swaggerDefinition = swaggerDefinitionForFunctionImport(
-      f.Name,
+      actionImport.Name,
       httpMethod,
       serviceMetadata.swagger
     );
+
     return {
       ...transformFunctionImportBase(
-        f,
-        f.Parameter,
+        actionImport,
+        edmxAction.Parameter || [],
         swaggerDefinition,
         formatter
       ),
       httpMethod,
-      returnType: parseFunctionImportReturnTypes(
-        f.ReturnType,
+      returnType: parseActionImportReturnTypes(
+        edmxAction.ReturnType?.Type,
         entities,
         complexTypes
       )

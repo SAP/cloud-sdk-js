@@ -2,7 +2,7 @@
 
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
-import { responseTransformerFunctionName } from './response-transformer-function';
+import { responseTransformer } from './response-transformer-function';
 
 const parameterName = 'parameters';
 
@@ -12,7 +12,7 @@ export function functionImportFunction(
 ): FunctionDeclarationStructure {
   return {
     kind: StructureKind.Function,
-    name: functionImport.functionName,
+    name: functionImport.name,
     isExported: true,
     parameters: [
       {
@@ -69,9 +69,9 @@ function getFunctionImportRequestBuilderArgumentsV4(
   return [
     `'${service.servicePath}'`,
     `'${functionImport.originalName}'`,
-    `(data) => ${responseTransformerFunctionName(
-      functionImport.returnType
-    )}(data, ${functionImport.returnType.builderFunction})`,
+    `(data) => ${responseTransformer(functionImport.returnType)}(data, ${
+      functionImport.returnType.builderFunction
+    })`,
     'params'
   ];
 }

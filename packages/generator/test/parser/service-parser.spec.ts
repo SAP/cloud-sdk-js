@@ -1,10 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { GlobalNameFormatter } from '../../src/global-name-formatter';
 import { ServiceMapping } from '../../src/service-mapping';
-import {
-  VdmFunctionImportReturnTypeCategory,
-  VdmProperty
-} from '../../src/vdm-types';
+import { VdmReturnTypeCategory, VdmProperty } from '../../src/vdm-types';
 import { createOptions } from '../test-util/create-generator-options';
 import { parseAllServices, parseService } from '../../src/service-generator';
 
@@ -224,7 +221,7 @@ describe('service-parser', () => {
       const functionImportName = 'createTestComplexType';
       const factoryName = 'createTestComplexType_1';
       const expectedReturnType = {
-        returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
+        returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
         returnType: 'TestComplexType',
         builderFunction:
           '(data) => deserializeComplexType(data, TestComplexType)',
@@ -232,7 +229,7 @@ describe('service-parser', () => {
         isMulti: false
       };
 
-      expect(functionImport.functionName).toBe(functionImportName);
+      expect(functionImport.name).toBe(functionImportName);
       expect(functionImport.returnType).toEqual(expectedReturnType);
 
       expect(complexType.typeName).toBe(complexTypeName);
@@ -251,7 +248,7 @@ describe('service-parser', () => {
         f => f.originalName === 'Continue'
       )!;
 
-      expect(functionImport.functionName).toBe('fContinue');
+      expect(functionImport.name).toBe('fContinue');
     });
 
     it('function imports edm return types are read correctly', () => {
@@ -266,9 +263,7 @@ describe('service-parser', () => {
         f => f.originalName === 'TestFunctionImportEdmReturnType'
       )!;
 
-      expect(functionImport.functionName).toBe(
-        'testFunctionImportEdmReturnType'
-      );
+      expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
       expect(functionImport.returnType.builderFunction).toBe(
         "(val) => edmToTs(val, 'Edm.Boolean')"
       );

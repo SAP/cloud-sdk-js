@@ -1,38 +1,38 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { responseTransformerFunctionName } from '../../src/function-import';
-import { VdmFunctionImportReturnTypeCategory } from '../../src/vdm-types';
+
+import { VdmReturnTypeCategory } from '../../src/vdm-types';
 import { orderBreakfast } from '../test-util/data-model';
 
 const returnTypeEntity = {
   builderFunction: '',
   returnType: 'Entity',
   isCollection: false,
-  returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY
+  returnTypeCategory: VdmReturnTypeCategory.ENTITY
 };
 
 const returnTypeComplexType = {
   builderFunction: '',
   returnType: 'ComplexType',
   isCollection: true,
-  returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE
+  returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE
 };
 
 describe('response-transformer-function', () => {
   it('responseTransformerFunctionName of entity', () => {
-    expect(responseTransformerFunctionName(returnTypeEntity)).toEqual(
+    expect(responseTransformerActionFunctionName(returnTypeEntity)).toEqual(
       'transformReturnValueForEntity'
     );
   });
 
   it('responseTransformerFunctionName of complex type and list', () => {
-    expect(responseTransformerFunctionName(returnTypeComplexType)).toEqual(
-      'transformReturnValueForComplexTypeList'
-    );
+    expect(
+      responseTransformerActionFunctionName(returnTypeComplexType)
+    ).toEqual('transformReturnValueForComplexTypeList');
   });
 
   it('responseTransformerFunctionName of edmType', () => {
-    expect(responseTransformerFunctionName(orderBreakfast.returnType)).toEqual(
-      'transformReturnValueForEdmType'
-    );
+    expect(
+      responseTransformerActionFunctionName(orderBreakfast.returnType)
+    ).toEqual('transformReturnValueForEdmType');
   });
 });

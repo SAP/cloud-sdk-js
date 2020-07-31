@@ -9,6 +9,8 @@ import {
   parseFunctionImports as parseFunctionImportsV2
 } from '../../src/edmx-parser/v2';
 import {
+  parseActionImport,
+  parseActions,
   parseComplexTypes,
   parseEntitySets as parseEntitySetsV4,
   parseEntityType as parseEntityTypeV4,
@@ -62,6 +64,8 @@ describe('edmx-edmx-parser', () => {
     expect(parseEntityTypeV4(metadataEdmx.root).length).toBe(11);
     expect(parseFunctionImportsV4(metadataEdmx.root).length).toBe(8);
     expect(parseFunctions(metadataEdmx.root).length).toBe(8);
+    expect(parseActionImport(metadataEdmx.root).length).toBe(2);
+    expect(parseActions(metadataEdmx.root).length).toBe(2);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(1);
 

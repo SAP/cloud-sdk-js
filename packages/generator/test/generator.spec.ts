@@ -100,6 +100,20 @@ describe('generator', () => {
         expect.not.arrayContaining(['testFunctionImportNoReturnType'])
       );
     });
+
+    it('generates action-imports.ts file', () => {
+      const actionImports = getActionImportDeclarations(files);
+      expect(actionImports.length).toBe(2);
+      const actionImportNames = actionImports.map(action => action.getName());
+      expect(actionImportNames).toEqual(
+        expect.arrayContaining(['testActionImportNoParameterNoReturnType'])
+      );
+      expect(actionImportNames).toEqual(
+        expect.arrayContaining([
+          'testActionImportMultipleParameterComplexReturnType'
+        ])
+      );
+    });
   });
 });
 
@@ -141,4 +155,14 @@ function getFunctionImportDeclarations(
   );
 
   return functionImportsFile!.getFunctions();
+}
+
+function getActionImportDeclarations(
+  files: SourceFile[]
+): FunctionDeclaration[] {
+  const actionImportFile = files.find(
+    file => file.getBaseName() === 'action-imports.ts'
+  );
+
+  return actionImportFile!.getFunctions();
 }

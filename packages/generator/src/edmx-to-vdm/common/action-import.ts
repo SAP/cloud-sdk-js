@@ -2,9 +2,9 @@
 import { toTypeNameFormat } from '@sap-cloud-sdk/core';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmFunctionImportBase } from '../../vdm-types';
+import { VdmActionImportBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser/swagger-types';
-import { functionImportDescription } from '../description-util';
+import { actionImportDescription } from '../description-util';
 import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common';
 import { getParameter } from './action-function-parameters';
 
@@ -14,33 +14,33 @@ const logger = createLogger({
 });
 
 export function transformFunctionImportBase<T extends EdmxNamed>(
-  edmxFunctionImport: T,
+  edmxActionImport: T,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
-): VdmFunctionImportBase {
-  const functionName = formatter.originalToFunctionImportName(
-    edmxFunctionImport.Name
+): VdmActionImportBase {
+  const actionName = formatter.originalToActionImportName(
+    edmxActionImport.Name
   );
-  const functionImport = {
-    originalName: edmxFunctionImport.Name,
-    name: functionName,
-    parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
+  const actiononImport = {
+    originalName: edmxActionImport.Name,
+    name: actionName,
+    parametersTypeName: toTypeNameFormat(`${actionName}Parameters`)
   };
 
   const parameters = getParameter(
-    edmxFunctionImport,
+    edmxActionImport,
     edmxParameters,
     swaggerDefinition,
     formatter
   );
 
   return {
-    ...functionImport,
+    ...actiononImport,
     parameters,
-    description: functionImportDescription(
+    description: actionImportDescription(
       swaggerDefinition,
-      functionImport.originalName
+      actiononImport.originalName
     )
   };
 }

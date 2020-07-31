@@ -68,6 +68,12 @@ export function functionImportDescription(
   return endWithDot(swaggerDefinition?.summary || toTitleFormat(originalName));
 }
 
+export function actionImportDescription(
+  swaggerDefinition: SwaggerPath | undefined,
+  originalName: string
+): string {
+  return functionImportDescription(swaggerDefinition, originalName);
+}
 export function entityDescription(
   entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   className: string

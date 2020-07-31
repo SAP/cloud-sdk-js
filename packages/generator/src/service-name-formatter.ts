@@ -3,7 +3,7 @@
 import { toPropertyFormat, toStaticPropertyFormat } from '@sap-cloud-sdk/core';
 import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
-import { applyPrefixOnJsConfictFunctionImports } from './name-formatting-strategies';
+import { applyPrefixOnJsConflictFunctionImports } from './name-formatting-strategies';
 import { UniqueNameFinder } from './unique-name-finder';
 import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
 
@@ -110,7 +110,10 @@ export class ServiceNameFormatter {
     const newName = this.finderServiceWide.findUniqueName(transformedName);
 
     this.finderServiceWide.addToAlreadyUsedNames(newName);
-    return applyPrefixOnJsConfictFunctionImports(newName);
+    return applyPrefixOnJsConflictFunctionImports(newName);
+  }
+  originalToActionImportName(str: string): string {
+    return this.originalToFunctionImportName(str);
   }
 
   originalToComplexTypeName(str: string): string {

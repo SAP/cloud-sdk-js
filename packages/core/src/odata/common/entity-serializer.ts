@@ -140,7 +140,7 @@ export function entitySerializer(tsToEdm) {
     }
 
     if (isComplexTypeNameSpace(propertyMetadata.type)) {
-      serializeComplexType(propertyValue, propertyMetadata.type);
+      return serializeComplexType(propertyValue, propertyMetadata.type);
     }
 
     return tsToEdm(propertyValue, propertyMetadata.type);

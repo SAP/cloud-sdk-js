@@ -5,7 +5,7 @@ module.exports = {
         "project": {
             "extends": "tsconfig.json",
             "include": [
-              "**/*.ts"
+                "**/*.ts"
             ],
             "exclude": [
                 "**/*.d.ts",
@@ -116,7 +116,7 @@ module.exports = {
                     'public-abstract-method',
                     'protected-abstract-method',
                     'private-abstract-method',
-                  ]
+                ]
             }
         ],
         "@typescript-eslint/no-empty-function": "error",
@@ -155,7 +155,7 @@ module.exports = {
         "brace-style": "error",
         "camelcase": "off",
         "comma-dangle": "off",
-        "complexity": ["warn",5],
+        "complexity": "off",
         "constructor-super": "error",
         "curly": "error",
         "dot-notation": "off",
@@ -280,12 +280,12 @@ module.exports = {
         "valid-jsdoc": [
             "error",
             {
-              "requireReturn": false,
-              "requireReturnType": false,
-              "requireParamType": false,
-              "prefer": {
-                "return": "returns"
-              }
+                "requireReturn": false,
+                "requireReturnType": false,
+                "requireParamType": false,
+                "prefer": {
+                    "return": "returns"
+                }
             }
         ],
         "valid-typeof": "off"

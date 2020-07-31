@@ -30,14 +30,14 @@
     "prepare": "yarn compile",
     "test": "yarn jest --coverage",
     "test:local": "yarn jest --config ./jest-local.json",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest-local.json",
-    "test:watch-debug": "node --inspect-brk node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
+    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand --config ./jest-local.json"
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.25.0",
     "@sap-cloud-sdk/util": "^1.25.0",
     "@sap/edm-converters": "^1.0.21",
-    "@types/fs-extra": "^8.1.0",
+    "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",
     "fast-xml-parser": "^3.16.0",
     "fs-extra": "^9.0.0",
@@ -50,11 +50,6 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services": "^1.25.0",
-    "@types/jest": "^26.0.7",
-    "@types/yargs": "^15.0.4",
-    "jest": "^25.2.4",
-    "jest-junit": "^11.1.0",
-    "ts-jest": "^25.4.0",
-    "typescript": "~3.9.6"
+    "@types/yargs": "^15.0.4"
   }
 }

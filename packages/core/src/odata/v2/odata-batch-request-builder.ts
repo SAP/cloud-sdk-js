@@ -33,6 +33,11 @@ import {
   GetByKeyRequestBuilder,
   UpdateRequestBuilder
 } from './request-builder';
+import {
+  isCollectionResult,
+  getCollectionResult,
+  getSingleResult
+} from './request-builder/response-data-accessor';
 
 const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
 
@@ -209,24 +214,27 @@ function buildResponse(
 
 const asReadResponse = body => <T extends Entity>(
   constructor: Constructable<T>
-) => {
+): Error | T[] => {
   if (body.error) {
     return new Error(body.error);
   }
-  if (body.d.__metadata) {
-    return [deserializeEntity(body.d, constructor)];
+  if (isCollectionResult(body)) {
+    return getCollectionResult(body).map(r =>
+      deserializeEntity(r, constructor)
+    );
   }
-  return body.d.results.map(r => deserializeEntity(r, constructor));
+  return [deserializeEntity(getSingleResult(body), constructor)];
 };
 
 const asWriteResponse = body => <T extends Entity>(
   constructor: Constructable<T>
 ) => {
-  if (!body.d.__metadata) {
+  const resultData = getSingleResult(body);
+  if (!resultData.__metadata) {
     throw Error('The metadata of the response body is undefined.');
   }
 
-  return deserializeEntity(body.d, constructor);
+  return deserializeEntity(resultData, constructor);
 };
 
 /*
@@ -311,7 +319,7 @@ function toConstructableFromChangeSetResponse(
   entityToConstructorMap: MapType<Constructable<Entity>>
 ): Constructable<Entity> | undefined {
   return entityToConstructorMap[
-    getEntityNameFromMetadata(responseBody.d.__metadata)
+    getEntityNameFromMetadata(getSingleResult(responseBody).__metadata)
   ];
 }
 
@@ -319,19 +327,9 @@ function toConstructableFromRetrieveResponse(
   responseBody: any,
   entityToConstructorMap: MapType<Constructable<Entity>>
 ): Constructable<Entity> {
-  let entityJson;
-  const data = responseBody.d;
-
-  if (data.results && data.results.length) {
-    // GetAll
-    entityJson = data.results[0];
-  } else if (data.results && !data.results.length) {
-    // GetByKey C4C (!)
-    entityJson = data.results;
-  } else {
-    // GetByKey
-    entityJson = data;
-  }
+  const entityJson = isCollectionResult(responseBody)
+    ? getCollectionResult(responseBody)[0]
+    : getSingleResult(responseBody);
 
   return entityToConstructorMap[
     getEntityNameFromMetadata(entityJson.__metadata)
@@ -442,7 +440,7 @@ function buildRetrieveOrErrorResponse(
   const httpCode = toHttpCode(response);
   if (httpCode === 200) {
     return {
-      httpCode: 200,
+      httpCode,
       body: parsedBody,
       type: toConstructableFromRetrieveResponse(
         parsedBody,

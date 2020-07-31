@@ -15,6 +15,7 @@ import {
   EdmTypeShared,
   isEdmType
 } from '../common';
+import { PropertyMetadata } from '../v2';
 
 const logger = createLogger({
   package: 'core',
@@ -65,7 +66,7 @@ export function entitySerializer(tsToEdm) {
       return serializeComplexTypeFieldLegacy(field, fieldValue);
     }
     if (field instanceof CollectionField) {
-      return serializeCollectionField(fieldValue, field);
+      return serializeCollection(fieldValue, field._fieldType);
     }
   }
 
@@ -130,15 +131,31 @@ export function entitySerializer(tsToEdm) {
       );
   }
 
+  function serializeComplexTypeProperty(
+    propertyValue: any,
+    propertyMetadata: PropertyMetadata
+  ): any {
+    if (propertyMetadata.isCollection) {
+      return serializeCollection(propertyValue, propertyMetadata.type);
+    }
+
+    if (isComplexTypeNameSpace(propertyMetadata.type)) {
+      return serializeComplexType(propertyValue, propertyMetadata.type);
+    }
+
+    return tsToEdm(propertyValue, propertyMetadata.type);
+  }
+
   function serializeComplexType<
     ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(fieldValue: any, complexType: ComplexTypeNamespaceT): any {
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof fieldValue[property.name] !== 'undefined' && {
-          [property.originalName]: isComplexTypeNameSpace(property.type)
-            ? serializeComplexType(fieldValue[property.name], property.type)
-            : tsToEdm(fieldValue[property.name], property.type)
+          [property.originalName]: serializeComplexTypeProperty(
+            fieldValue[property.name],
+            property
+          )
         })
       }))
       .reduce(
@@ -150,11 +167,9 @@ export function entitySerializer(tsToEdm) {
       );
   }
 
-  function serializeCollectionField<
-    EntityT extends EntityBase,
+  function serializeCollection<
     FieldT extends EdmTypeShared<'any'> | Record<string, any>
-  >(fieldValue: any[], field: CollectionField<EntityT, FieldT>) {
-    const fieldType = field._fieldType;
+  >(fieldValue: any[], fieldType: FieldT) {
     if (isEdmType(fieldType)) {
       return fieldValue.map(val => tsToEdm(val, fieldType));
     }
@@ -165,6 +180,7 @@ export function entitySerializer(tsToEdm) {
 
   return {
     serializeEntity,
+    serializeComplexType,
     serializeEntityNonCustomFields
   };
 }

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Support collections in complex types.
 
 ## Improvements
 

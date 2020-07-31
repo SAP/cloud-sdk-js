@@ -63,11 +63,13 @@ export namespace TestNestedComplexType {
   export const _propertyMetadata: PropertyMetadata[] = [{
     originalName: 'StringProperty',
     name: 'stringProperty',
-    type: 'Edm.String'
+    type: 'Edm.String',
+    isCollection: false
   }, {
     originalName: 'ComplexTypeProperty',
     name: 'complexTypeProperty',
-    type: TestLvl2NestedComplexType
+    type: TestLvl2NestedComplexType,
+    isCollection: false
   }];
   /**
    * Type reference to the according complex type.

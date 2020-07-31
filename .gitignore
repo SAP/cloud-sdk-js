@@ -10,6 +10,7 @@ lerna-debug.log
 .idea
 .nyc_output
 documentation
+.npmrc
 
 test-results.xml
 test-packages/type-tests/report.*.json

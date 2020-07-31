@@ -127,6 +127,9 @@
         <Property Name="GeographyPointProperty" Type="Edm.GeographyPoint"/>
         <Property Name="EnumProperty" Type="API_TEST_SRV.A_TestEnumType"/>
         <Property CollectionKind="List" Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexType"/>
+
+        <Property Name="CollectionStringProperty" Type="Collection(Edm.String)"/>
+        <Property Name="CollectionComplexTypeProperty" Type="Collection(API_TEST_SRV.A_TestNestedComplexType)"/>
       </ComplexType>
 
       <ComplexType Name="A_TestNestedComplexType">

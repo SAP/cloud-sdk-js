@@ -29,7 +29,7 @@ jobs:
         id: cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ matrix.os }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit
       - run: yarn test:integration
@@ -48,7 +48,7 @@ jobs:
         id: cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
@@ -70,7 +70,7 @@ jobs:
         id: cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - name: Build odata v4 service
         run: yarn e2e-test:build
@@ -89,9 +89,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |
-          git update-index --assume-unchanged .npmrc
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-          npx lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid `git rev-parse --short HEAD` -y
+          yarn lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid `git rev-parse --short HEAD` -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:

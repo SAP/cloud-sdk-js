@@ -3,7 +3,7 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/core';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { VdmNavigationProperty } from './vdm-types';
+import { VdmNavigationProperty, VdmProperty } from './vdm-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -153,6 +153,37 @@ export function linkClass(
       ? 'OneToManyLink'
       : 'Link'
     : 'OneToOneLink';
+}
+
+export function getGenericParameters(
+  entityClassName: string,
+  prop: VdmProperty
+): string {
+  const param = prop.isCollection
+    ? prop.isComplex
+      ? [`${prop.jsType}`]
+      : [`'${prop.edmType}'`]
+    : [];
+  return [entityClassName, ...param].join(', ');
+}
+
+export function createPropertyFieldInitializer(
+  property: VdmProperty,
+  entityClassName: string
+) {
+  const edmOrComplexType = property.isComplex
+    ? property.jsType
+    : `'${property.edmType}'`;
+  const collectionTypeOrEdmType =
+    property.isComplex && !property.isCollection ? undefined : edmOrComplexType;
+
+  return `new ${property.fieldType}(${[
+    `'${property.originalName}'`,
+    entityClassName,
+    ...(typeof collectionTypeOrEdmType === 'undefined'
+      ? []
+      : [collectionTypeOrEdmType])
+  ].join(', ')})`;
 }
 
 /**

@@ -118,6 +118,16 @@ var TestComplexTypeField = /** @class */ (function (_super) {
          */
         _this.complexTypeProperty = new TestNestedComplexType_1.TestNestedComplexTypeField('ComplexTypeProperty', _this);
         /**
+         * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.collectionStringProperty = new v4_1.CollectionField('CollectionStringProperty', _this, 'Edm.String');
+        /**
+         * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.collectionComplexTypeProperty = new v4_1.CollectionField('CollectionComplexTypeProperty', _this, TestNestedComplexType_1.TestNestedComplexType);
+        /**
          * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
@@ -135,71 +145,98 @@ var TestComplexType;
     TestComplexType._propertyMetadata = [{
             originalName: 'StringProperty',
             name: 'stringProperty',
-            type: 'Edm.String'
+            type: 'Edm.String',
+            isCollection: false
         }, {
             originalName: 'BooleanProperty',
             name: 'booleanProperty',
-            type: 'Edm.Boolean'
+            type: 'Edm.Boolean',
+            isCollection: false
         }, {
             originalName: 'GuidProperty',
             name: 'guidProperty',
-            type: 'Edm.Guid'
+            type: 'Edm.Guid',
+            isCollection: false
         }, {
             originalName: 'Int16Property',
             name: 'int16Property',
-            type: 'Edm.Int16'
+            type: 'Edm.Int16',
+            isCollection: false
         }, {
             originalName: 'Int32Property',
             name: 'int32Property',
-            type: 'Edm.Int32'
+            type: 'Edm.Int32',
+            isCollection: false
         }, {
             originalName: 'Int64Property',
             name: 'int64Property',
-            type: 'Edm.Int64'
+            type: 'Edm.Int64',
+            isCollection: false
         }, {
             originalName: 'DecimalProperty',
             name: 'decimalProperty',
-            type: 'Edm.Decimal'
+            type: 'Edm.Decimal',
+            isCollection: false
         }, {
             originalName: 'SingleProperty',
             name: 'singleProperty',
-            type: 'Edm.Single'
+            type: 'Edm.Single',
+            isCollection: false
         }, {
             originalName: 'DoubleProperty',
             name: 'doubleProperty',
-            type: 'Edm.Double'
+            type: 'Edm.Double',
+            isCollection: false
         }, {
             originalName: 'FloatProperty',
             name: 'floatProperty',
-            type: 'Edm.Float'
+            type: 'Edm.Float',
+            isCollection: false
         }, {
             originalName: 'TimeProperty',
             name: 'timeProperty',
-            type: 'Edm.Time'
+            type: 'Edm.Time',
+            isCollection: false
         }, {
             originalName: 'DateTimeProperty',
             name: 'dateTimeProperty',
-            type: 'Edm.DateTime'
+            type: 'Edm.DateTime',
+            isCollection: false
         }, {
             originalName: 'DateTimeOffSetProperty',
             name: 'dateTimeOffSetProperty',
-            type: 'Edm.DateTimeOffset'
+            type: 'Edm.DateTimeOffset',
+            isCollection: false
         }, {
             originalName: 'ByteProperty',
             name: 'byteProperty',
-            type: 'Edm.Byte'
+            type: 'Edm.Byte',
+            isCollection: false
         }, {
             originalName: 'SByteProperty',
             name: 'sByteProperty',
-            type: 'Edm.SByte'
+            type: 'Edm.SByte',
+            isCollection: false
         }, {
             originalName: 'ComplexTypeProperty',
             name: 'complexTypeProperty',
-            type: TestNestedComplexType_1.TestNestedComplexType
+            type: TestNestedComplexType_1.TestNestedComplexType,
+            isCollection: false
+        }, {
+            originalName: 'CollectionStringProperty',
+            name: 'collectionStringProperty',
+            type: 'Edm.String',
+            isCollection: true
+        }, {
+            originalName: 'CollectionComplexTypeProperty',
+            name: 'collectionComplexTypeProperty',
+            type: TestNestedComplexType_1.TestNestedComplexType,
+            isCollection: true
         }, {
             originalName: 'BaseStringProperty',
             name: 'baseStringProperty',
-            type: 'Edm.String'
+            type: 'Edm.String',
+            isCollection: false
         }];
     /**
      * Type reference to the according complex type.

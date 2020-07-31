@@ -13,6 +13,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUri } from '../uri-conversion';
+import { getSingleResult } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  *
@@ -86,7 +87,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
       .then(request => request.execute())
       .then(response =>
         deserializeEntity(
-          response.data.d,
+          getSingleResult(response.data),
           this._entityConstructor,
           response.headers
         )

@@ -18,6 +18,7 @@ import {
   EdmTypeShared,
   isEdmType
 } from '../common';
+import { PropertyMetadata } from '../v2';
 
 const logger = createLogger({
   package: 'core',
@@ -195,6 +196,21 @@ export function entityDeserializer(
       );
   }
 
+  function deserializeComplexTypeProperty(
+    propertyValue: any,
+    propertyMetadata: PropertyMetadata
+  ) {
+    if (propertyMetadata.isCollection) {
+      return deserializeCollectionType(propertyValue, propertyMetadata.type);
+    }
+
+    if (isComplexTypeNameSpace(propertyMetadata.type)) {
+      return deserializeComplexType(propertyValue, propertyMetadata.type);
+    }
+
+    return edmToTs(propertyValue, propertyMetadata.type);
+  }
+
   function deserializeComplexType<
     ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
@@ -205,14 +221,10 @@ export function entityDeserializer(
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof json[property.originalName] !== 'undefined' && {
-          [property.name]: property.isCollection
-            ? deserializeCollectionType(
-                json[property.originalName],
-                property.type
-              )
-            : isComplexTypeNameSpace(property.type)
-            ? deserializeComplexType(json[property.originalName], property.type)
-            : edmToTs(json[property.originalName], property.type)
+          [property.name]: deserializeComplexTypeProperty(
+            json[property.originalName],
+            property
+          )
         })
       }))
       .reduce((complexTypeInstance, property) => ({

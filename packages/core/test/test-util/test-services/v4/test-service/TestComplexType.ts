@@ -6,7 +6,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src/v4';
+import { CollectionField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src/v4';
 
 /**
  * TestComplexType
@@ -92,6 +92,16 @@ export interface TestComplexType {
    * @nullable
    */
   complexTypeProperty?: TestNestedComplexType;
+  /**
+   * Collection String Property.
+   * @nullable
+   */
+  collectionStringProperty?: string[];
+  /**
+   * Collection Complex Type Property.
+   * @nullable
+   */
+  collectionComplexTypeProperty?: TestNestedComplexType[];
   /**
    * Base String Property.
    * @nullable
@@ -192,6 +202,16 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    */
   complexTypeProperty: TestNestedComplexTypeField<EntityT> = new TestNestedComplexTypeField('ComplexTypeProperty', this);
   /**
+   * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  collectionStringProperty: CollectionField<EntityT, 'Edm.String'> = new CollectionField('CollectionStringProperty', this, 'Edm.String');
+  /**
+   * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  collectionComplexTypeProperty: CollectionField<EntityT, TestNestedComplexType> = new CollectionField('CollectionComplexTypeProperty', this, TestNestedComplexType);
+  /**
    * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
@@ -215,71 +235,98 @@ export namespace TestComplexType {
   export const _propertyMetadata: PropertyMetadata[] = [{
     originalName: 'StringProperty',
     name: 'stringProperty',
-    type: 'Edm.String'
+    type: 'Edm.String',
+    isCollection: false
   }, {
     originalName: 'BooleanProperty',
     name: 'booleanProperty',
-    type: 'Edm.Boolean'
+    type: 'Edm.Boolean',
+    isCollection: false
   }, {
     originalName: 'GuidProperty',
     name: 'guidProperty',
-    type: 'Edm.Guid'
+    type: 'Edm.Guid',
+    isCollection: false
   }, {
     originalName: 'Int16Property',
     name: 'int16Property',
-    type: 'Edm.Int16'
+    type: 'Edm.Int16',
+    isCollection: false
   }, {
     originalName: 'Int32Property',
     name: 'int32Property',
-    type: 'Edm.Int32'
+    type: 'Edm.Int32',
+    isCollection: false
   }, {
     originalName: 'Int64Property',
     name: 'int64Property',
-    type: 'Edm.Int64'
+    type: 'Edm.Int64',
+    isCollection: false
   }, {
     originalName: 'DecimalProperty',
     name: 'decimalProperty',
-    type: 'Edm.Decimal'
+    type: 'Edm.Decimal',
+    isCollection: false
   }, {
     originalName: 'SingleProperty',
     name: 'singleProperty',
-    type: 'Edm.Single'
+    type: 'Edm.Single',
+    isCollection: false
   }, {
     originalName: 'DoubleProperty',
     name: 'doubleProperty',
-    type: 'Edm.Double'
+    type: 'Edm.Double',
+    isCollection: false
   }, {
     originalName: 'FloatProperty',
     name: 'floatProperty',
-    type: 'Edm.Float'
+    type: 'Edm.Float',
+    isCollection: false
   }, {
     originalName: 'TimeProperty',
     name: 'timeProperty',
-    type: 'Edm.Time'
+    type: 'Edm.Time',
+    isCollection: false
   }, {
     originalName: 'DateTimeProperty',
     name: 'dateTimeProperty',
-    type: 'Edm.DateTime'
+    type: 'Edm.DateTime',
+    isCollection: false
   }, {
     originalName: 'DateTimeOffSetProperty',
     name: 'dateTimeOffSetProperty',
-    type: 'Edm.DateTimeOffset'
+    type: 'Edm.DateTimeOffset',
+    isCollection: false
   }, {
     originalName: 'ByteProperty',
     name: 'byteProperty',
-    type: 'Edm.Byte'
+    type: 'Edm.Byte',
+    isCollection: false
   }, {
     originalName: 'SByteProperty',
     name: 'sByteProperty',
-    type: 'Edm.SByte'
+    type: 'Edm.SByte',
+    isCollection: false
   }, {
     originalName: 'ComplexTypeProperty',
     name: 'complexTypeProperty',
-    type: TestNestedComplexType
+    type: TestNestedComplexType,
+    isCollection: false
+  }, {
+    originalName: 'CollectionStringProperty',
+    name: 'collectionStringProperty',
+    type: 'Edm.String',
+    isCollection: true
+  }, {
+    originalName: 'CollectionComplexTypeProperty',
+    name: 'collectionComplexTypeProperty',
+    type: TestNestedComplexType,
+    isCollection: true
   }, {
     originalName: 'BaseStringProperty',
     name: 'baseStringProperty',
-    type: 'Edm.String'
+    type: 'Edm.String',
+    isCollection: false
   }];
   /**
    * Type reference to the according complex type.

@@ -9,7 +9,11 @@ import {
   OptionalKind,
   VariableDeclarationStructure
 } from 'ts-morph';
-import { linkClass } from '../generator-utils';
+import {
+  linkClass,
+  getGenericParameters,
+  createPropertyFieldInitializer
+} from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
 import {
   getStaticNavPropertyDescription,
@@ -50,48 +54,12 @@ function getFieldInitializer(
   prop: VdmProperty,
   entityClassName: string
 ): OptionalKind<VariableDeclarationStructure> {
-  const type = prop.isComplex ? prop.jsType : `'${prop.edmType}'`;
-
-  const className = prop.fieldType;
   const genericParameters = getGenericParameters(entityClassName, prop);
-  const collectionTypeParameter =
-    prop.isComplex && !prop.isCollection ? undefined : type;
-
   return {
     name: prop.staticPropertyName,
-    type: `${className}<${genericParameters}>`,
-    initializer: createPropertyFieldInitializer(
-      className,
-      prop.originalName,
-      entityClassName,
-      collectionTypeParameter
-    )
+    type: `${prop.fieldType}<${genericParameters}>`,
+    initializer: createPropertyFieldInitializer(prop, entityClassName)
   };
-}
-
-function getGenericParameters(
-  entityClassName: string,
-  prop: VdmProperty
-): string {
-  const param = prop.isCollection
-    ? prop.isComplex
-      ? [`${prop.jsType}`]
-      : [`'${prop.edmType}'`]
-    : [];
-  return [entityClassName, ...param].join(', ');
-}
-
-function createPropertyFieldInitializer(
-  className: string,
-  originalFieldName: string,
-  entityClassName: string,
-  thirdParameter?: string
-) {
-  return `new ${className}(${[
-    `'${originalFieldName}'`,
-    entityClassName,
-    ...(typeof thirdParameter === 'undefined' ? [] : [thirdParameter])
-  ].join(', ')})`;
 }
 
 function property(

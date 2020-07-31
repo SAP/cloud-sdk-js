@@ -18,6 +18,7 @@ import {
   EdmTypeShared,
   isEdmType
 } from '../common';
+import { PropertyMetadata } from '../v2';
 
 const logger = createLogger({
   package: 'core',
@@ -116,7 +117,10 @@ export function entityDeserializer(
       return json[field._fieldName];
     }
     if (field instanceof CollectionField) {
-      return deserializeCollectionType(json[field._fieldName], field);
+      return deserializeCollectionType(
+        json[field._fieldName],
+        field._fieldType
+      );
     }
   }
 
@@ -192,6 +196,21 @@ export function entityDeserializer(
       );
   }
 
+  function deserializeComplexTypeProperty(
+    propertyValue: any,
+    propertyMetadata: PropertyMetadata
+  ) {
+    if (propertyMetadata.isCollection) {
+      return deserializeCollectionType(propertyValue, propertyMetadata.type);
+    }
+
+    if (isComplexTypeNameSpace(propertyMetadata.type)) {
+      return deserializeComplexType(propertyValue, propertyMetadata.type);
+    }
+
+    return edmToTs(propertyValue, propertyMetadata.type);
+  }
+
   function deserializeComplexType<
     ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
   >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
@@ -202,9 +221,10 @@ export function entityDeserializer(
     return complexType._propertyMetadata
       .map(property => ({
         ...(typeof json[property.originalName] !== 'undefined' && {
-          [property.name]: isComplexTypeNameSpace(property.type)
-            ? deserializeComplexType(json[property.originalName], property.type)
-            : edmToTs(json[property.originalName], property.type)
+          [property.name]: deserializeComplexTypeProperty(
+            json[property.originalName],
+            property
+          )
         })
       }))
       .reduce((complexTypeInstance, property) => ({
@@ -214,10 +234,8 @@ export function entityDeserializer(
   }
 
   function deserializeCollectionType<
-    EntityT extends EntityBase,
     FieldT extends EdmTypeShared<'any'> | Record<string, any>
-  >(json: any[], field: CollectionField<EntityT, FieldT>) {
-    const fieldType = field._fieldType;
+  >(json: any[], fieldType: FieldT) {
     if (isEdmType(fieldType)) {
       return json.map(val => edmToTs(val, fieldType));
     }

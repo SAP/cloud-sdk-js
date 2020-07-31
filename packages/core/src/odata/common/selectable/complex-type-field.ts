@@ -8,6 +8,7 @@ import {
   isComplexTypeNameSpace,
   ComplexTypeNamespace
 } from './complex-type-namespace';
+import { ConstructorOrField } from './constructor-or-field';
 
 /**
  * Represents a complex type property of an entity.
@@ -97,13 +98,6 @@ export abstract class ComplexTypeField<
       : this._fieldName;
   }
 }
-
-/**
- * Union type to represent the parent of a complex type field. This can either be an entity constructor or another complex type field.
- */
-export type ConstructorOrField<EntityT extends EntityBase, ComplexT> =
-  | Constructable<EntityT>
-  | ComplexTypeField<EntityT, ComplexT>;
 
 /**
  * Convenience method to get the entity constructor of the parent of a complex type.

@@ -8,6 +8,7 @@ export * from './collection-field';
 export * from './complex-type-namespace';
 export * from './complex-type-field';
 export * from './complex-type-property-fields';
+export * from './constructor-or-field';
 export * from './create-complex-type';
 export * from './custom-field';
 export * from './date-field';

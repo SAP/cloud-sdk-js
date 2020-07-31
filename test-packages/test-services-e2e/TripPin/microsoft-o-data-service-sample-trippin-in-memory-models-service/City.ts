@@ -72,15 +72,18 @@ export namespace City {
   export const _propertyMetadata: PropertyMetadata[] = [{
     originalName: 'Name',
     name: 'name',
-    type: 'Edm.String'
+    type: 'Edm.String',
+    isCollection: false
   }, {
     originalName: 'CountryRegion',
     name: 'countryRegion',
-    type: 'Edm.String'
+    type: 'Edm.String',
+    isCollection: false
   }, {
     originalName: 'Region',
     name: 'region',
-    type: 'Edm.String'
+    type: 'Edm.String',
+    isCollection: false
   }];
   /**
    * Type reference to the according complex type.

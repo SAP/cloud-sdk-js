@@ -1,22 +1,20 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EntityBase, Constructable } from '../entity';
+import { EntityBase } from '../entity';
 import { EdmTypeShared } from '../edm-types';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { Field } from './field';
 import { ComplexTypeNamespace } from './complex-type-namespace';
+import { getEntityConstructor } from './complex-type-field';
+import { ConstructorOrField } from './constructor-or-field';
 
 /**
  * @experimental This is experimental and is subject to change. Use with caution.
  *
- * Creates an instance of CollectionField.
+ * Represents a static field of an entity or complex type.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  * @typeparam FieldT - Type of the entries of the collection in the field
- *
- * @param _fieldName - Actual name of the field used in the OData request
- * @param _entityConstructor - The constructor of the entity this field belongs to
- * @param _fieldType - Type of the field according to the metadata description
  */
 export class CollectionField<
   EntityT extends EntityBase,
@@ -24,11 +22,20 @@ export class CollectionField<
 > extends Field<EntityT> implements SelectableEdmTypeField {
   readonly selectable: true;
 
+  /**
+   * @experimental This is experimental and is subject to change. Use with caution.
+   *
+   * Creates an instance of CollectionField.
+   *
+   * @param fieldName - Actual name of the field used in the OData request.
+   * @param fieldOf - The constructor of the entity or the complex type field this field belongs to.
+   * @param _fieldType - Type of the field according to the metadata description.
+   */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT>,
+    fieldOf: ConstructorOrField<EntityT>,
     readonly _fieldType: FieldT | ComplexTypeNamespace<FieldT>
   ) {
-    super(fieldName, entityConstructor);
+    super(fieldName, getEntityConstructor(fieldOf));
   }
 }

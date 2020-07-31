@@ -20,11 +20,13 @@ describe('namespace', () => {
               initializer: `[{
         originalName: 'Complexity',
         name: 'complexity',
-        type: 'Edm.String'
+        type: 'Edm.String',
+        isCollection: false
       }, {
         originalName: 'Amount',
         name: 'amount',
-        type: 'Edm.Int16'
+        type: 'Edm.Int16',
+        isCollection: false
       }]`,
               type: 'PropertyMetadata[]'
             }
@@ -83,11 +85,13 @@ describe('namespace', () => {
               initializer: `[{
         originalName: 'ComplexDesert',
         name: 'complexDesert',
-        type: ComplexDesert
+        type: ComplexDesert,
+        isCollection: false
       }, {
         originalName: 'Amount',
         name: 'amount',
-        type: 'Edm.Int16'
+        type: 'Edm.Int16',
+        isCollection: false
       }]`,
               type: 'PropertyMetadata[]'
             }

@@ -148,7 +148,6 @@ module.exports = {
       'js/api-reference-js-ts'
     ],
     'Continuous Delivery': ['devops/getting-started'],
-    // FAQ: ['faq/frequently-asked-questions'],
     // Support: ['support/support'],
     'Community': ['community/community-call'],
     'Related projects': [

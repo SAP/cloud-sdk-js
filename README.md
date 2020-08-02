@@ -66,7 +66,7 @@ In addition to the Open Source parts of this project, we also publish the SAP Cl
 To install an OData client for an SAP S/4HANA service run:
 
 ```sh-session
-$ npm install @sap/cloud-sdk-vdm
+$ npm install @sap/cloud-sdk-vdm-<service name>-service
 ```
 
 ### Project "Piper"

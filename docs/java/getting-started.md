@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 To get started with the SAP Cloud SDK for Java you can either create a new project or integrate the SDK into your existing one.
 You will need an installation of Java and Maven.
 
-:::note Java Compatibility
+:::note Java version compatibility
 The SDK itself is compatible with Java 8 and 11.
 Other versions may work as well depending on your setup, but are not tested for by us.
 Note that SAP Cloud Plattform Cloud Foundry environment only supports Java 8 out of the box but can be configured to also run with Java 11.

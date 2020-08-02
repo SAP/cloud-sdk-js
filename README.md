@@ -68,7 +68,7 @@ To install an OData client for an SAP S/4HANA service run:
 ```sh-session
 $ npm install @sap/cloud-sdk-vdm-<service name>-service
 ```
-
+In the example above, `service name` is the name of the service you want to use, e. g. for the business partner service, run: `npm install @sap/cloud-sdk-vdm-business-partner-service`.
 ### Project "Piper"
 Continuous delivery is a method to develop software with short feedback cycles.
 It is applicable to projects both for SAP Cloud Platform and SAP on-premise platforms.

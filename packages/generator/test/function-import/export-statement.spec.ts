@@ -4,7 +4,7 @@ import { exportStatement } from '../../src/action-function-import/export-stateme
 
 describe('export-statement', () => {
   it('exportStatement', () => {
-    const actual = exportStatement([orderBreakfast],'functionImports');
+    const actual = exportStatement([orderBreakfast], 'functionImports');
 
     expect(actual.declarationKind).toEqual('const');
     expect(actual.isExported).toBeTruthy();

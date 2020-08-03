@@ -18,11 +18,11 @@ export interface ResetDataSourceParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export function resetDataSource(parameters: ResetDataSourceParameters): ActionImportRequestBuilder<ResetDataSourceParameters, undefined> {
-  const params = {
+  const payload = {
 
   }
 
-  return new ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
+  return new ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', (data) => transformReturnValueForUndefined(data, (val) => undefined), payload);
 }
 
 export const actionImports = {

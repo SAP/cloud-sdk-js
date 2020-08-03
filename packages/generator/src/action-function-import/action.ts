@@ -1,11 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import {
-  VdmActionImport,
-  VdmFunctionImport,
-  VdmServiceMetadata
-} from '../vdm-types';
+import { VdmActionImport, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 
 const parameterName = 'parameters';
@@ -42,20 +38,24 @@ export function actionImportFunction(
 }
 
 function getActionImportStatements(
-  actionImport: VdmFunctionImport,
+  actionImport: VdmActionImport,
   service: VdmServiceMetadata
 ): string {
   const context = actionImport.parameters
     ? actionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== 'const params = {\n') {
+        if (cumulator !== 'const payload = {\n') {
           cumulator += ',\n';
         }
         cumulator += `${currentParameters.parameterName}: new ActionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
-      }, 'const params = {\n') + '\n}'
+      }, 'const payload = {\n') + '\n}'
     : '{}';
 
-  const parameters = getRequestBuilderArgumentsBase(actionImport, service);
+  const parameters = getRequestBuilderArgumentsBase(
+    'payload',
+    actionImport,
+    service
+  );
   const returnStatement = `return new ActionImportRequestBuilder(${parameters.join(
     ', '
   )});`;

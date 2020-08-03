@@ -1,7 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { oDataUri } from '../uri-conversion';
-import { ActionImportParameters, ODataActionImportRequestConfig } from '../request';
+import {
+  ActionImportParameters,
+  ODataActionImportRequestConfig
+} from '../request';
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
 
 /**
@@ -26,7 +28,13 @@ export class ActionImportRequestBuilder<
     readonly responseTransformer: (data: any) => ReturnT,
     payload: ActionImportParameters<ParametersT>
   ) {
-    super(responseTransformer,new ODataActionImportRequestConfig(defaultServicePath,actionImportName,payload,oDataUri))
+    super(
+      responseTransformer,
+      new ODataActionImportRequestConfig(
+        defaultServicePath,
+        actionImportName,
+        payload
+      )
+    );
   }
 }
-

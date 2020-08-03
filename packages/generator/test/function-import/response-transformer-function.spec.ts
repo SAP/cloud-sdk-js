@@ -2,6 +2,7 @@
 
 import { VdmReturnTypeCategory } from '../../src/vdm-types';
 import { orderBreakfast } from '../test-util/data-model';
+import { responseTransformerFunctionName } from '../../src/action-function-import/response-transformer-function';
 
 const returnTypeEntity = {
   builderFunction: '',
@@ -19,20 +20,20 @@ const returnTypeComplexType = {
 
 describe('response-transformer-function', () => {
   it('responseTransformerFunctionName of entity', () => {
-    expect(responseTransformerActionFunctionName(returnTypeEntity)).toEqual(
+    expect(responseTransformerFunctionName(returnTypeEntity)).toEqual(
       'transformReturnValueForEntity'
     );
   });
 
   it('responseTransformerFunctionName of complex type and list', () => {
-    expect(
-      responseTransformerActionFunctionName(returnTypeComplexType)
-    ).toEqual('transformReturnValueForComplexTypeList');
+    expect(responseTransformerFunctionName(returnTypeComplexType)).toEqual(
+      'transformReturnValueForComplexTypeList'
+    );
   });
 
   it('responseTransformerFunctionName of edmType', () => {
-    expect(
-      responseTransformerActionFunctionName(orderBreakfast.returnType)
-    ).toEqual('transformReturnValueForEdmType');
+    expect(responseTransformerFunctionName(orderBreakfast.returnType)).toEqual(
+      'transformReturnValueForEdmType'
+    );
   });
 });

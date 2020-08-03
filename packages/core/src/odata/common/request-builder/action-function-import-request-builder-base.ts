@@ -7,12 +7,6 @@ import {
 } from '../../../scp-cf/destination-service-types';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../../common/request/odata-function-import-request-config';
-import {
-  FunctionImportParameters,
-  ODataUri,
-  RequestMethodType
-} from '../../common';
-import { ActionImportParameters } from '../../v4/request/action-import-parameter';
 import { ODataActionImportRequestConfig } from '../../v4/request';
 
 /**
@@ -24,20 +18,19 @@ export abstract class ActionFunctionImportRequestBuilderBase<
   ParametersT,
   ReturnT
 > extends MethodRequestBuilderBase<
-  ODataFunctionImportRequestConfig<ParametersT>| ODataActionImportRequestConfig<ParametersT>
+  | ODataFunctionImportRequestConfig<ParametersT>
+  | ODataActionImportRequestConfig<ParametersT>
 > {
   /**
    * Base class for function  and actions imports
-   * @param method - HTTP method to be used for the request
-   * @param defaultServicePath - Default path for the service the function belongs to
-   * @param actionOrFunctionImportName - The name of the function import.
    * @param responseTransformer - Transformation function for the response
-   * @param parameters - Parameters to be set in the function
-   * @param oDataUri - Contains the v2/v4 specific URI conversions
+   * @param requestConfig - Request config for a action or funciton import
    */
   protected constructor(
     readonly responseTransformer: (data: any) => ReturnT,
-    requestConfig: ODataFunctionImportRequestConfig<ParametersT>| ODataActionImportRequestConfig<ParametersT>
+    requestConfig:
+      | ODataFunctionImportRequestConfig<ParametersT>
+      | ODataActionImportRequestConfig<ParametersT>
   ) {
     super(requestConfig);
   }

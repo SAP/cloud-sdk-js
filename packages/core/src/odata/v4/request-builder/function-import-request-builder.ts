@@ -27,8 +27,15 @@ export class FunctionImportRequestBuilder<
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: FunctionImportParameters<ParametersT>
   ) {
-    super(responseTransformer,
-      new ODataFunctionImportRequestConfig('get',defaultServicePath,functionImportName,parameters,oDataUri)
+    super(
+      responseTransformer,
+      new ODataFunctionImportRequestConfig(
+        'get',
+        defaultServicePath,
+        functionImportName,
+        parameters,
+        oDataUri
+      )
     );
   }
 }

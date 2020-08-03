@@ -51,7 +51,11 @@ function getFunctionImportStatements(
       }, 'const params = {\n') + '\n}'
     : '{}';
 
-  let parameters = getRequestBuilderArgumentsBase(functionImport, service);
+  let parameters = getRequestBuilderArgumentsBase(
+    'params',
+    functionImport,
+    service
+  );
   if (service.oDataVersion === 'v2') {
     parameters = [`'${functionImport.httpMethod}'`, ...parameters];
   }

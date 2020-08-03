@@ -14,8 +14,8 @@ var v4_1 = require("@sap-cloud-sdk/core/v4");
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function resetDataSource(parameters) {
-    var params = {};
-    return new v4_1.ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
+    var payload = {};
+    return new v4_1.ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, payload);
 }
 exports.resetDataSource = resetDataSource;
 exports.actionImports = {

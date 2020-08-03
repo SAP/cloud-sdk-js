@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { ODataUri } from '../../common/uri-conversion';
 import { ActionImportParameters } from '../../v4';
 import { ODataRequestConfig } from '../../common/request/odata-request-config';
 
@@ -18,18 +17,16 @@ export class ODataActionImportRequestConfig<
   constructor(
     defaultServicePath: string,
     readonly actionImportName: string,
-    parameters: ActionImportParameters<ParametersT>,
-    private oDataUri: ODataUri
+    parameters: ActionImportParameters<ParametersT>
   ) {
     super('post', defaultServicePath);
-    this.payload = Object.keys(parameters).reduce((all,key)=>{
-      const orginalName = parameters[key].originalName
-      if(orginalName){
-        all[orginalName] = parameters[key].value
+    this.payload = Object.keys(parameters).reduce((all, key) => {
+      const orginalName = parameters[key].originalName;
+      if (orginalName) {
+        all[orginalName] = parameters[key].value;
       }
-      return all}
-    ,{})
-
+      return all;
+    }, {});
   }
 
   resourcePath(): string {
@@ -37,10 +34,10 @@ export class ODataActionImportRequestConfig<
   }
 
   queryParameters(): MapType<any> {
-      return {
-        ...this.prependDollarToQueryParameters({
-          format: 'json'
-        })
-      }
+    return {
+      ...this.prependDollarToQueryParameters({
+        format: 'json'
+      })
+    };
   }
 }

@@ -2,9 +2,8 @@
 
 import { Field, StringFilterFunction, BooleanFilterFunction } from '../common';
 import { filterFunction } from '../common/filter/filter-function';
+import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions';
 import { Entity } from './entity';
-
-import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions'
 
 /* String Functions */
 /**
@@ -37,4 +36,8 @@ export function replace<EntityT extends Entity>(
   return filterFunction('replace', 'string', str, searchStr, replaceStr);
 }
 
-export const filterFunctions = { ...filterFunctionsCommon, substringOf, replace };
+export const filterFunctions = {
+  ...filterFunctionsCommon,
+  substringOf,
+  replace
+};

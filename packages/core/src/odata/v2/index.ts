@@ -16,4 +16,4 @@ export * from './extract-odata-etag';
 export * from '../common';
 export * from '../common/filter/filter-function';
 
-export * from './filter-functions'
+export * from './filter-functions';

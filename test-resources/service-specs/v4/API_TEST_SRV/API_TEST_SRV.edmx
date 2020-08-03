@@ -109,7 +109,7 @@
       </ComplexType>
 
       <ComplexType Name="A_TestComplexType" BaseType="API_TEST_SRV.A_TestComplexBaseType">
-        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
         <Property Name="GuidProperty" Type="Edm.Guid"/>
         <Property Name="Int16Property" Type="Edm.Int16"/>

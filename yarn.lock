@@ -1751,9 +1751,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@^26.0.7":
-  version "26.0.7"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.7.tgz#495cb1d1818c1699dbc3b8b046baf1c86ef5e324"
-  integrity sha512-+x0077/LoN6MjqBcVOe1y9dpryWnfDZ+Xfo3EqGeBcfPRJlQp3Lw62RvNlWxuGv7kOEwlHriAa54updi3Jvvwg==
+  version "26.0.8"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-26.0.8.tgz#f5c5559cf25911ce227f7ce30f1f160f24966369"
+  integrity sha512-eo3VX9jGASSuv680D4VQ89UmuLZneNxv2MCZjfwlInav05zXVJTzfc//lavdV0GPwSxsXJTy2jALscB7Acqg0g==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
@@ -1787,7 +1787,7 @@
 
 "@types/node@*", "@types/node@>= 8", "@types/node@^12.0.0", "@types/node@^12.12.29":
   version "12.12.53"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.53.tgz#be0d375933c3d15ef2380dafb3b0350ea7021129"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.12.53.tgz#be0d375933c3d15ef2380dafb3b0350ea7021129"
   integrity sha512-51MYTDTyCziHb70wtGNFRwB4l+5JNvdqzFSkbDvpbftEgVUBEE+T5f7pROhWMp/fxp07oNIEQZd5bbfAH22ohQ==
 
 "@types/normalize-package-data@^2.4.0":
@@ -3672,7 +3672,7 @@ domexception@^1.0.1:
 
 dot-prop@^3.0.0, dot-prop@^4.2.0, dot-prop@^5.1.1:
   version "5.2.0"
-  resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-5.2.0.tgz#c34ecc29556dc45f1f4c22697b6f4904e0cc4fcb"
+  resolved "https://registry.npmjs.org/dot-prop/-/dot-prop-5.2.0.tgz#c34ecc29556dc45f1f4c22697b6f4904e0cc4fcb"
   integrity sha512-uEUyaDKoSQ1M4Oq8l45hSE26SnTxL6snNnqvK/VWx5wJhmff5z0FUVJDKDanor/6w3kzE3i7XZOk+7wC0EXr1A==
   dependencies:
     is-obj "^2.0.0"
@@ -4031,9 +4031,9 @@ eslint@^6.3.0:
     v8-compile-cache "^2.0.3"
 
 eslint@^7.5.0:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.5.0.tgz#9ecbfad62216d223b82ac9ffea7ef3444671d135"
-  integrity sha512-vlUP10xse9sWt9SGRtcr1LAC67BENcQMFeV+w5EvLEoFe3xJ8cF1Skd0msziRx/VMC+72B4DxreCE+OR12OA6Q==
+  version "7.6.0"
+  resolved "https://registry.npmjs.org/eslint/-/eslint-7.6.0.tgz#522d67cfaea09724d96949c70e7a0550614d64d6"
+  integrity sha512-QlAManNtqr7sozWm5TF4wIH9gmUm2hE3vNRUvyoYAa4y1l5/jxD/PQStEjBMQtCqZmSep8UxrcecI60hOpe61w==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -5559,7 +5559,7 @@ is-obj@^1.0.1:
 
 is-obj@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-2.0.0.tgz#473fb05d973705e3fd9620545018ca8e22ef4982"
+  resolved "https://registry.npmjs.org/is-obj/-/is-obj-2.0.0.tgz#473fb05d973705e3fd9620545018ca8e22ef4982"
   integrity sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==
 
 is-plain-obj@^1.0.0, is-plain-obj@^1.1.0:
@@ -8299,15 +8299,10 @@ rambda@2.14.5:
   resolved "https://registry.yarnpkg.com/rambda/-/rambda-2.14.5.tgz#906cdd9b45c25883e45f4fdba15d984c79620c08"
   integrity sha512-vYoUQ9bmWfKh6UvxIojk5/x91NcarecpiK+bJndyHg6KPzgtuMLmQ05jWMiRDLDblps1znByuhc6DbGtEuOqZw==
 
-rambda@^5.0.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/rambda/-/rambda-5.9.0.tgz#559c402d64be44836ab2efc44865ba7c58713013"
-  integrity sha512-51IivfuBRSokyKkRLrS2QtLCIRWfY+PQkQ4+vb2PXrdAPplBeWraw6BqYZGOuCzvKhvFhJxO+anRL6mUziUiJg==
-
-rambda@~5.8.0:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/rambda/-/rambda-5.8.0.tgz#41b6ec4c9ab57a1f09c91bc75357136c22dccffd"
-  integrity sha512-gEzvDE/Syadcn+yVjEYKLZnvFiHcoUQWwfjVcEZ3ugwN22IGHGWQebISzr+E2ar7fW8ly7CtDZcgVUnmrvSPIw==
+rambda@^5.0.0, rambda@~5.11.0:
+  version "5.11.0"
+  resolved "https://registry.npmjs.org/rambda/-/rambda-5.11.0.tgz#59e2c714775ff539a3bb838c23499d29515c48b7"
+  integrity sha512-IwUN0KmyM5UYZT1h7p4K09TF04EgMkK1Y0m97XlDjIZxH7W9TJ9YuzvCE1WuagpfcT6aLzugTiV4L3V+YE5seQ==
 
 range-parser@~1.2.1:
   version "1.2.1"

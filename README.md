@@ -21,7 +21,7 @@ An SDK to reduce your development effort when building side-by-side extension ap
 - [License](#license)
 
 ## Packages
-This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna). To install any of the packages make sure you have an `.npmrc` in your project, that references the `@sap` npm registry like this: `@sap:registry=https://npm.sap.com`.
+This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna).
 To use the SDK in your project, we recommend using our [commandline interface](#sap-cloud-sdk-cli).
 
 ### @sap-cloud-sdk/core
@@ -48,12 +48,12 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
-## API documentation
-We use GitHub Pages for our API documentation, the link can be found [here](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts).
+## Documentation
+Check out our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
 
 ## How to switch to the Open Source version of the SAP Cloud SDK
 Please ignore this section, if you have never used the SAP Cloud SDK with a version `< 1.18.0`.
-If you are using an old version of the SAP Cloud SDK, you might want to read [how to migrate to this Open Source version of the SAP Cloud SDK](./knowledge-base/how-tos/how-to-switch-to-os-cloud-sdk.md).
+If you are using an old version of the SAP Cloud SDK, you might want to read [how to migrate to this Open Source version of the SAP Cloud SDK](https://sap.github.io/cloud-sdk/docs/js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript).
 
 ## Related Projects
 
@@ -61,15 +61,14 @@ If you are using an old version of the SAP Cloud SDK, you might want to read [ho
 To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Cloud Platform.
 
 ### Virtual Data Model (VDM)
-In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the latest versions of the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer licence. Those are not included in this project, but rely on modules from this project.
+In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the latest versions of the whitelisted OData services of SAP S/4HANA Cloud under the SAP Developer license. Those are not included in this project, but rely on modules from this project.
 
-To install an OData client for an SAP S/4HANA service, make sure you have an `.npmrc` in the root of your project, that contains a reference to the the SAP npm registry: `@sap:registry=https://npm.sap.com`.
+To install an OData client for an SAP S/4HANA service run:
 
-Then run:
 ```sh-session
-$ npm install @sap-cloud-sdk/core
+$ npm install @sap/cloud-sdk-vdm-<service name>-service
 ```
-
+In the example above, `service name` is the name of the service you want to use, e. g. for the business partner service, run: `npm install @sap/cloud-sdk-vdm-business-partner-service`.
 ### Project "Piper"
 Continuous delivery is a method to develop software with short feedback cycles.
 It is applicable to projects both for SAP Cloud Platform and SAP on-premise platforms.
@@ -85,6 +84,8 @@ Feel free to leave your feedback in form of GitHub issues for bugs and feature r
 Want to contribute? Check out our [contributing](./CONTRIBUTING.md) guide.
 
 ## Links
+
+- [Documentation portal](https://sap.github.io/cloud-sdk/)
 - [SAP Help Page on SAP Cloud SDK](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
 - [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
 - [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)

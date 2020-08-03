@@ -32,8 +32,9 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 [Release Blog](https://blogs.sap.com/?p=1154386)
 
-## New Functionality
+### New Functionality
 
+- (Beta) OData 2.0: Introduce the first preview of a new and improved OData client implementation. For more details, consult the [documentation](https://sap.github.io/cloud-sdk/docs/java/features/odata/use-typed-odata-v2-and-v4-client-for-java#switch-to-improved-odata-vdm-beta).
 - OData 4.0: Extract version identifiers from the `ETag` header in case of create and update operations. Now result entities obtained via `ModificationRespnse#getResponseEntity()` will contain a version identifier. It will be sent as `IF-MATCH` header in subsequent update and delete operations.  
 
 - New experimental method `ScpCfDestinationLoader#tryGetDestination`.
@@ -51,7 +52,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
       (uri) -> restTemplate.getForObject(uri, ScpCfDestinationServiceV1Response.class));
   ``` 
 
-## Improvements
+### Improvements
 
 - Update dependencies:
   - Update [SAP Cloud Application Programming Model](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/00823f91779d4d42aa29a498e0535cdf.html) from version `1.40.2` to `1.40.6`
@@ -64,7 +65,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - Add public enum `SoapNamespace` to `rfc` module, with experimental support to customize expected XML tag namespace from SOAP response messages. This can be useful if target SOAP service is not working with ABAP code.
 - The principal id can be extracted from authorization tokens of grant type `urn:ietf:params:oauth:grant-type:jwt-bearer`.
 
-## Fixed Issues
+### Fixed Issues
 
 - Fix an issue on SCP Neo with anonymous HTTP requests being blocked, when optional module `concurrency-scp-neo` was added as application dependency.
 - Fix an issue with SOAP wrapped RFC and BAPI calls that sends pure exporting parameters as empty tags in SOAP serialised requests. Exporting parameters are no longer sent in SOAP serialised requests.

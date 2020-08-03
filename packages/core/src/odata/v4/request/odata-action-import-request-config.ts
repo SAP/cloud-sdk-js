@@ -22,7 +22,14 @@ export class ODataActionImportRequestConfig<
     private oDataUri: ODataUri
   ) {
     super('post', defaultServicePath);
-    this.payload = parameters
+    this.payload = Object.keys(parameters).reduce((all,key)=>{
+      const orginalName = parameters[key].originalName
+      if(orginalName){
+        all[orginalName] = parameters[key].value
+      }
+      return all}
+    ,{})
+
   }
 
   resourcePath(): string {
@@ -30,6 +37,10 @@ export class ODataActionImportRequestConfig<
   }
 
   queryParameters(): MapType<any> {
-    return {};
+      return {
+        ...this.prependDollarToQueryParameters({
+          format: 'json'
+        })
+      }
   }
 }

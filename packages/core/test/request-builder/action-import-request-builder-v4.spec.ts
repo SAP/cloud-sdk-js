@@ -7,8 +7,13 @@ import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType
 } from '../test-util/test-services/v4/test-service/action-imports';
-import { TestComplexType } from '../test-util/test-services/v4/test-service';
-import { serializeEntity } from '../../src/odata/v4';
+import { TestComplexType, TestComplexTypeField, TestEntity } from '../test-util/test-services/v4/test-service';
+import {
+  ComplexTypeStringPropertyField,
+  deserializeComplexType,
+  serializeComplexType,
+  serializeEntity
+} from '../../src/odata/v4';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';
@@ -37,12 +42,17 @@ describe('action import request builder', () => {
   it('should call an action with .', async () => {
     mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
 
-    const response = {StringProperty:'SomeValue'}
-    nock(host).post(`${servicePath}/TestActionImportMultipleParameterComplexReturnType?$format=json`).reply(200,response);
+    const tsBody = {stringParam:'LaLa',nonNullableStringParam:'LuLu'}
+    const tsResponse = {stringProperty:"someResponseValue"}
 
-    const result = await testActionImportMultipleParameterComplexReturnType({stringParam:'Lala',nonNullableStringParam:'LiLu'}).execute(
+    const httpResponse = serializeComplexType(tsResponse, TestComplexType)
+    const httpBody = {StringParam:"LaLa",NonNullableStringParam:"LuLu"}
+
+    nock(host).post(`${servicePath}/TestActionImportMultipleParameterComplexReturnType?$format=json`,httpBody).reply(200,httpResponse);
+
+    const result = await testActionImportMultipleParameterComplexReturnType(tsBody).execute(
       destination
     );
-    expect(result).toBe(undefined);
+    expect(result).toEqual(tsResponse);
   });
 });

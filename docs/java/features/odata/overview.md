@@ -4,7 +4,7 @@ title: OData with the Cloud SDK for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Overview
-description: This article provides an overview of how the SAP Cloud SDK for Java supports connecting to OData services. 
+description: This article provides an overview of how the SAP Cloud SDK for Java supports connecting to OData services.
 keywords:
 - sap
 - cloud
@@ -33,6 +33,6 @@ The Cloud SDK supports consumption of OData services through the following featu
 
 The SDK supports both OData v2 and OData v4 protocols. However, parts of the v4 implementation are still in beta and not all features are supported yet.
 
-:::tip Improved OData VDM (Beta)
-The Cloud SDK for Java has published an improved OData VDM implementation (Beta) which boosts performance of your Java apps and lets you profit from faster innovations for both OData protocols. Check out the [VDM article](use-vdm.md) for details.
+:::tip Improved OData type-safe client
+The Cloud SDK for Java has published an improved OData type-safe client implementation (Beta) which boosts performance of your Java apps and lets you profit from faster innovations for both OData protocols. Check out the [our article on type-safe client for details](use-typed-odata-v2-and-v4-client-for-java) for details.
 :::

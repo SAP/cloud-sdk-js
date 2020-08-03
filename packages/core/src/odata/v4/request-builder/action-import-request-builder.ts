@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import {
-  ActionImportParameters,
+  ActionImportPayload,
   ODataActionImportRequestConfig
 } from '../request';
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
@@ -26,7 +26,7 @@ export class ActionImportRequestBuilder<
     defaultServicePath: string,
     actionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
-    payload: ActionImportParameters<ParametersT>
+    payload: ActionImportPayload<ParametersT>
   ) {
     super(
       responseTransformer,

@@ -8,7 +8,7 @@ import {
 import { VdmFunctionImport, VdmActionImport } from '../vdm-types';
 
 export function exportStatement(
-  actionAunctionImports: VdmFunctionImport[] | VdmActionImport[],
+  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[],
   name: 'functionImports' | 'actionImports'
 ): VariableStatementStructure {
   return {
@@ -17,7 +17,7 @@ export function exportStatement(
     declarations: [
       {
         name,
-        initializer: exportsInitializer(actionAunctionImports)
+        initializer: exportsInitializer(actionFunctionImports)
       }
     ],
     isExported: true

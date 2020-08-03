@@ -16,7 +16,4 @@ export * from './extract-odata-etag';
 export * from '../common';
 export * from '../common/filter/filter-function';
 
-export * as filterFunctions from './filter-functions';
-
-/* Export some filter functions for backwards compatibility */
-export { substringOf, length, substring } from './filter-functions';
+export * from './filter-functions'

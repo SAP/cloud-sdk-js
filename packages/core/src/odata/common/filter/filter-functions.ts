@@ -253,6 +253,7 @@ export function isOf<EntityT extends EntityBase>(
   expression: Field<EntityT>,
   type: string
 ): BooleanFilterFunction<EntityT>;
+
 export function isOf<EntityT extends EntityBase>(
   expressionOrType: Field<EntityT> | string,
   type?: string
@@ -262,3 +263,5 @@ export function isOf<EntityT extends EntityBase>(
   }
   return filterFunction('isof', 'boolean', expressionOrType);
 }
+
+export const filterFunctions = { endsWith, startsWith, length, indexOf, substring, toLower, toUpper, trim, concat, round, floor, ceiling, day, hour, minute, month, second, year, isOf };

@@ -4,6 +4,8 @@ import { Field, StringFilterFunction, BooleanFilterFunction } from '../common';
 import { filterFunction } from '../common/filter/filter-function';
 import { Entity } from './entity';
 
+import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions'
+
 /* String Functions */
 /**
  * Build a filter function to test whether a string is a substring of the other. Evaluates to boolean.
@@ -35,4 +37,4 @@ export function replace<EntityT extends Entity>(
   return filterFunction('replace', 'string', str, searchStr, replaceStr);
 }
 
-export * from '../common/filter/filter-functions';
+export const filterFunctions = { ...filterFunctionsCommon, substringOf, replace };

@@ -124,7 +124,8 @@ module.exports = {
             type: 'category',
             label: 'OData',
             items: [
-              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
+
+              'js/features/odata/overview',              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
               'js/features/odata/use-typed-odata-client-for-javascript-and-typescript'
             ]
           },
@@ -145,7 +146,8 @@ module.exports = {
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript'
         ],
       },
-      'js/api-reference-js-ts'
+      'js/api-reference-js-ts',
+      'js/frequently-asked-questions'
     ],
     'Continuous Delivery': ['devops/getting-started'],
     // Support: ['support/support'],

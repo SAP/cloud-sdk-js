@@ -1,0 +1,96 @@
+---
+id: frequently-asked-questions
+title:  Frequently asked questions
+hide_title: false
+hide_table_of_contents: false
+sidebar_label: FAQ
+description: You asked! We Answered! We collected here the most frequent question about SAP Cloud SDK for Java.
+keywords:
+- sap
+- cloud
+- sdk
+- cloud native
+- cloud sdk
+- sap cloud sdk
+---
+
+## Generic questions ##
+
+### Is SAP Cloud SDK for JavaScript Open Source
+
+Yes. The SAP Cloud SDK for JavaScript is Open Source and available under permissive [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0). You'll find all the available modules on [Github](https://github.com/SAP/cloud-sdk) and [NPM](https://www.npmjs.com/search?q=%40sap-cloud-sdk). SAP Cloud SDK command-line interface resides in a separate [Github repository](https://github.com/sap/cloud-sdk-cli).
+
+### What is Virtual Data Model?
+
+In simple words, Virtual Data Model is a nick-name for pre-generated type-safe client libraries for multiple whitelisted OData services of SAP [S/4HANA Cloud](https://www.sap.com/germany/products/s4hana-erp.html). These libraries are a part of SAP Cloud SDK for JavaScript but they are **not** Open Source and shipped under SAP Developer license. Libraries are updated with every release of S/4HANA Cloud and you can always find them on [NPM](https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*)
+
+### Do you continue developing of the SDK for JavaScript?
+
+The SAP cloud SDK for JavaScript is developed and maintained by the experienced team at SAP. Publishing the SDK as Open Source allows anyone to benefit from library value adds, instantly contribute new functionality, faster fix issues, and speed up feature development.
+
+### Can I contribute to the SDK for JavaScript?
+
+We're happy to accept and review your valuable contribution. For details on contributing check our [quick guide](https://github.com/SAP/cloud-sdk/blob/master/CONTRIBUTING.md)
+
+### How often do you release a new SDK version?
+
+We usually release [bi-weekly](https://github.com/SAP/cloud-sdk/releases). All the features that are in _Generally Available_ or _Beta_ state get into the next release.
+
+Pre-generated type-safe client libraries are released quarterly to follow the S/4HANA Cloud release cycle.
+
+### Do you release hotfixes?
+
+Yes, we do. They usually have a higher `patch` number according to [semver](https://semver.org/), i.e: 1.24.1 instead of 1.24.0. Check our [release notes](https://github.com/SAP/cloud-sdk/releases) for more details.
+
+### Should I update with every release?
+
+The general recommendation is _YES_. This way you'll reduce the effort to keep up with the fast pace of cloud development. We try to keep stable functionality consistent and explicitly notify about breaking changes. Be cautious about using features annotated as _Beta_ because their API can change with every release.
+
+### Which Node versions are supported by the SDK?
+
+We support and recommend the [latest active LTS version of Node](https://nodejs.org/en/about/releases/). You can try using a later Node version on your own risk.
+
+### Can I use features annotated as Beta in production?
+
+We __do not recommend__ using API that is marked unstable in productive code. We do not guarantee any API compatibility for future updates and the features might be experimental. You can use these features to test cutting edge functionality, provide us feedback, and plan migration steps when _Beta_ features are releases as _General
+Availability_.
+
+### I think I found a bug in the SDK, what should I do?
+
+Please, report it to us via any available channel. The preferred support channel is [Github](https://github.com/SAP/cloud-sdk/issues/new/choose). You can also ask a question on [Stack
+Overflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk ).
+
+### I'm creating a BCP incident, what's your component name?
+
+Choose `XX-S4C-SDK` if you are reporting an issue via BCP.
+
+## OData related questions ##
+
+### What versions of OData protocol do you support?
+
+We support OData v2 and OData v4 services. You can use pre-generated client libraries supplied with SDK or generate your client from the SDK specification. [Find more details here.](features/odata/overview)
+
+### Do you support ALL OData features?
+
+We support most of the OData features that are exposed by SAP services. However, the [OData specification](https://www.odata.org/documentation/) is huge and contains many features that would see rare to no use. If you found a feature that you need but it is not yet supported by Cloud SDK for Java, please, make a feature request via [Github](https://github.com/SAP/cloud-sdk/issues/new/choose)
+
+### I receive an OData error/exception when using Cloud SDK for JavaScript
+
+You may see some errors while developing. These errors are not always caused by flaws in the SDK as we often see inconsistent OData protocol handling by different services. Some of them even have known flaws for which we have workarounds. If you can't solve your issue via debugging and experimenting, please, report your incident via [Stack Overflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk ) or [Github](https://github.com/SAP/cloud-sdk/issues/new/choose).
+
+## REST related questions ##
+
+### Do you support REST client libraries?
+
+We're working on it. The current support in experimental and not ready for production use.
+
+## Questions about SAP Cloud Platform
+
+### Do you support SAP Cloud Platform - Cloud Foundry?
+
+SAP Cloud SDK for JavaScript has first-class support for [SCP Cloud
+Foundry](https://www.sap.com/products/cloud-platform.html). We provide plenty of helpful abstractions for [connectivity](features/connectivity/destination-js-sdk) and authentication that make developing Apps a pleasant and rewarding experience. Let us know if you're missing any features about SCP Cloud Foundry support from SAP Cloud SDK for Java.
+
+### Do you support SAP Cloud Platform - Neo?
+
+We still provide fully-fledged support Neo environment. However, we do not recommend starting new projects with SAP Cloud Platform Neo as Cloud Foundry is better suited for Apps and S/4HANA extensions development.

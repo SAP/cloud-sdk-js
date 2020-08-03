@@ -2,11 +2,31 @@
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
-import { parseFunctionImports, parseFunctions } from '../../edmx-parser/v4';
+import {
+  EdmxFunction,
+  EdmxFunctionImport,
+  parseFunctionImports,
+  parseFunctions
+} from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
-import { findFunctionForFunctionImport } from './action-function-util';
+import { stripNamespace } from '../edmx-to-vdm-util';
+
+export function findFunctionForFunctionImport(
+  functions: EdmxFunction[],
+  functionImport: EdmxFunctionImport
+): EdmxFunction {
+  const edmxActionOrFunction = functions.find(
+    fn => stripNamespace(functionImport.Function) === fn.Name
+  );
+  if (!edmxActionOrFunction) {
+    throw Error(
+      `Unable to find a function with name: ${functionImport.Function}, but specified in function import ${functionImport.Name}`
+    );
+  }
+  return edmxActionOrFunction;
+}
 
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,

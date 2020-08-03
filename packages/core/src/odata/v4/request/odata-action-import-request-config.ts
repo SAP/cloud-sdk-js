@@ -1,8 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { ActionImportPayload,ActionImportPayloadElement } from './action-import-payload';
 import { ODataRequestConfig } from '../../common/request/odata-request-config';
+import {
+  ActionImportPayload,
+  ActionImportPayloadElement
+} from './action-import-payload';
 
 export class ODataActionImportRequestConfig<
   ParametersT
@@ -21,7 +24,8 @@ export class ODataActionImportRequestConfig<
   ) {
     super('post', defaultServicePath);
     this.payload = Object.keys(parameters).reduce((all, key) => {
-      const payloadElement:ActionImportPayloadElement<ParametersT> = parameters[key];
+      const payloadElement: ActionImportPayloadElement<ParametersT> =
+        parameters[key];
       if (payloadElement) {
         all[payloadElement.originalName] = payloadElement.value;
       }

@@ -1,12 +1,32 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
-import { parseActionImport, parseActions } from '../../edmx-parser/v4';
+import {
+  EdmxAction,
+  EdmxActionImport,
+  parseActionImport,
+  parseActions
+} from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmActionImport, VdmComplexType, VdmEntity } from '../../vdm-types';
 import { parseActionImportReturnTypes } from '../common/action-function-return-types';
-import { findActionForActionImport } from './action-function-util';
+import { stripNamespace } from '../edmx-to-vdm-util';
+import { transformActionImportBase } from '../common/action-import';
+
+export function findActionForActionImport(
+  actions: EdmxAction[],
+  actionImport: EdmxActionImport
+): EdmxAction {
+  const edmxActionOrFunction = actions.find(
+    action => stripNamespace(actionImport.Action) === action.Name
+  );
+  if (!edmxActionOrFunction) {
+    throw Error(
+      `Unable to find a action with name: ${actionImport.Action}, but specified in action import ${actionImport.Name}`
+    );
+  }
+  return edmxActionOrFunction;
+}
 
 export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
@@ -28,7 +48,7 @@ export function generateActionImportsV4(
     );
 
     return {
-      ...transformFunctionImportBase(
+      ...transformActionImportBase(
         actionImport,
         edmxAction.Parameter || [],
         swaggerDefinition,

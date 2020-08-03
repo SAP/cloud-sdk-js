@@ -5,16 +5,17 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmActionImportBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser/swagger-types';
 import { actionImportDescription } from '../description-util';
-import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common';
-import { getParameter } from './action-function-parameters';
+import { EdmxParameter } from '../../edmx-parser/common';
+import { EdmxActionImport } from '../../edmx-parser/v4';
+import { getActionImportParameters } from './action-function-parameters';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'function-import'
 });
 
-export function transformFunctionImportBase<T extends EdmxNamed>(
-  edmxActionImport: T,
+export function transformActionImportBase(
+  edmxActionImport: EdmxActionImport,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
@@ -28,7 +29,7 @@ export function transformFunctionImportBase<T extends EdmxNamed>(
     parametersTypeName: toTypeNameFormat(`${actionName}Parameters`)
   };
 
-  const parameters = getParameter(
+  const parameters = getActionImportParameters(
     edmxActionImport,
     edmxParameters,
     swaggerDefinition,

@@ -34,7 +34,6 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ### New Functionality
 
-- (Beta) OData 2.0: Introduce the first preview of a new and improved OData client implementation. For more details, consult the [documentation](https://sap.github.io/cloud-sdk/docs/java/features/odata/use-typed-odata-v2-and-v4-client-for-java#switch-to-improved-odata-vdm-beta).
 - OData 4.0: Extract version identifiers from the `ETag` header in case of create and update operations. Now result entities obtained via `ModificationRespnse#getResponseEntity()` will contain a version identifier. It will be sent as `IF-MATCH` header in subsequent update and delete operations.  
 
 - New experimental method `ScpCfDestinationLoader#tryGetDestination`.

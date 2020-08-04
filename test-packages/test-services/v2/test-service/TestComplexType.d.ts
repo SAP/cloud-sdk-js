@@ -8,9 +8,8 @@ import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, Com
 export interface TestComplexType {
     /**
      * String Property.
-     * @nullable
      */
-    stringProperty?: string;
+    stringProperty: string;
     /**
      * Boolean Property.
      * @nullable

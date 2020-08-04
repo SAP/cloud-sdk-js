@@ -14,9 +14,8 @@ import { CollectionField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanP
 export interface TestComplexType {
   /**
    * String Property.
-   * @nullable
    */
-  stringProperty?: string;
+  stringProperty: string;
   /**
    * Boolean Property.
    * @nullable

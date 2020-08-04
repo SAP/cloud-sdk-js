@@ -40,17 +40,13 @@ export declare class TestNestedComplexTypeField<EntityT extends Entity> extends 
      * @param fieldName - Actual name of the field as used in the OData request.
      * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
      */
-    constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, TestNestedComplexType>);
+    constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
 }
 export declare namespace TestNestedComplexType {
     /**
      * Metadata information on all properties of the `TestNestedComplexType` complex type.
      */
-    const _propertyMetadata: PropertyMetadata[];
-    /**
-     * Type reference to the according complex type.
-     */
-    const _complexType: TestNestedComplexType;
+    const _propertyMetadata: PropertyMetadata<TestNestedComplexType>[];
     /**
      * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
      */

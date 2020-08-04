@@ -51,7 +51,7 @@ export class TestNestedComplexTypeField<EntityT extends Entity> extends ComplexT
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, TestNestedComplexType>) {
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
     super(fieldName, fieldOf, TestNestedComplexType);
   }
 }
@@ -60,7 +60,7 @@ export namespace TestNestedComplexType {
   /**
    * Metadata information on all properties of the `TestNestedComplexType` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata[] = [{
+  export const _propertyMetadata: PropertyMetadata<TestNestedComplexType>[] = [{
     originalName: 'StringProperty',
     name: 'stringProperty',
     type: 'Edm.String',
@@ -71,10 +71,6 @@ export namespace TestNestedComplexType {
     type: TestLvl2NestedComplexType,
     isCollection: false
   }];
-  /**
-   * Type reference to the according complex type.
-   */
-  export const _complexType: TestNestedComplexType = {};
 
   /**
    * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.

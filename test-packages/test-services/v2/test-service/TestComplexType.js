@@ -209,10 +209,6 @@ var TestComplexType;
             isCollection: false
         }];
     /**
-     * Type reference to the according complex type.
-     */
-    TestComplexType._complexType = {};
-    /**
      * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
      */
     function build(json) {

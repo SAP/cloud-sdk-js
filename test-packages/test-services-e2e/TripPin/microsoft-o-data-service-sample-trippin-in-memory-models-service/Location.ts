@@ -51,7 +51,7 @@ export class LocationField<EntityT extends Entity> extends ComplexTypeField<Enti
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, Location>) {
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
     super(fieldName, fieldOf, Location);
   }
 }
@@ -60,7 +60,7 @@ export namespace Location {
   /**
    * Metadata information on all properties of the `Location` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata[] = [{
+  export const _propertyMetadata: PropertyMetadata<Location>[] = [{
     originalName: 'Address',
     name: 'address',
     type: 'Edm.String',
@@ -71,10 +71,6 @@ export namespace Location {
     type: City,
     isCollection: false
   }];
-  /**
-   * Type reference to the according complex type.
-   */
-  export const _complexType: Location = {};
 
   /**
    * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.

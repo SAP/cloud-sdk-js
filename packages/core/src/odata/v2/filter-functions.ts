@@ -2,6 +2,7 @@
 
 import { Field, StringFilterFunction, BooleanFilterFunction } from '../common';
 import { filterFunction } from '../common/filter/filter-function';
+import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions';
 import { Entity } from './entity';
 
 /* String Functions */
@@ -35,4 +36,11 @@ export function replace<EntityT extends Entity>(
   return filterFunction('replace', 'string', str, searchStr, replaceStr);
 }
 
-export * from '../common/filter/filter-functions';
+/**
+ * OData v2 specific filter functions
+ */
+export const filterFunctions = {
+  ...filterFunctionsCommon,
+  substringOf,
+  replace
+};

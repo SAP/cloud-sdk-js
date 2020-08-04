@@ -13,6 +13,7 @@ import {
 import { CollectionFilterFunction } from '../common/filter/collection-filter-function';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
+import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions';
 
 /* String Functions */
 /**
@@ -145,4 +146,18 @@ export function hasSubsequence<
  * TODO: totalseconds, time
  */
 
-export * from '../common/filter/filter-functions';
+/**
+ * OData v4 specific filter functions
+ */
+export const filterFunctions = {
+  ...filterFunctionsCommon,
+  contains,
+  matchesPattern,
+  fractionalSeconds,
+  totalOffsetMinutes,
+  maxDateTime,
+  minDateTime,
+  now,
+  hasSubset,
+  hasSubsequence
+};

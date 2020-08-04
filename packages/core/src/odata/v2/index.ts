@@ -15,5 +15,4 @@ export * from './legacy-request-configs';
 export * from './extract-odata-etag';
 export * from '../common';
 export * from '../common/filter/filter-function';
-
 export * from './filter-functions';

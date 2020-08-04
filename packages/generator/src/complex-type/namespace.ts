@@ -17,11 +17,7 @@ export function complexTypeNamespace(
     kind: StructureKind.Namespace,
     name: complexType.typeName,
     isExported: true,
-    statements: [
-      propertyMetadata(complexType),
-      complexTypeDeclaration(complexType),
-      factoryFunction(complexType)
-    ]
+    statements: [propertyMetadata(complexType), factoryFunction(complexType)]
   };
 }
 
@@ -78,30 +74,12 @@ function propertyMetadata(
       {
         name: '_propertyMetadata',
         initializer: getPropertyMetadataInitializer(complexType),
-        type: 'PropertyMetadata[]'
+        type: `PropertyMetadata<${complexType.typeName}>[]`
       }
     ],
     docs: [
       `\nMetadata information on all properties of the \`${complexType.typeName}\` complex type.`
     ],
-    isExported: true
-  };
-}
-
-function complexTypeDeclaration(
-  complexType: VdmComplexType
-): VariableStatementStructure {
-  return {
-    kind: StructureKind.VariableStatement,
-    declarationKind: VariableDeclarationKind.Const,
-    declarations: [
-      {
-        name: '_complexType',
-        initializer: '{}',
-        type: complexType.typeName
-      }
-    ],
-    docs: ['\nType reference to the according complex type.'],
     isExported: true
   };
 }

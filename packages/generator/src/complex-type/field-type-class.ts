@@ -34,7 +34,7 @@ export function fieldTypeClass(
           },
           {
             name: 'fieldOf',
-            type: `ConstructorOrField<EntityT, ${complexType.typeName}>`
+            type: 'ConstructorOrField<EntityT>'
           }
         ],
         docs: [

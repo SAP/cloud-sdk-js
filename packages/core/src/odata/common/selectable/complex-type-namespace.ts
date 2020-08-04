@@ -2,12 +2,11 @@
 import { EdmTypeShared } from '../edm-types';
 
 export interface ComplexTypeNamespace<ComplexT> {
-  _propertyMetadata: PropertyMetadata[];
-  _complexType: ComplexT;
+  _propertyMetadata: PropertyMetadata<ComplexT>[];
 }
 
-export interface PropertyMetadata {
-  name: string;
+export interface PropertyMetadata<ComplexT = any> {
+  name: keyof ComplexT;
   originalName: string;
   type: EdmTypeShared<'any'> | ComplexTypeNamespace<any>;
   isCollection?: boolean;

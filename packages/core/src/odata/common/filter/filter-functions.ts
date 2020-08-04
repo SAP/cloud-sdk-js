@@ -258,12 +258,19 @@ export function isOf<EntityT extends EntityBase>(
   expressionOrType: Field<EntityT> | string,
   type?: string
 ): BooleanFilterFunction<EntityT> {
-  if (type) {
-    return filterFunction('isof', 'boolean', expressionOrType, type);
-  }
-  return filterFunction('isof', 'boolean', expressionOrType);
+  return type
+    ? filterFunction('isof', 'boolean', expressionOrType, type)
+    : filterFunction('isof', 'boolean', expressionOrType);
 }
 
+/**
+ * Filter functions common to both OData v2 and OData v4. See below for version specific filter functions.
+ *
+ * Filter functions are used to create more complex filtering expresions, e. g. when filtering by the first letter of a property:
+ * ```
+ *  .filter(startsWith(BusinessPartner.FIRST_NAME, 'A').equals(true))
+ * ```
+ */
 export const filterFunctions = {
   endsWith,
   startsWith,

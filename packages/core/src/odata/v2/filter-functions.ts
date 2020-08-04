@@ -36,6 +36,9 @@ export function replace<EntityT extends Entity>(
   return filterFunction('replace', 'string', str, searchStr, replaceStr);
 }
 
+/**
+ * OData v2 specific filter functions
+ */
 export const filterFunctions = {
   ...filterFunctionsCommon,
   substringOf,

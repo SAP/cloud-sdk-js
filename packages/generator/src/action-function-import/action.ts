@@ -46,7 +46,7 @@ function getActionImportStatements(
         if (cumulator !== 'const payload = {\n') {
           cumulator += ',\n';
         }
-        cumulator += `${currentParameters.parameterName}: new ActionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
+        cumulator += `${currentParameters.parameterName}: new ActionImportPayloadElement('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
       }, 'const payload = {\n') + '\n}'
     : '{}';

@@ -27,9 +27,9 @@ exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoR
  */
 function testActionImportMultipleParameterComplexReturnType(parameters) {
     var payload = {
-        stringParam: new v4_1.ActionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
-        nonNullableStringParam: new v4_1.ActionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-        nullableBooleanParam: new v4_1.ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
+        stringParam: new v4_1.ActionImportPayloadElement('StringParam', 'Edm.String', parameters.stringParam),
+        nonNullableStringParam: new v4_1.ActionImportPayloadElement('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
+        nullableBooleanParam: new v4_1.ActionImportPayloadElement('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
     };
     return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', function (data) { return v4_1.transformReturnValueForComplexType(data, function (data) { return v4_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, payload);
 }

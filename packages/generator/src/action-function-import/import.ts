@@ -90,7 +90,7 @@ export function importDeclarationsFunction(
     return [];
   }
 
-  const actionImportParameters = flat(
+  const actionImportPayloadElements = flat(
     service.actionsImports.map(actionImport => actionImport.parameters)
   );
   const returnTypes = service.actionsImports.map(
@@ -98,8 +98,8 @@ export function importDeclarationsFunction(
   );
   return actionFunctionImportDeclarations(
     returnTypes,
-    actionImportParameters,
-    ['ActionImportRequestBuilder', 'ActionImportParameter'],
+    actionImportPayloadElements,
+    ['ActionImportRequestBuilder', 'ActionImportPayloadElement'],
     service.oDataVersion
   );
 }

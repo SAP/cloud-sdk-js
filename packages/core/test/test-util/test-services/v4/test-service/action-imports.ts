@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefined, transformReturnValueForComplexType, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src/v4';
+import { transformReturnValueForUndefined, transformReturnValueForComplexType, deserializeComplexType, ActionImportRequestBuilder, ActionImportPayloadElement } from '../../../../../src/v4';
 import { TestComplexType } from './TestComplexType';
 
 /**
@@ -52,9 +52,9 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
  */
 export function testActionImportMultipleParameterComplexReturnType(parameters: TestActionImportMultipleParameterComplexReturnTypeParameters): ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType> {
   const payload = {
-    stringParam: new ActionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
-    nonNullableStringParam: new ActionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-    nullableBooleanParam: new ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
+    stringParam: new ActionImportPayloadElement('StringParam', 'Edm.String', parameters.stringParam),
+    nonNullableStringParam: new ActionImportPayloadElement('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
+    nullableBooleanParam: new ActionImportPayloadElement('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
   }
 
   return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), payload);

@@ -11,9 +11,9 @@ import {
   CollectionField
 } from '../common';
 import { CollectionFilterFunction } from '../common/filter/collection-filter-function';
+import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
-import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions';
 
 /* String Functions */
 /**

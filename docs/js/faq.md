@@ -89,8 +89,4 @@ We're working on it. The current support in experimental and not ready for produ
 ### Do you support SAP Cloud Platform - Cloud Foundry?
 
 SAP Cloud SDK for JavaScript has first-class support for [SCP Cloud
-Foundry](https://www.sap.com/products/cloud-platform.html). We provide plenty of helpful abstractions for [connectivity](features/connectivity/destination-js-sdk) and authentication that make developing Apps a pleasant and rewarding experience. Let us know if you're missing any features about SCP Cloud Foundry support from SAP Cloud SDK for Java.
-
-### Do you support SAP Cloud Platform - Neo?
-
-We still provide fully-fledged support Neo environment. However, we do not recommend starting new projects with SAP Cloud Platform Neo as Cloud Foundry is better suited for Apps and S/4HANA extensions development.
+Foundry](https://www.sap.com/products/cloud-platform.html). We provide plenty of helpful abstractions for [connectivity](features/connectivity/destination-js-sdk) and authentication that make developing Apps a pleasant and rewarding experience. Let us know if you're missing any features about SCP Cloud Foundry support from SAP Cloud SDK for JavaScript.

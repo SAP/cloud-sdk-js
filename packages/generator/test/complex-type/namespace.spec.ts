@@ -28,25 +28,12 @@ describe('namespace', () => {
         type: 'Edm.Int16',
         isCollection: false
       }]`,
-              type: 'PropertyMetadata[]'
+              type: 'PropertyMetadata<ComplexMealType>[]'
             }
           ],
           docs: [
             '\nMetadata information on all properties of the `ComplexMealType` complex type.'
           ],
-          isExported: true
-        },
-        {
-          kind: StructureKind.VariableStatement,
-          declarationKind: VariableDeclarationKind.Const,
-          declarations: [
-            {
-              name: '_complexType',
-              initializer: '{}',
-              type: 'ComplexMealType'
-            }
-          ],
-          docs: ['\nType reference to the according complex type.'],
           isExported: true
         },
         {
@@ -93,25 +80,12 @@ describe('namespace', () => {
         type: 'Edm.Int16',
         isCollection: false
       }]`,
-              type: 'PropertyMetadata[]'
+              type: 'PropertyMetadata<ComplexMealWithDesertType>[]'
             }
           ],
           docs: [
             '\nMetadata information on all properties of the `ComplexMealWithDesertType` complex type.'
           ],
-          isExported: true
-        },
-        {
-          kind: StructureKind.VariableStatement,
-          declarationKind: VariableDeclarationKind.Const,
-          declarations: [
-            {
-              name: '_complexType',
-              initializer: '{}',
-              type: 'ComplexMealWithDesertType'
-            }
-          ],
-          docs: ['\nType reference to the according complex type.'],
           isExported: true
         },
         {

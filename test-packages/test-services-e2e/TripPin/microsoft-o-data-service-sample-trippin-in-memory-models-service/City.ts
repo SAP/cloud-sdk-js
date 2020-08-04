@@ -60,7 +60,7 @@ export class CityField<EntityT extends Entity> extends ComplexTypeField<EntityT,
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, City>) {
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
     super(fieldName, fieldOf, City);
   }
 }
@@ -69,7 +69,7 @@ export namespace City {
   /**
    * Metadata information on all properties of the `City` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata[] = [{
+  export const _propertyMetadata: PropertyMetadata<City>[] = [{
     originalName: 'Name',
     name: 'name',
     type: 'Edm.String',
@@ -85,10 +85,6 @@ export namespace City {
     type: 'Edm.String',
     isCollection: false
   }];
-  /**
-   * Type reference to the according complex type.
-   */
-  export const _complexType: City = {};
 
   /**
    * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.

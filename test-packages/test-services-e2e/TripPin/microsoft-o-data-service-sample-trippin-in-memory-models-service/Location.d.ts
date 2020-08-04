@@ -40,17 +40,13 @@ export declare class LocationField<EntityT extends Entity> extends ComplexTypeFi
      * @param fieldName - Actual name of the field as used in the OData request.
      * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
      */
-    constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, Location>);
+    constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
 }
 export declare namespace Location {
     /**
      * Metadata information on all properties of the `Location` complex type.
      */
-    const _propertyMetadata: PropertyMetadata[];
-    /**
-     * Type reference to the according complex type.
-     */
-    const _complexType: Location;
+    const _propertyMetadata: PropertyMetadata<Location>[];
     /**
      * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
      */

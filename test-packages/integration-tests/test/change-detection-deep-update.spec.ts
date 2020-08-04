@@ -71,6 +71,7 @@ describe('deep-update and change detection', () => {
       .stringProperty('abc')
       .build();
     testEntity.complexTypeProperty = {
+      stringProperty: 'test',
       booleanProperty: true
     };
 
@@ -107,6 +108,7 @@ describe('deep-update and change detection', () => {
       .stringProperty('abc')
       .build();
     testEntity.complexTypeProperty = {
+      stringProperty: 'test',
       booleanProperty: true
     };
 
@@ -119,7 +121,7 @@ describe('deep-update and change detection', () => {
       {
         StringProperty: 'no',
         to_SingleLink: { StringProperty: 'abc' },
-        ComplexTypeProperty: { BooleanProperty: true }
+        ComplexTypeProperty: { BooleanProperty: true, StringProperty: 'test' }
       }
     );
 

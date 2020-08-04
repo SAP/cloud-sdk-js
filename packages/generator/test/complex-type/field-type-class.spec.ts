@@ -46,7 +46,7 @@ describe('field-type-class', () => {
             },
             {
               name: 'fieldOf',
-              type: 'ConstructorOrField<EntityT, ComplexMealType>'
+              type: 'ConstructorOrField<EntityT>'
             }
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealType);'],
@@ -95,7 +95,7 @@ describe('field-type-class', () => {
             },
             {
               name: 'fieldOf',
-              type: 'ConstructorOrField<EntityT, ComplexMealWithDesertType>'
+              type: 'ConstructorOrField<EntityT>'
             }
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealWithDesertType);'],

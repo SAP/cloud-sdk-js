@@ -14,9 +14,8 @@ import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, Com
 export interface TestComplexType {
   /**
    * String Property.
-   * @nullable
    */
-  stringProperty?: string;
+  stringProperty: string;
   /**
    * Boolean Property.
    * @nullable
@@ -193,7 +192,7 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, TestComplexType>) {
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
     super(fieldName, fieldOf, TestComplexType);
   }
 }
@@ -202,7 +201,7 @@ export namespace TestComplexType {
   /**
    * Metadata information on all properties of the `TestComplexType` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata[] = [{
+  export const _propertyMetadata: PropertyMetadata<TestComplexType>[] = [{
     originalName: 'StringProperty',
     name: 'stringProperty',
     type: 'Edm.String',
@@ -283,10 +282,6 @@ export namespace TestComplexType {
     type: TestNestedComplexType,
     isCollection: false
   }];
-  /**
-   * Type reference to the according complex type.
-   */
-  export const _complexType: TestComplexType = {};
 
   /**
    * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.

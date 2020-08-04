@@ -40,7 +40,7 @@ export class TestComplexBaseTypeField<EntityT extends Entity> extends ComplexTyp
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT, TestComplexBaseType>) {
+  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
     super(fieldName, fieldOf, TestComplexBaseType);
   }
 }
@@ -49,16 +49,12 @@ export namespace TestComplexBaseType {
   /**
    * Metadata information on all properties of the `TestComplexBaseType` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata[] = [{
+  export const _propertyMetadata: PropertyMetadata<TestComplexBaseType>[] = [{
     originalName: 'BaseStringProperty',
     name: 'baseStringProperty',
     type: 'Edm.String',
     isCollection: false
   }];
-  /**
-   * Type reference to the according complex type.
-   */
-  export const _complexType: TestComplexBaseType = {};
 
   /**
    * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.

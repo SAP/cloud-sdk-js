@@ -4,7 +4,7 @@ title:  Frequently asked questions
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: FAQ
-description: You asked! We Answered! We collected here the most frequent question about SAP Cloud SDK for Java.
+description: You asked! We Answered! We collected here the most frequent question about SAP Cloud SDK for JavaScript.
 keywords:
 - sap
 - cloud

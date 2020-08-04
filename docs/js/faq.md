@@ -82,7 +82,7 @@ You may see some errors while developing. These errors are not always caused by 
 
 ### Do you support REST client libraries?
 
-We're working on it. The current support in experimental and not ready for production use.
+We're working on it. The current support is experimental and not ready for production use.
 
 ## Questions about SAP Cloud Platform
 

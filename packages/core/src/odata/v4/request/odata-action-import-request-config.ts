@@ -26,11 +26,11 @@ export class ODataActionImportRequestConfig<
     this.payload = this.buildHttpPayload(payload)
   }
 
-  private buildHttpPayload(payload:ActionImportPayload<ParametersT>):any{
+  private buildHttpPayload(payload:ActionImportPayload<ParametersT>):MapType<any> {
     const httpPayload = Object.keys(payload).reduce((all, key) => {
       const payloadElement: ActionImportPayloadElement<ParametersT> =
         payload[key];
-      if (typeof payloadElement.value === 'undefined') {
+      if (typeof payloadElement.value !== 'undefined') {
         all[payloadElement.originalName] = payloadElement.value;
       }
       return all;

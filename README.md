@@ -4,12 +4,14 @@
 # SAP Cloud SDK
 An SDK to reduce your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
+## Looking for documentation?
+Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
+
 ### Table of Contents
 - [Packages](#packages)
   - [@sap-cloud-sdk/core](#sap-cloud-sdkcore)
   - [@sap-cloud-sdk/generator](#sap-cloud-sdkgenerator)
   - [@sap-cloud-sdk/test-util](#sap-cloud-sdktest-util)
-- [API documentation](#api-documentation)
 - [How to switch to the Open Source version of the SAP Cloud SDK](#how-to-switch-to-the-open-source-version-of-the-sap-cloud-sdk)
 - [Related Projects](#related-projects)
   - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
@@ -47,9 +49,6 @@ To install the SAP Cloud SDK test-util as development dependencies in your proje
 ```sh-session
 $ npm install -D @sap-cloud-sdk/test-util
 ```
-
-## Documentation
-Check out our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
 
 ## How to switch to the Open Source version of the SAP Cloud SDK
 Please ignore this section, if you have never used the SAP Cloud SDK with a version `< 1.18.0`.

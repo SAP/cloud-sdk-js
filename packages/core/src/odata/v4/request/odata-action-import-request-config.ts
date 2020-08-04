@@ -23,21 +23,8 @@ export class ODataActionImportRequestConfig<
     payload: ActionImportPayload<ParametersT>
   ) {
     super('post', defaultServicePath);
-    this.payload = this.buildHttpPayload(payload)
+    this.payload = this.buildHttpPayload(payload);
   }
-
-  private buildHttpPayload(payload:ActionImportPayload<ParametersT>):MapType<any> {
-    const httpPayload = Object.keys(payload).reduce((all, key) => {
-      const payloadElement: ActionImportPayloadElement<ParametersT> =
-        payload[key];
-      if (typeof payloadElement.value !== 'undefined') {
-        all[payloadElement.originalName] = payloadElement.value;
-      }
-      return all;
-    }, {});
-
-    return httpPayload;
- }
 
   resourcePath(): string {
     return this.actionImportName;
@@ -49,5 +36,20 @@ export class ODataActionImportRequestConfig<
         format: 'json'
       })
     };
+  }
+
+  private buildHttpPayload(
+    payload: ActionImportPayload<ParametersT>
+  ): MapType<any> {
+    const httpPayload = Object.keys(payload).reduce((all, key) => {
+      const payloadElement: ActionImportPayloadElement<ParametersT> =
+        payload[key];
+      if (typeof payloadElement.value !== 'undefined') {
+        all[payloadElement.originalName] = payloadElement.value;
+      }
+      return all;
+    }, {});
+
+    return httpPayload;
   }
 }

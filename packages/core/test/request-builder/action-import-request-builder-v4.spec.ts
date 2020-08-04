@@ -22,7 +22,7 @@ const destination: Destination = {
   originalProperties: {}
 };
 
-describe('action import request builder', () => {
+xdescribe('action import request builder', () => {
   it('should call simple action.', async () => {
     mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
 

@@ -4,7 +4,7 @@ title:  Frequently asked questions
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: FAQ
-description: You asked! We Answered! We collected here the most frequent question about SAP Cloud SDK for Java.
+description: You asked! We Answered! We collected here the most frequent question about SAP Cloud SDK for JavaScript.
 keywords:
 - sap
 - cloud
@@ -82,7 +82,7 @@ You may see some errors while developing. These errors are not always caused by 
 
 ### Do you support REST client libraries?
 
-We're working on it. The current support in experimental and not ready for production use.
+We're working on it. The current support is experimental and not ready for production use.
 
 ## Questions about SAP Cloud Platform
 

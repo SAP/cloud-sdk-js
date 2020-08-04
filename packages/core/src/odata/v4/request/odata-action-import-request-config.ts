@@ -15,23 +15,29 @@ export class ODataActionImportRequestConfig<
    *
    * @param defaultServicePath - Default path of the service
    * @param actionImportName - The name of the action import.
-   * @param parameters - Object containing the parameters passed as the body
+   * @param payload - Object containing the payload passed as the body
    */
   constructor(
     defaultServicePath: string,
     readonly actionImportName: string,
-    parameters: ActionImportPayload<ParametersT>
+    payload: ActionImportPayload<ParametersT>
   ) {
     super('post', defaultServicePath);
-    this.payload = Object.keys(parameters).reduce((all, key) => {
+    this.payload = this.buildHttpPayload(payload)
+  }
+
+  private buildHttpPayload(payload:ActionImportPayload<ParametersT>):any{
+    const httpPayload = Object.keys(payload).reduce((all, key) => {
       const payloadElement: ActionImportPayloadElement<ParametersT> =
-        parameters[key];
-      if (payloadElement) {
+        payload[key];
+      if (typeof payloadElement.value === 'undefined') {
         all[payloadElement.originalName] = payloadElement.value;
       }
       return all;
     }, {});
-  }
+
+    return httpPayload;
+ }
 
   resourcePath(): string {
     return this.actionImportName;

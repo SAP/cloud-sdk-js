@@ -56,7 +56,7 @@ export interface End {
 
 export interface EdmxFunctionImport extends EdmxNamed {
   EntitySet?: string;
-  ReturnType: string;
+  ReturnType?: string;
   'sap:action-for': string;
   Parameter: EdmxParameter[];
   'm:HttpMethod': string;

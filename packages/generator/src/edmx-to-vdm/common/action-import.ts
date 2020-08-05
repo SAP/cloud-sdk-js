@@ -20,7 +20,7 @@ export function transformActionImportBase(
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
 ): VdmActionImportBase {
-  const actionName = formatter.originalToActionImportName(
+  const name = formatter.originalToActionImportName(
     edmxActionImport.Name
   );
   const actiononImport = {

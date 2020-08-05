@@ -11,21 +11,17 @@ import {
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
-import { stripNamespace } from '../edmx-to-vdm-util';
+import { findActionFunctionByImportName } from './action-function-util';
 
-export function findFunctionForFunctionImport(
+function findFunctionForFunctionImport(
   functions: EdmxFunction[],
   functionImport: EdmxFunctionImport
 ): EdmxFunction {
-  const edmxActionOrFunction = functions.find(
-    fn => stripNamespace(functionImport.Function) === fn.Name
+  return findActionFunctionByImportName(
+    functions,
+    functionImport.Function,
+    'function'
   );
-  if (!edmxActionOrFunction) {
-    throw Error(
-      `Unable to find a function with name: ${functionImport.Function}, but specified in function import ${functionImport.Name}`
-    );
-  }
-  return edmxActionOrFunction;
 }
 
 export function generateFunctionImportsV4(

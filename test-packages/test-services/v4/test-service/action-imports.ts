@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefined, transformReturnValueForComplexType, deserializeComplexType, ActionImportRequestBuilder, ActionImportPayloadElement } from '@sap-cloud-sdk/core/v4';
+import { transformReturnValueForUndefined, transformReturnValueForComplexType, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core/v4';
 import { TestComplexType } from './TestComplexType';
 
 /**
@@ -19,11 +19,11 @@ export interface TestActionImportNoParameterNoReturnTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export function testActionImportNoParameterNoReturnType(parameters: TestActionImportNoParameterNoReturnTypeParameters): ActionImportRequestBuilder<TestActionImportNoParameterNoReturnTypeParameters, undefined> {
-  const payload = {
+  const params = {
 
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', (data) => transformReturnValueForUndefined(data, (val) => undefined), payload);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
 }
 
 /**
@@ -51,13 +51,13 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export function testActionImportMultipleParameterComplexReturnType(parameters: TestActionImportMultipleParameterComplexReturnTypeParameters): ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType> {
-  const payload = {
-    stringParam: new ActionImportPayloadElement('StringParam', 'Edm.String', parameters.stringParam),
-    nonNullableStringParam: new ActionImportPayloadElement('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-    nullableBooleanParam: new ActionImportPayloadElement('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
+  const params = {
+    stringParam: new ActionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
+    nonNullableStringParam: new ActionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
+    nullableBooleanParam: new ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), payload);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 export const actionImports = {

@@ -43,19 +43,15 @@ function getActionImportStatements(
 ): string {
   const context = actionImport.parameters
     ? actionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== 'const payload = {\n') {
+        if (cumulator !== 'const params = {\n') {
           cumulator += ',\n';
         }
-        cumulator += `${currentParameters.parameterName}: new ActionImportPayloadElement('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
+        cumulator += `${currentParameters.parameterName}: new ActionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
-      }, 'const payload = {\n') + '\n}'
+      }, 'const params = {\n') + '\n}'
     : '{}';
 
-  const parameters = getRequestBuilderArgumentsBase(
-    'payload',
-    actionImport,
-    service
-  );
+  const parameters = getRequestBuilderArgumentsBase(actionImport, service);
   const returnStatement = `return new ActionImportRequestBuilder(${parameters.join(
     ', '
   )});`;

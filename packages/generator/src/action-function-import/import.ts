@@ -99,7 +99,7 @@ export function importDeclarationsFunction(
   return actionFunctionImportDeclarations(
     returnTypes,
     actionImportPayloadElements,
-    ['ActionImportRequestBuilder', 'ActionImportPayloadElement'],
+    ['ActionImportRequestBuilder', 'ActionImportParameter'],
     service.oDataVersion
   );
 }

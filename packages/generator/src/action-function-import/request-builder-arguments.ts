@@ -7,7 +7,6 @@ import {
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 export function getRequestBuilderArgumentsBase(
-  parameterName: 'params' | 'payload',
   actionFunctionImport: VdmFunctionImport | VdmActionImport,
   service: VdmServiceMetadata
 ): string[] {
@@ -17,6 +16,6 @@ export function getRequestBuilderArgumentsBase(
     `(data) => ${responseTransformerFunctionName(
       actionFunctionImport.returnType
     )}(data, ${actionFunctionImport.returnType.builderFunction})`,
-    parameterName
+    'params'
   ];
 }

@@ -76,17 +76,18 @@ export function parseActionImport(root): EdmxActionImport[] {
   return forceArray(root.EntityContainer.ActionImport);
 }
 
-export function parseFunctions(root): EdmxFunction[] {
-  return forceArray(root.Function).map(f => ({
-    ...f,
-    Parameter: forceArray(f.Parameter),
+function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {
+  return forceArray(root[actionFunctionKey]).map(actionOrFunction => ({
+    ...actionOrFunction,
+    Parameter: forceArray(actionOrFunction.Parameter),
     IsBound: false
   }));
 }
+
+export function parseFunctions(root): EdmxFunction[] {
+  return parseActionsFunctions(root, 'Function');
+}
+
 export function parseActions(root): EdmxAction[] {
-  return forceArray(root.Action).map(a => ({
-    ...a,
-    Parameter: forceArray(a.Parameter),
-    IsBound: false
-  }));
+  return parseActionsFunctions(root, 'Action');
 }

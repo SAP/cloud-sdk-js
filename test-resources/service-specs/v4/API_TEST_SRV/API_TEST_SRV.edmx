@@ -150,19 +150,6 @@
       <Action Name="TestActionImportNoParameterNoReturnType">
       </Action>
 
-<!--
-      <Action Name="TestActionImportNoReturnType>
-        <Parameter Name="StringParam" Type="Edm.StringParam" Nullable="false"/>
-      </Action>
-
-      <Action Name="TestActionImportNoParameter>
-         <Parameter Name="StringParam" Type="Edm.StringParam" Nullable="false"/>
-      </Action>
-
-      <Action Name="TestActionImportEntityReturnType">
-        <ReturnType Type="API_TEST_SRV.A_TestEntityType"/>
-      </Action>
--->
       <Action Name="TestActionImportMultipleParameterComplexReturnType">
         <Parameter Name="StringParam" Type="Edm.String"/>
         <Parameter Name="NonNullableStringParam" Type="Edm.String" Nullable="false"/>

@@ -21,13 +21,11 @@ export function transformFunctionImportBase(
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
 ): VdmFunctionImportBase {
-  const name = formatter.originalToFunctionImportName(
-    edmxFunctionImport.Name
-  );
+  const name = formatter.originalToFunctionImportName(edmxFunctionImport.Name);
   const functionImport = {
     originalName: edmxFunctionImport.Name,
-    name: functionName,
-    parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
+    name,
+    parametersTypeName: toTypeNameFormat(`${name}Parameters`)
   };
 
   const parameters = getFunctionImportParameters(

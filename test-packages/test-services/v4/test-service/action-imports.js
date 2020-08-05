@@ -15,8 +15,8 @@ var TestComplexType_1 = require("./TestComplexType");
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testActionImportNoParameterNoReturnType(parameters) {
-    var payload = {};
-    return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, payload);
+    var params = {};
+    return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
 }
 exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoReturnType;
 /**
@@ -26,12 +26,12 @@ exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoR
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function testActionImportMultipleParameterComplexReturnType(parameters) {
-    var payload = {
-        stringParam: new v4_1.ActionImportPayloadElement('StringParam', 'Edm.String', parameters.stringParam),
-        nonNullableStringParam: new v4_1.ActionImportPayloadElement('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-        nullableBooleanParam: new v4_1.ActionImportPayloadElement('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
+    var params = {
+        stringParam: new v4_1.ActionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
+        nonNullableStringParam: new v4_1.ActionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
+        nullableBooleanParam: new v4_1.ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
     };
-    return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', function (data) { return v4_1.transformReturnValueForComplexType(data, function (data) { return v4_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, payload);
+    return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', function (data) { return v4_1.transformReturnValueForComplexType(data, function (data) { return v4_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testActionImportMultipleParameterComplexReturnType = testActionImportMultipleParameterComplexReturnType;
 exports.actionImports = {

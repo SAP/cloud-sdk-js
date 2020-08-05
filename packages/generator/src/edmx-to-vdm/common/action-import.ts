@@ -20,13 +20,11 @@ export function transformActionImportBase(
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
 ): VdmActionImportBase {
-  const name = formatter.originalToActionImportName(
-    edmxActionImport.Name
-  );
+  const name = formatter.originalToActionImportName(edmxActionImport.Name);
   const actiononImport = {
     originalName: edmxActionImport.Name,
-    name: actionName,
-    parametersTypeName: toTypeNameFormat(`${actionName}Parameters`)
+    name,
+    parametersTypeName: toTypeNameFormat(`${name}Parameters`)
   };
 
   const parameters = getActionImportParameters(

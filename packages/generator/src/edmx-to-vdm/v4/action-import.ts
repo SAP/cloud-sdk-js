@@ -10,22 +10,14 @@ import {
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmActionImport, VdmComplexType, VdmEntity } from '../../vdm-types';
 import { parseActionImportReturnTypes } from '../common/action-function-return-types';
-import { stripNamespace } from '../edmx-to-vdm-util';
 import { transformActionImportBase } from '../common/action-import';
+import { findActionFunctionByImportName } from './action-function-util';
 
-export function findActionForActionImport(
+function findActionForActionImport(
   actions: EdmxAction[],
   actionImport: EdmxActionImport
 ): EdmxAction {
-  const edmxActionOrFunction = actions.find(
-    action => stripNamespace(actionImport.Action) === action.Name
-  );
-  if (!edmxActionOrFunction) {
-    throw Error(
-      `Unable to find a action with name: ${actionImport.Action}, but specified in action import ${actionImport.Name}`
-    );
-  }
-  return edmxActionOrFunction;
+  return findActionFunctionByImportName(actions, actionImport.Action, 'action');
 }
 
 export function generateActionImportsV4(

@@ -3,9 +3,9 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { ODataRequestConfig } from '../../common/request/odata-request-config';
 import {
-  ActionImportPayload,
-  ActionImportPayloadElement
-} from './action-import-payload';
+  ActionImportParameters,
+  ActionImportParameter
+} from './action-import-parameter';
 
 export class ODataActionImportRequestConfig<
   ParametersT
@@ -15,15 +15,15 @@ export class ODataActionImportRequestConfig<
    *
    * @param defaultServicePath - Default path of the service
    * @param actionImportName - The name of the action import.
-   * @param payload - Object containing the payload passed as the body
+   * @param parameters - Parameters of the action imports
    */
   constructor(
     defaultServicePath: string,
     readonly actionImportName: string,
-    payload: ActionImportPayload<ParametersT>
+    parameters: ActionImportParameters<ParametersT>
   ) {
     super('post', defaultServicePath);
-    this.payload = this.buildHttpPayload(payload);
+    this.payload = this.buildHttpPayload(parameters);
   }
 
   resourcePath(): string {
@@ -39,17 +39,17 @@ export class ODataActionImportRequestConfig<
   }
 
   private buildHttpPayload(
-    payload: ActionImportPayload<ParametersT>
+    parameters: ActionImportParameters<ParametersT>
   ): MapType<any> {
-    const httpPayload = Object.keys(payload).reduce((all, key) => {
-      const payloadElement: ActionImportPayloadElement<ParametersT> =
-        payload[key];
+    const payload = Object.keys(parameters).reduce((all, key) => {
+      const payloadElement: ActionImportParameter<ParametersT> =
+        parameters[key];
       if (typeof payloadElement.value !== 'undefined') {
         all[payloadElement.originalName] = payloadElement.value;
       }
       return all;
     }, {});
 
-    return httpPayload;
+    return payload;
   }
 }

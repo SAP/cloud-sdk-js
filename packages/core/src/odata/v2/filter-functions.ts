@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Field, StringFilterFunction, BooleanFilterFunction } from '../common';
+import { Field, StringFilterFunction, BooleanFilterFunction, EntityBase, NumberFilterFunction } from '../common';
 import { filterFunction } from '../common/filter/filter-function';
 import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions';
 import { Entity } from './entity';
@@ -36,11 +36,29 @@ export function replace<EntityT extends Entity>(
   return filterFunction('replace', 'string', str, searchStr, replaceStr);
 }
 
+/* Export some filter functions for backwards compatibility */
+export function length<EntityT extends EntityBase>(
+  str: string | Field<EntityT> | StringFilterFunction<EntityT>
+): NumberFilterFunction<EntityT> {
+  return filterFunctionsCommon.length(str);
+}
+
+/* Export some filter functions for backwards compatibility */
+export function substring<EntityT extends EntityBase>(
+  str: string | Field<EntityT> | StringFilterFunction<EntityT>,
+  pos: number | Field<EntityT> | NumberFilterFunction<EntityT>,
+  len?: number | Field<EntityT> | NumberFilterFunction<EntityT>
+): StringFilterFunction<EntityT> {
+  return filterFunctionsCommon.substring(str, pos, len);
+}
+
 /**
  * OData v2 specific filter functions
  */
 export const filterFunctions = {
   ...filterFunctionsCommon,
   substringOf,
-  replace
+  replace,
+  length,
+  substring
 };

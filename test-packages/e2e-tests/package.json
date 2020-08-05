@@ -17,7 +17,8 @@
     "start:daemon": "pm2 start start.js",
     "start": "cds run",
     "deploy:to-sqlite": "cds deploy --to sqlite",
-    "test": "yarn jest --coverage"
+    "test": "yarn jest --coverage",
+    "check:dependencies": "depcheck . --ignores='express,sqlite3'"
   },
   "cds": {
     "cdsc": {

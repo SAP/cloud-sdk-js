@@ -52,6 +52,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
+      - run: yarn check:dependencies
+        name: Undeclared dependency check
       - run: yarn check:vulnerability
         name: Dependency Vulnerability Check
       - run: yarn check:license

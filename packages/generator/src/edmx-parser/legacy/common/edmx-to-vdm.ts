@@ -8,7 +8,7 @@ import {
   VdmEntity,
   VdmProperty,
   VdmFunctionImportReturnType,
-  VdmFunctionImportReturnTypeCategory,
+  VdmReturnTypeCategory,
   VdmNavigationProperty,
   VdmFunctionImport
 } from '../../../vdm-types';
@@ -415,7 +415,7 @@ export function parseReturnType(
 ): VdmFunctionImportReturnType {
   if (!returnType) {
     return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.VOID,
+      returnTypeCategory: VdmReturnTypeCategory.VOID,
       returnType: 'undefined',
       builderFunction: '(val) => undefined',
       isMulti: false,
@@ -426,7 +426,7 @@ export function parseReturnType(
   returnType = parseTypeName(returnType);
   if (returnType.startsWith('Edm.')) {
     return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE,
+      returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
       returnType: propertyJsType(returnType)!,
       builderFunction: `(val) => edmToTs(val, '${returnType}')`,
       isMulti: isCollection,
@@ -437,7 +437,7 @@ export function parseReturnType(
   const entity = entities.find(e => e.entityTypeName === parsedReturnType);
   if (entity) {
     return {
-      returnTypeCategory: VdmFunctionImportReturnTypeCategory.ENTITY,
+      returnTypeCategory: VdmReturnTypeCategory.ENTITY,
       returnType: entity.className,
       builderFunction: entity.className,
       isMulti: isCollection,
@@ -451,7 +451,7 @@ export function parseReturnType(
     throw Error(`Unable to find complex type with name ${parsedReturnType}.`);
   }
   return {
-    returnTypeCategory: VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE,
+    returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
     builderFunction: `${complexType.typeName}.build`,
     isMulti: isCollection,
@@ -473,7 +473,7 @@ export function transformFunctionImportBase(
   );
   const functionImport = {
     originalName: edmxFunctionImport.Name,
-    functionName,
+    name: functionName,
     parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
   };
 

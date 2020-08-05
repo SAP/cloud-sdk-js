@@ -8,6 +8,7 @@ export * from './odata-batch-change-set';
 export * from './odata-batch-request-builder';
 export * from './odata-batch-retrieve-request';
 export * from './payload-value-converter';
+export * from './request';
 export * from './request-builder';
 export * from './selectable/custom-field';
 export * from './uri-conversion';

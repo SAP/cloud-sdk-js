@@ -13,6 +13,10 @@
   "publishConfig": {
     "access": "restricted"
   },
+  "scripts": {
+    "test": "echo 'Nothing to test here.'",
+    "check:dependencies": "echo 'Nothing to check here.'"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.25.0",

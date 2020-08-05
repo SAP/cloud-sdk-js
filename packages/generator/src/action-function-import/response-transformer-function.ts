@@ -1,12 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import {
+  VdmActionFunctionImportReturnType,
   VdmFunctionImportReturnType,
-  VdmFunctionImportReturnTypeCategory
+  VdmReturnTypeCategory
 } from '../vdm-types';
 
 export function responseTransformerFunctionName(
-  returnType: VdmFunctionImportReturnType
+  returnType: VdmActionFunctionImportReturnType
 ): string {
   const transformationFn = singleTransformationFunction(returnType);
   return returnType.isCollection ? `${transformationFn}List` : transformationFn;
@@ -16,11 +17,11 @@ function singleTransformationFunction(
   returnType: VdmFunctionImportReturnType
 ): string {
   switch (returnType.returnTypeCategory) {
-    case VdmFunctionImportReturnTypeCategory.VOID:
+    case VdmReturnTypeCategory.VOID:
       return 'transformReturnValueForUndefined';
-    case VdmFunctionImportReturnTypeCategory.ENTITY:
+    case VdmReturnTypeCategory.ENTITY:
       return 'transformReturnValueForEntity';
-    case VdmFunctionImportReturnTypeCategory.COMPLEX_TYPE:
+    case VdmReturnTypeCategory.COMPLEX_TYPE:
       return 'transformReturnValueForComplexType';
     default:
       return 'transformReturnValueForEdmType';

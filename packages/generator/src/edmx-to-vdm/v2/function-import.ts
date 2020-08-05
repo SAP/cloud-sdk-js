@@ -1,10 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { parseReturnTypes, transformFunctionImportBase } from '../common';
+import { transformFunctionImportBase } from '../common';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import { parseFunctionImports } from '../../edmx-parser/v2';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
 
 export function generateFunctionImportsV2(
   serviceMetadata: ServiceMetadata,
@@ -29,7 +30,11 @@ export function generateFunctionImportsV2(
         formatter
       ),
       httpMethod,
-      returnType: parseReturnTypes(f.ReturnType, entities, complexTypes)
+      returnType: parseFunctionImportReturnTypes(
+        f.ReturnType,
+        entities,
+        complexTypes
+      )
     };
   });
 }

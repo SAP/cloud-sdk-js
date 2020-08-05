@@ -39,11 +39,18 @@ export interface EdmxFunctionImport extends EdmxNamed {
   Function: string;
 }
 
+export interface EdmxActionImport extends EdmxNamed {
+  EntitySet?: string;
+  Action: string;
+}
+
 export interface EdmxFunction extends EdmxNamed {
-  ReturnType: { Type: string };
+  ReturnType?: { Type: string };
   Parameter: EdmxParameter[];
   IsBound: boolean;
 }
+
+export type EdmxAction = EdmxFunction;
 
 export interface EdmxDerivedType extends EdmxNamed {
   BaseType?: string;

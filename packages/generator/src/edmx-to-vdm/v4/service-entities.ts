@@ -6,6 +6,7 @@ import { includeFactoryName } from '../common';
 import { generateFunctionImportsV4 } from './function-import';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
+import { generateActionImportsV4 } from './action-import';
 
 export function getServiceEntitiesV4(
   serviceMetadata: ServiceMetadata
@@ -14,6 +15,12 @@ export function getServiceEntitiesV4(
 
   const complexTypes = generateComplexTypesV4(serviceMetadata, formatter);
   const entities = generateEntitiesV4(serviceMetadata, complexTypes, formatter);
+  const actionsImports = generateActionImportsV4(
+    serviceMetadata,
+    entities,
+    complexTypes,
+    formatter
+  );
   const functionImports = generateFunctionImportsV4(
     serviceMetadata,
     entities,
@@ -24,6 +31,7 @@ export function getServiceEntitiesV4(
   return {
     complexTypes: includeFactoryName(complexTypes, formatter),
     entities,
-    functionImports
+    functionImports,
+    actionsImports
   };
 }

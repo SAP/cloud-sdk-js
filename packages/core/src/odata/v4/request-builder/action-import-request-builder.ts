@@ -1,7 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { oDataUri } from '../uri-conversion';
-import { ActionImportParameters } from '../request/action-import-parameter';
+import {
+  ActionImportParameters,
+  ODataActionImportRequestConfig
+} from '../request';
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
 
 /**
@@ -27,12 +29,12 @@ export class ActionImportRequestBuilder<
     parameters: ActionImportParameters<ParametersT>
   ) {
     super(
-      'post',
-      defaultServicePath,
-      actionImportName,
       responseTransformer,
-      parameters,
-      oDataUri
+      new ODataActionImportRequestConfig(
+        defaultServicePath,
+        actionImportName,
+        parameters
+      )
     );
   }
 }

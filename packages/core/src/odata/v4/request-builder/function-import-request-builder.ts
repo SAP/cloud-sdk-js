@@ -3,6 +3,7 @@
 import { FunctionImportParameters } from '../../common';
 import { oDataUri } from '../uri-conversion';
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
+import { ODataFunctionImportRequestConfig } from '../../common/request/odata-function-import-request-config';
 
 /**
  * Create OData request to execute a function import.
@@ -27,12 +28,14 @@ export class FunctionImportRequestBuilder<
     parameters: FunctionImportParameters<ParametersT>
   ) {
     super(
-      'get',
-      defaultServicePath,
-      functionImportName,
       responseTransformer,
-      parameters,
-      oDataUri
+      new ODataFunctionImportRequestConfig(
+        'get',
+        defaultServicePath,
+        functionImportName,
+        parameters,
+        oDataUri
+      )
     );
   }
 }

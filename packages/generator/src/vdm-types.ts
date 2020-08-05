@@ -20,6 +20,7 @@ export interface VdmServiceEntities {
   entities: VdmEntity[];
   complexTypes: VdmComplexType[];
   functionImports: VdmFunctionImport[];
+  actionsImports?: VdmActionImport[];
 }
 
 export type VdmServiceMetadata = VdmServicePackageMetaData & VdmServiceEntities;
@@ -85,15 +86,28 @@ export interface VdmComplexType {
   fieldType: string;
 }
 
-export interface VdmFunctionImport {
-  httpMethod: string;
+export interface VdmFunctionImportBase {
   originalName: string;
   parameters: VdmParameter[];
   parametersTypeName: string;
-  functionName: string;
+  name: string;
   description: string;
+}
+
+export type VdmActionImportBase = VdmFunctionImportBase;
+
+export interface VdmFunctionImport extends VdmFunctionImportBase {
+  httpMethod: string;
   returnType: VdmFunctionImportReturnType;
 }
+
+export type VdmActionImport = VdmFunctionImport;
+
+export type VdmActionImportReturnType = VdmFunctionImportReturnType;
+
+export type VdmActionFunctionImportReturnType =
+  | VdmActionImportReturnType
+  | VdmFunctionImportReturnType;
 
 export interface VdmFunctionImportReturnType {
   builderFunction: string;
@@ -103,10 +117,10 @@ export interface VdmFunctionImportReturnType {
    */
   isMulti?: boolean;
   isCollection: boolean;
-  returnTypeCategory: VdmFunctionImportReturnTypeCategory;
+  returnTypeCategory: VdmReturnTypeCategory;
 }
 
-export enum VdmFunctionImportReturnTypeCategory {
+export enum VdmReturnTypeCategory {
   ENTITY,
   COMPLEX_TYPE,
   EDM_TYPE,

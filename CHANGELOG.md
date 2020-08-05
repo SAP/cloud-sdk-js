@@ -15,10 +15,12 @@
 ## Compatibility Notes
 
 - In version 1.25.0 we introduced the property `_complexType` on complex types. This property is removed in this version as it introduced a bug causing some generated OData clients to not be able to compile. OData clients generated using version 1.25.0 will be incompatible with future versions of the SAP Cloud SDK.
+- Deprecated the `generateNpmrc` option of the SAP Cloud SDK generator. From now on `@sap` scoped packages do not need the private registry anymore.
 
 ## New Functionality
 
 - Support collections in complex types.
+- Support unbound actions in OData V4. Note that all OData V4 functionality is still experimental.
 
 ## Improvements
 

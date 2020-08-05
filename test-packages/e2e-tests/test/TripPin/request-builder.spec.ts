@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { any } from '@sap-cloud-sdk/core/v4';
+import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/action-imports';
 import { People } from '../../../test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
 
 const url = 'https://services.odata.org/';
@@ -38,5 +39,10 @@ xdescribe('Request builder test', () => {
         })
       ])
     );
+  });
+
+  it('should execute the simple unbound action in present in the tripping service', async () => {
+    const result = await resetDataSource({}).execute(destination);
+    expect(result).toBe(undefined);
   });
 });

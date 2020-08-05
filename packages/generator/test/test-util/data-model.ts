@@ -3,7 +3,7 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImport,
-  VdmFunctionImportReturnTypeCategory,
+  VdmReturnTypeCategory,
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
@@ -204,7 +204,7 @@ export const complexMealWithDesert: VdmComplexType = {
 
 export const orderBreakfast: VdmFunctionImport = {
   description: 'order a breakfast',
-  functionName: 'orderBreakfast',
+  name: 'orderBreakfast',
   httpMethod: 'post',
   originalName: 'OrderBreakfast',
   parameters: [
@@ -222,6 +222,6 @@ export const orderBreakfast: VdmFunctionImport = {
     builderFunction: '(val) => edmToTs(val, Edm.String)',
     returnType: 'string',
     isCollection: false,
-    returnTypeCategory: VdmFunctionImportReturnTypeCategory.EDM_TYPE
+    returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE
   }
 };

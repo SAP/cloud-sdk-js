@@ -27,11 +27,14 @@
     "prepare": "yarn compile",
     "test": "yarn jest --coverage --runInBand",
     "test:local": "yarn jest --config ./jest-local.json",
-    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand --config ./jest-local.json"
+    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand --config ./jest-local.json",
+    "check:dependencies": "depcheck ."
   },
   "dependencies": {
     "@sap-cloud-sdk/util": "^1.25.0",
     "axios": "^0.19.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nock": "^13.0.2"
+  }
 }

@@ -1,9 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import { ODataUri } from '../../common/uri-conversion';
-import { FunctionImportParameters } from '../../common/request/function-import-parameter';
 import { ODataRequestConfig } from '../../common/request/odata-request-config';
+import {
+  ActionImportParameters,
+  ActionImportParameter
+} from './action-import-parameter';
 
 export class ODataActionImportRequestConfig<
   ParametersT
@@ -13,15 +15,15 @@ export class ODataActionImportRequestConfig<
    *
    * @param defaultServicePath - Default path of the service
    * @param actionImportName - The name of the action import.
-   * @param parameters - Object containing the parameters with a value and additional meta information
+   * @param parameters - Parameters of the action imports
    */
   constructor(
     defaultServicePath: string,
     readonly actionImportName: string,
-    public parameters: FunctionImportParameters<ParametersT>,
-    private oDataUri: ODataUri
+    parameters: ActionImportParameters<ParametersT>
   ) {
     super('post', defaultServicePath);
+    this.payload = this.buildHttpPayload(parameters);
   }
 
   resourcePath(): string {
@@ -29,6 +31,25 @@ export class ODataActionImportRequestConfig<
   }
 
   queryParameters(): MapType<any> {
-    return {};
+    return {
+      ...this.prependDollarToQueryParameters({
+        format: 'json'
+      })
+    };
+  }
+
+  private buildHttpPayload(
+    parameters: ActionImportParameters<ParametersT>
+  ): MapType<any> {
+    const payload = Object.keys(parameters).reduce((all, key) => {
+      const payloadElement: ActionImportParameter<ParametersT> =
+        parameters[key];
+      if (typeof payloadElement.value !== 'undefined') {
+        all[payloadElement.originalName] = payloadElement.value;
+      }
+      return all;
+    }, {});
+
+    return payload;
   }
 }

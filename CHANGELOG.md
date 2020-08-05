@@ -19,7 +19,7 @@
 ## New Functionality
 
 - Support collections in complex types.
-- Support unbound action in OData V4. Note that all OData V4 functionality is still experimental.
+- Support unbound actions in OData V4. Note that all OData V4 functionality is still experimental.
 
 ## Improvements
 

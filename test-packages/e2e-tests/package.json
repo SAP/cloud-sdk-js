@@ -18,7 +18,7 @@
     "start": "cds run",
     "deploy:to-sqlite": "cds deploy --to sqlite",
     "test": "yarn jest --coverage",
-    "check:dependencies": "depcheck . --ignores='express,sqlite3'"
+    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "cds": {
     "cdsc": {

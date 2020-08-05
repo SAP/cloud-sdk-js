@@ -21,7 +21,7 @@ export function transformFunctionImportBase(
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
 ): VdmFunctionImportBase {
-  const functionName = formatter.originalToFunctionImportName(
+  const name = formatter.originalToFunctionImportName(
     edmxFunctionImport.Name
   );
   const functionImport = {

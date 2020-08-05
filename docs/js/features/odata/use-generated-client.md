@@ -1,9 +1,9 @@
 ---
 id: use-typed-odata-client-for-javascript-and-typescript
-title: Consume OData clients for JS / TS
+title: Use the OData client for JavaScript / TypeScript
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Consume OData clients for JS / TS
+sidebar_label: Use the OData client
 description: Use the SAP Cloud SDK for JavaScript to build and run OData requests in a typesafe way.
 keywords:
 - sap

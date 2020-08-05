@@ -8,9 +8,8 @@
   "types": "types",
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
-    "compile:core": "yarn tsc -b test",
     "test": "yarn dtslint --expectOnly --localTs ../../node_modules/typescript/lib test",
-    "check:dependencies": "echo 'Nothing to check here.'"
+    "check:dependencies": "echo Nothing to check here."
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.25.0",

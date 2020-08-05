@@ -17,7 +17,7 @@ describe('package-json', () => {
       '  "name": "@sap/cloud-sdk-vdm",\n' +
       '  "version": "2.0.0",\n' +
       '  "description": "SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)",\n' +
-      '  "homepage": "https://www.sap.com/cloud-sdk",\n' +
+      '  "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",\n' +
       '  "repository": {\n' +
       '    "type": "git",\n' +
       '    "url": ""\n' +

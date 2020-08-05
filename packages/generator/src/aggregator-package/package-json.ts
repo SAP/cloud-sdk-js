@@ -13,7 +13,7 @@ export function packageJson(
         version: versionInPackageJson || generatorVersion,
         description:
           'SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)',
-        homepage: 'https://www.sap.com/cloud-sdk',
+        homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
         repository: {
           type: 'git',
           url: ''

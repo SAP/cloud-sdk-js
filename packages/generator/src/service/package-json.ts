@@ -13,7 +13,7 @@ export function packageJson(
         name: npmPackageName,
         version: versionInPackageJson || generatorVersion,
         description,
-        homepage: 'https://www.sap.com/cloud-sdk',
+        homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
         main: './index.js',
         types: './index.d.ts',
         publishConfig: {

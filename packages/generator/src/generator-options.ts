@@ -110,9 +110,9 @@ export const generatorOptionsCli: KeysToOptions = {
   },
   generateNpmrc: {
     describe:
-      'By default, the generator will generate a .npmrc file specifying a registry for @sap scoped dependencies. When set to false, the generator will skip the generation of .npmrc.',
+      'Deprecated. If set to true the generator will generate an .npmrc file specifying a registry for @sap scoped dependencies. This is not necessary anymore and will be skipped by default.',
     type: 'boolean',
-    default: true
+    default: false
   },
   generateTypedocJson: {
     describe:

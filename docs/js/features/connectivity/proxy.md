@@ -1,6 +1,6 @@
 ---
 id: proxy-js-sdk
-title: Proxies in the Cloud SDK for JS/TS
+title: Proxies in the SAP Cloud SDK for JavaScript / TypeScript
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Proxies

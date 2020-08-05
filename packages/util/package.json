@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/util",
-  "version": "1.25.0",
+  "version": "1.26.0",
   "description": "SAP Cloud SDK for JavaScript general utilities",
   "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
@@ -33,9 +33,8 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
+    "logform": "^2.2.0",
     "rambda": "~5.11.0",
-    "winston": "^3.3.3",
-    "logform": "^2.2.0"
-  },
-  "devDependencies": {}
+    "winston": "^3.3.3"
+  }
 }

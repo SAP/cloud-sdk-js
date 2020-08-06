@@ -30,7 +30,6 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn config list
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit
       - run: yarn test:integration

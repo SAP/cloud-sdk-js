@@ -29,3 +29,4 @@ extensions on SAP Cloud Platform. Check `JSDoc`API documentation.
 - [All release notes since version 1.18.0](https://github.com/SAP/cloud-sdk/releases)
 - [Older release notes up to version 1.17.2](https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html)
 - [Getting Started](getting-started)
+- [Release notes for type-safe client libraries](release-notes-sap-cloud-sdk-for-javascript-and-typescript)

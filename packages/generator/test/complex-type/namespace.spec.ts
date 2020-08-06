@@ -49,7 +49,7 @@ describe('namespace', () => {
           statements: 'return deserializeComplexType(json, ComplexMealType);',
           isExported: true,
           docs: [
-            '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+            '\n@deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.'
           ]
         }
       ]
@@ -102,7 +102,7 @@ describe('namespace', () => {
             'return deserializeComplexType(json, ComplexMealWithDesertType);',
           isExported: true,
           docs: [
-            '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+            '\n@deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.'
           ]
         }
       ]

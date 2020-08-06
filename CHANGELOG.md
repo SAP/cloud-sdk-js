@@ -26,8 +26,18 @@
 
 ## Fixed Issues
 
-- Fix links in TSDoc of generated OData clients.
+-
 
+
+# 1.26.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.26.1<br>
+Blog: TBD<br>
+
+## Fixed Issues
+
+- Fix links in TSDoc of generated OData clients.
 
 # 1.26.0
 

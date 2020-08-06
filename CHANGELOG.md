@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix links in TSDoc of generated OData clients.
 
 
 # 1.26.0

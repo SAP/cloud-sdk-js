@@ -25,4 +25,12 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - protect yourself from bugs and breaking changes in the future
 
 
-##
+## Release notes for `core`, `generator`, `test-utils`
+
+You'll find [release note](https://github.com/SAP/cloud-sdk/releases) for Open Source modules of SAP Cloud SDK for JavaScript in our [Github repository](https://github.com/SAP/cloud-sdk/releases)
+
+## Release notes for `cloud-sdk-cli`
+
+You'll find [release notes](https://github.com/SAP/cloud-sdk-cli/releases) for SAP Cloud SDK CLI in a separate [Github repository](https://github.com/SAP/cloud-sdk-cli/releases).
+
+## Release notes for pre-generated type-safe clients for S/4HANA Cloud, Marketing cloud and S/4HANA On-premise

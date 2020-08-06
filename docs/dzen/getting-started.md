@@ -30,8 +30,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 - [ ] Open it with you favorite Markdown editor
 - [ ] Proceed to the next step
 
-:::tip Use Online GitHub editor if you can't clone things locally
-Switch to the `documentation` branch and [open the files in your browser](https://github.com/SAP/cloud-sdk/tree/documentation )
+:::tip Use Online Gitub editor if you can't clone things locally
+<img alt="" src={useBaseUrl('img/edit-article.png')}/>
 :::
 
 ## 1. Running documentation locally (approx. 5-7 min) ##
@@ -173,10 +173,12 @@ I recommend reloading the page without cache.
   In this case if I want to link anything in `docs` folder I'll have to go with [my-link](../java/getting-started).
   You can reach up until root `docs` folder level with this approach.
 - To make dynamic link to the `static` folder content you'll need to use a snippet similar to the one below:
-```javascript
+
+```js
 import useBaseUrl from '@docusaurus/useBaseUrl'
 <img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
 ```
+
 - Of course you can link with `your-link/your-path#your-heading`,
   check the right-side menu for the links like [sending you to the top](http://localhost:3000/cloud-sdk/docs/dzen/getting-started#what-youll-need ).
 

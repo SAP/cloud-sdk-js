@@ -33,4 +33,12 @@ You'll find [release note](https://github.com/SAP/cloud-sdk/releases) for Open S
 
 You'll find [release notes](https://github.com/SAP/cloud-sdk-cli/releases) for SAP Cloud SDK CLI in a separate [Github repository](https://github.com/SAP/cloud-sdk-cli/releases).
 
-## Release notes for pre-generated type-safe clients for S/4HANA Cloud, Marketing cloud and S/4HANA On-premise
+## Release notes for client libraries
+
+:::note What are client libraries?
+For your convenience we [pre-generate type-safe clients libraries](https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*) for whitelisted OData services of S/4HANA Cloud, Marketing cloud and S/4HANA On-premise. These libraries are not Open Source and distributed under SAP Developer license.
+:::
+
+### Version 1.20.0
+
+Based on S/4HANA 2008 RTC release on August'29 2020

@@ -36,7 +36,7 @@ module.exports = {
         alt: 'SAP Cloud SDK',
         src: 'img/logo.svg'
       },
-      links: [
+    items: [
         {
           to: 'docs/overview/about',
           label: 'Docs',
@@ -56,7 +56,7 @@ module.exports = {
               href: 'https://stackoverflow.com/questions/tagged/sap-cloud-sdk'
             },
             {
-              label: 'GitHub JS/TS',
+              label: 'GitHub JavaScript',
               href: 'https://github.com/SAP/cloud-sdk/issues'
             },
             {
@@ -70,14 +70,14 @@ module.exports = {
           position: 'left',
           items: [
             {
-              label: 'Java SDK',
+              label: 'Java',
               to:
                 'docs/java/release-notes-sap-cloud-sdk-for-java'
             },
             {
-              label: 'JS SDK',
-              href:
-                'https://github.com/SAP/cloud-sdk/releases'
+              label: 'JavaScript',
+              to:
+                'docs/js/release-notes-sap-cloud-sdk-for-javascript-and-typescript'
             },
             {
               label: 'CI/CD Toolkit',
@@ -117,12 +117,11 @@ module.exports = {
             },
             {
               label: 'Cloud SDK for CI/CD',
-              href: 'docs/devops/getting-started'
+              to: 'docs/devops/getting-started'
             },
             {
               label: 'Cloud SDK Tutorials',
-              href:
-                'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk'
+              href: 'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk'
             }
           ]
         },
@@ -159,6 +158,23 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/SAP/cloud-sdk'
             }
+          ]
+        },
+        {
+          title: 'Package repositories',
+          items: [
+            {
+              label: 'Cloud SDK for JavaScript',
+              href: 'https://www.npmjs.com/search?q=%40sap-cloud-sdk'
+            },
+            {
+              label: 'JS client libraries for S/4HANA',
+              href: 'https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*'
+            },
+            {
+              label: 'Cloud SDK for Java',
+              href: 'https://search.maven.org/search?q=g:com.sap.cloud.sdk'
+            },
           ]
         }
       ],

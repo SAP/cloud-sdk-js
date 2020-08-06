@@ -19,8 +19,8 @@ image:
 SAP Cloud SDK for Java is prepared to generate a typesafe clients using [Open API](https://www.openapis.org/) to conveniently work
 with various REST APIs available at [SAP API Hub](https://api.sap.com/)
 
-:::info Open API Generator is not released for public use 
-If you're interested in a typed REST API client for a specific SAP application or service contact us via [cloudsdk@sap.com](mailto:cloudsdk@sap.com) 
+:::info Open API Generator is not released for public use
+If you're interested in a typed REST API client for a specific SAP application or service contact us via [cloudsdk@sap.com](mailto:cloudsdk@sap.com)
 :::
 
 ### Pre-generated typesafe REST API client ###
@@ -28,7 +28,7 @@ We ship pre-generated typesafe REST API clients as modules in collaboration with
 Cloud Platform and beyond.
 
 Depending on the scope modules could be available only internally within SAP or publicly released. [SAP Cloud Platform Workflow
-API](../clients/scp-workflow-rest-api) is an example of publicly released API module.
+API](clients/scp-workflow-rest-api) is an example of publicly released API module.
 
 In case you need information on REST or other services shipped only internally, please, approach us directly via
 standard communication channels.
@@ -45,8 +45,8 @@ standard communication channels.
   we release.
 
 ## I'm providing a service on SAP Cloud Platform. How can I ship it with Cloud SDK? ##
-Reach out to us via internal communication channels and we'll provide you with information on our contribution models. 
- 
+Reach out to us via internal communication channels and we'll provide you with information on our contribution models.
+
 ## Do you plan to release Open API generator? Like you've done for OData? ##
 Because of less deterministic standard and huge variety of Open API services we decided not to release it as of yet. We
 might reconsider this decision if we see a strong use-case and great value for our customers behind such commitment. The

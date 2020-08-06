@@ -82,7 +82,7 @@ To continue discovering SDK for your favorite programming language check respect
 guides and comprehensive tutorials for multiple use cases.
 
 :::caution
-There is no full feature parity between [JavaScript](../js/features )  and [Java](../java/features ) libraries.
+There is no full feature parity between JavaScript  and Java libraries.
 Please, review respective documentation sections to find out more.
 :::
 

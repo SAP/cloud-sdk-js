@@ -127,7 +127,7 @@ skipUsageAnalytics: false
 **Congratulations! You've just setup a brand new application with the SAP Cloud SDK for Java.**
 
 :::tip
-To change the Java version modify the `<java.version>` property in the root `pom.xml`. 
+To change the Java version modify the `<java.version>` property in the root `pom.xml`.
 :::
 
 ## Integrate the Cloud SDK for Java into your Project
@@ -144,7 +144,7 @@ To get started include the _SDK BOM_ in the _dependency management_ of your proj
             <type>pom</type>
             <scope>import</scope>
         </dependency>
-    </dependencies>        
+    </dependencies>
 </dependencyManagement>
 ```
 
@@ -197,7 +197,7 @@ Last but not least we recommend that you include the following plugin:
 ```
 
 It sends _[anonymized usage data](https://blogs.sap.com/2018/10/23/usage-analytics-s4sdk/)_ such as the SDK version used and helps us with improving the SDK.
-Furthermore the plugin is capable of generating a report with useful information about the project setup. 
+Furthermore the plugin is capable of generating a report with useful information about the project setup.
 Invoking `diagnosis-report` will print out the SDK modules used and their version but also other information like the Java and Maven version.
 This is helpful when you are facing an issue and are reaching out to us for help.
 
@@ -232,9 +232,9 @@ For a TomEE based project the filters should be registered automatically. They a
 
 
 ## Next steps ##
-- [Configure you IDE](../guides/recommended-ide )
-- [Get and bind SAP Cloud Foundry CLI](../guides/cf-cli )
+- [Configure you IDE](guides/recommended-ide )
+- [Get and bind SAP Cloud Foundry CLI](guides/cf-cli )
 - [Check tutorials for Cloud SDK for Java](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:java )
 - Check out key **Features** and **Guides** sections
-- Review [JavaDoc](api-documentation )
-- Check [what's new](../../overview/what-is-new ) and [release notes](https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html )
+- Check our [release notes](release-notes-sap-cloud-sdk-for-java)
+- Check [what's new](../overview/what-is-new )

@@ -32,7 +32,7 @@ function factoryFunction(
     statements: `return deserializeComplexType(json, ${complexType.typeName});`,
     isExported: true,
     docs: [
-      '\n@deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.'
+      '\n@deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.'
     ]
   };
 }

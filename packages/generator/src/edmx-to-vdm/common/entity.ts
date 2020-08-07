@@ -92,10 +92,7 @@ function properties(
     );
     const isComplex = isComplexType(p.Type);
     const isCollection = isCollectionType(p.Type);
-    const typeMapping = getTypeMappingEntityProperties(
-      p.Type,
-      complexTypes
-    );
+    const typeMapping = getTypeMappingEntityProperties(p.Type, complexTypes);
 
     return {
       originalName: p.Name,

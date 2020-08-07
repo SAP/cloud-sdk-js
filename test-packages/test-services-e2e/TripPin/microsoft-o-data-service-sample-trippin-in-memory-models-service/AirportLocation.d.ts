@@ -1,9 +1,14 @@
 import { City, CityField } from './City';
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core/v4';
+import { ComplexTypeAnyPropertyField, ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core/v4';
 /**
  * AirportLocation
  */
 export interface AirportLocation {
+    /**
+     * Loc.
+     * @nullable
+     */
+    loc?: any;
     /**
      * Address.
      * @nullable
@@ -24,6 +29,11 @@ export declare function createAirportLocation(json: any): AirportLocation;
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class AirportLocationField<EntityT extends Entity> extends ComplexTypeField<EntityT, AirportLocation> {
+    /**
+     * Representation of the [[AirportLocation.loc]] property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    loc: ComplexTypeAnyPropertyField<EntityT>;
     /**
      * Representation of the [[AirportLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

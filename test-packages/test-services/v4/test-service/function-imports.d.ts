@@ -89,6 +89,10 @@ export interface TestFunctionImportMultipleParamsParameters {
      * Nullable Boolean Param.
      */
     nullableBooleanParam?: boolean;
+    /**
+     * Nullable Geography Point Param.
+     */
+    nullableGeographyPointParam?: any;
 }
 /**
  * Test Function Import Multiple Params.

@@ -88,7 +88,7 @@ export class ComplexTypeNumberPropertyField<
   readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
-   * Creates an instance of ComplexTypeBigNumberPropertyField.
+   * Creates an instance of ComplexTypeNumberPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
@@ -103,7 +103,7 @@ export class ComplexTypeNumberPropertyField<
   /**
    * @deprecated Since v1.19.0.
    *
-   * Creates an instance of ComplexTypeBigNumberPropertyField.
+   * Creates an instance of ComplexTypeNumberPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param entityConstructor - Constructor type of the entity the field belongs to

@@ -43,6 +43,11 @@ var AirportLocationField = /** @class */ (function (_super) {
     function AirportLocationField(fieldName, fieldOf) {
         var _this = _super.call(this, fieldName, fieldOf, AirportLocation) || this;
         /**
+         * Representation of the [[AirportLocation.loc]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.loc = new v4_1.ComplexTypeAnyPropertyField('Loc', _this, 'Edm.Any');
+        /**
          * Representation of the [[AirportLocation.address]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
@@ -63,6 +68,11 @@ var AirportLocation;
      * Metadata information on all properties of the `AirportLocation` complex type.
      */
     AirportLocation._propertyMetadata = [{
+            originalName: 'Loc',
+            name: 'loc',
+            type: 'Edm.Any',
+            isCollection: false
+        }, {
             originalName: 'Address',
             name: 'address',
             type: 'Edm.String',

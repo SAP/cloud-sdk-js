@@ -1,8 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxProperty } from '../edmx-parser/common';
-import { edmToTsType } from '../generator-utils';
+import { edmToTsType, getFallbackEdmTypeIfNeeded } from '../generator-utils';
+import {
+  VdmComplexType,
+  VdmMappedEdmType,
+  VdmMappedEdmTypeProperty
+} from '../vdm-types';
+import { complexTypeForName } from './common';
 
 const logger = createLogger({
   package: 'generator',
@@ -18,7 +24,17 @@ export function isCollectionType(typeName: string): boolean {
   return collectionRegExp.test(typeName);
 }
 
+export function isEdmType(typeName: string): boolean {
+  return typeName.startsWith('Edm');
+}
+
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
+
+export function parseType(typeName: string): string {
+  return typeName.startsWith('Edm')
+    ? typeName
+    : typeName.split('.')[typeName.split('.').length - 1];
+}
 
 export function parseTypeName(typeName: string): string {
   return isCollectionType(typeName)
@@ -38,7 +54,11 @@ export function isV2Metadata(metadata: EdmxMetadata): boolean {
   return metadata.oDataVersion === 'v2';
 }
 
-export function isComplexType(type: string): boolean {
+export function isComplexType(typeName: string): boolean {
+  let type = typeName;
+  if (isCollectionType(typeName)) {
+    type = parseCollectionTypeName(typeName);
+  }
   const typeParts = type.split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;
 }
@@ -51,22 +71,75 @@ export function checkCollectionKind(property: EdmxProperty) {
   }
 }
 
+export function getTypeMappingActionFunction(
+  typeName: string
+): VdmMappedEdmType {
+  const type = parseType(typeName);
+  if (isEdmType(type)) {
+    const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
+    return {
+      edmType: edmFallback,
+      jsType: edmToTsType(edmFallback)
+    };
+  }
+  throw new Error(
+    `Tries to get a action/function parameter with type ${typeName} which is not a Edm type.`
+  );
+}
+
+export function typesForCollection(
+  typeName: string,
+  complexTypes?: Omit<VdmComplexType, 'factoryName'>[],
+  formattedTypes?: MapType<any>
+): VdmMappedEdmTypeProperty {
+  const typeInsideCollection = parseCollectionTypeName(typeName);
+  if (isEdmType(typeInsideCollection)) {
+    const typeEdm = getFallbackEdmTypeIfNeeded(typeInsideCollection);
+    return {
+      edmType: typeEdm,
+      jsType: edmToTsType(typeEdm),
+      fieldType: 'CollectionField'
+    };
+  }
+  if (isComplexType(typeInsideCollection)) {
+    const typeComplex = parseType(typeInsideCollection);
+    return {
+      edmType: typeInsideCollection,
+      jsType: complexTypes
+        ? complexTypeForName(typeInsideCollection, complexTypes)
+        : formattedTypes![typeComplex],
+      fieldType: 'CollectionField'
+    };
+  }
+  throw new Error(
+    'Types in inside a collection must be either have complex or edm types'
+  );
+}
+
+// function typesForEdm(typeName: string): types {
+//   const isComplex = isComplexType(typeName)
+//   const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
+//   return {
+//     edmType: edmFallback,
+//     jsType: edmToTsType(edmFallback),
+//     fieldType: isComplex
+//       ? edmToComplexPropertyType(edmFallback)
+//       : edmToFieldType(edmFallback)
+//   };
+// }
+
+// jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
+//   fieldType: isCollection
+//   ? 'CollectionField'
+//   : propertyFieldType(type) ||
+//   complexTypeFieldForName(type, complexTypes),
+// }
+
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
-export function parseType(type: string): string {
-  return type.startsWith('Edm')
-    ? type
-    : type.split('.')[type.split('.').length - 1];
-}
-
-export function filterUnknownEdmTypes(p: EdmxProperty): boolean {
-  const type = parseTypeName(p.Type);
-  const skip = type.startsWith('Edm.') && !edmToTsType(type);
-  if (skip) {
-    logger.warn(
-      `Edm Type ${type} not supported by the SAP Cloud SDK. Skipping generation of property ${p.Name}.`
-    );
-  }
-  return !skip;
-}
+// export function parseType(type: string): string {
+//   return type.startsWith('Edm')
+//     ? type
+//     : type.split('.')[type.split('.').length - 1];
+// }

@@ -1,23 +1,28 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import {
   edmToComplexPropertyType,
   edmToTsType,
+  getFallbackEdmTypeIfNeeded,
   isNullableProperty
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmComplexType, VdmProperty } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmProperty,
+  VdmMappedEdmTypeProperty
+} from '../../vdm-types';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
-  filterUnknownEdmTypes,
   isCollectionType,
   isComplexType,
-  parseType,
-  parseTypeName
+  isEdmType,
+  typesForCollection
 } from '../edmx-to-vdm-util';
+import { complexTypeName } from '../../edmx-parser/legacy/common';
 
 const logger = createLogger({
   package: 'generator',
@@ -57,46 +62,71 @@ export function transformComplexTypesBase(
       typeName,
       originalName: c.Name,
       fieldType: complexTypeFieldType(typeName),
-      properties: c.Property.filter(filterUnknownEdmTypes)
-        .map(p => {
-          checkCollectionKind(p);
-          const instancePropertyName = formatter.originalToInstancePropertyName(
+      properties: c.Property.map(p => {
+        checkCollectionKind(p);
+        const instancePropertyName = formatter.originalToInstancePropertyName(
+          c.Name,
+          p.Name
+        );
+        const isComplex = isComplexType(p.Type);
+        const isCollection = isCollectionType(p.Type);
+        const typesComplexProperty = getTypeMappingComplexProperties(
+          p.Type,
+          formattedTypes
+        );
+        return {
+          originalName: p.Name,
+          instancePropertyName,
+          staticPropertyName: formatter.originalToStaticPropertyName(
             c.Name,
             p.Name
-          );
-          const type = parseTypeName(p.Type);
-          const isComplex = isComplexType(type);
-          const isCollection = isCollectionType(p.Type);
-          const parsedType = parseType(type);
-          return {
-            originalName: p.Name,
-            instancePropertyName,
-            staticPropertyName: formatter.originalToStaticPropertyName(
-              c.Name,
-              p.Name
-            ),
-            propertyNameAsParam: applyPrefixOnJsConfictParam(
-              instancePropertyName
-            ),
-            description: propertyDescription(p),
-            technicalName: p.Name,
-            nullable: isNullableProperty(p),
-            edmType: isComplex ? type : parsedType,
-            jsType: isComplex ? formattedTypes[parsedType] : edmToTsType(type),
-            fieldType: isCollection
-              ? 'CollectionField'
-              : isComplex
-              ? formattedTypes[parsedType] + 'Field'
-              : edmToComplexPropertyType(type),
-            isComplex,
-            isCollection: isCollectionType(p.Type)
-          };
-        })
-        .filter(filterUnknownPropertyTypes)
+          ),
+          propertyNameAsParam: applyPrefixOnJsConfictParam(
+            instancePropertyName
+          ),
+          description: propertyDescription(p),
+          technicalName: p.Name,
+          nullable: isNullableProperty(p),
+          edmType: typesComplexProperty.edmType,
+          jsType: typesComplexProperty.jsType,
+          fieldType: typesComplexProperty.fieldType,
+          isComplex,
+          isCollection
+        };
+      }).filter(filterUnknownPropertyTypes)
     };
   });
 }
 
-function complexTypeFieldType(typeName: string) {
+export function complexTypeFieldType(typeName: string) {
   return typeName + 'Field';
+}
+
+export function getTypeMappingComplexProperties(
+  typeName: string,
+  formattedTypes: MapType<any>
+): VdmMappedEdmTypeProperty {
+  // const type = parseTypeName(typeName);
+  if (isEdmType(typeName)) {
+    const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
+    return {
+      edmType: edmFallback,
+      jsType: edmToTsType(edmFallback),
+      fieldType: edmToComplexPropertyType(edmFallback)
+    };
+  }
+
+  if (isCollectionType(typeName)) {
+    return typesForCollection(typeName, undefined, formattedTypes);
+  }
+
+  if (isComplexType(typeName)) {
+    const withoutPrefix = complexTypeName(typeName)!;
+    return {
+      edmType: typeName,
+      jsType: formattedTypes[withoutPrefix],
+      fieldType: complexTypeFieldType(formattedTypes[withoutPrefix])
+    };
+  }
+  throw new Error(`No types found for ${typeName}`);
 }

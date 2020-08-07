@@ -30,6 +30,7 @@ import {
   isCollectionType,
   parseTypeName
 } from '../../../edmx-to-vdm/edmx-to-vdm-util';
+import { complexTypeFieldType } from '../../../edmx-to-vdm/common';
 import {
   JoinedEntityMetadata,
   EdmxProperty,
@@ -188,7 +189,7 @@ const propertyFieldType = (type: string): string | undefined =>
 const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
-const complexTypeName = (type: string) => last(type.split('.'));
+export const complexTypeName = (type: string) => last(type.split('.'));
 
 const findComplexType = (
   name: string,
@@ -209,8 +210,6 @@ function complexTypeForName(
   );
   return 'any';
 }
-
-const complexTypeFieldType = (typeName: string) => typeName + 'Field';
 
 function complexTypeFieldForName(
   name: string,

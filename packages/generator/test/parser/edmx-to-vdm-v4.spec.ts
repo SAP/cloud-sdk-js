@@ -34,6 +34,29 @@ describe('edmx-to-vdm-v4', () => {
     });
   });
 
+  it('transforms collection type properties for unknown edmx types', () => {
+    const service = createTestServiceData(
+      [
+        createEntityType('TestEntityType', [
+          [
+            'CollectionProperty',
+            'Collection(Edm.SomethingTheSdkDoesNotSupport)',
+            false
+          ]
+        ])
+      ],
+      [createTestEntitySet('TestEntity', 'TestEntityType')]
+    );
+
+    const entity = generateEntitiesV4(service, [], getFormatter())[0];
+    expect(entity.properties[0]).toMatchObject({
+      isCollection: true,
+      edmType: 'Edm.Any',
+      jsType: 'any',
+      fieldType: 'CollectionField'
+    });
+  });
+
   it('transforms collection type properties for complex types', () => {
     const service = createTestServiceData(
       [

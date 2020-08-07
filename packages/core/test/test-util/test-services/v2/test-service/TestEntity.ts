@@ -7,7 +7,7 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, Link, NumberField, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
+import { AllFields, AnyField, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, Link, NumberField, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -111,6 +111,11 @@ export class TestEntity extends Entity implements TestEntityType {
    */
   sByteProperty?: number;
   /**
+   * Something The Sdk Does Not Support.
+   * @nullable
+   */
+  somethingTheSdkDoesNotSupport?: any;
+  /**
    * Complex Type Property.
    * @nullable
    */
@@ -184,6 +189,7 @@ export interface TestEntityType {
   dateTimeOffSetProperty?: Moment;
   byteProperty?: number;
   sByteProperty?: number;
+  somethingTheSdkDoesNotSupport?: any;
   complexTypeProperty?: TestComplexType;
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityOtherMultiLinkType[];
@@ -208,6 +214,7 @@ export interface TestEntityTypeForceMandatory {
   dateTimeOffSetProperty: Moment;
   byteProperty: number;
   sByteProperty: number;
+  somethingTheSdkDoesNotSupport: any;
   complexTypeProperty: TestComplexType;
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityOtherMultiLinkType[];
@@ -301,6 +308,11 @@ export namespace TestEntity {
    */
   export const S_BYTE_PROPERTY: NumberField<TestEntity> = new NumberField('SByteProperty', TestEntity, 'Edm.SByte');
   /**
+   * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntity> = new AnyField('SomethingTheSDKDoesNotSupport', TestEntity, 'Edm.Any');
+  /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -323,7 +335,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | TestComplexTypeField<TestEntity> | Link<TestEntity, TestEntityMultiLink> | Link<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | AnyField<TestEntity> | TestComplexTypeField<TestEntity> | Link<TestEntity, TestEntityMultiLink> | Link<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -341,6 +353,7 @@ export namespace TestEntity {
     TestEntity.DATE_TIME_OFF_SET_PROPERTY,
     TestEntity.BYTE_PROPERTY,
     TestEntity.S_BYTE_PROPERTY,
+    TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT,
     TestEntity.COMPLEX_TYPE_PROPERTY,
     TestEntity.TO_MULTI_LINK,
     TestEntity.TO_OTHER_MULTI_LINK,

@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefined, transformReturnValueForComplexType, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core/v4';
+import { transformReturnValueForUndefined, transformReturnValueForComplexType, transformReturnValueForEdmType, edmToTs, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core/v4';
 import { TestComplexType } from './TestComplexType';
 
 /**
@@ -42,6 +42,10 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
    * Nullable Boolean Param.
    */
   nullableBooleanParam?: boolean;
+  /**
+   * Nullable Geography Point Param.
+   */
+  nullableGeographyPointParam?: any;
 }
 
 /**
@@ -54,13 +58,39 @@ export function testActionImportMultipleParameterComplexReturnType(parameters: T
   const params = {
     stringParam: new ActionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
     nonNullableStringParam: new ActionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-    nullableBooleanParam: new ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
+    nullableBooleanParam: new ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
+    nullableGeographyPointParam: new ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
   }
 
   return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
+/**
+ * Type of the parameters to be passed to [[testActionImportUnsupportedEdmTypes]].
+ */
+export interface TestActionImportUnsupportedEdmTypesParameters {
+  /**
+   * Simple Param.
+   */
+  simpleParam: any;
+}
+
+/**
+ * Test Action Import Unsupported Edm Types.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function testActionImportUnsupportedEdmTypes(parameters: TestActionImportUnsupportedEdmTypesParameters): ActionImportRequestBuilder<TestActionImportUnsupportedEdmTypesParameters, any> {
+  const params = {
+    simpleParam: new ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
+  }
+
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Any')), params);
+}
+
 export const actionImports = {
   testActionImportNoParameterNoReturnType,
-  testActionImportMultipleParameterComplexReturnType
+  testActionImportMultipleParameterComplexReturnType,
+  testActionImportUnsupportedEdmTypes
 };

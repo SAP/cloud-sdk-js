@@ -15,7 +15,8 @@ export type EdmTypeSameConverters =
   | 'Edm.SByte'
   | 'Edm.Binary'
   | 'Edm.Guid'
-  | 'Edm.Byte';
+  | 'Edm.Byte'
+  | 'Edm.Any';
 
 export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 

@@ -30,7 +30,8 @@ module.exports = {
             type: 'category',
             label: 'Connectivity',
             items: [
-              'java/features/connectivity/sdk-connectivity-destination-service'
+              'java/features/connectivity/sdk-connectivity-destination-service',
+              'java/features/connectivity/sdk-connectivity-http-client'
             ]
           },
           'java/features/bapi-and-rfc/bapi-and-rfc-overview',

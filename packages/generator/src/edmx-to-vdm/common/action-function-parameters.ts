@@ -50,15 +50,15 @@ function getParameter<T extends EdmxNamed>(
     const swaggerParameter = swaggerDefinition
       ? swaggerDefinition.parameters.find(param => param.name === p.Name)
       : undefined;
-    const typesActionFunction = getTypeMappingActionFunction(p.Type);
+    const typeMapping = getTypeMappingActionFunction(p.Type);
     return {
       originalName: p.Name,
       parameterName: formatter.originalToParameterName(
         edmxActionFunctionImport.Name,
         p.Name
       ),
-      edmType: typesActionFunction.edmType,
-      jsType: typesActionFunction.jsType,
+      edmType: typeMapping.edmType,
+      jsType: typeMapping.jsType,
       nullable: isNullableParameter(p),
       description: parameterDescription(p, swaggerParameter)
     };

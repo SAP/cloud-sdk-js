@@ -16,7 +16,7 @@ export type EdmTypeSameConverters =
   | 'Edm.Binary'
   | 'Edm.Guid'
   | 'Edm.Byte'
-  | 'Edm.Any';
+  | 'Edm.Any'; // Represents currently unspupported edm types like Edm.Geography.
 
 export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 

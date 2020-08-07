@@ -103,11 +103,11 @@ function getEdmReturnType(
   isCollection: boolean,
   edmType: string
 ): VdmFunctionImportReturnType {
-  const typesActionFunction = getTypeMappingActionFunction(edmType);
+  const typeMapping = getTypeMappingActionFunction(edmType);
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
-    returnType: typesActionFunction.jsType,
-    builderFunction: `(val) => edmToTs(val, '${typesActionFunction.edmType}')`,
+    returnType: typeMapping.jsType,
+    builderFunction: `(val) => edmToTs(val, '${typeMapping.edmType}')`,
     isMulti: isCollection,
     isCollection
   };

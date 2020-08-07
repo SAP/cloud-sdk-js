@@ -92,7 +92,7 @@ function properties(
     );
     const isComplex = isComplexType(p.Type);
     const isCollection = isCollectionType(p.Type);
-    const typesENtityProperty = getTypeMappingEntityProperties(
+    const typeMapping = getTypeMappingEntityProperties(
       p.Type,
       complexTypes
     );
@@ -105,9 +105,9 @@ function properties(
         p.Name
       ),
       propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
-      edmType: typesENtityProperty.edmType,
-      jsType: typesENtityProperty.jsType,
-      fieldType: typesENtityProperty.fieldType,
+      edmType: typeMapping.edmType,
+      jsType: typeMapping.jsType,
+      fieldType: typeMapping.fieldType,
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,

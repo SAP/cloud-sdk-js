@@ -70,7 +70,7 @@ export function transformComplexTypesBase(
         );
         const isComplex = isComplexType(p.Type);
         const isCollection = isCollectionType(p.Type);
-        const typesComplexProperty = getTypeMappingComplexProperties(
+        const typeMapping = getTypeMappingComplexProperties(
           p.Type,
           formattedTypes
         );
@@ -87,9 +87,9 @@ export function transformComplexTypesBase(
           description: propertyDescription(p),
           technicalName: p.Name,
           nullable: isNullableProperty(p),
-          edmType: typesComplexProperty.edmType,
-          jsType: typesComplexProperty.jsType,
-          fieldType: typesComplexProperty.fieldType,
+          edmType: typeMapping.edmType,
+          jsType: typeMapping.jsType,
+          fieldType: typeMapping.fieldType,
           isComplex,
           isCollection
         };

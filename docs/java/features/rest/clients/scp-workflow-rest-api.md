@@ -50,7 +50,7 @@ Refer to the documentation on [help.sap.com](https://help.sap.com/viewer/e157c39
 - Which Cloud Foundry subaccount and space you want to use
 - You have access to the SCP Workflow Service feature
 - You possess all necessary authorizations on Cloud Foundry
-- [You have installed the Cloud Foundry Command Line Interface (CLI) on your machine](../../../../guides/cf-cli).
+- [You have installed the Cloud Foundry Command Line Interface (CLI) on your machine](../../../guides/cf-cli).
 
 ##### Identifying necessary OAuth Scopes
 :::tip

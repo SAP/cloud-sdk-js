@@ -36,10 +36,10 @@ Tenant or principal information is not available or an incorrect tenant is used.
   See [JWT validation fails](#jwt-validation-fails).
 
 - An operation is performed in an asynchronous manner without propagating the `ThreadContext`.
-  See [Running Asynchronous Operations](../features/multi-tenancy/multi-tenancy-thread-context#running-asynchronous-operations).
+  See [Running Asynchronous Operations](features/multi-tenancy/multi-tenancy-thread-context#running-asynchronous-operations).
 
 - The SDK components are not registered as listeners on incoming requests.
-  See [Framework Support](../getting-started#framework-integration).
+  See [Framework Support](getting-started#framework-integration).
 
 - There was no JWT in the authorization header.
 
@@ -72,7 +72,7 @@ The ERP system unexpectedly responds with _401: Unauthorized_ or _403: Forbidden
 **Possible causes:**
 
 - The SAP Client and Locale headers will be missing if the `Destination` is not an `ErpHttpDestination`.
-  See [Connecting to S/4HANA](../features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
+  See [Connecting to S/4HANA](features/connectivity/sdk-connectivity-destination-service#connect-to-on-premise-s4hana-system).
 
 ### Compilation failures in generated OData VDM classes
 

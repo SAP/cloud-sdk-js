@@ -43,5 +43,5 @@ On the other hand, we're remaining main contributors to every SDK component and 
 ensure the highest quality and seamless integration with other SAP solutions.
 
 ### Feedback ###
-We are happy to hear your feedback about SAP Cloud SDK. You can write us an [email](s4sdk@sap.com ) or submit an issue
-in this [repository](https://github.com/SAP/cloud-sdk/issues)
+We are happy to hear your feedback about SAP Cloud SDK. You can write us to cloudsdk@sap.com or submit an issue
+towards this [repository](https://github.com/SAP/cloud-sdk/issues)

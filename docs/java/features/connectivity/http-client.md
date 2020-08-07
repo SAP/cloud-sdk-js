@@ -75,16 +75,15 @@ DefaultHttpClientFactory customFactory = new DefaultHttpClientFactory() {
       .setProxy(new HttpHost("proxy", 8080, "http"));
   }
   @Override
-  protected HttpClientBuilder createHttpClientBuilder( HttpDestinationProperties destination ) {
-    return HttpClientBuilder.create().setUserAgent("SDK");
+  protected HttpClientBuilder getHttpClientBuilder( HttpDestinationProperties destination ) {
+    return super.getHttpClientBuilder(destination)
+      .setUserAgent("SDK");
   }
 };
 ```
 It's possible to take advantage of calls to `super` - or use your own objects directly.
 This inheritance enables custom implementation for the following methods:
-- `createHttpClientBuilder`
-- `getConnectionManager`
-- `getDefaultCredentialsProvider`
+- `getHttpClientBuilder`
 - `getDefaultRequestConfig`
 - `getDefaultSocketConfig`
 

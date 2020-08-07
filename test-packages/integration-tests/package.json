@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/integration-tests",
-  "version": "1.25.0",
+  "version": "1.26.1",
   "description": "SAP Cloud SDK for JavaScript integration tests",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -14,14 +14,14 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.25.0",
-    "@sap-cloud-sdk/core": "^1.25.0",
-    "@sap-cloud-sdk/test-services": "^1.25.0",
-    "@sap-cloud-sdk/test-util": "^1.25.0"
+    "@sap-cloud-sdk/analytics": "^1.26.1",
+    "@sap-cloud-sdk/core": "^1.26.1",
+    "@sap-cloud-sdk/test-services": "^1.26.1",
+    "@sap-cloud-sdk/test-util": "^1.26.1"
   },
   "devDependencies": {
-    "nock" : "^13.0.3",
+    "bignumber.js": "^9.0.0",
     "jsonwebtoken": "^8.5.1",
-    "bignumber.js": "^9.0.0"
+    "nock": "^13.0.3"
   }
 }

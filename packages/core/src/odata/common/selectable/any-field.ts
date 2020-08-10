@@ -58,23 +58,6 @@ export class ComplexTypeAnyPropertyField<
     edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 
-  /**
-   * @deprecated Since v1.19.0.
-   *
-   * Creates an instance of ComplexTypeAnyPropertyField.
-   *
-   * @param fieldName - Actual name of the field used in the OData request
-   * @param entityConstructor - Constructor type of the entity the field belongs to
-   * @param parentTypeName - Name of the parent complex type
-   * @param edmType - Type of the field according to the metadata description
-   */
-  constructor(
-    fieldName: string,
-    entityConstructor: Constructable<EntityT>,
-    parentTypeName: string,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
-  );
-
   /*
    * Union of the two possible constructors.
    */

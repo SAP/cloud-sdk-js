@@ -116,7 +116,7 @@ export function getFallbackEdmTypeIfNeeded(
     return edmType as EdmTypeShared<any>;
   }
   logger.warn(
-    `The tpye ${edmType} is currently not supported by the sdk. Type "any" is used as fallback.`
+    `The type ${edmType} is currently not supported by the sdk. Type "any" is used as fallback.`
   );
   return 'Edm.Any';
 }

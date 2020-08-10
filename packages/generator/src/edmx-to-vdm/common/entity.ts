@@ -27,14 +27,13 @@ import {
   JoinedEntityMetadata
 } from '../../edmx-parser/common';
 import {
-  checkCollectionKind,
+  checkCollectionKind, complexTypeFieldType,
   isCollectionType,
   isComplexType,
   isEdmType,
   typesForCollection
 } from '../edmx-to-vdm-util';
 import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
-import { complexTypeFieldType } from './complex-type';
 
 const logger = createLogger({
   package: 'generator',
@@ -200,7 +199,6 @@ function getTypeMappingEntityProperties(
   typeName: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): VdmMappedEdmTypeProperty {
-  // const type = parseTypeName(typeName);
 
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);

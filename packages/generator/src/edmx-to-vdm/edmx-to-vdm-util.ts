@@ -9,6 +9,7 @@ import {
   VdmMappedEdmTypeProperty
 } from '../vdm-types';
 import { complexTypeForName } from './common';
+import { last } from 'rambda';
 
 const logger = createLogger({
   package: 'generator',
@@ -28,8 +29,16 @@ export function isEdmType(typeName: string): boolean {
   return typeName.startsWith('Edm');
 }
 
+export function complexTypeName(type: string):string|undefined {
+  return last(type.split('.'));
+}
+
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
+/**
+ * @deprecated since version 1.27.0. Use [[isEdmType]] and [[complexTypeName]] if you want to extract type names of non Edm types.
+ * @param typeName
+ */
 export function parseType(typeName: string): string {
   return typeName.startsWith('Edm')
     ? typeName
@@ -71,11 +80,14 @@ export function checkCollectionKind(property: EdmxProperty) {
   }
 }
 
+export function complexTypeFieldType(typeName: string) {
+  return typeName + 'Field';
+}
+
 export function getTypeMappingActionFunction(
   typeName: string
 ): VdmMappedEdmType {
-  const type = parseType(typeName);
-  if (isEdmType(type)) {
+  if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {
       edmType: edmFallback,
@@ -102,7 +114,7 @@ export function typesForCollection(
     };
   }
   if (isComplexType(typeInsideCollection)) {
-    const typeComplex = parseType(typeInsideCollection);
+    const typeComplex = complexTypeName(typeInsideCollection) || typeInsideCollection;
     return {
       edmType: typeInsideCollection,
       jsType: complexTypes
@@ -116,30 +128,5 @@ export function typesForCollection(
   );
 }
 
-// function typesForEdm(typeName: string): types {
-//   const isComplex = isComplexType(typeName)
-//   const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
-//   return {
-//     edmType: edmFallback,
-//     jsType: edmToTsType(edmFallback),
-//     fieldType: isComplex
-//       ? edmToComplexPropertyType(edmFallback)
-//       : edmToFieldType(edmFallback)
-//   };
-// }
-
-// jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
-//   fieldType: isCollection
-//   ? 'CollectionField'
-//   : propertyFieldType(type) ||
-//   complexTypeFieldForName(type, complexTypes),
-// }
-
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
-
-// export function parseType(type: string): string {
-//   return type.startsWith('Edm')
-//     ? type
-//     : type.split('.')[type.split('.').length - 1];
-// }

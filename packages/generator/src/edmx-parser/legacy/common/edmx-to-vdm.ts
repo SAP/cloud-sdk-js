@@ -27,10 +27,10 @@ import {
 } from '../../../generator-utils';
 import { applyPrefixOnJsConflictParam } from '../../../name-formatting-strategies';
 import {
+  complexTypeFieldType,
   isCollectionType,
   parseTypeName
 } from '../../../edmx-to-vdm/edmx-to-vdm-util';
-import { complexTypeFieldType } from '../../../edmx-to-vdm/common';
 import {
   JoinedEntityMetadata,
   EdmxProperty,

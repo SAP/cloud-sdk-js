@@ -44,7 +44,7 @@
     "lint": "yarn eslint --ext .ts .",
     "lint:fix": "yarn lint --fix",
     "lint:fix-cached": "yarn lint:fix --cache",
-    "check:circular": "yarn madge --circular ./packages/core",
+    "check:circular": "yarn madge --circular ./packages/generator",
     "check:dependencies": "yarn workspaces run check:dependencies",
     "check:license": "node scripts/check-licenses.js",
     "check:vulnerability": "yarn audit-ci -h",

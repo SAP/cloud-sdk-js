@@ -16,13 +16,12 @@ import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import {
-  checkCollectionKind,
+  checkCollectionKind, complexTypeFieldType, complexTypeName,
   isCollectionType,
   isComplexType,
   isEdmType,
   typesForCollection
 } from '../edmx-to-vdm-util';
-import { complexTypeName } from '../../edmx-parser/legacy/common';
 
 const logger = createLogger({
   package: 'generator',
@@ -98,15 +97,10 @@ export function transformComplexTypesBase(
   });
 }
 
-export function complexTypeFieldType(typeName: string) {
-  return typeName + 'Field';
-}
-
 export function getTypeMappingComplexProperties(
   typeName: string,
   formattedTypes: MapType<any>
 ): VdmMappedEdmTypeProperty {
-  // const type = parseTypeName(typeName);
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {

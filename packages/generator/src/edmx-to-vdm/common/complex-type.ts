@@ -16,7 +16,9 @@ import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import {
-  checkCollectionKind, complexTypeFieldType, complexTypeName,
+  checkCollectionKind,
+  complexTypeFieldType,
+  complexTypeName,
   isCollectionType,
   isComplexType,
   isEdmType,

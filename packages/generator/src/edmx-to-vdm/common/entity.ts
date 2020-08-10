@@ -27,7 +27,8 @@ import {
   JoinedEntityMetadata
 } from '../../edmx-parser/common';
 import {
-  checkCollectionKind, complexTypeFieldType,
+  checkCollectionKind,
+  complexTypeFieldType,
   isCollectionType,
   isComplexType,
   isEdmType,
@@ -199,7 +200,6 @@ function getTypeMappingEntityProperties(
   typeName: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): VdmMappedEdmTypeProperty {
-
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {

@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { last } from 'rambda';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxProperty } from '../edmx-parser/common';
 import { edmToTsType, getFallbackEdmTypeIfNeeded } from '../generator-utils';
@@ -9,7 +10,6 @@ import {
   VdmMappedEdmTypeProperty
 } from '../vdm-types';
 import { complexTypeForName } from './common';
-import { last } from 'rambda';
 
 const logger = createLogger({
   package: 'generator',
@@ -29,7 +29,7 @@ export function isEdmType(typeName: string): boolean {
   return typeName.startsWith('Edm');
 }
 
-export function complexTypeName(type: string):string|undefined {
+export function complexTypeName(type: string): string | undefined {
   return last(type.split('.'));
 }
 
@@ -37,7 +37,8 @@ export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 /**
  * @deprecated since version 1.27.0. Use [[isEdmType]] and [[complexTypeName]] if you want to extract type names of non Edm types.
- * @param typeName
+ * @param typeName Name of the edm type for example "Edm.String" or "Namespace.ComplexType"
+ * @returns the typename input for Edm types e.g. "Edm.String" or the type without the namesapce.
  */
 export function parseType(typeName: string): string {
   return typeName.startsWith('Edm')
@@ -114,7 +115,8 @@ export function typesForCollection(
     };
   }
   if (isComplexType(typeInsideCollection)) {
-    const typeComplex = complexTypeName(typeInsideCollection) || typeInsideCollection;
+    const typeComplex =
+      complexTypeName(typeInsideCollection) || typeInsideCollection;
     return {
       edmType: typeInsideCollection,
       jsType: complexTypes

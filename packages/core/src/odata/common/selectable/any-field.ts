@@ -2,7 +2,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { EntityBase, ODataVersionOf } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,

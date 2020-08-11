@@ -57,12 +57,8 @@ export interface VdmPropertyValueConstraints {
 export interface VdmProperty
   extends VdmPropertyDescriptor,
     VdmPropertyValueConstraints,
-    VdmMappedEdmTypeProperty {
+    VdmMappedEdmType {
   description: string;
-}
-
-export interface VdmMappedEdmTypeProperty extends VdmMappedEdmType {
-  fieldType: string;
 }
 
 // Navigation Properties
@@ -140,6 +136,7 @@ export interface VdmParameter extends VdmMappedEdmType {
 export interface VdmMappedEdmType {
   edmType: string;
   jsType: string;
+  fieldType: string;
 }
 
 export interface ApiBusinessHubMetadata {

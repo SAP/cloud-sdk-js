@@ -3,11 +3,10 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxProperty } from '../edmx-parser/common';
-import { edmToTsType, getFallbackEdmTypeIfNeeded } from '../generator-utils';
+import { edmToFieldType, edmToTsType, getFallbackEdmTypeIfNeeded } from '../generator-utils';
 import {
   VdmComplexType,
-  VdmMappedEdmType,
-  VdmMappedEdmTypeProperty
+  VdmMappedEdmType
 } from '../vdm-types';
 import { complexTypeForName } from './common';
 
@@ -92,7 +91,8 @@ export function getTypeMappingActionFunction(
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {
       edmType: edmFallback,
-      jsType: edmToTsType(edmFallback)
+      jsType: edmToTsType(edmFallback),
+      fieldType: edmToFieldType(edmFallback)
     };
   }
   throw new Error(
@@ -104,7 +104,7 @@ export function typesForCollection(
   typeName: string,
   complexTypes?: Omit<VdmComplexType, 'factoryName'>[],
   formattedTypes?: MapType<any>
-): VdmMappedEdmTypeProperty {
+): VdmMappedEdmType {
   const typeInsideCollection = parseCollectionTypeName(typeName);
   if (isEdmType(typeInsideCollection)) {
     const typeEdm = getFallbackEdmTypeIfNeeded(typeInsideCollection);

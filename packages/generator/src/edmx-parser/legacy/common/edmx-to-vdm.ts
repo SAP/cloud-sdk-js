@@ -488,6 +488,7 @@ export function transformFunctionImportBase(
       ),
       edmType: parseType(p.Type),
       jsType: edmToTsType(p.Type)!,
+      fieldType: edmToFieldType(p.Type),
       nullable: isNullableParameter(p),
       description: parameterDescription(p, swaggerParameter)
     };

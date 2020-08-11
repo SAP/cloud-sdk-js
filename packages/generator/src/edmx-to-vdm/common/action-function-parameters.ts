@@ -59,6 +59,7 @@ function getParameter<T extends EdmxNamed>(
       ),
       edmType: typeMapping.edmType,
       jsType: typeMapping.jsType,
+      fieldType: typeMapping.fieldType,
       nullable: isNullableParameter(p),
       description: parameterDescription(p, swaggerParameter)
     };

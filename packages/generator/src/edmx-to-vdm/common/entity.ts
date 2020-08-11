@@ -15,7 +15,7 @@ import {
   VdmEntity,
   VdmNavigationProperty,
   VdmProperty,
-  VdmMappedEdmTypeProperty
+  VdmMappedEdmType
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
@@ -199,7 +199,7 @@ export function createEntityClassNames(
 function getTypeMappingEntityProperties(
   typeName: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
-): VdmMappedEdmTypeProperty {
+): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {

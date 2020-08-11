@@ -10,7 +10,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   VdmComplexType,
   VdmProperty,
-  VdmMappedEdmTypeProperty
+  VdmMappedEdmType
 } from '../../vdm-types';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
@@ -102,7 +102,7 @@ export function transformComplexTypesBase(
 export function getTypeMappingComplexProperties(
   typeName: string,
   formattedTypes: MapType<any>
-): VdmMappedEdmTypeProperty {
+): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {

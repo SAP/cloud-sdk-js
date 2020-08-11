@@ -3,11 +3,12 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxProperty } from '../edmx-parser/common';
-import { edmToFieldType, edmToTsType, getFallbackEdmTypeIfNeeded } from '../generator-utils';
 import {
-  VdmComplexType,
-  VdmMappedEdmType
-} from '../vdm-types';
+  edmToFieldType,
+  edmToTsType,
+  getFallbackEdmTypeIfNeeded
+} from '../generator-utils';
+import { VdmComplexType, VdmMappedEdmType } from '../vdm-types';
 import { complexTypeForName } from './common';
 
 const logger = createLogger({

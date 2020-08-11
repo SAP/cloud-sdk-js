@@ -65,11 +65,7 @@ export function isV2Metadata(metadata: EdmxMetadata): boolean {
 }
 
 export function isComplexType(typeName: string): boolean {
-  let type = typeName;
-  if (isCollectionType(typeName)) {
-    type = parseCollectionTypeName(typeName);
-  }
-  const typeParts = type.split('.');
+  const typeParts = typeName.split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;
 }
 

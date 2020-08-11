@@ -24,28 +24,31 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 ### Follow these steps (approx. 5 min) ###
 
 - [x] **Be The Best You**
-- [ ] Install [Node.js](https://nodejs.org/en/download/ ) version 12.x
+- [ ] Install [Node.js](https://nodejs.org/en/download/ )
 - [ ] Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git )
-- [ ] Clone [Documentation repository](https://github.com/SAP/cloud-sdk/tree/documentation ). Mind, use `documentation` branch.
-- [ ] Open it with you favorite Markdown or code editor
+- [ ] Clone [Documentation repository](https://github.com/SAP/cloud-sdk/ ). Mind to switch to `documentation` branch.
+- [ ] Open it with you favorite Markdown editor
 - [ ] Proceed to the next step
 
-:::tip Use Online GitHub editor if you can't clone things locally
-Open the `documentation` branch and [open the files in your browser](https://github.com/SAP/cloud-sdk/tree/documentation )
+:::tip Use Online Gitub editor if you can't clone things locally
+<img alt="" src={useBaseUrl('img/edit-article.png')}/>
 :::
 
 ## 1. Running documentation locally (approx. 5-7 min) ##
 
-Check `Node.js` and `npm` are installed
+Check `Node.js` and `npm` are installed. You can use the latest LTS release.
+
 ```bash
 node -v
 v12.16.1
 npm -v
 6.14.4
 ```
-Clone the documentation branch
+Clone the repository
+
 ```bash
-git clone -b documentation git@github.com:SAP/cloud-sdk.git documentation
+git clone git@github.com:SAP/cloud-sdk.git
+git checkout documentation
 ```
 
 Run documentation locally
@@ -53,7 +56,6 @@ Run documentation locally
 cd documentation
 npm install
 npm start
-
 ```
 
 You should see the following output in your console and documentation should automatically open in your browser
@@ -72,42 +74,20 @@ Starting the development server...
 ℹ ｢wds｣: 404s will fallback to /index.html
 
 ```
+A browser tab with the starting page of documentation portal should open automatically. Try navigating to [http://localhost:3000/](http://localhost:3000/) as a fall back opiton.
 
-Try opening [http://localhost:3000/](http://localhost:3000/ ) in case browser tab was not opened automatically.
 
-:::note
-Congratulation! You achieved the **white belt** in mastery of the docs Kung-Fu. Please, proceed to the next level!
-:::
-
-## 2. Getting Creative ##
+## 2. Documenting ##
 :::info Most of the people using the word `creative` forget about the `create` side of it.
 Creativity is the ability to generate innovative ideas and manifest them from thought into reality. The process involves original thinking and then producing.
 
 **Creative** without producing is just **Imaginative**
 :::
 
-### Where are our BLIs [^1] for DCIs [^2]? ###
-
-You'll find backlog items for documentation items [here](https://github.wdf.sap.corp/MA/scp-rocket/projects/12 ). VPN
-access is required.
-
-I encourage you to make a bookmark and every time you have an `Eureka` about DCI to note it quickly.
-
-Remember to:
-- Tag it with `content`
-- Assign yourself to the item if you're planning to write it
-- Add enough context to explain your idea for anyone working on it
-
-#### What about team's backlogs? ####
-- I'll be sourcing items there from the GitHub project to be taken in the respective delivery process
-- Things like fixing typos and minor updates do not need BLIs
-- Editing FAQ, adding a very quick How To or a section to an existing article should not require having a BLI in team's
-  backlog, but I ask to log it in the GitHub project for now to keep it trackable.
-
 :::tip Rule of thumb:
-- less then 5 mins? - **don't log**
-- 15 mins - 2hr - **BLI on GitHub**
-- \> 2hr - **Tracked via backlog of respective team**
+- less then 5 mins? - **just do it, no need for backlog item**
+- 15 mins - 2hr - **depending on your and team's preferences add it to the backlog or to you personal ToDo**
+- \> 2hr - **Add to backlog and track together with the team**
 :::
 
 ### Getting hands dirty (approx. 15-20 mins) ###
@@ -129,7 +109,6 @@ title: Generate OData client
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Generate Odata client
-custom_edit_url: https://github.com --- can be removed
 description: You'll learn how to convert your service definition into a Java project containing type-safe Odata V4 lient to consume it
 keywords: --- can be removed or standard template
 - sap
@@ -138,10 +117,9 @@ keywords: --- can be removed or standard template
 - cloud native
 - cloud sdk
 - sap cloud sdk
-image: --- only for blog
 ---
 ```
-5. Let's publish it locally to enable preview
+5. Try it locally to enable preview
 - [ ] Open `sidebar.js` from project root
 - [ ] Find this code snippet in `Java` section
 ```javascript
@@ -166,12 +144,8 @@ image: --- only for blog
    check [this material on good writing practices](how-to-write-documentation).
 7. Be proud of yourself!
 
-:::caution You made it to the **Orange Belt** of Documentation Kung-Fu
-Great Job and stay curious!
-:::
-
 ### Go Live! ###
-Time to show you amazing work to the world! But first you have to pass your final exam.
+Time to show you amazing work to the world!
 
 - [ ] Make sure your documentation builds
 ```bash
@@ -179,7 +153,7 @@ npm run build
 ```
 - [ ] Please, `commit` you work and create a `pull-request`.
 
-Because our **Documentation** shares a home with the **SAP Cloud SDK for JavaScript** you have to make your `pull-request` against the `documentation` branch.
+Because our **Documentation** shares its home with the **SAP Cloud SDK for JavaScript** you have to make your `pull-request` against the `documentation` branch.
 
 <img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
 
@@ -188,20 +162,23 @@ Ask someone to review you work.
 Please, make sure you followed [this best practices](how-to-write-documentation) or at lease run you writing through the spell checker.
 
 #### Publish ####
-Pipeline should do it for you after `pull-request` is merged.
-It's still work in progress.
-Please, contact Artem Kovalov to push the changes to GitHub pages in the meanwhile.
+After your `Pull request` successfully merged, pipeline will automatically publish new version of the documentation. You can check [GitHub actions](https://github.com/SAP/cloud-sdk/actions?query=workflow%3A%22Release+Cloud+SDK+documentation%22) for Documentation or simply navigate to live documentation portal and check if your changes applied.
 
+:::tip Clear cache
+I recommend reloading the page without cache.
+:::
 ## 3. Conventions ##
 - Static content resides in the `static` folder
 - Linking to files and images from Markdown starts from the folder where you file is located.
   In this case if I want to link anything in `docs` folder I'll have to go with [my-link](../java/getting-started).
-  You can react up until `docs` with this approach.
-- To make dynamic link to the `static` folder content you'll need something like this:
-```javascript
+  You can reach up until root `docs` folder level with this approach.
+- To make dynamic link to the `static` folder content you'll need to use a snippet similar to the one below:
+
+```js
 import useBaseUrl from '@docusaurus/useBaseUrl'
 <img alt="pull-request" src={useBaseUrl('img/docs/pull-request.png')}/>
 ```
+
 - Of course you can link with `your-link/your-path#your-heading`,
   check the right-side menu for the links like [sending you to the top](http://localhost:3000/cloud-sdk/docs/dzen/getting-started#what-youll-need ).
 
@@ -214,23 +191,14 @@ Please, refer to the official documentation:
 - [Coding you own component with React and MDX](https://v2.docusaurus.io/docs/markdown-features/#embedding-react-components-with-mdx )
 
 ## 5. Where to get help? ##
-- Ask me anything if in doubt or feeling stuck. Really **ANYTHING**
 - Check [Docusaurus documentation](https://v2.docusaurus.io/docs/markdown-features/ )
 - Read good documentation to write good documentation
+- Ask your experienced colleague
 
 ## 6. What to do next? ##
-- Think of a `How To`, `FAQ`, `Article`, `Manual`, `Snippet` or simply `DCI` and put it into work!
-- Get you first item delivered ~~this~~ next week!
-- Share ideas and feedback about improving our documentation
+- Deliver your great documentation item now.
+- Share ideas and feedback about improving Cloud SDK documentation
 
 ## 7. Useful resources ##
 
 - [Markdown Guide](https://www.markdownguide.org/) - officially supported by Docusaurus
-- [Kung Fu belt system](https://www.kungfuwestisland.com/kung-fu-belt-system/) - you'll need a Kimono to look cool in
-  the office
-
-## &infin;. Questions? ##
-
-
-[^1]: Backlog Item
-[^2]: Documentation Item

@@ -4,14 +4,15 @@ title: OData with the Cloud SDK for Java
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Overview
-description: This article provides an overview of how the SAP Cloud SDK for Java supports connecting to OData services. 
+description: This article provides an overview of how the SAP Cloud SDK for Java supports connecting to OData services.
 keywords:
 - sap
 - cloud
 - sdk
 - odata
 - java
-- VDM
+- typed
+- client
 - generate
 ---
 
@@ -26,8 +27,12 @@ There are two widely used versions of the protocol: OData v2 and OData v4. The l
 The Cloud SDK supports consumption of OData services through the following features:
 
 - An OData client that is capable of building and executing OData requests
-- The concept of a Virtual Data Model (VDM) that allows for building requests in a type-aware and thus type-safe manner
-- Pre-generated VMDs for S/4HANA OData services
-- A generator (available as CLI and Maven Plugin) that is capable of generating VDMs from service definitions
+- The concept of a typed OData client that allows for building requests in a type-aware and thus type-safe manner
+- A generator (available as command line interface and Maven plugin) that is capable of generating typed OData clients from service definitions (OData metadata documents)
+- Java Virtual Data Model (VDM): pre-generated typed OData client for [all OData services of SAP S/4HANA Cloud](https://api.sap.com/package/SAPS4HANACloud?section=Artifacts)
 
 The SDK supports both OData v2 and OData v4 protocols. However, parts of the v4 implementation are still in beta and not all features are supported yet.
+
+:::tip Improved OData type-safe client
+The Cloud SDK for Java has published an improved OData type-safe client implementation (Beta) which boosts performance of your Java apps and lets you profit from faster innovations for both OData protocols. Check out the [our article on type-safe client for details](use-typed-odata-v2-and-v4-client-for-java) for details.
+:::

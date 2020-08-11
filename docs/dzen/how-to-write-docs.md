@@ -4,7 +4,6 @@ title: Documentation Guide Lines
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Documentation How To
-custom_edit_url: https://github.com
 description: Writing is an art!
 keywords:
 - sap
@@ -27,7 +26,6 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 - If you see a typo - fix it and make a pull request
 - If an action to update yours or someone's article takes less then 10-15 minutes - just do it.
 - If smth can't be fixed by you - notify an author or respective team.
-
 
 
 ## General notes on Writing ##

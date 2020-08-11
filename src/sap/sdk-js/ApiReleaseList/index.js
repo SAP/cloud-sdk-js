@@ -7,7 +7,7 @@ function ApiReleaseList () {
     <ul>
       {jsReleases.map((ver, ind) => (
         <li key={`${ver}`}>
-          <a href={useBaseUrl(`api/${ver}/`)}>{`${ver}`}</a>{ind ? "" : <strong><em> - latest </em></strong>}
+          <a href={useBaseUrl(`api/${ver}/`)}>{`${ver}`}</a>{ind ? '' : <strong><em> - latest </em></strong>}
         </li>
       ))}
     </ul>

@@ -4,7 +4,6 @@ title: Multi Tenancy with the Thread Context
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Thread Context
-custom_edit_url: https://github.com
 description: This article describes how the SAP Cloud SDK for Java provides an application context that is stored in a thread-safe manner and enables cloud native features to be used out of the box.
 keywords:
 - sap
@@ -72,7 +71,7 @@ The following code achieves this:
 
 ```java
 ThreadContextExecutor executor = new ThreadContextExecutor();
-Callable operationWithContext = () -> executor.execute(operation);
+Callable operationWithContext = () -> executor.execute(() -> operation());
 
 invokeAsynchronously(operationWithContext);
 ```
@@ -84,19 +83,18 @@ A similar approach can be applied with the _Tenant_, _Principal_ and _AuthToken_
 This code runs an asynchronous operation with a dedicated tenant:
 
 ```java
-Callable operationWithTenant = TenantAccessor.executeWithTenant(customTenant, () -> operation);
+Callable operationWithTenant = TenantAccessor.executeWithTenant(customTenant, () -> operation());
 
 invokeAsynchronously(operationWithContext);
 ```
 
-
-For the Thread context there is also a dedicated decorator class which performs this exact task, so the following code is equivalent:
+<!-- For the Thread context there is also a dedicated decorator class which performs this exact task, so the following code is equivalent:
 
 ```java
 Callable operationWithContext = new DefaultThreadContextProvider().decorate(operation);
 
 invokeAsynchronously(operationWithContext);
-```
+``` -->
 
 :::note
 Be cautious with long running, asynchronous operations. A propagated Thread context will only persist as long as the Thread lives that it was created on. So when the parent Thread dies the context will seize to exist and no longer be available in any of the Threads.

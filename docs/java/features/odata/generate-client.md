@@ -1,10 +1,10 @@
 ---
-id: java-generate-odata-vmd-v2-v4
-title: OData VDM Generator for Java
+id: generate-typed-odata-v2-and-v4-client-for-java
+title: Generate a typed OData client for Java
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Generate a VDM for OData
-description: This article describes how to leverage the OData Generator to obtain Java classes from a service definition. These classes can then be used to build type-safe OData requests.
+sidebar_label: Generate a typed OData client for Java
+description: This article describes how to leverage the OData client generator to obtain Java classes from a service definition. These classes can then be used to build type-safe OData requests.
 keywords:
 - sap
 - cloud
@@ -19,13 +19,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-## Generate a Virtual Data Model with the OData Generator ##
+## Generate a typed OData client with the OData Generator ##
 
-The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are referred to as Virtual Data Model (VDM) provide type-safe access to the service.
+The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are referred to as _typed OData client_ provide type-safe access to the service.
 
 In general there are three ways to use the generator:
 - Via the dedicated maven plugin
-- Via the CLI
+- Via the command line interface (CLI)
 - By instantiating and invoking it at runtime
 
 The maven plugin is usually the recommended way as it integrates nicely with most project setups and makes configuration easy. However, the other two approaches are available and all are documented below.
@@ -40,7 +40,7 @@ Please be aware that OData v2 and OData v4 service definitions are not interchan
 
 Regardless of how the generator is invoked the generated code requires some dependencies to be present. Therefore it is required to ensure the following dependencies are present in your project:
 
-<Tabs 
+<Tabs
 groupId="odataVersion"
 defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },
@@ -87,7 +87,10 @@ defaultValue="v4" values={[
 </TabItem>
 </Tabs>
 
-Lombok and dependency injections are used by the generated VDM classes, that is why they are needed but only with the scope _provided_.
+:::caution Lombok and Dependency injection are mandatory!
+Lombok and dependency injections are used by the generated typed OData client classes, that is why they are needed but only with the scope _provided_.
+Furthermore, some common IDEs (e.g. IntelliJ, Eclipse) require plugins to recognize these annotations. See the note on [Missing Getters/Setters](../../troubleshooting.md#compilation-failures-in-generated-odata-vdm-classes)
+:::
 
 
 ### Using the OData Generator Maven Plugin ###
@@ -107,7 +110,7 @@ defaultValue="v4" values={[
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-v4-generator-maven-plugin</artifactId>
         <!-- Please use the latest version here-->
-        <version>3.18.0</version>
+        <version>3.XX.X</version>
         <executions>
             <execution>
                 <id>generate-consumption</id>
@@ -137,7 +140,7 @@ defaultValue="v4" values={[
         <groupId>com.sap.cloud.sdk.datamodel</groupId>
         <artifactId>odata-generator-maven-plugin</artifactId>
         <!-- Please use the latest version here-->
-        <version>3.18.0</version>
+        <version>3.XX.X</version>
         <executions>
             <execution>
                 <id>generate-consumption</id>
@@ -192,7 +195,7 @@ Please note that if you use the generator for services other than SAP S/4HANA se
 
 ### Using the CLI
 
-<Tabs 
+<Tabs
 groupId="odataVersion"
 defaultValue="v4" values={[
 { label: 'OData v2', value: 'v2', },

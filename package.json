@@ -6,13 +6,18 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy"
+    "deploy": "docusaurus deploy",
+    "lint": "standard --fix"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.0-alpha.50",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.50",
+    "@docusaurus/core": "^2.0.0-alpha.61",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.61",
     "classnames": "^2.2.6",
+    "interactjs": "^1.9.19",
+    "moment": "^2.26.0",
+    "randomcolor": "^0.5.4",
     "react": "^16.8.4",
+    "react-calendar-timeline": "^0.27.0",
     "react-dom": "^16.8.4"
   },
   "browserslist": {
@@ -25,6 +30,22 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.0.1",
+    "@typescript-eslint/parser": "^3.0.1",
+    "eslint": "^7.1.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-standard": "^4.0.1"
+  },
+  "standard": {
+    "ignore": [
+      "static/**"
     ]
   }
 }

@@ -15,13 +15,13 @@ keywords:
 image:
 ---
 :::caution
-There is no full feature parity between [JavaScript](../js/features )  and [Java](../java/features ) libraries.
+There is no full feature parity between JavaScript  and Java libraries.
 Please, review respective documentation sections to find out more.
 :::
 
 ## CLI ##
 
-## Virtual Data Model ##
+## Typed OData Client ##
 
 ## Cloud Abstractions ##
 

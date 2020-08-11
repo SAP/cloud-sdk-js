@@ -9,21 +9,34 @@ module.exports = {
   projectName: 'cloud-sdk', // Usually your repo name.
   themeConfig: {
     prism: {
-      additionalLanguages: ['powershell', 'java', 'groovy']
+      additionalLanguages: ['powershell', 'java', 'groovy'],
+      theme: require('prism-react-renderer/themes/github'),
+      darkTheme: require('prism-react-renderer/themes/dracula')
     },
+    algolia: {
+      apiKey: '84d46c71e9f2445436400effad7c4e1b',
+      indexName: 'sap_cloud-sdk',
+      // appId: 'app-id', // Optional, if you run the DocSearch crawler on your own
+      algoliaOptions: {}, // Optional, if provided by Algolia
+    },
+    // ***************************************************************
+    // Activate this announcement bar for global urgent notifications
+    // ***************************************************************
+    //
     // announcementBar: {
     //   id: 'WIP', // Any value that will identify this message
     //   content:
     //     '~~~WIP~~~ Cloud SDK Documentation is work in progress. Use on your own discretion.',
     //   backgroundColor: '#ed2939', // Defaults to `#fff`
     //   textColor: '#000' // Defaults to `#000`
+    // },
     navbar: {
       title: 'SAP Cloud SDK',
       logo: {
         alt: 'SAP Cloud SDK',
         src: 'img/logo.svg'
       },
-      links: [
+    items: [
         {
           to: 'docs/overview/about',
           label: 'Docs',
@@ -43,7 +56,7 @@ module.exports = {
               href: 'https://stackoverflow.com/questions/tagged/sap-cloud-sdk'
             },
             {
-              label: 'GitHub JS/TS',
+              label: 'GitHub JavaScript',
               href: 'https://github.com/SAP/cloud-sdk/issues'
             },
             {
@@ -57,14 +70,14 @@ module.exports = {
           position: 'left',
           items: [
             {
-              label: 'Java SDK',
-              href:
-                'https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html'
+              label: 'Java',
+              to:
+                'docs/java/release-notes-sap-cloud-sdk-for-java'
             },
             {
-              label: 'JS SDK',
-              href:
-                'https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html'
+              label: 'JavaScript',
+              to:
+                'docs/js/release-notes-sap-cloud-sdk-for-javascript-and-typescript'
             },
             {
               label: 'CI/CD Toolkit',
@@ -104,12 +117,11 @@ module.exports = {
             },
             {
               label: 'Cloud SDK for CI/CD',
-              href: 'docs/devops/getting-started'
+              to: 'docs/devops/getting-started'
             },
             {
               label: 'Cloud SDK Tutorials',
-              href:
-                'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk'
+              href: 'https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk'
             }
           ]
         },
@@ -147,6 +159,23 @@ module.exports = {
               href: 'https://github.com/SAP/cloud-sdk'
             }
           ]
+        },
+        {
+          title: 'Package repositories',
+          items: [
+            {
+              label: 'Cloud SDK for JavaScript',
+              href: 'https://www.npmjs.com/search?q=%40sap-cloud-sdk'
+            },
+            {
+              label: 'JS client libraries for S/4HANA',
+              href: 'https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*'
+            },
+            {
+              label: 'Cloud SDK for Java',
+              href: 'https://search.maven.org/search?q=g:com.sap.cloud.sdk'
+            },
+          ]
         }
       ],
       copyright: `Copyright © ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.`
@@ -161,15 +190,26 @@ module.exports = {
           // Equivalent to `enableUpdateBy`.
           showLastUpdateAuthor: true,
           // Equivalent to `enableUpdateTime`.
-          showLastUpdateTime: true
-          // editUrl:
-          // 'https://github.com/facebook/docusaurus/edit/master/website/',
+          showLastUpdateTime: true,
+          editUrl:
+          'https://github.com/SAP/cloud-sdk/edit/documentation',
+          routeBasePath: 'docs'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
+        },
+        sitempa: {
+          cacheTime: 600 * 1000, // 600 sec - cache purge period
+          changefreq: 'weekly',
+          priority: 0.5
         }
       }
     ]
+  ],
+  scripts: [
+    {
+      src: 'https://sap.github.io/cloud-sdk/js/swa.js'
+    }
   ],
   customFields: {}
 }

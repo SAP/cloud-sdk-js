@@ -4,7 +4,6 @@ title: Deploy to Cloud Foundry
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Deploy to Cloud Foundry
-custom_edit_url: https://github.com
 description: Learn how to push you Cloud SDK application to SAP Cloud Foundry
 keywords:
 - sap

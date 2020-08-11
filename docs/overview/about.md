@@ -5,7 +5,6 @@ hide_title: false
 hide_table_of_contents: false
 sidebar_label: About
 description: SAP Cloud SDK is the simplest and fastest way to extend SAP services and applications in the cloud.
-custom_edit_url: https://github.com/SAP/cloud-sdk/edit/documentation/docs/overview/about.md
 keywords:
 - sap
 - cloud
@@ -28,10 +27,10 @@ it grew into a fully-fledged and [feature rich](key-features ) development libra
 
 - [Cloud SDK for Java](../java/introduction )
 - [Cloud SDK for JavaScript (Node.js)](../js/introduction )
-- [Cloud SDK for CI/CD](../devops/getting-started )
+- [Continuous delivery toolkit](../devops/getting-started )
 
 ### Organic part of SAP Cloud Ecosystem ###
-<img alt="SAP Cloud SDK as a part of SAP Cloud Applications ecosystem" src={useBaseUrl('img/cloud-sdk-under-the-hood.png')} />;
+<img alt="SAP Cloud SDK as a part of SAP Cloud Applications ecosystem" src={useBaseUrl('img/cloud-sdk-under-the-hood.png')} />
 
 ### Open Source ###
 The SAP Cloud SDK actively works in the direction of open-sourcing most of its code. We endorse best open standards and
@@ -44,5 +43,5 @@ On the other hand, we're remaining main contributors to every SDK component and 
 ensure the highest quality and seamless integration with other SAP solutions.
 
 ### Feedback ###
-We are happy to hear your feedback about SAP Cloud SDK. You can write us an [email](s4sdk@sap.com ) or submit an issue
-in this [repository](https://github.com/SAP/cloud-sdk/issues)
+We are happy to hear your feedback about SAP Cloud SDK. You can write us to cloudsdk@sap.com or submit an issue
+towards this [repository](https://github.com/SAP/cloud-sdk/issues)

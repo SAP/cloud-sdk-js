@@ -4,9 +4,10 @@ import { and, Filterable, FilterList } from '../../common/filter';
 import { EntityBase } from '../../common';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { FilterLambdaExpression } from '../../common/filter/filter-lambda-expression';
-// eslint-disable-next-line valid-jsdoc
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Will return the entity if at least one element of the multilink relation fulfills the condition.
+ * param filters = A filter condition like MyEntity.someMultiLink.someProperty.eq('value')
+ * returns The lambda filter function to be considered in the query
  */
 export function any<
   EntityT extends EntityBase,
@@ -19,7 +20,9 @@ export function any<
 
 // eslint-disable-next-line valid-jsdoc
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Will return the entity if all elements of the multilink relation fulfill the condition.
+ * param filters = A filter condition like MyEntity.someMultiLink.someProperty.eq('value')
+ * returns The lambda filter function to be considered in the query
  */
 export function all<
   EntityT extends EntityBase,

@@ -1,11 +1,10 @@
 ---
-id: cf-xsuaa
-title: SAP Cloud Foundry
+id: cloud-foundry-xsuaa-service
+title: SCP CF XSUAA explained
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Cloud Foundry XSUAA Usage
-custom_edit_url: https://github.com
-description: Understand how the XSUAA service on Cloud Foundry works
+sidebar_label: CF XSUAA service
+description: Understand how the XSUAA service on Cloud Foundry works and leverage it for your applications
 keywords:
 - sap
 - cloud
@@ -19,27 +18,24 @@ keywords:
 image:
 ---
 
-## XSUAA Usage on SCP Cloud Foundry
-
 When developing and deploying an application it quickly becomes important to understand how authentication and authorizations work on SCP Cloud Foundry.
 In our tutorials and documentation, we recommend using "approuter" as a proxy service to handle authentication management to your implemented application.
 The following steps will show what happens behind the scenes. The requests can be manually reproduced by a REST client of your choice, e.g. Postman or Insomnia.
 
-We highly recommend checking the [official UAA documentation](https://docs.cloudfoundry.org/api/uaa/) for any questions and comprehensive documentation on the topic.
-
 :::note XSUAA service is developed independently of SAP Cloud SDK
 The following documentation only touches a subset of features of the XSUAA Service on Cloud Foundry.
-The Cloud SDK and XSUAA are developed independently. We do not provide in-depth support on XSUAA topics beyond Cloud SDK use cases. Mind, if some information seems outdated - get in touch with us and refer to [official XSUAA docs]((https://docs.cloudfoundry.org/api/uaa/)).
+The Cloud SDK and XSUAA are developed independently. We do not provide in-depth support on XSUAA topics beyond Cloud SDK use cases. Mind, if some information seems outdated - get in touch with us and refer to [official XSUAA docs](https://docs.cloudfoundry.org/api/uaa/).
 :::
 
 
-These are use cases described below:
+## SCP CF XSUAA key use-cases
+
 - User Login: `Authorization Code Grant`
 - SCP Service Usage on behalf of a User: `JWT Bearer Token Grant`
 - SCP Service Usage on behalf of a service: `Client Credentials Grant`
 - Resolve User Access Token: `Refresh Token Grant`
 
-### Read the Application Properties  
+### Read the Application Properties
 
 In order to create a request, we need to parse the XSUAA connection data.
 
@@ -48,7 +44,7 @@ In order to create a request, we need to parse the XSUAA connection data.
 1. Open the **system-provided** environment variables of your application on Cloud Foundry.
 
 1. Extract values "_url_", "_clientid_", "_clientsecret_" from the JSON value, located in the object `VCAP_SERVICES.xsuaa[0].credentials`.
-   
+
 :::tip
 Depending on your setup, the `xsuaa` array may have more than one entry. Because your application can be bound to multiple instances, e.g. through different service plans.
 :::
@@ -57,7 +53,7 @@ Depending on your setup, the `xsuaa` array may have more than one entry. Because
 
 Since we start without an existing access token, our journey begins with the browser flow of [Authorization Code Grant](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#authorization-code-grant).
 
-This flow is split into two steps: 
+This flow is split into two steps:
 - Get authorization code on behalf of a single-sign-on login form.
 - Get personal access token from authorization code.
 
@@ -68,9 +64,9 @@ You will likely need to run the following HTTP request in your browser and check
 1. Make the following request:
     ```
     GET https://[xsuaa.url]/oauth/authorize
-    
+
     Query parameters:
-    
+
     client_id=[xsuaa.clientid]
     redirect_uri=[application.route]
     response_type=code
@@ -99,11 +95,11 @@ With the authorization code we can now request a real access token from the OAut
 1. Make the following request:
     ```
     POST https://[xsuaa.url]/oauth/token
-    
+
     Headers
     Accept: application/json
     Content-Type: application/x-www-form-urlencoded
-   
+
     client_id=[xsuaa.clientid]
     client_secret=[xsuaa.clientsecret]
     redirect_uri=[application.route]
@@ -124,7 +120,7 @@ With the authorization code we can now request a real access token from the OAut
     ```
    Congratulation, now you've fetched a valid `access_token`.
    It can be further evaluated and forwarded.
-   
+
 :::tip
    Some applications like _approuter_ will save the `refresh_token` to the user session for you.
    This enables automatic retrieval of new access tokens after the existing one has expired during the active session.
@@ -137,15 +133,15 @@ Several services on SCP Cloud Foundry require a dedicated OAuth2 access token, e
 
 1. In the JSON value, locate the object `VCAP_SERVICES.destination[0].credentials`. Make note of `clientid`, `clientsecret`, `uri`
 
-   
+
 1. Make the following request:
     ```
     POST https://[xsuaa.url]/oauth/token
-    
+
     Headers
     Accept: application/json
     Content-Type: application/x-www-form-urlencoded
-   
+
     client_id=[destination.clientid]
     client_secret=[destination.clientsecret]
     assertion=[access_token]
@@ -175,11 +171,11 @@ Here we use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa
 1. Make a request:
     ```
     POST https://[xsuaa.url]/oauth/token
-    
+
     Headers
     Accept: application/json
     Content-Type: application/x-www-form-urlencoded
-   
+
     client_id=[destination.clientid]
     client_secret=[destination.clientsecret]
     grant_type=client_credentials
@@ -197,20 +193,20 @@ Here we use the [Client Credentials Grant](https://docs.cloudfoundry.org/api/uaa
    Congratulation, you have a valid `destination_access_token`.
    It can be used to query the `destination.uri` linked destination service on behalf of the service binding.
 
-   
-   
+
+
 ## Refresh Token Grant
 
 If the current access token is expired, a new one can be requested with the [Refresh Token flow](https://docs.cloudfoundry.org/api/uaa/version/74.23.0/index.html#refresh-token).
-   
+
 1. Make a request:
     ```
     POST https://[xsuaa.url]/oauth/token
-    
+
     Headers
     Accept: application/json
     Content-Type: application/x-www-form-urlencoded
-   
+
     client_id=[xsuaa.clientid]
     client_secret=[xsuaa.clientsecret]
     refresh_token=[refresh_token]

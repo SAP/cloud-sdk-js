@@ -5,7 +5,7 @@ hide_title: false
 hide_table_of_contents: false
 sidebar_label: Cloud Foundry XSUAA Usage
 custom_edit_url: https://github.com
-description: Configure you Cloud Foundry CLI and bind it to SAP Cloud Platform
+description: Understand how the XSUAA service on Cloud Foundry works
 keywords:
 - sap
 - cloud

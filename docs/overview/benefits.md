@@ -32,7 +32,7 @@ Discover SAP APIs the same way you would discover your code.
 We make sure you can easily benefit from vast infrastructure offered by the SAP Cloud Platform. Destinations, routing,
 authentication, caching, resilience, and other advanced topics are significantly simplified by Cloud SDK.
 
-## Best practices our of the box ##
+## Best practices out of the box ##
 Continuous delivery and integration, all types of tests for comprehensive code coverage, micro-deliveries, blue-green
 deployment, version control workflows, and other best DevOps practices integrated for instant improvement in your development culture.
 

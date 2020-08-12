@@ -9951,9 +9951,9 @@ ts-jest@^25.4.0:
     yargs-parser "18.x"
 
 ts-morph@^7.0.1:
-  version "7.2.0"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-7.2.0.tgz#58371362feeb5659d997ee8c8007215e671973c9"
-  integrity sha512-0nxRlGsyPxCSrXa9nPx/aPI4gLc0X5ggf/nHptbArg4ZYaQgVhFoQ/PpJo5S/gUNVLmPPc/ZpYVtZOrnQ5sVCA==
+  version "7.3.0"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-7.3.0.tgz#1777b893d9573b3522108b43159b5ba2515ffde7"
+  integrity sha512-BUKSoz7AFSKPcYTZODbICW2mOthAN4vc5juD6FL1lD/dLwZ0WvrC3zqBM3/X6f5gHxq3yaz+HmanHGaWm0ddbQ==
   dependencies:
     "@dsherret/to-absolute-glob" "^2.0.2"
     "@ts-morph/common" "~0.5.2"

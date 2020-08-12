@@ -79,10 +79,12 @@ module.exports = {
         type: 'category',
         label: 'Guides',
         items: [
+          'java/guides/cf-cli',
+          'java/guides/cf-deploy',
+          'java/guides/cloud-foundry-xsuaa-service',
           'java/guides/logging-overview',
           'java/guides/manage-dependencies',
-          'java/guides/cf-deploy',
-          'java/guides/cf-cli',
+          'java/guides/logging-overview',
           'java/guides/tutorial-overview-sdk-java',
           'java/guides/sap-cloud-sdk-linux-how-to',
           //       'java/how-to/test-odata-service',
@@ -124,7 +126,8 @@ module.exports = {
             type: 'category',
             label: 'OData',
             items: [
-              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
+
+              'js/features/odata/overview',              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
               'js/features/odata/use-typed-odata-client-for-javascript-and-typescript'
             ]
           },
@@ -145,16 +148,18 @@ module.exports = {
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript'
         ],
       },
-      'js/api-reference-js-ts'
+      'js/api-reference-js-ts',
+      'js/release-notes-sap-cloud-sdk-for-javascript-and-typescript',
+      'js/frequently-asked-questions'
     ],
     'Continuous Delivery': ['devops/getting-started'],
     // Support: ['support/support'],
     'Community': ['community/community-call'],
     'Related projects': [
-      'related-projects/cloud-application-model'
+      'related-projects/cloud-application-model',
+      'related-projects/sap-xsuaa-security-library-for-javascript-and-java'
       //   'related-projects/sap-cloud-for-realestate',
       //   'related-projects/sap-s4-hana',
-      //   'related-projects/sap-xsuaa-cf'
     ]
   }
 }

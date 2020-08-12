@@ -1,6 +1,6 @@
 ---
 id: destination-js-sdk
-title: Destinations in the Cloud SDK for JS/TS
+title: Destinations in the SAP Cloud SDK for JavaScript / TypeScript
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Destinations

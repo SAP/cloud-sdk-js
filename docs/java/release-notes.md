@@ -30,11 +30,12 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ## 3.25.0
 
-[Release Blog](https://blogs.sap.com/?p=1154386)
+- [JavaDoc](https://help.sap.com/doc/6bb07895fec64c22846d8f8c6169611c/1.0/en-US/index.html)
+- [Release Blog](https://blogs.sap.com/?p=1154386)
 
 ## New Functionality
 
-- OData 4.0: Extract version identifiers from the `ETag` header in case of create and update operations. Now result entities obtained via `ModificationRespnse#getResponseEntity()` will contain a version identifier. It will be sent as `IF-MATCH` header in subsequent update and delete operations.  
+- OData 4.0: Extract version identifiers from the `ETag` header in case of create and update operations. Now result entities obtained via `ModificationRespnse#getResponseEntity()` will contain a version identifier. It will be sent as `IF-MATCH` header in subsequent update and delete operations.
 
 - New experimental method `ScpCfDestinationLoader#tryGetDestination`.
   It allows for custom request handling to resources on _SAP Cloud Platform Destination Service_.
@@ -44,12 +45,12 @@ We highly recommend regularly updating to the latest SDK version. It will help y
   String destinationName;
   String basePath;
   String relativePath;
-  
+
   Try<ScpCfDestination> destination = new ScpCfDestinationLoader()
     .tryGetDestination(
       destinationName, basePath, relativePath,
       (uri) -> restTemplate.getForObject(uri, ScpCfDestinationServiceV1Response.class));
-  ``` 
+  ```
 
 ## Improvements
 
@@ -74,7 +75,10 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ## 3.24.0
 
-Release date: July 16, 2020 - [Documentation](https://help.sap.com/doc/f1983b8177f447fdb4a414b0312b7c2f/1.0/en-US/index.html) - [Blog](https://blogs.sap.com/?p=1146336)
+Release date: July 16, 2020
+
+- [JavaDoc](https://help.sap.com/doc/f1983b8177f447fdb4a414b0312b7c2f/1.0/en-US/index.html)
+- [Blog](https://blogs.sap.com/?p=1146336)
 
 ### Improvements
 

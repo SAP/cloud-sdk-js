@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Support Enum type.
 
 ## Improvements
 

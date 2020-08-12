@@ -7,6 +7,8 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
 import { CollectionField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src/v4';
+import { ComplexTypeEnumPropertyField } from '../../../../../src/odata/common/selectable/enum-field';
+import { TestEnumType } from './TestEnumType';
 
 /**
  * TestComplexType
@@ -86,6 +88,8 @@ export interface TestComplexType {
    * @nullable
    */
   sByteProperty?: number;
+
+  enumProperty?: TestEnumType;
   /**
    * Complex Type Property.
    * @nullable
@@ -195,6 +199,8 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   sByteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('SByteProperty', this, 'Edm.SByte');
+
+  enumProperty: ComplexTypeEnumPropertyField<EntityT> = new ComplexTypeEnumPropertyField('EnumProperty', this, 'Edm.Enum');
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -300,6 +306,11 @@ export namespace TestComplexType {
     originalName: 'ByteProperty',
     name: 'byteProperty',
     type: 'Edm.Byte',
+    isCollection: false
+  }, {
+    originalName: 'EnumProperty',
+    name: 'enumProperty',
+    type: 'Edm.Enum',
     isCollection: false
   }, {
     originalName: 'SByteProperty',

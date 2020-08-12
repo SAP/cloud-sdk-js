@@ -21,7 +21,11 @@ export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 
 // Exclusive types for ODataVersions
 export type EdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
-export type EdmTypeV4 = 'Edm.Date' | 'Edm.Duration' | 'Edm.TimeOfDay';
+export type EdmTypeV4 =
+  | 'Edm.Date'
+  | 'Edm.Duration'
+  | 'Edm.TimeOfDay'
+  | 'Edm.Enum';
 
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of typescript.
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =

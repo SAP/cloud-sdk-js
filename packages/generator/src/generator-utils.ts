@@ -42,7 +42,7 @@ export function isNullableParameter(parameter: any) {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
 
-type EdmTypeMapping = { [key in EdmTypeShared<'any'>]: string };
+type EdmTypeMapping = { [key in EdmTypeShared<'any'>]: string | undefined };
 
 const edmToTsTypeMapping: EdmTypeMapping = {
   'Edm.String': 'string',
@@ -67,7 +67,8 @@ const edmToTsTypeMapping: EdmTypeMapping = {
   // OData v4 specific
   'Edm.Date': 'Moment',
   'Edm.Duration': 'Duration',
-  'Edm.TimeOfDay': 'Time'
+  'Edm.TimeOfDay': 'Time',
+  'Edm.Enum': undefined
 };
 
 const edmToFieldTypeMapping: EdmTypeMapping = {
@@ -93,7 +94,8 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
   // OData v4 specific
   'Edm.Date': 'DateField',
   'Edm.Duration': 'DurationField',
-  'Edm.TimeOfDay': 'TimeField'
+  'Edm.TimeOfDay': 'TimeField',
+  'Edm.Enum': 'EnumField'
 };
 
 const fieldTypeToComplexPropertyTypeMapping = {

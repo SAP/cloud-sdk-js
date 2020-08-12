@@ -8,8 +8,36 @@ import {
   TestEntity,
   TestComplexType
 } from '../../test-util/test-services/v4/test-service';
+import { TestEnumType } from '../../test-util/test-services/v4/test-service/TestEnumType';
 
 describe('entity-serializer', () => {
+  it('should serialize entity with enum field', () => {
+    const enumProperty = TestEnumType.Enum2;
+    const testEntity = TestEntity.builder().enumProperty(enumProperty).build();
+
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+      EnumProperty: 'Enum2'
+    });
+  });
+
+  it('should serialize entity with string/enum field with complex type', () => {
+    const stringProp1 = 'string 1';
+    const complexType1 = {
+      stringProperty: stringProp1,
+      enumProperty: TestEnumType.Enum1
+    };
+    const testEntity = TestEntity.builder()
+      .complexTypeProperty(complexType1)
+      .build();
+
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+      ComplexTypeProperty: {
+        StringProperty: stringProp1,
+        EnumProperty: 'Enum1'
+      }
+    });
+  });
+
   it('should serialize entity with collection field', () => {
     const collectionProperty = ['abc', 'def'];
     const testEntity = TestEntity.builder()

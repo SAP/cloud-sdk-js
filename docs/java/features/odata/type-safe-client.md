@@ -22,8 +22,8 @@ import TabItem from '@theme/TabItem';
 
 The typed OData client allows to build type-safe OData requests for a given service. The Java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
 
-:::tip Improved OData VDM (Beta)
-The Cloud SDK for Java has published an improved OData VDM implementation (Beta) which boosts performance of your Java apps by avoiding unncessary metadata calls. Also, both OData V2 and V4 implementations now share the same underlying odata client library and thereby you profit from faster innovations for both protocol versions. Check out the code snippets below under the tab _OData V2 (Beta)_ and the brief [adjustment guide](#switch-to-improved-odata-vdm-beta).
+:::tip Improved OData v2 type-safe client (Beta)
+The Cloud SDK for Java has published as **Beta** an improved OData type-safe client implementation (also known as Virtual Data Model or VDM) which improves performance of your apps by avoiding unnecessary metadata calls. Both OData v2 and v4 implementations now share the same code base and allow for faster innovations for both protocol versions. Check out the code snippets below under the tab _OData V2 (Beta)_ and the brief [migration guide](#switch-to-improved-odata-vdm-beta).
 :::
 
 ## Using the Fluent API ##
@@ -528,7 +528,7 @@ catch( ODataErrorResponseException e ) {
 A navigation property describes a unidirectional relationship between two entity types.
 Like other properties it has a name and declares a multiplicity, i.e. whether to expect a single or multiple values.
 Additionally a navigation property allows for dedicated CRUD operations, that may not be exposed by default on entity sets of the service root.
-Such operations also provide a convenient way to access the nested resources of entities.   
+Such operations also provide a convenient way to access the nested resources of entities.
 
 <Tabs groupId="odataProtocol" defaultValue="v4" values={[
 { label: 'OData V2', value: 'v2', },

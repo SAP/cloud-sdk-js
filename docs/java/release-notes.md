@@ -27,7 +27,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
-## 3.26.0
+## 3.26.0 - August 13, 2020
 
 - [JavaDoc](https://help.sap.com/doc/170aace62830463d8f4ec9a9251667ee/1.0/en-US/index.html)
 
@@ -94,7 +94,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - Fix a `NullPointerException` when invoking a function module in S/4HANA which is not remote-enabled or does not exist.
 - Fix an issue where calling a remote-enabled function module with a byte sequence as an exporting parameter was not supported before. It is now possible to pass byte sequences as exporting parameters.
 
-## 3.25.0
+## 3.25.0 - July 30, 2020
 
 - [JavaDoc](https://help.sap.com/doc/6bb07895fec64c22846d8f8c6169611c/1.0/en-US/index.html)
 - [Release Blog](https://blogs.sap.com/?p=1154386)

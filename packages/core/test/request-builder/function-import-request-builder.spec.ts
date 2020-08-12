@@ -13,7 +13,8 @@ import {
   testFunctionImportGet,
   testFunctionImportMultipleParams,
   testFunctionImportNoReturnType,
-  testFunctionImportPost
+  testFunctionImportPost,
+  testFunctionImportUnsupportedEdmTypes
 } from '../test-util/test-services/v2/test-service';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
@@ -80,6 +81,21 @@ describe('FunctionImportRequestBuilder', () => {
 
     const returnValue = await requestBuilder.execute(defaultDestination);
     expect(returnValue).toBe(true);
+  });
+
+  it('return any type for unspported edm type in function module', async () => {
+    const requestBuilder = testFunctionImportUnsupportedEdmTypes({
+      simpleParam: 'SomeUntypedValue'
+    });
+    const untypedResponse = { d: { somethingElse: 'AnyReturnType' } };
+
+    nock(defaultHost)
+      .get(`${serviceUrl}/TestFunctionImportUnsupportedEdmTypes`)
+      .query({ $format: 'json', SimpleParam: 'SomeUntypedValue' })
+      .reply(200, untypedResponse);
+
+    const returnValue = await requestBuilder.execute(defaultDestination);
+    expect(returnValue).toEqual(untypedResponse.d);
   });
 
   it('returns edm type collection', async () => {

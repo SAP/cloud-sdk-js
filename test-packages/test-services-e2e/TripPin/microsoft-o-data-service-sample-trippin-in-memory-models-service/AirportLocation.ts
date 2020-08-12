@@ -4,12 +4,17 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core/v4';
+import { ComplexTypeAnyPropertyField, ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core/v4';
 
 /**
  * AirportLocation
  */
 export interface AirportLocation {
+  /**
+   * Loc.
+   * @nullable
+   */
+  loc?: any;
   /**
    * Address.
    * @nullable
@@ -34,6 +39,11 @@ export function createAirportLocation(json: any): AirportLocation {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class AirportLocationField<EntityT extends Entity> extends ComplexTypeField<EntityT, AirportLocation> {
+  /**
+   * Representation of the [[AirportLocation.loc]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  loc: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField('Loc', this, 'Edm.Any');
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -61,6 +71,11 @@ export namespace AirportLocation {
    * Metadata information on all properties of the `AirportLocation` complex type.
    */
   export const _propertyMetadata: PropertyMetadata<AirportLocation>[] = [{
+    originalName: 'Loc',
+    name: 'loc',
+    type: 'Edm.Any',
+    isCollection: false
+  }, {
     originalName: 'Address',
     name: 'address',
     type: 'Edm.String',

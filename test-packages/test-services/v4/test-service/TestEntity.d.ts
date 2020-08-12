@@ -2,7 +2,7 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
@@ -110,6 +110,16 @@ export declare class TestEntity extends Entity implements TestEntityType {
      */
     sByteProperty?: number;
     /**
+     * Geography Point Property.
+     * @nullable
+     */
+    geographyPointProperty?: any;
+    /**
+     * Something The Sdk Does Not Support.
+     * @nullable
+     */
+    somethingTheSdkDoesNotSupport?: any;
+    /**
      * Collection Property.
      * Maximum length: 10.
      * @nullable
@@ -182,6 +192,8 @@ export interface TestEntityType {
     durationProperty?: Duration;
     byteProperty?: number;
     sByteProperty?: number;
+    geographyPointProperty?: any;
+    somethingTheSdkDoesNotSupport?: any;
     collectionProperty?: string[];
     complexTypeProperty?: TestComplexType;
     complexTypeCollectionProperty?: TestComplexType[];
@@ -208,6 +220,8 @@ export interface TestEntityTypeForceMandatory {
     durationProperty: Duration;
     byteProperty: number;
     sByteProperty: number;
+    geographyPointProperty: any;
+    somethingTheSdkDoesNotSupport: any;
     collectionProperty: string[];
     complexTypeProperty: TestComplexType;
     complexTypeCollectionProperty: TestComplexType[];
@@ -307,6 +321,16 @@ export declare namespace TestEntity {
      */
     const S_BYTE_PROPERTY: NumberField<TestEntity>;
     /**
+     * Static representation of the [[geographyPointProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const GEOGRAPHY_POINT_PROPERTY: AnyField<TestEntity>;
+    /**
+     * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntity>;
+    /**
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -339,7 +363,7 @@ export declare namespace TestEntity {
     /**
      * All fields of the TestEntity entity.
      */
-    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
+    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
     /**
      * All fields selector.
      */

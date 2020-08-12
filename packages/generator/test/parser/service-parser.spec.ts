@@ -77,6 +77,52 @@ describe('service-parser', () => {
       ).toBeDefined();
     });
 
+    it('entity properties are read correctly', () => {
+      const services = parseAllServices(
+        createOptions({
+          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV'
+        })
+      );
+      const properties = services[0].entities.find(
+        entity => entity.className === 'TestEntity'
+      )!.properties;
+      expect(properties.length).toBe(19);
+      const stringProp = properties.find(
+        prop => prop.originalName === 'StringProperty'
+      );
+      expect(stringProp).toEqual({
+        originalName: 'StringProperty',
+        instancePropertyName: 'stringProperty',
+        staticPropertyName: 'STRING_PROPERTY',
+        propertyNameAsParam: 'stringProperty',
+        edmType: 'Edm.String',
+        jsType: 'string',
+        fieldType: 'StringField',
+        description: '',
+        nullable: true,
+        maxLength: '10',
+        isComplex: false,
+        isCollection: false
+      });
+
+      const anyField = properties.find(
+        prop => prop.originalName === 'SomethingTheSDKDoesNotSupport'
+      );
+      expect(anyField).toEqual({
+        originalName: 'SomethingTheSDKDoesNotSupport',
+        instancePropertyName: 'somethingTheSdkDoesNotSupport',
+        staticPropertyName: 'SOMETHING_THE_SDK_DOES_NOT_SUPPORT',
+        propertyNameAsParam: 'somethingTheSdkDoesNotSupport',
+        edmType: 'Edm.Any',
+        jsType: 'any',
+        fieldType: 'AnyField',
+        description: '',
+        nullable: true,
+        isComplex: false,
+        isCollection: false
+      });
+    });
+
     it('entities are read correctly', () => {
       const services = parseAllServices(
         createOptions({
@@ -96,7 +142,7 @@ describe('service-parser', () => {
           entitySetName: 'A_TestEntity',
           className: 'TestEntity',
           numKeys: 2,
-          numProperties: 18
+          numProperties: 19
         },
         {
           entitySetName: 'A_TestEntityMultiLink',
@@ -170,7 +216,19 @@ describe('service-parser', () => {
       expect(complexType.originalName).toBe('A_TestComplexType');
       expect(complexType.factoryName).toBe('createTestComplexType_1');
       expect(complexType.fieldType).toBe('TestComplexTypeField');
-      expect(complexType.properties.length).toBe(16);
+      expect(complexType.properties.length).toBe(17);
+
+      expect(
+        complexType.properties.find(
+          prop => prop.originalName === 'SomethingTheSDKDoesNotSupport'
+        )!.fieldType
+      ).toBe('ComplexTypeAnyPropertyField');
+
+      expect(
+        complexType.properties.find(
+          prop => prop.originalName === 'ComplexTypeProperty'
+        )!.fieldType
+      ).toBe('TestNestedComplexTypeField');
     });
 
     it('complex type properties are read correctly', () => {
@@ -266,6 +324,39 @@ describe('service-parser', () => {
       expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
       expect(functionImport.returnType.builderFunction).toBe(
         "(val) => edmToTs(val, 'Edm.Boolean')"
+      );
+
+      const functionImportUnsupportedEdmTypes = service.functionImports.find(
+        f => f.originalName === 'TestFunctionImportUnsupportedEdmTypes'
+      )!;
+
+      expect(functionImportUnsupportedEdmTypes.returnType.builderFunction).toBe(
+        "(val) => edmToTs(val, 'Edm.Any')"
+      );
+      expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toBe(
+        'Edm.Any'
+      );
+    });
+
+    it('should parse actions imports correctly', () => {
+      const services = parseAllServices(
+        createOptions({
+          inputDir: '../../test-resources/service-specs/v4/API_TEST_SRV',
+          useSwagger: false
+        })
+      );
+
+      const actions = services[0].actionsImports;
+
+      expect(actions?.length).toBe(3);
+      const actionWithUnsupportedEdmType = actions?.find(
+        action => action.originalName === 'TestActionImportUnsupportedEdmTypes'
+      );
+      expect(actionWithUnsupportedEdmType?.returnType.builderFunction).toBe(
+        "(val) => edmToTs(val, 'Edm.Any')"
+      );
+      expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toBe(
+        'Edm.Any'
       );
     });
 

@@ -28,6 +28,10 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
      * Nullable Boolean Param.
      */
     nullableBooleanParam?: boolean;
+    /**
+     * Nullable Geography Point Param.
+     */
+    nullableGeographyPointParam?: any;
 }
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
@@ -36,8 +40,25 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testActionImportMultipleParameterComplexReturnType(parameters: TestActionImportMultipleParameterComplexReturnTypeParameters): ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType>;
+/**
+ * Type of the parameters to be passed to [[testActionImportUnsupportedEdmTypes]].
+ */
+export interface TestActionImportUnsupportedEdmTypesParameters {
+    /**
+     * Simple Param.
+     */
+    simpleParam: any;
+}
+/**
+ * Test Action Import Unsupported Edm Types.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export declare function testActionImportUnsupportedEdmTypes(parameters: TestActionImportUnsupportedEdmTypesParameters): ActionImportRequestBuilder<TestActionImportUnsupportedEdmTypesParameters, any>;
 export declare const actionImports: {
     testActionImportNoParameterNoReturnType: typeof testActionImportNoParameterNoReturnType;
     testActionImportMultipleParameterComplexReturnType: typeof testActionImportMultipleParameterComplexReturnType;
+    testActionImportUnsupportedEdmTypes: typeof testActionImportUnsupportedEdmTypes;
 };
 //# sourceMappingURL=action-imports.d.ts.map

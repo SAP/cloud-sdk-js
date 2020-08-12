@@ -5,7 +5,8 @@ import { mockCsrfTokenRequest } from '../../../../test-packages/integration-test
 import { Destination } from '../../src/scp-cf';
 import {
   testActionImportMultipleParameterComplexReturnType,
-  testActionImportNoParameterNoReturnType
+  testActionImportNoParameterNoReturnType,
+  testActionImportUnsupportedEdmTypes
 } from '../test-util/test-services/v4/test-service/action-imports';
 import { TestComplexType } from '../test-util/test-services/v4/test-service';
 import { serializeComplexType } from '../../src/odata/v4';
@@ -22,7 +23,7 @@ const destination: Destination = {
   originalProperties: {}
 };
 
-xdescribe('action import request builder', () => {
+describe('action import request builder', () => {
   it('should call simple action.', async () => {
     mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
 
@@ -36,6 +37,22 @@ xdescribe('action import request builder', () => {
       destination
     );
     expect(result).toBe(undefined);
+  });
+
+  it('is possible to call actions with unknown edm types', async () => {
+    mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+    const response = { something: 'SomeuntypedResponse' };
+
+    nock(host)
+      .post(`${servicePath}/TestActionImportUnsupportedEdmTypes?$format=json`, {
+        SimpleParam: 'someUntypedParameter'
+      })
+      .reply(200, response);
+
+    const result = await testActionImportUnsupportedEdmTypes({
+      simpleParam: 'someUntypedParameter'
+    }).execute(destination);
+    expect(result).toEqual(response);
   });
 
   it('should call an action and parse the reponse', async () => {

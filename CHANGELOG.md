@@ -19,6 +19,8 @@
 ## New Functionality
 
 - Support Enum type.
+- Include fallback `Edm.Any` for previously unsupported edm types like Edm.Geography.
+Type safety and related features like URI conversion are not supported for the fallback type.  
 
 ## Improvements
 

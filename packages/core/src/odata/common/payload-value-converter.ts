@@ -85,7 +85,8 @@ export const deserializersCommon: EdmTypeMapping = {
   'Edm.Guid': toGuid,
   'Edm.SByte': toNumber,
   'Edm.Single': fromEdmToNumber,
-  'Edm.String': identity
+  'Edm.String': identity,
+  'Edm.Any': identity
 };
 
 export const serializersCommom: EdmTypeMapping = {
@@ -101,5 +102,6 @@ export const serializersCommom: EdmTypeMapping = {
   'Edm.Guid': identity,
   'Edm.SByte': toNumber,
   'Edm.Single': fromNumberToEdm,
-  'Edm.String': identity
+  'Edm.String': identity,
+  'Edm.Any': identity
 };

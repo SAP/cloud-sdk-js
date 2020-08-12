@@ -42,7 +42,9 @@ export function isNullableParameter(parameter: any) {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
 
-export type EdmTypeMapping = { [key in EdmTypeShared<'any'>]: string | undefined };
+export type EdmTypeMapping = {
+  [key in EdmTypeShared<'any'>]: string | undefined;
+};
 
 const edmToTsTypeMapping: EdmTypeMapping = {
   'Edm.String': 'string',

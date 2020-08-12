@@ -22,3 +22,4 @@ export * from './selectable';
 export * from './simple-type-fields';
 export * from './string-field';
 export * from './time-field';
+export * from './any-field';

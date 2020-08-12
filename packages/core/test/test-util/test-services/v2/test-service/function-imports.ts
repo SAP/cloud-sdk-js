@@ -128,6 +128,30 @@ export function testFunctionImportComplexReturnType(parameters: TestFunctionImpo
 }
 
 /**
+ * Type of the parameters to be passed to [[testFunctionImportUnsupportedEdmTypes]].
+ */
+export interface TestFunctionImportUnsupportedEdmTypesParameters {
+  /**
+   * Simple Param.
+   */
+  simpleParam: any;
+}
+
+/**
+ * Test Function Import Unsupported Edm Types.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function testFunctionImportUnsupportedEdmTypes(parameters: TestFunctionImportUnsupportedEdmTypesParameters): FunctionImportRequestBuilder<TestFunctionImportUnsupportedEdmTypesParameters, any> {
+  const params = {
+    simpleParam: new FunctionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
+  }
+
+  return new FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Any')), params);
+}
+
+/**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
  */
 export interface TestFunctionImportComplexReturnTypeCollectionParameters {
@@ -271,6 +295,7 @@ export const functionImports = {
   testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection,
   testFunctionImportComplexReturnType,
+  testFunctionImportUnsupportedEdmTypes,
   testFunctionImportComplexReturnTypeCollection,
   testFunctionImportGet,
   testFunctionImportPost,

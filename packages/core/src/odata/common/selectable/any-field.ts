@@ -2,7 +2,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { EntityBase, ODataVersionOf } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,
@@ -12,42 +12,41 @@ import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
 /**
- * Represents a property with a boolean value.
+ * Represents a property with an unknown or currently unsupported edm type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+class AnyFieldBase<EntityT extends EntityBase> extends EdmTypeField<
   EntityT,
-  boolean
+  any
 > {}
 
 /**
- * Represents a selectable property with a boolean value.
+ * Represents a selectable property with with an unknown or currently unsupported edm type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanField<EntityT extends EntityBase>
-  extends BooleanFieldBase<EntityT>
+export class AnyField<EntityT extends EntityBase> extends AnyFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
 }
 
 /**
- * Represents a complex type property with a boolean value.
+ * Represents a complex type property with with an unknown or currently unsupported edm type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class ComplexTypeBooleanPropertyField<
+export class ComplexTypeAnyPropertyField<
   EntityT extends EntityBase,
   ComplexT = any
-> extends BooleanFieldBase<EntityT> {
+> extends AnyFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
-   * Creates an instance of ComplexTypeBooleanPropertyField.
+   * Creates an instance of ComplexTypeAnyPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
@@ -56,23 +55,6 @@ export class ComplexTypeBooleanPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
-  );
-
-  /**
-   * @deprecated Since v1.19.0.
-   *
-   * Creates an instance of ComplexTypeBooleanPropertyField.
-   *
-   * @param fieldName - Actual name of the field used in the OData request
-   * @param entityConstructor - Constructor type of the entity the field belongs to
-   * @param parentTypeName - Name of the parent complex type
-   * @param edmType - Type of the field according to the metadata description
-   */
-  constructor(
-    fieldName: string,
-    entityConstructor: Constructable<EntityT>,
-    parentTypeName: string,
     edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 

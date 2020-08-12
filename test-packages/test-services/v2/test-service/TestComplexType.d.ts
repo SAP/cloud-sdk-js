@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time } from '@sap-cloud-sdk/core';
+import { ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time } from '@sap-cloud-sdk/core';
 /**
  * TestComplexType
  */
@@ -80,6 +80,11 @@ export interface TestComplexType {
      * @nullable
      */
     sByteProperty?: number;
+    /**
+     * Something The Sdk Does Not Support.
+     * @nullable
+     */
+    somethingTheSdkDoesNotSupport?: any;
     /**
      * Complex Type Property.
      * @nullable
@@ -170,6 +175,11 @@ export declare class TestComplexTypeField<EntityT extends Entity> extends Comple
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     sByteProperty: ComplexTypeNumberPropertyField<EntityT>;
+    /**
+     * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    somethingTheSdkDoesNotSupport: ComplexTypeAnyPropertyField<EntityT>;
     /**
      * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

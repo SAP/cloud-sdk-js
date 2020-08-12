@@ -113,6 +113,11 @@ var TestComplexTypeField = /** @class */ (function (_super) {
          */
         _this.sByteProperty = new core_1.ComplexTypeNumberPropertyField('SByteProperty', _this, 'Edm.SByte');
         /**
+         * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.somethingTheSdkDoesNotSupport = new core_1.ComplexTypeAnyPropertyField('SomethingTheSDKDoesNotSupport', _this, 'Edm.Any');
+        /**
          * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
@@ -201,6 +206,11 @@ var TestComplexType;
             originalName: 'SByteProperty',
             name: 'sByteProperty',
             type: 'Edm.SByte',
+            isCollection: false
+        }, {
+            originalName: 'SomethingTheSDKDoesNotSupport',
+            name: 'somethingTheSdkDoesNotSupport',
+            type: 'Edm.Any',
             isCollection: false
         }, {
             originalName: 'ComplexTypeProperty',

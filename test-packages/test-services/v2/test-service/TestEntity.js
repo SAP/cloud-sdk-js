@@ -176,6 +176,11 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      */
     TestEntity.S_BYTE_PROPERTY = new core_1.NumberField('SByteProperty', TestEntity, 'Edm.SByte');
     /**
+     * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT = new core_1.AnyField('SomethingTheSDKDoesNotSupport', TestEntity, 'Edm.Any');
+    /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -216,6 +221,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
         TestEntity.DATE_TIME_OFF_SET_PROPERTY,
         TestEntity.BYTE_PROPERTY,
         TestEntity.S_BYTE_PROPERTY,
+        TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT,
         TestEntity.COMPLEX_TYPE_PROPERTY,
         TestEntity.TO_MULTI_LINK,
         TestEntity.TO_OTHER_MULTI_LINK,

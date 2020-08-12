@@ -3,6 +3,8 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import {
   edmToFieldType,
+  edmToTsType,
+  getFallbackEdmTypeIfNeeded,
   isCreatable,
   isDeletable,
   isNullableProperty,
@@ -12,7 +14,8 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmNavigationProperty,
-  VdmProperty
+  VdmProperty,
+  VdmMappedEdmType
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
@@ -25,11 +28,11 @@ import {
 } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
-  filterUnknownEdmTypes,
+  complexTypeFieldType,
   isCollectionType,
   isComplexType,
-  parseTypeName,
-  propertyJsType
+  isEdmType,
+  typesForCollection
 } from '../edmx-to-vdm-util';
 import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
 
@@ -78,7 +81,7 @@ function properties(
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
 ): VdmProperty[] {
-  return entity.entityType.Property.filter(filterUnknownEdmTypes).map(p => {
+  return entity.entityType.Property.map(p => {
     checkCollectionKind(p);
     const swaggerProp = entity.swaggerDefinition
       ? entity.swaggerDefinition.properties[p.Name]
@@ -87,9 +90,10 @@ function properties(
       entity.entitySet.Name,
       p.Name
     );
-    const type = parseTypeName(p.Type);
-    const isComplex = isComplexType(type);
+    const isComplex = isComplexType(p.Type);
     const isCollection = isCollectionType(p.Type);
+    const typeMapping = getTypeMappingEntityProperties(p.Type, complexTypes);
+
     return {
       originalName: p.Name,
       instancePropertyName,
@@ -98,12 +102,9 @@ function properties(
         p.Name
       ),
       propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
-      edmType: type,
-      jsType: propertyJsType(type) || complexTypeForName(type, complexTypes),
-      fieldType: isCollection
-        ? 'CollectionField'
-        : propertyFieldType(type) ||
-          complexTypeFieldForName(type, complexTypes),
+      edmType: typeMapping.edmType,
+      jsType: typeMapping.jsType,
+      fieldType: typeMapping.fieldType,
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
@@ -114,43 +115,6 @@ function properties(
 }
 const propertyFieldType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToFieldType(type) : undefined;
-
-const complexTypeName = (type: string) => last(type.split('.'));
-const complexTypeFieldType = (typeName: string) => typeName + 'Field';
-
-const findComplexType = (
-  name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
-): Omit<VdmComplexType, 'factoryName'> | undefined =>
-  complexTypes.find(c => c.originalName === complexTypeName(name));
-
-function complexTypeForName(
-  name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
-): string {
-  const complexType = findComplexType(name, complexTypes);
-  if (complexType) {
-    return complexType.typeName;
-  }
-  logger.warn(
-    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
-  );
-  return 'any';
-}
-
-function complexTypeFieldForName(
-  name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
-): string {
-  const complexType = findComplexType(name, complexTypes);
-  if (complexType) {
-    return complexTypeFieldType(complexType.typeName);
-  }
-  logger.warn(
-    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
-  );
-  return 'any';
-}
 
 export function joinEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,
@@ -230,4 +194,65 @@ export function createEntityClassNames(
     }),
     {}
   );
+}
+
+function getTypeMappingEntityProperties(
+  typeName: string,
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+): VdmMappedEdmType {
+  if (isEdmType(typeName)) {
+    const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
+    return {
+      edmType: edmFallback,
+      jsType: edmToTsType(edmFallback),
+      fieldType: edmToFieldType(edmFallback)
+    };
+  }
+  if (isCollectionType(typeName)) {
+    return typesForCollection(typeName, complexTypes);
+  }
+  if (isComplexType(typeName)) {
+    return {
+      edmType: typeName,
+      jsType: complexTypeForName(typeName, complexTypes),
+      fieldType: complexTypeFieldForName(typeName, complexTypes)
+    };
+  }
+  throw new Error(`No types found for ${typeName}`);
+}
+
+function complexTypeFieldForName(
+  name: string,
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+): string {
+  const complexType = findComplexType(name, complexTypes);
+  if (complexType) {
+    return complexTypeFieldType(complexType.typeName);
+  }
+  logger.warn(
+    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
+  );
+  return 'any';
+}
+
+const complexTypeName = (type: string) => last(type.split('.'));
+
+const findComplexType = (
+  name: string,
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+): Omit<VdmComplexType, 'factoryName'> | undefined =>
+  complexTypes.find(c => c.originalName === complexTypeName(name));
+
+export function complexTypeForName(
+  name: string,
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+): string {
+  const complexType = findComplexType(name, complexTypes);
+  if (complexType) {
+    return complexType.typeName;
+  }
+  logger.warn(
+    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
+  );
+  return 'any';
 }

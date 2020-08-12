@@ -214,7 +214,8 @@ export const orderBreakfast: VdmFunctionImport = {
       nullable: true,
       description: 'Breakfast includes a honey toast',
       edmType: 'Edm.Boolean',
-      jsType: 'boolean'
+      jsType: 'boolean',
+      fieldType: 'BooleanField'
     }
   ],
   parametersTypeName: 'Params',

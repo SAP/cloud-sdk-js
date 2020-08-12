@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 import { GetAllRequestBuilder } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
@@ -39,6 +40,22 @@ describe('GetAllRequestBuilder', () => {
   });
 
   describe('execute', () => {
+    it('is possible to use untyped properties', async () => {
+      const entityData1 = {
+        SomethingTheSDKDoesNotSupport: 'SomeValue'
+      };
+
+      mockGetRequest({
+        query: { $select: 'SomethingTheSDKDoesNotSupport' },
+        responseBody: { d: { results: [entityData1] } }
+      });
+
+      const actual = await requestBuilder
+        .select(TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT)
+        .execute(defaultDestination);
+      expect(actual[0].somethingTheSdkDoesNotSupport).toBe('SomeValue');
+    });
+
     it('returns all entities', async () => {
       const entityData1 = createOriginalTestEntityData1();
       const entityData2 = createOriginalTestEntityData2();

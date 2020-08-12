@@ -27,6 +27,7 @@ import {
 } from '../../../generator-utils';
 import { applyPrefixOnJsConflictParam } from '../../../name-formatting-strategies';
 import {
+  complexTypeFieldType,
   isCollectionType,
   parseTypeName
 } from '../../../edmx-to-vdm/edmx-to-vdm-util';
@@ -188,7 +189,7 @@ const propertyFieldType = (type: string): string | undefined =>
 const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
-const complexTypeName = (type: string) => last(type.split('.'));
+export const complexTypeName = (type: string) => last(type.split('.'));
 
 const findComplexType = (
   name: string,
@@ -209,8 +210,6 @@ function complexTypeForName(
   );
   return 'any';
 }
-
-const complexTypeFieldType = (typeName: string) => typeName + 'Field';
 
 function complexTypeFieldForName(
   name: string,
@@ -489,6 +488,7 @@ export function transformFunctionImportBase(
       ),
       edmType: parseType(p.Type),
       jsType: edmToTsType(p.Type)!,
+      fieldType: edmToFieldType(p.Type),
       nullable: isNullableParameter(p),
       description: parameterDescription(p, swaggerParameter)
     };

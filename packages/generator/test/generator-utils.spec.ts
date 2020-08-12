@@ -4,6 +4,7 @@ import {
   edmToTsType,
   ensureString,
   forceArray,
+  getFallbackEdmTypeIfNeeded,
   isCreatable,
   isDeletable,
   isFilterable,
@@ -107,8 +108,25 @@ describe('edmToTsType', () => {
     expect(edmToTsType('Edm.Single')).toBe('number');
     expect(edmToTsType('Edm.DateTime')).toBe('Moment');
     expect(edmToTsType('Edm.Time')).toBe('Time');
-    expect(edmToTsType('Edm.GeographyPoint')).toBeUndefined();
-    expect(edmToTsType('Edm.Undefined')).toBeUndefined();
+    expect(() => edmToTsType('Edm.GeographyPoint')).toThrow(
+      'No ts type found for edm type: Edm.GeographyPoint'
+    );
+    expect(edmToTsType(getFallbackEdmTypeIfNeeded('Edm.GeographyPoint'))).toBe(
+      'any'
+    );
+    expect(() => edmToTsType('Edm.Undefined')).toThrow(
+      'No ts type found for edm type: Edm.Undefined'
+    );
+    expect(edmToTsType(getFallbackEdmTypeIfNeeded('Edm.Undefined'))).toBe(
+      'any'
+    );
+  });
+});
+
+describe('getFallbackEdmTypeIfNeeded', () => {
+  it('return Edm.Any for unknown/unsupported edm types', () => {
+    expect(getFallbackEdmTypeIfNeeded('Edm.String')).toBe('Edm.String');
+    expect(getFallbackEdmTypeIfNeeded('Edm.Unsuported')).toBe('Edm.Any');
   });
 });
 

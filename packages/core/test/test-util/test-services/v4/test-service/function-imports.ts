@@ -143,6 +143,10 @@ export interface TestFunctionImportMultipleParamsParameters {
    * Nullable Boolean Param.
    */
   nullableBooleanParam?: boolean;
+  /**
+   * Nullable Geography Point Param.
+   */
+  nullableGeographyPointParam?: any;
 }
 
 /**
@@ -155,7 +159,8 @@ export function testFunctionImportMultipleParams(parameters: TestFunctionImportM
   const params = {
     stringParam: new FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
     nonNullableStringParam: new FunctionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-    nullableBooleanParam: new FunctionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
+    nullableBooleanParam: new FunctionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
+    nullableGeographyPointParam: new FunctionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
   }
 
   return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Boolean')), params);

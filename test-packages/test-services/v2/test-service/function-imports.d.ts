@@ -74,6 +74,22 @@ export interface TestFunctionImportComplexReturnTypeParameters {
  */
 export declare function testFunctionImportComplexReturnType(parameters: TestFunctionImportComplexReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeParameters, TestComplexType>;
 /**
+ * Type of the parameters to be passed to [[testFunctionImportUnsupportedEdmTypes]].
+ */
+export interface TestFunctionImportUnsupportedEdmTypesParameters {
+    /**
+     * Simple Param.
+     */
+    simpleParam: any;
+}
+/**
+ * Test Function Import Unsupported Edm Types.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export declare function testFunctionImportUnsupportedEdmTypes(parameters: TestFunctionImportUnsupportedEdmTypesParameters): FunctionImportRequestBuilder<TestFunctionImportUnsupportedEdmTypesParameters, any>;
+/**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
  */
 export interface TestFunctionImportComplexReturnTypeCollectionParameters {
@@ -168,6 +184,7 @@ export declare const functionImports: {
     testFunctionImportEntityReturnType: typeof testFunctionImportEntityReturnType;
     testFunctionImportEntityReturnTypeCollection: typeof testFunctionImportEntityReturnTypeCollection;
     testFunctionImportComplexReturnType: typeof testFunctionImportComplexReturnType;
+    testFunctionImportUnsupportedEdmTypes: typeof testFunctionImportUnsupportedEdmTypes;
     testFunctionImportComplexReturnTypeCollection: typeof testFunctionImportComplexReturnTypeCollection;
     testFunctionImportGet: typeof testFunctionImportGet;
     testFunctionImportPost: typeof testFunctionImportPost;

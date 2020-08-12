@@ -85,7 +85,8 @@ function testFunctionImportMultipleParams(parameters) {
     var params = {
         stringParam: new v4_1.FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
         nonNullableStringParam: new v4_1.FunctionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-        nullableBooleanParam: new v4_1.FunctionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam)
+        nullableBooleanParam: new v4_1.FunctionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
+        nullableGeographyPointParam: new v4_1.FunctionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
     };
     return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
 }

@@ -7,9 +7,9 @@ import {
   VdmReturnTypeCategory
 } from '../../vdm-types';
 import {
+  getTypeMappingActionFunction,
   isCollectionType,
-  parseTypeName,
-  propertyJsType
+  parseTypeName
 } from '../edmx-to-vdm-util';
 
 export function parseFunctionImportReturnTypes(
@@ -103,10 +103,11 @@ function getEdmReturnType(
   isCollection: boolean,
   edmType: string
 ): VdmFunctionImportReturnType {
+  const typeMapping = getTypeMappingActionFunction(edmType);
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
-    returnType: propertyJsType(edmType)!,
-    builderFunction: `(val) => edmToTs(val, '${edmType}')`,
+    returnType: typeMapping.jsType,
+    builderFunction: `(val) => edmToTs(val, '${typeMapping.edmType}')`,
     isMulti: isCollection,
     isCollection
   };

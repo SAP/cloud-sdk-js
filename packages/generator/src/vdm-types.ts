@@ -58,7 +58,6 @@ export interface VdmProperty
   extends VdmPropertyDescriptor,
     VdmPropertyValueConstraints,
     VdmMappedEdmType {
-  fieldType: string;
   description: string;
 }
 
@@ -137,6 +136,7 @@ export interface VdmParameter extends VdmMappedEdmType {
 export interface VdmMappedEdmType {
   edmType: string;
   jsType: string;
+  fieldType: string;
 }
 
 export interface ApiBusinessHubMetadata {

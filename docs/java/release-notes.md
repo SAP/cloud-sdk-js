@@ -35,12 +35,18 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 #### OData and type-safe client libraries
 
-- We released a Beta version of improved type-safe client library implementation for OData v2 protocol which now shares a code base with OData v4 protocol. It brings significant advantages like:
+- **We released a Beta version of improved type-safe client library implementation for OData v2 protocol which now shares a code base with OData v4 protocol.**  It brings significant advantages like:
   - Boosting performance by avoiding unnecessary metadata calls
   - The same code base for both OData protocol versions speeds up the innovation cycle and unlocks the developing of advanced features for both OData versions.
   - For more insights and guide how to switch to an new version check our [type-safe client documentation](features/odata/use-typed-odata-v2-and-v4-client-for-java#switch-to-improved-odata-vdm-beta)
+
+----------
+
 - The results of `create` and `update` operations in OData v4 type-safe client now offer `getModifiedEntity()` method which returns a new `Entity object` including any changes to payload or metadata the service may have responded with.
-- We released a regular update for pre-generated type-safe client libraries (also known as VDM) for the [latest RTC release 2008 of SAP S/4HANA Cloud](https://news.sap.com/2020/08/sap-s4hana-cloud-release-2008-stay-ahead-change/).
+
+----------
+
+- **We released a regular update for pre-generated type-safe client libraries (also known as VDM) for the [latest RTC release 2008 of SAP S/4HANA Cloud](https://news.sap.com/2020/08/sap-s4hana-cloud-release-2008-stay-ahead-change/).**
   - The update covers all the changes to existing services and introduces new ones. You'll find them in `com.sap.cloud.sdk.s4hana.datamodel.odata.services` and `com.sap.cloud.sdk.s4hana.datamodel.odatav4.services`. Below is the quick reference on difference and compatibility between 2005 and current 2008 S/4HANA Cloud releases:
   - These deprecated OData **services are no longer allowed/whitelisted**:
     - Removed deprecated `ChangeMasterService`, use the successor "[ChangeMasterServiceV2Service](https://api.sap.com/api/API_CHANGEMASTER_0002/resource)" instead.
@@ -80,7 +86,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ### Compatibility notes
 
-- Client library for `ELECTRONICDOCFILE_0001` service is missing from S/4HANA 2008 release. We're working to fix this as fast as possible and we'll communicate it in release notes.
+- Client library for `ELECTRONICDOCFILE_0001` service is missing from S/4HANA 2008 release. We're working to fix this as fast as possible and will communicate it in release notes.
 
 ### Fixed Issues
 

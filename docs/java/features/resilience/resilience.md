@@ -191,11 +191,11 @@ The following resilience patterns are available and can be configured in a Resil
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.RetryConfiguration.html">RetryConfiguration</a></em></td>
     <td>Retry a failed operation a limited amount of times before failing</td>
 </tr><tr>
-    <td>Circuit Breaker <p>(also known as Shed Load or Load Shedding)</p></td>
+    <td>Circuit Breaker</td>
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.CircuitBreakerConfiguration.html">CircuitBreakerConfiguration</a></em></td>
     <td>Reject attempts if too many failures occurred in the past</td>
 </tr><tr>
-    <td>Bulkhead</td>
+    <td>Bulkhead <p>(also known as Shed Load or Load Shedding)</p></td>
     <td><em><a href="https://help.sap.com/http.svc/rc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/resilience/ResilienceConfiguration.BulkheadConfiguration.html">BulkheadConfiguration</a></em></td>
     <td>Limit how many instances of this operation may run in parallel</td>
 </tr>

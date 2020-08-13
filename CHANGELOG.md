@@ -23,7 +23,7 @@ Type safety and related features like URI conversion are not supported for the f
 
 ## Improvements
 
--
+- Special characters like `'` (single quotes), ` ` (space) and `ä` (umlaut) are encoded properly when used in the `Filter`.
 
 ## Fixed Issues
 

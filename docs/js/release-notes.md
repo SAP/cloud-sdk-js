@@ -40,7 +40,7 @@ For your convenience we [pre-generate type-safe clients libraries](https://www.n
 
 ## Version 1.20.0 - August 13, 2020
 
-- [Api documentation](https://help.sap.com/doc/c0ae2e82b25e4b77855f00ec098ddf8f/1.0/en-US/index.html)
+- [API documentation](https://help.sap.com/doc/c0ae2e82b25e4b77855f00ec098ddf8f/1.0/en-US/index.html)
 - [NPM](https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*)
 
 ### New functionality

@@ -7,6 +7,7 @@ import {
   createLogger
 } from '@sap-cloud-sdk/util';
 import {
+  AuthenticationType,
   Destination,
   DestinationAuthToken,
   getOAuth2ClientCredentialsToken,
@@ -49,11 +50,31 @@ export async function addAuthorizationHeader<
   };
 }
 
-async function getAuthHeaders(
+function hasAuthHeaders(destination: Destination): boolean {
+  if (!destination.authentication) {
+    return false;
+  }
+  const authTypesWithAuthorizationHeader: AuthenticationType[] = [
+    'BasicAuthentication',
+    'OAuth2ClientCredentials',
+    'OAuth2SAMLBearerAssertion',
+    'PrincipalPropagation'
+  ];
+  return authTypesWithAuthorizationHeader.includes(destination.authentication);
+}
+
+export async function getAuthHeaders(
   destination: Destination,
   customHeaders?: MapType<any>
 ): Promise<MapType<string>> {
   const customAuthHeaders = getHeader('authorization', customHeaders);
+
+  if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
+    logger.warn(`You provided authorization headers in the request config. 
+    However your destination ${destination.name} also provides authorization headers.
+    To have authorization information from both sources is often unintended.
+    The custom headers from the request config will be used.`);
+  }
   return Object.keys(customAuthHeaders).length
     ? customAuthHeaders
     : buildAuthorizationHeaders(destination);

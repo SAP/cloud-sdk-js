@@ -18,22 +18,50 @@ import {
   EdmTypeShared,
   isEdmType
 } from '../common';
-import { PropertyMetadata } from '../v2';
+import { EdmToPrimitive, EdmType, PropertyMetadata } from '../v2';
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'entity-deserializer'
 });
 
-// eslint-disable-next-line valid-jsdoc
+export interface EntityDeserializer<EntityT extends EntityBase = any> {
+  // TODO: extractCustomFields should not be exported here. This was probably done only for testing
+  extractCustomFields: (
+    json: any,
+    entityConstructor: Constructable<EntityT>
+  ) => MapType<any>;
+  deserializeEntity: (
+    json: any,
+    entityConstructor: Constructable<EntityT>,
+    requestHeader?: any
+  ) => EntityT;
+  deserializeComplexType: (
+    json: MapType<any>,
+    complexType: ComplexTypeNamespace<any>
+  ) => any;
+}
+
+type EdmToTsType<EdmT extends EdmType> = (
+  value: any,
+  edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
+) => EdmToPrimitive<EdmT>;
+type ExtractODataETagType = (json: MapType<any>) => string | undefined;
+type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
+
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Constructs a entityDeserializer given the OData v2 or v4 specific methods.
+ * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts
+ * @param edmToTs - Converters  emd input to ts values.
+ * @param extractODataETag - Extractor for the Etag.
+ * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
+ * @returns a entity deserializer as defined by [[entityDeserializerType]]
  */
-export function entityDeserializer(
-  edmToTs,
-  extractODataETag,
-  extractDataFromOneToManyLink: (arg) => any[] | undefined
-) {
+export function entityDeserializer<EdmT extends EdmType, EntityT, JsonT>(
+  edmToTs: EdmToTsType<EdmT>,
+  extractODataETag: ExtractODataETagType,
+  extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
+): EntityDeserializer {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
    * In this context, a custom fields is every property that is not known in the corresponding entity class.
@@ -211,9 +239,10 @@ export function entityDeserializer(
     return edmToTs(propertyValue, propertyMetadata.type);
   }
 
-  function deserializeComplexType<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
-  >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
+  function deserializeComplexType(
+    json: MapType<any>,
+    complexType: ComplexTypeNamespace<any>
+  ): any {
     if (json === null) {
       return null;
     }

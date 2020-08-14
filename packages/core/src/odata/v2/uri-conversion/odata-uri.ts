@@ -1,35 +1,29 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import {
   getEntityKeys,
   getOrderBy,
   ODataUri,
-  FieldType,
-  Constructable,
   createGetResourcePathForKeys,
   createGetFilter
 } from '../../common';
-import { Entity } from '../entity';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
-import { convertToUriFormat } from './uri-value-converter';
+import { uriConverter } from './uri-value-converter';
+
+const { getFilter } = createGetFilter(uriConverter);
+const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
+const { convertToUriFormat } = uriConverter;
 
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Instance of the [[ODataUri]] conversion interface for OData v2.
  */
 export const oDataUri: ODataUri = {
   getExpand,
-  getFilter: createGetFilter({ convertToUriFormat }).getFilter,
+  getFilter,
   getEntityKeys,
   getOrderBy,
-  getResourcePathForKeys: <EntityT extends Entity>(
-    keys: MapType<FieldType> = {},
-    entityConstructor: Constructable<EntityT>
-  ) =>
-    createGetResourcePathForKeys({
-      convertToUriFormat
-    }).getResourcePathForKeys(keys, entityConstructor),
+  getResourcePathForKeys,
   getSelect,
   convertToUriFormat
 };

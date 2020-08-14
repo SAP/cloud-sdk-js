@@ -7,11 +7,26 @@ const logger = createLogger({
   messageContext: 'response-data-accessor'
 });
 
+/**
+ * Methods to extract the data from OData v2 responses.
+ */
+
+/**
+ * Extract the collection data from the repsonse.
+ * If the data does not contain a collection an empty array is returned.
+ * @param data - Response of the OData v2 service
+ * @returns any[] - Collection extracted from the repsponse
+ */
 export function getCollectionResult(data): any[] {
   validateCollectionResult(data);
   return isCollectionResult(data) ? data?.d?.results : [];
 }
 
+/**
+ * Checks if the data contains a collection result.
+ * @param data - Response of the OData v2 service
+ * @returns boolean - true if the data is a collection result
+ */
 export function isCollectionResult(data): boolean {
   return Array.isArray(data?.d?.results);
 }
@@ -24,6 +39,11 @@ function validateCollectionResult(data): void {
   }
 }
 
+/**
+ * Checks if the data contains a collection result.
+ * @param data - Response of the OData v2 service
+ * @returns boolean - true if the data is a collection result
+ */
 export function getSingleResult(data): Record<string, any> {
   validateSingleResult(data);
   return isSingleResultAsCollection(data) ? data?.d?.results : data?.d || {};

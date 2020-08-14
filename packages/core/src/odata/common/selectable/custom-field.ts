@@ -7,7 +7,6 @@ import { DateField } from './date-field';
 import { Field } from './field';
 import { NumberField } from './number-field';
 import { StringField } from './string-field';
-import { TimeField } from './time-field';
 
 export class CustomFieldBase<EntityT extends EntityBase> extends Field<
   EntityT
@@ -121,9 +120,5 @@ export class CustomFieldBase<EntityT extends EntityBase> extends Field<
       this._entityConstructor,
       'Edm.Binary'
     );
-  }
-
-  edmTime(): TimeField<EntityT> {
-    return new TimeField(this._fieldName, this._entityConstructor, 'Edm.Time');
   }
 }

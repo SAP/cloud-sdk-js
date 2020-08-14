@@ -2,4 +2,7 @@
 
 import { EdmTypeCommon, EdmTypeV2 } from '../common';
 
+/**
+ * Allowed Edm types for OData v2.
+ */
 export type EdmType = EdmTypeCommon | EdmTypeV2;

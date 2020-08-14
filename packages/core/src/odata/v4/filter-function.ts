@@ -14,7 +14,7 @@ import {
 } from '../common/filter/filter-function';
 import { CollectionFilterFunction } from '../common/filter/collection-filter-function';
 import { Entity } from './entity';
-import { DateFilterFunction } from './date-filter-function';
+import { DateFilterFunction } from './filter/date-filter-function';
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,

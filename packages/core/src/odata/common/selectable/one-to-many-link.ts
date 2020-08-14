@@ -6,7 +6,10 @@ import { Orderable } from '../order';
 import { Link } from './link';
 
 /**
- * @experimental
+ * Represents a one to many relation for OData v4 entites.
+ * For OData v2 entites the [[Link]] is used to represent one to many relation.
+ *
+ * See also [[Link]] for more informations.
  */
 export class OneToManyLink<
   EntityT extends EntityBase,
@@ -26,9 +29,11 @@ export class OneToManyLink<
     return clonedLink;
   }
 
-  // eslint-disable-next-line valid-jsdoc
   /**
-   * @experimental This is experimental and is subject to change. Use with caution.
+   * Create filter statements to be applied to the OData request based on the linked entity values.
+   *
+   * @param filters - Filters based on the linked entity
+   * @returns Newly created Filterlink
    */
   filter(
     ...expressions: (

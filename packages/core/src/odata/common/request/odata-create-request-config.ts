@@ -7,7 +7,6 @@ import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
  * OData create request configuration for an entity type.
  *
  * @typeparam EntityT - Type of the entity to setup a request for

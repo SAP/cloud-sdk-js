@@ -13,8 +13,9 @@ import type { Selectable } from './selectable';
  * For example, when constructing a query on the BusinessPartner entity, an instance of `Link<BusinessPartner, Customer>`
  * can be passed as argument to the select function, e.g. `BusinessPartner.TO_CUSTOMER`.
  *
- * NOTE: the Link class represents navigation properties with a 1:n cardinality.
- * For navigation properties with a 1:0..1 cardinality, see [[OneToOneLink]].
+ * NOTE: Due to historical development the Link and its extensions are used in the following way:
+ * OData v2 entity: 1:N -> [[Link]], 1:0..1 -> [[OneToOneLink]]
+ * OData v4 entity: 1:N -> [[OneToManyLink]], 1:0..1 -> [[OneToOneLink]]
  *
  * See also: [[Selectable]]
  *

@@ -5,7 +5,7 @@ import { Selectable } from '../../common';
 
 /**
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.
- * This retrieves where in addition to the selection (`select`) there is also an expansion (`expand`) needed.
+ * In OData v4 selected properties are not automatically expanded anymore and a manual expand needs to be performed.
  *
  * @typeparam EntityT - Type of the entity to get the selection for
  * @param selects - The list of selectables to be transformed to query parameters

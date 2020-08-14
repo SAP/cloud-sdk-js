@@ -31,6 +31,7 @@ exports.TestEntity = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityRequestBuilder_1 = require("./TestEntityRequestBuilder");
+var string_1 = require("./string");
 var TestComplexType_1 = require("./TestComplexType");
 var v4_1 = require("@sap-cloud-sdk/core/v4");
 /**
@@ -193,7 +194,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.COLLECTION_PROPERTY = new v4_1.CollectionField('CollectionProperty', TestEntity, 'Edm.String');
+    TestEntity.COLLECTION_PROPERTY = new v4_1.CollectionField('CollectionProperty', TestEntity, string_1.string);
     /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.

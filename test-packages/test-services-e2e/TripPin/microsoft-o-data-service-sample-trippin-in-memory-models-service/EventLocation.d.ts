@@ -58,7 +58,7 @@ export declare namespace EventLocation {
      */
     const _propertyMetadata: PropertyMetadata<EventLocation>[];
     /**
-     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json: {
         [keys: string]: FieldType | City;

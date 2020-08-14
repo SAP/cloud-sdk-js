@@ -143,7 +143,7 @@ export declare namespace People {
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const EMAILS: CollectionField<People, 'Edm.String'>;
+    const EMAILS: CollectionField<People, string>;
     /**
      * Static representation of the [[addressInfo]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -167,7 +167,7 @@ export declare namespace People {
     /**
      * All fields of the People entity.
      */
-    const _allFields: Array<StringField<People> | BigNumberField<People> | CollectionField<People, 'Edm.String'> | CollectionField<People, Location> | LocationField<People> | OneToManyLink<People, People> | OneToOneLink<People, People>>;
+    const _allFields: Array<StringField<People> | BigNumberField<People> | CollectionField<People, string> | CollectionField<People, Location> | LocationField<People> | OneToManyLink<People, People> | OneToOneLink<People, People>>;
     /**
      * All fields selector.
      */

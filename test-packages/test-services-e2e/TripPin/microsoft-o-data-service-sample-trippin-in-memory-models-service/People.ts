@@ -5,6 +5,7 @@
  */
 import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
+import { string } from './string';
 import { Location, LocationField } from './Location';
 import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core/v4';
 
@@ -162,7 +163,7 @@ export namespace People {
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS: CollectionField<People, 'Edm.String'> = new CollectionField('Emails', People, 'Edm.String');
+  export const EMAILS: CollectionField<People, string> = new CollectionField('Emails', People, string);
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -186,7 +187,7 @@ export namespace People {
   /**
    * All fields of the People entity.
    */
-  export const _allFields: Array<StringField<People> | BigNumberField<People> | CollectionField<People, 'Edm.String'> | CollectionField<People, Location> | LocationField<People> | OneToManyLink<People, People> | OneToOneLink<People, People>> = [
+  export const _allFields: Array<StringField<People> | BigNumberField<People> | CollectionField<People, string> | CollectionField<People, Location> | LocationField<People> | OneToManyLink<People, People> | OneToOneLink<People, People>> = [
     People.USER_NAME,
     People.FIRST_NAME,
     People.LAST_NAME,

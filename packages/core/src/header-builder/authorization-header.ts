@@ -71,7 +71,7 @@ export async function getAuthHeaders(
 
   if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
     logger.warn(`You provided authorization headers in the request config. 
-    However your destination ${destination.name} also provides authorization headers.
+    However, your destination ${destination.name} also provides authorization headers.
     To have authorization information from both sources is often unintended.
     The custom headers from the request config will be used.`);
   }

@@ -334,7 +334,7 @@ export declare namespace TestEntity {
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const COLLECTION_PROPERTY: CollectionField<TestEntity, string>;
+    const COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.String'>;
     /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -363,7 +363,7 @@ export declare namespace TestEntity {
     /**
      * All fields of the TestEntity entity.
      */
-    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, string> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
+    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
     /**
      * All fields selector.
      */

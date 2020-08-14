@@ -64,8 +64,15 @@ export function isV2Metadata(metadata: EdmxMetadata): boolean {
   return metadata.oDataVersion === 'v2';
 }
 
+/**
+ * Check if a type is complex.
+ * Returns false for: (1) types starting with "Edm." or collections containing a type starting with "Edm.".
+ *
+ * @param typeName - The typename from the edmx service definition.
+ * @returns true for complex types, false for Edm types or Edm types in collections.
+ */
 export function isComplexType(typeName: string): boolean {
-  const typeParts = typeName.split('.');
+  const typeParts = parseTypeName(typeName).split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;
 }
 

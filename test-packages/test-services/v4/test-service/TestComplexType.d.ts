@@ -214,7 +214,7 @@ export declare class TestComplexTypeField<EntityT extends Entity> extends Comple
      * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    collectionStringProperty: CollectionField<EntityT, string>;
+    collectionStringProperty: CollectionField<EntityT, 'Edm.String'>;
     /**
      * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -242,7 +242,7 @@ export declare namespace TestComplexType {
      * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json: {
-        [keys: string]: FieldType | TestNestedComplexType | string;
+        [keys: string]: FieldType | TestNestedComplexType;
     }): TestComplexType;
 }
 //# sourceMappingURL=TestComplexType.d.ts.map

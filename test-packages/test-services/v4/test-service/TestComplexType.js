@@ -15,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestComplexType = exports.TestComplexTypeField = exports.createTestComplexType = void 0;
 var TestNestedComplexType_1 = require("./TestNestedComplexType");
-var string_1 = require("./string");
 var v4_1 = require("@sap-cloud-sdk/core/v4");
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
@@ -132,7 +131,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
          * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.collectionStringProperty = new v4_1.CollectionField('CollectionStringProperty', _this, string_1.string);
+        _this.collectionStringProperty = new v4_1.CollectionField('CollectionStringProperty', _this, 'Edm.String');
         /**
          * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -246,7 +245,7 @@ var TestComplexType;
         }, {
             originalName: 'CollectionStringProperty',
             name: 'collectionStringProperty',
-            type: string_1.string,
+            type: 'Edm.String',
             isCollection: true
         }, {
             originalName: 'CollectionComplexTypeProperty',

@@ -79,6 +79,18 @@ describe('generator', () => {
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(2);
       expect(testEntityFile!.getNamespaces().length).toBe(1);
+      const foo = testEntityFile!
+        .getImportStringLiterals()
+        .map(sl => sl.getLiteralValue());
+      expect(foo).toEqual([
+        './TestEntityRequestBuilder',
+        'moment',
+        'bignumber.js',
+        './TestComplexType',
+        '@sap-cloud-sdk/core/v4',
+        './TestEntityMultiLink',
+        './TestEntitySingleLink'
+      ]);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
       expect(entityClass!.getProperties().length).toBe(29);

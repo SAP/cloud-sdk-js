@@ -478,7 +478,7 @@ A retrieve request is any HTTP `GET` request - in terms of the SAP Cloud SDK thi
 
 In the example below, a list of adresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the read requests, which are then passed to the batch function.
 
-The batch request will return a list of `BatchResponse`s, which will be stored in the `retrieveResponses` variable. These `BatchResponse`s need to be parsed and converted to the expected entities.
+The batch request will return a list of `BatchResponse` items, which will be stored in the `retrieveResponses` variable. These `BatchResponse` items need to be parsed and converted to the expected entities.
 
 `ReadResponse` contains an httpCode, a body, an entity (in this case `BusinessPartnerAddress`) and functions like `as` to convert the response into the entity and `isSuccess`.
 

@@ -26,7 +26,7 @@
         <Property Name="ByteProperty" Type="Edm.Byte"/>
         <Property Name="SByteProperty" Type="Edm.SByte"/>
         <Property Name="GeographyPointProperty" Type="Edm.GeographyPoint"/>
-
+        <Property Name="SomethingTheSDKDoesNotSupport" Type="Edm.SomethingTheSDKDoesNotSupport"/>
         <Property Name="CollectionProperty" Type="Collection(Edm.String)" MaxLength="10" sap:display-format="UpperCase"/>
 
         <Property Name="ComplexTypeProperty" Type="API_TEST_SRV.A_TestComplexType"/>
@@ -126,6 +126,7 @@
         <Property Name="SByteProperty" Type="Edm.SByte"/>
         <Property Name="GeographyPointProperty" Type="Edm.GeographyPoint"/>
         <Property Name="EnumProperty" Type="API_TEST_SRV.A_TestEnumType"/>
+        <Property Name="SomethingTheSDKDoesNotSupport" Type="Edm.SomethingTheSDKDoesNotSupport"/>
         <Property CollectionKind="List" Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexType"/>
 
         <Property Name="CollectionStringProperty" Type="Collection(Edm.String)"/>
@@ -156,6 +157,11 @@
         <Parameter Name="NullableBooleanParam" Type="Edm.Boolean" Nullable="true"/>
         <Parameter Name="NullableGeographyPointParam" Type="Edm.GeographyPoint" Nullable="true"/>
         <ReturnType Type="API_TEST_SRV.A_TestComplexType"/>
+      </Action>
+
+      <Action Name="TestActionImportUnsupportedEdmTypes">
+        <Parameter Name="SimpleParam" Type="Edm.SomethingTheSDKDoesNotSupport"/>
+        <ReturnType Type="Edm.SomethingTheSDKDoesNotSupport"/>
       </Action>
 
       <Function Name="TestFunctionImportNoReturnType">
@@ -232,6 +238,9 @@
 
         <ActionImport Name="TestActionImportMultipleParameterComplexReturnType" Action="API_TEST_SRV.TestActionImportMultipleParameterComplexReturnType">
         </ActionImport>
+
+       <ActionImport Name="TestActionImportUnsupportedEdmTypes" Action="API_TEST_SRV.TestActionImportUnsupportedEdmTypes">
+       </ActionImport>
 
         <FunctionImport Name="TestFunctionImportEdmReturnType" Function="API_TEST_SRV.TestFunctionImportEdmReturnType">
         </FunctionImport>

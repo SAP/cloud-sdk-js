@@ -57,6 +57,16 @@ describe('convertToUriFormat', () => {
     expect(convertToUriFormat('test', 'Edm.String')).toBe("'test'");
   });
 
+  it('Edm.String with space, umlaut and plus', () => {
+    expect(convertToUriFormat('ä ö+', 'Edm.String')).toBe(
+      "'%C3%A4%20%C3%B6%2B'"
+    );
+  });
+
+  it('Edm.String with single quotes', () => {
+    expect(convertToUriFormat("a'b'c", 'Edm.String')).toBe("'a''b''c'");
+  });
+
   it('Edm.DateTime', () => {
     expect(
       convertToUriFormat(moment(1552304382000).utc(), 'Edm.DateTime')

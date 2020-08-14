@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
+exports.functionImports = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportUnsupportedEdmTypes = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -75,6 +75,19 @@ function testFunctionImportComplexReturnType(parameters) {
     return new core_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', function (data) { return core_1.transformReturnValueForComplexType(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
+/**
+ * Test Function Import Unsupported Edm Types.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+function testFunctionImportUnsupportedEdmTypes(parameters) {
+    var params = {
+        simpleParam: new core_1.FunctionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
+    };
+    return new core_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmType(data, function (val) { return core_1.edmToTs(val, 'Edm.Any'); }); }, params);
+}
+exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdmTypes;
 /**
  * Test Function Import Complex Return Type Collection.
  *
@@ -155,6 +168,7 @@ exports.functionImports = {
     testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
     testFunctionImportEntityReturnTypeCollection: testFunctionImportEntityReturnTypeCollection,
     testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
+    testFunctionImportUnsupportedEdmTypes: testFunctionImportUnsupportedEdmTypes,
     testFunctionImportComplexReturnTypeCollection: testFunctionImportComplexReturnTypeCollection,
     testFunctionImportGet: testFunctionImportGet,
     testFunctionImportPost: testFunctionImportPost,

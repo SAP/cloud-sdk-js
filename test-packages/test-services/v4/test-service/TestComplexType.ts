@@ -6,7 +6,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { CollectionField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '@sap-cloud-sdk/core/v4';
+import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '@sap-cloud-sdk/core/v4';
 
 /**
  * TestComplexType
@@ -86,6 +86,11 @@ export interface TestComplexType {
    * @nullable
    */
   sByteProperty?: number;
+  /**
+   * Geography Point Property.
+   * @nullable
+   */
+  geographyPointProperty?: any;
   /**
    * Complex Type Property.
    * @nullable
@@ -196,6 +201,11 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    */
   sByteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('SByteProperty', this, 'Edm.SByte');
   /**
+   * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  geographyPointProperty: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField('GeographyPointProperty', this, 'Edm.Any');
+  /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
@@ -305,6 +315,11 @@ export namespace TestComplexType {
     originalName: 'SByteProperty',
     name: 'sByteProperty',
     type: 'Edm.SByte',
+    isCollection: false
+  }, {
+    originalName: 'GeographyPointProperty',
+    name: 'geographyPointProperty',
+    type: 'Edm.Any',
     isCollection: false
   }, {
     originalName: 'ComplexTypeProperty',

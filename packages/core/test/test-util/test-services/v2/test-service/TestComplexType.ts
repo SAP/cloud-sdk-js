@@ -6,7 +6,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src';
+import { ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src';
 
 /**
  * TestComplexType
@@ -86,6 +86,11 @@ export interface TestComplexType {
    * @nullable
    */
   sByteProperty?: number;
+  /**
+   * Something The Sdk Does Not Support.
+   * @nullable
+   */
+  somethingTheSdkDoesNotSupport?: any;
   /**
    * Complex Type Property.
    * @nullable
@@ -181,6 +186,11 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    */
   sByteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('SByteProperty', this, 'Edm.SByte');
   /**
+   * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  somethingTheSdkDoesNotSupport: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField('SomethingTheSDKDoesNotSupport', this, 'Edm.Any');
+  /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
@@ -275,6 +285,11 @@ export namespace TestComplexType {
     originalName: 'SByteProperty',
     name: 'sByteProperty',
     type: 'Edm.SByte',
+    isCollection: false
+  }, {
+    originalName: 'SomethingTheSDKDoesNotSupport',
+    name: 'somethingTheSdkDoesNotSupport',
+    type: 'Edm.Any',
     isCollection: false
   }, {
     originalName: 'ComplexTypeProperty',

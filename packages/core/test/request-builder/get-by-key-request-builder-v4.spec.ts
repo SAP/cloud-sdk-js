@@ -44,6 +44,23 @@ describe('GetByKeyRequestBuilder', () => {
     });
   });
 
+  it('is possible to use untyped properties', async () => {
+    const entityData1 = {
+      SomethingTheSDKDoesNotSupport: 'SomeValue'
+    };
+
+    mockGetRequest({
+      query: { $select: 'SomethingTheSDKDoesNotSupport' },
+      responseBody: { value: [entityData1] }
+    });
+
+    const actual = await TestEntity.requestBuilder()
+      .getAll()
+      .select(TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT)
+      .execute(defaultDestination);
+    expect(actual[0].somethingTheSdkDoesNotSupport).toBe('SomeValue');
+  });
+
   it('etag should be pulled from @odata.etag', async () => {
     const entityData = createOriginalTestEntityData1();
     const versionIdentifier = 'etagInMetadata';

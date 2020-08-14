@@ -24,6 +24,7 @@
         <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
         <Property Name="ByteProperty" Type="Edm.Byte"/>
         <Property Name="SByteProperty" Type="Edm.SByte"/>
+        <Property Name="SomethingTheSDKDoesNotSupport" Type="Edm.SomethingTheSDKDoesNotSupport"/>
 
         <Property Name="ComplexTypeProperty" Type="API_TEST_SRV.A_TestComplexType"/>
 
@@ -143,6 +144,7 @@
         <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
         <Property Name="ByteProperty" Type="Edm.Byte"/>
         <Property Name="SByteProperty" Type="Edm.SByte"/>
+        <Property Name="SomethingTheSDKDoesNotSupport" Type="Edm.SomethingTheSDKDoesNotSupport"/>
         <Property CollectionKind="List" Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexType"/>
       </ComplexType>
 
@@ -273,6 +275,10 @@
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportComplexReturnType" ReturnType="API_TEST_SRV.A_TestComplexType" m:HttpMethod="GET">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportUnsupportedEdmTypes" ReturnType="Edm.SomethingTheSDKDoesNotSupport" m:HttpMethod="GET">
+            <Parameter Name="SimpleParam" Type="Edm.SomethingTheSDKDoesNotSupport" Mode="In"/>
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportComplexReturnTypeCollection" ReturnType="Collection(API_TEST_SRV.A_TestComplexType)" m:HttpMethod="GET">

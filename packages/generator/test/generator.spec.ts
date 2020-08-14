@@ -79,10 +79,10 @@ describe('generator', () => {
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(2);
       expect(testEntityFile!.getNamespaces().length).toBe(1);
-      const foo = testEntityFile!
+      const imports = testEntityFile!
         .getImportStringLiterals()
-        .map(sl => sl.getLiteralValue());
-      expect(foo).toEqual([
+        .map(stringLiteral => stringLiteral.getLiteralValue());
+      expect(imports).toEqual([
         './TestEntityRequestBuilder',
         'moment',
         'bignumber.js',

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- OData v4 is moven from the experimental state to GA.
 
 ## Improvements
 

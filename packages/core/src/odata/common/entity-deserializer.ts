@@ -25,6 +25,9 @@ const logger = createLogger({
   messageContext: 'entity-deserializer'
 });
 
+/**
+ * Interface representing the return type of the builder function [[entityDeserializer]]
+ */
 export interface EntityDeserializer<EntityT extends EntityBase = any> {
   // TODO: extractCustomFields should not be exported here. This was probably done only for testing
   extractCustomFields: (
@@ -55,7 +58,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
  * @param edmToTs - Converters  emd input to ts values.
  * @param extractODataETag - Extractor for the Etag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
- * @returns a entity deserializer as defined by [[entityDeserializerType]]
+ * @returns a entity deserializer as defined by [[EntityDeserializer]]
  */
 export function entityDeserializer<EdmT extends EdmType, EntityT, JsonT>(
   edmToTs: EdmToTsType<EdmT>,

@@ -22,6 +22,9 @@ const logger = createLogger({
   messageContext: 'entity-serializer'
 });
 
+/**
+ * Interface representing the return type of the builder function [[entitySerializer]].
+ */
 export interface EntitySerializer<
   EntityT extends EntityBase = any,
   ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
@@ -49,7 +52,7 @@ type TsToEdmType = (
  * Constructs a entitySerializer given the OData v2 or v4 specific tsToEdm method.
  * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
  * @param tsToEdm - Converters ts input to edm values
- * @returns a entity serializer as defined by [[entitySerializerType]]
+ * @returns a entity serializer as defined by [[EntitySerializer]]
  */
 export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   /**

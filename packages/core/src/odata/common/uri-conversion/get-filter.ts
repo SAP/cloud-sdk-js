@@ -21,7 +21,10 @@ type GetFilterType<EntityT extends EntityBase> = (
   entityConstructor: Constructable<EntityT>
 ) => Partial<{ filter: string }>;
 
-interface GetFilter<EntityT extends EntityBase = any> {
+/**
+ * Interface representing the return of the getFilter creator [[createGetFilter]].
+ */
+export interface GetFilter<EntityT extends EntityBase = any> {
   getFilter: GetFilterType<EntityT>;
 }
 
@@ -30,7 +33,7 @@ interface GetFilter<EntityT extends EntityBase = any> {
  * The concrete filter getters are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
  *
  * @param uriConverter Uri converter for v2 or v4.
- * @returns The filter getter. See [[GetFilter]]
+ * @returns The filter getter. See interface [[GetFilter]]
  */
 export function createGetFilter(uriConverter: UriConverter): GetFilter {
   /**

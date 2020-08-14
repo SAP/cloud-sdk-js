@@ -22,14 +22,17 @@ const logger = createLogger({
   messageContext: 'entity-serializer'
 });
 
-export interface EntitySerializer<EntityT extends EntityBase = any> {
+export interface EntitySerializer<
+  EntityT extends EntityBase = any,
+  ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
+> {
   serializeEntity: (
     entity: EntityT,
     entityConstructor: Constructable<EntityT>
   ) => MapType<any>;
   serializeComplexType: (
-    complexTypeField: ComplexTypeField<EntityT>,
-    fieldValue: any
+    fieldValue: any,
+    complexTypeNameSpace: ComplexTypeNamespaceT
   ) => any;
   serializeEntityNonCustomFields: (
     entity: EntityT,

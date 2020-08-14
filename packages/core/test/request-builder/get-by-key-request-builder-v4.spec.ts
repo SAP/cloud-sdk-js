@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { GetByKeyRequestBuilder } from '../../src/odata/v4/';
+import { GetByKeyRequestBuilder, uriConverter } from '../../src/odata/v4/';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -11,7 +11,8 @@ import {
   testEntityResourcePath
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v4/test-service';
-import { convertToUriFormat } from '../../src/odata/v4/uri-conversion';
+
+const { convertToUriFormat } = uriConverter;
 
 describe('GetByKeyRequestBuilder', () => {
   beforeAll(() => {

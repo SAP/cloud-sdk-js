@@ -31,9 +31,6 @@ export class EnumField<EntityT extends EntityBase>
   implements SelectableEdmTypeField {
   readonly selectable: true;
 
-  edmEnumType: string;
-  tsType: any;
-
   constructor(fieldName: string, fieldOf: Constructable<EntityT>) {
     super(fieldName, fieldOf, 'Edm.Enum');
   }

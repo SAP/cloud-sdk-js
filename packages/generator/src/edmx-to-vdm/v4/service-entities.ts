@@ -7,14 +7,25 @@ import { generateFunctionImportsV4 } from './function-import';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
 import { generateActionImportsV4 } from './action-import';
+import { generateEnumTypesV4 } from './enum-type';
 
 export function getServiceEntitiesV4(
   serviceMetadata: ServiceMetadata
 ): VdmServiceEntities {
   const formatter = new ServiceNameFormatter();
 
-  const complexTypes = generateComplexTypesV4(serviceMetadata, formatter);
-  const entities = generateEntitiesV4(serviceMetadata, complexTypes, formatter);
+  const enumTypes = generateEnumTypesV4(serviceMetadata, formatter);
+  const complexTypes = generateComplexTypesV4(
+    serviceMetadata,
+    enumTypes,
+    formatter
+  );
+  const entities = generateEntitiesV4(
+    serviceMetadata,
+    complexTypes,
+    enumTypes,
+    formatter
+  );
   const actionsImports = generateActionImportsV4(
     serviceMetadata,
     entities,
@@ -30,6 +41,7 @@ export function getServiceEntitiesV4(
 
   return {
     complexTypes: includeFactoryName(complexTypes, formatter),
+    enumTypes,
     entities,
     functionImports,
     actionsImports

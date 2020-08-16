@@ -8,8 +8,8 @@ import {
   edmToTsType,
   getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
-import { VdmComplexType, VdmMappedEdmType } from '../vdm-types';
-import { complexTypeForName } from './common';
+import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
+import { complexTypeForName, enumTypeForName, isEnumType } from './common';
 
 const logger = createLogger({
   package: 'generator',
@@ -33,6 +33,10 @@ export function complexTypeName(type: string): string | undefined {
   return last(type.split('.'));
 }
 
+export function enumTypeName(type: string): string | undefined {
+  return complexTypeName(type);
+}
+
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 /**
@@ -52,7 +56,7 @@ export function parseTypeName(typeName: string): string {
     : typeName;
 }
 
-function parseCollectionTypeName(typeName: string): string {
+export function parseCollectionTypeName(typeName: string): string {
   const name = typeName.match(collectionRegExp)?.groups?.collectionType;
   if (!name) {
     throw new Error(`Cannot parse type name ${typeName}.`);
@@ -64,7 +68,8 @@ export function isV2Metadata(metadata: EdmxMetadata): boolean {
   return metadata.oDataVersion === 'v2';
 }
 
-export function isComplexType(typeName: string): boolean {
+// todo check usage
+export function isComplexTypeOrEnumType(typeName: string): boolean {
   const typeParts = typeName.split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;
 }
@@ -99,6 +104,7 @@ export function getTypeMappingActionFunction(
 
 export function typesForCollection(
   typeName: string,
+  enumTypes: VdmEnumType[],
   complexTypes?: Omit<VdmComplexType, 'factoryName'>[],
   formattedTypes?: MapType<any>
 ): VdmMappedEdmType {
@@ -111,7 +117,14 @@ export function typesForCollection(
       fieldType: 'CollectionField'
     };
   }
-  if (isComplexType(typeInsideCollection)) {
+  if (isComplexTypeOrEnumType(typeInsideCollection)) {
+    if (isEnumType(typeInsideCollection, enumTypes)) {
+      return {
+        edmType: typeInsideCollection,
+        jsType: enumTypeForName(typeInsideCollection, enumTypes),
+        fieldType: 'CollectionField'
+      };
+    }
     const typeComplex =
       complexTypeName(typeInsideCollection) || typeInsideCollection;
     return {

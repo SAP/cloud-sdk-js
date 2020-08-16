@@ -192,7 +192,7 @@ export class TestEntity extends Entity implements TestEntityType {
 
 import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
 import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
-import { TestEnumType, TestEnumTypeField } from './TestEnumType';
+import { TestEnumType } from './TestEnumType';
 import { EnumField } from '../../../../../src/odata/common/selectable/enum-field';
 
 export interface TestEntityType {
@@ -391,7 +391,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | TestEnumTypeField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | EnumField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,

@@ -50,7 +50,13 @@ export function generateEntitiesV2(
   );
 
   return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntityBase(entityMetadata, classNames, complexTypes, formatter),
+    ...transformEntityBase(
+      entityMetadata,
+      classNames,
+      complexTypes,
+      [],
+      formatter
+    ),
     navigationProperties: navigationProperties(
       entityMetadata,
       associations,

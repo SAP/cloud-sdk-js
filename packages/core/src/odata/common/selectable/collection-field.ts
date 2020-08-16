@@ -18,7 +18,7 @@ import { ConstructorOrField } from './constructor-or-field';
  */
 export class CollectionField<
   EntityT extends EntityBase,
-  FieldT extends EdmTypeShared<'any'> | Record<string, any> = any
+  FieldT extends EdmTypeShared<'any'> | Record<string, any> = any | any
 > extends Field<EntityT> implements SelectableEdmTypeField {
   readonly selectable: true;
 

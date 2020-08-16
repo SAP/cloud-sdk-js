@@ -12,11 +12,11 @@ import { TestEnumType } from '../../test-util/test-services/v4/test-service/Test
 
 describe('entity-serializer', () => {
   it('should serialize entity with enum field', () => {
-    const enumProperty = TestEnumType.Enum2;
+    const enumProperty = TestEnumType.Member2;
     const testEntity = TestEntity.builder().enumProperty(enumProperty).build();
 
     expect(serializeEntity(testEntity, TestEntity)).toEqual({
-      EnumProperty: 'Enum2'
+      EnumProperty: 'Member2'
     });
   });
 
@@ -24,7 +24,7 @@ describe('entity-serializer', () => {
     const stringProp1 = 'string 1';
     const complexType1 = {
       stringProperty: stringProp1,
-      enumProperty: TestEnumType.Enum1
+      enumProperty: TestEnumType.Member1
     };
     const testEntity = TestEntity.builder()
       .complexTypeProperty(complexType1)
@@ -33,7 +33,7 @@ describe('entity-serializer', () => {
     expect(serializeEntity(testEntity, TestEntity)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProp1,
-        EnumProperty: 'Enum1'
+        EnumProperty: 'Member1'
       }
     });
   });

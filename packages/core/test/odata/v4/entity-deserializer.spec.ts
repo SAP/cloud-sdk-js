@@ -9,8 +9,8 @@ import { TestEnumType } from '../../test-util/test-services/v4/test-service/Test
 
 describe('entity-deserializer', () => {
   it('should deserialize an enum property', () => {
-    const enumProperty = TestEnumType.Enum1;
-    expect(deserializeEntity({ EnumProperty: 'Enum1' }, TestEntity)).toEqual(
+    const enumProperty = TestEnumType.Member1;
+    expect(deserializeEntity({ EnumProperty: 'Member1' }, TestEntity)).toEqual(
       TestEntity.builder().enumProperty(enumProperty).build()
     );
   });

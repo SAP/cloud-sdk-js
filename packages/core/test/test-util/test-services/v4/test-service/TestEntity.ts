@@ -7,7 +7,8 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src/v4';
+import { TestEnumType } from './TestEnumType';
+import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src/v4';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -115,8 +116,6 @@ export class TestEntity extends Entity implements TestEntityType {
    * @nullable
    */
   sByteProperty?: number;
-
-  enumProperty?: TestEnumType;
   /**
    * Geography Point Property.
    * @nullable
@@ -143,6 +142,16 @@ export class TestEntity extends Entity implements TestEntityType {
    * @nullable
    */
   complexTypeCollectionProperty?: TestComplexType[];
+  /**
+   * Enum Property.
+   * @nullable
+   */
+  enumProperty?: TestEnumType;
+  /**
+   * Enum Collection Property.
+   * @nullable
+   */
+  enumCollectionProperty?: TestEnumType[];
   /**
    * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
    */
@@ -192,8 +201,6 @@ export class TestEntity extends Entity implements TestEntityType {
 
 import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
 import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
-import { TestEnumType } from './TestEnumType';
-import { EnumField } from '../../../../../src/odata/common/selectable/enum-field';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
@@ -214,12 +221,13 @@ export interface TestEntityType {
   durationProperty?: Duration;
   byteProperty?: number;
   sByteProperty?: number;
-  enumProperty?: TestEnumType;
   geographyPointProperty?: any;
   somethingTheSdkDoesNotSupport?: any;
   collectionProperty?: string[];
   complexTypeProperty?: TestComplexType;
   complexTypeCollectionProperty?: TestComplexType[];
+  enumProperty?: TestEnumType;
+  enumCollectionProperty?: TestEnumType[];
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;
@@ -244,12 +252,13 @@ export interface TestEntityTypeForceMandatory {
   durationProperty: Duration;
   byteProperty: number;
   sByteProperty: number;
-  enumProperty: TestEnumType;
   geographyPointProperty: any;
   somethingTheSdkDoesNotSupport: any;
   collectionProperty: string[];
   complexTypeProperty: TestComplexType;
   complexTypeCollectionProperty: TestComplexType[];
+  enumProperty: TestEnumType;
+  enumCollectionProperty: TestEnumType[];
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;
@@ -346,8 +355,6 @@ export namespace TestEntity {
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const S_BYTE_PROPERTY: NumberField<TestEntity> = new NumberField('SByteProperty', TestEntity, 'Edm.SByte');
-
-  export const ENUM_PROPERTY: EnumField<TestEntity> = new EnumField('EnumProperty', TestEntity);
   /**
    * Static representation of the [[geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -374,6 +381,16 @@ export namespace TestEntity {
    */
   export const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity, TestComplexType> = new CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType);
   /**
+   * Static representation of the [[enumProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const ENUM_PROPERTY: EnumField<TestEntity> = new EnumField('EnumProperty', TestEntity);
+  /**
+   * Static representation of the [[enumCollectionProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntity, TestEnumType> = new CollectionField('EnumCollectionProperty', TestEntity, TestEnumType);
+  /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -391,7 +408,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | EnumField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | EnumField<TestEntity> | CollectionField<TestEntity, TestEnumType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -410,12 +427,13 @@ export namespace TestEntity {
     TestEntity.DURATION_PROPERTY,
     TestEntity.BYTE_PROPERTY,
     TestEntity.S_BYTE_PROPERTY,
-    TestEntity.ENUM_PROPERTY,
     TestEntity.GEOGRAPHY_POINT_PROPERTY,
     TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT,
     TestEntity.COLLECTION_PROPERTY,
     TestEntity.COMPLEX_TYPE_PROPERTY,
     TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
+    TestEntity.ENUM_PROPERTY,
+    TestEntity.ENUM_COLLECTION_PROPERTY,
     TestEntity.TO_MULTI_LINK,
     TestEntity.TO_OTHER_MULTI_LINK,
     TestEntity.TO_SINGLE_LINK

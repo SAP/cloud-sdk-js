@@ -1,13 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable max-classes-per-file */
 
-import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
-import {
-  ComplexTypeField,
-  getEdmType,
-  getEntityConstructor
-} from './complex-type-field';
+import { EntityBase, Constructable } from '../entity';
+import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
@@ -59,10 +54,9 @@ export class ComplexTypeEnumPropertyField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
+    fieldOf: ConstructorOrField<EntityT, ComplexT>
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), getEdmType(edmType));
+    super(fieldName, getEntityConstructor(fieldOf), 'Edm.Enum');
     this.fieldOf = fieldOf;
   }
 

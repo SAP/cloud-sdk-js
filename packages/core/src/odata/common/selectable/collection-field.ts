@@ -18,7 +18,8 @@ import { ConstructorOrField } from './constructor-or-field';
  */
 export class CollectionField<
   EntityT extends EntityBase,
-  FieldT extends EdmTypeShared<'any'> | Record<string, any> = any | any
+  // todo there is not super class for enum like TestEnumType
+  FieldT extends EdmTypeShared<'any'> | any | Record<string, any> = any
 > extends Field<EntityT> implements SelectableEdmTypeField {
   readonly selectable: true;
 
@@ -34,7 +35,8 @@ export class CollectionField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    readonly _fieldType: FieldT | ComplexTypeNamespace<FieldT>
+    // todo same as the todo in the class signature
+    readonly _fieldType: FieldT | any | ComplexTypeNamespace<FieldT>
   ) {
     super(fieldName, getEntityConstructor(fieldOf));
   }

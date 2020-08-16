@@ -18,9 +18,10 @@ import {
   isCollectionType,
   isComplexTypeOrEnumType,
   isEdmType,
+  parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
-import { isEnumType } from './entity';
+import { enumTypeForName, isEnumType } from './entity';
 
 const logger = createLogger({
   package: 'generator',
@@ -62,14 +63,23 @@ export function transformComplexTypesBase(
           c.Name,
           p.Name
         );
-        const isComplexOrEnum = isComplexTypeOrEnumType(p.Type);
-        const isEnum = isComplexOrEnum ? isEnumType(p.Type, enumTypes) : false;
-        const isComplex = isComplexOrEnum ? !isEnum : false;
         const isCollection = isCollectionType(p.Type);
+        const isComplexOrEnum = isComplexTypeOrEnumType(
+          isCollection ? parseCollectionTypeName(p.Type) : p.Type
+        );
+        const isEnum = isComplexOrEnum
+          ? isCollection
+            ? isEnumType(parseCollectionTypeName(p.Type), enumTypes)
+            : isEnumType(p.Type, enumTypes)
+          : false;
+        const isComplex = isComplexOrEnum ? !isEnum : false;
         const typeMapping = getTypeMappingComplexProperties(
           p.Type,
           enumTypes,
-          formattedTypes
+          formattedTypes,
+          isCollection,
+          isEnum,
+          isComplex
         );
         return {
           originalName: p.Name,
@@ -99,7 +109,10 @@ export function transformComplexTypesBase(
 export function getTypeMappingComplexProperties(
   typeName: string,
   enumTypes: VdmEnumType[],
-  formattedTypes: MapType<any>
+  formattedTypes: MapType<any>,
+  isCollection: boolean,
+  isEnum: boolean,
+  isComplex: boolean
 ): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
@@ -110,11 +123,19 @@ export function getTypeMappingComplexProperties(
     };
   }
 
-  if (isCollectionType(typeName)) {
+  if (isCollection) {
     return typesForCollection(typeName, enumTypes, undefined, formattedTypes);
   }
 
-  if (isComplexTypeOrEnumType(typeName)) {
+  if (isEnum) {
+    return {
+      edmType: 'Edm.Enum',
+      jsType: enumTypeForName(typeName, enumTypes),
+      fieldType: 'ComplexTypeEnumPropertyField'
+    };
+  }
+
+  if (isComplex) {
     const withoutPrefix = complexTypeName(typeName)!;
     return {
       edmType: typeName,

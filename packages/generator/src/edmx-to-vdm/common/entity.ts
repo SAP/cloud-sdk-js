@@ -84,9 +84,7 @@ function properties(
   formatter: ServiceNameFormatter,
   enumTypes: VdmEnumType[]
 ): VdmProperty[] {
-  console.log(entity.entityType.Property);
   return entity.entityType.Property.map(p => {
-    console.log(p);
     checkCollectionKind(p);
     const swaggerProp = entity.swaggerDefinition
       ? entity.swaggerDefinition.properties[p.Name]

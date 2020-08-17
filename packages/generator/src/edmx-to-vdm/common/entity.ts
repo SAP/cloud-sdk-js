@@ -30,8 +30,8 @@ import {
 import {
   checkCollectionKind,
   complexTypeFieldType,
-  isCollectionType,
-  isEdmType,
+  isCollectionType, isComplexType,
+  isEdmType, isEnumType,
   parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
@@ -259,13 +259,13 @@ function complexTypeFieldForName(
 
 const getPostfix = (type: string) => last(type.split('.'));
 
-const findComplexType = (
+export const findComplexType = (
   name: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): Omit<VdmComplexType, 'factoryName'> | undefined =>
   complexTypes.find(c => c.originalName === getPostfix(name));
 
-const findEnumType = (
+export const findEnumType = (
   name: string,
   enumTypes: VdmEnumType[]
 ): VdmEnumType | undefined =>
@@ -297,15 +297,4 @@ export function enumTypeForName(
     `No enum type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
   );
   return 'any';
-}
-
-export function isComplexType(
-  name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
-): boolean {
-  return !!findComplexType(name, complexTypes);
-}
-
-export function isEnumType(name: string, enumTypes: VdmEnumType[]): boolean {
-  return !!findEnumType(name, enumTypes);
 }

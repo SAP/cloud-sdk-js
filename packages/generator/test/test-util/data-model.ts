@@ -6,7 +6,8 @@ import {
   VdmReturnTypeCategory,
   VdmNavigationProperty,
   VdmProperty,
-  VdmServiceMetadata
+  VdmServiceMetadata,
+  VdmEnumType
 } from '../../src/vdm-types';
 
 export const entityName: VdmProperty = {
@@ -101,6 +102,12 @@ export const foodService: VdmServiceMetadata = {
   enumTypes: [],
   className: 'FoodService',
   edmxPath: 'some/path/to/food/edmx'
+};
+
+export const enumMeal: VdmEnumType = {
+  originalName: 'EnumMealName',
+  typeName: 'EnumMealType',
+  members: ['member1', 'member2']
 };
 
 export const complexMeal: VdmComplexType = {

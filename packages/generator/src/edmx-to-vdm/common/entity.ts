@@ -260,19 +260,19 @@ function complexTypeFieldForName(
   return 'any';
 }
 
-const complexOrEnumTypeName = (type: string) => last(type.split('.'));
+const getPostfix = (type: string) => last(type.split('.'));
 
 const findComplexType = (
   name: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): Omit<VdmComplexType, 'factoryName'> | undefined =>
-  complexTypes.find(c => c.originalName === complexOrEnumTypeName(name));
+  complexTypes.find(c => c.originalName === getPostfix(name));
 
 const findEnumType = (
   name: string,
   enumTypes: VdmEnumType[]
 ): VdmEnumType | undefined =>
-  enumTypes.find(e => e.originalName === complexOrEnumTypeName(name));
+  enumTypes.find(e => e.originalName === getPostfix(name));
 
 export function complexTypeForName(
   name: string,

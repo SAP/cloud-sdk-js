@@ -16,7 +16,7 @@ keywords:
 
 ## What is a BAPI/an RFC Module?
 
-As per the [official SAP documentation](https://help.sap.com/saphelp_46c/helpdata/en/a5/3ec8464ac011d1894e0000e829fbbd/content.htm?no_cache=true), a BAPI (Business Application Programming Interface) is a *precisely defined interface providing access to processes and data in business application systems*. BAPIs allow external systems to integrate with SAP S/4HANA by reading and writing business data through the BAPI as an interface. By contrast, an RFC module can also be used for such integrations. However, the recommended approach is to leverage BAPIs wherever possible as BAPIs guarantee more stable and intuitive interfaces.
+As per the [official SAP documentation](https://help.sap.com/saphelp_46c/helpdata/en/a5/3ec8464ac011d1894e0000e829fbbd/content.htm?no_cache=true), a BAPI (Business Application Programming Interface) is a *precisely defined interface providing access to processes and data in business application systems*. BAPIs allow external systems to integrate with ABAP systems by reading and writing business data through the BAPI as an interface. By contrast, an RFC module can also be used for such integrations. However, the recommended approach is to leverage BAPIs wherever possible as BAPIs guarantee more stable and intuitive interfaces.
 
 On the technical level, both BAPIs and RFC modules allow for invocation from external systems through the [RFC protocol](https://help.sap.com/doc/saphelp_nw73/7.3.16/en-US/48/88068ad9134076e10000000a42189d/content.htm) (Remote Function Call). As opposed to HTTP, RFC is a binary protocol highly-optimized for fast data transfer between enterprise systems.
 
@@ -40,7 +40,7 @@ SAP Cloud SDK does *not* package JCo as library with its dependencies. The SDK a
 :::
 
 On the SCP Neo landscape, JCo is automatically provided by the infrastructure, on the SCP Cloud Foundry landscape one must use the SAP Java Build Pack during app deployment. There are other edge cases that we'll cover later.
-## Call a BAPI in SAP S/4HANA
+## Call a BAPI in a SAP ABAP system
 
 :::tip Generate SDK project
 If you're starting from scratch, generate a `Tomee` project following the steps in the [Getting started](https://sap.github.io/cloud-sdk/docs/java/getting-started#generating-a-project-from-a-maven-archetype) guide.
@@ -49,7 +49,7 @@ If you're starting from scratch, generate a `Tomee` project following the steps 
 ### Implement an Example BAPI Call
 
 #### Example Scenario
-We build an app that we deploy to SCP Cloud Foundry. This app exposes a servlet which invokes a BAPI to retrieve cost center information from SAP S/4HANA. The servlet has two input parameters which we supply in the query string:
+We build an app that we deploy to SCP Cloud Foundry. This app exposes a servlet which invokes a BAPI to retrieve cost center information from e.g. SAP S/4HANA. The servlet has two input parameters which we supply in the query string:
 - *destinationName*: Defines which SCP destination to use for connecting to SAP S/4HANA.
 - *controllingArea*: Defines the controlling area for the cost center retrieval.
 
@@ -204,14 +204,14 @@ Here is what you'll need to make progress throughout the next steps.
 - Node installed on your own machine
 - User in SAP S/4HANA target system
 - SCP Cloud Foundry subaccount with entitlements for XSUAA, destination and connectivity service
-- SAP Cloud Connector connected to the SAP Cloud Foundry subaccount
+- SAP Cloud Connector connected to the SAP Cloud Foundry subaccount (if SAP S/4HANA is On-Premise)
 
 Another full tutorial for setting up this scenario can be found [here](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/fa4adc9bd40e45dbac573fd616695446.html).
 
 #### Setup App Router
 JCo requires that the app is invoked with a JWT that contains the user context. Therefore, securing the backend with an app router is required. Follow [this tutorial](https://developers.sap.com/tutorials/s4sdk-secure-cloudfoundry.html) to setup the app router.
 
-#### Setup Cloud Connector
+#### Setup Cloud Connector for SAP S/4HANA On-Premise access
 Expose the S/4HANA system in the SAP Cloud Connector as described in the [official documentation](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/ca5868997e48468395cf0ca4882f5783.html).
 
 #### Setup Destination

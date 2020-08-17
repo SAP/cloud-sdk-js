@@ -118,6 +118,16 @@ var TestComplexTypeField = /** @class */ (function (_super) {
          */
         _this.geographyPointProperty = new v4_1.ComplexTypeAnyPropertyField('GeographyPointProperty', _this, 'Edm.Any');
         /**
+         * Representation of the [[TestComplexType.enumProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.enumProperty = new v4_1.ComplexTypeEnumPropertyField('EnumProperty', _this);
+        /**
+         * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.somethingTheSdkDoesNotSupport = new v4_1.ComplexTypeAnyPropertyField('SomethingTheSDKDoesNotSupport', _this, 'Edm.Any');
+        /**
          * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
@@ -228,6 +238,16 @@ var TestComplexType;
             type: 'Edm.Any',
             isCollection: false
         }, {
+            originalName: 'EnumProperty',
+            name: 'enumProperty',
+            type: 'Edm.Enum',
+            isCollection: false
+        }, {
+            originalName: 'SomethingTheSDKDoesNotSupport',
+            name: 'somethingTheSdkDoesNotSupport',
+            type: 'Edm.Any',
+            isCollection: false
+        }, {
             originalName: 'ComplexTypeProperty',
             name: 'complexTypeProperty',
             type: TestNestedComplexType_1.TestNestedComplexType,
@@ -249,7 +269,7 @@ var TestComplexType;
             isCollection: false
         }];
     /**
-     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
         return v4_1.deserializeComplexType(json, TestComplexType);

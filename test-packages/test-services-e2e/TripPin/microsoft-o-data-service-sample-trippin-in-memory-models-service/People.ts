@@ -6,7 +6,9 @@
 import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import { Location, LocationField } from './Location';
-import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core/v4';
+import { PersonGender } from './PersonGender';
+import { Feature } from './Feature';
+import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, EnumField, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core/v4';
 
 /**
  * This class represents the entity "People" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
@@ -44,6 +46,10 @@ export class People extends Entity implements PeopleType {
    */
   middleName?: string;
   /**
+   * Gender.
+   */
+  gender!: PersonGender;
+  /**
    * Age.
    * @nullable
    */
@@ -63,6 +69,14 @@ export class People extends Entity implements PeopleType {
    * @nullable
    */
   homeAddress?: Location;
+  /**
+   * Favorite Feature.
+   */
+  favoriteFeature!: Feature;
+  /**
+   * Features.
+   */
+  features!: Feature[];
   /**
    * One-to-many navigation property to the [[People]] entity.
    */
@@ -111,10 +125,13 @@ export interface PeopleType {
   firstName: string;
   lastName?: string;
   middleName?: string;
+  gender: PersonGender;
   age?: BigNumber;
   emails?: string[];
   addressInfo?: Location[];
   homeAddress?: Location;
+  favoriteFeature: Feature;
+  features: Feature[];
   friends: PeopleType[];
   bestFriend: PeopleType;
 }
@@ -124,10 +141,13 @@ export interface PeopleTypeForceMandatory {
   firstName: string;
   lastName: string;
   middleName: string;
+  gender: PersonGender;
   age: BigNumber;
   emails: string[];
   addressInfo: Location[];
   homeAddress: Location;
+  favoriteFeature: Feature;
+  features: Feature[];
   friends: PeopleType[];
   bestFriend: PeopleType;
 }
@@ -154,6 +174,11 @@ export namespace People {
    */
   export const MIDDLE_NAME: StringField<People> = new StringField('MiddleName', People, 'Edm.String');
   /**
+   * Static representation of the [[gender]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const GENDER: EnumField<People> = new EnumField('Gender', People);
+  /**
    * Static representation of the [[age]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -174,6 +199,16 @@ export namespace People {
    */
   export const HOME_ADDRESS: LocationField<People> = new LocationField('HomeAddress', People);
   /**
+   * Static representation of the [[favoriteFeature]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const FAVORITE_FEATURE: EnumField<People> = new EnumField('FavoriteFeature', People);
+  /**
+   * Static representation of the [[features]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const FEATURES: CollectionField<People, 'Edm.Enum'> = new CollectionField('Features', People, 'Edm.Enum');
+  /**
    * Static representation of the one-to-many navigation property [[friends]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -186,15 +221,18 @@ export namespace People {
   /**
    * All fields of the People entity.
    */
-  export const _allFields: Array<StringField<People> | BigNumberField<People> | CollectionField<People, 'Edm.String'> | CollectionField<People, Location> | LocationField<People> | OneToManyLink<People, People> | OneToOneLink<People, People>> = [
+  export const _allFields: Array<StringField<People> | EnumField<People> | BigNumberField<People> | CollectionField<People, 'Edm.String'> | CollectionField<People, Location> | LocationField<People> | CollectionField<People, 'Edm.Enum'> | OneToManyLink<People, People> | OneToOneLink<People, People>> = [
     People.USER_NAME,
     People.FIRST_NAME,
     People.LAST_NAME,
     People.MIDDLE_NAME,
+    People.GENDER,
     People.AGE,
     People.EMAILS,
     People.ADDRESS_INFO,
     People.HOME_ADDRESS,
+    People.FAVORITE_FEATURE,
+    People.FEATURES,
     People.FRIENDS,
     People.BEST_FRIEND
   ];

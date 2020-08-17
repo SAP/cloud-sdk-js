@@ -219,7 +219,7 @@ var TestComplexType;
             isCollection: false
         }];
     /**
-     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
         return core_1.deserializeComplexType(json, TestComplexType);

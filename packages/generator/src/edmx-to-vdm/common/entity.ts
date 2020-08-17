@@ -94,12 +94,9 @@ function properties(
       p.Name
     );
     const isCollection = isCollectionType(p.Type);
-    const isComplex = isCollection
-      ? isComplexType(parseCollectionTypeName(p.Type), complexTypes)
-      : isComplexType(p.Type, complexTypes);
-    const isEnum = isCollection
-      ? isEnumType(parseCollectionTypeName(p.Type), enumTypes)
-      : isEnumType(p.Type, enumTypes);
+    const parsed = isCollection ? parseCollectionTypeName(p.Type) : p.Type;
+    const isComplex = isComplexType(parsed, complexTypes);
+    const isEnum = isEnumType(parsed, enumTypes);
     const typeMapping = getTypeMappingEntityProperties(
       p.Type,
       complexTypes,

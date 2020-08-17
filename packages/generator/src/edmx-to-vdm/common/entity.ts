@@ -30,8 +30,10 @@ import {
 import {
   checkCollectionKind,
   complexTypeFieldType,
-  isCollectionType, isComplexType,
-  isEdmType, isEnumType,
+  isCollectionType,
+  isComplexType,
+  isEdmType,
+  isEnumType,
   parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';

@@ -17,7 +17,8 @@ import {
   complexTypeName,
   isCollectionType,
   isComplexTypeOrEnumType,
-  isEdmType, isEnumType,
+  isEdmType,
+  isEnumType,
   parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
@@ -66,7 +67,7 @@ export function transformComplexTypesBase(
         const isCollection = isCollectionType(p.Type);
         const parsed = isCollection ? parseCollectionTypeName(p.Type) : p.Type;
         const isComplexOrEnum = isComplexTypeOrEnumType(parsed);
-        const isEnum = isEnumType(parsed, enumTypes)
+        const isEnum = isEnumType(parsed, enumTypes);
         const isComplex = isComplexOrEnum ? !isEnum : false;
         const typeMapping = getTypeMappingComplexProperties(
           p.Type,

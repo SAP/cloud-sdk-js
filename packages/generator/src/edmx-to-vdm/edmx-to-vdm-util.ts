@@ -9,7 +9,12 @@ import {
   getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
-import { complexTypeForName, enumTypeForName, findComplexType, findEnumType } from './common';
+import {
+  complexTypeForName,
+  enumTypeForName,
+  findComplexType,
+  findEnumType
+} from './common';
 
 const logger = createLogger({
   package: 'generator',
@@ -31,10 +36,6 @@ export function isEdmType(typeName: string): boolean {
 
 export function complexTypeName(type: string): string | undefined {
   return last(type.split('.'));
-}
-
-export function enumTypeName(type: string): string | undefined {
-  return complexTypeName(type);
 }
 
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
@@ -77,11 +78,15 @@ export function isComplexType(
   name: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): boolean {
-  return isComplexTypeOrEnumType(name)? !!findComplexType(name, complexTypes) : false;
+  return isComplexTypeOrEnumType(name)
+    ? !!findComplexType(name, complexTypes)
+    : false;
 }
 
 export function isEnumType(name: string, enumTypes: VdmEnumType[]): boolean {
-  return isComplexTypeOrEnumType(name) ? !!findEnumType(name, enumTypes) : false;
+  return isComplexTypeOrEnumType(name)
+    ? !!findEnumType(name, enumTypes)
+    : false;
 }
 
 export function checkCollectionKind(property: EdmxProperty) {

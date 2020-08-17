@@ -98,6 +98,7 @@ export const foodService: VdmServiceMetadata = {
   entities: [breakfastEntity, brunchEntity],
   functionImports: [],
   complexTypes: [],
+  enumTypes: [],
   className: 'FoodService',
   edmxPath: 'some/path/to/food/edmx'
 };

@@ -67,9 +67,9 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(30);
+      expect(files.length).toBe(31);
     });
-
+    // todo
     it('generates TestEntity.ts file', () => {
       const testEntityFile = files.find(
         file => file.getBaseName() === 'TestEntity.ts'
@@ -81,12 +81,12 @@ describe('generator', () => {
       expect(testEntityFile!.getNamespaces().length).toBe(1);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(29);
+      expect(entityClass!.getProperties().length).toBe(31);
 
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getNamespace('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(30);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(32);
     });
 
     it('generates function-imports.ts file', () => {

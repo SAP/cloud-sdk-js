@@ -189,11 +189,18 @@ export function getGenericParameters(
   entityClassName: string,
   prop: VdmProperty
 ): string {
-  const param = prop.isCollection
-    ? prop.isComplex || prop.isEnum
-      ? [`${prop.jsType}`]
-      : [`'${prop.edmType}'`]
-    : [];
+  let param;
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      param = [`${prop.jsType}`];
+    } else if (prop.isEnum) {
+      param = ["'Edm.Enum'"];
+    } else {
+      param = [`'${prop.edmType}'`];
+    }
+  } else {
+    param = [];
+  }
   return [entityClassName, ...param].join(', ');
 }
 
@@ -205,10 +212,14 @@ export function createPropertyFieldInitializer(
     property.isComplex || property.isEnum
       ? property.jsType
       : `'${property.edmType}'`;
-  const collectionTypeOrEdmType =
-    (property.isComplex || property.isEnum) && !property.isCollection
-      ? undefined
-      : edmOrComplexTypeOrEnumType;
+  let collectionTypeOrEdmType;
+  if ((property.isComplex || property.isEnum) && !property.isCollection) {
+    collectionTypeOrEdmType = undefined;
+  } else if (property.isEnum && property.isCollection) {
+    collectionTypeOrEdmType = "'Edm.Enum'";
+  } else {
+    collectionTypeOrEdmType = edmOrComplexTypeOrEnumType;
+  }
 
   return `new ${property.fieldType}(${[
     `'${property.originalName}'`,

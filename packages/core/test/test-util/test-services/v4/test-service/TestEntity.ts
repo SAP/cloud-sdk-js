@@ -389,7 +389,7 @@ export namespace TestEntity {
    * Static representation of the [[enumCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntity, TestEnumType> = new CollectionField('EnumCollectionProperty', TestEntity, TestEnumType);
+  export const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.Enum'> = new CollectionField('EnumCollectionProperty', TestEntity, 'Edm.Enum');
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -408,7 +408,7 @@ export namespace TestEntity {
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | EnumField<TestEntity> | CollectionField<TestEntity, TestEnumType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | EnumField<TestEntity> | CollectionField<TestEntity, 'Edm.Enum'> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,

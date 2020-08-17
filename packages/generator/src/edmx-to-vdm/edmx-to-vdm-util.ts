@@ -68,7 +68,6 @@ export function isV2Metadata(metadata: EdmxMetadata): boolean {
   return metadata.oDataVersion === 'v2';
 }
 
-// todo check usage
 export function isComplexTypeOrEnumType(typeName: string): boolean {
   const typeParts = typeName.split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;

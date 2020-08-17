@@ -69,7 +69,7 @@ describe('generator', () => {
     it('generates expected number of files', () => {
       expect(files.length).toBe(31);
     });
-    // todo
+
     it('generates TestEntity.ts file', () => {
       const testEntityFile = files.find(
         file => file.getBaseName() === 'TestEntity.ts'

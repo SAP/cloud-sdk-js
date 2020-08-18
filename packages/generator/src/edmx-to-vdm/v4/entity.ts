@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 import {
   createEntityClassNames,
   joinEntityMetadata,
@@ -8,6 +9,7 @@ import {
 import {
   VdmComplexType,
   VdmEntity,
+  VdmEnumType,
   VdmNavigationProperty
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
@@ -41,6 +43,7 @@ export function joinEntityTypes(
 export function generateEntitiesV4(
   serviceMetadata: ServiceMetadata,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
   const entitySets = parseEntitySets(serviceMetadata.edmx.root);
@@ -55,7 +58,13 @@ export function generateEntitiesV4(
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
   return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntityBase(entityMetadata, classNames, complexTypes, formatter),
+    ...transformEntityBase(
+      entityMetadata,
+      classNames,
+      complexTypes,
+      enumTypes,
+      formatter
+    ),
     navigationProperties: navigationProperties(
       entityMetadata.entityType,
       entityMetadata.entitySet,

@@ -6,7 +6,8 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { CollectionField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src/v4';
+import { TestEnumType } from './TestEnumType';
+import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeEnumPropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src/v4';
 
 /**
  * TestComplexType
@@ -86,6 +87,21 @@ export interface TestComplexType {
    * @nullable
    */
   sByteProperty?: number;
+  /**
+   * Geography Point Property.
+   * @nullable
+   */
+  geographyPointProperty?: any;
+  /**
+   * Enum Property.
+   * @nullable
+   */
+  enumProperty?: TestEnumType;
+  /**
+   * Something The Sdk Does Not Support.
+   * @nullable
+   */
+  somethingTheSdkDoesNotSupport?: any;
   /**
    * Complex Type Property.
    * @nullable
@@ -195,6 +211,21 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   sByteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('SByteProperty', this, 'Edm.SByte');
+  /**
+   * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  geographyPointProperty: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField('GeographyPointProperty', this, 'Edm.Any');
+  /**
+   * Representation of the [[TestComplexType.enumProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  enumProperty: ComplexTypeEnumPropertyField<EntityT> = new ComplexTypeEnumPropertyField('EnumProperty', this);
+  /**
+   * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  somethingTheSdkDoesNotSupport: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField('SomethingTheSDKDoesNotSupport', this, 'Edm.Any');
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -307,6 +338,21 @@ export namespace TestComplexType {
     type: 'Edm.SByte',
     isCollection: false
   }, {
+    originalName: 'GeographyPointProperty',
+    name: 'geographyPointProperty',
+    type: 'Edm.Any',
+    isCollection: false
+  }, {
+    originalName: 'EnumProperty',
+    name: 'enumProperty',
+    type: 'Edm.Enum',
+    isCollection: false
+  }, {
+    originalName: 'SomethingTheSDKDoesNotSupport',
+    name: 'somethingTheSdkDoesNotSupport',
+    type: 'Edm.Any',
+    isCollection: false
+  }, {
     originalName: 'ComplexTypeProperty',
     name: 'complexTypeProperty',
     type: TestNestedComplexType,
@@ -329,7 +375,7 @@ export namespace TestComplexType {
   }];
 
   /**
-   * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | TestNestedComplexType }): TestComplexType {
     return deserializeComplexType(json, TestComplexType);

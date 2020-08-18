@@ -20,7 +20,8 @@ export const uriConvertersCommon: UriConverterMapping = {
   'Edm.Double': value => (isInfOrNan(value) ? value : `${value}D`),
   'Edm.Single': value => (isInfOrNan(value) ? value : `${value}F`),
   'Edm.Float': value => (isInfOrNan(value) ? value : `${value}F`),
-  'Edm.String': value => convertToUriForEdmString(value)
+  'Edm.String': value => convertToUriForEdmString(value),
+  'Edm.Any': value => String(value)
 };
 
 function isInfOrNan(value: string | number): boolean {
@@ -34,5 +35,5 @@ function isInfOrNan(value: string | number): boolean {
  * @hidden
  */
 export function convertToUriForEdmString(value: any): string {
-  return `'${value.replace(/'/g, "''")}'`;
+  return `'${encodeURIComponent(value).replace(/'/g, "''")}'`;
 }

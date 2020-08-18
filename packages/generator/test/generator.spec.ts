@@ -47,17 +47,17 @@ describe('generator', () => {
       expect(testEntityFile!.getNamespaces().length).toBe(1);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(24);
+      expect(entityClass!.getProperties().length).toBe(25);
 
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getNamespace('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(25);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(26);
     });
 
     it('generates function-imports.ts file', () => {
       const functionImports = getFunctionImportDeclarations(files);
-      expect(functionImports.length).toBe(12);
+      expect(functionImports.length).toBe(13);
     });
   });
 
@@ -67,7 +67,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(30);
+      expect(files.length).toBe(31);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -81,12 +81,12 @@ describe('generator', () => {
       expect(testEntityFile!.getNamespaces().length).toBe(1);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(27);
+      expect(entityClass!.getProperties().length).toBe(31);
 
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getNamespace('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(28);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(32);
     });
 
     it('generates function-imports.ts file', () => {
@@ -103,7 +103,7 @@ describe('generator', () => {
 
     it('generates action-imports.ts file', () => {
       const actionImports = getActionImportDeclarations(files);
-      expect(actionImports.length).toBe(2);
+      expect(actionImports.length).toBe(3);
       const actionImportNames = actionImports.map(action => action.getName());
       expect(actionImportNames).toEqual(
         expect.arrayContaining(['testActionImportNoParameterNoReturnType'])

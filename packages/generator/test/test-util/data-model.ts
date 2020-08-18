@@ -6,7 +6,8 @@ import {
   VdmReturnTypeCategory,
   VdmNavigationProperty,
   VdmProperty,
-  VdmServiceMetadata
+  VdmServiceMetadata,
+  VdmEnumType
 } from '../../src/vdm-types';
 
 export const entityName: VdmProperty = {
@@ -98,8 +99,15 @@ export const foodService: VdmServiceMetadata = {
   entities: [breakfastEntity, brunchEntity],
   functionImports: [],
   complexTypes: [],
+  enumTypes: [],
   className: 'FoodService',
   edmxPath: 'some/path/to/food/edmx'
+};
+
+export const enumMeal: VdmEnumType = {
+  originalName: 'EnumMealName',
+  typeName: 'EnumMealType',
+  members: ['member1', 'member2']
 };
 
 export const complexMeal: VdmComplexType = {
@@ -214,7 +222,8 @@ export const orderBreakfast: VdmFunctionImport = {
       nullable: true,
       description: 'Breakfast includes a honey toast',
       edmType: 'Edm.Boolean',
-      jsType: 'boolean'
+      jsType: 'boolean',
+      fieldType: 'BooleanField'
     }
   ],
   parametersTypeName: 'Params',

@@ -180,6 +180,16 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      */
     TestEntity.S_BYTE_PROPERTY = new v4_1.NumberField('SByteProperty', TestEntity, 'Edm.SByte');
     /**
+     * Static representation of the [[geographyPointProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.GEOGRAPHY_POINT_PROPERTY = new v4_1.AnyField('GeographyPointProperty', TestEntity, 'Edm.Any');
+    /**
+     * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT = new v4_1.AnyField('SomethingTheSDKDoesNotSupport', TestEntity, 'Edm.Any');
+    /**
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -194,6 +204,16 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY = new v4_1.CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType_1.TestComplexType);
+    /**
+     * Static representation of the [[enumProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.ENUM_PROPERTY = new v4_1.EnumField('EnumProperty', TestEntity);
+    /**
+     * Static representation of the [[enumCollectionProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.ENUM_COLLECTION_PROPERTY = new v4_1.CollectionField('EnumCollectionProperty', TestEntity, 'Edm.Enum');
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -231,9 +251,13 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
         TestEntity.DURATION_PROPERTY,
         TestEntity.BYTE_PROPERTY,
         TestEntity.S_BYTE_PROPERTY,
+        TestEntity.GEOGRAPHY_POINT_PROPERTY,
+        TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT,
         TestEntity.COLLECTION_PROPERTY,
         TestEntity.COMPLEX_TYPE_PROPERTY,
         TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
+        TestEntity.ENUM_PROPERTY,
+        TestEntity.ENUM_COLLECTION_PROPERTY,
         TestEntity.TO_MULTI_LINK,
         TestEntity.TO_OTHER_MULTI_LINK,
         TestEntity.TO_SINGLE_LINK

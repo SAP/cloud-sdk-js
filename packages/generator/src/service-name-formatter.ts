@@ -128,6 +128,10 @@ export class ServiceNameFormatter {
     return newName;
   }
 
+  originalToEnumTypeName(str: string): string {
+    return this.originalToComplexTypeName(str);
+  }
+
   typeNameToFactoryName(str: string);
   /**
    * @deprecated since version 1.25.0. In the refactored version of the generator the reserved names are obsolete.

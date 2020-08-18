@@ -25,11 +25,34 @@ describe('edmx-to-vdm-v4', () => {
       [createTestEntitySet('TestEntity', 'TestEntityType')]
     );
 
-    const entity = generateEntitiesV4(service, [], getFormatter())[0];
+    const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.properties[0]).toMatchObject({
       isCollection: true,
       edmType: 'Edm.String',
       jsType: 'string',
+      fieldType: 'CollectionField'
+    });
+  });
+
+  it('transforms collection type properties for unknown edmx types', () => {
+    const service = createTestServiceData(
+      [
+        createEntityType('TestEntityType', [
+          [
+            'CollectionProperty',
+            'Collection(Edm.SomethingTheSdkDoesNotSupport)',
+            false
+          ]
+        ])
+      ],
+      [createTestEntitySet('TestEntity', 'TestEntityType')]
+    );
+
+    const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
+    expect(entity.properties[0]).toMatchObject({
+      isCollection: true,
+      edmType: 'Edm.Any',
+      jsType: 'any',
       fieldType: 'CollectionField'
     });
   });
@@ -45,9 +68,14 @@ describe('edmx-to-vdm-v4', () => {
     );
 
     const formatter = getFormatter();
-    const vdmComplexTypes = generateComplexTypesV4(service, formatter);
+    const vdmComplexTypes = generateComplexTypesV4(service, [], formatter);
 
-    const entity = generateEntitiesV4(service, vdmComplexTypes, formatter)[0];
+    const entity = generateEntitiesV4(
+      service,
+      vdmComplexTypes,
+      [],
+      formatter
+    )[0];
     expect(entity.properties[0]).toMatchObject({
       isCollection: true,
       isComplex: true,
@@ -73,7 +101,7 @@ describe('edmx-to-vdm-v4', () => {
       ]
     );
 
-    const entity = generateEntitiesV4(service, [], getFormatter())[0];
+    const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.navigationProperties[0]).toMatchObject({
       from: 'TestEntityType',
       to: 'TestEntity',
@@ -99,7 +127,7 @@ describe('edmx-to-vdm-v4', () => {
       ]
     );
 
-    const entity = generateEntitiesV4(service, [], getFormatter())[0];
+    const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.navigationProperties[0]).toMatchObject({
       from: 'TestEntityType',
       to: 'TestEntity',
@@ -133,7 +161,7 @@ describe('edmx-to-vdm-v4', () => {
       ]
     );
 
-    const entity = generateEntitiesV4(service, [], getFormatter())[0];
+    const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.properties.length).toBe(3);
     expect(entity.properties[2]).toMatchObject({
       isCollection: true,
@@ -147,7 +175,7 @@ describe('edmx-to-vdm-v4', () => {
 it('transforms action imports', () => {
   const formatter = getFormatter();
   const service = createServiceWithActions();
-  const entites = generateEntitiesV4(service, [], formatter);
+  const entites = generateEntitiesV4(service, [], [], formatter);
   const actionImport = generateActionImportsV4(service, entites, [], formatter);
   expect(actionImport.length).toBe(2);
 

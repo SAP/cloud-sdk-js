@@ -42,9 +42,15 @@ export function isNullableParameter(parameter: any) {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
 
-type EdmTypeMapping = { [key in EdmTypeShared<'any'>]: string };
+export type EdmTypeMapping = {
+  [key in EdmTypeShared<'any'>]: string | undefined;
+};
 
-const edmToTsTypeMapping: EdmTypeMapping = {
+type EdmTypeMappingWithoutEnum = {
+  [key in Exclude<EdmTypeShared<'any'>, 'Edm.Enum'>]: string | undefined;
+};
+
+const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
   'Edm.String': 'string',
   'Edm.Boolean': 'boolean',
   'Edm.Guid': 'string',
@@ -59,6 +65,7 @@ const edmToTsTypeMapping: EdmTypeMapping = {
   'Edm.SByte': 'number',
   'Edm.DateTimeOffset': 'Moment',
   'Edm.Binary': 'string',
+  'Edm.Any': 'any',
 
   // OData v2 specific
   'Edm.DateTime': 'Moment',
@@ -85,6 +92,7 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
   'Edm.SByte': 'NumberField',
   'Edm.DateTimeOffset': 'DateField',
   'Edm.Binary': 'BinaryField',
+  'Edm.Any': 'AnyField',
 
   // OData v2 specific
   'Edm.DateTime': 'DateField',
@@ -93,7 +101,8 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
   // OData v4 specific
   'Edm.Date': 'DateField',
   'Edm.Duration': 'DurationField',
-  'Edm.TimeOfDay': 'TimeField'
+  'Edm.TimeOfDay': 'TimeField',
+  'Edm.Enum': 'EnumField'
 };
 
 const fieldTypeToComplexPropertyTypeMapping = {
@@ -103,21 +112,45 @@ const fieldTypeToComplexPropertyTypeMapping = {
   DateField: 'ComplexTypeDatePropertyField',
   NumberField: 'ComplexTypeNumberPropertyField',
   StringField: 'ComplexTypeStringPropertyField',
-  TimeField: 'ComplexTypeTimePropertyField'
+  TimeField: 'ComplexTypeTimePropertyField',
+  AnyField: 'ComplexTypeAnyPropertyField'
 };
 
-export function edmToTsType(edmType: string): string | undefined {
-  if (edmToTsTypeMapping[edmType]) {
-    return edmToTsTypeMapping[edmType];
+export function getFallbackEdmTypeIfNeeded(
+  edmType: string
+): EdmTypeShared<any> {
+  if (edmType in edmToTsTypeMapping) {
+    return edmType as EdmTypeShared<any>;
   }
+  logger.warn(
+    `The type ${edmType} is currently not supported by the sdk. Type "any" is used as fallback.`
+  );
+  return 'Edm.Any';
+}
+
+export function edmToTsType(edmType: string): string {
+  const tsType = edmToTsTypeMapping[edmType];
+  if (!tsType) {
+    throw new Error(`No ts type found for edm type: ${edmType}`);
+  }
+  return tsType;
 }
 
 export function edmToFieldType(edmType: string): string {
-  return edmToFieldTypeMapping[edmType];
+  const fieldType = edmToFieldTypeMapping[edmType];
+  if (!fieldType) {
+    throw new Error(`No field type found for edm type: ${edmType}`);
+  }
+  return fieldType;
 }
 
 export function edmToComplexPropertyType(edmType: string): string {
-  return fieldTypeToComplexPropertyTypeMapping[edmToFieldType(edmType)];
+  const fieldType =
+    fieldTypeToComplexPropertyTypeMapping[edmToFieldType(edmType)];
+  if (!fieldType) {
+    throw new Error(`No complex field type found for edm type: ${edmType}`);
+  }
+  return fieldType;
 }
 
 export function forceArray(obj: any): any[] {
@@ -159,11 +192,16 @@ export function getGenericParameters(
   entityClassName: string,
   prop: VdmProperty
 ): string {
-  const param = prop.isCollection
-    ? prop.isComplex
-      ? [`${prop.jsType}`]
-      : [`'${prop.edmType}'`]
-    : [];
+  let param: string[] = [];
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      param = [`${prop.jsType}`];
+    } else if (prop.isEnum) {
+      param = ["'Edm.Enum'"];
+    } else {
+      param = [`'${prop.edmType}'`];
+    }
+  }
   return [entityClassName, ...param].join(', ');
 }
 
@@ -171,12 +209,18 @@ export function createPropertyFieldInitializer(
   property: VdmProperty,
   entityClassName: string
 ) {
-  const edmOrComplexType = property.isComplex
-    ? property.jsType
-    : `'${property.edmType}'`;
-  const collectionTypeOrEdmType =
-    property.isComplex && !property.isCollection ? undefined : edmOrComplexType;
-
+  const edmOrComplexTypeOrEnumType =
+    property.isComplex || property.isEnum
+      ? property.jsType
+      : `'${property.edmType}'`;
+  let collectionTypeOrEdmType: string | undefined = edmOrComplexTypeOrEnumType;
+  if (property.isComplex && !property.isCollection) {
+    collectionTypeOrEdmType = undefined;
+  } else if (property.isEnum && !property.isCollection) {
+    collectionTypeOrEdmType = undefined;
+  } else if (property.isEnum && property.isCollection) {
+    collectionTypeOrEdmType = "'Edm.Enum'";
+  }
   return `new ${property.fieldType}(${[
     `'${property.originalName}'`,
     entityClassName,

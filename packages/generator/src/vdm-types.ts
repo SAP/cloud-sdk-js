@@ -19,6 +19,7 @@ export interface VdmServicePackageMetaData {
 export interface VdmServiceEntities {
   entities: VdmEntity[];
   complexTypes: VdmComplexType[];
+  enumTypes: VdmEnumType[];
   functionImports: VdmFunctionImport[];
   actionsImports?: VdmActionImport[];
 }
@@ -46,6 +47,7 @@ export interface VdmPropertyDescriptor {
   propertyNameAsParam: string;
   staticPropertyName: string;
   isComplex?: boolean;
+  isEnum?: boolean;
   isCollection: boolean;
 }
 
@@ -58,7 +60,6 @@ export interface VdmProperty
   extends VdmPropertyDescriptor,
     VdmPropertyValueConstraints,
     VdmMappedEdmType {
-  fieldType: string;
   description: string;
 }
 
@@ -75,6 +76,12 @@ export interface VdmNavigationProperty extends VdmPropertyDescriptor {
    * @deprecated Since v1.22.0. Use `isCollection` instead.
    */
   isMultiLink?: boolean;
+}
+
+export interface VdmEnumType {
+  originalName: string;
+  typeName: string;
+  members: string[];
 }
 
 // Complex types and function imports
@@ -137,6 +144,7 @@ export interface VdmParameter extends VdmMappedEdmType {
 export interface VdmMappedEdmType {
   edmType: string;
   jsType: string;
+  fieldType: string;
 }
 
 export interface ApiBusinessHubMetadata {

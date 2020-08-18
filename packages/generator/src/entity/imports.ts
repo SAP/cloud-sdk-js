@@ -8,6 +8,7 @@ import {
   coreNavPropertyFieldTypeImportNames,
   corePropertyFieldTypeImportNames,
   corePropertyTypeImportNames,
+  enumTypeImportDeclarations,
   externalImportDeclarations
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
@@ -24,6 +25,7 @@ export function importDeclarations(
     },
     ...externalImportDeclarations(entity.properties),
     ...complexTypeImportDeclarations(entity.properties),
+    ...enumTypeImportDeclarations(entity.properties),
     coreImportDeclaration(
       [
         ...corePropertyTypeImportNames(entity.properties),

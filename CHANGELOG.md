@@ -28,7 +28,7 @@ Type safety and related features like URI conversion are not supported for the f
 
 ## Fixed Issues
 
--
+- [Generator] Fix wrong type argument for collection types containing Edm types. 
 
 
 # 1.26.1

@@ -29,7 +29,7 @@ export interface GetFilter<EntityT extends EntityBase = any> {
 }
 
 /**
- * Creates a getFilter function using the OData v2 or OData v4 uri converter.
+ * Creates a getFilter function using the OData v2 or OData v4 URI converter.
  * The concrete filter getters are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
  *
  * @param uriConverter Uri converter for v2 or v4.

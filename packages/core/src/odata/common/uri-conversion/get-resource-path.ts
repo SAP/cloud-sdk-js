@@ -21,7 +21,7 @@ interface GetResourcePathForKeys<EntityT extends EntityBase = any> {
 }
 
 /**
- * Creates a getResourcePathForKeys function using the OData v2 or OData v4 uri converter.
+ * Creates a getResourcePathForKeys function using the OData v2 or OData v4 URI converter.
  * The concrete instances for v2 or v4 are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
  *
  * @param uriConverter Uri converter for v2 or v4.

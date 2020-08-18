@@ -12,10 +12,10 @@ const logger = createLogger({
  */
 
 /**
- * Extract the collection data from the repsonse.
+ * Extract the collection data from the response.
  * If the data does not contain a collection an empty array is returned.
  * @param data - Response of the OData v2 service
- * @returns any[] - Collection extracted from the repsponse
+ * @returns any[] - Collection extracted from the response
  */
 export function getCollectionResult(data): any[] {
   validateCollectionResult(data);

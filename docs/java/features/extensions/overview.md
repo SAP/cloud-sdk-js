@@ -23,11 +23,9 @@ By providing versatile and reliable core functionality to aid modern cloud devel
 
 We make sure extension libraries are well integrated into the Cloud SDK's ecosystem and call them extensions to make it clear they are not the core SDK components. It doesn't make the features introduced by them less valuable for a developer. These extensions are usually shipped in separate packages similar to libraries generated from API definitions.
 
-### Can a generated type-safe API client library be an extension?
+### Extension vs type-safe API client library?
 
-Yes and no. This becomes another distinguishing feature of extensions because they require additional integration code to be crafted by the contribution team together with the SDK team in the contrast to generated REST or OData type-safe clients generated purely from API definitions.
-
-Having an API definition is not mandatory for extensions. By their nature extensions can also benefit from code-generation capabilities provided by SDK but would require additional development to overcome intrinsic technical complexities. Otherwise, they might be fully handcrafted as pure feature source code.
+Usually, with an extension, you get more than a nice API client but also a hand-crafted code specific to needs that go beyond calling and API.
 
 ## Where can I find supported extensions?
 

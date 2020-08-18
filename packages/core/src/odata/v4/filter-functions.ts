@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import {
   Field,
   StringFilterFunction,
@@ -50,7 +50,7 @@ export function matchesPattern<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function fractionalSeconds<EntityT extends Entity>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('fractionalseconds', 'decimal', date);
 }
@@ -61,7 +61,7 @@ export function fractionalSeconds<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function totalOffsetMinutes<EntityT extends Entity>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('totaloffsetminutes', 'decimal', date);
 }

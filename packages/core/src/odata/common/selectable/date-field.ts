@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable max-classes-per-file */
 
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
@@ -20,7 +20,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  */
 export class DateFieldBase<EntityT extends EntityBase> extends EdmTypeField<
   EntityT,
-  Moment
+  moment.Moment
 > {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
@@ -28,7 +28,7 @@ export class DateFieldBase<EntityT extends EntityBase> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  greaterThan(value: Moment): Filter<EntityT, Moment> {
+  greaterThan(value: moment.Moment): Filter<EntityT, moment.Moment> {
     return new Filter(this.fieldPath(), 'gt', value, this.edmType);
   }
 
@@ -38,7 +38,7 @@ export class DateFieldBase<EntityT extends EntityBase> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  greaterOrEqual(value: Moment): Filter<EntityT, Moment> {
+  greaterOrEqual(value: moment.Moment): Filter<EntityT, moment.Moment> {
     return new Filter(this.fieldPath(), 'ge', value, this.edmType);
   }
 
@@ -48,7 +48,7 @@ export class DateFieldBase<EntityT extends EntityBase> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  lessThan(value: Moment): Filter<EntityT, Moment> {
+  lessThan(value: moment.Moment): Filter<EntityT, moment.Moment> {
     return new Filter(this.fieldPath(), 'lt', value, this.edmType);
   }
 
@@ -58,7 +58,7 @@ export class DateFieldBase<EntityT extends EntityBase> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  lessOrEqual(value: Moment): Filter<EntityT, Moment> {
+  lessOrEqual(value: moment.Moment): Filter<EntityT, moment.Moment> {
     return new Filter(this.fieldPath(), 'le', value, this.edmType);
   }
 }

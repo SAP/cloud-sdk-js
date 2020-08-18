@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { fail } from 'assert';
 import BigNumber from 'bignumber.js';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import { createComplexType, edmToTs, Time } from '../../src';
 
 const converter = {
@@ -20,7 +20,7 @@ const converter = {
   IntField: (intField: number) => ({
     intField: edmToTs(intField, 'Edm.Int16')
   }),
-  DateField: (dateField: Moment) => ({
+  DateField: (dateField: moment.Moment) => ({
     dateField: edmToTs(dateField, 'Edm.DateTime')
   }),
   TimeField: (timeField: Time) => ({

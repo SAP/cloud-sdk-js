@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { EntityBase } from '../entity';
 import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';
@@ -172,7 +172,7 @@ export function ceiling<EntityT extends EntityBase>(
  * @returns The newly created filter function
  */
 export function day<EntityT extends EntityBase>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('day', 'int', date);
 }
@@ -183,7 +183,7 @@ export function day<EntityT extends EntityBase>(
  * @returns The newly created filter function
  */
 export function hour<EntityT extends EntityBase>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('hour', 'int', date);
 }
@@ -194,7 +194,7 @@ export function hour<EntityT extends EntityBase>(
  * @returns The newly created filter function
  */
 export function minute<EntityT extends EntityBase>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('minute', 'int', date);
 }
@@ -205,18 +205,18 @@ export function minute<EntityT extends EntityBase>(
  * @returns The newly created filter function
  */
 export function month<EntityT extends EntityBase>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('month', 'int', date);
 }
 
 /**
  * Build a filter function to get the second of a date. Evaluates to int.
- * @param date - The date to get the second for. This can either be a date (Moment) or a reference to a field.
+ * @param date - The date to get the second for. This can either be a date (moment.Moment) or a reference to a field.
  * @returns The newly created filter function
  */
 export function second<EntityT extends EntityBase>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('second', 'int', date);
 }
@@ -227,7 +227,7 @@ export function second<EntityT extends EntityBase>(
  * @returns The newly created filter function
  */
 export function year<EntityT extends EntityBase>(
-  date: Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('year', 'int', date);
 }

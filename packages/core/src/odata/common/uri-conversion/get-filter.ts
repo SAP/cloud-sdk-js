@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { isMoment } from 'moment';
+import * as moment from 'moment';
 import { Constructable, EntityBase } from '../entity';
 import { toStaticPropertyFormat } from '../../../util';
 import {
@@ -193,7 +193,7 @@ export function createGetFilter(uriConverter: UriConverter) {
     if (param instanceof FilterFunction) {
       return filterFunctionToString(param, parentFieldNames);
     }
-    if (isMoment(param)) {
+    if (moment.isMoment(param)) {
       return uriConverter.convertToUriFormat(param, 'Edm.DateTimeOffset');
     }
     if (Array.isArray(param)) {

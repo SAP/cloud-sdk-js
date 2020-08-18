@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Moment, isMoment } from 'moment';
+import * as moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity';
 import { Field, FieldType } from '../selectable';
@@ -78,7 +78,7 @@ export abstract class FilterFunction<
     if (typeof param === 'string') {
       return `'${param.replace(/'/g, "''")}'`;
     }
-    if (isMoment(param)) {
+    if (moment.isMoment(param)) {
       throw new Error(
         'Date parameters are not supported in the deprecated `transformParameter` method. Use `get-filter` instead.'
       );
@@ -98,7 +98,10 @@ export abstract class FilterFunction<
 /**
  * Primitive type of a parameter of a filter function.
  */
-export type FilterFunctionPrimitiveParameterType = number | string | Moment;
+export type FilterFunctionPrimitiveParameterType =
+  | number
+  | string
+  | moment.Moment;
 
 /**
  * Type of a parameter of a filter function. This can either be a primitive type, a reference to a field or another filter function.

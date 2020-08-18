@@ -70,10 +70,12 @@ export async function getAuthHeaders(
   const customAuthHeaders = getHeader('authorization', customHeaders);
 
   if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
-    logger.warn(`You provided authorization headers in the request config. 
-    However, your destination ${destination.name} also provides authorization headers.
-    To have authorization information from both sources is often unintended.
-    The custom headers from the request config will be used.`);
+    logger.warn(
+      'You provided authorization headers in the request config.' +
+        `However, your destination ${destination.name} also provides authorization headers.` +
+        'To have authorization information from both sources is often unintended.' +
+        'The custom headers from the request config will be used.'
+    );
   }
   return Object.keys(customAuthHeaders).length
     ? customAuthHeaders

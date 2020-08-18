@@ -31,7 +31,7 @@ Having an API definition is not mandatory for extensions. By their nature extens
 
 ## Where can I find supported extensions?
 
-Visit extension library in the right-side menu.
+Visit extension library in the left-side menu.
 
 ## Benefits for developers using SDK
 

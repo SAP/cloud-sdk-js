@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { tsToEdm, serializeEntity } from '../../src';
+import { serializeEntityV2 } from '../../src';
 import {
   TestEntity,
   TestEntityLvl2MultiLink,
@@ -14,7 +14,7 @@ describe('entity-serializer', () => {
       .int16Property(100)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV2(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
       Int16Property: testEntity.int16Property
     });
@@ -33,7 +33,7 @@ describe('entity-serializer', () => {
       .int16Property(100)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV2(testEntity, TestEntity)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProperty1,
         ComplexTypeProperty: {
@@ -46,7 +46,7 @@ describe('entity-serializer', () => {
 
   it('should serialize an empty entity', () => {
     const emptyEntity = TestEntity.builder().build();
-    expect(serializeEntity(emptyEntity, TestEntity)).toEqual({});
+    expect(serializeEntityV2(emptyEntity, TestEntity)).toEqual({});
   });
 
   it('should serialize a one to one linked entity', () => {
@@ -60,7 +60,7 @@ describe('entity-serializer', () => {
       .toSingleLink(singleLinkEntity)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV2(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
       BooleanProperty: testEntity.booleanProperty,
       to_SingleLink: {
@@ -91,7 +91,7 @@ describe('entity-serializer', () => {
       .toMultiLink([multiLinkEntity])
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV2(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
       Int32Property: tsToEdm(testEntity.int32Property, 'Edm.Int32'),
       TimeProperty: tsToEdm(testEntity.timeProperty, 'Edm.Time'),
@@ -124,7 +124,7 @@ describe('entity-serializer', () => {
       .stringProperty(stringProperty)
       .build();
 
-    expect(serializeEntity(entity, TestEntity)).toEqual({
+    expect(serializeEntityV2(entity, TestEntity)).toEqual({
       ComplexTypeProperty: {
         StringProperty: complexTypeProp.stringProperty,
         BooleanProperty: complexTypeProp.booleanProperty,
@@ -143,7 +143,7 @@ describe('entity-serializer', () => {
     testEntity.setCustomField('CustomField1', 'abcd');
     testEntity.setCustomField('CustomField2', 1234);
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV2(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
       SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',

@@ -3,12 +3,12 @@ import { v4 as uuid } from 'uuid';
 import { ODataDeleteRequestConfig } from '../../../src/odata/common/request/odata-delete-request-config';
 import { testEntityResourcePath } from '../../test-util/test-data';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { oDataUri } from '../../../src/odata/v2/uri-conversion';
+import { oDataUriV2 } from '../../../src/odata/v2/uri-conversion';
 
 describe('ODataDeleteRequestConfig', () => {
   let config: ODataDeleteRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataDeleteRequestConfig(TestEntity, oDataUri);
+    config = new ODataDeleteRequestConfig(TestEntity, oDataUriV2);
   });
 
   it('method is delete', () => {

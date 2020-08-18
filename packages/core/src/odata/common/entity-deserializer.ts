@@ -18,7 +18,7 @@ import {
   EdmTypeShared,
   isEdmType
 } from '../common';
-import { EdmToPrimitive, EdmType, PropertyMetadata } from '../v2';
+import { EdmToPrimitiveV2, EdmTypeV2, PropertyMetadata } from '../v2';
 
 const logger = createLogger({
   package: 'core',
@@ -40,10 +40,10 @@ export interface EntityDeserializer<EntityT extends EntityBase = any> {
   ) => any;
 }
 
-type EdmToTsType<EdmT extends EdmType> = (
+type EdmToTsType<EdmT extends EdmTypeV2> = (
   value: any,
   edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
-) => EdmToPrimitive<EdmT>;
+) => EdmToPrimitiveV2<EdmT>;
 type ExtractODataETagType = (json: MapType<any>) => string | undefined;
 type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
 
@@ -55,7 +55,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
  * @returns a entity deserializer as defined by [[EntityDeserializer]]
  */
-export function entityDeserializer<EdmT extends EdmType, EntityT, JsonT>(
+export function entityDeserializer<EdmT extends EdmTypeV2, EntityT, JsonT>(
   edmToTs: EdmToTsType<EdmT>,
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType

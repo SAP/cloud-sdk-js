@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { GetAllRequestBuilder } from '../../src';
+import { GetAllRequestBuilderV2 } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -16,7 +16,7 @@ import {
 import { TestEntity } from '../test-util/test-services/v2/test-service';
 
 describe('GetAllRequestBuilder', () => {
-  let requestBuilder: GetAllRequestBuilder<TestEntity>;
+  let requestBuilder: GetAllRequestBuilderV2<TestEntity>;
 
   beforeAll(() => {
     muteLoggers('http-agent', 'destination-accessor', 'environment-accessor');
@@ -27,7 +27,7 @@ describe('GetAllRequestBuilder', () => {
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilder(TestEntity);
+    requestBuilder = new GetAllRequestBuilderV2(TestEntity);
   });
 
   describe('url', () => {

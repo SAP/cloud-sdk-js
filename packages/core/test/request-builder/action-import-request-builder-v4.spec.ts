@@ -9,7 +9,7 @@ import {
   testActionImportUnsupportedEdmTypes
 } from '../test-util/test-services/v4/test-service/action-imports';
 import { TestComplexType } from '../test-util/test-services/v4/test-service';
-import { serializeComplexType } from '../../src/odata/v4';
+import { serializeComplexTypeV4 } from '../../src/odata/v4';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';
@@ -61,7 +61,7 @@ describe('action import request builder', () => {
     const tsBody = { stringParam: 'LaLa', nonNullableStringParam: 'LuLu' };
     const tsResponse = { stringProperty: 'someResponseValue' };
 
-    const httpResponse = serializeComplexType(tsResponse, TestComplexType);
+    const httpResponse = serializeComplexTypeV4(tsResponse, TestComplexType);
     const httpBody = { StringParam: 'LaLa', NonNullableStringParam: 'LuLu' };
 
     nock(host)

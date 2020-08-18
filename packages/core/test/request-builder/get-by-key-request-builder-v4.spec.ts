@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { GetByKeyRequestBuilder, uriConverter } from '../../src/odata/v4/';
+import { GetByKeyRequestBuilderV4, uriConverterV4 } from '../../src/odata/v4/';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -12,7 +12,7 @@ import {
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v4/test-service';
 
-const { convertToUriFormat } = uriConverter;
+const { convertToUriFormat } = uriConverterV4;
 
 describe('GetByKeyRequestBuilder', () => {
   beforeAll(() => {
@@ -36,7 +36,7 @@ describe('GetByKeyRequestBuilder', () => {
         TestEntity
       );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilderV4(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -76,7 +76,7 @@ describe('GetByKeyRequestBuilder', () => {
       responseBody: entityData
     });
 
-    const actual = await new GetByKeyRequestBuilder(TestEntity, {
+    const actual = await new GetByKeyRequestBuilderV4(TestEntity, {
       KeyPropertyGuid: expected.keyPropertyGuid,
       KeyPropertyString: expected.keyPropertyString
     }).execute(defaultDestination);
@@ -100,7 +100,7 @@ describe('GetByKeyRequestBuilder', () => {
       responseHeaders: { Etag: versionIdentifier }
     });
 
-    const actual = await new GetByKeyRequestBuilder(TestEntity, {
+    const actual = await new GetByKeyRequestBuilderV4(TestEntity, {
       KeyPropertyGuid: expected.keyPropertyGuid,
       KeyPropertyString: expected.keyPropertyString
     }).execute(defaultDestination);

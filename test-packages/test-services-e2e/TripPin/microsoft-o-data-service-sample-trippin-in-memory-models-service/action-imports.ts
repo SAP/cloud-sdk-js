@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefined, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core/v4';
+import { transformReturnValueForUndefined, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
 
 /**
  * Type of the parameters to be passed to [[resetDataSource]].

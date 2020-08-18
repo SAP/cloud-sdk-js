@@ -12,7 +12,7 @@ import { tsToEdm } from './payload-value-converter';
  */
 const serializer: EntitySerializer = entitySerializer(tsToEdm);
 
-export const serializeEntity = serializer.serializeEntity;
-export const serializeComplexType = serializer.serializeComplexType;
-export const serializeEntityNonCustomFields =
+export const serializeEntityV2 = serializer.serializeEntity;
+export const serializeComplexTypeV2 = serializer.serializeComplexType;
+export const serializeEntityNonCustomFieldsV2 =
   serializer.serializeEntityNonCustomFields;

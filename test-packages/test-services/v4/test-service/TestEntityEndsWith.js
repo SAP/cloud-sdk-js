@@ -31,7 +31,7 @@ exports.TestEntityEndsWith = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityEndsWithRequestBuilder_1 = require("./TestEntityEndsWithRequestBuilder");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
@@ -45,7 +45,7 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
      */
     TestEntityEndsWith.builder = function () {
-        return v4_1.Entity.entityBuilder(TestEntityEndsWith);
+        return Entity.entityBuilder(TestEntityEndsWith);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityEndsWith` entity type.
@@ -60,7 +60,7 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
      */
     TestEntityEndsWith.customField = function (fieldName) {
-        return v4_1.Entity.customFieldSelector(fieldName, TestEntityEndsWith);
+        return Entity.customFieldSelector(fieldName, TestEntityEndsWith);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,14 +83,14 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
      */
     TestEntityEndsWith._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityEndsWith;
-}(v4_1.Entity));
+}(Entityv4));
 exports.TestEntityEndsWith = TestEntityEndsWith;
 (function (TestEntityEndsWith) {
     /**
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityEndsWith.KEY_PROPERTY = new v4_1.StringField('KeyProperty', TestEntityEndsWith, 'Edm.String');
+    TestEntityEndsWith.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityEndsWith, 'Edm.String');
     /**
      * All fields of the TestEntityEndsWith entity.
      */
@@ -100,7 +100,7 @@ exports.TestEntityEndsWith = TestEntityEndsWith;
     /**
      * All fields selector.
      */
-    TestEntityEndsWith.ALL_FIELDS = new v4_1.AllFields('*', TestEntityEndsWith);
+    TestEntityEndsWith.ALL_FIELDS = new core_1.AllFields('*', TestEntityEndsWith);
     /**
      * All key fields of the TestEntityEndsWith entity.
      */

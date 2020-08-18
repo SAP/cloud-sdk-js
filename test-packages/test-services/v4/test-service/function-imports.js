@@ -6,7 +6,7 @@ exports.functionImports = exports.testFunctionImportWithDifferentName = exports.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 var TestEntity_1 = require("./TestEntity");
 var TestComplexType_1 = require("./TestComplexType");
 /**
@@ -17,7 +17,7 @@ var TestComplexType_1 = require("./TestComplexType");
  */
 function testFunctionImportEdmReturnType(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', function (data) { return core_1.transformReturnValueForEdmType(data, function (val) { return core_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
 }
 exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
 /**
@@ -28,7 +28,7 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
  */
 function testFunctionImportEdmReturnTypeCollection(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', function (data) { return v4_1.transformReturnValueForEdmTypeList(data, function (val) { return v4_1.edmToTs(val, 'Edm.String'); }); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', function (data) { return core_1.transformReturnValueForEdmTypeList(data, function (val) { return core_1.edmToTs(val, 'Edm.String'); }); }, params);
 }
 exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnTypeCollection;
 /**
@@ -39,7 +39,7 @@ exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnT
  */
 function testFunctionImportEntityReturnType(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', function (data) { return v4_1.transformReturnValueForEntity(data, TestEntity_1.TestEntity); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', function (data) { return core_1.transformReturnValueForEntity(data, TestEntity_1.TestEntity); }, params);
 }
 exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
 /**
@@ -50,7 +50,7 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
  */
 function testFunctionImportEntityReturnTypeCollection(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', function (data) { return v4_1.transformReturnValueForEntityList(data, TestEntity_1.TestEntity); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', function (data) { return core_1.transformReturnValueForEntityList(data, TestEntity_1.TestEntity); }, params);
 }
 exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
 /**
@@ -61,7 +61,7 @@ exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityR
  */
 function testFunctionImportComplexReturnType(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', function (data) { return v4_1.transformReturnValueForComplexType(data, function (data) { return v4_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', function (data) { return core_1.transformReturnValueForComplexType(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
 /**
@@ -72,7 +72,7 @@ exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnTyp
  */
 function testFunctionImportComplexReturnTypeCollection(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', function (data) { return v4_1.transformReturnValueForComplexTypeList(data, function (data) { return v4_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', function (data) { return core_1.transformReturnValueForComplexTypeList(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
 /**
@@ -83,12 +83,12 @@ exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComple
  */
 function testFunctionImportMultipleParams(parameters) {
     var params = {
-        stringParam: new v4_1.FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
-        nonNullableStringParam: new v4_1.FunctionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-        nullableBooleanParam: new v4_1.FunctionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
-        nullableGeographyPointParam: new v4_1.FunctionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
+        stringParam: new core_1.FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
+        nonNullableStringParam: new core_1.FunctionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
+        nullableBooleanParam: new core_1.FunctionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
+        nullableGeographyPointParam: new core_1.FunctionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
     };
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', function (data) { return core_1.transformReturnValueForEdmType(data, function (val) { return core_1.edmToTs(val, 'Edm.Boolean'); }); }, params);
 }
 exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 /**
@@ -99,7 +99,7 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
  */
 function testFunctionImportWithDifferentName(parameters) {
     var params = {};
-    return new v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
+    return new core_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', function (data) { return core_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
 }
 exports.testFunctionImportWithDifferentName = testFunctionImportWithDifferentName;
 exports.functionImports = {

@@ -1,0 +1,20 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
+import { EntityBase, Constructable } from '../common';
+import { CustomFieldV2 } from './selectable/custom-field-v2';
+
+/**
+ * Super class for all representations of OData v2 entity types.
+ */
+export class EntityV2 extends EntityBase {
+  protected static customFieldSelector<EntityT extends EntityBase>(
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>
+  ): CustomFieldV2<EntityT> {
+    return new CustomFieldV2(fieldName, entityConstructor);
+  }
+
+  readonly _oDataVersion: 'v2' = 'v2';
+}
+
+export { EntityV2 as Entity };

@@ -6,12 +6,12 @@
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, Entity, EntityBuilderType, Field, NumberField, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BigNumberField, BooleanField, CustomFieldV4, DateField, EntityBuilderType, EntityV4, Field, NumberField, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "TestEntity" of service "AdminService".
  */
-export class TestEntity extends Entity implements TestEntityType {
+export class TestEntity extends Entityv4 implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -106,7 +106,7 @@ export class TestEntity extends Entity implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomField<TestEntity> {
+  static customField(fieldName: string): CustomFieldv4<TestEntity> {
     return Entity.customFieldSelector(fieldName, TestEntity);
   }
 

@@ -20,7 +20,7 @@ exports.Location = exports.LocationField = exports.createLocation = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var City_1 = require("./City");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * @deprecated Since v1.6.0. Use [[Location.build]] instead.
  */
@@ -46,7 +46,7 @@ var LocationField = /** @class */ (function (_super) {
          * Representation of the [[Location.address]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.address = new v4_1.ComplexTypeStringPropertyField('Address', _this, 'Edm.String');
+        _this.address = new core_1.ComplexTypeStringPropertyField('Address', _this, 'Edm.String');
         /**
          * Representation of the [[Location.city]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -55,7 +55,7 @@ var LocationField = /** @class */ (function (_super) {
         return _this;
     }
     return LocationField;
-}(v4_1.ComplexTypeField));
+}(core_1.ComplexTypeField));
 exports.LocationField = LocationField;
 var Location;
 (function (Location) {
@@ -77,7 +77,7 @@ var Location;
      * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return v4_1.deserializeComplexType(json, Location);
+        return core_1.deserializeComplexType(json, Location);
     }
     Location.build = build;
 })(Location = exports.Location || (exports.Location = {}));

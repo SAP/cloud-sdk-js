@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityV2 } from '../entity-v2';
 import { Constructable, Filterable } from '../../common';
-import { oDataUri } from './odata-uri';
+import { oDataUriV2 } from './o-data-uri-v2';
 
 /**
  * @deprecated Since v1.21.0. Use [[oDataUri.getFilter]] instead.
@@ -13,9 +13,9 @@ import { oDataUri } from './odata-uri';
  * @param entityConstructor - Constructor type of the entity to filter on
  * @returns An object containing the query parameter or an empty object
  */
-export function getQueryParametersForFilter<EntityT extends Entity>(
+export function getQueryParametersForFilter<EntityT extends EntityV2>(
   filter: Filterable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): Partial<{ filter: string }> {
-  return oDataUri.getFilter(filter, entityConstructor);
+  return oDataUriV2.getFilter(filter, entityConstructor);
 }

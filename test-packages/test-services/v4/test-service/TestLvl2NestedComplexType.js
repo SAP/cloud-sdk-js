@@ -19,7 +19,7 @@ exports.TestLvl2NestedComplexType = exports.TestLvl2NestedComplexTypeField = exp
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * @deprecated Since v1.6.0. Use [[TestLvl2NestedComplexType.build]] instead.
  */
@@ -45,11 +45,11 @@ var TestLvl2NestedComplexTypeField = /** @class */ (function (_super) {
          * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.stringProperty = new v4_1.ComplexTypeStringPropertyField('StringProperty', _this, 'Edm.String');
+        _this.stringProperty = new core_1.ComplexTypeStringPropertyField('StringProperty', _this, 'Edm.String');
         return _this;
     }
     return TestLvl2NestedComplexTypeField;
-}(v4_1.ComplexTypeField));
+}(core_1.ComplexTypeField));
 exports.TestLvl2NestedComplexTypeField = TestLvl2NestedComplexTypeField;
 var TestLvl2NestedComplexType;
 (function (TestLvl2NestedComplexType) {
@@ -66,7 +66,7 @@ var TestLvl2NestedComplexType;
      * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return v4_1.deserializeComplexType(json, TestLvl2NestedComplexType);
+        return core_1.deserializeComplexType(json, TestLvl2NestedComplexType);
     }
     TestLvl2NestedComplexType.build = build;
 })(TestLvl2NestedComplexType = exports.TestLvl2NestedComplexType || (exports.TestLvl2NestedComplexType = {}));

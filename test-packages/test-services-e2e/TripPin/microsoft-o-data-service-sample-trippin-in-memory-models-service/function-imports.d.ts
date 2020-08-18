@@ -1,4 +1,4 @@
-import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/core/v4';
+import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/core';
 import { People } from './People';
 import { Airports } from './Airports';
 /**

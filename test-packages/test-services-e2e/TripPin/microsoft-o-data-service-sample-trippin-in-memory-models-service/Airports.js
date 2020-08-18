@@ -32,7 +32,7 @@ exports.Airports = void 0;
  */
 var AirportsRequestBuilder_1 = require("./AirportsRequestBuilder");
 var AirportLocation_1 = require("./AirportLocation");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
@@ -46,7 +46,7 @@ var Airports = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `Airports`.
      */
     Airports.builder = function () {
-        return v4_1.Entity.entityBuilder(Airports);
+        return Entity.entityBuilder(Airports);
     };
     /**
      * Returns a request builder to construct requests for operations on the `Airports` entity type.
@@ -61,7 +61,7 @@ var Airports = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `Airports`.
      */
     Airports.customField = function (fieldName) {
-        return v4_1.Entity.customFieldSelector(fieldName, Airports);
+        return Entity.customFieldSelector(fieldName, Airports);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -84,24 +84,24 @@ var Airports = /** @class */ (function (_super) {
      */
     Airports._defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
     return Airports;
-}(v4_1.Entity));
+}(Entityv4));
 exports.Airports = Airports;
 (function (Airports) {
     /**
      * Static representation of the [[name]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    Airports.NAME = new v4_1.StringField('Name', Airports, 'Edm.String');
+    Airports.NAME = new core_1.StringField('Name', Airports, 'Edm.String');
     /**
      * Static representation of the [[icaoCode]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    Airports.ICAO_CODE = new v4_1.StringField('IcaoCode', Airports, 'Edm.String');
+    Airports.ICAO_CODE = new core_1.StringField('IcaoCode', Airports, 'Edm.String');
     /**
      * Static representation of the [[iataCode]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    Airports.IATA_CODE = new v4_1.StringField('IataCode', Airports, 'Edm.String');
+    Airports.IATA_CODE = new core_1.StringField('IataCode', Airports, 'Edm.String');
     /**
      * Static representation of the [[location]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -119,7 +119,7 @@ exports.Airports = Airports;
     /**
      * All fields selector.
      */
-    Airports.ALL_FIELDS = new v4_1.AllFields('*', Airports);
+    Airports.ALL_FIELDS = new core_1.AllFields('*', Airports);
     /**
      * All key fields of the Airports entity.
      */

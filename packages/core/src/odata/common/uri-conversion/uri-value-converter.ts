@@ -40,7 +40,7 @@ export function convertToUriForEdmString(value: any): string {
 
 /**
  * Interface defining the methods of the URI converter.
- * The concrete implementations are created in odata/v2/uri-conversion/uri-value-converter.ts and odata/v4/uri-conversion/uri-value-converter.ts
+ * The concrete implementations are created in odata/v2/uri-conversion/uri-value-converter-v2.ts and odata/v4/uri-conversion/uri-value-converter-v2.ts
  */
 export interface UriConverter {
   convertToUriFormat(

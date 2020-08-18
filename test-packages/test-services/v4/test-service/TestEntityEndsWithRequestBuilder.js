@@ -19,7 +19,7 @@ exports.TestEntityEndsWithRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 var TestEntityEndsWith_1 = require("./TestEntityEndsWith");
 /**
  * Request builder class for operations supported on the [[TestEntityEndsWith]] entity.
@@ -35,14 +35,14 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
      */
     TestEntityEndsWithRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new v4_1.GetByKeyRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityEndsWith` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityEndsWith` entities.
      */
     TestEntityEndsWithRequestBuilder.prototype.getAll = function () {
-        return new v4_1.GetAllRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith);
+        return new core_1.GetAllRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith);
     };
     /**
      * Returns a request builder for creating a `TestEntityEndsWith` entity.
@@ -50,7 +50,7 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWith`.
      */
     TestEntityEndsWithRequestBuilder.prototype.create = function (entity) {
-        return new v4_1.CreateRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, entity);
+        return new core_1.CreateRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityEndsWith`.
@@ -58,12 +58,12 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWith`.
      */
     TestEntityEndsWithRequestBuilder.prototype.update = function (entity) {
-        return new v4_1.UpdateRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, entity);
+        return new core_1.UpdateRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, entity);
     };
     TestEntityEndsWithRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new v4_1.DeleteRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, keyPropertyOrEntity instanceof TestEntityEndsWith_1.TestEntityEndsWith ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, keyPropertyOrEntity instanceof TestEntityEndsWith_1.TestEntityEndsWith ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityEndsWithRequestBuilder;
-}(v4_1.RequestBuilder));
+}(core_1.RequestBuilder));
 exports.TestEntityEndsWithRequestBuilder = TestEntityEndsWithRequestBuilder;
 //# sourceMappingURL=TestEntityEndsWithRequestBuilder.js.map

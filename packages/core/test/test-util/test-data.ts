@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
-import { uriConverter } from '../../src/odata/v2/uri-conversion';
+import { uriConverterV2 } from '../../src/odata/v2/uri-conversion';
 import { TestEntity } from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
@@ -8,7 +8,7 @@ import {
   TestEntitySingleLink
 } from './test-services/v4/test-service';
 
-const { convertToUriFormat } = uriConverter;
+const { convertToUriFormat } = uriConverterV2;
 
 export function createOriginalTestEntityData1() {
   return {

@@ -45,7 +45,7 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
      */
     TestEntityCircularLinkParent.builder = function () {
-        return core_1.Entity.entityBuilder(TestEntityCircularLinkParent);
+        return Entity.entityBuilder(TestEntityCircularLinkParent);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityCircularLinkParent` entity type.
@@ -60,7 +60,7 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
      */
     TestEntityCircularLinkParent.customField = function (fieldName) {
-        return core_1.Entity.customFieldSelector(fieldName, TestEntityCircularLinkParent);
+        return Entity.customFieldSelector(fieldName, TestEntityCircularLinkParent);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,7 +83,7 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      */
     TestEntityCircularLinkParent._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityCircularLinkParent;
-}(core_1.Entity));
+}(Entityv2));
 exports.TestEntityCircularLinkParent = TestEntityCircularLinkParent;
 var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
 (function (TestEntityCircularLinkParent) {

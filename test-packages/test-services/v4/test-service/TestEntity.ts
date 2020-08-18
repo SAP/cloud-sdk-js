@@ -8,12 +8,12 @@ import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
-import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity extends Entity implements TestEntityType {
+export class TestEntity extends Entityv4 implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -186,7 +186,7 @@ export class TestEntity extends Entity implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomField<TestEntity> {
+  static customField(fieldName: string): CustomFieldv4<TestEntity> {
     return Entity.customFieldSelector(fieldName, TestEntity);
   }
 

@@ -8,15 +8,15 @@ import {
   deserializersCommon,
   serializersCommom
 } from '../common/payload-value-converter';
-import { EdmType } from './edm-types';
+import { EdmTypeV2 } from './edm-types';
 
 /**
  * @hidden
  */
-export function edmToTs<T extends EdmType>(
+export function edmToTsV2<T extends EdmTypeV2>(
   value: any,
   edmType: EdmTypeShared<'v2'>
-): EdmToPrimitive<T> {
+): EdmToPrimitiveV2<T> {
   if (value === null || typeof value === 'undefined') {
     return value;
   }
@@ -39,7 +39,7 @@ export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
   return value;
 }
 
-type EdmTypeMapping = { [key in EdmType]: (value: any) => any };
+type EdmTypeMapping = { [key in EdmTypeV2]: (value: any) => any };
 
 const toTime = (value: string): Time => {
   const timeComponents = /PT(\d{1,2})H(\d{1,2})M(\d{1,2})S/.exec(value);
@@ -111,7 +111,7 @@ function leftpad(value: any, targetLength: number): string {
   return '0'.repeat(targetLength - str.length) + str;
 }
 
-export type EdmToPrimitive<T extends EdmType> = T extends
+export type EdmToPrimitiveV2<T extends EdmTypeV2> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Single'
@@ -145,3 +145,6 @@ const serializers: EdmTypeMapping = {
   'Edm.DateTimeOffset': momentToEdmDateTime,
   'Edm.Time': fromTime
 };
+
+export { EdmToPrimitiveV2 as EdmToPrimitive };
+export { edmToTsV2 as edmToTs };

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { deserializeEntity } from '../../src';
+import { deserializeEntityV2 } from '../../src';
 import {
   TestEntity,
   TestEntityMultiLink,
@@ -15,7 +15,7 @@ describe('entity-deserializer', () => {
 
     const response = { StringProperty: prop };
 
-    expect(deserializeEntity(response, TestEntity)).toEqual(testEntity);
+    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
   });
 
   it('should build an entity with multi link', () => {
@@ -30,7 +30,7 @@ describe('entity-deserializer', () => {
         results: [{ StringProperty: prop }]
       }
     };
-    expect(deserializeEntity(response, TestEntity)).toEqual(testEntity);
+    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
   });
 
   it('should build an entity with one to one link', () => {
@@ -48,7 +48,7 @@ describe('entity-deserializer', () => {
       }
     };
 
-    expect(deserializeEntity(response, TestEntity)).toEqual(testEntity);
+    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
   });
 
   it('should build an entity with custom fields', () => {
@@ -85,7 +85,7 @@ describe('entity-deserializer', () => {
     expected.stringProperty = 'test';
 
     it('should deserialize', () => {
-      const actual = deserializeEntity(
+      const actual = deserializeEntityV2(
         {
           ComplexTypeProperty: {
             StringProperty: stringProperty,
@@ -104,7 +104,7 @@ describe('entity-deserializer', () => {
     });
 
     it('should deserialize with unknown keys', () => {
-      const actual = deserializeEntity(
+      const actual = deserializeEntityV2(
         {
           ComplexTypeProperty: {
             StringProperty: stringProperty,

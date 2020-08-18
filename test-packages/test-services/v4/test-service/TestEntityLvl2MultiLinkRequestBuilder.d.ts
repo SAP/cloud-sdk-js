@@ -1,4 +1,4 @@
-import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core/v4';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 /**
  * Request builder class for operations supported on the [[TestEntityLvl2MultiLink]] entity.

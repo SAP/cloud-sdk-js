@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { DeleteRequestBuilder, uriConverter } from '../../src/odata/v4';
+import { DeleteRequestBuilderV4, uriConverterV4 } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -10,7 +10,7 @@ import {
 import { testEntityResourcePath } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v4/test-service';
 
-const { convertToUriFormat } = uriConverter;
+const { convertToUriFormat } = uriConverterV4;
 
 describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
@@ -33,7 +33,7 @@ describe('DeleteRequestBuilder', () => {
       )
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilderV4(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     }).execute(defaultDestination);
@@ -60,9 +60,10 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const deleteRequest = new DeleteRequestBuilderV4(
+      TestEntity,
+      entity
+    ).execute(defaultDestination);
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });

@@ -6,7 +6,7 @@ import {
   buildAndAddAuthorizationHeader,
   Destination,
   ODataRequest,
-  oDataUri
+  oDataUriV2
 } from '../../../src';
 import {
   addAuthorizationHeader,
@@ -110,7 +110,7 @@ describe('Authorization header builder', () => {
   describe('[deprecated]', () => {
     it('Prioritizes custom Authorization headers (upper case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity, oDataUri),
+        new ODataGetAllRequestConfig(TestEntity, oDataUriV2),
         defaultDestination
       );
       request.config.addCustomHeaders({
@@ -123,7 +123,7 @@ describe('Authorization header builder', () => {
 
     it('Prioritizes custom Authorization headers (lower case A)', async () => {
       const request = new ODataRequest(
-        new ODataGetAllRequestConfig(TestEntity, oDataUri),
+        new ODataGetAllRequestConfig(TestEntity, oDataUriV2),
         defaultDestination
       );
       request.config.addCustomHeaders({

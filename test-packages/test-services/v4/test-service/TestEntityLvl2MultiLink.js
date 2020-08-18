@@ -31,7 +31,7 @@ exports.TestEntityLvl2MultiLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityLvl2MultiLinkRequestBuilder_1 = require("./TestEntityLvl2MultiLinkRequestBuilder");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
  */
@@ -45,7 +45,7 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
      */
     TestEntityLvl2MultiLink.builder = function () {
-        return v4_1.Entity.entityBuilder(TestEntityLvl2MultiLink);
+        return Entity.entityBuilder(TestEntityLvl2MultiLink);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityLvl2MultiLink` entity type.
@@ -60,7 +60,7 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
      */
     TestEntityLvl2MultiLink.customField = function (fieldName) {
-        return v4_1.Entity.customFieldSelector(fieldName, TestEntityLvl2MultiLink);
+        return Entity.customFieldSelector(fieldName, TestEntityLvl2MultiLink);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,34 +83,34 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
      */
     TestEntityLvl2MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityLvl2MultiLink;
-}(v4_1.Entity));
+}(Entityv4));
 exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
 (function (TestEntityLvl2MultiLink) {
     /**
      * Static representation of the [[stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityLvl2MultiLink.STRING_PROPERTY = new v4_1.StringField('StringProperty', TestEntityLvl2MultiLink, 'Edm.String');
+    TestEntityLvl2MultiLink.STRING_PROPERTY = new core_1.StringField('StringProperty', TestEntityLvl2MultiLink, 'Edm.String');
     /**
      * Static representation of the [[booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = new v4_1.BooleanField('BooleanProperty', TestEntityLvl2MultiLink, 'Edm.Boolean');
+    TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = new core_1.BooleanField('BooleanProperty', TestEntityLvl2MultiLink, 'Edm.Boolean');
     /**
      * Static representation of the [[guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityLvl2MultiLink.GUID_PROPERTY = new v4_1.StringField('GuidProperty', TestEntityLvl2MultiLink, 'Edm.Guid');
+    TestEntityLvl2MultiLink.GUID_PROPERTY = new core_1.StringField('GuidProperty', TestEntityLvl2MultiLink, 'Edm.Guid');
     /**
      * Static representation of the [[int16Property]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityLvl2MultiLink.INT_16_PROPERTY = new v4_1.NumberField('Int16Property', TestEntityLvl2MultiLink, 'Edm.Int16');
+    TestEntityLvl2MultiLink.INT_16_PROPERTY = new core_1.NumberField('Int16Property', TestEntityLvl2MultiLink, 'Edm.Int16');
     /**
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityLvl2MultiLink.KEY_PROPERTY = new v4_1.StringField('KeyProperty', TestEntityLvl2MultiLink, 'Edm.String');
+    TestEntityLvl2MultiLink.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityLvl2MultiLink, 'Edm.String');
     /**
      * All fields of the TestEntityLvl2MultiLink entity.
      */
@@ -124,7 +124,7 @@ exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
     /**
      * All fields selector.
      */
-    TestEntityLvl2MultiLink.ALL_FIELDS = new v4_1.AllFields('*', TestEntityLvl2MultiLink);
+    TestEntityLvl2MultiLink.ALL_FIELDS = new core_1.AllFields('*', TestEntityLvl2MultiLink);
     /**
      * All key fields of the TestEntityLvl2MultiLink entity.
      */

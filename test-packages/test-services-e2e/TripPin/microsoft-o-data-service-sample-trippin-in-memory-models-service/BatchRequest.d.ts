@@ -1,4 +1,4 @@
-import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '@sap-cloud-sdk/core/v4';
+import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '@sap-cloud-sdk/core';
 import { People, Airlines, Airports, NewComePeople } from './index';
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.

@@ -45,7 +45,7 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
      */
     TestEntityLvl2SingleLink.builder = function () {
-        return core_1.Entity.entityBuilder(TestEntityLvl2SingleLink);
+        return Entity.entityBuilder(TestEntityLvl2SingleLink);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityLvl2SingleLink` entity type.
@@ -60,7 +60,7 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
      */
     TestEntityLvl2SingleLink.customField = function (fieldName) {
-        return core_1.Entity.customFieldSelector(fieldName, TestEntityLvl2SingleLink);
+        return Entity.customFieldSelector(fieldName, TestEntityLvl2SingleLink);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,7 +83,7 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
      */
     TestEntityLvl2SingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityLvl2SingleLink;
-}(core_1.Entity));
+}(Entityv2));
 exports.TestEntityLvl2SingleLink = TestEntityLvl2SingleLink;
 (function (TestEntityLvl2SingleLink) {
     /**

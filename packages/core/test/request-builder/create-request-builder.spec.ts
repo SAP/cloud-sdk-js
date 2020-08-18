@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
-import { CreateRequestBuilder } from '../../src';
+import { CreateRequestBuilderV2 } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -38,7 +38,7 @@ describe('CreateRequestBuilder', () => {
       .stringProperty(stringProp)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -62,7 +62,7 @@ describe('CreateRequestBuilder', () => {
     });
 
     const entity = TestEntity.builder().stringProperty(stringProp).build();
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -84,7 +84,7 @@ describe('CreateRequestBuilder', () => {
       )
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -113,7 +113,7 @@ describe('CreateRequestBuilder', () => {
       ])
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -146,7 +146,7 @@ describe('CreateRequestBuilder', () => {
       .withCustomFields(customFields)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -181,7 +181,7 @@ describe('CreateRequestBuilder', () => {
       path: toChildPath
     });
 
-    const actual = await new CreateRequestBuilder(
+    const actual = await new CreateRequestBuilderV2(
       TestEntityMultiLink,
       childEntity
     )
@@ -199,7 +199,7 @@ describe('CreateRequestBuilder', () => {
 
     const someEntity = TestEntity.builder().stringProperty('').build();
 
-    const createRequest = new CreateRequestBuilder(
+    const createRequest = new CreateRequestBuilderV2(
       TestEntity,
       someEntity
     ).execute(defaultDestination);

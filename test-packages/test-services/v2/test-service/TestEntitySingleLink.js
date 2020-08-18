@@ -45,7 +45,7 @@ var TestEntitySingleLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
      */
     TestEntitySingleLink.builder = function () {
-        return core_1.Entity.entityBuilder(TestEntitySingleLink);
+        return Entity.entityBuilder(TestEntitySingleLink);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntitySingleLink` entity type.
@@ -60,7 +60,7 @@ var TestEntitySingleLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
      */
     TestEntitySingleLink.customField = function (fieldName) {
-        return core_1.Entity.customFieldSelector(fieldName, TestEntitySingleLink);
+        return Entity.customFieldSelector(fieldName, TestEntitySingleLink);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,7 +83,7 @@ var TestEntitySingleLink = /** @class */ (function (_super) {
      */
     TestEntitySingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntitySingleLink;
-}(core_1.Entity));
+}(Entityv2));
 exports.TestEntitySingleLink = TestEntitySingleLink;
 var TestEntityLvl2MultiLink_1 = require("./TestEntityLvl2MultiLink");
 var TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");

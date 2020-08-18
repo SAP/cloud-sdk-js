@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { UpdateRequestBuilder, uriConverter } from '../../src/odata/v4';
+import { UpdateRequestBuilderV4, uriConverterV4 } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -10,7 +10,7 @@ import {
 import { testEntityResourcePath } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v4/test-service';
 
-const { convertToUriFormat } = uriConverter;
+const { convertToUriFormat } = uriConverterV4;
 
 function createTestEntity() {
   const keyPropGuid = uuid();
@@ -53,7 +53,7 @@ describe('UpdateRequestBuilder', () => {
       TestEntity
     );
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilderV4(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());

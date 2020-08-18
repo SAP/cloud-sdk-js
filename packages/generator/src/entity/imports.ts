@@ -35,8 +35,8 @@ export function importDeclarations(
           oDataVersion
         ),
         'AllFields',
-        'CustomField',
-        'Entity',
+        oDataVersion === 'v2' ? 'CustomFieldV2' : 'CustomFieldV4',
+        oDataVersion === 'v2' ? 'EntityV2' : 'EntityV4',
         'EntityBuilderType',
         'Field'
       ].sort(),

@@ -4,13 +4,13 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../../test-util/test-services/v4/test-service';
-import { getExpand } from '../../../src/odata/v4/uri-conversion';
+import { getExpandV4 } from '../../../src/odata/v4/uri-conversion';
 import { asc } from '../../../src/odata/common/order';
 
 describe('get expand', () => {
   it('for first level expand without sub-query', () => {
     expect(
-      getExpand(
+      getExpandV4(
         [
           TestEntity.ALL_FIELDS,
           TestEntity.TO_SINGLE_LINK,
@@ -22,13 +22,13 @@ describe('get expand', () => {
   });
 
   it('for single link with sub-query', () => {
-    expect(getExpand([testExpandSingleLink.expand], TestEntity).expand).toBe(
+    expect(getExpandV4([testExpandSingleLink.expand], TestEntity).expand).toBe(
       `${testExpandSingleLink.odataStr}`
     );
   });
 
   it('for multi link with sub-query', () => {
-    expect(getExpand([testExpandMultiLink.expand], TestEntity).expand).toBe(
+    expect(getExpandV4([testExpandMultiLink.expand], TestEntity).expand).toBe(
       `${testExpandMultiLink.odataStr}`
     );
   });

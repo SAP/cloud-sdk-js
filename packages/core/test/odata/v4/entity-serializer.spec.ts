@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import {
-  serializeEntity,
-  serializeComplexType
+  serializeEntityV4,
+  serializeComplexTypeV4
 } from '../../../src/odata/v4/entity-serializer';
 import {
   TestEntity,
@@ -15,7 +15,7 @@ describe('entity-serializer', () => {
     const enumProperty = TestEnumType.Member2;
     const testEntity = TestEntity.builder().enumProperty(enumProperty).build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
       EnumProperty: 'Member2'
     });
   });
@@ -30,7 +30,7 @@ describe('entity-serializer', () => {
       .complexTypeProperty(complexType1)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProp1,
         EnumProperty: 'Member1'
@@ -44,7 +44,7 @@ describe('entity-serializer', () => {
       .collectionProperty(collectionProperty)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
       CollectionProperty: collectionProperty
     });
   });
@@ -60,7 +60,7 @@ describe('entity-serializer', () => {
       .complexTypeCollectionProperty(collectionPropWithComplexType)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProp1
       },
@@ -83,7 +83,7 @@ describe('entity-serializer', () => {
     };
 
     expect(
-      serializeComplexType(
+      serializeComplexTypeV4(
         {
           collectionStringProperty
         },
@@ -94,7 +94,7 @@ describe('entity-serializer', () => {
 
   it('should serialize complex type with complex type collection field', () => {
     expect(
-      serializeComplexType(
+      serializeComplexTypeV4(
         {
           collectionComplexTypeProperty: [{ stringProperty: 'abc' }]
         },

@@ -4,8 +4,8 @@ import {
   entityDeserializer,
   EntityDeserializer
 } from '../common/entity-deserializer';
-import { edmToTs } from './payload-value-converter';
-import { extractODataETag } from './extract-odata-etag';
+import { edmToTsV2 } from './payload-value-converter';
+import { extractODataETagV2 } from './extract-o-data-e-tag-v2';
 import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-link';
 
 /**
@@ -13,10 +13,10 @@ import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-li
  * See [[EntityDeserializerType]] for the provided methods.
  */
 const deserializer: EntityDeserializer = entityDeserializer(
-  edmToTs,
-  extractODataETag,
+  edmToTsV2,
+  extractODataETagV2,
   extractDataFromOneToManyLink
 );
 
-export const deserializeEntity = deserializer.deserializeEntity;
-export const deserializeComplexType = deserializer.deserializeComplexType;
+export const deserializeEntityV2 = deserializer.deserializeEntity;
+export const deserializeComplexTypeV2 = deserializer.deserializeComplexType;

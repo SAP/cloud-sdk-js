@@ -32,7 +32,7 @@ exports.NewComePeople = void 0;
  */
 var NewComePeopleRequestBuilder_1 = require("./NewComePeopleRequestBuilder");
 var Location_1 = require("./Location");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "NewComePeople" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
@@ -46,7 +46,7 @@ var NewComePeople = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `NewComePeople`.
      */
     NewComePeople.builder = function () {
-        return v4_1.Entity.entityBuilder(NewComePeople);
+        return Entity.entityBuilder(NewComePeople);
     };
     /**
      * Returns a request builder to construct requests for operations on the `NewComePeople` entity type.
@@ -61,7 +61,7 @@ var NewComePeople = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `NewComePeople`.
      */
     NewComePeople.customField = function (fieldName) {
-        return v4_1.Entity.customFieldSelector(fieldName, NewComePeople);
+        return Entity.customFieldSelector(fieldName, NewComePeople);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -84,49 +84,49 @@ var NewComePeople = /** @class */ (function (_super) {
      */
     NewComePeople._defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
     return NewComePeople;
-}(v4_1.Entity));
+}(Entityv4));
 exports.NewComePeople = NewComePeople;
 (function (NewComePeople) {
     /**
      * Static representation of the [[userName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.USER_NAME = new v4_1.StringField('UserName', NewComePeople, 'Edm.String');
+    NewComePeople.USER_NAME = new core_1.StringField('UserName', NewComePeople, 'Edm.String');
     /**
      * Static representation of the [[firstName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.FIRST_NAME = new v4_1.StringField('FirstName', NewComePeople, 'Edm.String');
+    NewComePeople.FIRST_NAME = new core_1.StringField('FirstName', NewComePeople, 'Edm.String');
     /**
      * Static representation of the [[lastName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.LAST_NAME = new v4_1.StringField('LastName', NewComePeople, 'Edm.String');
+    NewComePeople.LAST_NAME = new core_1.StringField('LastName', NewComePeople, 'Edm.String');
     /**
      * Static representation of the [[middleName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.MIDDLE_NAME = new v4_1.StringField('MiddleName', NewComePeople, 'Edm.String');
+    NewComePeople.MIDDLE_NAME = new core_1.StringField('MiddleName', NewComePeople, 'Edm.String');
     /**
      * Static representation of the [[gender]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.GENDER = new v4_1.EnumField('Gender', NewComePeople);
+    NewComePeople.GENDER = new core_1.EnumField('Gender', NewComePeople);
     /**
      * Static representation of the [[age]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.AGE = new v4_1.BigNumberField('Age', NewComePeople, 'Edm.Int64');
+    NewComePeople.AGE = new core_1.BigNumberField('Age', NewComePeople, 'Edm.Int64');
     /**
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.EMAILS = new v4_1.CollectionField('Emails', NewComePeople, 'Edm.String');
+    NewComePeople.EMAILS = new core_1.CollectionField('Emails', NewComePeople, 'Edm.String');
     /**
      * Static representation of the [[addressInfo]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.ADDRESS_INFO = new v4_1.CollectionField('AddressInfo', NewComePeople, Location_1.Location);
+    NewComePeople.ADDRESS_INFO = new core_1.CollectionField('AddressInfo', NewComePeople, Location_1.Location);
     /**
      * Static representation of the [[homeAddress]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -136,12 +136,12 @@ exports.NewComePeople = NewComePeople;
      * Static representation of the [[favoriteFeature]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.FAVORITE_FEATURE = new v4_1.EnumField('FavoriteFeature', NewComePeople);
+    NewComePeople.FAVORITE_FEATURE = new core_1.EnumField('FavoriteFeature', NewComePeople);
     /**
      * Static representation of the [[features]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NewComePeople.FEATURES = new v4_1.CollectionField('Features', NewComePeople, 'Edm.Enum');
+    NewComePeople.FEATURES = new core_1.CollectionField('Features', NewComePeople, 'Edm.Enum');
     /**
      * All fields of the NewComePeople entity.
      */
@@ -161,7 +161,7 @@ exports.NewComePeople = NewComePeople;
     /**
      * All fields selector.
      */
-    NewComePeople.ALL_FIELDS = new v4_1.AllFields('*', NewComePeople);
+    NewComePeople.ALL_FIELDS = new core_1.AllFields('*', NewComePeople);
     /**
      * All key fields of the NewComePeople entity.
      */

@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import BigNumber from 'bignumber.js';
 import moment = require('moment');
-import { edmToTs } from '../../src';
-import { uriConverter } from '../../src/odata/v2/uri-conversion';
+import { edmToTsV2 } from '../../src';
+import { uriConverterV2 } from '../../src/odata/v2/uri-conversion';
 
-const { convertToUriFormat } = uriConverter;
+const { convertToUriFormat } = uriConverterV2;
 
 describe('convertToUriFormat', () => {
   it('Edm.Binary', () => {
@@ -73,7 +73,7 @@ describe('convertToUriFormat', () => {
     ).toBe("datetime'2019-03-11T11:39:42.000'");
     expect(
       convertToUriFormat(
-        edmToTs('/Date(1552304382000)/', 'Edm.DateTime'),
+        edmToTsV2('/Date(1552304382000)/', 'Edm.DateTime'),
         'Edm.DateTime'
       )
     ).toBe("datetime'2019-03-11T11:39:42.000'");
@@ -85,7 +85,7 @@ describe('convertToUriFormat', () => {
     ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
     expect(
       convertToUriFormat(
-        edmToTs('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'),
+        edmToTsV2('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'),
         'Edm.DateTimeOffset'
       )
     ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");

@@ -251,7 +251,7 @@ because it replaces the existing data with the payload.
   - delete entities (`@removed`)
   - delete links (`reason = deleted`)
   - add links (with id/key)
-  - update entities (with id/key + Partial<Entity>)
+  - update entities (with id/key + Partial<EntityV2>)
   - create new entities + add links (without id/key)
 ``` json
 {
@@ -308,12 +308,12 @@ because it replaces the existing data with the payload.
       .toSingleLink(singleLink)
       .build();
       
-    new UpdateRequestBuilder(TestEntity, entity)
+    new UpdateRequestBuilderV2(TestEntity, entity)
     .execute(destination);
 ```
 #### Delta update
 ``` typescript
-    new UpdateRequestBuilder(TestEntity, entity)
+    new UpdateRequestBuilderV2(TestEntity, entity)
       .deepUpdateWithDeltaPayload(
       TestEntity.TO_MULTI_LINK, deltaMultiLink1, deltaMultiLink2
     ).deepUpdateWithDeltaPayload(

@@ -6,7 +6,7 @@ exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = exp
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 var index_1 = require("./index");
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new v4_1.ODataBatchRequestBuilder(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, map);
+    return new core_1.ODataBatchRequestBuilder(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, map);
 }
 exports.batch = batch;
 /**
@@ -31,7 +31,7 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new v4_1.ODataBatchChangeSet(requests);
+    return new core_1.ODataBatchChangeSet(requests);
 }
 exports.changeset = changeset;
 exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = '/sap/opu/odata/sap/Microsoft.OData.Service.Sample.TrippinInMemory.Models';

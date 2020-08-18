@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { DeleteRequestBuilder } from '../../src';
+import { DeleteRequestBuilderV2 } from '../../src';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -27,7 +27,7 @@ describe('DeleteRequestBuilder', () => {
       path: testEntityResourcePath(keyPropGuid, keyPropString)
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     }).execute(defaultDestination);
@@ -50,9 +50,10 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const deleteRequest = new DeleteRequestBuilderV2(
+      TestEntity,
+      entity
+    ).execute(defaultDestination);
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });
@@ -67,7 +68,7 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -82,7 +83,7 @@ describe('DeleteRequestBuilder', () => {
       path: testEntityResourcePath(keyPropGuid, keyPropString)
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -100,7 +101,7 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -116,7 +117,7 @@ describe('DeleteRequestBuilder', () => {
       statusCode: 500
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
       KeyPropertyGuid: keyPropGuid
     }).execute(defaultDestination);
 

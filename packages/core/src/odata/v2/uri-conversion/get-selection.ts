@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityV2 } from '../entity-v2';
 import { Selectable } from '../../common';
-import { getSelect } from './get-select';
-import { getExpand } from './get-expand';
+import { getSelectV2 } from './get-select-v2';
+import { getExpandV2 } from './get-expand-v2';
 
 /**
  * @deprecated Since v1.21.0. Use [[oDataUri.getSelect]] and [[oDataUri.getExpand]] instead.
@@ -15,11 +15,11 @@ import { getExpand } from './get-expand';
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getQueryParametersForSelection<EntityT extends Entity>(
+export function getQueryParametersForSelection<EntityT extends EntityV2>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ select: string; expand: string }> {
   return {
-    ...getSelect(selects),
-    ...getExpand(selects)
+    ...getSelectV2(selects),
+    ...getExpandV2(selects)
   };
 }

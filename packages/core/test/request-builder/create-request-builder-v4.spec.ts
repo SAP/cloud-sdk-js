@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
-import { CreateRequestBuilder } from '../../src/odata/v4';
+import { CreateRequestBuilderV4 } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -36,7 +36,7 @@ describe('CreateRequestBuilder', () => {
       .stringProperty(stringProp)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilderV4(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -57,7 +57,7 @@ describe('CreateRequestBuilder', () => {
       )
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilderV4(TestEntity, entity).execute(
       defaultDestination
     );
 

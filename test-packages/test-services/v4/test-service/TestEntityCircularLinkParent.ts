@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, OneToOneLink, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */
-export class TestEntityCircularLinkParent extends Entity implements TestEntityCircularLinkParentType {
+export class TestEntityCircularLinkParent extends Entityv4 implements TestEntityCircularLinkParentType {
   /**
    * Technical entity name for TestEntityCircularLinkParent.
    */
@@ -54,7 +54,7 @@ export class TestEntityCircularLinkParent extends Entity implements TestEntityCi
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
    */
-  static customField(fieldName: string): CustomField<TestEntityCircularLinkParent> {
+  static customField(fieldName: string): CustomFieldv4<TestEntityCircularLinkParent> {
     return Entity.customFieldSelector(fieldName, TestEntityCircularLinkParent);
   }
 

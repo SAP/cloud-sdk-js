@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField } from '../../../../../src/v4';
+import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, OneToOneLink, StringField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityMultiLink extends Entity implements TestEntityMultiLinkType {
+export class TestEntityMultiLink extends Entityv4 implements TestEntityMultiLinkType {
   /**
    * Technical entity name for TestEntityMultiLink.
    */
@@ -79,7 +79,7 @@ export class TestEntityMultiLink extends Entity implements TestEntityMultiLinkTy
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
    */
-  static customField(fieldName: string): CustomField<TestEntityMultiLink> {
+  static customField(fieldName: string): CustomFieldv4<TestEntityMultiLink> {
     return Entity.customFieldSelector(fieldName, TestEntityMultiLink);
   }
 

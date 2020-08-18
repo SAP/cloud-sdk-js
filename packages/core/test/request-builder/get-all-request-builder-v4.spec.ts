@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { any, GetAllRequestBuilder } from '../../src/odata/v4';
+import { any, GetAllRequestBuilderV4 } from '../../src/odata/v4';
 import { muteLoggers } from '../test-util/mute-logger';
 import {
   defaultDestination,
@@ -19,7 +19,7 @@ import {
 } from '../test-util/test-data';
 
 describe('GetAllRequestBuilder', () => {
-  let requestBuilder: GetAllRequestBuilder<TestEntity>;
+  let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
 
   beforeAll(() => {
     muteLoggers('http-agent', 'destination-accessor', 'environment-accessor');
@@ -30,7 +30,7 @@ describe('GetAllRequestBuilder', () => {
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilder(TestEntity);
+    requestBuilder = new GetAllRequestBuilderV4(TestEntity);
   });
 
   describe('url', () => {
@@ -54,7 +54,7 @@ describe('GetAllRequestBuilder', () => {
         TestEntity
       );
 
-      const actual = await new GetAllRequestBuilder(TestEntity).execute(
+      const actual = await new GetAllRequestBuilderV4(TestEntity).execute(
         defaultDestination
       );
       expect(actual).toEqual([

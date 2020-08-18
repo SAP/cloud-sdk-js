@@ -1,4 +1,4 @@
-import { ActionImportRequestBuilder } from '@sap-cloud-sdk/core/v4';
+import { ActionImportRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestComplexType } from './TestComplexType';
 /**
  * Type of the parameters to be passed to [[testActionImportNoParameterNoReturnType]].

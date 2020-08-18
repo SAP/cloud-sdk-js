@@ -24,7 +24,8 @@ export function createOriginalTestEntityData2() {
     KeyPropertyString: '12345',
     StringProperty: '6789',
     BooleanProperty: true,
-    Int16Property: 42
+    Int16Property: 42,
+    EnumProperty: 'Enum1'
   };
 }
 
@@ -61,6 +62,7 @@ export function createTestEntityV4(originalData): TestEntityV4 {
     .stringProperty(originalData.StringProperty)
     .booleanProperty(originalData.BooleanProperty)
     .int16Property(originalData.Int16Property)
+    .enumProperty(originalData.EnumProperty)
     .build()
     .setOrInitializeRemoteState();
   if (originalData.to_SingleLink) {

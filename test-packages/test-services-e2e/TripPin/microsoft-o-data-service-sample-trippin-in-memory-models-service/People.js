@@ -108,6 +108,11 @@ exports.People = People;
      */
     People.MIDDLE_NAME = new v4_1.StringField('MiddleName', People, 'Edm.String');
     /**
+     * Static representation of the [[gender]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    People.GENDER = new v4_1.EnumField('Gender', People);
+    /**
      * Static representation of the [[age]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -128,6 +133,16 @@ exports.People = People;
      */
     People.HOME_ADDRESS = new Location_1.LocationField('HomeAddress', People);
     /**
+     * Static representation of the [[favoriteFeature]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    People.FAVORITE_FEATURE = new v4_1.EnumField('FavoriteFeature', People);
+    /**
+     * Static representation of the [[features]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    People.FEATURES = new v4_1.CollectionField('Features', People, 'Edm.Enum');
+    /**
      * Static representation of the one-to-many navigation property [[friends]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -145,10 +160,13 @@ exports.People = People;
         People.FIRST_NAME,
         People.LAST_NAME,
         People.MIDDLE_NAME,
+        People.GENDER,
         People.AGE,
         People.EMAILS,
         People.ADDRESS_INFO,
         People.HOME_ADDRESS,
+        People.FAVORITE_FEATURE,
+        People.FEATURES,
         People.FRIENDS,
         People.BEST_FRIEND
     ];

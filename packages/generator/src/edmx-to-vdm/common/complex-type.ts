@@ -7,7 +7,7 @@ import {
   isNullableProperty
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmComplexType, VdmProperty, VdmMappedEdmType } from '../../vdm-types';
+import { VdmComplexType, VdmMappedEdmType, VdmEnumType } from '../../vdm-types';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
@@ -16,20 +16,18 @@ import {
   complexTypeFieldType,
   complexTypeName,
   isCollectionType,
-  isComplexType,
+  isComplexTypeOrEnumType,
   isEdmType,
+  isEnumType,
+  parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
+import { enumTypeForName } from './entity';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'complex-type'
 });
-
-// TODO: this should be removed once Enum types are implemented
-function filterUnknownPropertyTypes(p: VdmProperty): boolean {
-  return !(p.isComplex && typeof p.jsType === 'undefined');
-}
 
 // TODO: this should be removed once the deprecated complex type factory is removed
 export function includeFactoryName(
@@ -44,6 +42,7 @@ export function includeFactoryName(
 
 export function transformComplexTypesBase(
   complexTypes: EdmxComplexTypeBase[],
+  enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): Omit<VdmComplexType, 'factoryName'>[] {
   const formattedTypes = complexTypes.reduce(
@@ -65,11 +64,18 @@ export function transformComplexTypesBase(
           c.Name,
           p.Name
         );
-        const isComplex = isComplexType(p.Type);
         const isCollection = isCollectionType(p.Type);
+        const parsed = isCollection ? parseCollectionTypeName(p.Type) : p.Type;
+        const isComplexOrEnum = isComplexTypeOrEnumType(parsed);
+        const isEnum = isEnumType(parsed, enumTypes);
+        const isComplex = isComplexOrEnum ? !isEnum : false;
         const typeMapping = getTypeMappingComplexProperties(
           p.Type,
-          formattedTypes
+          enumTypes,
+          formattedTypes,
+          isCollection,
+          isEnum,
+          isComplex
         );
         return {
           originalName: p.Name,
@@ -88,16 +94,21 @@ export function transformComplexTypesBase(
           jsType: typeMapping.jsType,
           fieldType: typeMapping.fieldType,
           isComplex,
+          isEnum,
           isCollection
         };
-      }).filter(filterUnknownPropertyTypes)
+      })
     };
   });
 }
 
 export function getTypeMappingComplexProperties(
   typeName: string,
-  formattedTypes: MapType<any>
+  enumTypes: VdmEnumType[],
+  formattedTypes: MapType<any>,
+  isCollection: boolean,
+  isEnum: boolean,
+  isComplex: boolean
 ): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
@@ -108,11 +119,19 @@ export function getTypeMappingComplexProperties(
     };
   }
 
-  if (isCollectionType(typeName)) {
-    return typesForCollection(typeName, undefined, formattedTypes);
+  if (isCollection) {
+    return typesForCollection(typeName, enumTypes, undefined, formattedTypes);
   }
 
-  if (isComplexType(typeName)) {
+  if (isEnum) {
+    return {
+      edmType: 'Edm.Enum',
+      jsType: enumTypeForName(typeName, enumTypes),
+      fieldType: 'ComplexTypeEnumPropertyField'
+    };
+  }
+
+  if (isComplex) {
     const withoutPrefix = complexTypeName(typeName)!;
     return {
       edmType: typeName,

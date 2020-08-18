@@ -105,3 +105,8 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
   )._filters,
   odataStr: "(to_MultiLink/any(a0:(substring(a0/StringProperty, 1) eq 'test')))"
 };
+
+export const testFilterEnum = {
+  filter: TestEntityV4.ENUM_PROPERTY.equals('test'),
+  odataStr: "EnumProperty eq 'test'"
+};

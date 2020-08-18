@@ -118,6 +118,11 @@ var TestComplexTypeField = /** @class */ (function (_super) {
          */
         _this.geographyPointProperty = new v4_1.ComplexTypeAnyPropertyField('GeographyPointProperty', _this, 'Edm.Any');
         /**
+         * Representation of the [[TestComplexType.enumProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.enumProperty = new v4_1.ComplexTypeEnumPropertyField('EnumProperty', _this);
+        /**
          * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
@@ -231,6 +236,11 @@ var TestComplexType;
             originalName: 'GeographyPointProperty',
             name: 'geographyPointProperty',
             type: 'Edm.Any',
+            isCollection: false
+        }, {
+            originalName: 'EnumProperty',
+            name: 'enumProperty',
+            type: 'Edm.Enum',
             isCollection: false
         }, {
             originalName: 'SomethingTheSDKDoesNotSupport',

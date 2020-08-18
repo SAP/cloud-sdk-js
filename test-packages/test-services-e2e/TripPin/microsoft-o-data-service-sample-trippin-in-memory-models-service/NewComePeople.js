@@ -108,6 +108,11 @@ exports.NewComePeople = NewComePeople;
      */
     NewComePeople.MIDDLE_NAME = new v4_1.StringField('MiddleName', NewComePeople, 'Edm.String');
     /**
+     * Static representation of the [[gender]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    NewComePeople.GENDER = new v4_1.EnumField('Gender', NewComePeople);
+    /**
      * Static representation of the [[age]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -128,6 +133,16 @@ exports.NewComePeople = NewComePeople;
      */
     NewComePeople.HOME_ADDRESS = new Location_1.LocationField('HomeAddress', NewComePeople);
     /**
+     * Static representation of the [[favoriteFeature]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    NewComePeople.FAVORITE_FEATURE = new v4_1.EnumField('FavoriteFeature', NewComePeople);
+    /**
+     * Static representation of the [[features]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    NewComePeople.FEATURES = new v4_1.CollectionField('Features', NewComePeople, 'Edm.Enum');
+    /**
      * All fields of the NewComePeople entity.
      */
     NewComePeople._allFields = [
@@ -135,10 +150,13 @@ exports.NewComePeople = NewComePeople;
         NewComePeople.FIRST_NAME,
         NewComePeople.LAST_NAME,
         NewComePeople.MIDDLE_NAME,
+        NewComePeople.GENDER,
         NewComePeople.AGE,
         NewComePeople.EMAILS,
         NewComePeople.ADDRESS_INFO,
-        NewComePeople.HOME_ADDRESS
+        NewComePeople.HOME_ADDRESS,
+        NewComePeople.FAVORITE_FEATURE,
+        NewComePeople.FEATURES
     ];
     /**
      * All fields selector.

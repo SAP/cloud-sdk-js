@@ -4,7 +4,10 @@
 import { identity } from 'rambda';
 import { tsToEdm } from '../payload-value-converter';
 import { EdmTypeShared } from '../../common';
-import { uriConvertersCommon } from '../../common/uri-conversion/uri-value-converter';
+import {
+  convertToUriForEdmString,
+  uriConvertersCommon
+} from '../../common/uri-conversion/uri-value-converter';
 import { EdmType } from '../edm-types';
 
 type UriConverterMapping = { [key in EdmType]: (value: any) => string };
@@ -18,7 +21,8 @@ export const uriConverters: UriConverterMapping = {
   'Edm.TimeOfDay': identity,
   'Edm.Decimal': value => String(value),
   'Edm.Duration': value => `duration'${value}'`,
-  'Edm.Guid': identity
+  'Edm.Guid': identity,
+  'Edm.Enum': value => convertToUriForEdmString(value)
 };
 /**
  * @hidden

@@ -45,7 +45,7 @@ Visit extension library in the left-side menu.
 ## Benefits for contributors
 
 :::info
-At the moment only services and libraries from withing SAP can be contributed and released together with SAP Cloud SDK for JavaScript.
+At the moment only services and libraries from withing SAP can be contributed and released together with SAP Cloud SDK for Java.
 :::
 
 - Increased adoption thanks to the huge SDK user base

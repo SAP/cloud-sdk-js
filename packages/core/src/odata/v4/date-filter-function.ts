@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import * as moment from 'moment';
+import moment from 'moment';
 import { EntityBase } from '../common';
 import { FilterFunctionParameterType } from '../common/filter';
 import { OrderableFilterFunction } from '../common/filter/orderable-filter-function';

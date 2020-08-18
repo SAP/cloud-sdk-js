@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable max-classes-per-file */
 
-import * as moment from 'moment';
+import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';

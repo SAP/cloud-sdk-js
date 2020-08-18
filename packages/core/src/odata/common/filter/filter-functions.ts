@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import * as moment from 'moment';
+import moment from 'moment';
 import { EntityBase } from '../entity';
 import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';

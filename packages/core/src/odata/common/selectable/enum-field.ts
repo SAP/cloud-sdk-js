@@ -13,7 +13,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  */
 class EnumFieldBase<EntityT extends EntityBase> extends EdmTypeField<
   EntityT,
-  /*TODO FieldType is designed to be a union type of a list of static known type.
+  /* TODO FieldType is designed to be a union type of a list of static known type.
    For enum type, one can only use any. Use string here since it's better than any.
    However, when using filter you use `EnumType eq 'test'`.
    */

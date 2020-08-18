@@ -19,7 +19,7 @@ import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-ke
 import { oDataUri } from '../uri-conversion';
 import { getSingleResult } from './response-data-accessor';
 /**
- * Create OData request to get a single entity based on its key properties.
+ * Create an OData request to get a single entity based on its key properties.
  * The properties available in the response can be restricted by creating a [[GetAllRequestBuilder.select selection]], where no selection is equal to selecting all fields.
  * Note that navigational properties are automatically expanded if they included in a  select.
  *

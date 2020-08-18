@@ -46,7 +46,11 @@ export type EdmTypeMapping = {
   [key in EdmTypeShared<'any'>]: string | undefined;
 };
 
-const edmToTsTypeMapping: EdmTypeMapping = {
+type EdmTypeMappingWithoutEnum = {
+  [key in Exclude<EdmTypeShared<'any'>, 'Edm.Enum'>]: string | undefined;
+};
+
+const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
   'Edm.String': 'string',
   'Edm.Boolean': 'boolean',
   'Edm.Guid': 'string',
@@ -70,8 +74,7 @@ const edmToTsTypeMapping: EdmTypeMapping = {
   // OData v4 specific
   'Edm.Date': 'Moment',
   'Edm.Duration': 'Duration',
-  'Edm.TimeOfDay': 'Time',
-  'Edm.Enum': undefined
+  'Edm.TimeOfDay': 'Time'
 };
 
 const edmToFieldTypeMapping: EdmTypeMapping = {

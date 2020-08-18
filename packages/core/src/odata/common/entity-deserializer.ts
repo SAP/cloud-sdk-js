@@ -67,7 +67,7 @@ export function entityDeserializer<EdmT extends EdmType, EntityT, JsonT>(
 ): EntityDeserializer {
   /**
    * Extracts all custom fields from the JSON payload for a single entity.
-   * In this context, a custom fields is every property that is not known in the corresponding entity class.
+   * In this context, a custom field is every property that is not known in the corresponding entity class.
    *
    * @param json - The JSON payload.
    * @param entityConstructor - The constructor function of the entity class.

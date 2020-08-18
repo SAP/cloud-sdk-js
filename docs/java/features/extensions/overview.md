@@ -12,6 +12,7 @@ keywords:
 - sap cloud sdk
 - integrations
 - extensions
+- libraries
 ---
 
 ## What are extensions?

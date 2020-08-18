@@ -86,6 +86,11 @@ export interface TestComplexType {
      */
     geographyPointProperty?: any;
     /**
+     * Something The Sdk Does Not Support.
+     * @nullable
+     */
+    somethingTheSdkDoesNotSupport?: any;
+    /**
      * Complex Type Property.
      * @nullable
      */
@@ -196,6 +201,11 @@ export declare class TestComplexTypeField<EntityT extends Entity> extends Comple
      */
     geographyPointProperty: ComplexTypeAnyPropertyField<EntityT>;
     /**
+     * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    somethingTheSdkDoesNotSupport: ComplexTypeAnyPropertyField<EntityT>;
+    /**
      * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
@@ -204,7 +214,7 @@ export declare class TestComplexTypeField<EntityT extends Entity> extends Comple
      * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    collectionStringProperty: CollectionField<EntityT, 'Edm.String'>;
+    collectionStringProperty: CollectionField<EntityT, string>;
     /**
      * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -229,10 +239,10 @@ export declare namespace TestComplexType {
      */
     const _propertyMetadata: PropertyMetadata<TestComplexType>[];
     /**
-     * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json: {
-        [keys: string]: FieldType | TestNestedComplexType;
+        [keys: string]: FieldType | TestNestedComplexType | string;
     }): TestComplexType;
 }
 //# sourceMappingURL=TestComplexType.d.ts.map

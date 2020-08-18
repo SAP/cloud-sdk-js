@@ -5,6 +5,7 @@
  */
 import { NewComePeopleRequestBuilder } from './NewComePeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
+import { string } from './string';
 import { Location, LocationField } from './Location';
 import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, Field, StringField } from '@sap-cloud-sdk/core/v4';
 
@@ -150,7 +151,7 @@ export namespace NewComePeople {
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS: CollectionField<NewComePeople, 'Edm.String'> = new CollectionField('Emails', NewComePeople, 'Edm.String');
+  export const EMAILS: CollectionField<NewComePeople, string> = new CollectionField('Emails', NewComePeople, string);
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -164,7 +165,7 @@ export namespace NewComePeople {
   /**
    * All fields of the NewComePeople entity.
    */
-  export const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, 'Edm.String'> | CollectionField<NewComePeople, Location> | LocationField<NewComePeople>> = [
+  export const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, string> | CollectionField<NewComePeople, Location> | LocationField<NewComePeople>> = [
     NewComePeople.USER_NAME,
     NewComePeople.FIRST_NAME,
     NewComePeople.LAST_NAME,

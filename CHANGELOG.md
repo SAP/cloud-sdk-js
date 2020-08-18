@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- Include fallback `Edm.Any` for previously unsupported edm types like Edm.Geography.
+- Include fallback `Edm.Any` for previously unsupported EDM types like Edm.Geography.
 Type safety and related features like URI conversion are not supported for the fallback type.  
 - OData v4 is moved from the experimental state to GA.
 

@@ -88,7 +88,7 @@ export namespace AirportLocation {
   }];
 
   /**
-   * @deprecated Since v1.25.0. Use [[deserializeComplexType]] instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | City }): AirportLocation {
     return deserializeComplexType(json, AirportLocation);

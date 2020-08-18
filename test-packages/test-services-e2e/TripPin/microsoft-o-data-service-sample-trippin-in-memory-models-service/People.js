@@ -31,6 +31,7 @@ exports.People = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var PeopleRequestBuilder_1 = require("./PeopleRequestBuilder");
+var string_1 = require("./string");
 var Location_1 = require("./Location");
 var v4_1 = require("@sap-cloud-sdk/core/v4");
 /**
@@ -116,7 +117,7 @@ exports.People = People;
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    People.EMAILS = new v4_1.CollectionField('Emails', People, 'Edm.String');
+    People.EMAILS = new v4_1.CollectionField('Emails', People, string_1.string);
     /**
      * Static representation of the [[addressInfo]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.

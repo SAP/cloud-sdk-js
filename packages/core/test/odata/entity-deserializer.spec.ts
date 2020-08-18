@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { deserializeEntity, edmToTs, extractODataETag } from '../../src';
+import { deserializeEntity } from '../../src';
 import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
-import { entityDeserializer } from '../../src/odata/common/entity-deserializer';
+import { extractCustomFields } from '../../src/odata/common/entity-deserializer';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {
@@ -65,7 +65,7 @@ describe('entity-deserializer', () => {
       SecondCustomField: 12345
     };
 
-    expect(entityDeserializer.extractCustomFields(withCustomFields, TestEntity)).toEqual(expected);
+    expect(extractCustomFields(withCustomFields, TestEntity)).toEqual(expected);
   });
 
   describe('entity with complex type field', () => {

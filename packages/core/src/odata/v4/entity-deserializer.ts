@@ -2,7 +2,7 @@
 
 import {
   entityDeserializer,
-  entityDeserializer
+  EntityDeserializer
 } from '../common/entity-deserializer';
 import { edmToTs } from './payload-value-converter';
 import { extractODataETag } from './extract-odata-etag';
@@ -12,7 +12,7 @@ import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-li
  * Entity deserializer instance for v4 entities.
  * See [[EntityDeserializerType]] for the provided methods.
  */
-const deserializer: entityDeserializer = entityDeserializer(
+const deserializer: EntityDeserializer = entityDeserializer(
   edmToTs,
   extractODataETag,
   extractDataFromOneToManyLink

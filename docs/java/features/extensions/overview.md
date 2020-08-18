@@ -43,6 +43,10 @@ Visit extension library in the right-side menu.
 
 ## Benefits for contributors
 
+:::info
+At the moment only services and libraries from withing SAP can be contributed and released together with SAP Cloud SDK for JavaScript.
+:::
+
 - Increased adoption thanks to the huge SDK user base
 - On-boarding to the best development practices
 - Code reviews by the SDK Team
@@ -52,4 +56,18 @@ Visit extension library in the right-side menu.
 
 ## How to contribute?
 
-If you maintain a library or have a service that you believe will strengthen Cloud SDK offering and provides additional value to your customers thanks to deeper integration, we're happy to hear from you via email: cloudsdk@sap.com or reach out to us via internal communication channel if you're working at SAP.
+If you:
+
+ - maintain a library in SAP cloud ecosystem
+ - have a service in SAP cloud ecosystem that you believe will strengthen Cloud SDK offering and provides additional value to your customers by being part of Cloud SDK
+ - know of a service or library within SAP that you would like to use in the context of SAP Cloud SDK
+
+We're happy to hear from you via email: **cloudsdk@sap.com**  or reach out to us via SAP internal communication channels.
+
+:::tip What if you're outside of SAP
+If you're outside of SAP but know about valuable library or service missing from SAP Cloud SDK offering, please, let us know.
+:::
+
+## Feedback and support
+
+We hope you're happy developing with SAP Cloud SDK for Java. We're happy to hear back from you to help us further improve. Send you feedback, ideas, suggestions to **cloudsdk@sap.com**

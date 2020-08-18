@@ -7,7 +7,7 @@ import {
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
 
 /**
- * Create OData request to execute an action import.
+ * Create an OData request to execute an action import.
  * @typeparam ParametersT - Type of the action import parameters
  * @typeparam ReturnT - Type of the action import return value
  */

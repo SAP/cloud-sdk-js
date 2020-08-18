@@ -18,52 +18,48 @@ import {
   EdmTypeShared,
   isEdmType
 } from '../common';
-import { PropertyMetadata } from '../v2';
+import { EdmToPrimitive, EdmType, PropertyMetadata } from '../v2';
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'entity-deserializer'
 });
 
-// eslint-disable-next-line valid-jsdoc
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Interface representing the return type of the builder function [[entityDeserializer]]
  */
-export function entityDeserializer(
-  edmToTs,
-  extractODataETag,
-  extractDataFromOneToManyLink: (arg) => any[] | undefined
-) {
-  /**
-   * Extracts all custom fields from the JSON payload for a single entity.
-   * In this context, a custom fields is every property that is not known in the corresponding entity class.
-   *
-   * @param json - The JSON payload.
-   * @param entityConstructor - The constructor function of the entity class.
-   * @returns An object containing the custom fields as key-value pairs.
-   */
-  function extractCustomFields<EntityT extends EntityBase, JsonT>(
-    json: Partial<JsonT>,
-    entityConstructor: Constructable<EntityT>
-  ): MapType<any> {
-    const regularODataProperties = [
-      '__metadata',
-      '__deferred',
-      // type assertion for backwards compatibility, TODO: remove in v2.0
-      ...(entityConstructor._allFields as (
-        | Field<EntityT>
-        | Link<EntityT>
-      )[]).map(field => field._fieldName)
-    ];
-    const regularFields = new Set<string>(regularODataProperties);
-    return Object.keys(json)
-      .filter(key => !regularFields.has(key))
-      .reduce((customFields, key) => {
-        customFields[key] = json[key];
-        return customFields;
-      }, {});
-  }
+export interface EntityDeserializer<EntityT extends EntityBase = any> {
+  deserializeEntity: (
+    json: any,
+    entityConstructor: Constructable<EntityT>,
+    requestHeader?: any
+  ) => EntityT;
+  deserializeComplexType: (
+    json: MapType<any>,
+    complexType: ComplexTypeNamespace<any>
+  ) => any;
+}
 
+type EdmToTsType<EdmT extends EdmType> = (
+  value: any,
+  edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
+) => EdmToPrimitive<EdmT>;
+type ExtractODataETagType = (json: MapType<any>) => string | undefined;
+type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
+
+/**
+ * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
+ * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts
+ * @param edmToTs - Converters  emd input to ts values.
+ * @param extractODataETag - Extractor for the Etag.
+ * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
+ * @returns a entity deserializer as defined by [[EntityDeserializer]]
+ */
+export function entityDeserializer<EdmT extends EdmType, EntityT, JsonT>(
+  edmToTs: EdmToTsType<EdmT>,
+  extractODataETag: ExtractODataETagType,
+  extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
+): EntityDeserializer {
   /**
    * Converts the JSON payload for a single entity into an instance of the corresponding generated entity class.
    * It sets the remote state to the data provided by the JSON payload.
@@ -92,10 +88,6 @@ export function entityDeserializer(
       .initializeCustomFields(extractCustomFields(json, entityConstructor))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();
-  }
-
-  function extractEtagFromHeader(headers: any): string | undefined {
-    return headers ? headers['Etag'] || headers['etag'] : undefined;
   }
 
   function getFieldValue<EntityT extends EntityBase, JsonT>(
@@ -211,9 +203,10 @@ export function entityDeserializer(
     return edmToTs(propertyValue, propertyMetadata.type);
   }
 
-  function deserializeComplexType<
-    ComplexTypeNamespaceT extends ComplexTypeNamespace<any>
-  >(json: MapType<any>, complexType: ComplexTypeNamespaceT): any {
+  function deserializeComplexType(
+    json: MapType<any>,
+    complexType: ComplexTypeNamespace<any>
+  ): any {
     if (json === null) {
       return null;
     }
@@ -244,10 +237,41 @@ export function entityDeserializer(
     }
   }
 
-  // TODO: extractCustomFields should not be exported here. This was probably done only for testing
   return {
-    extractCustomFields,
     deserializeEntity,
     deserializeComplexType
   };
+}
+
+export function extractEtagFromHeader(headers: any): string | undefined {
+  return headers ? headers['Etag'] || headers['etag'] : undefined;
+}
+
+/**
+ * Extracts all custom fields from the JSON payload for a single entity.
+ * In this context, a custom fields is every property that is not known in the corresponding entity class.
+ *
+ * @param json - The JSON payload.
+ * @param entityConstructor - The constructor function of the entity class.
+ * @returns An object containing the custom fields as key-value pairs.
+ */
+export function extractCustomFields<EntityT extends EntityBase, JsonT>(
+  json: Partial<JsonT>,
+  entityConstructor: Constructable<EntityT>
+): MapType<any> {
+  const regularODataProperties = [
+    '__metadata',
+    '__deferred',
+    // type assertion for backwards compatibility, TODO: remove in v2.0
+    ...(entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]).map(
+      field => field._fieldName
+    )
+  ];
+  const regularFields = new Set<string>(regularODataProperties);
+  return Object.keys(json)
+    .filter(key => !regularFields.has(key))
+    .reduce((customFields, key) => {
+      customFields[key] = json[key];
+      return customFields;
+    }, {});
 }

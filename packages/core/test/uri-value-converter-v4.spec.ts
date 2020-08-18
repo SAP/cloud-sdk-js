@@ -1,7 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
-import { convertToUriFormat } from '../src/v4';
+import { uriConverter } from '../src/v4';
+
+const { convertToUriFormat } = uriConverter;
 
 describe('convertToUriFormat', () => {
   it('should convert guid', () => {

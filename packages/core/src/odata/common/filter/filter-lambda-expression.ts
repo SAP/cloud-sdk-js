@@ -4,13 +4,15 @@ import { EntityBase } from '../entity';
 import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
+/* eslint-disable valid-jsdoc */
+
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * hidden
  */
 export type FilterLambdaOperator = 'any' | 'all';
 
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * hidden
  */
 export class FilterLambdaExpression<
   EntityT extends EntityBase,
@@ -22,9 +24,8 @@ export class FilterLambdaExpression<
   ) {}
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * hidden
  */
 export function isFilterLambdaExpression<
   EntityT extends EntityBase,

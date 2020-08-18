@@ -4,18 +4,32 @@ import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity';
 import { FieldType, Field } from '../selectable';
 import { toStaticPropertyFormat } from '../../../util';
-import { UriConverter } from '../../v2';
+import { UriConverter } from '../uri-conversion';
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'get-resource-path'
 });
 
-// eslint-disable-next-line valid-jsdoc
+type GetResourcePathForKeysType<EntityT extends EntityBase> = (
+  keys: MapType<FieldType>,
+  entityConstructor: Constructable<EntityT>
+) => string;
+
+interface GetResourcePathForKeys<EntityT extends EntityBase = any> {
+  getResourcePathForKeys: GetResourcePathForKeysType<EntityT>;
+}
+
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Creates a getResourcePathForKeys function using the OData v2 or OData v4 URI converter.
+ * The concrete instances for v2 or v4 are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
+ *
+ * @param uriConverter Uri converter for v2 or v4.
+ * @returns The filter getter. See [[GetFilter]]
  */
-export function createGetResourcePathForKeys(uriConverter: UriConverter) {
+export function createGetResourcePathForKeys(
+  uriConverter: UriConverter
+): GetResourcePathForKeys {
   /**
    * Get the resource path of an entity specified by key-value pairs.
    *

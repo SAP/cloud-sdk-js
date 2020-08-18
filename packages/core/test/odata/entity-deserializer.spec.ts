@@ -1,10 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { deserializeEntity, extractCustomFields } from '../../src';
+import { deserializeEntity } from '../../src';
 import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../test-util/test-services/v2/test-service';
+import { extractCustomFields } from '../../src/odata/common/entity-deserializer';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {

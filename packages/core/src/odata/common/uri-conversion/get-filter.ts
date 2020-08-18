@@ -13,14 +13,29 @@ import {
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
 import { ComplexTypeField, FieldType } from '../selectable';
-import { UriConverter } from '../request';
+import { UriConverter } from '../uri-conversion';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 
-// eslint-disable-next-line valid-jsdoc
+type GetFilterType<EntityT extends EntityBase> = (
+  filter: Filterable<EntityT>,
+  entityConstructor: Constructable<EntityT>
+) => Partial<{ filter: string }>;
+
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Interface representing the return of the getFilter creator [[createGetFilter]].
  */
-export function createGetFilter(uriConverter: UriConverter) {
+export interface GetFilter<EntityT extends EntityBase = any> {
+  getFilter: GetFilterType<EntityT>;
+}
+
+/**
+ * Creates a getFilter function using the OData v2 or OData v4 URI converter.
+ * The concrete filter getters are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
+ *
+ * @param uriConverter Uri converter for v2 or v4.
+ * @returns The filter getter. See interface [[GetFilter]]
+ */
+export function createGetFilter(uriConverter: UriConverter): GetFilter {
   /**
    * Get an object containing the given filter as query parameter, or an empty object if none was given.
    *

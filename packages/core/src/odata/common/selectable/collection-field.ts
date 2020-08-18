@@ -9,7 +9,6 @@ import { getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
  *
  * Represents a static field of an entity or complex type.
  *
@@ -23,7 +22,6 @@ export class CollectionField<
   readonly selectable: true;
 
   /**
-   * @experimental This is experimental and is subject to change. Use with caution.
    *
    * Creates an instance of CollectionField.
    *

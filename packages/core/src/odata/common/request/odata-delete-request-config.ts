@@ -8,7 +8,6 @@ import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
 
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
  * OData delete request configuration for an entity type.
  *
  * @typeparam EntityT - Type of the entity to setup a request for

@@ -21,8 +21,10 @@ import { oDataUri } from '../uri-conversion';
 import { getCollectionResult } from './response-data-accessor';
 
 /**
- * Create OData request to get multiple entities based on the configuration of the request. A `GetAllRequestBuilder` allows to restrict the response in multiple dimensions.
+ * Create an OData request to get multiple entities based on the configuration of the request.
+ * A `GetAllRequestBuilder` allows restricting the response in multiple dimensions.
  * The properties available in the response can be restricted by creating a [[GetAllRequestBuilder.select selection]], where no selection is equal to selecting all fields.
+ * Note that navigational properties are automatically expanded if they included in a  select.
  * The entities can be [[GetAllRequestBuilder.filter filtered]] and [[GetAllRequestBuilder.select ordered]] based on the values of their properties.
  * The number of entities in the result can be [[GetAllRequestBuilder.top limited]] and results can be [[GetAllRequestBuilder.skip skipped]] for paging purposes.
  * If none of the above mentioned are configured all entities of the given type will be requested.

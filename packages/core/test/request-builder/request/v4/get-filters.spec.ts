@@ -1,5 +1,4 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { getFilter } from '../../../../src/odata/v4/uri-conversion/get-filter';
 import {
   testFilterEnum,
   testFilterLambdaExpressionFilterFunctionOnLink,
@@ -12,6 +11,8 @@ import {
 } from '../../../test-util/filter-factory';
 import { TestEntity } from '../../../test-util/test-services/v4/test-service';
 import { oDataUri, filterFunctions, filterFunction } from '../../../../src/v4';
+
+const { getFilter } = oDataUri;
 
 describe('get filters', () => {
   it('for simple filters', () => {

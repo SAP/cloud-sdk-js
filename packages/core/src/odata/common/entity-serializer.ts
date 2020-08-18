@@ -22,11 +22,39 @@ const logger = createLogger({
   messageContext: 'entity-serializer'
 });
 
-// eslint-disable-next-line valid-jsdoc
 /**
- * @experimental This is experimental and is subject to change. Use with caution.
+ * Interface representing the return type of the builder function [[entitySerializer]].
  */
-export function entitySerializer(tsToEdm) {
+export interface EntitySerializer<
+  EntityT extends EntityBase = any,
+  ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
+> {
+  serializeEntity: (
+    entity: EntityT,
+    entityConstructor: Constructable<EntityT>
+  ) => MapType<any>;
+  serializeComplexType: (
+    fieldValue: any,
+    complexTypeNameSpace: ComplexTypeNamespaceT
+  ) => any;
+  serializeEntityNonCustomFields: (
+    entity: EntityT,
+    entityConstructor: Constructable<EntityT>
+  ) => MapType<any>;
+}
+
+type TsToEdmType = (
+  value: any,
+  edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
+) => any;
+
+/**
+ * Constructs an entitySerializer given the OData v2 or v4 specific tsToEdm method.
+ * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
+ * @param tsToEdm - Converters ts input to edm values
+ * @returns a entity serializer as defined by [[EntitySerializer]]
+ */
+export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service.
    *

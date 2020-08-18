@@ -3,7 +3,7 @@
 
 import { identity } from 'rambda';
 import { tsToEdm } from '../payload-value-converter';
-import { EdmTypeShared } from '../../common';
+import { EdmTypeShared, UriConverter } from '../../common';
 import {
   convertToUriForEdmString,
   uriConvertersCommon
@@ -27,14 +27,13 @@ export const uriConverters: UriConverterMapping = {
 /**
  * @hidden
  */
-export function convertToUriFormat(
-  value: any,
-  edmType: EdmTypeShared<'v4'>
-): string {
-  const converted = tsToEdm(value, edmType);
-  const uriConverter = uriConverters[edmType];
-  if (uriConverter) {
-    return uriConverter(converted);
+export const uriConverter: UriConverter = {
+  convertToUriFormat(value: any, edmType: EdmTypeShared<'v4'>): string {
+    const converted = tsToEdm(value, edmType);
+    const uriConverterFunc = uriConverters[edmType];
+    if (uriConverterFunc) {
+      return uriConverterFunc(converted);
+    }
+    return converted;
   }
-  return converted;
-}
+};

@@ -3,7 +3,7 @@
 
 import { identity } from 'rambda';
 import { tsToEdm } from '../payload-value-converter';
-import { EdmTypeShared } from '../../common';
+import { EdmTypeShared, UriConverter } from '../../common';
 import {
   convertToUriForEdmString,
   uriConvertersCommon

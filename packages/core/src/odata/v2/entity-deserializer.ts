@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import {
-  EntityDeserializer,
-  entityDeserializer
+  entityDeserializer,
+  EntityDeserializer
 } from '../common/entity-deserializer';
 import { edmToTs } from './payload-value-converter';
 import { extractODataETag } from './extract-odata-etag';
@@ -18,6 +18,5 @@ const deserializer: EntityDeserializer = entityDeserializer(
   extractDataFromOneToManyLink
 );
 
-export const extractCustomFields = deserializer.extractCustomFields;
 export const deserializeEntity = deserializer.deserializeEntity;
 export const deserializeComplexType = deserializer.deserializeComplexType;

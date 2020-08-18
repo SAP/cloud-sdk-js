@@ -5,10 +5,6 @@ import {
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
 import { joinEntityTypes } from '../../edmx-to-vdm/v4';
-import {
-  parseTypeName,
-  stripNamespace
-} from '../../edmx-to-vdm/edmx-to-vdm-util';
 import { joinTypesWithBaseTypes } from '../legacy/v4';
 import {
   EdmxAction,
@@ -41,24 +37,7 @@ export function parseEnumTypes(root): EdmxEnumType[] {
 
 export function parseEntityType(root): EdmxEntityType[] {
   const entityTypes = parseEntityTypesBase(root);
-  return joinTypesWithBaseTypes(
-    filterEnumProperties(entityTypes, parseEnumTypes(root)),
-    joinEntityTypes
-  );
-}
-
-// TODO: Filters enum properties as long as those are not supported
-function filterEnumProperties(
-  entityTypes: EdmxEntityType[],
-  enumTypes: EdmxEnumType[]
-): EdmxEntityType[] {
-  const enumTypeNames = enumTypes.map(enumType => enumType.Name);
-  return entityTypes.map(entityType => ({
-    ...entityType,
-    Property: entityType.Property.filter(
-      prop => !enumTypeNames.includes(stripNamespace(parseTypeName(prop.Type)))
-    )
-  }));
+  return joinTypesWithBaseTypes(entityTypes, joinEntityTypes);
 }
 
 export function parseEntitySets(root): EdmxEntitySet[] {

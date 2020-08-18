@@ -18,12 +18,13 @@
 
 ## New Functionality
 
+- Added experimental support for OData V4 enum type. Use the `@sap/cloud-sdk-generator` to generate the type safe client.
 - Include fallback `Edm.Any` for previously unsupported edm types like Edm.Geography.
 Type safety and related features like URI conversion are not supported for the fallback type.  
 
 ## Improvements
 
--
+- Special characters like `'` (single quotes), ` ` (space) and `ä` (umlaut) are encoded properly when used in the `Filter`.
 
 ## Fixed Issues
 

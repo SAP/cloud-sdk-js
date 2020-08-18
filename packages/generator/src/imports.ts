@@ -85,6 +85,16 @@ export function complexTypeImportDeclarations(
   );
 }
 
+export function enumTypeImportDeclarations(
+  properties: VdmProperty[]
+): ImportDeclarationStructure[] {
+  return mergeImportDeclarations(
+    properties
+      .filter(prop => prop.isEnum)
+      .map(prop => enumTypeImportDeclaration(prop))
+  );
+}
+
 // Only supports named imports
 export function mergeImportDeclarations(
   importDeclarations: ImportDeclarationStructure[]
@@ -142,5 +152,15 @@ function complexTypeImportDeclaration(
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier: `./${prop.jsType}`,
     namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
+  };
+}
+
+function enumTypeImportDeclaration(
+  prop: VdmProperty
+): ImportDeclarationStructure {
+  return {
+    kind: StructureKind.ImportDeclaration,
+    moduleSpecifier: `./${prop.jsType}`,
+    namedImports: [prop.jsType]
   };
 }

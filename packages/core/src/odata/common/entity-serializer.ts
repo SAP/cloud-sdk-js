@@ -49,7 +49,7 @@ type TsToEdmType = (
 ) => any;
 
 /**
- * Constructs a entitySerializer given the OData v2 or v4 specific tsToEdm method.
+ * Constructs an entitySerializer given the OData v2 or v4 specific tsToEdm method.
  * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
  * @param tsToEdm - Converters ts input to edm values
  * @returns a entity serializer as defined by [[EntitySerializer]]

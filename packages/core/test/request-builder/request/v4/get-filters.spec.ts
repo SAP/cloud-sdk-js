@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { getFilter } from '../../../../src/odata/v4/uri-conversion/get-filter';
 import {
+  testFilterEnum,
   testFilterLambdaExpressionFilterFunctionOnLink,
   testFilterLambdaExpressionFilterLinkOnLink,
   testFilterLambdaExpressionFilterListOnLink,
@@ -16,6 +17,12 @@ describe('get filters', () => {
   it('for simple filters', () => {
     expect(getFilter(testFilterStringV4.filter, TestEntity).filter).toBe(
       `${testFilterString.odataStr}`
+    );
+  });
+
+  it('for enum filters', () => {
+    expect(getFilter(testFilterEnum.filter, TestEntity).filter).toBe(
+      `${testFilterEnum.odataStr}`
     );
   });
 

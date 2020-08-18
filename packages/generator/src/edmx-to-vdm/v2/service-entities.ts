@@ -23,6 +23,7 @@ export function getServiceEntitiesV2(
 
   return {
     complexTypes: includeFactoryName(complexTypes, formatter),
+    enumTypes: [],
     entities,
     functionImports
   };

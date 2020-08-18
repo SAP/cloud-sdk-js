@@ -6,7 +6,9 @@
 import { NewComePeopleRequestBuilder } from './NewComePeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import { Location, LocationField } from './Location';
-import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, Field, StringField } from '@sap-cloud-sdk/core/v4';
+import { PersonGender } from './PersonGender';
+import { Feature } from './Feature';
+import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, EnumField, Field, StringField } from '@sap-cloud-sdk/core/v4';
 
 /**
  * This class represents the entity "NewComePeople" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
@@ -44,6 +46,10 @@ export class NewComePeople extends Entity implements NewComePeopleType {
    */
   middleName?: string;
   /**
+   * Gender.
+   */
+  gender!: PersonGender;
+  /**
    * Age.
    * @nullable
    */
@@ -63,6 +69,14 @@ export class NewComePeople extends Entity implements NewComePeopleType {
    * @nullable
    */
   homeAddress?: Location;
+  /**
+   * Favorite Feature.
+   */
+  favoriteFeature!: Feature;
+  /**
+   * Features.
+   */
+  features!: Feature[];
 
   /**
    * Returns an entity builder to construct instances `NewComePeople`.
@@ -103,10 +117,13 @@ export interface NewComePeopleType {
   firstName: string;
   lastName?: string;
   middleName?: string;
+  gender: PersonGender;
   age?: BigNumber;
   emails?: string[];
   addressInfo?: Location[];
   homeAddress?: Location;
+  favoriteFeature: Feature;
+  features: Feature[];
 }
 
 export interface NewComePeopleTypeForceMandatory {
@@ -114,10 +131,13 @@ export interface NewComePeopleTypeForceMandatory {
   firstName: string;
   lastName: string;
   middleName: string;
+  gender: PersonGender;
   age: BigNumber;
   emails: string[];
   addressInfo: Location[];
   homeAddress: Location;
+  favoriteFeature: Feature;
+  features: Feature[];
 }
 
 export namespace NewComePeople {
@@ -142,6 +162,11 @@ export namespace NewComePeople {
    */
   export const MIDDLE_NAME: StringField<NewComePeople> = new StringField('MiddleName', NewComePeople, 'Edm.String');
   /**
+   * Static representation of the [[gender]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const GENDER: EnumField<NewComePeople> = new EnumField('Gender', NewComePeople);
+  /**
    * Static representation of the [[age]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -162,17 +187,30 @@ export namespace NewComePeople {
    */
   export const HOME_ADDRESS: LocationField<NewComePeople> = new LocationField('HomeAddress', NewComePeople);
   /**
+   * Static representation of the [[favoriteFeature]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const FAVORITE_FEATURE: EnumField<NewComePeople> = new EnumField('FavoriteFeature', NewComePeople);
+  /**
+   * Static representation of the [[features]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const FEATURES: CollectionField<NewComePeople, 'Edm.Enum'> = new CollectionField('Features', NewComePeople, 'Edm.Enum');
+  /**
    * All fields of the NewComePeople entity.
    */
-  export const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, 'Edm.String'> | CollectionField<NewComePeople, Location> | LocationField<NewComePeople>> = [
+  export const _allFields: Array<StringField<NewComePeople> | EnumField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, 'Edm.String'> | CollectionField<NewComePeople, Location> | LocationField<NewComePeople> | CollectionField<NewComePeople, 'Edm.Enum'>> = [
     NewComePeople.USER_NAME,
     NewComePeople.FIRST_NAME,
     NewComePeople.LAST_NAME,
     NewComePeople.MIDDLE_NAME,
+    NewComePeople.GENDER,
     NewComePeople.AGE,
     NewComePeople.EMAILS,
     NewComePeople.ADDRESS_INFO,
-    NewComePeople.HOME_ADDRESS
+    NewComePeople.HOME_ADDRESS,
+    NewComePeople.FAVORITE_FEATURE,
+    NewComePeople.FEATURES
   ];
   /**
    * All fields selector.

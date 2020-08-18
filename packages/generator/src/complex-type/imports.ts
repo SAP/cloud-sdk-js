@@ -7,6 +7,7 @@ import {
   coreImportDeclaration,
   corePropertyFieldTypeImportNames,
   corePropertyTypeImportNames,
+  enumTypeImportDeclarations,
   externalImportDeclarations
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';
@@ -18,6 +19,7 @@ export function importDeclarations(
   return [
     ...externalImportDeclarations(complexType.properties),
     ...complexTypeImportDeclarations(complexType.properties),
+    ...enumTypeImportDeclarations(complexType.properties),
     coreImportDeclaration(
       [
         ...corePropertyTypeImportNames(complexType.properties),

@@ -43,6 +43,7 @@ import {
   actionImportSourceFile,
   functionImportSourceFile
 } from './action-function-import';
+import { enumTypeSourceFile } from './enum-type/file';
 
 const logger = createLogger({
   package: 'generator',
@@ -232,6 +233,16 @@ export async function generateSourcesForService(
       serviceDir,
       `${entity.className}RequestBuilder`,
       requestBuilderSourceFile(entity, service.oDataVersion),
+      options.forceOverwrite
+    );
+  });
+
+  service.enumTypes.forEach(enumType => {
+    logger.info(`Generating complex type: ${enumType.typeName}...`);
+    sourceFile(
+      serviceDir,
+      enumType.typeName,
+      enumTypeSourceFile(enumType),
       options.forceOverwrite
     );
   });

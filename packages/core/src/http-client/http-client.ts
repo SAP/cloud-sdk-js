@@ -63,7 +63,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
 
 /**
  * Takes as paramter a function that expects an [[HttpRequest]] and returns a Promise of [[HttpResponse]].
- * Returns a function that takes a destination and a request, builds an [[HttpRequest]] from them, and calls
+ * Returns a function that takes a destination and a request-config (extends [[HttpRequestConfig]]), builds an [[HttpRequest]] from them, and calls
  * the provided execute function.
  *
  * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead!

@@ -11,6 +11,7 @@ export function generateComplexTypesV2(
 ): Omit<VdmComplexType, 'factoryName'>[] {
   return transformComplexTypesBase(
     parseComplexTypes(serviceMetadata.edmx.root),
+    [],
     formatter
   );
 }

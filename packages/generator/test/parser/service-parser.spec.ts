@@ -102,7 +102,8 @@ describe('service-parser', () => {
         nullable: true,
         maxLength: '10',
         isComplex: false,
-        isCollection: false
+        isCollection: false,
+        isEnum: false
       });
 
       const anyField = properties.find(
@@ -119,7 +120,8 @@ describe('service-parser', () => {
         description: '',
         nullable: true,
         isComplex: false,
-        isCollection: false
+        isCollection: false,
+        isEnum: false
       });
     });
 
@@ -255,6 +257,7 @@ describe('service-parser', () => {
         nullable: true,
         isComplex: true,
         isCollection: false,
+        isEnum: false,
         maxLength: undefined
       };
       expect(complexProperty).toEqual(expected);

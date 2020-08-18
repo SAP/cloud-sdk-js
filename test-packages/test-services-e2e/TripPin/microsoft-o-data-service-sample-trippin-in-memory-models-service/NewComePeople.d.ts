@@ -1,7 +1,9 @@
 import { NewComePeopleRequestBuilder } from './NewComePeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import { Location, LocationField } from './Location';
-import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, Field, StringField } from '@sap-cloud-sdk/core/v4';
+import { PersonGender } from './PersonGender';
+import { Feature } from './Feature';
+import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, EnumField, Field, StringField } from '@sap-cloud-sdk/core/v4';
 /**
  * This class represents the entity "NewComePeople" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
@@ -38,6 +40,10 @@ export declare class NewComePeople extends Entity implements NewComePeopleType {
      */
     middleName?: string;
     /**
+     * Gender.
+     */
+    gender: PersonGender;
+    /**
      * Age.
      * @nullable
      */
@@ -57,6 +63,14 @@ export declare class NewComePeople extends Entity implements NewComePeopleType {
      * @nullable
      */
     homeAddress?: Location;
+    /**
+     * Favorite Feature.
+     */
+    favoriteFeature: Feature;
+    /**
+     * Features.
+     */
+    features: Feature[];
     /**
      * Returns an entity builder to construct instances `NewComePeople`.
      * @returns A builder that constructs instances of entity type `NewComePeople`.
@@ -86,20 +100,26 @@ export interface NewComePeopleType {
     firstName: string;
     lastName?: string;
     middleName?: string;
+    gender: PersonGender;
     age?: BigNumber;
     emails?: string[];
     addressInfo?: Location[];
     homeAddress?: Location;
+    favoriteFeature: Feature;
+    features: Feature[];
 }
 export interface NewComePeopleTypeForceMandatory {
     userName: string;
     firstName: string;
     lastName: string;
     middleName: string;
+    gender: PersonGender;
     age: BigNumber;
     emails: string[];
     addressInfo: Location[];
     homeAddress: Location;
+    favoriteFeature: Feature;
+    features: Feature[];
 }
 export declare namespace NewComePeople {
     /**
@@ -123,6 +143,11 @@ export declare namespace NewComePeople {
      */
     const MIDDLE_NAME: StringField<NewComePeople>;
     /**
+     * Static representation of the [[gender]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const GENDER: EnumField<NewComePeople>;
+    /**
      * Static representation of the [[age]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -131,7 +156,7 @@ export declare namespace NewComePeople {
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const EMAILS: CollectionField<NewComePeople, string>;
+    const EMAILS: CollectionField<NewComePeople, 'Edm.String'>;
     /**
      * Static representation of the [[addressInfo]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -143,9 +168,19 @@ export declare namespace NewComePeople {
      */
     const HOME_ADDRESS: LocationField<NewComePeople>;
     /**
+     * Static representation of the [[favoriteFeature]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const FAVORITE_FEATURE: EnumField<NewComePeople>;
+    /**
+     * Static representation of the [[features]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const FEATURES: CollectionField<NewComePeople, 'Edm.Enum'>;
+    /**
      * All fields of the NewComePeople entity.
      */
-    const _allFields: Array<StringField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, string> | CollectionField<NewComePeople, Location> | LocationField<NewComePeople>>;
+    const _allFields: Array<StringField<NewComePeople> | EnumField<NewComePeople> | BigNumberField<NewComePeople> | CollectionField<NewComePeople, 'Edm.String'> | CollectionField<NewComePeople, Location> | LocationField<NewComePeople> | CollectionField<NewComePeople, 'Edm.Enum'>>;
     /**
      * All fields selector.
      */

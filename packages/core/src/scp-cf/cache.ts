@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { MapType } from '@sap-cloud-sdk/util';
-import moment, { Moment, MomentInputObject } from 'moment';
+import moment from 'moment';
 
 interface CacheInterface<T> {
   hasKey(key: string): boolean;
@@ -13,7 +13,7 @@ interface CacheInterface<T> {
  * @hidden
  */
 export interface CacheEntry<T> {
-  expires?: Moment;
+  expires?: moment.Moment;
   entry: T;
 }
 
@@ -54,9 +54,9 @@ export class Cache<T> implements CacheInterface<T> {
    * Default validity period for each entry in cache.
    * If undefined, all cached entries will be valid indefinitely.
    */
-  private defaultValidityTime: MomentInputObject | undefined;
+  private defaultValidityTime: moment.MomentInputObject | undefined;
 
-  constructor(validityTime?: MomentInputObject) {
+  constructor(validityTime?: moment.MomentInputObject) {
     this.cache = {};
     this.defaultValidityTime = validityTime;
   }
@@ -110,7 +110,7 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
 }
 
 function inferExpirationTime(
-  expirationTime: MomentInputObject | undefined
-): Moment | undefined {
+  expirationTime: moment.MomentInputObject | undefined
+): moment.Moment | undefined {
   return expirationTime ? moment().add(expirationTime) : undefined;
 }

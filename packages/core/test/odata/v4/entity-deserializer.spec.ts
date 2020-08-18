@@ -5,8 +5,16 @@ import {
   TestComplexType
 } from '../../test-util/test-services/v4/test-service';
 import { deserializeEntity, deserializeComplexType } from '../../../src/v4';
+import { TestEnumType } from '../../test-util/test-services/v4/test-service/TestEnumType';
 
 describe('entity-deserializer', () => {
+  it('should deserialize an enum property', () => {
+    const enumProperty = TestEnumType.Member1;
+    expect(deserializeEntity({ EnumProperty: 'Member1' }, TestEntity)).toEqual(
+      TestEntity.builder().enumProperty(enumProperty).build()
+    );
+  });
+
   it('should deserialize an entity with string collection property', () => {
     const collectionProperty = ['abc', 'def'];
     expect(

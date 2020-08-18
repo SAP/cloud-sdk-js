@@ -2,7 +2,8 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
+import { TestEnumType } from './TestEnumType';
+import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
@@ -136,6 +137,16 @@ export declare class TestEntity extends Entity implements TestEntityType {
      */
     complexTypeCollectionProperty?: TestComplexType[];
     /**
+     * Enum Property.
+     * @nullable
+     */
+    enumProperty?: TestEnumType;
+    /**
+     * Enum Collection Property.
+     * @nullable
+     */
+    enumCollectionProperty?: TestEnumType[];
+    /**
      * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
      */
     toMultiLink: TestEntityMultiLink[];
@@ -197,6 +208,8 @@ export interface TestEntityType {
     collectionProperty?: string[];
     complexTypeProperty?: TestComplexType;
     complexTypeCollectionProperty?: TestComplexType[];
+    enumProperty?: TestEnumType;
+    enumCollectionProperty?: TestEnumType[];
     toMultiLink: TestEntityMultiLinkType[];
     toOtherMultiLink: TestEntityMultiLinkType[];
     toSingleLink: TestEntitySingleLinkType;
@@ -225,6 +238,8 @@ export interface TestEntityTypeForceMandatory {
     collectionProperty: string[];
     complexTypeProperty: TestComplexType;
     complexTypeCollectionProperty: TestComplexType[];
+    enumProperty: TestEnumType;
+    enumCollectionProperty: TestEnumType[];
     toMultiLink: TestEntityMultiLinkType[];
     toOtherMultiLink: TestEntityMultiLinkType[];
     toSingleLink: TestEntitySingleLinkType;
@@ -334,7 +349,7 @@ export declare namespace TestEntity {
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const COLLECTION_PROPERTY: CollectionField<TestEntity, string>;
+    const COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.String'>;
     /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -345,6 +360,16 @@ export declare namespace TestEntity {
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntity, TestComplexType>;
+    /**
+     * Static representation of the [[enumProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const ENUM_PROPERTY: EnumField<TestEntity>;
+    /**
+     * Static representation of the [[enumCollectionProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.Enum'>;
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -363,7 +388,7 @@ export declare namespace TestEntity {
     /**
      * All fields of the TestEntity entity.
      */
-    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, string> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
+    const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | DurationField<TestEntity> | AnyField<TestEntity> | CollectionField<TestEntity, 'Edm.String'> | TestComplexTypeField<TestEntity> | CollectionField<TestEntity, TestComplexType> | EnumField<TestEntity> | CollectionField<TestEntity, 'Edm.Enum'> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>>;
     /**
      * All fields selector.
      */

@@ -15,7 +15,8 @@ import {
   VdmEntity,
   VdmNavigationProperty,
   VdmProperty,
-  VdmMappedEdmType
+  VdmMappedEdmType,
+  VdmEnumType
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
@@ -32,6 +33,8 @@ import {
   isCollectionType,
   isComplexType,
   isEdmType,
+  isEnumType,
+  parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
 import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
@@ -45,13 +48,14 @@ export function transformEntityBase(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   classNames: Record<string, any>,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): Omit<VdmEntity, 'navigationProperties'> {
   const entity = {
     entitySetName: entityMetadata.entitySet.Name,
     entityTypeName: entityMetadata.entityType.Name,
     className: classNames[entityMetadata.entitySet.Name],
-    properties: properties(entityMetadata, complexTypes, formatter),
+    properties: properties(entityMetadata, complexTypes, formatter, enumTypes),
     creatable: entityMetadata.entitySet
       ? isCreatable(entityMetadata.entitySet)
       : true,
@@ -79,7 +83,8 @@ function keys(props: VdmProperty[], edmxKeys: EdmxNamed[]): VdmProperty[] {
 function properties(
   entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  enumTypes: VdmEnumType[]
 ): VdmProperty[] {
   return entity.entityType.Property.map(p => {
     checkCollectionKind(p);
@@ -90,9 +95,17 @@ function properties(
       entity.entitySet.Name,
       p.Name
     );
-    const isComplex = isComplexType(p.Type);
     const isCollection = isCollectionType(p.Type);
-    const typeMapping = getTypeMappingEntityProperties(p.Type, complexTypes);
+    const parsed = isCollection ? parseCollectionTypeName(p.Type) : p.Type;
+    const isComplex = isComplexType(parsed, complexTypes);
+    const isEnum = isEnumType(parsed, enumTypes);
+    const typeMapping = getTypeMappingEntityProperties(
+      p.Type,
+      complexTypes,
+      enumTypes,
+      isComplex,
+      isEnum
+    );
 
     return {
       originalName: p.Name,
@@ -109,6 +122,7 @@ function properties(
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
       isComplex,
+      isEnum,
       isCollection
     };
   });
@@ -198,7 +212,10 @@ export function createEntityClassNames(
 
 function getTypeMappingEntityProperties(
   typeName: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  enumTypes: VdmEnumType[],
+  isComplex: boolean,
+  isEnum: boolean
 ): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
@@ -209,13 +226,20 @@ function getTypeMappingEntityProperties(
     };
   }
   if (isCollectionType(typeName)) {
-    return typesForCollection(typeName, complexTypes);
+    return typesForCollection(typeName, enumTypes, complexTypes);
   }
-  if (isComplexType(typeName)) {
+  if (isComplex) {
     return {
       edmType: typeName,
       jsType: complexTypeForName(typeName, complexTypes),
       fieldType: complexTypeFieldForName(typeName, complexTypes)
+    };
+  }
+  if (isEnum) {
+    return {
+      edmType: typeName,
+      jsType: enumTypeForName(typeName, enumTypes),
+      fieldType: 'EnumField'
     };
   }
   throw new Error(`No types found for ${typeName}`);
@@ -235,13 +259,19 @@ function complexTypeFieldForName(
   return 'any';
 }
 
-const complexTypeName = (type: string) => last(type.split('.'));
+const getPostfix = (type: string) => last(type.split('.'));
 
-const findComplexType = (
+export const findComplexType = (
   name: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): Omit<VdmComplexType, 'factoryName'> | undefined =>
-  complexTypes.find(c => c.originalName === complexTypeName(name));
+  complexTypes.find(c => c.originalName === getPostfix(name));
+
+export const findEnumType = (
+  name: string,
+  enumTypes: VdmEnumType[]
+): VdmEnumType | undefined =>
+  enumTypes.find(e => e.originalName === getPostfix(name));
 
 export function complexTypeForName(
   name: string,
@@ -253,6 +283,20 @@ export function complexTypeForName(
   }
   logger.warn(
     `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
+  );
+  return 'any';
+}
+
+export function enumTypeForName(
+  name: string,
+  enumTypes: VdmEnumType[]
+): string {
+  const enumType = findEnumType(name, enumTypes);
+  if (enumType) {
+    return enumType.typeName;
+  }
+  logger.warn(
+    `No enum type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
   );
   return 'any';
 }

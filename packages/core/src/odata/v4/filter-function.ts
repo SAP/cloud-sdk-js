@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Moment } from 'moment';
+import moment from 'moment';
 import {
   FilterFunctionParameterType,
   BooleanFilterFunction,
@@ -62,7 +62,7 @@ export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
-): CollectionFilterFunction<EntityT, Moment>;
+): CollectionFilterFunction<EntityT, moment.Moment>;
 
 /**
  * Build a custom filter function.

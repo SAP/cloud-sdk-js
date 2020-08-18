@@ -2,22 +2,8 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../scp-cf';
-import { buildAuthorizationHeaders } from './authorization-header';
-import {
-  getHeader,
-  replaceDuplicateKeys,
-  filterNullishValues
-} from './headers-util';
-
-async function getAuthHeaders(
-  destination: Destination,
-  customHeaders?: MapType<any>
-): Promise<MapType<string>> {
-  const customAuthHeaders = getHeader('authorization', customHeaders);
-  return Object.keys(customAuthHeaders).length
-    ? customAuthHeaders
-    : buildAuthorizationHeaders(destination);
-}
+import { getAuthHeaders } from './authorization-header';
+import { replaceDuplicateKeys, filterNullishValues } from './headers-util';
 
 /**
  * Builds the authorization, proxy authorization and SAP headers for a given destination.

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Moment } from 'moment';
+import moment from 'moment';
 import { EntityBase } from '../../common';
 import { FilterFunctionParameterType } from '../../common/filter';
 import { OrderableFilterFunction } from '../../common/filter/orderable-filter-function';
@@ -10,7 +10,7 @@ import { OrderableFilterFunction } from '../../common/filter/orderable-filter-fu
  */
 export class DateFilterFunction<
   EntityT extends EntityBase
-> extends OrderableFilterFunction<EntityT, Moment> {
+> extends OrderableFilterFunction<EntityT, moment.Moment> {
   /**
    * Creates an instance of DateFilterFunction.
    * @param functionName - Name of the function that returns a numeric value

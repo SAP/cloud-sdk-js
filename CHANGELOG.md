@@ -19,16 +19,19 @@
 ## New Functionality
 
 - Include fallback `Edm.Any` for previously unsupported EDM types like Edm.Geography.
+- Added experimental support for OData V4 enum type. Use the `@sap/cloud-sdk-generator` to generate the type safe client.
+- Include fallback `Edm.Any` for previously unsupported edm types like Edm.Geography.
 Type safety and related features like URI conversion are not supported for the fallback type.  
 - OData v4 is moved from the experimental state to GA.
 
 ## Improvements
 
+- Log a warning in case the destination and the custom request config contain both `authorization` headers. 
 - Special characters like `'` (single quotes), ` ` (space) and `ä` (umlaut) are encoded properly when used in the `Filter`.
 
 ## Fixed Issues
 
--
+- [Generator] Fix wrong type argument for collection types containing Edm types. 
 
 
 # 1.26.1

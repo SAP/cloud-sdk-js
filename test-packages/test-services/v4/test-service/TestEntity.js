@@ -206,6 +206,16 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      */
     TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY = new v4_1.CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType_1.TestComplexType);
     /**
+     * Static representation of the [[enumProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.ENUM_PROPERTY = new v4_1.EnumField('EnumProperty', TestEntity);
+    /**
+     * Static representation of the [[enumCollectionProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.ENUM_COLLECTION_PROPERTY = new v4_1.CollectionField('EnumCollectionProperty', TestEntity, 'Edm.Enum');
+    /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -247,6 +257,8 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
         TestEntity.COLLECTION_PROPERTY,
         TestEntity.COMPLEX_TYPE_PROPERTY,
         TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
+        TestEntity.ENUM_PROPERTY,
+        TestEntity.ENUM_COLLECTION_PROPERTY,
         TestEntity.TO_MULTI_LINK,
         TestEntity.TO_OTHER_MULTI_LINK,
         TestEntity.TO_SINGLE_LINK

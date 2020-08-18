@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import nock from 'nock';
-import { MapType } from '@sap-cloud-sdk/util';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import {
   buildAndAddAuthorizationHeader,
   Destination,
@@ -67,6 +67,27 @@ describe('Authorization header builder', () => {
     await expect(
       buildAuthorizationHeaders(destination)
     ).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  it('warns if the destination and request config contains authorization information.', () => {
+    const destination: Destination = {
+      url: '',
+      authentication: 'BasicAuthentication',
+      username: 'SomeUser',
+      password: 'SomePassword'
+    };
+
+    const logger = createLogger({
+      package: 'core',
+      messageContext: 'authorization-header'
+    });
+    const warnSpy = jest.spyOn(logger, 'warn');
+    buildHeadersForDestination(destination, { authorization: 'SomeThing' });
+    expect(warnSpy).toBeCalledWith(
+      expect.stringMatching(
+        /.*To have authorization information from both sources is often unintended.*/
+      )
+    );
   });
 
   it("should still add header if the old 'NoAuthorization' workaround is used.", async () => {

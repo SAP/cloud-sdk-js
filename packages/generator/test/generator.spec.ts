@@ -67,7 +67,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(30);
+      expect(files.length).toBe(31);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -79,14 +79,27 @@ describe('generator', () => {
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(2);
       expect(testEntityFile!.getNamespaces().length).toBe(1);
+      const imports = testEntityFile!
+        .getImportStringLiterals()
+        .map(stringLiteral => stringLiteral.getLiteralValue());
+      expect(imports).toEqual([
+        './TestEntityRequestBuilder',
+        'moment',
+        'bignumber.js',
+        './TestComplexType',
+        './TestEnumType',
+        '@sap-cloud-sdk/core/v4',
+        './TestEntityMultiLink',
+        './TestEntitySingleLink'
+      ]);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(29);
+      expect(entityClass!.getProperties().length).toBe(31);
 
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getNamespace('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(30);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(32);
     });
 
     it('generates function-imports.ts file', () => {

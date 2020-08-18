@@ -2,7 +2,7 @@
 /* eslint-disable valid-jsdoc */
 
 import BigNumber from 'bignumber.js';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import { Time, EdmTypeShared } from '../common';
 import {
   deserializersCommon,
@@ -57,7 +57,7 @@ const toTime = (value: string): Time => {
  * @hidden
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
-export function edmDateTimeToMoment(edmDateTime: string): Moment {
+export function edmDateTimeToMoment(edmDateTime: string): moment.Moment {
   const dateTimeOffsetComponents = /.*\((-?\d+)(?:([\+-])(\d{4})\))?/.exec(
     edmDateTime
   );
@@ -81,7 +81,7 @@ export function edmDateTimeToMoment(edmDateTime: string): Moment {
  * @hidden
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
-export function momentToEdmDateTime(momentInstance: Moment): string {
+export function momentToEdmDateTime(momentInstance: moment.Moment): string {
   const timestamp = momentInstance.unix() * 1000;
 
   // For some reason isUtc() returns wrong values here, so we use the internal flag directly
@@ -123,7 +123,7 @@ export type EdmToPrimitive<T extends EdmType> = T extends
   : T extends 'Edm.Decimal' | 'Edm.Int64'
   ? BigNumber
   : T extends 'Edm.DateTime' | 'Edm.DateTimeOffset'
-  ? Moment
+  ? moment.Moment
   : T extends 'Edm.String' | 'Edm.Guid'
   ? string
   : T extends 'Edm.Boolean'

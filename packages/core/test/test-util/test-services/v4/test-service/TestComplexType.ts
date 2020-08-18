@@ -6,8 +6,8 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { string } from './string';
-import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src/v4';
+import { TestEnumType } from './TestEnumType';
+import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeEnumPropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src/v4';
 
 /**
  * TestComplexType
@@ -92,6 +92,11 @@ export interface TestComplexType {
    * @nullable
    */
   geographyPointProperty?: any;
+  /**
+   * Enum Property.
+   * @nullable
+   */
+  enumProperty?: TestEnumType;
   /**
    * Something The Sdk Does Not Support.
    * @nullable
@@ -212,6 +217,11 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    */
   geographyPointProperty: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField('GeographyPointProperty', this, 'Edm.Any');
   /**
+   * Representation of the [[TestComplexType.enumProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  enumProperty: ComplexTypeEnumPropertyField<EntityT> = new ComplexTypeEnumPropertyField('EnumProperty', this);
+  /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
@@ -225,7 +235,7 @@ export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeFie
    * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  collectionStringProperty: CollectionField<EntityT, string> = new CollectionField('CollectionStringProperty', this, string);
+  collectionStringProperty: CollectionField<EntityT, 'Edm.String'> = new CollectionField('CollectionStringProperty', this, 'Edm.String');
   /**
    * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -333,6 +343,11 @@ export namespace TestComplexType {
     type: 'Edm.Any',
     isCollection: false
   }, {
+    originalName: 'EnumProperty',
+    name: 'enumProperty',
+    type: 'Edm.Enum',
+    isCollection: false
+  }, {
     originalName: 'SomethingTheSDKDoesNotSupport',
     name: 'somethingTheSdkDoesNotSupport',
     type: 'Edm.Any',
@@ -345,7 +360,7 @@ export namespace TestComplexType {
   }, {
     originalName: 'CollectionStringProperty',
     name: 'collectionStringProperty',
-    type: string,
+    type: 'Edm.String',
     isCollection: true
   }, {
     originalName: 'CollectionComplexTypeProperty',
@@ -362,7 +377,7 @@ export namespace TestComplexType {
   /**
    * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
-  export function build(json: { [keys: string]: FieldType | TestNestedComplexType | string }): TestComplexType {
+  export function build(json: { [keys: string]: FieldType | TestNestedComplexType }): TestComplexType {
     return deserializeComplexType(json, TestComplexType);
   }
 }

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import BigNumber from 'bignumber.js';
-import { Moment, Duration } from 'moment';
+import moment from 'moment';
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
 import { Time } from '../time';
 
@@ -13,8 +13,8 @@ export type FieldType =
   | number
   | boolean
   | Time
-  | Moment
-  | Duration
+  | moment.Moment
+  | moment.Duration
   | BigNumber
   | null
   | undefined;

@@ -2,7 +2,7 @@
 /* eslint-disable valid-jsdoc */
 
 import BigNumber from 'bignumber.js';
-import moment, { Duration, Moment } from 'moment';
+import moment from 'moment';
 import { identity } from 'rambda';
 import { Time, EdmTypeShared } from '../common';
 import {
@@ -44,7 +44,7 @@ type EdmTypeMapping = {
   [key in EdmType]: (value: any) => any;
 };
 
-function edmDateToMoment(date: string): Moment {
+function edmDateToMoment(date: string): moment.Moment {
   const parsed = moment.utc(date, 'YYYY-MM-DD', true);
   if (!parsed.isValid()) {
     throw new Error(
@@ -54,7 +54,7 @@ function edmDateToMoment(date: string): Moment {
   return parsed;
 }
 
-function edmDateTimeOffsetToMoment(dateTime: string): Moment {
+function edmDateTimeOffsetToMoment(dateTime: string): moment.Moment {
   const prefix = 'YYYY-MM-DDTHH:mm';
   // In moment the Z is either Offset from UTC as +-HH:mm, +-HHmm, or Z
   const validFormats = [`${prefix}Z`, `${prefix}:ssZ`, `${prefix}:ss.SSSZ`];
@@ -67,7 +67,7 @@ function edmDateTimeOffsetToMoment(dateTime: string): Moment {
   return parsed;
 }
 
-function edmDurationToMoment(value: string): Duration {
+function edmDurationToMoment(value: string): moment.Duration {
   const durationPattern = /([\+,\-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
   const captured = durationPattern.exec(value);
   if (!captured || captured[0] !== value) {
@@ -94,15 +94,15 @@ function edmTimeOfDayToTime(value: string): Time {
   };
 }
 
-function momentToEdmDate(value: Moment): string {
+function momentToEdmDate(value: moment.Moment): string {
   return value.format('YYYY-MM-DD');
 }
 
-function momentToEdmDateTimeOffsetToMoment(value: Moment): string {
+function momentToEdmDateTimeOffsetToMoment(value: moment.Moment): string {
   return value.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
 }
 
-function durationToEdmDuration(value: Duration): string {
+function durationToEdmDuration(value: moment.Duration): string {
   return value.toISOString();
 }
 
@@ -122,7 +122,7 @@ export type EdmToPrimitive<T extends EdmType> = T extends
   : T extends 'Edm.Decimal' | 'Edm.Int64'
   ? BigNumber
   : T extends 'Edm.DateTime' | 'Edm.DateTimeOffset'
-  ? Moment
+  ? moment.Moment
   : T extends 'Edm.String' | 'Edm.Guid'
   ? string
   : T extends 'Edm.Boolean'

@@ -53,7 +53,7 @@ type ExtractODataETagType = (json: MapType<any>) => string | undefined;
 type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
 
 /**
- * Constructs a entityDeserializer given the OData v2 or v4 specific methods.
+ * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
  * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts
  * @param edmToTs - Converters  emd input to ts values.
  * @param extractODataETag - Extractor for the Etag.

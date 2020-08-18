@@ -213,17 +213,14 @@ export function createPropertyFieldInitializer(
     property.isComplex || property.isEnum
       ? property.jsType
       : `'${property.edmType}'`;
-  let collectionTypeOrEdmType;
+  let collectionTypeOrEdmType: string | undefined = edmOrComplexTypeOrEnumType;
   if (property.isComplex && !property.isCollection) {
     collectionTypeOrEdmType = undefined;
   } else if (property.isEnum && !property.isCollection) {
     collectionTypeOrEdmType = undefined;
   } else if (property.isEnum && property.isCollection) {
     collectionTypeOrEdmType = "'Edm.Enum'";
-  } else {
-    collectionTypeOrEdmType = edmOrComplexTypeOrEnumType;
   }
-
   return `new ${property.fieldType}(${[
     `'${property.originalName}'`,
     entityClassName,

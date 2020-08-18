@@ -13,7 +13,10 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  */
 class EnumFieldBase<EntityT extends EntityBase> extends EdmTypeField<
   EntityT,
-  // todo FieldType is designed to be a union type of a list of static known type. For enum type, one can only use any. Use string here since it's better than any. However, when using filter you use `EnumType eq 'test'`.
+  /*TODO FieldType is designed to be a union type of a list of static known type.
+   For enum type, one can only use any. Use string here since it's better than any.
+   However, when using filter you use `EnumType eq 'test'`.
+   */
   string
 > {}
 
@@ -47,7 +50,7 @@ export class ComplexTypeEnumPropertyField<
   readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
-   * Creates an instance of ComplexTypeBigNumberPropertyField.
+   * Creates an instance of ComplexTypeEnumPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to

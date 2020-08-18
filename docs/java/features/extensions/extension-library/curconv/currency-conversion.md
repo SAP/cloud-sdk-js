@@ -2,7 +2,7 @@
 id: sap-currency-conversion-extension-library-for-cloud-sdk-for-java
 title: Currency conversion extension
 sidebar_label: Currency conversion
-description: Currency conversion extension is a convenient library to convert between currencies based on your conversion rates sources you provide. It hanles bulk conversions, direct one-to-one, and indirect conversions based on inverse rates.
+description: Currency conversion extension is a convenient library to convert between currencies based on your conversion rates sources you provide. It handles bulk conversions, direct one-to-one, and indirect conversions based on inverse rates.
 keywords:
 - sap
 - cloud

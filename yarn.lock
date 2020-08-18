@@ -2834,25 +2834,10 @@ charm@~0.1.1:
   resolved "https://registry.npmjs.org/charm/-/charm-0.1.2.tgz#06c21eed1a1b06aeb67553cdc53e23274bac2296"
   integrity sha1-BsIe7RobBq62dVPNxT4jJ0usIpY=
 
-"chokidar@>=2.0.0 <4.0.0":
+"chokidar@>=2.0.0 <4.0.0", chokidar@^3.3.0:
   version "3.4.2"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.4.2.tgz#38dc8e658dec3809741eb3ef7bb0a47fe424232d"
   integrity sha512-IZHaDeBeI+sZJRX7lGcXsdzgvZqKv6sECqsbErJA4mHWfpRrD8B97kSFN4cQz6nGBGiuFia1MKR4d6c1o8Cv7A==
-  dependencies:
-    anymatch "~3.1.1"
-    braces "~3.0.2"
-    glob-parent "~5.1.0"
-    is-binary-path "~2.1.0"
-    is-glob "~4.0.1"
-    normalize-path "~3.0.0"
-    readdirp "~3.4.0"
-  optionalDependencies:
-    fsevents "~2.1.2"
-
-chokidar@^3.3.0:
-  version "3.4.1"
-  resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.4.1.tgz#e905bdecf10eaa0a0b1db0c664481cc4cbc22ba1"
-  integrity sha512-TQTJyr2stihpC4Sya9hs2Xh+O2wf+igjL36Y75xx2WdHuiICcn/XJza46Jwt0eT5hVpQOzo3FpY3cj3RVYLX0g==
   dependencies:
     anymatch "~3.1.1"
     braces "~3.0.2"
@@ -8075,9 +8060,9 @@ pm2-multimeter@^0.1.2:
     charm "~0.1.1"
 
 pm2@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.npmjs.org/pm2/-/pm2-4.4.0.tgz#85ad86da2d3c6618881714e885c85a96d77ee379"
-  integrity sha512-uEY3ShP5O5d7VBx4r0QhVjWAgjyhazenIl0fhxyVr+aDMWSa3hpD5RpvkGJMiX8z3nDrBBWCSU7TYth1sdbJkA==
+  version "4.4.1"
+  resolved "https://registry.npmjs.org/pm2/-/pm2-4.4.1.tgz#a96bf6d4c75cf97612de5940835e792899845b54"
+  integrity sha512-ece2zqVvSg29tIGdznKqk07IwVaO4mX7zLBMVxbJQMfvxpQUotLLERDW0v/RYMHtzj1bX8MLsDUsmPiIbEszKg==
   dependencies:
     "@pm2/agent" "~1.0.2"
     "@pm2/io" "~4.3.5"

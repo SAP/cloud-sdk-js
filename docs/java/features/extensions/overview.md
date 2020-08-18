@@ -2,7 +2,7 @@
 id: extensions-supported-by-sap-cloud-sdk-for-java
 title: Extensions overview
 sidebar_label: Overview
-description: Discover reach eco-system of SAP Cloud SDK for Java via various value-add extensions. They usually happen thanks to contributiors from within and outside of SAP and provide additional features on top of standard SDK offering. We document them in this section.
+description: Discover rich eco-system of SAP Cloud SDK for Java via various value-add extensions. They usually happen thanks to contributors from within and outside of SAP and provide additional features on top of standard SDK offering. We document them in this section.
 keywords:
 - sap
 - cloud

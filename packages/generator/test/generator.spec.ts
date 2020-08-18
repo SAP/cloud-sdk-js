@@ -87,6 +87,7 @@ describe('generator', () => {
         'moment',
         'bignumber.js',
         './TestComplexType',
+        './TestEnumType',
         '@sap-cloud-sdk/core/v4',
         './TestEntityMultiLink',
         './TestEntitySingleLink'

@@ -22,7 +22,7 @@
 
 ## Improvements
 
-- Add warning in case the destination, and the custom request config contain both `authorization` headers. 
+- Log a warning in case the destination and the custom request config contain both `authorization` headers. 
 
 ## Fixed Issues
 

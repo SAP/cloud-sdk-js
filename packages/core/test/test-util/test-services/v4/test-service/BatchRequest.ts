@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '../../../../../src';
+import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, OdataBatchChangeSetV4, OdataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '../../../../../src';
 import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLvl2MultiLink, TestEntitySingleLink, TestEntityLvl2SingleLink, TestEntityCircularLinkParent, TestEntityCircularLinkChild, TestEntityEndsWith, TestEntityEndsWithSomethingElse } from './index';
 
 /**
@@ -11,8 +11,8 @@ import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLv
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(defaultTestServicePath, requests, map);
+export function batch(...requests: Array<ReadTestServiceRequestBuilder | OdataBatchChangeSetV4<WriteTestServiceRequestBuilder>>): OdataBatchRequestBuilderV4 {
+  return new OdataBatchRequestBuilderV4(defaultTestServicePath, requests, map);
 }
 
 /**
@@ -20,8 +20,8 @@ export function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBa
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(...requests: WriteTestServiceRequestBuilder[]): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(requests);
+export function changeset(...requests: WriteTestServiceRequestBuilder[]): OdataBatchChangeSetV4<WriteTestServiceRequestBuilder> {
+  return new OdataBatchChangeSetV4(requests);
 }
 
 export const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

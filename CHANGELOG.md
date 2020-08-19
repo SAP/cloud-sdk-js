@@ -134,12 +134,12 @@ Blog: TBD<br>
 
 ## Compatibility Notes
 
-- Importing filter functions directly is deprecated, import using `filterFunctionsV2` instead.
+- Importing filter functions directly is deprecated, import using `filterFunctions` instead.
 - _OData client generator_: Remove the hidden generator option `changelogFile`. Use the new more general options `additionalFiles` instead.
 
 ## New Functionality
 
-- Support all string, number and date related filter functions. Import `filterFunctionsV2` and use in a filter, e. g.  `.filter(filterFunctionsV2.startsWith(BusinessPartner.FIRST_NAME).equals(true))`.
+- Support all string, number and date related filter functions. Import `filterFunctions` and use in a filter, e. g.  `.filter(filterFunctions.startsWith(BusinessPartner.FIRST_NAME).equals(true))`.
 - Add the option `--additionalFiles <GlobToFiles>` to the generator. If specified, all files matching the glob will be copied to each generated service directory.
 
 # 1.22.0
@@ -354,8 +354,8 @@ Blog: https://blogs.sap.com/?p=1039650<br>
 ## New Functionality
 
 - Add common [OData V2](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/) filter functions, i. e. `bool substringof(string po, string p1)`, `string substring(string p0, int pos)` and `int length(string p0)`. For filtering with those functions use: `SomeEntity.filter(length(SomeEntity.FIELD).greaterThan(10));`
-- Support building custom OData filter functions for filtering. Use the [`filterFunctionV4`](https://help.sap.com/doc/101ace914463482b816b6fb265daa879/1.0/en-US/modules/_sap_cloud_sdk_core.html#filterfunction-1) factory function to filter using any of the OData v2 filter functions generically:
-`SomeEntity.filter(filterFunctionV4('concat', 'string', 'prefix', SomeEntity.FIELD).equals('prefixSomeName'))`. As for the common filter function, filtering over different levels of navigation is not supported.
+- Support building custom OData filter functions for filtering. Use the [`filterFunction`](https://help.sap.com/doc/101ace914463482b816b6fb265daa879/1.0/en-US/modules/_sap_cloud_sdk_core.html#filterfunction-1) factory function to filter using any of the OData v2 filter functions generically:
+`SomeEntity.filter(filterFunction('concat', 'string', 'prefix', SomeEntity.FIELD).equals('prefixSomeName'))`. As for the common filter function, filtering over different levels of navigation is not supported.
 
 ## Improvements
 
@@ -566,7 +566,7 @@ Blog: https://blogs.sap.com/2019/09/12/new-versions-of-sap-cloud-sdk-3.3.1-for-j
 
 ## Improvements
 
-- Support response format used by SAP Cloud for Customer for retrieving a single OData entity by key (in [`GetByKeyRequestBuilderV4`](https://help.sap.com/doc/c3eb465862914a45adb2c0963287fe0d/1.0/en-US/classes/_sap_cloud_sdk_core.getbykeyrequestbuilder.html)).
+- Support response format used by SAP Cloud for Customer for retrieving a single OData entity by key (in [`GetByKeyRequestBuilder`](https://help.sap.com/doc/c3eb465862914a45adb2c0963287fe0d/1.0/en-US/classes/_sap_cloud_sdk_core.getbykeyrequestbuilder.html)).
 - Add an option to ignore version identifiers as part of delete requests by using the [`ignoreVersionIdentifier`](https://help.sap.com/doc/c3eb465862914a45adb2c0963287fe0d/1.0/en-US/classes/_sap_cloud_sdk_core.deleterequestbuilder.html#ignoreversionidentifier) method.
 - Support "Location ID" property of Cloud Connector in on-premise destinations. This previously caused the connection to fail if a Location ID was expected by the Cloud Connector.
 
@@ -621,7 +621,7 @@ Blog: https://blogs.sap.com/2019/08/15/new-versions-of-sap-cloud-sdk-3.1.0-for-j
 
 ## Improvements
 
-- _OData client_: allow creating OData entities as child of another entity by using the [`asChildOf()`](https://help.sap.com/doc/387c59ceff9840e48572a430b12d9fe2/1.0/en-US/classes/_sap_cloud_sdk_core.createrequestbuilder.html#aschildof) method in `CreateRequestBuilderV2` class.
+- _OData client_: allow creating OData entities as child of another entity by using the [`asChildOf()`](https://help.sap.com/doc/387c59ceff9840e48572a430b12d9fe2/1.0/en-US/classes/_sap_cloud_sdk_core.createrequestbuilder.html#aschildof) method in `CreateRequestBuilder` class.
 
 ## Fixed Issues
 

@@ -213,7 +213,7 @@
         <EntitySet Name="A_TestEntityCircularLinkChild" EntityType="API_TEST_SRV.A_TestEntityCircularLinkChildType" sap:content-version="1"/>
 
         <!-- collection_suffix
-          In some C4C APIs there are entity sets, whose type is unrelated to the entity set name. EntityV2 set names ending with collection should have class names without the collection suffix,
+          In some C4C APIs there are entity sets, whose type is unrelated to the entity set name. Entity set names ending with collection should have class names without the collection suffix,
         -->
         <EntitySet Name="A_TestEntityEndsWithCollection" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityEndsWithSomethingElse" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>

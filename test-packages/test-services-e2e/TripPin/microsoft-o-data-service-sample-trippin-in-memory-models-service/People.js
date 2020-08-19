@@ -46,7 +46,7 @@ var People = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `People`.
      */
     People.builder = function () {
-        return Entity.entityBuilder(People);
+        return core_1.EntityV4.entityBuilder(People);
     };
     /**
      * Returns a request builder to construct requests for operations on the `People` entity type.
@@ -61,7 +61,7 @@ var People = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `People`.
      */
     People.customField = function (fieldName) {
-        return Entity.customFieldSelector(fieldName, People);
+        return core_1.EntityV4.customFieldSelector(fieldName, People);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -84,7 +84,7 @@ var People = /** @class */ (function (_super) {
      */
     People._defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
     return People;
-}(Entityv4));
+}(core_1.EntityV4));
 exports.People = People;
 (function (People) {
     /**

@@ -29,7 +29,7 @@ export function edmToTsV2<T extends EdmTypeV2>(
 /**
  * @hidden
  */
-export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
+export function tsToEdmV2(value: any, edmType: EdmTypeShared<'v2'>): any {
   if (value === null) {
     return 'null';
   }

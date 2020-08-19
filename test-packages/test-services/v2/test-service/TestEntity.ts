@@ -12,7 +12,7 @@ import { AllFields, AnyField, BigNumberField, BooleanField, CustomFieldV2, DateF
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity extends Entityv2 implements TestEntityType {
+export class TestEntity extends EntityV2 implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -138,7 +138,7 @@ export class TestEntity extends Entityv2 implements TestEntityType {
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   static builder(): EntityBuilderType<TestEntity, TestEntityTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntity);
+    return EntityV2.entityBuilder(TestEntity);
   }
 
   /**
@@ -154,8 +154,8 @@ export class TestEntity extends Entityv2 implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomFieldv2<TestEntity> {
-    return Entity.customFieldSelector(fieldName, TestEntity);
+  static customField(fieldName: string): CustomFieldV2<TestEntity> {
+    return EntityV2.customFieldSelector(fieldName, TestEntity);
   }
 
   /**

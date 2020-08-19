@@ -35,14 +35,14 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntityOtherMultiLink` entity based on its keys.
      */
     TestEntityOtherMultiLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new core_1.GetByKeyRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilderV4(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityOtherMultiLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityOtherMultiLink` entities.
      */
     TestEntityOtherMultiLinkRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink);
+        return new core_1.GetAllRequestBuilderV4(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink);
     };
     /**
      * Returns a request builder for creating a `TestEntityOtherMultiLink` entity.
@@ -50,7 +50,7 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLinkRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, entity);
+        return new core_1.CreateRequestBuilderV4(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityOtherMultiLink`.
@@ -58,10 +58,10 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLinkRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, entity);
+        return new core_1.UpdateRequestBuilderV4(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, entity);
     };
     TestEntityOtherMultiLinkRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new core_1.DeleteRequestBuilder(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, keyPropertyOrEntity instanceof TestEntityOtherMultiLink_1.TestEntityOtherMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilderV4(TestEntityOtherMultiLink_1.TestEntityOtherMultiLink, keyPropertyOrEntity instanceof TestEntityOtherMultiLink_1.TestEntityOtherMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityOtherMultiLinkRequestBuilder;
 }(core_1.RequestBuilder));

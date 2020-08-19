@@ -1,22 +1,24 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import { caps } from '@sap-cloud-sdk/util';
 import { coreImportDeclaration } from '../imports';
 import { VdmServiceMetadata } from '../vdm-types';
 
 export function importBatchDeclarations(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
+  const versionInCaps = caps(service.oDataVersion);
   return [
     coreImportDeclaration(
       [
-        'CreateRequestBuilder',
-        'DeleteRequestBuilder',
-        'GetAllRequestBuilder',
-        'GetByKeyRequestBuilder',
-        'ODataBatchChangeSet',
-        'ODataBatchRequestBuilder',
-        'UpdateRequestBuilder'
+        `CreateRequestBuilder${versionInCaps}`,
+        `DeleteRequestBuilder${versionInCaps}`,
+        `GetAllRequestBuilder${versionInCaps}`,
+        `GetByKeyRequestBuilder${versionInCaps}`,
+        `ODataBatchChangeSet${versionInCaps}`,
+        `ODataBatchRequestBuilder${versionInCaps}`,
+        `UpdateRequestBuilder${versionInCaps}`
       ],
       service.oDataVersion
     ),

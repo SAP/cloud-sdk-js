@@ -13,9 +13,9 @@ import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
   EdmTypeShared,
-  isEdmType
+  isEdmType,
+  PropertyMetadata
 } from '../common';
-import { PropertyMetadata } from '../v2';
 
 const logger = createLogger({
   package: 'core',

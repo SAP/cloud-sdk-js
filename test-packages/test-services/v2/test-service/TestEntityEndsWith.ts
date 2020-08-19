@@ -9,7 +9,7 @@ import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringFie
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
-export class TestEntityEndsWith extends Entityv2 implements TestEntityEndsWithType {
+export class TestEntityEndsWith extends EntityV2 implements TestEntityEndsWithType {
   /**
    * Technical entity name for TestEntityEndsWith.
    */
@@ -33,7 +33,7 @@ export class TestEntityEndsWith extends Entityv2 implements TestEntityEndsWithTy
    * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
    */
   static builder(): EntityBuilderType<TestEntityEndsWith, TestEntityEndsWithTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntityEndsWith);
+    return EntityV2.entityBuilder(TestEntityEndsWith);
   }
 
   /**
@@ -49,8 +49,8 @@ export class TestEntityEndsWith extends Entityv2 implements TestEntityEndsWithTy
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
    */
-  static customField(fieldName: string): CustomFieldv2<TestEntityEndsWith> {
-    return Entity.customFieldSelector(fieldName, TestEntityEndsWith);
+  static customField(fieldName: string): CustomFieldV2<TestEntityEndsWith> {
+    return EntityV2.customFieldSelector(fieldName, TestEntityEndsWith);
   }
 
   /**

@@ -33,7 +33,8 @@ export function generateFunctionImportsV2(
       returnType: parseFunctionImportReturnTypes(
         f.ReturnType,
         entities,
-        complexTypes
+        complexTypes,
+        serviceMetadata.edmx.oDataVersion
       )
     };
   });

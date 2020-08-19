@@ -9,7 +9,7 @@ import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Fi
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityLvl2MultiLink extends Entityv4 implements TestEntityLvl2MultiLinkType {
+export class TestEntityLvl2MultiLink extends EntityV4 implements TestEntityLvl2MultiLinkType {
   /**
    * Technical entity name for TestEntityLvl2MultiLink.
    */
@@ -55,7 +55,7 @@ export class TestEntityLvl2MultiLink extends Entityv4 implements TestEntityLvl2M
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
   static builder(): EntityBuilderType<TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntityLvl2MultiLink);
+    return EntityV4.entityBuilder(TestEntityLvl2MultiLink);
   }
 
   /**
@@ -71,8 +71,8 @@ export class TestEntityLvl2MultiLink extends Entityv4 implements TestEntityLvl2M
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
-  static customField(fieldName: string): CustomFieldv4<TestEntityLvl2MultiLink> {
-    return Entity.customFieldSelector(fieldName, TestEntityLvl2MultiLink);
+  static customField(fieldName: string): CustomFieldV4<TestEntityLvl2MultiLink> {
+    return EntityV4.customFieldSelector(fieldName, TestEntityLvl2MultiLink);
   }
 
   /**

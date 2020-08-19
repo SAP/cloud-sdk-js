@@ -6,7 +6,7 @@ import {
   filterFunction,
   filterFunctionsV2,
   oDataUriV2
-} from '../../../../src/odata/v2';
+} from '../../../../src';
 import {
   testFilterBoolean,
   testFilterGuid,

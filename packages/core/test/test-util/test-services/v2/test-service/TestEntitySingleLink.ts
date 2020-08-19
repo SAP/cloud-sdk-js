@@ -9,7 +9,7 @@ import { AllFields, BooleanField, CustomFieldV2, EntityBuilderType, EntityV2, Fi
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
  */
-export class TestEntitySingleLink extends Entityv2 implements TestEntitySingleLinkType {
+export class TestEntitySingleLink extends EntityV2 implements TestEntitySingleLinkType {
   /**
    * Technical entity name for TestEntitySingleLink.
    */
@@ -63,7 +63,7 @@ export class TestEntitySingleLink extends Entityv2 implements TestEntitySingleLi
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
   static builder(): EntityBuilderType<TestEntitySingleLink, TestEntitySingleLinkTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntitySingleLink);
+    return EntityV2.entityBuilder(TestEntitySingleLink);
   }
 
   /**
@@ -79,8 +79,8 @@ export class TestEntitySingleLink extends Entityv2 implements TestEntitySingleLi
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
-  static customField(fieldName: string): CustomFieldv2<TestEntitySingleLink> {
-    return Entity.customFieldSelector(fieldName, TestEntitySingleLink);
+  static customField(fieldName: string): CustomFieldV2<TestEntitySingleLink> {
+    return EntityV2.customFieldSelector(fieldName, TestEntitySingleLink);
   }
 
   /**

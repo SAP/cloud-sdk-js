@@ -16,7 +16,7 @@ var TestComplexType_1 = require("./TestComplexType");
  */
 function testActionImportNoParameterNoReturnType(parameters) {
     var params = {};
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', function (data) { return core_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', function (data) { return core_1.transformReturnValueForUndefinedV4(data, function (val) { return undefined; }); }, params);
 }
 exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoReturnType;
 /**
@@ -32,7 +32,7 @@ function testActionImportMultipleParameterComplexReturnType(parameters) {
         nullableBooleanParam: new core_1.ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
         nullableGeographyPointParam: new core_1.ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
     };
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', function (data) { return core_1.transformReturnValueForComplexType(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', function (data) { return core_1.transformReturnValueForComplexTypeV4(data, function (data) { return core_1.deserializeComplexTypeV4(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testActionImportMultipleParameterComplexReturnType = testActionImportMultipleParameterComplexReturnType;
 /**
@@ -45,7 +45,7 @@ function testActionImportUnsupportedEdmTypes(parameters) {
     var params = {
         simpleParam: new core_1.ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
     };
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmType(data, function (val) { return core_1.edmToTs(val, 'Edm.Any'); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val, 'Edm.Any'); }); }, params);
 }
 exports.testActionImportUnsupportedEdmTypes = testActionImportUnsupportedEdmTypes;
 exports.actionImports = {

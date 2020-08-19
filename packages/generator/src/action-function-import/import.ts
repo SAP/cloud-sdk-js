@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { flat, ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, flat, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import {
   VdmActionFunctionImportReturnType,
@@ -27,10 +27,10 @@ function actionFunctionImportDeclarations(
       [
         ...corePropertyTypeImportNames(parameters),
         ...returnTypes.map(returnType =>
-          responseTransformerFunctionName(returnType)
+          responseTransformerFunctionName(returnType, oDataVersion)
         ),
-        ...edmRelatedImports(returnTypes),
-        ...complexTypeRelatedImports(returnTypes),
+        ...edmRelatedImports(returnTypes, oDataVersion),
+        ...complexTypeRelatedImports(returnTypes, oDataVersion),
         ...additionalImports
       ],
       oDataVersion
@@ -40,22 +40,26 @@ function actionFunctionImportDeclarations(
 }
 
 function complexTypeRelatedImports(
-  returnTypes: VdmActionFunctionImportReturnType[]
+  returnTypes: VdmActionFunctionImportReturnType[],
+  oDataVersion: ODataVersion
 ) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
   )
-    ? ['deserializeComplexType']
+    ? [`deserializeComplexType${caps(oDataVersion)}`]
     : [];
 }
 
-function edmRelatedImports(returnTypes: VdmActionFunctionImportReturnType[]) {
+function edmRelatedImports(
+  returnTypes: VdmActionFunctionImportReturnType[],
+  oDataVersion: ODataVersion
+) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.EDM_TYPE
   )
-    ? ['edmToTs']
+    ? [`edmToTs${caps(oDataVersion)}`]
     : [];
 }
 
@@ -116,7 +120,10 @@ export function importDeclarationsAction(
   return actionFunctionImportDeclarations(
     returnTypes,
     functionImportParameters,
-    ['FunctionImportRequestBuilder', 'FunctionImportParameter'],
+    [
+      `FunctionImportRequestBuilder${caps(service.oDataVersion)}`,
+      'FunctionImportParameter'
+    ],
     service.oDataVersion
   );
 }

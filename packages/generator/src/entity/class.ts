@@ -6,7 +6,7 @@ import {
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import { prependPrefix } from '../internal-prefix';
 import {
   getEntityDescription,
@@ -29,7 +29,7 @@ export function entityClass(
   return {
     kind: StructureKind.Class,
     name: entity.className,
-    extends: `Entity${service.oDataVersion.toUpperCase}`,
+    extends: `Entity${caps(service.oDataVersion)}`,
     implements: [`${entity.className}Type`],
     properties: [
       ...staticProperties(entity, service),
@@ -146,19 +146,24 @@ function methods(
   oDataVersion: ODataVersion
 ): MethodDeclarationStructure[] {
   return [
-    builder(entity,oDataVersion),
+    builder(entity, oDataVersion),
     requestBuilder(entity),
     customField(entity, oDataVersion),
     toJSON(entity)
   ];
 }
 
-function builder(entity: VdmEntity,oDataVersion:ODataVersion): MethodDeclarationStructure {
+function builder(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     isStatic: true,
     name: 'builder',
-    statements: `return Entity${oDataVersion.toUpperCase()}.entityBuilder(${entity.className});`,
+    statements: `return Entity${caps(oDataVersion)}.entityBuilder(${
+      entity.className
+    });`,
     returnType: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
     docs: [
       addLeadingNewline(
@@ -213,8 +218,10 @@ function customField(
         type: 'string'
       }
     ],
-    statements: `return Entity.customFieldSelector(fieldName, ${entity.className});`,
-    returnType: `CustomField${oDataVersion.toUpperCase}<${entity.className}>`,
+    statements: `return Entity${caps(
+      oDataVersion
+    )}.customFieldSelector(fieldName, ${entity.className});`,
+    returnType: `CustomField${caps(oDataVersion)}<${entity.className}>`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
@@ -228,7 +235,7 @@ function customField(
               }
             ],
             returns: {
-              type: `CustomField${oDataVersion.toUpperCase}<${entity.className}>`,
+              type: `CustomField${caps(oDataVersion)}<${entity.className}>`,
               description: `A builder that constructs instances of entity type \`${entity.className}\`.`
             }
           }

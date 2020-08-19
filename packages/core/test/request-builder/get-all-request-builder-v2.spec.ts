@@ -15,7 +15,7 @@ import {
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
 
-describe('GetAllRequestBuilder', () => {
+describe('GetAllRequestBuilderV2', () => {
   let requestBuilder: GetAllRequestBuilderV2<TestEntity>;
 
   beforeAll(() => {

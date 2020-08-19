@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable valid-jsdoc */
 
-import { edmToTsV2, tsToEdm } from '../payload-value-converter';
+import { edmToTsV2, tsToEdmV2 } from '../payload-value-converter';
 import { EdmTypeShared, UriConverter } from '../../common';
 import { uriConvertersCommon } from '../../common/uri-conversion/uri-value-converter';
 import { EdmTypeV2 } from '../edm-types';
@@ -27,7 +27,7 @@ export const uriConvertersV2: UriConverterMapping = {
  */
 export const uriConverterV2: UriConverter = {
   convertToUriFormat(value: any, edmType: EdmTypeShared<'v2'>): string {
-    const converted = tsToEdm(value, edmType);
+    const converted = tsToEdmV2(value, edmType);
     const uriConverterFunc = uriConvertersV2[edmType];
     if (uriConverterFunc) {
       return uriConverterFunc(converted);

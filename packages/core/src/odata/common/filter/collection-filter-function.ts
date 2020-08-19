@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { EntityBase } from '../entity';
-import { EdmTypeShared, FieldType } from '../../v2';
+import { FieldType } from '../selectable';
+import { EdmTypeShared } from '../edm-types';
 import {
   FilterFunction,
   FilterFunctionParameterType

@@ -9,7 +9,7 @@ import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringFie
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityOtherMultiLink extends Entityv2 implements TestEntityOtherMultiLinkType {
+export class TestEntityOtherMultiLink extends EntityV2 implements TestEntityOtherMultiLinkType {
   /**
    * Technical entity name for TestEntityOtherMultiLink.
    */
@@ -33,7 +33,7 @@ export class TestEntityOtherMultiLink extends Entityv2 implements TestEntityOthe
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
   static builder(): EntityBuilderType<TestEntityOtherMultiLink, TestEntityOtherMultiLinkTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntityOtherMultiLink);
+    return EntityV2.entityBuilder(TestEntityOtherMultiLink);
   }
 
   /**
@@ -49,8 +49,8 @@ export class TestEntityOtherMultiLink extends Entityv2 implements TestEntityOthe
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
-  static customField(fieldName: string): CustomFieldv2<TestEntityOtherMultiLink> {
-    return Entity.customFieldSelector(fieldName, TestEntityOtherMultiLink);
+  static customField(fieldName: string): CustomFieldV2<TestEntityOtherMultiLink> {
+    return EntityV2.customFieldSelector(fieldName, TestEntityOtherMultiLink);
   }
 
   /**

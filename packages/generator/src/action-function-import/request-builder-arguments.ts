@@ -14,7 +14,8 @@ export function getRequestBuilderArgumentsBase(
     `'${service.servicePath}'`,
     `'${actionFunctionImport.originalName}'`,
     `(data) => ${responseTransformerFunctionName(
-      actionFunctionImport.returnType
+      actionFunctionImport.returnType,
+      service.oDataVersion
     )}(data, ${actionFunctionImport.returnType.builderFunction})`,
     'params'
   ];

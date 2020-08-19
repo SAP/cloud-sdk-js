@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilder(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, map);
+    return new core_1.ODataBatchRequestBuilderV4(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, map);
 }
 exports.batch = batch;
 /**
@@ -31,7 +31,7 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSet(requests);
+    return new core_1.ODataBatchChangeSetV4(requests);
 }
 exports.changeset = changeset;
 exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = '/sap/opu/odata/sap/Microsoft.OData.Service.Sample.TrippinInMemory.Models';

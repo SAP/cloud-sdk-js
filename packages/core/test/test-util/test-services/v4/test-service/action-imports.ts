@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefined, transformReturnValueForComplexType, transformReturnValueForEdmType, edmToTs, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
+import { transformReturnValueForUndefinedV4, transformReturnValueForComplexTypeV4, transformReturnValueForEdmTypeV4, edmToTsV4, deserializeComplexTypeV4, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
 import { TestComplexType } from './TestComplexType';
 
 /**
@@ -23,7 +23,7 @@ export function testActionImportNoParameterNoReturnType(parameters: TestActionIm
 
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', (data) => transformReturnValueForUndefinedV4(data, (val) => undefined), params);
 }
 
 /**
@@ -62,7 +62,7 @@ export function testActionImportMultipleParameterComplexReturnType(parameters: T
     nullableGeographyPointParam: new ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType)), params);
 }
 
 /**
@@ -86,7 +86,7 @@ export function testActionImportUnsupportedEdmTypes(parameters: TestActionImport
     simpleParam: new ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Any')), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val, 'Edm.Any')), params);
 }
 
 export const actionImports = {

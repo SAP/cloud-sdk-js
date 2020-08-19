@@ -24,7 +24,7 @@ function createTestEntity() {
     .build();
 }
 
-describe('UpdateRequestBuilder', () => {
+describe('UpdateRequestBuilderV4', () => {
   beforeAll(() => {
     muteLoggers('http-agent');
   });

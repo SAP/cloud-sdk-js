@@ -63,10 +63,10 @@ var TestComplexBaseType;
             isCollection: false
         }];
     /**
-     * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return core_1.deserializeComplexType(json, TestComplexBaseType);
+        return core_1.deserializeComplexTypeV4(json, TestComplexBaseType);
     }
     TestComplexBaseType.build = build;
 })(TestComplexBaseType = exports.TestComplexBaseType || (exports.TestComplexBaseType = {}));

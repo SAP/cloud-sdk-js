@@ -12,7 +12,7 @@ import { TestEntity } from '../test-util/test-services/v4/test-service';
 
 const { convertToUriFormat } = uriConverterV4;
 
-describe('DeleteRequestBuilder', () => {
+describe('DeleteRequestBuilderV4', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
 

@@ -9,7 +9,7 @@ import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringFie
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
-export class TestEntityEndsWithSomethingElse extends Entityv4 implements TestEntityEndsWithSomethingElseType {
+export class TestEntityEndsWithSomethingElse extends EntityV4 implements TestEntityEndsWithSomethingElseType {
   /**
    * Technical entity name for TestEntityEndsWithSomethingElse.
    */
@@ -34,7 +34,7 @@ export class TestEntityEndsWithSomethingElse extends Entityv4 implements TestEnt
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
   static builder(): EntityBuilderType<TestEntityEndsWithSomethingElse, TestEntityEndsWithSomethingElseTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntityEndsWithSomethingElse);
+    return EntityV4.entityBuilder(TestEntityEndsWithSomethingElse);
   }
 
   /**
@@ -50,8 +50,8 @@ export class TestEntityEndsWithSomethingElse extends Entityv4 implements TestEnt
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
-  static customField(fieldName: string): CustomFieldv4<TestEntityEndsWithSomethingElse> {
-    return Entity.customFieldSelector(fieldName, TestEntityEndsWithSomethingElse);
+  static customField(fieldName: string): CustomFieldV4<TestEntityEndsWithSomethingElse> {
+    return EntityV4.customFieldSelector(fieldName, TestEntityEndsWithSomethingElse);
   }
 
   /**

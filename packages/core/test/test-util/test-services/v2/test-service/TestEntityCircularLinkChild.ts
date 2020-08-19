@@ -9,7 +9,7 @@ import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, Link, Str
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
-export class TestEntityCircularLinkChild extends Entityv2 implements TestEntityCircularLinkChildType {
+export class TestEntityCircularLinkChild extends EntityV2 implements TestEntityCircularLinkChildType {
   /**
    * Technical entity name for TestEntityCircularLinkChild.
    */
@@ -37,7 +37,7 @@ export class TestEntityCircularLinkChild extends Entityv2 implements TestEntityC
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
   static builder(): EntityBuilderType<TestEntityCircularLinkChild, TestEntityCircularLinkChildTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntityCircularLinkChild);
+    return EntityV2.entityBuilder(TestEntityCircularLinkChild);
   }
 
   /**
@@ -53,8 +53,8 @@ export class TestEntityCircularLinkChild extends Entityv2 implements TestEntityC
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
-  static customField(fieldName: string): CustomFieldv2<TestEntityCircularLinkChild> {
-    return Entity.customFieldSelector(fieldName, TestEntityCircularLinkChild);
+  static customField(fieldName: string): CustomFieldV2<TestEntityCircularLinkChild> {
+    return EntityV2.customFieldSelector(fieldName, TestEntityCircularLinkChild);
   }
 
   /**

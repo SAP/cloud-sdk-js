@@ -9,7 +9,7 @@ import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringFie
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
-export class Airlines extends Entityv4 implements AirlinesType {
+export class Airlines extends EntityV4 implements AirlinesType {
   /**
    * Technical entity name for Airlines.
    */
@@ -38,7 +38,7 @@ export class Airlines extends Entityv4 implements AirlinesType {
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
   static builder(): EntityBuilderType<Airlines, AirlinesTypeForceMandatory> {
-    return Entity.entityBuilder(Airlines);
+    return EntityV4.entityBuilder(Airlines);
   }
 
   /**
@@ -54,8 +54,8 @@ export class Airlines extends Entityv4 implements AirlinesType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
-  static customField(fieldName: string): CustomFieldv4<Airlines> {
-    return Entity.customFieldSelector(fieldName, Airlines);
+  static customField(fieldName: string): CustomFieldV4<Airlines> {
+    return EntityV4.customFieldSelector(fieldName, Airlines);
   }
 
   /**

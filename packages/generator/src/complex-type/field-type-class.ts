@@ -5,6 +5,7 @@ import {
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
+import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   getComplexTypeFieldDescription,
   getComplexTypePropertyDescription
@@ -16,11 +17,14 @@ import {
 } from '../generator-utils';
 
 export function fieldTypeClass(
-  complexType: VdmComplexType
+  complexType: VdmComplexType,
+  oDataVersion: ODataVersion
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
-    name: `${complexType.fieldType}<EntityT extends Entity>`,
+    name: `${complexType.fieldType}<EntityT extends Entity${caps(
+      oDataVersion
+    )}>`,
     extends: `ComplexTypeField<EntityT, ${complexType.typeName}>`,
     isExported: true,
     properties: properties(complexType),

@@ -88,7 +88,7 @@ describe('generator', () => {
         'bignumber.js',
         './TestComplexType',
         './TestEnumType',
-        '@sap-cloud-sdk/core/v4',
+        '@sap-cloud-sdk/core',
         './TestEntityMultiLink',
         './TestEntitySingleLink'
       ]);

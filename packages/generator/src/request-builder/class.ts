@@ -8,6 +8,7 @@ import {
   ParameterDeclarationStructure,
   StructureKind
 } from 'ts-morph';
+import { ODataVersion, caps } from '@sap-cloud-sdk/util';
 import {
   addLeadingNewline,
   getFunctionDoc,
@@ -16,40 +17,45 @@ import {
 import { VdmEntity } from '../vdm-types';
 
 export function requestBuilderClass(
-  entity: VdmEntity
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
     name: `${entity.className}RequestBuilder`,
     isExported: true,
     extends: `RequestBuilder<${entity.className}>`,
-    methods: requestBuilderMethods(entity),
+    methods: requestBuilderMethods(entity, oDataVersion),
     docs: [addLeadingNewline(getRequestBuilderDescription(entity))]
   };
 }
 
 function requestBuilderMethods(
-  entity: VdmEntity
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
 ): MethodDeclarationStructure[] {
   const methods = [
-    getByKeyRequestBuilder(entity),
-    getAllRequestBuilder(entity)
+    getByKeyRequestBuilder(entity, oDataVersion),
+    getAllRequestBuilder(entity, oDataVersion)
   ];
   if (entity.creatable) {
-    methods.push(createRequestBuilder(entity));
+    methods.push(createRequestBuilder(entity, oDataVersion));
   }
 
   if (entity.updatable) {
-    methods.push(updateRequestBuilder(entity));
+    methods.push(updateRequestBuilder(entity, oDataVersion));
   }
 
   if (entity.deletable) {
-    methods.push(deleteRequestBuilder(entity));
+    methods.push(deleteRequestBuilder(entity, oDataVersion));
   }
   return methods;
 }
 
-function getByKeyRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
+function getByKeyRequestBuilder(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'getByKey',
@@ -57,15 +63,23 @@ function getByKeyRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
       name: key.propertyNameAsParam,
       type: key.jsType
     })),
-    returnType: `GetByKeyRequestBuilder<${entity.className}>`,
-    statements: buildParametrizedStatements(entity, 'GetByKeyRequestBuilder'),
+    returnType: `GetByKeyRequestBuilder${caps(oDataVersion)}<${
+      entity.className
+    }>`,
+    statements: buildParametrizedStatements(
+      entity,
+      'GetByKeyRequestBuilder',
+      oDataVersion
+    ),
     docs: [
       addLeadingNewline(
         getFunctionDoc(
           `Returns a request builder for retrieving one \`${entity.className}\` entity based on its keys.`,
           {
             returns: {
-              type: `GetByKeyRequestBuilder<${entity.className}>`,
+              type: `GetByKeyRequestBuilder${caps(oDataVersion)}<${
+                entity.className
+              }>`,
               description: `A request builder for creating requests to retrieve one \`${entity.className}\` entity based on its keys.`
             },
             params: entity.keys.map(key => ({
@@ -80,19 +94,28 @@ function getByKeyRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   };
 }
 
-function getAllRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
+function getAllRequestBuilder(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'getAll',
-    returnType: `GetAllRequestBuilder<${entity.className}>`,
-    statements: `return new GetAllRequestBuilder(${entity.className});`,
+    returnType: `GetAllRequestBuilder${caps(oDataVersion)}<${
+      entity.className
+    }>`,
+    statements: `return new GetAllRequestBuilder${caps(oDataVersion)}(${
+      entity.className
+    });`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
           `Returns a request builder for querying all \`${entity.className}\` entities.`,
           {
             returns: {
-              type: `GetAllRequestBuilder<${entity.className}>`,
+              type: `GetAllRequestBuilder${caps(oDataVersion)}<${
+                entity.className
+              }>`,
               description: `A request builder for creating requests to retrieve all \`${entity.className}\` entities.`
             }
           }
@@ -102,25 +125,34 @@ function getAllRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   };
 }
 
-function createRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
+function createRequestBuilder(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'create',
-    returnType: `CreateRequestBuilder<${entity.className}>`,
+    returnType: `CreateRequestBuilder${caps(oDataVersion)}<${
+      entity.className
+    }>`,
     parameters: [
       {
         name: 'entity',
         type: entity.className
       }
     ],
-    statements: `return new CreateRequestBuilder(${entity.className}, entity);`,
+    statements: `return new CreateRequestBuilder${caps(oDataVersion)}(${
+      entity.className
+    }, entity);`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
           `Returns a request builder for creating a \`${entity.className}\` entity.`,
           {
             returns: {
-              type: `CreateRequestBuilder<${entity.className}>`,
+              type: `CreateRequestBuilder${caps(oDataVersion)}<${
+                entity.className
+              }>`,
               description: `A request builder for creating requests that create an entity of type \`${entity.className}\`.`
             },
             params: [
@@ -137,25 +169,34 @@ function createRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   };
 }
 
-function updateRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
+function updateRequestBuilder(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'update',
-    returnType: `UpdateRequestBuilder<${entity.className}>`,
+    returnType: `UpdateRequestBuilder${caps(oDataVersion)}<${
+      entity.className
+    }>`,
     parameters: [
       {
         name: 'entity',
         type: entity.className
       }
     ],
-    statements: `return new UpdateRequestBuilder(${entity.className}, entity);`,
+    statements: `return new UpdateRequestBuilder${caps(oDataVersion)}(${
+      entity.className
+    }, entity);`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
           `Returns a request builder for updating an entity of type \`${entity.className}\`.`,
           {
             returns: {
-              type: `UpdateRequestBuilder<${entity.className}>`,
+              type: `UpdateRequestBuilder${caps(oDataVersion)}<${
+                entity.className
+              }>`,
               description: `A request builder for creating requests that update an entity of type \`${entity.className}\`.`
             },
             params: [
@@ -172,14 +213,19 @@ function updateRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   };
 }
 
-function deleteRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
+function deleteRequestBuilder(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'delete',
-    returnType: `DeleteRequestBuilder<${entity.className}>`,
+    returnType: `DeleteRequestBuilder${caps(oDataVersion)}<${
+      entity.className
+    }>`,
     parameters: deleteRequestBuilderParameters(entity),
-    statements: deleteRequestBuilderStatements(entity),
-    overloads: deleteRequestBuilderOverload(entity)
+    statements: deleteRequestBuilderStatements(entity, oDataVersion),
+    overloads: deleteRequestBuilderOverload(entity, oDataVersion)
   };
 }
 
@@ -211,12 +257,14 @@ function deleteRequestBuilderParameters(
 }
 
 function deleteRequestBuilderOverload(
-  entity: VdmEntity
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
 ): MethodDeclarationOverloadStructure[] {
+  const versionInCaps = caps(oDataVersion);
   return [
     {
       kind: StructureKind.MethodOverload,
-      returnType: `DeleteRequestBuilder<${entity.className}>`,
+      returnType: `DeleteRequestBuilder${versionInCaps}<${entity.className}>`,
       parameters: entity.keys.map(key => ({
         name: key.propertyNameAsParam,
         type: key.jsType
@@ -227,7 +275,7 @@ function deleteRequestBuilderOverload(
             `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
             {
               returns: {
-                type: `DeleteRequestBuilder<${entity.className}>`,
+                type: `DeleteRequestBuilder${versionInCaps}<${entity.className}>`,
                 description: `A request builder for creating requests that delete an entity of type \`${entity.className}\`.`
               },
               params: entity.keys.map(key => ({
@@ -242,7 +290,9 @@ function deleteRequestBuilderOverload(
     },
     {
       kind: StructureKind.MethodOverload,
-      returnType: `DeleteRequestBuilder<${entity.className}>`,
+      returnType: `DeleteRequestBuilder${caps(oDataVersion)}<${
+        entity.className
+      }>`,
       parameters: [
         {
           name: 'entity',
@@ -255,7 +305,9 @@ function deleteRequestBuilderOverload(
             `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
             {
               returns: {
-                type: `DeleteRequestBuilder<${entity.className}>`,
+                type: `DeleteRequestBuilder${caps(oDataVersion)}<${
+                  entity.className
+                }>`,
                 description: `A request builder for creating requests that delete an entity of type \`${entity.className}\` by taking the entity as a parameter.`
               },
               params: [
@@ -273,24 +325,32 @@ function deleteRequestBuilderOverload(
   ];
 }
 
-function deleteRequestBuilderStatements(entity: VdmEntity) {
+function deleteRequestBuilderStatements(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+) {
   const params = deleteRequestBuilderParameters(entity).map(
     param => param.name
   );
   const keys = entity.keys
     .map((key, index) => `${key.originalName}: ${params[index]}!`)
     .join(',\n');
-  return `return new DeleteRequestBuilder(${entity.className}, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
+  return `return new DeleteRequestBuilder${caps(oDataVersion)}(${
+    entity.className
+  }, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
 }
 
 function buildParametrizedStatements(
   entity: VdmEntity,
-  requestBuilder: RequestBuilderName
+  requestBuilder: RequestBuilderName,
+  oDataVersion: ODataVersion
 ) {
   const params = entity.keys
     .map(key => `${key.originalName}: ${key.propertyNameAsParam}`)
     .join(',\n');
-  return `return new ${requestBuilder}(${entity.className}, {${params}});`;
+  return `return new ${requestBuilder}${caps(oDataVersion)}(${
+    entity.className
+  }, {${params}});`;
 }
 
 type RequestBuilderName =

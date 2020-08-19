@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEntity, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEntityV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { People } from './People';
 import { Airports } from './Airports';
 
@@ -19,12 +19,12 @@ export interface GetPersonWithMostFriendsParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function getPersonWithMostFriends(parameters: GetPersonWithMostFriendsParameters): FunctionImportRequestBuilder<GetPersonWithMostFriendsParameters, People> {
+export function getPersonWithMostFriends(parameters: GetPersonWithMostFriendsParameters): FunctionImportRequestBuilderV4<GetPersonWithMostFriendsParameters, People> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', (data) => transformReturnValueForEntity(data, People), params);
+  return new FunctionImportRequestBuilderV4('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', (data) => transformReturnValueForEntityV4(data, People), params);
 }
 
 /**
@@ -47,13 +47,13 @@ export interface GetNearestAirportParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function getNearestAirport(parameters: GetNearestAirportParameters): FunctionImportRequestBuilder<GetNearestAirportParameters, Airports> {
+export function getNearestAirport(parameters: GetNearestAirportParameters): FunctionImportRequestBuilderV4<GetNearestAirportParameters, Airports> {
   const params = {
     lat: new FunctionImportParameter('lat', 'Edm.Double', parameters.lat),
     lon: new FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
   }
 
-  return new FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', (data) => transformReturnValueForEntity(data, Airports), params);
+  return new FunctionImportRequestBuilderV4('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', (data) => transformReturnValueForEntityV4(data, Airports), params);
 }
 
 export const functionImports = {

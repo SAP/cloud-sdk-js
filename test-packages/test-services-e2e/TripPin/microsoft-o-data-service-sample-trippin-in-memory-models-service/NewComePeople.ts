@@ -13,7 +13,7 @@ import { AllFields, BigNumberField, CollectionField, CustomFieldV4, EntityBuilde
 /**
  * This class represents the entity "NewComePeople" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
-export class NewComePeople extends Entityv4 implements NewComePeopleType {
+export class NewComePeople extends EntityV4 implements NewComePeopleType {
   /**
    * Technical entity name for NewComePeople.
    */
@@ -83,7 +83,7 @@ export class NewComePeople extends Entityv4 implements NewComePeopleType {
    * @returns A builder that constructs instances of entity type `NewComePeople`.
    */
   static builder(): EntityBuilderType<NewComePeople, NewComePeopleTypeForceMandatory> {
-    return Entity.entityBuilder(NewComePeople);
+    return EntityV4.entityBuilder(NewComePeople);
   }
 
   /**
@@ -99,8 +99,8 @@ export class NewComePeople extends Entityv4 implements NewComePeopleType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `NewComePeople`.
    */
-  static customField(fieldName: string): CustomFieldv4<NewComePeople> {
-    return Entity.customFieldSelector(fieldName, NewComePeople);
+  static customField(fieldName: string): CustomFieldV4<NewComePeople> {
+    return EntityV4.customFieldSelector(fieldName, NewComePeople);
   }
 
   /**

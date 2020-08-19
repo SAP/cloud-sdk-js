@@ -35,14 +35,14 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (_su
      * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
      */
     TestEntityEndsWithSomethingElseRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new core_1.GetByKeyRequestBuilder(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilderV4(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityEndsWithSomethingElse` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityEndsWithSomethingElse` entities.
      */
     TestEntityEndsWithSomethingElseRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilder(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse);
+        return new core_1.GetAllRequestBuilderV4(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse);
     };
     /**
      * Returns a request builder for creating a `TestEntityEndsWithSomethingElse` entity.
@@ -50,7 +50,7 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (_su
      * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWithSomethingElse`.
      */
     TestEntityEndsWithSomethingElseRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilder(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, entity);
+        return new core_1.CreateRequestBuilderV4(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityEndsWithSomethingElse`.
@@ -58,10 +58,10 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (_su
      * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWithSomethingElse`.
      */
     TestEntityEndsWithSomethingElseRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilder(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, entity);
+        return new core_1.UpdateRequestBuilderV4(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, entity);
     };
     TestEntityEndsWithSomethingElseRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new core_1.DeleteRequestBuilder(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, keyPropertyOrEntity instanceof TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilderV4(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, keyPropertyOrEntity instanceof TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityEndsWithSomethingElseRequestBuilder;
 }(core_1.RequestBuilder));

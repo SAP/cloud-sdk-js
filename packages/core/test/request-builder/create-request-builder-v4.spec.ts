@@ -13,7 +13,7 @@ import {
 } from '../test-util/test-services/v4/test-service';
 import { testPostRequestOutcome } from '../test-util/testPostRequestOutcome';
 
-describe('CreateRequestBuilder', () => {
+describe('CreateRequestBuilderV4', () => {
   beforeAll(() => {
     muteLoggers('http-agent', 'entity-builder');
   });

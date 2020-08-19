@@ -35,14 +35,14 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
      */
     TestEntityEndsWithRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new core_1.GetByKeyRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilderV4(TestEntityEndsWith_1.TestEntityEndsWith, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityEndsWith` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityEndsWith` entities.
      */
     TestEntityEndsWithRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith);
+        return new core_1.GetAllRequestBuilderV4(TestEntityEndsWith_1.TestEntityEndsWith);
     };
     /**
      * Returns a request builder for creating a `TestEntityEndsWith` entity.
@@ -50,7 +50,7 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWith`.
      */
     TestEntityEndsWithRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, entity);
+        return new core_1.CreateRequestBuilderV4(TestEntityEndsWith_1.TestEntityEndsWith, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityEndsWith`.
@@ -58,10 +58,10 @@ var TestEntityEndsWithRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWith`.
      */
     TestEntityEndsWithRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, entity);
+        return new core_1.UpdateRequestBuilderV4(TestEntityEndsWith_1.TestEntityEndsWith, entity);
     };
     TestEntityEndsWithRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new core_1.DeleteRequestBuilder(TestEntityEndsWith_1.TestEntityEndsWith, keyPropertyOrEntity instanceof TestEntityEndsWith_1.TestEntityEndsWith ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilderV4(TestEntityEndsWith_1.TestEntityEndsWith, keyPropertyOrEntity instanceof TestEntityEndsWith_1.TestEntityEndsWith ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityEndsWithRequestBuilder;
 }(core_1.RequestBuilder));

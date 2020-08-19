@@ -14,7 +14,7 @@ import { TestEntity } from '../test-util/test-services/v4/test-service';
 
 const { convertToUriFormat } = uriConverterV4;
 
-describe('GetByKeyRequestBuilder', () => {
+describe('GetByKeyRequestBuilderV4', () => {
   beforeAll(() => {
     muteLoggers('http-agent');
   });

@@ -17,7 +17,7 @@ var Airports_1 = require("./Airports");
  */
 function getPersonWithMostFriends(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', function (data) { return core_1.transformReturnValueForEntity(data, People_1.People); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetPersonWithMostFriends', function (data) { return core_1.transformReturnValueForEntityV4(data, People_1.People); }, params);
 }
 exports.getPersonWithMostFriends = getPersonWithMostFriends;
 /**
@@ -31,7 +31,7 @@ function getNearestAirport(parameters) {
         lat: new core_1.FunctionImportParameter('lat', 'Edm.Double', parameters.lat),
         lon: new core_1.FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
     };
-    return new core_1.FunctionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', function (data) { return core_1.transformReturnValueForEntity(data, Airports_1.Airports); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'GetNearestAirport', function (data) { return core_1.transformReturnValueForEntityV4(data, Airports_1.Airports); }, params);
 }
 exports.getNearestAirport = getNearestAirport;
 exports.functionImports = {

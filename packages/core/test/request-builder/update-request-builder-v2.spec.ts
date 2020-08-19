@@ -22,7 +22,7 @@ function createTestEntity() {
     .build();
 }
 
-describe('UpdateRequestBuilder', () => {
+describe('UpdateRequestBuilderV2', () => {
   beforeAll(() => {
     muteLoggers('http-agent');
   });

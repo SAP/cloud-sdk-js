@@ -9,7 +9,7 @@ import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, OneToOneL
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */
-export class TestEntityCircularLinkParent extends Entityv4 implements TestEntityCircularLinkParentType {
+export class TestEntityCircularLinkParent extends EntityV4 implements TestEntityCircularLinkParentType {
   /**
    * Technical entity name for TestEntityCircularLinkParent.
    */
@@ -38,7 +38,7 @@ export class TestEntityCircularLinkParent extends Entityv4 implements TestEntity
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
    */
   static builder(): EntityBuilderType<TestEntityCircularLinkParent, TestEntityCircularLinkParentTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntityCircularLinkParent);
+    return EntityV4.entityBuilder(TestEntityCircularLinkParent);
   }
 
   /**
@@ -54,8 +54,8 @@ export class TestEntityCircularLinkParent extends Entityv4 implements TestEntity
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
    */
-  static customField(fieldName: string): CustomFieldv4<TestEntityCircularLinkParent> {
-    return Entity.customFieldSelector(fieldName, TestEntityCircularLinkParent);
+  static customField(fieldName: string): CustomFieldV4<TestEntityCircularLinkParent> {
+    return EntityV4.customFieldSelector(fieldName, TestEntityCircularLinkParent);
   }
 
   /**

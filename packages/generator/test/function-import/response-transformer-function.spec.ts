@@ -20,20 +20,20 @@ const returnTypeComplexType = {
 
 describe('response-transformer-function', () => {
   it('responseTransformerFunctionName of entity', () => {
-    expect(responseTransformerFunctionName(returnTypeEntity)).toEqual(
-      'transformReturnValueForEntity'
+    expect(responseTransformerFunctionName(returnTypeEntity, 'v2')).toEqual(
+      'transformReturnValueForEntityV2'
     );
   });
 
   it('responseTransformerFunctionName of complex type and list', () => {
-    expect(responseTransformerFunctionName(returnTypeComplexType)).toEqual(
-      'transformReturnValueForComplexTypeList'
-    );
+    expect(
+      responseTransformerFunctionName(returnTypeComplexType, 'v4')
+    ).toEqual('transformReturnValueForComplexTypeListV4');
   });
 
   it('responseTransformerFunctionName of edmType', () => {
-    expect(responseTransformerFunctionName(orderBreakfast.returnType)).toEqual(
-      'transformReturnValueForEdmType'
-    );
+    expect(
+      responseTransformerFunctionName(orderBreakfast.returnType, 'v2')
+    ).toEqual('transformReturnValueForEdmTypeV2');
   });
 });

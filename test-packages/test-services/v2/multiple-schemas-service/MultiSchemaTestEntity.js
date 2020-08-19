@@ -45,7 +45,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntity.builder = function () {
-        return Entity.entityBuilder(MultiSchemaTestEntity);
+        return core_1.EntityV2.entityBuilder(MultiSchemaTestEntity);
     };
     /**
      * Returns a request builder to construct requests for operations on the `MultiSchemaTestEntity` entity type.
@@ -60,7 +60,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntity.customField = function (fieldName) {
-        return Entity.customFieldSelector(fieldName, MultiSchemaTestEntity);
+        return core_1.EntityV2.customFieldSelector(fieldName, MultiSchemaTestEntity);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,7 +83,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      */
     MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
     return MultiSchemaTestEntity;
-}(Entityv2));
+}(core_1.EntityV2));
 exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
 (function (MultiSchemaTestEntity) {
     /**

@@ -11,7 +11,7 @@ import { AllFields, BigNumberField, BooleanField, CustomFieldV4, DateField, Enti
 /**
  * This class represents the entity "TestEntity" of service "AdminService".
  */
-export class TestEntity extends Entityv4 implements TestEntityType {
+export class TestEntity extends EntityV4 implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -90,7 +90,7 @@ export class TestEntity extends Entityv4 implements TestEntityType {
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   static builder(): EntityBuilderType<TestEntity, TestEntityTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntity);
+    return EntityV4.entityBuilder(TestEntity);
   }
 
   /**
@@ -106,8 +106,8 @@ export class TestEntity extends Entityv4 implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomFieldv4<TestEntity> {
-    return Entity.customFieldSelector(fieldName, TestEntity);
+  static customField(fieldName: string): CustomFieldV4<TestEntity> {
+    return EntityV4.customFieldSelector(fieldName, TestEntity);
   }
 
   /**

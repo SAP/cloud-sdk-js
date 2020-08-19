@@ -45,7 +45,7 @@ var Airlines = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `Airlines`.
      */
     Airlines.builder = function () {
-        return Entity.entityBuilder(Airlines);
+        return core_1.EntityV4.entityBuilder(Airlines);
     };
     /**
      * Returns a request builder to construct requests for operations on the `Airlines` entity type.
@@ -60,7 +60,7 @@ var Airlines = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `Airlines`.
      */
     Airlines.customField = function (fieldName) {
-        return Entity.customFieldSelector(fieldName, Airlines);
+        return core_1.EntityV4.customFieldSelector(fieldName, Airlines);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,7 +83,7 @@ var Airlines = /** @class */ (function (_super) {
      */
     Airlines._defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
     return Airlines;
-}(Entityv4));
+}(core_1.EntityV4));
 exports.Airlines = Airlines;
 (function (Airlines) {
     /**

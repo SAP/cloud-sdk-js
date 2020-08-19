@@ -7,32 +7,39 @@ import {
   VariableDeclarationKind,
   VariableStatementStructure
 } from 'ts-morph';
-import { unique } from '@sap-cloud-sdk/util';
+import { caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import { VdmComplexType } from '../vdm-types';
 
 export function complexTypeNamespace(
-  complexType: VdmComplexType
+  complexType: VdmComplexType,
+  oDataVersion: ODataVersion
 ): NamespaceDeclarationStructure {
   return {
     kind: StructureKind.Namespace,
     name: complexType.typeName,
     isExported: true,
-    statements: [propertyMetadata(complexType), factoryFunction(complexType)]
+    statements: [
+      propertyMetadata(complexType),
+      factoryFunction(complexType, oDataVersion)
+    ]
   };
 }
 
 function factoryFunction(
-  complexType: VdmComplexType
+  complexType: VdmComplexType,
+  oDataVerion: ODataVersion
 ): FunctionDeclarationStructure {
   return {
     kind: StructureKind.Function,
     name: 'build',
     returnType: complexType.typeName,
     parameters: [{ name: 'json', type: getJsonType(complexType) }],
-    statements: `return deserializeComplexType(json, ${complexType.typeName});`,
+    statements: `return deserializeComplexType${caps(oDataVerion)}(json, ${
+      complexType.typeName
+    });`,
     isExported: true,
     docs: [
-      '\n@deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.'
+      '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
     ]
   };
 }

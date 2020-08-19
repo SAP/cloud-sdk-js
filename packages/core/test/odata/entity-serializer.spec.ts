@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { serializeEntityV2 } from '../../src';
+import { serializeEntityV2, tsToEdmV2 } from '../../src';
 import {
   TestEntity,
   TestEntityLvl2MultiLink,
@@ -93,8 +93,8 @@ describe('entity-serializer', () => {
 
     expect(serializeEntityV2(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
-      Int32Property: tsToEdm(testEntity.int32Property, 'Edm.Int32'),
-      TimeProperty: tsToEdm(testEntity.timeProperty, 'Edm.Time'),
+      Int32Property: tsToEdmV2(testEntity.int32Property, 'Edm.Int32'),
+      TimeProperty: tsToEdmV2(testEntity.timeProperty, 'Edm.Time'),
       to_MultiLink: [
         {
           StringProperty: multiLinkEntity.stringProperty,
@@ -145,7 +145,7 @@ describe('entity-serializer', () => {
 
     expect(serializeEntityV2(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
-      SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
+      SingleProperty: tsToEdmV2(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',
       CustomField2: 1234
     });

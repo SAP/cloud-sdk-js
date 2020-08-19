@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '@sap-cloud-sdk/core';
+import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '@sap-cloud-sdk/core';
 import { People, Airlines, Airports, NewComePeople } from './index';
 
 /**
@@ -11,8 +11,8 @@ import { People, Airlines, Airports, NewComePeople } from './index';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(...requests: Array<ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>>): ODataBatchRequestBuilder {
-  return new ODataBatchRequestBuilder(defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, map);
+export function batch(...requests: Array<ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
+  return new ODataBatchRequestBuilderV4(defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, map);
 }
 
 /**
@@ -20,11 +20,11 @@ export function batch(...requests: Array<ReadMicrosoftODataServiceSampleTrippinI
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(...requests: WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder[]): ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder> {
-  return new ODataBatchChangeSet(requests);
+export function changeset(...requests: WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder[]): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder> {
+  return new ODataBatchChangeSetV4(requests);
 }
 
 export const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = '/sap/opu/odata/sap/Microsoft.OData.Service.Sample.TrippinInMemory.Models';
 const map = { 'People': People, 'Airlines': Airlines, 'Airports': Airports, 'NewComePeople': NewComePeople };
-export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder = GetAllRequestBuilder<People> | GetAllRequestBuilder<Airlines> | GetAllRequestBuilder<Airports> | GetAllRequestBuilder<NewComePeople> | GetByKeyRequestBuilder<People> | GetByKeyRequestBuilder<Airlines> | GetByKeyRequestBuilder<Airports> | GetByKeyRequestBuilder<NewComePeople>;
-export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder = CreateRequestBuilder<People> | UpdateRequestBuilder<People> | DeleteRequestBuilder<People> | CreateRequestBuilder<Airlines> | UpdateRequestBuilder<Airlines> | DeleteRequestBuilder<Airlines> | CreateRequestBuilder<Airports> | UpdateRequestBuilder<Airports> | DeleteRequestBuilder<Airports> | CreateRequestBuilder<NewComePeople> | UpdateRequestBuilder<NewComePeople> | DeleteRequestBuilder<NewComePeople>;
+export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder = GetAllRequestBuilderV4<People> | GetAllRequestBuilderV4<Airlines> | GetAllRequestBuilderV4<Airports> | GetAllRequestBuilderV4<NewComePeople> | GetByKeyRequestBuilderV4<People> | GetByKeyRequestBuilderV4<Airlines> | GetByKeyRequestBuilderV4<Airports> | GetByKeyRequestBuilderV4<NewComePeople>;
+export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder = CreateRequestBuilderV4<People> | UpdateRequestBuilderV4<People> | DeleteRequestBuilderV4<People> | CreateRequestBuilderV4<Airlines> | UpdateRequestBuilderV4<Airlines> | DeleteRequestBuilderV4<Airlines> | CreateRequestBuilderV4<Airports> | UpdateRequestBuilderV4<Airports> | DeleteRequestBuilderV4<Airports> | CreateRequestBuilderV4<NewComePeople> | UpdateRequestBuilderV4<NewComePeople> | DeleteRequestBuilderV4<NewComePeople>;

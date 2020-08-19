@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilder(exports.defaultTestServicePath, requests, map);
+    return new core_1.ODataBatchRequestBuilderV4(exports.defaultTestServicePath, requests, map);
 }
 exports.batch = batch;
 /**
@@ -31,7 +31,7 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSet(requests);
+    return new core_1.ODataBatchChangeSetV4(requests);
 }
 exports.changeset = changeset;
 exports.defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

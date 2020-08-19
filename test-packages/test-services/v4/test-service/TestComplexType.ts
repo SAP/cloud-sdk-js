@@ -7,7 +7,7 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
 import { TestEnumType } from './TestEnumType';
-import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeEnumPropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '@sap-cloud-sdk/core';
+import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeEnumPropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, Time, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexType
@@ -135,7 +135,7 @@ export function createTestComplexType(json: any): TestComplexType {
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, TestComplexType> {
+export class TestComplexTypeField<EntityT extends EntityV4> extends ComplexTypeField<EntityT, TestComplexType> {
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -375,9 +375,9 @@ export namespace TestComplexType {
   }];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | TestNestedComplexType }): TestComplexType {
-    return deserializeComplexType(json, TestComplexType);
+    return deserializeComplexTypeV4(json, TestComplexType);
   }
 }

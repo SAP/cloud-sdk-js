@@ -12,8 +12,9 @@ import {
   testEntityResourcePath
 } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
+import { GetByKeyRequestBuilderV2 } from '../../src/odata/v2/request-builder';
 
-describe('GetByKeyRequestBuilder', () => {
+describe('GetByKeyRequestBuilderV2', () => {
   beforeAll(() => {
     muteLoggers('http-agent');
   });
@@ -31,7 +32,7 @@ describe('GetByKeyRequestBuilder', () => {
         responseBody: { d: entityData }
       });
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilderV2(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -53,7 +54,7 @@ describe('GetByKeyRequestBuilder', () => {
         responseBody: { d: entityData }
       });
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilderV2(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -76,7 +77,7 @@ describe('GetByKeyRequestBuilder', () => {
         responseHeaders: { Etag: versionIdentifier }
       });
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilderV2(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -95,7 +96,7 @@ describe('GetByKeyRequestBuilder', () => {
         responseBody: { d: { results: entityData } }
       });
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilderV2(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -107,7 +108,7 @@ describe('GetByKeyRequestBuilder', () => {
   it('throws a useful error when request execution fails', async () => {
     nock(/.*/).get(/.*/).reply(500);
 
-    const getByKeyRequest = new GetByKeyRequestBuilder(TestEntity, {
+    const getByKeyRequest = new GetByKeyRequestBuilderV2(TestEntity, {
       KeyPropertyGuid: uuid(),
       KeyPropertyString: 'test'
     }).execute(defaultDestination);

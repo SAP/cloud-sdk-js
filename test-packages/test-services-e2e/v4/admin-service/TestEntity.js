@@ -45,7 +45,7 @@ var TestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     TestEntity.builder = function () {
-        return Entity.entityBuilder(TestEntity);
+        return core_1.EntityV4.entityBuilder(TestEntity);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
@@ -60,7 +60,7 @@ var TestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     TestEntity.customField = function (fieldName) {
-        return Entity.customFieldSelector(fieldName, TestEntity);
+        return core_1.EntityV4.customFieldSelector(fieldName, TestEntity);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,7 +83,7 @@ var TestEntity = /** @class */ (function (_super) {
      */
     TestEntity._defaultServicePath = '/admin';
     return TestEntity;
-}(Entityv4));
+}(core_1.EntityV4));
 exports.TestEntity = TestEntity;
 (function (TestEntity) {
     /**

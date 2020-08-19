@@ -10,7 +10,7 @@ import {
 import { testEntityResourcePath } from '../test-util/test-data';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
 
-describe('DeleteRequestBuilder', () => {
+describe('DeleteRequestBuilderV2', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
 

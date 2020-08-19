@@ -9,7 +9,7 @@ import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringFie
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
  */
-export class MultiSchemaTestEntity extends Entityv2 implements MultiSchemaTestEntityType {
+export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEntityType {
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */
@@ -33,7 +33,7 @@ export class MultiSchemaTestEntity extends Entityv2 implements MultiSchemaTestEn
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
   static builder(): EntityBuilderType<MultiSchemaTestEntity, MultiSchemaTestEntityTypeForceMandatory> {
-    return Entity.entityBuilder(MultiSchemaTestEntity);
+    return EntityV2.entityBuilder(MultiSchemaTestEntity);
   }
 
   /**
@@ -49,8 +49,8 @@ export class MultiSchemaTestEntity extends Entityv2 implements MultiSchemaTestEn
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
-  static customField(fieldName: string): CustomFieldv2<MultiSchemaTestEntity> {
-    return Entity.customFieldSelector(fieldName, MultiSchemaTestEntity);
+  static customField(fieldName: string): CustomFieldV2<MultiSchemaTestEntity> {
+    return EntityV2.customFieldSelector(fieldName, MultiSchemaTestEntity);
   }
 
   /**

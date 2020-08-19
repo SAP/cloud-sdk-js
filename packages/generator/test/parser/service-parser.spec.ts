@@ -285,7 +285,7 @@ describe('service-parser', () => {
         returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
         returnType: 'TestComplexType',
         builderFunction:
-          '(data) => deserializeComplexType(data, TestComplexType)',
+          '(data) => deserializeComplexTypeV2(data, TestComplexType)',
         isCollection: false,
         isMulti: false
       };
@@ -326,7 +326,7 @@ describe('service-parser', () => {
 
       expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
       expect(functionImport.returnType.builderFunction).toBe(
-        "(val) => edmToTs(val, 'Edm.Boolean')"
+        "(val) => edmToTsV2(val, 'Edm.Boolean')"
       );
 
       const functionImportUnsupportedEdmTypes = service.functionImports.find(
@@ -334,7 +334,7 @@ describe('service-parser', () => {
       )!;
 
       expect(functionImportUnsupportedEdmTypes.returnType.builderFunction).toBe(
-        "(val) => edmToTs(val, 'Edm.Any')"
+        "(val) => edmToTsV2(val, 'Edm.Any')"
       );
       expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toBe(
         'Edm.Any'
@@ -356,7 +356,7 @@ describe('service-parser', () => {
         action => action.originalName === 'TestActionImportUnsupportedEdmTypes'
       );
       expect(actionWithUnsupportedEdmType?.returnType.builderFunction).toBe(
-        "(val) => edmToTs(val, 'Edm.Any')"
+        "(val) => edmToTsV4(val, 'Edm.Any')"
       );
       expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toBe(
         'Edm.Any'

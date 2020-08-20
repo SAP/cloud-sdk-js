@@ -52,7 +52,6 @@ The SDK has two versions of type-safe OData v2 client.
 Toggle between version Tabs in this document to see the API difference between these two OData v2 clients. Where API is the same we provide a universal code snippet
 :::
 
-
 ## Using the Fluent API ##
 
 The typed OData client consists of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.

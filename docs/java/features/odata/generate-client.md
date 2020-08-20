@@ -18,7 +18,6 @@ keywords:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 ## Generate a typed OData client with the OData Generator ##
 
 The OData Generator allows for generating Java classes from the metadata of an OData service. These classes which are referred to as _typed OData client_ provide type-safe access to the service.
@@ -88,7 +87,6 @@ Regardless of how the generator is invoked the generated code requires some depe
 Lombok and dependency injections are used by the generated typed OData client classes, that is why they are needed but only with the scope _provided_.
 Furthermore, some common IDEs (e.g. IntelliJ, Eclipse) require plugins to recognize these annotations. See the note on [Missing Getters/Setters](../../troubleshooting.md#compilation-failures-in-generated-odata-vdm-classes)
 :::
-
 
 ### Using the OData Generator Maven Plugin ###
 

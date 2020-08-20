@@ -45,8 +45,9 @@ The SDK has two versions of type-safe OData v2 client.
 
 ### Which one to chose?
 
-For production environment we still recommend a **stable client**, for testing and development you can leverage both clients.
-To test improved client, please, follow simple steps in the [migration guide](#switch-to-improved-odata-vdm-beta)
+- For production environment we still recommend a **stable client**, for testing and development you can leverage both clients.
+- To test improved client, please, follow simple steps in the [migration guide](#switch-to-improved-odata-vdm-beta)
+- Toggle between version Tabs in this document to see the API difference between these two OData v2 clients.
 
 ## Using the Fluent API ##
 

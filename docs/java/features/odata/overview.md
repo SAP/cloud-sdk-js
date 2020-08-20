@@ -20,7 +20,7 @@ keywords:
 
 [OData](https://www.odata.org/) is an open standard for building and consuming RESTful APIs. It defines a query language to send and retrieve data via HTTP and to perform operations on data.
 
-There are two widely used versions of the protocol: OData v2 and OData v4. The latter comes with extended and improved functionality. You can find full details on OData standers in [documentation](https://www.odata.org/documentation/).
+There are two widely used versions of the protocol: OData v2 and OData v4. The latter comes with extended and improved functionality. You can find full details on OData standards in [documentation](https://www.odata.org/documentation/).
 
 ## What OData versions are supported?
 | OData protocol version                                           | Cloud SDK V3 |

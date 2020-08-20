@@ -41,7 +41,7 @@ The Cloud SDK for Java has published an improved OData type-safe client implemen
 
 ### You are extending an SAP product or service, building a middle-ware, publishing a cloud App
 
-- **Type-safe consumption of OData services.** By consumption, we mean building and executing API calls against OData service with serialized request data and processing serialized responses. All in a type-safe way.
+- **Type-safe consumption of OData services.** By consumption, we mean building and executing API calls against OData service with serialized request data and processing serialized responses. All in a type-safe way. Your code focuses on business logic and leaves lower level tasks to the SAP Cloud SDK.
 - **Converting OData API into a different flavor of REST API.** You can use SAP Cloud SDK for Java to build an App that converts your desired REST format to OData calls and vice versa. Such App may serve as a proxy, integration adaptor, service gateway, etc.
 - **Serving as a layer to fetch data from and push data to OData services.** Instead of building your query tool you can fetch the data with SAP Cloud SDK and pass it on to your UX framework, analytics tool, data converter, etc. Reverse data flow will allow you to push new or modified data to the OData service for processing or persistence.
 

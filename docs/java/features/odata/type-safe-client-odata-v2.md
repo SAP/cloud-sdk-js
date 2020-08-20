@@ -1,10 +1,10 @@
 ---
-id: use-typed-odata-v2-and-v4-client-for-java
-title: Typed client to consume OData Services for Java
+id: use-typed-odata-v2-client-in-sap-cloud-sdk-for-java
+title: Typed client to consume OData v2 Services for Java
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: Type-safe consumption of OData services
-description: Use SAP Cloud SDK for Java to build and run OData requests in a type-safe way.
+sidebar_label: OData v2 typed client
+description: Use SAP Cloud SDK for Java to build and run OData v2 requests in a type-safe way.
 keywords:
 - sap
 - cloud
@@ -20,11 +20,38 @@ import TabItem from '@theme/TabItem';
 
 ## Build and execute OData Requests with the typed OData client
 
-The typed OData client allows to build type-safe OData requests for a given service. The Java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
+The typed OData v2 client allows to build type-safe OData v2 requests for a given service. The Java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the typed OData v2 client are not only _syntactically valid_ but also _semantically valid_.
 
-:::tip Improved OData v2 type-safe client (Beta)
-The Cloud SDK for Java has published as **Beta** an improved OData type-safe client implementation (also known as Virtual Data Model or VDM) which improves performance of your apps by avoiding unnecessary metadata calls. Both OData v2 and v4 implementations now share the same code base and allow for faster innovations for both protocol versions. Check out the code snippets below under the tab _OData V2 (Beta)_ and the brief [migration guide](#switch-to-improved-odata-vdm-beta).
+## Versions of OData v2 client
+
+The SDK has two versions of type-safe OData v2 client.
+
+### A stable client version
+
+- Stable and well tested
+- Based on 3rd party dependencies, which slows down release of advanced features
+- Doesn't share a code base with OData v4 client
+- Has good performance, but not optimized for optimal metadata handling
+
+### Improved but still experimental client version
+
+- Currently released as `Beta`, meaning the API might see breaking changes
+- High performance thanks to optimized handling of metadata (fewer network requests)
+- Developed fully _In house_ and shares code with OData v4 client
+- Allows for faster feature development and bug fixes
+- Has standard and advanced APIs for typed and untyped client
+- More and better implemented features
+- Better implementation of BATCH requests (currently in development and not yet available)
+
+### Which one to chose?
+
+- For production environment we still recommend a **stable client**, for testing and development you can leverage both clients.
+- To test improved client, please, follow simple steps in the [migration guide](#switch-to-improved-odata-vdm-beta)
+
+:::tip use Tabs to see the API difference
+Toggle between version Tabs in this document to see the API difference between these two OData v2 clients. Where API is the same we provide a universal code snippet
 :::
+
 
 ## Using the Fluent API ##
 
@@ -73,27 +100,6 @@ Each of the above statements returns a builder object that allows for specifying
 
 The following query parameters and request options are available for these operations:
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V2 (Beta)', value: 'v2-beta', },
-{ label: 'OData V4', value: 'v4', }]}>
-<TabItem value="v4">
-
-Query parameters:
-- `$select`, `$expand` and `$search` are available on reading a single or multiple entities
-- `$filter`, `$top`, `$skip` and `$orderby` are available only when reading a collection of entities
-
-Request parameters:
-- Update operations allow to set either `modifyingEntity()` or `replacingEntity()` which will result in `HTTP PATCH` or `HTTP PUT` respectively. By default entities are modified via `PATCH`.
-- Update and delete operations allow to modify how ETags are handled:
-   - By default an ETag is send if one is present on the entity being modified.
-   - `matchAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
-   - `ignoreAnyVersionIdentifier()` will ensure that no ETag is sent.
-- All operations allow for adding custom headers via `withHeader(...)`
-
-</TabItem>
-<TabItem value="v2">
-
 Query parameters:
 - `$select` and `$expand` are available on reading a single or multiple entities
 - `$filter`, `$top`, `$skip` and `$orderby` are available only when reading a collection of entities
@@ -105,23 +111,6 @@ Request parameters:
    - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 - All operations allow for adding custom headers via `withHeader(...)`
 
-</TabItem>
-
-<TabItem value="v2-beta">
-
-Query parameters:
-- `$select` and `$expand` are available on reading a single or multiple entities
-- `$filter`, `$top`, `$skip` and `$orderby` are available only when reading a collection of entities
-
-Request parameters:
-- Update operations allow to set either `modifyingEntity()` or `replacingEntity()` which will result in `HTTP PATCH` or `HTTP PUT` respectively. By default entities are modified via `PATCH`.
-- Update and delete operations allow to modify how ETags are handled:
-   - By default an ETag is send if one is present on the entity being modified.
-   - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
-- All operations allow for adding custom headers via `withHeader(...)`
-
-</TabItem>
-</Tabs>
 
 #### Handling of ETags ####
 
@@ -129,22 +118,8 @@ An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a v
 
 Consider the following example:
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2' },
-{ label: 'OData V2 (Beta)', value: 'v2-beta' },
-{ label: 'OData V4', value: 'v4' }]}>
-<TabItem value="v4">
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2' }, { label: 'OData V2 (Beta)', value: 'v2-beta' } ]}>
 
-```java
-partner = service.getBusinessPartnerByKey("id")
-                 .execute(destination);
-response = service.updateBusinessPartner(partner)
-                 .execute(destination);
-// update the partner reference
-partner = response.getModifiedEntity();
-```
-
-</TabItem>
 <TabItem value="v2">
 
 ```java
@@ -187,44 +162,8 @@ When reading entities the API offers `select( ... )` on the builders. Through it
 
 The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V2 (Beta)', value: 'v2-beta', },
-{ label: 'OData V4', value: 'v4', }]}>
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', }, ]}>
 
-<TabItem value="v4">
-
-```java
-service.getBusinessPartnerByKey("id")
-    .select(BusinessPartner.FIRST_NAME, BusinessPartner.LAST_NAME, BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
-    .execute(destination);
-```
-
-The above translates to the following query parameters:
-
-```
-$select=FirstName,LastName&$expand=to_BusinessPartnerAddress
-```
-
-OData v4 allows for formulating nested, fully featured queries on complex and navigational properties. Querying nested objects is possible within expand. That means the following query is possible:
-
-```java
-service.getBusinessPartnerByKey("id")
-    .select(BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
-        .select(BusinessPartnerAddress.CITY_CODE, BusinessPartnerAddress.COUNTRY)
-        .filter(BusinessPartnerAddress.CITY_CODE.notEqualTo("1234"))
-        .orderBy(BusinessPartnerAddress.COUNTRY.desc())
-    )
-    .execute(destination);
-```
-
-The above translates to the following `expand` query parameter:
-
-```
-$expand=to_BusinessPartnerAddress($select=CityCode,Country;$filter=CityCode eq '1234';$orderby=Country desc)
-```
-
-</TabItem>
 <TabItem value="v2">
 
 ```java
@@ -293,33 +232,14 @@ $select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/
 </Tabs>
 
 
-### Filter ###
+### Filter
 
 When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also build via the static property fields on entities.
 
 The following example:
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V2 (Beta)', value: 'v2-beta', },
-{ label: 'OData V4', value: 'v4', }]}>
-<TabItem value="v4">
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', } ]}>
 
-```java
-/*
-Get all business partners that either:
-  - Have first name 'Alice' but not last name 'Bob'
-  - Or have first name 'Mallory'
-*/
-service.getAllBusinessPartner()
-    .filter(BusinessPartner.FIRST_NAME.equalTo("Alice")
-        .and(BusinessPartner.LAST_NAME.notEqualTo("Bob"))
-        .or(BusinessPartner.FIRST_NAME.equalTo("Mallory"))
-    )
-    .execute(destination);
-```
-
-</TabItem>
 <TabItem value="v2">
 
 ```java
@@ -366,79 +286,23 @@ Take note of the order of `and` and `or`. As `or` is invoked on the result of `a
 
 To achieve a different order with `and` as the top level statement one would nest the `or` within `and(...)`:
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V2 (Beta)', value: 'v2-beta', },
-{ label: 'OData V4', value: 'v4', }]}>
-<TabItem value="v4">
-
-```java
-.and(BusinessPartner.LAST_NAME.notEqualTo("Bob")
-    .or(BusinessPartner.FIRST_NAME.equalTo("Mallory"))
-)
-```
-
-</TabItem>
-<TabItem value="v2">
-
 ```java
 .and(BusinessPartner.LAST_NAME.ne("Bob")
     .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
 )
 ```
 
-</TabItem>
-<TabItem value="v2-beta">
-
 ```java
 .and(BusinessPartner.LAST_NAME.ne("Bob")
     .or(BusinessPartner.FIRST_NAME.eq("Mallory"))
 )
 ```
-
-</TabItem>
-</Tabs>
 
 #### Available Filter Expressions ####
 
 <!-- TODO: Explain filters on complex types and navigational properties -->
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V2 (Beta)', value: 'v2-beta', },
-{ label: 'OData V4', value: 'v4', }]}>
-<TabItem value="v4">
-
-The [OData v4 standard](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) allows for a wide range of filter expressions. A detailed list of what is available in the SDK can be obtained from [the Javadoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odatav4/expression/package-summary.html). The functionality can also be discovered through the fluent API.
-
-The below example leverages OData v4 exclusive features to build a more complex request:
-
-```java
-/*
-Fetch all business partners where:
-- the last name is at least twice as long as the first name
-- AND the combined string of first and last name does not contain 'bob'
-*/
-service.getAllBusinessPartner()
-    .filter(BusinessPartner.FIRST_NAME.length().multiply(2).lessThan(BusinessPartner.LAST_NAME.length())
-        .and(BusinessPartner.FIRST_NAME.concat(BusinessPartner.LAST_NAME).contains("bob"))
-    )
-    .execute(destination);
-```
-
-</TabItem>
-<TabItem value="v2">
-
 The [OData v2 standard](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/) allows for a limited range of filter expressions compared to OData v4. A detailed list of what is available in the SDK can be obtained from [the Javadoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/helper/package-summary.html). The functionality can also be discovered through the fluent API.
-
-</TabItem>
-<TabItem value="v2-beta">
-
-The [OData v2 standard](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/) allows for a limited range of filter expressions compared to OData v4. A detailed list of what is available in the SDK can be obtained from [the Javadoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/helper/package-summary.html). The functionality can also be discovered through the fluent API.
-
-</TabItem>
-
-</Tabs>
 
 <!--
 ### Count ###
@@ -453,41 +317,8 @@ Function Imports / Functions & Actions
 
 ## Error Handling
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V2 (Beta)', value: 'v2-beta', },
-{ label: 'OData V4', value: 'v4', }]}>
-<TabItem value="v4">
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', }, ]}>
 
-Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `execute` methods may throw a runtime exception (extending) `ODataException`. This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. To handle all kind of failures consider the following code:
-
-```java
-try { ... }
- catch( final ODataException e ) {
-    ODataQueryGeneric query = e.getQuery();
-    logger.debug("The following query failed: {}", query);
-    // do something else
-}
-```
-
-This handling is the most generic, handling all possible failures. For more specific information there are dedicated exceptions inheriting from `ODataException`. Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/client/exception/ODataException.html) for all the exception types.
-
-In order to handle different kinds of failure one can list multiple catch clauses to cover different levels or cases that might occur, e.g.:
-
-```java
-try { ... }
-catch( ODataErrorResponseException e ) {
-    // ...
-} catch( ODataRequestException e ) {
-    // ...
-} catch( ODataDeserializationException e ) {
-    // ...
-}
-```
-
-Note that instead of applying `try/catch` one can also make use of `tryExecute` on the request builders.
-
-</TabItem>
 <TabItem value="v2">
 
 Coming soon
@@ -530,10 +361,7 @@ Like other properties it has a name and declares a multiplicity, i.e. whether to
 Additionally a navigation property allows for dedicated CRUD operations, that may not be exposed by default on entity sets of the service root.
 Such operations also provide a convenient way to access the nested resources of entities.
 
-<Tabs groupId="odataProtocol" defaultValue="v4" values={[
-{ label: 'OData V2', value: 'v2', },
-{ label: 'OData V2 (Beta)', value: 'v2-beta', },
-{ label: 'OData V4', value: 'v4', }]}>
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', }, ]}>
 
 <TabItem value="v2">
 
@@ -591,40 +419,7 @@ POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartne
 ```
 
 </TabItem>
-<TabItem value="v4">
 
-The typed OData client for OData v4 supports the following operations on (arbitrarily nested) navigation properties:
-- Create
-- Read
-- Update
-- Delete
-- Count
-
-
-The below example leverages the creation of a nested entity in relation to an existing entity:
-
-```java
-/*
-Create a new address for a specific business partner.
-*/
-BusinessPartner businessPartnerById = BusinessPartner.builder().businessPartner("123").build();
-BusinessPartnerAddress addressItem = BusinessPartnerAddress.builder().country("DE").build();
-
-service.forEntity( businessPartnerById )
-    .navigateTo( BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS )
-    .create( addressItem )
-    .execute( destination );
-```
-
-This sample API call translates to the following service request:
-```
-POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartnerAddress
-{
-  "country": "de"
-}
-```
-
-</TabItem>
 </Tabs>
 
 ## Switch to improved OData v2 type-safe client

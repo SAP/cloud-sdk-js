@@ -16,7 +16,7 @@ keywords:
 ---
 
 :::danger OData v4 is experimental and not ready for production
-Typed client for OData v4 is under heavy development and was released only as experimental/beta. Please, use it on you own discretion. We'll explicitly communicate in the release notes when it's stable and general availability.
+Typed client for OData v4 is under heavy development and was released only as `experimental/Beta`. Please, use it on you own discretion. We'll explicitly communicate in the release notes when it's stable and general availability.
 :::
 
 ## Making a request using a generated OData v4 client

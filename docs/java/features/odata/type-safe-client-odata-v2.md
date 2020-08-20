@@ -36,7 +36,7 @@ The SDK has two versions of type-safe OData v2 client.
 ### Improved but still experimental client version
 
 - Currently released as `Beta`, meaning the API might see breaking changes
-- High perform thanks to optimized handling of metadata
+- High performance thanks to optimized handling of metadata (fewer network requests)
 - Developed fully _In house_ and shares code with OData v4 client
 - Allows for faster feature development and bug fixes
 - Has standard and advanced APIs for typed and untyped client

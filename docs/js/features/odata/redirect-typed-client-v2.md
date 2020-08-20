@@ -1,5 +1,5 @@
 ---
-id: use-typed-odata-client-for-js
+id: use-typed-odata-client-for-javascript-and-typescript
 title: Feature title
 sidebar_label: Shiny label :)
 description: Why should I read this?!

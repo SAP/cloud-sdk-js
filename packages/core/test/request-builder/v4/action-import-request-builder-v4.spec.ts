@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
-import { defaultDestination } from '../../test-util/request-mocker';
 import { mockCsrfTokenRequest } from '@sap-cloud-sdk/integration-tests/test/test-util/request-mocker';
+import { defaultDestination } from '../../test-util/request-mocker';
 import { Destination } from '../../../src/scp-cf';
 import {
   testActionImportMultipleParameterComplexReturnType,

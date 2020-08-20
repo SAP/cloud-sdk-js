@@ -1,7 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { SourceFile,  } from 'ts-morph';
-import { checkStaticProperties, getFunctionImportDeclarations, getGeneratedFiles } from '../test-util/generator';
+import { SourceFile } from 'ts-morph';
+import {
+  checkStaticProperties,
+  getFunctionImportDeclarations,
+  getGeneratedFiles
+} from '../test-util/generator';
 
 describe('generator', () => {
   let files: SourceFile[];
@@ -39,5 +43,4 @@ describe('generator', () => {
       expect(functionImports.length).toBe(13);
     });
   });
-})
-
+});

@@ -1,5 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { GetByKeyRequestBuilderV4, uriConverterV4 } from '../../../src/odata/v4';
+import {
+  GetByKeyRequestBuilderV4,
+  uriConverterV4
+} from '../../../src/odata/v4';
 import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultDestination,

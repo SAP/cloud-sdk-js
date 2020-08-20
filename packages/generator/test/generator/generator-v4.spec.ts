@@ -1,10 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { ODataVersion } from '@sap-cloud-sdk/util';
-import { SourceFile, ClassDeclaration, FunctionDeclaration } from 'ts-morph';
-import { generateProject, GeneratorOptions } from '../../src';
-import { createOptions } from '../test-util/create-generator-options';
-import { checkStaticProperties, getFunctionImportDeclarations, getGeneratedFiles } from '../test-util/generator';
+import { SourceFile, FunctionDeclaration } from 'ts-morph';
+import {
+  checkStaticProperties,
+  getFunctionImportDeclarations,
+  getGeneratedFiles
+} from '../test-util/generator';
 
 describe('generator', () => {
   let files: SourceFile[];

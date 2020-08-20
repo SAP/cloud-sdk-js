@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { ODataVersion } from '@sap-cloud-sdk/util';
-import { SourceFile, ClassDeclaration, FunctionDeclaration } from 'ts-morph';
-import { generateProject, GeneratorOptions } from '../../src';
+import { SourceFile } from 'ts-morph';
+import { generateProject } from '../../src';
 import { createOptions } from '../test-util/create-generator-options';
 
 describe('generator', () => {
@@ -26,4 +25,4 @@ describe('generator', () => {
       ).toBeDefined();
     });
   });
-})
+});

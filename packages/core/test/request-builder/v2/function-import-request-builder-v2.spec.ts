@@ -2,7 +2,10 @@
 
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { defaultDestination, defaultHost } from '../../test-util/request-mocker';
+import {
+  defaultDestination,
+  defaultHost
+} from '../../test-util/request-mocker';
 import {
   TestEntity,
   testFunctionImportComplexReturnType,

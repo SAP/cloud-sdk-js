@@ -5,6 +5,7 @@ import {
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
+import { basicHeader } from '@sap-cloud-sdk/core';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall
@@ -17,11 +18,10 @@ import {
 } from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
+import { mockCsrfTokenRequest } from '../../../packages/core/test/test-util/request-mocker';
 import { singleTestEntityMultiLinkResponse } from './test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from './test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
-import { basicCredentials } from './test-util/destination-encoder';
-import { mockCsrfTokenRequest } from './test-util/request-mocker';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';
@@ -59,7 +59,7 @@ describe('Request Builder', () => {
   it('should resolve for getAll request', async () => {
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -165,7 +165,7 @@ describe('Request Builder', () => {
     const response = singleTestEntityResponse();
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -185,7 +185,7 @@ describe('Request Builder', () => {
   it('should resolve for all field and multi-level selection', async () => {
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -207,7 +207,7 @@ describe('Request Builder', () => {
     const response = singleTestEntityResponse();
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -231,7 +231,7 @@ describe('Request Builder', () => {
     mockCsrfTokenRequest(destination.url, destination.sapClient!);
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3'
@@ -261,7 +261,7 @@ describe('Request Builder', () => {
     mockCsrfTokenRequest(destination.url, destination.sapClient!);
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3'
@@ -292,7 +292,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3'
@@ -337,7 +337,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3'
@@ -366,7 +366,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3',
@@ -390,7 +390,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         'x-csrf-token': 'Fetch',
         'sap-client': destination.sapClient as string
       }
@@ -400,7 +400,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json'
       }

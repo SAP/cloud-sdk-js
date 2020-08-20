@@ -3,11 +3,11 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
+import { basicHeader } from '@sap-cloud-sdk/core';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
-import { basicCredentials } from './test-util/destination-encoder';
+import { mockCsrfTokenRequest } from '../../../packages/core/test/test-util/request-mocker';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response-v4';
 import { singleTestEntityResponse } from './test-data/single-test-entity-response-v4';
-import { mockCsrfTokenRequest } from './test-util/request-mocker';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';
@@ -45,7 +45,7 @@ describe('Request Builder', () => {
   it('should resolve for getAll request', async () => {
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -64,7 +64,7 @@ describe('Request Builder', () => {
     mockCsrfTokenRequest(destination.url, destination.sapClient!);
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3'
@@ -95,7 +95,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3'
@@ -135,7 +135,7 @@ describe('Request Builder', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
         cookie: 'key1=val1;key2=val2;key3=val3'

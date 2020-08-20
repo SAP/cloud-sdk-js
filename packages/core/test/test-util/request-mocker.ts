@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable, Destination, oDataUriV2 } from '../../src';
+import { basicHeader, Constructable, Destination, oDataUriV2 } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
@@ -192,4 +192,25 @@ function getRequestHeaders(method: string, additionalHeaders?: MapType<any>) {
         : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken };
     return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
   }
+}
+export function mockCsrfTokenRequest(
+  host: string,
+  sapClient: string,
+  servicePath = '/sap/opu/odata/sap/API_TEST_SRV',
+  username = 'username',
+  password = 'password',
+  csrfToken = 'CSRFTOKEN'
+) {
+  nock(host, {
+    reqheaders: {
+      authorization: basicHeader(username, password),
+      'x-csrf-token': 'Fetch',
+      'sap-client': sapClient
+    }
+  })
+    .get(servicePath)
+    .reply(200, '', {
+      'x-csrf-token': csrfToken,
+      'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
+    });
 }

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { asc, Destination } from '@sap-cloud-sdk/core';
+import { asc, basicHeader, Destination } from '@sap-cloud-sdk/core';
 import {
   TestComplexType,
   TestEntity
@@ -7,7 +7,6 @@ import {
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
-import { basicCredentials } from './test-util/destination-encoder';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = TestEntity._entityName;
@@ -27,7 +26,10 @@ describe('Complex types', () => {
   it('should allow filtering on complex type properties', async () => {
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(
+          destination.username!,
+          destination.password!
+        ),
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -52,7 +54,10 @@ describe('Complex types', () => {
   it('should allow ordering on complex type properties', async () => {
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(
+          destination.username!,
+          destination.password!
+        ),
         accept: 'application/json',
         'content-type': 'application/json'
       }

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { Destination, ErrorResponse } from '@sap-cloud-sdk/core';
+import { basicHeader, Destination, ErrorResponse } from '@sap-cloud-sdk/core';
 import { batch, changeset } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
 import {
@@ -23,9 +23,8 @@ import {
   multiChangesetBatchResponse,
   multiRetrieveResponse
 } from './test-data/batch/responses';
-import { basicCredentials } from './test-util/destination-encoder';
 
-const basicHeader = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
+const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const csrfToken = 'CSRFTOKEN';
 
@@ -41,7 +40,7 @@ const destination: Destination = {
 function mockCsrfTokenRequest(host: string, sapClient: string) {
   nock(host, {
     reqheaders: {
-      authorization: basicHeader,
+      authorization: basicHeaderCSRF,
       'x-csrf-token': 'Fetch',
       'sap-client': sapClient
     }
@@ -58,7 +57,7 @@ function mockBatchRequest(matchRequestPayload, reponseData) {
 
   nock(destination.url, {
     reqheaders: {
-      authorization: basicCredentials(destination),
+      authorization: basicHeader(destination.username!, destination.password!),
       accept: 'application/json',
       cookie: 'key1=val1;key2=val2;key3=val3'
     }

@@ -6,8 +6,8 @@ import {
   unmockAllTestDestinations
 } from '@sap-cloud-sdk/test-util';
 import nock from 'nock';
+import { basicHeader } from '@sap-cloud-sdk/core';
 import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
-import { basicCredentials } from './test-util/destination-encoder';
 
 describe('mockAllTestDestinations', () => {
   afterEach(() => {
@@ -25,10 +25,7 @@ describe('mockAllTestDestinations', () => {
     const destinationUrl = 'https://example.com';
     nock(destinationUrl, {
       reqheaders: {
-        authorization: basicCredentials({
-          username: 'username',
-          password: 'password'
-        }),
+        authorization: basicHeader('username', 'password'),
         accept: 'application/json',
         'content-type': 'application/json'
       }

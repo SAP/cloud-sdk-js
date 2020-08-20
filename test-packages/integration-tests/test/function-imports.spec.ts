@@ -1,19 +1,18 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { Destination } from '@sap-cloud-sdk/core';
+import { basicHeader, Destination } from '@sap-cloud-sdk/core';
 import { functionImports } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
 import { errorResponse } from './test-data/error-response';
 import { singleTestEntityResponse } from './test-data/single-test-entity-response';
-import { basicCredentials } from './test-util/destination-encoder';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-const basicHeader = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
+const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const csrfToken = 'CSRFTOKEN';
 
 function mockCsrfTokenRequest(url: string) {
   nock(url, {
     reqheaders: {
-      authorization: basicHeader,
+      authorization: basicHeaderCSRF,
       'x-csrf-token': 'Fetch'
     }
   })
@@ -43,7 +42,10 @@ describe('Function imports', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(
+          destination.username!,
+          destination.password!
+        ),
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -62,7 +64,10 @@ describe('Function imports', () => {
 
     nock(destination.url, {
       reqheaders: {
-        authorization: basicCredentials(destination),
+        authorization: basicHeader(
+          destination.username!,
+          destination.password!
+        ),
         accept: 'application/json',
         'content-type': 'application/json'
       }

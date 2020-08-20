@@ -48,7 +48,7 @@ The Cloud SDK for Java has published an improved OData type-safe client implemen
 ### Developing and publishing OData service
 
 - **Use SAP Cloud SDK to create a robust automated testing framework.** Benefiting from a code generator provided by us you can quickly create a type-safe client for your own OData service and scale your automated testing capabilities. This comes with the advantage of easily updating your client code while your service grows and its metadata evolves.
-- **Shipping your client module with SAP Cloud SDK for Java.** As a service developer, you're usually interested in an easy way for your customers to consume your service. That's exactly what Cloud SDK does. When your service approaches release you can contribute your API definition via our contribution process and benefit from shipping of a **pre-generated type-safe client** as a Maven module of SAP Cloud SDK.
+- **Shipping your client module with SAP Cloud SDK for Java.** As a service developer, you're usually interested in an easy way for your customers to consume your service. That's exactly what Cloud SDK does. When your service approaches release you can generate an API client with the SAP Cloud SDK and release it to developers using your service. As an SAP service, you can contribute your API definition via our contribution process and benefit from shipping of a **pre-generated type-safe client** as a Maven module of SAP Cloud SDK.
 
 ### Coding convention and interoparability
 

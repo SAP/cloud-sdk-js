@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { asc, odataUriV2 } from '../../../src';
+import { asc, oDataUriV2 } from '../../../src';
 import { ODataGetAllRequestConfig } from '../../../src/odata/common/request/odata-get-all-request-config';
 import { testFilterString } from '../../test-util/filter-factory';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
@@ -7,7 +7,7 @@ import { TestEntity } from '../../test-util/test-services/v2/test-service';
 describe('ODataGetAllRequestConfig', () => {
   let config: ODataGetAllRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataGetAllRequestConfig(TestEntity, odataUriV2);
+    config = new ODataGetAllRequestConfig(TestEntity, oDataUriV2);
   });
 
   it('method is get', () => {

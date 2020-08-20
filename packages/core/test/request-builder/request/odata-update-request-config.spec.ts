@@ -3,12 +3,12 @@ import { v4 as uuid } from 'uuid';
 import { ODataUpdateRequestConfig } from '../../../src/odata/common/request/odata-update-request-config';
 import { testEntityResourcePath } from '../../test-util/test-data';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { odataUriV2 } from '../../../src/odata/v2/uri-conversion';
+import { oDataUriV2 } from '../../../src/odata/v2/uri-conversion';
 
 describe('ODataUpdateRequestConfig', () => {
   let config: ODataUpdateRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataUpdateRequestConfig(TestEntity, odataUriV2);
+    config = new ODataUpdateRequestConfig(TestEntity, oDataUriV2);
   });
 
   it('method is patch as default', () => {

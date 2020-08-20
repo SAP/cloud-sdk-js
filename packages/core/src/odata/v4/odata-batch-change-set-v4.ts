@@ -23,7 +23,7 @@ const request_if_match_key = 'If-Match: ';
 /**
  * OData batch change set, which holds a collection of write operations.
  */
-export class OdataBatchChangeSetV4<
+export class ODataBatchChangeSetV4<
   T extends
     | CreateRequestBuilderV4<EntityV4>
     | UpdateRequestBuilderV4<EntityV4>
@@ -42,7 +42,7 @@ export function toBatchChangeSetV4<
     | CreateRequestBuilderV4<EntityV4>
     | UpdateRequestBuilderV4<EntityV4>
     | DeleteRequestBuilderV4<EntityV4>
->(changeSet: OdataBatchChangeSetV4<T>): string | undefined {
+>(changeSet: ODataBatchChangeSetV4<T>): string | undefined {
   const changeSetBody = toBatchChangeSetBody(changeSet);
   if (!changeSetBody) {
     return;
@@ -59,7 +59,7 @@ function toBatchChangeSetBody<
     | CreateRequestBuilderV4<EntityV4>
     | UpdateRequestBuilderV4<EntityV4>
     | DeleteRequestBuilderV4<EntityV4>
->(changeSet: OdataBatchChangeSetV4<T>): string | undefined {
+>(changeSet: ODataBatchChangeSetV4<T>): string | undefined {
   if (changeSet.requests.length === 0) {
     return;
   }

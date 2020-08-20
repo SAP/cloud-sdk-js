@@ -23,7 +23,7 @@ const request_if_match_key = 'If-Match: ';
 /**
  * OData batch change set, which holds a collection of write operations.
  */
-export class OdataBatchChangeSetV2<
+export class ODataBatchChangeSetV2<
   T extends
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>
@@ -42,7 +42,7 @@ export function toBatchChangeSetV2<
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>
     | DeleteRequestBuilderV2<EntityV2>
->(changeSet: OdataBatchChangeSetV2<T>): string | undefined {
+>(changeSet: ODataBatchChangeSetV2<T>): string | undefined {
   const changeSetBody = toBatchChangeSetBody(changeSet);
   if (!changeSetBody) {
     return;
@@ -59,7 +59,7 @@ function toBatchChangeSetBody<
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>
     | DeleteRequestBuilderV2<EntityV2>
->(changeSet: OdataBatchChangeSetV2<T>): string | undefined {
+>(changeSet: ODataBatchChangeSetV2<T>): string | undefined {
   if (changeSet.requests.length === 0) {
     return;
   }
@@ -141,5 +141,5 @@ function toEtagHeaderValue(
   return;
 }
 
-export { OdataBatchChangeSetV2 as ODataBatchChangeSet };
+export { ODataBatchChangeSetV2 as ODataBatchChangeSet };
 export { toBatchChangeSetV2 as toBatchChangeSet };

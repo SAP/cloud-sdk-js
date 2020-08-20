@@ -2,7 +2,7 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase, FieldType, Constructable } from '../../common';
-import { odataUriV2 } from './odata-uri-v2';
+import { oDataUriV2 } from './odata-uri-v2';
 
 /**
  * @deprecated Since v1.21.0. Use [[odataUriV2.getResourcePathForKeys]] instead.
@@ -18,5 +18,5 @@ export function getResourcePathForKeys<EntityT extends EntityBase>(
   keys: MapType<FieldType> = {},
   entityConstructor: Constructable<EntityT>
 ): string {
-  return odataUriV2.getResourcePathForKeys(keys, entityConstructor);
+  return oDataUriV2.getResourcePathForKeys(keys, entityConstructor);
 }

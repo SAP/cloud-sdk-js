@@ -12,7 +12,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { odataUriV4 } from '../uri-conversion';
+import { oDataUriV4 } from '../uri-conversion';
 import { getSingleResult } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
@@ -32,7 +32,7 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor, odataUriV4));
+    super(new ODataCreateRequestConfig(_entityConstructor, oDataUriV4));
   }
 
   get entity(): EntityT {
@@ -63,7 +63,7 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, EntityT>
   ): this {
-    this.requestConfig.parentKeys = odataUriV4.getEntityKeys(
+    this.requestConfig.parentKeys = oDataUriV4.getEntityKeys(
       parentEntity,
       linkField._entityConstructor
     );

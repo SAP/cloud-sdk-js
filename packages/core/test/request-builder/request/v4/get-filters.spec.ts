@@ -11,12 +11,12 @@ import {
 } from '../../../test-util/filter-factory';
 import { TestEntity } from '../../../test-util/test-services/v4/test-service';
 import {
-  odataUriV4,
+  oDataUriV4,
   filterFunctionsV4,
   filterFunctionV4
 } from '../../../../src';
 
-const { getFilter } = odataUriV4;
+const { getFilter } = oDataUriV4;
 
 describe('get filters', () => {
   it('for simple filters', () => {
@@ -69,7 +69,7 @@ describe('get filters', () => {
 
   it('for hasSubset filter function with collection', () => {
     expect(
-      odataUriV4.getFilter(
+      oDataUriV4.getFilter(
         filterFunctionsV4
           .hasSubset(['1', '2'], TestEntity.COLLECTION_PROPERTY)
           .equals(true),
@@ -80,7 +80,7 @@ describe('get filters', () => {
 
   it('for int collection filter function', () => {
     expect(
-      odataUriV4.getFilter(
+      oDataUriV4.getFilter(
         filterFunctionV4('fn', 'int[]').equals([1, 2, 3]),
         TestEntity
       ).filter

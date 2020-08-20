@@ -23,7 +23,7 @@ import { EntityV4 } from './entity-v4';
 import { deserializeEntityV4 } from './entity-deserializer';
 import {
   toBatchChangeSetV4,
-  OdataBatchChangeSetV4
+  ODataBatchChangeSetV4
 } from './odata-batch-change-set-v4';
 import { toBatchRetrieveBodyV4 } from './odata-batch-retrieve-request-v4';
 import {
@@ -45,7 +45,7 @@ const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
  * The OData batch request builder to build a batch, which consists of an ordered retrieve requests or change sets.
  *
  */
-export class OdataBatchRequestBuilderV4 extends MethodRequestBuilderBase<
+export class ODataBatchRequestBuilderV4 extends MethodRequestBuilderBase<
   ODataBatchRequestConfig
 > {
   /**
@@ -58,7 +58,7 @@ export class OdataBatchRequestBuilderV4 extends MethodRequestBuilderBase<
   constructor(
     readonly defaultServicePath: string,
     readonly requests: (
-      | OdataBatchChangeSetV4<
+      | ODataBatchChangeSetV4<
           | CreateRequestBuilderV4<EntityV4>
           | UpdateRequestBuilderV4<EntityV4>
           | DeleteRequestBuilderV4<EntityV4>
@@ -127,7 +127,7 @@ export class OdataBatchRequestBuilderV4 extends MethodRequestBuilderBase<
  */
 function getPayload(
   requests: (
-    | OdataBatchChangeSetV4<
+    | ODataBatchChangeSetV4<
         | CreateRequestBuilderV4<EntityV4>
         | UpdateRequestBuilderV4<EntityV4>
         | DeleteRequestBuilderV4<EntityV4>
@@ -160,7 +160,7 @@ function toRequestBody<
     | DeleteRequestBuilderV4<EntityV4>
 >(
   request:
-    | OdataBatchChangeSetV4<T>
+    | ODataBatchChangeSetV4<T>
     | GetAllRequestBuilderV4<EntityV4>
     | GetByKeyRequestBuilderV4<EntityV4>
 ): string | undefined {
@@ -170,7 +170,7 @@ function toRequestBody<
   ) {
     return toBatchRetrieveBodyV4(request);
   }
-  if (request instanceof OdataBatchChangeSetV4) {
+  if (request instanceof ODataBatchChangeSetV4) {
     return toBatchChangeSetV4(request);
   }
   throw Error(

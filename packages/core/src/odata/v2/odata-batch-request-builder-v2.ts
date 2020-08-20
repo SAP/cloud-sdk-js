@@ -23,7 +23,7 @@ import { EntityV2 } from './entity-v2';
 import { deserializeEntityV2 } from './entity-deserializer';
 import {
   toBatchChangeSetV2,
-  OdataBatchChangeSetV2
+  ODataBatchChangeSetV2
 } from './odata-batch-change-set-v2';
 import { toBatchRetrieveBodyV2 } from './odata-batch-retrieve-request-v2';
 import {
@@ -45,7 +45,7 @@ const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
  * The OData batch request builder to build a batch, which consists of an ordered retrieve requests or change sets.
  *
  */
-export class OdataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
+export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
   ODataBatchRequestConfig
 > {
   /**
@@ -58,7 +58,7 @@ export class OdataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
   constructor(
     readonly defaultServicePath: string,
     readonly requests: (
-      | OdataBatchChangeSetV2<
+      | ODataBatchChangeSetV2<
           | CreateRequestBuilderV2<EntityV2>
           | UpdateRequestBuilderV2<EntityV2>
           | DeleteRequestBuilderV2<EntityV2>
@@ -127,7 +127,7 @@ export class OdataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
  */
 function getPayload(
   requests: (
-    | OdataBatchChangeSetV2<
+    | ODataBatchChangeSetV2<
         | CreateRequestBuilderV2<EntityV2>
         | UpdateRequestBuilderV2<EntityV2>
         | DeleteRequestBuilderV2<EntityV2>
@@ -160,7 +160,7 @@ function toRequestBody<
     | DeleteRequestBuilderV2<EntityV2>
 >(
   request:
-    | OdataBatchChangeSetV2<T>
+    | ODataBatchChangeSetV2<T>
     | GetAllRequestBuilderV2<EntityV2>
     | GetByKeyRequestBuilderV2<EntityV2>
 ): string | undefined {
@@ -170,7 +170,7 @@ function toRequestBody<
   ) {
     return toBatchRetrieveBodyV2(request);
   }
-  if (request instanceof OdataBatchChangeSetV2) {
+  if (request instanceof ODataBatchChangeSetV2) {
     return toBatchChangeSetV2(request);
   }
   throw Error(
@@ -453,4 +453,4 @@ function buildRetrieveOrErrorResponse(
   return { httpCode, body: parsedBody, isSuccess: () => false };
 }
 
-export { OdataBatchRequestBuilderV2 as ODataBatchRequestBuilder };
+export { ODataBatchRequestBuilderV2 as ODataBatchRequestBuilder };

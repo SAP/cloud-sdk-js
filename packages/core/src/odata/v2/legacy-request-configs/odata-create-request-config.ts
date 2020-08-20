@@ -2,7 +2,7 @@
 
 import { EntityBase, Constructable } from '../../common';
 import { ODataCreateRequestConfig as Base } from '../../common/request/odata-create-request-config';
-import { odataUriV2 } from '../uri-conversion';
+import { oDataUriV2 } from '../uri-conversion';
 
 /**
  * @deprecated Since v1.21.0. Use superclass instead.
@@ -18,6 +18,6 @@ export class ODataCreateRequestConfig<EntityT extends EntityBase> extends Base<
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(_entityConstructor: Constructable<EntityT>) {
-    super(_entityConstructor, odataUriV2);
+    super(_entityConstructor, oDataUriV2);
   }
 }

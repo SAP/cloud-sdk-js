@@ -2,7 +2,7 @@
 
 import { EntityV2 } from '../entity-v2';
 import { Constructable, Filterable } from '../../common';
-import { odataUriV2 } from './odata-uri-v2';
+import { oDataUriV2 } from './odata-uri-v2';
 
 /**
  * @deprecated Since v1.21.0. Use [[odataUriV2.getFilter]] instead.
@@ -17,5 +17,5 @@ export function getQueryParametersForFilter<EntityT extends EntityV2>(
   filter: Filterable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): Partial<{ filter: string }> {
-  return odataUriV2.getFilter(filter, entityConstructor);
+  return oDataUriV2.getFilter(filter, entityConstructor);
 }

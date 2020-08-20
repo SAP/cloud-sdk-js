@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { FunctionImportParameters } from '../../common';
-import { odataUriV4 } from '../uri-conversion';
+import { oDataUriV4 } from '../uri-conversion';
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../../common/request/odata-function-import-request-config';
 
@@ -35,7 +35,7 @@ export class FunctionImportRequestBuilderV4<
         defaultServicePath,
         functionImportName,
         parameters,
-        odataUriV4
+        oDataUriV4
       )
     );
   }

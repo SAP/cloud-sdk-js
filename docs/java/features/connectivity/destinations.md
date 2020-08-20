@@ -31,11 +31,11 @@ also, other sources like the environment variables are considered.
 
 ### Integrated Multi-Tenancy
 
-By default the `DestinationAccessor` is tenant aware.
+By default, the `DestinationAccessor` is tenant aware.
 If a tenant is available it will be used to access the destination service on behalf of that tenant.
-If no destination is found in the tenant specific destination service the SDK will try to get it using the service binding of the application.
+If no destination is found in the tenant-specific destination service the SDK will try to get it using the service binding of the application.
 
-This default retrieval strategy can be overridden by passing options to the accessor as second argument.
+This default retrieval strategy can be overridden by passing options to the accessor as the second argument.
 See the section on [destination options](#building-destination-options) below.
 
 ## Decorating Destinations ##

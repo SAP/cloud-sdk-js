@@ -29,6 +29,15 @@ DestinationAccessor.getDestination("my-destination");
 This will look up the destination in the destination service if the application is running on SAP Cloud Platform. But
 also, other sources like the environment variables are considered.
 
+### Integrated Multi-Tenancy
+
+By default, the `DestinationAccessor` is tenant aware.
+If a tenant is available it will be used to access the destination service on behalf of that tenant.
+If no destination is found in the tenant-specific destination service the SDK will try to get it using the service binding of the application.
+
+This default retrieval strategy can be overridden by passing options to the accessor as the second argument.
+See the section on [destination options](#building-destination-options) below.
+
 ## Decorating Destinations ##
 Depending on the use case, one needs to wrap the accessed destination before issuing a request to a system. This is to make sure all required destination properties are correctly set before invoking the actual request.
 
@@ -87,7 +96,7 @@ You need to build a `DestinationOptions` object and pass it as a parameter. It d
 final DestinationOptions options = DestinationOptions.builder().build();
  ```
 
-For a provider/subscriber setup, a retrieval strategy must be chosen according to your particular use case from:
+For a provider/subscriber setup, a [retrieval strategy](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/cloudplatform/connectivity/ScpCfDestinationRetrievalStrategy.html) must be chosen according to your particular use case from:
 - `ALWAYS_SUBSCRIBER`
 - `ALWAYS_PROVIDER`
 - `SUBSCRIBER_THEN_PROVIDER`.

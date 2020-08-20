@@ -49,3 +49,24 @@ If you need a client for an OData service where we do not ship a pre-generated c
 ### Connectivity
 
 We simplify connectivity to SAP enabled OData services via type-safe abstractions over [Destinations](../connectivity/sdk-connectivity-destination-service), Authentication and some other related concepts.
+
+## Popular use-cases for Type-safe OData client
+
+### You are extending an SAP product or service, building a middle-ware, publishing a cloud App
+
+- **Type-safe consumption of OData services.** By consumption, we mean building and executing API calls against OData service with serialized request data and processing serialized responses. All in a type-safe way. Your code focuses on business logic and leaves lower level tasks to the SAP Cloud SDK.
+- **Converting OData API into a different flavor of REST API.** You can use SAP Cloud SDK for Java to build an App that converts your desired REST format to OData calls and vice versa. Such App may serve as a proxy, integration adaptor, service gateway, etc.
+- **Serving as a layer to fetch data from and push data to OData services.** Instead of building your query tool you can fetch the data with SAP Cloud SDK and pass it on to your UX framework, analytics tool, data converter, etc. Reverse data flow will allow you to push new or modified data to the OData service for processing or persistence. In that manner, the SAP Cloud SDK can help  you implement adapters for a [hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)).
+
+### Developing and publishing OData service
+
+- **Use SAP Cloud SDK to create a robust automated testing framework.** Benefiting from a code generator provided by us you can quickly create a type-safe client for your own OData service and scale your automated testing capabilities. This comes with the advantage of easily updating your client code while your service grows and its metadata evolves.
+- **Shipping your client module with SAP Cloud SDK for Java.** As a service developer, you're usually interested in an easy way for your customers to consume your service. That's exactly what Cloud SDK does. When your service approaches release you can generate an API client with the SAP Cloud SDK and release it to developers using your service. As an SAP service, you can contribute your API definition via our contribution process and benefit from shipping of a **pre-generated type-safe client** as a Maven module of SAP Cloud SDK.
+
+### Coding convention and interoparability
+
+- **Making sure different teams in your organization coherently consume OData services.** SAP Cloud SDK will help you to save developers' time, ensure best coding practices, and knowledge sharing. Such an approach ensures you won't have duplication of work to save the same problem by different teams and guaranteed high levels of interoperability and integration.
+
+### Advanced features and custom development
+
+- **Using certain SDK features for Custom OData service consumption or publishing.** If SDK's features for OData consumption do not cover your use-case end-to-end you can benefit from our public utility and helper methods like OData expression builder, non-type safe request builders, and some others. Make sure you know what you're doing because SDK can't guarantee convenience and correctness in such a case.

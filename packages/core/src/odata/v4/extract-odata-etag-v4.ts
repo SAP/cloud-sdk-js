@@ -6,6 +6,6 @@ import { MapType } from '@sap-cloud-sdk/util';
  * @param json - Reponse data from which the etag is extracted
  * @returns The etag
  */
-export function extractODataETagV4(json: MapType<any>): string | undefined {
+export function extractOdataEtagV4(json: MapType<any>): string | undefined {
   return '@odata.etag' in json ? json['@odata.etag'] : undefined;
 }

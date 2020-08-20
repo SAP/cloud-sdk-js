@@ -12,5 +12,5 @@ export * from './request-builder';
 export * from './selectable/custom-field-v2';
 export * from './uri-conversion';
 export * from './legacy-request-configs';
-export * from './extract-o-data-e-tag-v2';
+export * from './extract-odata-etag-v2';
 export * from './filter-functions-v2';

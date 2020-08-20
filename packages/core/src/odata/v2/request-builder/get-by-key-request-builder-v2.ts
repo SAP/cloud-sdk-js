@@ -16,7 +16,7 @@ import {
 } from '../../../scp-cf/destination-service-types';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
-import { oDataUriV2 } from '../uri-conversion';
+import { odataUriV2 } from '../uri-conversion';
 import { getSingleResult } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.
@@ -40,7 +40,7 @@ export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
     readonly _entityConstructor: Constructable<EntityT>,
     keys: MapType<FieldType>
   ) {
-    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUriV2));
+    super(new ODataGetByKeyRequestConfig(_entityConstructor, odataUriV2));
     this.requestConfig.keys = keys;
   }
 

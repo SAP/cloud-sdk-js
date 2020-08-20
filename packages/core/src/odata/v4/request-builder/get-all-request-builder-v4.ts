@@ -19,7 +19,7 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetAllRequestConfig } from '../../common/request/odata-get-all-request-config';
 import { Expandable } from '../../common/expandable';
-import { oDataUriV4 } from '../uri-conversion';
+import { odataUriV4 } from '../uri-conversion';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { getCollectionResult } from './response-data-accessor';
 
@@ -45,7 +45,7 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(new ODataGetAllRequestConfig(_entityConstructor, oDataUriV4));
+    super(new ODataGetAllRequestConfig(_entityConstructor, odataUriV4));
   }
   /**
    * Restrict the response to the given selection of properties in the request.

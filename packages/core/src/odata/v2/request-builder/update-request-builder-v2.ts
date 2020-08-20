@@ -15,7 +15,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { oDataUriV2 } from '../uri-conversion';
+import { odataUriV2 } from '../uri-conversion';
 
 /**
  * Create OData query to update an entity.
@@ -38,7 +38,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataUpdateRequestConfig(_entityConstructor, oDataUriV2));
+    super(new ODataUpdateRequestConfig(_entityConstructor, odataUriV2));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
@@ -50,7 +50,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
    * @returns the builder itself
    */
   prepare(): this {
-    this.requestConfig.keys = oDataUriV2.getEntityKeys(
+    this.requestConfig.keys = odataUriV2.getEntityKeys(
       this._entity,
       this._entityConstructor
     );

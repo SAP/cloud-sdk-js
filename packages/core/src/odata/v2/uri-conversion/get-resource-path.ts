@@ -2,10 +2,10 @@
 
 import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase, FieldType, Constructable } from '../../common';
-import { oDataUriV2 } from './o-data-uri-v2';
+import { odataUriV2 } from './odata-uri-v2';
 
 /**
- * @deprecated Since v1.21.0. Use [[oDataUriV2.getResourcePathForKeys]] instead.
+ * @deprecated Since v1.21.0. Use [[odataUriV2.getResourcePathForKeys]] instead.
  * Get the resource path of an entity specified by key-value pairs.
  *
  * @typeparam EntityT - Type of the entity to get the resource path for
@@ -18,5 +18,5 @@ export function getResourcePathForKeys<EntityT extends EntityBase>(
   keys: MapType<FieldType> = {},
   entityConstructor: Constructable<EntityT>
 ): string {
-  return oDataUriV2.getResourcePathForKeys(keys, entityConstructor);
+  return odataUriV2.getResourcePathForKeys(keys, entityConstructor);
 }

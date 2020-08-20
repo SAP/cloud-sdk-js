@@ -6,7 +6,7 @@ import { getSelectV2 } from './get-select-v2';
 import { getExpandV2 } from './get-expand-v2';
 
 /**
- * @deprecated Since v1.21.0. Use [[oDataUriV2.getSelect]] and [[oDataUriV2.getExpand]] instead.
+ * @deprecated Since v1.21.0. Use [[odataUriV2.getSelect]] and [[odataUriV2.getExpand]] instead.
  *
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.
  * This retrieves where in addition to the selection (`select`) there is also an expansion (`expand`) needed.

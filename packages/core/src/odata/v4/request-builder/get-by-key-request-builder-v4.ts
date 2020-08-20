@@ -17,7 +17,7 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
 import { Expandable } from '../../common/expandable';
-import { oDataUriV4 } from '../uri-conversion';
+import { odataUriV4 } from '../uri-conversion';
 import { HttpReponse } from '../../../http-client';
 import { getSingleResult } from './response-data-accessor';
 /**
@@ -43,7 +43,7 @@ export class GetByKeyRequestBuilderV4<EntityT extends EntityV4>
     readonly _entityConstructor: Constructable<EntityT>,
     keys: MapType<FieldType>
   ) {
-    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUriV4));
+    super(new ODataGetByKeyRequestConfig(_entityConstructor, odataUriV4));
     this.requestConfig.keys = keys;
   }
 

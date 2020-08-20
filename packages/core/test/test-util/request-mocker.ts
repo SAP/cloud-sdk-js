@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable, Destination, oDataUriV2 } from '../../src';
+import { Constructable, Destination, odataUriV2 } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
 import { ODataRequest } from '../../src/odata/common/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
-import { oDataUriV4 } from '../../src/odata/v4/uri-conversion/o-data-uri-v4';
+import { odataUriV4 } from '../../src/odata/v4/uri-conversion/odata-uri-v4';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';
 import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
 
@@ -68,7 +68,7 @@ export function mockCreateRequest(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    oDataUriV2
+    odataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -84,7 +84,7 @@ export function mockCreateRequestV4(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    oDataUriV4
+    odataUriV4
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -100,7 +100,7 @@ export function mockDeleteRequest(
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
     entityConstructor,
-    oDataUriV2
+    odataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -115,7 +115,7 @@ export function mockUpdateRequest(
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
     entityConstructor,
-    oDataUriV2
+    odataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -130,7 +130,7 @@ export function mockGetRequest(
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
     entityConstructor,
-    oDataUriV2
+    odataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,

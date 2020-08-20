@@ -10,7 +10,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { oDataUriV4 } from '../uri-conversion';
+import { odataUriV4 } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.
  *
@@ -32,11 +32,11 @@ export class DeleteRequestBuilderV4<EntityT extends EntityV4>
     entityConstructor: Constructable<EntityT>,
     keysOrEntity: MapType<FieldType> | EntityV4
   ) {
-    super(new ODataDeleteRequestConfig(entityConstructor, oDataUriV4));
+    super(new ODataDeleteRequestConfig(entityConstructor, odataUriV4));
     this._entityConstructor = entityConstructor;
 
     if (keysOrEntity instanceof EntityV4) {
-      this.requestConfig.keys = oDataUriV4.getEntityKeys(
+      this.requestConfig.keys = odataUriV4.getEntityKeys(
         keysOrEntity,
         entityConstructor
       );

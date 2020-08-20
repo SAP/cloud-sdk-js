@@ -5,5 +5,5 @@ export * from './get-orderby';
 export * from './get-resource-path';
 export * from './get-select-v2';
 export * from './get-selection';
-export * from './o-data-uri-v2';
+export * from './odata-uri-v2';
 export * from './uri-value-converter-v2';

@@ -2,10 +2,10 @@
 
 import { EntityV2 } from '../entity-v2';
 import { Constructable, Filterable } from '../../common';
-import { oDataUriV2 } from './o-data-uri-v2';
+import { odataUriV2 } from './odata-uri-v2';
 
 /**
- * @deprecated Since v1.21.0. Use [[oDataUriV2.getFilter]] instead.
+ * @deprecated Since v1.21.0. Use [[odataUriV2.getFilter]] instead.
  * Get an object containing the given filter as query parameter, or an empty object if none was given.
  *
  * @typeparam EntityT - Type of the entity to filter on
@@ -17,5 +17,5 @@ export function getQueryParametersForFilter<EntityT extends EntityV2>(
   filter: Filterable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): Partial<{ filter: string }> {
-  return oDataUriV2.getFilter(filter, entityConstructor);
+  return odataUriV2.getFilter(filter, entityConstructor);
 }

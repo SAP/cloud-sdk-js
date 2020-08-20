@@ -18,7 +18,7 @@ const { convertToUriFormat } = uriConverterV4;
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v4.
  */
-export const oDataUriV4: ODataUri = {
+export const odataUriV4: ODataUri = {
   getExpand: (_, expands, entityConstructor) =>
     getExpandV4(expands, entityConstructor),
   getFilter,

@@ -17,7 +17,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { oDataUriV2 } from '../uri-conversion';
+import { odataUriV2 } from '../uri-conversion';
 import { getCollectionResult } from './response-data-accessor';
 
 /**
@@ -42,7 +42,7 @@ export class GetAllRequestBuilderV2<EntityT extends EntityV2>
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(new ODataGetAllRequestConfig(_entityConstructor, oDataUriV2));
+    super(new ODataGetAllRequestConfig(_entityConstructor, odataUriV2));
   }
   /**
    * Restrict the response to the given selection of properties in the request.

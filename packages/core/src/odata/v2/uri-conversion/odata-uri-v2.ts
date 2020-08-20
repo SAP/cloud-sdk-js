@@ -18,7 +18,7 @@ const { convertToUriFormat } = uriConverterV2;
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v2.
  */
-export const oDataUriV2: ODataUri = {
+export const odataUriV2: ODataUri = {
   getExpand: getExpandV2,
   getFilter,
   getEntityKeys,
@@ -28,4 +28,4 @@ export const oDataUriV2: ODataUri = {
   convertToUriFormat
 };
 
-export { oDataUriV2 as oDataUri };
+export { odataUriV2 as oDataUri };

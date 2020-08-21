@@ -9,7 +9,7 @@
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.27.0",
     "@sap-cloud-sdk/test-services-e2e": "^1.27.0",
-    "@sap/cds": "3.34.2",
+    "@sap/cds": "4.1.7",
     "express": "^4.17.1",
     "sqlite3": "^5.0.0"
   },

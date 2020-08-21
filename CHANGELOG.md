@@ -18,6 +18,25 @@
 
 ## New Functionality
 
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.27.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.27.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
 - Added experimental support for OData V4 enum type. Use the `@sap/cloud-sdk-generator` to generate the type safe client.
 - Include fallback `Edm.Any` for previously unsupported edm types like Edm.Geography.
 Type safety and related features like URI conversion are not supported for the fallback type.  
@@ -30,7 +49,6 @@ Type safety and related features like URI conversion are not supported for the f
 ## Fixed Issues
 
 - [Generator] Fix wrong type argument for collection types containing Edm types. 
-
 
 # 1.26.1
 

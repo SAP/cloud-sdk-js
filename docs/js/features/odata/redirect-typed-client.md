@@ -15,7 +15,7 @@ keywords:
 import {Redirect} from '@docusaurus/router';
 
 function RedirectToClient() {
-  return <Redirect to="use-typed-odata-client-for-javascript-and-typescript" />;
+  return <Redirect to="use-typed-odata-v2-client-for-javascript-and-typescript" />;
 }
 
 <RedirectToClient />

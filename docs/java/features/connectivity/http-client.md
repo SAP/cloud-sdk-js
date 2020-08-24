@@ -15,15 +15,15 @@ keywords:
 - http
 ---
 
-The SAP Cloud SDK offers some basic functionality that helps with connecting to other systems and services like S/4HANA Cloud.
-The SDK leverages the existing API of `HttpClient` and applies a convenient property management, e.g. according to a specific destination configuration.
+The SAP Cloud SDK offers basic functionality that helps with connecting to other systems and services like S/4HANA Cloud or OnPremise edition.
+The SDK leverages the existing API of `HttpClient` and applies conveniently managed properties, e.g. according to a specific destination configuration.
 
 In the following paragraphs the `HttpClientAccessor` API and its usage will be described.
 
 ## General Usage
 
 In general an `HttpClient` can be instantiated through the `HttpClientAcessor`.
-The Cloud SDK itself uses the accessor class for all iternal requests as well.
+The SAP Cloud SDK itself uses the accessor class for all iternal requests as well.
 
 ```java
 HttpClient client = HttpClientAccessor.getHttpClient();
@@ -36,13 +36,15 @@ HttpDestination destination = DestinationAccess.getDestination("my-destination")
 HttpClient client = HttpClientAccessor.getHttpClient(destination);
 ```
 
-When using a destination, the configured URL will be used as base path for the subsequent requests for `client`. 
+When using a destination, the configured destination URL will be used as base path for the subsequent requests for `client`.
 
-Please note: Like in other Accessor based APIs, the Cloud SDK offers additional methods with "try" prefix to allow for optional VAVR-enhanced API access.
+:::note
+Please note that similar to other Accessor based APIs, the SAP Cloud SDK offers additional methods with "try" prefix to allow for optional VAVR-enhanced API access.
+:::
 
 ## Customization
 
-When the properties of `HttpClient` are not working for the application, e.g. timeout is too short / too long, then the generation can be customized.
+When the properties of `HttpClient` are not working for the application, e.g. timeout is too short or too long, then the generation can be customized.
 Please find the `HttpClientFactory` interface and the provided implementation `DefaultHttpClientFactory`.
 They offer a similar method `createHttpClient` with optional destination argument:
 
@@ -70,8 +72,8 @@ When inheriting from `DefaultHttpClientFactory` it's possible to provide even de
 ```java
 DefaultHttpClientFactory customFactory = new DefaultHttpClientFactory() {
   @Override
-  protected RequestConfig.Builder getDefaultRequestConfig( HttpDestinationProperties destination ) {
-    return super.getDefaultRequestConfig(destination)
+  protected RequestConfig.Builder getRequestConfigBuilder( HttpDestinationProperties destination ) {
+    return super.getRequestConfigBuilder(destination)
       .setProxy(new HttpHost("proxy", 8080, "http"));
   }
   @Override
@@ -81,18 +83,19 @@ DefaultHttpClientFactory customFactory = new DefaultHttpClientFactory() {
   }
 };
 ```
-It's possible to take advantage of calls to `super` - or use your own objects directly.
+It is possible to take advantage of calls to `super` - or use your own objects directly.
 This inheritance enables custom implementation for the following methods:
 - `getHttpClientBuilder`
-- `getDefaultRequestConfig`
-- `getDefaultSocketConfig`
+- `getRequestConfigBuilder`
+- `getSocketConfigBuilder`
+- `getConnectionManager`
 
 
 ## Overriding default behavior
 
 Now that the customization of the HTTP client factory is available, the default behavior for the accessor can be adjusted very easily:
 
-``` 
+```java
 HttpClientFactory factory = new MyCustomHttpClientFactory();
 HttpClientAccessor.setHttpClientFactory(factory);
 ```

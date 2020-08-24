@@ -38,6 +38,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - The implicit properties of `DefaultHttpClientFactory` can now be customized.
   - With `HttpClientAccessor.setHttpClientFactory( HttpClientFactory )` it is possible to change the logic that manages creation and configuration of `HttpClient` instances. These clients are used to handle connection between platform services and integration endpoints internally. The `DefaultHttpClientFactory` class has been updated to allow for conveniently changing the implicit properties, e.g. time-out, maximum number of connections and proxy settings. Since the implementation can be easily extended, a custom logic will not need to start from scratch again.
   - To change properties, either create a new class that inherits from `DefaultHttpClientFactory` and override the accessor methods with scope protected. Or explore the flexible builder pattern for a similar result: `DefaultHttpClientFactory.builder()`.
+  - For more information, please find [the related documentation](https://sap.github.io/cloud-sdk/docs/java/features/connectivity/sdk-connectivity-http-client).
 
 ### Improvements
 

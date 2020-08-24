@@ -27,9 +27,33 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+
+## 3.27.0 - August 27, 2020
+
+- [JavaDoc](https://???)
+- [Release Blog](https://blogs.sap.com/?p=???)
+
+### New functionality
+
+- The implicit properties of `DefaultHttpClientFactory` can now be customized.
+  - With `HttpClientAccessor.setHttpClientFactory( HttpClientFactory )` it is possible to change the logic that manages creation and configuration of `HttpClient` instances. These clients are used to handle connection between platform services and integration endpoints internally. The `DefaultHttpClientFactory` class has been updated to allow for conveniently changing the implicit properties, e.g. time-out, maximum number of connections and proxy settings. Since the implementation can be easily extended, a custom logic will not need to start from scratch again.
+  - To change properties, either create a new class that inherits from `DefaultHttpClientFactory` and override the accessor methods with scope protected. Or explore the flexible builder pattern for a similar result: `DefaultHttpClientFactory.builder()`.
+
+### Improvements
+
+- Improve log message quality of OData V2 errors that may occurr within `executeRequest` method.
+- Update dependencies in maven archetypes:
+  - Archetype `scp-cf-tomee`:
+    - Update `tomee-maven-plugin` from `8.0.3` to `8.0.4`
+  - Archetype `scp-cf-spring`:
+    - Update `spring-boot` from `2.3.0.RELEASE` to `2.3.2.RELEASE`
+  - Archetype `scp-neo-javaee7`:
+    - Update `scp.sdkVersion` from `1.74.10` to `1.79.14`
+
 ## 3.26.0 - August 13, 2020
 
 - [JavaDoc](https://help.sap.com/doc/170aace62830463d8f4ec9a9251667ee/1.0/en-US/index.html)
+- [Release Blog](https://blogs.sap.com/?p=1164213)
 
 ### New functionality
 

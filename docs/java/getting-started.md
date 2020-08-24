@@ -26,7 +26,7 @@ You will need an installation of Java and Maven.
 :::note Java version compatibility
 The SDK itself is compatible with Java 8 and 11.
 Other Java versions may work as well depending on your setup but are not yet tested by us.
-Note that SAP Cloud Plattform Cloud Foundry environment only supports Java 8 out of the box but can be configured to also run with Java 11.
+Note that SAP Cloud Platform Cloud Foundry environment only supports Java 8 out of the box but can be configured to also run with Java 11.
 SAP Cloud Plattform Neo only supports Java 8.
 :::
 

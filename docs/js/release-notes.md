@@ -24,21 +24,43 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+:::note _Release notes_ for Open Source SDK components
+For Open Source SDK modules we maintain release note on Github.
 
-## Release notes for `core`, `generator`, `test-utils`
-
-You'll find [release note](https://github.com/SAP/cloud-sdk/releases) for Open Source modules of SAP Cloud SDK for JavaScript in our [Github repository](https://github.com/SAP/cloud-sdk/releases)
-
-## Release notes for `cloud-sdk-cli`
-
-You'll find [release notes](https://github.com/SAP/cloud-sdk-cli/releases) for SAP Cloud SDK CLI in a separate [Github repository](https://github.com/SAP/cloud-sdk-cli/releases).
-
-## Release notes for client libraries
-
-:::note What are client libraries?
-For your convenience we [pre-generate type-safe clients libraries](https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*) for whitelisted OData services of S/4HANA Cloud, Marketing cloud and S/4HANA On-premise. These libraries are not Open Source and distributed under SAP Developer license.
+- [Release notes](https://github.com/SAP/cloud-sdk/releases) for `core`, `generator`, and `test-utils` SDK modules.
+- [Release notes](https://github.com/SAP/cloud-sdk-cli/releases) for `cloud-sdk-cli` module.
 :::
 
-### Version 1.20.0
 
-Based on S/4HANA 2008 RTC release on August'29 2020
+## Pre-generated type-safe client libraries
+
+:::tip What are client libraries?
+For your convenience we [pre-generate type-safe clients libraries](https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*) (also known as VDM) for whitelisted OData services of S/4HANA Cloud, Marketing cloud and S/4HANA On-premise. These libraries are not Open Source and distributed under SAP Developer license.
+:::
+
+## Version 1.20.0 - August 13, 2020
+
+- [API documentation](https://help.sap.com/doc/c0ae2e82b25e4b77855f00ec098ddf8f/1.0/en-US/index.html)
+- [NPM](https://www.npmjs.com/search?q=%40sap%2Fcloud-sdk-vdm-*)
+
+### New functionality
+
+- **We released a regular update for pre-generated type-safe client libraries (also known as VDM) for the [latest RTC release 2008 of SAP S/4HANA Cloud](https://news.sap.com/2020/08/sap-s4hana-cloud-release-2008-stay-ahead-change/).**
+  - The update covers all the changes to existing services and introduces new ones. You'll find them in `com.sap.cloud.sdk.s4hana.datamodel.odata.services` and `com.sap.cloud.sdk.s4hana.datamodel.odatav4.services`. Below is the quick reference on difference and compatibility between 2005 and current 2008 S/4HANA Cloud releases:
+  - These deprecated OData **services are no longer allowed/whitelisted**:
+    - Removed deprecated `ChangeMasterService`, use the successor "[ChangeMasterServiceV2Service](https://api.sap.com/api/API_CHANGEMASTER_0002/resource)" instead.
+    - Removed deprecated `ProcessOrderConfirmationService`, use the successor "[ProcessOrderConfirmationV2Service](https://api.sap.com/api/API_PROC_ORDER_CONFIRMATION_2_SRV/resource)" instead.
+    - Removed deprecated `ProductionOrderConfirmationService`, use the successor "[ProductionOrderConfirmationV2Service](https://api.sap.com/api/API_PROD_ORDER_CONFIRMATION_2_SRV/resource)" instead.
+  - These OData service **methods have a changed argument order**:
+    - In service `SalesDocumentWithCreditBlocksService` the methods `rejectCreditBlock` and `releaseCreditBlock` are updated.
+    - In service `CustomerReturnsDeliveryV2Service` the methods `setPutawayQuantityWithBaseQuantity`, `putawayOneItemWithBaseQuantity` and `putawayOneItemWithSalesQuantity` are updated.
+  - These OData service **methods have been removed**:
+    - In service `ProductionOrderConfirmationV2Service` the method `createProdnOrdConfMatlDocItm` has been removed.
+    - In service `ProcessOrderConfirmationV2Service` the method `createProcOrdConfMatlDocItm` has been removed.
+    - In service `SupplierInvoiceIntegrationService` the methods `createSuplrInvcItemAcctAssgmt` and `createSuplrInvcItemPurOrdRef` have been removed.
+  - For reference on what OData services are included in current release, check out [SAP API Business Hub for SAP S/4HANA Cloud](https://api.sap.com/shell/discover/contentpackage/SAPS4HANACloud)
+
+### Compatibility notes
+
+- Despite releasing a `Beta` version of OData v4 type-safe client we didn't include pre-generated libraries for available S/4HANA OData v4 services in this release. We work to reach `General Availability` for OData v4 client soon and release a type-safe client for OData v4 services together with this milestone. We'll communicate it in the release notes.
+- We recommend updating to SAP Cloud SDK version 1.26.1 to benefit from the latest functionality of type-safe clients.

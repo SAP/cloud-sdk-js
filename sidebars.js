@@ -23,7 +23,8 @@ module.exports = {
             items: [
               'java/features/odata/overview',
               'java/features/odata/generate-typed-odata-v2-and-v4-client-for-java',
-              'java/features/odata/use-typed-odata-v2-and-v4-client-for-java'
+              'java/features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java',
+              'java/features/odata/use-typed-odata-v4-client-in-sap-cloud-sdk-for-java'
             ]
           },
           {
@@ -60,6 +61,21 @@ module.exports = {
                 items: ['java/features/rest/clients/scp-workflow-rest-api']
               }
             ]
+          },
+          {
+            type: 'category',
+            label: 'SDK extensions',
+            items: [
+              'java/features/extensions/extensions-supported-by-sap-cloud-sdk-for-java'
+              // {
+              //   type: 'category',
+              //   label: 'Extension library',
+              //   items: [
+              //     'java/features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java',
+              //     'java/features/extensions/extension-library/blockchain/sap-blockchain-extension-library-for-cloud-sdk-for-java',
+              //   ]
+              // }
+            ]
           }
         ]
       },
@@ -80,10 +96,12 @@ module.exports = {
         type: 'category',
         label: 'Guides',
         items: [
+          'java/guides/cf-cli',
+          'java/guides/cf-deploy',
+          'java/guides/cloud-foundry-xsuaa-service',
           'java/guides/logging-overview',
           'java/guides/manage-dependencies',
-          'java/guides/cf-deploy',
-          'java/guides/cf-cli',
+          'java/guides/logging-overview',
           'java/guides/tutorial-overview-sdk-java',
           'java/guides/sap-cloud-sdk-linux-how-to',
           //       'java/how-to/test-odata-service',
@@ -127,7 +145,8 @@ module.exports = {
             items: [
 
               'js/features/odata/overview',              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
-              'js/features/odata/use-typed-odata-client-for-javascript-and-typescript'
+              'js/features/odata/use-typed-odata-v2-client-for-javascript-and-typescript',
+              'js/features/odata/use-typed-odata-v4-client-for-javascript-and-typescript'
             ]
           },
           {

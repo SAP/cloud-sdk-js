@@ -27,13 +27,79 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+## 3.26.0 - August 13, 2020
 
-## 3.25.0
+- [JavaDoc](https://help.sap.com/doc/170aace62830463d8f4ec9a9251667ee/1.0/en-US/index.html)
+
+### New functionality
+
+#### OData and type-safe client libraries
+
+- **We released a Beta version of improved type-safe client library implementation for OData v2 protocol which now shares a code base with OData v4 protocol.**  It brings significant advantages like:
+  - Boosting performance by avoiding unnecessary metadata calls
+  - The same code base for both OData protocol versions speeds up the innovation cycle and unlocks the developing of advanced features for both OData versions.
+  - For more insights and guide how to switch to an new version check our [type-safe client documentation](features/odata/use-typed-odata-v2-and-v4-client-for-java#switch-to-improved-odata-vdm-beta)
+
+----------
+
+- The results of `create` and `update` operations in OData v4 type-safe client now offer `getModifiedEntity()` method which returns a new `Entity object` including any changes to payload or metadata the service may have responded with.
+
+----------
+
+- **We released a regular update for pre-generated type-safe client libraries (also known as VDM) for the [latest RTC release 2008 of SAP S/4HANA Cloud](https://news.sap.com/2020/08/sap-s4hana-cloud-release-2008-stay-ahead-change/).**
+  - The update covers all the changes to existing services and introduces new ones. You'll find them in `com.sap.cloud.sdk.s4hana.datamodel.odata.services` and `com.sap.cloud.sdk.s4hana.datamodel.odatav4.services`. Below is the quick reference on difference and compatibility between 2005 and current 2008 S/4HANA Cloud releases:
+  - These deprecated OData **services are no longer allowed/whitelisted**:
+    - Removed deprecated `ChangeMasterService`, use the successor "[ChangeMasterServiceV2Service](https://api.sap.com/api/API_CHANGEMASTER_0002/resource)" instead.
+    - Removed deprecated `ProcessOrderConfirmationService`, use the successor "[ProcessOrderConfirmationV2Service](https://api.sap.com/api/API_PROC_ORDER_CONFIRMATION_2_SRV/resource)" instead.
+    - Removed deprecated `ProductionOrderConfirmationService`, use the successor "[ProductionOrderConfirmationV2Service](https://api.sap.com/api/API_PROD_ORDER_CONFIRMATION_2_SRV/resource)" instead.
+  - These OData service **methods have a changed argument order**:
+    - In service `SalesDocumentWithCreditBlocksService` the methods `rejectCreditBlock` and `releaseCreditBlock` are updated.
+    - In service `CustomerReturnsDeliveryV2Service` the methods `setPutawayQuantityWithBaseQuantity`, `putawayOneItemWithBaseQuantity` and `putawayOneItemWithSalesQuantity` are updated.
+  - These OData service **methods have been removed**:
+    - In service `ProductionOrderConfirmationV2Service` the method `createProdnOrdConfMatlDocItm` has been removed.
+    - In service `ProcessOrderConfirmationV2Service` the method `createProcOrdConfMatlDocItm` has been removed.
+    - In service `SupplierInvoiceIntegrationService` the methods `createSuplrInvcItemAcctAssgmt` and `createSuplrInvcItemPurOrdRef` have been removed.
+  - For reference on what OData services are included in current release, check out [SAP API Business Hub for SAP S/4HANA Cloud](https://api.sap.com/shell/discover/contentpackage/SAPS4HANACloud)
+
+#### REST
+
+- The experimental REST SCP Workflow client library got enhanced with a new API class constructor that expects an `ApiClient`, which allows for easier integration with e.g., the Spring `RestTemplate`.
+
+  ```java
+  final String basePath = "https://my-api.org";
+  final RestTemplate restTemplate  = obtainRestTemplate();
+
+  final ApiClient apiClient = new ApiClient(restTemplate).setBasePath(basePath);
+
+  new WorkflowDefinitionsApi(apiClient).queryDefinitions();
+  ```
+#### SAP Cloud Platform - Clound Foundry
+
+- We added support for new authentication types recently introduced on SAP Cloud Platform - Cloud Foundry. It further improves handling of `Destinations` and keeps SDK up to date with SCP features:
+  - `SAP_ASSERTION_SSO`
+  - `OAuth2JWTBearer`
+  - `OAuth2Password`
+
+### Known issues
+
+- The module `testutil-core` references the dependency `org.eclipse.jetty:jetty-server:jar:9.4.27.v20200227` transitively which is subject to vulnerability [CVE-2019-17638](https://bugs.eclipse.org/bugs/show_bug.cgi?id=564984). As we look into updating to the newest version of `jetty-server`, one can mitigate the risk by assuming that `testutil-core` is used for testing only and hence not used in production environments.
+
+### Compatibility notes
+
+- Client library for `ELECTRONICDOCFILE_0001` service is missing from S/4HANA 2008 release. We're working to fix this as fast as possible and will communicate it in release notes.
+
+### Fixed Issues
+
+- Fix an issue where calling a remote-enabled function module that returns a table of type raw (byte sequence) returned the hash code of the byte sequence. It returns the String representation of the byte sequence instead now.
+- Fix a `NullPointerException` when invoking a function module in S/4HANA which is not remote-enabled or does not exist.
+- Fix an issue where calling a remote-enabled function module with a byte sequence as an exporting parameter was not supported before. It is now possible to pass byte sequences as exporting parameters.
+
+## 3.25.0 - July 30, 2020
 
 - [JavaDoc](https://help.sap.com/doc/6bb07895fec64c22846d8f8c6169611c/1.0/en-US/index.html)
 - [Release Blog](https://blogs.sap.com/?p=1154386)
 
-## New Functionality
+### New Functionality
 
 - OData 4.0: Extract version identifiers from the `ETag` header in case of create and update operations. Now result entities obtained via `ModificationRespnse#getResponseEntity()` will contain a version identifier. It will be sent as `IF-MATCH` header in subsequent update and delete operations.
 
@@ -52,7 +118,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
       (uri) -> restTemplate.getForObject(uri, ScpCfDestinationServiceV1Response.class));
   ```
 
-## Improvements
+### Improvements
 
 - Update dependencies:
   - Update [SAP Cloud Application Programming Model](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/00823f91779d4d42aa29a498e0535cdf.html) from version `1.40.2` to `1.40.6`
@@ -65,7 +131,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - Add public enum `SoapNamespace` to `rfc` module, with experimental support to customize expected XML tag namespace from SOAP response messages. This can be useful if target SOAP service is not working with ABAP code.
 - The principal id can be extracted from authorization tokens of grant type `urn:ietf:params:oauth:grant-type:jwt-bearer`.
 
-## Fixed Issues
+### Fixed Issues
 
 - Fix an issue on SCP Neo with anonymous HTTP requests being blocked, when optional module `concurrency-scp-neo` was added as application dependency.
 - Fix an issue with SOAP wrapped RFC and BAPI calls that sends pure exporting parameters as empty tags in SOAP serialised requests. Exporting parameters are no longer sent in SOAP serialised requests.

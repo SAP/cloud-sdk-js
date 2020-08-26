@@ -143,9 +143,10 @@ module.exports = {
             label: 'OData',
             items: [
 
-              'js/features/odata/overview',              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
-              'js/features/odata/use-typed-odata-v2-client-for-javascript-and-typescript',
-              'js/features/odata/use-typed-odata-v4-client-for-javascript-and-typescript'
+              'js/features/odata/overview',
+              'js/features/odata/generate-odata-client',
+              'js/features/odata/odata-v2-client',
+              'js/features/odata/odata-v4-client'
             ]
           },
           {

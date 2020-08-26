@@ -1,5 +1,5 @@
 ---
-id: use-typed-odata-v2-and-v4-client-for-java
+id: generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript
 title: Redirecting
 keywords:
 - sap
@@ -12,4 +12,4 @@ keywords:
 
 import {Redirect} from '@docusaurus/router';
 
-<Redirect to="use-typed-odata-v2-client-in-sap-cloud-sdk-for-java" />
+<Redirect to="generate-odata-client" />

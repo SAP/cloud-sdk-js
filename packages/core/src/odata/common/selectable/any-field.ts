@@ -26,7 +26,8 @@ class AnyFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class AnyField<EntityT extends EntityBase> extends AnyFieldBase<EntityT>
+export class AnyField<EntityT extends EntityBase>
+  extends AnyFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
 }

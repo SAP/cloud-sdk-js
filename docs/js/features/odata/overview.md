@@ -1,8 +1,6 @@
 ---
 id: overview
 title: OData with the Cloud SDK for JavaScript
-hide_title: false
-hide_table_of_contents: false
 sidebar_label: Overview
 description: This article provides an overview of how the SAP Cloud SDK for JavaScript supports connecting to OData services.
 keywords:

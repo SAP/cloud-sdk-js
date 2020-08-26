@@ -69,4 +69,4 @@ Please note, that we have a [code of conduct](./CODE_OF_CONDUCT.md), please foll
 Once you are ready to make a change, please test it appropriately, create a pull request and describe your change in the pull request. The owners of the repository will review your changes as soon as possible.
 
 ## Developer Certificate of Origin (DCO)
-Due to legal reasons, contributors will be asked to accept a DCO before they submit the first pull request to this projects, this happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
+Due to legal reasons, contributors will be asked to accept a DCO before they submit the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).

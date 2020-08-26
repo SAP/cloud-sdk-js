@@ -3,14 +3,14 @@ Upstream-Name: github.com/SAP/cloud-sdk
 Upstream-Contact: The SAP Cloud SDK team <cloudsdk@sap.com>
 Source: https://github.com/SAP/cloud-sdk
 Disclaimer: This project may include APIs to SAP or third party products or services.
-The use of these APIs, products and services may be subject to additional agreements.
-In no event shall the application of the Apache Software License, v.2 to this project grant any rights in or to these APIs,
-products or services that would alter, expand, be inconsistent with, or supersede any terms of these additional agreements.
-“API” means application programming interfaces, as well as their respective specifications and implementing code
-that allows other software products to communicate with or call on SAP or third party products or services (for example,
-SAP Enterprise Services, BAPIs, Idocs, RFCs and ABAP calls or other user exits) and may be made available through SAP or third party products,
-SDKs, documentation or other media.
+ The use of these APIs, products and services may be subject to additional agreements.
+ In no event shall the application of the Apache Software License, v.2 to this project grant any rights in or to these APIs,
+ products or services that would alter, expand, be inconsistent with, or supersede any terms of these additional agreements.
+ “API” means application programming interfaces, as well as their respective specifications and implementing code
+ that allows other software products to communicate with or call on SAP or third party products or services (for example,
+ SAP Enterprise Services, BAPIs, Idocs, RFCs and ABAP calls or other user exits) and may be made available through SAP or third party products,
+ SDKs, documentation or other media.
 
- Files: **
- Copyright:  Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
- License: Apache-2.0
+Files: **
+Copyright:  Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+License: Apache-2.0

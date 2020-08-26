@@ -215,7 +215,7 @@ export async function generateSourcesForService(
   otherFile(serviceDir, 'tsconfig.json', tsConfig(), options.forceOverwrite);
 
   if (service.entities && service.entities.length > 0) {
-    logger.info(`Generating batch file service: ${service.namespace}...`);
+    logger.info(`Generating batch request builder for: ${service.namespace}...`);
     sourceFile(
       serviceDir,
       'BatchRequest',

@@ -234,7 +234,7 @@ export abstract class EntityBase {
    * Returns all changed properties compared to the last known remote state.
    * The returned properties does not include custom fields. Use [[getUpdatedCustomFields]], if updated custom fields are needed.
    *
-   * @returns EntityV4 with all properties that changed
+   * @returns Entity with all properties that changed
    */
   public getUpdatedProperties(): this {
     const current = this.getCurrentMapKeys();
@@ -256,7 +256,7 @@ export abstract class EntityBase {
   /**
    * Returns a map of all defined fields in entity to their current values.
    *
-   * @returns EntityV4 with all defined entity fields
+   * @returns Entity with all defined entity fields
    */
   protected getCurrentMapKeys(): this {
     return Object.keys(this)

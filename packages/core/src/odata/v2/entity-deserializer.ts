@@ -20,3 +20,6 @@ const deserializer: EntityDeserializer = entityDeserializer(
 
 export const deserializeEntityV2 = deserializer.deserializeEntity;
 export const deserializeComplexTypeV2 = deserializer.deserializeComplexType;
+
+export { deserializeEntityV2 as deserializeEntity };
+export { deserializeComplexTypeV2 as deserializeComplexType };

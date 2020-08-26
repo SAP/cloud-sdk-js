@@ -16,3 +16,7 @@ export const serializeEntityV2 = serializer.serializeEntity;
 export const serializeComplexTypeV2 = serializer.serializeComplexType;
 export const serializeEntityNonCustomFieldsV2 =
   serializer.serializeEntityNonCustomFields;
+
+export { serializeEntityV2 as serializeEntity };
+export { serializeComplexTypeV2 as serializeComplexType };
+export { serializeEntityNonCustomFieldsV2 as serializeEntityNonCustomFields };

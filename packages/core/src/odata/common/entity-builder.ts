@@ -49,7 +49,7 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
    * If you have obtained the JSON as a request payload use the [[deserializeEntity]] methods.
    * Note that fields not mappable to a field in the target entity are silently ignored.
    * @param json - Representation of the entity in JSON format.
-   * @returns EntityV4 constructed from JSON representation.
+   * @returns Entity constructed from JSON representation.
    */
   public fromJson(json: Partial<JsonT>): EntityT {
     const entityBuilder = this._entityConstructor.builder();

@@ -51,7 +51,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: yarn lint
-          name: Static Code Check
+        name: Static Code Check
       - run: yarn check:dependencies
         name: Undeclared dependency check
       - run: yarn check:vulnerability

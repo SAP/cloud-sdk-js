@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { TestEntity } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
-import moment from 'moment';
-import * as mnt from 'Moment';
+import {moment} from 'moment';
+import * as mnt from 'moment';
 
 const url = 'http://localhost:4004/';
 const destination = { url };

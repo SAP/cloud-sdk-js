@@ -40,6 +40,21 @@ describe('GetAllRequestBuilderV4', () => {
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
+
+    it('is built correctly for nested expands', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
+      const actual = await requestBuilder
+        .expand(
+          TestEntity.TO_MULTI_LINK.expand(
+            TestEntityMultiLink.TO_MULTI_LINK_1.expand(
+              TestEntityLvl2MultiLink.TO_MULTI_LINK_2.expand()
+            )
+          )
+        )
+        .url(defaultDestination);
+      expect(actual).toBe(expected);
+    });
   });
 
   describe('execute', () => {

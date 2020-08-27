@@ -114,10 +114,10 @@ var TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");
      */
     TestEntityMultiLink.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityMultiLink, 'Edm.String');
     /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Static representation of the one-to-many navigation property [[toMultiLink1]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityMultiLink.TO_MULTI_LINK = new core_1.OneToManyLink('to_MultiLink', TestEntityMultiLink, TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink);
+    TestEntityMultiLink.TO_MULTI_LINK_1 = new core_1.OneToManyLink('to_MultiLink1', TestEntityMultiLink, TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink);
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -132,7 +132,7 @@ var TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");
         TestEntityMultiLink.GUID_PROPERTY,
         TestEntityMultiLink.INT_16_PROPERTY,
         TestEntityMultiLink.KEY_PROPERTY,
-        TestEntityMultiLink.TO_MULTI_LINK,
+        TestEntityMultiLink.TO_MULTI_LINK_1,
         TestEntityMultiLink.TO_SINGLE_LINK
     ];
     /**

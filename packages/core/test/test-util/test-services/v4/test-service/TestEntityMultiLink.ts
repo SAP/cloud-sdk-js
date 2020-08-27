@@ -52,7 +52,7 @@ export class TestEntityMultiLink extends EntityV4 implements TestEntityMultiLink
   /**
    * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
    */
-  toMultiLink!: TestEntityLvl2MultiLink[];
+  toMultiLink1!: TestEntityLvl2MultiLink[];
   /**
    * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
    */
@@ -101,7 +101,7 @@ export interface TestEntityMultiLinkType {
   guidProperty?: string;
   int16Property?: number;
   keyProperty: string;
-  toMultiLink: TestEntityLvl2MultiLinkType[];
+  toMultiLink1: TestEntityLvl2MultiLinkType[];
   toSingleLink: TestEntityLvl2SingleLinkType;
 }
 
@@ -111,7 +111,7 @@ export interface TestEntityMultiLinkTypeForceMandatory {
   guidProperty: string;
   int16Property: number;
   keyProperty: string;
-  toMultiLink: TestEntityLvl2MultiLinkType[];
+  toMultiLink1: TestEntityLvl2MultiLinkType[];
   toSingleLink: TestEntityLvl2SingleLinkType;
 }
 
@@ -142,10 +142,10 @@ export namespace TestEntityMultiLink {
    */
   export const KEY_PROPERTY: StringField<TestEntityMultiLink> = new StringField('KeyProperty', TestEntityMultiLink, 'Edm.String');
   /**
-   * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+   * Static representation of the one-to-many navigation property [[toMultiLink1]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink> = new OneToManyLink('to_MultiLink', TestEntityMultiLink, TestEntityLvl2MultiLink);
+  export const TO_MULTI_LINK_1: OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink> = new OneToManyLink('to_MultiLink1', TestEntityMultiLink, TestEntityLvl2MultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -160,7 +160,7 @@ export namespace TestEntityMultiLink {
     TestEntityMultiLink.GUID_PROPERTY,
     TestEntityMultiLink.INT_16_PROPERTY,
     TestEntityMultiLink.KEY_PROPERTY,
-    TestEntityMultiLink.TO_MULTI_LINK,
+    TestEntityMultiLink.TO_MULTI_LINK_1,
     TestEntityMultiLink.TO_SINGLE_LINK
   ];
   /**

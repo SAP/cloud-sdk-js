@@ -53,7 +53,7 @@
         <Property Name="GuidProperty" Type="Edm.Guid"/>
         <Property Name="Int16Property" Type="Edm.Int16"/>
 
-        <NavigationProperty Name="to_MultiLink" Type="Collection(API_TEST_SRV.A_TestEntityLvl2MultiLinkType)"/>
+        <NavigationProperty Name="to_MultiLink1" Type="Collection(API_TEST_SRV.A_TestEntityLvl2MultiLinkType)"/>
         <NavigationProperty Name="to_SingleLink" Type="API_TEST_SRV.A_TestEntityLvl2SingleLinkType"/>
       </EntityType>
 
@@ -62,7 +62,13 @@
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
         <Property Name="GuidProperty" Type="Edm.Guid"/>
         <Property Name="Int16Property" Type="Edm.Int16"/>
+        <NavigationProperty Name="to_MultiLink2" Type="Collection(API_TEST_SRV.A_TestEntityLvl3MultiLinkType)"/>
       </EntityType>
+
+    <EntityType Name="A_TestEntityLvl3MultiLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
+      <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+      <Property Name="GuidProperty" Type="Edm.Guid"/>
+    </EntityType>
 
       <EntityType Name="A_TestEntityOtherMultiLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
       </EntityType>
@@ -206,16 +212,20 @@
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
         </EntitySet>
         <EntitySet Name="A_TestEntityMultiLink" EntityType="API_TEST_SRV.A_TestEntityMultiLinkType" sap:content-version="1">
-          <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityLvl2MultiLink"/>
+          <NavigationPropertyBinding Path="to_MultiLink1" Target="A_TestEntityLvl2MultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntityLvl2SingleLink"/>
         </EntitySet>
         <EntitySet Name="A_TestEntityOtherMultiLink" EntityType="API_TEST_SRV.A_TestEntityOtherMultiLinkType" sap:content-version="1"/>
-        <EntitySet Name="A_TestEntityLvl2MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityLvl2MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_MultiLink2" Target="A_TestEntityLvl3MultiLink"/>
+        </EntitySet>
+          <EntitySet Name="A_TestEntityLvl3MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl3MultiLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntitySingleLink" EntityType="API_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1">
           <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityLvl2MultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntityLvl2SingleLink"/>
         </EntitySet>
         <EntitySet Name="A_TestEntityLvl2SingleLink" EntityType="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" sap:content-version="1"/>
+
 
         <!-- circular_links
           Due to circular linking, we had a bug, where one of the links was undefined. Note, that there is only one association.

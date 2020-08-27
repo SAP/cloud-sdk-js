@@ -85,6 +85,7 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
     return TestEntityLvl2MultiLink;
 }(core_1.EntityV4));
 exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
+var TestEntityLvl3MultiLink_1 = require("./TestEntityLvl3MultiLink");
 (function (TestEntityLvl2MultiLink) {
     /**
      * Static representation of the [[stringProperty]] property for query construction.
@@ -112,6 +113,11 @@ exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
      */
     TestEntityLvl2MultiLink.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityLvl2MultiLink, 'Edm.String');
     /**
+     * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntityLvl2MultiLink.TO_MULTI_LINK_2 = new core_1.OneToManyLink('to_MultiLink2', TestEntityLvl2MultiLink, TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink);
+    /**
      * All fields of the TestEntityLvl2MultiLink entity.
      */
     TestEntityLvl2MultiLink._allFields = [
@@ -119,7 +125,8 @@ exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
         TestEntityLvl2MultiLink.BOOLEAN_PROPERTY,
         TestEntityLvl2MultiLink.GUID_PROPERTY,
         TestEntityLvl2MultiLink.INT_16_PROPERTY,
-        TestEntityLvl2MultiLink.KEY_PROPERTY
+        TestEntityLvl2MultiLink.KEY_PROPERTY,
+        TestEntityLvl2MultiLink.TO_MULTI_LINK_2
     ];
     /**
      * All fields selector.

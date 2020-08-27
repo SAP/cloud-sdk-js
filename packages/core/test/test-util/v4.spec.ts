@@ -110,7 +110,7 @@ describe('v4', () => {
           .top(1)
           .skip(1)
           .expand(
-            TestEntityMultiLink.TO_MULTI_LINK.select(
+            TestEntityMultiLink.TO_MULTI_LINK_1.select(
               TestEntityLvl2MultiLink.STRING_PROPERTY,
               TestEntityLvl2MultiLink.BOOLEAN_PROPERTY
             )

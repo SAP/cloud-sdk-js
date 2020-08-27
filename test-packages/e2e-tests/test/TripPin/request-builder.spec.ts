@@ -45,4 +45,12 @@ xdescribe('Request builder test', () => {
     const result = await resetDataSource({}).execute(destination);
     expect(result).toBe(undefined);
   });
+
+  it('should handle nested expands', async () => {
+    const result = await People.requestBuilder()
+      .getAll()
+      .expand(People.FRIENDS.expand(People.FRIENDS))
+      .execute(destination);
+    expect(result[0].friends[0].friends[0]).not.toBe(undefined);
+  });
 });

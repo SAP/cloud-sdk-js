@@ -86,13 +86,13 @@ export const testFilterLambdaExpressionFilterLinkOnLink = {
 export const testNestedFilterLambdaExpressionOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
     any(
-      TestEntityMultiLinkV4.TO_MULTI_LINK.filter(
+      TestEntityMultiLinkV4.TO_MULTI_LINK_1.filter(
         any(TestEntityLvl2MultiLink.STRING_PROPERTY.equals('test'))
       )
     )
   )._filters,
   odataStr:
-    "(to_MultiLink/any(a0:((a0/to_MultiLink/any(a1:(a1/StringProperty eq 'test'))))))"
+    "(to_MultiLink/any(a0:((a0/to_MultiLink1/any(a1:(a1/StringProperty eq 'test'))))))"
 };
 
 export const testFilterLambdaExpressionFilterFunctionOnLink = {

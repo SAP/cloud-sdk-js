@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { getOrderBy, Orderable } from '../../common';
-import { EntityV2 } from '../entity-v2';
+import { EntityV2 } from '../entity';
 
 /**
- * @deprecated Since v1.21.0. Use [[odataUriV2.getOrderBy]] instead.
+ * @deprecated Since v1.21.0. Use [[oDataUriV2.getOrderBy]] instead.
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.
  *
  * @typeparam EntityT - Type of the entity to order

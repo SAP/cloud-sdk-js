@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-export * from './create-request-builder-v4';
-export * from './delete-request-builder-v4';
-export * from './function-import-request-builder-v4';
+export * from './create-request-builder';
+export * from './delete-request-builder';
+export * from './function-import-request-builder';
 export * from './action-import-request-builder';
-export * from './get-all-request-builder-v4';
-export * from './get-by-key-request-builder-v4';
-export * from './response-transformers-v4';
-export * from './update-request-builder-v4';
+export * from './get-all-request-builder';
+export * from './get-by-key-request-builder';
+export * from './response-transformers';
+export * from './update-request-builder';

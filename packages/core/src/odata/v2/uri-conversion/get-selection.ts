@@ -1,12 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EntityV2 } from '../entity-v2';
+import { EntityV2 } from '../entity';
 import { Selectable } from '../../common';
-import { getSelectV2 } from './get-select-v2';
-import { getExpandV2 } from './get-expand-v2';
+import { getSelectV2 } from './get-select';
+import { getExpandV2 } from './get-expand';
 
 /**
- * @deprecated Since v1.21.0. Use [[odataUriV2.getSelect]] and [[odataUriV2.getExpand]] instead.
+ * @deprecated Since v1.21.0. Use [[oDataUriV2.getSelect]] and [[oDataUriV2.getExpand]] instead.
  *
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.
  * This retrieves where in addition to the selection (`select`) there is also an expansion (`expand`) needed.

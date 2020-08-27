@@ -5,7 +5,7 @@ import {
   EntityDeserializer
 } from '../common/entity-deserializer';
 import { edmToTsV4 } from './payload-value-converter';
-import { extractODataEtagV4 } from './extract-odata-etag-v4';
+import { extractODataEtagV4 } from './extract-odata-etag';
 import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-link';
 
 /**

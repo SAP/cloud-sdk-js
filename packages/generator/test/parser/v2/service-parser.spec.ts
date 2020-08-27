@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { GlobalNameFormatter } from '../../src/global-name-formatter';
-import { ServiceMapping } from '../../src/service-mapping';
-import { VdmReturnTypeCategory, VdmProperty } from '../../src/vdm-types';
-import { createOptions } from '../test-util/create-generator-options';
-import { parseAllServices, parseService } from '../../src/service-generator';
+import { GlobalNameFormatter } from '../../../src/global-name-formatter';
+import { ServiceMapping } from '../../../src/service-mapping';
+import { VdmReturnTypeCategory, VdmProperty } from '../../../src/vdm-types';
+import { createOptions } from '../../test-util/create-generator-options';
+import { parseAllServices, parseService } from '../../../src/service-generator';
 
 describe('service-parser', () => {
   describe('chooses package name source', () => {

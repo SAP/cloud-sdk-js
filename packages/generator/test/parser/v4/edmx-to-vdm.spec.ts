@@ -1,18 +1,18 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { ServiceNameFormatter } from '../../src/service-name-formatter';
-import { EdmxParameter, EdmxProperty } from '../../src/edmx-parser/common';
+import { ServiceNameFormatter } from '../../../src/service-name-formatter';
+import { EdmxParameter, EdmxProperty } from '../../../src/edmx-parser/common';
 import {
   EdmxAction,
   EdmxActionImport,
   EdmxEntitySet,
   EdmxEntityType
-} from '../../src/edmx-parser/v4';
+} from '../../../src/edmx-parser/v4';
 import {
   generateComplexTypesV4,
   generateEntitiesV4
-} from '../../src/edmx-to-vdm/v4';
-import { ServiceMetadata } from '../../src/edmx-parser/edmx-file-reader';
-import { generateActionImportsV4 } from '../../src/edmx-to-vdm/v4/action-import';
+} from '../../../src/edmx-to-vdm/v4';
+import { ServiceMetadata } from '../../../src/edmx-parser/edmx-file-reader';
+import { generateActionImportsV4 } from '../../../src/edmx-to-vdm/v4/action-import';
 
 describe('edmx-to-vdm-v4', () => {
   it('transforms collection type properties for primitive types', () => {

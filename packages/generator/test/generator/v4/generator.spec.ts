@@ -5,7 +5,7 @@ import {
   checkStaticProperties,
   getFunctionImportDeclarations,
   getGeneratedFiles
-} from '../test-util/generator';
+} from '../../test-util/generator';
 
 describe('generator', () => {
   let files: SourceFile[];

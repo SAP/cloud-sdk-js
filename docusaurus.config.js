@@ -17,7 +17,7 @@ module.exports = {
       apiKey: '84d46c71e9f2445436400effad7c4e1b',
       indexName: 'sap_cloud-sdk',
       // appId: 'app-id', // Optional, if you run the DocSearch crawler on your own
-      algoliaOptions: {}, // Optional, if provided by Algolia
+      algoliaOptions: {} // Optional, if provided by Algolia
     },
     // ***************************************************************
     // Activate this announcement bar for global urgent notifications
@@ -36,7 +36,7 @@ module.exports = {
         alt: 'SAP Cloud SDK',
         src: 'img/logo.svg'
       },
-    items: [
+      items: [
         {
           to: 'docs/overview/about',
           label: 'Docs',
@@ -174,7 +174,7 @@ module.exports = {
             {
               label: 'Cloud SDK for Java',
               href: 'https://search.maven.org/search?q=g:com.sap.cloud.sdk'
-            },
+            }
           ]
         }
       ],
@@ -198,7 +198,7 @@ module.exports = {
         theme: {
           customCss: require.resolve('./src/css/custom.css')
         },
-        sitempa: {
+        sitemap: {
           cacheTime: 600 * 1000, // 600 sec - cache purge period
           changefreq: 'weekly',
           priority: 0.5

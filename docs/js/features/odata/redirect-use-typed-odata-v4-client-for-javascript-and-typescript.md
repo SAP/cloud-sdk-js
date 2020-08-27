@@ -11,5 +11,6 @@ keywords:
 ---
 
 import {Redirect} from '@docusaurus/router';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
-<Redirect to="odata-v4-client" />
+<Redirect to={useBaseUrl('docs/js/features/odata/odata-v4-client')} ></Redirect>

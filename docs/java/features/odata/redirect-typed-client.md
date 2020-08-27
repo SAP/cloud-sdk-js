@@ -11,5 +11,6 @@ keywords:
 ---
 
 import {Redirect} from '@docusaurus/router';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
-<Redirect to="use-typed-odata-v2-client-in-sap-cloud-sdk-for-java" />
+<Redirect to={useBaseUrl('docs/java/features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java')} ></Redirect>

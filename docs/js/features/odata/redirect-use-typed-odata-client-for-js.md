@@ -12,4 +12,4 @@ keywords:
 
 import {Redirect} from '@docusaurus/router';
 
-<Redirect to="odata-v2-client" />
+<Redirect to="./odata-v2-client" />

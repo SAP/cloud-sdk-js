@@ -1,8 +1,6 @@
 ---
-id: generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript
+id: generate-odata-client
 title: Generate an OData client for JavaScript
-hide_title: false
-hide_table_of_contents: false
 sidebar_label: Generate an OData client for JavaScript
 keywords:
 - sap

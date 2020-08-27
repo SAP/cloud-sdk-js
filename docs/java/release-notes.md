@@ -30,7 +30,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ## 3.27.0 - August 27, 2020
 
-- [JavaDoc](https://???)
+- [JavaDoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html)
 - [Release Blog](https://blogs.sap.com/?p=???)
 
 ### New functionality
@@ -42,7 +42,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ### Improvements
 
-- Improve log message quality of OData V2 errors that may occurr within `executeRequest` method.
+- Improve log message quality of OData V2 errors that may occur within `executeRequest` method.
 - Update dependencies in maven archetypes:
   - Archetype `scp-cf-tomee`:
     - Update `tomee-maven-plugin` from `8.0.3` to `8.0.4`

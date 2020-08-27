@@ -2,13 +2,6 @@
 import { readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
 import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-parser';
 import {
-  parseAssociation,
-  parseAssociationSets,
-  parseEntitySets as parseEntitySetsV2,
-  parseEntityTypes as parseEntityTypesV2,
-  parseFunctionImports as parseFunctionImportsV2
-} from '../../../src/edmx-parser/v2';
-import {
   parseActionImport,
   parseActions,
   parseComplexTypes,

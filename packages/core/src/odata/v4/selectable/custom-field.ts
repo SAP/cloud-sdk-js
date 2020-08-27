@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import type { Entity } from '../entity';
+import type { EntityV4 } from '../entity';
 import { CustomFieldBase } from '../../common/selectable/custom-field';
 import { DateField, DurationField, TimeField } from '../../common';
 
-export class CustomField<EntityT extends Entity> extends CustomFieldBase<
+export class CustomFieldV4<EntityT extends EntityV4> extends CustomFieldBase<
   EntityT
 > {
   edmDate(): DateField<EntityT> {

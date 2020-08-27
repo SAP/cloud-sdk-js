@@ -3,7 +3,7 @@
 import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity';
 import { toPropertyFormat } from '../../../util';
-import { Field } from '../../v2';
+import { Field } from '../selectable';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.

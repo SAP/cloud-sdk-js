@@ -9,15 +9,15 @@ import {
   deserializersCommon,
   serializersCommom
 } from '../common/payload-value-converter';
-import { EdmType } from './edm-types';
+import { EdmTypeV4 } from './edm-types';
 
 /**
  * @hidden
  */
-export function edmToTs<T extends EdmType>(
+export function edmToTsV4<T extends EdmTypeV4>(
   value: any,
   edmType: EdmTypeShared<'v4'>
-): EdmToPrimitive<T> {
+): EdmToPrimitiveV4<T> {
   if (value === null || typeof value === 'undefined') {
     return value;
   }
@@ -30,7 +30,7 @@ export function edmToTs<T extends EdmType>(
 /**
  * @hidden
  */
-export function tsToEdm(value: any, edmType: EdmTypeShared<'v4'>): any {
+export function tsToEdmV4(value: any, edmType: EdmTypeShared<'v4'>): any {
   if (value === null) {
     return 'null';
   }
@@ -41,7 +41,7 @@ export function tsToEdm(value: any, edmType: EdmTypeShared<'v4'>): any {
 }
 
 type EdmTypeMapping = {
-  [key in EdmType]: (value: any) => any;
+  [key in EdmTypeV4]: (value: any) => any;
 };
 
 function edmDateToMoment(date: string): moment.Moment {
@@ -110,7 +110,7 @@ function timeToEdmTimeOfDay(value: Time): string {
   return `${value.hours}:${value.minutes}:${value.seconds}`;
 }
 
-export type EdmToPrimitive<T extends EdmType> = T extends
+export type EdmToPrimitiveV4<T extends EdmTypeV4> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Single'

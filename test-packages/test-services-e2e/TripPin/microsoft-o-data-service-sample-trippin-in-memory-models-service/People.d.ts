@@ -3,11 +3,11 @@ import { BigNumber } from 'bignumber.js';
 import { Location, LocationField } from './Location';
 import { PersonGender } from './PersonGender';
 import { Feature } from './Feature';
-import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, EnumField, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BigNumberField, CollectionField, CustomFieldV4, EntityBuilderType, EntityV4, EnumField, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "People" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
-export declare class People extends Entity implements PeopleType {
+export declare class People extends EntityV4 implements PeopleType {
     /**
      * Technical entity name for People.
      */
@@ -94,7 +94,7 @@ export declare class People extends Entity implements PeopleType {
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `People`.
      */
-    static customField(fieldName: string): CustomField<People>;
+    static customField(fieldName: string): CustomFieldV4<People>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

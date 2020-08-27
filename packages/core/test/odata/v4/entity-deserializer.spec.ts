@@ -4,21 +4,24 @@ import {
   TestEntity,
   TestComplexType
 } from '../../test-util/test-services/v4/test-service';
-import { deserializeEntity, deserializeComplexType } from '../../../src/v4';
+import { deserializeEntityV4, deserializeComplexTypeV4 } from '../../../src/';
 import { TestEnumType } from '../../test-util/test-services/v4/test-service/TestEnumType';
 
 describe('entity-deserializer', () => {
   it('should deserialize an enum property', () => {
     const enumProperty = TestEnumType.Member1;
-    expect(deserializeEntity({ EnumProperty: 'Member1' }, TestEntity)).toEqual(
-      TestEntity.builder().enumProperty(enumProperty).build()
-    );
+    expect(
+      deserializeEntityV4({ EnumProperty: 'Member1' }, TestEntity)
+    ).toEqual(TestEntity.builder().enumProperty(enumProperty).build());
   });
 
   it('should deserialize an entity with string collection property', () => {
     const collectionProperty = ['abc', 'def'];
     expect(
-      deserializeEntity({ CollectionProperty: collectionProperty }, TestEntity)
+      deserializeEntityV4(
+        { CollectionProperty: collectionProperty },
+        TestEntity
+      )
     ).toEqual(
       TestEntity.builder().collectionProperty(collectionProperty).build()
     );
@@ -29,7 +32,7 @@ describe('entity-deserializer', () => {
     const stringProp2 = 'string 2';
 
     expect(
-      deserializeEntity(
+      deserializeEntityV4(
         {
           ComplexTypeProperty: { StringProperty: stringProp1 },
           ComplexTypeCollectionProperty: [
@@ -53,7 +56,7 @@ describe('entity-deserializer', () => {
   it('should deserialize a complex type with a string collection property', () => {
     const collectionStringProperty = ['abc', 'def'];
     expect(
-      deserializeComplexType(
+      deserializeComplexTypeV4(
         {
           CollectionStringProperty: collectionStringProperty
         },
@@ -66,7 +69,7 @@ describe('entity-deserializer', () => {
 
   it('should deserialize a complex type with a complex type collection property', () => {
     expect(
-      deserializeComplexType(
+      deserializeComplexTypeV4(
         {
           CollectionComplexTypeProperty: [{ StringProperty: 'abc' }]
         },

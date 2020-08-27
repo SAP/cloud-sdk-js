@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEdmType, transformReturnValueForEdmTypeList, transformReturnValueForEntity, transformReturnValueForEntityList, transformReturnValueForComplexType, transformReturnValueForComplexTypeList, transformReturnValueForUndefined, edmToTs, deserializeComplexType, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core/v4';
+import { transformReturnValueForEdmTypeV4, transformReturnValueForEdmTypeListV4, transformReturnValueForEntityV4, transformReturnValueForEntityListV4, transformReturnValueForComplexTypeV4, transformReturnValueForComplexTypeListV4, transformReturnValueForUndefinedV4, edmToTsV4, deserializeComplexTypeV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 
@@ -19,12 +19,12 @@ export interface TestFunctionImportEdmReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportEdmReturnType(parameters: TestFunctionImportEdmReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeParameters, boolean> {
+export function testFunctionImportEdmReturnType(parameters: TestFunctionImportEdmReturnTypeParameters): FunctionImportRequestBuilderV4<TestFunctionImportEdmReturnTypeParameters, boolean> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Boolean')), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val, 'Edm.Boolean')), params);
 }
 
 /**
@@ -39,12 +39,12 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportEdmReturnTypeCollection(parameters: TestFunctionImportEdmReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeCollectionParameters, string[]> {
+export function testFunctionImportEdmReturnTypeCollection(parameters: TestFunctionImportEdmReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportEdmReturnTypeCollectionParameters, string[]> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeList(data, (val) => edmToTs(val, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeListV4(data, (val) => edmToTsV4(val, 'Edm.String')), params);
 }
 
 /**
@@ -59,12 +59,12 @@ export interface TestFunctionImportEntityReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportEntityReturnType(parameters: TestFunctionImportEntityReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeParameters, TestEntity> {
+export function testFunctionImportEntityReturnType(parameters: TestFunctionImportEntityReturnTypeParameters): FunctionImportRequestBuilderV4<TestFunctionImportEntityReturnTypeParameters, TestEntity> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntity(data, TestEntity), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
 }
 
 /**
@@ -79,12 +79,12 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportEntityReturnTypeCollection(parameters: TestFunctionImportEntityReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]> {
+export function testFunctionImportEntityReturnTypeCollection(parameters: TestFunctionImportEntityReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityList(data, TestEntity), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityListV4(data, TestEntity), params);
 }
 
 /**
@@ -99,12 +99,12 @@ export interface TestFunctionImportComplexReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportComplexReturnType(parameters: TestFunctionImportComplexReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeParameters, TestComplexType> {
+export function testFunctionImportComplexReturnType(parameters: TestFunctionImportComplexReturnTypeParameters): FunctionImportRequestBuilderV4<TestFunctionImportComplexReturnTypeParameters, TestComplexType> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType)), params);
 }
 
 /**
@@ -119,12 +119,12 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportComplexReturnTypeCollection(parameters: TestFunctionImportComplexReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]> {
+export function testFunctionImportComplexReturnTypeCollection(parameters: TestFunctionImportComplexReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeList(data, (data) => deserializeComplexType(data, TestComplexType)), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeListV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType)), params);
 }
 
 /**
@@ -155,7 +155,7 @@ export interface TestFunctionImportMultipleParamsParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportMultipleParams(parameters: TestFunctionImportMultipleParamsParameters): FunctionImportRequestBuilder<TestFunctionImportMultipleParamsParameters, boolean> {
+export function testFunctionImportMultipleParams(parameters: TestFunctionImportMultipleParamsParameters): FunctionImportRequestBuilderV4<TestFunctionImportMultipleParamsParameters, boolean> {
   const params = {
     stringParam: new FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
     nonNullableStringParam: new FunctionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
@@ -163,7 +163,7 @@ export function testFunctionImportMultipleParams(parameters: TestFunctionImportM
     nullableGeographyPointParam: new FunctionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.Boolean')), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val, 'Edm.Boolean')), params);
 }
 
 /**
@@ -178,12 +178,12 @@ export interface TestFunctionImportWithDifferentNameParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportWithDifferentName(parameters: TestFunctionImportWithDifferentNameParameters): FunctionImportRequestBuilder<TestFunctionImportWithDifferentNameParameters, undefined> {
+export function testFunctionImportWithDifferentName(parameters: TestFunctionImportWithDifferentNameParameters): FunctionImportRequestBuilderV4<TestFunctionImportWithDifferentNameParameters, undefined> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', (data) => transformReturnValueForUndefinedV4(data, (val) => undefined), params);
 }
 
 export const functionImports = {

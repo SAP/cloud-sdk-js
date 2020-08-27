@@ -2,7 +2,7 @@
 
 import { EntityBase, Constructable } from '../../common';
 import { ODataGetByKeyRequestConfig as Base } from '../../common/request/odata-get-by-key-request-config';
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV2 } from '../uri-conversion';
 
 /**
  * @deprecated Since v1.21.0. Use superclass instead.
@@ -19,6 +19,6 @@ export class ODataGetByKeyRequestConfig<
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(_entityConstructor: Constructable<EntityT>) {
-    super(_entityConstructor, oDataUri);
+    super(_entityConstructor, oDataUriV2);
   }
 }

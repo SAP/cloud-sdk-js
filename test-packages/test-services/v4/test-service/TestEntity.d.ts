@@ -3,11 +3,11 @@ import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
-import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomField, DateField, DurationField, Entity, EntityBuilderType, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export declare class TestEntity extends Entity implements TestEntityType {
+export declare class TestEntity extends EntityV4 implements TestEntityType {
     /**
      * Technical entity name for TestEntity.
      */
@@ -173,7 +173,7 @@ export declare class TestEntity extends Entity implements TestEntityType {
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
-    static customField(fieldName: string): CustomField<TestEntity>;
+    static customField(fieldName: string): CustomFieldV4<TestEntity>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

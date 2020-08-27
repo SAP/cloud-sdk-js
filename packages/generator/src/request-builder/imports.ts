@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   coreImportDeclaration,
   corePropertyTypeImportNames,
@@ -18,7 +18,7 @@ export function importDeclarations(
     coreImportDeclaration(
       [
         ...corePropertyTypeImportNames(entity.keys),
-        ...requestBuilderCoreImportDeclarations(entity)
+        ...requestBuilderCoreImportDeclarations(entity, oDataVersion)
       ],
       oDataVersion
     ),
@@ -26,23 +26,27 @@ export function importDeclarations(
   ];
 }
 
-function requestBuilderCoreImportDeclarations(entity: VdmEntity) {
+function requestBuilderCoreImportDeclarations(
+  entity: VdmEntity,
+  oDataVersion: ODataVersion
+) {
+  const versionInCap = caps(oDataVersion);
   const coreImports = [
     'RequestBuilder',
-    'GetAllRequestBuilder',
-    'GetByKeyRequestBuilder'
+    `GetAllRequestBuilder${versionInCap}`,
+    `GetByKeyRequestBuilder${versionInCap}`
   ];
 
   if (entity.creatable) {
-    coreImports.push('CreateRequestBuilder');
+    coreImports.push(`CreateRequestBuilder${versionInCap}`);
   }
 
   if (entity.updatable) {
-    coreImports.push('UpdateRequestBuilder');
+    coreImports.push(`UpdateRequestBuilder${versionInCap}`);
   }
 
   if (entity.deletable) {
-    coreImports.push('DeleteRequestBuilder');
+    coreImports.push(`DeleteRequestBuilder${versionInCap}`);
   }
 
   return coreImports;

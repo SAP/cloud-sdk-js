@@ -8,12 +8,12 @@ import { BigNumber } from 'bignumber.js';
 import { Location, LocationField } from './Location';
 import { PersonGender } from './PersonGender';
 import { Feature } from './Feature';
-import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, EnumField, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BigNumberField, CollectionField, CustomFieldV4, EntityBuilderType, EntityV4, EnumField, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "People" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
-export class People extends Entity implements PeopleType {
+export class People extends EntityV4 implements PeopleType {
   /**
    * Technical entity name for People.
    */
@@ -91,7 +91,7 @@ export class People extends Entity implements PeopleType {
    * @returns A builder that constructs instances of entity type `People`.
    */
   static builder(): EntityBuilderType<People, PeopleTypeForceMandatory> {
-    return Entity.entityBuilder(People);
+    return EntityV4.entityBuilder(People);
   }
 
   /**
@@ -107,8 +107,8 @@ export class People extends Entity implements PeopleType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `People`.
    */
-  static customField(fieldName: string): CustomField<People> {
-    return Entity.customFieldSelector(fieldName, People);
+  static customField(fieldName: string): CustomFieldV4<People> {
+    return EntityV4.customFieldSelector(fieldName, People);
   }
 
   /**

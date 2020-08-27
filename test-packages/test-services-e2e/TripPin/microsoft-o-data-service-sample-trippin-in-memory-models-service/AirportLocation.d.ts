@@ -1,5 +1,5 @@
 import { City, CityField } from './City';
-import { ComplexTypeAnyPropertyField, ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core/v4';
+import { ComplexTypeAnyPropertyField, ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core';
 /**
  * AirportLocation
  */
@@ -28,7 +28,7 @@ export declare function createAirportLocation(json: any): AirportLocation;
  * AirportLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export declare class AirportLocationField<EntityT extends Entity> extends ComplexTypeField<EntityT, AirportLocation> {
+export declare class AirportLocationField<EntityT extends EntityV4> extends ComplexTypeField<EntityT, AirportLocation> {
     /**
      * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -58,7 +58,7 @@ export declare namespace AirportLocation {
      */
     const _propertyMetadata: PropertyMetadata<AirportLocation>[];
     /**
-     * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json: {
         [keys: string]: FieldType | City;

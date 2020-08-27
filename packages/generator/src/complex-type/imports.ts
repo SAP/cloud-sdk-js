@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   coreImportDeclaration,
@@ -16,6 +16,7 @@ export function importDeclarations(
   complexType: VdmComplexType,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
+  const versionInCaps = caps(oDataVersion);
   return [
     ...externalImportDeclarations(complexType.properties),
     ...complexTypeImportDeclarations(complexType.properties),
@@ -26,8 +27,8 @@ export function importDeclarations(
         ...corePropertyFieldTypeImportNames(complexType.properties),
         'ComplexTypeField',
         'ConstructorOrField',
-        'deserializeComplexType',
-        'Entity',
+        `deserializeComplexType${versionInCaps}`,
+        `Entity${versionInCaps}`,
         'FieldType',
         'PropertyMetadata'
       ].sort(),

@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmActionFunctionImportReturnType,
   VdmFunctionImportReturnType,
@@ -7,10 +8,14 @@ import {
 } from '../vdm-types';
 
 export function responseTransformerFunctionName(
-  returnType: VdmActionFunctionImportReturnType
+  returnType: VdmActionFunctionImportReturnType,
+  oDataVersion: ODataVersion
 ): string {
   const transformationFn = singleTransformationFunction(returnType);
-  return returnType.isCollection ? `${transformationFn}List` : transformationFn;
+  const versionInCaps = caps(oDataVersion);
+  return returnType.isCollection
+    ? `${transformationFn}List${versionInCaps}`
+    : `${transformationFn}${versionInCaps}`;
 }
 
 function singleTransformationFunction(

@@ -4,19 +4,19 @@ import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, FieldType } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataDeleteRequestConfig } from '../../common/request/odata-delete-request-config';
-import { Entity } from '../entity';
+import { EntityV2 } from '../entity';
 import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV2 } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.
  *
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export class DeleteRequestBuilder<EntityT extends Entity>
+export class DeleteRequestBuilderV2<EntityT extends EntityV2>
   extends MethodRequestBuilderBase<ODataDeleteRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
@@ -30,13 +30,13 @@ export class DeleteRequestBuilder<EntityT extends Entity>
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    keysOrEntity: MapType<FieldType> | Entity
+    keysOrEntity: MapType<FieldType> | EntityV2
   ) {
-    super(new ODataDeleteRequestConfig(entityConstructor, oDataUri));
+    super(new ODataDeleteRequestConfig(entityConstructor, oDataUriV2));
     this._entityConstructor = entityConstructor;
 
-    if (keysOrEntity instanceof Entity) {
-      this.requestConfig.keys = oDataUri.getEntityKeys(
+    if (keysOrEntity instanceof EntityV2) {
+      this.requestConfig.keys = oDataUriV2.getEntityKeys(
         keysOrEntity,
         entityConstructor
       );
@@ -88,3 +88,5 @@ export class DeleteRequestBuilder<EntityT extends Entity>
       );
   }
 }
+
+export { DeleteRequestBuilderV2 as DeleteRequestBuilder };

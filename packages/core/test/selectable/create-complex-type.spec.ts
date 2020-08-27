@@ -2,29 +2,29 @@
 import { fail } from 'assert';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { createComplexType, edmToTs, Time } from '../../src';
+import { createComplexType, edmToTsV2, Time } from '../../src';
 
 const converter = {
   StringField: (controllingArea: string) => ({
-    stringField: edmToTs(controllingArea, 'Edm.String')
+    stringField: edmToTsV2(controllingArea, 'Edm.String')
   }),
   BooleanField: (booleanField: boolean) => ({
-    booleanField: edmToTs(booleanField, 'Edm.Boolean')
+    booleanField: edmToTsV2(booleanField, 'Edm.Boolean')
   }),
   NumberField: (numberField: BigNumber) => ({
-    numberField: edmToTs(numberField, 'Edm.Decimal')
+    numberField: edmToTsV2(numberField, 'Edm.Decimal')
   }),
   GuidField: (guidField: string) => ({
-    guidField: edmToTs(guidField, 'Edm.Guid')
+    guidField: edmToTsV2(guidField, 'Edm.Guid')
   }),
   IntField: (intField: number) => ({
-    intField: edmToTs(intField, 'Edm.Int16')
+    intField: edmToTsV2(intField, 'Edm.Int16')
   }),
   DateField: (dateField: moment.Moment) => ({
-    dateField: edmToTs(dateField, 'Edm.DateTime')
+    dateField: edmToTsV2(dateField, 'Edm.DateTime')
   }),
   TimeField: (timeField: Time) => ({
-    timeField: edmToTs(timeField, 'Edm.Time')
+    timeField: edmToTsV2(timeField, 'Edm.Time')
   })
 };
 

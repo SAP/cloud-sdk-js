@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
+import { EntityV4 } from '../entity';
+import { deserializeEntityV4 } from '../entity-deserializer';
 import { Constructable } from '../../common';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 /* eslint-disable valid-jsdoc */
@@ -9,7 +9,7 @@ import { getSingleResult, getCollectionResult } from './response-data-accessor';
 /**
  * @hidden
  */
-export function transformReturnValueForUndefined<ReturnT>(
+export function transformReturnValueForUndefinedV4<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ) {
@@ -19,11 +19,11 @@ export function transformReturnValueForUndefined<ReturnT>(
 /**
  * @hidden
  */
-export function transformReturnValueForEntity<ReturnT extends Entity>(
+export function transformReturnValueForEntityV4<ReturnT extends EntityV4>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT {
-  return deserializeEntity(
+  return deserializeEntityV4(
     getSingleResult(data),
     entityConstructor
   ).setOrInitializeRemoteState() as ReturnT;
@@ -32,13 +32,13 @@ export function transformReturnValueForEntity<ReturnT extends Entity>(
 /**
  * @hidden
  */
-export function transformReturnValueForEntityList<ReturnT extends Entity>(
+export function transformReturnValueForEntityListV4<ReturnT extends EntityV4>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT[] {
   return getCollectionResult(data).map(
     entityJson =>
-      deserializeEntity(
+      deserializeEntityV4(
         entityJson,
         entityConstructor
       ).setOrInitializeRemoteState() as ReturnT
@@ -48,7 +48,7 @@ export function transformReturnValueForEntityList<ReturnT extends Entity>(
 /**
  * @hidden
  */
-export function transformReturnValueForComplexType<ReturnT>(
+export function transformReturnValueForComplexTypeV4<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT {
@@ -58,7 +58,7 @@ export function transformReturnValueForComplexType<ReturnT>(
 /**
  * @hidden
  */
-export function transformReturnValueForComplexTypeList<ReturnT>(
+export function transformReturnValueForComplexTypeListV4<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT[] {
@@ -68,7 +68,7 @@ export function transformReturnValueForComplexTypeList<ReturnT>(
 /**
  * @hidden
  */
-export function transformReturnValueForEdmType<ReturnT>(
+export function transformReturnValueForEdmTypeV4<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT {
@@ -78,7 +78,7 @@ export function transformReturnValueForEdmType<ReturnT>(
 /**
  * @hidden
  */
-export function transformReturnValueForEdmTypeList<ReturnT>(
+export function transformReturnValueForEdmTypeListV4<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT[] {

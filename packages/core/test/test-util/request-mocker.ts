@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { MapType } from '@sap-cloud-sdk/util';
-import { Constructable, Destination, oDataUri } from '../../src';
+import { basicHeader, Constructable, Destination, oDataUriV2 } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
 import { ODataRequest } from '../../src/odata/common/request/odata-request';
 import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
-import { oDataUri as oDataUriV4 } from '../../src/odata/v4/uri-conversion/odata-uri';
+import { oDataUriV4 } from '../../src/odata/v4/uri-conversion/odata-uri';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';
 import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
 
@@ -68,7 +68,7 @@ export function mockCreateRequest(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    oDataUri
+    oDataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -100,7 +100,7 @@ export function mockDeleteRequest(
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
     entityConstructor,
-    oDataUri
+    oDataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -115,7 +115,7 @@ export function mockUpdateRequest(
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
     entityConstructor,
-    oDataUri
+    oDataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -130,7 +130,7 @@ export function mockGetRequest(
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
     entityConstructor,
-    oDataUri
+    oDataUriV2
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -192,4 +192,25 @@ function getRequestHeaders(method: string, additionalHeaders?: MapType<any>) {
         : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken };
     return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
   }
+}
+export function mockCsrfTokenRequest(
+  host: string,
+  sapClient: string,
+  servicePath = '/sap/opu/odata/sap/API_TEST_SRV',
+  username = 'username',
+  password = 'password',
+  csrfToken = 'CSRFTOKEN'
+) {
+  nock(host, {
+    reqheaders: {
+      authorization: basicHeader(username, password),
+      'x-csrf-token': 'Fetch',
+      'sap-client': sapClient
+    }
+  })
+    .get(servicePath)
+    .reply(200, '', {
+      'x-csrf-token': csrfToken,
+      'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
+    });
 }

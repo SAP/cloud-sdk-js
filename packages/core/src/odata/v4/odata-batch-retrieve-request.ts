@@ -5,10 +5,10 @@ import {
   content_transfer_encoding_line
 } from '../common';
 import { getRequestLine } from '../common/request/odata-batch-request-util';
-import { Entity } from './entity';
+import { EntityV4 } from './entity';
 import {
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder
+  GetAllRequestBuilderV4,
+  GetByKeyRequestBuilderV4
 } from './request-builder';
 
 /**
@@ -25,8 +25,10 @@ import {
  * @param requestBuilder - The request builder of the retrieve request.
  * @returns The request body.
  */
-export function toBatchRetrieveBody(
-  requestBuilder: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>
+export function toBatchRetrieveBodyV4(
+  requestBuilder:
+    | GetAllRequestBuilderV4<EntityV4>
+    | GetByKeyRequestBuilderV4<EntityV4>
 ): string {
   const lines: string[] = [
     part_content_type_line,

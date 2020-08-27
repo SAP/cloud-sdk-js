@@ -3,7 +3,7 @@
 import { Field, StringFilterFunction, BooleanFilterFunction } from '../common';
 import { filterFunction } from '../common/filter/filter-function';
 import { filterFunctions as filterFunctionsCommon } from '../common/filter/filter-functions';
-import { Entity } from './entity';
+import { EntityV2 } from './entity';
 
 /* String Functions */
 /**
@@ -13,7 +13,7 @@ import { Entity } from './entity';
  *
  * @returns The newly created filter function
  */
-export function substringOf<EntityT extends Entity>(
+export function substringOf<EntityT extends EntityV2>(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
@@ -28,7 +28,7 @@ export function substringOf<EntityT extends Entity>(
  *
  * @returns The newly created filter function
  */
-export function replace<EntityT extends Entity>(
+export function replace<EntityT extends EntityV2>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   searchStr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   replaceStr: string | Field<EntityT> | StringFilterFunction<EntityT>
@@ -51,8 +51,10 @@ export const substring = filterFunctionsCommon.substring;
 /**
  * OData v2 specific filter functions
  */
-export const filterFunctions = {
+export const filterFunctionsV2 = {
   ...filterFunctionsCommon,
   substringOf,
   replace
 };
+
+export { filterFunctionsV2 as filterFunctions };

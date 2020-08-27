@@ -4,15 +4,15 @@ import {
   EntitySerializer,
   entitySerializer
 } from '../common/entity-serializer';
-import { tsToEdm } from './payload-value-converter';
+import { tsToEdmV4 } from './payload-value-converter';
 
 /**
  * Entity serializer instance for v4 entities.
  * See [[EntitySerializerType]] for the provided methods.
  */
-const serializer: EntitySerializer = entitySerializer(tsToEdm);
+const serializer: EntitySerializer = entitySerializer(tsToEdmV4);
 
-export const serializeEntity = serializer.serializeEntity;
-export const serializeComplexType = serializer.serializeComplexType;
-export const serializeEntityNonCustomFields =
+export const serializeEntityV4 = serializer.serializeEntity;
+export const serializeComplexTypeV4 = serializer.serializeComplexType;
+export const serializeEntityNonCustomFieldsV4 =
   serializer.serializeEntityNonCustomFields;

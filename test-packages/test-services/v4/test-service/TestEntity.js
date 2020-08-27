@@ -32,7 +32,7 @@ exports.TestEntity = void 0;
  */
 var TestEntityRequestBuilder_1 = require("./TestEntityRequestBuilder");
 var TestComplexType_1 = require("./TestComplexType");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
@@ -46,7 +46,7 @@ var TestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     TestEntity.builder = function () {
-        return v4_1.Entity.entityBuilder(TestEntity);
+        return core_1.EntityV4.entityBuilder(TestEntity);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
@@ -61,7 +61,7 @@ var TestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     TestEntity.customField = function (fieldName) {
-        return v4_1.Entity.customFieldSelector(fieldName, TestEntity);
+        return core_1.EntityV4.customFieldSelector(fieldName, TestEntity);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -84,7 +84,7 @@ var TestEntity = /** @class */ (function (_super) {
      */
     TestEntity._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntity;
-}(v4_1.Entity));
+}(core_1.EntityV4));
 exports.TestEntity = TestEntity;
 var TestEntityMultiLink_1 = require("./TestEntityMultiLink");
 var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
@@ -93,107 +93,107 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      * Static representation of the [[keyPropertyGuid]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.KEY_PROPERTY_GUID = new v4_1.StringField('KeyPropertyGuid', TestEntity, 'Edm.Guid');
+    TestEntity.KEY_PROPERTY_GUID = new core_1.StringField('KeyPropertyGuid', TestEntity, 'Edm.Guid');
     /**
      * Static representation of the [[keyPropertyString]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.KEY_PROPERTY_STRING = new v4_1.StringField('KeyPropertyString', TestEntity, 'Edm.String');
+    TestEntity.KEY_PROPERTY_STRING = new core_1.StringField('KeyPropertyString', TestEntity, 'Edm.String');
     /**
      * Static representation of the [[stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.STRING_PROPERTY = new v4_1.StringField('StringProperty', TestEntity, 'Edm.String');
+    TestEntity.STRING_PROPERTY = new core_1.StringField('StringProperty', TestEntity, 'Edm.String');
     /**
      * Static representation of the [[booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.BOOLEAN_PROPERTY = new v4_1.BooleanField('BooleanProperty', TestEntity, 'Edm.Boolean');
+    TestEntity.BOOLEAN_PROPERTY = new core_1.BooleanField('BooleanProperty', TestEntity, 'Edm.Boolean');
     /**
      * Static representation of the [[guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.GUID_PROPERTY = new v4_1.StringField('GuidProperty', TestEntity, 'Edm.Guid');
+    TestEntity.GUID_PROPERTY = new core_1.StringField('GuidProperty', TestEntity, 'Edm.Guid');
     /**
      * Static representation of the [[int16Property]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.INT_16_PROPERTY = new v4_1.NumberField('Int16Property', TestEntity, 'Edm.Int16');
+    TestEntity.INT_16_PROPERTY = new core_1.NumberField('Int16Property', TestEntity, 'Edm.Int16');
     /**
      * Static representation of the [[int32Property]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.INT_32_PROPERTY = new v4_1.NumberField('Int32Property', TestEntity, 'Edm.Int32');
+    TestEntity.INT_32_PROPERTY = new core_1.NumberField('Int32Property', TestEntity, 'Edm.Int32');
     /**
      * Static representation of the [[int64Property]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.INT_64_PROPERTY = new v4_1.BigNumberField('Int64Property', TestEntity, 'Edm.Int64');
+    TestEntity.INT_64_PROPERTY = new core_1.BigNumberField('Int64Property', TestEntity, 'Edm.Int64');
     /**
      * Static representation of the [[decimalProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.DECIMAL_PROPERTY = new v4_1.BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
+    TestEntity.DECIMAL_PROPERTY = new core_1.BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
     /**
      * Static representation of the [[singleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.SINGLE_PROPERTY = new v4_1.NumberField('SingleProperty', TestEntity, 'Edm.Single');
+    TestEntity.SINGLE_PROPERTY = new core_1.NumberField('SingleProperty', TestEntity, 'Edm.Single');
     /**
      * Static representation of the [[doubleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.DOUBLE_PROPERTY = new v4_1.NumberField('DoubleProperty', TestEntity, 'Edm.Double');
+    TestEntity.DOUBLE_PROPERTY = new core_1.NumberField('DoubleProperty', TestEntity, 'Edm.Double');
     /**
      * Static representation of the [[floatProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.FLOAT_PROPERTY = new v4_1.NumberField('FloatProperty', TestEntity, 'Edm.Float');
+    TestEntity.FLOAT_PROPERTY = new core_1.NumberField('FloatProperty', TestEntity, 'Edm.Float');
     /**
      * Static representation of the [[timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.TIME_OF_DAY_PROPERTY = new v4_1.TimeField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
+    TestEntity.TIME_OF_DAY_PROPERTY = new core_1.TimeField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
     /**
      * Static representation of the [[dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.DATE_PROPERTY = new v4_1.DateField('DateProperty', TestEntity, 'Edm.Date');
+    TestEntity.DATE_PROPERTY = new core_1.DateField('DateProperty', TestEntity, 'Edm.Date');
     /**
      * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.DATE_TIME_OFF_SET_PROPERTY = new v4_1.DateField('DateTimeOffSetProperty', TestEntity, 'Edm.DateTimeOffset');
+    TestEntity.DATE_TIME_OFF_SET_PROPERTY = new core_1.DateField('DateTimeOffSetProperty', TestEntity, 'Edm.DateTimeOffset');
     /**
      * Static representation of the [[durationProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.DURATION_PROPERTY = new v4_1.DurationField('DurationProperty', TestEntity, 'Edm.Duration');
+    TestEntity.DURATION_PROPERTY = new core_1.DurationField('DurationProperty', TestEntity, 'Edm.Duration');
     /**
      * Static representation of the [[byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.BYTE_PROPERTY = new v4_1.NumberField('ByteProperty', TestEntity, 'Edm.Byte');
+    TestEntity.BYTE_PROPERTY = new core_1.NumberField('ByteProperty', TestEntity, 'Edm.Byte');
     /**
      * Static representation of the [[sByteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.S_BYTE_PROPERTY = new v4_1.NumberField('SByteProperty', TestEntity, 'Edm.SByte');
+    TestEntity.S_BYTE_PROPERTY = new core_1.NumberField('SByteProperty', TestEntity, 'Edm.SByte');
     /**
      * Static representation of the [[geographyPointProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.GEOGRAPHY_POINT_PROPERTY = new v4_1.AnyField('GeographyPointProperty', TestEntity, 'Edm.Any');
+    TestEntity.GEOGRAPHY_POINT_PROPERTY = new core_1.AnyField('GeographyPointProperty', TestEntity, 'Edm.Any');
     /**
      * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT = new v4_1.AnyField('SomethingTheSDKDoesNotSupport', TestEntity, 'Edm.Any');
+    TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT = new core_1.AnyField('SomethingTheSDKDoesNotSupport', TestEntity, 'Edm.Any');
     /**
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.COLLECTION_PROPERTY = new v4_1.CollectionField('CollectionProperty', TestEntity, 'Edm.String');
+    TestEntity.COLLECTION_PROPERTY = new core_1.CollectionField('CollectionProperty', TestEntity, 'Edm.String');
     /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -203,32 +203,32 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY = new v4_1.CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType_1.TestComplexType);
+    TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY = new core_1.CollectionField('ComplexTypeCollectionProperty', TestEntity, TestComplexType_1.TestComplexType);
     /**
      * Static representation of the [[enumProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.ENUM_PROPERTY = new v4_1.EnumField('EnumProperty', TestEntity);
+    TestEntity.ENUM_PROPERTY = new core_1.EnumField('EnumProperty', TestEntity);
     /**
      * Static representation of the [[enumCollectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.ENUM_COLLECTION_PROPERTY = new v4_1.CollectionField('EnumCollectionProperty', TestEntity, 'Edm.Enum');
+    TestEntity.ENUM_COLLECTION_PROPERTY = new core_1.CollectionField('EnumCollectionProperty', TestEntity, 'Edm.Enum');
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.TO_MULTI_LINK = new v4_1.OneToManyLink('to_MultiLink', TestEntity, TestEntityMultiLink_1.TestEntityMultiLink);
+    TestEntity.TO_MULTI_LINK = new core_1.OneToManyLink('to_MultiLink', TestEntity, TestEntityMultiLink_1.TestEntityMultiLink);
     /**
      * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.TO_OTHER_MULTI_LINK = new v4_1.OneToManyLink('to_OtherMultiLink', TestEntity, TestEntityMultiLink_1.TestEntityMultiLink);
+    TestEntity.TO_OTHER_MULTI_LINK = new core_1.OneToManyLink('to_OtherMultiLink', TestEntity, TestEntityMultiLink_1.TestEntityMultiLink);
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.TO_SINGLE_LINK = new v4_1.OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink_1.TestEntitySingleLink);
+    TestEntity.TO_SINGLE_LINK = new core_1.OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink_1.TestEntitySingleLink);
     /**
      * All fields of the TestEntity entity.
      */
@@ -265,7 +265,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
     /**
      * All fields selector.
      */
-    TestEntity.ALL_FIELDS = new v4_1.AllFields('*', TestEntity);
+    TestEntity.ALL_FIELDS = new core_1.AllFields('*', TestEntity);
     /**
      * All key fields of the TestEntity entity.
      */

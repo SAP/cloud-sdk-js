@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV2 } from '../uri-conversion';
 import { FunctionImportParameters } from '../../common/request/function-import-parameter';
 import { ODataFunctionImportRequestConfig as Base } from '../../common/request/odata-function-import-request-config';
 import { RequestMethodType } from '../../common';
@@ -28,6 +28,12 @@ export class ODataFunctionImportRequestConfig<ParametersT> extends Base<
     functionImportName: string,
     parameters: FunctionImportParameters<ParametersT>
   ) {
-    super(method, defaultServicePath, functionImportName, parameters, oDataUri);
+    super(
+      method,
+      defaultServicePath,
+      functionImportName,
+      parameters,
+      oDataUriV2
+    );
   }
 }

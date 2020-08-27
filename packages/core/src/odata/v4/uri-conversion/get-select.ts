@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityV4 } from '../entity';
 import { Selectable } from '../../common';
 
 /**
@@ -11,7 +11,7 @@ import { Selectable } from '../../common';
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getSelect<EntityT extends Entity>(
+export function getSelectV4<EntityT extends EntityV4>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ select: string }> {
   const selection = selects.map(select => select._fieldName);

@@ -31,7 +31,7 @@ exports.TestEntityOtherMultiLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityOtherMultiLinkRequestBuilder_1 = require("./TestEntityOtherMultiLinkRequestBuilder");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
@@ -45,7 +45,7 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLink.builder = function () {
-        return v4_1.Entity.entityBuilder(TestEntityOtherMultiLink);
+        return core_1.EntityV4.entityBuilder(TestEntityOtherMultiLink);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityOtherMultiLink` entity type.
@@ -60,7 +60,7 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
      */
     TestEntityOtherMultiLink.customField = function (fieldName) {
-        return v4_1.Entity.customFieldSelector(fieldName, TestEntityOtherMultiLink);
+        return core_1.EntityV4.customFieldSelector(fieldName, TestEntityOtherMultiLink);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -83,14 +83,14 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
      */
     TestEntityOtherMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityOtherMultiLink;
-}(v4_1.Entity));
+}(core_1.EntityV4));
 exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
 (function (TestEntityOtherMultiLink) {
     /**
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityOtherMultiLink.KEY_PROPERTY = new v4_1.StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
+    TestEntityOtherMultiLink.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
     /**
      * All fields of the TestEntityOtherMultiLink entity.
      */
@@ -100,7 +100,7 @@ exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
     /**
      * All fields selector.
      */
-    TestEntityOtherMultiLink.ALL_FIELDS = new v4_1.AllFields('*', TestEntityOtherMultiLink);
+    TestEntityOtherMultiLink.ALL_FIELDS = new core_1.AllFields('*', TestEntityOtherMultiLink);
     /**
      * All key fields of the TestEntityOtherMultiLink entity.
      */

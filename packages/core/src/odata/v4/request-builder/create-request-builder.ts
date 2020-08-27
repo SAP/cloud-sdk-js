@@ -4,22 +4,22 @@ import { errorWithCause } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, Link } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataCreateRequestConfig } from '../../common/request/odata-create-request-config';
-import { Entity } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
-import { serializeEntity } from '../entity-serializer';
+import { EntityV4 } from '../entity';
+import { deserializeEntityV4 } from '../entity-deserializer';
+import { serializeEntityV4 } from '../entity-serializer';
 import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV4 } from '../uri-conversion';
 import { getSingleResult } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  *
  * @typeparam EntityT - Type of the entity to be created
  */
-export class CreateRequestBuilder<EntityT extends Entity>
+export class CreateRequestBuilderV4<EntityT extends EntityV4>
   extends MethodRequestBuilderBase<ODataCreateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   /**
@@ -32,7 +32,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor, oDataUri));
+    super(new ODataCreateRequestConfig(_entityConstructor, oDataUriV4));
   }
 
   get entity(): EntityT {
@@ -45,7 +45,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
    * @returns the builder itself
    */
   prepare(): this {
-    this.requestConfig.payload = serializeEntity(
+    this.requestConfig.payload = serializeEntityV4(
       this._entity,
       this._entityConstructor
     );
@@ -59,11 +59,11 @@ export class CreateRequestBuilder<EntityT extends Entity>
    * @param linkField - Static representation of the navigation property that navigates from the parent entity to the child entity
    * @returns The entity itself, to facilitate method chaining
    */
-  asChildOf<ParentEntityT extends Entity>(
+  asChildOf<ParentEntityT extends EntityV4>(
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, EntityT>
   ): this {
-    this.requestConfig.parentKeys = oDataUri.getEntityKeys(
+    this.requestConfig.parentKeys = oDataUriV4.getEntityKeys(
       parentEntity,
       linkField._entityConstructor
     );
@@ -86,7 +86,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        deserializeEntity(
+        deserializeEntityV4(
           getSingleResult(response.data),
           this._entityConstructor,
           response.headers

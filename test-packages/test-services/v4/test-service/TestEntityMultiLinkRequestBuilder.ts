@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core/v4';
+import { RequestBuilder, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, CreateRequestBuilderV4, UpdateRequestBuilderV4, DeleteRequestBuilderV4 } from '@sap-cloud-sdk/core';
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 
 /**
@@ -15,16 +15,16 @@ export class TestEntityMultiLinkRequestBuilder extends RequestBuilder<TestEntity
    * @param keyProperty Key property. See [[TestEntityMultiLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
    */
-  getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntityMultiLink> {
-    return new GetByKeyRequestBuilder(TestEntityMultiLink, { KeyProperty: keyProperty });
+  getByKey(keyProperty: string): GetByKeyRequestBuilderV4<TestEntityMultiLink> {
+    return new GetByKeyRequestBuilderV4(TestEntityMultiLink, { KeyProperty: keyProperty });
   }
 
   /**
    * Returns a request builder for querying all `TestEntityMultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityMultiLink` entities.
    */
-  getAll(): GetAllRequestBuilder<TestEntityMultiLink> {
-    return new GetAllRequestBuilder(TestEntityMultiLink);
+  getAll(): GetAllRequestBuilderV4<TestEntityMultiLink> {
+    return new GetAllRequestBuilderV4(TestEntityMultiLink);
   }
 
   /**
@@ -32,8 +32,8 @@ export class TestEntityMultiLinkRequestBuilder extends RequestBuilder<TestEntity
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityMultiLink`.
    */
-  create(entity: TestEntityMultiLink): CreateRequestBuilder<TestEntityMultiLink> {
-    return new CreateRequestBuilder(TestEntityMultiLink, entity);
+  create(entity: TestEntityMultiLink): CreateRequestBuilderV4<TestEntityMultiLink> {
+    return new CreateRequestBuilderV4(TestEntityMultiLink, entity);
   }
 
   /**
@@ -41,8 +41,8 @@ export class TestEntityMultiLinkRequestBuilder extends RequestBuilder<TestEntity
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityMultiLink`.
    */
-  update(entity: TestEntityMultiLink): UpdateRequestBuilder<TestEntityMultiLink> {
-    return new UpdateRequestBuilder(TestEntityMultiLink, entity);
+  update(entity: TestEntityMultiLink): UpdateRequestBuilderV4<TestEntityMultiLink> {
+    return new UpdateRequestBuilderV4(TestEntityMultiLink, entity);
   }
 
   /**
@@ -50,14 +50,14 @@ export class TestEntityMultiLinkRequestBuilder extends RequestBuilder<TestEntity
    * @param keyProperty Key property. See [[TestEntityMultiLink.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityMultiLink`.
    */
-  delete(keyProperty: string): DeleteRequestBuilder<TestEntityMultiLink>;
+  delete(keyProperty: string): DeleteRequestBuilderV4<TestEntityMultiLink>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityMultiLink`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityMultiLink` by taking the entity as a parameter.
    */
-  delete(entity: TestEntityMultiLink): DeleteRequestBuilder<TestEntityMultiLink>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityMultiLink> {
-    return new DeleteRequestBuilder(TestEntityMultiLink, keyPropertyOrEntity instanceof TestEntityMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+  delete(entity: TestEntityMultiLink): DeleteRequestBuilderV4<TestEntityMultiLink>;
+  delete(keyPropertyOrEntity: any): DeleteRequestBuilderV4<TestEntityMultiLink> {
+    return new DeleteRequestBuilderV4(TestEntityMultiLink, keyPropertyOrEntity instanceof TestEntityMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

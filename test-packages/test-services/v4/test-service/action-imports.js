@@ -6,7 +6,7 @@ exports.actionImports = exports.testActionImportUnsupportedEdmTypes = exports.te
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 var TestComplexType_1 = require("./TestComplexType");
 /**
  * Test Action Import No Parameter No Return Type.
@@ -16,7 +16,7 @@ var TestComplexType_1 = require("./TestComplexType");
  */
 function testActionImportNoParameterNoReturnType(parameters) {
     var params = {};
-    return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', function (data) { return core_1.transformReturnValueForUndefinedV4(data, function (val) { return undefined; }); }, params);
 }
 exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoReturnType;
 /**
@@ -27,12 +27,12 @@ exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoR
  */
 function testActionImportMultipleParameterComplexReturnType(parameters) {
     var params = {
-        stringParam: new v4_1.ActionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
-        nonNullableStringParam: new v4_1.ActionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
-        nullableBooleanParam: new v4_1.ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
-        nullableGeographyPointParam: new v4_1.ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
+        stringParam: new core_1.ActionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
+        nonNullableStringParam: new core_1.ActionImportParameter('NonNullableStringParam', 'Edm.String', parameters.nonNullableStringParam),
+        nullableBooleanParam: new core_1.ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
+        nullableGeographyPointParam: new core_1.ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
     };
-    return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', function (data) { return v4_1.transformReturnValueForComplexType(data, function (data) { return v4_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', function (data) { return core_1.transformReturnValueForComplexTypeV4(data, function (data) { return core_1.deserializeComplexTypeV4(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testActionImportMultipleParameterComplexReturnType = testActionImportMultipleParameterComplexReturnType;
 /**
@@ -43,9 +43,9 @@ exports.testActionImportMultipleParameterComplexReturnType = testActionImportMul
  */
 function testActionImportUnsupportedEdmTypes(parameters) {
     var params = {
-        simpleParam: new v4_1.ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
+        simpleParam: new core_1.ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
     };
-    return new v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', function (data) { return v4_1.transformReturnValueForEdmType(data, function (val) { return v4_1.edmToTs(val, 'Edm.Any'); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val, 'Edm.Any'); }); }, params);
 }
 exports.testActionImportUnsupportedEdmTypes = testActionImportUnsupportedEdmTypes;
 exports.actionImports = {

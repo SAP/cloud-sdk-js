@@ -6,7 +6,7 @@ exports.defaultAdminServicePath = exports.changeset = exports.batch = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 var index_1 = require("./index");
 /**
  * Batch builder for operations supported on the Admin Service.
@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new v4_1.ODataBatchRequestBuilder(exports.defaultAdminServicePath, requests, map);
+    return new core_1.ODataBatchRequestBuilderV4(exports.defaultAdminServicePath, requests, map);
 }
 exports.batch = batch;
 /**
@@ -31,7 +31,7 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new v4_1.ODataBatchChangeSet(requests);
+    return new core_1.ODataBatchChangeSetV4(requests);
 }
 exports.changeset = changeset;
 exports.defaultAdminServicePath = '/sap/opu/odata/sap/AdminService';

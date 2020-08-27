@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityV2 } from '../entity';
 import { Selectable, Link } from '../../common';
 
 /**
@@ -12,14 +12,14 @@ import { Selectable, Link } from '../../common';
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
  */
-export function getExpand<EntityT extends Entity>(
+export function getExpandV2<EntityT extends EntityV2>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ expand: string }> {
   const expand = getExpandsAsString(selects);
   return expand.length ? { expand: expand.join(',') } : {};
 }
 
-function getExpandsAsString<EntityT extends Entity>(
+function getExpandsAsString<EntityT extends EntityV2>(
   selectables: Selectable<EntityT>[],
   initialExpand: string[] = [],
   parent = ''
@@ -46,3 +46,5 @@ function getPath(parent: string, fieldName: string): string {
   }
   return fieldName;
 }
+
+export { getExpandV2 as getExpand };

@@ -20,7 +20,7 @@ exports.AirportLocation = exports.AirportLocationField = exports.createAirportLo
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var City_1 = require("./City");
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * @deprecated Since v1.6.0. Use [[AirportLocation.build]] instead.
  */
@@ -46,12 +46,12 @@ var AirportLocationField = /** @class */ (function (_super) {
          * Representation of the [[AirportLocation.loc]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.loc = new v4_1.ComplexTypeAnyPropertyField('Loc', _this, 'Edm.Any');
+        _this.loc = new core_1.ComplexTypeAnyPropertyField('Loc', _this, 'Edm.Any');
         /**
          * Representation of the [[AirportLocation.address]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.address = new v4_1.ComplexTypeStringPropertyField('Address', _this, 'Edm.String');
+        _this.address = new core_1.ComplexTypeStringPropertyField('Address', _this, 'Edm.String');
         /**
          * Representation of the [[AirportLocation.city]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -60,7 +60,7 @@ var AirportLocationField = /** @class */ (function (_super) {
         return _this;
     }
     return AirportLocationField;
-}(v4_1.ComplexTypeField));
+}(core_1.ComplexTypeField));
 exports.AirportLocationField = AirportLocationField;
 var AirportLocation;
 (function (AirportLocation) {
@@ -84,10 +84,10 @@ var AirportLocation;
             isCollection: false
         }];
     /**
-     * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return v4_1.deserializeComplexType(json, AirportLocation);
+        return core_1.deserializeComplexTypeV4(json, AirportLocation);
     }
     AirportLocation.build = build;
 })(AirportLocation = exports.AirportLocation || (exports.AirportLocation = {}));

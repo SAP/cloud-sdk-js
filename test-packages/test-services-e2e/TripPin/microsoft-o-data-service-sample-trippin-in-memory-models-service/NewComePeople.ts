@@ -8,12 +8,12 @@ import { BigNumber } from 'bignumber.js';
 import { Location, LocationField } from './Location';
 import { PersonGender } from './PersonGender';
 import { Feature } from './Feature';
-import { AllFields, BigNumberField, CollectionField, CustomField, Entity, EntityBuilderType, EnumField, Field, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BigNumberField, CollectionField, CustomFieldV4, EntityBuilderType, EntityV4, EnumField, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "NewComePeople" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
-export class NewComePeople extends Entity implements NewComePeopleType {
+export class NewComePeople extends EntityV4 implements NewComePeopleType {
   /**
    * Technical entity name for NewComePeople.
    */
@@ -83,7 +83,7 @@ export class NewComePeople extends Entity implements NewComePeopleType {
    * @returns A builder that constructs instances of entity type `NewComePeople`.
    */
   static builder(): EntityBuilderType<NewComePeople, NewComePeopleTypeForceMandatory> {
-    return Entity.entityBuilder(NewComePeople);
+    return EntityV4.entityBuilder(NewComePeople);
   }
 
   /**
@@ -99,8 +99,8 @@ export class NewComePeople extends Entity implements NewComePeopleType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `NewComePeople`.
    */
-  static customField(fieldName: string): CustomField<NewComePeople> {
-    return Entity.customFieldSelector(fieldName, NewComePeople);
+  static customField(fieldName: string): CustomFieldV4<NewComePeople> {
+    return EntityV4.customFieldSelector(fieldName, NewComePeople);
   }
 
   /**

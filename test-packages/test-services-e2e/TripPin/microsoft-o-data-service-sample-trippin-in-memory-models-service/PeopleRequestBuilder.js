@@ -19,7 +19,7 @@ exports.PeopleRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 var People_1 = require("./People");
 /**
  * Request builder class for operations supported on the [[People]] entity.
@@ -35,14 +35,14 @@ var PeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
      */
     PeopleRequestBuilder.prototype.getByKey = function (userName) {
-        return new v4_1.GetByKeyRequestBuilder(People_1.People, { UserName: userName });
+        return new core_1.GetByKeyRequestBuilderV4(People_1.People, { UserName: userName });
     };
     /**
      * Returns a request builder for querying all `People` entities.
      * @returns A request builder for creating requests to retrieve all `People` entities.
      */
     PeopleRequestBuilder.prototype.getAll = function () {
-        return new v4_1.GetAllRequestBuilder(People_1.People);
+        return new core_1.GetAllRequestBuilderV4(People_1.People);
     };
     /**
      * Returns a request builder for creating a `People` entity.
@@ -50,7 +50,7 @@ var PeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `People`.
      */
     PeopleRequestBuilder.prototype.create = function (entity) {
-        return new v4_1.CreateRequestBuilder(People_1.People, entity);
+        return new core_1.CreateRequestBuilderV4(People_1.People, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `People`.
@@ -58,12 +58,12 @@ var PeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `People`.
      */
     PeopleRequestBuilder.prototype.update = function (entity) {
-        return new v4_1.UpdateRequestBuilder(People_1.People, entity);
+        return new core_1.UpdateRequestBuilderV4(People_1.People, entity);
     };
     PeopleRequestBuilder.prototype.delete = function (userNameOrEntity) {
-        return new v4_1.DeleteRequestBuilder(People_1.People, userNameOrEntity instanceof People_1.People ? userNameOrEntity : { UserName: userNameOrEntity });
+        return new core_1.DeleteRequestBuilderV4(People_1.People, userNameOrEntity instanceof People_1.People ? userNameOrEntity : { UserName: userNameOrEntity });
     };
     return PeopleRequestBuilder;
-}(v4_1.RequestBuilder));
+}(core_1.RequestBuilder));
 exports.PeopleRequestBuilder = PeopleRequestBuilder;
 //# sourceMappingURL=PeopleRequestBuilder.js.map

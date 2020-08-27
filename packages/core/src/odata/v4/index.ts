@@ -13,8 +13,6 @@ export * from './request-builder';
 export * from './selectable/custom-field';
 export * from './uri-conversion';
 export * from './extract-odata-etag';
-export * from '../common';
-export * from '../common/selectable/one-to-many-link';
 export * from './filter/filter-lambda-expression';
 export * from './filter-functions';
 export * from './filter-function';

@@ -1,9 +1,9 @@
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
-import { AllFields, BooleanField, CustomField, Entity, EntityBuilderType, Field, NumberField, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
-export declare class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2SingleLinkType {
+export declare class TestEntityLvl2SingleLink extends EntityV4 implements TestEntityLvl2SingleLinkType {
     /**
      * Technical entity name for TestEntityLvl2SingleLink.
      */
@@ -58,7 +58,7 @@ export declare class TestEntityLvl2SingleLink extends Entity implements TestEnti
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
      */
-    static customField(fieldName: string): CustomField<TestEntityLvl2SingleLink>;
+    static customField(fieldName: string): CustomFieldV4<TestEntityLvl2SingleLink>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

@@ -10,9 +10,13 @@ import {
   testNestedFilterLambdaExpressionOnLink
 } from '../../../test-util/filter-factory';
 import { TestEntity } from '../../../test-util/test-services/v4/test-service';
-import { oDataUri, filterFunctions, filterFunction } from '../../../../src/v4';
+import {
+  oDataUriV4,
+  filterFunctionsV4,
+  filterFunctionV4
+} from '../../../../src';
 
-const { getFilter } = oDataUri;
+const { getFilter } = oDataUriV4;
 
 describe('get filters', () => {
   it('for simple filters', () => {
@@ -65,8 +69,8 @@ describe('get filters', () => {
 
   it('for hasSubset filter function with collection', () => {
     expect(
-      oDataUri.getFilter(
-        filterFunctions
+      oDataUriV4.getFilter(
+        filterFunctionsV4
           .hasSubset(['1', '2'], TestEntity.COLLECTION_PROPERTY)
           .equals(true),
         TestEntity
@@ -76,8 +80,8 @@ describe('get filters', () => {
 
   it('for int collection filter function', () => {
     expect(
-      oDataUri.getFilter(
-        filterFunction('fn', 'int[]').equals([1, 2, 3]),
+      oDataUriV4.getFilter(
+        filterFunctionV4('fn', 'int[]').equals([1, 2, 3]),
         TestEntity
       ).filter
     ).toBe('fn() eq [1,2,3]');

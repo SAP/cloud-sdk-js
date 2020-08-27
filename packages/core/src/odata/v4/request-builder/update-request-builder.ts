@@ -3,26 +3,26 @@
 import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
-import { Entity } from '../entity';
+import { EntityV4 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataUpdateRequestConfig } from '../../common/request/odata-update-request-config';
 import {
-  serializeEntity,
-  serializeEntityNonCustomFields
+  serializeEntityV4,
+  serializeEntityNonCustomFieldsV4
 } from '../entity-serializer';
 import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV4 } from '../uri-conversion';
 
 /**
  * Create OData query to update an entity.
  *
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilder<EntityT extends Entity>
+export class UpdateRequestBuilderV4<EntityT extends EntityV4>
   extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   private ignored: Set<string>;
@@ -38,7 +38,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataUpdateRequestConfig(_entityConstructor, oDataUri));
+    super(new ODataUpdateRequestConfig(_entityConstructor, oDataUriV4));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
@@ -50,7 +50,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    * @returns the builder itself
    */
   prepare(): this {
-    this.requestConfig.keys = oDataUri.getEntityKeys(
+    this.requestConfig.keys = oDataUriV4.getEntityKeys(
       this._entity,
       this._entityConstructor
     );
@@ -58,7 +58,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
     let updateBody;
     switch (this.requestConfig.method) {
       case 'put':
-        updateBody = serializeEntity(this._entity, this._entityConstructor);
+        updateBody = serializeEntityV4(this._entity, this._entityConstructor);
         break;
       case 'patch':
         updateBody = this.getUpdateBody();
@@ -159,7 +159,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
   }
 
   private getUpdateBody(): MapType<any> {
-    const serializedBody = serializeEntity(
+    const serializedBody = serializeEntityV4(
       this._entity,
       this._entityConstructor
     );
@@ -175,7 +175,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
 
   private serializedDiff(): MapType<any> {
     return {
-      ...serializeEntityNonCustomFields(
+      ...serializeEntityNonCustomFieldsV4(
         this._entity.getUpdatedProperties(),
         this._entityConstructor
       ),

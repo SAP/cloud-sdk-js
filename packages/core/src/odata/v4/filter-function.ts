@@ -13,52 +13,52 @@ import {
   numberReturnTypeMapping
 } from '../common/filter/filter-function';
 import { CollectionFilterFunction } from '../common/filter/collection-filter-function';
-import { Entity } from './entity';
+import { EntityV4 } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'string',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): StringFilterFunction<EntityT>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'datetimeoffset',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): DateFilterFunction<EntityT>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'boolean[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, boolean>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'string[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, string>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'int[]' | 'double[]' | 'decimal[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, number>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: 'datetimeoffset[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
@@ -71,7 +71,7 @@ export function filterFunction<EntityT extends Entity>(
  * @param parameters - the parameter(s) used in the function
  * @returns An instance of filter function suited for the given return type
  */
-export function filterFunction<EntityT extends Entity>(
+export function filterFunctionV4<EntityT extends EntityV4>(
   functionName: string,
   returnType: FilterFunctionReturnTypeV4,
   ...parameters: FilterFunctionParameterType<EntityT>[]

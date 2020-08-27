@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
+import { EntityV4 } from '../entity';
+import { deserializeEntityV4 } from '../entity-deserializer';
 import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
@@ -19,22 +19,22 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetAllRequestConfig } from '../../common/request/odata-get-all-request-config';
 import { Expandable } from '../../common/expandable';
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV4 } from '../uri-conversion';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { getCollectionResult } from './response-data-accessor';
 
 /**
  * Create an OData request to get multiple entities based on the configuration of the request.
  * A `GetAllRequestBuilder` allows restricting the response in multiple dimensions.
- * The properties available in the response can be restricted by creating a [[GetAllRequestBuilder.select selection]], where no selection is equal to selecting all fields of the entity.
- * Navigational properties need to expanded explicitly by [[GetAllRequestBuilder.expand]].
- * The entities can be [[GetAllRequestBuilder.filter filtered]] and [[GetAllRequestBuilder.select ordered]] based on the values of their properties.
- * The number of entities in the result can be [[GetAllRequestBuilder.top limited]] and results can be [[GetAllRequestBuilder.skip skipped]] for paging purposes.
+ * The properties available in the response can be restricted by creating a [[GetAllRequestBuilderV2.select selection]], where no selection is equal to selecting all fields of the entity.
+ * Navigational properties need to expanded explicitly by [[GetAllRequestBuilderV4.expand]].
+ * The entities can be [[GetAllRequestBuilderV2.filter filtered]] and [[GetAllRequestBuilderV2.select ordered]] based on the values of their properties.
+ * The number of entities in the result can be [[GetAllRequestBuilderV2.top limited]] and results can be [[GetAllRequestBuilderV2.skip skipped]] for paging purposes.
  * If none of the above mentioned are configured all entities of the given type will be requested.
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetAllRequestBuilder<EntityT extends Entity>
+export class GetAllRequestBuilderV4<EntityT extends EntityV4>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
@@ -45,7 +45,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly _entityConstructor: Constructable<EntityT>) {
-    super(new ODataGetAllRequestConfig(_entityConstructor, oDataUri));
+    super(new ODataGetAllRequestConfig(_entityConstructor, oDataUriV4));
   }
   /**
    * Restrict the response to the given selection of properties in the request.
@@ -125,14 +125,14 @@ export class GetAllRequestBuilder<EntityT extends Entity>
       .then(request => request.execute())
       .then(response =>
         getCollectionResult(response.data).map(json =>
-          deserializeEntity(json, this._entityConstructor, response.headers)
+          deserializeEntityV4(json, this._entityConstructor, response.headers)
         )
       );
   }
 }
 
 // TODO: remove this code duplication
-function toFilterList<EntityT extends Entity, LinkedEntityT extends Entity>(
+function toFilterList<EntityT extends EntityV4, LinkedEntityT extends EntityV4>(
   filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterList<EntityT> {
   return and(

@@ -6,7 +6,7 @@ exports.actionImports = exports.resetDataSource = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 /**
  * Reset Data Source.
  *
@@ -15,7 +15,7 @@ var v4_1 = require("@sap-cloud-sdk/core/v4");
  */
 function resetDataSource(parameters) {
     var params = {};
-    return new v4_1.ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', function (data) { return v4_1.transformReturnValueForUndefined(data, function (val) { return undefined; }); }, params);
+    return new core_1.ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', function (data) { return core_1.transformReturnValueForUndefinedV4(data, function (val) { return undefined; }); }, params);
 }
 exports.resetDataSource = resetDataSource;
 exports.actionImports = {

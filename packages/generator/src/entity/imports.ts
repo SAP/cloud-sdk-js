@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   coreImportDeclaration,
@@ -17,6 +17,7 @@ export function importDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
+  const versionInCap = caps(oDataVersion);
   return [
     {
       kind: StructureKind.ImportDeclaration,
@@ -35,8 +36,8 @@ export function importDeclarations(
           oDataVersion
         ),
         'AllFields',
-        'CustomField',
-        'Entity',
+        `CustomField${versionInCap}`,
+        `Entity${versionInCap}`,
         'EntityBuilderType',
         'Field'
       ].sort(),

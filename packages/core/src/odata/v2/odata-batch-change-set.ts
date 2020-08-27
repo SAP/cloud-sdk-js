@@ -6,11 +6,11 @@ import {
   content_transfer_encoding_line
 } from '../common';
 import { getRequestLine } from '../common/request/odata-batch-request-util';
-import { Entity } from './entity';
+import { EntityV2 } from './entity';
 import {
-  CreateRequestBuilder,
-  DeleteRequestBuilder,
-  UpdateRequestBuilder
+  CreateRequestBuilderV2,
+  DeleteRequestBuilderV2,
+  UpdateRequestBuilderV2
 } from './request-builder';
 
 const batch_content_type_prefix =
@@ -23,11 +23,11 @@ const request_if_match_key = 'If-Match: ';
 /**
  * OData batch change set, which holds a collection of write operations.
  */
-export class ODataBatchChangeSet<
+export class ODataBatchChangeSetV2<
   T extends
-    | CreateRequestBuilder<Entity>
-    | UpdateRequestBuilder<Entity>
-    | DeleteRequestBuilder<Entity>
+    | CreateRequestBuilderV2<EntityV2>
+    | UpdateRequestBuilderV2<EntityV2>
+    | DeleteRequestBuilderV2<EntityV2>
 > {
   constructor(readonly requests: T[], readonly changeSetId: string = uuid()) {}
 }
@@ -37,12 +37,12 @@ export class ODataBatchChangeSet<
  * @param changeSet - Change set holds a collection of write operations.
  * @returns The generated payload from the given change set.
  */
-export function toBatchChangeSet<
+export function toBatchChangeSetV2<
   T extends
-    | CreateRequestBuilder<Entity>
-    | UpdateRequestBuilder<Entity>
-    | DeleteRequestBuilder<Entity>
->(changeSet: ODataBatchChangeSet<T>): string | undefined {
+    | CreateRequestBuilderV2<EntityV2>
+    | UpdateRequestBuilderV2<EntityV2>
+    | DeleteRequestBuilderV2<EntityV2>
+>(changeSet: ODataBatchChangeSetV2<T>): string | undefined {
   const changeSetBody = toBatchChangeSetBody(changeSet);
   if (!changeSetBody) {
     return;
@@ -56,10 +56,10 @@ export function toBatchChangeSet<
 
 function toBatchChangeSetBody<
   T extends
-    | CreateRequestBuilder<Entity>
-    | UpdateRequestBuilder<Entity>
-    | DeleteRequestBuilder<Entity>
->(changeSet: ODataBatchChangeSet<T>): string | undefined {
+    | CreateRequestBuilderV2<EntityV2>
+    | UpdateRequestBuilderV2<EntityV2>
+    | DeleteRequestBuilderV2<EntityV2>
+>(changeSet: ODataBatchChangeSetV2<T>): string | undefined {
   if (changeSet.requests.length === 0) {
     return;
   }
@@ -94,14 +94,14 @@ function toBatchChangeSetBody<
  */
 function toRequestPayload(
   request:
-    | CreateRequestBuilder<Entity>
-    | UpdateRequestBuilder<Entity>
-    | DeleteRequestBuilder<Entity>,
+    | CreateRequestBuilderV2<EntityV2>
+    | UpdateRequestBuilderV2<EntityV2>
+    | DeleteRequestBuilderV2<EntityV2>,
   changeSetId: string
 ): string {
   if (
-    request instanceof CreateRequestBuilder ||
-    request instanceof UpdateRequestBuilder
+    request instanceof CreateRequestBuilderV2 ||
+    request instanceof UpdateRequestBuilderV2
   ) {
     request.prepare();
   }
@@ -125,13 +125,13 @@ function toRequestPayload(
 
 function toEtagHeaderValue(
   request:
-    | CreateRequestBuilder<Entity>
-    | UpdateRequestBuilder<Entity>
-    | DeleteRequestBuilder<Entity>
+    | CreateRequestBuilderV2<EntityV2>
+    | UpdateRequestBuilderV2<EntityV2>
+    | DeleteRequestBuilderV2<EntityV2>
 ): string | undefined {
   if (
-    request instanceof UpdateRequestBuilder ||
-    request instanceof DeleteRequestBuilder
+    request instanceof UpdateRequestBuilderV2 ||
+    request instanceof DeleteRequestBuilderV2
   ) {
     if (request.requestConfig.versionIdentifierIgnored) {
       return '*';
@@ -140,3 +140,6 @@ function toEtagHeaderValue(
   }
   return;
 }
+
+export { ODataBatchChangeSetV2 as ODataBatchChangeSet };
+export { toBatchChangeSetV2 as toBatchChangeSet };

@@ -1,4 +1,4 @@
-import { ActionImportRequestBuilder } from '@sap-cloud-sdk/core/v4';
+import { ActionImportRequestBuilder } from '@sap-cloud-sdk/core';
 /**
  * Type of the parameters to be passed to [[resetDataSource]].
  */

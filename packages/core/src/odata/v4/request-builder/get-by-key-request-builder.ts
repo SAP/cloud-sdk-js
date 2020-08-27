@@ -7,8 +7,8 @@ import {
   FieldType,
   Selectable
 } from '../../common';
-import { Entity } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
+import { EntityV4 } from '../entity';
+import { deserializeEntityV4 } from '../entity-deserializer';
 import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
@@ -17,18 +17,18 @@ import {
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
 import { Expandable } from '../../common/expandable';
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV4 } from '../uri-conversion';
 import { HttpReponse } from '../../../http-client';
 import { getSingleResult } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.
- * The properties available in the response can be restricted by creating a [[GetByKeyRequestBuilder.select selection]], where no selection is equal to selecting all fields of the entity.
- * Navigational properties need to expanded explicitly by [[GetAllRequestBuilder.expand]].
+ * The properties available in the response can be restricted by creating a [[GetByKeyRequestBuilderV4.select selection]], where no selection is equal to selecting all fields of the entity.
+ * Navigational properties need to expanded explicitly by [[GetAllRequestBuilderV4.expand]].
  * where no selection is equal to selecting all fields.
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilder<EntityT extends Entity>
+export class GetByKeyRequestBuilderV4<EntityT extends EntityV4>
   extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
@@ -43,7 +43,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     keys: MapType<FieldType>
   ) {
-    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUri));
+    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUriV4));
     this.requestConfig.keys = keys;
   }
 
@@ -77,7 +77,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        deserializeEntity(
+        deserializeEntityV4(
           getSingleResult(response.data),
           this._entityConstructor,
           response.headers

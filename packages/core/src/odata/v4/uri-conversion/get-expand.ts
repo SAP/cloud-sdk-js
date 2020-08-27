@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { Entity } from '../entity';
+import { EntityV4 } from '../entity';
 import { Expandable } from '../../common/expandable';
 import {
   Constructable,
@@ -10,8 +10,8 @@ import {
   createGetFilter
 } from '../../common';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
-import { getSelect } from './get-select';
-import { uriConverter } from './uri-value-converter';
+import { getSelectV4 } from './get-select';
+import { uriConverterV4 } from './uri-value-converter';
 
 function prependDollar(param: string): string {
   return `$${param}`;
@@ -25,7 +25,7 @@ function prependDollar(param: string): string {
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
  */
-export function getExpand<EntityT extends Entity>(
+export function getExpandV4<EntityT extends EntityV4>(
   expands: Expandable<EntityT>[] = [],
   entityConstructor: Constructable<EntityT>
 ): Partial<{ expand: string }> {
@@ -38,7 +38,7 @@ export function getExpand<EntityT extends Entity>(
     : {};
 }
 
-function getExpandAsString<EntityT extends Entity>(
+function getExpandAsString<EntityT extends EntityV4>(
   expand: Expandable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): string {
@@ -51,14 +51,14 @@ function getExpandAsString<EntityT extends Entity>(
   if (expand instanceof Link) {
     params = {
       ...params,
-      ...getSelect(expand._selects),
-      ...getExpand(expand._expand, expand._linkedEntity)
+      ...getSelectV4(expand._selects),
+      ...getExpandV4(expand._expand, expand._linkedEntity)
     };
 
     if (expand instanceof OneToManyLink) {
       params = {
         ...params,
-        ...createGetFilter(uriConverter).getFilter(
+        ...createGetFilter(uriConverterV4).getFilter(
           and(...expand._filters?.filters),
           entityConstructor
         ),

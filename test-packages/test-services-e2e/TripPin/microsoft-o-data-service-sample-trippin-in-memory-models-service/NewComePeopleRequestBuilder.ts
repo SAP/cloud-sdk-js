@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core/v4';
+import { RequestBuilder, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, CreateRequestBuilderV4, UpdateRequestBuilderV4, DeleteRequestBuilderV4 } from '@sap-cloud-sdk/core';
 import { NewComePeople } from './NewComePeople';
 
 /**
@@ -15,16 +15,16 @@ export class NewComePeopleRequestBuilder extends RequestBuilder<NewComePeople> {
    * @param userName Key property. See [[NewComePeople.userName]].
    * @returns A request builder for creating requests to retrieve one `NewComePeople` entity based on its keys.
    */
-  getByKey(userName: string): GetByKeyRequestBuilder<NewComePeople> {
-    return new GetByKeyRequestBuilder(NewComePeople, { UserName: userName });
+  getByKey(userName: string): GetByKeyRequestBuilderV4<NewComePeople> {
+    return new GetByKeyRequestBuilderV4(NewComePeople, { UserName: userName });
   }
 
   /**
    * Returns a request builder for querying all `NewComePeople` entities.
    * @returns A request builder for creating requests to retrieve all `NewComePeople` entities.
    */
-  getAll(): GetAllRequestBuilder<NewComePeople> {
-    return new GetAllRequestBuilder(NewComePeople);
+  getAll(): GetAllRequestBuilderV4<NewComePeople> {
+    return new GetAllRequestBuilderV4(NewComePeople);
   }
 
   /**
@@ -32,8 +32,8 @@ export class NewComePeopleRequestBuilder extends RequestBuilder<NewComePeople> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `NewComePeople`.
    */
-  create(entity: NewComePeople): CreateRequestBuilder<NewComePeople> {
-    return new CreateRequestBuilder(NewComePeople, entity);
+  create(entity: NewComePeople): CreateRequestBuilderV4<NewComePeople> {
+    return new CreateRequestBuilderV4(NewComePeople, entity);
   }
 
   /**
@@ -41,8 +41,8 @@ export class NewComePeopleRequestBuilder extends RequestBuilder<NewComePeople> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `NewComePeople`.
    */
-  update(entity: NewComePeople): UpdateRequestBuilder<NewComePeople> {
-    return new UpdateRequestBuilder(NewComePeople, entity);
+  update(entity: NewComePeople): UpdateRequestBuilderV4<NewComePeople> {
+    return new UpdateRequestBuilderV4(NewComePeople, entity);
   }
 
   /**
@@ -50,14 +50,14 @@ export class NewComePeopleRequestBuilder extends RequestBuilder<NewComePeople> {
    * @param userName Key property. See [[NewComePeople.userName]].
    * @returns A request builder for creating requests that delete an entity of type `NewComePeople`.
    */
-  delete(userName: string): DeleteRequestBuilder<NewComePeople>;
+  delete(userName: string): DeleteRequestBuilderV4<NewComePeople>;
   /**
    * Returns a request builder for deleting an entity of type `NewComePeople`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `NewComePeople` by taking the entity as a parameter.
    */
-  delete(entity: NewComePeople): DeleteRequestBuilder<NewComePeople>;
-  delete(userNameOrEntity: any): DeleteRequestBuilder<NewComePeople> {
-    return new DeleteRequestBuilder(NewComePeople, userNameOrEntity instanceof NewComePeople ? userNameOrEntity : { UserName: userNameOrEntity! });
+  delete(entity: NewComePeople): DeleteRequestBuilderV4<NewComePeople>;
+  delete(userNameOrEntity: any): DeleteRequestBuilderV4<NewComePeople> {
+    return new DeleteRequestBuilderV4(NewComePeople, userNameOrEntity instanceof NewComePeople ? userNameOrEntity : { UserName: userNameOrEntity! });
   }
 }

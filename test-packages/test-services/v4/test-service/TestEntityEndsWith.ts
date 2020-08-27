@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
-export class TestEntityEndsWith extends Entity implements TestEntityEndsWithType {
+export class TestEntityEndsWith extends EntityV4 implements TestEntityEndsWithType {
   /**
    * Technical entity name for TestEntityEndsWith.
    */
@@ -34,7 +34,7 @@ export class TestEntityEndsWith extends Entity implements TestEntityEndsWithType
    * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
    */
   static builder(): EntityBuilderType<TestEntityEndsWith, TestEntityEndsWithTypeForceMandatory> {
-    return Entity.entityBuilder(TestEntityEndsWith);
+    return EntityV4.entityBuilder(TestEntityEndsWith);
   }
 
   /**
@@ -50,8 +50,8 @@ export class TestEntityEndsWith extends Entity implements TestEntityEndsWithType
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
    */
-  static customField(fieldName: string): CustomField<TestEntityEndsWith> {
-    return Entity.customFieldSelector(fieldName, TestEntityEndsWith);
+  static customField(fieldName: string): CustomFieldV4<TestEntityEndsWith> {
+    return EntityV4.customFieldSelector(fieldName, TestEntityEndsWith);
   }
 
   /**

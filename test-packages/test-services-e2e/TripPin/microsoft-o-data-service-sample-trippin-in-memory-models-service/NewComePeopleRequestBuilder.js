@@ -19,7 +19,7 @@ exports.NewComePeopleRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var v4_1 = require("@sap-cloud-sdk/core/v4");
+var core_1 = require("@sap-cloud-sdk/core");
 var NewComePeople_1 = require("./NewComePeople");
 /**
  * Request builder class for operations supported on the [[NewComePeople]] entity.
@@ -35,14 +35,14 @@ var NewComePeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `NewComePeople` entity based on its keys.
      */
     NewComePeopleRequestBuilder.prototype.getByKey = function (userName) {
-        return new v4_1.GetByKeyRequestBuilder(NewComePeople_1.NewComePeople, { UserName: userName });
+        return new core_1.GetByKeyRequestBuilderV4(NewComePeople_1.NewComePeople, { UserName: userName });
     };
     /**
      * Returns a request builder for querying all `NewComePeople` entities.
      * @returns A request builder for creating requests to retrieve all `NewComePeople` entities.
      */
     NewComePeopleRequestBuilder.prototype.getAll = function () {
-        return new v4_1.GetAllRequestBuilder(NewComePeople_1.NewComePeople);
+        return new core_1.GetAllRequestBuilderV4(NewComePeople_1.NewComePeople);
     };
     /**
      * Returns a request builder for creating a `NewComePeople` entity.
@@ -50,7 +50,7 @@ var NewComePeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `NewComePeople`.
      */
     NewComePeopleRequestBuilder.prototype.create = function (entity) {
-        return new v4_1.CreateRequestBuilder(NewComePeople_1.NewComePeople, entity);
+        return new core_1.CreateRequestBuilderV4(NewComePeople_1.NewComePeople, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `NewComePeople`.
@@ -58,12 +58,12 @@ var NewComePeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `NewComePeople`.
      */
     NewComePeopleRequestBuilder.prototype.update = function (entity) {
-        return new v4_1.UpdateRequestBuilder(NewComePeople_1.NewComePeople, entity);
+        return new core_1.UpdateRequestBuilderV4(NewComePeople_1.NewComePeople, entity);
     };
     NewComePeopleRequestBuilder.prototype.delete = function (userNameOrEntity) {
-        return new v4_1.DeleteRequestBuilder(NewComePeople_1.NewComePeople, userNameOrEntity instanceof NewComePeople_1.NewComePeople ? userNameOrEntity : { UserName: userNameOrEntity });
+        return new core_1.DeleteRequestBuilderV4(NewComePeople_1.NewComePeople, userNameOrEntity instanceof NewComePeople_1.NewComePeople ? userNameOrEntity : { UserName: userNameOrEntity });
     };
     return NewComePeopleRequestBuilder;
-}(v4_1.RequestBuilder));
+}(core_1.RequestBuilder));
 exports.NewComePeopleRequestBuilder = NewComePeopleRequestBuilder;
 //# sourceMappingURL=NewComePeopleRequestBuilder.js.map

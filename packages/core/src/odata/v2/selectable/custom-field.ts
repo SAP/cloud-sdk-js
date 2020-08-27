@@ -1,10 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import type { Entity } from '../entity';
+import type { EntityV2 } from '../entity';
 import { CustomFieldBase } from '../../common/selectable/custom-field';
 import { DateField, TimeField } from '../../common';
 
-export class CustomField<EntityT extends Entity> extends CustomFieldBase<
+export class CustomFieldV2<EntityT extends EntityV2> extends CustomFieldBase<
   EntityT
 > {
   edmDateTime(): DateField<EntityT> {
@@ -22,3 +22,5 @@ export class CustomField<EntityT extends Entity> extends CustomFieldBase<
     );
   }
 }
+
+export { CustomFieldV2 as CustomField };

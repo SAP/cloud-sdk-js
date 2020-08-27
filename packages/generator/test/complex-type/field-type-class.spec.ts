@@ -5,11 +5,11 @@ import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
 
 describe('field-type-class', () => {
   it('fieldTypeClass', () => {
-    const actual = fieldTypeClass(complexMeal);
+    const actual = fieldTypeClass(complexMeal, 'v2');
 
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealField<EntityT extends Entity>',
+      name: 'ComplexMealField<EntityT extends EntityV2>',
       extends: 'ComplexTypeField<EntityT, ComplexMealType>',
       isExported: true,
       properties: [
@@ -59,10 +59,10 @@ describe('field-type-class', () => {
   });
 
   it('fieldTypeClass with nested complex types', () => {
-    const actual = fieldTypeClass(complexMealWithDesert);
+    const actual = fieldTypeClass(complexMealWithDesert, 'v4');
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealWithDesertField<EntityT extends Entity>',
+      name: 'ComplexMealWithDesertField<EntityT extends EntityV4>',
       extends: 'ComplexTypeField<EntityT, ComplexMealWithDesertType>',
       isExported: true,
       properties: [

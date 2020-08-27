@@ -57,7 +57,8 @@ export function generateFunctionImportsV4(
       returnType: parseFunctionImportReturnTypes(
         edmxFunction.ReturnType?.Type,
         entities,
-        complexTypes
+        complexTypes,
+        serviceMetadata.edmx.oDataVersion
       )
     };
   });

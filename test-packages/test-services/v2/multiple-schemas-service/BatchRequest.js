@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilder(exports.defaultMultipleSchemasServicePath, requests, map);
+    return new core_1.ODataBatchRequestBuilderV2(exports.defaultMultipleSchemasServicePath, requests, map);
 }
 exports.batch = batch;
 /**
@@ -31,7 +31,7 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSet(requests);
+    return new core_1.ODataBatchChangeSetV2(requests);
 }
 exports.changeset = changeset;
 exports.defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/SCHEMA_DATA';

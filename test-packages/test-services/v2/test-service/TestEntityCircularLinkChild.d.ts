@@ -1,9 +1,9 @@
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, Link, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, Link, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
-export declare class TestEntityCircularLinkChild extends Entity implements TestEntityCircularLinkChildType {
+export declare class TestEntityCircularLinkChild extends EntityV2 implements TestEntityCircularLinkChildType {
     /**
      * Technical entity name for TestEntityCircularLinkChild.
      */
@@ -40,7 +40,7 @@ export declare class TestEntityCircularLinkChild extends Entity implements TestE
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
      */
-    static customField(fieldName: string): CustomField<TestEntityCircularLinkChild>;
+    static customField(fieldName: string): CustomFieldV2<TestEntityCircularLinkChild>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

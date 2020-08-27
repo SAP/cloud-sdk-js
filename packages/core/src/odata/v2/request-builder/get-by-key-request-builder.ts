@@ -7,8 +7,8 @@ import {
   FieldType,
   Selectable
 } from '../../common';
-import { Entity } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
+import { EntityV2 } from '../entity';
+import { deserializeEntityV2 } from '../entity-deserializer';
 import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
@@ -16,16 +16,16 @@ import {
 } from '../../../scp-cf/destination-service-types';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
-import { oDataUri } from '../uri-conversion';
+import { oDataUriV2 } from '../uri-conversion';
 import { getSingleResult } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.
- * The properties available in the response can be restricted by creating a [[GetAllRequestBuilder.select selection]], where no selection is equal to selecting all fields.
+ * The properties available in the response can be restricted by creating a [[GetAllRequestBuilderV2.select selection]], where no selection is equal to selecting all fields.
  * Note that navigational properties are automatically expanded if they included in a  select.
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilder<EntityT extends Entity>
+export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
   extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
@@ -40,7 +40,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     readonly _entityConstructor: Constructable<EntityT>,
     keys: MapType<FieldType>
   ) {
-    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUri));
+    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUriV2));
     this.requestConfig.keys = keys;
   }
 
@@ -69,7 +69,7 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        deserializeEntity(
+        deserializeEntityV2(
           getSingleResult(response.data),
           this._entityConstructor,
           response.headers
@@ -82,3 +82,5 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
       );
   }
 }
+
+export { GetByKeyRequestBuilderV2 as GetByKeyRequestBuilder };

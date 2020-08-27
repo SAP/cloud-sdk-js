@@ -6,7 +6,7 @@
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
-import { ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, Time, deserializeComplexType } from '../../../../../src';
+import { ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, EntityV2, FieldType, PropertyMetadata, Time, deserializeComplexTypeV2 } from '../../../../../src';
 
 /**
  * TestComplexType
@@ -109,7 +109,7 @@ export function createTestComplexType_1(json: any): TestComplexType {
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, TestComplexType> {
+export class TestComplexTypeField<EntityT extends EntityV2> extends ComplexTypeField<EntityT, TestComplexType> {
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -299,9 +299,9 @@ export namespace TestComplexType {
   }];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | TestNestedComplexType }): TestComplexType {
-    return deserializeComplexType(json, TestComplexType);
+    return deserializeComplexTypeV2(json, TestComplexType);
   }
 }

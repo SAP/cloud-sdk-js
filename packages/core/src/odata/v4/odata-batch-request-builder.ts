@@ -19,19 +19,19 @@ import {
 } from '../common';
 import { MethodRequestBuilderBase } from '../common/request-builder/request-builder-base';
 import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
-import { Entity } from './entity';
-import { deserializeEntity } from './entity-deserializer';
+import { EntityV4 } from './entity';
+import { deserializeEntityV4 } from './entity-deserializer';
 import {
-  toBatchChangeSet,
-  ODataBatchChangeSet
+  toBatchChangeSetV4,
+  ODataBatchChangeSetV4
 } from './odata-batch-change-set';
-import { toBatchRetrieveBody } from './odata-batch-retrieve-request';
+import { toBatchRetrieveBodyV4 } from './odata-batch-retrieve-request';
 import {
-  CreateRequestBuilder,
-  DeleteRequestBuilder,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  UpdateRequestBuilder
+  CreateRequestBuilderV4,
+  DeleteRequestBuilderV4,
+  GetAllRequestBuilderV4,
+  GetByKeyRequestBuilderV4,
+  UpdateRequestBuilderV4
 } from './request-builder';
 import {
   isCollectionResult,
@@ -45,7 +45,7 @@ const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
  * The OData batch request builder to build a batch, which consists of an ordered retrieve requests or change sets.
  *
  */
-export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
+export class ODataBatchRequestBuilderV4 extends MethodRequestBuilderBase<
   ODataBatchRequestConfig
 > {
   /**
@@ -58,15 +58,15 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
   constructor(
     readonly defaultServicePath: string,
     readonly requests: (
-      | ODataBatchChangeSet<
-          | CreateRequestBuilder<Entity>
-          | UpdateRequestBuilder<Entity>
-          | DeleteRequestBuilder<Entity>
+      | ODataBatchChangeSetV4<
+          | CreateRequestBuilderV4<EntityV4>
+          | UpdateRequestBuilderV4<EntityV4>
+          | DeleteRequestBuilderV4<EntityV4>
         >
-      | GetAllRequestBuilder<Entity>
-      | GetByKeyRequestBuilder<Entity>
+      | GetAllRequestBuilderV4<EntityV4>
+      | GetByKeyRequestBuilderV4<EntityV4>
     )[],
-    readonly entityToConstructorMap: MapType<Constructable<Entity>>
+    readonly entityToConstructorMap: MapType<Constructable<EntityV4>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath, uuid()));
     this.requestConfig.payload = getPayload(requests, this.requestConfig);
@@ -127,13 +127,13 @@ export class ODataBatchRequestBuilder extends MethodRequestBuilderBase<
  */
 function getPayload(
   requests: (
-    | ODataBatchChangeSet<
-        | CreateRequestBuilder<Entity>
-        | UpdateRequestBuilder<Entity>
-        | DeleteRequestBuilder<Entity>
+    | ODataBatchChangeSetV4<
+        | CreateRequestBuilderV4<EntityV4>
+        | UpdateRequestBuilderV4<EntityV4>
+        | DeleteRequestBuilderV4<EntityV4>
       >
-    | GetAllRequestBuilder<Entity>
-    | GetByKeyRequestBuilder<Entity>
+    | GetAllRequestBuilderV4<EntityV4>
+    | GetByKeyRequestBuilderV4<EntityV4>
   )[],
   requestConfig: ODataBatchRequestConfig
 ): string {
@@ -155,23 +155,23 @@ function getPayload(
 
 function toRequestBody<
   T extends
-    | CreateRequestBuilder<Entity>
-    | UpdateRequestBuilder<Entity>
-    | DeleteRequestBuilder<Entity>
+    | CreateRequestBuilderV4<EntityV4>
+    | UpdateRequestBuilderV4<EntityV4>
+    | DeleteRequestBuilderV4<EntityV4>
 >(
   request:
-    | ODataBatchChangeSet<T>
-    | GetAllRequestBuilder<Entity>
-    | GetByKeyRequestBuilder<Entity>
+    | ODataBatchChangeSetV4<T>
+    | GetAllRequestBuilderV4<EntityV4>
+    | GetByKeyRequestBuilderV4<EntityV4>
 ): string | undefined {
   if (
-    request instanceof GetAllRequestBuilder ||
-    request instanceof GetByKeyRequestBuilder
+    request instanceof GetAllRequestBuilderV4 ||
+    request instanceof GetByKeyRequestBuilderV4
   ) {
-    return toBatchRetrieveBody(request);
+    return toBatchRetrieveBodyV4(request);
   }
-  if (request instanceof ODataBatchChangeSet) {
-    return toBatchChangeSet(request);
+  if (request instanceof ODataBatchChangeSetV4) {
+    return toBatchChangeSetV4(request);
   }
   throw Error(
     `The request: ${JSON.stringify(
@@ -182,7 +182,7 @@ function toRequestBody<
 
 function buildResponses(
   responses: string[],
-  entityToConstructorMap: MapType<Constructable<Entity>>,
+  entityToConstructorMap: MapType<Constructable<EntityV4>>,
   lineBreak: string
 ): BatchResponse[] {
   return responses.map(r =>
@@ -192,7 +192,7 @@ function buildResponses(
 
 function buildResponse(
   response: string,
-  entityToConstructorMap: MapType<Constructable<Entity>>,
+  entityToConstructorMap: MapType<Constructable<EntityV4>>,
   lineBreak: string
 ) {
   if (isChangeSet(response)) {
@@ -212,7 +212,7 @@ function buildResponse(
   );
 }
 
-const asReadResponse = body => <T extends Entity>(
+const asReadResponse = body => <T extends EntityV4>(
   constructor: Constructable<T>
 ): Error | T[] => {
   if (body.error) {
@@ -220,13 +220,13 @@ const asReadResponse = body => <T extends Entity>(
   }
   if (isCollectionResult(body)) {
     return getCollectionResult(body).map(r =>
-      deserializeEntity(r, constructor)
+      deserializeEntityV4(r, constructor)
     );
   }
-  return [deserializeEntity(getSingleResult(body), constructor)];
+  return [deserializeEntityV4(getSingleResult(body), constructor)];
 };
 
-const asWriteResponse = body => <T extends Entity>(
+const asWriteResponse = body => <T extends EntityV4>(
   constructor: Constructable<T>
 ) => {
   const resultData = getSingleResult(body);
@@ -234,7 +234,7 @@ const asWriteResponse = body => <T extends Entity>(
     throw Error('The metadata of the response body is undefined.');
   }
 
-  return deserializeEntity(resultData, constructor);
+  return deserializeEntityV4(resultData, constructor);
 };
 
 /*
@@ -316,8 +316,8 @@ function trimRetrieveHeaders(
 
 function toConstructableFromChangeSetResponse(
   responseBody: any,
-  entityToConstructorMap: MapType<Constructable<Entity>>
-): Constructable<Entity> | undefined {
+  entityToConstructorMap: MapType<Constructable<EntityV4>>
+): Constructable<EntityV4> | undefined {
   return entityToConstructorMap[
     getEntityNameFromMetadata(getSingleResult(responseBody).__metadata)
   ];
@@ -325,8 +325,8 @@ function toConstructableFromChangeSetResponse(
 
 function toConstructableFromRetrieveResponse(
   responseBody: any,
-  entityToConstructorMap: MapType<Constructable<Entity>>
-): Constructable<Entity> {
+  entityToConstructorMap: MapType<Constructable<EntityV4>>
+): Constructable<EntityV4> {
   const entityJson = isCollectionResult(responseBody)
     ? getCollectionResult(responseBody)[0]
     : getSingleResult(responseBody);
@@ -390,7 +390,7 @@ function toHttpCode(response: string): number {
 function toWriteResponseArray(
   response: string,
   lineBreak: string,
-  entityToConstructorMap: MapType<Constructable<Entity>>
+  entityToConstructorMap: MapType<Constructable<EntityV4>>
 ): WriteResponse[] {
   return partitionChangeSetResponse(response, lineBreak).map(r => {
     if (isNoContent(r)) {
@@ -420,7 +420,7 @@ function toWriteResponseArray(
 
 function buildWriteResponses(
   response: string,
-  entityToConstructorMap: MapType<Constructable<Entity>>,
+  entityToConstructorMap: MapType<Constructable<EntityV4>>,
   lineBreak: string
 ): WriteResponses {
   const writeResponses = toWriteResponseArray(
@@ -433,7 +433,7 @@ function buildWriteResponses(
 
 function buildRetrieveOrErrorResponse(
   response: string,
-  entityToConstructorMap: MapType<Constructable<Entity>>,
+  entityToConstructorMap: MapType<Constructable<EntityV4>>,
   lineBreak: string
 ): ReadResponse | ErrorResponse {
   const parsedBody = JSON.parse(trimRetrieveHeaders(response, lineBreak));

@@ -5,7 +5,7 @@ import { complexMeal, complexMealWithDesert } from '../test-util/data-model';
 
 describe('namespace', () => {
   it('complexTypeSourceFile', () => {
-    const actual = complexTypeNamespace(complexMeal);
+    const actual = complexTypeNamespace(complexMeal, 'v2');
     expect(actual).toEqual({
       kind: StructureKind.Namespace,
       name: 'ComplexMealType',
@@ -46,10 +46,10 @@ describe('namespace', () => {
               type: '{ [keys: string]: FieldType }'
             }
           ],
-          statements: 'return deserializeComplexType(json, ComplexMealType);',
+          statements: 'return deserializeComplexTypeV2(json, ComplexMealType);',
           isExported: true,
           docs: [
-            '\n@deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.'
+            '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
           ]
         }
       ]
@@ -57,7 +57,7 @@ describe('namespace', () => {
   });
 
   it('should generate a builder when a complex type includes a complex type property', () => {
-    const actual = complexTypeNamespace(complexMealWithDesert);
+    const actual = complexTypeNamespace(complexMealWithDesert, 'v4');
     expect(actual).toEqual({
       kind: StructureKind.Namespace,
       name: 'ComplexMealWithDesertType',
@@ -99,10 +99,10 @@ describe('namespace', () => {
             }
           ],
           statements:
-            'return deserializeComplexType(json, ComplexMealWithDesertType);',
+            'return deserializeComplexTypeV4(json, ComplexMealWithDesertType);',
           isExported: true,
           docs: [
-            '\n@deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.'
+            '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
           ]
         }
       ]

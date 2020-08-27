@@ -1,10 +1,10 @@
 import { AirportsRequestBuilder } from './AirportsRequestBuilder';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, StringField } from '@sap-cloud-sdk/core/v4';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
  */
-export declare class Airports extends Entity implements AirportsType {
+export declare class Airports extends EntityV4 implements AirportsType {
     /**
      * Technical entity name for Airports.
      */
@@ -52,7 +52,7 @@ export declare class Airports extends Entity implements AirportsType {
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `Airports`.
      */
-    static customField(fieldName: string): CustomField<Airports>;
+    static customField(fieldName: string): CustomFieldV4<Airports>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

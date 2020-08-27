@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
+import { caps } from '@sap-cloud-sdk/util';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 
@@ -20,7 +21,7 @@ export function functionImportFunction(
         type: functionImport.parametersTypeName
       }
     ],
-    returnType: `FunctionImportRequestBuilder<${
+    returnType: `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
       functionImport.parametersTypeName
     }, ${functionImport.returnType.returnType}${
       functionImport.returnType.isCollection ? '[]' : ''
@@ -56,9 +57,9 @@ function getFunctionImportStatements(
     parameters = [`'${functionImport.httpMethod}'`, ...parameters];
   }
 
-  const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(
-    ', '
-  )});`;
+  const returnStatement = `return new FunctionImportRequestBuilder${caps(
+    service.oDataVersion
+  )}(${parameters.join(', ')});`;
 
   return context + '\n\n' + returnStatement;
 }

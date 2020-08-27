@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
-import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
+import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = TestEntity._entityName;

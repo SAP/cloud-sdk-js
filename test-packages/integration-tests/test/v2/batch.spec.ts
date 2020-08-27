@@ -10,19 +10,19 @@ import {
   getByKeyRequest,
   patchRequest,
   putRequest
-} from './test-data/batch-sub-requests';
+} from '../test-data/batch-sub-requests';
 import {
   mixedBatchRequest,
   mixedErrorRequest,
   multiChangesetBatchRequest,
   multiRetrieveRequest
-} from './test-data/batch/requests';
+} from '../test-data/batch/requests';
 import {
   mixedBatchResponse,
   mixedErrorResponse,
   multiChangesetBatchResponse,
   multiRetrieveResponse
-} from './test-data/batch/responses';
+} from '../test-data/batch/responses';
 
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';

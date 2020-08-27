@@ -7,7 +7,7 @@ import {
 } from '@sap-cloud-sdk/test-util';
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/core';
-import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
+import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 
 describe('mockAllTestDestinations', () => {
   afterEach(() => {

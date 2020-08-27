@@ -7,7 +7,7 @@ import nock from 'nock';
 import {
   testEntityKeyPropGuid,
   testEntityKeyPropString
-} from './test-data/keys';
+} from '../test-data/keys';
 
 function mockCsrfTokenRequest(
   host: string,

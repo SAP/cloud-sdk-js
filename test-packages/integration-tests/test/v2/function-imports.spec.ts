@@ -2,8 +2,8 @@
 import { basicHeader, Destination } from '@sap-cloud-sdk/core';
 import { functionImports } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
-import { errorResponse } from './test-data/error-response';
-import { singleTestEntityResponse } from './test-data/single-test-entity-response';
+import { errorResponse } from '../test-data/error-response';
+import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';

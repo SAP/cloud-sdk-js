@@ -9,19 +9,19 @@ import { basicHeader } from '@sap-cloud-sdk/core';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall
-} from '../../../packages/core/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
   mockDestinationServiceBinding,
   mockServiceBindings,
   providerXsuaaUrl
-} from '../../../packages/core/test/test-util/environment-mocks';
-import { privateKey } from '../../../packages/core/test/test-util/keys';
-import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
-import { mockCsrfTokenRequest } from '../../../packages/core/test/test-util/request-mocker';
-import { singleTestEntityMultiLinkResponse } from './test-data/single-test-entity-multi-link-response';
-import { singleTestEntityResponse } from './test-data/single-test-entity-response';
-import { testEntityCollectionResponse } from './test-data/test-entity-collection-response';
+} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
+import { privateKey } from '@sap-cloud-sdk/core/test/test-util/keys';
+import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/core/test/test-util/xsuaa-service-mocks';
+import { mockCsrfTokenRequest } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
+import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
+import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
+import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';

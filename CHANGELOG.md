@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Move OData v4 support from experimental to GA status.
 
 ## Improvements
 

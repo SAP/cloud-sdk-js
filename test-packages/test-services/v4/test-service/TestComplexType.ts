@@ -7,7 +7,7 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
 import { TestEnumType } from './TestEnumType';
-import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeEnumPropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, Time, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
+import { CollectionField, ComplexTypeAnyPropertyField, ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeEnumPropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexType
@@ -62,16 +62,6 @@ export interface TestComplexType {
    * @nullable
    */
   floatProperty?: number;
-  /**
-   * Time Property.
-   * @nullable
-   */
-  timeProperty?: Time;
-  /**
-   * Date Time Property.
-   * @nullable
-   */
-  dateTimeProperty?: Moment;
   /**
    * Date Time Off Set Property.
    * @nullable
@@ -187,16 +177,6 @@ export class TestComplexTypeField<EntityT extends EntityV4> extends ComplexTypeF
    */
   floatProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('FloatProperty', this, 'Edm.Float');
   /**
-   * Representation of the [[TestComplexType.timeProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'filter' in the fluent request API.
-   */
-  timeProperty: ComplexTypeTimePropertyField<EntityT> = new ComplexTypeTimePropertyField('TimeProperty', this, 'Edm.Time');
-  /**
-   * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'filter' in the fluent request API.
-   */
-  dateTimeProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField('DateTimeProperty', this, 'Edm.DateTime');
-  /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
@@ -311,16 +291,6 @@ export namespace TestComplexType {
     originalName: 'FloatProperty',
     name: 'floatProperty',
     type: 'Edm.Float',
-    isCollection: false
-  }, {
-    originalName: 'TimeProperty',
-    name: 'timeProperty',
-    type: 'Edm.Time',
-    isCollection: false
-  }, {
-    originalName: 'DateTimeProperty',
-    name: 'dateTimeProperty',
-    type: 'Edm.DateTime',
     isCollection: false
   }, {
     originalName: 'DateTimeOffSetProperty',

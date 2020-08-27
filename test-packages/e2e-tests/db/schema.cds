@@ -10,7 +10,5 @@ entity TestEntity {
   DoubleProperty: Double;
   DecimalProperty: Decimal(9,2);
   DateProperty: Date;
-  TimeOfDayProperty: Time;
-  DataTimeOffsetDataTimeProperty: DateTime;
   DataTimeOffsetTimestampProperty: Timestamp;
 }

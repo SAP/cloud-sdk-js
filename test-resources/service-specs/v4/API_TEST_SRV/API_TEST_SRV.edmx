@@ -119,8 +119,6 @@
         <Property Name="SingleProperty" Type="Edm.Single"/>
         <Property Name="DoubleProperty" Type="Edm.Double"/>
         <Property Name="FloatProperty" Type="Edm.Float"/>
-        <Property Name="TimeProperty" Type="Edm.Time" Precision="0"/>
-        <Property Name="DateTimeProperty" Type="Edm.DateTime" Precision="0" sap:display-format="Date"/>
         <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
         <Property Name="ByteProperty" Type="Edm.Byte"/>
         <Property Name="SByteProperty" Type="Edm.SByte"/>

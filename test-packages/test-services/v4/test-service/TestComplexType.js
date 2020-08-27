@@ -88,16 +88,6 @@ var TestComplexTypeField = /** @class */ (function (_super) {
          */
         _this.floatProperty = new core_1.ComplexTypeNumberPropertyField('FloatProperty', _this, 'Edm.Float');
         /**
-         * Representation of the [[TestComplexType.timeProperty]] property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        _this.timeProperty = new core_1.ComplexTypeTimePropertyField('TimeProperty', _this, 'Edm.Time');
-        /**
-         * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        _this.dateTimeProperty = new core_1.ComplexTypeDatePropertyField('DateTimeProperty', _this, 'Edm.DateTime');
-        /**
          * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
@@ -206,16 +196,6 @@ var TestComplexType;
             originalName: 'FloatProperty',
             name: 'floatProperty',
             type: 'Edm.Float',
-            isCollection: false
-        }, {
-            originalName: 'TimeProperty',
-            name: 'timeProperty',
-            type: 'Edm.Time',
-            isCollection: false
-        }, {
-            originalName: 'DateTimeProperty',
-            name: 'dateTimeProperty',
-            type: 'Edm.DateTime',
             isCollection: false
         }, {
             originalName: 'DateTimeOffSetProperty',

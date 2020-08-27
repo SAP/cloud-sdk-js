@@ -30,7 +30,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ## 3.27.0 - August 27, 2020
 
-- [JavaDoc](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/index.html)
+- [JavaDoc](https://help.sap.com/doc/5271979a09384c8aaf7a8a4cde53fc7d/1.0/en-US/index.html)
 - [Release Blog](https://blogs.sap.com/?p=???)
 
 ### New functionality

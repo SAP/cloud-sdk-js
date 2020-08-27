@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { TestEntity } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
-import {moment} from 'moment';
-import * as mnt from 'moment';
+import moment from 'moment';
 
 const url = 'http://localhost:4004/';
 const destination = { url };
@@ -29,7 +28,7 @@ async function deleteEntity(key: EntityKey): Promise<void> {
 
 async function createEntity(
   key: EntityKey,
-  date: mnt.Moment
+  date: moment.Moment
 ): Promise<TestEntity> {
   const dataForCreation = TestEntity.builder()
     .keyPropertyInt(key.keyInt)

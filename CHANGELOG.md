@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [Generator] Skip generation of Batch.ts for services without entities.
 
 
 # 1.27.0

@@ -214,12 +214,17 @@ export async function generateSourcesForService(
 
   otherFile(serviceDir, 'tsconfig.json', tsConfig(), options.forceOverwrite);
 
-  sourceFile(
-    serviceDir,
-    'BatchRequest',
-    batchSourceFile(service),
-    options.forceOverwrite
-  );
+  if (service.entities && service.entities.length > 0) {
+    logger.info(
+      `Generating batch request builder for: ${service.namespace}...`
+    );
+    sourceFile(
+      serviceDir,
+      'BatchRequest',
+      batchSourceFile(service),
+      options.forceOverwrite
+    );
+  }
 
   service.entities.forEach(entity => {
     logger.info(`Generating entity: ${entity.className}...`);

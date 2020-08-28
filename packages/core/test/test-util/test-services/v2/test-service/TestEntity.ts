@@ -8,7 +8,7 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { AllFields, AnyField, BigNumberField, BooleanField, CustomFieldV2, DateField, EntityBuilderType, EntityV2, Field, Link, NumberField, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
-// test
+
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */

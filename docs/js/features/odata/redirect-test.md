@@ -1,5 +1,5 @@
 ---
-id: generator-js-sdk
+id: test
 title: Redirecting
 keywords:
 - sap
@@ -11,6 +11,5 @@ keywords:
 ---
 
 import {Redirect} from '@docusaurus/router';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
-<Redirect to={useBaseUrl('docs/js/features/odata/generate-odata-client')} />
+<Redirect to='odata-v2-client' />

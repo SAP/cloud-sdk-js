@@ -50,7 +50,10 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
-      - run: yarn generate:test-services:v2 && yarn generate:test-services:v4 && git diff --name-only
+      - run: yarn generate:test-services:v2 && yarn generate:test-services:v4
+      - run: git diff --name-only
+        id: git_diff_after_generating_test_services
+      - run:  echo "${steps.git_diff_after_generating_test_services.outputs}"
         name: TestEntity Version Check
       - run: exit 1
       - run: yarn lint

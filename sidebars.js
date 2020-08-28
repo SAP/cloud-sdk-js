@@ -31,7 +31,8 @@ module.exports = {
             type: 'category',
             label: 'Connectivity',
             items: [
-              'java/features/connectivity/sdk-connectivity-destination-service'
+              'java/features/connectivity/sdk-connectivity-destination-service',
+              'java/features/connectivity/sdk-connectivity-http-client'
             ]
           },
           'java/features/bapi-and-rfc/bapi-and-rfc-overview',
@@ -102,7 +103,7 @@ module.exports = {
           'java/guides/manage-dependencies',
           'java/guides/logging-overview',
           'java/guides/tutorial-overview-sdk-java',
-          'java/guides/sap-cloud-sdk-linux-how-to',
+          'java/guides/sap-cloud-sdk-linux-how-to'
           //       'java/how-to/test-odata-service',
           //       'java/how-to/build-client-for-cap',
           //       'java/how-to/cap-with-client-sdk',
@@ -125,7 +126,7 @@ module.exports = {
           'java/video/video-tutorial-about-getting-started-with-sap-cloudsdk-for-java',
           'java/video/video-tutorial-about-type-safe-client-generator-for-odata-with-sap-cloudsdk-for-java',
           'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java'
-        ],
+        ]
       },
       'java/sdk-java-troubleshooting-frequent-problems',
       'java/release-notes-sap-cloud-sdk-for-java',
@@ -143,9 +144,10 @@ module.exports = {
             label: 'OData',
             items: [
 
-              'js/features/odata/overview',              'js/features/odata/generate-typed-odata-v2-and-v4-client-for-javascript-and-typescript',
-              'js/features/odata/use-typed-odata-v2-client-for-javascript-and-typescript',
-              'js/features/odata/use-typed-odata-v4-client-for-javascript-and-typescript'
+              'js/features/odata/overview',
+              'js/features/odata/generate-odata-client',
+              'js/features/odata/odata-v2-client',
+              'js/features/odata/odata-v4-client'
             ]
           },
           {
@@ -163,7 +165,7 @@ module.exports = {
         label: 'Guides',
         items: [
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript'
-        ],
+        ]
       },
       'js/api-reference-js-ts',
       'js/release-notes-sap-cloud-sdk-for-javascript-and-typescript',
@@ -171,7 +173,7 @@ module.exports = {
     ],
     'Continuous Delivery': ['devops/getting-started'],
     // Support: ['support/support'],
-    'Community': ['community/community-call'],
+    Community: ['community/community-call'],
     'Related projects': [
       'related-projects/cloud-application-model',
       'related-projects/sap-xsuaa-security-library-for-javascript-and-java'

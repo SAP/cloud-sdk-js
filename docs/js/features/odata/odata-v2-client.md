@@ -1,8 +1,6 @@
 ---
-id: use-typed-odata-v2-client-for-javascript-and-typescript
+id: odata-v2-client
 title: Use the OData client for JavaScript / TypeScript
-hide_title: false
-hide_table_of_contents: false
 sidebar_label: Typed OData v2 client
 description: Use the SAP Cloud SDK for JavaScript to build and run OData v2 requests in a typesafe way.
 keywords:
@@ -14,7 +12,6 @@ keywords:
 - TypeScript
 - consume
 ---
-
 
 ## Making a request using a generated OData v2 client
 

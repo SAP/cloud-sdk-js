@@ -1,7 +1,7 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 
 ![build](https://github.com/SAP/cloud-sdk/workflows/build/badge.svg)
-# SAP Cloud SDK 
+# SAP Cloud SDK
 An SDK to reduce your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
 ## Looking for documentation?

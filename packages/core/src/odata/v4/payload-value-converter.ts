@@ -114,7 +114,9 @@ function timeToEdmTimeOfDay(value: Time): string {
 
 function padTimeComponent(timeComponent: number): string {
   const [wholeNumber, fractionalNumber] = timeComponent.toString().split('.');
-  return [wholeNumber.padStart(2, '0'), fractionalNumber].join('.');
+  return fractionalNumber
+    ? [wholeNumber.padStart(2, '0'), fractionalNumber].join('.')
+    : wholeNumber.padStart(2, '0');
 }
 export type EdmToPrimitiveV4<T extends EdmTypeV4> = T extends
   | 'Edm.Int16'

@@ -57,15 +57,15 @@ export interface TestComplexType {
      */
     floatProperty?: number;
     /**
-     * Time Property.
+     * Time Of Day Property.
      * @nullable
      */
-    timeProperty?: Time;
+    timeOfDayProperty?: Time;
     /**
-     * Date Time Property.
+     * Date Property.
      * @nullable
      */
-    dateTimeProperty?: Moment;
+    dateProperty?: Moment;
     /**
      * Date Time Off Set Property.
      * @nullable
@@ -177,15 +177,15 @@ export declare class TestComplexTypeField<EntityT extends EntityV4> extends Comp
      */
     floatProperty: ComplexTypeNumberPropertyField<EntityT>;
     /**
-     * Representation of the [[TestComplexType.timeProperty]] property for query construction.
+     * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    timeProperty: ComplexTypeTimePropertyField<EntityT>;
+    timeOfDayProperty: ComplexTypeTimePropertyField<EntityT>;
     /**
-     * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
+     * Representation of the [[TestComplexType.dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    dateTimeProperty: ComplexTypeDatePropertyField<EntityT>;
+    dateProperty: ComplexTypeDatePropertyField<EntityT>;
     /**
      * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

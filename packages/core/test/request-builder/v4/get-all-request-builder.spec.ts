@@ -40,6 +40,21 @@ describe('GetAllRequestBuilderV4', () => {
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
+
+    it('is built correctly for nested expands', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_MultiLink($expand=to_MultiLink1($expand=to_MultiLink2))';
+      const actual = await requestBuilder
+        .expand(
+          TestEntity.TO_MULTI_LINK.expand(
+            TestEntityMultiLink.TO_MULTI_LINK_1.expand(
+              TestEntityLvl2MultiLink.TO_MULTI_LINK_2.expand()
+            )
+          )
+        )
+        .url(defaultDestination);
+      expect(actual).toBe(expected);
+    });
   });
 
   describe('execute', () => {
@@ -115,7 +130,7 @@ describe('GetAllRequestBuilderV4', () => {
         {
           query: {
             $expand:
-              "to_SingleLink,to_MultiLink($filter=((to_MultiLink/any(a0:(a0/StringProperty ne 'test')))))"
+              "to_SingleLink,to_MultiLink($filter=((to_MultiLink1/any(a0:(a0/StringProperty ne 'test')))))"
           },
           responseBody: { value: [testEntity] }
         },
@@ -125,7 +140,7 @@ describe('GetAllRequestBuilderV4', () => {
         .expand(
           TestEntity.TO_SINGLE_LINK,
           TestEntity.TO_MULTI_LINK.filter(
-            TestEntityMultiLink.TO_MULTI_LINK.filter(
+            TestEntityMultiLink.TO_MULTI_LINK_1.filter(
               any(TestEntityLvl2MultiLink.STRING_PROPERTY.notEquals('test'))
             )
           )

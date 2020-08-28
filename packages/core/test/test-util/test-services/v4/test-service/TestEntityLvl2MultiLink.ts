@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, StringField } from '../../../../../src';
+import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, StringField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
@@ -49,6 +49,10 @@ export class TestEntityLvl2MultiLink extends EntityV4 implements TestEntityLvl2M
    * Maximum length: 10.
    */
   keyProperty!: string;
+  /**
+   * One-to-many navigation property to the [[TestEntityLvl3MultiLink]] entity.
+   */
+  toMultiLink2!: TestEntityLvl3MultiLink[];
 
   /**
    * Returns an entity builder to construct instances `TestEntityLvl2MultiLink`.
@@ -84,12 +88,15 @@ export class TestEntityLvl2MultiLink extends EntityV4 implements TestEntityLvl2M
   }
 }
 
+import { TestEntityLvl3MultiLink, TestEntityLvl3MultiLinkType } from './TestEntityLvl3MultiLink';
+
 export interface TestEntityLvl2MultiLinkType {
   stringProperty?: string;
   booleanProperty?: boolean;
   guidProperty?: string;
   int16Property?: number;
   keyProperty: string;
+  toMultiLink2: TestEntityLvl3MultiLinkType[];
 }
 
 export interface TestEntityLvl2MultiLinkTypeForceMandatory {
@@ -98,6 +105,7 @@ export interface TestEntityLvl2MultiLinkTypeForceMandatory {
   guidProperty: string;
   int16Property: number;
   keyProperty: string;
+  toMultiLink2: TestEntityLvl3MultiLinkType[];
 }
 
 export namespace TestEntityLvl2MultiLink {
@@ -127,14 +135,20 @@ export namespace TestEntityLvl2MultiLink {
    */
   export const KEY_PROPERTY: StringField<TestEntityLvl2MultiLink> = new StringField('KeyProperty', TestEntityLvl2MultiLink, 'Edm.String');
   /**
+   * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const TO_MULTI_LINK_2: OneToManyLink<TestEntityLvl2MultiLink, TestEntityLvl3MultiLink> = new OneToManyLink('to_MultiLink2', TestEntityLvl2MultiLink, TestEntityLvl3MultiLink);
+  /**
    * All fields of the TestEntityLvl2MultiLink entity.
    */
-  export const _allFields: Array<StringField<TestEntityLvl2MultiLink> | BooleanField<TestEntityLvl2MultiLink> | NumberField<TestEntityLvl2MultiLink>> = [
+  export const _allFields: Array<StringField<TestEntityLvl2MultiLink> | BooleanField<TestEntityLvl2MultiLink> | NumberField<TestEntityLvl2MultiLink> | OneToManyLink<TestEntityLvl2MultiLink, TestEntityLvl3MultiLink>> = [
     TestEntityLvl2MultiLink.STRING_PROPERTY,
     TestEntityLvl2MultiLink.BOOLEAN_PROPERTY,
     TestEntityLvl2MultiLink.GUID_PROPERTY,
     TestEntityLvl2MultiLink.INT_16_PROPERTY,
-    TestEntityLvl2MultiLink.KEY_PROPERTY
+    TestEntityLvl2MultiLink.KEY_PROPERTY,
+    TestEntityLvl2MultiLink.TO_MULTI_LINK_2
   ];
   /**
    * All fields selector.

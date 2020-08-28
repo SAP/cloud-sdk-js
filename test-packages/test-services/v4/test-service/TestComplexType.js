@@ -88,15 +88,15 @@ var TestComplexTypeField = /** @class */ (function (_super) {
          */
         _this.floatProperty = new core_1.ComplexTypeNumberPropertyField('FloatProperty', _this, 'Edm.Float');
         /**
-         * Representation of the [[TestComplexType.timeProperty]] property for query construction.
+         * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.timeProperty = new core_1.ComplexTypeTimePropertyField('TimeProperty', _this, 'Edm.Time');
+        _this.timeOfDayProperty = new core_1.ComplexTypeTimePropertyField('TimeOfDayProperty', _this, 'Edm.TimeOfDay');
         /**
-         * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
+         * Representation of the [[TestComplexType.dateProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
-        _this.dateTimeProperty = new core_1.ComplexTypeDatePropertyField('DateTimeProperty', _this, 'Edm.DateTime');
+        _this.dateProperty = new core_1.ComplexTypeDatePropertyField('DateProperty', _this, 'Edm.Date');
         /**
          * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -208,14 +208,14 @@ var TestComplexType;
             type: 'Edm.Float',
             isCollection: false
         }, {
-            originalName: 'TimeProperty',
-            name: 'timeProperty',
-            type: 'Edm.Time',
+            originalName: 'TimeOfDayProperty',
+            name: 'timeOfDayProperty',
+            type: 'Edm.TimeOfDay',
             isCollection: false
         }, {
-            originalName: 'DateTimeProperty',
-            name: 'dateTimeProperty',
-            type: 'Edm.DateTime',
+            originalName: 'DateProperty',
+            name: 'dateProperty',
+            type: 'Edm.Date',
             isCollection: false
         }, {
             originalName: 'DateTimeOffSetProperty',

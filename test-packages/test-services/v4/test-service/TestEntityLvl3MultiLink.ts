@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+import { TestEntityLvl3MultiLinkRequestBuilder } from './TestEntityLvl3MultiLinkRequestBuilder';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
+
+/**
+ * This class represents the entity "A_TestEntityLvl3MultiLink" of service "API_TEST_SRV".
+ */
+export class TestEntityLvl3MultiLink extends EntityV4 implements TestEntityLvl3MultiLinkType {
+  /**
+   * Technical entity name for TestEntityLvl3MultiLink.
+   */
+  static _entityName = 'A_TestEntityLvl3MultiLink';
+  /**
+   * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
+   * Technical service name for TestEntityLvl3MultiLink.
+   */
+  static _serviceName = 'API_TEST_SRV';
+  /**
+   * Default url path for the according service.
+   */
+  static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  /**
+   * String Property.
+   * Maximum length: 10.
+   * @nullable
+   */
+  stringProperty?: string;
+  /**
+   * Guid Property.
+   * @nullable
+   */
+  guidProperty?: string;
+  /**
+   * Key Property.
+   * Maximum length: 10.
+   */
+  keyProperty!: string;
+
+  /**
+   * Returns an entity builder to construct instances `TestEntityLvl3MultiLink`.
+   * @returns A builder that constructs instances of entity type `TestEntityLvl3MultiLink`.
+   */
+  static builder(): EntityBuilderType<TestEntityLvl3MultiLink, TestEntityLvl3MultiLinkTypeForceMandatory> {
+    return EntityV4.entityBuilder(TestEntityLvl3MultiLink);
+  }
+
+  /**
+   * Returns a request builder to construct requests for operations on the `TestEntityLvl3MultiLink` entity type.
+   * @returns A `TestEntityLvl3MultiLink` request builder.
+   */
+  static requestBuilder(): TestEntityLvl3MultiLinkRequestBuilder {
+    return new TestEntityLvl3MultiLinkRequestBuilder();
+  }
+
+  /**
+   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLvl3MultiLink`.
+   * @param fieldName Name of the custom field to select
+   * @returns A builder that constructs instances of entity type `TestEntityLvl3MultiLink`.
+   */
+  static customField(fieldName: string): CustomFieldV4<TestEntityLvl3MultiLink> {
+    return EntityV4.customFieldSelector(fieldName, TestEntityLvl3MultiLink);
+  }
+
+  /**
+   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
+   * @returns An object containing all instance variables + custom fields.
+   */
+  toJSON(): { [key: string]: any } {
+    return { ...this, ...this._customFields };
+  }
+}
+
+export interface TestEntityLvl3MultiLinkType {
+  stringProperty?: string;
+  guidProperty?: string;
+  keyProperty: string;
+}
+
+export interface TestEntityLvl3MultiLinkTypeForceMandatory {
+  stringProperty: string;
+  guidProperty: string;
+  keyProperty: string;
+}
+
+export namespace TestEntityLvl3MultiLink {
+  /**
+   * Static representation of the [[stringProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const STRING_PROPERTY: StringField<TestEntityLvl3MultiLink> = new StringField('StringProperty', TestEntityLvl3MultiLink, 'Edm.String');
+  /**
+   * Static representation of the [[guidProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const GUID_PROPERTY: StringField<TestEntityLvl3MultiLink> = new StringField('GuidProperty', TestEntityLvl3MultiLink, 'Edm.Guid');
+  /**
+   * Static representation of the [[keyProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const KEY_PROPERTY: StringField<TestEntityLvl3MultiLink> = new StringField('KeyProperty', TestEntityLvl3MultiLink, 'Edm.String');
+  /**
+   * All fields of the TestEntityLvl3MultiLink entity.
+   */
+  export const _allFields: Array<StringField<TestEntityLvl3MultiLink>> = [
+    TestEntityLvl3MultiLink.STRING_PROPERTY,
+    TestEntityLvl3MultiLink.GUID_PROPERTY,
+    TestEntityLvl3MultiLink.KEY_PROPERTY
+  ];
+  /**
+   * All fields selector.
+   */
+  export const ALL_FIELDS: AllFields<TestEntityLvl3MultiLink> = new AllFields('*', TestEntityLvl3MultiLink);
+  /**
+   * All key fields of the TestEntityLvl3MultiLink entity.
+   */
+  export const _keyFields: Array<Field<TestEntityLvl3MultiLink>> = [TestEntityLvl3MultiLink.KEY_PROPERTY];
+  /**
+   * Mapping of all key field names to the respective static field property TestEntityLvl3MultiLink.
+   */
+  export const _keys: { [keys: string]: Field<TestEntityLvl3MultiLink> } = TestEntityLvl3MultiLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityLvl3MultiLink> }, field: Field<TestEntityLvl3MultiLink>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
+}

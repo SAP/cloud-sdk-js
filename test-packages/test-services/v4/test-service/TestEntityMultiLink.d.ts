@@ -46,7 +46,7 @@ export declare class TestEntityMultiLink extends EntityV4 implements TestEntityM
     /**
      * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
      */
-    toMultiLink: TestEntityLvl2MultiLink[];
+    toMultiLink1: TestEntityLvl2MultiLink[];
     /**
      * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
      */
@@ -83,7 +83,7 @@ export interface TestEntityMultiLinkType {
     guidProperty?: string;
     int16Property?: number;
     keyProperty: string;
-    toMultiLink: TestEntityLvl2MultiLinkType[];
+    toMultiLink1: TestEntityLvl2MultiLinkType[];
     toSingleLink: TestEntityLvl2SingleLinkType;
 }
 export interface TestEntityMultiLinkTypeForceMandatory {
@@ -92,7 +92,7 @@ export interface TestEntityMultiLinkTypeForceMandatory {
     guidProperty: string;
     int16Property: number;
     keyProperty: string;
-    toMultiLink: TestEntityLvl2MultiLinkType[];
+    toMultiLink1: TestEntityLvl2MultiLinkType[];
     toSingleLink: TestEntityLvl2SingleLinkType;
 }
 export declare namespace TestEntityMultiLink {
@@ -122,10 +122,10 @@ export declare namespace TestEntityMultiLink {
      */
     const KEY_PROPERTY: StringField<TestEntityMultiLink>;
     /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Static representation of the one-to-many navigation property [[toMultiLink1]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const TO_MULTI_LINK: OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink>;
+    const TO_MULTI_LINK_1: OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink>;
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.

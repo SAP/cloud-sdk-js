@@ -52,6 +52,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: git diff --name-only
         name: TestEntity Version Check
+      - run: exit 1
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:dependencies

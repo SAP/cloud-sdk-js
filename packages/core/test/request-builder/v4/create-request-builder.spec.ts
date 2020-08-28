@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
+import moment from 'moment';
 import { CreateRequestBuilderV4 } from '../../../src/odata/v4';
 import { muteLoggers } from '../../test-util/mute-logger';
 import {
@@ -25,7 +26,12 @@ describe('CreateRequestBuilderV4', () => {
   it('create an entity with field properties', async () => {
     const keyProp = uuid();
     const stringProp = 'testStr';
-    const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
+    const postBody = {
+      KeyPropertyGuid: keyProp,
+      StringProperty: stringProp,
+      TimeOfDayProperty: '01:02:03',
+      DateProperty: '1996-11-23'
+    };
 
     mockCreateRequestV4({
       responseBody: postBody
@@ -34,6 +40,8 @@ describe('CreateRequestBuilderV4', () => {
     const entity = TestEntity.builder()
       .keyPropertyGuid(keyProp)
       .stringProperty(stringProp)
+      .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
+      .dateProperty(moment.utc('1996-11-23', 'YYYY-MM-DD', true))
       .build();
 
     const actual = await new CreateRequestBuilderV4(TestEntity, entity).execute(

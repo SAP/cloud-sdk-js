@@ -63,15 +63,15 @@ export interface TestComplexType {
    */
   floatProperty?: number;
   /**
-   * Time Property.
+   * Time Of Day Property.
    * @nullable
    */
-  timeProperty?: Time;
+  timeOfDayProperty?: Time;
   /**
-   * Date Time Property.
+   * Date Property.
    * @nullable
    */
-  dateTimeProperty?: Moment;
+  dateProperty?: Moment;
   /**
    * Date Time Off Set Property.
    * @nullable
@@ -187,15 +187,15 @@ export class TestComplexTypeField<EntityT extends EntityV4> extends ComplexTypeF
    */
   floatProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('FloatProperty', this, 'Edm.Float');
   /**
-   * Representation of the [[TestComplexType.timeProperty]] property for query construction.
+   * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: ComplexTypeTimePropertyField<EntityT> = new ComplexTypeTimePropertyField('TimeProperty', this, 'Edm.Time');
+  timeOfDayProperty: ComplexTypeTimePropertyField<EntityT> = new ComplexTypeTimePropertyField('TimeOfDayProperty', this, 'Edm.TimeOfDay');
   /**
-   * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
+   * Representation of the [[TestComplexType.dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField('DateTimeProperty', this, 'Edm.DateTime');
+  dateProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField('DateProperty', this, 'Edm.Date');
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -313,14 +313,14 @@ export namespace TestComplexType {
     type: 'Edm.Float',
     isCollection: false
   }, {
-    originalName: 'TimeProperty',
-    name: 'timeProperty',
-    type: 'Edm.Time',
+    originalName: 'TimeOfDayProperty',
+    name: 'timeOfDayProperty',
+    type: 'Edm.TimeOfDay',
     isCollection: false
   }, {
-    originalName: 'DateTimeProperty',
-    name: 'dateTimeProperty',
-    type: 'Edm.DateTime',
+    originalName: 'DateProperty',
+    name: 'dateProperty',
+    type: 'Edm.Date',
     isCollection: false
   }, {
     originalName: 'DateTimeOffSetProperty',

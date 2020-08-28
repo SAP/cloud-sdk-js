@@ -107,7 +107,9 @@ function durationToEdmDuration(value: moment.Duration): string {
 }
 
 function timeToEdmTimeOfDay(value: Time): string {
-  return [value.hours, value.minutes, value.seconds].map(timeComponent => padTimeComponent(timeComponent)).join(':');
+  return [value.hours, value.minutes, value.seconds]
+    .map(timeComponent => padTimeComponent(timeComponent))
+    .join(':');
 }
 
 function padTimeComponent(timeComponent: number): string {

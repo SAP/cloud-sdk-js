@@ -50,6 +50,8 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
+      - run: git diff --name-only
+        name: TestEntity Version Check
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:dependencies

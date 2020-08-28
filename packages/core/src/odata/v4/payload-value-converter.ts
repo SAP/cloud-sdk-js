@@ -107,9 +107,17 @@ function durationToEdmDuration(value: moment.Duration): string {
 }
 
 function timeToEdmTimeOfDay(value: Time): string {
-  return `${value.hours}:${value.minutes}:${value.seconds}`;
+  return [value.hours, value.minutes, value.seconds]
+    .map(timeComponent => padTimeComponent(timeComponent))
+    .join(':');
 }
 
+function padTimeComponent(timeComponent: number): string {
+  const [wholeNumber, fractionalNumber] = timeComponent.toString().split('.');
+  return fractionalNumber
+    ? [wholeNumber.padStart(2, '0'), fractionalNumber].join('.')
+    : wholeNumber.padStart(2, '0');
+}
 export type EdmToPrimitiveV4<T extends EdmTypeV4> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'

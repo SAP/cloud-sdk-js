@@ -28,14 +28,13 @@ async function deleteEntity(key: EntityKey): Promise<void> {
   }
 }
 
-async function createEntity(
-  key: EntityKey,
-  date: moment.Moment
-): Promise<TestEntity> {
+async function createEntity(key: EntityKey): Promise<TestEntity> {
   const dataForCreation = TestEntity.builder()
     .keyPropertyInt(key.keyInt)
     .keyPropertyString(key.keyString)
-    .dateProperty(date)
+    .dateProperty(moment(0))
+    .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
+    .dataTimeOffsetDataTimeProperty(moment(0))
     .build();
   return TestEntity.requestBuilder()
     .create(dataForCreation)
@@ -82,13 +81,13 @@ describe('Request builder test', () => {
   });
 
   it('should create an entity', async () => {
-    await createEntity(entityKey, moment(0));
+    await createEntity(entityKey);
     const queried = await queryEntity(entityKey);
     expect(queried.dateProperty?.toISOString()).toBe(moment(0).toISOString());
   });
 
   it('should update an entity', async () => {
-    const created = await createEntity(entityKey, moment(0));
+    const created = await createEntity(entityKey);
     const newDate = moment.utc('2020-01-01', 'YYYY-MM-DD');
     created.dateProperty = newDate;
     await TestEntity.requestBuilder().update(created).execute(destination);
@@ -100,7 +99,7 @@ describe('Request builder test', () => {
   });
 
   xit('should set the version identifier (eTag)', async () => {
-    const created = await createEntity(entityKey, moment(0));
+    const created = await createEntity(entityKey);
     expect(created['_versionIdentifier']).not.toBe(undefined);
   });
 });

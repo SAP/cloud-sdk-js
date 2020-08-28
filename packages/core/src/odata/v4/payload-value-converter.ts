@@ -113,15 +113,9 @@ function timeToEdmTimeOfDay(value: Time): string {
   return `${hoursPadded}:${minutesPadded}:${secondsPadded}`;
 }
 
-function padSeconds(seconds: number): string {
-  const secondsString = seconds.toString(10);
-  if (!secondsString.includes('.')) {
-    return secondsString.padStart(2, '0');
-  }
-  const secondsStringParts: string[] = secondsString.split('.');
-  return [secondsStringParts[0].padStart(2, '0'), secondsStringParts[1]].join(
-    '.'
-  );
+function padTimeComponent(timeComponent: number): string {
+  const [wholeNumber, fractionalNumber] = timeComponent.toString().split('.');
+  return [wholeNumber.padStart(2, '0'), fractionalNumber].join('.');
 }
 export type EdmToPrimitiveV4<T extends EdmTypeV4> = T extends
   | 'Edm.Int16'

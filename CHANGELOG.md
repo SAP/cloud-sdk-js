@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- Move OData v4 support from experimental to GA status.
+-
 
 ## Improvements
 
@@ -26,9 +26,23 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.28.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.28.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- Move OData v4 support from experimental to GA status.
+
+## Fixed Issues
+
 - [Generator] Skip generation of Batch.ts for services without entities.
 - [RequestBuilder] Fix serialization of "Edm.Time" fields in OData V4. 
-
 
 # 1.27.0
 

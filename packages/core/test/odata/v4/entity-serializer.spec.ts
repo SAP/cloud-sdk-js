@@ -104,4 +104,22 @@ describe('entity-serializer', () => {
       CollectionComplexTypeProperty: [{ StringProperty: 'abc' }]
     });
   });
+
+  it('should serialize TimeOfDay.', () => {
+    const testEntity = TestEntity.builder()
+      .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
+      .build();
+
+    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+      TimeOfDayProperty: '01:02:03'
+    });
+
+    const testEntityFractional = TestEntity.builder()
+      .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3.456 })
+      .build();
+
+    expect(serializeEntityV4(testEntityFractional, TestEntity)).toEqual({
+      TimeOfDayProperty: '01:02:03.456'
+    });
+  });
 });

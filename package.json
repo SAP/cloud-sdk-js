@@ -48,6 +48,7 @@
     "check:dependencies": "yarn workspaces run check:dependencies",
     "check:license": "node scripts/check-licenses.js",
     "check:vulnerability": "yarn audit-ci -h",
+    "check:test-service": "yarn generate:test-services:v2 && yarn generate:test-services:v4 && yarn ts-node scripts/check-test-service-for-changes.ts",
     "bump:patch": "yarn lerna version patch --force-publish -y",
     "bump:minor": "yarn lerna version minor --force-publish -y",
     "core": "yarn workspace @sap-cloud-sdk/core",

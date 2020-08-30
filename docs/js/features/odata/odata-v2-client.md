@@ -208,6 +208,29 @@ The example above can be shortened to:
 )
 ```
 
+##### Filter on One-To-One Navigation Properties
+
+In addition to basic properties, filters can also be applied on one-to-one navigation properties. The example below shows how to filter on the `TO_CUSTOMER`, which is a one-to-one navigation property of the BusinessPartner entity. Please note, the `CUSTOMER_NAME` and `CUSTOMER_FULL_NAME` are properties of the entity `Customer`, which is the type of the one-to-one navigation property `TO_CUSTOMER`.
+```ts
+/*
+  Get all business partners that match all the following conditions:
+    - Have customer with the customer name 'name'
+    - Have customer with the customer full name 'fullName'
+*/
+.filter(
+  BusinessPartner.TO_CUSTOMER.filter(
+    Customer.CUSTOMER_NAME.equals('name'),
+    Customer.CUSTOMER_FULL_NAME.equals('fullName')
+  )
+)
+```
+The `$filter` will be generated like below:
+```sql
+$filter=((to_Customer/CustomerName eq 'name' and to_Customer/CustomerFullName eq 'fullName'))
+```
+
+##### More Filter Expressions
+
 More advanced filter expressions can be found [here](#available-filter-expressions).
 
 #### Skip
@@ -382,7 +405,9 @@ By default an ETag is sent if it's present on the entity being modified. `ignore
 
 To create, update, and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution, the request will try to fetch a token first before issuing the create request. Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
 
-#### Available Filter Expressions
+### Available Filter Expressions
+
+#### Filter Functions
 
 There are predefined filter functions e. g. `length`, `substring`, `substringOf` in the core library, that allow for a wide range of filter expressions:
 

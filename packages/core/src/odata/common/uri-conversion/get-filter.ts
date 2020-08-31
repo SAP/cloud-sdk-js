@@ -70,8 +70,6 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     lambdaExpressionLevel = 0
   ): string {
     if (isFilterList(filter)) {
-      filter.flatten();
-
       let andExp = filter.andFilters
         .map(subFilter =>
           getODataFilterExpression(

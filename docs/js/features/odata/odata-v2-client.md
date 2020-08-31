@@ -2,7 +2,7 @@
 id: odata-v2-client
 title: Use the OData client for JavaScript / TypeScript
 sidebar_label: Typed OData v2 client
-description: Use the SAP Cloud SDK for JavaScript to build and run OData v2 requests in a typesafe way.
+description: Use the SAP Cloud SDK for JavaScript to build and run OData v2 requests in a type-safe way.
 keywords:
 - sap
 - cloud
@@ -270,7 +270,7 @@ BusinessPartner.requestBuilder().getByKey('id');
 
 The example above retrieves the BusinessPartner with the id 'id'.
 
-The result can be retricted by applying the [select](#select) function, same as in the [GetAll](#getall-request-builder) request.
+The result can be restricted by applying the [select](#select) function, same as in the [GetAll](#getall-request-builder) request.
 
 ### Create Request Builder
 

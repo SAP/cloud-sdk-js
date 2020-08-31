@@ -2,7 +2,7 @@
 id: odata-v4-client
 title: Use the OData v4 client for JavaScript / TypeScript
 sidebar_label: Typed OData v4 client
-description: Use the SAP Cloud SDK for JavaScript to build and run OData v4 requests in a typesafe way.
+description: Use the SAP Cloud SDK for JavaScript to build and run OData v4 requests in a type-safe way.
 keywords:
 - sap
 - cloud
@@ -12,8 +12,6 @@ keywords:
 - TypeScript
 - consume
 ---
-
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 :::danger OData v4 is experimental and not ready for production
 Typed client for OData v4 is under heavy development and was released only as `experimental/Beta`. Please, use it on you own discretion. We'll explicitly communicate in the release notes when it's stable and general availability.
@@ -27,7 +25,7 @@ Be patient, we are working on the it.
 
 ##### Filter on One-To-Many Navigation Properties
 
-OData V4 introduces the [lambda operators](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_LambdaOperators) e.g., `any`/`all`, so that the root property of the one-to-many navigation properties can be filtered. Below is an example that demostrates how to use the lambda operator [any](useBaseUrl('api/1.28.0/modules/sap_cloud_sdk_core#any')) as a filter.
+OData V4 introduces the [lambda operators](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_LambdaOperators) e.g., `any`/`all`, so that the root property of the one-to-many navigation properties can be filtered. Below is an example that demonstrates how to use the lambda operator [any](/cloud-sdk/api/1.28.0/modules/sap_cloud_sdk_core#any)) as a filter.
 
 ```ts
 /*

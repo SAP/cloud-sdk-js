@@ -13,6 +13,8 @@ keywords:
 - consume
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 ## Making a request using a generated OData v2 client
 
 The typed OData v2 client allows to build type-safe OData v2 requests for a given service.
@@ -44,7 +46,7 @@ Each request type has additional request specific configuration options:
 
 Creating  an entity `asChildOf` another entity for [`create`](#create-request-builder) requests, [ETag handling](#handling-of-etags) for [`update`](#update-request-builder) and [`delete`](#delete-request-builder) requests, as well as set operations for [`getAll`](#getall-request-builder) requests and [`select`](#select)ing properties for [`getAll`](#getall-request-builder) and [`getByKey`](#getbykey-request-builder) requests.
 
-The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured, chain the `execute` function and pass a [destination](/cloud-sdk/docs/js/features/connectivity/destination-js-sdk/) to it.
+The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured, chain the `execute` function and pass a <a href={useBaseUrl('docs/js/features/connectivity/destination-js-sdk')}>destination</a> to it.
 
 ### Setting custom request headers
 

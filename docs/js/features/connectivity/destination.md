@@ -11,11 +11,9 @@ keywords:
 - sdk
 - destination
 - connectivity
-- JavaScript 
+- JavaScript
 - TypeScript
 ---
-
-import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Introduction ##
 
@@ -23,17 +21,17 @@ Most applications developed on SAP Cloud Platform (SCP) will integrate in some w
 Integration means the exchange of data and it is necessary to abstract the details on the data exchange from your code base.
 The reasons for this abstraction are manifold: URLs defining a resource may change, authentication information should not be part of code, in case of a multi customer application the locations depends on the customer, etc.
 
-On SCP this abstraction is provided by a so called destination object. 
+On SCP this abstraction is provided by a so called destination object.
 This object can be obtained at runtime of the application and contains information like:
 - URL
 - Authentication
-- Proxy Settings (see the [proxy documentation](./proxy.md) for more details)   
+- Proxy Settings (see the [proxy documentation](./proxy.md) for more details)
 - ...
 
 The SAP Cloud SDK helps you receiving this object and provides also options for local testing outside the SCP.
 
 The SDK provides a generator to create a client or data model based on a service definition.
-For S/4HANA this client has been created and published to npm. 
+For S/4HANA this client has been created and published to npm.
 In this [tutorial series](https://developers.sap.com/group.s4sdk-js-cloud-foundry.html) a detailed step-by-step guide how to use the data model is presented.
 A simple request to receive some business-partners from an S/4 HANA system would look like:
 ```js
@@ -45,7 +43,7 @@ BusinessPartner.requestBuilder()
 where `yourDestination` is a [`Destination` object](https://sap.github.io/cloud-sdk/api/1.21.0/interfaces/sap_cloud_sdk_core.destination).
 In principle, you could create a destination object yourself or read it from somewhere and then pass it to the `execute()` method.
 However, this would not be very flexible and convenient as discussed above.
-The SDK provides some help for this problem. 
+The SDK provides some help for this problem.
 If just a destinationName is provided i.e.:
 ```js
 .execute({"destinationName": 'myDestination'})
@@ -60,7 +58,7 @@ When given a `destinationName` the SDK tries three things to find a destination:
 2. Checking a service instance
 3. Using the destination service
 
-Once a destination is found, the flow is stopped and the destination is returned. 
+Once a destination is found, the flow is stopped and the destination is returned.
 So local env beats service instance beats destination service in case all contain a destination with the given name.
 
 ### Local Environment Variable ###
@@ -87,7 +85,7 @@ If you want to use this information the name of the service instance must be pro
 Currently two services types are supported out of the box `business-logging` and `s4-hana-cloud` with the following transformation functions:
 ```js
 //business-logging
-(serviceBinding) => { 
+(serviceBinding) => {
     url: serviceBinding.credentials.writeUrl,
     authentication: 'OAuth2ClientCredentials',
     username: serviceBinding.credentials.uaa.clientid,
@@ -105,7 +103,7 @@ Currently two services types are supported out of the box `business-logging` and
 
 ### Destination Service ###
 
-This is the normal case in a productive environment. 
+This is the normal case in a productive environment.
 In order to access the destination service, the SDK will first fetch an access token from the XSUAA service.
 This token is used to make a call to the destination service returning the destinations.
 For a simple service this would be the end of the story.
@@ -117,8 +115,8 @@ Assume you want to build a simple application showing the 5 newest business-part
 You want to offer this application as a service to customers.
 Of course you want to make this service cost efficient and host it only once and let multiple customers use it.
 This leads now naturally to the requirement that your service needs to return the data related to the specific customers.
-A customer is represented by an account on SCP and a service considering the account is a `tenant aware service`. 
- 
+A customer is represented by an account on SCP and a service considering the account is a `tenant aware service`.
+
 Tenant aware services on SCP are offered to customers via an `subscription` which works on a high level as follows:
 If a customer wants to use a service, a subscription is created linking the customer account and the one account hosting the service.
 In the following the term `subscriber account` will be used for the accounts using a service and `provider account` for the one hosting it.
@@ -127,30 +125,30 @@ After this little definition detour, let's go back to the destination service an
 For simplicity an optional argument of the destination lookup has been neglected in the beginning:
 ```js
 .execute({destinationName: 'myDestination', jwt: 'yourJWT'})
-```  
-The `jwt` argument takes the JSON web token (JWT) issued by an XSUAA as input. 
+```
+The `jwt` argument takes the JSON web token (JWT) issued by an XSUAA as input.
 This token contains a field `zid` holding the tenant id which will be used in the lookup process.
 The lookup process done by the SDK involves the following steps:
-- Request an access token for the destination service and a given tenant id from the XSUAA. 
+- Request an access token for the destination service and a given tenant id from the XSUAA.
 - Due to the subscription between provider and subscriber, the XSUAA is allowed to issue the token.
 - The token allows for calling the destination service on behalf of the given tenant.
 The tenant and service information are encoded in the access token.
 - Make a call to the destination service using the obtained access token.
 - The destination maintained in the given tenant are returned.
-  
+
 If no token is given or the destination is not found in the subscriber account the provider account is used as a fallback.
 In order to control this fallback behaviour a selection strategy can be passed to the destination lookup:
 ```js
 .execute({destinationName: 'myDestination', jwt: 'yourJWT'},{selectionStrategy:'alwaysSubscriber'})
 ```
 There are three selection strategies defined in the SDK: `alwaysSubscriber`, `alwaysProvider` and `subscriberFirst`.
-The selection strategy can be passed as an optional argument to the `.execute()` method. 
+The selection strategy can be passed as an optional argument to the `.execute()` method.
 The default value is `subscriberFirst`.
 The selection strategies can be used to control for which account a destination lookup is attempted:
 - alwaysSubscriber: Only try to get destinations from the subscriber account.
 A valid JWT is mandatory to receive something.
 - alwaysProvider: Only try to get destination from the provider account.
-A JWT is not needed. 
+A JWT is not needed.
 Even if you present a subscriber JWT the provider destination will be returned if present.
 - subscriberFirst: Tries to get from the subscriber first using the JWT.
 If no valid JWT is provided or the destination is not found it tries the provider as described for alwaysProvider.
@@ -162,4 +160,4 @@ These destinations are called `instance destinations` since they are tied to an 
 In every request these destinations are added to the destinations returned by the destination service.
 :::
 
- 
+

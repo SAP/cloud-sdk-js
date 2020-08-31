@@ -17,6 +17,7 @@ keywords:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Build and execute OData Requests with the typed OData client
 
@@ -56,7 +57,7 @@ Toggle between version Tabs in this document to see the API difference between t
 
 The typed OData client consists of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.
 
-To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/cloud-sdk/docs/java/features/connectivity/sdk-connectivity-destination-service). The following code snippets assume that such a destination is in place:
+To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail <a href={useBaseUrl('docs/java/features/connectivity/sdk-connectivity-destination-service')}>here</a>. The following code snippets assume that such a destination is in place:
 
 ```java
 HttpDestination destination;

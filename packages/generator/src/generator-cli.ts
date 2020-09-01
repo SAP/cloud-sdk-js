@@ -19,7 +19,7 @@ generate(parseCmdArgs()).then(() =>
 export function parseCmdArgs(): GeneratorOptions {
   const command = yargs.command(
     '$0',
-    'OData Client Code Generator for OData (v2). Generates TypeScript code from .edmx/.xml files for usage with the SAP Cloud SDK for JavaScript.'
+    'OData Client Code Generator for OData v2 and v4. Generates TypeScript code from .edmx/.xml files for usage with the SAP Cloud SDK for JavaScript.'
   );
   for (const key in generatorOptionsCli) {
     command.option(key, generatorOptionsCli[key]);

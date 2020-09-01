@@ -60,7 +60,7 @@
     "@types/jsonwebtoken": "^8.3.8",
     "@types/uuid": "^8.0.0",
     "@types/voca": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^3.7.0",
+    "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^3.7.0",
     "audit-ci": "^3.1.1",
     "compare-versions": "^3.6.0",

@@ -39,12 +39,15 @@ Blog: TBD<br>
 
 - Move OData v4 support from experimental to GA status.
 
+## Improvements
+
+- Adjust the generation of the `$filter` parameter in URL so that parentheses are not removed even logically they are not needed. 
+For example, now `$filter=((filterA and filter B) and (filterC and filter D))` will not be flattened to `$filter=(filterA and filter B and filterC and filter D)`.
+
 ## Fixed Issues
 
 - [Generator] Skip generation of Batch.ts for services without entities.
 - [RequestBuilder] Fix serialization of "Edm.Time" fields in OData V4. 
-- Fix the generation of the `$filter` parameter in URL so that parentheses are not removed even logically they are not needed. 
-For example, now `$filter=((filterA and filter B) and (filterC and filter D))` will not be flattened to `$filter=(filterA and filter B and filterC and filter D)`.
 
 # 1.27.0
 

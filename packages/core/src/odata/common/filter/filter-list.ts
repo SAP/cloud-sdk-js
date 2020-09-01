@@ -33,7 +33,7 @@ export class FilterList<EntityT extends EntityBase>
   /**
    * Flattens `andFilters` and `orFilters` as far as possible while staying logically equivalent.
    *
-   * @deprecated Since v1.28.0. This function should not be used, since some OData Services might not support the flattened filter expression.
+   * @deprecated Since v1.28.1. This function should not be used, since some OData Services might not support the flattened filter expression.
    * @returns Flattened filter list
    */
   flatten(): FilterList<EntityT> {

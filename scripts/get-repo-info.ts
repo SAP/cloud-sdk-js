@@ -19,7 +19,7 @@ if (!process.env.user) {
 }
 
 if (!process.env.token) {
-  throw new Error('Please set your github access token as process.env.toke');
+  throw new Error('Please set your github access token as process.env.token');
 }
 
 const owner = 'SAP';

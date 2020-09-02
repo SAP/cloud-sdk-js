@@ -313,6 +313,6 @@ const makeNpmCompliant = pipe(
 const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
-export function hasBatchRequest(service: VdmServiceMetadata): boolean {
-  return service.entities && service.entities.length > 0;
+export function hasEntities(service: VdmServiceMetadata): boolean {
+  return !!service.entities?.length;
 }

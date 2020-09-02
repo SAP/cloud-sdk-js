@@ -25,7 +25,7 @@ import { copyFile, otherFile, sourceFile } from './file-generator';
 import { GeneratorOptions } from './generator-options';
 import {
   cloudSdkVdmHack,
-  hasBatchRequest,
+  hasEntities,
   npmCompliantName
 } from './generator-utils';
 import {
@@ -218,7 +218,7 @@ export async function generateSourcesForService(
 
   otherFile(serviceDir, 'tsconfig.json', tsConfig(), options.forceOverwrite);
 
-  if (hasBatchRequest(service)) {
+  if (hasEntities(service)) {
     logger.info(
       `Generating batch request builder for: ${service.namespace}...`
     );

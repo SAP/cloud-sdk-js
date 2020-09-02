@@ -6,26 +6,24 @@ import {
   StructureKind
 } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
-import { hasBatchRequest } from '../generator-utils';
+import { hasEntities } from '../generator-utils';
 
 export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
-  const basicStatements = [
-    ...service.entities.map(entity => exportStatement(entity.className)),
-    ...service.entities.map(entity =>
-      exportStatement(`${entity.className}RequestBuilder`)
-    ),
-    ...service.complexTypes.map(complexType =>
-      exportStatement(complexType.typeName)
-    ),
-    ...(service.functionImports && service.functionImports.length
-      ? [exportStatement('function-imports')]
-      : [])
-  ];
   return {
     kind: StructureKind.SourceFile,
-    statements: hasBatchRequest(service)
-      ? [...basicStatements, exportStatement('BatchRequest')]
-      : basicStatements
+    statements: [
+      ...service.entities.map(entity => exportStatement(entity.className)),
+      ...service.entities.map(entity =>
+        exportStatement(`${entity.className}RequestBuilder`)
+      ),
+      ...service.complexTypes.map(complexType =>
+        exportStatement(complexType.typeName)
+      ),
+      ...(service.functionImports && service.functionImports.length
+        ? [exportStatement('function-imports')]
+        : []),
+      ...(hasEntities(service) ? [exportStatement('BatchRequest')] : [])
+    ]
   };
 }
 

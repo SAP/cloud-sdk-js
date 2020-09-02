@@ -23,7 +23,11 @@ import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
 import { copyFile, otherFile, sourceFile } from './file-generator';
 import { GeneratorOptions } from './generator-options';
-import { cloudSdkVdmHack, npmCompliantName } from './generator-utils';
+import {
+  cloudSdkVdmHack,
+  hasEntities,
+  npmCompliantName
+} from './generator-utils';
 import {
   genericDescription,
   s4hanaCloudDescription
@@ -214,7 +218,7 @@ export async function generateSourcesForService(
 
   otherFile(serviceDir, 'tsconfig.json', tsConfig(), options.forceOverwrite);
 
-  if (service.entities && service.entities.length > 0) {
+  if (hasEntities(service)) {
     logger.info(
       `Generating batch request builder for: ${service.namespace}...`
     );

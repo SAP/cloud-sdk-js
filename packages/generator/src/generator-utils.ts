@@ -3,7 +3,11 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/core';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { VdmNavigationProperty, VdmProperty } from './vdm-types';
+import {
+  VdmNavigationProperty,
+  VdmProperty,
+  VdmServiceMetadata
+} from './vdm-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -308,3 +312,7 @@ const makeNpmCompliant = pipe(
 
 const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
+
+export function hasEntities(service: VdmServiceMetadata): boolean {
+  return !!service.entities?.length;
+}

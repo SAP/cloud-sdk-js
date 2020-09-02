@@ -16,6 +16,6 @@
     "@sap-cloud-sdk/test-services": "^1.28.1"
   },
   "devDependencies": {
-    "dtslint": "^3.3.0"
+    "dtslint": "^4.0.0"
   }
 }

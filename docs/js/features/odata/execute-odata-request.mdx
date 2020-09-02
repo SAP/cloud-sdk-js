@@ -77,7 +77,7 @@ The request can further be configured by chaining additional configuration funct
 
 Each request type has additional request specific configuration options, e. g. creating an entity `asChildOf` another entity for `create` requests, eTag handling for `update` and `delete` requests, as well as set operations for `getAll` requests and selecting properties for `getAll` and `getByKey` requests.
 
-The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured use the `execute` function and pass a [destination](../../connectivity/destination-js-sdk) to it. This will automatically construct your request URL and headers, execute the request and return a typed response if applicable.
+The last step when making a request using the SAP Cloud SDK is the request execution. Once the request is configured use the `execute` function and pass a [destination](../connectivity/destination-js-sdk) to it. This will automatically construct your request URL and headers, execute the request and return a typed response if applicable.
 
 ### Setting custom request headers
 

@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [Generator] Remove `Batch.ts` from the index file when the file does not exist.
 
 
 # 1.28.0
@@ -41,8 +41,8 @@ Blog: TBD<br>
 
 ## Fixed Issues
 
-- [Generator] Skip generation of Batch.ts for services without entities.
-- [RequestBuilder] Fix serialization of "Edm.Time" fields in OData V4. 
+- [Generator] Skip generation of `Batch.ts` for services without entities.
+- [RequestBuilder] Fix serialization of `Edm.Time` fields in OData V4. 
 
 # 1.27.0
 

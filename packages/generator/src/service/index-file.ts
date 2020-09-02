@@ -24,7 +24,7 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
   return {
     kind: StructureKind.SourceFile,
     statements: hasBatchRequest(service)
-      ? basicStatements.concat(exportStatement('BatchRequest'))
+      ? [...basicStatements, exportStatement('BatchRequest')]
       : basicStatements
   };
 }

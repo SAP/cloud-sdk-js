@@ -51,9 +51,14 @@
     "check:test-service": "yarn generate:test-services:v2 && yarn generate:test-services:v4 && yarn ts-node scripts/check-test-service-for-changes.ts",
     "bump:patch": "yarn lerna version patch --force-publish -y",
     "bump:minor": "yarn lerna version minor --force-publish -y",
+    "analytics": "yarn workspace @sap-cloud-sdk/analytics",
     "core": "yarn workspace @sap-cloud-sdk/core",
+    "generator": "yarn workspace @sap-cloud-sdk/generator",
+    "test-util": "yarn workspace @sap-cloud-sdk/test-util",
     "util": "yarn workspace @sap-cloud-sdk/util",
-    "generator": "yarn workspace @sap-cloud-sdk/generator"
+    "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
+    "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
+    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
     "@types/jest": "^26.0.7",

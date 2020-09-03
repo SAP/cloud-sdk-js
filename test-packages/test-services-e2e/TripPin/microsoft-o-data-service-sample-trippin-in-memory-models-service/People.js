@@ -82,7 +82,7 @@ var People = /** @class */ (function (_super) {
     /**
      * Default url path for the according service.
      */
-    People._defaultServicePath = 'TripPinServiceRW';
+    People._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
     return People;
 }(core_1.EntityV4));
 exports.People = People;

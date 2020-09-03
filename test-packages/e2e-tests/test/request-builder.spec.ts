@@ -80,9 +80,7 @@ describe('Request builder test', () => {
     const testEntity = await TestEntity.requestBuilder()
       .getByKey(101)
       .execute(destination);
-    expect(testEntity).toEqual(
-      expect.objectContaining({ keyTestEntity: 101 })
-    );
+    expect(testEntity).toEqual(expect.objectContaining({ keyTestEntity: 101 }));
   });
 
   it('should create an entity', async () => {

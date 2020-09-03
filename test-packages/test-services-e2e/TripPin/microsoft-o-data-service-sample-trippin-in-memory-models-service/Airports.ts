@@ -23,7 +23,7 @@ export class Airports extends EntityV4 implements AirportsType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'TripPinServiceRW';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * Icao Code.
    */

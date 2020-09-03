@@ -59,7 +59,7 @@ describe('CreateRequestBuilderV4', () => {
     const postBody = {
       KeyPropertyGuid: keyProp,
       StringProperty: stringProp,
-      to_MultiLink:[{KeyProperty:'123'},{KeyProperty: '456'}]
+      to_MultiLink: [{ KeyProperty: '123' }, { KeyProperty: '456' }]
     };
 
     const links: TestEntityMultiLinkType[] = [
@@ -81,8 +81,11 @@ describe('CreateRequestBuilderV4', () => {
       defaultDestination
     );
 
-    expect(actual.toMultiLink.length).toBe(2)
-    expect(actual.toMultiLink.map(link=>link.keyProperty)).toEqual(['123','456'])
+    expect(actual.toMultiLink.length).toBe(2);
+    expect(actual.toMultiLink.map(link => link.keyProperty)).toEqual([
+      '123',
+      '456'
+    ]);
   });
 
   it('create an entity with a single link property', async () => {

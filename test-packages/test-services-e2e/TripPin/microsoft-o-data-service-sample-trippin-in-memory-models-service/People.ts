@@ -25,7 +25,7 @@ export class People extends EntityV4 implements PeopleType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'TripPinServiceRW';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * User Name.
    */

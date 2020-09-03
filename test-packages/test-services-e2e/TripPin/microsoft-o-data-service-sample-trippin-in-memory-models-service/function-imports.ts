@@ -32,7 +32,7 @@ export function getNearestAirport(parameters: GetNearestAirportParameters): Func
     lon: new FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
   }
 
-  return new FunctionImportRequestBuilderV4('TripPinServiceRW', 'GetNearestAirport', (data) => transformReturnValueForEntityV4(data, Airports), params);
+  return new FunctionImportRequestBuilderV4('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', (data) => transformReturnValueForEntityV4(data, Airports), params);
 }
 
 export const functionImports = {

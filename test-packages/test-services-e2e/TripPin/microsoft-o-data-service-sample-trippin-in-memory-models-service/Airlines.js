@@ -81,7 +81,7 @@ var Airlines = /** @class */ (function (_super) {
     /**
      * Default url path for the according service.
      */
-    Airlines._defaultServicePath = 'TripPinServiceRW';
+    Airlines._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
     return Airlines;
 }(core_1.EntityV4));
 exports.Airlines = Airlines;

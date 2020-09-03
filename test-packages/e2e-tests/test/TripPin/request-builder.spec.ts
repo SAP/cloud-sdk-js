@@ -5,7 +5,7 @@ import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/micros
 import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
 import { People } from '../../../test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
 
-const url = 'https://services.odata.org/V4/(S(yym4o5sbztcrqnvx5vjqr1z2))';
+const url = 'https://services.odata.org/';
 const destination = { url };
 
 async function deletePerson(userName: string): Promise<void> {

@@ -1,6 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { TestEntity } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
+import {
+  TestEntity,
+  TestEntityLink
+} from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
 import moment from 'moment';
 
 const url = 'http://localhost:4004/';
@@ -9,17 +12,23 @@ interface EntityKey {
   keyString: string;
   keyInt: number;
 }
-const entityKey = { keyString: 'keyString', keyInt: 123 };
+const entityKey = 123;
 
-async function queryEntity(key: EntityKey): Promise<TestEntity> {
+async function queryEntity(key: number): Promise<TestEntity> {
   return TestEntity.requestBuilder()
-    .getByKey(key.keyInt, key.keyString)
+    .getByKey(key)
+    .expand(TestEntity.TO_MULTI_LINK)
     .execute(destination);
 }
 
-async function deleteEntity(key: EntityKey): Promise<void> {
+async function deleteEntity(key: number): Promise<void> {
   try {
     const fetched = await queryEntity(key);
+    await Promise.all(
+      fetched.toMultiLink.map(link =>
+        TestEntityLink.requestBuilder().delete(link).execute(destination)
+      )
+    );
     return TestEntity.requestBuilder().delete(fetched).execute(destination);
   } catch (e) {
     if (!e.stack.includes('Request failed with status code 404')) {
@@ -28,10 +37,10 @@ async function deleteEntity(key: EntityKey): Promise<void> {
   }
 }
 
-async function createEntity(key: EntityKey): Promise<TestEntity> {
+async function createEntity(key: number): Promise<TestEntity> {
   const dataForCreation = TestEntity.builder()
-    .keyPropertyInt(key.keyInt)
-    .keyPropertyString(key.keyString)
+    .keyTestEntity(key)
+    .stringProperty('someValue')
     .dateProperty(moment(0))
     .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
     .dataTimeOffsetDataTimeProperty(moment(0))
@@ -52,20 +61,16 @@ describe('Request builder test', () => {
     expect(testEntities).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          keyPropertyInt: 101,
-          keyPropertyString: 'aaa'
+          keyTestEntity: 101
         }),
         expect.objectContaining({
-          keyPropertyInt: 102,
-          keyPropertyString: 'aab'
+          keyTestEntity: 102
         }),
         expect.objectContaining({
-          keyPropertyInt: 103,
-          keyPropertyString: 'aac'
+          keyTestEntity: 103
         }),
         expect.objectContaining({
-          keyPropertyInt: 104,
-          keyPropertyString: 'aad'
+          keyTestEntity: 104
         })
       ])
     );
@@ -73,10 +78,10 @@ describe('Request builder test', () => {
 
   it('should return an entity for get by key request', async () => {
     const testEntity = await TestEntity.requestBuilder()
-      .getByKey(101, 'aaa')
+      .getByKey(101)
       .execute(destination);
     expect(testEntity).toEqual(
-      expect.objectContaining({ keyPropertyInt: 101, keyPropertyString: 'aaa' })
+      expect.objectContaining({ keyTestEntity: 101 })
     );
   });
 
@@ -98,6 +103,76 @@ describe('Request builder test', () => {
     );
   });
 
+  it('should create an entity with related entities (deep create)', async () => {
+    const entity = TestEntity.builder()
+      .keyTestEntity(entityKey)
+      .toMultiLink([
+        TestEntityLink.builder()
+          .keyToTestEntity(entityKey)
+          .keyTestEntityLink(20)
+          .build(),
+        TestEntityLink.builder()
+          .keyToTestEntity(entityKey)
+          .keyTestEntityLink(30)
+          .build()
+      ])
+      .build();
+
+    await TestEntity.requestBuilder().create(entity).execute(destination);
+    const quried = await queryEntity(entityKey);
+    expect(quried.toMultiLink.length).toBe(2);
+    expect(quried.toMultiLink.map(link => link.keyTestEntityLink)).toEqual([
+      20,
+      30
+    ]);
+  });
+
+  // Only supported in OData 4.01 and CAP is 4.0
+  xit('should update an entity including existing related entites', async () => {
+    const entity = TestEntity.builder()
+      .keyTestEntity(entityKey)
+      .stringProperty('oldValueParent')
+      .toMultiLink([
+        TestEntityLink.builder()
+          .keyToTestEntity(entityKey)
+          .keyTestEntityLink(20)
+          .stringProperty('oldValueChild')
+          .build()
+      ])
+      .build();
+    await TestEntity.requestBuilder().create(entity).execute(destination);
+    const beforeUpdate = await queryEntity(entityKey);
+    beforeUpdate.stringProperty = 'newValueParent';
+    beforeUpdate.toMultiLink[0].stringProperty = 'newValueChild';
+    await TestEntity.requestBuilder().update(beforeUpdate).execute(destination);
+
+    const afterUpdate = await queryEntity(entityKey);
+    expect(afterUpdate.stringProperty).toBe('newValueParent');
+    expect(afterUpdate.toMultiLink[0].stringProperty).toBe('newValueChild');
+  });
+
+  // Only supported in OData 4.01 and CAP is 4.0
+  xit('should update an entity with related entities (deep update)', async () => {
+    await createEntity(entityKey);
+    const withoutAssociation = await queryEntity(entityKey);
+    withoutAssociation.toMultiLink = [
+      TestEntityLink.builder()
+        .keyToTestEntity(entityKey)
+        .keyTestEntityLink(20)
+        .build()
+    ];
+    withoutAssociation.stringProperty = 'newValue';
+    await TestEntity.requestBuilder()
+      .update(withoutAssociation)
+      .execute(destination);
+
+    const afterUpdate = await queryEntity(entityKey);
+    expect(afterUpdate.stringProperty).toBe('newValue');
+    expect(afterUpdate.toMultiLink.length).toBe(1);
+    expect(afterUpdate.toMultiLink[0].keyTestEntityLink).toBe(20);
+  });
+
+  // CAP seems not to set the etag
   xit('should set the version identifier (eTag)', async () => {
     const created = await createEntity(entityKey);
     expect(created['_versionIdentifier']).not.toBe(undefined);

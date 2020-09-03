@@ -1,7 +1,7 @@
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
 import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
 /**
- * This class represents the entity "Airlines" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
+ * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 export declare class Airlines extends EntityV4 implements AirlinesType {
     /**
@@ -23,9 +23,8 @@ export declare class Airlines extends EntityV4 implements AirlinesType {
     airlineCode: string;
     /**
      * Name.
-     * @nullable
      */
-    name?: string;
+    name: string;
     /**
      * Returns an entity builder to construct instances `Airlines`.
      * @returns A builder that constructs instances of entity type `Airlines`.
@@ -52,7 +51,7 @@ export declare class Airlines extends EntityV4 implements AirlinesType {
 }
 export interface AirlinesType {
     airlineCode: string;
-    name?: string;
+    name: string;
 }
 export interface AirlinesTypeForceMandatory {
     airlineCode: string;

@@ -5,13 +5,12 @@
  */
 import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
-import { Location, LocationField } from './Location';
+import { Location } from './Location';
 import { PersonGender } from './PersonGender';
-import { Feature } from './Feature';
 import { AllFields, BigNumberField, CollectionField, CustomFieldV4, EntityBuilderType, EntityV4, EnumField, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 
 /**
- * This class represents the entity "People" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
+ * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 export class People extends EntityV4 implements PeopleType {
   /**
@@ -22,11 +21,11 @@ export class People extends EntityV4 implements PeopleType {
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for People.
    */
-  static _serviceName = 'Microsoft.OData.Service.Sample.TrippinInMemory.Models';
+  static _serviceName = 'Microsoft.OData.SampleService.Models.TripPin';
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
+  static _defaultServicePath = 'TripPinServiceRW';
   /**
    * User Name.
    */
@@ -37,23 +36,8 @@ export class People extends EntityV4 implements PeopleType {
   firstName!: string;
   /**
    * Last Name.
-   * @nullable
    */
-  lastName?: string;
-  /**
-   * Middle Name.
-   * @nullable
-   */
-  middleName?: string;
-  /**
-   * Gender.
-   */
-  gender!: PersonGender;
-  /**
-   * Age.
-   * @nullable
-   */
-  age?: BigNumber;
+  lastName!: string;
   /**
    * Emails.
    * @nullable
@@ -65,26 +49,22 @@ export class People extends EntityV4 implements PeopleType {
    */
   addressInfo?: Location[];
   /**
-   * Home Address.
+   * Gender.
    * @nullable
    */
-  homeAddress?: Location;
+  gender?: PersonGender;
   /**
-   * Favorite Feature.
+   * Concurrency.
    */
-  favoriteFeature!: Feature;
-  /**
-   * Features.
-   */
-  features!: Feature[];
+  concurrency!: BigNumber;
   /**
    * One-to-many navigation property to the [[People]] entity.
    */
   friends!: People[];
   /**
-   * One-to-one navigation property to the [[People]] entity.
+   * One-to-one navigation property to the [[Photos]] entity.
    */
-  bestFriend!: People;
+  photo!: Photos;
 
   /**
    * Returns an entity builder to construct instances `People`.
@@ -120,36 +100,30 @@ export class People extends EntityV4 implements PeopleType {
   }
 }
 
+import { Photos, PhotosType } from './Photos';
+
 export interface PeopleType {
   userName: string;
   firstName: string;
-  lastName?: string;
-  middleName?: string;
-  gender: PersonGender;
-  age?: BigNumber;
+  lastName: string;
   emails?: string[];
   addressInfo?: Location[];
-  homeAddress?: Location;
-  favoriteFeature: Feature;
-  features: Feature[];
+  gender?: PersonGender;
+  concurrency: BigNumber;
   friends: PeopleType[];
-  bestFriend: PeopleType;
+  photo: PhotosType;
 }
 
 export interface PeopleTypeForceMandatory {
   userName: string;
   firstName: string;
   lastName: string;
-  middleName: string;
-  gender: PersonGender;
-  age: BigNumber;
   emails: string[];
   addressInfo: Location[];
-  homeAddress: Location;
-  favoriteFeature: Feature;
-  features: Feature[];
+  gender: PersonGender;
+  concurrency: BigNumber;
   friends: PeopleType[];
-  bestFriend: PeopleType;
+  photo: PhotosType;
 }
 
 export namespace People {
@@ -169,21 +143,6 @@ export namespace People {
    */
   export const LAST_NAME: StringField<People> = new StringField('LastName', People, 'Edm.String');
   /**
-   * Static representation of the [[middleName]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const MIDDLE_NAME: StringField<People> = new StringField('MiddleName', People, 'Edm.String');
-  /**
-   * Static representation of the [[gender]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const GENDER: EnumField<People> = new EnumField('Gender', People);
-  /**
-   * Static representation of the [[age]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const AGE: BigNumberField<People> = new BigNumberField('Age', People, 'Edm.Int64');
-  /**
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -194,47 +153,38 @@ export namespace People {
    */
   export const ADDRESS_INFO: CollectionField<People, Location> = new CollectionField('AddressInfo', People, Location);
   /**
-   * Static representation of the [[homeAddress]] property for query construction.
+   * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const HOME_ADDRESS: LocationField<People> = new LocationField('HomeAddress', People);
+  export const GENDER: EnumField<People> = new EnumField('Gender', People);
   /**
-   * Static representation of the [[favoriteFeature]] property for query construction.
+   * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FAVORITE_FEATURE: EnumField<People> = new EnumField('FavoriteFeature', People);
-  /**
-   * Static representation of the [[features]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const FEATURES: CollectionField<People, 'Edm.Enum'> = new CollectionField('Features', People, 'Edm.Enum');
+  export const CONCURRENCY: BigNumberField<People> = new BigNumberField('Concurrency', People, 'Edm.Int64');
   /**
    * Static representation of the one-to-many navigation property [[friends]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
   export const FRIENDS: OneToManyLink<People, People> = new OneToManyLink('Friends', People, People);
   /**
-   * Static representation of the one-to-one navigation property [[bestFriend]] for query construction.
+   * Static representation of the one-to-one navigation property [[photo]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BEST_FRIEND: OneToOneLink<People, People> = new OneToOneLink('BestFriend', People, People);
+  export const PHOTO: OneToOneLink<People, Photos> = new OneToOneLink('Photo', People, Photos);
   /**
    * All fields of the People entity.
    */
-  export const _allFields: Array<StringField<People> | EnumField<People> | BigNumberField<People> | CollectionField<People, 'Edm.String'> | CollectionField<People, Location> | LocationField<People> | CollectionField<People, 'Edm.Enum'> | OneToManyLink<People, People> | OneToOneLink<People, People>> = [
+  export const _allFields: Array<StringField<People> | CollectionField<People, 'Edm.String'> | CollectionField<People, Location> | EnumField<People> | BigNumberField<People> | OneToManyLink<People, People> | OneToOneLink<People, Photos>> = [
     People.USER_NAME,
     People.FIRST_NAME,
     People.LAST_NAME,
-    People.MIDDLE_NAME,
-    People.GENDER,
-    People.AGE,
     People.EMAILS,
     People.ADDRESS_INFO,
-    People.HOME_ADDRESS,
-    People.FAVORITE_FEATURE,
-    People.FEATURES,
+    People.GENDER,
+    People.CONCURRENCY,
     People.FRIENDS,
-    People.BEST_FRIEND
+    People.PHOTO
   ];
   /**
    * All fields selector.

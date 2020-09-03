@@ -35,5 +35,5 @@ function changeset() {
 }
 exports.changeset = changeset;
 exports.defaultAdminServicePath = '/sap/opu/odata/sap/AdminService';
-var map = { 'TestEntity': index_1.TestEntity };
+var map = { 'TestEntity': index_1.TestEntity, 'TestEntityLink': index_1.TestEntityLink };
 //# sourceMappingURL=BatchRequest.js.map

@@ -34,7 +34,7 @@ var AirportsRequestBuilder_1 = require("./AirportsRequestBuilder");
 var AirportLocation_1 = require("./AirportLocation");
 var core_1 = require("@sap-cloud-sdk/core");
 /**
- * This class represents the entity "Airports" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
+ * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 var Airports = /** @class */ (function (_super) {
     __extends(Airports, _super);
@@ -78,25 +78,25 @@ var Airports = /** @class */ (function (_super) {
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for Airports.
      */
-    Airports._serviceName = 'Microsoft.OData.Service.Sample.TrippinInMemory.Models';
+    Airports._serviceName = 'Microsoft.OData.SampleService.Models.TripPin';
     /**
      * Default url path for the according service.
      */
-    Airports._defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
+    Airports._defaultServicePath = 'TripPinServiceRW';
     return Airports;
 }(core_1.EntityV4));
 exports.Airports = Airports;
 (function (Airports) {
     /**
-     * Static representation of the [[name]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    Airports.NAME = new core_1.StringField('Name', Airports, 'Edm.String');
-    /**
      * Static representation of the [[icaoCode]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     Airports.ICAO_CODE = new core_1.StringField('IcaoCode', Airports, 'Edm.String');
+    /**
+     * Static representation of the [[name]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    Airports.NAME = new core_1.StringField('Name', Airports, 'Edm.String');
     /**
      * Static representation of the [[iataCode]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -111,8 +111,8 @@ exports.Airports = Airports;
      * All fields of the Airports entity.
      */
     Airports._allFields = [
-        Airports.NAME,
         Airports.ICAO_CODE,
+        Airports.NAME,
         Airports.IATA_CODE,
         Airports.LOCATION
     ];

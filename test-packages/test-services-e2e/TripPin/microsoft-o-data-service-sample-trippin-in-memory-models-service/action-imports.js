@@ -15,7 +15,7 @@ var core_1 = require("@sap-cloud-sdk/core");
  */
 function resetDataSource(parameters) {
     var params = {};
-    return new core_1.ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', function (data) { return core_1.transformReturnValueForUndefinedV4(data, function (val) { return undefined; }); }, params);
+    return new core_1.ActionImportRequestBuilder('TripPinServiceRW', 'ResetDataSource', function (data) { return core_1.transformReturnValueForUndefinedV4(data, function (val) { return undefined; }); }, params);
 }
 exports.resetDataSource = resetDataSource;
 exports.actionImports = {

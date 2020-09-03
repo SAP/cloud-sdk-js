@@ -10,6 +10,6 @@ var PersonGender;
 (function (PersonGender) {
     PersonGender["Male"] = "Male";
     PersonGender["Female"] = "Female";
-    PersonGender["Unknow"] = "Unknow";
+    PersonGender["Unknown"] = "Unknown";
 })(PersonGender = exports.PersonGender || (exports.PersonGender = {}));
 //# sourceMappingURL=PersonGender.js.map

@@ -22,7 +22,7 @@ export function resetDataSource(parameters: ResetDataSourceParameters): ActionIm
 
   }
 
-  return new ActionImportRequestBuilder('TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/', 'ResetDataSource', (data) => transformReturnValueForUndefinedV4(data, (val) => undefined), params);
+  return new ActionImportRequestBuilder('TripPinServiceRW', 'ResetDataSource', (data) => transformReturnValueForUndefinedV4(data, (val) => undefined), params);
 }
 
 export const actionImports = {

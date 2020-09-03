@@ -10,6 +10,8 @@ import {
 } from '../../test-util/request-mocker';
 import {
   TestEntity,
+  TestEntityMultiLink,
+  TestEntityMultiLinkType,
   TestEntitySingleLink
 } from '../../test-util/test-services/v4/test-service';
 import { testPostRequestOutcome } from '../../test-util/testPostRequestOutcome';
@@ -49,6 +51,38 @@ describe('CreateRequestBuilderV4', () => {
     );
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
+  });
+
+  it('create an entity with multi link property (deep create)', async () => {
+    const keyProp = uuid();
+    const stringProp = 'testStr';
+    const postBody = {
+      KeyPropertyGuid: keyProp,
+      StringProperty: stringProp,
+      to_MultiLink:[{KeyProperty:'123'},{KeyProperty: '456'}]
+    };
+
+    const links: TestEntityMultiLinkType[] = [
+      TestEntityMultiLink.builder().keyProperty('123').build(),
+      TestEntityMultiLink.builder().keyProperty('456').build()
+    ];
+
+    mockCreateRequestV4({
+      responseBody: postBody
+    });
+
+    const entity = TestEntity.builder()
+      .keyPropertyGuid(keyProp)
+      .stringProperty(stringProp)
+      .toMultiLink(links)
+      .build();
+
+    const actual = await new CreateRequestBuilderV4(TestEntity, entity).execute(
+      defaultDestination
+    );
+
+    expect(actual.toMultiLink.length).toBe(2)
+    expect(actual.toMultiLink.map(link=>link.keyProperty)).toEqual(['123','456'])
   });
 
   it('create an entity with a single link property', async () => {

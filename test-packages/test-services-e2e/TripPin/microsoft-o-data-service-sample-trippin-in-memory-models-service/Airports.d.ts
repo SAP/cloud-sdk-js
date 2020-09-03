@@ -2,7 +2,7 @@ import { AirportsRequestBuilder } from './AirportsRequestBuilder';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
 import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
 /**
- * This class represents the entity "Airports" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
+ * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 export declare class Airports extends EntityV4 implements AirportsType {
     /**
@@ -19,24 +19,21 @@ export declare class Airports extends EntityV4 implements AirportsType {
      */
     static _defaultServicePath: string;
     /**
-     * Name.
-     * @nullable
-     */
-    name?: string;
-    /**
      * Icao Code.
      */
     icaoCode: string;
     /**
-     * Iata Code.
-     * @nullable
+     * Name.
      */
-    iataCode?: string;
+    name: string;
+    /**
+     * Iata Code.
+     */
+    iataCode: string;
     /**
      * Location.
-     * @nullable
      */
-    location?: AirportLocation;
+    location: AirportLocation;
     /**
      * Returns an entity builder to construct instances `Airports`.
      * @returns A builder that constructs instances of entity type `Airports`.
@@ -62,28 +59,28 @@ export declare class Airports extends EntityV4 implements AirportsType {
     };
 }
 export interface AirportsType {
-    name?: string;
     icaoCode: string;
-    iataCode?: string;
-    location?: AirportLocation;
+    name: string;
+    iataCode: string;
+    location: AirportLocation;
 }
 export interface AirportsTypeForceMandatory {
-    name: string;
     icaoCode: string;
+    name: string;
     iataCode: string;
     location: AirportLocation;
 }
 export declare namespace Airports {
     /**
-     * Static representation of the [[name]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    const NAME: StringField<Airports>;
-    /**
      * Static representation of the [[icaoCode]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     const ICAO_CODE: StringField<Airports>;
+    /**
+     * Static representation of the [[name]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const NAME: StringField<Airports>;
     /**
      * Static representation of the [[iataCode]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.

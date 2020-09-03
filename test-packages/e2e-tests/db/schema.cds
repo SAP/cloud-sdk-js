@@ -18,7 +18,8 @@ entity TestEntity {
   TimeOfDayProperty: Time;
   DataTimeOffsetDataTimeProperty: DateTime;
   DataTimeOffsetTimestampProperty: Timestamp;
-  //ToMultiLink: Association[0..*] to TestEntityLink on KeyTestEntity=ToMultiLink.KeyToTestEntity;
+  //Only Composition allow for deep create. Associations do not. The reason is that Composition are self-contained.
+  //So a hild entity can not exist without a parent.
   ToMultiLink: Composition of many TestEntityLink on KeyTestEntity=ToMultiLink.KeyToTestEntity;
 };
 

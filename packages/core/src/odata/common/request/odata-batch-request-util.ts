@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { MethodRequestBuilderBase } from '../request-builder';
-import { http_version } from '../odate-batch-consts';
+import { http_version } from '../odata-batch-consts';
 import { ODataRequestConfig } from './odata-request-config';
 
 function getUrl(requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>) {

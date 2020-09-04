@@ -75,7 +75,7 @@ The `executeHttpRequest()` function is used by all request builders provided of 
 
 ### Prerequisite I: The Business Application Studio ###
 
-You have a cloud foundry account and a subscription to the BAS. 
+You have a Cloud Foundry account and a subscription to the BAS. 
 Start the BAS and connect your BAS workspace to the CF account. 
 This is done via the little CF icon (<img src={useBaseUrl('img/cf-connect-button.jpg')} />) on the left of the BAS.
 The connection enables the proxy connection from the BAS to your CF account.

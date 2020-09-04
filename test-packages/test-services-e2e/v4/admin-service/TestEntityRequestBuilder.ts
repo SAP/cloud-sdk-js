@@ -12,15 +12,11 @@ import { TestEntity } from './TestEntity';
 export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-   * @param keyPropertyInt Key property. See [[TestEntity.keyPropertyInt]].
-   * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
+   * @param keyTestEntity Key property. See [[TestEntity.keyTestEntity]].
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
-  getByKey(keyPropertyInt: number, keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntity> {
-    return new GetByKeyRequestBuilderV4(TestEntity, {
-      KeyPropertyInt: keyPropertyInt,
-      KeyPropertyString: keyPropertyString
-    });
+  getByKey(keyTestEntity: number): GetByKeyRequestBuilderV4<TestEntity> {
+    return new GetByKeyRequestBuilderV4(TestEntity, { KeyTestEntity: keyTestEntity });
   }
 
   /**
@@ -51,21 +47,17 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
-   * @param keyPropertyInt Key property. See [[TestEntity.keyPropertyInt]].
-   * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
+   * @param keyTestEntity Key property. See [[TestEntity.keyTestEntity]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity`.
    */
-  delete(keyPropertyInt: number, keyPropertyString: string): DeleteRequestBuilderV4<TestEntity>;
+  delete(keyTestEntity: number): DeleteRequestBuilderV4<TestEntity>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity` by taking the entity as a parameter.
    */
   delete(entity: TestEntity): DeleteRequestBuilderV4<TestEntity>;
-  delete(keyPropertyIntOrEntity: any, keyPropertyString?: string): DeleteRequestBuilderV4<TestEntity> {
-    return new DeleteRequestBuilderV4(TestEntity, keyPropertyIntOrEntity instanceof TestEntity ? keyPropertyIntOrEntity : {
-      KeyPropertyInt: keyPropertyIntOrEntity!,
-      KeyPropertyString: keyPropertyString!
-    });
+  delete(keyTestEntityOrEntity: any): DeleteRequestBuilderV4<TestEntity> {
+    return new DeleteRequestBuilderV4(TestEntity, keyTestEntityOrEntity instanceof TestEntity ? keyTestEntityOrEntity : { KeyTestEntity: keyTestEntityOrEntity! });
   }
 }

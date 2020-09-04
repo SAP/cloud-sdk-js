@@ -42,15 +42,15 @@ var CityField = /** @class */ (function (_super) {
     function CityField(fieldName, fieldOf) {
         var _this = _super.call(this, fieldName, fieldOf, City) || this;
         /**
-         * Representation of the [[City.name]] property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        _this.name = new core_1.ComplexTypeStringPropertyField('Name', _this, 'Edm.String');
-        /**
          * Representation of the [[City.countryRegion]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
          */
         _this.countryRegion = new core_1.ComplexTypeStringPropertyField('CountryRegion', _this, 'Edm.String');
+        /**
+         * Representation of the [[City.name]] property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        _this.name = new core_1.ComplexTypeStringPropertyField('Name', _this, 'Edm.String');
         /**
          * Representation of the [[City.region]] property for query construction.
          * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -67,13 +67,13 @@ var City;
      * Metadata information on all properties of the `City` complex type.
      */
     City._propertyMetadata = [{
-            originalName: 'Name',
-            name: 'name',
+            originalName: 'CountryRegion',
+            name: 'countryRegion',
             type: 'Edm.String',
             isCollection: false
         }, {
-            originalName: 'CountryRegion',
-            name: 'countryRegion',
+            originalName: 'Name',
+            name: 'name',
             type: 'Edm.String',
             isCollection: false
         }, {

@@ -15,18 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+__exportStar(require("./Photos"), exports);
 __exportStar(require("./People"), exports);
 __exportStar(require("./Airlines"), exports);
 __exportStar(require("./Airports"), exports);
-__exportStar(require("./NewComePeople"), exports);
+__exportStar(require("./PhotosRequestBuilder"), exports);
 __exportStar(require("./PeopleRequestBuilder"), exports);
 __exportStar(require("./AirlinesRequestBuilder"), exports);
 __exportStar(require("./AirportsRequestBuilder"), exports);
-__exportStar(require("./NewComePeopleRequestBuilder"), exports);
-__exportStar(require("./Location"), exports);
 __exportStar(require("./City"), exports);
-__exportStar(require("./AirportLocation"), exports);
+__exportStar(require("./Location"), exports);
 __exportStar(require("./EventLocation"), exports);
+__exportStar(require("./AirportLocation"), exports);
 __exportStar(require("./function-imports"), exports);
 __exportStar(require("./BatchRequest"), exports);
 //# sourceMappingURL=index.js.map

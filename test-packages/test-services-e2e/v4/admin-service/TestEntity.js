@@ -85,17 +85,13 @@ var TestEntity = /** @class */ (function (_super) {
     return TestEntity;
 }(core_1.EntityV4));
 exports.TestEntity = TestEntity;
+var TestEntityLink_1 = require("./TestEntityLink");
 (function (TestEntity) {
     /**
-     * Static representation of the [[keyPropertyInt]] property for query construction.
+     * Static representation of the [[keyTestEntity]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntity.KEY_PROPERTY_INT = new core_1.NumberField('KeyPropertyInt', TestEntity, 'Edm.Int32');
-    /**
-     * Static representation of the [[keyPropertyString]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TestEntity.KEY_PROPERTY_STRING = new core_1.StringField('KeyPropertyString', TestEntity, 'Edm.String');
+    TestEntity.KEY_TEST_ENTITY = new core_1.NumberField('KeyTestEntity', TestEntity, 'Edm.Int32');
     /**
      * Static representation of the [[stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -147,11 +143,15 @@ exports.TestEntity = TestEntity;
      */
     TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY = new core_1.DateField('DataTimeOffsetTimestampProperty', TestEntity, 'Edm.DateTimeOffset');
     /**
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.TO_MULTI_LINK = new core_1.OneToManyLink('ToMultiLink', TestEntity, TestEntityLink_1.TestEntityLink);
+    /**
      * All fields of the TestEntity entity.
      */
     TestEntity._allFields = [
-        TestEntity.KEY_PROPERTY_INT,
-        TestEntity.KEY_PROPERTY_STRING,
+        TestEntity.KEY_TEST_ENTITY,
         TestEntity.STRING_PROPERTY,
         TestEntity.GUID_PROPERTY,
         TestEntity.BOOLEAN_PROPERTY,
@@ -161,7 +161,8 @@ exports.TestEntity = TestEntity;
         TestEntity.DATE_PROPERTY,
         TestEntity.TIME_OF_DAY_PROPERTY,
         TestEntity.DATA_TIME_OFFSET_DATA_TIME_PROPERTY,
-        TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY
+        TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY,
+        TestEntity.TO_MULTI_LINK
     ];
     /**
      * All fields selector.
@@ -170,7 +171,7 @@ exports.TestEntity = TestEntity;
     /**
      * All key fields of the TestEntity entity.
      */
-    TestEntity._keyFields = [TestEntity.KEY_PROPERTY_INT, TestEntity.KEY_PROPERTY_STRING];
+    TestEntity._keyFields = [TestEntity.KEY_TEST_ENTITY];
     /**
      * Mapping of all key field names to the respective static field property TestEntity.
      */

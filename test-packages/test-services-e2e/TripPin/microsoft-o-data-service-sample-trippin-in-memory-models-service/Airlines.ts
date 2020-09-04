@@ -7,7 +7,7 @@ import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
 import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
- * This class represents the entity "Airlines" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
+ * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 export class Airlines extends EntityV4 implements AirlinesType {
   /**
@@ -18,20 +18,19 @@ export class Airlines extends EntityV4 implements AirlinesType {
    * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
    * Technical service name for Airlines.
    */
-  static _serviceName = 'Microsoft.OData.Service.Sample.TrippinInMemory.Models';
+  static _serviceName = 'Microsoft.OData.SampleService.Models.TripPin';
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * Airline Code.
    */
   airlineCode!: string;
   /**
    * Name.
-   * @nullable
    */
-  name?: string;
+  name!: string;
 
   /**
    * Returns an entity builder to construct instances `Airlines`.
@@ -69,7 +68,7 @@ export class Airlines extends EntityV4 implements AirlinesType {
 
 export interface AirlinesType {
   airlineCode: string;
-  name?: string;
+  name: string;
 }
 
 export interface AirlinesTypeForceMandatory {

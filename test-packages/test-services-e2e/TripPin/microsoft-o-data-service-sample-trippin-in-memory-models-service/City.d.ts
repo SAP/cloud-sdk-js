@@ -4,20 +4,17 @@ import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, E
  */
 export interface City {
     /**
-     * Name.
-     * @nullable
-     */
-    name?: string;
-    /**
      * Country Region.
-     * @nullable
      */
-    countryRegion?: string;
+    countryRegion: string;
+    /**
+     * Name.
+     */
+    name: string;
     /**
      * Region.
-     * @nullable
      */
-    region?: string;
+    region: string;
 }
 /**
  * @deprecated Since v1.6.0. Use [[City.build]] instead.
@@ -29,15 +26,15 @@ export declare function createCity(json: any): City;
  */
 export declare class CityField<EntityT extends EntityV4> extends ComplexTypeField<EntityT, City> {
     /**
-     * Representation of the [[City.name]] property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    name: ComplexTypeStringPropertyField<EntityT>;
-    /**
      * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     countryRegion: ComplexTypeStringPropertyField<EntityT>;
+    /**
+     * Representation of the [[City.name]] property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    name: ComplexTypeStringPropertyField<EntityT>;
     /**
      * Representation of the [[City.region]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

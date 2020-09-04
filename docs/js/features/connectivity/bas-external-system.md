@@ -114,7 +114,7 @@ Either you extend your existing `.vscode/launch.json` or you create a new one.
   ]
 }
 ```
-In this document we use a simple Nest application but for any express or [CAP project](https://community.sap.com/topics/cloud-application-programming) it will look similar.
+In this example we use a simple Nest.js application. The code will look very similar for express or [CAP](https://community.sap.com/topics/cloud-application-programming) applications.
 The entries are quite self-explanatory, the `program` and `preLaunchTask` will be of course different depending on your application.
 The relevant thing will happen in the `.env` file which is read when starting the application.
 If you do not have a `.env` file create one or adjust the existing one.

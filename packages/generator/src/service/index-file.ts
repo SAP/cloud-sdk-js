@@ -6,6 +6,7 @@ import {
   StructureKind
 } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
+import { hasEntities } from '../generator-utils';
 
 export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
   return {
@@ -21,7 +22,7 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
       ...(service.functionImports && service.functionImports.length
         ? [exportStatement('function-imports')]
         : []),
-      exportStatement('BatchRequest')
+      ...(hasEntities(service) ? [exportStatement('BatchRequest')] : [])
     ]
   };
 }

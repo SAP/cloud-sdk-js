@@ -41,6 +41,20 @@ describe('get filters', () => {
     );
   });
 
+  it('for nested filters with and operator only', () => {
+    expect(
+      oDataUriV2.getFilter(
+        and(
+          and(testFilterString.filter, testFilterBoolean.filter),
+          and(testFilterString.filter, testFilterInt16.filter)
+        ),
+        TestEntity
+      ).filter
+    ).toBe(
+      `((${testFilterString.odataStr} and ${testFilterBoolean.odataStr}) and (${testFilterString.odataStr} and ${testFilterInt16.odataStr}))`
+    );
+  });
+
   it('for nested multidimensional filters', () => {
     expect(
       oDataUriV2.getFilter(

@@ -29,7 +29,7 @@ You can connect to your CF account and access environment variables and destinat
 This connection is also the focus of this document:
 How to reach external systems from your locally running BAS application without deploying to CF.
 This is a very useful feature for developers because the cycle to test something is much quicker if you can do it locally.
-We will also consider onPremise S/4 systems as relevant external system here, because for external systems reachable on the internet a connection is trivial.
+We will also consider SAP S/4HANA On-Premise systems as relevant external system here, because for external systems reachable on the internet a connection is trivial.
 
 <img alt="Reaching external onPremise" src={useBaseUrl('img/cloud-connector.png')} />
 

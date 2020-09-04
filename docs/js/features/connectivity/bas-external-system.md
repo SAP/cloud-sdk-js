@@ -1,5 +1,4 @@
 ---
-id: bas-external-system-js-sdk
 title: Connecting to external system from the business application studio (BAS) with the SAP Cloud SDK for JavaScript / TypeScript
 hide_title: false
 hide_table_of_contents: false

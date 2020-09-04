@@ -52,7 +52,7 @@ As described in [the destination lookup](destination-js-sdk) the SDK has a desti
 The trick is to define a `destinations` environment variable when you run locally, which works like a switch under the hood when you execute:
 
 ```$xslt
-executeHttpReques({destinationName:"myDestinationName",jwt:"myJWT"})
+executeHttpRequest({ destinationName: "myDestinationName", jwt: "myJWT" });
 ```
 
 The code is the same for local execution and production. The two situation are:

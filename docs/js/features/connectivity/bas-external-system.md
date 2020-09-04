@@ -31,7 +31,7 @@ How to reach external systems from your locally running BAS application without 
 This is a very useful feature for developers because the cycle to test something is much quicker if you can do it locally.
 We will also consider SAP S/4HANA On-Premise systems as relevant external system here, because for external systems reachable on the internet a connection is trivial.
 
-<img alt="Reaching external onPremise" src={useBaseUrl('img/cloud-connector.png')} />
+<img alt="Connecting to external On-Premise systems" src={useBaseUrl('img/cloud-connector.png')} />
 
 ## Technical Background ##
 

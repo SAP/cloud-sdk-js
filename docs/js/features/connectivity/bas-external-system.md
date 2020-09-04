@@ -62,7 +62,7 @@ The destination contains only the name and URL of the real CF destination.
 Since the destination has no proxy type specified, the SDK takes the HTTP_PROXY into account, as is the default.
 From there the flow described above takes place.
 
-**Case 2:** When you run on CF there is not environment variable present. 
+**Case 2:** When run on CF there is no environment variable present. 
 The `jwt` is used to fetch the full destination from the service.
 The proxy type is `onPremise` and the connectivity service provides all proxy information.
 

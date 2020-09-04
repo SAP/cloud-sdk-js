@@ -148,7 +148,7 @@ For the simple case you would add `mockTestDestination(<destinationName>)` to yo
 
 ## Closing Remarks for Cloud Systems
 
-In case you have a cloud system like S/4 Hana cloud or any other system on the internet you can follow the same approach.
+In case you have a cloud system like SAP S/4HANA Cloud or any other system on the internet you can follow the same approach.
 Just add values for `user` and `password` to the environment variables if the system requires authorization.
 In case you use the `mockTestDestination()` add the login information to the `credentials.json`.
 

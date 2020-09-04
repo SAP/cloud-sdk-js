@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [Generator] Generator will fail, when it generates `.ts` files that have compilation errors.
 
 ## Fixed Issues
 

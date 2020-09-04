@@ -71,7 +71,7 @@ The proxy type is `onPremise` and the connectivity service provides all proxy in
 The `executeHttpRequest()` function is used by all request builders provided of the SDK as well as by CAP applications connecting to an SAP S/4HANA system.
 :::
 
-## Details on the Setup ##
+## Setup ##
 
 ### Prerequisite I: The Business Application Studio ###
 

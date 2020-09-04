@@ -27,7 +27,7 @@ function createPeople(userName: string): People {
     .build();
 }
 
-describe('Request builder test', () => {
+xdescribe('Request builder test', () => {
   it('should return a collection of entities for get all request', async () => {
     const people = await People.requestBuilder()
       .getAll()

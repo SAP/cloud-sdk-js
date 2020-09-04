@@ -153,7 +153,7 @@ Just add values for `user` and `password` to the environment variables if the sy
 In case you use the `mockTestDestination()` add the login information to the `credentials.json`.
 
 :::note
-Via the connection between the BAS and CF it is also possible to import all environmentvariabless from the CF account to the BAS.
+Via the connection between the BAS and CF it is also possible to import all environment variables from the CF account to the BAS.
 In particular the `VCAP_SERVICE` variable containing all service information.
 If you import these you can do the real destination via the destination service in your locally deployed app.
 This works for all destinations with a proxy type `internet` but not for the ones with `onPremise`. 

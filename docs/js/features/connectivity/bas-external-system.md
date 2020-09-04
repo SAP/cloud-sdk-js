@@ -18,7 +18,7 @@ keywords:
 
 import useBaseUrl from '@docusaurus/useBaseUrl'
 
-## Introduction ##
+## What is the Business Application Studio (BAS)? ##
 
 The business application studio (BAS) is a development environment offered as a service on Cloud Foundry (CF).
 You can simply subscribe to the BAS and from there quickly start developing without installing node, git, Visual Studio Code or other tools.

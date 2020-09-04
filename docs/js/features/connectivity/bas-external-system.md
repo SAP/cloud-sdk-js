@@ -26,8 +26,7 @@ From the look and feel it is very similar to Visual Studio Code, which is no sur
 
 However, SAP added a few useful features to the BAS. 
 You can connect to your CF account and access environment variables and destinations of the destination service subscribed to your account.
-This connection is also the focus of this document:
-How to reach external systems from your locally running BAS application without deploying to CF.
+This allows you to connect to external systems from your locally running BAS application without deploying to CF.
 This is a very useful feature for developers because the cycle to test something is much quicker if you can do it locally.
 We will also consider SAP S/4HANA On-Premise systems as relevant external system here, because for external systems reachable on the internet a connection is trivial.
 

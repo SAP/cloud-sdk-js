@@ -21,7 +21,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Introduction ##
 
-The business application studio (BAS) is a development environment offered as a service on cloud foundry (CF).
+The business application studio (BAS) is a development environment offered as a service on Cloud Foundry (CF).
 You can simple subscribe to the BSA and from there start developing quickly without installing node, git, visual studio vode... .
 From the look and feel it is very similar to visual studio code, which is no sunrise since it is base on the [Eclipse Theia](https://theia-ide.org/) the open source version of visula studio code.
 
@@ -162,4 +162,3 @@ This works for all destination with a proxy type `internet` but not for the ones
 The reason for this is the interference of two proxies: (1) The web proxy of the BAS and (2) the connectivity proxy in CF.
 If you load an onPremise destination via the destination service it will contain the connectivity proxy of CF, although you would need the web proxy when you run locally in BAS.
 :::
-

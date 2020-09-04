@@ -1,16 +1,16 @@
 ---
-title: Connecting to external system from the business application studio (BAS) with the SAP Cloud SDK for JavaScript / TypeScript
+title: Connecting to external system from the Business Application Studio (BAS) with the SAP Cloud SDK for JavaScript / TypeScript
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: From BAS to External Systems
-description: This article describes how the SDK helps to connect to external systems from the business application studio.
+description: This article describes how the SDK helps to connect to external systems from the Business Application Studio.
 keywords:
 - sap
 - cloud
 - sdk
 - proxy
 - connectivity
-- business application studio
+- Business Application Studio
 - cloud-foundry
 - JavaScript
 - TypeScript
@@ -20,25 +20,24 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## What is the Business Application Studio (BAS)? ##
 
-The business application studio (BAS) is a development environment offered as a service on Cloud Foundry (CF).
+The Business Application Studio (BAS) is a development environment offered as a service on Cloud Foundry (CF).
 You can simply subscribe to the BAS and from there quickly start developing without installing node, git, Visual Studio Code or other tools.
 From the look and feel it is very similar to Visual Studio Code, which is no surprise since it is based on [Eclipse Theia](https://theia-ide.org/), the open source version of Visual Studio Code.
 
 However, SAP added a few useful features to the BAS. 
-You can connect to your CF account and access environment variables and destinations of the destination service subscribed to your account.
-This allows you to connect to external systems from your locally running BAS application without deploying to CF.
+You can connect the BAS to your CF account.
+This allows you to reach behind a Cloud Connector from your locally running BAS application without deploying to CF.
 This is a very useful feature for developers because the cycle to test something is much quicker if you can do it locally.
-We will also consider SAP S/4HANA On-Premise systems as relevant external system here, because for external systems reachable on the internet a connection is trivial.
 
 <img alt="Connecting to external On-Premise systems" src={useBaseUrl('img/cloud-connector.png')} />
 
-## Technical Background ##
+## Technical Background <a name="background"></a> ##
 
-Companies do not expose their onPremise S/4 systems to the internet.
-They are only reachable via a cloud connector (CC) attached to a CF account.
+Companies do not expose their On-Premise SAP S/4HANA systems to the internet.
+They are only reachable via a Cloud Connector (CC) attached to a CF account.
 In principle, you cannot reach these systems outside the CF account.    
 
-However, due to the subscription between the BAS and the CF account there is a connection from the local application to the S/4 system.
+However, due to the subscription between the BAS and the CF account there is a connection from the local application to the SAP S/4HANA system.
 On a high level the connection works the following way:
 - The BAS includes an HTTP_PROXY running at http://localhost:8887 
 - This proxy forwards all http requests to the CF account
@@ -64,7 +63,7 @@ From there the flow described above takes place.
 
 **Case 2:** When run on CF there is no environment variable present. 
 The `jwt` is used to fetch the full destination from the service.
-The proxy type is `onPremise` and the connectivity service provides all proxy information.
+The proxy type is `OnPremise` and the connectivity service provides all proxy information.
 
 
 :::note
@@ -80,23 +79,21 @@ Start the BAS and connect your BAS workspace to the CF account.
 This is done via the little CF icon (<img src={useBaseUrl('img/cf-connect-button.jpg')} />) on the left of the BAS.
 The connection enables the proxy connection from the BAS to your CF account.
 
-### Prerequisite II: Cloud Connector and Destination Setup ###
+### Prerequisite II: Cloud Connector and Destination Setup  <a name="CCandDestSetup"></a> ###
 
-You have a working cloud-connector setup and in your account contains a destination pointing to an onPremise system you want to connect to.
-Go to the destination in CF and add the following properties:
+You have a working Cloud Connector setup and in your account contains a destination pointing to an On-Premise system you want to connect to.
+Per default, destinations are not usable by a connected BAS. 
+You need to set two properties `WebIDEEnabled` and `HTML5.DynamicDestination` to enable that feature for a specific destination.
+Go to the destination configuration in CF and add the properties:
 
 |Property|Value|
 |---|---|
 |WebIDEEnabled|true|
 |HTML5.DynamicDestination|true|
-
-This makes the destination available for usage from the BAS studio. 
-Note down the value of the `name` and `url` field of the destination.
-We will need it later on.
   
 ### Local Application Setup
 
-You use launch configurations to run and debug applications locally.
+You use [launch configurations](https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes) to run and debug applications locally.
 Either extend your existing `.vscode/launch.json` or create a new one. 
 ```JSON
 {"configurations": [
@@ -114,18 +111,24 @@ Either extend your existing `.vscode/launch.json` or create a new one.
   ]
 }
 ```
-In this example we use a simple Nest.js application. The code will look very similar for express or [CAP](https://community.sap.com/topics/cloud-application-programming) applications.
-The entries are quite self-explanatory, the `program` and `preLaunchTask` will be of course different depending on your application.
-The relevant thing will happen in the `.env` file which is read when starting the application.
+In this example we use a simple Nest.js application. 
+The code will look very similar for express or [CAP](https://community.sap.com/topics/cloud-application-programming) applications.
+The property `program` defines the script file executed when you run the configuration. 
+In our case the `main.js` script will start up the Nest server.
+The `preLaunchTask` executes the build before each run which compiles the TypeScript files to JavaScript. 
+The `outFiles` properties defines where the compiled files will be located.
+
+As discussed [in the beginning](#background) we need to set an environment variable.
+The easiest way to do that is via a `.env` file which is read when starting the application.
 If you do not have a `.env` file create one or adjust the existing one.
 Just add the following entry to the `.env` file:
 
 ```
 destinations="[{"name": "<destinationName>","url": "<destinationUrl>"}]"
 ```
-Fill in the `name` and `url` you have noted down from the CF destination you want to connect to.
+Fill in the `name` and `url` of the destination you [configured in CF](#CCandDestSetup).
 Once the request reaches the CF account via the proxy, it reads all authorization information from the real destination.
-All requests done with the SDK will now reach the S/4 system. 
+All requests done with the SDK will now reach the SAP S/4HANA system. 
 You can start your application via the launch button. 
 
 :::note
@@ -154,9 +157,9 @@ In case you use the `mockTestDestination()` add the login information to the `cr
 
 :::note
 Via the connection between the BAS and CF it is also possible to import all environment variables from the CF account to the BAS.
-In particular the `VCAP_SERVICE` variable containing all service information.
-If you import these you can do the real destination via the destination service in your locally deployed app.
-This works for all destinations with a proxy type `internet` but not for the ones with `onPremise`. 
+In particular, you can mirror `VCAP_SERVICE` variable containing all service information.
+If you import these you can use the real destination via the destination service in your locally deployed app.
+This works for all destinations with a proxy type `Internet` but not for the ones with `OnPremise`. 
 The reason for this is the interference of two proxies: (1) The web proxy of the BAS and (2) the connectivity proxy in CF.
 If you load an On-Premise destination via the destination service it will contain the connectivity proxy of CF, although you would need the web proxy when you run locally in BAS.
 :::

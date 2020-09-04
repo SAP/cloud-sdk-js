@@ -43,7 +43,7 @@ On a high level the connection works the following way:
 - The BAS includes an HTTP_PROXY running at http://localhost:8887 
 - This proxy forwards all http requests to the CF account
 - CF searches the existing destinations for one matching the URL of the request
-- If a destination is present  initial request is send to this destination
+- If a destination is present, an initial request is sent to this destination
 - The proxy is a reverse proxy also piping back the response to the BAS
 
 The SDK helps you to consider the HTTP_PROXY automatically and  makes it easy to use the same code base locally and in production on CF.

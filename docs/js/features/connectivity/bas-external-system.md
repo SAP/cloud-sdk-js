@@ -22,7 +22,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 The business application studio (BAS) is a development environment offered as a service on Cloud Foundry (CF).
 You can simply subscribe to the BAS and from there quickly start developing without installing node, git, Visual Studio Code or other tools.
-From the look and feel it is very similar to visual studio code, which is no sunrise since it is base on the [Eclipse Theia](https://theia-ide.org/) the open source version of visula studio code.
+From the look and feel it is very similar to Visual Studio Code, which is no surprise since it is based on [Eclipse Theia](https://theia-ide.org/), the open source version of Visual Studio Code.
 
 However, SAP added a few useful features to the BAS. 
 You can connect to your CF account and access environment variables and destinations of the destination service subscribed to your account.

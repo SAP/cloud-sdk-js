@@ -97,7 +97,7 @@ We will need it later on.
 ### Local Application Setup
 
 You use launch configurations to run and debug applications locally.
-Either you extend your existing `.vscode/launch.json` or you create a new one. 
+Either extend your existing `.vscode/launch.json` or create a new one. 
 ```JSON
 {"configurations": [
     {

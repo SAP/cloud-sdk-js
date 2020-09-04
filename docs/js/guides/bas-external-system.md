@@ -2,7 +2,7 @@
 title: Connecting to external system from the Business Application Studio (BAS) with the SAP Cloud SDK for JavaScript / TypeScript
 hide_title: false
 hide_table_of_contents: false
-sidebar_label: From BAS to External Systems
+sidebar_label: Connecting to External system form BAS
 description: This article describes how the SDK helps to connect to external systems from the Business Application Studio.
 keywords:
 - sap
@@ -46,7 +46,7 @@ On a high level the connection works the following way:
 - The proxy is a reverse proxy also piping back the response to the BAS
 
 The SDK helps you to consider the HTTP_PROXY automatically and makes it easy to use the same code base locally and in production on CF.
-As described in [the destination lookup](destination-js-sdk) the SDK has a destination lookup priority considering environment variables first.
+As described in [the destination lookup](../features/connectivity/destination-js-sdk) the SDK has a destination lookup priority considering environment variables first.
 
 The trick is to define a `destinations` environment variable when you run locally, which works like a switch under the hood when you execute:
 

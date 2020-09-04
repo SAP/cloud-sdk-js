@@ -156,8 +156,7 @@ module.exports = {
             label: 'Connectivity',
             items: [
               'js/features/connectivity/destination-js-sdk',
-              'js/features/connectivity/proxy-js-sdk',
-              'js/features/connectivity/bas-external-system'
+              'js/features/connectivity/proxy-js-sdk'
             ]
           }
         ]
@@ -166,7 +165,8 @@ module.exports = {
         type: 'category',
         label: 'Guides',
         items: [
-          'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript'
+          'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript',
+          'js/guides/bas-external-system'
         ]
       },
       'js/api-reference-js-ts',

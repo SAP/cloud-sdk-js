@@ -60,7 +60,7 @@ The code is the same for local execution and production. The two situation are:
 **Case 1:** When run locally, the SDK reads the destination from the environment variables. The `jwt` is irrelevant.
 The destination contains only the name and URL of the real CF destination. 
 Since the destination has no proxy type specified, the SDK takes the HTTP_PROXY into account, as is the default.
-From there the flow, described above, takes place.
+From there the flow described above takes place.
 
 **Case 2:** When you run on CF there is not environment variable present. 
 The `jwt` is used to fetch the full destination from the service.

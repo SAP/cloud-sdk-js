@@ -77,7 +77,27 @@ This ensures the mapping of all S/4 properties like `sap-client` and `sap-locale
 
 ## Testing destinations in local environment ##
 
-For testing purposes, the SDK provides functionality to provide such a destination in a local development environment. Refer to [these tutorial steps](https://developers.sap.com/tutorials/s4sdk-odata-service-cloud-foundry.html#b77d53b0-2d8b-449c-9a9a-9df80ee09a4e) on how to mock destinations for local development and testing.
+For testing purposes, the SDK provides functionality to provide such a destination in a local development environment. 
+This is especially useful when working with destinations from the destination service since the service is not available in a local setting.
+
+The SDK offers a `MockUtil` class that is capable of injecting destinations into the `DestinationAccessor`:
+
+```java
+final MockUtil mockUtil = new MockUtil();
+
+MockDestination destination = MockDestination
+            .builder("my-destination", URI.create("http://localhost:8080"))
+            .build();
+
+mockUtil.mockDestination(destination);
+
+// This will now return the mocked destination
+DestinationAccessor.getDestination("my-destionation").asHttp();
+```
+
+This helps with keeping production and test code nicely separated.
+There are more overloads of the mocking on the [MockUtil class](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/testutil/MockUtil.html) that you can use.
+Also refer to [these tutorial steps](https://developers.sap.com/tutorials/s4sdk-odata-service-cloud-foundry.html#b77d53b0-2d8b-449c-9a9a-9df80ee09a4e) on how to mock destinations for local development and testing.
 
 ## Retrieving destinations
 

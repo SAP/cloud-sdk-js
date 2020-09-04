@@ -58,7 +58,7 @@ executeHttpRequest({ destinationName: "myDestinationName", jwt: "myJWT" });
 The code is the same for local execution and production. The two situation are:
 
 **Case 1:** When run locally, the SDK reads the destination from the environment variables. The `jwt` is irrelevant.
-The destination contains only name and url of the real CF destination. 
+The destination contains only the name and URL of the real CF destination. 
 Since the destination has no proxy type specified the SDK takes per default the HTTP_PROXY into account.
 From there the flow, described above, takes place.
 

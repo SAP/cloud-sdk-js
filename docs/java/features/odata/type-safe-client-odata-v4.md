@@ -15,6 +15,8 @@ keywords:
 - generate
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 ## Build and execute OData Requests with the typed OData client
 
 The typed OData v4 client allows to build type-safe OData v4 requests for a given service. The Java classes represent the _data model_ and the available _operations_ of the service. As a consequence all requests that are build through the typed OData client are not only _syntactically valid_ but also _semantically valid_.
@@ -23,7 +25,7 @@ The typed OData v4 client allows to build type-safe OData v4 requests for a give
 
 The typed OData v4 client consists of _service_ and _data model_ classes. The service classes mirror the API provided by the OData service and serve as entry point for creating requests. They provide a builder which allows for adding further parameters in a fluent way.
 
-To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail [here](/cloud-sdk/docs/java/features/connectivity/sdk-connectivity-destination-service). The following code snippets assume that such a destination is in place:
+To execute HTTP requests the OData client leverages _Destinations_ and are documented in more detail <a href={useBaseUrl('docs/java/features/connectivity/sdk-connectivity-destination-service')}>here</a>. The following code snippets assume that such a destination is in place:
 
 ```java
 HttpDestination destination;

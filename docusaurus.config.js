@@ -34,7 +34,8 @@ module.exports = {
       title: 'SAP Cloud SDK',
       logo: {
         alt: 'SAP Cloud SDK',
-        src: 'img/logo.svg'
+        src: 'img/logo.svg',
+        srcDark: 'img/logo-dark.svg'
       },
       items: [
         {

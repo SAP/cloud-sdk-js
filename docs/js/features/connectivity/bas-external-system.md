@@ -159,5 +159,5 @@ In particular the `VCAP_SERVICE` variable containing all service information.
 If you import these you can do the real destination via the destination service in your locally deployed app.
 This works for all destinations with a proxy type `internet` but not for the ones with `onPremise`. 
 The reason for this is the interference of two proxies: (1) The web proxy of the BAS and (2) the connectivity proxy in CF.
-If you load an onPremise destination via the destination service it will contain the connectivity proxy of CF, although you would need the web proxy when you run locally in BAS.
+If you load an On-Premise destination via the destination service it will contain the connectivity proxy of CF, although you would need the web proxy when you run locally in BAS.
 :::

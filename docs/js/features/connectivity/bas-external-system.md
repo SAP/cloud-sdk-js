@@ -130,7 +130,7 @@ You can start your application via the launch button.
 
 :::note
 The SDK also offers a `mockTestDestination()` method which reads destination information from a `system.json` and `credentials.json` file.
-In the end, this only sets the `destinations` environment variables as the `.env` file does, but could become advantageous if you have many systems.
+In the end, this only sets the `destinations` environment variables as stored in the `.env` file, but could become advantageous if you have many systems.
 You can also set the `credentials.json` to your git ignore list so that they are not checked in by accident and share the systems with your colleagues.
 :::
 

@@ -39,7 +39,7 @@ They are only reachable via a cloud connector (CC) attached to a CF account.
 In principle, you cannot reach these systems outside the CF account.    
 
 However, due to the subscription between the BAS and the CF account there is a connection from the local application to the S/4 system.
-The connection works on a high level in the following way:
+On a high level the connection works the following way:
 - The BAS includes an HTTP_PROXY running at http://localhost:8887 
 - This proxy forwards all http requests to the CF account
 - CF searches the existing destinations for one matching the URL of the request

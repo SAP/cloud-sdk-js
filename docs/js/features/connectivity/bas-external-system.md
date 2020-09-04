@@ -46,7 +46,7 @@ On a high level the connection works the following way:
 - If a destination is present, an initial request is sent to this destination
 - The proxy is a reverse proxy also piping back the response to the BAS
 
-The SDK helps you to consider the HTTP_PROXY automatically and  makes it easy to use the same code base locally and in production on CF.
+The SDK helps you to consider the HTTP_PROXY automatically and makes it easy to use the same code base locally and in production on CF.
 As described in [the destination lookup](destination-js-sdk) the SDK has a destination lookup priority considering environment variables first.
 
 The trick is to define a `destinations` environment variable when you run locally, which works like a switch under the hood when you execute:

@@ -91,7 +91,7 @@ Go to the destination in CF and add the following properties:
 |HTML5.DynamicDestination|true|
 
 This makes the destination available for usage from the BAS studio. 
-Note  down the value of the `name` and `url` field of the destination.
+Note down the value of the `name` and `url` field of the destination.
 We will need it later on.
   
 ### Local Application Setup

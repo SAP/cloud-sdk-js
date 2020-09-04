@@ -21,8 +21,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Introduction ##
 
-The business application studio (BAS) is a development environment offered as a serivce on cloud foundry (CF).
-You can simple subscripte to the BSA and from there start developing quickly without installing node, git, visual studio vode... .
+The business application studio (BAS) is a development environment offered as a service on cloud foundry (CF).
+You can simple subscribe to the BSA and from there start developing quickly without installing node, git, visual studio vode... .
 From the look and feel it is very similar to visual studio code, which is no sunrise since it is base on the [Eclipse Theia](https://theia-ide.org/) the open source version of visula studio code.
 
 However, SAP added a few useful features to the BAS. 
@@ -42,7 +42,7 @@ In principle, you cannot reach these systems from outside of the CF account.
 
 However, due to the subscription between the BAS and the CF account there is a connection from the local application to the S/4 system.
 The connection works on a high level in the following way:
-- The BAS includes a HTTP_PROXY running at http://localhost:8887 
+- The BAS includes an HTTP_PROXY running at http://localhost:8887 
 - This proxy forwards all http requests to the CF account
 - CF searches the existing destinations for one matching the URL of the request
 - If a destination is present  initial request is send to this destination

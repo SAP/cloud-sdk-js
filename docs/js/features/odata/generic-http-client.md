@@ -11,13 +11,15 @@ keywords:
 - TypeScript
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl'
+
 ## What is the Generic Http Client
 
 In the [Executing a request using a generated OData client](./execute-odata-request.mdx) document we explained how to create OData requests using a generated OData client.
 This client is the highest layer of convenience and safety for the user.
 But there are two layers underneath: The generic http client and the Axios client.
 
-<img alt="Destination in CF" src={useBaseUrl('img/odata-client-layers.png')} />
+<img alt="Destination in CF" src={useBaseUrl('img/odata-client-layers.png')} class="center" />
 
 **OData Client:** Provides strong typing with respect to the request (payload,select,filter,...) and response. 
 It taks care of deserializing your request to a URL and JSON payload as well as serializing the response.

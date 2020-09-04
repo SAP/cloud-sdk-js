@@ -147,6 +147,7 @@ module.exports = {
               'js/features/odata/overview',
               'js/features/odata/generate-odata-client',
               'js/features/odata/execute-odata-request',
+              'js/features/odata/generic-http-client',
               'js/features/odata/odata-v2-client',
               'js/features/odata/odata-v4-client'
             ]

@@ -42,7 +42,7 @@ OData V4 introduces the [lambda operators](http://docs.oasis-open.org/odata/odat
   )
 )
 ```
-The `$filter`parameter of the URL will be generated like below:
+The generated `$filter` parameter of the URL will be:
 ```sql
 $filter=(/any(a0:((a0/Friends/FirstName eq 'firstName' and a0/Friends/LastName eq 'lastName'))))
 ```

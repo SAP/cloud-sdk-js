@@ -19,7 +19,7 @@ Typed client for OData v4 is under heavy development and was released only as `e
 
 ## Making a request using a generated OData v4 client
 
-Be patient, we are working on the it.
+Be patient, we are working on it.
 
 ### Filter
 

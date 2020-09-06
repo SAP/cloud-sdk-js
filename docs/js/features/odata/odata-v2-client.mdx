@@ -124,7 +124,7 @@ The example above can be shortened to:
 )
 ```
 
-##### Filter on One-To-One Navigation Properties
+#### Filter on One-To-One Navigation Properties
 
 In addition to basic properties, filters can also be applied on one-to-one navigation properties. The example below shows how to filter on the `TO_CUSTOMER`, which is a one-to-one navigation property of the BusinessPartner entity. Please note, the `CUSTOMER_NAME` and `CUSTOMER_FULL_NAME` are properties of the entity `Customer`, which is the type of the one-to-one navigation property `TO_CUSTOMER`.
 ```ts
@@ -145,7 +145,7 @@ The generated `$filter` will be:
 $filter=((to_Customer/CustomerName eq 'name' and to_Customer/CustomerFullName eq 'fullName'))
 ```
 
-##### More Filter Expressions
+#### More Filter Expressions
 
 More advanced filter expressions can be found [here](#available-filter-expressions).
 

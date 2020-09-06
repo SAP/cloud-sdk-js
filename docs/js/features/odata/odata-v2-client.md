@@ -226,7 +226,7 @@ In addition to basic properties, filters can also be applied on one-to-one navig
   )
 )
 ```
-The `$filter` will be generated like below:
+The generated `$filter` will be:
 ```sql
 $filter=((to_Customer/CustomerName eq 'name' and to_Customer/CustomerFullName eq 'fullName'))
 ```

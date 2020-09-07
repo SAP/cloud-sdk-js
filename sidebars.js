@@ -66,15 +66,15 @@ module.exports = {
             type: 'category',
             label: 'SDK extensions',
             items: [
-              'java/features/extensions/extensions-supported-by-sap-cloud-sdk-for-java'
-              // {
-              //   type: 'category',
-              //   label: 'Extension library',
-              //   items: [
-              //     'java/features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java',
+              'java/features/extensions/extensions-supported-by-sap-cloud-sdk-for-java',
+               {
+                 type: 'category',
+                 label: 'Extension library',
+                 items: [
+                   'java/features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java',
               //     'java/features/extensions/extension-library/blockchain/sap-blockchain-extension-library-for-cloud-sdk-for-java',
-              //   ]
-              // }
+                 ]
+               }
             ]
           }
         ]

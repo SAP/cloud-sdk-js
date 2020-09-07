@@ -34,9 +34,9 @@ We consider holding a session in the future about these topics:
 
 ## Upcoming Dates 2020
 
-* Oct 6
-* Nov 3
-* Dec 1
+* Oct 13
+* Nov 10
+* Dec 8
 
 ## Past Sessions
 

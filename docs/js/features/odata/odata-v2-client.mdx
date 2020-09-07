@@ -422,7 +422,7 @@ const [updateChangesetResponse, ...retrieveResponses] =
 ### Use multiple changesets
 
 A batch request can consist of multiple changeset. As shown in the example below, the `changeset1` will be executed first followed by the `changeset2`.
-Again, it's not possible to define the order of the execuetion inside a changeset.
+In contrast to the operations within a changeset, which have no defined order of execution as state already before.
 ```ts
 const changeset1 = changeset(...updateRequests1);
 const changeset2 = changeset(...updateRequests2);

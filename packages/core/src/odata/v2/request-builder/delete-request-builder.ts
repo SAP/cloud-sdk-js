@@ -47,15 +47,13 @@ export class DeleteRequestBuilderV2<EntityT extends EntityV2>
   }
 
   /**
-   * Add ETag version identifier in the delete request header.
+   * Add an eTag version identifier in the delete request header.
    *
-   * @param etag - The version identifier of the entity
+   * @param eTag - The version identifier of the entity
    * @returns The builder itself, to facilitate method chaining
    */
-  setVersionIdentifier(etag: string): this {
-    if (etag) {
-      this.requestConfig.addCustomHeaders({ 'if-match': etag });
-    }
+  setVersionIdentifier(eTag: string): this {
+    this.requestConfig.eTag = eTag;
     return this;
   }
 

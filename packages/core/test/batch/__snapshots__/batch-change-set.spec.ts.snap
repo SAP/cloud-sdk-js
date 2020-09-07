@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`batch changeset toBatchChangeSetV2 returns undefined for empty change set 1`] = `undefined`;
+
+exports[`batch changeset toBatchChangeSetV2 serializes change set with multiple operations 1`] = `
+"Content-Type: multipart/mixed; boundary=changeset_changesetId
+
+--changeset_changesetId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+{\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
+
+--changeset_changesetId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
+
+--changeset_changesetId--"
+`;
+
+exports[`batch changeset toBatchChangeSetV2 serializes change set with one operation 1`] = `
+"Content-Type: multipart/mixed; boundary=changeset_changesetId
+
+--changeset_changesetId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
+
+--changeset_changesetId--"
+`;
+
+exports[`batch changeset toRequestPayload serializes create request 1`] = `
+"--changeset_testId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
+"
+`;
+
+exports[`batch changeset toRequestPayload serializes delete request with entity 1`] = `
+"--changeset_testId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+
+"
+`;
+
+exports[`batch changeset toRequestPayload serializes delete request with id 1`] = `
+"--changeset_testId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'test',KeyPropertyString='test') HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+
+"
+`;
+
+exports[`batch changeset toRequestPayload serializes update request 1`] = `
+"--changeset_testId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+{\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
+"
+`;
+
+exports[`batch changeset toRequestPayload serializes update request using put 1`] = `
+"--changeset_testId
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+PUT /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+
+{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
+"
+`;

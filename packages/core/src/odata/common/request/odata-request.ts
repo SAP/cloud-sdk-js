@@ -212,7 +212,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     );
   }
 
-  private getETagHeader(): MapType<string> {
+  public getETagHeader(): MapType<string> {
     const eTag = isWithETag(this.config)
       ? this.config.versionIdentifierIgnored
         ? '*'

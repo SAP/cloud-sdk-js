@@ -4,3 +4,8 @@ export const part_content_type_line = 'Content-Type: application/http';
 export const content_transfer_encoding_line =
   'Content-Transfer-Encoding: binary';
 export const http_version = 'HTTP/1.1';
+export const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
+
+export function batchContentType(boundary: string, id: string) {
+  return `multipart/mixed; boundary=${boundary}_${id}`;
+}

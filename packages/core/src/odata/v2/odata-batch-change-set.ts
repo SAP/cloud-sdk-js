@@ -43,32 +43,16 @@ export function toBatchChangeSetV2<
     | UpdateRequestBuilderV2<EntityV2>
     | DeleteRequestBuilderV2<EntityV2>
 >(changeSet: ODataBatchChangeSetV2<T>): string | undefined {
-  const changeSetBody = toBatchChangeSetBody(changeSet);
-  if (!changeSetBody) {
-    return;
+  if (changeSet.requests.length) {
+    return [
+      `${batch_content_type_prefix}${changeSet.changeSetId}`,
+      '',
+      ...changeSet.requests.map(r =>
+        toRequestPayload(r, changeSet.changeSetId)
+      ),
+      `${change_set_start_prefix}${changeSet.changeSetId}--`
+    ].join('\n');
   }
-  return [
-    `${batch_content_type_prefix}${changeSet.changeSetId}`,
-    '',
-    changeSetBody
-  ].join('\n');
-}
-
-function toBatchChangeSetBody<
-  T extends
-    | CreateRequestBuilderV2<EntityV2>
-    | UpdateRequestBuilderV2<EntityV2>
-    | DeleteRequestBuilderV2<EntityV2>
->(changeSet: ODataBatchChangeSetV2<T>): string | undefined {
-  if (changeSet.requests.length === 0) {
-    return;
-  }
-  const requests = changeSet.requests.map(r =>
-    toRequestPayload(r, changeSet.changeSetId)
-  );
-  return Array.prototype
-    .concat(requests, `${change_set_start_prefix}${changeSet.changeSetId}--`)
-    .join('\n');
 }
 
 /**
@@ -92,22 +76,15 @@ function toBatchChangeSetBody<
  * @param changeSetId - The change set identifier
  * @returns The generated request payload
  */
-function toRequestPayload(
+export function toRequestPayload(
   request:
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>
     | DeleteRequestBuilderV2<EntityV2>,
   changeSetId: string
 ): string {
-  if (
-    request instanceof CreateRequestBuilderV2 ||
-    request instanceof UpdateRequestBuilderV2
-  ) {
-    request.prepare();
-  }
-
-  const etagValue = toEtagHeaderValue(request) || '';
-  const lines = [
+  const etagValue = toEtagHeaderValue(request);
+  return [
     `${change_set_start_prefix}${changeSetId}`,
     part_content_type_line,
     content_transfer_encoding_line,
@@ -119,11 +96,10 @@ function toRequestPayload(
     '',
     JSON.stringify(request.requestConfig.payload),
     ''
-  ];
-  return lines.join('\n');
+  ].join('\n');
 }
 
-function toEtagHeaderValue(
+export function toEtagHeaderValue(
   request:
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>

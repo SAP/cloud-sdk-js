@@ -34,9 +34,6 @@ We consider holding a session in the future about these topics:
 
 ## Upcoming Dates 2020
 
-* Jul 7
-* Aug 4
-* Sep 1
 * Oct 6
 * Nov 3
 * Dec 1
@@ -45,7 +42,9 @@ We consider holding a session in the future about these topics:
 
 ### 2020
 
-* Jun 2 - JavaScript Linting with SAP Cloud SDK for Continuous Delivery
+* Sep 1 - Leverage the Improved OData Client of SAP Cloud SDK for Java
+* Jul 7 - [Consuming OData v4 Services using SAP Cloud SDK for JavaScript](https://www.youtube.com/watch?v=O1jRbANWcrA)
+* Jun 2 - [JavaScript Linting with SAP Cloud SDK for Continuous Delivery](https://www.youtube.com/watch?v=5VV7QnfHtWY)
 * May 5 - [Consuming OData v4 Services using SAP Cloud SDK for Java](https://www.youtube.com/watch?v=p_JTapzii_I)
 * Apr 7 - [SAP Cloud SDK for JavaScript goes open source](https://www.youtube.com/watch?v=nRWXlxgdnmk)
 * Mar 3 - [Get from Zero to Production with SAP Cloud SDK](https://www.youtube.com/watch?v=f3XG4hFiWdM)

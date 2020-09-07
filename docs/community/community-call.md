@@ -19,7 +19,7 @@ image:
 
 In this series of calls for SAP Community, we will give you regular updates on the latest releases of the SAP Cloud SDK, its roadmap, and topics around extensibility of SAP Business Suite, SAP S/4HANA, and other SAP offerings using SAP Cloud Platform. The call series will be conducted by the SAP Cloud SDK development and product management team. We will introduce SAP Cloud SDK and cover its latest updates.
 
-The community update calls take place on every first Tuesday of a month. On this page, you can find the schedule as well as a history of past sessions below.
+The community update calls take place on every second Tuesday of a month. On this page, you can find the schedule as well as a history of past sessions below.
 
 [Register for the series](https://sap-se.zoom.us/webinar/register/WN_dBtYmF5IR7Gb8TMjHqEvhw)
 

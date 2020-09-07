@@ -43,7 +43,7 @@
     "fast-xml-parser": "^3.16.0",
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
-    "rambda": "^5.0.0",
+    "rambda": "^6.1.0",
     "ts-morph": "^8.1.0",
     "typescript": "~3.9.6",
     "voca": "^1.4.0",

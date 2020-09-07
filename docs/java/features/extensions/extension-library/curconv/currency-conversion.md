@@ -18,9 +18,7 @@ keywords:
 
 Currency Conversion is an extension library built on SAP Cloud SDK. You can use this library to facilitate currency exchange rate conversions. 
 
-:::Note: The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data provider sources.
-<img alt="" src={useBaseUrl('img/edit-article.png')}/>
-:::
+**Note: The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data provider sources.**
 
 You can use the library for the following functions:
 
@@ -93,9 +91,7 @@ You can request for a conversion from INR to USD even if the rates available are
 ### Indirect Conversions By Using a Reference Rate
 A currency conversion can be performed by using a reference or intermediate currency outside of your desired currency pair. A conversion from INR to USD can be performed by using a reference currency, say EUR, with the currency exchange rates for INR to EUR and USD to EUR. Note that this can be done only if a reference currency for these rates is specified in when you define these exchange rate pairs, in the 'toCurrency' field.
 
-:::Note: If a reference currency is provided, it takes precedence over direct rates. The conversion will be performed based on the reference currency specified. Inverse rates are not considered in this scenario.
-<img alt="" src={useBaseUrl('img/edit-article.png')}/>
-:::
+**Note: If a reference currency is provided, it takes precedence over direct rates. The conversion will be performed based on the reference currency specified. Inverse rates are not considered in this scenario.**
 
 ### Fixed Rate
 The exact exchange rate provided at run-time. The library uses the run-time rates to perform the conversion.
@@ -123,7 +119,7 @@ This is done by using an exponent value of the converted amount. An exponent rep
 
 This rounding off logic is applied to all conversion amounts.
 
-:::Note: The library provides both the unrounded and rounded-off amounts in the result set. You can choose which one to use, based on your use case.
+**Note: The library provides both the unrounded and rounded-off amounts in the result set. You can choose which one to use, based on your use case.**
 
 ## Features
 

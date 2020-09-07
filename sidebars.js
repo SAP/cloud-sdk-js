@@ -157,7 +157,8 @@ module.exports = {
             label: 'Connectivity',
             items: [
               'js/features/connectivity/destination-js-sdk',
-              'js/features/connectivity/proxy-js-sdk'
+              'js/features/connectivity/proxy-js-sdk',
+              'js/features/connectivity/on-premise'
             ]
           }
         ]

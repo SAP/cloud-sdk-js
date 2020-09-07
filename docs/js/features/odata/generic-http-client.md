@@ -1,46 +1,84 @@
 ---
-title: Generic Http Client
-sidebar_label: Generic Http Client
+title: Generic HTTP Client
+sidebar_label: Generic HTTP Client
 keywords:
 - sap
 - cloud
 - sdk
 - odata
-- http
+- HTTP
 - JavaScript
 - TypeScript
 ---
 
 import useBaseUrl from '@docusaurus/useBaseUrl'
 
-## What is the Generic Http Client
+## What is the Generic HTTP Client
 
-In the [Executing a request using a generated OData client](./execute-odata-request.mdx) document we explained how to create OData requests using a generated OData client.
+In the [Executing a request using a generated OData client](./execute-odata-request.mdx) section we explained how to make OData requests using the generated OData client.
 This client is the highest layer of convenience and safety for the user.
-But there are two layers underneath: The generic http client and the Axios client.
+Below the OData client there are two further clients: The Generic HTTP client and the Axios client.
 
 <img alt="Destination in CF" src={useBaseUrl('img/odata-client-layers.png')} class="center" />
 
+In this document we explain when and how to use the middle layer directly.
+First we would like to define the boarder between the different clients and what the generic HTTP client is. 
+
 **OData Client:** Provides strong typing with respect to the request (payload,select,filter,...) and response. 
-It taks care of deserializing your request to a URL and JSON payload as well as serializing the response.
+For each OData service a separate client needs to be generated which defines the types and methods for this service.
+The client takes care of deserializing your request to a URL and JSON payload as well as serializing the response.
+The generated payload and URL are passed to the Generic HTTP Client.
 
-**Generic Http Client:** Adds SAP infrastructure specific functionality on top of a standard Http Client.
-The central aspect of this functionality is connectivity based on [destination lookup](../connectivity/destination.md) and [web proxy handling](../connectivity/proxy.md).
-The two linked documents explain in great detail how the client fetches a destination  from a name and JWT and how it considers web proxies.
-In the end all informations from the destination and proxy configuration end up in header-fields and [proxy-agents](https://www.npmjs.com/package/proxy-agent), which are passed one level down.
+**Generic HTTP Client:** Adds SAP infrastructure specific functionality on top of a standard HTTP Client.
+All OData services use the same generic HTTP client so it contains no service specific information.
+The central aspect of this layer is connectivity based on [destination lookup](../connectivity/destination.md), [On-Premise](../connectivity/on-premise.md) connection via the connectivity service and [web proxy handling](../connectivity/proxy.md).
+In the end all information from the destination, connectivity service and proxy configuration end up in header-fields and [proxy-agents](https://www.npmjs.com/package/proxy-agent).
+These information go one level down to the Axios client.
 
-**Axios Http Client:**  Is a widely used open source [http client for node](https://www.npmjs.com/package/axios). 
-This client execute the actual HTTP reuqest in the end.
+**Axios HTTP Client:**  Is a widely used open source [HTTP client for node](https://www.npmjs.com/package/axios). 
+This client executes the actual HTTP requests in the end.
  
-So to quickly summerize the 
-The central aspect is connectivity.
--destination (lookup,header see below)
--proxy
--headers (sap-client, SAP-Connectivity-SCC-Location_ID)
-After you built your typesafe 
-
 ## When To Use it
 
+In this section we would like to provide some guidance when and when not to use the Generic HTTP client.
+You should consider the Generic HTTP client if:
+- ...You need to use an unsupported feature by the typed OData Client like `upsert` for example. 
+Then you get at least some convenience in the connectivity part.
+- ...You only want to ping a service or trigger a function import without a complicated payload. 
+In such a case the size of a full data model of the typed client is perhaps not worth the benefits. 
+Especially if you ping multiple different services all requiring a data model.
+- ...You want to call a non OData service which has no service definition.
+
+on the other hand you should consider the OData Client if:
+- ...You have to build complicated filter,selection and/or expand conditions. 
+Here you will highly benefit from the help of the OData client.
+- ...You want to update or create new entities. 
+The OData Client has build in `ETag` versions handling and takes also care of `CSRF` token fetching for you. 
+With the generic client you have to mange versions and tokens on your own.
+ 
 ## How To Use it
 
-- mention headers.
+You call Generic HTTP client in the following way:
+
+```JS
+executeHttpRequest(destination,requestConfig)
+```
+
+where the `destination` argument is either a full destination object you have already fetched or an object containing a destination name and JWT.
+In the latter case the SDK fetches the destination as described [here](../connectivity/destination.md) for you.
+The request config argument contains the request configuration. 
+A minimal config would look like:
+```JSON
+{
+     method: HttpMethod.GET,
+     params: {
+          a: 'a',
+          b: 'b'
+     },
+    ...
+}
+```
+
+Note that you can also give values for `url` or `headers` in the request config. 
+The values you give in the request config will overwrite the ones related to the destination.
+For example if you provide a request config with `authorization` headers, the authorization information from the destination will be omitted.

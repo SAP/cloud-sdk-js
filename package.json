@@ -79,7 +79,7 @@
     "prettier": "^2.0.2",
     "ts-jest": "^25.4.0",
     "ts-node": "^9.0.0",
-    "typedoc": "^0.18.0",
+    "typedoc": "^0.19.1",
     "typedoc-plugin-lerna-packages": "0.3.0",
     "typescript": "~3.9.6"
   },

@@ -87,24 +87,26 @@ describe('Request builder test', () => {
   it('should create an entity and a link as child of the entity', async () => {
     const testEntity = await createEntity(entityKey);
 
-    const entityLink = TestEntityLink.builder().keyTestEntityLink(entityLinkKey)
+    const entityLink = TestEntityLink.builder()
+      .keyTestEntityLink(entityLinkKey)
       .build();
 
-    await TestEntityLink.requestBuilder().create(entityLink)
+    await TestEntityLink.requestBuilder()
+      .create(entityLink)
       .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
       .execute(destination);
 
     const queried = await queryEntity(entityKey);
 
     expect(queried.dateProperty?.toISOString()).toBe(moment(0).toISOString());
-    expect(queried.toMultiLink).toEqual(expect.arrayContaining([
-      expect.objectContaining(
-        {
+    expect(queried.toMultiLink).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
           keyTestEntityLink: entityLinkKey,
           keyToTestEntity: entityKey
-        }
-      )
-    ]));
+        })
+      ])
+    );
   });
 
   it('should update an entity', async () => {
@@ -144,13 +146,13 @@ describe('Request builder test', () => {
   });
 
   it('a', async () => {
-    const entity = TestEntity.builder()
-      .keyTestEntity(entityKey)
-      .build();
-    const entityLink = TestEntityLink.builder().keyTestEntityLink(entityLinkKey)
+    const entity = TestEntity.builder().keyTestEntity(entityKey).build();
+    const entityLink = TestEntityLink.builder()
+      .keyTestEntityLink(entityLinkKey)
       .build();
 
-    await TestEntityLink.requestBuilder().create(entityLink)
+    await TestEntityLink.requestBuilder()
+      .create(entityLink)
       .asChildOf(entity, TestEntity.TO_MULTI_LINK)
       .execute(destination);
 

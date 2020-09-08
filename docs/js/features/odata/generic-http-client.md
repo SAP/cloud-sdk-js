@@ -46,7 +46,6 @@ You should consider the Generic HTTP client if:
 Then you get at least some convenience in the connectivity part.
 - ...you only want to ping a service or trigger a function import without a complicated payload. 
 In such a case the size of a full data model of the typed client is perhaps not worth the benefits. 
-Especially if you ping multiple different services all requiring a data model.
 - ...you want to call a non OData service which has no service definition.
 
 on the other hand you should consider the OData client if:
@@ -60,7 +59,7 @@ With the generic client you have to mange versions and tokens on your own.
 
 You call Generic HTTP client in the following way:
 
-```JS
+```ts
 executeHttpRequest(destination,requestConfig)
 ```
 

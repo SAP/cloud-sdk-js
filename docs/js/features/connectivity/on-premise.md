@@ -1,5 +1,5 @@
 ---
-title: On-Premise Connectivity in the SAP Cloud SDK for JavaScript / TypeScript
+title: On-Premise Connectivity in the SAP Cloud SDK for JavaScript
 hide_title: false
 hide_table_of_contents: false
 sidebar_label: Proxies
@@ -49,5 +49,4 @@ We would like to mention to minor aspects of the SDK:
 The header contains user information included in the `JWT` and enables user propagation from the cloud application to the SAP S/4 HANA system.
 2. In case the destination contains a  `LocationId` property, the SDK adds the `SAP-Connectivity-SCC-Location_ID` header to the request.
 If you have multiple Cloud Connectors connected to your account the `LocationId` defines which one of these to use for the request.
-
 

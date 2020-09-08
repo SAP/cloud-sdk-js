@@ -113,9 +113,13 @@ The library uses the [Big Decimal](https://docs.oracle.com/javase/7/docs/api/jav
 The library returns the converted amount both as a string and a big decimal. You can work with the big decimal object and specify a scale of your choice.
 
 ### Rounding Off
-Rounded off values represent the usable currency amounts in relation to your business case. This means that the amounts are rounded off to a precision and value which makes sense in a business. The conversion library provides you with a rounded off amount that can be used in businesses.
+Rounded off values represent the usable currency amounts in relation to your business case. This means that the amounts are rounded off to a precision and value which make sense in a business. 
 
-This is done by using an exponent value of the converted amount. An exponent represents the relationship between a major and minor currency unit. For example, 100 cents make one US Dollar (USD). An exponent value represents this relationship with a base of 10. So, in this example, the exponent of the US Dollar is 2. Similarly, exponents for all currencies are published by ISO and this information is also available in the [Currency](https://docs.oracle.com/javase/7/docs/api/java/util/Currency.html) class.
+This is done by using an exponent value of the converted amount. An exponent represents the relationship between a major and minor currency unit as a mathematical function. For example, 100 cents make one US Dollar (USD). We can represent this relationship by using a "base value" and an "exponent value". In this example, the base value will be 10 and the exponent will be 2. This means that 10 (base value) will be multiplied by itself twice. So, the exponent here is 2. 
+
+Additionally, converted amounts in the library response are rounded off to a "scale" equal to the exponent of the target currency. This means that if the source currency's exponent value is 2 (as is the case in our example), there will be two digits after the decimal in the rounded off amount.
+
+Exponents for all currencies are published by ISO and this information is also available in the [Currency](https://docs.oracle.com/javase/7/docs/api/java/util/Currency.html) class.
 
 This rounding off logic is applied to all conversion amounts.
 

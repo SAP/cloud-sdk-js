@@ -33,7 +33,7 @@ The generated payload and URL are passed to the Generic HTTP Client.
 All OData services use the same generic HTTP client so it contains no service specific information.
 The central aspect of this layer is connectivity based on [destination lookup](../connectivity/destination.md), [On-Premise](../connectivity/on-premise.md) connection via the connectivity service and [web proxy handling](../connectivity/proxy.md).
 In the end, all information from the destination, connectivity service and proxy configuration ends up in header-fields and [proxy-agents](https://www.npmjs.com/package/proxy-agent).
-These information go one level down to the Axios client.
+The information goes one level down to the Axios client.
 
 **Axios HTTP Client:**  Is a widely used open source [HTTP client for node](https://www.npmjs.com/package/axios). 
 This client executes the actual HTTP requests in the end.

@@ -1,8 +1,8 @@
 ---
 id: release-notes-sap-cloud-sdk-for-javascript-and-typescript
-title: Release notes - SDK for JavaScript and Typescript
+title: Release notes - SDK for JavaScript and TypeScript
 sidebar_label: Release notes
-description: Release notes of SAP Cloud SDK for JavaScript and Typescript, stay up to date with the recent features, fixes, dependency updates and recommendedations.
+description: Release notes of SAP Cloud SDK for JavaScript and TypeScript, stay up to date with the recent features, fixes, dependency updates and recommendedations.
 keywords:
 - sap
 - cloud

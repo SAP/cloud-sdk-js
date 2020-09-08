@@ -24,7 +24,7 @@ From the look and feel it is very similar to Visual Studio Code, which is no sur
 
 However, SAP added a few useful features to the BAS. 
 You can connect the BAS to your CF account, which allows you to reach all systems that you have configured on CF from your local machine. This includes systems that are connected through the Cloud Connector and are normally not reachable through the internet.
-This is a very useful feature for developers because the cycle to test something is much quicker if you can do it locally.
+Being able to test changes locally reduces the overhead of deploying remotely and thus increases convenience for developers.
 
 <img alt="Connecting to external On-Premise systems" src={useBaseUrl('img/cloud-connector.png')} />
 

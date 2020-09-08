@@ -76,7 +76,7 @@ Start the BAS and connect your BAS workspace to the CF account.
 This is done via the little CF icon (<img src={useBaseUrl('img/cf-connect-button.jpg')} />) on the left of the BAS.
 The connection enables the proxy connection from the BAS to your CF account.
 
-### Prerequisite II: Cloud Connector and Destination Setup  <a name="CCandDestSetup"></a> ###
+### Prerequisite II: Cloud Connector and Destination Setup <a name="CCandDestSetup"></a> ###
 
 You have setup a working Cloud Connector and configured a destination pointing to an On-Premise system you want to connect to.
 Per default, destinations are not usable by a connected BAS. 

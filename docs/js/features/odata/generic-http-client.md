@@ -15,7 +15,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## What is the Generic HTTP Client
 
-In the [Executing a request using a generated OData client](./execute-odata-request.mdx) section we explained how to make OData requests using the generated OData client.
+In the [Executing a request using a generated OData client](./execute-odata-request.mdx) section, we explained how to make OData requests using the generated OData client.
 This client is the highest layer of convenience and safety for the user.
 Below the OData client there are two further clients: The Generic HTTP client and the Axios client.
 

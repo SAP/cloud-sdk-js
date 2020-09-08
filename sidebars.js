@@ -169,7 +169,7 @@ module.exports = {
           'js/guides/bas-external-system'
         ]
       },
-      'js/api-reference-js-ts',
+      'js/api',
       'js/release-notes-sap-cloud-sdk-for-javascript-and-typescript',
       'js/frequently-asked-questions'
     ],

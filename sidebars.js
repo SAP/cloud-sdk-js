@@ -165,7 +165,8 @@ module.exports = {
         type: 'category',
         label: 'Guides',
         items: [
-          'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript'
+          'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript',
+          'js/guides/bas-external-system'
         ]
       },
       'js/api',

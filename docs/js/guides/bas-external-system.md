@@ -78,7 +78,7 @@ The connection enables the proxy connection from the BAS to your CF account.
 
 ### Prerequisite II: Cloud Connector and Destination Setup  <a name="CCandDestSetup"></a> ###
 
-You have a working Cloud Connector setup and in your account contains a destination pointing to an On-Premise system you want to connect to.
+You have setup a working Cloud Connector and configured a destination pointing to an On-Premise system you want to connect to.
 Per default, destinations are not usable by a connected BAS. 
 You need to set two properties `WebIDEEnabled` and `HTML5.DynamicDestination` to enable that feature for a specific destination.
 Go to the destination configuration in CF and add the properties:

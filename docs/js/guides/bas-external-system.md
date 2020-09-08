@@ -1,6 +1,6 @@
 ---
 title: Connecting to external systems from the Business Application Studio (BAS) with the SAP Cloud SDK for JavaScript / TypeScript
-sidebar_label: Connecting to External system form BAS
+sidebar_label: Connecting to external systems from BAS
 description: This article describes how the SDK helps to connect to external systems from the Business Application Studio.
 keywords:
 - sap

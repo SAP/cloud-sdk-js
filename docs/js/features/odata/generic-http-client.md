@@ -44,7 +44,7 @@ In this section, we would like to provide some guidance when and when not to use
 You should consider the Generic HTTP client if:
 - ...you need to use an unsupported feature by the typed OData Client like `upsert` for example. 
 Then you get at least some convenience in the connectivity part.
-- ...You only want to ping a service or trigger a function import without a complicated payload. 
+- ...you only want to ping a service or trigger a function import without a complicated payload. 
 In such a case the size of a full data model of the typed client is perhaps not worth the benefits. 
 Especially if you ping multiple different services all requiring a data model.
 - ...You want to call a non OData service which has no service definition.

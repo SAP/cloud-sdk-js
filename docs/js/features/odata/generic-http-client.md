@@ -40,7 +40,7 @@ This client executes the actual HTTP requests in the end.
  
 ## When To Use it
 
-In this section we would like to provide some guidance when and when not to use the Generic HTTP client.
+In this section, we would like to provide some guidance when and when not to use the Generic HTTP client.
 You should consider the Generic HTTP client if:
 - ...You need to use an unsupported feature by the typed OData Client like `upsert` for example. 
 Then you get at least some convenience in the connectivity part.

@@ -145,25 +145,6 @@ describe('Request builder test', () => {
     ]);
   });
 
-  it('a', async () => {
-    const entity = TestEntity.builder().keyTestEntity(entityKey).build();
-    const entityLink = TestEntityLink.builder()
-      .keyTestEntityLink(entityLinkKey)
-      .build();
-
-    await TestEntityLink.requestBuilder()
-      .create(entityLink)
-      .asChildOf(entity, TestEntity.TO_MULTI_LINK)
-      .execute(destination);
-
-    // const quried = await queryEntity(entityKey);
-    // expect(quried.toMultiLink.length).toBe(2);
-    // expect(quried.toMultiLink.map(link => link.keyTestEntityLink)).toEqual([
-    //   20,
-    //   30
-    // ]);
-  });
-
   // Only supported in OData 4.01 and CAP is 4.0
   xit('should update an entity including existing related entites', async () => {
     const entity = TestEntity.builder()

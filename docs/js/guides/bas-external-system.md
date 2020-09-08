@@ -88,7 +88,7 @@ Go to the destination configuration in CF and add the properties:
 |WebIDEEnabled|true|
 |HTML5.DynamicDestination|true|
   
-### Local Application Setup
+### Local Application Setup with Business Application Studio
 
 You use [launch configurations](https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes) to run and debug applications locally.
 Either extend your existing `.vscode/launch.json` or create a new one. 
@@ -115,7 +115,8 @@ In our case the `main.js` script will start up the Nest server.
 The `preLaunchTask` executes the build before each run which compiles the TypeScript files to JavaScript. 
 The `outFiles` properties defines where the compiled files will be located.
 
-As discussed [in the beginning](#background) we need to set an environment variable.
+As discussed [in the beginning](#background) we need to set the `destinations` environment variable.
+This will interrupt the [destination lookup](../../js/features/connectivity/destination.md) and lead to a destination with the HTTP_PROXY considered. 
 The easiest way to do that is via a `.env` file which is read when starting the application.
 If you do not have a `.env` file create one or adjust the existing one.
 Just add the following entry to the `.env` file:

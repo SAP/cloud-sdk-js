@@ -36,7 +36,7 @@ BusinessPartner.requestBuilder()
 
 SDK does a lot of heavy lifting under the hood to take care of complexity so that you can fully concentrate on your App's logic. A detailed step by step guide on using a type-safe client is provided in this [tutorial series](https://developers.sap.com/group.s4sdk-js-cloud-foundry.html).
 
-**To name a few things handled by Cloud SDK for Javascript:**
+**To name a few things handled by Cloud SDK for JavaScript:**
 
 - destination fetching
 - handling of ETag

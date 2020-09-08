@@ -58,7 +58,7 @@ These section establishes best engineering practices for contributing team.
 
 ### Contribution programming language
 
-The contribution should happen in Typescript and endorse type-safety whenever possible.
+The contribution should happen in TypeScript and endorse type-safety whenever possible.
 
 ### API alignment
 

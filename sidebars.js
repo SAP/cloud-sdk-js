@@ -168,7 +168,7 @@ module.exports = {
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript'
         ]
       },
-      'js/api-reference-js-ts',
+      'js/api',
       'js/release-notes-sap-cloud-sdk-for-javascript-and-typescript',
       'js/frequently-asked-questions'
     ],

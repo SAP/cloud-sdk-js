@@ -53,7 +53,7 @@ on the other hand you should consider the OData client if:
 - ...you have to build complicated filter, selection and/or expand conditions. 
 Here you will highly benefit from the help of the OData client.
 - ...you want to update or create new entities. 
-The OData Client has build in `ETag` versions handling and takes also care of `CSRF` token fetching for you. 
+The OData Client has built-in `ETag` versions handling and takes also care of `CSRF` token fetching for you. 
 With the generic client you have to mange versions and tokens on your own.
  
 ## How To Use it

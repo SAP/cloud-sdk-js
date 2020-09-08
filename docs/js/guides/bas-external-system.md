@@ -48,7 +48,7 @@ The SDK has a [destination lookup](../features/connectivity/destination-js-sdk) 
 The trick is to define a `destinations` environment variable when you run locally, which works like a switch under the hood when you execute:
 
 ```ts
-executeHttpRequest({ destinationName: "myDestinationName", jwt: "myJWT" });
+executeHttpRequest({ destinationName: 'myDestinationName', jwt: 'myJWT' });
 ```
 
 The code is the same for local execution and production. The two situation are:

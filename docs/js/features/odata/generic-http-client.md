@@ -25,7 +25,7 @@ In this document we explain when and how to use the middle layer directly.
 First we would like to define the boarder between the different clients and what the generic HTTP client is. 
 
 **OData Client:** Provides strong typing with respect to the request (payload,select,filter,...) and response. 
-For each OData service a separate client needs to be generated which defines the types and methods for this service.
+For each OData service, a separate client needs to be generated which defines the types and methods for this service.
 The client takes care of deserializing your request to a URL and JSON payload as well as serializing the response.
 The generated payload and URL are passed to the Generic HTTP Client.
 

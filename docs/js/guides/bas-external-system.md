@@ -23,15 +23,15 @@ You can simply subscribe to the BAS and from there quickly start developing with
 From the look and feel it is very similar to Visual Studio Code, which is no surprise since it is based on [Eclipse Theia](https://theia-ide.org/), the open source version of Visual Studio Code.
 
 However, SAP added a few useful features to the BAS. 
-You can connect the BAS to your CF account, which allows you to reach all systems that you have configured on CF from your local machine. This includes systems that are connected through the Cloud Connector and are normally not reachable through the internet.
+You can connect the BAS to your CF account, which allows you to reach all systems that you have configured on CF from your local machine. This includes systems that are connected through the Cloud Connector (CC) and are normally not reachable through the internet.
 Being able to test changes locally reduces the overhead of deploying remotely and thus increases convenience for developers.
 
 <img alt="Connecting to external On-Premise systems" src={useBaseUrl('img/cloud-connector.png')} />
 
 ## Technical Background <a name="background"></a> ##
 
-Companies do not expose their On-Premise SAP S/4HANA systems to the internet.
-They are only reachable via a Cloud Connector (CC) attached to a CF account.
+Companies do not expose their SAP S/4HANA On-Premise systems to the internet.
+They are only reachable via a CC attached to a CF account.
 In principle, you cannot reach these systems outside the CF account.    
 
 However, due to the subscription between the BAS and the CF account there is a connection from the local application to the SAP S/4HANA system.

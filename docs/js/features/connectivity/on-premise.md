@@ -23,7 +23,7 @@ Typically, they are located within a company's internal network.
 Since this isolation would be in conjunction to modern requirements of data availability, SAP has introduced the [Cloud Connector](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/e6c7616abb5710148cfcf3e75d96d596.html?q=cloud%20connector).
 The Cloud Connector works like a reverse proxy opening a connection between some white-listed service endpoints of the On-Premise system, and the connected Cloud Foundry account.
 Only applications running in the connected Cloud Foundry account can access the services. 
-Applications which are supposed to access On-Premise systems need a binding to the [connectivity service.](https://www.cloudfoundry.org/the-foundry/sap-cloud-platform-service-connectivity/)
+Applications which are supposed to access On-Premise systems need a binding to the [connectivity service](https://www.cloudfoundry.org/the-foundry/sap-cloud-platform-service-connectivity/).
 
 
 ## Implementation Details ##

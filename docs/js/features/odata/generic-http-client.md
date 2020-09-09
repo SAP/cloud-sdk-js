@@ -54,7 +54,7 @@ Here you will highly benefit from the help of the OData client.
 The OData Client has built-in `ETag` versions handling and takes also care of `CSRF` token fetching for you. 
 With the generic client you have to mange versions and tokens on your own.
  
-## How To Use it
+## How to use it
 
 You call Generic HTTP client in the following way:
 

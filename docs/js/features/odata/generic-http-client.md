@@ -64,7 +64,7 @@ executeHttpRequest(destination,requestConfig)
 ```
 
 where the `destination` argument is either a full destination object you have already fetched or an object containing a destination name and JWT.
-In the latter case the SDK fetches the destination as described [here](../connectivity/destination.md) for you.
+In the latter case the SDK [fetches the destination](../connectivity/destination.md) for you.
 The request config argument contains the request configuration. 
 A minimal config would look like:
 ```JSON

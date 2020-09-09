@@ -22,7 +22,7 @@ Below the OData client there are two further clients: The Generic HTTP client an
 <img alt="Destination in CF" src={useBaseUrl('img/odata-client-layers.png')} class="center" />
 
 In this document we explain when and how to use the middle layer directly.
-First we would like to define the boarder between the different clients and what the generic HTTP client is. 
+The different clients serve different purposes:
 
 **OData Client:** Provides strong typing with respect to the request (payload,select,filter,...) and response. 
 For each OData service, a separate client needs to be generated which defines the types and methods for this service.

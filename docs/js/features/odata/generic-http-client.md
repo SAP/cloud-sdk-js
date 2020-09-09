@@ -24,7 +24,7 @@ Below the OData client there are two further clients: The Generic HTTP client an
 In this document we explain when and how to use the middle layer directly.
 The different clients serve different purposes:
 
-**OData Client:** Provides strong typing with respect to the request (payload,select,filter,...) and response. 
+**OData Client:** Provides strong typing with respect to the request (payload, select, filter, ...) and response. 
 For each OData service, a separate client needs to be generated which defines the types and methods for this service.
 The client takes care of deserializing your request to a URL and JSON payload as well as serializing the response.
 The generated payload and URL are passed to the Generic HTTP Client.

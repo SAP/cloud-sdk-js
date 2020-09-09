@@ -17,7 +17,7 @@ keywords:
 
 This document has overlap to the [proxy handling](./proxy.md), [destination lookup](./destination.md) and [On-Premise connectivity from the BAS](../../guides/bas-external-system.md).
 The focus of this document is on the steps necessary to connect to an On-Premise system and how the SDK implements these steps.
-The crucial problem with On-Premise SAP S/4 HANA systems is, that they are not exposed to the internet.
+The crucial problem with SAP S/4HANA On-Premise systems is, that they are not exposed to the internet.
 Typically, they are located within the companies internal network.
 
 Since this isolation would be in conjunction to modern requirements of data availability, SAP has introduced the [Cloud Connector](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/e6c7616abb5710148cfcf3e75d96d596.html?q=cloud%20connector).

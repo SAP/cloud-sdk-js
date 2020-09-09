@@ -28,7 +28,7 @@ Applications which are supposed to access On-Premise systems need a binding to t
 
 ## Implementation Details ##
 
-As a first step, the SDK looks up the destination as described in [this document](./destination.md).
+As a first step, the SDK [looks up the destination](./destination.md).
 If the `Proxy Type` of the destination is `OnPremise` the SDK will try to establish a connection via the Cloud Connector.
 
 As mentioned above, the application needs a service binding to the connectivity service.

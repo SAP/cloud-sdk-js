@@ -30,7 +30,7 @@ As a first step, the SDK [looks up the destination](./destination.md).
 If the `Proxy Type` of the destination is `OnPremise` the SDK will try to establish a connection via the Cloud Connector.
 
 As mentioned above, the application needs a service binding to the connectivity service.
-A service binding relates to client credentials in the  `VCAP` environment variables. 
+A service binding relates to client credentials in the  `VCAP` environment variable. 
 The SDK uses the client credentials and if given the tenant id of the JWT to obtain a [client credentials grant.](https://help.sap.com/viewer/8d8be6a74e4e49589a546c02ee193741/latest/en-US/f1eff1dd7907469491989b3a36e6a7c6.html)
 If multiple connectivity services binding exist, the SDK uses the first entry per default.
 

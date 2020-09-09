@@ -42,7 +42,7 @@ The proxy is the entry point to the Cloud Connector instance connected the accou
 The proxy is only reachable from the Cloud Foundry space, so you cannot use that flow for applications running outside of Cloud Foundry. 
 
 These are the main steps the SDK does to achieve connectivity to SAP S/4 HANA On-Premise systems via the Cloud Connector.
-We would like to mention to minor aspects of the SDK:
+We would like to mention minor aspects of the SDK:
 1. In case the `Authentication` property on the destination is `PrincipalPropagation` the SDK adds the `SAP-Connectivity-Authentication` header to the request.
 The header contains user information included in the `JWT` and enables user propagation from the cloud application to the SAP S/4 HANA system.
 2. In case the destination contains a  `LocationId` property, the SDK adds the `SAP-Connectivity-SCC-Location_ID` header to the request.

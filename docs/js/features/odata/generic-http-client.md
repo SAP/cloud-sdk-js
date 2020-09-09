@@ -38,7 +38,7 @@ The information goes one level down to the Axios client.
 **Axios HTTP Client:**  Is a widely used open source [HTTP client for node](https://www.npmjs.com/package/axios). 
 This client executes the actual HTTP requests in the end.
  
-## When To Use it
+## When to use it
 
 You should consider the Generic HTTP client if:
 - ...you need to use an unsupported feature by the typed OData Client like `upsert` for example. 

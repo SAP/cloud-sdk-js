@@ -59,7 +59,7 @@ With the generic client you have to mange versions and tokens on your own.
 You call Generic HTTP client in the following way:
 
 ```ts
-executeHttpRequest(destination,requestConfig)
+executeHttpRequest(destination, requestConfig)
 ```
 
 The `destination` argument is either a full destination object you have already fetched or an object containing a destination name and JWT.

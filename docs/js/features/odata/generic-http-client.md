@@ -56,7 +56,7 @@ With the generic client you have to mange versions and tokens on your own.
  
 ## How to use it
 
-You call Generic HTTP client in the following way:
+To make a request using the Generic HTTP client use the `executeHttpRequest` function.
 
 ```ts
 executeHttpRequest(destination, requestConfig)

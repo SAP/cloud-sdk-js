@@ -47,7 +47,7 @@ Then you get at least some convenience in the connectivity part.
 In such a case the size of a full data model of the typed client is perhaps not worth the benefits. 
 - ...you want to call a non OData service which has no service definition.
 
-on the other hand you should consider the OData client if:
+You should consider the OData client if:
 - ...you have to build complicated filter, selection and/or expand conditions. 
 Here you will highly benefit from the help of the OData client.
 - ...you want to update or create new entities. 

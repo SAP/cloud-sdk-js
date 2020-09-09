@@ -1,7 +1,7 @@
 ---
 title: On-Premise Connectivity in the SAP Cloud SDK for JavaScript
 sidebar_label: On-Premise Systems
-description: This article describes how the SDK request to On-Premise SAP S/4 HANA systems.
+description: How to connect to SAP S/4 HANA On-Premise systems using the SAP Cloud SDK
 keywords:
 - sap
 - cloud

@@ -13,12 +13,14 @@ keywords:
 - currency conversion
 - extension
 ---
+import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Overview
 
 Currency Conversion is an extension library built on SAP Cloud SDK. You can use this library to facilitate currency exchange rate conversions. 
 
-**Note: The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data provider sources.**
+:::Note: The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data provider sources.
+:::
 
 You can use the library for the following functions:
 
@@ -115,7 +117,7 @@ The library returns the converted amount both as a string and a big decimal. You
 ### Rounding Off
 Rounded off values represent the usable currency amounts in relation to your business case. This means that the amounts are rounded off to a precision and value which make sense in a business. 
 
-This is done by using an exponent value of the converted amount. An exponent represents the relationship between a major and minor currency unit as a mathematical function. For example, 100 cents make one US Dollar (USD). We can represent this relationship by using a "base value" and an "exponent value". In this example, the base value will be 10 and the exponent will be 2. This means that 10 (base value) will be multiplied by itself twice. So, the exponent here is 2. 
+This is done by using an exponent value of the target currency. An exponent represents the relationship between a major and minor currency unit as a mathematical function. For example, 100 cents make one US Dollar (USD). We can represent this relationship by using a "base value" and an "exponent value". For all rounding off calculations, the base value is fixed as 10. Therefore, in this example, the exponent will be 2. 
 
 Additionally, converted amounts in the library response are rounded off to a "scale" equal to the exponent of the target currency. This means that if the source currency's exponent value is 2 (as is the case in our example), there will be two digits after the decimal in the rounded off amount.
 
@@ -123,7 +125,8 @@ Exponents for all currencies are published by ISO and this information is also a
 
 This rounding off logic is applied to all conversion amounts.
 
-**Note: The library provides both the unrounded and rounded-off amounts in the result set. You can choose which one to use, based on your use case.**
+:::Note: The library provides both the unrounded and rounded-off amounts in the result set. You can choose which one to use, based on your use case.
+:::
 
 ## Features
 
@@ -199,6 +202,17 @@ result.get(param).getCause().getMessage();
 
 }
 ```
+The code example above shows the process for bulk conversions. If you want to perform a single conversion, please use the single conversion API. A code example is provided below.
+
+```
+try{
+              SingleNonFixedRateConversionResult result = currConverter.convertCurrencyWithNonFixedRate(param, dataAdapter);
+convertedAmount = result.getConvertedAmount().getDecimalValue();
+         } catch(ConversionException ex){
+slfLogger.error("conversion exception with message as " + ex.getMessage());
+throw new Exception(ex.getMessage());
+         }
+```
 ## Troubleshooting and FAQ
 
 ### Getting Support
@@ -228,4 +242,4 @@ A: Conversion requests fail due to several reasons, including but not limited to
 
 - The library found duplicate exchange rate records from the same exchange rates provider.
 
-You can handle the individual status of a success or failure exception. To learn more, see Code Example.
+You can handle the individual status of a success or failure exception. To learn more, see [Code Example](#code-example).

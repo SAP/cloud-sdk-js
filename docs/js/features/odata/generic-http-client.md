@@ -69,7 +69,7 @@ The request config argument contains the request configuration.
 A minimal config would look like:
 ```JSON
 {
-     method: HttpMethod.GET,
+     method: 'get',
      params: {
           a: 'a',
           b: 'b'

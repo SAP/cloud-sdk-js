@@ -53,7 +53,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
     - Update Apache Commons Lang from version `3.10` to `3.11`
     - Update Apache Commons Text from version `1.8` to `1.9`
     - Update Apache CXF from `3.3.6` to `3.3.7`
-    - Update Mockito from `3.3.3` to `3.5.7
+    - Update Mockito from `3.3.3` to `3.5.7`
     - Update Jackson from `2.11.0` to `2.11.2`
     - Update Junit Pioneer from `0.6.0` to `0.9.0`
     - Update Netty from `4.1.50.Final` to `4.1.51.Final`

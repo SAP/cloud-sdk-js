@@ -27,27 +27,32 @@ The typed OData v2 client allows to build type-safe OData v2 requests for a give
 
 The SDK has two versions of type-safe OData v2 client.
 
-### A stable client version
+:::tip use Tabs to see the API difference
+SAP Cloud SDK `X.Y.Z` releases the productive version of the new, improved OData client. Consequently, the APIs of the old OData client have been deprecated.
+:::
 
-- Stable and well tested
-- Based on 3rd party dependencies, which slows down release of advanced features
-- Doesn't share a code base with OData v4 client
-- Has good performance, but not optimized for optimal metadata handling
+### The new improved client
 
-### Improved but still experimental client version
-
-- Currently released as `Beta`, meaning the API might see breaking changes
+As of SAP Cloud SDK `X.Y.Z` we offer a generally available improved OData client.
 - High performance thanks to optimized handling of metadata (fewer network requests)
 - Developed fully _In house_ and shares code with OData v4 client
 - Allows for faster feature development and bug fixes
 - Has standard and advanced APIs for typed and untyped client
 - More and better implemented features
-- Better implementation of BATCH requests (currently in development and not yet available)
 
-### Which one to chose?
 
-- For production environment we still recommend a **stable client**, for testing and development you can leverage both clients.
-- To test improved client, please, follow simple steps in the [migration guide](#switch-to-improved-odata-vdm-beta)
+### The deprecated old client
+
+As of SAP Cloud SDK `X.Y.Z` we have deprecated the old OData client.
+- Stable and well tested
+- Based on 3rd party dependencies, which slows down release of advanced features
+- Doesn't share a code base with OData v4 client
+- Has good performance, but not optimized for optimal metadata handling
+
+### Which one to choose?
+
+- We recommend using the new improved OData client for new development.
+- For existing code, we recommend [adjusting your code](#switch-to-improved-odata-vdm-beta) to switch to the new OData client.
 
 :::tip use Tabs to see the API difference
 Toggle between version Tabs in this document to see the API difference between these two OData v2 clients. Where API is the same we provide a universal code snippet
@@ -118,9 +123,9 @@ An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a v
 
 Consider the following example:
 
-<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2' }, { label: 'OData V2 (Beta)', value: 'v2-beta' } ]}>
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2' }, { label: 'OData V2 (Deprecated)', value: 'v2-deprecated' } ]}>
 
-<TabItem value="v2">
+<TabItem value="v2-deprecated">
 
 ```java
 partner = service.getBusinessPartnerByKey("id")
@@ -132,7 +137,7 @@ service.updateBusinessPartner(partner)
 
 </TabItem>
 
-<TabItem value="v2-beta">
+<TabItem value="v2">
 
 ```java
 partner = service.getBusinessPartnerByKey("id")
@@ -162,9 +167,9 @@ When reading entities the API offers `select( ... )` on the builders. Through it
 
 The properties that can be selected or expanded are represented via static _fields on the entity_ class. So there will be a field for each property. E.g. for the business partner entity one can find `BusinessPartner.FIRST_NAME` and `BusinessPartner.LAST_NAME`.
 
-<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', }, ]}>
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Deprecated)', value: 'v2-deprecated', }, ]}>
 
-<TabItem value="v2">
+<TabItem value="v2-deprecated">
 
 ```java
 service.getBusinessPartnerByKey("id")
@@ -197,7 +202,7 @@ $select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/
 
 </TabItem>
 
-<TabItem value="v2-beta">
+<TabItem value="v2">
 
 ```java
 service.getBusinessPartnerByKey("id")
@@ -238,9 +243,9 @@ When operating on a collection of entities the API offers `filter( ... )` on the
 
 The following example:
 
-<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', } ]}>
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Deprecated)', value: 'v2-deprecated', } ]}>
 
-<TabItem value="v2">
+<TabItem value="v2-deprecated">
 
 ```java
 /*
@@ -258,7 +263,7 @@ service.getAllBusinessPartner()
 
 </TabItem>
 
-<TabItem value="v2-beta">
+<TabItem value="v2">
 
 ```java
 /*
@@ -317,16 +322,16 @@ Function Imports / Functions & Actions
 
 ## Error Handling
 
-<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', }, ]}>
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Deprecated)', value: 'v2-deprecated', }, ]}>
 
-<TabItem value="v2">
+<TabItem value="v2-deprecated">
 
 Coming soon
 
 </TabItem>
-<TabItem value="v2-beta">
+<TabItem value="v2">
 
-Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `execute` methods may throw a runtime exception (extending) `ODataException`. This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. To handle all kind of failures consider the following code:
+Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `executeRequest` methods may throw a runtime exception (extending) `ODataException`. This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. To handle all kind of failures consider the following code:
 
 ```java
 try { ... }
@@ -361,9 +366,9 @@ Like other properties it has a name and declares a multiplicity, i.e. whether to
 Additionally a navigation property allows for dedicated CRUD operations, that may not be exposed by default on entity sets of the service root.
 Such operations also provide a convenient way to access the nested resources of entities.
 
-<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Beta)', value: 'v2-beta', }, ]}>
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2', }, { label: 'OData V2 (Deprecated)', value: 'v2-deprecated', }, ]}>
 
-<TabItem value="v2">
+<TabItem value="v2-deprecated">
 
 The typed OData client for OData v2 supports the following operations on (first-level only) navigation properties:
 - Create
@@ -391,7 +396,7 @@ POST /ODataService/API_BUSINESS_PARTNER/A_BusinessPartner(123)/to_BusinessPartne
 ```
 
 </TabItem>
-<TabItem value="v2-beta">
+<TabItem value="v2">
 
 The typed OData client for OData v2 supports the following operations on (first-level only) navigation properties:
 - Create

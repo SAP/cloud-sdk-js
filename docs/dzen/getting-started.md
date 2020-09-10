@@ -48,7 +48,7 @@ Clone the repository
 
 ```bash
 git clone git@github.com:SAP/cloud-sdk.git
-cd documentation
+cd cloud-sdk
 git checkout documentation
 ```
 

@@ -48,12 +48,12 @@ Clone the repository
 
 ```bash
 git clone git@github.com:SAP/cloud-sdk.git
+cd cloud-sdk
 git checkout documentation
 ```
 
 Run documentation locally
 ```bash
-cd documentation
 npm install
 npm start
 ```

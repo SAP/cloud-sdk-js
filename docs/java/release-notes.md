@@ -19,8 +19,8 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 Version 2.x of the SAP Cloud SDK for Java V2 has reached its end of life and is now longer maintained. To continue using the latest features outlined in the release notes for version 3 below, please [upgrade to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
 :::
 
-## Should I upgrade?
-We highly recommend regularly upgrading to the latest SDK version. It will help you:
+## Should I update?
+We highly recommend regularly updating to the latest SDK version. It will help you:
 
 - ensure access to the latest Cloud SDK features
 - keep up with the latest changes in SAP Cloud Platform

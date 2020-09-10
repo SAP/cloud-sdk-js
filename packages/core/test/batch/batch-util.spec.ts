@@ -34,8 +34,7 @@ describe('batch util', () => {
     it('serializes update request', () => {
       const updateRequest = TestEntity.requestBuilder().update(testEntity);
       expect(getRequestLine(updateRequest)).toMatchInlineSnapshot(
-        "\"PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guid',KeyPropertyString='test') HTTP/1.1\"",
-        `"PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1"`
+        "\"PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1\""
       );
     });
 
@@ -44,16 +43,14 @@ describe('batch util', () => {
         .update(testEntity)
         .replaceWholeEntityWithPut();
       expect(getRequestLine(updateRequest)).toMatchInlineSnapshot(
-        "\"PUT /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guid',KeyPropertyString='test') HTTP/1.1\"",
-        `"PUT /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1"`
+        "\"PUT /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1\""
       );
     });
 
     it('serializes delete request', () => {
       const updateRequest = TestEntity.requestBuilder().delete(testEntity);
       expect(getRequestLine(updateRequest)).toMatchInlineSnapshot(
-        "\"DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guid',KeyPropertyString='test') HTTP/1.1\"",
-        `"DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1"`
+        "\"DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1\""
       );
     });
 

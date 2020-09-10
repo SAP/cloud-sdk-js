@@ -38,7 +38,7 @@ We highly recommend regularly upgrading to the latest SDK version. It will help 
 
 ### New Functionality
   
-- The Currency Conversion library has been added. You can use this library to facilitate currency exchange rate conversions within your Cloud application. 
+- The [Currency Conversion](https://help.sap.com/viewer/7080b5b59e8243ecb48e34c1b107538b/Latest/en-US/7296e9db0dce45ac8557b17d3374f298.html) library has been added. You can use this library to facilitate currency exchange rate conversions within your Cloud application. 
   - Note that no exchange rates are provided by the library. It is assumed that you have your own data providers for getting the exchange rates.
   - The library supports bulk conversions, direct one-to-one conversions from a source value to a target value, and indirect conversions based on inverse rates or a reference currency.
   - You can perform currency conversions based on a fixed currency exchange rate, or a non-fixed rate (if you want the library to select the most appropriate rate based on a list of data from various data providers). 

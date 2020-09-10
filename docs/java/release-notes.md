@@ -29,7 +29,7 @@ We highly recommend regularly upgrading to the latest SDK version. It will help 
 
 ## 3.28.1 - September 10, 2020
 
-[Javadoc](tbd) | [Release blog](https://blogs.sap.com/?p=1178236) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*)  
+[Javadoc](https://help.sap.com/doc/4c43c34d44aa4b839b8fa3d7aac74d70/1.0/en-US/index.html) | [Release blog](https://blogs.sap.com/?p=1178236) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*)  
 
 ### Compatibility Notes
 

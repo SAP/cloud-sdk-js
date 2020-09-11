@@ -12,6 +12,7 @@ keywords:
 - TypeScript
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl'
 
 ## Why On-Premise Systems are Different ##
 
@@ -24,7 +25,7 @@ The Cloud Connector works like a reverse proxy opening a connection between some
 Only applications running in the connected Cloud Foundry account can access the services. 
 Applications which are supposed to access On-Premise systems need a binding to the [connectivity service](https://www.cloudfoundry.org/the-foundry/sap-cloud-platform-service-connectivity/).
 
-<img alt="Destination in CF" src={useBaseUrl('img/on-premise-connectivity.png')} class="center" />
+<img alt="Destination in CF" src={useBaseUrl('img/on-premise-connectivity.png')} class="center" width="80%"/>
 
 ## Implementation Details ##
 

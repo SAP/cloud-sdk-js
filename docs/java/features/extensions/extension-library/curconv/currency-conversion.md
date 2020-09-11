@@ -2,7 +2,7 @@
 id: sap-currency-conversion-extension-library-for-cloud-sdk-for-java
 title: Currency Conversion
 sidebar_label: Currency Conversion
-description: The Currency Conversion library that allows you to perform currency exchange rate conversions in your Cloud applications. You provide the market data from your own data sources, and the library handles the conversion. You can make bulk or single conversions based on direct or indirect rates. You can also perform conversions using inverse rates or a reference currency. 
+description: The Currency Conversion library that allows you to perform currency exchange rate conversions in your Cloud applications. You provide the market data from your own data sources, and the library handles the conversion. You can make bulk or single conversions based on direct or indirect rates. You can also perform conversions using inverse rates or a reference currency.
 keywords:
 - sap
 - cloud
@@ -14,12 +14,18 @@ keywords:
 - extension
 ---
 import useBaseUrl from '@docusaurus/useBaseUrl'
+import MvnBadge from './MvnBadge'
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<MvnBadge />
 
 ## Overview
 
-Currency Conversion is an extension library built on SAP Cloud SDK. You can use this library to facilitate currency exchange rate conversions. 
+Currency Conversion is an extension library built on SAP Cloud SDK. You can use this library to facilitate currency exchange rate conversions.
 
-:::Note: The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data provider sources.
+:::note
+The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data provider sources.
 :::
 
 You can use the library for the following functions:
@@ -54,20 +60,20 @@ If you want to run the library in the Cloud Foundry environment, use the followi
 
 ```xml
 <dependency>
-             <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
-             <artifactId>tenant-scp-cf</artifactId>
-             <version>{{The latest version ID from NexusInformation published on non-SAP site}}</version>
-        </dependency>
+  <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+  <artifactId>tenant-scp-cf</artifactId>
+  <version>{{The latest version ID from NexusInformation published on non-SAP site}}</version>
+</dependency>
 ```
 
 If you want to run the library in the Neo environment, use the following:
 
 ```xml
 <dependency>
-            <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
-            <artifactId>tenant-scp-neo</artifactId>
-            <version>{{The latest version ID from Nexus}}</version>
-       </dependency>  
+  <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+  <artifactId>tenant-scp-neo</artifactId>
+  <version>{{The latest version ID from Nexus}}</version>
+</dependency>  
 ```
 
 If your IDE haven't resolved the dependencies, run `mvn clean install` in the root directory of you project.
@@ -78,12 +84,12 @@ If your IDE haven't resolved the dependencies, run `mvn clean install` in the ro
 Currency Conversion is a Java library that you can use to convert currency exchange rates. You can perform conversions either with one currency pair or perform multiple conversions through a single API call. You can use a data adapter to provide exchange rates, configuration settings, and so on.
 
 ### Data Adapter
-The data adapter provides the library with access to relevant exchange rates and configurations. You use the data adapter to send currency exchange rates to the library. 
+The data adapter provides the library with access to relevant exchange rates and configurations. You use the data adapter to send currency exchange rates to the library.
 
-At runtime, the conversion library interacts with the data adapter by calling the relevant methods to provide the information you request. 
+At runtime, the conversion library interacts with the data adapter by calling the relevant methods to provide the information you request.
 
 ### Direct Conversions
-Direct conversions happen between a source currency and a target currency, by using the exact rate from the source to the target currency. So, a conversion request with USD as the source currency and EUR as the target currency is performed only if an exchange rate from USD to EUR is available. Conversions will fail if, say, only the rate from EUR to USD is available. 
+Direct conversions happen between a source currency and a target currency, by using the exact rate from the source to the target currency. So, a conversion request with USD as the source currency and EUR as the target currency is performed only if an exchange rate from USD to EUR is available. Conversions will fail if, say, only the rate from EUR to USD is available.
 
 Unless you use...
 
@@ -93,7 +99,9 @@ You can request for a conversion from INR to USD even if the rates available are
 ### Indirect Conversions By Using a Reference Rate
 A currency conversion can be performed by using a reference or intermediate currency outside of your desired currency pair. A conversion from INR to USD can be performed by using a reference currency, say EUR, with the currency exchange rates for INR to EUR and USD to EUR. Note that this can be done only if a reference currency for these rates is specified in when you define these exchange rate pairs, in the 'toCurrency' field.
 
-**Note: If a reference currency is provided, it takes precedence over direct rates. The conversion will be performed based on the reference currency specified. Inverse rates are not considered in this scenario.**
+:::note
+If a reference currency is provided, it takes precedence over direct rates. The conversion will be performed based on the reference currency specified. Inverse rates are not considered in this scenario.
+:::
 
 ### Fixed Rate
 The exact exchange rate provided at run-time. The library uses the run-time rates to perform the conversion.
@@ -115,9 +123,9 @@ The library uses the [Big Decimal](https://docs.oracle.com/javase/7/docs/api/jav
 The library returns the converted amount both as a string and a big decimal. You can work with the big decimal object and specify a scale of your choice.
 
 ### Rounding Off
-Rounded off values represent the usable currency amounts in relation to your business case. This means that the amounts are rounded off to a precision and value which make sense in a business. 
+Rounded off values represent the usable currency amounts in relation to your business case. This means that the amounts are rounded off to a precision and value which make sense in a business.
 
-This is done by using an exponent value of the target currency. An exponent represents the relationship between a major and minor currency unit as a mathematical function. For example, 100 cents make one US Dollar (USD). We can represent this relationship by using a "base value" and an "exponent value". For all rounding off calculations, the base value is fixed as 10. Therefore, in this example, the exponent will be 2. 
+This is done by using an exponent value of the target currency. An exponent represents the relationship between a major and minor currency unit as a mathematical function. For example, 100 cents make one US Dollar (USD). We can represent this relationship by using a "base value" and an "exponent value". For all rounding off calculations, the base value is fixed as 10. Therefore, in this example, the exponent will be 2.
 
 Additionally, converted amounts in the library response are rounded off to a "scale" equal to the exponent of the target currency. This means that if the source currency's exponent value is 2 (as is the case in our example), there will be two digits after the decimal in the rounded off amount.
 
@@ -125,7 +133,8 @@ Exponents for all currencies are published by ISO and this information is also a
 
 This rounding off logic is applied to all conversion amounts.
 
-:::Note: The library provides both the unrounded and rounded-off amounts in the result set. You can choose which one to use, based on your use case.
+:::note
+The library provides both the unrounded and rounded-off amounts in the result set. You can choose which one to opt for, based on your use case.
 :::
 
 ## Features
@@ -150,69 +159,80 @@ TenantAccessor.executeWithTenant(() -> MyProviderTenant, () -> {
 });
 ```
 ## Code Example
+The code example that follows, shows the end-to-end process flow in using the Currency Conversion library.
 
 ```java
+// Initialize the Currency Conversion Library.
 CurrencyConverter currConverter = new CurrencyConverter();
 
-// Data Adapter
+// Initialize the Data Adapter implementation you would like to use.
 DataAdapter dataAdapter = new DataAdapterImpl();
 
-// Prepare parameters for the conversion request.
+// Prepare the parameter for your conversion request.
+ConversionParametersForNonFixedRate parameter =
+    ConversionParametersForNonFixedRate.builder()
+      .fromAmount(new CurrencyAmount("500.123"))
+      .fromCurrency(Currency.getInstance("EUR"))
+      .toCurrency(Currency.getInstance("USD"))
+      .exchangeRateType(new RateType("MID"))
+      .build();
+
+// Call the conversion library for a single conversion.
+
+try {
+      SingleNonFixedRateConversionResult singleConversionresult =
+        currConverter.convertCurrencyWithNonFixedRate(param, dataAdapter);
+      convertedAmount =
+        singleConversionresult.getConvertedAmount().getDecimalValue();
+} catch(ConversionException ex){
+      slfLogger.error("Conversion exception with message as " + ex.getMessage());
+      throw new Exception(ex.getMessage());
+}
+
+// Or... if you would like to perform bulk conversions, use the following...
 
 List<ConversionParametersForNonFixedRate> paramList = new ArrayList<>();
 
-ConversionParametersForNonFixedRate parameter = ConversionParametersForNonFixedRate.builder()
-.exchangeRateType(new RateType("MID")).fromAmount(CurrencyAmount.builder().valueString(500.123)
-.build()).fromCurrency(Currency.getInstance(EUR)).toCurrency(Currency.getInstance(USD)).build();
-
 paramList.add(parameter);
 
+ConversionParametersForNonFixedRate parameter2 =
+    ConversionParametersForNonFixedRate.builder()
+      .fromAmount(new CurrencyAmount("485.324"))
+      .fromCurrency(Currency.getInstance("JPY"))
+      .toCurrency(Currency.getInstance("USD"))
+      .exchangeRateType(new RateType("MID"))
+      .build();
 
-// Call the conversion library.
+paramList.add(parameter2);
 
-BulkNonFixedRateConversionResult result = null;
+// ...and so on.
 
-try{
+// Call the conversion library for bulk conversion.
 
-result = currConverter.convertCurrenciesWithNonFixedRate(paramList, dataAdapter);
+BulkNonFixedRateConversionResult bulkConversionresult = null;
 
-} catch(ConversionException ex){
-
-slfLogger.error("conversion exception with message as " + ex.getMessage());
-
-throw new Exception(ex.getMessage());
-
+try {
+  bulkConversionresult =
+    currConverter.convertCurrenciesWithNonFixedRate(paramList, dataAdapter);
+} catch (ConversionException ex){
+    slfLogger.error("Conversion exception with message as " + ex.getMessage());
+    throw new Exception(ex.getMessage());
 }
 
 // Process the results.
 
-for(ConversionParametersForNonFixedRate param : paramList) {
-
-if(result.get(param).isSuccess()) {
-
-convertedAmount = result.get(param).get().getConvertedAmount().getDecimalValue();
-
-}else {
-
-// Handle specific failures.
-
-result.get(param).getCause().getMessage();
-
+for(ConversionParametersForNonFixedRate param: paramList) {
+    if(bulkConversionresult.get(param).isSuccess()) {
+      convertedAmount =
+        bulkConversionresult.get(param).get().getConvertedAmount().getDecimalValue();
+    } else {
+      // Handle specific failures.
+      bulkConversionresult.get(param).getCause().getMessage();
+    }
 }
 
-}
 ```
-The code example above shows the process for bulk conversions. If you want to perform a single conversion, please use the single conversion API. A code example is provided below.
 
-```
-try{
-              SingleNonFixedRateConversionResult result = currConverter.convertCurrencyWithNonFixedRate(param, dataAdapter);
-convertedAmount = result.getConvertedAmount().getDecimalValue();
-         } catch(ConversionException ex){
-slfLogger.error("conversion exception with message as " + ex.getMessage());
-throw new Exception(ex.getMessage());
-         }
-```
 ## Troubleshooting and FAQ
 
 ### Getting Support
@@ -228,10 +248,6 @@ A: No. The library requires you to provide your own exchange rates. It facilitat
 Q: Are your conversion results consistent with those provided by SAP S/4HANA?
 
 A: No. We do not use the configuration tables based on SAP S/4HANA.
-
-Q: What languages do you support?
-
-A: The primary language used is English. 
 
 Q: Why are my conversion requests failing?
 

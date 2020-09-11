@@ -54,7 +54,7 @@ executeHttpRequest(destination, requestConfig)
 
 The `destination` argument is either a full destination object you have already fetched or an object containing a destination name and JWT.
 In the latter case the SDK [fetches the destination](../connectivity/destination.md) for you.
-The [request config](https://sap.github.io/cloud-sdk/api/1.28.1/interfaces/sap_cloud_sdk_core.httprequestconfig) argument contains the request configuration. 
+The [request config](pathname:///api/1.28.1/interfaces/sap_cloud_sdk_core.httprequestconfig) argument contains the request configuration. 
 A minimal config would look like this:
 ```JSON
 {

@@ -21,7 +21,7 @@ This client is the highest layer of convenience and type-safety for the user.
 Below the OData client uses the Generic HTTP client of the SDK.
 For the final HTTP calls we have decided to use the Axios library.
 
-<img alt="The layers of HTTP clients in the SDK." src={useBaseUrl('img/odata-client-layers.png')} class="center" />
+<img alt="The layers of HTTP clients in the SDK." src={useBaseUrl('img/odata-client-layers.png')} class="center" width="50%"/>
 
 In this document we explain when and how to use the middle layer directly.
 The different clients serve different purposes:

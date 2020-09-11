@@ -14,7 +14,7 @@ keywords:
 - extension
 ---
 import useBaseUrl from '@docusaurus/useBaseUrl'
-import MvnBadge from './MvnBadge'
+import MvnBadge from '../../../../../../src/sap/sdk-java/MvnBadge'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -62,7 +62,8 @@ If you want to run the library in the Cloud Foundry environment, use the followi
 <dependency>
   <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
   <artifactId>tenant-scp-cf</artifactId>
-  <version>{{The latest version ID from NexusInformation published on non-SAP site}}</version>
+  <!-- Please use the latest version of the dependency -->
+  <version>3.X.X</version>
 </dependency>
 ```
 
@@ -72,11 +73,12 @@ If you want to run the library in the Neo environment, use the following:
 <dependency>
   <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
   <artifactId>tenant-scp-neo</artifactId>
-  <version>{{The latest version ID from Nexus}}</version>
+  <!-- Please use the latest version of the dependency -->
+  <version>3.X.X</version>
 </dependency>  
 ```
 
-If your IDE haven't resolved the dependencies, run `mvn clean install` in the root directory of you project.
+If your IDE hasn't resolved the dependencies, run `mvn clean install` in the root directory of you project.
 
 ## Concepts
 
@@ -112,7 +114,7 @@ A set of exchange rates you provide to the library. The library picks the "best 
 You must implement the data adapter to enable the library to read the exchange rates from your data source.
 
 ### Default and Overwriting Tenant
-By default, the conversion library operates in the context of the calling tenant, that is, the customer that uses your application to initiate a Currency Conversion call. This is a "default tenant". You can choose to override this tenant by using the TenantAccessor class to perform conversions for them.
+By default, the conversion library operates in the context of the calling tenant, that is, the customer that uses your application to initiate a Currency Conversion call. This is a "default tenant". You can choose to override this tenant by using the `TenantAccessor` class to perform conversions for them.
 
 ### Default and Overwriting Tenant Setting
 By default, the conversion library works with the default tenant settings you provide as part of the data adapter implementation. These settings can include the default data provider and default data provider source for your application's consumers'. However, if your business case requires you to provide exchange rates to your consumers, instead of them providing their own rates, you can use the OverrideTenantSetting class to provide a different default provider and source while calling the conversion API.
@@ -185,8 +187,7 @@ try {
       convertedAmount =
         singleConversionresult.getConvertedAmount().getDecimalValue();
 } catch(ConversionException ex){
-      slfLogger.error("Conversion exception with message as " + ex.getMessage());
-      throw new Exception(ex.getMessage());
+      //Exception handling here
 }
 
 // Or... if you would like to perform bulk conversions, use the following...
@@ -215,8 +216,7 @@ try {
   bulkConversionresult =
     currConverter.convertCurrenciesWithNonFixedRate(paramList, dataAdapter);
 } catch (ConversionException ex){
-    slfLogger.error("Conversion exception with message as " + ex.getMessage());
-    throw new Exception(ex.getMessage());
+    //Exception handling here;
 }
 
 // Process the results.
@@ -239,7 +239,7 @@ for(ConversionParametersForNonFixedRate param: paramList) {
 
 You can report a BCP incident or error through the SAP Support Portal Information published on SAP site. Use `XX-S4C-SDK-CC` as the component.
 
-### Frequently asked questions
+### Frequently Asked Questions
 
 Q: Do you provide currency exchange rates from a data provider?
 

@@ -15,8 +15,8 @@ import MvnBadge from '../../src/sap/sdk-java/MvnBadge'
 
 <MvnBadge />
 
-:::info Migrate to SDK v3
-Version 2.x of the SAP Cloud SDK for Java V2 has reached its end of life and is now longer maintained. To continue using the latest features outlined in the release notes for version 3 below, please [migrate to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
+:::info Update to SDK v3
+Version 2.x of the SAP Cloud SDK for Java V2 has reached its end of life and is now longer maintained. To continue using the latest features outlined in the release notes for version 3 below, please [upgrade to **SDK V3**](https://developers.sap.com/tutorials/s4sdk-migration-v3.html).
 :::
 
 ## Should I update?
@@ -26,6 +26,55 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - keep up with the latest changes in SAP Cloud Platform
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
+
+## 3.28.1 - September 10, 2020
+
+[Javadoc](https://help.sap.com/doc/4c43c34d44aa4b839b8fa3d7aac74d70/1.0/en-US/index.html) | [Release blog](https://blogs.sap.com/?p=1178236) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.28.1)  
+
+### Compatibility Notes
+
+- Blockchain Business Services: The constructors of classes `Me` and `Partner` are no longer public. New instances can be constructed using a builder, by calling `Me.builder()` and `Partner.builder()` respectively.
+- Blockchain Business Services: `IdentityClient.deletePartner` now only requires the `Partner`'s ID instead of a full object.
+
+### New Functionality
+  
+- The [Currency Conversion](https://help.sap.com/viewer/7080b5b59e8243ecb48e34c1b107538b/Latest/en-US/7296e9db0dce45ac8557b17d3374f298.html) library has been added. You can use this library to facilitate currency exchange rate conversions within your Cloud application. 
+  - Note that no exchange rates are provided by the library. It is assumed that you have your own data providers for getting the exchange rates.
+  - The library supports bulk conversions, direct one-to-one conversions from a source value to a target value, and indirect conversions based on inverse rates or a reference currency.
+  - You can perform currency conversions based on a fixed currency exchange rate, or a non-fixed rate (if you want the library to select the most appropriate rate based on a list of data from various data providers). 
+  - To use the library, add the `currency-conversion-core` and `currency-conversion-datamodel` Maven dependencies in your pom.xml.
+
+### Improvements
+
+- Update dependencies:
+    - Update [SAP Cloud Security Client](https://github.com/SAP/cloud-security-xsuaa-integration) from `2.7.5` to `2.7.6`
+    - Update AssertJ Core from `3.16.1` to `3.17.0`
+    - Update Caffeine from `2.8.4` to `2.8.5`
+    - Update Apache Commons Lang from version `3.10` to `3.11`
+    - Update Apache Commons Text from version `1.8` to `1.9`
+    - Update Apache CXF from `3.3.6` to `3.3.7`
+    - Update Mockito from `3.3.3` to `3.5.7`
+    - Update Jackson from `2.11.0` to `2.11.2`
+    - Update Junit Pioneer from `0.6.0` to `0.9.0`
+    - Update Netty from `4.1.50.Final` to `4.1.51.Final`
+    - Update Jetty from `9.4.27.v20200227` to `9.4.31.v20200723`
+    - Update Protocol Buffers Java from `3.12.1` to`3.12.2`
+    - Update Resilience4J from `1.4.0` to `1.5.0`
+    - Update Spring from version ``5.2.6.RELEASE`` to `5.2.8.RELEASE`
+    - Update Spring Security from `5.3.2.RELEASE` to `5.3.4.RELEASE`
+    - Update Wiremock from `2.26.3` to `2.27.1`
+    - Update Togglz from `2.6.1.Final` to `2.8.0`
+    - Update SQLite JDBC Driver from `3.28.0` to `3.32.3.2`
+    - Update JavaPoet from `1.12.1` to `1.13.0`
+    - Update Spring Boot from `2.3.0.RELEASE` to `2.3.2.RELEASE`
+    - Update JSON Unit AssertJ  from `2.17.0` to `2.18.1`
+    - Update `io.projectreactor:reactor-core` from `3.3.5.RELEASE` to `3.3.9.RELEASE`
+    - Update CDS4 from `1.11.0` to `1.12.1`
+    - Update `com.squareup.okio:okio` from `2.6.0` to `2.7.0`
+
+### Fixed Issues
+- Fix an issue where numbers where not serialised correctly in OData V2 requests using `executeRequest`. Fractional and long numbers are now correctly serialised as JSON strings.
+- Fix an `org.springframework.beans.BeanInstantiationException` with a nested `java.lang.NoSuchMethodException` when adding the Maven dependency `scp-workflow-cf` to a Spring Boot project
 
 
 ## 3.27.0 - August 27, 2020

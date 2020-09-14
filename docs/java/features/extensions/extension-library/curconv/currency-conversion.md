@@ -101,7 +101,11 @@ You can request for a conversion from INR to USD even if the rates available are
 ### Indirect Conversions By Using a Reference Rate
 A currency conversion can be performed by using a reference or intermediate currency outside of your desired currency pair. A conversion from INR to USD can be performed by using a reference currency, say EUR, with the currency exchange rates for INR to EUR and USD to EUR. Note that this can be done only if a reference currency for these rates is specified in when you define these exchange rate pairs, in the 'toCurrency' field.
 
-:::note
+:::info
+Indirect conversions using inverse rates and reference currencies are disabled by default. You can use the data adapter implementation to specify whether you want to enable them, for each exchange rate type.
+:::
+
+:::caution
 If a reference currency is provided, it takes precedence over direct rates. The conversion will be performed based on the reference currency specified. Inverse rates are not considered in this scenario.
 :::
 
@@ -150,7 +154,7 @@ Get multiple currency pairs converted through a single call. You can use the lib
 #### Get Direct and Indirect Conversions
 Get direct and indirect currency conversions for your currency pairs. Direct conversions are one-to-one conversions between a source and a target currency. Indirect conversions are performed by using inverse rates or a reference currency.
 
-### Multi-tenancy with Currency Conversion
+### Multitenancy with Currency Conversion
 Based on the dependency added to pom.xml, the library identifies the environment you are operating on and the tenant context. The library automatically derives the tenant context by using the [Tenant abstraction](https://help.sap.com/doc/19838225037e4e52ba36d2bb95176126/1.0/en-US/com/sap/cloud/sdk/cloudplatform/tenant/Tenant.html) provided by the SAP Cloud SDK. To override the default conversion configuration, manually add an exchange rate provider and an exchange rate provider code to the API request, as follows. If you do this, the default configuration settings are not taken into consideration.
 
 ```java
@@ -241,17 +245,28 @@ You can report a BCP incident or error through the SAP Support Portal Informatio
 
 ### Frequently Asked Questions
 
-Q: Do you provide currency exchange rates from a data provider?
+:::info Question
+Do you provide currency exchange rates from a data provider?
+:::
 
-A: No. The library requires you to provide your own exchange rates. It facilitates direct currency conversions for both fixed and non-fixed rates based on your exchange rate set.
+:::tip Answer
+No. The library requires you to provide your own exchange rates. It facilitates direct currency conversions for both fixed and non-fixed rates based on your exchange rate set.
+:::
 
-Q: Are your conversion results consistent with those provided by SAP S/4HANA?
+:::info Question
+Answer Are your conversion results consistent with those provided by SAP S/4HANA?
+:::
 
-A: No. We do not use the configuration tables based on SAP S/4HANA.
+:::tip Answer
+No. We do not use the configuration tables based on SAP S/4HANA and therefore our results are different.
+:::
 
-Q: Why are my conversion requests failing?
+:::info Question
+Why are my conversion requests failing?
+:::
 
-A: Conversion requests fail due to several reasons, including but not limited to the following:
+:::tip Answer
+Conversion requests fail due to several reasons, including but not limited to the following:
 - The library could not determine the exchange rate record for your conversion request: If this happens, check your Data Adapter settings and the exchange rate list you have provided.
 
 - The library found multiple exchange rates for the same conversion request, and there was no default exchange rate provider specified. If this happens, set a default exchange rate provider.
@@ -259,3 +274,4 @@ A: Conversion requests fail due to several reasons, including but not limited to
 - The library found duplicate exchange rate records from the same exchange rates provider.
 
 You can handle the individual status of a success or failure exception. To learn more, see [Code Example](#code-example).
+:::

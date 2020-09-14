@@ -27,6 +27,9 @@ describe('GetByKeyRequestBuilderV4', () => {
       const entityData = createOriginalTestEntityData1();
       const expected = createTestEntityV4(entityData);
 
+
+TestEntity.requestBuilder().getAll().orderBy(count(TestEntity.TO_MULTI_LINK)).execute()
+
       mockGetRequest(
         {
           path: testEntityResourcePath(

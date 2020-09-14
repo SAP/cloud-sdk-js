@@ -1,24 +1,22 @@
 ## Count Method on Entities
 
 This ADR is about the `$count` method in OData.
-In general it is very simple:
+In generall it is very simple:
 
 ```
 http://my-test-service/some-entity$count
 ```
 
-returns the number of existing `some-entity` in the backend.
-However, in `v4` and `v2` there are more things to consider:
+Returns the number of existing `some-entity` in the backend.
+However, in `v4` and `v2` there are more things to consider.
 
-###v4
+[v2 spec](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/) <br>
+[v4 spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_AddressingtheCountofaCollection)
 
 Note that the spaces  are for readability of the examples only; in real URLs they must be percent-encoded as %20.
 
-[v2 spec](https://www.odata.org/documentation/odata-version-2-0/uri-conventions/)
-[v4 spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_AddressingtheCountofaCollection):
-
 #### Common (v2 & v4)
-- Using `count` on root entity: `http://host/service/Categories(1)/$count`
+- Using `count` on root entity: `http://host/service/Categories/$count`
 - Using `count` on a filtered list: `http://host/service/Products/$count?$filter=Price gt 5.00` 
 or even with filter on navigation `http://host/service/Categories/$count?filter=Products/Price gt 5.00`
 - Using `count` on navigation property: `http://host/service/Categories(1)/Products/$count`
@@ -33,18 +31,18 @@ or even with multiple navigations `http://host/service/Categories(1)/Products(2)
 
 Add a new `count()` request as `getAll()` and then `execute()` with destination infromation:
 
-#### Basic case (v2 & v4)
+#### A: Basic case (v2 & v4)
 ```ts
 const myCount:number = await TestEntity.requestBuilder().count().execute(destination)
 ```
 
-#### Count with filter (v2 & v4)
+#### B: Count with filter (v2 & v4)
 
 ```ts
 const myCount:number = await TestEntity.requestBuilder().count().filter(myFilter).execute(destination)
 ```
 
-#### Navigation (v2 & v4)
+#### C: Navigation (v2 & v4)
 Here I propose a new object the `pathBuilder`.
 This could become handy also for other features like create a navigation property to an already existing entity. 
 
@@ -55,7 +53,7 @@ const myPathTo1:Path<TestEntity,TestEntityMultiLink> = TestEntity.pathBuilder().
 TestEntity.requestBuilder().count(myPathToN).execute(destination) //0..N
 TestEntity.requestBuilder().count(myPathTo1).execute(destination) //0..1
 ```
-#### Count inside a filter condition (v4)
+#### D: Count inside a filter condition (v4)
 
 Here I priopose a new lambda funciton like `any` or `and`:
 
@@ -77,7 +75,7 @@ TestEndtiy.requestBuilder().getAll().filter(
 .execute(destination)
 ```
 
-#### Count with orderBy (v4)
+#### E: Count with orderBy (v4)
 
 the `count` lambda function should translate to a sortable type
 
@@ -86,3 +84,9 @@ TestEntity.requestBuilder().getAll().orderBy(
   asc(count(TestEntity.TO_MULTI_LINK)))
 .execute()
 ```
+
+### Order of Implementation
+
+- The functionality of `A` and `B` should be part of the initial issue.
+- The part `C` should be also implemented I think. This should be broken down in the `pathBuilder` and then the count extension.
+- The parts `D` and `E` could be postponed in my opinion until we get customer demand.

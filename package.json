@@ -10,15 +10,16 @@
     "lint": "standard --fix"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.0-alpha.63",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.63",
+    "@docusaurus/core": "next",
+    "@docusaurus/preset-classic": "next",
     "classnames": "^2.2.6",
     "interactjs": "^1.9.22",
     "moment": "^2.27.0",
     "randomcolor": "^0.6.2",
     "react": "^16.13.1",
     "react-calendar-timeline": "^0.27.0",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "typescript": "^4.0.2"
   },
   "browserslist": {
     "production": [
@@ -35,7 +36,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
-    "eslint": "^7.7.0",
+    "eslint": "^7.9.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",

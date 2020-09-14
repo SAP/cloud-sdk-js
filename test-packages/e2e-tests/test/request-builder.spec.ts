@@ -13,6 +13,7 @@ interface EntityKey {
   keyInt: number;
 }
 const entityKey = 123;
+const entityLinkKey = 987;
 
 async function queryEntity(key: number): Promise<TestEntity> {
   return TestEntity.requestBuilder()
@@ -83,10 +84,29 @@ describe('Request builder test', () => {
     expect(testEntity).toEqual(expect.objectContaining({ keyTestEntity: 101 }));
   });
 
-  it('should create an entity', async () => {
-    await createEntity(entityKey);
+  it('should create an entity and a link as child of the entity', async () => {
+    const testEntity = await createEntity(entityKey);
+
+    const entityLink = TestEntityLink.builder()
+      .keyTestEntityLink(entityLinkKey)
+      .build();
+
+    await TestEntityLink.requestBuilder()
+      .create(entityLink)
+      .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
+      .execute(destination);
+
     const queried = await queryEntity(entityKey);
+
     expect(queried.dateProperty?.toISOString()).toBe(moment(0).toISOString());
+    expect(queried.toMultiLink).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          keyTestEntityLink: entityLinkKey,
+          keyToTestEntity: entityKey
+        })
+      ])
+    );
   });
 
   it('should update an entity', async () => {

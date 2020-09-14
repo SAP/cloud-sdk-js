@@ -23,13 +23,15 @@ module.exports = {
     // Activate this announcement bar for global urgent notifications
     // ***************************************************************
     //
-    // announcementBar: {
-    //   id: 'WIP', // Any value that will identify this message
-    //   content:
-    //     '~~~WIP~~~ Cloud SDK Documentation is work in progress. Use on your own discretion.',
-    //   backgroundColor: '#ed2939', // Defaults to `#fff`
-    //   textColor: '#000' // Defaults to `#000`
-    // },
+    announcementBar: {
+      id: 'survey', // Any value that will identify this message
+      content:
+         '&#11088;&#11088;&#11088; Please, help us improving Cloud SDK by taking <a target="_blank" rel="noopener noreferrer" href="https://sapinsights.eu.qualtrics.com/jfe/form/SV_0pUmWpCadpoLhyZ">our survey</a> &#11088;&#11088;&#11088;',
+      backgroundColor: '#fff', // Defaults to `#fff`
+      textColor: '#000', // Defaults to `#000`,
+      isCloseable: false, // Defaults to `true`.
+
+    },
     navbar: {
       title: 'SAP Cloud SDK',
       logo: {
@@ -202,7 +204,8 @@ module.exports = {
         sitemap: {
           cacheTime: 600 * 1000, // 600 sec - cache purge period
           changefreq: 'weekly',
-          priority: 0.5
+          priority: 0.5,
+          trailingSlash: false
         }
       }
     ]

@@ -64,7 +64,7 @@ If you provide the destination name the SDK will try to lookup as described [her
 In productive use, the manual configuration will not be useful, but for testing, it might be valuable.
 The destination object contains a field `proxyConfiguration` in which you can configure a proxy.
 
-```js
+```JSON
 {
 url: "https://MyDestinationURL.com"
 proxyConfiguration?: {

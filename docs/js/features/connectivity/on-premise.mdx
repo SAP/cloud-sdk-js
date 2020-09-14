@@ -31,7 +31,7 @@ Applications which are supposed to access On-Premise systems need a binding to t
 
 ### Connectivity Service ###
 
-As a first step, the SDK [looks up the destination](./destination.md).
+As a first step, the SDK [looks up the destination](./destination.mdx).
 If the `Proxy Type` of the destination is `OnPremise` the SDK will try to establish a connection via the Cloud Connector.
 
 As mentioned above, the application needs a service binding to the connectivity service.
@@ -44,7 +44,7 @@ The SDK takes the client grant to call the connectivity service and receives the
 Then the SDK creates an HTTP agent considering this proxy and the necessary `Proxy-Authorization` headers.
 The proxy is the entry point to the Cloud Connector instance connected the account.
 The proxy is only reachable from the Cloud Foundry space, so you cannot use that flow for applications running outside of Cloud Foundry. 
-The final destination containing the [proxy information](./proxy.md) will look like:
+The final destination containing the [proxy information](./proxy.mdx) will look like:
 
 ```JSON
 {
@@ -60,7 +60,7 @@ proxyConfiguration?: {
   }
 }
 ```
-and will be used by the [HTTP client](../odata/generic-http-client.md) of the SDK to execute the request.
+and will be used by the [HTTP client](../odata/generic-http-client.mdx) of the SDK to execute the request.
 We would like to mention two minor aspects of the SDK.
 
 ### Principal Propagation ### 

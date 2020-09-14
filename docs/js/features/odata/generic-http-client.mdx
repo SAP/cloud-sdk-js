@@ -34,9 +34,9 @@ The generated payload and URL are passed to the Generic HTTP Client.
 **Generic HTTP Client:** Adds SAP infrastructure specific functionality on top of a standard HTTP Client.
 All OData services use the same generic HTTP client, so it contains no service specific information.
 The client handles connectivity related issues such as:
-- [destination lookup](../connectivity/destination.md) 
-- Connections to [On-Premise](../connectivity/on-premise.md)  system via the connectivity service 
-- [web proxies](../connectivity/proxy.md).
+- [destination lookup](../connectivity/destination.mdx)
+- Connections to [On-Premise](../connectivity/on-premise.mdx)  system via the connectivity service
+- [web proxies](../connectivity/proxy.mdx).
 
 In the end, all information from the destination, connectivity service and proxy configuration ends up in header-fields and [proxy-agents](https://www.npmjs.com/package/proxy-agent).
 The information goes one level down to the Axios client.
@@ -53,7 +53,7 @@ executeHttpRequest(destination, requestConfig)
 ```
 
 The `destination` argument is either a full destination object you have already fetched or an object containing a destination name and JWT.
-In the latter case the SDK [fetches the destination](../connectivity/destination.md) for you.
+In the latter case the SDK [fetches the destination](../connectivity/destination.mdx) for you.
 The [request config](pathname:///api/1.28.1/interfaces/sap_cloud_sdk_core.httprequestconfig) argument contains the request configuration. 
 A minimal config would look like this:
 ```JSON

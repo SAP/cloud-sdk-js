@@ -100,10 +100,10 @@ The decorator allows for three different ways of applying a configuration:
 </tr>
 </tbody></table>
 
-In case your operation should run asynchronously we highly recommend you leverage the `queue` functionality. The decorator will ensure the [Thread Context](../multi-tenancy/thread-context.md) with Tenant and Principal information is propagated correctly to new Threads.
+In case your operation should run asynchronously we highly recommend you leverage the `queue` functionality. The decorator will ensure the [Thread Context](../multi-tenancy/thread-context.mdx) with Tenant and Principal information is propagated correctly to new Threads.
 
 :::note
-Note that the Resilience Decorator will try to propagate the current [Thread Context](../multi-tenancy/thread-context.md) at the _time the decorator is invoked_. This is important when you are decorating a Callable or Supplier and running it later. The Thread Context must be available whenever `decorateCallable` or `decorateSupplier` is evaluated. So if the call to `ResilienceDecorator` should take place asynchronously you should [follow these steps](../multi-tenancy/thread-context.md#running-asynchronous-operations) to ensure the Thread Context is available.
+Note that the Resilience Decorator will try to propagate the current [Thread Context](../multi-tenancy/thread-context.mdx) at the _time the decorator is invoked_. This is important when you are decorating a Callable or Supplier and running it later. The Thread Context must be available whenever `decorateCallable` or `decorateSupplier` is evaluated. So if the call to `ResilienceDecorator` should take place asynchronously you should [follow these steps](../multi-tenancy/thread-context.mdx#running-asynchronous-operations) to ensure the Thread Context is available.
 :::
 
 #### Failures and Fallbacks

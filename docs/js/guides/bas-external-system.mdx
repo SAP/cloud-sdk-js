@@ -116,7 +116,7 @@ The `preLaunchTask` executes the build before each run which compiles the TypeSc
 The `outFiles` properties defines where the compiled files will be located.
 
 As discussed [in the beginning](#background) we need to set the `destinations` environment variable.
-This will interrupt the [destination lookup](../../js/features/connectivity/destination.md) and lead to a destination with the HTTP_PROXY considered. 
+This will interrupt the [destination lookup](../../js/features/connectivity/destination.mdx) and lead to a destination with the HTTP_PROXY considered.
 The easiest way to do that is via a `.env` file which is read when starting the application.
 If you do not have a `.env` file create one or adjust the existing one.
 Just add the following entry to the `.env` file:

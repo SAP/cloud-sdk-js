@@ -17,14 +17,12 @@ export interface EventLocation {
   buildingInfo?: string;
   /**
    * Address.
-   * @nullable
    */
-  address?: string;
+  address: string;
   /**
    * City.
-   * @nullable
    */
-  city?: City;
+  city: City;
 }
 
 /**

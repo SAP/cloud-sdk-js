@@ -2,10 +2,30 @@
 
 import { any } from '@sap-cloud-sdk/core';
 import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/action-imports';
+import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
 import { People } from '../../../test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
 
 const url = 'https://services.odata.org/';
 const destination = { url };
+
+async function deletePerson(userName: string): Promise<void> {
+  const queried = await People.requestBuilder()
+    .getByKey(userName)
+    .execute(destination);
+  // The trippin service return not 404 exception but 204 if an entity is not found. Hence this check
+  if (queried.userName) {
+    return People.requestBuilder().delete(queried).execute(destination);
+  }
+}
+
+function createPeople(userName: string): People {
+  return People.builder()
+    .firstName('SomeFirstName')
+    .lastName('SomeLastName')
+    .gender(PersonGender.Male)
+    .userName(userName)
+    .build();
+}
 
 xdescribe('Request builder test', () => {
   it('should return a collection of entities for get all request', async () => {
@@ -53,4 +73,60 @@ xdescribe('Request builder test', () => {
       .execute(destination);
     expect(result[0].friends[0].friends[0]).not.toBe(undefined);
   });
+
+  it('should create a simple entity without navigation properties', async () => {
+    const myKey = 'KeyForCreation';
+    await deletePerson(myKey);
+    const entity = createPeople(myKey);
+    // This is not a navigation property
+    entity.addressInfo = [
+      {
+        address: 'Address1',
+        city: { name: 'Berlin', countryRegion: 'DE', region: '' }
+      },
+      {
+        address: 'Address2',
+        city: { name: 'Paris', countryRegion: 'FR', region: '' }
+      }
+    ];
+
+    const created = await People.requestBuilder()
+      .create(entity)
+      .execute(destination);
+
+    const expected = await People.requestBuilder()
+      .getByKey(myKey)
+      .execute(destination);
+    expect(expected.addressInfo!.length).toBe(2);
+    expect(expected.addressInfo!.map(address => address.address)).toEqual([
+      'Address1',
+      'Address2'
+    ]);
+  }, 10000);
+
+  // This does not work for the demo service currently
+  xit('should create a simple entity with navigation i.e. "deep create"', async () => {
+    const keyRoot = 'KeyForCreationDeepRoot';
+    const keyChild1 = 'KeyForCreationChild1';
+    const keyChild2 = 'KeyForCreationChild2';
+    await deletePerson(keyRoot);
+    await deletePerson(keyChild1);
+    await deletePerson(keyChild2);
+
+    const entity = createPeople(keyRoot);
+    entity.friends = [createPeople(keyChild1), createPeople(keyChild2)];
+
+    const created = await People.requestBuilder()
+      .create(entity)
+      .execute(destination);
+
+    const expected = await People.requestBuilder()
+      .getByKey(keyRoot)
+      .execute(destination);
+    expect(expected.friends!.length).toBe(2);
+    expect(expected.friends!.map(friend => friend.userName)).toEqual([
+      keyChild1,
+      keyChild2
+    ]);
+  }, 10000);
 });

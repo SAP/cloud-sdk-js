@@ -12,14 +12,12 @@ import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, E
 export interface Location {
   /**
    * Address.
-   * @nullable
    */
-  address?: string;
+  address: string;
   /**
    * City.
-   * @nullable
    */
-  city?: City;
+  city: City;
 }
 
 /**

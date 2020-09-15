@@ -1,7 +1,7 @@
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { AllFields, BigNumberField, BooleanField, CustomFieldV4, DateField, EntityBuilderType, EntityV4, Field, NumberField, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
+import { AllFields, BigNumberField, BooleanField, CustomFieldV4, DateField, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "TestEntity" of service "AdminService".
  */
@@ -20,13 +20,9 @@ export declare class TestEntity extends EntityV4 implements TestEntityType {
      */
     static _defaultServicePath: string;
     /**
-     * Key Property Int.
+     * Key Test Entity.
      */
-    keyPropertyInt: number;
-    /**
-     * Key Property String.
-     */
-    keyPropertyString: string;
+    keyTestEntity: number;
     /**
      * String Property.
      * Maximum length: 111.
@@ -79,6 +75,10 @@ export declare class TestEntity extends EntityV4 implements TestEntityType {
      */
     dataTimeOffsetTimestampProperty?: Moment;
     /**
+     * One-to-many navigation property to the [[TestEntityLink]] entity.
+     */
+    toMultiLink: TestEntityLink[];
+    /**
      * Returns an entity builder to construct instances `TestEntity`.
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
@@ -102,9 +102,9 @@ export declare class TestEntity extends EntityV4 implements TestEntityType {
         [key: string]: any;
     };
 }
+import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 export interface TestEntityType {
-    keyPropertyInt: number;
-    keyPropertyString: string;
+    keyTestEntity: number;
     stringProperty?: string;
     guidProperty?: string;
     booleanProperty?: boolean;
@@ -115,10 +115,10 @@ export interface TestEntityType {
     timeOfDayProperty?: Time;
     dataTimeOffsetDataTimeProperty?: Moment;
     dataTimeOffsetTimestampProperty?: Moment;
+    toMultiLink: TestEntityLinkType[];
 }
 export interface TestEntityTypeForceMandatory {
-    keyPropertyInt: number;
-    keyPropertyString: string;
+    keyTestEntity: number;
     stringProperty: string;
     guidProperty: string;
     booleanProperty: boolean;
@@ -129,18 +129,14 @@ export interface TestEntityTypeForceMandatory {
     timeOfDayProperty: Time;
     dataTimeOffsetDataTimeProperty: Moment;
     dataTimeOffsetTimestampProperty: Moment;
+    toMultiLink: TestEntityLinkType[];
 }
 export declare namespace TestEntity {
     /**
-     * Static representation of the [[keyPropertyInt]] property for query construction.
+     * Static representation of the [[keyTestEntity]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const KEY_PROPERTY_INT: NumberField<TestEntity>;
-    /**
-     * Static representation of the [[keyPropertyString]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    const KEY_PROPERTY_STRING: StringField<TestEntity>;
+    const KEY_TEST_ENTITY: NumberField<TestEntity>;
     /**
      * Static representation of the [[stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -192,9 +188,14 @@ export declare namespace TestEntity {
      */
     const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: DateField<TestEntity>;
     /**
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    const TO_MULTI_LINK: OneToManyLink<TestEntity, TestEntityLink>;
+    /**
      * All fields of the TestEntity entity.
      */
-    const _allFields: Array<NumberField<TestEntity> | StringField<TestEntity> | BooleanField<TestEntity> | BigNumberField<TestEntity> | DateField<TestEntity> | TimeField<TestEntity>>;
+    const _allFields: Array<NumberField<TestEntity> | StringField<TestEntity> | BooleanField<TestEntity> | BigNumberField<TestEntity> | DateField<TestEntity> | TimeField<TestEntity> | OneToManyLink<TestEntity, TestEntityLink>>;
     /**
      * All fields selector.
      */

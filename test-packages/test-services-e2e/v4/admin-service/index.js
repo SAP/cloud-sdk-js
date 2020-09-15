@@ -16,6 +16,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 __exportStar(require("./TestEntity"), exports);
+__exportStar(require("./TestEntityLink"), exports);
 __exportStar(require("./TestEntityRequestBuilder"), exports);
+__exportStar(require("./TestEntityLinkRequestBuilder"), exports);
 __exportStar(require("./BatchRequest"), exports);
 //# sourceMappingURL=index.js.map

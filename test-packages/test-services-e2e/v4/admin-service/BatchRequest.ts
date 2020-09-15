@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '@sap-cloud-sdk/core';
-import { TestEntity } from './index';
+import { TestEntity, TestEntityLink } from './index';
 
 /**
  * Batch builder for operations supported on the Admin Service.
@@ -25,6 +25,6 @@ export function changeset(...requests: WriteAdminServiceRequestBuilder[]): OData
 }
 
 export const defaultAdminServicePath = '/sap/opu/odata/sap/AdminService';
-const map = { 'TestEntity': TestEntity };
-export type ReadAdminServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntity>;
-export type WriteAdminServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity>;
+const map = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink };
+export type ReadAdminServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink>;
+export type WriteAdminServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink>;

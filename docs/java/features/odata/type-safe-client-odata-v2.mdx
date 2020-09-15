@@ -105,16 +105,13 @@ Query parameters:
 - `$filter`, `$top`, `$skip` and `$orderby` are available only when reading a collection of entities
 
 Request parameters:
-- Update operations allow to set either `modifyingEntity()` or `replacingEntity()` which will result in `HTTP PATCH` or `HTTP PUT` respectively. By default entities are modified via `PATCH`.
-- Update and delete operations allow to modify how ETags are handled:
-   - By default an ETag is send if one is present on the entity being modified.
-   - `ignoreAnyVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
 - All operations allow for adding custom headers via `withHeader(...)`
+- Update operations allow to set either `modifyingEntity()` or `replacingEntity()` which will result in `HTTP PATCH` or `HTTP PUT` respectively. By default entities are modified via `PATCH`.
 
 
 #### Handling of ETags ####
 
-An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SDK will try to read version identifiers from responses and set them when sending OData requests.
+An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier which is often used to implement an optimistic locking mechanism. The SDK will try to read version identifiers from responses and set them when sending OData requests that manipulate data.
 
 Consider the following example:
 
@@ -151,6 +148,32 @@ On the read request the SDK will automatically try to extract the version identi
 :::note
 If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.
 :::
+
+This behavior can be customized.
+The following code sends a `*` in the `IF-MATCH` header which essentially corresponds to a forced overwrite.
+
+<Tabs groupId="odataProtocol" defaultValue="v2" values={[ { label: 'OData V2', value: 'v2' }, { label: 'OData V2 (Deprecated)', value: 'v2-deprecated' } ]}>
+
+<TabItem value="v2">
+
+```java
+service.updateBusinessPartner(partner)
+                 .matchAnyVersionIdentifier()
+                 .execute(destination);
+```
+
+</TabItem>
+
+<TabItem value="v2-deprecated">
+
+```java
+response = service.updateBusinessPartner(partner)
+                 .ignoreVersionIdentifier()
+                 .executeRequest(destination);
+```
+
+</TabItem>
+</Tabs>
 
 #### Handling of CSRF tokens ####
 
@@ -437,3 +460,4 @@ final BusinessPartner partner = service.createBusinessPartner(partner)
 ```
 - `executeRequest` throws the runtime exception `ODataException` and respective sub classes. Hence, adjust your exception handling as described under the tab _OData V2 (Beta)_ in the section [Error Handling](#error-handling). Note that any `ErrorResultHandler` registered by `withErrorHandler()` is not considered.
 - Remove any call to `cachingMetadata()` and `withoutCachingMetadata()` as they are obsolete.
+- Remove any call to `ignoringVersionIdentifier()` or `ignoreVersionIdentifier()`. Use `matchAnyVersionIdentifier()` or `disableVersionIdentifier()` instead.

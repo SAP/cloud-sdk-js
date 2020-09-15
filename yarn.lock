@@ -6782,9 +6782,9 @@ macos-release@^2.2.0:
   integrity sha512-H/QHeBIN1fIGJX517pvK8IEK53yQOW7YcEI55oYtgjDdoCQQz7eJS94qt5kNrscReEyuD/JcdFCm2XBEcGOITg==
 
 madge@^3.9.2:
-  version "3.9.2"
-  resolved "https://registry.npmjs.org/madge/-/madge-3.9.2.tgz#a432de2c858092d379c2910a21a622ad2b1b24c7"
-  integrity sha512-6ZvyKinAOOzcRpvpm1iyOuds+LvWIq3o3GmUYAHMJdIpDAgVY3mphxVzeWNo3agIOv0X0T/zbLycXQm9Rn19nA==
+  version "3.10.0"
+  resolved "https://registry.npmjs.org/madge/-/madge-3.10.0.tgz#950ddf0d14b642283ad8d9c5663bf13f92270705"
+  integrity sha512-SzYOVX3HdxutdFtKv729C9zpGyysjRA5WszJueM6GEUrnCkS1v2KuFh/vF4DOpk04sfW10D73aJ7vL21de+lgw==
   dependencies:
     chalk "^4.1.0"
     commander "^5.1.0"

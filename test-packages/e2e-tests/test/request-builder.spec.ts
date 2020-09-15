@@ -145,18 +145,21 @@ describe('Request builder test', () => {
     ]);
   });
 
-  it('should create an entity with related entities via asChildOf()',async ()=>{
-    const parent = await createEntity(entityKey)
+  it('should create an entity with related entities via asChildOf()', async () => {
+    const parent = await createEntity(entityKey);
     const child = TestEntityLink.builder()
       .keyToTestEntity(entityKey)
       .keyTestEntityLink(20)
-      .build()
+      .build();
 
-    await TestEntityLink.requestBuilder().create(child).asChildOf(parent, TestEntity.TO_MULTI_LINK).execute(destination)
-    const parentWithChild = await queryEntity(entityKey)
-    expect(parentWithChild.toMultiLink.length).toBe(1)
-    expect(parentWithChild.toMultiLink[0].keyTestEntityLink).toBe(20)
-  })
+    await TestEntityLink.requestBuilder()
+      .create(child)
+      .asChildOf(parent, TestEntity.TO_MULTI_LINK)
+      .execute(destination);
+    const parentWithChild = await queryEntity(entityKey);
+    expect(parentWithChild.toMultiLink.length).toBe(1);
+    expect(parentWithChild.toMultiLink[0].keyTestEntityLink).toBe(20);
+  });
 
   // Only supported in OData 4.01 and CAP is 4.0
   xit('should update an entity including existing related entites', async () => {

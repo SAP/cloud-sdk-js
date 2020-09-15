@@ -89,6 +89,21 @@ function Home () {
       title={`${siteConfig.title}`}
       description='SAP Cloud SDK is a one stop shop for developing and extending SAP applications in a Cloud'
     >
+      <div className="alert alert--info" style={{textAlign: 'center', fontSize: '2em'}} role="alert">
+    <div className={styles.buttons}>
+            <Link
+              className={classnames(
+                'button button--outline button--secondary button--lg',
+                styles.getStarted
+              )}
+              to='https://sapinsights.eu.qualtrics.com/jfe/form/SV_0pUmWpCadpoLhyZ'
+            >
+              <span style={{ fontSize: '2em'}}>
+              Take our <strong>survey</strong> to help us improve!
+              </span>
+            </Link>
+          </div>
+</div>
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className='container'>
           <h1 className='hero__title'>{siteConfig.title}</h1>

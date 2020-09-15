@@ -206,10 +206,10 @@ Here is what you'll need to make progress throughout the next steps.
 - SCP Cloud Foundry subaccount with entitlements for XSUAA, destination and connectivity service
 - SAP Cloud Connector connected to the SAP Cloud Foundry subaccount (if SAP S/4HANA is On-Premise)
 
-Another full tutorial for setting up this scenario can be found [here](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/fa4adc9bd40e45dbac573fd616695446.html).
+Official tutorials for setting up these scenarios can be found [here](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/fa4adc9bd40e45dbac573fd616695446.html).
 
-#### Setup App Router
-JCo requires that the app is invoked with a JWT that contains the user context. Therefore, securing the backend with an app router is required. Follow [this tutorial](https://developers.sap.com/tutorials/s4sdk-secure-cloudfoundry.html) to setup the app router.
+#### Setup App Router (optional)
+If tenant-aware access of JCo and its required microservices or Principal Propagation want to be achieved, it is required that the app is invoked with a JWT containing the user context. For that, securing the backend with an app router is required. Follow [this tutorial](https://developers.sap.com/tutorials/s4sdk-secure-cloudfoundry.html) to setup the app router.
 
 #### Setup Cloud Connector for SAP S/4HANA On-Premise access
 Expose the S/4HANA system in the SAP Cloud Connector as described in the [official documentation](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/ca5868997e48468395cf0ca4882f5783.html).
@@ -252,10 +252,11 @@ Possible reasons and resolutions:
   buildpacks:
     - sap_java_buildpack
 ...
+  env:
+    USE_JCO: true
+...  
 ```
-
-### JCo requires User Information to be set	
-JCo throws an `java.lang.IllegalStateException: User information is not set` if the application is not protected. That is, the incoming request must contain a JWT that identifies the user. As a solution, protect your backend with an app router to let the app user login.
+- Furthermore you must specify the environment variable `USE_JCO` in order to load JCo during app deployment.
 
 ### Decoration of RFC Destinations
 In the realm of HTTP, destinations allow decoration to add further features to them. For instance, an `ErpHttpDestination` can decorate an `HttpDestination` which introduces the enhancement of request headers with S/4HANA-specific destination properties (e.g., `sap-client`).

@@ -24,6 +24,16 @@ describe('batch request serializer', () => {
     ).toMatchSnapshot();
   });
 
+  it.skip('serializes retrieve request with custom headers', () => {
+    expect(
+      toBatchRetrieveBodyV2(
+        TestEntity.requestBuilder()
+          .getAll()
+          .withCustomHeaders({ 'Custom-Header': 'custom' })
+      )
+    ).toMatchSnapshot();
+  });
+
   describe('toRequestPayload', () => {
     it('serializes create request', () => {
       const createRequest = TestEntity.requestBuilder().create(testEntity);

@@ -152,19 +152,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    *
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
-  async headers(): Promise<MapType<string>> {
+  async headers(): Promise<Record<string, any>> {
     try {
       if (!this.destination) {
         throw Error('The destination is undefined.');
       }
-      const defaultHeaders = replaceDuplicateKeys(
-        filterNullishValues({
-          accept: 'application/json',
-          'content-type': this.config.contentType,
-          ...this.getETagHeader()
-        }),
-        this.config.customHeaders
-      );
 
       const destinationRelatedHeaders = await buildHeadersForDestination(
         this.destination,
@@ -179,14 +171,34 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       return {
         ...destinationRelatedHeaders,
         ...csrfHeaders,
-        ...defaultHeaders,
-        ...this.config.customHeaders
+        ...this.basicHeaders()
       };
     } catch (error) {
       return Promise.reject(
         errorWithCause('Constructing headers for OData request failed!', error)
       );
     }
+  }
+
+  /**
+   * Create object containing all basic headers for the given request, including custom headers, but excluding destination related and csrf headers.
+   *
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   */
+  basicHeaders(): Record<string, any> {
+    const defaultHeaders = replaceDuplicateKeys(
+      filterNullishValues({
+        accept: 'application/json',
+        'content-type': this.config.contentType,
+        ...this.getETagHeader()
+      }),
+      this.config.customHeaders
+    );
+
+    return {
+      ...defaultHeaders,
+      ...this.config.customHeaders
+    };
   }
 
   /**

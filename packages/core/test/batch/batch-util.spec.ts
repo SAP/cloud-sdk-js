@@ -6,11 +6,21 @@ import { buildTestEntity } from '../test-util/batch-test-util';
 
 const testEntity = buildTestEntity();
 describe('batch util', () => {
-  describe('getRequestLine', () => {
+  describe('serializeRequest', () => {
     it('serializes getAll request', () => {
       const getAllRequest = TestEntity.requestBuilder().getAll();
       expect(serializeRequest(getAllRequest)).toMatchInlineSnapshot(
         '"GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1"'
+      );
+    });
+
+    it('serializes request with custom query parameters and custom service path', () => {
+      const getAllRequest = TestEntity.requestBuilder()
+        .getAll()
+        .withCustomQueryParameters({ key: 'value' })
+        .withCustomServicePath('custom/service/path');
+      expect(serializeRequest(getAllRequest)).toMatchInlineSnapshot(
+        '"GET /custom/service/path/A_TestEntity?$format=json&key=value HTTP/1.1"'
       );
     });
 

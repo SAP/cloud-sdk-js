@@ -17,7 +17,11 @@ const headers = [
 ];
 const http_version = 'HTTP/1.1';
 const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
-
+const changeSetBoundaryPrefix = 'changeset_';
+const batch_content_type_prefix = `Content-Type: multipart/mixed; boundary=${changeSetBoundaryPrefix}`;
+const request_content_type_line = 'Content-Type: application/json';
+const request_accept_line = 'Accept: application/json';
+const request_if_match_key = 'If-Match: ';
 function batchContentType(boundary: string, id: string) {
   return `multipart/mixed; boundary=${boundary}_${id}`;
 }
@@ -43,12 +47,6 @@ export function toBatchRetrieveBodyV2(
 ): string {
   return [...headers, '', serializeRequest(requestBuilder), '', ''].join('\n');
 }
-
-const changeSetBoundaryPrefix = 'changeset_';
-const batch_content_type_prefix = `Content-Type: multipart/mixed; boundary=${changeSetBoundaryPrefix}`;
-const request_content_type_line = 'Content-Type: application/json';
-const request_accept_line = 'Accept: application/json';
-const request_if_match_key = 'If-Match: ';
 
 /**
  * OData batch change set, which holds a collection of write operations.

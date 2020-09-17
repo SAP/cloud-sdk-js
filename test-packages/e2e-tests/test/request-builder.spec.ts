@@ -51,7 +51,7 @@ async function createEntity(key: number): Promise<TestEntity> {
     .execute(destination);
 }
 
-describe('Request builder test', () => {
+describe('Request builder', () => {
   beforeEach(async () => deleteEntity(entityKey));
 
   it('should return a collection of entities for get all request', async () => {

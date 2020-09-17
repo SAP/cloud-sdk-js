@@ -9,6 +9,16 @@ GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
 "
 `;
 
+exports[`batch request serializer serializes retrieve request with custom headers 1`] = `
+"Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
+Custom-Header: custom
+
+"
+`;
+
 exports[`batch request serializer toBatchChangeSetV2 returns undefined for empty change set 1`] = `undefined`;
 
 exports[`batch request serializer toBatchChangeSetV2 serializes change set with multiple operations 1`] = `

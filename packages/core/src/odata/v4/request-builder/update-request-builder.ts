@@ -17,6 +17,7 @@ import {
 } from '../../../scp-cf/destination-service-types';
 import { oDataUriV4 } from '../uri-conversion';
 import { extractEtagFromHeader } from '../../common/entity-deserializer';
+import { extractODataEtagV4 } from '../extract-odata-etag';
 
 /**
  * Create OData query to update an entity.
@@ -97,7 +98,9 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
         // Update returns 204 hence the data from the request is used to build entity for return
         .then(response => {
           const eTag =
-            extractEtagFromHeader(response.headers) || this.requestConfig.eTag;
+            extractEtagFromHeader(response.headers) ||
+            extractODataEtagV4(response.data) ||
+            this.requestConfig.eTag;
           return this._entity
             .setOrInitializeRemoteState()
             .setVersionIdentifier(this.requestConfig.eTag);

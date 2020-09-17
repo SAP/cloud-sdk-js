@@ -23,10 +23,11 @@
 ## Improvements
 
 - [Generator] Generator will fail, when it generates `.ts` files that have compilation errors.
+- [OData] Add warning for deep update attempts in OData v2. 
 
 ## Fixed Issues
 
--
+- [OData] Fix handling of Etag for update requests.
 
 
 # 1.28.1

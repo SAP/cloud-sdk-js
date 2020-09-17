@@ -22,6 +22,7 @@ import {
 } from '../../../scp-cf/destination-service-types';
 import { oDataUriV2 } from '../uri-conversion';
 import { extractEtagFromHeader } from '../../common/entity-deserializer';
+import { extractODataEtagV2 } from '../extract-odata-etag';
 
 const logger = createLogger({
   package: 'core',
@@ -107,7 +108,9 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
         // Update returns 204 hence the data from the request is used to build entity for return
         .then(response => {
           const eTag =
-            extractEtagFromHeader(response.headers) || this.requestConfig.eTag;
+            extractEtagFromHeader(response.headers) ||
+            extractODataEtagV2(response.data) ||
+            this.requestConfig.eTag;
           return this._entity
             .setOrInitializeRemoteState()
             .setVersionIdentifier(eTag);
@@ -118,6 +121,9 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     );
   }
 
+  /*
+   * In case the entity contains a navigation to a different entity a warning is printed.
+   */
   warnIfNavigation(
     request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
   ): ODataRequest<ODataUpdateRequestConfig<EntityT>> {

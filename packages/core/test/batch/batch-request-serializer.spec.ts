@@ -61,6 +61,13 @@ describe('batch request serializer', () => {
       const deleteRequest = TestEntity.requestBuilder().delete('test', 'test');
       expect(toRequestPayload(deleteRequest, 'testId')).toMatchSnapshot();
     });
+
+    it('serializes delete request with eTag', () => {
+      const deleteRequest = TestEntity.requestBuilder().delete(
+        testEntity.setVersionIdentifier('eTag')
+      );
+      expect(toRequestPayload(deleteRequest, 'testId')).toMatchSnapshot();
+    });
   });
 
   describe('toEtagHeaderValue', () => {

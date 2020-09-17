@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { v4 as uuid } from 'uuid';
+import { titleCase } from 'voca';
 import { serializeRequest } from '../common/request/odata-batch-request-util';
 import { EntityV2 } from './entity';
 import {
@@ -111,15 +112,15 @@ export function toRequestPayload(
     | DeleteRequestBuilderV2<EntityV2>,
   changeSetId: string
 ): string {
-  const etagValue = toEtagHeaderValue(request);
+  const requestHeaders = Object.entries(request.basicHeaders()).map(
+    ([key, value]) => `${titleCase(key)}: ${value}`
+  );
   return [
     `--${changeSetBoundaryPrefix}${changeSetId}`,
     ...headers,
     '',
     serializeRequest(request),
-    request_content_type_line,
-    request_accept_line,
-    etagValue ? `${request_if_match_key}${etagValue}` : '',
+    ...(requestHeaders.length ? requestHeaders : ['']),
     '',
     JSON.stringify(request.requestConfig.payload),
     ''

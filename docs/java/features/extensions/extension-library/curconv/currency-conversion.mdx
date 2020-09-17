@@ -126,7 +126,7 @@ By default, the conversion library works with the default tenant settings you pr
 ### Big Decimal
 The library uses the [Big Decimal](https://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html) class, which allows you to control the precision and scale of your currency exchange rates. For direct conversions, the scale of the result is calculated by adding the scale of the amount and the exchange rate. For example, if you have two exchange rates: 13.74 and 1.32, the result would be 15.0600. For indirect conversions, the scales are added as well, with the rounding rule of "[half up](https://docs.oracle.com/javase/7/docs/api/java/math/RoundingMode.html#HALF_UP)" applied.
 
-The library returns the converted amount both as a string and a big decimal. You can work with the big decimal object and specify a scale of your choice.
+The library returns the converted amount both as a `String` and a `Big Decimal`. You can work with the `Big Decimal` object and specify a scale of your choice.
 
 ### Rounding Off
 Rounded off values represent the usable currency amounts in relation to your business case. This means that the amounts are rounded off to a precision and value which make sense in a business.

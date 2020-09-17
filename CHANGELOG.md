@@ -22,12 +22,27 @@
 
 ## Improvements
 
--
+- [Generator] Generator will fail, when it generates `.ts` files that have compilation errors.
 
 ## Fixed Issues
 
 -
 
+
+# 1.28.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.28.1<br>
+Blog: TBD<br>
+
+## Improvements
+
+- Adjust the generation of the `$filter` parameter in URL so that parentheses are not removed even logically they are not needed. 
+For example, now `$filter=((filterA and filter B) and (filterC and filter D))` will not be flattened to `$filter=(filterA and filter B and filterC and filter D)`.
+
+## Fixed Issues
+
+- [Generator] Remove `Batch.ts` from the index file when the file does not exist.
 
 # 1.28.0
 
@@ -41,8 +56,8 @@ Blog: TBD<br>
 
 ## Fixed Issues
 
-- [Generator] Skip generation of Batch.ts for services without entities.
-- [RequestBuilder] Fix serialization of "Edm.Time" fields in OData V4. 
+- [Generator] Skip generation of `Batch.ts` for services without entities.
+- [RequestBuilder] Fix serialization of `Edm.Time` fields in OData V4. 
 
 # 1.27.0
 

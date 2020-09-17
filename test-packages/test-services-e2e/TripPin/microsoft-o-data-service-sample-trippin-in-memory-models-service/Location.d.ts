@@ -6,14 +6,12 @@ import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, E
 export interface Location {
     /**
      * Address.
-     * @nullable
      */
-    address?: string;
+    address: string;
     /**
      * City.
-     * @nullable
      */
-    city?: City;
+    city: City;
 }
 /**
  * @deprecated Since v1.6.0. Use [[Location.build]] instead.

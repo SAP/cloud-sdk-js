@@ -6,11 +6,10 @@ import { TestEntity } from './TestEntity';
 export declare class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
     /**
      * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-     * @param keyPropertyInt Key property. See [[TestEntity.keyPropertyInt]].
-     * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
+     * @param keyTestEntity Key property. See [[TestEntity.keyTestEntity]].
      * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
      */
-    getByKey(keyPropertyInt: number, keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntity>;
+    getByKey(keyTestEntity: number): GetByKeyRequestBuilderV4<TestEntity>;
     /**
      * Returns a request builder for querying all `TestEntity` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
@@ -30,11 +29,10 @@ export declare class TestEntityRequestBuilder extends RequestBuilder<TestEntity>
     update(entity: TestEntity): UpdateRequestBuilderV4<TestEntity>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntity`.
-     * @param keyPropertyInt Key property. See [[TestEntity.keyPropertyInt]].
-     * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
+     * @param keyTestEntity Key property. See [[TestEntity.keyTestEntity]].
      * @returns A request builder for creating requests that delete an entity of type `TestEntity`.
      */
-    delete(keyPropertyInt: number, keyPropertyString: string): DeleteRequestBuilderV4<TestEntity>;
+    delete(keyTestEntity: number): DeleteRequestBuilderV4<TestEntity>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntity`.
      * @param entity Pass the entity to be deleted.

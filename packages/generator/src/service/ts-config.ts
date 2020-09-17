@@ -5,7 +5,6 @@ export function tsConfig(): string {
     JSON.stringify(
       {
         compilerOptions: {
-          outDir: './dist',
           target: 'es5',
           module: 'commonjs',
           lib: ['esnext'],

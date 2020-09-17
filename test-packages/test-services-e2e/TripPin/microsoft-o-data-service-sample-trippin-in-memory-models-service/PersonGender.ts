@@ -7,5 +7,5 @@
 export enum PersonGender {
   Male = 'Male',
   Female = 'Female',
-  Unknow = 'Unknow'
+  Unknown = 'Unknown'
 }

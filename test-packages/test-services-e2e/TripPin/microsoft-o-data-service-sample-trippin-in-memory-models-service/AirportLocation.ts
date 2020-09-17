@@ -12,19 +12,16 @@ import { ComplexTypeAnyPropertyField, ComplexTypeField, ComplexTypeStringPropert
 export interface AirportLocation {
   /**
    * Loc.
-   * @nullable
    */
-  loc?: any;
+  loc: any;
   /**
    * Address.
-   * @nullable
    */
-  address?: string;
+  address: string;
   /**
    * City.
-   * @nullable
    */
-  city?: City;
+  city: City;
 }
 
 /**

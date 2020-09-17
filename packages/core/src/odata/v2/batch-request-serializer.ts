@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { v4 as uuid } from 'uuid';
-import { titleCase } from 'voca';
+import voca from 'voca';
 import { serializeRequest } from '../common/request/odata-batch-request-util';
 import { EntityV2 } from './entity';
 import {
@@ -113,7 +113,7 @@ export function toRequestPayload(
   changeSetId: string
 ): string {
   const requestHeaders = Object.entries(request.basicHeaders()).map(
-    ([key, value]) => `${titleCase(key)}: ${value}`
+    ([key, value]) => `${voca.titleCase(key)}: ${value}`
   );
   return [
     `--${changeSetBoundaryPrefix}${changeSetId}`,

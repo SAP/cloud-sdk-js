@@ -9,9 +9,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
-Content-Type: application/json
 Accept: application/json
-
+Content-Type: application/json
 
 {\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 
@@ -31,9 +30,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Content-Type: application/json
 Accept: application/json
-
+Content-Type: application/json
 
 {\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 
@@ -42,9 +40,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Content-Type: application/json
 Accept: application/json
-
+Content-Type: application/json
 
 
 

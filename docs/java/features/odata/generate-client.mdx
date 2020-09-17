@@ -35,6 +35,11 @@ For all three the required input is an `EDMX` file holding the service metadata.
 Please be aware that OData v2 and OData v4 service definitions are not interchangeable. There is a dedicated generator for each protocol version and it only accepts service definitions for that version.
 :::
 
+:::note
+The OData VDM generator does support all data types as per the [OData specification](https://www.odata.org/documentation/odata-version-2-0/json-format/).
+If your OData service metadata uses a data type not listed in the standard, please alter your metadata to use a compatible data type from the specification instead.
+:::
+
 ## Using the OData Generator ##
 
 Regardless of how the generator is invoked the generated code requires some dependencies to be present. Therefore it is required to ensure the following dependencies are present in your project:

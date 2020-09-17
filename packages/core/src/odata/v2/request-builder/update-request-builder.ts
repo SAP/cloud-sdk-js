@@ -1,8 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { Constructable, EntityIdentifiable, Selectable } from '../../common';
+import {
+  Constructable,
+  EntityIdentifiable,
+  ODataRequest,
+  Selectable
+} from '../../common';
 import { EntityV2 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataUpdateRequestConfig } from '../../common/request/odata-update-request-config';
@@ -16,7 +21,12 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUriV2 } from '../uri-conversion';
+import { extractEtagFromHeader } from '../../common/entity-deserializer';
 
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'update-request-builder-v2'
+});
 /**
  * Create OData query to update an entity.
  *
@@ -91,18 +101,38 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
 
     return (
       this.build(destination, options)
+        .then(request => this.warnIfNavigation(request))
         .then(request => request.execute())
 
         // Update returns 204 hence the data from the request is used to build entity for return
-        .then(response =>
-          this._entity
+        .then(response => {
+          const eTag =
+            extractEtagFromHeader(response.headers) || this.requestConfig.eTag;
+          return this._entity
             .setOrInitializeRemoteState()
-            .setVersionIdentifier(this.requestConfig.eTag)
-        )
+            .setVersionIdentifier(eTag);
+        })
         .catch(error =>
           Promise.reject(errorWithCause('OData update request failed!', error))
         )
     );
+  }
+
+  warnIfNavigation(
+    request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
+  ): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
+    Object.keys(this._entity).forEach(key => {
+      if (
+        this._entity[key] instanceof EntityV2 ||
+        this._entity[key][0] instanceof EntityV2
+      ) {
+        logger.warn(
+          `The navigational property ${key} has been included in your update request. Update of navigational properties is not supported in OData v2 by the SDK.`
+        );
+      }
+    });
+
+    return request;
   }
 
   /**

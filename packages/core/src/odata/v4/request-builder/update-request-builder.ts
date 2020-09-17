@@ -16,6 +16,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUriV4 } from '../uri-conversion';
+import { extractEtagFromHeader } from '../../common/entity-deserializer';
 
 /**
  * Create OData query to update an entity.
@@ -94,11 +95,13 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
         .then(request => request.execute())
 
         // Update returns 204 hence the data from the request is used to build entity for return
-        .then(response =>
-          this._entity
+        .then(response => {
+          const eTag =
+            extractEtagFromHeader(response.headers) || this.requestConfig.eTag;
+          return this._entity
             .setOrInitializeRemoteState()
-            .setVersionIdentifier(this.requestConfig.eTag)
-        )
+            .setVersionIdentifier(this.requestConfig.eTag);
+        })
         .catch(error =>
           Promise.reject(errorWithCause('OData update request failed!', error))
         )

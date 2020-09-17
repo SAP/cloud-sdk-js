@@ -57,8 +57,12 @@ describe('batch response parser', () => {
       'changeSetResponse',
       `--${changesetId}--`
     ].join('\n');
-    const headers = { 'content-type': `multipart/mixed; boundary=${batchId}` };
-    const createBatchResponse = data => ({ data, headers, status: 200 });
+    const createBatchResponse = (
+      data,
+      headers: Record<string, any> = {
+        'content-type': `multipart/mixed; boundary=${batchId}`
+      }
+    ) => ({ data, headers, status: 200 });
 
     it('correctly partitions batch response', () => {
       const body = [
@@ -73,6 +77,24 @@ describe('batch response parser', () => {
         retrieveResponse,
         changeSetResponse
       ]);
+    });
+
+    it('correctly partitions batch response for upper case headers', () => {
+      const body = [
+        `--${batchId}`,
+        retrieveResponse,
+        `--${batchId}`,
+        changeSetResponse,
+        `--${batchId}--`
+      ].join('\n');
+
+      expect(
+        partitionBatchResponse(
+          createBatchResponse(body, {
+            'Content-Type': `multipart/mixed; boundary=${batchId}`
+          })
+        )
+      ).toEqual([retrieveResponse, changeSetResponse]);
     });
 
     it('correctly trims white space', () => {
@@ -106,8 +128,9 @@ describe('batch response parser', () => {
       const body = [`--${batchId}`, retrieveResponse, `--${batchId}--`].join(
         '\n'
       );
-      const response = createBatchResponse(body);
-      response.headers['content-type'] = 'multipart/mixed';
+      const response = createBatchResponse(body, {
+        'Content-Type': 'multipart/mixed'
+      });
       expect(() =>
         partitionBatchResponse(response)
       ).toThrowErrorMatchingInlineSnapshot(

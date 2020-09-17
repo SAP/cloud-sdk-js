@@ -1,10 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {
-  basicHeader,
-  Destination,
-  ErrorResponse,
-  ReadResponse
-} from '@sap-cloud-sdk/core';
+import { basicHeader, Destination, ErrorResponse } from '@sap-cloud-sdk/core';
 import { batch, changeset } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
 import {
@@ -69,7 +64,9 @@ function mockBatchRequest(matchRequestPayload, reponseData) {
   })
     .matchHeader('content-type', /multipart\/mixed; boundary=batch_*/)
     .post(`${servicePath}/$batch`, new RegExp(matchRequestPayload))
-    .reply(202, reponseData);
+    .reply(202, reponseData, {
+      'Content-Type': 'multipart/mixed; boundary=TEST-RESPONSE'
+    });
 }
 
 describe('Batch', () => {
@@ -98,16 +95,12 @@ describe('Batch', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it.only('should resolve for mixed changesets and retrieve requests', async () => {
+  it('should resolve for mixed changesets and retrieve requests', async () => {
     mockBatchRequest(mixedBatchRequest(), mixedBatchResponse());
 
     const request = batch(getAllRequest, changeset(createRequest)).execute(
       destination
     );
-
-    const res = await request;
-    const [retrieveRes, changeRes] = res;
-    const a = (retrieveRes as ReadResponse).as(TestEntity);
 
     await expect(request).resolves.not.toThrow();
   });

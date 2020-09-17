@@ -8,7 +8,7 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
   /**
    * @deprecated Since v1.29.0
    */
-  static readonly content_type_prefix = batchContentType;
+  static readonly content_type_prefix = 'multipart/mixed; boundary=batch_';
 
   /**
    * Creates an instance of ODataBatchRequestConfig.
@@ -17,7 +17,7 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
    * @param batchId - The batch id for building the header and the payload.
    */
   constructor(readonly defaultServicePath: string, readonly batchId: string) {
-    super('post', defaultServicePath, `${batchContentType}${batchId}`);
+    super('post', defaultServicePath, batchContentType('batch', batchId));
   }
 
   resourcePath(): string {

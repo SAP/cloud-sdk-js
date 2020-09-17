@@ -1,8 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`batch changeset toBatchChangeSetV2 returns undefined for empty change set 1`] = `undefined`;
+exports[`batch request serializer serializes retrieve request 1`] = `
+"Content-Type: application/http
+Content-Transfer-Encoding: binary
 
-exports[`batch changeset toBatchChangeSetV2 serializes change set with multiple operations 1`] = `
+GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
+
+"
+`;
+
+exports[`batch request serializer toBatchChangeSetV2 returns undefined for empty change set 1`] = `undefined`;
+
+exports[`batch request serializer toBatchChangeSetV2 serializes change set with multiple operations 1`] = `
 "Content-Type: multipart/mixed; boundary=changeset_changesetId
 
 --changeset_changesetId
@@ -30,7 +39,7 @@ Accept: application/json
 --changeset_changesetId--"
 `;
 
-exports[`batch changeset toBatchChangeSetV2 serializes change set with one operation 1`] = `
+exports[`batch request serializer toBatchChangeSetV2 serializes change set with one operation 1`] = `
 "Content-Type: multipart/mixed; boundary=changeset_changesetId
 
 --changeset_changesetId
@@ -47,7 +56,7 @@ Accept: application/json
 --changeset_changesetId--"
 `;
 
-exports[`batch changeset toRequestPayload serializes create request 1`] = `
+exports[`batch request serializer toRequestPayload serializes create request 1`] = `
 "--changeset_testId
 Content-Type: application/http
 Content-Transfer-Encoding: binary
@@ -61,7 +70,7 @@ Accept: application/json
 "
 `;
 
-exports[`batch changeset toRequestPayload serializes delete request with entity 1`] = `
+exports[`batch request serializer toRequestPayload serializes delete request with entity 1`] = `
 "--changeset_testId
 Content-Type: application/http
 Content-Transfer-Encoding: binary
@@ -75,7 +84,7 @@ Accept: application/json
 "
 `;
 
-exports[`batch changeset toRequestPayload serializes delete request with id 1`] = `
+exports[`batch request serializer toRequestPayload serializes delete request with id 1`] = `
 "--changeset_testId
 Content-Type: application/http
 Content-Transfer-Encoding: binary
@@ -89,7 +98,7 @@ Accept: application/json
 "
 `;
 
-exports[`batch changeset toRequestPayload serializes update request 1`] = `
+exports[`batch request serializer toRequestPayload serializes update request 1`] = `
 "--changeset_testId
 Content-Type: application/http
 Content-Transfer-Encoding: binary
@@ -103,7 +112,7 @@ Accept: application/json
 "
 `;
 
-exports[`batch changeset toRequestPayload serializes update request using put 1`] = `
+exports[`batch request serializer toRequestPayload serializes update request using put 1`] = `
 "--changeset_testId
 Content-Type: application/http
 Content-Transfer-Encoding: binary

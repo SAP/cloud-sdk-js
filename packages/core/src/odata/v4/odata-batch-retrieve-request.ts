@@ -4,7 +4,7 @@ import {
   part_content_type_line,
   content_transfer_encoding_line
 } from '../common';
-import { getRequestLine } from '../common/request/odata-batch-request-util';
+import { serializeRequest } from '../common/request/odata-batch-request-util';
 import { EntityV4 } from './entity';
 import {
   GetAllRequestBuilderV4,
@@ -34,7 +34,7 @@ export function toBatchRetrieveBodyV4(
     part_content_type_line,
     content_transfer_encoding_line,
     '',
-    getRequestLine(requestBuilder),
+    serializeRequest(requestBuilder),
     '',
     ''
   ];

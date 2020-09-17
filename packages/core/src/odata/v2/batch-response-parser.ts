@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { last, MapType, createLogger } from '@sap-cloud-sdk/util';
-import { HttpReponse } from '../../http-client';
+import { HttpResponse } from '../../http-client';
 import { getHeaderValue } from '../../header-builder';
 import {
   getSingleResult,
@@ -83,7 +83,7 @@ function getBoundary(contentType: string | undefined): string | undefined {
   }
 }
 
-export function partitionBatchResponse(response: HttpReponse): string[] {
+export function partitionBatchResponse(response: HttpResponse): string[] {
   const body = response.data.trim();
   if (!body) {
     return [];

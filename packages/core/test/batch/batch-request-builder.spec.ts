@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { getPayload } from '../../src';
+import { serializeBatchPayload } from '../../src';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
 import {
   createChangeSetWithFakeId,
@@ -10,9 +10,9 @@ import { ODataBatchRequestConfig } from '../../src/odata/common/request/odata-ba
 
 const testEntity = buildTestEntity();
 describe('batch request builder', () => {
-  describe('getPayload', () => {
+  describe('serializeBatchPayload', () => {
     it('serializes payload for batch subrequests', () => {
-      const payload = getPayload(
+      const payload = serializeBatchPayload(
         [
           createChangeSetWithFakeId(
             TestEntity.requestBuilder().create(testEntity)

@@ -5,7 +5,7 @@ import {
   part_content_type_line,
   content_transfer_encoding_line
 } from '../common';
-import { getRequestLine } from '../common/request/odata-batch-request-util';
+import { serializeRequest } from '../common/request/odata-batch-request-util';
 import { EntityV4 } from './entity';
 import {
   CreateRequestBuilderV4,
@@ -112,7 +112,7 @@ function toRequestPayload(
     part_content_type_line,
     content_transfer_encoding_line,
     '',
-    getRequestLine(request),
+    serializeRequest(request),
     request_content_type_line,
     request_accept_line,
     etagValue ? `${request_if_match_key}${etagValue}` : '',

@@ -1,21 +1,27 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import {
-  toRequestPayload,
+  toBatchChangeSetV2,
+  toBatchRetrieveBodyV2,
   toEtagHeaderValue,
-  toBatchChangeSetV2
-} from '../../src/odata/v2';
+  toRequestPayload
+} from '../../src';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
 import {
   buildTestEntity,
   createChangeSetWithFakeId
 } from '../test-util/batch-test-util';
 
-let testEntity: TestEntity;
+describe('batch request serializer', () => {
+  let testEntity: TestEntity;
 
-describe('batch changeset', () => {
   beforeEach(() => {
     testEntity = buildTestEntity();
+  });
+
+  it('serializes retrieve request', () => {
+    expect(
+      toBatchRetrieveBodyV2(TestEntity.requestBuilder().getAll())
+    ).toMatchSnapshot();
   });
 
   describe('toRequestPayload', () => {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`batch request builder getPayload serializes payload for batch subrequests 1`] = `
+exports[`batch request builder serializeBatchPayload serializes payload for batch subrequests 1`] = `
 "--batch_batchId
 Content-Type: multipart/mixed; boundary=changeset_changesetId
 

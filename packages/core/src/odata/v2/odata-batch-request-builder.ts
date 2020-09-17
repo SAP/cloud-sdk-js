@@ -13,10 +13,10 @@ import { MethodRequestBuilderBase } from '../common/request-builder/request-buil
 import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
 import { EntityV2 } from './entity';
 import {
+  toBatchRetrieveBodyV2,
   toBatchChangeSetV2,
   ODataBatchChangeSetV2
-} from './odata-batch-change-set';
-import { toBatchRetrieveBodyV2 } from './odata-batch-retrieve-request';
+} from './batch-request-serializer';
 import {
   CreateRequestBuilderV2,
   DeleteRequestBuilderV2,
@@ -60,8 +60,10 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
     readonly entityToConstructorMap: MapType<Constructable<EntityV2>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath, uuid()));
-
-    this.requestConfig.payload = getPayload(requests, this.requestConfig);
+    this.requestConfig.payload = serializeBatchPayload(
+      requests,
+      this.requestConfig
+    );
   }
 
   /**
@@ -104,7 +106,7 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
  * @param requestConfig - The batch request configuration.
  * @returns The generated payload.
  */
-export function getPayload(
+export function serializeBatchPayload(
   requests: (
     | ODataBatchChangeSetV2<
         | CreateRequestBuilderV2<EntityV2>
@@ -116,7 +118,7 @@ export function getPayload(
   )[],
   requestConfig: ODataBatchRequestConfig
 ): string {
-  const payloads = requests.map(toRequestBody).filter(b => !!b);
+  const payloads = requests.map(serializeRequest).filter(b => !!b);
   if (payloads.length > 0) {
     return (
       payloads
@@ -132,7 +134,7 @@ export function getPayload(
   return '';
 }
 
-function toRequestBody<
+export function serializeRequest<
   T extends
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>

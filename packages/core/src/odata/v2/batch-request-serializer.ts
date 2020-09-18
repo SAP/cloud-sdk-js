@@ -2,7 +2,9 @@
 
 import { v4 as uuid } from 'uuid';
 import voca from 'voca';
-import { serializeRequest } from '../common/request/odata-batch-request-util';
+import { MethodRequestBuilderBase } from '../common';
+import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
+import { serializeRequestBody } from '../common/request/odata-batch-request-util';
 import { EntityV2 } from './entity';
 import {
   CreateRequestBuilderV2,
@@ -46,7 +48,17 @@ export function toBatchRetrieveBodyV2(
     | GetAllRequestBuilderV2<EntityV2>
     | GetByKeyRequestBuilderV2<EntityV2>
 ): string {
-  return [...headers, '', serializeRequest(requestBuilder), '', ''].join('\n');
+  const requestHeaders = Object.entries(requestBuilder.basicHeaders()).map(
+    ([key, value]) => `${voca.titleCase(key)}: ${value}`
+  );
+  const a = [
+    ...headers,
+    '',
+    serializeRequestBody(requestBuilder),
+    ...(requestHeaders.length ? requestHeaders : ['']),
+    ''
+  ].join('\n');
+  return a;
 }
 
 /**
@@ -119,7 +131,24 @@ export function toRequestPayload(
     `--${changeSetBoundaryPrefix}${changeSetId}`,
     ...headers,
     '',
-    serializeRequest(request),
+    serializeRequestBody(request),
+    ...(requestHeaders.length ? requestHeaders : ['']),
+    '',
+    JSON.stringify(request.requestConfig.payload),
+    ''
+  ].join('\n');
+}
+
+export function serializeRequest<
+  RequestConfigT extends ODataBatchRequestConfig
+>(request: MethodRequestBuilderBase<RequestConfigT>) {
+  const requestHeaders = Object.entries(request.basicHeaders()).map(
+    ([key, value]) => `${voca.titleCase(key)}: ${value}`
+  );
+  return [
+    ...headers,
+    '',
+    serializeRequestBody(request),
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',
     JSON.stringify(request.requestConfig.payload),

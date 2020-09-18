@@ -118,7 +118,7 @@ export function serializeBatchPayload(
   )[],
   requestConfig: ODataBatchRequestConfig
 ): string {
-  const payloads = requests.map(serializeRequest).filter(b => !!b);
+  const payloads = requests.map(serializeBatchSubRequest).filter(b => !!b);
   if (payloads.length > 0) {
     return (
       payloads
@@ -134,7 +134,7 @@ export function serializeBatchPayload(
   return '';
 }
 
-export function serializeRequest<
+export function serializeBatchSubRequest<
   T extends
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>

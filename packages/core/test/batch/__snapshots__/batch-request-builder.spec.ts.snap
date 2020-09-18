@@ -20,7 +20,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
-
+Accept: application/json
+Content-Type: application/json
 
 --batch_batchId
 Content-Type: multipart/mixed; boundary=changeset_changesetId
@@ -51,7 +52,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId')?$format=json HTTP/1.1
-
+Accept: application/json
+Content-Type: application/json
 
 --batch_batchId--
 "

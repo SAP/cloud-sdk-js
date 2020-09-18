@@ -26,7 +26,7 @@ function getMethod(
  * @param requestBuilder - Reqeust builder holds the request information.
  * @returns the generated request line.
  */
-export function serializeRequest(
+export function serializeRequestBody(
   requestBuilder: MethodRequestBuilderBase<ODataRequestConfig>
 ): string {
   return `${getMethod(requestBuilder).toUpperCase()} ${getUrl(

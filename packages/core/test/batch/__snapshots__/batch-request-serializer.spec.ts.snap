@@ -1,21 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`batch request serializer serializes retrieve request 1`] = `
+exports[`batch request serializer serializes getAll request 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
-
+Accept: application/json
+Content-Type: application/json
 "
 `;
 
-exports[`batch request serializer serializes retrieve request with custom headers 1`] = `
+exports[`batch request serializer serializes getAll request with custom headers 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
+Accept: application/json
+Content-Type: application/json
 Custom-Header: custom
+"
+`;
 
+exports[`batch request serializer serializes getByKey request 1`] = `
+"Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'testId',KeyPropertyString='test')?$format=json HTTP/1.1
+Accept: application/json
+Content-Type: application/json
 "
 `;
 

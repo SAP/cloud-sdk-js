@@ -18,13 +18,13 @@ describe('batch request serializer', () => {
     testEntity = buildTestEntity();
   });
 
-  it('serializes retrieve request', () => {
+  it('serializes getAll request', () => {
     expect(
       toBatchRetrieveBodyV2(TestEntity.requestBuilder().getAll())
     ).toMatchSnapshot();
   });
 
-  it.skip('serializes retrieve request with custom headers', () => {
+  it('serializes getAll request with custom headers', () => {
     expect(
       toBatchRetrieveBodyV2(
         TestEntity.requestBuilder()
@@ -32,6 +32,14 @@ describe('batch request serializer', () => {
           .withCustomHeaders({ 'Custom-Header': 'custom' })
       )
     ).toMatchSnapshot();
+  });
+
+  it('serializes getByKey request', () => {
+    const getByKeyRequest = TestEntity.requestBuilder().getByKey(
+      'testId',
+      'test'
+    );
+    expect(toBatchRetrieveBodyV2(getByKeyRequest)).toMatchSnapshot();
   });
 
   describe('toRequestPayload', () => {

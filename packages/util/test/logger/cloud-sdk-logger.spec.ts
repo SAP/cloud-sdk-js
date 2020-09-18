@@ -8,7 +8,9 @@ import {
   getLogger,
   setLogLevel,
   setGlobalLogLevel,
-  getGlobalLogLevel
+  getGlobalLogLevel,
+  muteLoggers,
+  unmuteLoggers
 } from '../../src';
 
 describe('Cloud SDK Logger', () => {
@@ -212,6 +214,50 @@ describe('Cloud SDK Logger', () => {
       logger = createLogger(messageContext);
 
       expect(logger.level).toEqual('warn');
+    });
+  });
+
+  describe('mute logger', () => {
+    function allTransportsAreSilent(someLogger, silent: boolean): boolean {
+      return someLogger.transports.every(
+        transport => transport.silent === silent
+      );
+    }
+
+    it('silences existing loggers', () => {
+      const logger1 = createLogger('logger1');
+      const logger2 = createLogger('logger2');
+
+      muteLoggers();
+
+      expect(allTransportsAreSilent(logger1, true)).toBe(true);
+      expect(allTransportsAreSilent(logger2, true)).toBe(true);
+    });
+
+    it('silences new loggers', () => {
+      muteLoggers();
+
+      const logger1 = createLogger('logger1');
+      const logger2 = createLogger('logger2');
+
+      expect(allTransportsAreSilent(logger1, true)).toBe(true);
+      expect(allTransportsAreSilent(logger2, true)).toBe(true);
+    });
+
+    it('unsilences existing and new loggers', () => {
+      const logger1 = createLogger('logger1');
+
+      muteLoggers();
+
+      const logger2 = createLogger('logger2');
+
+      unmuteLoggers();
+
+      const logger3 = createLogger('logger3');
+
+      expect(allTransportsAreSilent(logger1, false)).toBe(true);
+      expect(allTransportsAreSilent(logger2, false)).toBe(true);
+      expect(allTransportsAreSilent(logger3, false)).toBe(true);
     });
   });
 });

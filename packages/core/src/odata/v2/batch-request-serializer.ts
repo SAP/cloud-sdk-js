@@ -3,13 +3,14 @@
 import { v4 as uuid } from 'uuid';
 import voca from 'voca';
 import { MethodRequestBuilderBase } from '../common';
-import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
 import { serializeRequestBody } from '../common/request/odata-batch-request-util';
 import { EntityV2 } from './entity';
 import {
   CreateRequestBuilderV2,
   DeleteRequestBuilderV2,
+  GetAllRequestBuilder,
   GetAllRequestBuilderV2,
+  GetByKeyRequestBuilder,
   GetByKeyRequestBuilderV2,
   UpdateRequestBuilderV2
 } from './request-builder';
@@ -18,15 +19,9 @@ const headers = [
   'Content-Type: application/http',
   'Content-Transfer-Encoding: binary'
 ];
-const http_version = 'HTTP/1.1';
-const changesetIdPrefix = 'Content-Type: multipart/mixed; boundary=';
-const changeSetBoundaryPrefix = 'changeset_';
-const batch_content_type_prefix = `Content-Type: multipart/mixed; boundary=${changeSetBoundaryPrefix}`;
-const request_content_type_line = 'Content-Type: application/json';
-const request_accept_line = 'Accept: application/json';
-const request_if_match_key = 'If-Match: ';
-function batchContentType(boundary: string, id: string) {
-  return `multipart/mixed; boundary=${boundary}_${id}`;
+const changeSetBoundaryPrefix = 'changeset';
+function batchContentType(prefix: string, id: string) {
+  return `multipart/mixed; boundary=${prefix}_${id}`;
 }
 
 /**
@@ -86,12 +81,15 @@ export function toBatchChangeSetV2<
 >(changeSet: ODataBatchChangeSetV2<T>): string | undefined {
   if (changeSet.requests.length) {
     return [
-      `${batch_content_type_prefix}${changeSet.changeSetId}`,
+      `Content-Type: ${batchContentType(
+        changeSetBoundaryPrefix,
+        changeSet.changeSetId
+      )}`,
       '',
       ...changeSet.requests.map(r =>
         toRequestPayload(r, changeSet.changeSetId)
       ),
-      `--${changeSetBoundaryPrefix}${changeSet.changeSetId}--`
+      `--${changeSetBoundaryPrefix}_${changeSet.changeSetId}--`
     ].join('\n');
   }
 }
@@ -124,24 +122,13 @@ export function toRequestPayload(
     | DeleteRequestBuilderV2<EntityV2>,
   changeSetId: string
 ): string {
-  const requestHeaders = Object.entries(request.basicHeaders()).map(
-    ([key, value]) => `${voca.titleCase(key)}: ${value}`
-  );
   return [
-    `--${changeSetBoundaryPrefix}${changeSetId}`,
-    ...headers,
-    '',
-    serializeRequestBody(request),
-    ...(requestHeaders.length ? requestHeaders : ['']),
-    '',
-    JSON.stringify(request.requestConfig.payload),
-    ''
+    `--${changeSetBoundaryPrefix}_${changeSetId}`,
+    serializeRequest(request)
   ].join('\n');
 }
 
-export function serializeRequest<
-  RequestConfigT extends ODataBatchRequestConfig
->(request: MethodRequestBuilderBase<RequestConfigT>) {
+export function serializeRequest(request: MethodRequestBuilderBase) {
   const requestHeaders = Object.entries(request.basicHeaders()).map(
     ([key, value]) => `${voca.titleCase(key)}: ${value}`
   );
@@ -151,9 +138,18 @@ export function serializeRequest<
     serializeRequestBody(request),
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',
-    JSON.stringify(request.requestConfig.payload),
-    ''
+    ...getPayload(request)
   ].join('\n');
+}
+
+function getPayload(request: MethodRequestBuilderBase) {
+  if (
+    request instanceof GetAllRequestBuilder ||
+    request instanceof GetByKeyRequestBuilder
+  ) {
+    return [];
+  }
+  return [JSON.stringify(request.requestConfig.payload), ''];
 }
 
 export function toEtagHeaderValue(

@@ -13,7 +13,7 @@ const logger = createLogger({
  * @hidden
  */
 export abstract class ODataRequestConfig {
-  payload: MapType<any> | string;
+  payload: Record<string, any> | string;
   customServicePath: string;
 
   private _customHeaders: MapType<string> = {};

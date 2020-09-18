@@ -2,7 +2,6 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { UpdateRequestBuilderV4, uriConverterV4 } from '../../../src/odata/v4';
-import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultDestination,
   mockUpdateRequest
@@ -25,10 +24,6 @@ function createTestEntity() {
 }
 
 describe('UpdateRequestBuilderV4', () => {
-  beforeAll(() => {
-    muteLoggers('http-agent');
-  });
-
   afterEach(() => {
     nock.cleanAll();
   });

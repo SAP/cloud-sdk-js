@@ -32,10 +32,16 @@ function toggleSilenceTransports(logger: Logger, silence: boolean) {
   logger.transports.forEach(transport => (transport.silent = silence));
 }
 
+/**
+ * Mute all logger output created by the SAP Cloud SDK Logger. This also applies to future loggers created. Useful for tests.
+ */
 export function muteLoggers() {
   toggleMuteLoggers(true);
 }
 
+/**
+ * Unmute all logger output created by the SAP Cloud SDK Logger. This also applies to future loggers created. Useful for tests.
+ */
 export function unmuteLoggers() {
   toggleMuteLoggers(false);
 }

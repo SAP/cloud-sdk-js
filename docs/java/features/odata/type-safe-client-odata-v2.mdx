@@ -460,4 +460,4 @@ final BusinessPartner partner = service.createBusinessPartner(partner)
 ```
 - `executeRequest` throws the runtime exception `ODataException` and respective sub classes. Hence, adjust your exception handling as described under the tab _OData V2 (Beta)_ in the section [Error Handling](#error-handling). Note that any `ErrorResultHandler` registered by `withErrorHandler()` is not considered.
 - Remove any call to `cachingMetadata()` and `withoutCachingMetadata()` as they are obsolete.
-- Remove any call to `ignoringVersionIdentifier()` or `ignoreVersionIdentifier()`. Use `matchAnyVersionIdentifier()` or `disableVersionIdentifier()` instead.
+- Remove any call to `ignoringVersionIdentifier(boolean)` or `ignoreVersionIdentifier()`. Use `matchAnyVersionIdentifier()` or `disableVersionIdentifier()` instead.

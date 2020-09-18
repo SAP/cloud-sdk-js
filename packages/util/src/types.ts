@@ -4,9 +4,7 @@
  * @deprecated Since v1.29.0. Use Record<string, T> instead.
  * Convenience type for JavaScript objects.
  */
-export interface MapType<T> {
-  [key: string]: T;
-}
+export type MapType<T> = Record<string, T>;
 
 /**
  * Denotes the OData version.

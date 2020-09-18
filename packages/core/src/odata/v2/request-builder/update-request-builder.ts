@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { errorWithCause } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { EntityV2 } from '../entity';

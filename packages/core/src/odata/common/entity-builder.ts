@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { toStaticPropertyFormat } from '../../util';
 import type { Constructable, EntityBase } from './entity';
 
@@ -64,7 +64,9 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
     return entityBuilder.build();
   }
 
-  private filterCustomFields(customFields: Record<string, any>): Record<string, any> {
+  private filterCustomFields(
+    customFields: Record<string, any>
+  ): Record<string, any> {
     return Object.keys(customFields).reduce((validCfs, cf) => {
       if (!this._entityConstructor[toStaticPropertyFormat(cf)]) {
         validCfs[cf] = customFields[cf];

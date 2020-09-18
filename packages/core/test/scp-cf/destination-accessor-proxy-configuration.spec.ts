@@ -25,15 +25,10 @@ import {
   onPremiseMultipleResponse
 } from '../test-util/example-destination-service-responses';
 import { getDestination, parseDestination, Protocol } from '../../src';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('proxy configuration', () => {
   afterEach(() => {
     delete process.env['https_proxy'];
-  });
-
-  beforeAll(() => {
-    muteLoggers('destination-accessor', 'proxy-util', 'jwt');
   });
 
   it('should take the enviorment varaible.', async () => {

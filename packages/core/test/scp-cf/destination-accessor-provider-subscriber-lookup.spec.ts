@@ -24,13 +24,8 @@ import {
 import { mockServiceBindings } from '../test-util/environment-mocks';
 import { mockServiceToken } from '../test-util/token-accessor-mocks';
 import * as destinationService from '../../src/scp-cf/destination-service';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
-  beforeAll(() => {
-    muteLoggers('destination-accessor', 'proxy-util', 'jwt');
-  });
-
   afterEach(() => {
     nock.cleanAll();
   });

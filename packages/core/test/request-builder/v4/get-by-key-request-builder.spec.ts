@@ -3,7 +3,6 @@ import {
   GetByKeyRequestBuilderV4,
   uriConverterV4
 } from '../../../src/odata/v4';
-import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultDestination,
   mockGetRequest
@@ -18,10 +17,6 @@ import { TestEntity } from '../../test-util/test-services/v4/test-service';
 const { convertToUriFormat } = uriConverterV4;
 
 describe('GetByKeyRequestBuilderV4', () => {
-  beforeAll(() => {
-    muteLoggers('http-agent');
-  });
-
   describe('execute', () => {
     it('returns entity by key', async () => {
       const entityData = createOriginalTestEntityData1();

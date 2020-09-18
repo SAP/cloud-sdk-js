@@ -146,9 +146,9 @@ module.exports = {
 
               'js/features/odata/overview',
               'js/features/odata/generate-odata-client',
-              'js/features/odata/execute-odata-request',
-              'js/features/odata/odata-v2-client',
-              'js/features/odata/odata-v4-client'
+              'js/features/odata/executing-a-request-using-a-generated-odata-v2-v4-client-with-sap-cloud-sdk-for-javascript',
+              'js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript',
+              'js/features/odata/use-odata-v4-type-safe-client-for-javascript-typescript'
             ]
           },
           {

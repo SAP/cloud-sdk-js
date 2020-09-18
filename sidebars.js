@@ -29,13 +29,25 @@ module.exports = {
           },
           {
             type: 'category',
+            label: 'REST',
+            items: [
+              'java/features/rest/overview',
+              {
+                type: 'category',
+                label: 'Released clients',
+                items: ['java/features/rest/clients/scp-workflow-rest-api']
+              }
+            ]
+          },
+          'java/features/bapi-and-rfc/bapi-and-rfc-overview',
+          {
+            type: 'category',
             label: 'Connectivity',
             items: [
               'java/features/connectivity/sdk-connectivity-destination-service',
               'java/features/connectivity/sdk-connectivity-http-client'
             ]
           },
-          'java/features/bapi-and-rfc/bapi-and-rfc-overview',
           {
             type: 'category',
             label: 'Multitenancy',
@@ -52,29 +64,17 @@ module.exports = {
           },
           {
             type: 'category',
-            label: 'REST',
-            items: [
-              'java/features/rest/overview',
-              {
-                type: 'category',
-                label: 'Released clients',
-                items: ['java/features/rest/clients/scp-workflow-rest-api']
-              }
-            ]
-          },
-          {
-            type: 'category',
             label: 'SDK extensions',
             items: [
-              'java/features/extensions/extensions-supported-by-sap-cloud-sdk-for-java'
-              // {
-              //   type: 'category',
-              //   label: 'Extension library',
-              //   items: [
-              //     'java/features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java',
-              //     'java/features/extensions/extension-library/blockchain/sap-blockchain-extension-library-for-cloud-sdk-for-java',
-              //   ]
-              // }
+              'java/features/extensions/extensions-supported-by-sap-cloud-sdk-for-java',
+              {
+                type: 'category',
+                label: 'Extension library',
+                items: [
+                  'java/features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java',
+                  // 'java/features/extensions/extension-library/blockchain/sap-blockchain-extension-library-for-cloud-sdk-for-java',
+                ]
+              }
             ]
           }
         ]

@@ -11,7 +11,6 @@ import {
   defaultDestination,
   mockHeaderRequest
 } from '../../test-util/request-mocker';
-import { muteLoggers } from '../../test-util/mute-logger';
 import { addCsrfTokenAndCookies } from '../../../src/header-builder/legacy-csrf-token-header';
 
 const standardHeaders = {
@@ -21,10 +20,6 @@ const standardHeaders = {
 };
 
 describe('csrf-token-header', () => {
-  beforeAll(() => {
-    muteLoggers('http-agent', 'csrf-token-header');
-  });
-
   const logger = createLogger('csrf-token-header');
 
   it('should build "cookie" and "x-csrf-token" properties.', async () => {

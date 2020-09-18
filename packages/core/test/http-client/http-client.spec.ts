@@ -12,13 +12,8 @@ import {
   HttpRequest,
   Protocol
 } from '../../src';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('generic http client', () => {
-  beforeAll(() => {
-    muteLoggers('environment-accessor', 'destination-accessor');
-  });
-
   const httpsDestination: Destination = {
     name: 'httpsDestination',
     url: 'https://example.com',

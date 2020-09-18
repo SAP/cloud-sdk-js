@@ -2,7 +2,6 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
 import { CreateRequestBuilderV2 } from '../../../src';
-import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultDestination,
   mockCreateRequest
@@ -16,10 +15,6 @@ import {
 import { testPostRequestOutcome } from '../../test-util/testPostRequestOutcome';
 
 describe('CreateRequestBuilderV2', () => {
-  beforeAll(() => {
-    muteLoggers('http-agent', 'entity-builder');
-  });
-
   afterAll(() => {
     nock.cleanAll();
   });

@@ -55,7 +55,7 @@ export const changesetHeader = () => [
   'Content-Transfer-Encoding: binary'
 ];
 
-export const changesetRequestHeader = () => [
-  'Content-Type: application/json',
-  'Accept: application/json'
+export const requestHeader = () => [
+  'Accept: application/json',
+  'Content-Type: application/json'
 ];

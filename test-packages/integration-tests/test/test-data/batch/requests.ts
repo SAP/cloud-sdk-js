@@ -42,5 +42,6 @@ export const mixedErrorRequest = () =>
     ...singleChangesetRequest,
     '--batch_.*',
     ...singleChangesetRequest,
-    '--batch_.*--'
+    '--batch_.*--',
+    ''
   ].join('\n');

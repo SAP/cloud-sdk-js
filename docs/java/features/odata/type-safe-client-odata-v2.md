@@ -28,12 +28,12 @@ The typed OData v2 client allows to build type-safe OData v2 requests for a give
 The SDK has two versions of type-safe OData v2 client.
 
 :::tip use Tabs to see the API difference
-SAP Cloud SDK `X.Y.Z` releases the productive version of the new, improved OData client. Consequently, the APIs of the old OData client have been deprecated.
+SAP Cloud SDK `3.29.0` releases the productive version of the new, improved OData client. Consequently, the APIs of the old OData client have been deprecated.
 :::
 
 ### The new improved client
 
-As of SAP Cloud SDK `X.Y.Z` we offer a generally available improved OData client.
+As of SAP Cloud SDK `3.29.0` we offer a generally available improved OData client.
 - High performance thanks to optimized handling of metadata (fewer network requests)
 - Developed fully _In house_ and shares code with OData v4 client
 - Allows for faster feature development and bug fixes
@@ -43,7 +43,7 @@ As of SAP Cloud SDK `X.Y.Z` we offer a generally available improved OData client
 
 ### The deprecated old client
 
-As of SAP Cloud SDK `X.Y.Z` we have deprecated the old OData client.
+As of SAP Cloud SDK `3.29.0` we have deprecated the old OData client.
 - Stable and well tested
 - Based on 3rd party dependencies, which slows down release of advanced features
 - Doesn't share a code base with OData v4 client

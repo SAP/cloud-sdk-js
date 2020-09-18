@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { flatten, pipe } from 'rambda';
 import {
   addProxyConfigurationInternet,
@@ -89,11 +88,15 @@ const transformServiceBindings = pipe(
   flattenServiceBindings
 );
 
-function flattenServiceBindings(vcapServices: MapType<any>): MapType<any>[] {
+function flattenServiceBindings(
+  vcapServices: Record<string, any>
+): Record<string, any>[] {
   return flatten(Object.values(vcapServices));
 }
 
-function inlineServiceTypes(vcapServices: MapType<any>): MapType<any> {
+function inlineServiceTypes(
+  vcapServices: Record<string, any>
+): Record<string, any> {
   return Object.entries(vcapServices).reduce(
     (vcap, [serviceType, bindings]) => ({
       ...vcap,
@@ -119,7 +122,7 @@ const serviceToDestinationTransformers = {
   's4-hana-cloud': xfS4hanaCloudBindingToDestination
 };
 
-function transform(serviceBinding: MapType<any>): Destination {
+function transform(serviceBinding: Record<string, any>): Destination {
   if (!serviceToDestinationTransformers[serviceBinding.type]) {
     throw serviceTypeNotSupportedError(serviceBinding.type);
   }
@@ -139,7 +142,7 @@ function serviceTypeNotSupportedError(serviceType: string): Error {
 }
 
 function noServiceBindingFoundError(
-  serviceBindings: MapType<any>[],
+  serviceBindings: Record<string, any>[],
   serviceInstanceName: string
 ): Error {
   return Error(

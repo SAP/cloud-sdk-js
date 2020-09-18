@@ -158,7 +158,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     return this;
   }
 
-  private getUpdateBody(): MapType<any> {
+  private getUpdateBody(): Record<string, any> {
     const serializedBody = serializeEntityV4(
       this._entity,
       this._entityConstructor
@@ -173,7 +173,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     )();
   }
 
-  private serializedDiff(): MapType<any> {
+  private serializedDiff(): Record<string, any> {
     return {
       ...serializeEntityNonCustomFieldsV4(
         this._entity.getUpdatedProperties(),
@@ -183,28 +183,30 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     };
   }
 
-  private removeNavPropsAndComplexTypes(body: MapType<any>): MapType<any> {
+  private removeNavPropsAndComplexTypes(
+    body: Record<string, any>
+  ): Record<string, any> {
     return removePropertyOnCondition(([key, val]) => typeof val === 'object')(
       body
     );
   }
 
-  private removeKeyFields(body: MapType<any>): MapType<any> {
+  private removeKeyFields(body: Record<string, any>): Record<string, any> {
     return removePropertyOnCondition(([key, val]) =>
       this.getKeyFieldNames().includes(key)
     )(body);
   }
 
-  private removeIgnoredFields(body: MapType<any>): MapType<any> {
+  private removeIgnoredFields(body: Record<string, any>): Record<string, any> {
     return removePropertyOnCondition(([key, val]) => this.ignored.has(key))(
       body
     );
   }
 
   private addRequiredFields(
-    completeBody: MapType<any>,
-    body: MapType<any>
-  ): MapType<any> {
+    completeBody: Record<string, any>,
+    body: Record<string, any>
+  ): Record<string, any> {
     return Array.from(this.required).reduce((resultBody, requiredField) => {
       if (Object.keys(resultBody).includes(requiredField)) {
         return resultBody;
@@ -237,7 +239,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
 
 const removePropertyOnCondition = (
   condition: (objectEntry: [string, any]) => boolean
-) => (body: MapType<any>): MapType<any> =>
+) => (body: Record<string, any>): Record<string, any> =>
   Object.entries(body).reduce((resultBody, [key, val]) => {
     if (condition([key, val])) {
       return resultBody;

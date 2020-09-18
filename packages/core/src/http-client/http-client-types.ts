@@ -1,10 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import * as http from 'http';
-import { MapType } from '@sap-cloud-sdk/util';
 
 export interface DestinationHttpRequestConfig {
   baseURL: string;
-  headers: MapType<string>;
+  headers: Record<string, string>;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 }
@@ -45,7 +44,7 @@ export interface HttpRequestConfig {
   url?: string;
   method: Method;
   data?: any;
-  params?: MapType<string>;
+  params?: Record<string, string>;
   timeout?: number;
   maxContentLength?: number;
   headers?: any;

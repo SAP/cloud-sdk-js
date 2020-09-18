@@ -2,7 +2,7 @@
 
 import { last } from 'rambda';
 import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   VdmComplexType,
   VdmEntity,
@@ -96,7 +96,7 @@ export function joinEntityMetadata(
 export function createEntityClassNames(
   entityMetadata: JoinedEntityMetadata[],
   formatter: ServiceNameFormatter
-): MapType<string> {
+): Record<string, string> {
   return entityMetadata.reduce((names, e) => {
     names[e.entitySet.Name] = formatter.originalToEntityClassName(
       e.entitySet.Name

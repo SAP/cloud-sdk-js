@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { ODataUri } from '../uri-conversion';
 import {
   FunctionImportParameter,
@@ -33,7 +32,7 @@ export class ODataFunctionImportRequestConfig<
     return this.functionImportName;
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     return {
       ...this.prependDollarToQueryParameters({
         format: 'json'
@@ -45,7 +44,7 @@ export class ODataFunctionImportRequestConfig<
         )
         .reduce(
           (
-            queryParams: MapType<any>,
+            queryParams: Record<string, any>,
             parameter: FunctionImportParameter<ParametersT>
           ) => {
             queryParams[
@@ -57,7 +56,7 @@ export class ODataFunctionImportRequestConfig<
             return queryParams;
           },
           {}
-        ) as MapType<any>)
+        ) as Record<string, any>)
     };
   }
 }

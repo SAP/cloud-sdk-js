@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 /**
+ * @deprecated Since v1.29.0. Use Record<string, T> instead.
  * Convenience type for JavaScript objects.
  */
 export interface MapType<T> {

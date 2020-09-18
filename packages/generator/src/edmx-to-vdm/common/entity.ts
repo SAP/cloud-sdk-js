@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import {
   edmToFieldType,
@@ -200,7 +200,7 @@ export function navigationPropertyBase(
 export function createEntityClassNames(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>[],
   formatter: ServiceNameFormatter
-): MapType<string> {
+): Record<string, string> {
   return entityMetadata.reduce(
     (names, e) => ({
       ...names,

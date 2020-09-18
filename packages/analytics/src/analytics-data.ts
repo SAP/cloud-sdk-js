@@ -3,7 +3,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { findProjectRoot, MapType } from '@sap-cloud-sdk/util';
+import { findProjectRoot } from '@sap-cloud-sdk/util';
 import { UsageAnalyticsProjectConfig } from './analytics-types';
 import { enforceValidConfig } from './config';
 import { hash } from './util';
@@ -53,7 +53,7 @@ function usesTypeScript(packageJson: PackageJson): string {
   const mergedDeps = {
     ...packageJson.dependencies,
     ...packageJson.devDependencies
-  } as MapType<string>;
+  } as Record<string, string>;
   return mergedDeps.typescript ? 'true' : 'false';
 }
 
@@ -151,8 +151,8 @@ export interface AnalyticsData {
 
 interface PackageJson {
   name: string;
-  dependencies?: MapType<string>;
-  devDependencies?: MapType<string>;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
 }
 
 interface OperatingSystemInfo {

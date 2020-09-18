@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
 import { filterNullishValues, getHeader, getHeaderValue } from './headers-util';
@@ -20,7 +20,7 @@ const logger = createLogger({
 export async function buildCsrfHeaders<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: Partial<T>
-): Promise<MapType<string>> {
+): Promise<Record<string, string>> {
   const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
   validateCsrfTokenResponse(csrfHeaders);
   return filterNullishValues({
@@ -32,7 +32,7 @@ export async function buildCsrfHeaders<T extends HttpRequestConfig>(
 function makeCsrfRequest<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: Partial<T>
-): Promise<MapType<any>> {
+): Promise<Record<string, any>> {
   const fetchHeader = !getHeaderValue(
     'x-csrf-token',
     requestConfig.headers
@@ -57,7 +57,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     });
 }
 
-function validateCsrfTokenResponse(responseHeaders: MapType<any>) {
+function validateCsrfTokenResponse(responseHeaders: Record<string, any>) {
   if (!responseHeaders['x-csrf-token']) {
     logger.warn(
       'Destination did not return a CSRF token. This may cause a failure when sending the OData request.'

@@ -25,7 +25,7 @@ import TabItem from '@theme/TabItem';
 Currency Conversion is an extension library built on SAP Cloud SDK. You can use this library to facilitate currency exchange rate conversions.
 
 :::note
-The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data provider sources.
+The library does not provide any market data out-of-the-box. You must provide the currency exchange rates to the library from your own data sources. You can use the [SAP Market Rates Management](https://www.sap.com/products/market-rates-management.html) service or any other of your choice.
 :::
 
 You can use the library for the following functions:
@@ -97,7 +97,7 @@ At runtime, the conversion library interacts with the data adapter by calling th
 ### Direct Conversions
 Direct conversions happen between a source currency and a target currency, by using the exact rate from the source to the target currency. So, a conversion request with USD as the source currency and EUR as the target currency is performed only if an exchange rate from USD to EUR is available. Conversions will fail if, say, only the rate from EUR to USD is available.
 
-Unless you use...
+However, this scenario is covered by indirect conversions as described in the following section.
 
 ### Indirect Conversions By Using an Inverse Rate
 You can request for a conversion from INR to USD even if the rates available are from USD to INR. You (or your consumers) enable the inverse rates setting for each exchange rate type. You can then provide the rate type information by using the data adapter. Note that inverse rates are only used if no direct rates are available. For example, if you have enabled the inverse rate type for INR to USD and if a direct rate is available for this currency pair, it will still be given precedence over the inverse rate. If a direct rate from INR to USD is not found, the library looks for the USD to INR rate.

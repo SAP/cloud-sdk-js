@@ -16,11 +16,29 @@ const container = new Container();
 const exceptionTransport = new transports.Console();
 const customLogLevels = {};
 const DEFAULT_LOGGER__MESSAGE_CONTEXT = '__DEFAULT_LOGGER__MESSAGE_CONTEXT';
+let silent = false;
 
 const moduleLogger = createLogger({
   package: 'util',
   messageContext: 'cloud-sdk-logger'
 });
+
+function toggleMuteLoggers(silence: boolean) {
+  silent = silence;
+  container.loggers.forEach(logger => toggleSilenceTransports(logger, silence));
+}
+
+function toggleSilenceTransports(logger: Logger, silence: boolean) {
+  logger.transports.forEach(transport => (transport.silent = silence));
+}
+
+export function muteLoggers() {
+  toggleMuteLoggers(true);
+}
+
+export function unmuteLoggers() {
+  toggleMuteLoggers(false);
+}
 
 /**
  * Default logger for the SAP Cloud SDK for unhandled exceptions.
@@ -79,7 +97,7 @@ export function createLogger(
     typeof messageContext === 'string'
       ? { messageContext }
       : { ...messageContext };
-  return container.get(customFields.messageContext, {
+  const logger = container.get(customFields.messageContext, {
     level:
       customLogLevels[customFields.messageContext] ||
       customFields.level ||
@@ -94,6 +112,10 @@ export function createLogger(
     format,
     transports: [new transports.Console()]
   });
+
+  toggleSilenceTransports(logger, silent);
+
+  return logger;
 }
 
 /**

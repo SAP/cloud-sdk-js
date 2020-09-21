@@ -246,9 +246,9 @@ This can be done by using the `asChildOf` method which allows to create an entit
 You need to give the parent object and the field connecting the two entities:
 ```ts
 BusinessPartnerAddress.requestBuilder()
-    .create(newAddress)
-    .asChildOf(existingBusinessPartner,BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
-    .execute(myDestination)
+  .create(newAddress)
+  .asChildOf(existingBusinessPartner,BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
+  .execute(myDestination)
 ```
 
 ## Update Request Builder

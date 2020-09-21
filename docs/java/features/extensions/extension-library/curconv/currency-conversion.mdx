@@ -50,8 +50,6 @@ Add the dependency in your pom.xml file under the existing *dependencies* tag as
 <dependency>
    <groupId>com.sap.cloud.sdk.services</groupId>
    <artifactId>currency-conversion-core</artifactId>
-   <!-- Please use the latest version of the dependency -->
-   <version>3.X.X</version>
 </dependency>
 ```
 The library works within the tenant context, therefore, depending on the landscape you operate in, add one of the following dependencies in your pom.xml file, in addition to that of the library's. Adding this additional dependency helps the library detect your tenants automatically. Without it, you would have to manually pass this information. Therefore, we recommend adding one or more of the following dependencies, based on your landscape.
@@ -62,8 +60,6 @@ If you want to run the library in the Cloud Foundry environment, use the followi
 <dependency>
   <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
   <artifactId>tenant-scp-cf</artifactId>
-  <!-- Please use the latest version of the dependency -->
-  <version>3.X.X</version>
 </dependency>
 ```
 
@@ -73,9 +69,7 @@ If you want to run the library in the Neo environment, use the following:
 <dependency>
   <groupId>com.sap.cloud.sdk.cloudplatform</groupId>
   <artifactId>tenant-scp-neo</artifactId>
-  <!-- Please use the latest version of the dependency -->
-  <version>3.X.X</version>
-</dependency>  
+</dependency>
 ```
 
 :::tip

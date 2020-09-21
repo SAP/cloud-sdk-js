@@ -86,7 +86,7 @@ The different cases are explained in [Filters in Expand.](#filterParentChildren)
 
 The URL for the query will be:
 ```sql
-/People?$expand=Friends($select=FirstName,AddressInfo;$filter=(LastName eq 'Miller');$skip=1;$top=1)
+/People?$expand=Friends($select=FirstName,AddressInfo;$filter=(LastName eq 'Miller');$skip=1;$top=1;$orderby=Gender asc)
 ```
 
 #### Filter parent vs. Filter children <a name="filterParentChildren"/>
@@ -110,7 +110,7 @@ People.requestBuilder().getAll().filter(People.FRIENDS
     )
 )
 ```
-The lambda `all` would enforce that all friends must have first name `John`.
+The lambda [all](pathname:///api/1.28.1/modules/sap_cloud_sdk_core#all) would enforce that all friends must have first name `John`.
 The two queries above filter the parent entity person.
 
 In case you want to get all people but reduce the friends in the response, the filter has to be inside the expand:
@@ -122,6 +122,3 @@ People.requestBuilder().getAll()
     )
 ```
 This will return all people but only the friends with first name `John` will be included in the response.
-
-
-

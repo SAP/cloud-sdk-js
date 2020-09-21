@@ -26,6 +26,8 @@
 
 ## Fixed Issues
 
+- [OData] Fix `oderBy` parameter in expanded subqueries.
+
 -
 
 

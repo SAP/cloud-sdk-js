@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity';
 import { FieldType, Field } from '../selectable';
 import { toStaticPropertyFormat } from '../../../util';
@@ -12,7 +12,7 @@ const logger = createLogger({
 });
 
 type GetResourcePathForKeysType<EntityT extends EntityBase> = (
-  keys: MapType<FieldType>,
+  keys: Record<string, FieldType>,
   entityConstructor: Constructable<EntityT>
 ) => string;
 
@@ -40,7 +40,7 @@ export function createGetResourcePathForKeys(
    * @returns The path to the resource
    */
   function getResourcePathForKeys<EntityT extends EntityBase>(
-    keys: MapType<FieldType> = {},
+    keys: Record<string, FieldType> = {},
     entityConstructor: Constructable<EntityT>
   ): string {
     keys = filterNonKeyProperties(keys, entityConstructor);
@@ -57,7 +57,7 @@ export function createGetResourcePathForKeys(
   }
 
   function getMissingKeys<EntityT extends EntityBase>(
-    keys: MapType<FieldType>,
+    keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
     const givenKeys = Object.keys(keys);
@@ -67,7 +67,7 @@ export function createGetResourcePathForKeys(
   }
 
   function getInvalidKeys<EntityT extends EntityBase>(
-    keys: MapType<FieldType>,
+    keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
     // type assertion for backwards compatibility, TODO: remove in v2.0
@@ -77,16 +77,16 @@ export function createGetResourcePathForKeys(
     return Object.keys(keys).filter(key => !validKeys.includes(key));
   }
 
-  function getNullishKeys(keys: MapType<FieldType>): string[] {
+  function getNullishKeys(keys: Record<string, FieldType>): string[] {
     return Object.entries(keys)
       .filter(([_, value]) => typeof value === 'undefined' || value === null)
       .map(([key]) => key);
   }
 
   function filterNonKeyProperties<EntityT extends EntityBase>(
-    keys: MapType<FieldType>,
+    keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
-  ): MapType<FieldType> {
+  ): Record<string, FieldType> {
     const invalidKeys = getInvalidKeys(keys, entityConstructor);
     if (invalidKeys.length) {
       logger.warn(
@@ -115,7 +115,7 @@ export function createGetResourcePathForKeys(
   }
 
   function validateKeys<EntityT extends EntityBase>(
-    keys: MapType<FieldType>,
+    keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): void {
     const missingKeys = getMissingKeys(keys, entityConstructor);

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { MapType } from '@sap-cloud-sdk/util';
+
 import { ODataRequest, ODataRequestConfig } from '../odata/common/request';
 
 /**
@@ -12,7 +12,7 @@ import { ODataRequest, ODataRequestConfig } from '../odata/common/request';
  */
 export async function buildHeaders<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>
-): Promise<MapType<string>> {
+): Promise<Record<string, string>> {
   if (!request.destination) {
     throw Error('The request destination is undefined.');
   }

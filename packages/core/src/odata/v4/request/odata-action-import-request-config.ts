@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { ODataRequestConfig } from '../../common/request/odata-request-config';
 import {
   ActionImportParameters,
@@ -30,7 +29,7 @@ export class ODataActionImportRequestConfig<
     return this.actionImportName;
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     return {
       ...this.prependDollarToQueryParameters({
         format: 'json'
@@ -40,7 +39,7 @@ export class ODataActionImportRequestConfig<
 
   private buildHttpPayload(
     parameters: ActionImportParameters<ParametersT>
-  ): MapType<any> {
+  ): Record<string, any> {
     const payload = Object.keys(parameters).reduce((all, key) => {
       const payloadElement: ActionImportParameter<ParametersT> =
         parameters[key];

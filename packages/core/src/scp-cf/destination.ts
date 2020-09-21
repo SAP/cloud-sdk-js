@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { assoc, pipe } from 'rambda';
 import {
   AuthenticationType,
@@ -17,7 +16,9 @@ import {
  * @param destination - An object that adheres to the [[Destination]] interface.
  * @returns An SDK compatible destination object.
  */
-export function sanitizeDestination(destination: MapType<any>): Destination {
+export function sanitizeDestination(
+  destination: Record<string, any>
+): Destination {
   validateDestinationInput(destination);
   const parsedDestination = pipe(
     parseAuthTokens,
@@ -81,7 +82,7 @@ function validateDestinationConfig(
   }
 }
 
-function validateDestinationInput(destinationInput: MapType<any>): void {
+function validateDestinationInput(destinationInput: Record<string, any>): void {
   if (
     isHttpDestination(destinationInput) &&
     typeof destinationInput.url === 'undefined'
@@ -90,7 +91,7 @@ function validateDestinationInput(destinationInput: MapType<any>): void {
   }
 }
 
-function isHttpDestination(destinationInput: MapType<any>): boolean {
+function isHttpDestination(destinationInput: Record<string, any>): boolean {
   return (
     destinationInput.Type === 'HTTP' ||
     destinationInput.type === 'HTTP' ||
@@ -126,7 +127,9 @@ function setDefaultAuthenticationFallback(
     : assoc('authentication', getAuthenticationType(destination), destination);
 }
 
-function parseCertificate(certificate: MapType<any>): DestinationCertificate {
+function parseCertificate(
+  certificate: Record<string, any>
+): DestinationCertificate {
   return {
     name: certificate.Name || certificate.name,
     content: certificate.Content || certificate.content,
@@ -134,14 +137,16 @@ function parseCertificate(certificate: MapType<any>): DestinationCertificate {
   };
 }
 
-function parseCertificates(destination: MapType<any>): MapType<any> {
+function parseCertificates(
+  destination: Record<string, any>
+): Record<string, any> {
   const certificates = destination.certificates
     ? destination.certificates.map(parseCertificate)
     : [];
   return assoc('certificates', certificates, destination);
 }
 
-function parseAuthToken(authToken: MapType<any>): DestinationAuthToken {
+function parseAuthToken(authToken: Record<string, any>): DestinationAuthToken {
   return {
     type: authToken.type,
     value: authToken.value,
@@ -150,7 +155,9 @@ function parseAuthToken(authToken: MapType<any>): DestinationAuthToken {
   };
 }
 
-function parseAuthTokens(destination: MapType<any>): MapType<any> {
+function parseAuthTokens(
+  destination: Record<string, any>
+): Record<string, any> {
   const authTokens = destination.authTokens
     ? destination.authTokens.map(parseAuthToken)
     : [];
@@ -186,8 +193,8 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
 export interface DestinationJson {
   [key: string]: any;
   destinationConfiguration: DestinationConfiguration;
-  authTokens?: MapType<string>[];
-  certificates?: MapType<string>[];
+  authTokens?: Record<string, string>[];
+  certificates?: Record<string, string>[];
 }
 
 /**
@@ -232,7 +239,7 @@ export function isDestinationJson(
   return Object.keys(destination).includes('destinationConfiguration');
 }
 
-const configMapping: MapType<keyof Destination> = {
+const configMapping: Record<string, keyof Destination> = {
   URL: 'url',
   Name: 'name',
   User: 'username',

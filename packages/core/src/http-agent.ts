@@ -2,7 +2,7 @@
 
 import * as http from 'http';
 import * as https from 'https';
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { assoc, last, pipe } from 'rambda';
 import { Destination, DestinationCertificate } from './scp-cf';
 import { proxyAgent } from './util/proxy-util';
@@ -59,13 +59,13 @@ function createProxyAgent(
 }
 
 const trustAllOptions = (destination: Destination) => (
-  options: MapType<any>
-): MapType<any> =>
+  options: Record<string, any>
+): Record<string, any> =>
   assoc('rejectUnauthorized', !destination.isTrustingAllCertificates, options);
 
 const certificateOptions = (destination: Destination) => (
-  options: MapType<any>
-): MapType<any> => {
+  options: Record<string, any>
+): Record<string, any> => {
   if (destination.keyStoreName && destination.keyStorePassword) {
     const certificate = selectCertificate(destination);
 

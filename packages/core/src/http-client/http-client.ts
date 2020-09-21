@@ -2,7 +2,7 @@
 
 import * as http from 'http';
 import * as https from 'https';
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { errorWithCause } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { buildHeadersForDestination } from '../header-builder/header-builder-for-destination';
 import {
@@ -30,7 +30,7 @@ import {
  */
 export async function buildHttpRequest(
   destination: Destination | DestinationNameAndJwt,
-  customHeaders?: MapType<any>
+  customHeaders?: Record<string, any>
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
@@ -97,7 +97,7 @@ export const executeHttpRequest = execute(executeWithAxios);
 
 function buildDestinationHttpRequestConfig(
   destination: Destination,
-  headers: MapType<string>
+  headers: Record<string, string>
 ): DestinationHttpRequestConfig {
   return {
     baseURL: destination.url,
@@ -108,8 +108,8 @@ function buildDestinationHttpRequestConfig(
 
 function buildHeaders(
   destination: Destination,
-  customHeaders?: MapType<any>
-): Promise<MapType<string>> {
+  customHeaders?: Record<string, any>
+): Promise<Record<string, string>> {
   return buildHeadersForDestination(destination, customHeaders).catch(error =>
     Promise.reject(
       errorWithCause(

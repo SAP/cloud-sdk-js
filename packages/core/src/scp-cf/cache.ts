@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import moment from 'moment';
 
 interface CacheInterface<T> {
@@ -48,7 +47,7 @@ export class Cache<T> implements CacheInterface<T> {
   /**
    * Object that stores all cached entries.
    */
-  private cache: MapType<CacheEntry<T>>;
+  private cache: Record<string, CacheEntry<T>>;
 
   /**
    * Default validity period for each entry in cache.

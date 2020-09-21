@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause  } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import {
   Constructable,
@@ -194,7 +194,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     return this;
   }
 
-  private getUpdateBody(): MapType<any> {
+  private getUpdateBody(): Record<string, any> {
     const serializedBody = serializeEntityV2(
       this._entity,
       this._entityConstructor
@@ -209,7 +209,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     )();
   }
 
-  private serializedDiff(): MapType<any> {
+  private serializedDiff(): Record<string, any> {
     return {
       ...serializeEntityNonCustomFieldsV2(
         this._entity.getUpdatedProperties(),
@@ -219,28 +219,30 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     };
   }
 
-  private removeNavPropsAndComplexTypes(body: MapType<any>): MapType<any> {
+  private removeNavPropsAndComplexTypes(
+    body: Record<string, any>
+  ): Record<string, any> {
     return removePropertyOnCondition(([key, val]) => typeof val === 'object')(
       body
     );
   }
 
-  private removeKeyFields(body: MapType<any>): MapType<any> {
+  private removeKeyFields(body: Record<string, any>): Record<string, any> {
     return removePropertyOnCondition(([key, val]) =>
       this.getKeyFieldNames().includes(key)
     )(body);
   }
 
-  private removeIgnoredFields(body: MapType<any>): MapType<any> {
+  private removeIgnoredFields(body: Record<string, any>): Record<string, any> {
     return removePropertyOnCondition(([key, val]) => this.ignored.has(key))(
       body
     );
   }
 
   private addRequiredFields(
-    completeBody: MapType<any>,
-    body: MapType<any>
-  ): MapType<any> {
+    completeBody: Record<string, any>,
+    body: Record<string, any>
+  ): Record<string, any> {
     return Array.from(this.required).reduce((resultBody, requiredField) => {
       if (Object.keys(resultBody).includes(requiredField)) {
         return resultBody;
@@ -273,7 +275,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
 
 const removePropertyOnCondition = (
   condition: (objectEntry: [string, any]) => boolean
-) => (body: MapType<any>): MapType<any> =>
+) => (body: Record<string, any>): Record<string, any> =>
   Object.entries(body).reduce((resultBody, [key, val]) => {
     if (condition([key, val])) {
       return resultBody;

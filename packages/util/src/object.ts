@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { assoc, merge } from 'rambda';
-import { MapType } from './types';
 
 /**
  * Checks if a chain of properties exists on the given object.
@@ -46,7 +45,7 @@ export const assocSome = <T>(key: string, value?: any) => (obj: T): T => {
  * @param b - The object which to merge into a.
  * @returns A copy of the merge(a, b) or a if b is undefined or null.
  */
-export const mergeSome = (a: MapType<any>, b?: MapType<any>) => {
+export const mergeSome = (a: Record<string, any>, b?: Record<string, any>) => {
   if (typeof b !== 'undefined' && b !== null) {
     return merge(a, b);
   }
@@ -63,9 +62,9 @@ export const mergeSome = (a: MapType<any>, b?: MapType<any>) => {
  * @returns An object with renamed keys.
  */
 export const renameKeys = (
-  keyMapping: MapType<string>,
-  obj: MapType<any>
-): MapType<any> => {
+  keyMapping: Record<string, string>,
+  obj: Record<string, any>
+): Record<string, any> => {
   const unchangedEntries = Object.keys(obj)
     .filter(k => !Object.keys(keyMapping).includes(k))
     .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});

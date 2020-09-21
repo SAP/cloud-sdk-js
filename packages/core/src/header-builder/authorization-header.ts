@@ -1,11 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import {
-  MapType,
-  errorWithCause,
-  isNullish,
-  createLogger
-} from '@sap-cloud-sdk/util';
+import { errorWithCause, isNullish, createLogger } from '@sap-cloud-sdk/util';
 import {
   AuthenticationType,
   Destination,
@@ -34,8 +29,8 @@ export async function addAuthorizationHeader<
   RequestT extends ODataRequestConfig
 >(
   request: ODataRequest<RequestT>,
-  headers: MapType<string>
-): Promise<MapType<string>> {
+  headers: Record<string, string>
+): Promise<Record<string, string>> {
   const destination = request.destination;
   if (!destination) {
     return headers;
@@ -65,8 +60,8 @@ function hasAuthHeaders(destination: Destination): boolean {
 
 export async function getAuthHeaders(
   destination: Destination,
-  customHeaders?: MapType<any>
-): Promise<MapType<string>> {
+  customHeaders?: Record<string, any>
+): Promise<Record<string, string>> {
   const customAuthHeaders = getHeader('authorization', customHeaders);
 
   if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
@@ -91,20 +86,22 @@ export async function getAuthHeaders(
  * @returns The provided headers with the new authorization headers.
  */
 export function buildAndAddAuthorizationHeader(destination: Destination) {
-  return async function (headers: MapType<any>): Promise<MapType<string>> {
+  return async function (
+    headers: Record<string, any>
+  ): Promise<Record<string, string>> {
     return {
       ...headers,
       ...(await buildAuthorizationHeaders(destination))
     };
   };
 }
-function toAuthorizationHeader(authorization: string): MapType<string> {
+function toAuthorizationHeader(authorization: string): Record<string, string> {
   return toSanitizedHeaderObject('authorization', authorization);
 }
 
 function headerFromTokens(
   authTokens?: DestinationAuthToken[] | null
-): MapType<string> {
+): Record<string, string> {
   if (!authTokens || !authTokens.length) {
     throw Error(
       'AuthenticationType is "OAuth2SAMLBearerAssertion", but no AuthTokens could be fetched from the destination service!'
@@ -130,7 +127,7 @@ function headerFromTokens(
 
 async function headerFromOAuth2ClientCredentialsDestination(
   destination: Destination
-): Promise<MapType<string>> {
+): Promise<Record<string, string>> {
   const response = await getOAuth2ClientCredentialsToken(destination).catch(
     error => {
       throw errorWithCause(
@@ -144,7 +141,7 @@ async function headerFromOAuth2ClientCredentialsDestination(
 
 function headerFromBasicAuthDestination(
   destination: Destination
-): MapType<string> {
+): Record<string, string> {
   if (isNullish(destination.username) || isNullish(destination.password)) {
     throw Error(
       'AuthenticationType is "BasicAuthentication", but "username" and / or "password" are missing!'
@@ -160,7 +157,9 @@ export function basicHeader(username: string, password: string): string {
   return `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
 }
 
-function headerForPrincipalPropagation(destination: Destination): MapType<any> {
+function headerForPrincipalPropagation(
+  destination: Destination
+): Record<string, any> {
   const principalPropagationHeader =
     destination?.proxyConfiguration?.headers?.[
       'SAP-Connectivity-Authentication'
@@ -175,7 +174,7 @@ function headerForPrincipalPropagation(destination: Destination): MapType<any> {
   };
 }
 
-function headerForProxy(destination: Destination): MapType<any> {
+function headerForProxy(destination: Destination): Record<string, any> {
   const proxyAuthHeader =
     destination?.proxyConfiguration?.headers?.['Proxy-Authorization'];
 
@@ -185,7 +184,9 @@ function headerForProxy(destination: Destination): MapType<any> {
 // TODO the proxy header are for OnPrem auth and are now handled correctly and should be removed here
 // However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
 // Remove this in v2
-function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
+function legacyNoAuthOnPremiseProxy(
+  destination: Destination
+): Record<string, any> {
   logger.warn(
     `You are using \'NoAuthentication\' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up \'PrincipalPropagation\' so please change the destination property to the desired authentication scheme.`
   );
@@ -203,7 +204,9 @@ function legacyNoAuthOnPremiseProxy(destination: Destination): MapType<any> {
   };
 }
 
-function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
+function getProxyRelatedAuthHeaders(
+  destination: Destination
+): Record<string, any> {
   if (
     destination.proxyType === 'OnPremise' &&
     destination.authentication === 'NoAuthentication'
@@ -217,7 +220,7 @@ function getProxyRelatedAuthHeaders(destination: Destination): MapType<any> {
 
 async function getAuthenticationRelatedHeaders(
   destination: Destination
-): Promise<MapType<string>> {
+): Promise<Record<string, string>> {
   switch (destination.authentication) {
     case null:
     case undefined:
@@ -245,7 +248,7 @@ async function getAuthenticationRelatedHeaders(
 
 export async function buildAuthorizationHeaders(
   destination: Destination
-): Promise<MapType<string>> {
+): Promise<Record<string, string>> {
   const sanitizedDestination = sanitizeDestination(destination);
   return {
     ...(await getAuthenticationRelatedHeaders(sanitizedDestination)),

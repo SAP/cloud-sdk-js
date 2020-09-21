@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { Destination } from '../scp-cf';
 import { getAuthHeaders } from './authorization-header';
 import { replaceDuplicateKeys, filterNullishValues } from './headers-util';
@@ -14,8 +13,8 @@ import { replaceDuplicateKeys, filterNullishValues } from './headers-util';
  */
 export async function buildHeadersForDestination(
   destination: Destination,
-  customHeaders?: MapType<any>
-): Promise<MapType<string>> {
+  customHeaders?: Record<string, any>
+): Promise<Record<string, string>> {
   const authHeaders = await getAuthHeaders(destination, customHeaders);
 
   const sapHeaders = replaceDuplicateKeys(

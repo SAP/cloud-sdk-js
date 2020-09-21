@@ -3,7 +3,7 @@
 import { v4 as uuid } from 'uuid';
 import voca from 'voca';
 import { MethodRequestBuilderBase } from '../common';
-import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
+import { ODataBatchRequestBuilderV2 } from './batch-request-builder';
 import { EntityV2 } from './entity';
 import {
   CreateRequestBuilderV2,
@@ -132,30 +132,19 @@ export function getLine(request: MethodRequestBuilderBase): string {
 }
 
 /**
- * Convert the given requests to the payload of the batch.
- *
- * @param requests - Requests of the batch.
- * @param requestConfig - The batch request configuration.
- * @returns The generated payload.
+ * Serialize a batch request to string. This is used for the batch request payload when executing the request.
+ * @param request - Batch request to serialize.
+ * @returns String representation of the batch request.
  */
 export function serializeBatchRequest(
-  requests: (
-    | ODataBatchChangeSetV2<
-        | CreateRequestBuilderV2<EntityV2>
-        | UpdateRequestBuilderV2<EntityV2>
-        | DeleteRequestBuilderV2<EntityV2>
-      >
-    | GetAllRequestBuilderV2<EntityV2>
-    | GetByKeyRequestBuilderV2<EntityV2>
-  )[],
-  requestConfig: ODataBatchRequestConfig
+  request: ODataBatchRequestBuilderV2
 ): string {
-  const serializedSubRequests = requests
-    .map(request => serializeBatchSubRequest(request))
-    .filter(b => !!b);
+  const serializedSubRequests = request.requests
+    .map(subRequest => serializeBatchSubRequest(subRequest))
+    .filter(validRequest => !!validRequest);
 
   if (serializedSubRequests.length) {
-    const batchBoundary = `batch_${requestConfig.batchId}`;
+    const batchBoundary = `batch_${request.requestConfig.batchId}`;
     return [
       `--${batchBoundary}`,
       serializedSubRequests.join(`\n--${batchBoundary}\n`),

@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { any, GetAllRequestBuilderV4 } from '../../../src/odata/v4';
-import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultDestination,
   mockGetRequest,
@@ -20,10 +19,6 @@ import {
 
 describe('GetAllRequestBuilderV4', () => {
   let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
-
-  beforeAll(() => {
-    muteLoggers('http-agent', 'destination-accessor', 'environment-accessor');
-  });
 
   afterEach(() => {
     unmockDestinationsEnv();

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [Util] Allow to mute and unmute loggers.
 
 ## Improvements
 
@@ -38,7 +38,7 @@ Blog: TBD<br>
 
 ## Improvements
 
-- Adjust the generation of the `$filter` parameter in URL so that parentheses are not removed even logically they are not needed. 
+- Adjust the generation of the `$filter` parameter in URL so that parentheses are not removed even logically they are not needed.
 For example, now `$filter=((filterA and filter B) and (filterC and filter D))` will not be flattened to `$filter=(filterA and filter B and filterC and filter D)`.
 
 ## Fixed Issues
@@ -58,7 +58,7 @@ Blog: TBD<br>
 ## Fixed Issues
 
 - [Generator] Skip generation of `Batch.ts` for services without entities.
-- [RequestBuilder] Fix serialization of `Edm.Time` fields in OData V4. 
+- [RequestBuilder] Fix serialization of `Edm.Time` fields in OData V4.
 
 # 1.27.0
 
@@ -70,16 +70,16 @@ Blog: TBD<br>
 
 - Added experimental support for OData V4 enum type. Use the `@sap/cloud-sdk-generator` to generate the type safe client.
 - Include fallback `Edm.Any` for previously unsupported edm types like Edm.Geography.
-Type safety and related features like URI conversion are not supported for the fallback type.  
+Type safety and related features like URI conversion are not supported for the fallback type.
 
 ## Improvements
 
-- Log a warning in case the destination and the custom request config contain both `authorization` headers. 
+- Log a warning in case the destination and the custom request config contain both `authorization` headers.
 - Special characters like `'` (single quotes), ` ` (space) and `ä` (umlaut) are encoded properly when used in the `Filter`.
 
 ## Fixed Issues
 
-- [Generator] Fix wrong type argument for collection types containing Edm types. 
+- [Generator] Fix wrong type argument for collection types containing Edm types.
 
 # 1.26.1
 

@@ -6,7 +6,6 @@ import {
   getDestinationByName,
   getDestinationsFromEnv
 } from '../../src/scp-cf/env-destination-accessor';
-import { muteLoggers } from '../test-util/mute-logger';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv
@@ -53,10 +52,6 @@ const destinationFromConfigEnv: Destination = {
 };
 
 describe('env-destination-accessor', () => {
-  beforeAll(() => {
-    muteLoggers('env-destination-accessor', 'proxy-util');
-  });
-
   afterEach(() => {
     unmockDestinationsEnv();
     jest.resetAllMocks();

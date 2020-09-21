@@ -1,10 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { destinationForServiceBinding } from '../../src/scp-cf';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('vcap-service-destination', () => {
   beforeAll(() => {
-    muteLoggers('environment-accessor');
     mockServiceBindings();
   });
 

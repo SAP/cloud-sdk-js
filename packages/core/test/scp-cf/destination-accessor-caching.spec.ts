@@ -40,13 +40,8 @@ import {
   oauthSingleResponse,
   onPremiseMultipleResponse
 } from '../test-util/example-destination-service-responses';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('caching destination', () => {
-  beforeAll(() => {
-    muteLoggers('destination-accessor', 'proxy-util');
-  });
-
   afterEach(() => {
     destinationCache.clear();
   });

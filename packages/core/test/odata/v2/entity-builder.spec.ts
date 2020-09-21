@@ -2,17 +2,12 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { EntityBuilder } from '../../../src';
-import { muteLoggers } from '../../test-util/mute-logger';
 import {
   TestEntity,
   TestEntitySingleLink
 } from '../../test-util/test-services/v2/test-service';
 
 describe('EntityBuilder', () => {
-  beforeAll(() => {
-    muteLoggers('entity-builder');
-  });
-
   it('should build an empty entity when no properties are defined', () => {
     const builder = new EntityBuilder<TestEntity, unknown>(TestEntity);
     expect(builder.build()).toEqual(new TestEntity());

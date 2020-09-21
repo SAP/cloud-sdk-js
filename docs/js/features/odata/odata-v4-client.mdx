@@ -94,7 +94,7 @@ The URL for the query will be:
 Depending on the context of the filter it will either filter the parent or the children.
 In our example we have a `PERSON` related to 0..N `FRIENDS` which are both of type people.
 
-If you want to get all persons with first name `John` the query is:
+If you want to get all people with first name `John` the query is:
 
 ```ts
 People.requestBuilder().getAll()
@@ -122,7 +122,6 @@ People.requestBuilder().getAll()
     )
 ```
 This will return all persons but only the friends with name `John` will be included in the response.
-
 
 
 

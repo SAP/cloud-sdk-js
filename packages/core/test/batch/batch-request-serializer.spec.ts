@@ -6,9 +6,11 @@ import {
   createChangeSetWithFakeId
 } from '../test-util/batch-test-util';
 import {
+  serializeBatchRequest,
   serializeChangeSet,
   serializeRequest
 } from '../../src/odata/v2/batch-request-serializer';
+import { ODataBatchRequestConfig } from '../../src/odata/common/request/odata-batch-request-config';
 
 describe('batch request serializer', () => {
   let testEntity: TestEntity;
@@ -97,6 +99,27 @@ describe('batch request serializer', () => {
 
     it('returns undefined for empty change set', () => {
       expect(serializeChangeSet(createChangeSetWithFakeId())).toBeUndefined();
+    });
+  });
+
+  describe('serializeBatchRequest', () => {
+    it('serializes payload for batch subrequests', () => {
+      const payload = serializeBatchRequest(
+        [
+          createChangeSetWithFakeId(
+            TestEntity.requestBuilder().create(testEntity)
+          ),
+          TestEntity.requestBuilder().getAll(),
+          createChangeSetWithFakeId(
+            TestEntity.requestBuilder().update(testEntity),
+            TestEntity.requestBuilder().delete(testEntity)
+          ),
+          TestEntity.requestBuilder().getByKey('guidId', 'strId')
+        ],
+        { batchId: 'batchId' } as ODataBatchRequestConfig
+      );
+
+      expect(payload).toMatchSnapshot();
     });
   });
 });

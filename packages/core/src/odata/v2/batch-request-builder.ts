@@ -14,8 +14,7 @@ import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-c
 import { EntityV2 } from './entity';
 import {
   ODataBatchChangeSetV2,
-  serializeRequest,
-  serializeChangeSet
+  serializeBatchRequest
 } from './batch-request-serializer';
 import {
   CreateRequestBuilderV2,
@@ -58,7 +57,7 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
     readonly entityToConstructorMap: MapType<Constructable<EntityV2>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath, uuid()));
-    this.requestConfig.payload = serializeBatchPayload(
+    this.requestConfig.payload = serializeBatchRequest(
       requests,
       this.requestConfig
     );
@@ -95,66 +94,6 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
         )
       );
   }
-}
-
-/**
- * Convert the given requests to the payload of the batch.
- *
- * @param requests - Requests of the batch.
- * @param requestConfig - The batch request configuration.
- * @returns The generated payload.
- */
-export function serializeBatchPayload(
-  requests: (
-    | ODataBatchChangeSetV2<
-        | CreateRequestBuilderV2<EntityV2>
-        | UpdateRequestBuilderV2<EntityV2>
-        | DeleteRequestBuilderV2<EntityV2>
-      >
-    | GetAllRequestBuilderV2<EntityV2>
-    | GetByKeyRequestBuilderV2<EntityV2>
-  )[],
-  requestConfig: ODataBatchRequestConfig
-): string {
-  const serializedSubRequests = requests
-    .map(request => serializeBatchSubRequest(request))
-    .filter(b => !!b);
-
-  if (serializedSubRequests.length) {
-    const batchBoundary = `batch_${requestConfig.batchId}`;
-    return [
-      `--${batchBoundary}`,
-      serializedSubRequests.join(`\n--${batchBoundary}\n`),
-      `--${batchBoundary}--`,
-      ''
-    ].join('\n');
-  }
-  return '';
-}
-
-function serializeBatchSubRequest<
-  T extends
-    | CreateRequestBuilderV2<EntityV2>
-    | UpdateRequestBuilderV2<EntityV2>
-    | DeleteRequestBuilderV2<EntityV2>
->(
-  request:
-    | ODataBatchChangeSetV2<T>
-    | GetAllRequestBuilderV2<EntityV2>
-    | GetByKeyRequestBuilderV2<EntityV2>
-): string | undefined {
-  if (
-    request instanceof GetAllRequestBuilderV2 ||
-    request instanceof GetByKeyRequestBuilderV2
-  ) {
-    return serializeRequest(request);
-  }
-  if (request instanceof ODataBatchChangeSetV2) {
-    return serializeChangeSet(request);
-  }
-  throw Error(
-    'Could not serialize batch request. The given sub request is not a valid retrieve request or change set.'
-  );
 }
 
 function buildResponses(

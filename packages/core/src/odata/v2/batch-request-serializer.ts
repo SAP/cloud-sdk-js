@@ -3,6 +3,7 @@
 import { v4 as uuid } from 'uuid';
 import voca from 'voca';
 import { MethodRequestBuilderBase } from '../common';
+import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
 import { EntityV2 } from './entity';
 import {
   CreateRequestBuilderV2,
@@ -128,6 +129,66 @@ function getPayload(request: MethodRequestBuilderBase): string[] {
  */
 export function getLine(request: MethodRequestBuilderBase): string {
   return `${request.requestConfig.method.toUpperCase()} /${request.relativeUrl()} HTTP/1.1`;
+}
+
+/**
+ * Convert the given requests to the payload of the batch.
+ *
+ * @param requests - Requests of the batch.
+ * @param requestConfig - The batch request configuration.
+ * @returns The generated payload.
+ */
+export function serializeBatchRequest(
+  requests: (
+    | ODataBatchChangeSetV2<
+        | CreateRequestBuilderV2<EntityV2>
+        | UpdateRequestBuilderV2<EntityV2>
+        | DeleteRequestBuilderV2<EntityV2>
+      >
+    | GetAllRequestBuilderV2<EntityV2>
+    | GetByKeyRequestBuilderV2<EntityV2>
+  )[],
+  requestConfig: ODataBatchRequestConfig
+): string {
+  const serializedSubRequests = requests
+    .map(request => serializeBatchSubRequest(request))
+    .filter(b => !!b);
+
+  if (serializedSubRequests.length) {
+    const batchBoundary = `batch_${requestConfig.batchId}`;
+    return [
+      `--${batchBoundary}`,
+      serializedSubRequests.join(`\n--${batchBoundary}\n`),
+      `--${batchBoundary}--`,
+      ''
+    ].join('\n');
+  }
+  return '';
+}
+
+function serializeBatchSubRequest<
+  T extends
+    | CreateRequestBuilderV2<EntityV2>
+    | UpdateRequestBuilderV2<EntityV2>
+    | DeleteRequestBuilderV2<EntityV2>
+>(
+  request:
+    | ODataBatchChangeSetV2<T>
+    | GetAllRequestBuilderV2<EntityV2>
+    | GetByKeyRequestBuilderV2<EntityV2>
+): string | undefined {
+  if (
+    request instanceof GetAllRequestBuilderV2 ||
+    request instanceof GetByKeyRequestBuilderV2
+  ) {
+    return serializeRequest(request);
+  }
+  if (request instanceof ODataBatchChangeSetV2) {
+    return serializeChangeSet(request);
+  }
+  throw Error(
+    'Could not serialize batch request. The given sub request is not a valid retrieve request or change set.'
+  );
 }
 
 export { ODataBatchChangeSetV2 as ODataBatchChangeSet };

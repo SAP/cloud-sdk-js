@@ -42,11 +42,22 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
+
+    this.requestConfig.keys = oDataUriV2.getEntityKeys(
+      this._entity,
+      this._entityConstructor
+    );
+
+    this.requestConfig.payload = this.getUpdateBody();
+  }
+
+  get entity(): EntityT {
+    return this._entity;
   }
 
   /**
+   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.
    * Builds the payload and the entity keys of the query.
-   *
    * @returns the builder itself
    */
   prepare(): this {
@@ -84,7 +95,6 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT> {
-    this.prepare();
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
@@ -112,6 +122,10 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
    */
   replaceWholeEntityWithPut(): this {
     this.requestConfig.updateWithPut();
+    this.requestConfig.payload = serializeEntityV2(
+      this._entity,
+      this._entityConstructor
+    );
     return this;
   }
 

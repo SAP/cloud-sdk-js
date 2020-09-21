@@ -13,9 +13,9 @@ import { MethodRequestBuilderBase } from '../common/request-builder/request-buil
 import { ODataBatchRequestConfig } from '../common/request/odata-batch-request-config';
 import { EntityV2 } from './entity';
 import {
-  toBatchRetrieveBodyV2,
-  toBatchChangeSetV2,
-  ODataBatchChangeSetV2
+  ODataBatchChangeSetV2,
+  serializeRequest,
+  serializeChangeSet
 } from './batch-request-serializer';
 import {
   CreateRequestBuilderV2,
@@ -37,8 +37,6 @@ import {
 export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
   ODataBatchRequestConfig
 > {
-  typedRequestProperty;
-
   /**
    * Creates an instance of ODataBatchRequestBuilder.
    *
@@ -118,23 +116,23 @@ export function serializeBatchPayload(
   )[],
   requestConfig: ODataBatchRequestConfig
 ): string {
-  const payloads = requests.map(serializeBatchSubRequest).filter(b => !!b);
-  if (payloads.length > 0) {
-    return (
-      payloads
-        .map(
-          part =>
-            getBatchRequestStartWithLineBreak(requestConfig.batchId) + part
-        )
-        .join('\n') +
-      '\n' +
-      getEndBatchWithLineBreak(requestConfig.batchId)
-    );
+  const serializedSubRequests = requests
+    .map(request => serializeBatchSubRequest(request))
+    .filter(b => !!b);
+
+  if (serializedSubRequests.length) {
+    const batchBoundary = `batch_${requestConfig.batchId}`;
+    return [
+      `--${batchBoundary}`,
+      serializedSubRequests.join(`\n--${batchBoundary}\n`),
+      `--${batchBoundary}--`,
+      ''
+    ].join('\n');
   }
   return '';
 }
 
-export function serializeBatchSubRequest<
+function serializeBatchSubRequest<
   T extends
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>
@@ -149,13 +147,13 @@ export function serializeBatchSubRequest<
     request instanceof GetAllRequestBuilderV2 ||
     request instanceof GetByKeyRequestBuilderV2
   ) {
-    return toBatchRetrieveBodyV2(request);
+    return serializeRequest(request);
   }
   if (request instanceof ODataBatchChangeSetV2) {
-    return toBatchChangeSetV2(request);
+    return serializeChangeSet(request);
   }
   throw Error(
-    'The given request is not a valid retrieve request or change set.'
+    'Could not serialize batch request. The given sub request is not a valid retrieve request or change set.'
   );
 }
 
@@ -189,14 +187,6 @@ function buildResponse(
       response
     )} is not a valid retrieve request or change set, because it does not contain the proper Content-Type.`
   );
-}
-
-function getBatchRequestStartWithLineBreak(batchId: string) {
-  return `--batch_${batchId}\n`;
-}
-
-function getEndBatchWithLineBreak(batchId: string) {
-  return `--batch_${batchId}--\n`;
 }
 
 function isChangeSet(response: string): boolean {

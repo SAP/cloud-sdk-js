@@ -1,39 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`batch request serializer serializes getAll request 1`] = `
-"Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-"
-`;
-
-exports[`batch request serializer serializes getAll request with custom headers 1`] = `
-"Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Custom-Header: custom
-"
-`;
-
-exports[`batch request serializer serializes getByKey request 1`] = `
-"Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'testId',KeyPropertyString='test')?$format=json HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-"
-`;
-
-exports[`batch request serializer toBatchChangeSetV2 returns undefined for empty change set 1`] = `undefined`;
-
-exports[`batch request serializer toBatchChangeSetV2 serializes change set with multiple operations 1`] = `
+exports[`batch request serializer serializeChangeSet serializes change set with multiple operations 1`] = `
 "Content-Type: multipart/mixed; boundary=changeset_changesetId
 
 --changeset_changesetId
@@ -59,7 +26,7 @@ Content-Type: application/json
 --changeset_changesetId--"
 `;
 
-exports[`batch request serializer toBatchChangeSetV2 serializes change set with one operation 1`] = `
+exports[`batch request serializer serializeChangeSet serializes change set with one operation 1`] = `
 "Content-Type: multipart/mixed; boundary=changeset_changesetId
 
 --changeset_changesetId
@@ -75,9 +42,8 @@ Content-Type: application/json
 --changeset_changesetId--"
 `;
 
-exports[`batch request serializer toRequestPayload serializes create request 1`] = `
-"--changeset_testId
-Content-Type: application/http
+exports[`batch request serializer serializeRequest serializes create request 1`] = `
+"Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
@@ -88,9 +54,8 @@ Content-Type: application/json
 "
 `;
 
-exports[`batch request serializer toRequestPayload serializes delete request with eTag 1`] = `
-"--changeset_testId
-Content-Type: application/http
+exports[`batch request serializer serializeRequest serializes delete request with eTag 1`] = `
+"Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
@@ -102,9 +67,8 @@ If-Match: eTag
 "
 `;
 
-exports[`batch request serializer toRequestPayload serializes delete request with entity 1`] = `
-"--changeset_testId
-Content-Type: application/http
+exports[`batch request serializer serializeRequest serializes delete request with entity 1`] = `
+"Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
@@ -115,9 +79,8 @@ Content-Type: application/json
 "
 `;
 
-exports[`batch request serializer toRequestPayload serializes delete request with id 1`] = `
-"--changeset_testId
-Content-Type: application/http
+exports[`batch request serializer serializeRequest serializes delete request with id 1`] = `
+"Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'test',KeyPropertyString='test') HTTP/1.1
@@ -128,9 +91,39 @@ Content-Type: application/json
 "
 `;
 
-exports[`batch request serializer toRequestPayload serializes update request 1`] = `
-"--changeset_testId
-Content-Type: application/http
+exports[`batch request serializer serializeRequest serializes getAll request 1`] = `
+"Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+"
+`;
+
+exports[`batch request serializer serializeRequest serializes getAll request with custom headers 1`] = `
+"Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Custom-Header: custom
+"
+`;
+
+exports[`batch request serializer serializeRequest serializes getByKey request 1`] = `
+"Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'testId',KeyPropertyString='test')?$format=json HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+"
+`;
+
+exports[`batch request serializer serializeRequest serializes update request 1`] = `
+"Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
@@ -141,9 +134,8 @@ Content-Type: application/json
 "
 `;
 
-exports[`batch request serializer toRequestPayload serializes update request using put 1`] = `
-"--changeset_testId
-Content-Type: application/http
+exports[`batch request serializer serializeRequest serializes update request using put 1`] = `
+"Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 PUT /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1

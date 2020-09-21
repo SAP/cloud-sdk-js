@@ -338,6 +338,27 @@ BusinessPartner.requestBuilder()
   .execute(destination);
 ```
 
+## Function imports
+### Request builder
+The [function imports request builder](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.functionimportrequestbuilderv2) helps build a request for a service operation with essential parameters.
+The example below creates a function import request builder for the service operation "PostGoodsIssue" and then execute it against your service.
+```ts
+postGoodsIssue({outboundDeliveryOrder: "order"})
+  .execute(destination);
+```
+The service operation is defined in the service metadata. Therefore, for some services, there might be no function imports at all like the beloved `Business Partner Service`.
+This function import can be found in the package `@sap/cloud-sdk-vdm-warehouse-outbound-delivery-order-service`.
+
+### Setting ETag
+The `ETag` handling with the function imports is not integrated.
+Below is an example demonstrating how to make use of the [`withCustomHeaders`](pathname:///api/1.26.1/classes/sap_cloud_sdk_core.functionimportrequestbuilder-1#withcustomheaders) for setting `ETag` by your own.
+In order to use [`versionIdentifier`](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.entityv2#versionidentifier) for `ETag` value, make sure you fetch the entity information via e.g., a `get` request.
+```ts
+postGoodsIssue({outboundDeliveryOrder: "order"})
+  .withCustomHeaders({"if-match": entity.versionIdentifier})
+  .execute(destination)
+```
+
 ## Batch Requests
 
 OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with when you want to execute a large number of requests.

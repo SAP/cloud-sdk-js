@@ -29,13 +29,25 @@ module.exports = {
           },
           {
             type: 'category',
+            label: 'REST',
+            items: [
+              'java/features/rest/overview',
+              {
+                type: 'category',
+                label: 'Released clients',
+                items: ['java/features/rest/clients/scp-workflow-rest-api']
+              }
+            ]
+          },
+          'java/features/bapi-and-rfc/bapi-and-rfc-overview',
+          {
+            type: 'category',
             label: 'Connectivity',
             items: [
               'java/features/connectivity/sdk-connectivity-destination-service',
               'java/features/connectivity/sdk-connectivity-http-client'
             ]
           },
-          'java/features/bapi-and-rfc/bapi-and-rfc-overview',
           {
             type: 'category',
             label: 'Multitenancy',
@@ -52,29 +64,17 @@ module.exports = {
           },
           {
             type: 'category',
-            label: 'REST',
-            items: [
-              'java/features/rest/overview',
-              {
-                type: 'category',
-                label: 'Released clients',
-                items: ['java/features/rest/clients/scp-workflow-rest-api']
-              }
-            ]
-          },
-          {
-            type: 'category',
             label: 'SDK extensions',
             items: [
-              'java/features/extensions/extensions-supported-by-sap-cloud-sdk-for-java'
-              // {
-              //   type: 'category',
-              //   label: 'Extension library',
-              //   items: [
-              //     'java/features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java',
-              //     'java/features/extensions/extension-library/blockchain/sap-blockchain-extension-library-for-cloud-sdk-for-java',
-              //   ]
-              // }
+              'java/features/extensions/extensions-supported-by-sap-cloud-sdk-for-java',
+              {
+                type: 'category',
+                label: 'Extension library',
+                items: [
+                  'java/features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java',
+                  // 'java/features/extensions/extension-library/blockchain/sap-blockchain-extension-library-for-cloud-sdk-for-java',
+                ]
+              }
             ]
           }
         ]
@@ -146,10 +146,9 @@ module.exports = {
 
               'js/features/odata/overview',
               'js/features/odata/generate-odata-client',
-              'js/features/odata/execute-odata-request',
-              'js/features/odata/generic-http-client',
-              'js/features/odata/odata-v2-client',
-              'js/features/odata/odata-v4-client'
+              'js/features/odata/executing-a-request-using-a-generated-odata-v2-v4-client-with-sap-cloud-sdk-for-javascript',
+              'js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript',
+              'js/features/odata/use-odata-v4-type-safe-client-for-javascript-typescript'
             ]
           },
           {
@@ -158,7 +157,8 @@ module.exports = {
             items: [
               'js/features/connectivity/destination-js-sdk',
               'js/features/connectivity/proxy-js-sdk',
-              'js/features/connectivity/on-premise'
+              'js/features/connectivity/generic-http-client',
+              'js/features/connectivity/on-premise-connectivity-in-the-sap-cloud-sdk-for-javascript'
             ]
           }
         ]

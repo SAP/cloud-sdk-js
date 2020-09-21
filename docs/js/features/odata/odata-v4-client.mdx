@@ -48,7 +48,7 @@ $filter=(/any(a0:((a0/Friends/FirstName eq 'firstName' and a0/Friends/LastName e
 
 #### Expand and Select
 
-In contrast to the OData v2 implementation you have select and expand separately.
+In contrast to the OData v2 implementation, you have `select` and `expand` separately.
 In other words selected properties are not expanded automatically as in v2.
 
 ```ts
@@ -122,7 +122,6 @@ People.requestBuilder().getAll()
     )
 ```
 This will return all persons but only the friends with name `John` will be included in the response.
-
 
 
 

@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { tenantId, userId } from '../util';
 import { Cache, IsolationStrategy } from './cache';
 import { DestinationsByType } from './destination-accessor-types';
@@ -8,13 +7,13 @@ import { Destination } from './destination-service-types';
 
 const DestinationCache = (cache: Cache<Destination>) => ({
   retrieveDestinationFromCache: (
-    decodedJwt: MapType<any>,
+    decodedJwt: Record<string, any>,
     name: string,
     isolation: IsolationStrategy
   ): Destination | undefined =>
     cache.get(getDestinationCacheKey(decodedJwt, name, isolation)),
   cacheRetrievedDestinations: (
-    decodedJwt: MapType<any>,
+    decodedJwt: Record<string, any>,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
   ): void => {
@@ -52,7 +51,7 @@ const DestinationCache = (cache: Cache<Destination>) => ({
  * @hidden
  */
 export function getDestinationCacheKey(
-  decodedJwt: MapType<any>,
+  decodedJwt: Record<string, any>,
   destinationName: string,
   isolationStrategy: IsolationStrategy
 ): string {

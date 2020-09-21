@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { head } from 'rambda';
 import { audiences, DecodedJWT, decodeJwt } from '../util';
@@ -119,9 +119,9 @@ export function getService(service: string): Service | undefined {
  *
  * @returns 'VCAP_SERVICES' found in environment variables or null if not defined. The key denotes the name ov the service and the value is the definition.
  */
-export function getVcapService(): MapType<any> | null {
+export function getVcapService(): Record<string, any> | null {
   const env = getEnvironmentVariable('VCAP_SERVICES');
-  let vcapServices: MapType<any>;
+  let vcapServices: Record<string, any>;
   if (!env) {
     logger.warn("Environment variable 'VCAP_SERVICES' is not defined.");
     return null;
@@ -267,9 +267,9 @@ function selectXsuaaInstance(token?: DecodedJWT): XsuaaServiceCredentials {
 
 function applyStrategiesInOrder(
   selectionStrategies: SelectionStrategyFn[],
-  xsuaaInstances: MapType<any>[],
+  xsuaaInstances: Record<string, any>[],
   token?: DecodedJWT
-): MapType<any>[] {
+): Record<string, any>[] {
   return selectionStrategies.reduce(
     (result, strategy) =>
       result.length ? result : strategy(xsuaaInstances, token),
@@ -278,14 +278,14 @@ function applyStrategiesInOrder(
 }
 
 type SelectionStrategyFn = (
-  xsuaaInstances: MapType<any>[],
+  xsuaaInstances: Record<string, any>[],
   token?: DecodedJWT
-) => MapType<any>[];
+) => Record<string, any>[];
 
 function matchingClientId(
-  xsuaaInstances: MapType<any>[],
+  xsuaaInstances: Record<string, any>[],
   token?: DecodedJWT
-): MapType<any>[] {
+): Record<string, any>[] {
   if (!token) {
     return [];
   }
@@ -295,9 +295,9 @@ function matchingClientId(
 }
 
 function matchingAudience(
-  xsuaaInstances: MapType<any>[],
+  xsuaaInstances: Record<string, any>[],
   token?: DecodedJWT
-): MapType<any>[] {
+): Record<string, any>[] {
   if (!token) {
     return [];
   }
@@ -307,9 +307,9 @@ function matchingAudience(
 }
 
 function takeFirstAndWarn(
-  xsuaaInstances: MapType<any>[],
+  xsuaaInstances: Record<string, any>[],
   token?: DecodedJWT
-): MapType<any>[] {
+): Record<string, any>[] {
   logger.warn(
     `Unable to match a specific XSUAA service instance to the given JWT. The following XSUAA instances are bound: ${xsuaaInstances.map(
       x => x.credentials.xsappname

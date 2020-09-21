@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { errorWithCause } from '@sap-cloud-sdk/util';
 import { head, last } from 'rambda';
 import { v4 as uuid } from 'uuid';
 import {
@@ -66,7 +66,7 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
       | GetAllRequestBuilderV2<EntityV2>
       | GetByKeyRequestBuilderV2<EntityV2>
     )[],
-    readonly entityToConstructorMap: MapType<Constructable<EntityV2>>
+    readonly entityToConstructorMap: Record<string, Constructable<EntityV2>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath, uuid()));
     this.requestConfig.payload = getPayload(requests, this.requestConfig);
@@ -182,7 +182,7 @@ function toRequestBody<
 
 function buildResponses(
   responses: string[],
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>,
   lineBreak: string
 ): BatchResponse[] {
   return responses.map(r =>
@@ -192,7 +192,7 @@ function buildResponses(
 
 function buildResponse(
   response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>,
   lineBreak: string
 ) {
   if (isChangeSet(response)) {
@@ -316,7 +316,7 @@ function trimRetrieveHeaders(
 
 function toConstructableFromChangeSetResponse(
   responseBody: any,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>
 ): Constructable<EntityV2> | undefined {
   return entityToConstructorMap[
     getEntityNameFromMetadata(getSingleResult(responseBody).__metadata)
@@ -325,7 +325,7 @@ function toConstructableFromChangeSetResponse(
 
 function toConstructableFromRetrieveResponse(
   responseBody: any,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>
 ): Constructable<EntityV2> {
   const entityJson = isCollectionResult(responseBody)
     ? getCollectionResult(responseBody)[0]
@@ -336,7 +336,7 @@ function toConstructableFromRetrieveResponse(
   ];
 }
 
-function getEntityNameFromMetadata(metadata: MapType<string>): string {
+function getEntityNameFromMetadata(metadata: Record<string, string>): string {
   const entityUri = metadata.uri;
   const [pathBeforeQuery] = entityUri.split('?');
   const [pathBeforeKeys] = pathBeforeQuery.split('(');
@@ -390,7 +390,7 @@ function toHttpCode(response: string): number {
 function toWriteResponseArray(
   response: string,
   lineBreak: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>
 ): WriteResponse[] {
   return partitionChangeSetResponse(response, lineBreak).map(r => {
     if (isNoContent(r)) {
@@ -420,7 +420,7 @@ function toWriteResponseArray(
 
 function buildWriteResponses(
   response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>,
   lineBreak: string
 ): WriteResponses {
   const writeResponses = toWriteResponseArray(
@@ -433,7 +433,7 @@ function buildWriteResponses(
 
 function buildRetrieveOrErrorResponse(
   response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>,
   lineBreak: string
 ): ReadResponse | ErrorResponse {
   const parsedBody = JSON.parse(trimRetrieveHeaders(response, lineBreak));

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import nock from 'nock';
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   buildAndAddAuthorizationHeader,
   Destination,
@@ -349,7 +349,7 @@ describe('Authorization header builder', () => {
   });
 });
 
-function checkHeaders(headers: MapType<any>) {
+function checkHeaders(headers: Record<string, any>) {
   expect(headers['SAP-Connectivity-Authentication']).toBe('someValue');
   expect(headers['Proxy-Authorization']).toBe('someProxyValue');
 }

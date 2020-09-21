@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable, EntityBase } from '../entity';
 import { Link } from '../selectable';
 import { ODataUri } from '../uri-conversion';
@@ -17,7 +16,7 @@ export class ODataCreateRequestConfig<
   /**
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
    */
-  parentKeys: MapType<any>;
+  parentKeys: Record<string, any>;
 
   /**
    * Field that links the parent entity class to the child entity class.
@@ -41,7 +40,7 @@ export class ODataCreateRequestConfig<
       : this.resourcePathAsChild();
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     return this.prependDollarToQueryParameters({});
   }
 

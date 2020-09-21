@@ -2,7 +2,7 @@
 
 import { readFileSync } from 'fs';
 import { sep } from 'path';
-import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosResponse } from 'axios';
 import { AnalyticsData, getAnalyticsData } from './analytics-data';
 import {
@@ -173,7 +173,9 @@ function calledFromCentralDependency(callerPath: string): boolean {
  * @returns SAP Web Analytics custom parameters
  * @hidden
  */
-function payloadToCustomParameters(params: AnalyticsData): MapType<string> {
+function payloadToCustomParameters(
+  params: AnalyticsData
+): Record<string, string> {
   let i = 1;
 
   return Object.entries(params).reduce((prev, [key, value]) => {

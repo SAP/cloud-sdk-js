@@ -1,11 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import {
-  createLogger,
-  errorWithCause,
-  MapType,
-  renameKeys
-} from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause, renameKeys } from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
@@ -43,7 +38,7 @@ export function clientCredentialsGrant(
   xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
   options?: ResilienceOptions,
-  customBody: MapType<any> = {}
+  customBody: Record<string, any> = {}
 ): Promise<ClientCredentialsResponse> {
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = { grant_type: GrantType.CLIENT_CREDENTIALS, ...customBody };

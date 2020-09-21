@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { Constructable, EntityBase } from '../entity';
 import { FieldType } from '../selectable';
 import { ODataUri } from '../uri-conversion';
@@ -15,7 +14,7 @@ import { WithKeys, WithETag } from './odata-request-traits';
 export class ODataDeleteRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithKeys, WithETag {
-  keys: MapType<FieldType>;
+  keys: Record<string, FieldType>;
   eTag: string;
   versionIdentifierIgnored = false;
 
@@ -38,7 +37,7 @@ export class ODataDeleteRequestConfig<EntityT extends EntityBase>
     );
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     return this.prependDollarToQueryParameters({});
   }
 }

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   edmToComplexPropertyType,
   edmToTsType,
@@ -105,7 +105,7 @@ export function transformComplexTypesBase(
 export function getTypeMappingComplexProperties(
   typeName: string,
   enumTypes: VdmEnumType[],
-  formattedTypes: MapType<any>,
+  formattedTypes: Record<string, any>,
   isCollection: boolean,
   isEnum: boolean,
   isComplex: boolean

@@ -64,7 +64,7 @@ describe('batch response parser', () => {
       }
     ) => ({ data, headers, status: 200 });
 
-    it('correctly partitions batch response', () => {
+    it('correctly splits batch response', () => {
       const body = [
         `--${batchId}`,
         retrieveResponse,
@@ -79,7 +79,7 @@ describe('batch response parser', () => {
       ]);
     });
 
-    it('correctly partitions batch response for upper case headers', () => {
+    it('correctly splits batch response for upper case headers', () => {
       const body = [
         `--${batchId}`,
         retrieveResponse,
@@ -152,7 +152,7 @@ describe('batch response parser', () => {
     const response1 = 'response1';
     const response2 = 'response2';
     const contentTypeHeader = `Content-Type: multipart/mixed; boundary=${changeSetId}`;
-    it('correctly partitions change set response', () => {
+    it('correctly splits change set response', () => {
       const changeSet = [
         contentTypeHeader,
         '',
@@ -166,7 +166,7 @@ describe('batch response parser', () => {
       expect(splitChangeSetResponse(changeSet)).toEqual([response1, response2]);
     });
 
-    it('correctly partitions change set response when the first header is not content-type', () => {
+    it('correctly splits change set response when the first header is not content-type', () => {
       const changeSet = [
         'content-length: 123',
         contentTypeHeader,

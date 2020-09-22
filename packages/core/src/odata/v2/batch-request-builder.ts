@@ -23,12 +23,7 @@ import {
   GetByKeyRequestBuilderV2,
   UpdateRequestBuilderV2
 } from './request-builder';
-import {
-  detectNewLineSymbol,
-  partitionBatchResponse,
-  buildRetrieveOrErrorResponse,
-  buildWriteResponses
-} from './batch-response-parser';
+import { parseBatchResponse } from './batch-response-parser';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
@@ -75,11 +70,7 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        buildResponses(
-          partitionBatchResponse(response),
-          this.entityToConstructorMap,
-          detectNewLineSymbol(response.data)
-        )
+        parseBatchResponse(response, this.entityToConstructorMap)
       )
       .catch(error =>
         Promise.reject(
@@ -92,46 +83,6 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
         )
       );
   }
-}
-
-function buildResponses(
-  responses: string[],
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
-  lineBreak: string
-): BatchResponse[] {
-  return responses.map(r =>
-    buildResponse(r, entityToConstructorMap, lineBreak)
-  );
-}
-
-function buildResponse(
-  response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
-  lineBreak: string
-) {
-  if (isChangeSet(response)) {
-    return buildWriteResponses(response, entityToConstructorMap, lineBreak);
-  }
-  if (isRetrieveRequestOrError(response)) {
-    return buildRetrieveOrErrorResponse(
-      response,
-      entityToConstructorMap,
-      lineBreak
-    );
-  }
-  throw Error(
-    `The response: ${JSON.stringify(
-      response
-    )} is not a valid retrieve request or change set, because it does not contain the proper Content-Type.`
-  );
-}
-
-function isChangeSet(response: string): boolean {
-  return !!response.match(/Content-Type: multipart\/mixed;/);
-}
-
-function isRetrieveRequestOrError(response: string): boolean {
-  return !!response.match(/Content-Type: application\/http/);
 }
 
 export { ODataBatchRequestBuilderV2 as ODataBatchRequestBuilder };

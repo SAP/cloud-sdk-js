@@ -3,9 +3,9 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   detectNewLineSymbol,
   getResponseBody,
-  partitionChangeSetResponse,
-  partitionBatchResponse,
-  getEntityNameFromMetadataUri,
+  splitChangeSetResponse,
+  splitBatchResponse,
+  parseEntityNameFromMetadataUri,
   parseHttpCode,
   getConstructor,
   toWriteResponse
@@ -26,7 +26,7 @@ describe('batch response parser', () => {
       expect(() =>
         detectNewLineSymbol('multiple\tlines')
       ).toThrowErrorMatchingInlineSnapshot(
-        '"Cannot detect line breaks in the response body: multiple	lines."'
+        '"Cannot detect line breaks in the batch response body."'
       );
     });
   });
@@ -35,20 +35,20 @@ describe('batch response parser', () => {
     it('retrieves the response body when there are >= 3 lines', () => {
       const responseLines = ['--partId', '', 'responseBody'];
       const response = responseLines.join('\n');
-      expect(getResponseBody(response, '\n')).toBe(responseLines[2]);
+      expect(getResponseBody(response)).toBe(responseLines[2]);
     });
 
     it('retrieves the response body when there are < 3 lines', () => {
       const response = ['--partId', 'responseBody'].join('\n');
       expect(() =>
-        getResponseBody(response, '\n')
+        getResponseBody(response)
       ).toThrowErrorMatchingInlineSnapshot(
         '"Cannot parse batch subrequest response body. Expected at least three lines in the response, got 2."'
       );
     });
   });
 
-  describe('partitionBatchResponse', () => {
+  describe('splitBatchResponse', () => {
     const batchId = 'batch_1234';
     const retrieveResponse = 'retrieveResponse';
     const changesetId = 'changeset_1234';
@@ -73,7 +73,7 @@ describe('batch response parser', () => {
         `--${batchId}--`
       ].join('\n');
 
-      expect(partitionBatchResponse(createBatchResponse(body))).toEqual([
+      expect(splitBatchResponse(createBatchResponse(body))).toEqual([
         retrieveResponse,
         changeSetResponse
       ]);
@@ -89,7 +89,7 @@ describe('batch response parser', () => {
       ].join('\n');
 
       expect(
-        partitionBatchResponse(
+        splitBatchResponse(
           createBatchResponse(body, {
             'Content-Type': `multipart/mixed; boundary=${batchId}`
           })
@@ -113,7 +113,7 @@ describe('batch response parser', () => {
         ''
       ].join('\n');
 
-      expect(partitionBatchResponse(createBatchResponse(body))).toEqual([
+      expect(splitBatchResponse(createBatchResponse(body))).toEqual([
         retrieveResponse,
         changeSetResponse
       ]);
@@ -121,7 +121,7 @@ describe('batch response parser', () => {
 
     it('returns empty array for empty response', () => {
       const body = ['', '', ''].join('\n');
-      expect(partitionBatchResponse(createBatchResponse(body))).toEqual([]);
+      expect(splitBatchResponse(createBatchResponse(body))).toEqual([]);
     });
 
     it('throws an error when headers do not contain boundary', () => {
@@ -132,7 +132,7 @@ describe('batch response parser', () => {
         'Content-Type': 'multipart/mixed'
       });
       expect(() =>
-        partitionBatchResponse(response)
+        splitBatchResponse(response)
       ).toThrowErrorMatchingInlineSnapshot(
         '"Could not parse batch response body. Expected at least two response boundaries."'
       );
@@ -140,14 +140,14 @@ describe('batch response parser', () => {
 
     it('throws an error when there are not enough boundaries', () => {
       expect(() =>
-        partitionBatchResponse(createBatchResponse(retrieveResponse))
+        splitBatchResponse(createBatchResponse(retrieveResponse))
       ).toThrowErrorMatchingInlineSnapshot(
         '"Could not parse batch response body. Expected at least two response boundaries."'
       );
     });
   });
 
-  describe('partitionChangeSetResponse', () => {
+  describe('splitChangeSetResponse', () => {
     const changeSetId = 'changeSetId';
     const response1 = 'response1';
     const response2 = 'response2';
@@ -163,10 +163,7 @@ describe('batch response parser', () => {
         `--${changeSetId}--`
       ].join('\n');
 
-      expect(partitionChangeSetResponse(changeSet)).toEqual([
-        response1,
-        response2
-      ]);
+      expect(splitChangeSetResponse(changeSet)).toEqual([response1, response2]);
     });
 
     it('correctly partitions change set response when the first header is not content-type', () => {
@@ -179,34 +176,34 @@ describe('batch response parser', () => {
         `--${changeSetId}--`
       ].join('\n');
 
-      expect(partitionChangeSetResponse(changeSet)).toEqual([response1]);
+      expect(splitChangeSetResponse(changeSet)).toEqual([response1]);
     });
 
     it('throws error if there is no boundary in the headers', () => {
       const changeSet = ['', ''].join('\n');
       expect(() =>
-        partitionChangeSetResponse(changeSet)
+        splitChangeSetResponse(changeSet)
       ).toThrowErrorMatchingInlineSnapshot('"Cannot parse change set."');
     });
 
     describe('getEntityNameFromMetadata', () => {
       it('correctly parses name from meta data', () => {
         expect(
-          getEntityNameFromMetadataUri(
+          parseEntityNameFromMetadataUri(
             "base/service/entity('key1','key2')?query"
           )
         ).toBe('entity');
       });
 
       it('correctly parses name from meta data if there is a trailing slash', () => {
-        expect(getEntityNameFromMetadataUri('base/service/entity/?query')).toBe(
-          'entity'
-        );
+        expect(
+          parseEntityNameFromMetadataUri('base/service/entity/?query')
+        ).toBe('entity');
       });
 
       it('throws error if uri is undefined in meta data', () => {
         expect(() =>
-          getEntityNameFromMetadataUri(undefined)
+          parseEntityNameFromMetadataUri(undefined)
         ).toThrowErrorMatchingInlineSnapshot(
           '"Could not retrieve entity name from metadata. URI was: \'undefined\'."'
         );
@@ -214,7 +211,7 @@ describe('batch response parser', () => {
 
       it('throws error if uri has unknown format', () => {
         expect(() =>
-          getEntityNameFromMetadataUri('/')
+          parseEntityNameFromMetadataUri('/')
         ).toThrowErrorMatchingInlineSnapshot(
           '"Could not retrieve entity name from metadata. Unknown URI format. URI was: \'/\'."'
         );
@@ -298,7 +295,7 @@ describe('batch response parser', () => {
         ''
       ].join('\n');
 
-      expect(toWriteResponse(response, '\n', {})).toEqual({
+      expect(toWriteResponse(response, {})).toEqual({
         httpCode: 204,
         body: {},
         type: undefined,
@@ -314,29 +311,12 @@ describe('batch response parser', () => {
         JSON.stringify(body)
       ].join('\n');
 
-      expect(toWriteResponse(response, '\n', {})).toEqual({
+      expect(toWriteResponse(response, {})).toEqual({
         httpCode: 201,
         body,
         type: undefined,
         as: expect.anything()
       });
-    });
-
-    it('should log a warning for responses with an unexpected status code', () => {
-      const logger = createLogger('batch-response-parser');
-      spyOn(logger, 'warn');
-
-      const response = [
-        firstHeader,
-        'HTTP/1.1 500 Internal Server Error',
-        secondHeader,
-        JSON.stringify(body)
-      ].join('\n');
-
-      expect(() => toWriteResponse(response, '\n', {})).not.toThrowError();
-      expect(logger.warn).toHaveBeenCalledWith(
-        'Unexpected http code for changeset sub response. Parsed response might be incorrect.'
-      );
     });
   });
 });

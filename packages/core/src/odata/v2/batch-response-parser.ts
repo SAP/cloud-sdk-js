@@ -22,42 +22,29 @@ const logger = createLogger({
   messageContext: 'batch-response-parser'
 });
 
-export function detectNewLineSymbol(response: string): string {
-  if (response.includes('\r\n')) {
+/**
+ * Detects the system dependent line break in a string.
+ * @param str The string to check for line breaks. Should have at least two lines, otherwise an error will be thrown.
+ * @returns The system dependent line break
+ */
+export function detectNewLineSymbol(str: string): string {
+  if (str.includes('\r\n')) {
     return '\r\n';
   }
-  if (response.includes('\n')) {
+  if (str.includes('\n')) {
     return '\n';
   }
-  throw new Error(
-    `Cannot detect line breaks in the response body: ${response}.`
-  );
+  throw new Error('Cannot detect line breaks in the batch response body.');
 }
 
-/*
-Response example:
---454DB24613455B1D7FBA89D16B5D9D610
-Content-Type: application/http
-Content-Length: 2833
-content-transfer-encoding: binary
-
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-Content-Length: 2626
-sap-metadata-last-modified: Wed, 04 Sep 2019 14:52:57 GMT
-cache-control: no-store, no-cache
-dataserviceversion: 2.0
-
-{"d":{"results":["something"]}}
---454DB24613455B1D7FBA89D16B5D9D610
-
-This function actually gets the response body!
+/**
+ * Get the response body from the string representation of a response.
+ * @param response String representation of a response.
+ * @returns The response body as a one line string.
  */
-export function getResponseBody(
-  retrieveResponse: string,
-  newLineSymbol: string
-): string {
-  const lines = retrieveResponse.split(newLineSymbol);
+export function getResponseBody(response: string): string {
+  const newLineSymbol = detectNewLineSymbol(response);
+  const lines = response.split(newLineSymbol);
 
   // A valid response should contain at least three lines, part id, empty line and response body.
   if (lines.length >= 3) {
@@ -69,7 +56,12 @@ export function getResponseBody(
   );
 }
 
-function parseHeaders(headersStr: string): Record<string, string> {
+/**
+ * Parse the string representation of response headers into an object
+ * @param headersStr Header string representation
+ * @returns The headers as an object.
+ */
+function parseHeaders(headersStr: string): Record<string, any> {
   const newLineSymbol = detectNewLineSymbol(headersStr);
   return headersStr.split(newLineSymbol).reduce((headers, line) => {
     const [key, value] = line.split(':');
@@ -77,13 +69,23 @@ function parseHeaders(headersStr: string): Record<string, string> {
   }, {});
 }
 
+/**
+ * Get the boundary from the content type header value.
+ * @param contentType Value of the content type header
+ * @returns The boundary or undefined if none is given.
+ */
 function getBoundary(contentType: string | undefined): string | undefined {
   if (contentType) {
     return last(contentType.split('boundary='));
   }
 }
 
-export function partitionBatchResponse(response: HttpResponse): string[] {
+/**
+ * Split a batch response into an array of sub responses for the retrieve requests and changesets.
+ * @param response The raw HTTP response.
+ * @returns A list of sub responses represented as strings.
+ */
+export function splitBatchResponse(response: HttpResponse): string[] {
   const body = response.data.trim();
   if (!body) {
     return [];
@@ -99,37 +101,15 @@ export function partitionBatchResponse(response: HttpResponse): string[] {
     );
   }
 
-  return partitionResponseBody(body, boundary);
+  return splitResponse(body, boundary);
 }
 
-/*
-E.g. response:
---batch_1234
-part 1
---batch_1234
-part 2
---batch_1234--
+/**
+ * Split a changeset (sub) response into an array of sub responses.
+ * @param changeSetResponse The string representation of a change set response.
+ * @returns A list of sub responses represented as strings.
  */
-export function partitionResponseBody(
-  responseBody: string,
-  boundary: string
-): string[] {
-  // E.g., ['', part 1, part 2, '--']
-  const parts = responseBody.split(`--${boundary}`).map(part => part.trim());
-
-  // Slice the first and last element
-  if (parts.length >= 3) {
-    return parts.slice(1, parts.length - 1);
-  }
-
-  throw new Error(
-    'Could not parse batch response body. Expected at least two response boundaries.'
-  );
-}
-
-export function partitionChangeSetResponse(
-  changeSetResponse: string
-): string[] {
+export function splitChangeSetResponse(changeSetResponse: string): string[] {
   const [changeSetResponseHeader] = changeSetResponse.split('--');
 
   const headers = parseHeaders(changeSetResponseHeader);
@@ -139,10 +119,35 @@ export function partitionChangeSetResponse(
     throw Error('Cannot parse change set.');
   }
 
-  return partitionResponseBody(changeSetResponse, boundary);
+  return splitResponse(changeSetResponse, boundary);
 }
 
-export function getEntityNameFromMetadataUri(uri: string | undefined): string {
+/**
+ * Split a string representation of a response into sub responses given its boundary.
+ * @param response The string representation of the response to split.
+ * @param boundary The boundary to split by.
+ * @returns A list of sub responses represented as strings.
+ */
+export function splitResponse(response: string, boundary: string): string[] {
+  const parts = response.split(`--${boundary}`).map(part => part.trim());
+
+  if (parts.length >= 3) {
+    return parts.slice(1, parts.length - 1);
+  }
+
+  throw new Error(
+    'Could not parse batch response body. Expected at least two response boundaries.'
+  );
+}
+
+/**
+ * Parse the entity name from the metadata uri. This should be the `__metadata` property of a single entity in the response.
+ * @param uri The URI to parse the entity name from
+ * @returns The entity name.
+ */
+export function parseEntityNameFromMetadataUri(
+  uri: string | undefined
+): string {
   if (!uri) {
     throw new Error(
       `Could not retrieve entity name from metadata. URI was: '${uri}'.`
@@ -163,6 +168,12 @@ export function getEntityNameFromMetadataUri(uri: string | undefined): string {
 }
 
 // version specific
+/**
+ * Retrieve the constructor for a specific single response body.
+ * @param responseBody The body of a single response as an object.
+ * @param entityToConstructorMap Mapping between entity names and their respective constructors.
+ * @returns The constructor if found in the mapping, undefined otherwise.
+ */
 export function getConstructor(
   responseBody: Record<string, any>,
   entityToConstructorMap: MapType<Constructable<EntityV2>>
@@ -173,34 +184,17 @@ export function getConstructor(
 
   const entityUri = entityJson?.__metadata?.uri;
   if (entityUri) {
-    return entityToConstructorMap[getEntityNameFromMetadataUri(entityUri)];
+    return entityToConstructorMap[parseEntityNameFromMetadataUri(entityUri)];
   }
 
   logger.warn('Could not parse constructor from response body.');
 }
 
-export function toConstructableFromChangeSetResponse(
-  responseBody: any,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
-): Constructable<EntityV2> | undefined {
-  return entityToConstructorMap[
-    getEntityNameFromMetadataUri(getSingleResult(responseBody).__metadata?.uri)
-  ];
-}
-
-export function toConstructableFromRetrieveResponse(
-  responseBody: any,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
-): Constructable<EntityV2> {
-  const entityJson = isCollectionResult(responseBody)
-    ? getCollectionResult(responseBody)[0]
-    : getSingleResult(responseBody);
-
-  return entityToConstructorMap[
-    getEntityNameFromMetadataUri(entityJson.__metadata?.uri)
-  ];
-}
-
+/**
+ * Parse the HTTP code of response.
+ * @param response String representation of the response.
+ * @returns The HTTP code.
+ */
 export function parseHttpCode(response: string): number {
   const group = response.match(/HTTP\/\d\.\d (\d{3}).*?/);
 
@@ -211,29 +205,46 @@ export function parseHttpCode(response: string): number {
   throw new Error('Cannot parse http code of the response.');
 }
 
-export function buildRetrieveOrErrorResponse(
-  response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
-  lineBreak: string
-): ReadResponse | ErrorResponse {
-  const parsedBody = JSON.parse(getResponseBody(response, lineBreak));
-  const httpCode = parseHttpCode(response);
-  if (httpCode === 200) {
-    return {
-      httpCode,
-      body: parsedBody,
-      type: toConstructableFromRetrieveResponse(
-        parsedBody,
-        entityToConstructorMap
-      ),
-      as: asReadResponse(parsedBody),
-      isSuccess: () => true
-    };
-  }
-  return { httpCode, body: parsedBody, isSuccess: () => false };
+/**
+ * Build a write responses object based on the according change set sub response.
+ * @param changeSetResponse String representation of the change set response.
+ * @param entityToConstructorMap Mapping between entity names and their respective constructors.
+ * @returns The write responses object.
+ */
+export function buildWriteResponses(
+  changeSetResponse: string,
+  entityToConstructorMap: MapType<Constructable<EntityV2>>
+): WriteResponses {
+  return {
+    responses: splitChangeSetResponse(changeSetResponse).map(
+      subResponse =>
+        parseResponse(subResponse, entityToConstructorMap) as WriteResponse
+    ),
+    isSuccess: () => true
+  };
 }
 
-function asReadResponse(body) {
+/**
+ * Build a retrieve or error response based on the according sub response.
+ * @param response String representation of the response.
+ * @param entityToConstructorMap Mapping between entity names and their respective constructors.
+ * @returns The read or error response.
+ */
+export function buildRetrieveOrErrorResponse(
+  response: string,
+  entityToConstructorMap: MapType<Constructable<EntityV2>>
+): ReadResponse | ErrorResponse {
+  return parseResponse(response, entityToConstructorMap) as
+    | ReadResponse
+    | ErrorResponse;
+}
+
+/**
+ * Create a function to transform the parsed response body to a list of entities of the given type or an error.
+ * @param body The parsed JSON reponse body.
+ * @returns A function to be used for transformation of the read response.
+ */
+function asReadResponse(body: any) {
   return <T extends EntityV2>(constructor: Constructable<T>): Error | T[] => {
     if (body.error) {
       return new Error(body.error);
@@ -247,32 +258,21 @@ function asReadResponse(body) {
   };
 }
 
-function isNoContent(response: string): boolean {
-  return !!response.match(/HTTP\/\d\.\d 204 No Content/);
+/**
+ * Create a function to transform the parsed response body to an entity of the given type.
+ * @param body The parsed JSON reponse body.
+ * @returns A function to be used for transformation of the write response.
+ */
+function asWriteResponse(body) {
+  return <T extends EntityV2>(constructor: Constructable<T>) =>
+    deserializeEntityV2(getSingleResult(body), constructor);
 }
 
-function isCreated(response: string): boolean {
-  return !!response.match(/HTTP\/\d\.\d 201 Created/);
-}
-
-function toWriteResponseArray(
-  response: string,
-  lineBreak: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
-): WriteResponse[] {
-  return partitionChangeSetResponse(response).map(r =>
-    toWriteResponse(r, lineBreak, entityToConstructorMap)
-  );
-}
-
-function parseResponseBody(
-  response: string,
-  lineBreak: string
-): Record<string, any> {
-  const responseBody = getResponseBody(response, lineBreak);
+function parseResponseBody(response: string): Record<string, any> {
+  const responseBody = getResponseBody(response);
   if (responseBody) {
     try {
-      return JSON.parse(getResponseBody(response, lineBreak));
+      return JSON.parse(getResponseBody(response));
     } catch (err) {
       logger.error(
         `Could not parse response body. Invalid JSON. Original Error: ${err}`
@@ -284,40 +284,69 @@ function parseResponseBody(
 
 export function toWriteResponse(
   response: string,
-  lineBreak: string,
   entityToConstructorMap: MapType<Constructable<EntityV2>>
 ): WriteResponse {
-  const httpCode = parseHttpCode(response);
-  if (httpCode !== 201 && httpCode !== 204) {
-    logger.warn(
-      'Unexpected http code for changeset sub response. Parsed response might be incorrect.'
-    );
+  return parseResponse(response, entityToConstructorMap) as WriteResponse;
+}
+
+export function parseResponse(
+  response: string,
+  entityToConstructorMap: MapType<Constructable<EntityV2>>
+): WriteResponse | ReadResponse | ErrorResponse {
+  const responseData = {
+    body: parseResponseBody(response),
+    httpCode: parseHttpCode(response)
+  };
+
+  // retrieve response
+  if (responseData.httpCode === 200) {
+    return {
+      ...responseData,
+      type: getConstructor(responseData.body, entityToConstructorMap),
+      as: asReadResponse(responseData.body),
+      isSuccess: () => true
+    };
   }
 
-  const body = parseResponseBody(response, lineBreak);
+  // change set sub response
+  if (responseData.httpCode === 201 || responseData.httpCode === 204) {
+    return {
+      ...responseData,
+      type: getConstructor(responseData.body, entityToConstructorMap),
+      as: asWriteResponse(responseData.body)
+    };
+  }
 
-  return {
-    httpCode,
-    body,
-    type: getConstructor(body, entityToConstructorMap),
-    as: asWriteResponse(body)
-  };
+  // error response
+  return { ...responseData, isSuccess: () => false };
 }
 
-export function buildWriteResponses(
-  response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>,
-  lineBreak: string
-): WriteResponses {
-  const writeResponses = toWriteResponseArray(
-    response,
-    lineBreak,
-    entityToConstructorMap
-  );
-  return { responses: writeResponses, isSuccess: () => true };
+export function parseBatchResponse(
+  batchResponse: HttpResponse,
+  entityToConstructorMap: MapType<Constructable<EntityV2>>
+): (ErrorResponse | ReadResponse | WriteResponses)[] {
+  return splitBatchResponse(batchResponse).map(subResponse => {
+    const headers = parseHeaders(subResponse);
+    const contentType = getHeaderValue('content-type', headers);
+
+    if (isMultipartContentType(contentType)) {
+      return buildWriteResponses(subResponse, entityToConstructorMap);
+    }
+
+    if (isHttpContentType(contentType)) {
+      return buildRetrieveOrErrorResponse(subResponse, entityToConstructorMap);
+    }
+
+    throw Error(
+      `Cannot parse batch response. Unknown sub response 'Content-Type' header '${contentType}'.`
+    );
+  });
 }
 
-function asWriteResponse(body) {
-  return <T extends EntityV2>(constructor: Constructable<T>) =>
-    deserializeEntityV2(getSingleResult(body), constructor);
+function isMultipartContentType(contentType: string): boolean {
+  return contentType.trim().startsWith('multipart/mixed');
+}
+
+function isHttpContentType(contentType: string): boolean {
+  return contentType.trim().startsWith('application/http');
 }

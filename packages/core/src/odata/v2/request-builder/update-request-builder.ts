@@ -48,7 +48,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
       this._entityConstructor
     );
 
-    this.requestConfig.payload = this.getUpdateBody();
+    this.requestConfig.payload = this.getPayload();
   }
 
   get entity(): EntityT {
@@ -66,20 +66,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
       this._entityConstructor
     );
 
-    let updateBody;
-    switch (this.requestConfig.method) {
-      case 'put':
-        updateBody = serializeEntityV2(this._entity, this._entityConstructor);
-        break;
-      case 'patch':
-        updateBody = this.getUpdateBody();
-        break;
-      default:
-        throw new Error(
-          `${this.requestConfig.method} is not a valid method of the update request.`
-        );
-    }
-    this.requestConfig.payload = updateBody;
+    this.requestConfig.payload = this.getPayload();
 
     return this;
   }
@@ -122,10 +109,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
    */
   replaceWholeEntityWithPut(): this {
     this.requestConfig.updateWithPut();
-    this.requestConfig.payload = serializeEntityV2(
-      this._entity,
-      this._entityConstructor
-    );
+    this.requestConfig.payload = this.getPayload();
     return this;
   }
 
@@ -137,6 +121,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
    */
   requiredFields(...fields: Selectable<EntityT>[]): this {
     this.required = this.toSet(...fields);
+    this.requestConfig.payload = this.getPayload();
     return this;
   }
 
@@ -148,6 +133,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
    */
   ignoredFields(...fields: Selectable<EntityT>[]): this {
     this.ignored = this.toSet(...fields);
+    this.requestConfig.payload = this.getPayload();
     return this;
   }
 
@@ -172,19 +158,22 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
     return this;
   }
 
-  private getUpdateBody(): MapType<any> {
+  private getPayload(): MapType<any> {
     const serializedBody = serializeEntityV2(
       this._entity,
       this._entityConstructor
     );
 
-    return pipe(
-      () => this.serializedDiff(),
-      body => this.removeNavPropsAndComplexTypes(body),
-      body => this.removeKeyFields(body),
-      body => this.addRequiredFields(serializedBody, body),
-      body => this.removeIgnoredFields(body)
-    )();
+    if (this.requestConfig.method === 'patch') {
+      return pipe(
+        () => this.serializedDiff(),
+        body => this.removeNavPropsAndComplexTypes(body),
+        body => this.removeKeyFields(body),
+        body => this.addRequiredFields(serializedBody, body),
+        body => this.removeIgnoredFields(body)
+      )();
+    }
+    return serializedBody;
   }
 
   private serializedDiff(): MapType<any> {

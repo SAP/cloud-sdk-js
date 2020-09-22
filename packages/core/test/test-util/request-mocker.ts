@@ -193,6 +193,7 @@ function getRequestHeaders(method: string, additionalHeaders?: MapType<any>) {
     return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
   }
 }
+
 export function mockCsrfTokenRequest(
   host: string,
   sapClient: string,

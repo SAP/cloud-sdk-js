@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { last, MapType, createLogger } from '@sap-cloud-sdk/util';
+import { last, createLogger } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '../../http-client';
 import { getHeaderValue } from '../../header-builder';
 import {
@@ -176,7 +176,7 @@ export function parseEntityNameFromMetadataUri(
  */
 export function getConstructor(
   responseBody: Record<string, any>,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>
 ): Constructable<EntityV2> | undefined {
   const entityJson = isCollectionResult(responseBody)
     ? getCollectionResult(responseBody)[0]
@@ -261,7 +261,7 @@ function parseResponseBody(response: string): Record<string, any> {
  */
 export function parseResponse(
   response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>
 ): WriteResponse | ReadResponse | ErrorResponse {
   const responseData = {
     body: parseResponseBody(response),
@@ -299,7 +299,7 @@ export function parseResponse(
  */
 export function parseBatchResponse(
   batchResponse: HttpResponse,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
+  entityToConstructorMap: Record<string, Constructable<EntityV2>>
 ): (ErrorResponse | ReadResponse | WriteResponses)[] {
   return splitBatchResponse(batchResponse).map(response => {
     const contentType = getHeaderValue('content-type', parseHeaders(response));

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { errorWithCause } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
 import {
   Destination,
@@ -50,7 +50,7 @@ export class ODataBatchRequestBuilderV2 extends MethodRequestBuilderBase<
       | GetAllRequestBuilderV2<EntityV2>
       | GetByKeyRequestBuilderV2<EntityV2>
     )[],
-    readonly entityToConstructorMap: MapType<Constructable<EntityV2>>
+    readonly entityToConstructorMap: Record<string, Constructable<EntityV2>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath, uuid()));
     this.requestConfig.payload = serializeBatchRequest(this);

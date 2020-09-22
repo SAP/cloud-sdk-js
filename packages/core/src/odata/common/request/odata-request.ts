@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType, propertyExists } from '@sap-cloud-sdk/util';
+import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import { Destination, sanitizeDestination } from '../../../scp-cf';
 import {
   removeSlashes,
@@ -224,7 +224,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     );
   }
 
-  public getETagHeader(): MapType<string> {
+  private getETagHeader(): Record<string, string> {
     const eTag = isWithETag(this.config)
       ? this.config.versionIdentifierIgnored
         ? '*'
@@ -234,8 +234,8 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   private async getCsrfHeaders(
-    destinationRelatedHeaders: MapType<string>
-  ): Promise<MapType<string>> {
+    destinationRelatedHeaders: Record<string, string>
+  ): Promise<Record<string, string>> {
     const customCsrfHeaders = getHeader(
       'x-csrf-token',
       this.config.customHeaders

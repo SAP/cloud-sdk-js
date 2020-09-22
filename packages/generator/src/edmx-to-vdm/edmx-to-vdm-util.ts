@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { last } from 'rambda';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxProperty } from '../edmx-parser/common';
@@ -121,7 +121,7 @@ export function typesForCollection(
   typeName: string,
   enumTypes: VdmEnumType[],
   complexTypes?: Omit<VdmComplexType, 'factoryName'>[],
-  formattedTypes?: MapType<any>
+  formattedTypes?: Record<string, any>
 ): VdmMappedEdmType {
   const typeInsideCollection = parseCollectionTypeName(typeName);
   if (isEdmType(typeInsideCollection)) {

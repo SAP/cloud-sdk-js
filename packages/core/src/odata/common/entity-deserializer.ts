@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { toPropertyFormat } from '../../util';
 import {
   isSelectedProperty,
@@ -37,7 +37,7 @@ export interface EntityDeserializer<EntityT extends EntityBase = any> {
     requestHeader?: any
   ) => EntityT;
   deserializeComplexType: (
-    json: MapType<any>,
+    json: Record<string, any>,
     complexType: ComplexTypeNamespace<any>
   ) => any;
 }
@@ -50,7 +50,7 @@ type EdmToTsTypeV4<EdmT extends EdmTypeV4 = any> = (
   value: any,
   edmType: EdmTypeShared<'v4'>
 ) => EdmToPrimitiveV4<EdmT>;
-type ExtractODataETagType = (json: MapType<any>) => string | undefined;
+type ExtractODataETagType = (json: Record<string, any>) => string | undefined;
 type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
 
 /**
@@ -166,9 +166,9 @@ export function entityDeserializer<EntityT, JsonT>(
 
   // TODO: get rid of this function in v2.0
   function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
-    json: MapType<any>,
+    json: Record<string, any>,
     complexTypeField: ComplexTypeField<EntityT>
-  ): MapType<any> | null {
+  ): Record<string, any> | null {
     logger.warn(
       'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'
     );
@@ -210,7 +210,7 @@ export function entityDeserializer<EntityT, JsonT>(
   }
 
   function deserializeComplexType(
-    json: MapType<any>,
+    json: Record<string, any>,
     complexType: ComplexTypeNamespace<any>
   ): any {
     if (json === null) {
@@ -264,7 +264,7 @@ export function extractEtagFromHeader(headers: any): string | undefined {
 export function extractCustomFields<EntityT extends EntityBase, JsonT>(
   json: Partial<JsonT>,
   entityConstructor: Constructable<EntityT>
-): MapType<any> {
+): Record<string, any> {
   const regularODataProperties = [
     '__metadata',
     '__deferred',

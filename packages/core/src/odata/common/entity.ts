@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable max-classes-per-file */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { nonEnumerable, toPropertyFormat } from '../../util';
 import { EntityBuilder } from './entity-builder';
 import { Link, Field, Selectable, CustomFieldBase } from './selectable';
@@ -85,7 +84,7 @@ export abstract class EntityBase {
    * Custom fields are represented by their field names and the corresponding values.
    * A custom field can be added or updated using [[setCustomField]] method.
    */
-  protected _customFields: MapType<any>;
+  protected _customFields: Record<string, any>;
 
   abstract readonly _oDataVersion: any;
 
@@ -109,7 +108,7 @@ export abstract class EntityBase {
    *
    * @returns A map of all defined custom fields in the entity
    */
-  getCustomFields(): MapType<any> {
+  getCustomFields(): Record<string, any> {
     return this._customFields;
   }
 
@@ -159,7 +158,7 @@ export abstract class EntityBase {
    * @param customFields - Extracted custom fields from a retrieved entity
    * @returns A boolean value, that indicates the existence of the field in entity
    */
-  initializeCustomFields(customFields: MapType<any>): this {
+  initializeCustomFields(customFields: Record<string, any>): this {
     Object.entries(customFields).forEach(cf => {
       this.setCustomField(cf[0], cf[1]);
     });
@@ -189,7 +188,7 @@ export abstract class EntityBase {
    * @param state - State to be set as remote state
    * @returns The entity itself, to facilitate method chaining
    */
-  public setOrInitializeRemoteState(state?: MapType<any>): this {
+  public setOrInitializeRemoteState(state?: Record<string, any>): this {
     if (!this.remoteState) {
       nonEnumerable(this, 'remoteState');
       this.remoteState = {};
@@ -214,7 +213,7 @@ export abstract class EntityBase {
    *
    * @returns A map containing all updated custom properties, with their new values
    */
-  public getUpdatedCustomFields(): MapType<any> {
+  public getUpdatedCustomFields(): Record<string, any> {
     if (this.remoteState === undefined) {
       return this._customFields;
     }

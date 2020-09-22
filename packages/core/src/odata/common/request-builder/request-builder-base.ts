@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { errorWithCause } from '@sap-cloud-sdk/util';
 import { useOrFetchDestination } from '../../../scp-cf/destination-accessor';
 import {
   Destination,
@@ -65,7 +65,7 @@ export abstract class MethodRequestBuilderBase<
    * @param headers - Key-value pairs denoting additional custom headers
    * @returns The request builder itself, to facilitate method chaining
    */
-  withCustomHeaders(headers: MapType<string>): this {
+  withCustomHeaders(headers: Record<string, string>): this {
     this.requestConfig.addCustomHeaders(headers);
     return this;
   }
@@ -76,7 +76,7 @@ export abstract class MethodRequestBuilderBase<
    * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  withCustomQueryParameters(queryParameters: MapType<string>): this {
+  withCustomQueryParameters(queryParameters: Record<string, string>): this {
     this.requestConfig.addCustomQueryParameters(queryParameters);
     return this;
   }

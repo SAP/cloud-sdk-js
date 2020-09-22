@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { ODataRequestConfig } from './odata-request-config';
 
 export class ODataBatchRequestConfig extends ODataRequestConfig {
@@ -23,7 +22,7 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
     return '$batch';
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     return {};
   }
 }

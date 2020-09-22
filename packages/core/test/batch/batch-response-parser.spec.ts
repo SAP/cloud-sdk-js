@@ -8,7 +8,7 @@ import {
   parseEntityNameFromMetadataUri,
   parseHttpCode,
   getConstructor,
-  toWriteResponse
+  parseResponse
 } from '../../src/odata/v2/batch-response-parser';
 
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
@@ -271,7 +271,7 @@ describe('batch response parser', () => {
     });
   });
 
-  describe('toWriteResponse', () => {
+  describe('parseResponse', () => {
     const firstHeader = [
       'Content-Type: application/http',
       'Content-Length: X',
@@ -287,7 +287,24 @@ describe('batch response parser', () => {
 
     const body = { valid: 'json' };
 
-    it('transforms no content response', () => {
+    it('parses get response', () => {
+      const response = [
+        firstHeader,
+        'HTTP/1.1 200 Success',
+        secondHeader,
+        JSON.stringify(body)
+      ].join('\n');
+
+      expect(parseResponse(response, {})).toEqual({
+        httpCode: 200,
+        body,
+        type: undefined,
+        isSuccess: expect.anything(),
+        as: expect.anything()
+      });
+    });
+
+    it('parses no content response', () => {
       const response = [
         firstHeader,
         'HTTP/1.1 204 No Content',
@@ -295,7 +312,7 @@ describe('batch response parser', () => {
         ''
       ].join('\n');
 
-      expect(toWriteResponse(response, {})).toEqual({
+      expect(parseResponse(response, {})).toEqual({
         httpCode: 204,
         body: {},
         type: undefined,
@@ -303,7 +320,7 @@ describe('batch response parser', () => {
       });
     });
 
-    it('transforms create response', () => {
+    it('parses create response', () => {
       const response = [
         firstHeader,
         'HTTP/1.1 201 Created',
@@ -311,7 +328,7 @@ describe('batch response parser', () => {
         JSON.stringify(body)
       ].join('\n');
 
-      expect(toWriteResponse(response, {})).toEqual({
+      expect(parseResponse(response, {})).toEqual({
         httpCode: 201,
         body,
         type: undefined,

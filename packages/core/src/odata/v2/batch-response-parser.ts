@@ -206,40 +206,6 @@ export function parseHttpCode(response: string): number {
 }
 
 /**
- * Build a write responses object based on the according change set sub response.
- * @param changeSetResponse String representation of the change set response.
- * @param entityToConstructorMap Mapping between entity names and their respective constructors.
- * @returns The write responses object.
- */
-export function buildWriteResponses(
-  changeSetResponse: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
-): WriteResponses {
-  return {
-    responses: splitChangeSetResponse(changeSetResponse).map(
-      subResponse =>
-        parseResponse(subResponse, entityToConstructorMap) as WriteResponse
-    ),
-    isSuccess: () => true
-  };
-}
-
-/**
- * Build a retrieve or error response based on the according sub response.
- * @param response String representation of the response.
- * @param entityToConstructorMap Mapping between entity names and their respective constructors.
- * @returns The read or error response.
- */
-export function buildRetrieveOrErrorResponse(
-  response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
-): ReadResponse | ErrorResponse {
-  return parseResponse(response, entityToConstructorMap) as
-    | ReadResponse
-    | ErrorResponse;
-}
-
-/**
  * Create a function to transform the parsed response body to a list of entities of the given type or an error.
  * @param body The parsed JSON reponse body.
  * @returns A function to be used for transformation of the read response.
@@ -268,11 +234,16 @@ function asWriteResponse(body) {
     deserializeEntityV2(getSingleResult(body), constructor);
 }
 
+/**
+ * Get the body from the given response and parse it to JSON.
+ * @param response The string representation of a single response.
+ * @returns The parsed JSON representation of the response body.
+ */
 function parseResponseBody(response: string): Record<string, any> {
   const responseBody = getResponseBody(response);
   if (responseBody) {
     try {
-      return JSON.parse(getResponseBody(response));
+      return JSON.parse(responseBody);
     } catch (err) {
       logger.error(
         `Could not parse response body. Invalid JSON. Original Error: ${err}`
@@ -282,13 +253,12 @@ function parseResponseBody(response: string): Record<string, any> {
   return {};
 }
 
-export function toWriteResponse(
-  response: string,
-  entityToConstructorMap: MapType<Constructable<EntityV2>>
-): WriteResponse {
-  return parseResponse(response, entityToConstructorMap) as WriteResponse;
-}
-
+/**
+ * Parse a single response to the according response object type.
+ * @param response The string representation of a single response.
+ * @param entityToConstructorMap A map that holds the entity type to constructor mapping
+ * @returns The parsed response in the according response object representation.
+ */
 export function parseResponse(
   response: string,
   entityToConstructorMap: MapType<Constructable<EntityV2>>
@@ -321,24 +291,39 @@ export function parseResponse(
   return { ...responseData, isSuccess: () => false };
 }
 
+/**
+ * Parse the complete batch HTTP response.
+ * @param batchResponse HTTP response.
+ * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
+ * @returns An array of parsed sub responses of the batch response.
+ */
 export function parseBatchResponse(
   batchResponse: HttpResponse,
   entityToConstructorMap: MapType<Constructable<EntityV2>>
 ): (ErrorResponse | ReadResponse | WriteResponses)[] {
-  return splitBatchResponse(batchResponse).map(subResponse => {
-    const headers = parseHeaders(subResponse);
-    const contentType = getHeaderValue('content-type', headers);
+  return splitBatchResponse(batchResponse).map(response => {
+    const contentType = getHeaderValue('content-type', parseHeaders(response));
 
+    // is change set response
     if (isMultipartContentType(contentType)) {
-      return buildWriteResponses(subResponse, entityToConstructorMap);
+      return {
+        responses: splitChangeSetResponse(response).map(
+          subResponse =>
+            parseResponse(subResponse, entityToConstructorMap) as WriteResponse
+        ),
+        isSuccess: () => true
+      };
     }
 
+    // is read or error response
     if (isHttpContentType(contentType)) {
-      return buildRetrieveOrErrorResponse(subResponse, entityToConstructorMap);
+      return parseResponse(response, entityToConstructorMap) as
+        | ReadResponse
+        | ErrorResponse;
     }
 
     throw Error(
-      `Cannot parse batch response. Unknown sub response 'Content-Type' header '${contentType}'.`
+      `Cannot parse batch response. Unknown subresponse 'Content-Type' header '${contentType}'.`
     );
   });
 }

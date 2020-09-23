@@ -364,13 +364,15 @@ BusinessPartner.requestBuilder()
 ## Function imports
 ### Request builder
 The [function imports request builder](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.functionimportrequestbuilderv2) helps build a request for a service operation containing parameters in a typesave way.
-The example below creates a function import request builder for the service operation "PostGoodsIssue" and then execute it against your service.
+This time, as an example, the [`Warehouse Outbound Delivery Order Service`](https://api.sap.com/api/API_WHSE_OUTB_DLV_ORDER/resource) is used, because not all the services contain function imports like the `Business Partner Service`.
+The type safe client for the `Warehouse Outbound Delivery Order Service` can be found in the package `@sap/cloud-sdk-vdm-warehouse-outbound-delivery-order-service`.
+
+The example below creates a function import request builder for the service operation `PostGoodsIssue` and then execute it against your service.
 ```ts
 postGoodsIssue({outboundDeliveryOrder: "order"})
   .execute(destination);
 ```
-The service operation is defined in the service metadata. Therefore, for some services, there might be no function imports at all like the beloved `Business Partner Service`.
-This function import can be found in the package `@sap/cloud-sdk-vdm-warehouse-outbound-delivery-order-service`.
+The service operation is defined in the service metadata.
 
 ### Setting ETag
 The `ETag` handling with the function imports is not integrated.

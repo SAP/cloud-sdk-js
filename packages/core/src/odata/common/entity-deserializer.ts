@@ -289,12 +289,12 @@ export function extractCustomFields<EntityT extends EntityBase, JsonT>(
  * @param data - One to many link response data
  * @returns The content of the one to many link
  */
-export function getOneToManyLinkResult(data):any[]{
-  //OData v2 standard
+export function getOneToManyLinkResult(data): any[] {
+  // OData v2 standard
   if (data.results && Array.isArray(data.results)) {
     return data.results;
   }
-  //OData v4 standard and some C4C v2 services
+  // OData v4 standard and some C4C v2 services
   if (Array.isArray(data)) {
     return data;
   }

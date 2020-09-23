@@ -31,7 +31,7 @@
     }
   },
   "devDependencies": {
-    "moment": "~2.28.0",
+    "moment": "~2.29.0",
     "pm2": "^4.4.0"
   }
 }

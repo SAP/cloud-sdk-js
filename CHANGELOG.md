@@ -26,6 +26,8 @@
 
 ## Fixed Issues
 
+- [OData] Fix `$orderby` parameter in expanded subqueries.
+
 -
 
 

@@ -1,17 +1,18 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
+import { deserializeEntityV2 } from '../../src';
 import {
   detectNewLineSymbol,
   getResponseBody,
-  splitChangeSetResponse,
   splitBatchResponse,
+  splitChangeSetResponse,
   parseEntityNameFromMetadataUri,
   parseHttpCode,
   getConstructor,
   parseResponse
-} from '../../src/odata/v2/batch-response-parser';
+} from '../../src/odata/common/request-builder/batch/batch-response-parser';
+import * as responseDataAccessor from '../../src/odata/v2/request-builder/response-data-accessor';
 
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 describe('batch response parser', () => {
   describe('detectNewLineSymbol', () => {
     it('detects windows style new line and carriage return', () => {
@@ -183,7 +184,9 @@ describe('batch response parser', () => {
       const changeSet = ['', ''].join('\n');
       expect(() =>
         splitChangeSetResponse(changeSet)
-      ).toThrowErrorMatchingInlineSnapshot('"Cannot parse change set."');
+      ).toThrowErrorMatchingInlineSnapshot(
+        '"Cannot parse change set. No boundary found."'
+      );
     });
 
     describe('getEntityNameFromMetadata', () => {
@@ -245,7 +248,8 @@ describe('batch response parser', () => {
       expect(
         getConstructor(
           { d: { __metadata: { uri: 'entity' } } },
-          entityToConstructorMap
+          entityToConstructorMap,
+          responseDataAccessor
         )
       ).toEqual(entityToConstructorMap.entity);
     });
@@ -254,7 +258,8 @@ describe('batch response parser', () => {
       expect(
         getConstructor(
           { d: { results: [{ __metadata: { uri: 'entity' } }] } },
-          entityToConstructorMap
+          entityToConstructorMap,
+          responseDataAccessor
         )
       ).toEqual(entityToConstructorMap.entity);
     });
@@ -263,7 +268,11 @@ describe('batch response parser', () => {
       const logger = createLogger('batch-response-parser');
       spyOn(logger, 'warn');
       expect(
-        getConstructor({ d: { results: [] } }, entityToConstructorMap)
+        getConstructor(
+          { d: { results: [] } },
+          entityToConstructorMap,
+          responseDataAccessor
+        )
       ).toBeUndefined();
       expect(logger.warn).toHaveBeenCalledWith(
         'Could not parse constructor from response body.'
@@ -295,7 +304,9 @@ describe('batch response parser', () => {
         JSON.stringify(body)
       ].join('\n');
 
-      expect(parseResponse(response, {})).toEqual({
+      expect(
+        parseResponse(response, {}, responseDataAccessor, deserializeEntityV2)
+      ).toEqual({
         httpCode: 200,
         body,
         type: undefined,
@@ -312,7 +323,9 @@ describe('batch response parser', () => {
         ''
       ].join('\n');
 
-      expect(parseResponse(response, {})).toEqual({
+      expect(
+        parseResponse(response, {}, responseDataAccessor, deserializeEntityV2)
+      ).toEqual({
         httpCode: 204,
         body: {},
         type: undefined,
@@ -328,7 +341,9 @@ describe('batch response parser', () => {
         JSON.stringify(body)
       ].join('\n');
 
-      expect(parseResponse(response, {})).toEqual({
+      expect(
+        parseResponse(response, {}, responseDataAccessor, deserializeEntityV2)
+      ).toEqual({
         httpCode: 201,
         body,
         type: undefined,

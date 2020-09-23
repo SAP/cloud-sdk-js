@@ -1,22 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { last, createLogger } from '@sap-cloud-sdk/util';
-import { HttpResponse } from '../../http-client';
-import { getHeaderValue } from '../../header-builder';
+import { getHeaderValue } from '../../../../header-builder';
+import { HttpResponse } from '../../../../http-client';
 import {
-  getSingleResult,
-  isCollectionResult,
-  getCollectionResult
-} from '../V4/request-builder/response-data-accessor';
-import {
-  Constructable,
   ErrorResponse,
   ReadResponse,
-  WriteResponses,
-  WriteResponse
-} from '../common';
-import { EntityV4 } from './entity';
-import { deserializeEntityV4 } from './entity-deserializer';
-
+  WriteResponse,
+  WriteResponses
+} from '../../batch-response';
+import { Constructable, EntityBase } from '../../entity';
 const logger = createLogger({
   package: 'core',
   messageContext: 'batch-response-parser'
@@ -116,7 +108,7 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
   const boundary = getBoundary(getHeaderValue('content-type', headers));
 
   if (!boundary) {
-    throw Error('Cannot parse change set.');
+    throw Error('Cannot parse change set. No boundary found.');
   }
 
   return splitResponse(changeSetResponse, boundary);
@@ -176,11 +168,12 @@ export function parseEntityNameFromMetadataUri(
  */
 export function getConstructor(
   responseBody: Record<string, any>,
-  entityToConstructorMap: Record<string, Constructable<EntityV4>>
-): Constructable<EntityV4> | undefined {
-  const entityJson = isCollectionResult(responseBody)
-    ? getCollectionResult(responseBody)[0]
-    : getSingleResult(responseBody);
+  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  responseDataAccessor
+): Constructable<EntityBase> | undefined {
+  const entityJson = responseDataAccessor.isCollectionResult(responseBody)
+    ? responseDataAccessor.getCollectionResult(responseBody)[0]
+    : responseDataAccessor.getSingleResult(responseBody);
 
   const entityUri = entityJson?.__metadata?.uri;
   if (entityUri) {
@@ -210,17 +203,19 @@ export function parseHttpCode(response: string): number {
  * @param body The parsed JSON reponse body.
  * @returns A function to be used for transformation of the read response.
  */
-function asReadResponse(body: any) {
-  return <T extends EntityV4>(constructor: Constructable<T>): Error | T[] => {
+function asReadResponse(body: any, responseDataAccessor, deserializeEntity) {
+  return <T extends EntityBase>(constructor: Constructable<T>): Error | T[] => {
     if (body.error) {
       return new Error(body.error);
     }
-    if (isCollectionResult(body)) {
-      return getCollectionResult(body).map(r =>
-        deserializeEntityV4(r, constructor)
-      );
+    if (responseDataAccessor.isCollectionResult(body)) {
+      return responseDataAccessor
+        .getCollectionResult(body)
+        .map(r => deserializeEntity(r, constructor));
     }
-    return [deserializeEntityV4(getSingleResult(body), constructor)];
+    return [
+      deserializeEntity(responseDataAccessor.getSingleResult(body), constructor)
+    ];
   };
 }
 
@@ -229,9 +224,9 @@ function asReadResponse(body: any) {
  * @param body The parsed JSON reponse body.
  * @returns A function to be used for transformation of the write response.
  */
-function asWriteResponse(body) {
-  return <T extends EntityV4>(constructor: Constructable<T>) =>
-    deserializeEntityV4(getSingleResult(body), constructor);
+function asWriteResponse(body, responseDataAccessor, deserializeEntity) {
+  return <T extends EntityBase>(constructor: Constructable<T>) =>
+    deserializeEntity(responseDataAccessor.getSingleResult(body), constructor);
 }
 
 /**
@@ -261,7 +256,9 @@ function parseResponseBody(response: string): Record<string, any> {
  */
 export function parseResponse(
   response: string,
-  entityToConstructorMap: Record<string, Constructable<EntityV4>>
+  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  responseDataAccessor,
+  deserializeEntity
 ): WriteResponse | ReadResponse | ErrorResponse {
   const responseData = {
     body: parseResponseBody(response),
@@ -272,8 +269,16 @@ export function parseResponse(
   if (responseData.httpCode === 200) {
     return {
       ...responseData,
-      type: getConstructor(responseData.body, entityToConstructorMap),
-      as: asReadResponse(responseData.body),
+      type: getConstructor(
+        responseData.body,
+        entityToConstructorMap,
+        responseDataAccessor
+      ),
+      as: asReadResponse(
+        responseData.body,
+        responseDataAccessor,
+        deserializeEntity
+      ),
       isSuccess: () => true
     };
   }
@@ -282,8 +287,16 @@ export function parseResponse(
   if (responseData.httpCode === 201 || responseData.httpCode === 204) {
     return {
       ...responseData,
-      type: getConstructor(responseData.body, entityToConstructorMap),
-      as: asWriteResponse(responseData.body)
+      type: getConstructor(
+        responseData.body,
+        entityToConstructorMap,
+        responseDataAccessor
+      ),
+      as: asWriteResponse(
+        responseData.body,
+        responseDataAccessor,
+        deserializeEntity
+      )
     };
   }
 
@@ -299,7 +312,9 @@ export function parseResponse(
  */
 export function parseBatchResponse(
   batchResponse: HttpResponse,
-  entityToConstructorMap: Record<string, Constructable<EntityV4>>
+  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  responseDataAccessor,
+  deserializeEntity
 ): (ErrorResponse | ReadResponse | WriteResponses)[] {
   return splitBatchResponse(batchResponse).map(response => {
     const contentType = getHeaderValue('content-type', parseHeaders(response));
@@ -309,7 +324,12 @@ export function parseBatchResponse(
       return {
         responses: splitChangeSetResponse(response).map(
           subResponse =>
-            parseResponse(subResponse, entityToConstructorMap) as WriteResponse
+            parseResponse(
+              subResponse,
+              entityToConstructorMap,
+              responseDataAccessor,
+              deserializeEntity
+            ) as WriteResponse
         ),
         isSuccess: () => true
       };
@@ -317,9 +337,12 @@ export function parseBatchResponse(
 
     // is read or error response
     if (isHttpContentType(contentType)) {
-      return parseResponse(response, entityToConstructorMap) as
-        | ReadResponse
-        | ErrorResponse;
+      return parseResponse(
+        response,
+        entityToConstructorMap,
+        responseDataAccessor,
+        deserializeEntity
+      ) as ReadResponse | ErrorResponse;
     }
 
     throw Error(

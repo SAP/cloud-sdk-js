@@ -5,16 +5,15 @@ import {
   buildTestEntity,
   createChangeSetWithFakeId
 } from '../test-util/batch-test-util';
-import {
-  serializeBatchRequest,
-  serializeChangeSet,
-  serializeRequest
-} from '../../src/odata/v2/batch-request-serializer';
 import { ODataBatchRequestConfig } from '../../src/odata/common/request/odata-batch-request-config';
+import {
+  serializeRequest,
+  serializeChangeSet,
+  serializeBatchRequest
+} from '../../src/odata/common/request-builder/batch/batch-request-serializer';
 
 describe('batch request serializer', () => {
   let testEntity: TestEntity;
-
   beforeEach(() => {
     testEntity = buildTestEntity();
   });
@@ -116,7 +115,9 @@ describe('batch request serializer', () => {
         TestEntity.requestBuilder().getByKey('guidId', 'strId')
       );
 
-      request.requestConfig = { batchId: 'batchId' } as ODataBatchRequestConfig;
+      request.requestConfig = {
+        boundary: 'batch_boundary'
+      } as ODataBatchRequestConfig;
 
       expect(serializeBatchRequest(request)).toMatchSnapshot();
     });

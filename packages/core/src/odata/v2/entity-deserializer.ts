@@ -14,8 +14,7 @@ import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-li
  */
 const deserializer: EntityDeserializer = entityDeserializer(
   edmToTsV2,
-  extractODataEtagV2,
-  extractDataFromOneToManyLink
+  extractODataEtagV2
 );
 
 export const deserializeEntityV2 = deserializer.deserializeEntity;

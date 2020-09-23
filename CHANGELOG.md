@@ -25,9 +25,7 @@
 - [Generator] Generator will fail, when it generates `.ts` files that have compilation errors.
 
 ## Fixed Issues
-
--
-
+- [OData] Fix deserialization of one to many links in C4C where the navigation property is not wrapped in a `result` object.
 
 # 1.28.1
 

@@ -45,7 +45,7 @@ function validateCollectionResult(data): void {
  * @param data - Response of the one to many link
  * @returns any[] - Collection extracted from the response
  */
-export function getLinkedCollectionResult(data): any[] | undefined {
+export function getLinkedCollectionResult(data): any[] {
   return Array.isArray(data) ? data : [];
 }
 

@@ -51,7 +51,7 @@ type EdmToTsTypeV4<EdmT extends EdmTypeV4 = any> = (
   edmType: EdmTypeShared<'v4'>
 ) => EdmToPrimitiveV4<EdmT>;
 type ExtractODataETagType = (json: Record<string, any>) => string | undefined;
-type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
+type ExtractDataFromOneToManyLinkType = (data: any) => any[];
 
 /**
  * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
@@ -157,7 +157,7 @@ export function entityDeserializer<EntityT, JsonT>(
     link: Link<EntityT, LinkedEntityT>
   ): LinkedEntityT[] | undefined {
     if (isSelectedProperty(json, link)) {
-      const results = extractDataFromOneToManyLink(json[link._fieldName]) || [];
+      const results = extractDataFromOneToManyLink(json[link._fieldName]);
       return results.map(linkJson =>
         deserializeEntity(linkJson, link._linkedEntity)
       );

@@ -26,10 +26,8 @@
 
 ## Fixed Issues
 
+- [OData] Fix deserialization of one to many links, where the navigation property is not wrapped in a `result` object.
 - [OData] Fix `$orderby` parameter in expanded subqueries.
-
--
-
 
 # 1.28.1
 

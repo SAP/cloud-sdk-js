@@ -12,11 +12,12 @@ import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-li
  * Entity deserializer instance for v4 entities.
  * See [[EntityDeserializerType]] for the provided methods.
  */
-const deserializer: EntityDeserializer = entityDeserializer(
+export const entityDeserializerV4: EntityDeserializer = entityDeserializer(
   edmToTsV4,
   extractODataEtagV4,
   extractDataFromOneToManyLink
 );
 
-export const deserializeEntityV4 = deserializer.deserializeEntity;
-export const deserializeComplexTypeV4 = deserializer.deserializeComplexType;
+export const deserializeEntityV4 = entityDeserializerV4.deserializeEntity;
+export const deserializeComplexTypeV4 =
+  entityDeserializerV4.deserializeComplexType;

@@ -6,6 +6,7 @@ import {
 } from '../common/entity-deserializer';
 import { edmToTsV2 } from './payload-value-converter';
 import { extractODataEtagV2 } from './extract-odata-etag';
+import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-link';
 
 /**
  * Entity deserializer instance for v2 entities.

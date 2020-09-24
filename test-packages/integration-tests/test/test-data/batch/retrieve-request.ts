@@ -8,6 +8,7 @@ export const getAllRequest = [
   '',
   'GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity\\?\\$format=json HTTP/1\\.1',
   ...requestHeader(),
+  '',
   ''
 ];
 
@@ -17,5 +18,6 @@ export const getByKeyRequest = [
   '',
   `GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity\\(KeyPropertyGuid=guid'\\${testEntityKeyPropGuid}',KeyPropertyString='\\${testEntityKeyPropString}'\\)\\?\\$format=json HTTP/1\\.1`,
   ...requestHeader(),
+  '',
   ''
 ];

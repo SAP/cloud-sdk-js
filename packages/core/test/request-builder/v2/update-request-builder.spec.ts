@@ -157,10 +157,7 @@ describe('UpdateRequestBuilderV2', () => {
 
     const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
       .requiredFields(TestEntity.KEY_PROPERTY_GUID)
-      .execute(defaultDestination)
-      .catch(err => {
-        console.log(err);
-      });
+      .execute(defaultDestination);
 
     expect(scope.isDone()).toBe(true);
     expect(actual).toEqual(entity);

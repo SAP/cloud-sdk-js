@@ -23,6 +23,7 @@ GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 
+
 --batch_boundary
 Content-Type: multipart/mixed; boundary=changeSet_boundary
 
@@ -54,6 +55,7 @@ Content-Transfer-Encoding: binary
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId')?$format=json HTTP/1.1
 Accept: application/json
 Content-Type: application/json
+
 
 --batch_boundary--
 "
@@ -157,6 +159,7 @@ Content-Transfer-Encoding: binary
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
 Accept: application/json
 Content-Type: application/json
+
 "
 `;
 
@@ -168,6 +171,7 @@ GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Custom-Header: custom
+
 "
 `;
 
@@ -178,6 +182,7 @@ Content-Transfer-Encoding: binary
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'testId',KeyPropertyString='test')?$format=json HTTP/1.1
 Accept: application/json
 Content-Type: application/json
+
 "
 `;
 

@@ -9,6 +9,8 @@ import {
   WriteResponses
 } from '../../batch-response';
 import { Constructable, EntityBase } from '../../entity';
+import { EntityDeserializer } from '../../entity-deserializer';
+import { ResponseDataAccessor } from '../../response-data-accessor';
 const logger = createLogger({
   package: 'core',
   messageContext: 'batch-response-parser'
@@ -49,15 +51,17 @@ export function getResponseBody(response: string): string {
 }
 
 /**
- * Parse the string representation of response headers into an object
- * @param headersStr Header string representation
+ * Parse the headers in the string representation of a response headers into an object. This will only look at the highest level of headers.
+ * @param response String representation of a response
  * @returns The headers as an object.
  */
-function parseHeaders(headersStr: string): Record<string, any> {
-  const newLineSymbol = detectNewLineSymbol(headersStr);
-  return headersStr.split(newLineSymbol).reduce((headers, line) => {
+function parseHeaders(response: string): Record<string, any> {
+  const newLineSymbol = detectNewLineSymbol(response);
+  // split on the first empty line
+  const [responseHeaders] = response.split(newLineSymbol + newLineSymbol);
+  return responseHeaders.split(newLineSymbol).reduce((headers, line) => {
     const [key, value] = line.split(':');
-    return { ...headers, [key]: value };
+    return { ...headers, [key]: value.trim() };
   }, {});
 }
 
@@ -102,9 +106,7 @@ export function splitBatchResponse(response: HttpResponse): string[] {
  * @returns A list of sub responses represented as strings.
  */
 export function splitChangeSetResponse(changeSetResponse: string): string[] {
-  const [changeSetResponseHeader] = changeSetResponse.split('--');
-
-  const headers = parseHeaders(changeSetResponseHeader);
+  const headers = parseHeaders(changeSetResponse);
   const boundary = getBoundary(getHeaderValue('content-type', headers));
 
   if (!boundary) {
@@ -159,17 +161,17 @@ export function parseEntityNameFromMetadataUri(
   return entityName;
 }
 
-// version specific
 /**
  * Retrieve the constructor for a specific single response body.
  * @param responseBody The body of a single response as an object.
  * @param entityToConstructorMap Mapping between entity names and their respective constructors.
+ * @param responseDataAccessor Response data access module.
  * @returns The constructor if found in the mapping, undefined otherwise.
  */
 export function getConstructor(
   responseBody: Record<string, any>,
   entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor
+  responseDataAccessor: ResponseDataAccessor
 ): Constructable<EntityBase> | undefined {
   const entityJson = responseDataAccessor.isCollectionResult(responseBody)
     ? responseDataAccessor.getCollectionResult(responseBody)[0]
@@ -201,9 +203,15 @@ export function parseHttpCode(response: string): number {
 /**
  * Create a function to transform the parsed response body to a list of entities of the given type or an error.
  * @param body The parsed JSON reponse body.
+ * @param responseDataAccessor Response data access module.
+ * @param deserializer Entity deserializer.
  * @returns A function to be used for transformation of the read response.
  */
-function asReadResponse(body: any, responseDataAccessor, deserializeEntity) {
+function asReadResponse(
+  body: any,
+  responseDataAccessor: ResponseDataAccessor,
+  deserializer: EntityDeserializer
+) {
   return <T extends EntityBase>(constructor: Constructable<T>): Error | T[] => {
     if (body.error) {
       return new Error(body.error);
@@ -211,10 +219,13 @@ function asReadResponse(body: any, responseDataAccessor, deserializeEntity) {
     if (responseDataAccessor.isCollectionResult(body)) {
       return responseDataAccessor
         .getCollectionResult(body)
-        .map(r => deserializeEntity(r, constructor));
+        .map(r => deserializer.deserializeEntity(r, constructor));
     }
     return [
-      deserializeEntity(responseDataAccessor.getSingleResult(body), constructor)
+      deserializer.deserializeEntity(
+        responseDataAccessor.getSingleResult(body),
+        constructor
+      )
     ];
   };
 }
@@ -222,11 +233,20 @@ function asReadResponse(body: any, responseDataAccessor, deserializeEntity) {
 /**
  * Create a function to transform the parsed response body to an entity of the given type.
  * @param body The parsed JSON reponse body.
+ * @param responseDataAccessor Response data access module.
+ * @param deserializer Entity deserializer.
  * @returns A function to be used for transformation of the write response.
  */
-function asWriteResponse(body, responseDataAccessor, deserializeEntity) {
+function asWriteResponse(
+  body: any,
+  responseDataAccessor: ResponseDataAccessor,
+  deserializer: EntityDeserializer
+) {
   return <T extends EntityBase>(constructor: Constructable<T>) =>
-    deserializeEntity(responseDataAccessor.getSingleResult(body), constructor);
+    deserializer.deserializeEntity(
+      responseDataAccessor.getSingleResult(body),
+      constructor
+    );
 }
 
 /**
@@ -251,14 +271,16 @@ function parseResponseBody(response: string): Record<string, any> {
 /**
  * Parse a single response to the according response object type.
  * @param response The string representation of a single response.
- * @param entityToConstructorMap A map that holds the entity type to constructor mapping
+ * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
+ * @param responseDataAccessor Response data access module.
+ * @param deserializer Entity deserializer.
  * @returns The parsed response in the according response object representation.
  */
 export function parseResponse(
   response: string,
   entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor,
-  deserializeEntity
+  responseDataAccessor: ResponseDataAccessor,
+  deserializer: EntityDeserializer
 ): WriteResponse | ReadResponse | ErrorResponse {
   const responseData = {
     body: parseResponseBody(response),
@@ -274,11 +296,7 @@ export function parseResponse(
         entityToConstructorMap,
         responseDataAccessor
       ),
-      as: asReadResponse(
-        responseData.body,
-        responseDataAccessor,
-        deserializeEntity
-      ),
+      as: asReadResponse(responseData.body, responseDataAccessor, deserializer),
       isSuccess: () => true
     };
   }
@@ -292,11 +310,7 @@ export function parseResponse(
         entityToConstructorMap,
         responseDataAccessor
       ),
-      as: asWriteResponse(
-        responseData.body,
-        responseDataAccessor,
-        deserializeEntity
-      )
+      as: asWriteResponse(responseData.body, responseDataAccessor, deserializer)
     };
   }
 
@@ -308,13 +322,15 @@ export function parseResponse(
  * Parse the complete batch HTTP response.
  * @param batchResponse HTTP response.
  * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
+ * @param responseDataAccessor Response data access module.
+ * @param deserializer Entity deserializer.
  * @returns An array of parsed sub responses of the batch response.
  */
 export function parseBatchResponse(
   batchResponse: HttpResponse,
   entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor,
-  deserializeEntity
+  responseDataAccessor: ResponseDataAccessor,
+  deserializer: EntityDeserializer
 ): (ErrorResponse | ReadResponse | WriteResponses)[] {
   return splitBatchResponse(batchResponse).map(response => {
     const contentType = getHeaderValue('content-type', parseHeaders(response));
@@ -328,7 +344,7 @@ export function parseBatchResponse(
               subResponse,
               entityToConstructorMap,
               responseDataAccessor,
-              deserializeEntity
+              deserializer
             ) as WriteResponse
         ),
         isSuccess: () => true
@@ -341,7 +357,7 @@ export function parseBatchResponse(
         response,
         entityToConstructorMap,
         responseDataAccessor,
-        deserializeEntity
+        deserializer
       ) as ReadResponse | ErrorResponse;
     }
 

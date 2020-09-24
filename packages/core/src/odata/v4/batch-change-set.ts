@@ -32,6 +32,6 @@ export class ODataBatchChangeSetV4<
    */
   constructor(
     readonly requests: T[],
-    readonly boundary: string = `changeSet_${uuid()}`
+    readonly boundary: string = `changeset_${uuid()}`
   ) {}
 }

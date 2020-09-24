@@ -43,15 +43,15 @@ export function serializeRequest(request: MethodRequestBuilderBase) {
     `${request.requestConfig.method.toUpperCase()} /${request.relativeUrl()} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',
-    ...getPayload(request)
+    ...getPayload(request),
+    ''
   ].join('\n');
 }
 
 function getPayload(request: MethodRequestBuilderBase): string[] {
-  if (request.requestConfig.method === 'get') {
-    return [];
-  }
-  return [JSON.stringify(request.requestConfig.payload), ''];
+  return request.requestConfig.method !== 'get'
+    ? [JSON.stringify(request.requestConfig.payload)]
+    : [];
 }
 
 /**

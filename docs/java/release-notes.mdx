@@ -57,14 +57,14 @@ final DefaultHttpDestination defaultHttpDestination =
             build();
 ```
 
-- We updated Workflow API client library that is shipped as `scp-workflow-cf` module. It now supports latest Workflow API service features.
+- We updated the Workflow API client library that is shipped as `scp-workflow-cf` module. It now supports the latest Workflow API service features.
 
 ### Improvements
 
 - Handle requesting a CSRF token for **OData V4** batch operations and actions
 - Improve the log output and error handling of CSRF token requests
 - In case a `DefaultErpHttpDestination` decorates an on-premise `HttpDestination` and the destination configuration lacks an `sap-client` property, a notification appears in App logs to raise awareness of potential authentication issues.
-- `Update` and `Delete` requests in **OData v4** type-safe client no longer send a `*` in the `IF_MATCH` header if no version identifier (ETag) has been retrieved from the server previously. This ensures consistent behavior of `Update` and `Delete` requests  and protects you from unintended data loss and integrity problems.
+- `Update` and `Delete` requests in **OData v4** type-safe client no longer send a `*` in the `IF_MATCH` header if no version identifier (ETag) has been retrieved from the server previously. This ensures consistent behavior of `Update` and `Delete` requests and protects you from unintended data loss and integrity problems.
 
 - Dependency Updates:
   - Update [SAP Cloud Security Client](https://github.com/SAP/cloud-security-xsuaa-integration) from `2.7.6` to `2.7.7`

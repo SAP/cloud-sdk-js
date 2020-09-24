@@ -63,7 +63,8 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[] | undefined;
  */
 export function entityDeserializer<EntityT, JsonT>(
   edmToTs: EdmToTsTypeV2 | EdmToTsTypeV4,
-  extractODataETag: ExtractODataETagType
+  extractODataETag: ExtractODataETagType,
+  extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
 ): EntityDeserializer {
   /**
    * Converts the JSON payload for a single entity into an instance of the corresponding generated entity class.
@@ -156,7 +157,7 @@ export function entityDeserializer<EntityT, JsonT>(
     link: Link<EntityT, LinkedEntityT>
   ): LinkedEntityT[] | undefined {
     if (isSelectedProperty(json, link)) {
-      const results = getOneToManyLinkResult(json[link._fieldName]);
+      const results = extractDataFromOneToManyLink(json[link._fieldName]) || [];
       return results.map(linkJson =>
         deserializeEntity(linkJson, link._linkedEntity)
       );
@@ -279,24 +280,4 @@ export function extractCustomFields<EntityT extends EntityBase, JsonT>(
       customFields[key] = json[key];
       return customFields;
     }, {});
-}
-
-/**
- * Data extractor for one to many links for v2/v4 entity used in [[entityDeserializer]]
- * It first tries if data.result is an array and returns it.
- * Then it tires if data itself is an array and return it.
- * If both are not the case it returns empty array.
- * @param data - One to many link response data
- * @returns The content of the one to many link
- */
-export function getOneToManyLinkResult(data):any[]{
-  //OData v2 standard
-  if (data.results && Array.isArray(data.results)) {
-    return data.results;
-  }
-  //OData v4 standard and some C4C v2 services
-  if (Array.isArray(data)) {
-    return data;
-  }
-  return [];
 }

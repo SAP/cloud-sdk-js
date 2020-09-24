@@ -3,7 +3,8 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   getCollectionResult,
   isCollectionResult,
-  getSingleResult
+  getSingleResult,
+  getLinkedCollectionResult
 } from '../../../src/odata/v2/request-builder/response-data-accessor';
 
 describe('response data accessor', () => {
@@ -77,6 +78,28 @@ describe('response data accessor', () => {
       expect(warnSpy).toHaveBeenCalledWith(
         'The given reponse data has the format for collections instead of the standard OData v2 format for single results.'
       );
+    });
+  });
+
+  describe('getLinkedCollectionResult', () => {
+    it('returns data for wrapped data (OData v2 spec)', () => {
+      expect(getLinkedCollectionResult({ results: ['a', 'b', 'c'] })).toEqual([
+        'a',
+        'b',
+        'c'
+      ]);
+    });
+
+    it('returns data for non wrapped data (OData v2 C4C)', () => {
+      expect(getLinkedCollectionResult(['a', 'b', 'c'])).toEqual([
+        'a',
+        'b',
+        'c'
+      ]);
+    });
+
+    it('returns empty array as fallback', () => {
+      expect(getLinkedCollectionResult({ a: 'b' })).toEqual([]);
     });
   });
 });

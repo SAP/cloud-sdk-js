@@ -12,14 +12,15 @@ import { getLinkedCollectionResult } from './request-builder/response-data-acces
  * Entity deserializer instance for v2 entities.
  * See [[EntityDeserializerType]] for the provided methods.
  */
-const deserializer: EntityDeserializer = entityDeserializer(
+export const entityDeserializerV2: EntityDeserializer = entityDeserializer(
   edmToTsV2,
   extractODataEtagV2,
   getLinkedCollectionResult
 );
 
-export const deserializeEntityV2 = deserializer.deserializeEntity;
-export const deserializeComplexTypeV2 = deserializer.deserializeComplexType;
+export const deserializeEntityV2 = entityDeserializerV2.deserializeEntity;
+export const deserializeComplexTypeV2 =
+  entityDeserializerV2.deserializeComplexType;
 
 export { deserializeEntityV2 as deserializeEntity };
 export { deserializeComplexTypeV2 as deserializeComplexType };

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
-import { deserializeEntityV2 } from '../../src';
+import { entityDeserializerV2 } from '../../src';
 import {
   detectNewLineSymbol,
   getResponseBody,
@@ -135,7 +135,7 @@ describe('batch response parser', () => {
       expect(() =>
         splitBatchResponse(response)
       ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not parse batch response body. Expected at least two response boundaries."'
+        '"Could not parse batch response. Expected multipart response with boundary"'
       );
     });
 
@@ -143,7 +143,7 @@ describe('batch response parser', () => {
       expect(() =>
         splitBatchResponse(createBatchResponse(retrieveResponse))
       ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not parse batch response body. Expected at least two response boundaries."'
+        '"Could not parse batch response. Expected multipart response with boundary"'
       );
     });
   });
@@ -305,7 +305,7 @@ describe('batch response parser', () => {
       ].join('\n');
 
       expect(
-        parseResponse(response, {}, responseDataAccessor, deserializeEntityV2)
+        parseResponse(response, {}, responseDataAccessor, entityDeserializerV2)
       ).toEqual({
         httpCode: 200,
         body,
@@ -324,7 +324,7 @@ describe('batch response parser', () => {
       ].join('\n');
 
       expect(
-        parseResponse(response, {}, responseDataAccessor, deserializeEntityV2)
+        parseResponse(response, {}, responseDataAccessor, entityDeserializerV2)
       ).toEqual({
         httpCode: 204,
         body: {},
@@ -342,7 +342,7 @@ describe('batch response parser', () => {
       ].join('\n');
 
       expect(
-        parseResponse(response, {}, responseDataAccessor, deserializeEntityV2)
+        parseResponse(response, {}, responseDataAccessor, entityDeserializerV2)
       ).toEqual({
         httpCode: 201,
         body,

@@ -61,7 +61,7 @@ function parseHeaders(response: string): Record<string, any> {
   const [responseHeaders] = response.split(newLineSymbol + newLineSymbol);
   return responseHeaders.split(newLineSymbol).reduce((headers, line) => {
     const [key, value] = line.split(':');
-    return { ...headers, [key]: value.trim() };
+    return { ...headers, [key]: value?.trim() };
   }, {});
 }
 
@@ -71,7 +71,7 @@ function parseHeaders(response: string): Record<string, any> {
  * @returns The boundary or undefined if none is given.
  */
 function getBoundary(contentType: string | undefined): string | undefined {
-  if (contentType) {
+  if (contentType?.match(/.*boundary=.+/)) {
     return last(contentType.split('boundary='));
   }
 }
@@ -368,9 +368,9 @@ export function parseBatchResponse(
 }
 
 function isMultipartContentType(contentType: string): boolean {
-  return contentType.trim().startsWith('multipart/mixed');
+  return contentType?.trim().startsWith('multipart/mixed');
 }
 
 function isHttpContentType(contentType: string): boolean {
-  return contentType.trim().startsWith('application/http');
+  return contentType?.trim().startsWith('application/http');
 }

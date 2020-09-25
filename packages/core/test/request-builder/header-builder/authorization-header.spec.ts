@@ -84,9 +84,7 @@ describe('Authorization header builder', () => {
     const warnSpy = jest.spyOn(logger, 'warn');
     buildHeadersForDestination(destination, { authorization: 'SomeThing' });
     expect(warnSpy).toBeCalledWith(
-      expect.stringMatching(
-        /.*To have authorization information from both sources is often unintended.*/
-      )
+      'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
     );
   });
 

@@ -18,6 +18,25 @@
 
 ## New Functionality
 
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.28.2
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.28.2<br>
+Blog: TBD<br>
+
+## New Functionality
+
 - [Util] Allow to mute and unmute loggers.
 
 ## Improvements
@@ -26,8 +45,8 @@
 
 ## Fixed Issues
 
--
-
+- [OData] Fix deserialization of one to many links, where the navigation property is not wrapped in a `result` object.
+- [OData] Fix `$orderby` parameter in expanded subqueries.
 
 # 1.28.1
 

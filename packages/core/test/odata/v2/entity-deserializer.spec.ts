@@ -18,7 +18,7 @@ describe('entity-deserializer', () => {
     expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
   });
 
-  it('should build an entity with multi link', () => {
+  it('should build an entity with multi link from response with results object (S/4)', () => {
     const prop = 'test';
     const multiLinkEntity = new TestEntityMultiLink();
     multiLinkEntity.stringProperty = prop;
@@ -29,6 +29,19 @@ describe('entity-deserializer', () => {
       to_MultiLink: {
         results: [{ StringProperty: prop }]
       }
+    };
+    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
+  });
+
+  it('should build an entity with multi link from response without results object (C4C)', () => {
+    const prop = 'test';
+    const multiLinkEntity = new TestEntityMultiLink();
+    multiLinkEntity.stringProperty = prop;
+    const testEntity = new TestEntity();
+    testEntity.toMultiLink = [multiLinkEntity];
+
+    const response = {
+      to_MultiLink: [{ StringProperty: prop }]
     };
     expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
   });

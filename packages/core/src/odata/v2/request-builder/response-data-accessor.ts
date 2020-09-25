@@ -1,7 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { createLogger } from '@sap-cloud-sdk/util';
-import { ResponseDataAccessor } from '../../common/response-data-accessor';
 
 const logger = createLogger({
   package: 'core',
@@ -25,8 +23,8 @@ export function getCollectionResult(data): any[] {
 
 /**
  * Checks if the data contains a collection result.
- * @param data - Response of the OData v2 service
- * @returns boolean - true if the data is a collection result
+ * @param data - Response of the OData service.
+ * @returns True if the data is a collection result.
  */
 export function isCollectionResult(data): boolean {
   return Array.isArray(data?.d?.results);
@@ -54,11 +52,11 @@ export function getLinkedCollectionResult(data): any[] {
 }
 
 /**
- * Checks if the data contains a collection result.
- * @param data - Response of the OData v2 service
- * @returns boolean - true if the data is a collection result
+ * Parses the data of a single result.
+ * @param data - Response of the OData service.
+ * @returns The single result object if existent, an empty object otherwise.
  */
-export function getSingleResult(data): Record<string, any> {
+export function getSingleResult(data: any): Record<string, any> {
   validateSingleResult(data);
   return isSingleResultAsCollection(data) ? data?.d?.results : data?.d || {};
 }
@@ -80,10 +78,3 @@ function validateSingleResult(data): void {
     );
   }
 }
-
-export const responseDataAccessorV2: ResponseDataAccessor = {
-  getCollectionResult,
-  isCollectionResult,
-  getSingleResult,
-  getLinkedCollectionResult
-};

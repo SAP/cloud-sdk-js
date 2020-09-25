@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [OData] Support the usage of $count in `getAll` requests e.g.: `Entity.requestBuilder().getAll().count().execute()`.
 
 ## Improvements
 

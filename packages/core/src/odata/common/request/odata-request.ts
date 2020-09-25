@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import { Destination, sanitizeDestination } from '../../../scp-cf';
 import {

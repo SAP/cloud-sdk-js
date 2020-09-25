@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { createLogger, errorWithCause, first } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { audiences, DecodedJWT, decodeJwt } from '../util';

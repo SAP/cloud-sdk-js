@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityV2 } from '../entity';
 import { deserializeEntityV2 } from '../entity-deserializer';
 import { Constructable } from '../../common';

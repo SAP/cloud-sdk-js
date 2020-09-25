@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import moment from 'moment';
 import { EntityBase } from '../../common';
 import { FilterFunctionParameterType } from '../../common/filter';

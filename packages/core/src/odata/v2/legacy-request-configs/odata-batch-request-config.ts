@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { ODataBatchRequestConfig } from '../../common/request/odata-batch-request-config';
 
 export class ODataBatchConfig extends ODataBatchRequestConfig {

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { Constructable, EntityBase } from '../entity';
 import { Link } from '../selectable';
 import { ODataUri } from '../uri-conversion';

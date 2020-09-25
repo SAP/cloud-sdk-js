@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ClassDeclaration, FunctionDeclaration, SourceFile } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { generateProject, GeneratorOptions } from '../../src';

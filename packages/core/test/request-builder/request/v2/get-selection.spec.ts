@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { getQueryParametersForSelection } from '../../../../src/odata/v2/uri-conversion/get-selection';
 import {
   TestEntity,

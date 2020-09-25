@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmActionImport, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';

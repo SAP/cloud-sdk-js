@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { createLogger, errorWithCause, renameKeys } from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { XsuaaServiceCredentials } from './environment-accessor-types';

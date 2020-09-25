@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { GeneratorOptions } from './generator-options';
 import { npmCompliantName } from './generator-utils';
 import { GlobalNameFormatter } from './global-name-formatter';

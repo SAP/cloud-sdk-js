@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { ODataUpdateRequestConfig } from '../../../../src/odata/common/request/odata-update-request-config';
 import { testEntityResourcePath } from '../../../test-util/test-data';

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { applyPrefixOnJsConfictParam } from '../src/name-formatting-strategies';
 import { UniqueNameFinder } from '../src/unique-name-finder';
 

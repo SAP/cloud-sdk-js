@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { EdmTypeShared, isEdmType } from '../edm-types';
 import { Constructable, EntityBase } from '../entity';

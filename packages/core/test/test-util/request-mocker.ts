@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
 import { basicHeader, Constructable, Destination, oDataUriV2 } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';

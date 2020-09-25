@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { ImportDeclarationStructure } from 'ts-morph';
 import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {

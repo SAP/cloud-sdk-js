@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /**
  * Flatten a two dimensional array into a one dimensional array
  * @param arr The array to be flattened.

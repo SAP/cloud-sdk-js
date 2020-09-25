@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';

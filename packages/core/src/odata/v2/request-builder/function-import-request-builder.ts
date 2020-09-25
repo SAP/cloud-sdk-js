@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { FunctionImportParameters, RequestMethodType } from '../../common';
 import { oDataUriV2 } from '../uri-conversion';
 import { ActionFunctionImportRequestBuilderBase } from '../../common/request-builder/action-function-import-request-builder-base';

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { toTitleFormat } from '@sap-cloud-sdk/core';
 import { endWithDot } from './generator-utils';
 import {

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { existsSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 import { createLogger, findProjectRoot } from '@sap-cloud-sdk/util';

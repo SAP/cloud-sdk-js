@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 export interface ResilienceOptions {
   /**
    * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.

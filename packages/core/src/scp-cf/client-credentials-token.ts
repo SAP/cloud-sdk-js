@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { Destination } from './destination-service-types';
 import { clientCredentialsGrant } from './xsuaa-service';
 import {

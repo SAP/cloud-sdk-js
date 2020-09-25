@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger, last } from '@sap-cloud-sdk/util';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxProperty } from '../edmx-parser/common';

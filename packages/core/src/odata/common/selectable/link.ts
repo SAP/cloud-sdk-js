@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
 import type { Expandable } from '../expandable';
 import type { Selectable } from './selectable';

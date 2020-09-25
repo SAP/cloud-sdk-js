@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { toPropertyFormat, toStaticPropertyFormat } from '@sap-cloud-sdk/core';
 import voca from 'voca';
 import { stripPrefix } from './internal-prefix';

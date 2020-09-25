@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { dirname, resolve, sep } from 'path';
 import * as analytics from '@sap-cloud-sdk/analytics/src/analytics-data';

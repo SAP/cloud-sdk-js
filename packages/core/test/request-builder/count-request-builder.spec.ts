@@ -74,7 +74,7 @@ describe('CountRequestBuilderV2', () => {
         .top(1)
         .count()
         .url(defaultDestination);
-      expect(warnSpy).toHaveBeenCalledTimes(1)
+      expect(warnSpy).toHaveBeenCalledTimes(1);
       expect(warnSpy).toHaveBeenCalledWith(
         'The query parameter $top must not be used in a count request and has been ignored.'
       );

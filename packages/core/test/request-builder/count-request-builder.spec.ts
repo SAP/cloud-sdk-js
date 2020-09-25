@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, muteLoggers } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockCountRequest
@@ -8,7 +8,6 @@ import {
 import { TestEntity as TestEntityV2 } from '../test-util/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
 import { Filter } from '../../src/odata/common';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('CountRequestBuilderV2', () => {
   const requestBuilders = [
@@ -17,7 +16,7 @@ describe('CountRequestBuilderV2', () => {
   ];
 
   beforeAll(() => {
-    muteLoggers('count-request-config');
+    muteLoggers();
   });
 
   describe('url', () => {
@@ -75,6 +74,7 @@ describe('CountRequestBuilderV2', () => {
         .top(1)
         .count()
         .url(defaultDestination);
+      expect(warnSpy).toHaveBeenCalledTimes(1)
       expect(warnSpy).toHaveBeenCalledWith(
         'The query parameter $top must not be used in a count request and has been ignored.'
       );

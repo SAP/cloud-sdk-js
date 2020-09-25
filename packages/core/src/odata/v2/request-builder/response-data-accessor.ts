@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger } from '@sap-cloud-sdk/util';
+import { ResponseDataAccessor } from '../../common/response-data-accessor';
 
 const logger = createLogger({
   package: 'core',
@@ -79,3 +80,10 @@ function validateSingleResult(data): void {
     );
   }
 }
+
+export const responseDataAccessorV2: ResponseDataAccessor = {
+  getCollectionResult,
+  isCollectionResult,
+  getSingleResult,
+  getLinkedCollectionResult
+};

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, last } from '@sap-cloud-sdk/util';
+import { errorWithCause, first, last } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
 import {
   Destination,
@@ -327,7 +327,7 @@ function toConstructableFromRetrieveResponse(
   entityToConstructorMap: Record<string, Constructable<EntityV4>>
 ): Constructable<EntityV4> {
   const entityJson = isCollectionResult(responseBody)
-    ? getCollectionResult(responseBody)[0]
+    ? first(getCollectionResult(responseBody))
     : getSingleResult(responseBody);
 
   return entityToConstructorMap[

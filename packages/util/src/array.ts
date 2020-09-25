@@ -25,3 +25,12 @@ export function unique<T>(arr: T[]): T[] {
 export function last<T>(arr: T[]): T | undefined {
   return arr.length ? arr[arr.length - 1] : undefined;
 }
+
+/**
+ * Get the first item from an array. Returns undefined if the array is empty.
+ * @param arr - Array to get the first item of
+ * @returns Fist item of the array or undefined if the array was empty
+ */
+export function first<T>(arr: T[]): T | undefined {
+  return arr[0];
+}

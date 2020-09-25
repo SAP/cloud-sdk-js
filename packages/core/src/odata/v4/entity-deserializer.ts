@@ -6,7 +6,7 @@ import {
 } from '../common/entity-deserializer';
 import { edmToTsV4 } from './payload-value-converter';
 import { extractODataEtagV4 } from './extract-odata-etag';
-import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-link';
+import { getLinkedCollectionResult } from './request-builder/response-data-accessor';
 
 /**
  * Entity deserializer instance for v4 entities.
@@ -15,7 +15,7 @@ import { extractDataFromOneToManyLink } from './extract-data-from-one-to-many-li
 const deserializer: EntityDeserializer = entityDeserializer(
   edmToTsV4,
   extractODataEtagV4,
-  extractDataFromOneToManyLink
+  getLinkedCollectionResult
 );
 
 export const deserializeEntityV4 = deserializer.deserializeEntity;

@@ -27,14 +27,10 @@ import {
   destinationName,
   oauthMultipleResponse
 } from '../test-util/example-destination-service-responses';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('Failure cases', () => {
   beforeEach(() => {
     clientCredentialsTokenCache.clear();
-  });
-  beforeAll(() => {
-    muteLoggers('destination-accessor', 'environment-accessor');
   });
 
   it('fails if no destination service is bound', async () => {

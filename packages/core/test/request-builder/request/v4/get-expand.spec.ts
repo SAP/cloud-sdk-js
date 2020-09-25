@@ -52,5 +52,5 @@ const testExpandMultiLink = {
     .top(1)
     .skip(1),
   odataStr:
-    "to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty eq 'test');$skip=1;$top=1)"
+    "to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty eq 'test');$skip=1;$top=1;$orderby=StringProperty asc)"
 };

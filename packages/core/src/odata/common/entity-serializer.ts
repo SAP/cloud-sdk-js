@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { toStaticPropertyFormat } from '../../util';
 import {
   Constructable,
@@ -32,7 +32,7 @@ export interface EntitySerializer<
   serializeEntity: (
     entity: EntityT,
     entityConstructor: Constructable<EntityT>
-  ) => MapType<any>;
+  ) => Record<string, any>;
   serializeComplexType: (
     fieldValue: any,
     complexTypeNameSpace: ComplexTypeNamespaceT
@@ -40,7 +40,7 @@ export interface EntitySerializer<
   serializeEntityNonCustomFields: (
     entity: EntityT,
     entityConstructor: Constructable<EntityT>
-  ) => MapType<any>;
+  ) => Record<string, any>;
 }
 
 type TsToEdmType = (
@@ -65,7 +65,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   function serializeEntity<EntityT extends EntityBase>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>
-  ): MapType<any> {
+  ): Record<string, any> {
     return {
       ...serializeEntityNonCustomFields(entity, entityConstructor),
       ...entity.getCustomFields()
@@ -108,7 +108,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   function serializeEntityNonCustomFields<EntityT extends EntityBase>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>
-  ): MapType<any> {
+  ): Record<string, any> {
     if (!entity) {
       return {};
     }

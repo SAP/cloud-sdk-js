@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { ProxyConfiguration } from './connectivity-service-types';
 import { Destination } from './destination-service-types';
@@ -97,7 +97,7 @@ function addHeaders(
 function proxyAuthorizationHeader(
   connectivityServiceBinding: Service,
   userJwt?
-): Promise<MapType<string>> {
+): Promise<Record<string, string>> {
   return serviceToken(connectivityServiceBinding, { userJwt })
     .then(token => ({
       'Proxy-Authorization': `Bearer ${token}`
@@ -110,7 +110,9 @@ function proxyAuthorizationHeader(
     });
 }
 
-function sapConnectivityAuthenticationHeader(jwt?: string): MapType<string> {
+function sapConnectivityAuthenticationHeader(
+  jwt?: string
+): Record<string, string> {
   if (jwt) {
     return {
       'SAP-Connectivity-Authentication': `Bearer ${jwt}`

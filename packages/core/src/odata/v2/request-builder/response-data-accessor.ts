@@ -40,6 +40,19 @@ function validateCollectionResult(data): void {
 }
 
 /**
+ * Extract the collection data from the one to many link response.
+ * If the data does not contain a collection an empty array is returned.
+ * @param data - Response of the one to many link
+ * @returns any[] - Collection extracted from the response
+ */
+export function getLinkedCollectionResult(data): any[] {
+  if (Array.isArray(data?.results)) {
+    return data.results;
+  }
+  return Array.isArray(data) ? data : [];
+}
+
+/**
  * Checks if the data contains a collection result.
  * @param data - Response of the OData v2 service
  * @returns boolean - true if the data is a collection result

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, MapType, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
+import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
@@ -13,11 +13,11 @@ const logger = createLogger({
  * @hidden
  */
 export abstract class ODataRequestConfig {
-  payload: MapType<any> | string;
+  payload: Record<string, any> | string;
   customServicePath: string;
 
-  private _customHeaders: MapType<string> = {};
-  private _customQueryParameters: MapType<string> = {};
+  private _customHeaders: Record<string, string> = {};
+  private _customQueryParameters: Record<string, string> = {};
 
   /**
    * Creates an instance of ODataRequest.
@@ -36,21 +36,21 @@ export abstract class ODataRequestConfig {
     }
   }
 
-  set customHeaders(headers: MapType<string>) {
+  set customHeaders(headers: Record<string, string>) {
     this._customHeaders = {};
     this.addCustomHeaders(headers);
   }
 
-  get customHeaders(): MapType<string> {
+  get customHeaders(): Record<string, string> {
     return this._customHeaders;
   }
 
-  set customQueryParameters(queryParameters: MapType<string>) {
+  set customQueryParameters(queryParameters: Record<string, string>) {
     this._customQueryParameters = {};
     this.addCustomQueryParameters(queryParameters);
   }
 
-  get customQueryParameters(): MapType<string> {
+  get customQueryParameters(): Record<string, string> {
     return this._customQueryParameters;
   }
 
@@ -59,7 +59,7 @@ export abstract class ODataRequestConfig {
    *
    * @param headers - Key-value pairs where the key is the name of a header property and the value is the respective value
    */
-  addCustomHeaders(headers: MapType<string>): void {
+  addCustomHeaders(headers: Record<string, string>): void {
     Object.entries(headers).forEach(([key, value]) => {
       // Enforce lower case as HTTP headers are case-insensitive
       this.customHeaders[key.toLowerCase()] = value;
@@ -71,13 +71,15 @@ export abstract class ODataRequestConfig {
    *
    * @param queryParameters - Key-value pairs where the key is the name of a query parameter and the value is the respective value
    */
-  addCustomQueryParameters(queryParameters: MapType<string>): void {
+  addCustomQueryParameters(queryParameters: Record<string, string>): void {
     Object.entries(queryParameters).forEach(([key, value]) => {
       this.customQueryParameters[key] = value;
     });
   }
 
-  protected prependDollarToQueryParameters(params: MapType<any>): MapType<any> {
+  protected prependDollarToQueryParameters(
+    params: Record<string, any>
+  ): Record<string, any> {
     return Object.entries(params).reduce((newParams, [key, value]) => {
       newParams[`$${key}`] = value;
       return newParams;
@@ -92,5 +94,5 @@ export abstract class ODataRequestConfig {
   /**
    * @hidden
    */
-  abstract queryParameters(): MapType<any>;
+  abstract queryParameters(): Record<string, any>;
 }

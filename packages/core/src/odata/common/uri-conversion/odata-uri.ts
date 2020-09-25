@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { Selectable, FieldType } from '../selectable';
 import { Expandable } from '../expandable';
 import { EntityBase, Constructable } from '../entity';
@@ -25,12 +24,12 @@ export interface ODataUri {
   getEntityKeys<EntityT extends EntityBase>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>
-  ): MapType<any>;
+  ): Record<string, any>;
   getOrderBy<EntityT extends EntityBase>(
     orderBy: Orderable<EntityT>[]
   ): Partial<{ orderby: string }>;
   getResourcePathForKeys<EntityT extends EntityBase>(
-    keys: MapType<FieldType>,
+    keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): string;
   getSelect<EntityT extends EntityBase>(

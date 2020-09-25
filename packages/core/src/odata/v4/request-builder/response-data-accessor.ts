@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'core',
@@ -40,12 +40,22 @@ function validateCollectionResult(data): void {
 }
 
 /**
+ * Extract the collection data from the one to many link response.
+ * If the data does not contain a collection an empty array is returned.
+ * @param data - Response of the one to many link
+ * @returns any[] - Collection extracted from the response
+ */
+export function getLinkedCollectionResult(data): any[] {
+  return Array.isArray(data) ? data : [];
+}
+
+/**
  * Extract the single entry data from the response.
  * If the data does not contain a single object an empty object is returned.
  * @param data - Response of the OData v4 service
- * @returns MapType<any> - single object extracted from the response
+ * @returns Record<string, any> - single object extracted from the response
  */
-export function getSingleResult(data): MapType<any> {
+export function getSingleResult(data): Record<string, any> {
   validateSingleResult(data);
   return isSingleResult(data) ? data : {};
 }

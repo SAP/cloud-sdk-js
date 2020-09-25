@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { toStaticPropertyFormat } from '../../util';
 import type { Constructable, EntityBase } from './entity';
 
@@ -27,7 +27,7 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
    * @param customFields - The custom fields you want to add.
    * @returns The entity builder itself for method chaining
    */
-  public withCustomFields(customFields: MapType<any>): this {
+  public withCustomFields(customFields: Record<string, any>): this {
     const validCustomFields = this.filterCustomFields(customFields);
     this.entity = this.entity.initializeCustomFields(validCustomFields);
     return this;
@@ -58,13 +58,15 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
         entityBuilder[key](value);
       }
       if (key === '_customFields') {
-        entityBuilder.withCustomFields(value as MapType<any>);
+        entityBuilder.withCustomFields(value as Record<string, any>);
       }
     });
     return entityBuilder.build();
   }
 
-  private filterCustomFields(customFields: MapType<any>): MapType<any> {
+  private filterCustomFields(
+    customFields: Record<string, any>
+  ): Record<string, any> {
     return Object.keys(customFields).reduce((validCfs, cf) => {
       if (!this._entityConstructor[toStaticPropertyFormat(cf)]) {
         validCfs[cf] = customFields[cf];

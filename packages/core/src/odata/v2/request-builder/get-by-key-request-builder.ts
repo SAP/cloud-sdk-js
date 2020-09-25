@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { errorWithCause } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
@@ -38,7 +38,7 @@ export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    keys: MapType<FieldType>
+    keys: Record<string, FieldType>
   ) {
     super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUriV2));
     this.requestConfig.keys = keys;

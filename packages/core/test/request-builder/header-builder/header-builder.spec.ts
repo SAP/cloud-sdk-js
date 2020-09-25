@@ -4,7 +4,6 @@ import nock from 'nock';
 import { buildHeaders } from '../../../src/header-builder/header-builder';
 import { Destination } from '../../../src/scp-cf/destination-service-types';
 import { mockedConnectivityServiceProxyConfig } from '../../test-util/environment-mocks';
-import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultDestination,
   mockHeaderRequest
@@ -17,10 +16,6 @@ import {
 } from '../../test-util/create-requests';
 
 describe('Header-Builder', () => {
-  beforeAll(() => {
-    muteLoggers('http-agent', 'csrf-token-header', 'authorization-header');
-  });
-
   it('customHeaders are not overwritten.', async () => {
     const authString = 'initial';
     const request = createGetAllRequest(defaultDestination);

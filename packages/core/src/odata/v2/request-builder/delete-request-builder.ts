@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause, MapType } from '@sap-cloud-sdk/util';
+import { errorWithCause } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, FieldType } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataDeleteRequestConfig } from '../../common/request/odata-delete-request-config';
@@ -30,7 +30,7 @@ export class DeleteRequestBuilderV2<EntityT extends EntityV2>
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    keysOrEntity: MapType<FieldType> | EntityV2
+    keysOrEntity: Record<string, FieldType> | EntityV2
   ) {
     super(new ODataDeleteRequestConfig(entityConstructor, oDataUriV2));
     this._entityConstructor = entityConstructor;

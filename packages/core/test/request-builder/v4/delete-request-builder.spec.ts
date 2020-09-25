@@ -2,7 +2,6 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { DeleteRequestBuilderV4, uriConverterV4 } from '../../../src/odata/v4';
-import { muteLoggers } from '../../test-util/mute-logger';
 import {
   defaultDestination,
   mockDeleteRequest
@@ -15,10 +14,6 @@ const { convertToUriFormat } = uriConverterV4;
 describe('DeleteRequestBuilderV4', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
-
-  beforeAll(() => {
-    muteLoggers('http-agent');
-  });
 
   afterAll(() => {
     nock.cleanAll();

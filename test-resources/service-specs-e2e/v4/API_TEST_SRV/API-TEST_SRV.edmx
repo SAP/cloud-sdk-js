@@ -4,15 +4,16 @@
         <Schema
             xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="AdminService">
             <EntityContainer Name="EntityContainer">
-                <EntitySet Name="TestEntity" EntityType="AdminService.TestEntity"/>
+                <EntitySet Name="TestEntity" EntityType="AdminService.TestEntity">
+                    <NavigationPropertyBinding Path="ToMultiLink" Target="TestEntityLink"/>
+                </EntitySet>
+                <EntitySet Name="TestEntityLink" EntityType="AdminService.TestEntityLink"/>
             </EntityContainer>
             <EntityType Name="TestEntity">
                 <Key>
-                    <PropertyRef Name="KeyPropertyInt"/>
-                    <PropertyRef Name="KeyPropertyString"/>
+                    <PropertyRef Name="KeyTestEntity"/>
                 </Key>
-                <Property Name="KeyPropertyInt" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+                <Property Name="KeyTestEntity" Type="Edm.Int32" Nullable="false"/>
                 <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
                 <Property Name="GuidProperty" Type="Edm.Guid"/>
                 <Property Name="BooleanProperty" Type="Edm.Boolean"/>
@@ -23,6 +24,16 @@
                 <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay"/>
                 <Property Name="DataTimeOffsetDataTimeProperty" Type="Edm.DateTimeOffset"/>
                 <Property Name="DataTimeOffsetTimestampProperty" Type="Edm.DateTimeOffset" Precision="7"/>
+                <NavigationProperty Name="ToMultiLink" Type="Collection(AdminService.TestEntityLink)"/>
+            </EntityType>
+            <EntityType Name="TestEntityLink">
+                <Key>
+                    <PropertyRef Name="KeyTestEntityLink"/>
+                    <PropertyRef Name="KeyToTestEntity"/>
+                </Key>
+                <Property Name="KeyTestEntityLink" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="KeyToTestEntity" Type="Edm.Int32" Nullable="false"/>
+                 <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
             </EntityType>
         </Schema>
     </edmx:DataServices>

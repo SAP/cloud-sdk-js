@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/integration-tests",
-  "version": "1.28.0",
+  "version": "1.28.2",
   "description": "SAP Cloud SDK for JavaScript integration tests",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -8,16 +8,16 @@
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
     "test": "yarn jest --coverage",
-    "test:local": "yarn jest --config ./jest-local.json",
-    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand --config ./jest-local.json",
-    "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand --config ./jest-local.json",
+    "test:local": "yarn jest",
+    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
+    "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.28.0",
-    "@sap-cloud-sdk/core": "^1.28.0",
-    "@sap-cloud-sdk/test-services": "^1.28.0",
-    "@sap-cloud-sdk/test-util": "^1.28.0"
+    "@sap-cloud-sdk/analytics": "^1.28.2",
+    "@sap-cloud-sdk/core": "^1.28.2",
+    "@sap-cloud-sdk/test-services": "^1.28.2",
+    "@sap-cloud-sdk/test-util": "^1.28.2"
   },
   "devDependencies": {
     "bignumber.js": "^9.0.0",

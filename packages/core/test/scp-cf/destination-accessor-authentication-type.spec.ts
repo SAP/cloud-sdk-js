@@ -34,13 +34,8 @@ import {
   getDestinationFromDestinationService,
   parseDestination
 } from '../../src/scp-cf';
-import { muteLoggers } from '../test-util/mute-logger';
 
 describe('authentication types', () => {
-  beforeAll(() => {
-    muteLoggers('destination-accessor', 'proxy-util', 'jwt');
-  });
-
   afterEach(() => {
     clientCredentialsTokenCache.clear();
     destinationCache.clear();

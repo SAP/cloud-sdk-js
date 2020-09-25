@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase, FieldType, Constructable } from '../../common';
 import { oDataUriV2 } from './odata-uri';
 
@@ -15,7 +14,7 @@ import { oDataUriV2 } from './odata-uri';
  * @returns The path to the resource
  */
 export function getResourcePathForKeys<EntityT extends EntityBase>(
-  keys: MapType<FieldType> = {},
+  keys: Record<string, FieldType> = {},
   entityConstructor: Constructable<EntityT>
 ): string {
   return oDataUriV2.getResourcePathForKeys(keys, entityConstructor);

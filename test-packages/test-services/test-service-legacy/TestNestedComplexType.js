@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TestNestedComplexType = exports.TestNestedComplexTypeField = exports.createTestNestedComplexType = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -20,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var core_1 = require("@sap-cloud-sdk/core");
 /**
- * @deprecated since v1.6.0. Use [[TestNestedComplexType.build]] instead.
+ * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
  */
 function createTestNestedComplexType(json) {
     return TestNestedComplexType.build(json);

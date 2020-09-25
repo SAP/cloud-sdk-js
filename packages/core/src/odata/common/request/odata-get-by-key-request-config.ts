@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity';
 import { FieldType, Selectable } from '../selectable';
 import { Expandable } from '../expandable';
@@ -16,7 +15,7 @@ import { WithKeys, WithSelection } from './odata-request-traits';
 export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithKeys, WithSelection<EntityT> {
-  keys: MapType<FieldType>;
+  keys: Record<string, FieldType>;
   selects: Selectable<EntityT>[] = [];
   expands: Expandable<EntityT>[];
 
@@ -39,7 +38,7 @@ export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
     );
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     return this.prependDollarToQueryParameters({
       format: 'json',
       ...this.oDataUri.getSelect(this.selects),

@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { PathLike, readFileSync } from 'fs';
-import { relative, resolve, basename } from 'path';
+import { resolve, basename } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
@@ -16,6 +16,7 @@ import {
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
+import execa = require('execa');
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';
@@ -23,7 +24,11 @@ import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
 import { copyFile, otherFile, sourceFile } from './file-generator';
 import { GeneratorOptions } from './generator-options';
-import { cloudSdkVdmHack, npmCompliantName } from './generator-utils';
+import {
+  cloudSdkVdmHack,
+  hasEntities,
+  npmCompliantName
+} from './generator-utils';
 import {
   genericDescription,
   s4hanaCloudDescription
@@ -61,41 +66,20 @@ export async function generate(
   await project.save();
 
   if (options.generateJs) {
-    return emit(project, options);
+    project
+      .getDirectories()
+      .filter(dir => !!dir.getSourceFile('tsconfig.json'))
+      .forEach(dir => {
+        logger.info(`Transpiling files in the directory: ${dir.getPath()}.`);
+
+        execa('tsc', { cwd: dir.getPath() }).catch(err => {
+          logger.error(`Error: Failed to generate js files: ${err}`);
+          process.exit(1);
+        });
+      });
   }
 
   return;
-}
-
-function emit(
-  project: Project,
-  options: GeneratorOptions
-): Promise<EmitResult[]> {
-  logger.info(
-    'Starting to save files for project to disk. This can take a while...'
-  );
-  // Filter for .ts files, due to a bug in ts-morph. Has been fixed in a newer version of ts-morph
-  const nonTsFiles = project
-    .getSourceFiles()
-    .filter(s => !s.getFilePath().endsWith('.ts'));
-  nonTsFiles.forEach(f => project.removeSourceFile(f));
-
-  const flatSourceFileList = project
-    .getDirectories()
-    // Filter only for files that are within the service subfolders
-    .filter(d => isDescendant(d.getPath(), options))
-    .map(d => d.getSourceFiles())
-    .reduce((d, collected) => [...collected, ...d], []);
-  return Promise.all(
-    flatSourceFileList.map(file => {
-      logger.info(`Saving file: ${file.getBaseName()}...`);
-      return file.emit();
-    })
-  );
-}
-
-function isDescendant(path: string, options: GeneratorOptions): boolean {
-  return !relative(options.outputDir.toString(), path).startsWith('..');
 }
 
 export async function generateProject(
@@ -214,7 +198,7 @@ export async function generateSourcesForService(
 
   otherFile(serviceDir, 'tsconfig.json', tsConfig(), options.forceOverwrite);
 
-  if (service.entities && service.entities.length > 0) {
+  if (hasEntities(service)) {
     logger.info(
       `Generating batch request builder for: ${service.namespace}...`
     );

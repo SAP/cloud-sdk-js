@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { sanitizeDestination } from '../../src/scp-cf';
 import { useOrFetchDestination } from '../../src/scp-cf/destination-accessor';
-import { muteLoggers } from '../test-util/mute-logger';
 
 function mockEnvDestinations() {
   process.env['destinations'] = JSON.stringify(environmentDestinations);
@@ -19,10 +18,6 @@ describe('destination loading precedence', () => {
   afterEach(() => {
     delete process.env['VCAP_SERVICES'];
     delete process.env['destinations'];
-  });
-
-  beforeAll(() => {
-    muteLoggers('destination-accessor', 'proxy-util', 'environment-accessor');
   });
 
   it('reads from env when only destinationName specified', async () => {

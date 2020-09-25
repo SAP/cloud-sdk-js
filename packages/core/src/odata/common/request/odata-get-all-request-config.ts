@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity';
 import { Filterable } from '../filter';
 import { Orderable } from '../order';
@@ -41,8 +40,8 @@ export class ODataGetAllRequestConfig<EntityT extends EntityBase>
     return this.entityConstructor._entityName;
   }
 
-  queryParameters(): MapType<any> {
-    const params: MapType<any> = {
+  queryParameters(): Record<string, any> {
+    const params: Record<string, any> = {
       format: 'json',
       ...this.oDataUri.getSelect(this.selects),
       ...this.oDataUri.getExpand(

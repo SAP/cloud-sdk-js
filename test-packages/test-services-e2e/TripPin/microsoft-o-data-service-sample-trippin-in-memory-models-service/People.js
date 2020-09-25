@@ -34,7 +34,7 @@ var PeopleRequestBuilder_1 = require("./PeopleRequestBuilder");
 var Location_1 = require("./Location");
 var core_1 = require("@sap-cloud-sdk/core");
 /**
- * This class represents the entity "People" of service "Microsoft.OData.Service.Sample.TrippinInMemory.Models".
+ * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 var People = /** @class */ (function (_super) {
     __extends(People, _super);
@@ -78,14 +78,15 @@ var People = /** @class */ (function (_super) {
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for People.
      */
-    People._serviceName = 'Microsoft.OData.Service.Sample.TrippinInMemory.Models';
+    People._serviceName = 'Microsoft.OData.SampleService.Models.TripPin';
     /**
      * Default url path for the according service.
      */
-    People._defaultServicePath = 'TripPinRESTierService/(S(duh2c3dgb1c5lzc0bqwgyekc))/';
+    People._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
     return People;
 }(core_1.EntityV4));
 exports.People = People;
+var Photos_1 = require("./Photos");
 (function (People) {
     /**
      * Static representation of the [[userName]] property for query construction.
@@ -103,21 +104,6 @@ exports.People = People;
      */
     People.LAST_NAME = new core_1.StringField('LastName', People, 'Edm.String');
     /**
-     * Static representation of the [[middleName]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    People.MIDDLE_NAME = new core_1.StringField('MiddleName', People, 'Edm.String');
-    /**
-     * Static representation of the [[gender]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    People.GENDER = new core_1.EnumField('Gender', People);
-    /**
-     * Static representation of the [[age]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    People.AGE = new core_1.BigNumberField('Age', People, 'Edm.Int64');
-    /**
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -128,30 +114,25 @@ exports.People = People;
      */
     People.ADDRESS_INFO = new core_1.CollectionField('AddressInfo', People, Location_1.Location);
     /**
-     * Static representation of the [[homeAddress]] property for query construction.
+     * Static representation of the [[gender]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    People.HOME_ADDRESS = new Location_1.LocationField('HomeAddress', People);
+    People.GENDER = new core_1.EnumField('Gender', People);
     /**
-     * Static representation of the [[favoriteFeature]] property for query construction.
+     * Static representation of the [[concurrency]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    People.FAVORITE_FEATURE = new core_1.EnumField('FavoriteFeature', People);
-    /**
-     * Static representation of the [[features]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    People.FEATURES = new core_1.CollectionField('Features', People, 'Edm.Enum');
+    People.CONCURRENCY = new core_1.BigNumberField('Concurrency', People, 'Edm.Int64');
     /**
      * Static representation of the one-to-many navigation property [[friends]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     People.FRIENDS = new core_1.OneToManyLink('Friends', People, People);
     /**
-     * Static representation of the one-to-one navigation property [[bestFriend]] for query construction.
+     * Static representation of the one-to-one navigation property [[photo]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    People.BEST_FRIEND = new core_1.OneToOneLink('BestFriend', People, People);
+    People.PHOTO = new core_1.OneToOneLink('Photo', People, Photos_1.Photos);
     /**
      * All fields of the People entity.
      */
@@ -159,16 +140,12 @@ exports.People = People;
         People.USER_NAME,
         People.FIRST_NAME,
         People.LAST_NAME,
-        People.MIDDLE_NAME,
-        People.GENDER,
-        People.AGE,
         People.EMAILS,
         People.ADDRESS_INFO,
-        People.HOME_ADDRESS,
-        People.FAVORITE_FEATURE,
-        People.FEATURES,
+        People.GENDER,
+        People.CONCURRENCY,
         People.FRIENDS,
-        People.BEST_FRIEND
+        People.PHOTO
     ];
     /**
      * All fields selector.

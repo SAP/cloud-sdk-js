@@ -9,6 +9,7 @@ import {
   GetAllRequestBuilderV4,
   oDataUriV2
 } from '../../src';
+import { basicHeader, Constructable, Destination, oDataUriV2 } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
@@ -61,11 +62,11 @@ interface MockRequestParams {
   destination?: Destination;
   path?: string;
   statusCode?: number;
-  additionalHeaders?: MapType<any>;
-  body?: MapType<any>;
-  responseBody?: MapType<any>;
-  responseHeaders?: MapType<any>;
-  query?: MapType<any>;
+  additionalHeaders?: Record<string, any>;
+  body?: Record<string, any>;
+  responseBody?: Record<string, any>;
+  responseHeaders?: Record<string, any>;
+  query?: Record<string, any>;
   method?: string;
 }
 
@@ -164,7 +165,7 @@ export function mockCountRequest(
 interface MockHeaderRequestParams {
   request;
   host?: string;
-  responseHeaders?: MapType<any>;
+  responseHeaders?: Record<string, any>;
 }
 
 export function mockHeaderRequest({
@@ -205,7 +206,10 @@ export function mockRequest(
     .reply(statusCode, responseBody, responseHeaders);
 }
 
-function getRequestHeaders(method: string, additionalHeaders?: MapType<any>) {
+function getRequestHeaders(
+  method: string,
+  additionalHeaders?: Record<string, any>
+) {
   if (additionalHeaders) {
     const initialHeaders =
       method === 'get'

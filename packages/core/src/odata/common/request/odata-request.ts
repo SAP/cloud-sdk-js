@@ -172,7 +172,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       return {
         ...destinationRelatedHeaders,
         ...csrfHeaders,
-        ...this.basicHeaders()
+        ...this.defaultHeaders(),
+        ...this.eTagHeaders(),
+        ...this.customHeaders()
       };
     } catch (error) {
       return Promise.reject(

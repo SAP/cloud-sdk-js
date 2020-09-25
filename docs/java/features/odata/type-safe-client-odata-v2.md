@@ -33,7 +33,7 @@ SAP Cloud SDK `3.29.0` releases the productive version of the new, improved ODat
 
 ### The new improved client
 
-As of SAP Cloud SDK `3.29.0` we offer a generally available improved OData client.
+As of SAP Cloud SDK `3.29.1` we offer a generally available improved OData client.
 - High performance thanks to optimized handling of metadata (fewer network requests)
 - Developed fully _In house_ and shares code with OData v4 client
 - Allows for faster feature development and bug fixes

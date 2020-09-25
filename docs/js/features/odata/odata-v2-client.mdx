@@ -1,5 +1,6 @@
 ---
-title: Use the OData client for JavaScript / TypeScript
+id: use-odata-v2-type-safe-client-for-javascript-typescript
+title: Use the OData v2 client for JavaScript / TypeScript
 sidebar_label: OData v2 client API
 description: Use the SAP Cloud SDK for JavaScript to build and run OData v2 requests in a type-safe way.
 keywords:
@@ -14,7 +15,7 @@ keywords:
 
 In the following, the OData v2 features supported by the SAP Cloud SDK are explained using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) of SAP S/4HANA as an example.
 
-For more details on **how to execute requests** using a (pre-)generated OData client refer to [this documentation](./execute-odata-request).
+For more details on **how to execute requests** using a (pre-)generated OData client refer to [this documentation](./executing-a-request-using-a-generated-odata-v2-v4-client-with-sap-cloud-sdk-for-javascript).
 
 ## GetAll Request Builder
 
@@ -228,6 +229,29 @@ BusinessPartner.requestBuilder()
 
 You can also create an entity `asChildOf` another entity.
 
+### Create as Child of
+
+Assume you have already created a business partner and would like to add a new address to it:
+```ts
+const existingBusinessPartner = await BusinessPartner.requestBuilder().getByKey(myID).execute(myDestination);
+
+const newAddress = BusinessPartnerAddress.builder()
+  .country('DE')
+  .postalCode('14469')
+  .cityName('Potsdam')
+  .streetName('Konrad-Zuse-Ring')
+  .houseNumber('10')
+  .build()
+```
+This can be done by using the `asChildOf` method which allows to create an entity as a child of an existing entity.
+You need to give the parent object and the field connecting the two entities:
+```ts
+BusinessPartnerAddress.requestBuilder()
+  .create(newAddress)
+  .asChildOf(existingBusinessPartner,BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
+  .execute(myDestination)
+```
+
 ## Update Request Builder
 
 The Update request builder allows you to send `PUT` or `PATCH` requests. By default `PATCH` is used to only update the changed fields:
@@ -335,6 +359,29 @@ BusinessPartner.requestBuilder()
   .getAll()
   .filter(length(BusinessPartner.FIRST_NAME).lessThan(5))
   .execute(destination);
+```
+
+## Function imports
+### Request builder
+The [function imports request builder](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.functionimportrequestbuilderv2) helps build a request for a service operation containing parameters in a typesave way.
+This time, as an example, the [`Warehouse Outbound Delivery Order Service`](https://api.sap.com/api/API_WHSE_OUTB_DLV_ORDER/resource) is used, because not all the services contain function imports like the `Business Partner Service`.
+The type safe client for the `Warehouse Outbound Delivery Order Service` can be found in the package `@sap/cloud-sdk-vdm-warehouse-outbound-delivery-order-service`.
+
+The example below creates a function import request builder for the service operation `PostGoodsIssue` and then execute it against your service.
+```ts
+postGoodsIssue({outboundDeliveryOrder: "order"})
+  .execute(destination);
+```
+The service operation is defined in the service metadata.
+
+### Setting ETag
+The `ETag` handling with the function imports is not integrated.
+Below is an example demonstrating how to make use of the [`withCustomHeaders`](pathname:///api/1.26.1/classes/sap_cloud_sdk_core.functionimportrequestbuilder-1#withcustomheaders) for setting `ETag` by your own.
+In order to use [`versionIdentifier`](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.entityv2#versionidentifier) for `ETag` value, make sure you fetch the entity information via e.g., a `get` request.
+```ts
+postGoodsIssue({outboundDeliveryOrder: "order"})
+  .withCustomHeaders({"if-match": entity.versionIdentifier})
+  .execute(destination)
 ```
 
 ## Batch Requests

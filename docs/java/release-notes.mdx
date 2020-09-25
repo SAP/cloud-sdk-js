@@ -33,7 +33,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ### Compatibility Notes
 
-- To leverage the new **OData v2 client**, you need to adjust existing code. Refer to [migration guide](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java#switch-to-improved-odata-v2-type-safe-client) for detailed instructions.
+- To leverage the new **OData v2 client**, you need to adjust existing code. Refer to [documentation on how to switch](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java#switch-to-improved-odata-v2-type-safe-client) for detailed instructions.
 - We start deprecating APIs of the outdated **OData v2 client**. In this release we deprecated:
   - Methods: `execute`, `toQuery`, `withErrorHandler`, `cachingMetadata`, `withoutCachingMetadata`, `ignoringVersionIdentifier` and `ignoreVersionIdentifier`.
   - Error handler: `ODataVdmErrorResultHandler`.
@@ -43,7 +43,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 ### New Functionality
 
 - The improved OData v2 type-safe client is now Generally Available. From now on we recommend it for OData API consumption.
-Refer to the [migration guide](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java#switch-to-improved-odata-v2-type-safe-client) for more details on the new OData 2 client.
+Refer to the [documentation on how to switch](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java#switch-to-improved-odata-v2-type-safe-client) for more details on the new OData 2 client.
   - The methods `executeRequest` are no longer marked as Beta and ready for use in production code.
   - The new methods `matchAnyVersionIdentifier()` and `disableVersionIdentifier()` allow for better control over [ETag handling](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java#handling-of-etags).
 

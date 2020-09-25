@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause, first } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { audiences, DecodedJWT, decodeJwt } from '../util';
 import {
@@ -40,7 +40,7 @@ export function getDestinationBasicCredentials(): BasicCredentials {
  * @returns The 'destination' credentials object or null if it does not exist.
  */
 export function getDestinationServiceCredentials(): any {
-  return getDestinationServiceCredentialsList()[0];
+  return first(getDestinationServiceCredentialsList());
 }
 
 /**
@@ -256,12 +256,12 @@ function selectXsuaaInstance(token?: DecodedJWT): XsuaaServiceCredentials {
   if (selected.length > 1) {
     logger.warn(
       `Multiple XSUAA instances could be matched to the given JWT! Choosing the first one (xsappname: ${
-        selected[0]!.credentials.xsappname
+        first(selected)!.credentials.xsappname
       }).`
     );
   }
 
-  return selected[0]!.credentials;
+  return first(selected)!.credentials;
 }
 
 function applyStrategiesInOrder(

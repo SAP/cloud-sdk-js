@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause } from '@sap-cloud-sdk/util';
-import { head, last } from 'rambda';
+import { errorWithCause, last } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
 import {
   Destination,
@@ -252,7 +251,7 @@ function partitionBatchResponse(response: string, lineBreak: string): string[] {
   }
 
   // E.g., --batch_1234
-  const partSeparator = head(response.split(lineBreak, 1));
+  const partSeparator = response.split(lineBreak, 1)[0];
   if (!partSeparator) {
     throw Error(`Failed to get part separator of the response: ${response}`);
   }
@@ -268,7 +267,7 @@ function partitionChangeSetResponse(
   responseOfSingleRetrieveRequest: string,
   lineBreak: string
 ): string[] {
-  const firstLine = head(responseOfSingleRetrieveRequest.split(lineBreak, 1));
+  const firstLine = responseOfSingleRetrieveRequest.split(lineBreak, 1)[0];
   if (!firstLine) {
     throw Error(
       `Failed to get the first line of ${responseOfSingleRetrieveRequest}.`

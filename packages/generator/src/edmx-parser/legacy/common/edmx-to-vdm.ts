@@ -1,8 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { last } from 'rambda';
 import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, last } from '@sap-cloud-sdk/util';
 import {
   VdmComplexType,
   VdmEntity,

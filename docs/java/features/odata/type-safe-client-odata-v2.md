@@ -43,7 +43,7 @@ As of SAP Cloud SDK `3.29.1` we offer a generally available improved OData clien
 
 ### The deprecated old client
 
-As of SAP Cloud SDK `3.29.0` we have deprecated the old OData client.
+As of SAP Cloud SDK `3.29.1` we have deprecated the old OData client.
 - Stable and well tested
 - Based on 3rd party dependencies, which slows down release of advanced features
 - Doesn't share a code base with OData v4 client

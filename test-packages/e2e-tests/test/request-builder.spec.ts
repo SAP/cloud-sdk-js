@@ -98,6 +98,28 @@ describe('Request builder test', () => {
     );
   });
 
+  it('should count the entities', async () => {
+    const result = await TestEntity.requestBuilder()
+      .getAll()
+      .count()
+      .execute(destination);
+    expect(result).toBeGreaterThan(2);
+
+    const resultTopped = await TestEntity.requestBuilder()
+      .getAll()
+      .top(3)
+      .count()
+      .execute(destination);
+    expect(resultTopped).toBeGreaterThan(3);
+
+    const resultFiltered = await TestEntity.requestBuilder()
+      .getAll()
+      .filter(TestEntity.STRING_PROPERTY.equals('Edgar Allen Poe'))
+      .count()
+      .execute(destination);
+    expect(resultFiltered).toBe(1);
+  });
+
   xit('should set the version identifier (eTag)', async () => {
     const created = await createEntity(entityKey);
     expect(created['_versionIdentifier']).not.toBe(undefined);

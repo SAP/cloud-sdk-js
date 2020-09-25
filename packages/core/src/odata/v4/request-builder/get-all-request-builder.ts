@@ -21,6 +21,7 @@ import { ODataGetAllRequestConfig } from '../../common/request/odata-get-all-req
 import { Expandable } from '../../common/expandable';
 import { oDataUriV4 } from '../uri-conversion';
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
+import { CountRequestBuilder } from '../../common/request-builder/count-request-builder';
 import { getCollectionResult } from './response-data-accessor';
 
 /**
@@ -108,6 +109,15 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
   skip(skip: number): this {
     this.requestConfig.skip = skip;
     return this;
+  }
+
+  /**
+   * Count the number of entities.
+   *
+   * @returns A count request builder for execution
+   */
+  count(): CountRequestBuilder<EntityT> {
+    return new CountRequestBuilder(this);
   }
 
   /**

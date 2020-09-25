@@ -18,6 +18,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUriV2 } from '../uri-conversion';
+import { CountRequestBuilder } from '../../common/request-builder/count-request-builder';
 import { getCollectionResult } from './response-data-accessor';
 
 /**
@@ -97,6 +98,15 @@ export class GetAllRequestBuilderV2<EntityT extends EntityV2>
   skip(skip: number): this {
     this.requestConfig.skip = skip;
     return this;
+  }
+
+  /**
+   * Count the number of entities.
+   *
+   * @returns A count request builder for execution
+   */
+  count(): CountRequestBuilder<EntityT> {
+    return new CountRequestBuilder(this);
   }
 
   /**

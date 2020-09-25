@@ -51,15 +51,6 @@ export abstract class MethodRequestBuilderBase<
   }
 
   /**
-   * Create object containing all basic headers for the given request, including custom headers, but excluding destination related and csrf headers.
-   *
-   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
-   */
-  basicHeaders(): Record<string, any> {
-    return new ODataRequest(this.requestConfig).basicHeaders();
-  }
-
-  /**
    * Add custom headers to the request.
    *
    * @param headers - Key-value pairs denoting additional custom headers

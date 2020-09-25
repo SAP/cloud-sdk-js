@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
+import { last } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import {
   reservedJSKeywords,
@@ -90,8 +90,4 @@ function sortByIntegerSuffix(array: string[]): string[] {
     }
     return 0;
   });
-}
-
-function last<T>(array: T[]): T {
-  return array[array.length - 1];
 }

@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { flat, unique, last } from '../src';
+import { flat, unique, last, first } from '../src';
 
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 describe('array', () => {
@@ -32,11 +32,29 @@ describe('array', () => {
 
   describe('last', () => {
     it('returns the last item', () => {
+      expect(last([true, false])).toStrictEqual(false);
+    });
+
+    it('returns the last item when there is only one element', () => {
       expect(last([false])).toStrictEqual(false);
     });
 
     it('returns undefined for empty arrays', () => {
       expect(last([])).toBeUndefined();
+    });
+  });
+
+  describe('first', () => {
+    it('returns the first item', () => {
+      expect(first([false, true])).toStrictEqual(false);
+    });
+
+    it('returns the first item when there is only one element', () => {
+      expect(first([false])).toStrictEqual(false);
+    });
+
+    it('returns undefined for empty arrays', () => {
+      expect(first([])).toBeUndefined();
     });
   });
 });

@@ -10,12 +10,12 @@ import { tsToEdmV2 } from './payload-value-converter';
  * Entity serializer instance for v2 entities.
  * See [[EntitySerializerType]] for the provided methods.
  */
-const serializer: EntitySerializer = entitySerializer(tsToEdmV2);
+export const entitySerializerV2: EntitySerializer = entitySerializer(tsToEdmV2);
 
-export const serializeEntityV2 = serializer.serializeEntity;
-export const serializeComplexTypeV2 = serializer.serializeComplexType;
+export const serializeEntityV2 = entitySerializerV2.serializeEntity;
+export const serializeComplexTypeV2 = entitySerializerV2.serializeComplexType;
 export const serializeEntityNonCustomFieldsV2 =
-  serializer.serializeEntityNonCustomFields;
+  entitySerializerV2.serializeEntityNonCustomFields;
 
 export { serializeEntityV2 as serializeEntity };
 export { serializeComplexTypeV2 as serializeComplexType };

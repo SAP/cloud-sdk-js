@@ -40,7 +40,7 @@ export function getDestinationBasicCredentials(): BasicCredentials {
  * @returns The 'destination' credentials object or null if it does not exist.
  */
 export function getDestinationServiceCredentials(): any {
-  return head(getDestinationServiceCredentialsList());
+  return getDestinationServiceCredentialsList()[0];
 }
 
 /**

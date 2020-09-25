@@ -1,12 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MapType } from '@sap-cloud-sdk/util';
-import { pick } from 'rambda';
+import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { omit, pick } from 'rambda';
 import { EntityBase } from '../entity';
 import { GetAllRequestBuilderV2 } from '../../v2/request-builder';
 import { GetAllRequestBuilderV4 } from '../../v4/request-builder';
 import { removeTrailingSlashes } from '../../../util';
 import { ODataRequestConfig } from './odata-request-config';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'count-request-config'
+});
 
 /**
  * OData count request configuration for an entity type.
@@ -37,7 +42,19 @@ export class ODataCountRequestConfig<
 
   queryParameters(): MapType<any> {
     const parametersAllowedInCount = ['$apply', '$search', '$filter'];
-    const allParams = this.getAllRequest.requestConfig.queryParameters();
-    return pick(parametersAllowedInCount, allParams);
+
+    const parametersSetByUser = omit(
+      ['$format'],
+      this.getAllRequest.requestConfig.queryParameters()
+    );
+    Object.keys(parametersSetByUser).forEach(key => {
+      if (!parametersAllowedInCount.includes(key)) {
+        logger.warn(
+          `The query parameter ${key} must not be used in a count request and has been ignored.`
+        );
+      }
+    });
+
+    return pick(parametersAllowedInCount, parametersSetByUser);
   }
 }

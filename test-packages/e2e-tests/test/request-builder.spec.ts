@@ -206,7 +206,6 @@ describe('Request builder test', () => {
     expect(afterUpdate.toMultiLink[0].keyTestEntityLink).toBe(20);
   });
 
-
   it('should count the entities', async () => {
     const result = await TestEntity.requestBuilder()
       .getAll()

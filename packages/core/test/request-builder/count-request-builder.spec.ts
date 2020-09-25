@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockCountRequest
@@ -7,12 +8,17 @@ import {
 import { TestEntity as TestEntityV2 } from '../test-util/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
 import { Filter } from '../../src/odata/common';
+import { muteLoggers } from '../test-util/mute-logger';
 
 describe('CountRequestBuilderV2', () => {
   const requestBuilders = [
     TestEntityV2.requestBuilder(),
     TestEntityV4.requestBuilder()
   ];
+
+  beforeAll(() => {
+    muteLoggers('count-request-config');
+  });
 
   describe('url', () => {
     it('is built basic count correctly', async () =>
@@ -58,6 +64,21 @@ describe('CountRequestBuilderV2', () => {
           expect(actual).toBe(expected);
         })
       ));
+
+    it('warns the users if parameters are ignored in count', async () => {
+      const logger = createLogger({
+        messageContext: 'count-request-config'
+      });
+      const warnSpy = jest.spyOn(logger, 'warn');
+      const actual = await TestEntityV4.requestBuilder()
+        .getAll()
+        .top(1)
+        .count()
+        .url(defaultDestination);
+      expect(warnSpy).toHaveBeenCalledWith(
+        'The query parameter $top must not be used in a count request and has been ignored.'
+      );
+    });
   });
 
   describe('parsing', () => {

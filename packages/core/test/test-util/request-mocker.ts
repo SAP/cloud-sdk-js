@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock = require('nock');
-import { MapType } from '@sap-cloud-sdk/util';
 import {
   basicHeader,
   Constructable,
@@ -9,7 +8,6 @@ import {
   GetAllRequestBuilderV4,
   oDataUriV2
 } from '../../src';
-import { basicHeader, Constructable, Destination, oDataUriV2 } from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';

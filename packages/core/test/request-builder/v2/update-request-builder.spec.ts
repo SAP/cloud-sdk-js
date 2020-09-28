@@ -1,13 +1,17 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { UpdateRequestBuilderV2 } from '../../../src';
 import {
   defaultDestination,
   mockUpdateRequest
 } from '../../test-util/request-mocker';
 import { testEntityResourcePath } from '../../test-util/test-data';
-import { TestEntity } from '../../test-util/test-services/v2/test-service';
+import {
+  TestEntity,
+  TestEntityMultiLink
+} from '../../test-util/test-services/v2/test-service';
 
 function createTestEntity() {
   const keyPropGuid = uuid();
@@ -255,5 +259,58 @@ describe('UpdateRequestBuilderV2', () => {
     ).execute(defaultDestination);
 
     await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  it('should set the remote state and etag', async () => {
+    const stringProp = 'etagTest';
+    const eTag = 'someEtag';
+
+    const entity = createTestEntity().setVersionIdentifier('not-a-star');
+    const requestBody = { Int32Property: entity.int32Property };
+
+    mockUpdateRequest({
+      body: requestBody,
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      ),
+      statusCode: 204,
+      responseHeaders: { Etag: eTag }
+    });
+
+    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+      defaultDestination
+    );
+
+    expect(actual['_versionIdentifier']).toBe(eTag);
+    expect(actual['remoteState']).toEqual(entity);
+  });
+
+  it('warns if navigaton properties are send', async () => {
+    const entity = createTestEntity();
+    entity.toMultiLink = [
+      TestEntityMultiLink.builder().keyProperty('someKey').build()
+    ];
+    const requestBody = { Int32Property: entity.int32Property };
+    const logger = createLogger('update-request-builder-v2');
+    const warnSpy = jest.spyOn(logger, 'warn');
+
+    mockUpdateRequest({
+      path: testEntityResourcePath(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString
+      ),
+      statusCode: 201
+    });
+
+    await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+      defaultDestination
+    );
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(
+        'Update of navigational properties is not supported in OData v2 by the SDK.'
+      )
+    );
   });
 });

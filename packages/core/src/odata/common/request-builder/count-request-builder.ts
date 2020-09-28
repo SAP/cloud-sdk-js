@@ -33,7 +33,7 @@ export class CountRequestBuilder<
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to the number of  entities
+   * @returns A promise resolving to the number of entities
    */
   async execute(
     destination: Destination | DestinationNameAndJwt,

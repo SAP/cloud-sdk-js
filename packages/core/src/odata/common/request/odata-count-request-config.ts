@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
-import { omit, pick } from 'rambda';
+import { pick } from 'rambda';
 import { EntityBase } from '../entity';
 import { removeTrailingSlashes } from '../../../util';
 import { GetAllRequestBuilderBase } from '../request-builder/get-all-request-builder-base';
@@ -37,19 +37,20 @@ export class ODataCountRequestConfig<
 
   queryParameters(): MapType<any> {
     const parametersAllowedInCount = ['$apply', '$search', '$filter'];
+    const defaultParameters = ['$format'];
+    const parameters = this.getAllRequest.requestConfig.queryParameters();
 
-    const parametersSetByUser = omit(
-      ['$format'],
-      this.getAllRequest.requestConfig.queryParameters()
-    );
-    Object.keys(parametersSetByUser).forEach(key => {
-      if (!parametersAllowedInCount.includes(key)) {
+    Object.keys(parameters).forEach(key => {
+      if (
+        !parametersAllowedInCount.includes(key) &&
+        !defaultParameters.includes(key)
+      ) {
         logger.warn(
           `The query parameter ${key} must not be used in a count request and has been ignored.`
         );
       }
     });
 
-    return pick(parametersAllowedInCount, parametersSetByUser);
+    return pick(parametersAllowedInCount, parameters);
   }
 }

@@ -2,8 +2,8 @@
 
 import * as http from 'http';
 import * as https from 'https';
-import { createLogger } from '@sap-cloud-sdk/util';
-import { assoc, last, pipe } from 'rambda';
+import { createLogger, last } from '@sap-cloud-sdk/util';
+import { assoc, pipe } from 'rambda';
 import { Destination, DestinationCertificate } from './scp-cf';
 import { proxyAgent } from './util/proxy-util';
 import { Protocol } from './protocol';

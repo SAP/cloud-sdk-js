@@ -12,6 +12,7 @@ import {
 import { OneToManyLink } from '../../common/selectable/one-to-many-link';
 import { getSelectV4 } from './get-select';
 import { uriConverterV4 } from './uri-value-converter';
+import { oDataUriV4 } from './odata-uri';
 
 function prependDollar(param: string): string {
   return `$${param}`;
@@ -63,7 +64,8 @@ function getExpandAsString<EntityT extends EntityV4>(
           entityConstructor
         ),
         ...(expand._skip && { skip: expand._skip }),
-        ...(expand._top && { top: expand._top })
+        ...(expand._top && { top: expand._top }),
+        ...(expand._orderBy && oDataUriV4.getOrderBy(expand._orderBy))
       };
     }
     const subQuery = Object.entries(params)

@@ -33,6 +33,11 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
     readonly _entity: EntityT
   ) {
     super(new ODataCreateRequestConfig(_entityConstructor, oDataUriV4));
+
+    this.requestConfig.payload = serializeEntityV4(
+      this._entity,
+      this._entityConstructor
+    );
   }
 
   get entity(): EntityT {
@@ -40,8 +45,8 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
   }
 
   /**
+   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.
    * Builds the payload of the query.
-   *
    * @returns the builder itself
    */
   prepare(): this {

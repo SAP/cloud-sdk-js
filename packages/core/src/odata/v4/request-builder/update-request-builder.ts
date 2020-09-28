@@ -44,11 +44,22 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
+
+    this.requestConfig.keys = oDataUriV4.getEntityKeys(
+      this._entity,
+      this._entityConstructor
+    );
+
+    this.requestConfig.payload = this.getPayload();
+  }
+
+  get entity(): EntityT {
+    return this._entity;
   }
 
   /**
+   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.
    * Builds the payload and the entity keys of the query.
-   *
    * @returns the builder itself
    */
   prepare(): this {
@@ -57,20 +68,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
       this._entityConstructor
     );
 
-    let updateBody;
-    switch (this.requestConfig.method) {
-      case 'put':
-        updateBody = serializeEntityV4(this._entity, this._entityConstructor);
-        break;
-      case 'patch':
-        updateBody = this.getUpdateBody();
-        break;
-      default:
-        throw new Error(
-          `${this.requestConfig.method} is not a valid method of the update request.`
-        );
-    }
-    this.requestConfig.payload = updateBody;
+    this.requestConfig.payload = this.getPayload();
 
     return this;
   }
@@ -86,7 +84,6 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT> {
-    this.prepare();
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
@@ -118,6 +115,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
    */
   replaceWholeEntityWithPut(): this {
     this.requestConfig.updateWithPut();
+    this.requestConfig.payload = this.getPayload();
     return this;
   }
 
@@ -129,6 +127,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
    */
   requiredFields(...fields: Selectable<EntityT>[]): this {
     this.required = this.toSet(...fields);
+    this.requestConfig.payload = this.getPayload();
     return this;
   }
 
@@ -140,6 +139,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
    */
   ignoredFields(...fields: Selectable<EntityT>[]): this {
     this.ignored = this.toSet(...fields);
+    this.requestConfig.payload = this.getPayload();
     return this;
   }
 
@@ -164,19 +164,22 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     return this;
   }
 
-  private getUpdateBody(): Record<string, any> {
+  private getPayload(): Record<string, any> {
     const serializedBody = serializeEntityV4(
       this._entity,
       this._entityConstructor
     );
 
-    return pipe(
-      () => this.serializedDiff(),
-      body => this.removeNavPropsAndComplexTypes(body),
-      body => this.removeKeyFields(body),
-      body => this.addRequiredFields(serializedBody, body),
-      body => this.removeIgnoredFields(body)
-    )();
+    if (this.requestConfig.method === 'patch') {
+      return pipe(
+        () => this.serializedDiff(),
+        body => this.removeNavPropsAndComplexTypes(body),
+        body => this.removeKeyFields(body),
+        body => this.addRequiredFields(serializedBody, body),
+        body => this.removeIgnoredFields(body)
+      )();
+    }
+    return serializedBody;
   }
 
   private serializedDiff(): Record<string, any> {

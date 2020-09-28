@@ -18,17 +18,35 @@
 
 ## New Functionality
 
+-
+
+## Improvements
+
+- [OData] Add warning for deep update attempts in OData v2. 
+
+## Fixed Issues
+
+- [OData] Fix parsing the Etag returned from update requests.
+
+
+# 1.28.2
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.28.2<br>
+Blog: TBD<br>
+
+## New Functionality
+
 - [Util] Allow to mute and unmute loggers.
 
 ## Improvements
 
 - [Generator] Generator will fail, when it generates `.ts` files that have compilation errors.
-- [OData] Add warning for deep update attempts in OData v2. 
 
 ## Fixed Issues
 
-- [OData] Fix handling of Etag for update requests.
-
+- [OData] Fix deserialization of one to many links, where the navigation property is not wrapped in a `result` object.
+- [OData] Fix `$orderby` parameter in expanded subqueries.
 
 # 1.28.1
 

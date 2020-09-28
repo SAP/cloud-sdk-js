@@ -6,7 +6,6 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
-  EmitResult,
   IndentationText,
   ModuleResolutionKind,
   Project,
@@ -55,31 +54,45 @@ const logger = createLogger({
   messageContext: 'generator'
 });
 
-export async function generate(
-  options: GeneratorOptions
-): Promise<void | EmitResult[]> {
+const threadsForCompiling = 16;
+
+export async function generate(options: GeneratorOptions): Promise<void> {
   const project = await generateProject(options);
   if (!project) {
     throw Error('The project is undefined.');
   }
 
   await project.save();
-
   if (options.generateJs) {
-    project
+    let directories = project
       .getDirectories()
-      .filter(dir => !!dir.getSourceFile('tsconfig.json'))
-      .forEach(dir => {
-        logger.info(`Transpiling files in the directory: ${dir.getPath()}.`);
-
-        execa('tsc', { cwd: dir.getPath() }).catch(err => {
-          logger.error(`Error: Failed to generate js files: ${err}`);
-          process.exit(1);
-        });
-      });
+      .filter(dir => !!dir.getSourceFile('tsconfig.json'));
+    while(directories.length > 0){
+      const chunk = directories.splice(0,threadsForCompiling)
+      await transpileDirectories(chunk)
+    }
   }
 
   return;
+}
+
+export async function transpileDirectories(directories:Directory[]):Promise<void[]>{
+  return Promise.all(directories.map(directory=>transpileDirectory(directory)))
+}
+
+export async function transpileDirectory(dir: Directory): Promise<void> {
+  try {
+    logger.info(
+      `Transpiling files in the directory: ${dir.getPath()} started.`
+    );
+    await execa('tsc', { cwd: dir.getPath() })
+      logger.info(
+        `Transpiling files in direcotory:  ${dir.getPath()} finished.`
+    );
+  } catch (err) {
+    logger.error(`Error: Failed to generate js files: ${err}`);
+    process.exit(1);
+  }
 }
 
 export async function generateProject(

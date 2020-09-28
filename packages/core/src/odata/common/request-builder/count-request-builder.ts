@@ -8,8 +8,7 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
-import { GetAllRequestBuilderV2 } from '../../v2/request-builder';
-import { GetAllRequestBuilderV4 } from '../../v4/request-builder';
+import { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 
 /**
  * Create an OData request to count entities based on the configuration of the request.
@@ -26,11 +25,7 @@ export class CountRequestBuilder<
    *
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
-  constructor(
-    readonly getAllRequest:
-      | GetAllRequestBuilderV2<EntityT>
-      | GetAllRequestBuilderV4<EntityT>
-  ) {
+  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityT>) {
     super(new ODataCountRequestConfig(getAllRequest));
   }
   /**
@@ -46,6 +41,11 @@ export class CountRequestBuilder<
   ): Promise<number> {
     return this.build(destination, options)
       .then(request => request.execute())
-      .then(response => response.data);
+      .then(response => {
+        if (typeof response.data !== 'number') {
+          throw new Error('Count request did not return a bare number.');
+        }
+        return response.data;
+      });
   }
 }

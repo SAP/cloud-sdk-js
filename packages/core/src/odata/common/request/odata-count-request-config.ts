@@ -3,9 +3,8 @@
 import { createLogger, MapType } from '@sap-cloud-sdk/util';
 import { omit, pick } from 'rambda';
 import { EntityBase } from '../entity';
-import { GetAllRequestBuilderV2 } from '../../v2/request-builder';
-import { GetAllRequestBuilderV4 } from '../../v4/request-builder';
 import { removeTrailingSlashes } from '../../../util';
+import { GetAllRequestBuilderBase } from '../request-builder/get-all-request-builder-base';
 import { ODataRequestConfig } from './odata-request-config';
 
 const logger = createLogger({
@@ -26,11 +25,7 @@ export class ODataCountRequestConfig<
    *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(
-    readonly getAllRequest:
-      | GetAllRequestBuilderV2<EntityT>
-      | GetAllRequestBuilderV4<EntityT>
-  ) {
+  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityBase>) {
     super('get', getAllRequest._entityConstructor._defaultServicePath);
   }
 

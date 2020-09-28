@@ -27,9 +27,66 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+## 3.29.1 - September 24, 2020
+
+[Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.29.1)
+
+### Compatibility Notes
+
+- To leverage the new **OData v2 client**, you need to adjust existing code. Refer to [documentation on how to switch](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java/#switch-to-improved-odata-v2-type-safe-client) for detailed instructions.
+- We start deprecating APIs of the outdated **OData v2 client**. In this release we deprecated:
+  - Methods: `execute`, `toQuery`, `withErrorHandler`, `cachingMetadata`, `withoutCachingMetadata`, `ignoringVersionIdentifier` and `ignoreVersionIdentifier`.
+  - Error handler: `ODataVdmErrorResultHandler`.
+  - Exception classes `VersionIdentifierMissingException` and `VersionIdentifierExpiredException`.
+  - You'll find instructions how to adjust the code to use the new **OData v2 client** in the Javadoc of deprecated method or class.
+
+### New Functionality
+
+- The improved OData v2 type-safe client is now Generally Available. From now on we recommend it for OData API consumption.
+Refer to the [documentation on how to switch](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java/#switch-to-improved-odata-v2-type-safe-client) for more details on the new OData 2 client.
+  - The methods `executeRequest` are no longer marked as Beta and ready for use in production code.
+  - The new methods `matchAnyVersionIdentifier()` and `disableVersionIdentifier()` allow for better control over [ETag handling](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java/#handling-of-etags).
+
+- The `DefaultHttpDestination` and `DefaulErptHttpDestination` can use a `java.security.KeyStore` and a key store password for HTTP communication. This is especially useful when utilizing mutual TLS (mTLS) for the communication with a remote system. Use the respective builder methods to set these values as in the following code snippet:
+
+```java
+final DefaultHttpDestination defaultHttpDestination =
+            DefaultHttpDestination.builder(uri).
+            keyStore(keyStore).
+            keyStorePassword(keyStorePassword).
+            build();
+```
+
+- We updated the Workflow API client library that is shipped as `scp-workflow-cf` module. It now supports the latest Workflow API service features.
+
+### Improvements
+
+- Handle requesting a CSRF token for **OData V4** batch operations and actions
+- Improve the log output and error handling of CSRF token requests
+- In case a `DefaultErpHttpDestination` decorates an on-premise `HttpDestination` and the destination configuration lacks an `sap-client` property, a notification appears in App logs to raise awareness of potential authentication issues.
+- `Update` and `Delete` requests in **OData v4** type-safe client no longer send a `*` in the `IF_MATCH` header if no version identifier (ETag) has been retrieved from the server previously. This ensures consistent behavior of `Update` and `Delete` requests and protects you from unintended data loss and integrity problems.
+
+- Dependency Updates:
+  - Update [SAP Cloud Security Client](https://github.com/SAP/cloud-security-xsuaa-integration) from `2.7.6` to `2.7.7`
+  - Upgrade Fabric SDK for Java from `2.1.0` to `2.2.1`
+  - Upgrade Fabric Gateway for Java from `2.1.0` to `2.2.0`
+  - Upgrade Commons Codec from `1.14` to `1.15`
+  - Upgrade Commons IO from `2.7.0` to `2.8.0`
+  - Upgrade AssertJ from `3.17.0` to `3.17.2`
+  - Upgrade Mockito from `3.5.7` to `3.5.10`
+  - Upgrade Wiremock from `2.27.1` to `2.27.2`
+  - Upgrade Netty from `4.1.51.Final` to `4.1.52.Final`
+
+### Fixed Issues
+- Fix an issue where invalid service metadata files would cause the `odata-generator` to fail. The generator now skips such services with a warning and only fails if the `failOnWarning` flag is set.
+- Fix special characters escaping and double encoding issues. The following characters are encoded now:
+    -  `%`, `#` ,`' '`, `?` , `\` and `"` in the service and entity path
+    -  `%`, `#` ,`' '`, `?` , `\` , `"` , `$` and `&` in system query options
+    -  `%`, `#` ,`' '`, `?` , `\` , `"` , `$` , `&` and `/` in string parameters being passed in functions and GetByKey requests
+
 ## 3.28.1 - September 10, 2020
 
-[Javadoc](https://help.sap.com/doc/4c43c34d44aa4b839b8fa3d7aac74d70/1.0/en-US/index.html) | [Release blog](https://blogs.sap.com/?p=1178236) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.28.1)  
+[Javadoc](https://help.sap.com/doc/4c43c34d44aa4b839b8fa3d7aac74d70/1.0/en-US/index.html) | [Release blog](https://blogs.sap.com/?p=1178236) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.28.1)
 
 ### Compatibility Notes
 
@@ -37,11 +94,11 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - Blockchain Business Services: `IdentityClient.deletePartner` now only requires the `Partner`'s ID instead of a full object.
 
 ### New Functionality
-  
-- The [Currency Conversion](https://help.sap.com/viewer/7080b5b59e8243ecb48e34c1b107538b/Latest/en-US/7296e9db0dce45ac8557b17d3374f298.html) library has been added. You can use this library to facilitate currency exchange rate conversions within your Cloud application. 
+
+- The [Currency Conversion](features/extensions/extension-library/curconv/sap-currency-conversion-extension-library-for-cloud-sdk-for-java) library has been added. You can use this library to facilitate currency exchange rate conversions within your Cloud application.
   - Note that no exchange rates are provided by the library. It is assumed that you have your own data providers for getting the exchange rates.
   - The library supports bulk conversions, direct one-to-one conversions from a source value to a target value, and indirect conversions based on inverse rates or a reference currency.
-  - You can perform currency conversions based on a fixed currency exchange rate, or a non-fixed rate (if you want the library to select the most appropriate rate based on a list of data from various data providers). 
+  - You can perform currency conversions based on a fixed currency exchange rate, or a non-fixed rate (if you want the library to select the most appropriate rate based on a list of data from various data providers).
   - To use the library, add the `currency-conversion-core` and `currency-conversion-datamodel` Maven dependencies in your pom.xml.
 
 ### Improvements

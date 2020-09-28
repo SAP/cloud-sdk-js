@@ -8465,10 +8465,10 @@ rambda@2.14.5:
   resolved "https://registry.npmjs.org/rambda/-/rambda-2.14.5.tgz#906cdd9b45c25883e45f4fdba15d984c79620c08"
   integrity sha512-vYoUQ9bmWfKh6UvxIojk5/x91NcarecpiK+bJndyHg6KPzgtuMLmQ05jWMiRDLDblps1znByuhc6DbGtEuOqZw==
 
-rambda@^6.1.0, rambda@~6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/rambda/-/rambda-6.1.0.tgz#5e628ebf685b58a760d1defc2cd01ac0c1f2808c"
-  integrity sha512-y6iIEdhcMl6KUpZf6zkpmj1gOcS51aJXo9uMWKvXotJlL7j7KI1fCBI3Fms9EHJr7fFJc6opbMll5Bl2zsJxfg==
+rambda@^6.1.0, rambda@~6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/rambda/-/rambda-6.2.0.tgz#4afb776b198b054341bdf53f40edc300bea9a969"
+  integrity sha512-2fIT02e45V2orajVC/TlmNtSyqbaWi/0hB6hfzNigV7qfrllS+mQeST1OQaveKWeVCNVKlXus0F2CAO8lDQNvw==
 
 range-parser@~1.2.1:
   version "1.2.1"

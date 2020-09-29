@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityBase } from '../../common';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { DestinationOptions } from '../../../scp-cf';

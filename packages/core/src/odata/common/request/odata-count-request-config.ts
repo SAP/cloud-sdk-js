@@ -1,6 +1,4 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { pick } from 'rambda';
 import { EntityBase } from '../entity';
 import { removeTrailingSlashes } from '../../../util';
@@ -17,9 +15,7 @@ const logger = createLogger({
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataCountRequestConfig<
-  EntityT extends EntityBase
-> extends ODataRequestConfig {
+export class ODataCountRequestConfig extends ODataRequestConfig {
   /**
    * Creates an instance of ODataGetAllRequestConfig.
    *
@@ -35,7 +31,7 @@ export class ODataCountRequestConfig<
     )}/$count`;
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     const parametersAllowedInCount = ['$apply', '$search', '$filter'];
     const defaultParameters = ['$format'];
     const parameters = this.getAllRequest.requestConfig.queryParameters();

@@ -23,6 +23,7 @@ export interface GeneratorOptions {
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   generateJs: boolean;
+  processesJsGeneration: number;
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;
   generateCSN: boolean;
@@ -136,6 +137,12 @@ export const generatorOptionsCli: KeysToOptions = {
       'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
     type: 'boolean',
     default: true
+  },
+  processesJsGeneration: {
+    describe: 'Number of processes used for generation of javascript files.',
+    alias: 'np',
+    type: 'number',
+    default: 16
   },
   sdkAfterVersionScript: {
     describe:

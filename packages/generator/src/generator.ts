@@ -2,7 +2,7 @@
 
 import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
@@ -54,8 +54,6 @@ const logger = createLogger({
   messageContext: 'generator'
 });
 
-const threadsForCompiling = 16;
-
 export async function generate(options: GeneratorOptions): Promise<void> {
   const project = await generateProject(options);
   if (!project) {
@@ -64,35 +62,38 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 
   await project.save();
   if (options.generateJs) {
-    let directories = project
+    const directories = project
       .getDirectories()
       .filter(dir => !!dir.getSourceFile('tsconfig.json'));
-    while(directories.length > 0){
-      const chunk = directories.splice(0,threadsForCompiling)
-      await transpileDirectories(chunk)
+    for (const chunk of splitInChunks(
+      directories,
+      options.processesJsGeneration
+    )) {
+      await transpileDirectories(chunk);
     }
   }
-
-  return;
 }
 
-export async function transpileDirectories(directories:Directory[]):Promise<void[]>{
-  return Promise.all(directories.map(directory=>transpileDirectory(directory)))
+export function transpileDirectories(
+  directories: Directory[]
+): Promise<void[]> {
+  return Promise.all(
+    directories.map(directory => transpileDirectory(directory))
+  );
 }
 
-export async function transpileDirectory(dir: Directory): Promise<void> {
-  try {
-    logger.info(
-      `Transpiling files in the directory: ${dir.getPath()} started.`
-    );
-    await execa('tsc', { cwd: dir.getPath() })
+export function transpileDirectory(dir: Directory): Promise<void> {
+  logger.info(`Transpiling files in the directory: ${dir.getPath()} started.`);
+  return execa('tsc', { cwd: dir.getPath() })
+    .then(() => {
       logger.info(
         `Transpiling files in direcotory:  ${dir.getPath()} finished.`
-    );
-  } catch (err) {
-    logger.error(`Error: Failed to generate js files: ${err}`);
-    process.exit(1);
-  }
+      );
+    })
+    .catch(err => {
+      logger.error(`Error: Failed to generate js files: ${err}`);
+      process.exit(1);
+    });
 }
 
 export async function generateProject(

@@ -1,4 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 /**
  * Flatten a two dimensional array into a one dimensional array
  * @param arr The array to be flattened.
@@ -33,4 +34,21 @@ export function last<T>(arr: T[]): T | undefined {
  */
 export function first<T>(arr: T[]): T | undefined {
   return arr[0];
+}
+
+/**
+ * Split the given array in chunks
+ * @param arr - Array to be splitted. The last aray could be shorter.
+ * @param chunkSize - Size of the chunks
+ * @returns Array with arrays of chunks size.
+ */
+export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
+  let result: T[][] = [];
+  if (arr) {
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      const chunk = arr.slice(i, i + chunkSize);
+      result = [...result, chunk];
+    }
+  }
+  return result;
 }

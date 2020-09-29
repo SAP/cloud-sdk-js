@@ -23,7 +23,7 @@ describe('file', () => {
       element => element.kind === StructureKind.Interface
     );
 
-    expect(interfaces.length).toBe(2);
+    expect(interfaces.length).toBe(1);
 
     const namespaces = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.Namespace

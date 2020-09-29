@@ -130,7 +130,8 @@ describe('UpdateRequestBuilderV2', () => {
     const putRequestBody = {
       KeyPropertyGuid: entity.keyPropertyGuid,
       KeyPropertyString: entity.keyPropertyString,
-      Int32Property: entity.int32Property
+      Int32Property: entity.int32Property,
+      StringProperty: null
     };
 
     mockUpdateRequest({

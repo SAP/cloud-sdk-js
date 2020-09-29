@@ -73,11 +73,8 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   }
 
   function serializeField(field: any, fieldValue: any): any {
-    if (fieldValue === null) {
+    if (fieldValue === null || fieldValue === undefined) {
       return null;
-    }
-    if (fieldValue === undefined) {
-      return undefined;
     }
     if (field instanceof EdmTypeField) {
       return tsToEdm(fieldValue, field.edmType);

@@ -27,10 +27,7 @@ export interface Constructable<
   customField(fieldName: string): CustomFieldBase<EntityT>;
 }
 
-export type EntityBuilderType<
-  EntityT extends EntityBase,
-  EntityTypeT
-> = {
+export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
   [property in keyof Required<EntityTypeT>]: (
     value: EntityTypeT[property]
   ) => EntityBuilderType<EntityT, EntityTypeT>;
@@ -45,15 +42,10 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  protected static entityBuilder<
-    EntityT extends EntityBase,
-    EntityTypeT
-  >(
+  protected static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
     entityConstructor: Constructable<EntityT, EntityTypeT>
   ): EntityBuilderType<EntityT, EntityTypeT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeT>(
-      entityConstructor
-    );
+    const builder = new EntityBuilder<EntityT, EntityTypeT>(entityConstructor);
     entityConstructor._allFields.forEach(field => {
       const fieldName = `${toPropertyFormat(field._fieldName)}`;
       builder[fieldName] = function (value) {

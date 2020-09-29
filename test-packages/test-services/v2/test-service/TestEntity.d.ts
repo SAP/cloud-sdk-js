@@ -130,7 +130,7 @@ export declare class TestEntity extends EntityV2 implements TestEntityType {
      * Returns an entity builder to construct instances `TestEntity`.
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
-    static builder(): EntityBuilderType<TestEntity, TestEntityTypeForceMandatory>;
+    static builder(): EntityBuilderType<TestEntity, TestEntityType>;
     /**
      * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
      * @returns A `TestEntity` request builder.
@@ -173,30 +173,6 @@ export interface TestEntityType {
     sByteProperty?: number;
     somethingTheSdkDoesNotSupport?: any;
     complexTypeProperty?: TestComplexType;
-    toMultiLink: TestEntityMultiLinkType[];
-    toOtherMultiLink: TestEntityOtherMultiLinkType[];
-    toSingleLink: TestEntitySingleLinkType;
-}
-export interface TestEntityTypeForceMandatory {
-    keyPropertyGuid: string;
-    keyPropertyString: string;
-    stringProperty: string;
-    booleanProperty: boolean;
-    guidProperty: string;
-    int16Property: number;
-    int32Property: number;
-    int64Property: BigNumber;
-    decimalProperty: BigNumber;
-    singleProperty: number;
-    doubleProperty: number;
-    floatProperty: number;
-    timeProperty: Time;
-    dateTimeProperty: Moment;
-    dateTimeOffSetProperty: Moment;
-    byteProperty: number;
-    sByteProperty: number;
-    somethingTheSdkDoesNotSupport: any;
-    complexTypeProperty: TestComplexType;
     toMultiLink: TestEntityMultiLinkType[];
     toOtherMultiLink: TestEntityOtherMultiLinkType[];
     toSingleLink: TestEntitySingleLinkType;

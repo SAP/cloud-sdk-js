@@ -27,6 +27,7 @@
 ## Fixed Issues
 
 - [OData] Fix parsing the Etag returned from update requests.
+- [OData] Fix the entity builder so that it can set `undefined` for optional properties.
 
 
 # 1.28.2

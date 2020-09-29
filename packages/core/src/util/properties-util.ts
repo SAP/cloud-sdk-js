@@ -16,16 +16,8 @@ export const nonEnumerable = (target: any, propertyKey: string) => {
  * @returns boolean
  */
 export function isNavigationProperty(key: string, entity: EntityBase): boolean {
-  if (!entity[key]) {
-    return false;
-  }
-
-  if (
-    entity[key] instanceof EntityBase ||
-    entity[key][0] instanceof EntityBase
-  ) {
-    return true;
-  }
-
-  return false;
+  return (
+    entity?.[key] instanceof EntityBase ||
+    entity?.[key][0] instanceof EntityBase
+  );
 }

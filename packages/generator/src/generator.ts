@@ -68,12 +68,14 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const directories = project
       .getDirectories()
       .filter(dir => !!dir.getSourceFile('tsconfig.json'));
-    for (const chunk of splitInChunks(
+    const chunks = splitInChunks(
       directories,
       options.processesJsGeneration || defaultValueProcessesJsGeneration
-    )) {
-      await transpileDirectories(chunk);
-    }
+    );
+    await chunks.reduce(
+      (all, chunk) => all.then(() => transpileDirectories(chunk)),
+      Promise.resolve()
+    );
   }
 }
 

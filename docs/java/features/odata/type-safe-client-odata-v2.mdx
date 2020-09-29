@@ -336,20 +336,19 @@ The [OData v2 standard](https://www.odata.org/documentation/odata-version-2-0/ur
 ### Count ###
 -->
 
-### Batch Requests ###
+### Batch Requests 
+Batch requests allow wrapping multiple OData requests into one single batch call. Thereby we reduce the number of roundtrips to the remote server. Refer to the [official OData V2 spec](https://www.odata.org/documentation/odata-version-2-0/batch-processing/) 
+for further reference about batch requests, their semantics and the request/response format.
 
-:::caution Work in progress
-We're still in progress of documenting OData BATCH requests with type-safe client. The quick code snippet below will demonstrate a simple example of multiple create requests ran as BATCH. Stay tuned for comprehensive documentation soon and look into our API documentation if you're in a hurry. You'll find it in our [release notes](../../release-notes-sap-cloud-sdk-for-java).
-:::
+#### Execute Batch Request
+The `service` object offers the method `batch` which allows access to the batch-related methods that help build the batch request.
 
-A simple example of BATCH create requests based on BusinessPartner OData v2 service.
+Multiple single requests (like `createBusinessPartnerAddress`) can be wrapped into so-called change sets.
+Each change set is opened with `beginChangeSet` and closed with `endChangeSet`. You can wrap multiple change sets into one batch request.
+
+Use `executeRequest` to issue the batch request to the remote system. We receive an instance of `BatchResponse` as result object.
 
 ```java
-final BusinessPartnerService service = new DefaultBusinessPartnerService();
-final HttpDestination destination = obtainHttpDestination();
-final BusinessPartnerAddress address1 = createBusinessPartnerAddress();
-final BusinessPartnerAddress address2 = createBusinessPartnerAddress();
-
 final BatchResponse result =
     service
         .batch()
@@ -358,15 +357,31 @@ final BatchResponse result =
         .createBusinessPartnerAddress(address2)
         .endChangeSet()
         .executeRequest(destination);
+```
 
+#### Access Batch Response
+Use the method `get` to access the individual change set responses by index. 
+```java
 final Try<BatchResponseChangeSet> changeSetTry = result.get(0);
-//error handling can be made with the Try type, like Try#isSuccess
+```
 
-if (changeSetTry.isSucces()) {
+The returned `Try` allows checking if the respective change set was processed successfully by the remote server.
+As per the specification, either all operations or none within the same change set are successful. Hence, if `changeSetTry.isSuccess()` is true,
+you can derive that all operations in the change set are succcessful.
+
+In case the change set contained at least one create operation, you can gain access to the created entity representations by using the
+method `getCreatedEntities`.
+
+```java
+if (changeSetTry.isSuccess()) {
     //now you can access the created entities
     final List<VdmEntity<?>> createdEntities = changeSet.get().getCreatedEntities();
 }
 ```
+:::note
+You have to cast the entity representations from the generic type `VdmEntity` to the respective sub classes.
+:::
+
 
 <!--
 

@@ -6,8 +6,11 @@ const builder = TestEntity.builder();
 // $ExpectError
 builder.keyPropertyString(undefined);
 
+// $ExpectError
+builder.keyPropertyGuid(null);
+
 // $ExpectType EntityBuilderType<TestEntity, TestEntityType>
-builder.stringProperty(undefined);
+builder.stringProperty(null);
 
 // $ExpectType EntityBuilderType<TestEntity, TestEntityType>
 builder.int64Property(undefined);

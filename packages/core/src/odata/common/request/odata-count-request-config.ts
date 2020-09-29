@@ -15,13 +15,15 @@ const logger = createLogger({
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataCountRequestConfig extends ODataRequestConfig {
+export class ODataCountRequestConfig<
+  EntityT extends EntityBase
+> extends ODataRequestConfig {
   /**
    * Creates an instance of ODataGetAllRequestConfig.
    *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityBase>) {
+  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityT>) {
     super('get', getAllRequest._entityConstructor._defaultServicePath);
   }
 

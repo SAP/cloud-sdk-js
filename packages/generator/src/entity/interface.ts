@@ -24,21 +24,6 @@ export function entityTypeInterface(
   };
 }
 
-export function entityTypeForceMandatoryInterface(
-  entity: VdmEntity,
-  service: VdmServiceMetadata
-): InterfaceDeclarationStructure {
-  return {
-    kind: StructureKind.Interface,
-    name: `${entity.className}TypeForceMandatory`,
-    isExported: true,
-    properties: [
-      ...propertiesForceMandatory(entity),
-      ...navPoperties(entity, service)
-    ]
-  };
-}
-
 function properties(entity: VdmEntity): PropertySignatureStructure[] {
   return entity.properties.map(prop => property(prop));
 }

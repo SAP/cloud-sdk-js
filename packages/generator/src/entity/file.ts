@@ -21,7 +21,6 @@ export function entitySourceFile(
       entityClass(entity, service),
       ...otherEntityImports(entity, service),
       entityTypeInterface(entity, service),
-      entityTypeForceMandatoryInterface(entity, service),
       entityNamespace(entity, service)
     ]
   };

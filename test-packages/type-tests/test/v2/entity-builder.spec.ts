@@ -3,6 +3,15 @@ import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 const builder = TestEntity.builder();
 
+// $ExpectError
+builder.keyPropertyString(undefined);
+
+// $ExpectType TestEntity
+builder.stringProperty(undefined);
+
+// $ExpectType TestEntity
+builder.int64Property(undefined);
+
 // $ExpectType TestEntity
 builder.fromJson({ stringProperty: '1' });
 

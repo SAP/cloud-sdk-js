@@ -17,11 +17,13 @@ function createTestEntity() {
   const keyPropGuid = uuid();
   const keyPropString = 'stringId';
   const int32Prop = 125;
+  const stringProp = undefined;
 
   return TestEntity.builder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .int32Property(int32Prop)
+    .stringProperty(stringProp)
     .build();
 }
 

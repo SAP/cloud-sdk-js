@@ -23,11 +23,13 @@ export interface GeneratorOptions {
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   generateJs: boolean;
-  processesJsGeneration: number;
+  processesJsGeneration?: number;
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;
   generateCSN: boolean;
 }
+
+export const defaultValueProcessesJsGeneration = 16;
 
 type KeysToOptions = {
   [optionName in keyof GeneratorOptions]: Options;
@@ -142,7 +144,7 @@ export const generatorOptionsCli: KeysToOptions = {
     describe: 'Number of processes used for generation of javascript files.',
     alias: 'np',
     type: 'number',
-    default: 16
+    default: defaultValueProcessesJsGeneration
   },
   sdkAfterVersionScript: {
     describe:

@@ -22,7 +22,10 @@ import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
 import { copyFile, otherFile, sourceFile } from './file-generator';
-import { GeneratorOptions } from './generator-options';
+import {
+  defaultValueProcessesJsGeneration,
+  GeneratorOptions
+} from './generator-options';
 import {
   cloudSdkVdmHack,
   hasEntities,
@@ -67,7 +70,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       .filter(dir => !!dir.getSourceFile('tsconfig.json'));
     for (const chunk of splitInChunks(
       directories,
-      options.processesJsGeneration
+      options.processesJsGeneration || defaultValueProcessesJsGeneration
     )) {
       await transpileDirectories(chunk);
     }

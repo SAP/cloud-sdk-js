@@ -31,7 +31,7 @@ export type EntityBuilderType<
   EntityT extends EntityBase,
   EntityTypeForceMandatoryT
 > = {
-  [property in keyof EntityTypeForceMandatoryT]: (
+  [property in keyof Required<EntityTypeForceMandatoryT>]: (
     value: EntityTypeForceMandatoryT[property]
   ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
 } &

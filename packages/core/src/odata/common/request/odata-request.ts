@@ -8,6 +8,7 @@ import { HttpResponse, executeHttpRequest } from '../../../http-client';
 import {
   filterNullishValues,
   getHeader,
+  getHeaderValue,
   replaceDuplicateKeys
 } from '../../../header-builder';
 // TODO: The buildCsrfHeaders import cannot be combined with the rest of the other headers due to circular dependencies
@@ -155,14 +156,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       if (!this.destination) {
         throw Error('The destination is undefined.');
       }
-      const defaultHeaders = replaceDuplicateKeys(
-        filterNullishValues({
-          accept: 'application/json',
-          'content-type': this.config.contentType,
-          ...this.getETagHeader()
-        }),
-        this.config.customHeaders
-      );
 
       const destinationRelatedHeaders = await buildHeadersForDestination(
         this.destination,
@@ -177,14 +170,59 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       return {
         ...destinationRelatedHeaders,
         ...csrfHeaders,
-        ...defaultHeaders,
-        ...this.config.customHeaders
+        ...this.defaultHeaders(),
+        ...this.eTagHeaders(),
+        ...this.customHeaders()
       };
     } catch (error) {
       return Promise.reject(
         errorWithCause('Constructing headers for OData request failed!', error)
       );
     }
+  }
+
+  /**
+   * Get all custom headers.
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   */
+  customHeaders(): Record<string, any> {
+    return this.config.customHeaders;
+  }
+
+  /**
+   * Get all default headers. If custom headers are set, those take precedence.
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   */
+  defaultHeaders(): Record<string, any> {
+    const defaultHeaders = replaceDuplicateKeys(
+      filterNullishValues({
+        accept: 'application/json',
+        'content-type': this.config.contentType
+      }),
+      this.customHeaders()
+    );
+
+    return {
+      ...defaultHeaders,
+      ...getHeader('accept', this.customHeaders()),
+      ...getHeader('content-type', this.customHeaders())
+    };
+  }
+
+  /**
+   * Get the eTag related headers, e. g. `if-match`.
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   */
+  eTagHeaders(): Record<string, string> {
+    if (getHeaderValue('if-match', this.customHeaders())) {
+      return getHeader('if-match', this.customHeaders());
+    }
+    const eTag = isWithETag(this.config)
+      ? this.config.versionIdentifierIgnored
+        ? '*'
+        : this.config.eTag
+      : undefined;
+    return filterNullishValues({ 'if-match': eTag });
   }
 
   /**
@@ -208,15 +246,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         constructError(error, this.config.method, this.serviceUrl())
       )
     );
-  }
-
-  private getETagHeader(): Record<string, string> {
-    const eTag = isWithETag(this.config)
-      ? this.config.versionIdentifierIgnored
-        ? '*'
-        : this.config.eTag
-      : undefined;
-    return filterNullishValues({ 'if-match': eTag });
   }
 
   private async getCsrfHeaders(

@@ -1,5 +1,3 @@
-
-
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { caps } from '@sap-cloud-sdk/util';
 import { coreImportDeclaration } from '../imports';

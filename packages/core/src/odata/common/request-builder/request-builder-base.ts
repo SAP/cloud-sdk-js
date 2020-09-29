@@ -45,7 +45,7 @@ export abstract class MethodRequestBuilderBase<
    * @returns The relative url for the request
    */
   relativeUrl(): string {
-    return new ODataRequest(this.requestConfig).relativeUrl();
+    return this.build().relativeUrl();
   }
 
   /**
@@ -82,29 +82,37 @@ export abstract class MethodRequestBuilderBase<
     return this;
   }
 
+  build(): ODataRequest<RequestConfigT>;
+  build(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationRetrievalOptions
+  ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
    *
    * @param destination - Targeted destination on which the request is performed.
    * @param options - Options to employ when fetching destinations.
-   * @returns The OData request executor including the destination configuration.
+   * @returns The OData request executor including the destination configuration, if one was given.
    */
   build(
-    destination: Destination | DestinationNameAndJwt,
+    destination?: Destination | DestinationNameAndJwt,
     options?: DestinationRetrievalOptions
-  ): Promise<ODataRequest<RequestConfigT>> {
-    return useOrFetchDestination(destination, options)
-      .then(dest => {
-        if (!dest) {
-          throw Error(noDestinationErrorMessage(destination));
-        }
-        return new ODataRequest(this.requestConfig, dest);
-      })
-      .catch(error =>
-        Promise.reject(
-          errorWithCause(noDestinationErrorMessage(destination), error)
-        )
-      );
+  ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
+    if (destination) {
+      return useOrFetchDestination(destination, options)
+        .then(dest => {
+          if (!dest) {
+            throw Error(noDestinationErrorMessage(destination));
+          }
+          return new ODataRequest(this.requestConfig, dest);
+        })
+        .catch(error =>
+          Promise.reject(
+            errorWithCause(noDestinationErrorMessage(destination), error)
+          )
+        );
+    }
+    return new ODataRequest(this.requestConfig);
   }
 }
 

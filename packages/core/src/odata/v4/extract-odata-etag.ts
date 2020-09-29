@@ -6,5 +6,5 @@
 export function extractODataEtagV4(
   json: Record<string, any>
 ): string | undefined {
-  return '@odata.etag' in json ? json['@odata.etag'] : undefined;
+  return json?.['@odata.etag'];
 }

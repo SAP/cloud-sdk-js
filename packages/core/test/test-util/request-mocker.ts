@@ -1,5 +1,12 @@
 import nock = require('nock');
-import { basicHeader, Constructable, Destination, oDataUriV2 } from '../../src';
+import {
+  basicHeader,
+  Constructable,
+  Destination,
+  GetAllRequestBuilderV2,
+  GetAllRequestBuilderV4,
+  oDataUriV2
+} from '../../src';
 import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
 import { ODataDeleteRequestConfig } from '../../src/odata/common/request/odata-delete-request-config';
 import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
@@ -136,6 +143,20 @@ export function mockGetRequest(
     method: params.method || 'get',
     query: { $format: 'json', ...params.query }
   });
+}
+
+export function mockCountRequest(
+  destination: Destination,
+  count: number,
+  getAllRequest:
+    | GetAllRequestBuilderV2<any>
+    | GetAllRequestBuilderV4<any> = TestEntity.requestBuilder().getAll()
+) {
+  const servicePath = getAllRequest._entityConstructor._defaultServicePath;
+  const entityName = getAllRequest._entityConstructor._entityName;
+  return nock(defaultHost)
+    .get(`${destination.url}${servicePath}/${entityName}/$count`)
+    .reply(200, count.toString());
 }
 
 interface MockHeaderRequestParams {

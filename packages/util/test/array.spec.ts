@@ -1,4 +1,5 @@
-import { flat, unique, last, first } from '../src';
+import { flat, unique, last, first, splitInChunks } from '../src';
+
 describe('array', () => {
   describe('flat', () => {
     it('flattens a nested array of numbers', () => {
@@ -52,6 +53,25 @@ describe('array', () => {
 
     it('returns undefined for empty arrays', () => {
       expect(first([])).toBeUndefined();
+    });
+  });
+
+  describe('splitInChunks', () => {
+    it('returns empty if undefined or empty', () => {
+      expect(splitInChunks(undefined!, 1)).toEqual([]);
+      expect(splitInChunks([], 1)).toEqual([]);
+    });
+
+    it('should split if chunk size is greater than the array', () => {
+      expect(splitInChunks([1, 2, 3], 4)).toEqual([[1, 2, 3]]);
+    });
+
+    it('should split the array in chunks', () => {
+      expect(splitInChunks([1, 2, 3, 4, 5, 6, 7], 3)).toEqual([
+        [1, 2, 3],
+        [4, 5, 6],
+        [7]
+      ]);
     });
   });
 });

@@ -33,3 +33,19 @@ export function last<T>(arr: T[]): T | undefined {
 export function first<T>(arr: T[]): T | undefined {
   return arr[0];
 }
+
+/**
+ * Split the given array in chunks
+ * @param arr - Array to be splitted. The last aray could be shorter.
+ * @param chunkSize - Size of the chunks
+ * @returns Array with arrays of chunks size.
+ */
+export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
+  let result: T[][] = [];
+  if (arr) {
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      result = [...result, arr.slice(i, i + chunkSize)];
+    }
+  }
+  return result;
+}

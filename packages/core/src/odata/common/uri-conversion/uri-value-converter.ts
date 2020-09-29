@@ -1,4 +1,3 @@
-
 /* eslint-disable valid-jsdoc */
 
 import { EdmTypeSameConvertersUri, EdmTypeShared } from '../../common';

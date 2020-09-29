@@ -1,6 +1,11 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
-import { Constructable, EntityIdentifiable, Selectable } from '../../common';
+import {
+  Constructable,
+  EntityIdentifiable,
+  ODataRequest,
+  Selectable
+} from '../../common';
 import { EntityV2 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataUpdateRequestConfig } from '../../common/request/odata-update-request-config';
@@ -14,7 +19,14 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUriV2 } from '../uri-conversion';
+import { extractEtagFromHeader } from '../../common/entity-deserializer';
+import { extractODataEtagV2 } from '../extract-odata-etag';
+import { isNavigationProperty } from '../../../util/properties-util';
 
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'update-request-builder-v2'
+});
 /**
  * Create OData query to update an entity.
  *
@@ -86,14 +98,19 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
 
     return (
       this.build(destination, options)
+        .then(request => warnIfNavigation(request, this._entity))
         .then(request => request.execute())
 
         // Update returns 204 hence the data from the request is used to build entity for return
-        .then(response =>
-          this._entity
+        .then(response => {
+          const eTag =
+            extractEtagFromHeader(response.headers) ||
+            extractODataEtagV2(response.data) ||
+            this.requestConfig.eTag;
+          return this._entity
             .setOrInitializeRemoteState()
-            .setVersionIdentifier(this.requestConfig.eTag)
-        )
+            .setVersionIdentifier(eTag);
+        })
         .catch(error =>
           Promise.reject(errorWithCause('OData update request failed!', error))
         )
@@ -247,5 +264,27 @@ const removePropertyOnCondition = (
     }
     return { ...resultBody, [key]: val };
   }, {});
+
+/*
+ * In case the entity contains a navigation to a different entity a warning is printed.
+ */
+function warnIfNavigation<EntityT extends EntityV2>(
+  request: ODataRequest<ODataUpdateRequestConfig<EntityT>>,
+  entity: EntityT
+): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
+  const warnings: string[] = [];
+  Object.keys(entity).forEach(key => {
+    if (isNavigationProperty(key, entity)) {
+      warnings.push(key);
+    }
+  });
+  if (warnings.length > 0) {
+    logger.warn(
+      `The navigational properties ${warnings} have been included in your update request. Update of navigational properties is not supported in OData v2 by the SDK.`
+    );
+  }
+
+  return request;
+}
 
 export { UpdateRequestBuilderV2 as UpdateRequestBuilder };

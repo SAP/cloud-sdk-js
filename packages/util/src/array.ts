@@ -46,8 +46,7 @@ export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
   let result: T[][] = [];
   if (arr) {
     for (let i = 0; i < arr.length; i += chunkSize) {
-      const chunk = arr.slice(i, i + chunkSize);
-      result = [...result, chunk];
+      result = [...result, arr.slice(i, i + chunkSize)];
     }
   }
   return result;

@@ -86,10 +86,10 @@ export class TestEntityLvl2MultiLink extends EntityV2 implements TestEntityLvl2M
 
 export interface TestEntityLvl2MultiLinkType {
   keyProperty: string;
-  stringProperty?: string;
-  booleanProperty?: boolean;
-  guidProperty?: string;
-  int16Property?: number;
+  stringProperty?: string | null;
+  booleanProperty?: boolean | null;
+  guidProperty?: string | null;
+  int16Property?: number | null;
 }
 
 export namespace TestEntityLvl2MultiLink {

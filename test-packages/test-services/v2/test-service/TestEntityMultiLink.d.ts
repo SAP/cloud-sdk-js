@@ -79,10 +79,10 @@ import { TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType } from './TestEnti
 import { TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType } from './TestEntityLvl2SingleLink';
 export interface TestEntityMultiLinkType {
     keyProperty: string;
-    stringProperty?: string;
-    booleanProperty?: boolean;
-    guidProperty?: string;
-    int16Property?: number;
+    stringProperty?: string | null;
+    booleanProperty?: boolean | null;
+    guidProperty?: string | null;
+    int16Property?: number | null;
     toMultiLink: TestEntityLvl2MultiLinkType[];
     toSingleLink: TestEntityLvl2SingleLinkType;
 }

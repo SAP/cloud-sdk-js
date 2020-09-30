@@ -1,0 +1,31 @@
+
+
+A retrieve request is any HTTP `GET` request - in terms of the SAP Cloud SDK this includes all requests built by a [GetAllRequestBuilder](#getall-request-builder) and [GetByKeyRequestBuilder](#getbykey-request-builder).
+
+In the example below, a list of addresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the read requests, which are then passed to the batch function.
+
+The batch request will return a list of `BatchResponse` items, which will be stored in the `retrieveResponses` variable. These `BatchResponse` items need to be parsed and converted to the expected entities.
+
+`ReadResponse` contains an HTTP code, a body, an entity (in this case `BusinessPartnerAddress`), and functions like `as` to convert the response into the entity and `isSuccess`.
+
+The reduce function converts each of the ReadResponses to a BusinessPartnerAddress using the `as` function. The `addresses` variable is the accumulator and the `[]` is the initial value. We end up with a list of BusinessPartnerAddress.
+
+```ts
+async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
+:Promise<BusinessPartnerAddress[]> {
+  const retrieveRequests = businessPartnerAddresses.map(
+      address => BusinessPartnerAddress
+        .requestBuilder()
+        .getByKey(address.businessPartner, address.addressId)
+  );
+
+  const retrieveResponses = await batch(...retrieveRequests)
+    .execute(destination);
+
+  return retrieveResponses.reduce(
+    (addresses, response: ReadResponse) =>
+      [...addresses, ...response.as(BusinessPartnerAddress)]
+      , []
+  );
+}
+```

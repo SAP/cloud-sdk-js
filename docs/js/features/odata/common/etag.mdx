@@ -1,0 +1,28 @@
+An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier that is often used to implement an optimistic locking mechanism. The SAP Cloud SDK will try to read version identifiers from responses and set them when sending OData requests.
+
+Consider the following example:
+
+```ts
+async function modifyBusinessPartner(id) {
+  const destination = { url: 'https://my.s4-system.com' };
+
+  const businessPartner = await BusinessPartner.requestBuilder()
+    .getByKey(id)
+    .execute(myDestination);
+
+  // do some modification
+  applyModification(businessPartner);
+
+  return BusinessPartner.requestBuilder()
+    .update(businessPartner)
+    .execute(destination);
+}
+```
+
+When executing `getAll` and `getByKey` requests the SAP Cloud SDK will automatically attempt to extract the version identifier from the response and store it within the returned entity (`partner` in the example above). When executing `update` requests the version identifier will be sent in the `If-match` request header.
+
+:::note
+If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.
+
+By default an ETag is sent if it's present on the entity being modified. `ignoreVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
+:::

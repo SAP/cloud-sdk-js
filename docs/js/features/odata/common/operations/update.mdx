@@ -1,0 +1,25 @@
+The Update request builder allows you to send `PUT` or `PATCH` requests. By default `PATCH` is used to only update the changed fields:
+
+```ts
+BusinessPartner.requestBuilder().update(businessPartner);
+```
+
+In the example above only the changed fields of the given `businessPartner` instance are sent to the BusinessPartner service using `PATCH`.
+
+To update the whole entity use `replaceWholeEntityWithPut`:
+
+```ts
+BusinessPartner.requestBuilder()
+  .update(businessPartner)
+  .replaceWholeEntityWithPut();
+```
+
+This will send a `PUT` request and thereby replace the whole entity.
+
+Entities can only be updated if [ETags](#handling-of-etags) match. If you want to force an update of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
+
+```ts
+BusinessPartner.requestBuilder()
+  .update(businessPartner)
+  .ignoreVersionIdentifier();
+```

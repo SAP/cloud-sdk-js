@@ -1,0 +1,8 @@
+The `ETag` handling with the function imports is not integrated.
+Below is an example demonstrating how to make use of the [`withCustomHeaders`](pathname:///api/1.26.1/classes/sap_cloud_sdk_core.functionimportrequestbuilder-1#withcustomheaders) for setting `ETag` by your own.
+In order to use [`versionIdentifier`](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.entityv2#versionidentifier) for `ETag` value, make sure you fetch the entity information via e.g., a `get` request.
+```ts
+postGoodsIssue({outboundDeliveryOrder: "order"})
+  .withCustomHeaders({"if-match": entity.versionIdentifier})
+  .execute(destination)
+```

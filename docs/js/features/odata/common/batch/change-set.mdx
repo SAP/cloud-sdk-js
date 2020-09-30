@@ -1,0 +1,28 @@
+
+A changeset is a collection of HTTP `POST`, `PUT`, `PATCH` and `DELETE` operations - requests built by any [CreateRequestBuilder](#create-request-builder), [UpdateRequestBuilder](#update-request-builder) and [DeleteRequestBuilder](#delete-request-builder) in terms of the SAP Cloud SDK. The order of execution within a changeset is not defined as opposed to the whole batch request itself. Therefore the requests within a changeset should not depend on each other. If the execution of any of the requests within a changeset fails, the whole changeset will be reflected as an error in the response and will not be applied, much like a database transaction.
+
+In the example below, a list of addresses is mapped in an [UpdateRequestBuilder](#update-request-builder) to form the update requests, which are then wrapped in a changeset and passed to the batch function.
+
+The batch request will return a single `BatchResponse` in a list, which is stored in the `updateChangesetResponse` variable.
+
+`WriteResponses` contains the function `isSuccess` and the property `responses` which is a list of `WriteResponse` which contains an HTTP code, and can contain a body, an entity (in this case `BusinessPartnerAddress`) and the function `as` to convert the response into the entity.
+
+```ts
+updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
+:Promise<BusinessPartnerAddress[]> {
+  const updateRequests = businessPartnerAddresses.map(
+    address => BusinessPartnerAddress
+      .requestBuilder()
+      .update(address)
+  );
+
+  const [updateChangesetResponse] = await batch(changeset(...updateRequests))
+    .execute(destination);
+
+  return (updateChangesetResponse as WriteResponses)
+    .responses
+    .map(
+      response => response.as(BusinessPartnerAddress)
+    );
+}
+```

@@ -1,0 +1,31 @@
+Depending on the context of the filter it will either filter the parent or the children.
+In our example we have a `PERSON` related to 0..N `FRIENDS` which are both of type people.
+
+If you want to get all people with first name `John` the query is:
+
+```ts
+People.requestBuilder().getAll()
+    .filter(People.FIRST_NAME.equals('John'))
+```
+
+If you want to get all people who have at least one friend with first name `John` the query is:
+
+```ts
+People.requestBuilder().getAll().filter(People.FRIENDS
+    .filter(
+        any(People.FIRST_NAME.equals('John'))
+    )
+)
+```
+The lambda [all](pathname:///api/1.28.1/modules/sap_cloud_sdk_core#all) would enforce that all friends must have first name `John`.
+The two queries above filter the parent entity person.
+
+In case you want to get all people but reduce the friends in the response, the filter has to be inside the expand:
+
+```ts
+People.requestBuilder().getAll()
+    .expand(People.FRIENDS
+        .filter(People.FIRST_NAME.equals('John'))
+    )
+```
+This will return all people but only the friends with first name `John` will be included in the response.

@@ -13,14 +13,12 @@ keywords:
 - consume
 ---
 
-import ETag from './common/etag.mdx'
-import Csrf from './common/csrf-token.mdx'
-import Select from './v2/select.mdx'
-
+import {Select} from './v2'
+import {Etag, Csrf} from './common'
 import {Count, Create, DeepCreate, CreateAsChildOf, Delete, Update, GetAll, GetByKey} from './common/operations'
 import {Top, Skip, Filter, FilterOneToOne, FilterFunctions} from './common/query-parameter'
 import {RequestBuilder, EtagFunctionImport} from './common/function-imports'
-import {BatchIntro,RetrieveRequests,MultiChangeSets,CombineChangeSetRetrieve,ChangeSet} from './common/batch'
+import {BatchIntro, RetrieveRequests, MultiChangeSets, CombineChangeSetRetrieve, ChangeSet} from './common/batch'
 
 In the following, the OData v2 features supported by the SAP Cloud SDK are explained using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) of SAP S/4HANA as an example.
 

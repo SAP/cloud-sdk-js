@@ -308,7 +308,7 @@ describe('UpdateRequestBuilderV2', () => {
 
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringMatching(
-        'Update of navigation properties is not supported in OData v2 by the SDK.'
+        'Update of navigation properties is not supported and will be ignored.'
       )
     );
   });

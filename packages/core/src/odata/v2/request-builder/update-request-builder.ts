@@ -1,4 +1,4 @@
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause, isNullish } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import {
   Constructable,
@@ -98,7 +98,9 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
 
     return (
       this.build(destination, options)
-        .then(request => warnIfNavigation(request, this._entity))
+        .then(request =>
+          warnIfNavigation(request, this._entity, this._entityConstructor)
+        )
         .then(request => request.execute())
 
         // Update returns 204 hence the data from the request is used to build entity for return
@@ -270,17 +272,18 @@ const removePropertyOnCondition = (
  */
 function warnIfNavigation<EntityT extends EntityV2>(
   request: ODataRequest<ODataUpdateRequestConfig<EntityT>>,
-  entity: EntityT
+  entity: EntityT,
+  entityConstructor: Constructable<EntityT>
 ): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
-  const warnings: string[] = [];
-  Object.keys(entity).forEach(key => {
-    if (isNavigationProperty(key, entity)) {
-      warnings.push(key);
-    }
-  });
-  if (warnings.length > 0) {
+  const setNavigationsProperties = Object.keys(entity).filter(
+    key =>
+      !isNullish(entity[key]) &&
+      isNavigationProperty(key as keyof EntityT, entityConstructor)
+  );
+
+  if (setNavigationsProperties.length) {
     logger.warn(
-      `The navigational properties ${warnings} have been included in your update request. Update of navigational properties is not supported in OData v2 by the SDK.`
+      `The navigation properties ${setNavigationsProperties} have been included in your update request. Update of navigation properties is not supported and will be ignored.`
     );
   }
 

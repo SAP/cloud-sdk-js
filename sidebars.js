@@ -59,7 +59,8 @@ module.exports = {
             type: 'category',
             label: 'Resilience & Caching',
             items: [
-              'java/features/resilience/resilience'
+              'java/features/resilience/resilience',
+              'java/features/resilience/caching'
             ]
           },
           {

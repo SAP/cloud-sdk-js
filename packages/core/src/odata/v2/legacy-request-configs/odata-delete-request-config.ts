@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityBase, Constructable } from '../../common';
 import { ODataDeleteRequestConfig as Base } from '../../common/request/odata-delete-request-config';
 import { oDataUriV2 } from '../uri-conversion';

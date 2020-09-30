@@ -18,15 +18,16 @@
 
 ## New Functionality
 
--
+- [OData] Support the usage of $count in `getAll` requests e.g.: `Entity.requestBuilder().getAll().count().execute()`.
 
 ## Improvements
 
--
+- [OData] Add warning for deep update attempts in OData v2. 
+- [Generator] The transpiling after generation is done in chunks to avoid CPU overloads for high numbers of services.
 
 ## Fixed Issues
 
--
+- [OData] Fix parsing the Etag returned from update requests.
 
 
 # 1.28.2

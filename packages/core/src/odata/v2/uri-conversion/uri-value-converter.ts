@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 /* eslint-disable valid-jsdoc */
 
 import { edmToTsV2, tsToEdmV2 } from '../payload-value-converter';

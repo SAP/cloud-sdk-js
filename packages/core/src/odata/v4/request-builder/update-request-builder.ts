@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { errorWithCause } from '@sap-cloud-sdk/util';
 import { pipe } from 'rambda';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
@@ -16,6 +14,8 @@ import {
   DestinationNameAndJwt
 } from '../../../scp-cf/destination-service-types';
 import { oDataUriV4 } from '../uri-conversion';
+import { extractEtagFromHeader } from '../../common/entity-deserializer';
+import { extractODataEtagV4 } from '../extract-odata-etag';
 
 /**
  * Create OData query to update an entity.
@@ -91,11 +91,15 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
         .then(request => request.execute())
 
         // Update returns 204 hence the data from the request is used to build entity for return
-        .then(response =>
-          this._entity
+        .then(response => {
+          const eTag =
+            extractEtagFromHeader(response.headers) ||
+            extractODataEtagV4(response.data) ||
+            this.requestConfig.eTag;
+          return this._entity
             .setOrInitializeRemoteState()
-            .setVersionIdentifier(this.requestConfig.eTag)
-        )
+            .setVersionIdentifier(this.requestConfig.eTag);
+        })
         .catch(error =>
           Promise.reject(errorWithCause('OData update request failed!', error))
         )

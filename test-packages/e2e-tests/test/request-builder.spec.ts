@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import {
   TestEntity,
   TestEntityLink
@@ -204,6 +202,28 @@ describe('Request builder', () => {
     expect(afterUpdate.stringProperty).toBe('newValue');
     expect(afterUpdate.toMultiLink.length).toBe(1);
     expect(afterUpdate.toMultiLink[0].keyTestEntityLink).toBe(20);
+  });
+
+  it('should count the entities', async () => {
+    const result = await TestEntity.requestBuilder()
+      .getAll()
+      .count()
+      .execute(destination);
+    expect(result).toBeGreaterThan(2);
+
+    const resultTopped = await TestEntity.requestBuilder()
+      .getAll()
+      .top(3)
+      .count()
+      .execute(destination);
+    expect(resultTopped).toBeGreaterThan(3);
+
+    const resultFiltered = await TestEntity.requestBuilder()
+      .getAll()
+      .filter(TestEntity.STRING_PROPERTY.equals('Edgar Allen Poe'))
+      .count()
+      .execute(destination);
+    expect(resultFiltered).toBe(1);
   });
 
   // CAP seems not to set the etag

@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { EdmxAction, EdmxFunction } from '../../edmx-parser/v4';
 import { stripNamespace } from '../edmx-to-vdm-util';
 

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 export * from './edm-types';
 export * from './entity';
 export * from './entity-deserializer';

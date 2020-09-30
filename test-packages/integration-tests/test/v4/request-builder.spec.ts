@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';

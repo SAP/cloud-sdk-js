@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { AllFields, OneToOneLink } from './selectable';
 import { EntityBase, ODataVersionOf } from './entity';
 import { OneToManyLink } from './selectable/one-to-many-link';

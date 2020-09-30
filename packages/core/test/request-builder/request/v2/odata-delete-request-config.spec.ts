@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { ODataDeleteRequestConfig } from '../../../../src/odata/common/request/odata-delete-request-config';
 import { testEntityResourcePath } from '../../../test-util/test-data';

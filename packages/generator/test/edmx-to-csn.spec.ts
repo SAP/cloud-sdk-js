@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { generateProject } from '../src/generator';
 import { GeneratorOptions } from '../src/generator-options';
 import * as csnGeneration from '../src/service/csn';

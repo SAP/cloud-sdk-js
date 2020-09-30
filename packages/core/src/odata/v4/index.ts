@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 export * from './batch-change-set';
 export * from './batch-request-builder';
 export * from './batch-request-serializer';

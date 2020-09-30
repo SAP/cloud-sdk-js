@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { VdmReturnTypeCategory } from '../../src/vdm-types';
 import { orderBreakfast } from '../test-util/data-model';
 import { responseTransformerFunctionName } from '../../src/action-function-import/response-transformer-function';

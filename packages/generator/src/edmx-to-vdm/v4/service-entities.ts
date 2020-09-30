@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmServiceEntities } from '../../vdm-types';

@@ -1,5 +1,3 @@
-
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -85,7 +83,8 @@ function insertCopyrightAndTracking() {
   );
   filePaths.forEach(filePath => {
     const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
-    const trackingTag = `<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>`
+    const trackingTag =
+      '<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>';
     transformFile(filePath, file => {
       const lines = file.split('\n');
       // Inplace insert the copyright div before the line including </footer> #yikes

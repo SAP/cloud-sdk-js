@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { Cache } from './cache';
 import { headerForClientCredentials } from './xsuaa-service';
 import {

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityBase } from '../entity';
 import { Filterable, FilterLink } from '../filter';
 import { Orderable } from '../order';

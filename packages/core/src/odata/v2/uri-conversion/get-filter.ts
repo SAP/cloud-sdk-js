@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityV2 } from '../entity';
 import { Constructable, Filterable } from '../../common';
 import { oDataUriV2 } from './odata-uri';

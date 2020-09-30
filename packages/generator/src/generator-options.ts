@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { PathLike } from 'fs';
 import { resolve } from 'path';
 import { Options } from 'yargs';
@@ -23,10 +21,13 @@ export interface GeneratorOptions {
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   generateJs: boolean;
+  processesJsGeneration?: number;
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;
   generateCSN: boolean;
 }
+
+export const defaultValueProcessesJsGeneration = 16;
 
 type KeysToOptions = {
   [optionName in keyof GeneratorOptions]: Options;
@@ -136,6 +137,12 @@ export const generatorOptionsCli: KeysToOptions = {
       'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
     type: 'boolean',
     default: true
+  },
+  processesJsGeneration: {
+    describe: 'Number of processes used for generation of javascript files.',
+    alias: 'np',
+    type: 'number',
+    default: defaultValueProcessesJsGeneration
   },
   sdkAfterVersionScript: {
     describe:

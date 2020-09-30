@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { VdmParameter } from '../../vdm-types';
 import { isNullableParameter } from '../../generator-utils';
 import { parameterDescription } from '../description-util';

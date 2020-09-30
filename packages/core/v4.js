@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 'use strict';
 function __export(m) {
   for (const p in m) {

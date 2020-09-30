@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { PathLike } from 'fs';
 import { basename } from 'path';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';

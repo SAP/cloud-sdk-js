@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import nock from 'nock';
 import { buildHeaders } from '../../../src/header-builder/header-builder';
 import { Destination } from '../../../src/scp-cf/destination-service-types';

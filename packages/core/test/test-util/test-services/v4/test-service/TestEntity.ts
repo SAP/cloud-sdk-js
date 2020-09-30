@@ -169,7 +169,7 @@ export class TestEntity extends EntityV4 implements TestEntityType {
    * Returns an entity builder to construct instances `TestEntity`.
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static builder(): EntityBuilderType<TestEntity, TestEntityTypeForceMandatory> {
+  static builder(): EntityBuilderType<TestEntity, TestEntityType> {
     return EntityV4.entityBuilder(TestEntity);
   }
 
@@ -205,60 +205,29 @@ import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySing
 export interface TestEntityType {
   keyPropertyGuid: string;
   keyPropertyString: string;
-  stringProperty?: string;
-  booleanProperty?: boolean;
-  guidProperty?: string;
-  int16Property?: number;
-  int32Property?: number;
-  int64Property?: BigNumber;
-  decimalProperty?: BigNumber;
-  singleProperty?: number;
-  doubleProperty?: number;
-  floatProperty?: number;
-  timeOfDayProperty?: Time;
-  dateProperty?: Moment;
-  dateTimeOffSetProperty?: Moment;
-  durationProperty?: Duration;
-  byteProperty?: number;
-  sByteProperty?: number;
-  geographyPointProperty?: any;
-  somethingTheSdkDoesNotSupport?: any;
+  stringProperty?: string | null;
+  booleanProperty?: boolean | null;
+  guidProperty?: string | null;
+  int16Property?: number | null;
+  int32Property?: number | null;
+  int64Property?: BigNumber | null;
+  decimalProperty?: BigNumber | null;
+  singleProperty?: number | null;
+  doubleProperty?: number | null;
+  floatProperty?: number | null;
+  timeOfDayProperty?: Time | null;
+  dateProperty?: Moment | null;
+  dateTimeOffSetProperty?: Moment | null;
+  durationProperty?: Duration | null;
+  byteProperty?: number | null;
+  sByteProperty?: number | null;
+  geographyPointProperty?: any | null;
+  somethingTheSdkDoesNotSupport?: any | null;
   collectionProperty?: string[];
-  complexTypeProperty?: TestComplexType;
+  complexTypeProperty?: TestComplexType | null;
   complexTypeCollectionProperty?: TestComplexType[];
-  enumProperty?: TestEnumType;
+  enumProperty?: TestEnumType | null;
   enumCollectionProperty?: TestEnumType[];
-  toMultiLink: TestEntityMultiLinkType[];
-  toOtherMultiLink: TestEntityMultiLinkType[];
-  toSingleLink: TestEntitySingleLinkType;
-}
-
-export interface TestEntityTypeForceMandatory {
-  keyPropertyGuid: string;
-  keyPropertyString: string;
-  stringProperty: string;
-  booleanProperty: boolean;
-  guidProperty: string;
-  int16Property: number;
-  int32Property: number;
-  int64Property: BigNumber;
-  decimalProperty: BigNumber;
-  singleProperty: number;
-  doubleProperty: number;
-  floatProperty: number;
-  timeOfDayProperty: Time;
-  dateProperty: Moment;
-  dateTimeOffSetProperty: Moment;
-  durationProperty: Duration;
-  byteProperty: number;
-  sByteProperty: number;
-  geographyPointProperty: any;
-  somethingTheSdkDoesNotSupport: any;
-  collectionProperty: string[];
-  complexTypeProperty: TestComplexType;
-  complexTypeCollectionProperty: TestComplexType[];
-  enumProperty: TestEnumType;
-  enumCollectionProperty: TestEnumType[];
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;

@@ -33,7 +33,7 @@ export class TestEntityEndsWithSomethingElse extends EntityV4 implements TestEnt
    * Returns an entity builder to construct instances `TestEntityEndsWithSomethingElse`.
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
-  static builder(): EntityBuilderType<TestEntityEndsWithSomethingElse, TestEntityEndsWithSomethingElseTypeForceMandatory> {
+  static builder(): EntityBuilderType<TestEntityEndsWithSomethingElse, TestEntityEndsWithSomethingElseType> {
     return EntityV4.entityBuilder(TestEntityEndsWithSomethingElse);
   }
 
@@ -64,10 +64,6 @@ export class TestEntityEndsWithSomethingElse extends EntityV4 implements TestEnt
 }
 
 export interface TestEntityEndsWithSomethingElseType {
-  keyProperty: string;
-}
-
-export interface TestEntityEndsWithSomethingElseTypeForceMandatory {
   keyProperty: string;
 }
 

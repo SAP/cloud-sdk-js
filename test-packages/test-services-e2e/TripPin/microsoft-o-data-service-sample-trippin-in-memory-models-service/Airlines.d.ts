@@ -29,7 +29,7 @@ export declare class Airlines extends EntityV4 implements AirlinesType {
      * Returns an entity builder to construct instances `Airlines`.
      * @returns A builder that constructs instances of entity type `Airlines`.
      */
-    static builder(): EntityBuilderType<Airlines, AirlinesTypeForceMandatory>;
+    static builder(): EntityBuilderType<Airlines, AirlinesType>;
     /**
      * Returns a request builder to construct requests for operations on the `Airlines` entity type.
      * @returns A `Airlines` request builder.
@@ -50,10 +50,6 @@ export declare class Airlines extends EntityV4 implements AirlinesType {
     };
 }
 export interface AirlinesType {
-    airlineCode: string;
-    name: string;
-}
-export interface AirlinesTypeForceMandatory {
     airlineCode: string;
     name: string;
 }

@@ -38,7 +38,7 @@ export class Photos extends EntityV4 implements PhotosType {
    * Returns an entity builder to construct instances `Photos`.
    * @returns A builder that constructs instances of entity type `Photos`.
    */
-  static builder(): EntityBuilderType<Photos, PhotosTypeForceMandatory> {
+  static builder(): EntityBuilderType<Photos, PhotosType> {
     return EntityV4.entityBuilder(Photos);
   }
 
@@ -70,12 +70,7 @@ export class Photos extends EntityV4 implements PhotosType {
 
 export interface PhotosType {
   id: BigNumber;
-  name?: string;
-}
-
-export interface PhotosTypeForceMandatory {
-  id: BigNumber;
-  name: string;
+  name?: string | null;
 }
 
 export namespace Photos {

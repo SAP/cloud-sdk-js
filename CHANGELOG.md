@@ -13,8 +13,7 @@
 -
 
 ## Compatibility Notes
-
--
+- [Generator] The interface `EnityTypeForceMandatory` (e.g., `BusinessPartnerTypeForceMandatory`) is removed.
 
 ## New Functionality
 
@@ -27,7 +26,7 @@
 ## Fixed Issues
 
 - [OData] Fix parsing the Etag returned from update requests.
-- [OData] Fix the entity builder so that it can set `undefined` for optional properties.
+- [OData] Fix the entity builder so that it can set `undefined`/`null` for optional properties.
 
 
 # 1.28.2

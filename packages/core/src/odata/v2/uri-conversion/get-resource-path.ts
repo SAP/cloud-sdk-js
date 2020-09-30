@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityBase, FieldType, Constructable } from '../../common';
 import { oDataUriV2 } from './odata-uri';
 

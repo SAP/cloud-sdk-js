@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { tenantId, userId } from '../util';
 import { Cache, IsolationStrategy } from './cache';
 import { DestinationsByType } from './destination-accessor-types';

@@ -1,6 +1,4 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
-import { createLogger, MapType } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { pick } from 'rambda';
 import { EntityBase } from '../entity';
 import { removeTrailingSlashes } from '../../../util';
@@ -25,7 +23,7 @@ export class ODataCountRequestConfig<
    *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityBase>) {
+  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityT>) {
     super('get', getAllRequest._entityConstructor._defaultServicePath);
   }
 
@@ -35,7 +33,7 @@ export class ODataCountRequestConfig<
     )}/$count`;
   }
 
-  queryParameters(): MapType<any> {
+  queryParameters(): Record<string, any> {
     const parametersAllowedInCount = ['$apply', '$search', '$filter'];
     const defaultParameters = ['$format'];
     const parameters = this.getAllRequest.requestConfig.queryParameters();

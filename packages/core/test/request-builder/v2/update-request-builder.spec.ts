@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -286,7 +285,7 @@ describe('UpdateRequestBuilderV2', () => {
     expect(actual['remoteState']).toEqual(entity);
   });
 
-  it('warns if navigaton properties are send', async () => {
+  it('warns if navigaton properties are sent', async () => {
     const entity = createTestEntity();
     entity.toMultiLink = [
       TestEntityMultiLink.builder().keyProperty('someKey').build()
@@ -309,7 +308,7 @@ describe('UpdateRequestBuilderV2', () => {
 
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringMatching(
-        'Update of navigational properties is not supported in OData v2 by the SDK.'
+        'Update of navigation properties is not supported and will be ignored.'
       )
     );
   });

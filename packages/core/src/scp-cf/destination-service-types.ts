@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { CachingOptions, IsolationStrategy } from './cache';
 import { ProxyConfiguration } from './connectivity-service-types';
 import { ResilienceOptions } from './resilience-options';

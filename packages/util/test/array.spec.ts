@@ -1,7 +1,5 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { flat, unique, last, first, splitInChunks } from '../src';
 
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 describe('array', () => {
   describe('flat', () => {
     it('flattens a nested array of numbers', () => {

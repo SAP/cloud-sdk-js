@@ -1,16 +1,11 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 const fs = require('fs');
 const path = require('path');
 
-const version = JSON.parse(fs.readFileSync('lerna.json', 'utf8'))
-  .version;
+const version = JSON.parse(fs.readFileSync('lerna.json', 'utf8')).version;
 const docsDir = path.resolve('docs');
 const apiDocsDir = path.resolve(docsDir, 'api');
 
-function transformFile(
-  filePath,
-  tranformFn,
-) {
+function transformFile(filePath, tranformFn) {
   const file = fs.readFileSync(filePath, { encoding: 'utf8' });
   const transformedFile = tranformFn(file);
   fs.writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
@@ -31,4 +26,4 @@ module.exports = {
   transformFile,
   jsonStringify,
   openFile
-}
+};

@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { TestEntity } from '@sap-cloud-sdk/test-services/test-service-legacy';
 
 // $ExpectType GetAllRequestBuilderV2<TestEntity>

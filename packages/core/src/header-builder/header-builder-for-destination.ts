@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { Destination } from '../scp-cf';
 import { getAuthHeaders } from './authorization-header';
 import { replaceDuplicateKeys, filterNullishValues } from './headers-util';

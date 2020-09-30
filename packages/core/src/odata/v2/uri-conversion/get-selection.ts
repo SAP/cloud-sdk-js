@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { EntityV2 } from '../entity';
 import { Selectable } from '../../common';
 import { getSelectV2 } from './get-select';

@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { ServiceNameFormatter } from '../../../src/service-name-formatter';
 import { EdmxParameter, EdmxProperty } from '../../../src/edmx-parser/common';
 import {

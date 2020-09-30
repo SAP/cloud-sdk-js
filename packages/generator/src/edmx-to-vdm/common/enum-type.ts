@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmEnumType } from '../../vdm-types';
 import { EdmxEnumType } from '../../edmx-parser/v4';

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { caps } from '@sap-cloud-sdk/util';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';

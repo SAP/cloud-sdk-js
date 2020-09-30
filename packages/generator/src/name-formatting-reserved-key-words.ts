@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 export const reservedVdmKeywords: Set<string> = new Set<string>([
   'builder',
   'entityBuilder',

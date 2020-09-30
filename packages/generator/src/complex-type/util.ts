@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { VdmProperty } from '../vdm-types';
 
 export function hasEdmTypeProperty(properties: VdmProperty[]): boolean {

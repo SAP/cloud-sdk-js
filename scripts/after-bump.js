@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 const path = require('path');
 const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
 

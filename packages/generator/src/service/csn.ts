@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import fs = require('fs');
 import edm2csn = require('@sap/edm-converters/lib/edmToCsn/lib/main');
 import { VdmServiceMetadata } from '../vdm-types';

@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { FunctionImportParameter, oDataUriV2 } from '../../../../src';
 import { ODataFunctionImportRequestConfig } from '../../../../src/odata/common/request/odata-function-import-request-config';
 

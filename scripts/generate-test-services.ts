@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import fs from 'fs';
 import path from 'path';
 import util from 'util';

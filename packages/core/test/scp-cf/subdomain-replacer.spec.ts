@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { replaceSubdomain } from '../../src/scp-cf/subdomain-replacer';
 
 describe('subdomain replacer', () => {

@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { forceArray } from '../../../generator-utils';
 import { parseEntityTypes, parseComplexTypes } from '../common/edmx-parser';
 import { EdmxMetadataBase } from '../common';

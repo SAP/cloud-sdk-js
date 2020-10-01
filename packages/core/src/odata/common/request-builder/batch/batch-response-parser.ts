@@ -215,7 +215,9 @@ function asReadResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <T extends EntityBase>(constructor: Constructable<T>): Error | T[] => {
+  return <EntityT extends EntityBase>(
+    constructor: Constructable<EntityT>
+  ): Error | EntityT[] => {
     if (body.error) {
       return new Error(body.error);
     }
@@ -245,7 +247,7 @@ function asWriteResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <T extends EntityBase>(constructor: Constructable<T>) =>
+  return <EntityT extends EntityBase>(constructor: Constructable<EntityT>) =>
     deserializer.deserializeEntity(
       responseDataAccessor.getSingleResult(body),
       constructor

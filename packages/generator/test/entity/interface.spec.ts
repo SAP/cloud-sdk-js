@@ -19,7 +19,10 @@ describe('entity interface generator', () => {
     const instanceProperties = interfaceDeclaration.properties;
     expect(instanceProperties!.map(prop => [prop.name, prop.type])).toEqual([
       [entityName.instancePropertyName, entityName.jsType],
-      [`${numberOfEggs.instancePropertyName}?`, numberOfEggs.jsType],
+      [
+        `${numberOfEggs.instancePropertyName}?`,
+        `${numberOfEggs.jsType} | null`
+      ],
       [`${breakfastTime.instancePropertyName}`, breakfastTime.jsType],
       [toBrunch.instancePropertyName, `${toBrunch.toEntityClassName}Type`]
     ]);

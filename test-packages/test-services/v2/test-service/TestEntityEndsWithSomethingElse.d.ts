@@ -25,7 +25,7 @@ export declare class TestEntityEndsWithSomethingElse extends EntityV2 implements
      * Returns an entity builder to construct instances `TestEntityEndsWithSomethingElse`.
      * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
      */
-    static builder(): EntityBuilderType<TestEntityEndsWithSomethingElse, TestEntityEndsWithSomethingElseTypeForceMandatory>;
+    static builder(): EntityBuilderType<TestEntityEndsWithSomethingElse, TestEntityEndsWithSomethingElseType>;
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityEndsWithSomethingElse` entity type.
      * @returns A `TestEntityEndsWithSomethingElse` request builder.
@@ -46,9 +46,6 @@ export declare class TestEntityEndsWithSomethingElse extends EntityV2 implements
     };
 }
 export interface TestEntityEndsWithSomethingElseType {
-    keyProperty: string;
-}
-export interface TestEntityEndsWithSomethingElseTypeForceMandatory {
     keyProperty: string;
 }
 export declare namespace TestEntityEndsWithSomethingElse {

@@ -70,7 +70,7 @@ export class People extends EntityV4 implements PeopleType {
    * Returns an entity builder to construct instances `People`.
    * @returns A builder that constructs instances of entity type `People`.
    */
-  static builder(): EntityBuilderType<People, PeopleTypeForceMandatory> {
+  static builder(): EntityBuilderType<People, PeopleType> {
     return EntityV4.entityBuilder(People);
   }
 
@@ -108,19 +108,7 @@ export interface PeopleType {
   lastName: string;
   emails?: string[];
   addressInfo?: Location[];
-  gender?: PersonGender;
-  concurrency: BigNumber;
-  friends: PeopleType[];
-  photo: PhotosType;
-}
-
-export interface PeopleTypeForceMandatory {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  emails: string[];
-  addressInfo: Location[];
-  gender: PersonGender;
+  gender?: PersonGender | null;
   concurrency: BigNumber;
   friends: PeopleType[];
   photo: PhotosType;

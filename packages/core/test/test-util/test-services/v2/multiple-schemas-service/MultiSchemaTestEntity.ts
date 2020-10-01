@@ -32,7 +32,7 @@ export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEn
    * Returns an entity builder to construct instances `MultiSchemaTestEntity`.
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
-  static builder(): EntityBuilderType<MultiSchemaTestEntity, MultiSchemaTestEntityTypeForceMandatory> {
+  static builder(): EntityBuilderType<MultiSchemaTestEntity, MultiSchemaTestEntityType> {
     return EntityV2.entityBuilder(MultiSchemaTestEntity);
   }
 
@@ -63,10 +63,6 @@ export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEn
 }
 
 export interface MultiSchemaTestEntityType {
-  keyProperty: string;
-}
-
-export interface MultiSchemaTestEntityTypeForceMandatory {
   keyProperty: string;
 }
 

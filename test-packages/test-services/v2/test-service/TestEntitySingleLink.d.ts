@@ -55,7 +55,7 @@ export declare class TestEntitySingleLink extends EntityV2 implements TestEntity
      * Returns an entity builder to construct instances `TestEntitySingleLink`.
      * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
      */
-    static builder(): EntityBuilderType<TestEntitySingleLink, TestEntitySingleLinkTypeForceMandatory>;
+    static builder(): EntityBuilderType<TestEntitySingleLink, TestEntitySingleLinkType>;
     /**
      * Returns a request builder to construct requests for operations on the `TestEntitySingleLink` entity type.
      * @returns A `TestEntitySingleLink` request builder.
@@ -79,19 +79,10 @@ import { TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType } from './TestEnti
 import { TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType } from './TestEntityLvl2SingleLink';
 export interface TestEntitySingleLinkType {
     keyProperty: string;
-    stringProperty?: string;
-    booleanProperty?: boolean;
-    guidProperty?: string;
-    int16Property?: number;
-    toMultiLink: TestEntityLvl2MultiLinkType[];
-    toSingleLink: TestEntityLvl2SingleLinkType;
-}
-export interface TestEntitySingleLinkTypeForceMandatory {
-    keyProperty: string;
-    stringProperty: string;
-    booleanProperty: boolean;
-    guidProperty: string;
-    int16Property: number;
+    stringProperty?: string | null;
+    booleanProperty?: boolean | null;
+    guidProperty?: string | null;
+    int16Property?: number | null;
     toMultiLink: TestEntityLvl2MultiLinkType[];
     toSingleLink: TestEntityLvl2SingleLinkType;
 }

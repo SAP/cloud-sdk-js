@@ -25,7 +25,7 @@ export declare class TestEntityOtherMultiLink extends EntityV2 implements TestEn
      * Returns an entity builder to construct instances `TestEntityOtherMultiLink`.
      * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
      */
-    static builder(): EntityBuilderType<TestEntityOtherMultiLink, TestEntityOtherMultiLinkTypeForceMandatory>;
+    static builder(): EntityBuilderType<TestEntityOtherMultiLink, TestEntityOtherMultiLinkType>;
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityOtherMultiLink` entity type.
      * @returns A `TestEntityOtherMultiLink` request builder.
@@ -46,9 +46,6 @@ export declare class TestEntityOtherMultiLink extends EntityV2 implements TestEn
     };
 }
 export interface TestEntityOtherMultiLinkType {
-    keyProperty: string;
-}
-export interface TestEntityOtherMultiLinkTypeForceMandatory {
     keyProperty: string;
 }
 export declare namespace TestEntityOtherMultiLink {

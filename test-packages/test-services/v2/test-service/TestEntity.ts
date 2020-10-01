@@ -137,7 +137,7 @@ export class TestEntity extends EntityV2 implements TestEntityType {
    * Returns an entity builder to construct instances `TestEntity`.
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static builder(): EntityBuilderType<TestEntity, TestEntityTypeForceMandatory> {
+  static builder(): EntityBuilderType<TestEntity, TestEntityType> {
     return EntityV2.entityBuilder(TestEntity);
   }
 
@@ -174,48 +174,23 @@ import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySing
 export interface TestEntityType {
   keyPropertyGuid: string;
   keyPropertyString: string;
-  stringProperty?: string;
-  booleanProperty?: boolean;
-  guidProperty?: string;
-  int16Property?: number;
-  int32Property?: number;
-  int64Property?: BigNumber;
-  decimalProperty?: BigNumber;
-  singleProperty?: number;
-  doubleProperty?: number;
-  floatProperty?: number;
-  timeProperty?: Time;
-  dateTimeProperty?: Moment;
-  dateTimeOffSetProperty?: Moment;
-  byteProperty?: number;
-  sByteProperty?: number;
-  somethingTheSdkDoesNotSupport?: any;
-  complexTypeProperty?: TestComplexType;
-  toMultiLink: TestEntityMultiLinkType[];
-  toOtherMultiLink: TestEntityOtherMultiLinkType[];
-  toSingleLink: TestEntitySingleLinkType;
-}
-
-export interface TestEntityTypeForceMandatory {
-  keyPropertyGuid: string;
-  keyPropertyString: string;
-  stringProperty: string;
-  booleanProperty: boolean;
-  guidProperty: string;
-  int16Property: number;
-  int32Property: number;
-  int64Property: BigNumber;
-  decimalProperty: BigNumber;
-  singleProperty: number;
-  doubleProperty: number;
-  floatProperty: number;
-  timeProperty: Time;
-  dateTimeProperty: Moment;
-  dateTimeOffSetProperty: Moment;
-  byteProperty: number;
-  sByteProperty: number;
-  somethingTheSdkDoesNotSupport: any;
-  complexTypeProperty: TestComplexType;
+  stringProperty?: string | null;
+  booleanProperty?: boolean | null;
+  guidProperty?: string | null;
+  int16Property?: number | null;
+  int32Property?: number | null;
+  int64Property?: BigNumber | null;
+  decimalProperty?: BigNumber | null;
+  singleProperty?: number | null;
+  doubleProperty?: number | null;
+  floatProperty?: number | null;
+  timeProperty?: Time | null;
+  dateTimeProperty?: Moment | null;
+  dateTimeOffSetProperty?: Moment | null;
+  byteProperty?: number | null;
+  sByteProperty?: number | null;
+  somethingTheSdkDoesNotSupport?: any | null;
+  complexTypeProperty?: TestComplexType | null;
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityOtherMultiLinkType[];
   toSingleLink: TestEntitySingleLinkType;

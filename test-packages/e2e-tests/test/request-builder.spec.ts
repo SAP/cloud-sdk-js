@@ -108,13 +108,22 @@ describe('Request builder test', () => {
   });
 
   it('should update an entity', async () => {
-    const created = await createEntity(entityKey);
-    const newDate = moment.utc('2020-01-01', 'YYYY-MM-DD');
-    created.dateProperty = newDate;
-    await TestEntity.requestBuilder().update(created).execute(destination);
+    await createEntity(entityKey);
 
-    const queried = await queryEntity(entityKey);
-    expect(queried.dateProperty?.toISOString()).toBe(
+    const queriedBeforeUpdate = await queryEntity(entityKey);
+    expect(queriedBeforeUpdate.stringProperty).not.toBe(null);
+
+    const newDate = moment.utc('2020-01-01', 'YYYY-MM-DD');
+    const newEntity = TestEntity.builder()
+      .keyTestEntity(entityKey)
+      .stringProperty(null)
+      .dateProperty(newDate)
+      .build();
+    await TestEntity.requestBuilder().update(newEntity).execute(destination);
+
+    const queriedAfterUpdate = await queryEntity(entityKey);
+    expect(queriedAfterUpdate.stringProperty).toBe(null);
+    expect(queriedAfterUpdate.dateProperty!.toISOString()).toBe(
       moment(newDate).toISOString()
     );
   });
@@ -160,7 +169,7 @@ describe('Request builder test', () => {
   });
 
   // Only supported in OData 4.01 and CAP is 4.0
-  xit('should update an entity including existing related entites', async () => {
+  xit('should update an entity including existing related entities', async () => {
     const entity = TestEntity.builder()
       .keyTestEntity(entityKey)
       .stringProperty('oldValueParent')

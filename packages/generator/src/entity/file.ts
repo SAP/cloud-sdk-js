@@ -2,10 +2,7 @@ import { SourceFileStructure, StructureKind } from 'ts-morph';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 import { entityClass } from './class';
 import { importDeclarations, otherEntityImports } from './imports';
-import {
-  entityTypeForceMandatoryInterface,
-  entityTypeInterface
-} from './interface';
+import { entityTypeInterface } from './interface';
 import { entityNamespace } from './namespace';
 
 export function entitySourceFile(
@@ -19,7 +16,6 @@ export function entitySourceFile(
       entityClass(entity, service),
       ...otherEntityImports(entity, service),
       entityTypeInterface(entity, service),
-      entityTypeForceMandatoryInterface(entity, service),
       entityNamespace(entity, service)
     ]
   };

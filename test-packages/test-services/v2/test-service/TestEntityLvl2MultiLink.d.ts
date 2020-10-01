@@ -47,7 +47,7 @@ export declare class TestEntityLvl2MultiLink extends EntityV2 implements TestEnt
      * Returns an entity builder to construct instances `TestEntityLvl2MultiLink`.
      * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
      */
-    static builder(): EntityBuilderType<TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkTypeForceMandatory>;
+    static builder(): EntityBuilderType<TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType>;
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityLvl2MultiLink` entity type.
      * @returns A `TestEntityLvl2MultiLink` request builder.
@@ -69,17 +69,10 @@ export declare class TestEntityLvl2MultiLink extends EntityV2 implements TestEnt
 }
 export interface TestEntityLvl2MultiLinkType {
     keyProperty: string;
-    stringProperty?: string;
-    booleanProperty?: boolean;
-    guidProperty?: string;
-    int16Property?: number;
-}
-export interface TestEntityLvl2MultiLinkTypeForceMandatory {
-    keyProperty: string;
-    stringProperty: string;
-    booleanProperty: boolean;
-    guidProperty: string;
-    int16Property: number;
+    stringProperty?: string | null;
+    booleanProperty?: boolean | null;
+    guidProperty?: string | null;
+    int16Property?: number | null;
 }
 export declare namespace TestEntityLvl2MultiLink {
     /**

@@ -89,7 +89,7 @@ export class TestEntity extends EntityV4 implements TestEntityType {
    * Returns an entity builder to construct instances `TestEntity`.
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static builder(): EntityBuilderType<TestEntity, TestEntityTypeForceMandatory> {
+  static builder(): EntityBuilderType<TestEntity, TestEntityType> {
     return EntityV4.entityBuilder(TestEntity);
   }
 
@@ -123,31 +123,16 @@ import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 
 export interface TestEntityType {
   keyTestEntity: number;
-  stringProperty?: string;
-  guidProperty?: string;
-  booleanProperty?: boolean;
-  int64Property?: BigNumber;
-  doubleProperty?: number;
-  decimalProperty?: BigNumber;
-  dateProperty?: Moment;
-  timeOfDayProperty?: Time;
-  dataTimeOffsetDataTimeProperty?: Moment;
-  dataTimeOffsetTimestampProperty?: Moment;
-  toMultiLink: TestEntityLinkType[];
-}
-
-export interface TestEntityTypeForceMandatory {
-  keyTestEntity: number;
-  stringProperty: string;
-  guidProperty: string;
-  booleanProperty: boolean;
-  int64Property: BigNumber;
-  doubleProperty: number;
-  decimalProperty: BigNumber;
-  dateProperty: Moment;
-  timeOfDayProperty: Time;
-  dataTimeOffsetDataTimeProperty: Moment;
-  dataTimeOffsetTimestampProperty: Moment;
+  stringProperty?: string | null;
+  guidProperty?: string | null;
+  booleanProperty?: boolean | null;
+  int64Property?: BigNumber | null;
+  doubleProperty?: number | null;
+  decimalProperty?: BigNumber | null;
+  dateProperty?: Moment | null;
+  timeOfDayProperty?: Time | null;
+  dataTimeOffsetDataTimeProperty?: Moment | null;
+  dataTimeOffsetTimestampProperty?: Moment | null;
   toMultiLink: TestEntityLinkType[];
 }
 

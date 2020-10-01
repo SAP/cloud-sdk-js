@@ -18,22 +18,7 @@ export function entityTypeInterface(
     kind: StructureKind.Interface,
     name: `${entity.className}Type`,
     isExported: true,
-    properties: [...properties(entity), ...navPoperties(entity, service)]
-  };
-}
-
-export function entityTypeForceMandatoryInterface(
-  entity: VdmEntity,
-  service: VdmServiceMetadata
-): InterfaceDeclarationStructure {
-  return {
-    kind: StructureKind.Interface,
-    name: `${entity.className}TypeForceMandatory`,
-    isExported: true,
-    properties: [
-      ...propertiesForceMandatory(entity),
-      ...navPoperties(entity, service)
-    ]
+    properties: [...properties(entity), ...navProperties(entity, service)]
   };
 }
 
@@ -41,29 +26,17 @@ function properties(entity: VdmEntity): PropertySignatureStructure[] {
   return entity.properties.map(prop => property(prop));
 }
 
-function propertiesForceMandatory(
-  entity: VdmEntity
-): PropertySignatureStructure[] {
-  return entity.properties.map(prop => propertyForceMandatory(prop));
-}
-
 function property(prop: VdmProperty): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
-    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType
+    type: prop.isCollection
+      ? `${prop.jsType}[]`
+      : prop.jsType + (prop.nullable ? ' | null' : '')
   };
 }
 
-function propertyForceMandatory(prop: VdmProperty): PropertySignatureStructure {
-  return {
-    kind: StructureKind.PropertySignature,
-    name: prop.instancePropertyName,
-    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType
-  };
-}
-
-function navPoperties(
+function navProperties(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): PropertySignatureStructure[] {

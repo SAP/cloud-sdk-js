@@ -193,9 +193,9 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
   private removeNavPropsAndComplexTypes(
     body: Record<string, any>
   ): Record<string, any> {
-    return removePropertyOnCondition(([key, val]) => typeof val === 'object')(
-      body
-    );
+    return removePropertyOnCondition(
+      ([key, val]) => typeof val === 'object' && val !== null
+    )(body);
   }
 
   private removeKeyFields(body: Record<string, any>): Record<string, any> {

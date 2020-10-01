@@ -29,7 +29,7 @@ export declare class TestEntityCircularLinkChild extends EntityV2 implements Tes
      * Returns an entity builder to construct instances `TestEntityCircularLinkChild`.
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
      */
-    static builder(): EntityBuilderType<TestEntityCircularLinkChild, TestEntityCircularLinkChildTypeForceMandatory>;
+    static builder(): EntityBuilderType<TestEntityCircularLinkChild, TestEntityCircularLinkChildType>;
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityCircularLinkChild` entity type.
      * @returns A `TestEntityCircularLinkChild` request builder.
@@ -50,10 +50,6 @@ export declare class TestEntityCircularLinkChild extends EntityV2 implements Tes
     };
 }
 export interface TestEntityCircularLinkChildType {
-    keyProperty: string;
-    toParent: TestEntityCircularLinkChildType[];
-}
-export interface TestEntityCircularLinkChildTypeForceMandatory {
     keyProperty: string;
     toParent: TestEntityCircularLinkChildType[];
 }

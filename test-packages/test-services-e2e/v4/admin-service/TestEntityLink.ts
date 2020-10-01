@@ -42,7 +42,7 @@ export class TestEntityLink extends EntityV4 implements TestEntityLinkType {
    * Returns an entity builder to construct instances `TestEntityLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLink`.
    */
-  static builder(): EntityBuilderType<TestEntityLink, TestEntityLinkTypeForceMandatory> {
+  static builder(): EntityBuilderType<TestEntityLink, TestEntityLinkType> {
     return EntityV4.entityBuilder(TestEntityLink);
   }
 
@@ -75,13 +75,7 @@ export class TestEntityLink extends EntityV4 implements TestEntityLinkType {
 export interface TestEntityLinkType {
   keyTestEntityLink: number;
   keyToTestEntity: number;
-  stringProperty?: string;
-}
-
-export interface TestEntityLinkTypeForceMandatory {
-  keyTestEntityLink: number;
-  keyToTestEntity: number;
-  stringProperty: string;
+  stringProperty?: string | null;
 }
 
 export namespace TestEntityLink {

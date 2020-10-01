@@ -6,7 +6,7 @@ import { tsToEdmV4 } from './payload-value-converter';
 
 /**
  * Entity serializer instance for v4 entities.
- * See [[EntitySerializerType]] for the provided methods.
+ * See [[EntitySerializer]] for the provided methods.
  */
 export const entitySerializerV4: EntitySerializer = entitySerializer(tsToEdmV4);
 

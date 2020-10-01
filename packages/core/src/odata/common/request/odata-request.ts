@@ -182,27 +182,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Create object containing all basic headers for the given request, including custom headers, but excluding destination related and csrf headers.
-   *
-   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
-   */
-  basicHeaders(): Record<string, any> {
-    const defaultHeaders = replaceDuplicateKeys(
-      filterNullishValues({
-        accept: 'application/json',
-        'content-type': this.config.contentType,
-        ...this.getETagHeader()
-      }),
-      this.config.customHeaders
-    );
-
-    return {
-      ...defaultHeaders,
-      ...this.config.customHeaders
-    };
-  }
-
-  /**
    * Get all custom headers.
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */

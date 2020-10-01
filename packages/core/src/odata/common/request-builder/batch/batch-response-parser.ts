@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { last, createLogger } from '@sap-cloud-sdk/util';
+import { last, createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { getHeaderValue } from '../../../../header-builder';
 import { HttpResponse } from '../../../../http-client';
 import {
@@ -66,14 +66,20 @@ function parseHeaders(response: string): Record<string, any> {
 }
 
 /**
- * Get the boundary from the content type header value.
+ * Get the boundary from the content type header value. Throws an error if no boundary can be found.
  * @param contentType Value of the content type header
- * @returns The boundary or undefined if none is given.
+ * @returns The boundary.
  */
-function getBoundary(contentType: string | undefined): string | undefined {
-  if (contentType?.match(/.*boundary=.+/)) {
-    return last(contentType.split('boundary='));
+function getBoundary(contentType: string | undefined): string {
+  const boundary = contentType?.match(/.*boundary=.+/)
+    ? last(contentType.split('boundary='))
+    : undefined;
+
+  if (!boundary) {
+    throw new Error('No boundary found.');
   }
+
+  return boundary;
 }
 
 /**
@@ -87,17 +93,14 @@ export function splitBatchResponse(response: HttpResponse): string[] {
     return [];
   }
 
-  const boundary = getBoundary(
-    getHeaderValue('content-type', response.headers)
-  );
-
-  if (!boundary) {
-    throw new Error(
-      'Could not parse batch response. Expected multipart response with boundary.'
+  try {
+    const boundary = getBoundary(
+      getHeaderValue('content-type', response.headers)
     );
+    return splitResponse(body, boundary);
+  } catch (err) {
+    throw errorWithCause('Could not parse batch response.', err);
   }
-
-  return splitResponse(body, boundary);
 }
 
 /**
@@ -107,13 +110,13 @@ export function splitBatchResponse(response: HttpResponse): string[] {
  */
 export function splitChangeSetResponse(changeSetResponse: string): string[] {
   const headers = parseHeaders(changeSetResponse);
-  const boundary = getBoundary(getHeaderValue('content-type', headers));
 
-  if (!boundary) {
-    throw Error('Cannot parse change set. No boundary found.');
+  try {
+    const boundary = getBoundary(getHeaderValue('content-type', headers));
+    return splitResponse(changeSetResponse, boundary);
+  } catch (err) {
+    throw errorWithCause('Could not parse change set response.', err);
   }
-
-  return splitResponse(changeSetResponse, boundary);
 }
 
 /**

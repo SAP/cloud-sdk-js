@@ -134,17 +134,13 @@ describe('batch response parser', () => {
       });
       expect(() =>
         splitBatchResponse(response)
-      ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not parse batch response. Expected multipart response with boundary"'
-      );
+      ).toThrowErrorMatchingInlineSnapshot('"Could not parse batch response."');
     });
 
     it('throws an error when there are not enough boundaries', () => {
       expect(() =>
         splitBatchResponse(createBatchResponse(retrieveResponse))
-      ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not parse batch response. Expected multipart response with boundary"'
-      );
+      ).toThrowErrorMatchingInlineSnapshot('"Could not parse batch response."');
     });
   });
 
@@ -185,7 +181,7 @@ describe('batch response parser', () => {
       expect(() =>
         splitChangeSetResponse(changeSet)
       ).toThrowErrorMatchingInlineSnapshot(
-        '"Cannot parse change set. No boundary found."'
+        '"Could not parse change set response."'
       );
     });
 

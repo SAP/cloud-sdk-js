@@ -33,7 +33,13 @@ export function serializeChangeSet(
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  */
 export function serializeRequest(request: MethodRequestBuilderBase) {
-  const requestHeaders = Object.entries(request.basicHeaders()).map(
+  const odataRequest = request.build();
+  const headers = {
+    ...odataRequest.defaultHeaders(),
+    ...odataRequest.eTagHeaders(),
+    ...odataRequest.customHeaders()
+  };
+  const requestHeaders = Object.entries(headers).map(
     ([key, value]) => `${voca.titleCase(key)}: ${value}`
   );
   return [

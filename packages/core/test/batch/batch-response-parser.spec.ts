@@ -11,7 +11,7 @@ import {
   getConstructor,
   parseResponse
 } from '../../src/odata/common/request-builder/batch/batch-response-parser';
-import * as responseDataAccessor from '../../src/odata/v2/request-builder/response-data-accessor';
+import { responseDataAccessorV2 } from '../../src/odata/v2/request-builder/response-data-accessor';
 
 describe('batch response parser', () => {
   describe('detectNewLineSymbol', () => {
@@ -245,7 +245,7 @@ describe('batch response parser', () => {
         getConstructor(
           { d: { __metadata: { uri: 'entity' } } },
           entityToConstructorMap,
-          responseDataAccessor
+          responseDataAccessorV2
         )
       ).toEqual(entityToConstructorMap.entity);
     });
@@ -255,7 +255,7 @@ describe('batch response parser', () => {
         getConstructor(
           { d: { results: [{ __metadata: { uri: 'entity' } }] } },
           entityToConstructorMap,
-          responseDataAccessor
+          responseDataAccessorV2
         )
       ).toEqual(entityToConstructorMap.entity);
     });
@@ -267,7 +267,7 @@ describe('batch response parser', () => {
         getConstructor(
           { d: { results: [] } },
           entityToConstructorMap,
-          responseDataAccessor
+          responseDataAccessorV2
         )
       ).toBeUndefined();
       expect(logger.warn).toHaveBeenCalledWith(
@@ -301,7 +301,12 @@ describe('batch response parser', () => {
       ].join('\n');
 
       expect(
-        parseResponse(response, {}, responseDataAccessor, entityDeserializerV2)
+        parseResponse(
+          response,
+          {},
+          responseDataAccessorV2,
+          entityDeserializerV2
+        )
       ).toEqual({
         httpCode: 200,
         body,
@@ -320,7 +325,12 @@ describe('batch response parser', () => {
       ].join('\n');
 
       expect(
-        parseResponse(response, {}, responseDataAccessor, entityDeserializerV2)
+        parseResponse(
+          response,
+          {},
+          responseDataAccessorV2,
+          entityDeserializerV2
+        )
       ).toEqual({
         httpCode: 204,
         body: {},
@@ -338,7 +348,12 @@ describe('batch response parser', () => {
       ].join('\n');
 
       expect(
-        parseResponse(response, {}, responseDataAccessor, entityDeserializerV2)
+        parseResponse(
+          response,
+          {},
+          responseDataAccessorV2,
+          entityDeserializerV2
+        )
       ).toEqual({
         httpCode: 201,
         body,

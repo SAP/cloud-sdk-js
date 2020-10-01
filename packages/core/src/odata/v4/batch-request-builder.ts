@@ -9,7 +9,7 @@ import {
 import { BatchResponse } from '../common';
 import { parseBatchResponse } from '../common/request-builder/batch/batch-response-parser';
 import { BatchRequestBuilder } from '../common/request-builder/batch/batch-request-builder';
-import * as responseDataAccessor from './request-builder/response-data-accessor';
+import { responseDataAccessorV4 } from './request-builder/response-data-accessor';
 import { entityDeserializerV4 } from './entity-deserializer';
 
 /**
@@ -34,7 +34,7 @@ export class ODataBatchRequestBuilderV4 extends BatchRequestBuilder {
         parseBatchResponse(
           response,
           this.entityToConstructorMap,
-          responseDataAccessor,
+          responseDataAccessorV4,
           entityDeserializerV4
         )
       )

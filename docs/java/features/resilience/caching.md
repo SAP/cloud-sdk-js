@@ -14,7 +14,7 @@ keywords:
 - CacheConfiguration
 image:
 ---
-The SAP Cloud SDK for Java provides abstractions for easily enabling caching in your application.Using caching would improve your application's responsiveness to your consumers.
+The SAP Cloud SDK for Java provides abstraction for caching that make it easy to integrate caching into an application with almost no configuration overhead.Using caching would improve your application's responsiveness to your consumers.
 The following article describes how to use Cloud SDK to enable caching in your application.
 
 ## Using the Resilience API for Caching
@@ -65,6 +65,8 @@ To invalidate the cache you can use:
 // invalidate
 ResilienceDecorator.invalidateCache(ResilienceConfiguration.of(resilienceId));
 ```
+This currently invalidates all available configured caches irrespective of the tenant and principal context(If it is a multi-tenant application).
+
 ## Using the JCache API for Caching
 
 You can also choose to directly use [`JCache`](https://www.baeldung.com/jcache). 

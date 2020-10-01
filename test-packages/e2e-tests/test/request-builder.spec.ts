@@ -110,18 +110,22 @@ describe('Request builder test', () => {
   });
 
   it('should update an entity', async () => {
-    const created = await createEntity(entityKey);
+    await createEntity(entityKey);
+
+    const queriedBeforeUpdate = await queryEntity(entityKey);
+    expect(queriedBeforeUpdate.stringProperty).not.toBe(null);
+
     const newDate = moment.utc('2020-01-01', 'YYYY-MM-DD');
     const newEntity = TestEntity.builder()
-      .keyTestEntity(created.keyTestEntity)
+      .keyTestEntity(entityKey)
       .stringProperty(null)
       .dateProperty(newDate)
       .build();
     await TestEntity.requestBuilder().update(newEntity).execute(destination);
 
-    const queried = await queryEntity(entityKey);
-    expect(queried.stringProperty).toBe(null);
-    expect(queried.dateProperty!.toISOString()).toBe(
+    const queriedAfterUpdate = await queryEntity(entityKey);
+    expect(queriedAfterUpdate.stringProperty).toBe(null);
+    expect(queriedAfterUpdate.dateProperty!.toISOString()).toBe(
       moment(newDate).toISOString()
     );
   });

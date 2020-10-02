@@ -76,7 +76,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-unused-imports": "^0.1.2",
     "glob": "^7.1.6",
-    "jest": "^25.2.4",
+    "jest": "^26.4.2",
     "jest-junit": "^11.1.0",
     "lerna": "^3.22.1",
     "license-checker": "^25.0.1",

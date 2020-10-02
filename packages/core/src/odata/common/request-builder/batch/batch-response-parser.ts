@@ -294,33 +294,72 @@ export function parseResponse(
 
   // retrieve response
   if (responseData.httpCode === 200) {
-    return {
-      ...responseData,
-      type: getConstructor(
-        responseData.body,
-        entityToConstructorMap,
-        responseDataAccessor
-      ),
-      as: asReadResponse(responseData.body, responseDataAccessor, deserializer),
-      isSuccess: () => true
-    };
+    return parseRetrieveResponse(
+      responseData,
+      entityToConstructorMap,
+      responseDataAccessor,
+      deserializer
+    );
   }
 
   // change set sub response
   if (responseData.httpCode === 201 || responseData.httpCode === 204) {
-    return {
-      ...responseData,
-      type: getConstructor(
-        responseData.body,
-        entityToConstructorMap,
-        responseDataAccessor
-      ),
-      as: asWriteResponse(responseData.body, responseDataAccessor, deserializer)
-    };
+    return parseChangeSetSubResponse(
+      responseData,
+      entityToConstructorMap,
+      responseDataAccessor,
+      deserializer
+    );
   }
 
   // error response
+  return parseErrorResponse(responseData);
+}
+
+function parseResponseData(response): ResponseData {
+  return {
+    body: parseResponseBody(response),
+    httpCode: parseHttpCode(response)
+  };
+}
+
+function parseRetrieveResponse(
+  responseData: ResponseData,
+  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  responseDataAccessor: ResponseDataAccessor,
+  deserializer: EntityDeserializer
+): ReadResponse {
+  return {
+    ...responseData,
+    type: getConstructor(
+      responseData.body,
+      entityToConstructorMap,
+      responseDataAccessor
+    )!,
+    as: asReadResponse(responseData.body, responseDataAccessor, deserializer),
+    isSuccess: () => true
+  };
+}
+
+function parseErrorResponse(responseData: ResponseData): ErrorResponse {
   return { ...responseData, isSuccess: () => false };
+}
+
+function parseChangeSetSubResponse(
+  responseData: ResponseData,
+  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  responseDataAccessor: ResponseDataAccessor,
+  deserializer: EntityDeserializer
+): WriteResponse {
+  return {
+    ...responseData,
+    type: getConstructor(
+      responseData.body,
+      entityToConstructorMap,
+      responseDataAccessor
+    ),
+    as: asWriteResponse(responseData.body, responseDataAccessor, deserializer)
+  };
 }
 
 /**
@@ -340,30 +379,26 @@ export function parseBatchResponse(
   return splitBatchResponse(batchResponse).map(response => {
     const contentType = getHeaderValue('content-type', parseHeaders(response));
 
-    // is change set response
-    if (isMultipartContentType(contentType)) {
-      return {
-        responses: splitChangeSetResponse(response).map(
-          subResponse =>
-            parseResponse(
-              subResponse,
-              entityToConstructorMap,
-              responseDataAccessor,
-              deserializer
-            ) as WriteResponse
-        ),
-        isSuccess: () => true
-      };
-    }
-
-    // is read or error response
-    if (isHttpContentType(contentType)) {
-      return parseResponse(
+    if (isChangeSetContentType(contentType)) {
+      return parseChangeSet(
         response,
         entityToConstructorMap,
         responseDataAccessor,
         deserializer
-      ) as ReadResponse | ErrorResponse;
+      );
+    }
+
+    if (isRetrieveOrErrorContentType(contentType)) {
+      const responseData = parseResponseData(response);
+
+      return isHttpSuccessCode(responseData.httpCode)
+        ? parseRetrieveResponse(
+            responseData,
+            entityToConstructorMap,
+            responseDataAccessor,
+            deserializer
+          )
+        : parseErrorResponse(responseData);
     }
 
     throw Error(
@@ -372,10 +407,38 @@ export function parseBatchResponse(
   });
 }
 
-function isMultipartContentType(contentType: string): boolean {
+function parseChangeSet(
+  response: string,
+  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  responseDataAccessor: ResponseDataAccessor,
+  deserializer: EntityDeserializer
+): WriteResponses {
+  return {
+    responses: splitChangeSetResponse(response).map(subResponse =>
+      parseChangeSetSubResponse(
+        parseResponseData(subResponse),
+        entityToConstructorMap,
+        responseDataAccessor,
+        deserializer
+      )
+    ),
+    isSuccess: () => true
+  };
+}
+
+function isChangeSetContentType(contentType: string): boolean {
   return contentType?.trim().startsWith('multipart/mixed');
 }
 
-function isHttpContentType(contentType: string): boolean {
+function isRetrieveOrErrorContentType(contentType: string): boolean {
   return contentType?.trim().startsWith('application/http');
+}
+
+function isHttpSuccessCode(httpCode): boolean {
+  return httpCode >= 200 && httpCode < 300;
+}
+
+interface ResponseData {
+  body: Record<string, any>;
+  httpCode: number;
 }

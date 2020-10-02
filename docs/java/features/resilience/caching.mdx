@@ -82,6 +82,9 @@ ResilienceDecorator.executeSupplier(() -> operation(), resilienceConfig);
 The above code will invoke `operation()` only once since the result of the first invocation will be cached.
 Only if the first call fails the second one would still happen.
 
+Note that a specific cache instance is not yet created when configuration is created.
+Instead it is only created when an operation is decorated or executed by the  `ResilienceDecorator`.
+
 :::tip
 The cache functionality is tenant aware by default.
 That means that by default cache entries created under a specific tenant will not be shared with other tenants.
@@ -166,24 +169,20 @@ See the section on isolation levels under [Resilience](https://sap.github.io/clo
 
 ## Manipulating the State of Caches
 
-:::note
-A specific cache instance is not yet created when configuration is created.
-Instead it is only created when an operation is decorated or executed by the  `ResilienceDecorator`.
-:::
-
-To invalidate the cache you can use:
+You may manually clear caches by:
 ```java
 // invalidate
 ResilienceDecorator.invalidateCache(resilienceConfig);
 ```
-This currently clears all cache entries associated with the configuration irrespective of the current tenant and principal.
+This currently clears all cache entries associated with the resilience configuration irrespective of the current tenant and principal.
 
 To get hold of the created cache instance and to use it for advanced operations like for e.g registering [event listeners](https://www.baeldung.com/jcache#listeners) you can use JCache API:
 
 ```java
 final Cache<SomeCacheKey, SomeResult> cache = Caching.getCachingProvider()
                                                      .getCacheManager()
-                                                     .getCache(resilienceId) //Returns the cache created using the resilienceId passed
+                                                     .getCache(resilienceConfig.identifier()) //Returns the cache created using the resilienceId passed
                                                      .registerCacheEntryListener(SimpleCacheEntryListener); //Registers the event listener
 ```
 where `SimpleCacheEntryListener` is a class that implements the interfaces of the required events w.r.t cache defined in [EventType](https://javadoc.io/doc/javax.cache/cache-api/latest/javax/cache/event/EventType.html)
+Note that the identifier of the resilience configuration is also the identifier of the cache associated with it.

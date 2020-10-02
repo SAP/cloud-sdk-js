@@ -100,7 +100,6 @@ module.exports = {
           'java/guides/cf-cli',
           'java/guides/cf-deploy',
           'java/guides/cloud-foundry-xsuaa-service',
-          'java/guides/logging-overview',
           'java/guides/manage-dependencies',
           'java/guides/logging-overview',
           'java/guides/tutorial-overview-sdk-java',

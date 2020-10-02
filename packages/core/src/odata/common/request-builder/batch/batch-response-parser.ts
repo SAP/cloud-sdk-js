@@ -2,15 +2,7 @@
 import { last, createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { getHeaderValue } from '../../../../header-builder';
 import { HttpResponse } from '../../../../http-client';
-import {
-  ErrorResponse,
-  ReadResponse,
-  WriteResponse,
-  WriteResponses
-} from '../../batch-response';
-import { Constructable, EntityBase } from '../../entity';
-import { EntityDeserializer } from '../../entity-deserializer';
-import { ResponseDataAccessor } from '../../response-data-accessor';
+
 const logger = createLogger({
   package: 'core',
   messageContext: 'batch-response-parser'
@@ -138,57 +130,6 @@ export function splitResponse(response: string, boundary: string): string[] {
 }
 
 /**
- * Parse the entity name from the metadata uri. This should be the `__metadata` property of a single entity in the response.
- * @param uri The URI to parse the entity name from
- * @returns The entity name.
- */
-export function parseEntityNameFromMetadataUri(
-  uri: string | undefined
-): string {
-  if (!uri) {
-    throw new Error(
-      `Could not retrieve entity name from metadata. URI was: '${uri}'.`
-    );
-  }
-  const [pathBeforeQuery] = uri.split('?');
-  const [pathBeforeKeys] = pathBeforeQuery.split('(');
-  const uriParts = pathBeforeKeys.split('/');
-
-  // Remove another part in case of a trailing slash
-  const entityName = uriParts.pop() || uriParts.pop();
-  if (!entityName) {
-    throw Error(
-      `Could not retrieve entity name from metadata. Unknown URI format. URI was: '${uri}'.`
-    );
-  }
-  return entityName;
-}
-
-/**
- * Retrieve the constructor for a specific single response body.
- * @param responseBody The body of a single response as an object.
- * @param entityToConstructorMap Mapping between entity names and their respective constructors.
- * @param responseDataAccessor Response data access module.
- * @returns The constructor if found in the mapping, undefined otherwise.
- */
-export function getConstructor(
-  responseBody: Record<string, any>,
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor: ResponseDataAccessor
-): Constructable<EntityBase> | undefined {
-  const entityJson = responseDataAccessor.isCollectionResult(responseBody)
-    ? responseDataAccessor.getCollectionResult(responseBody)[0]
-    : responseDataAccessor.getSingleResult(responseBody);
-
-  const entityUri = entityJson?.__metadata?.uri;
-  if (entityUri) {
-    return entityToConstructorMap[parseEntityNameFromMetadataUri(entityUri)];
-  }
-
-  logger.warn('Could not parse constructor from response body.');
-}
-
-/**
  * Parse the HTTP code of response.
  * @param response String representation of the response.
  * @returns The HTTP code.
@@ -201,57 +142,6 @@ export function parseHttpCode(response: string): number {
   }
 
   throw new Error('Cannot parse http code of the response.');
-}
-
-/**
- * Create a function to transform the parsed response body to a list of entities of the given type or an error.
- * @param body The parsed JSON reponse body.
- * @param responseDataAccessor Response data access module.
- * @param deserializer Entity deserializer.
- * @returns A function to be used for transformation of the read response.
- */
-function asReadResponse(
-  body: any,
-  responseDataAccessor: ResponseDataAccessor,
-  deserializer: EntityDeserializer
-) {
-  return <EntityT extends EntityBase>(
-    constructor: Constructable<EntityT>
-  ): Error | EntityT[] => {
-    if (body.error) {
-      return new Error(body.error);
-    }
-    if (responseDataAccessor.isCollectionResult(body)) {
-      return responseDataAccessor
-        .getCollectionResult(body)
-        .map(r => deserializer.deserializeEntity(r, constructor));
-    }
-    return [
-      deserializer.deserializeEntity(
-        responseDataAccessor.getSingleResult(body),
-        constructor
-      )
-    ];
-  };
-}
-
-/**
- * Create a function to transform the parsed response body to an entity of the given type.
- * @param body The parsed JSON reponse body.
- * @param responseDataAccessor Response data access module.
- * @param deserializer Entity deserializer.
- * @returns A function to be used for transformation of the write response.
- */
-function asWriteResponse(
-  body: any,
-  responseDataAccessor: ResponseDataAccessor,
-  deserializer: EntityDeserializer
-) {
-  return <EntityT extends EntityBase>(constructor: Constructable<EntityT>) =>
-    deserializer.deserializeEntity(
-      responseDataAccessor.getSingleResult(body),
-      constructor
-    );
 }
 
 /**
@@ -273,49 +163,6 @@ function parseResponseBody(response: string): Record<string, any> {
   return {};
 }
 
-/**
- * Parse a single response to the according response object type.
- * @param response The string representation of a single response.
- * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
- * @param responseDataAccessor Response data access module.
- * @param deserializer Entity deserializer.
- * @returns The parsed response in the according response object representation.
- */
-export function parseResponse(
-  response: string,
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor: ResponseDataAccessor,
-  deserializer: EntityDeserializer
-): WriteResponse | ReadResponse | ErrorResponse {
-  const responseData = {
-    body: parseResponseBody(response),
-    httpCode: parseHttpCode(response)
-  };
-
-  // retrieve response
-  if (responseData.httpCode === 200) {
-    return parseRetrieveResponse(
-      responseData,
-      entityToConstructorMap,
-      responseDataAccessor,
-      deserializer
-    );
-  }
-
-  // change set sub response
-  if (responseData.httpCode === 201 || responseData.httpCode === 204) {
-    return parseChangeSetSubResponse(
-      responseData,
-      entityToConstructorMap,
-      responseDataAccessor,
-      deserializer
-    );
-  }
-
-  // error response
-  return parseErrorResponse(responseData);
-}
-
 function parseResponseData(response): ResponseData {
   return {
     body: parseResponseBody(response),
@@ -323,107 +170,31 @@ function parseResponseData(response): ResponseData {
   };
 }
 
-function parseRetrieveResponse(
-  responseData: ResponseData,
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor: ResponseDataAccessor,
-  deserializer: EntityDeserializer
-): ReadResponse {
-  return {
-    ...responseData,
-    type: getConstructor(
-      responseData.body,
-      entityToConstructorMap,
-      responseDataAccessor
-    )!,
-    as: asReadResponse(responseData.body, responseDataAccessor, deserializer),
-    isSuccess: () => true
-  };
-}
-
-function parseErrorResponse(responseData: ResponseData): ErrorResponse {
-  return { ...responseData, isSuccess: () => false };
-}
-
-function parseChangeSetSubResponse(
-  responseData: ResponseData,
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor: ResponseDataAccessor,
-  deserializer: EntityDeserializer
-): WriteResponse {
-  return {
-    ...responseData,
-    type: getConstructor(
-      responseData.body,
-      entityToConstructorMap,
-      responseDataAccessor
-    ),
-    as: asWriteResponse(responseData.body, responseDataAccessor, deserializer)
-  };
-}
-
 /**
  * Parse the complete batch HTTP response.
- * @param batchResponse HTTP response.
- * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
- * @param responseDataAccessor Response data access module.
- * @param deserializer Entity deserializer.
+ * @param batchResponse HTTP response of a batch request.
  * @returns An array of parsed sub responses of the batch response.
  */
 export function parseBatchResponse(
-  batchResponse: HttpResponse,
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor: ResponseDataAccessor,
-  deserializer: EntityDeserializer
-): (ErrorResponse | ReadResponse | WriteResponses)[] {
+  batchResponse: HttpResponse
+): (ResponseData | ResponseData[])[] {
   return splitBatchResponse(batchResponse).map(response => {
     const contentType = getHeaderValue('content-type', parseHeaders(response));
 
     if (isChangeSetContentType(contentType)) {
-      return parseChangeSet(
-        response,
-        entityToConstructorMap,
-        responseDataAccessor,
-        deserializer
+      return splitChangeSetResponse(response).map(subResponse =>
+        parseResponseData(subResponse)
       );
     }
 
     if (isRetrieveOrErrorContentType(contentType)) {
-      const responseData = parseResponseData(response);
-
-      return isHttpSuccessCode(responseData.httpCode)
-        ? parseRetrieveResponse(
-            responseData,
-            entityToConstructorMap,
-            responseDataAccessor,
-            deserializer
-          )
-        : parseErrorResponse(responseData);
+      return parseResponseData(response);
     }
 
     throw Error(
       `Cannot parse batch response. Unknown subresponse 'Content-Type' header '${contentType}'.`
     );
   });
-}
-
-function parseChangeSet(
-  response: string,
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
-  responseDataAccessor: ResponseDataAccessor,
-  deserializer: EntityDeserializer
-): WriteResponses {
-  return {
-    responses: splitChangeSetResponse(response).map(subResponse =>
-      parseChangeSetSubResponse(
-        parseResponseData(subResponse),
-        entityToConstructorMap,
-        responseDataAccessor,
-        deserializer
-      )
-    ),
-    isSuccess: () => true
-  };
 }
 
 function isChangeSetContentType(contentType: string): boolean {
@@ -434,11 +205,11 @@ function isRetrieveOrErrorContentType(contentType: string): boolean {
   return contentType?.trim().startsWith('application/http');
 }
 
-function isHttpSuccessCode(httpCode): boolean {
+export function isHttpSuccessCode(httpCode): boolean {
   return httpCode >= 200 && httpCode < 300;
 }
 
-interface ResponseData {
+export interface ResponseData {
   body: Record<string, any>;
   httpCode: number;
 }

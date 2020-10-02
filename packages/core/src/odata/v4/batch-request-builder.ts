@@ -9,6 +9,7 @@ import {
 import { BatchResponse } from '../common';
 import { parseBatchResponse } from '../common/request-builder/batch/batch-response-parser';
 import { BatchRequestBuilder } from '../common/request-builder/batch/batch-request-builder';
+import { transformBatchResponse } from '../common/request-builder/batch/batch-response-transformer';
 import { responseDataAccessorV4 } from './request-builder/response-data-accessor';
 import { entityDeserializerV4 } from './entity-deserializer';
 
@@ -30,9 +31,10 @@ export class ODataBatchRequestBuilderV4 extends BatchRequestBuilder {
   ): Promise<BatchResponse[]> {
     return this.build(destination, options)
       .then(request => request.execute())
-      .then(response =>
-        parseBatchResponse(
-          response,
+      .then(response => parseBatchResponse(response))
+      .then(parsedResponse =>
+        transformBatchResponse(
+          parsedResponse,
           this.entityToConstructorMap,
           responseDataAccessorV4,
           entityDeserializerV4

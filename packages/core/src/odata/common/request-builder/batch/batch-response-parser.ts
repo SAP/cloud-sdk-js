@@ -163,7 +163,12 @@ function parseResponseBody(response: string): Record<string, any> {
   return {};
 }
 
-function parseResponseData(response): ResponseData {
+/**
+ * Parse the body and http code of a batch sub response.
+ * @param response A batch sub response.
+ * @returns The parsed response.s
+ */
+export function parseResponseData(response: string): ResponseData {
   return {
     body: parseResponseBody(response),
     httpCode: parseHttpCode(response)

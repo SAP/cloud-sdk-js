@@ -1,17 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { createLogger } from '@sap-cloud-sdk/util';
-import { entityDeserializerV2 } from '../../src';
+
 import {
   detectNewLineSymbol,
   getResponseBody,
   splitBatchResponse,
   splitChangeSetResponse,
-  parseEntityNameFromMetadataUri,
   parseHttpCode,
-  getConstructor,
-  parseResponse
+  parseResponseData
 } from '../../src/odata/common/request-builder/batch/batch-response-parser';
-import { responseDataAccessorV2 } from '../../src/odata/v2/request-builder/response-data-accessor';
 
 describe('batch response parser', () => {
   describe('detectNewLineSymbol', () => {
@@ -184,38 +180,6 @@ describe('batch response parser', () => {
         '"Could not parse change set response."'
       );
     });
-
-    describe('getEntityNameFromMetadata', () => {
-      it('correctly parses name from meta data', () => {
-        expect(
-          parseEntityNameFromMetadataUri(
-            "base/service/entity('key1','key2')?query"
-          )
-        ).toBe('entity');
-      });
-
-      it('correctly parses name from meta data if there is a trailing slash', () => {
-        expect(
-          parseEntityNameFromMetadataUri('base/service/entity/?query')
-        ).toBe('entity');
-      });
-
-      it('throws error if uri is undefined in meta data', () => {
-        expect(() =>
-          parseEntityNameFromMetadataUri(undefined)
-        ).toThrowErrorMatchingInlineSnapshot(
-          '"Could not retrieve entity name from metadata. URI was: \'undefined\'."'
-        );
-      });
-
-      it('throws error if uri has unknown format', () => {
-        expect(() =>
-          parseEntityNameFromMetadataUri('/')
-        ).toThrowErrorMatchingInlineSnapshot(
-          '"Could not retrieve entity name from metadata. Unknown URI format. URI was: \'/\'."'
-        );
-      });
-    });
   });
 
   describe('toHttpCode', () => {
@@ -236,47 +200,7 @@ describe('batch response parser', () => {
     });
   });
 
-  describe('getConstructor', () => {
-    const entityToConstructorMap = {
-      entity: 'entity' as any
-    };
-    it('returns constructor for single result', () => {
-      expect(
-        getConstructor(
-          { d: { __metadata: { uri: 'entity' } } },
-          entityToConstructorMap,
-          responseDataAccessorV2
-        )
-      ).toEqual(entityToConstructorMap.entity);
-    });
-
-    it('returns constructor for collection result', () => {
-      expect(
-        getConstructor(
-          { d: { results: [{ __metadata: { uri: 'entity' } }] } },
-          entityToConstructorMap,
-          responseDataAccessorV2
-        )
-      ).toEqual(entityToConstructorMap.entity);
-    });
-
-    it('returns undefined for empty collection result and logs a warning', () => {
-      const logger = createLogger('batch-response-parser');
-      spyOn(logger, 'warn');
-      expect(
-        getConstructor(
-          { d: { results: [] } },
-          entityToConstructorMap,
-          responseDataAccessorV2
-        )
-      ).toBeUndefined();
-      expect(logger.warn).toHaveBeenCalledWith(
-        'Could not parse constructor from response body.'
-      );
-    });
-  });
-
-  describe('parseResponse', () => {
+  describe('parseResponseData', () => {
     const firstHeader = [
       'Content-Type: application/http',
       'Content-Length: X',
@@ -300,19 +224,9 @@ describe('batch response parser', () => {
         JSON.stringify(body)
       ].join('\n');
 
-      expect(
-        parseResponse(
-          response,
-          {},
-          responseDataAccessorV2,
-          entityDeserializerV2
-        )
-      ).toEqual({
+      expect(parseResponseData(response)).toEqual({
         httpCode: 200,
-        body,
-        type: undefined,
-        isSuccess: expect.anything(),
-        as: expect.anything()
+        body
       });
     });
 
@@ -324,14 +238,7 @@ describe('batch response parser', () => {
         ''
       ].join('\n');
 
-      expect(
-        parseResponse(
-          response,
-          {},
-          responseDataAccessorV2,
-          entityDeserializerV2
-        )
-      ).toEqual({
+      expect(parseResponseData(response)).toEqual({
         httpCode: 204,
         body: {},
         type: undefined,
@@ -347,14 +254,7 @@ describe('batch response parser', () => {
         JSON.stringify(body)
       ].join('\n');
 
-      expect(
-        parseResponse(
-          response,
-          {},
-          responseDataAccessorV2,
-          entityDeserializerV2
-        )
-      ).toEqual({
+      expect(parseResponseData(response)).toEqual({
         httpCode: 201,
         body,
         type: undefined,

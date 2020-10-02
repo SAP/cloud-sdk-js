@@ -18,7 +18,7 @@ const logger = createLogger({
 /**
  * Transforms a parsed batch response using OData version specific deserialization data access.
  */
-class BatchResponseTransformer {
+export class BatchResponseTransformer {
   /**
    * Creates an instance of BatchResponseTransformer.
    * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
@@ -197,7 +197,9 @@ function asWriteResponse(
  * @param uri The URI to parse the entity name from
  * @returns The entity name.
  */
-function parseEntityNameFromMetadataUri(uri: string | undefined): string {
+export function parseEntityNameFromMetadataUri(
+  uri: string | undefined
+): string {
   if (!uri) {
     throw new Error(
       `Could not retrieve entity name from metadata. URI was: '${uri}'.`

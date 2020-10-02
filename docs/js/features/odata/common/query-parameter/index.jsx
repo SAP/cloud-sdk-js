@@ -13,10 +13,6 @@ export function Skip(){
   return <SkipContent/>
 }
 
-export function Select(){
-  return <SelectContent/>
-}
-
 export function Filter(){
   return <FilterContent/>
 }

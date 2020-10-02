@@ -79,11 +79,7 @@ ResilienceDecorator.executeSupplier(() -> operation(), resilienceConfig);
 ResilienceDecorator.executeSupplier(() -> operation(), resilienceConfig);
 ```
 
-<<<<<<< Updated upstream
-The above code will invoke `operation()` only once sicne the result of the first invocation will be cached.
-=======
-The above code will invoke `doStuff()` only once since the result of the first invocation will be cached.
->>>>>>> Stashed changes
+The above code will invoke `operation()` only once since the result of the first invocation will be cached.
 Only if the first call fails the second one would still happen.
 
 :::tip
@@ -182,12 +178,12 @@ ResilienceDecorator.invalidateCache(ResilienceConfiguration.of(resilienceId));
 ```
 This currently invalidates all available configured caches irrespective of the tenant and principal context(If it is a multi-tenant application).
 
-To get hold of the created cache instance and to use it for advanced operations like for e.g registering event listeners(https://www.baeldung.com/jcache#listeners) you can use JCache API:
+To get hold of the created cache instance and to use it for advanced operations like for e.g registering [event listeners](https://www.baeldung.com/jcache#listeners) you can use JCache API:
 
 ```java
 final Cache<SomeCacheKey, SomeResult> cache = Caching.getCachingProvider()
                                                      .getCacheManager()
                                                      .getCache(resilienceId) //Returns the cache created using the resilienceId passed
-                                                     .registerCacheEntryListener(SimpleCacheEntryListener); //Registers the event listeners
+                                                     .registerCacheEntryListener(SimpleCacheEntryListener); //Registers the event listener
 ```
 where `SimpleCacheEntryListener` is a class that implements the interfaces of the required events w.r.t cache defined in [EventType](https://javadoc.io/doc/javax.cache/cache-api/latest/javax/cache/event/EventType.html)

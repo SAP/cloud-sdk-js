@@ -176,7 +176,7 @@ To invalidate the cache you can use:
 // invalidate
 ResilienceDecorator.invalidateCache(ResilienceConfiguration.of(resilienceId));
 ```
-This currently invalidates all available configured caches irrespective of the tenant and principal context(If it is a multi-tenant application).
+This currently clears all cache entries associated with the configuration irrespective of the current tenant and principal.
 
 To get hold of the created cache instance and to use it for advanced operations like for e.g registering [event listeners](https://www.baeldung.com/jcache#listeners) you can use JCache API:
 

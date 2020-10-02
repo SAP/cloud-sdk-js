@@ -1585,10 +1585,10 @@
     "@sap/cds-foss" "^1.1.0"
     "@sap/odata-server" "^1.6.1"
 
-"@sap/cds@3.34.2":
-  version "3.34.2"
-  resolved "https://npm.sap.com/@sap/cds/-/cds-3.34.2.tgz#ec433196cbb8a6cc34e91708df82903156f30038"
-  integrity sha512-/w4juCQbHSdzJMYK7r3EzI9ML7FIqZR2d1SBLPSVMJAnPPmDJtXraDSYGtD71N/67ML1PMvlPtujctx40X5i7w==
+"@sap/cds@3.34.3":
+  version "3.34.3"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-3.34.3.tgz#3ae75f676db5b89d86d15c809e667dd95f9111ee"
+  integrity sha512-rg4k0dDTIziruciQv4I+qnsJrmoonN1wxMJRf7FOM7a9bDY761GW5bbdQIrfGexBAV3umZskM2fdpKv/oPexWw==
   dependencies:
     "@sap/cds-compiler" "1.26.x"
     "@sap/cds-foss" "^1.2.0"

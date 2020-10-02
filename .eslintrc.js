@@ -202,9 +202,11 @@ module.exports = {
     'no-restricted-imports': ['error', '../', './'],
     'no-return-await': 'error',
     'no-sequences': 'error',
-    'no-shadow': [
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': [
       'error',
       {
+        ignoreFunctionTypeParameterNameValueShadow: true,
         hoist: 'all'
       }
     ],

@@ -33,10 +33,10 @@ export class Link<
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT extends EntityBase, LinkedEntityT extends EntityBase>(
-    link: Link<EntityT, LinkedEntityT>
-  ): Link<EntityT, LinkedEntityT> {
-    const clonedLink = new Link<EntityT, LinkedEntityT>(
+  static clone<EntityT1 extends EntityBase, LinkedEntityT2 extends EntityBase>(
+    link: Link<EntityT1, LinkedEntityT2>
+  ): Link<EntityT1, LinkedEntityT2> {
+    const clonedLink = new Link<EntityT1, LinkedEntityT2>(
       link._fieldName,
       link._entityConstructor,
       link._linkedEntity

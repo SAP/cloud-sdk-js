@@ -240,8 +240,7 @@ describe('batch response parser', () => {
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 204,
-        body: {},
-        type: undefined,
+        body: {}
         as: expect.anything()
       });
     });
@@ -256,9 +255,7 @@ describe('batch response parser', () => {
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 201,
-        body,
-        type: undefined,
-        as: expect.anything()
+        body
       });
     });
   });

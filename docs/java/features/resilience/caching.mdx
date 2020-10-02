@@ -16,7 +16,7 @@ keywords:
 image:
 ---
 
-Caching may improve your applications performance and responsiveness to your consumers.
+Caching may improve your application`s performance and responsiveness to your consumers.
 The SAP Cloud SDK for Java provides abstractions for caching that make it easy to integrate caching into an application with almost no configuration overhead.
 Also it integrates with other SDK features and most importantly is tenant aware out of the box.
 The following article describes how to enable caching with the Cloud SDK for Java in your application.
@@ -83,11 +83,11 @@ The above code will invoke `operation()` only once since the result of the first
 Only if the first call fails the second one would still happen.
 
 Note that a specific cache instance is not yet created when configuration is created.
-Instead it is only created when an operation is decorated or executed by the  `ResilienceDecorator`.
+Instead it is only created when an operation is decorated or executed by the `ResilienceDecorator`.
 
 :::tip
 The cache functionality is tenant aware by default.
-That means that by default cache entries created under a specific tenant will not be shared with other tenants.
+That means that by default, cache entries created under a specific tenant will not be shared with other tenants.
 See the section on [multi tenancy](#multi-tenancy) below.
 :::
 
@@ -165,7 +165,7 @@ TenantAccessor.executeWithTenant(tenantB, () -> cachedOperation());
 
 This isolation is configured via the isolation mode of the resilience configuration.
 So you can disable tenant aware caching by setting the isolation mode to `NO_ISOLATION`.
-See the section on isolation levels under [Resilience](https://sap.github.io/cloud-sdk/docs/java/features/resilience/resilience#multi-tenancy)
+See the section on isolation levels under [Resilience](https://sap.github.io/cloud-sdk/docs/java/features/resilience/resilience#multi-tenancy) for more details.
 
 ## Manipulating the State of Caches
 

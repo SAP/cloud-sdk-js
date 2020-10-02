@@ -241,7 +241,6 @@ describe('batch response parser', () => {
       expect(parseResponseData(response)).toEqual({
         httpCode: 204,
         body: {}
-        as: expect.anything()
       });
     });
 

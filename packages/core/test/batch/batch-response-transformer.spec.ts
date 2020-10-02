@@ -66,7 +66,7 @@ describe('batch response transformer', () => {
     });
 
     it('returns undefined for empty collection result and logs a warning', () => {
-      const logger = createLogger('batch-response-parser');
+      const logger = createLogger('batch-response-transformer');
       spyOn(logger, 'warn');
       expect(
         batchTransformer['getConstructor']({ d: { results: [] } })

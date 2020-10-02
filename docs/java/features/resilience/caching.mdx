@@ -79,7 +79,11 @@ ResilienceDecorator.executeSupplier(() -> operation(), resilienceConfig);
 ResilienceDecorator.executeSupplier(() -> operation(), resilienceConfig);
 ```
 
+<<<<<<< Updated upstream
 The above code will invoke `operation()` only once sicne the result of the first invocation will be cached.
+=======
+The above code will invoke `doStuff()` only once since the result of the first invocation will be cached.
+>>>>>>> Stashed changes
 Only if the first call fails the second one would still happen.
 
 :::tip
@@ -101,7 +105,7 @@ How this timeout is applied can be configured through the [Expiration Strategy](
 By default a cache entry is cleared once the configured duration has passed since the entry was created.
 
 Finally, parameters can be listed that further refine the caching functionality.
-Parameters values will be attached to cache entries.
+Parameters values will be attached to cache key.
 When the cache is accessed only entries with matching parameter values will be returned.
 
 ```java
@@ -134,7 +138,7 @@ resilienceConfig.cacheConfiguration(cacheConfig);
 ResilienceDecorator.executeSupplier(() -> operation(), resilienceConfig);
 ```
 
-So you can use parameters to seperate cache entries as you see fit.
+So you can use parameters to separate cache entries as you see fit.
 Please note that there is no need to do this to achieve multi tenancy.
 The SDK is tenant aware by default as described below.
 
@@ -149,12 +153,12 @@ For this example assume that `config` is a `ResilienceConfiguration` that has a 
 ```java
 cachedOperation = ResilienceDecorator.decorateSupplier(() -> operation(), config)
 
-// cachedOperation() will be evaludated
+// cachedOperation() will be evaluated
 TenantAccessor.executeWithTenant(tenantA, () -> cachedOperation());
 // cached value will be taken
 TenantAccessor.executeWithTenant(tenantA, () -> cachedOperation());
 
-// cachedOperation() will be evaludated because the cached value is only accessible for tenantA
+// cachedOperation() will be evaluated because the cached value is only accessible for tenantA
 TenantAccessor.executeWithTenant(tenantB, () -> cachedOperation());
 // cached value for tenantB will be taken
 TenantAccessor.executeWithTenant(tenantB, () -> cachedOperation());
@@ -171,7 +175,6 @@ A specific cache instance is not yet created when configuration is created.
 Instead it is only created when an operation is decorated or executed by the  `ResilienceDecorator`.
 :::
 
-
 To invalidate the cache you can use:
 ```java
 // invalidate
@@ -179,21 +182,12 @@ ResilienceDecorator.invalidateCache(ResilienceConfiguration.of(resilienceId));
 ```
 This currently invalidates all available configured caches irrespective of the tenant and principal context(If it is a multi-tenant application).
 
-## Using the JCache API for Caching
-
-You can also choose to directly use [`JCache`](https://www.baeldung.com/jcache). 
-For e.g, Consider the following code snippet which illustrates how to create a cache (similar to the one created above using SDK's resilience API) using the JCache API:
+To get hold of the created cache instance and to use it for advanced operations like for e.g registering event listeners(https://www.baeldung.com/jcache#listeners) you can use JCache API:
 
 ```java
-CachingProvider cachingProvider = Caching.getCachingProvider();
-CacheManager cacheManager = cachingProvider.getCacheManager();
-MutableConfiguration<SomeCacheKey, SomeResult> config = new MutableConfiguration<>()
-                .setExpiryPolicyFactory(ModifiedExpiryPolicy.factoryOf(duration));
-Cache<SomeCacheKey, SomeResult> cache = cacheManager.createCache(resilienceId, config);
-SomeCacheKey cacheKey = combineCacheKey(param1, param2);
-SomeResult result = cache.get(cacheKey);
-if( result==null) {
-    result = runHeavyOperation(param1, param2);
-    cache.put(cacheKey, result);
-}
+final Cache<SomeCacheKey, SomeResult> cache = Caching.getCachingProvider()
+                                                     .getCacheManager()
+                                                     .getCache(resilienceId) //Returns the cache created using the resilienceId passed
+                                                     .registerCacheEntryListener(SimpleCacheEntryListener); //Registers the event listeners
 ```
+where `SimpleCacheEntryListener` is a class that implements the interfaces of the required events w.r.t cache defined in [EventType](https://javadoc.io/doc/javax.cache/cache-api/latest/javax/cache/event/EventType.html)

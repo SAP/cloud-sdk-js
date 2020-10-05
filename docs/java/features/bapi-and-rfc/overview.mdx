@@ -117,7 +117,7 @@ final BapiRequestResult result = new BapiRequest("BAPI_COSTCENTER_GETLIST1")
 ```
 We use the BAPI `BAPI_COSTCENTER_GETLIST1` to fetch cost center details from SAP S/4HANA. We call it with these parameters:
 - *Importing*: `CONTROLLINGAREA` is supplied with the controlling area the servlet received
-- *Tables*: `COSTCENTERLIST` provides us a list of cost centers that belong to the controlling area along with some cost center master data
+- *Tables*: `COSTCENTERLIST` provides us a list of cost centers that belong to the controlling area along with some cost center data
 - *Tables*: `RETURN` is the BAPI return table which contains the result messages after BAPI processing 
 
 Here is how you code that with the SAP Cloud SDK.

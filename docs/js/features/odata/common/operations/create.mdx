@@ -1,0 +1,9 @@
+The Create request builder allows you to send a `POST` request to create a new entity:
+
+```ts
+const businessPartner = BusinessPartner.builder().build();
+BusinessPartner.requestBuilder().create(businessPartner);
+```
+
+In the example above we created an instance of BusinessPartner and sent it to the BusinessPartner service in a `POST` request.
+

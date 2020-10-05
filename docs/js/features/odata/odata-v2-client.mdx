@@ -13,471 +13,89 @@ keywords:
 - consume
 ---
 
+import {Select} from './v2'
+import {Etag, Csrf} from './common'
+import {Count, Create, DeepCreate, CreateAsChildOf, Delete, Update, GetAll, GetByKey} from './common/operations'
+import {Top, Skip, Filter, FilterOneToOne, FilterFunctions} from './common/query-parameter'
+import {RequestBuilder, EtagFunctionImport} from './common/function-imports'
+import {BatchIntro, RetrieveRequests, MultiChangeSets, CombineChangeSetRetrieve, ChangeSet} from './common/batch'
+
 In the following, the OData v2 features supported by the SAP Cloud SDK are explained using the [Business Partner Service](https://api.sap.com/api/API_BUSINESS_PARTNER/resource) of SAP S/4HANA as an example.
 
 For more details on **how to execute requests** using a (pre-)generated OData client refer to [this documentation](./executing-a-request-using-a-generated-odata-v2-v4-client-with-sap-cloud-sdk-for-javascript).
 
 ## GetAll Request Builder
+<GetAll/>
 
-The GetAll request builder allows you to create a request to retrieve all entities that match the request configuration.
+  ### Select
+  <Select/>
 
-```ts
-BusinessPartner.requestBuilder().getAll();
-```
+  ### Filter
+  <Filter/>
 
-The example above creates a request to get all BusinessPartner entities.
+  #### Filter on One-To-One Navigation Properties
+  <FilterOneToOne/>
 
+  #### More Filter Expressions
+  More advanced filter expressions can be found [here](#available-filter-expressions).
 
-### Select
+  ### Skip
+  <Skip/>
 
-When reading entities, the API offers `select( ... )` on the builders. Through it, the query parameters `$select` and `$expand` are set. It restricts the response to the given selection of properties in the request.
+  ### Top
+  <Top/>
 
-The properties that can be selected or expanded are represented via static fields on the entity class. So there will be a field for each property. E.g. the business partner entity has `BusinessPartner.FIRST_NAME` as a representation of a property and `BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS` as a representation of a navigation property.
-
-A navigation property means that there is a relation between a business partner and their addresses. In this case, one business partner can have multiple addresses. In SAP S/4HANA, navigation properties typically start with `TO_`.
-
-```ts
-BusinessPartner.requestBuilder()
-  .getAll()
-  .select(
-    BusinessPartner.FIRST_NAME,
-    BusinessPartner.LAST_NAME,
-    BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS
-  )
-  .execute(destination);
-```
-
-The above translates to the following query parameters:
-
-```sql
-$select=FirstName,LastName,to_BusinessPartnerAddress/*&$expand=to_BusinessPartnerAddress
-```
-
-One can also select properties of the expanded navigation property:
-
-```ts
-BusinessPartner.requestBuilder()
-  .getAll()
-  .select(
-    BusinessPartner.FIRST_NAME,
-    BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS.select(
-      BusinessPartnerAddress.ADDRESS_ID,
-      BusinessPartnerAddress.CITY_CODE
-    )
-  )
-  .execute(destination);
-```
-
-The above translates to the following query parameters:
-
-```sql
-$select=FirstName,to_BusinessPartnerAddress/AddressID,to_BusinessPartnerAddress/CityCode&$expand=to_BusinessPartnerAddress
-```
-
-### Filter
-
-When operating on a collection of entities the API offers `filter( ... )` on the builders. It directly corresponds to the `$filter` parameter of the request. Filters are also built via the static property fields on entities:
-
-```ts
-/*
-  Get all business partners that either:
-    - Have first name 'Alice' but not last name 'Bob'
-    - Or have first name 'Mallory'
-*/
-BusinessPartner.requestBuilder()
-  .getAll()
-  .filter(
-    or(
-      and(
-        BusinessPartner.FIRST_NAME.equals('Alice'),
-        BusinessPartner.LAST_NAME.notEquals('Bob')
-      ),
-      BusinessPartner.FIRST_NAME.equals('Mallory')
-    )
-  )
-  .execute(destination);
-```
-
-The example above will translate to this filter parameter:
-```sql
-$filter=(((FirstName eq 'Alice') and (LastName ne 'Bob')) or (FirstName eq 'Mallory'))
-```
-
-Take note of the order of `and` and `or`. As `or` is invoked on the result of `and` it will form the outer expression while `and` is an inner expression in the first branch of `or`.
-
-It is also possible to pass multiple filters to the same filter function without concatenating them with `and` or `or`. They will be concatenated with `and` by default. The two following examples are equal:
-
-```ts
-.filter(
-  and(
-    BusinessPartner.FIRST_NAME.equals('Alice'),
-    BusinessPartner.LAST_NAME.notEquals('Bob')
-  )
-)
-```
-
-The example above can be shortened to:
-
-```ts
-.filter(
-  BusinessPartner.FIRST_NAME.equals('Alice'),
-  BusinessPartner.LAST_NAME.notEquals('Bob')
-)
-```
-
-#### Filter on One-To-One Navigation Properties
-
-In addition to basic properties, filters can also be applied on one-to-one navigation properties. The example below shows how to filter on the `TO_CUSTOMER`, which is a one-to-one navigation property of the BusinessPartner entity. Please note, the `CUSTOMER_NAME` and `CUSTOMER_FULL_NAME` are properties of the entity `Customer`, which is the type of the one-to-one navigation property `TO_CUSTOMER`.
-```ts
-/*
-  Get all business partners that match all the following conditions:
-    - Have customer with the customer name 'name'
-    - Have customer with the customer full name 'fullName'
-*/
-.filter(
-  BusinessPartner.TO_CUSTOMER.filter(
-    Customer.CUSTOMER_NAME.equals('name'),
-    Customer.CUSTOMER_FULL_NAME.equals('fullName')
-  )
-)
-```
-The generated `$filter` will be:
-```sql
-$filter=((to_Customer/CustomerName eq 'name' and to_Customer/CustomerFullName eq 'fullName'))
-```
-
-#### More Filter Expressions
-
-More advanced filter expressions can be found [here](#available-filter-expressions).
-
-### Skip
-
-`skip` allows you to skip a number of results in the requested set. It can be useful for paging:
-
-```ts
-BusinessPartner.requestBuilder().
-  .getAll()
-  .skip(10)
-```
-
-The example above retrieves all BusinessPartner entities except for the first 10 results.
-
-### Top
-
-`top` limits the number of returned results. This can also be useful for paging:
-```ts
-BusinessPartner.requestBuilder().
-  .getAll()
-  .top(10)
-```
-
-The example above retrieves the first 10 BusinessPartner entities.
-
-### Count
-
-Not yet available.
+  ### Count
+  <Count/>
 
 ## GetByKey Request Builder
-
-The GetByKey request builder allows you to create a request to retrieve one entity based on its key:
-
-```ts
-BusinessPartner.requestBuilder().getByKey('id');
-```
-
-The example above retrieves the BusinessPartner with the id 'id'.
-
-The result can be restricted by applying the [select](#select) function, same as in the [GetAll](#getall-request-builder) request.
+<GetByKey/>
 
 ## Create Request Builder
+<Create/>
 
-The Create request builder allows you to send a `POST` request to create a new entity:
+  ### Deep Create
+  <DeepCreate/>
 
-```ts
-const businessPartner = BusinessPartner.builder().build();
-BusinessPartner.requestBuilder().create(businessPartner);
-```
-
-In the example above we created an instance of BusinessPartner and sent it to the BusinessPartner service in a `POST` request.
-
-### Deep Create
-
-It is also possible to create an entity together with related entities in a single request:
-
-```ts
-// build a business partner instance with one linked address
-const businessPartner = BusinessPartner.builder()
-  .firstName('John')
-  .lastName('Doe')
-  .businessPartnerCategory('1')
-  .toBusinessPartnerAddress([
-    BusinessPartnerAddress.builder()
-      .country('DE')
-      .postalCode('14469')
-      .cityName('Potsdam')
-      .streetName('Konrad-Zuse-Ring')
-      .houseNumber('10')
-      .build()
-  ])
-  .build();
-
-// execute the create request
-BusinessPartner.requestBuilder()
-  .create(businessPartner)
-  .execute(myDestination);
-```
-
-You can also create an entity `asChildOf` another entity.
-
-### Create as Child of
-
-Assume you have already created a business partner and would like to add a new address to it:
-```ts
-const existingBusinessPartner = await BusinessPartner.requestBuilder().getByKey(myID).execute(myDestination);
-
-const newAddress = BusinessPartnerAddress.builder()
-  .country('DE')
-  .postalCode('14469')
-  .cityName('Potsdam')
-  .streetName('Konrad-Zuse-Ring')
-  .houseNumber('10')
-  .build()
-```
-This can be done by using the `asChildOf` method which allows to create an entity as a child of an existing entity.
-You need to give the parent object and the field connecting the two entities:
-```ts
-BusinessPartnerAddress.requestBuilder()
-  .create(newAddress)
-  .asChildOf(existingBusinessPartner,BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
-  .execute(myDestination)
-```
+  ### Create as Child of
+  <CreateAsChildOf/>
 
 ## Update Request Builder
-
-The Update request builder allows you to send `PUT` or `PATCH` requests. By default `PATCH` is used to only update the changed fields:
-
-```ts
-BusinessPartner.requestBuilder().update(businessPartner);
-```
-
-In the example above only the changed fields of the given `businessPartner` instance are sent to the BusinessPartner service using `PATCH`.
-
-To update the whole entity use `replaceWholeEntityWithPut`:
-
-```ts
-BusinessPartner.requestBuilder()
-  .update(businessPartner)
-  .replaceWholeEntityWithPut();
-```
-
-This will send a `PUT` request and thereby replace the whole entity.
-
-Entities can only be updated if [ETags](#handling-of-etags) match. If you want to force an update of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
-
-```ts
-BusinessPartner.requestBuilder()
-  .update(businessPartner)
-  .ignoreVersionIdentifier();
-```
+<Update/>
 
 ## Delete Request Builder
-
-The Delete request builder allows you to create `DELETE` requests, that delete an entity.
-
-```ts
-/*
-  The following won't work on the real SAP S/4HANA BusinessPartner service because BusinessPartners cannot be deleted.
-  We added this only for the sake of the example.
-*/
-BusinessPartner.requestBuilder().delete(businessPartner);
-```
-
-Entities can only be deleted if [ETags](#handling-of-etags) match. If you want to force deletion of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
-
-```ts
-BusinessPartner.requestBuilder()
-  .delete(businessPartner)
-  .ignoreVersionIdentifier();
-```
-
-You can also overwrite ETags using `setVersionIdentifier`:
-
-```ts
-BusinessPartner.requestBuilder()
-  .delete(businessPartner)
-  .setVersionIdentifier('etag');
-```
-
-In the example above the ETag 'ETag' is being used instead of the original one.
+<Delete/>
 
 ## Handling of ETags
-
-An [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) is a version identifier that is often used to implement an optimistic locking mechanism. The SAP Cloud SDK will try to read version identifiers from responses and set them when sending OData requests.
-
-Consider the following example:
-
-```ts
-async function modifyBusinessPartner(id) {
-  const destination = { url: 'https://my.s4-system.com' };
-
-  const businessPartner = await BusinessPartner.requestBuilder()
-    .getByKey(id)
-    .execute(myDestination);
-
-  // do some modification
-  applyModification(businessPartner);
-
-  return BusinessPartner.requestBuilder()
-    .update(businessPartner)
-    .execute(destination);
-}
-```
-
-When executing `getAll` and `getByKey` requests the SAP Cloud SDK will automatically attempt to extract the version identifier from the response and store it within the returned entity (`partner` in the example above). When executing `update` requests the version identifier will be sent in the `If-match` request header.
-
-:::note
-If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.
-
-By default an ETag is sent if it's present on the entity being modified. `ignoreVersionIdentifier()` will instead always send a `*` which acts as a wildcard to match all ETags.
-:::
+<ETag/>
 
 ## Handling of CSRF tokens
-
-To create, update, and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution, the request will try to fetch a token first before issuing the create request. Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
+<Csrf/>
 
 ## Available Filter Expressions
 
-### Filter Functions
-
-There are predefined filter functions e. g. `length`, `substring`, `substringOf` in the core library, that allow for a wide range of filter expressions:
-
-```ts
-/*
-  Fetch all business partners who have a first name shorter than 5 letters
-*/
-BusinessPartner.requestBuilder()
-  .getAll()
-  .filter(length(BusinessPartner.FIRST_NAME).lessThan(5))
-  .execute(destination);
-```
+  ### Filter Functions
+  <FilterFunctions/>
 
 ## Function imports
-### Request builder
-The [function imports request builder](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.functionimportrequestbuilderv2) helps build a request for a service operation containing parameters in a typesave way.
-This time, as an example, the [`Warehouse Outbound Delivery Order Service`](https://api.sap.com/api/API_WHSE_OUTB_DLV_ORDER/resource) is used, because not all the services contain function imports like the `Business Partner Service`.
-The type safe client for the `Warehouse Outbound Delivery Order Service` can be found in the package `@sap/cloud-sdk-vdm-warehouse-outbound-delivery-order-service`.
 
-The example below creates a function import request builder for the service operation `PostGoodsIssue` and then execute it against your service.
-```ts
-postGoodsIssue({outboundDeliveryOrder: "order"})
-  .execute(destination);
-```
-The service operation is defined in the service metadata.
+  ### Request builder
+  <RequestBuilder/>
 
-### Setting ETag
-The `ETag` handling with the function imports is not integrated.
-Below is an example demonstrating how to make use of the [`withCustomHeaders`](pathname:///api/1.26.1/classes/sap_cloud_sdk_core.functionimportrequestbuilder-1#withcustomheaders) for setting `ETag` by your own.
-In order to use [`versionIdentifier`](pathname:///api/1.28.1/classes/sap_cloud_sdk_core.entityv2#versionidentifier) for `ETag` value, make sure you fetch the entity information via e.g., a `get` request.
-```ts
-postGoodsIssue({outboundDeliveryOrder: "order"})
-  .withCustomHeaders({"if-match": entity.versionIdentifier})
-  .execute(destination)
-```
+  ### Setting ETag
+  <EtagFunctionImport/>
 
 ## Batch Requests
+<BatchIntro/>
 
-OData batch requests combine multiple operations into one POST operation, allowing you to execute multiple requests with just one network call. This can significantly reduce the network overhead you have to deal with when you want to execute a large number of requests.
+  ### Retrieve request
+  <RetrieveRequests/>
 
-An OData batch request can consist of a number of [retrieve requests](#retrieve-request) and [changesets](#changeset).
+  ### Changeset
+  <ChangeSet/>
 
-### Retrieve request
+  ### Combining changesets and retrieve requests
+  <CombineChangeSetRetrieve/>
 
-A retrieve request is any HTTP `GET` request - in terms of the SAP Cloud SDK this includes all requests built by a [GetAllRequestBuilder](#getall-request-builder) and [GetByKeyRequestBuilder](#getbykey-request-builder).
-
-In the example below, a list of addresses is mapped in a [GetByKeyRequestBuilder](#getbykey-request-builder) to form the read requests, which are then passed to the batch function.
-
-The batch request will return a list of `BatchResponse` items, which will be stored in the `retrieveResponses` variable. These `BatchResponse` items need to be parsed and converted to the expected entities.
-
-`ReadResponse` contains an HTTP code, a body, an entity (in this case `BusinessPartnerAddress`), and functions like `as` to convert the response into the entity and `isSuccess`.
-
-The reduce function converts each of the ReadResponses to a BusinessPartnerAddress using the `as` function. The `addresses` variable is the accumulator and the `[]` is the initial value. We end up with a list of BusinessPartnerAddress.
-
-```ts
-async getAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
-:Promise<BusinessPartnerAddress[]> {
-  const retrieveRequests = businessPartnerAddresses.map(
-      address => BusinessPartnerAddress
-        .requestBuilder()
-        .getByKey(address.businessPartner, address.addressId)
-  );
-
-  const retrieveResponses = await batch(...retrieveRequests)
-    .execute(destination);
-
-  return retrieveResponses.reduce(
-    (addresses, response: ReadResponse) =>
-      [...addresses, ...response.as(BusinessPartnerAddress)]
-      , []
-  );
-}
-```
-
-### Changeset
-
-A changeset is a collection of HTTP `POST`, `PUT`, `PATCH` and `DELETE` operations - requests built by any [CreateRequestBuilder](#create-request-builder), [UpdateRequestBuilder](#update-request-builder) and [DeleteRequestBuilder](#delete-request-builder) in terms of the SAP Cloud SDK. The order of execution within a changeset is not defined as opposed to the whole batch request itself. Therefore the requests within a changeset should not depend on each other. If the execution of any of the requests within a changeset fails, the whole changeset will be reflected as an error in the response and will not be applied, much like a database transaction.
-
-In the example below, a list of addresses is mapped in an [UpdateRequestBuilder](#update-request-builder) to form the update requests, which are then wrapped in a changeset and passed to the batch function.
-
-The batch request will return a single `BatchResponse` in a list, which is stored in the `updateChangesetResponse` variable.
-
-`WriteResponses` contains the function `isSuccess` and the property `responses` which is a list of `WriteResponse` which contains an HTTP code, and can contain a body, an entity (in this case `BusinessPartnerAddress`) and the function `as` to convert the response into the entity.
-
-```ts
-updateAddresses(businessPartnerAddresses: BusinessPartnerAddress[])
-:Promise<BusinessPartnerAddress[]> {
-  const updateRequests = businessPartnerAddresses.map(
-    address => BusinessPartnerAddress
-      .requestBuilder()
-      .update(address)
-  );
-
-  const [updateChangesetResponse] = await batch(changeset(...updateRequests))
-    .execute(destination);
-
-  return (updateChangesetResponse as WriteResponses)
-    .responses
-    .map(
-      response => response.as(BusinessPartnerAddress)
-    );
-}
-```
-
-### Combining changesets and retrieve requests
-
-In the example below, the changesets will be executed first, and then retrieve requests will be executed sequentially afterward. The order of execution within the changeset is not defined.
-The first `BatchResponse` will be the response to the changeset. The rest will be the responses for your retrieve requests.
-
-```ts
-const [updateChangesetResponse, ...retrieveResponses] =
-  await batch(
-    changeset(...updateRequests),
-    ...retrieveRequests
-  )
-  .execute(destination);
-```
-
-### Use multiple changesets
-
-A batch request can consist of multiple changeset. As shown in the example below, the `changeset1` will be executed first followed by the `changeset2`.
-In contrast to the operations within a changeset, which have no defined order of execution as state already before.
-```ts
-const changeset1 = changeset(...updateRequests1);
-const changeset2 = changeset(...updateRequests2);
-
-const [changesetResponse1, changesetResponse2] =
-  await batch(
-    changeset1,
-    changeset2,
-  )
-  .execute(destination);
-```
+  ### Use multiple changesets
+  <MultiChangeSets/>

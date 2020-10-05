@@ -1,0 +1,27 @@
+The Delete request builder allows you to create `DELETE` requests, that delete an entity.
+
+```ts
+/*
+  The following won't work on the real SAP S/4HANA BusinessPartner service because BusinessPartners cannot be deleted.
+  We added this only for the sake of the example.
+*/
+BusinessPartner.requestBuilder().delete(businessPartner);
+```
+
+Entities can only be deleted if [ETags](#handling-of-etags) match. If you want to force deletion of the entity regardless of the ETag configure the request to ignore version identifiers with `ignoreVersionIdentifier`:
+
+```ts
+BusinessPartner.requestBuilder()
+  .delete(businessPartner)
+  .ignoreVersionIdentifier();
+```
+
+You can also overwrite ETags using `setVersionIdentifier`:
+
+```ts
+BusinessPartner.requestBuilder()
+  .delete(businessPartner)
+  .setVersionIdentifier('etag');
+```
+
+In the example above the ETag 'ETag' is being used instead of the original one.

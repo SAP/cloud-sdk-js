@@ -1,0 +1,18 @@
+
+In contrast to the OData v2 implementation, you have to `select` and `expand` separately.
+In other words selected properties are not expanded automatically as in v2.
+
+```ts
+People.requestBuilder().getAll()
+    .select(People.LAST_NAME)
+    .expand(People.FRIENDS.select(People.FIRST_NAME,People.ADDRESS_INFO))
+```
+
+In the example above you select the `LAST_NAME` of the root entity and expand the navigation property `FRIENDS`.
+In the expanded entity the selected fields are `FIRST_NAME` and `ADDRESS_INFO`.
+
+The generated URL for this request will be:
+```sql
+/People?$select=LastName&$expand=Friends($select=FirstName,AddressInfo)
+```
+If no select is given, all non-navigational properties are included in the response.

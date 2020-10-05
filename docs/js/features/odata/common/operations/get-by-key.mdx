@@ -1,0 +1,9 @@
+The GetByKey request builder allows you to create a request to retrieve one entity based on its key:
+
+```ts
+BusinessPartner.requestBuilder().getByKey('id');
+```
+
+The example above retrieves the BusinessPartner with the id 'id'.
+
+The result can be restricted by applying the [select](#select) function, same as in the [GetAll](#getall-request-builder) request.

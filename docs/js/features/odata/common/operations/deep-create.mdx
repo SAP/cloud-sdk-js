@@ -1,0 +1,26 @@
+It is also possible to create an entity together with related entities in a single request:
+
+```ts
+// build a business partner instance with one linked address
+const businessPartner = BusinessPartner.builder()
+  .firstName('John')
+  .lastName('Doe')
+  .businessPartnerCategory('1')
+  .toBusinessPartnerAddress([
+    BusinessPartnerAddress.builder()
+      .country('DE')
+      .postalCode('14469')
+      .cityName('Potsdam')
+      .streetName('Konrad-Zuse-Ring')
+      .houseNumber('10')
+      .build()
+  ])
+  .build();
+
+// execute the create request
+BusinessPartner.requestBuilder()
+  .create(businessPartner)
+  .execute(myDestination);
+```
+
+You can also create an entity `asChildOf` another entity.

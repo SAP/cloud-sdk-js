@@ -1,0 +1,20 @@
+When reading entities, the API offers `select( ... )` on the builders.
+Note that for OData v4 a `select` does not automatically expand navigation properties.
+See [here](#expand-and-select) for detail on select and expand.
+For non navigational property the `select` behaves as follows:
+
+```ts
+BusinessPartner.requestBuilder()
+  .getAll()
+  .select(
+    BusinessPartner.FIRST_NAME,
+    BusinessPartner.LAST_NAME
+  )
+  .execute(destination);
+```
+
+The above translates to the following query parameters:
+
+```sql
+$select=FirstName,LastName
+```

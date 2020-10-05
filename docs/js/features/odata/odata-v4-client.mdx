@@ -14,11 +14,11 @@ keywords:
 ---
 
 import {Count, Create, DeepCreate, CreateAsChildOf, Delete, Update, GetAll, GetByKey} from './common/operations'
-import {Top, Skip, Filter, FilterOneToOne, Select} from './common/query-parameter'
+import {Top, Skip, Filter, FilterOneToOne} from './common/query-parameter'
 import {RequestBuilder, EtagFunctionImport} from './common/function-imports'
 import {BatchIntro,RetrieveRequests,MultiChangeSets,CombineChangeSetRetrieve,ChangeSet} from './common/batch'
 import {Csrf,Etag} from './common'
-import {ExpandSelect,FilterOneToMany,FilterParentChild} from './v4'
+import {ExpandSelect, FilterOneToMany, FilterParentChild, SubqueriesInExpand, Select} from './v4'
 
 In the following, the OData v4 features supported by the SAP Cloud SDK are explained.
 
@@ -32,6 +32,9 @@ This is a v2 service, but the listed examples are identical for OData v2 and v4.
 
 ## GetAll Request Builder
 <GetAll/>
+
+  ### Select
+  <Select/>
 
   ### Filter
   <Filter/>
@@ -47,8 +50,11 @@ This is a v2 service, but the listed examples are identical for OData v2 and v4.
 
   ### Expand
 
-  #### Expand and Select
+  #### Expand and Select <a name="expand-and-select"/>
   <ExpandSelect/>
+
+  #### Sub-queries in Expand
+  <SubqueriesInExpand/>
 
   #### Filter parent vs. Filter children <a name="filterParentChildren"/>
   <FilterParentChild/>

@@ -1,5 +1,5 @@
 
-In contrast to the OData v2 implementation, you have `select` and `expand` separately.
+In contrast to the OData v2 implementation, you have to `select` and `expand` separately.
 In other words selected properties are not expanded automatically as in v2.
 
 ```ts
@@ -16,26 +16,3 @@ The generated URL for this request will be:
 /People?$select=LastName&$expand=Friends($select=FirstName,AddressInfo)
 ```
 If no select is given, all non-navigational properties are included in the response.
-
-#### Sub-queries in Expand
-
-Note that you can create very complex queries within the expand scope:
-```ts
-People.requestBuilder().getAll()
-    .expand(People.FRIENDS
-      .select(People.FIRST_NAME,People.ADDRESS_INFO)
-      .filter(People.LAST_NAME.equals("Miller"))
-      .orderBy(asc(People.GENDER))
-      .top(1)
-      .skip(1)
-    )
-```
-
-In this example the filter will reduce the friends to be shown.
-The effect of a filter depends whether it is used in or outside of an expand.
-The different cases are explained in [Filters in Expand.](#filterParentChildren)
-
-The URL for the query will be:
-```sql
-/People?$expand=Friends($select=FirstName,AddressInfo;$filter=(LastName eq 'Miller');$skip=1;$top=1;$orderby=Gender asc)
-```

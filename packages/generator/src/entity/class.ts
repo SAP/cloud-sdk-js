@@ -162,7 +162,7 @@ function builder(
     statements: `return Entity${caps(oDataVersion)}.entityBuilder(${
       entity.className
     });`,
-    returnType: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
+    returnType: `EntityBuilderType<${entity.className}, ${entity.className}Type>`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(

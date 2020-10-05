@@ -37,7 +37,7 @@ export class TestEntityCircularLinkChild extends EntityV4 implements TestEntityC
    * Returns an entity builder to construct instances `TestEntityCircularLinkChild`.
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
-  static builder(): EntityBuilderType<TestEntityCircularLinkChild, TestEntityCircularLinkChildTypeForceMandatory> {
+  static builder(): EntityBuilderType<TestEntityCircularLinkChild, TestEntityCircularLinkChildType> {
     return EntityV4.entityBuilder(TestEntityCircularLinkChild);
   }
 
@@ -70,11 +70,6 @@ export class TestEntityCircularLinkChild extends EntityV4 implements TestEntityC
 import { TestEntityCircularLinkParent, TestEntityCircularLinkParentType } from './TestEntityCircularLinkParent';
 
 export interface TestEntityCircularLinkChildType {
-  keyProperty: string;
-  toParent: TestEntityCircularLinkParentType;
-}
-
-export interface TestEntityCircularLinkChildTypeForceMandatory {
   keyProperty: string;
   toParent: TestEntityCircularLinkParentType;
 }

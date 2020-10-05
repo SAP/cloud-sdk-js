@@ -38,7 +38,7 @@ export declare class Airports extends EntityV4 implements AirportsType {
      * Returns an entity builder to construct instances `Airports`.
      * @returns A builder that constructs instances of entity type `Airports`.
      */
-    static builder(): EntityBuilderType<Airports, AirportsTypeForceMandatory>;
+    static builder(): EntityBuilderType<Airports, AirportsType>;
     /**
      * Returns a request builder to construct requests for operations on the `Airports` entity type.
      * @returns A `Airports` request builder.
@@ -59,12 +59,6 @@ export declare class Airports extends EntityV4 implements AirportsType {
     };
 }
 export interface AirportsType {
-    icaoCode: string;
-    name: string;
-    iataCode: string;
-    location: AirportLocation;
-}
-export interface AirportsTypeForceMandatory {
     icaoCode: string;
     name: string;
     iataCode: string;

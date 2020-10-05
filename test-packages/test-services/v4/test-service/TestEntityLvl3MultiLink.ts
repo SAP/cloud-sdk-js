@@ -44,7 +44,7 @@ export class TestEntityLvl3MultiLink extends EntityV4 implements TestEntityLvl3M
    * Returns an entity builder to construct instances `TestEntityLvl3MultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLvl3MultiLink`.
    */
-  static builder(): EntityBuilderType<TestEntityLvl3MultiLink, TestEntityLvl3MultiLinkTypeForceMandatory> {
+  static builder(): EntityBuilderType<TestEntityLvl3MultiLink, TestEntityLvl3MultiLinkType> {
     return EntityV4.entityBuilder(TestEntityLvl3MultiLink);
   }
 
@@ -75,14 +75,8 @@ export class TestEntityLvl3MultiLink extends EntityV4 implements TestEntityLvl3M
 }
 
 export interface TestEntityLvl3MultiLinkType {
-  stringProperty?: string;
-  guidProperty?: string;
-  keyProperty: string;
-}
-
-export interface TestEntityLvl3MultiLinkTypeForceMandatory {
-  stringProperty: string;
-  guidProperty: string;
+  stringProperty?: string | null;
+  guidProperty?: string | null;
   keyProperty: string;
 }
 

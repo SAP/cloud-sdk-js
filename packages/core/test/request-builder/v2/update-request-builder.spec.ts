@@ -16,11 +16,15 @@ function createTestEntity() {
   const keyPropGuid = uuid();
   const keyPropString = 'stringId';
   const int32Prop = 125;
+  const stringProp = undefined;
+  const booleanProp = null;
 
   return TestEntity.builder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .int32Property(int32Prop)
+    .stringProperty(stringProp)
+    .booleanProperty(booleanProp)
     .build();
 }
 
@@ -127,7 +131,9 @@ describe('UpdateRequestBuilderV2', () => {
     const putRequestBody = {
       KeyPropertyGuid: entity.keyPropertyGuid,
       KeyPropertyString: entity.keyPropertyString,
-      Int32Property: entity.int32Property
+      Int32Property: entity.int32Property,
+      StringProperty: null,
+      BooleanProperty: null
     };
 
     mockUpdateRequest({

@@ -12,7 +12,7 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
  */
 export interface Constructable<
   EntityT extends EntityBase,
-  EntityTypeForceMandatoryT = unknown
+  EntityTypeT = unknown
 > {
   _serviceName: string;
   _entityName: string;
@@ -22,19 +22,16 @@ export interface Constructable<
   _keys: { [keys: string]: Selectable<EntityT> | Field<EntityT> }; // Selectable only here for backwards TODO: Remove in v2.0
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;
-  builder(): EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
+  builder(): EntityBuilderType<EntityT, EntityTypeT>;
   customField(fieldName: string): CustomFieldBase<EntityT>;
 }
 
-export type EntityBuilderType<
-  EntityT extends EntityBase,
-  EntityTypeForceMandatoryT
-> = {
-  [property in keyof EntityTypeForceMandatoryT]: (
-    value: EntityTypeForceMandatoryT[property]
-  ) => EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
+export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
+  [property in keyof Required<EntityTypeT>]: (
+    value: EntityTypeT[property]
+  ) => EntityBuilderType<EntityT, EntityTypeT>;
 } &
-  EntityBuilder<EntityT, EntityTypeForceMandatoryT>;
+  EntityBuilder<EntityT, EntityTypeT>;
 
 /**
  * Super class for all representations of OData entity types.
@@ -44,15 +41,10 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  protected static entityBuilder<
-    EntityT extends EntityBase,
-    EntityTypeForceMandatoryT
-  >(
-    entityConstructor: Constructable<EntityT, EntityTypeForceMandatoryT>
-  ): EntityBuilderType<EntityT, EntityTypeForceMandatoryT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeForceMandatoryT>(
-      entityConstructor
-    );
+  protected static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
+    entityConstructor: Constructable<EntityT, EntityTypeT>
+  ): EntityBuilderType<EntityT, EntityTypeT> {
+    const builder = new EntityBuilder<EntityT, EntityTypeT>(entityConstructor);
     entityConstructor._allFields.forEach(field => {
       const fieldName = `${toPropertyFormat(field._fieldName)}`;
       builder[fieldName] = function (value) {
@@ -60,7 +52,7 @@ export abstract class EntityBase {
         return this;
       };
     });
-    return builder as EntityBuilderType<EntityT, EntityTypeForceMandatoryT>;
+    return builder as EntityBuilderType<EntityT, EntityTypeT>;
   }
 
   /**

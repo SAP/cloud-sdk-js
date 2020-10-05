@@ -198,9 +198,7 @@ function asWriteResponse(
  * @param uri The URI to parse the entity name from
  * @returns The entity name.
  */
-export function parseEntityNameFromMetadataUri(
-  uri: string | undefined
-): string {
+export function parseEntityNameFromMetadataUri(uri: string): string {
   if (!uri) {
     throw new Error(
       `Could not retrieve entity name from metadata. URI was: '${uri}'.`

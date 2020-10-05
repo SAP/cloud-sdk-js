@@ -18,10 +18,11 @@
 ## New Functionality
 
 - [OData] Support the usage of $count in `getAll` requests e.g.: `Entity.requestBuilder().getAll().count().execute()`.
+- [OData] Support batch requests for OData v4.
 
 ## Improvements
 
-- [OData] Add warning for deep update attempts in OData v2. 
+- [OData] Add warning for deep update attempts in OData v2.
 - [Generator] The transpiling after generation is done in chunks to avoid CPU overloads for high numbers of services.
 
 ## Fixed Issues

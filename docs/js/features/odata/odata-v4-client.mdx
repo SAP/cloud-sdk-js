@@ -17,7 +17,7 @@ import {Count, Create, DeepCreate, CreateAsChildOf, Delete, Update, GetAll, GetB
 import {Top, Skip, Filter, FilterOneToOne, Select} from './common/query-parameter'
 import {RequestBuilder, EtagFunctionImport} from './common/function-imports'
 import {BatchIntro,RetrieveRequests,MultiChangeSets,CombineChangeSetRetrieve,ChangeSet} from './common/batch'
-import {Csrf,ETag} from './common'
+import {Csrf,Etag} from './common'
 import {ExpandSelect,FilterOneToMany,FilterParentChild} from './v4'
 
 In the following, the OData v4 features supported by the SAP Cloud SDK are explained.
@@ -79,6 +79,17 @@ This is a v2 service, but the listed examples are identical for OData v2 and v4.
 
 ## Delete Request Builder
 <Delete/>
+
+## Handling of ETags
+<ETag/>
+
+## Handling of CSRF tokens
+<Csrf/>
+
+## Available Filter Expressions
+
+  ### Filter Functions
+  <FilterFunctions/>
 
 ## Function imports
 

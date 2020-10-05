@@ -16,9 +16,9 @@ const logger = createLogger({
 });
 
 /**
- * Transforms a parsed batch response using OData version specific deserialization data access.
+ * Represents the state needed to deserialize a parsed batch response using OData version specific deserialization data access.
  */
-export class BatchResponseTransformer {
+export class BatchResponseDeserializer {
   /**
    * Creates an instance of BatchResponseTransformer.
    * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
@@ -35,24 +35,26 @@ export class BatchResponseTransformer {
   ) {}
 
   /**
-   * Transform the parsed batch response.
+   * Deserialize the parsed batch response.
    * @param parsedBatchResponse Two dimensional list of parsed batch sub responses.
    * @returns An array of parsed sub responses of the batch response.
    */
-  transformBatchResponse(
+  deserializeBatchResponse(
     parsedBatchResponse: (ResponseData[] | ResponseData)[]
   ): (ErrorResponse | ReadResponse | WriteResponses)[] {
     return parsedBatchResponse.map(responseData => {
       if (Array.isArray(responseData)) {
-        return this.transformChangeSet(responseData);
+        return this.deserializeChangeSet(responseData);
       }
       return isHttpSuccessCode(responseData.httpCode)
-        ? this.transformRetrieveResponse(responseData)
-        : this.transformErrorResponse(responseData);
+        ? this.deserializeRetrieveResponse(responseData)
+        : this.deserializeErrorResponse(responseData);
     });
   }
 
-  private transformRetrieveResponse(responseData: ResponseData): ReadResponse {
+  private deserializeRetrieveResponse(
+    responseData: ResponseData
+  ): ReadResponse {
     return {
       ...responseData,
       type: this.getConstructor(responseData.body)!,
@@ -65,11 +67,11 @@ export class BatchResponseTransformer {
     };
   }
 
-  private transformErrorResponse(responseData: ResponseData): ErrorResponse {
+  private deserializeErrorResponse(responseData: ResponseData): ErrorResponse {
     return { ...responseData, isSuccess: () => false };
   }
 
-  private transformChangeSetSubResponse(
+  private deserializeChangeSetSubResponse(
     responseData: ResponseData
   ): WriteResponse {
     return {
@@ -83,10 +85,10 @@ export class BatchResponseTransformer {
     };
   }
 
-  private transformChangeSet(changesetData: ResponseData[]): WriteResponses {
+  private deserializeChangeSet(changesetData: ResponseData[]): WriteResponses {
     return {
       responses: changesetData.map(subResponseData =>
-        this.transformChangeSetSubResponse(subResponseData)
+        this.deserializeChangeSetSubResponse(subResponseData)
       ),
       isSuccess: () => true
     };
@@ -120,25 +122,24 @@ export class BatchResponseTransformer {
 }
 
 /**
- * Transform the parsed batch response.
+ * Deserialize the parsed batch response.
  * @param parsedBatchResponse Two dimensional list of parsed batch sub responses.
  * @param entityToConstructorMap A map that holds the entity type to constructor mapping.
  * @param responseDataAccessor Response data access module.
  * @param deserializer Entity deserializer.
  * @returns An array of parsed sub responses of the batch response.
  */
-export function transformBatchResponse(
+export function deserializeBatchResponse(
   parsedBatchResponse: (ResponseData[] | ResponseData)[],
   entityToConstructorMap: Record<string, Constructable<EntityBase>>,
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ): (ErrorResponse | ReadResponse | WriteResponses)[] {
-  const transformer = new BatchResponseTransformer(
+  return new BatchResponseDeserializer(
     entityToConstructorMap,
     responseDataAccessor,
     deserializer
-  );
-  return transformer.transformBatchResponse(parsedBatchResponse);
+  ).deserializeBatchResponse(parsedBatchResponse);
 }
 
 /**

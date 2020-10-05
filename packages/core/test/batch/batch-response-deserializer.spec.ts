@@ -2,9 +2,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { EntityDeserializer } from '../../src/odata/common/entity-deserializer';
 import {
-  parseEntityNameFromMetadataUri,
-  BatchResponseTransformer
-} from '../../src/odata/common/request-builder/batch/batch-response-transformer';
+  BatchResponseDeserializer,
+  parseEntityNameFromMetadataUri
+} from '../../src/odata/common/request-builder/batch/batch-response-deserializer';
 import { responseDataAccessorV2 } from '../../src/odata/v2/request-builder/response-data-accessor';
 
 describe('batch response transformer', () => {
@@ -43,7 +43,7 @@ describe('batch response transformer', () => {
     const entityToConstructorMap = {
       entity: 'entity' as any
     };
-    const batchTransformer = new BatchResponseTransformer(
+    const batchTransformer = new BatchResponseDeserializer(
       entityToConstructorMap,
       responseDataAccessorV2,
       {} as EntityDeserializer

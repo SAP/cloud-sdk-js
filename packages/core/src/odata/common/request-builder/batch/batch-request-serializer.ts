@@ -66,6 +66,7 @@ function getPayload(request: MethodRequestBuilderBase): string[] {
  * @returns String representation of the batch request.
  */
 export function serializeBatchRequest(request: BatchRequestBuilder): string {
+  const crlf = '\r\n';
   const serializedSubRequests = request.requests
     .map(subRequest =>
       subRequest instanceof MethodRequestBuilderBase
@@ -75,7 +76,7 @@ export function serializeBatchRequest(request: BatchRequestBuilder): string {
     .filter(validRequest => !!validRequest)
     .join(`\n--${request.requestConfig.boundary}\n`);
 
-  return serializedSubRequests
+  const serializedBatchRequest = serializedSubRequests
     ? [
         `--${request.requestConfig.boundary}`,
         serializedSubRequests,
@@ -83,6 +84,9 @@ export function serializeBatchRequest(request: BatchRequestBuilder): string {
         ''
       ].join('\n')
     : serializedSubRequests;
+
+  // The batch standard expects CRLF line endings for batch requests
+  return serializedBatchRequest.replace(/\n/g, '\r\n');
 }
 
 /**

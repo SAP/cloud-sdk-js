@@ -15,12 +15,13 @@ export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;
   customServicePath: string;
 
-  private _customHeaders: Record<string, string> = {};
-  private _customQueryParameters: Record<string, string> = {};
   readonly defaultHeaders: Record<string, any> = {
     'content-type': 'application/json',
     accept: 'application/json'
   };
+
+  private _customHeaders: Record<string, string> = {};
+  private _customQueryParameters: Record<string, string> = {};
 
   /**
    * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
@@ -47,7 +48,10 @@ export abstract class ODataRequestConfig {
     if (typeof defaultHeadersOrContentType === 'string') {
       this.defaultHeaders['content-type'] = defaultHeadersOrContentType;
     } else {
-      this.defaultHeaders = mergeHeaders(this.defaultHeaders, defaultHeadersOrContentType);
+      this.defaultHeaders = mergeHeaders(
+        this.defaultHeaders,
+        defaultHeadersOrContentType
+      );
     }
   }
 

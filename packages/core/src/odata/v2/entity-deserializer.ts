@@ -8,7 +8,7 @@ import { getLinkedCollectionResult } from './request-builder/response-data-acces
 
 /**
  * Entity deserializer instance for v2 entities.
- * See [[EntityDeserializerType]] for the provided methods.
+ * See [[EntityDeserializer]] for the provided methods.
  */
 export const entityDeserializerV2: EntityDeserializer = entityDeserializer(
   edmToTsV2,

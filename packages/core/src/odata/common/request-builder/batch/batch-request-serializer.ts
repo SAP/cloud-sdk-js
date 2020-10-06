@@ -89,7 +89,7 @@ export function serializeBatchRequest(request: BatchRequestBuilder): string {
 }
 
 /**
- * @deprecated Since v1.29.0. This function won't be replaced.
+ * @deprecated Since v1.30.0. This function won't be replaced.
  * Serialize a request to a one line string containing the HTTP method, url and HTTP version.
  * For Example:
  * GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1

@@ -3,12 +3,12 @@ import { ODataRequestConfig } from './odata-request-config';
 
 export class ODataBatchRequestConfig extends ODataRequestConfig {
   /**
-   * @deprecated Since v1.29.0.
+   * @deprecated Since v1.30.0.
    */
   static readonly content_type_prefix = 'multipart/mixed; boundary=batch_';
 
   /**
-   * @deprecated Since v1.29.0. Use [[boundary]] instead.
+   * @deprecated Since v1.30.0. Use [[boundary]] instead.
    */
   get batchId() {
     return this.boundary;

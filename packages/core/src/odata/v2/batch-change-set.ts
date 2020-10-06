@@ -9,7 +9,7 @@ import {
 } from './request-builder';
 
 /**
- * @deprecated Since v1.29.0. Use [[BatchChangeSet]] directly
+ * @deprecated Since v1.30.0. Use [[BatchChangeSet]] directly
  * Representation of a batch change set, which holds a collection of write operations.
  */
 export class ODataBatchChangeSetV2<
@@ -19,7 +19,7 @@ export class ODataBatchChangeSetV2<
     | DeleteRequestBuilderV2<EntityV2>
 > implements BatchChangeSet<RequestT> {
   /**
-   * @deprecated Since v1.29.0. Use [[boundary]] instead.
+   * @deprecated Since v1.30.0. Use [[boundary]] instead.
    */
   get changeSetId() {
     return this.boundary;

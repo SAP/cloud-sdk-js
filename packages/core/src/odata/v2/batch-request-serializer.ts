@@ -15,7 +15,7 @@ import {
 } from './request-builder';
 
 /**
- * @deprecated Since v1.29.0. Use [[serializeRequest]] instead.
+ * @deprecated Since v1.30.0. Use [[serializeRequest]] instead.
  * Build a string as the request body of the retrieve request.
  * Below is an example of the generated body, where the two empty line are mandatory to make the request valid.
  * *** example starts ***
@@ -36,7 +36,7 @@ export function toBatchRetrieveBodyV2(
 }
 
 /**
- * @deprecated Since v1.29.0. Use [[serializeChangeSet]] instead.
+ * @deprecated Since v1.30.0. Use [[serializeChangeSet]] instead.
  * Serialize change set to string.
  * @param changeSet - Change set containing a collection of write operations.
  * @returns The serialized string representation of a change set.

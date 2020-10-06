@@ -3,10 +3,7 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
 import moment from 'moment';
-import {
-  deleteEntity,
-  queryEntity
-} from '../test-utils/test-entity-operations';
+import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 
 const url = 'http://localhost:4004/';
 const destination = { url };

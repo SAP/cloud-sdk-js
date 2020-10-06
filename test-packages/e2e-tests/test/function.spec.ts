@@ -5,7 +5,7 @@ const destination = { url };
 
 describe('Request builder test', () => {
   xit('should', async () => {
-    const url = await returnSapCloudSdk({}).url(destination);
+    const generatedUrl = await returnSapCloudSdk({}).url(destination);
     const response = await returnSapCloudSdk({}).execute(destination);
     expect(response).toBe('SapCloudSdk');
   });

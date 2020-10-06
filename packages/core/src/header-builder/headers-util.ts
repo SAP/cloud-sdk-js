@@ -73,3 +73,19 @@ export function replaceDuplicateKeys(
     )
     .reduce((replaced, header) => ({ ...replaced, ...header }), {});
 }
+
+/**
+ * Create a header object by merging two header objects, where the custom headers take precedence. .
+ * @param headers - A base header object that contains the headers that will be compared with `customHeaders`.
+ * @param customHeaders - A header object to be compared with headers. Only headers present in `headers` will be compared.
+ * @returns - An object containing all keys from both the header objects, where headers present in the `customHeaders` are replaced. Note that the case (upper / lower) used by `customHeaders` will be used.
+ */
+export function mergeHeaders(
+  headers: Record<string, any> = {},
+  customHeaders: Record<string, any> = {}
+): Record<string, any> {
+  return {
+    ...replaceDuplicateKeys(headers, customHeaders),
+    ...customHeaders
+  };
+}

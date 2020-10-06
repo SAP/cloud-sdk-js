@@ -3,7 +3,8 @@ import {
   getHeader,
   getHeaderValue,
   filterNullishValues,
-  replaceDuplicateKeys
+  replaceDuplicateKeys,
+  mergeHeaders
 } from '../../../src';
 
 describe('Header-builder:', () => {
@@ -48,7 +49,7 @@ describe('Header-builder:', () => {
       expect(getHeaderValue('KEY', customHeaders)).toEqual(value);
     });
 
-    it('returns undefinedt for no equal keys', () => {
+    it('returns undefined for different equal keys', () => {
       expect(getHeaderValue('differentKey', customHeaders)).toBeUndefined();
     });
   });
@@ -89,5 +90,17 @@ describe('Header-builder:', () => {
       DifferentCaseDuplicateKey: customValue,
       nonDuplicateKey: value
     });
+  });
+
+  it('mergeHeaders merges headers with custom headers', () => {
+    expect(
+      mergeHeaders(
+        {
+          a: 'a',
+          B: 'B'
+        },
+        { b: 'b', c: 'c' }
+      )
+    ).toEqual({ a: 'a', b: 'b', c: 'c' });
   });
 });

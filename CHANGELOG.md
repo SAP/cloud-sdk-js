@@ -13,6 +13,30 @@
 -
 
 ## Compatibility Notes
+
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.29.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.29.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - [Generator] The interface `EnityTypeForceMandatory` (e.g., `BusinessPartnerTypeForceMandatory`) is removed.
 
 ## New Functionality
@@ -28,7 +52,6 @@
 
 - [OData] Fix parsing the Etag returned from update requests.
 - [OData] Fix the entity builder so that it can set `undefined`/`null` for optional properties.
-
 
 # 1.28.2
 

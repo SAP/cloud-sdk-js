@@ -107,13 +107,13 @@ function getVoidReturnType(): VdmFunctionImportReturnType {
 function getEdmReturnType(
   isCollection: boolean,
   edmType: string,
-  oDataVerion: ODataVersion
+  oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
-    builderFunction: `(val) => edmToTs${caps(oDataVerion)}(val, '${
+    builderFunction: `(val) => edmToTs${caps(oDataVersion)}(val.value, '${
       typeMapping.edmType
     }')`,
     isMulti: isCollection,

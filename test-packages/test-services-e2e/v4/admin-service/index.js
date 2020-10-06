@@ -19,5 +19,6 @@ __exportStar(require("./TestEntity"), exports);
 __exportStar(require("./TestEntityLink"), exports);
 __exportStar(require("./TestEntityRequestBuilder"), exports);
 __exportStar(require("./TestEntityLinkRequestBuilder"), exports);
+__exportStar(require("./function-imports"), exports);
 __exportStar(require("./BatchRequest"), exports);
 //# sourceMappingURL=index.js.map

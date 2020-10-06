@@ -34,6 +34,6 @@ function changeset() {
     return new core_1.ODataBatchChangeSetV4(requests);
 }
 exports.changeset = changeset;
-exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = '/sap/opu/odata/sap/Microsoft.OData.SampleService.Models.TripPin';
+exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 var map = { 'Photos': index_1.Photos, 'People': index_1.People, 'Airlines': index_1.Airlines, 'Airports': index_1.Airports };
 //# sourceMappingURL=BatchRequest.js.map

@@ -24,7 +24,7 @@ export function changeset(...requests: WriteAdminServiceRequestBuilder[]): OData
   return new ODataBatchChangeSetV4(requests);
 }
 
-export const defaultAdminServicePath = '/sap/opu/odata/sap/AdminService';
+export const defaultAdminServicePath = '/admin';
 const map = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink };
 export type ReadAdminServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink>;
 export type WriteAdminServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink>;

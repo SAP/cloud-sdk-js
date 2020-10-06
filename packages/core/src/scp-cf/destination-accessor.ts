@@ -11,7 +11,7 @@ import {
   ProxyStrategy,
   proxyStrategy
 } from '../util/proxy-util';
-import { IsolationStrategy } from './cache';
+import { Cache, IsolationStrategy } from './cache';
 import { addProxyConfigurationOnPrem } from './connectivity-service';
 import { sanitizeDestination } from './destination';
 import { DestinationsByType } from './destination-accessor-types';
@@ -137,6 +137,166 @@ export async function getDestination(
   return destination;
 }
 
+
+class DestinationAccessor{
+  // private decodedProviderJwt:DecodedJWT
+  // private providerToken:string
+
+  // private isolationStrategy: IsolationStrategy
+  // private selectionStrategy:DestinationSelectionStrategy
+pri
+
+  get useCache():boolean {
+    return this.options.useCache||false
+  }
+
+  get selectionStrategy():DestinationSelectionStrategy {
+    return  this.options.selectionStrategy
+      ? this.options.selectionStrategy
+      : subscriberFirst;
+  }
+
+  get isolationStrategy():IsolationStrategy {
+    return this.options.isolationStrategy
+      ? this.options.isolationStrategy
+      : IsolationStrategy.Tenant;
+  }
+
+  //see how often called caching???
+  async getProviderToken():Promise<string> {
+      const { userJwt, ...optionsWithoutJwt } = this.options;
+      return serviceToken('destination', optionsWithoutJwt);
+  }
+
+  static async getDecodedUserJwt(options: DestinationOptions & { iss?: string }):Promise<DecodedJWT|undefined>{
+  return options.userJwt
+    ? await verifyJwt(options.userJwt, options)
+    : options.iss
+      ? { iss: options.iss }
+      : undefined;
+  }
+
+
+  private constructor( private name:string,
+  private options:DestinationOptions,
+                       private decodedUserJwt:DecodedJWT|undefined) {
+
+  }
+
+  async getDestinationFromDestinationService(name:string,options: DestinationOptions & { iss?: string } ):Promise<Destination>{
+    let cached = this.trySubscriberCache()
+    if(cached){
+      return cached
+    }
+    const subscriberDestination = await this.getSubscriberDestination();
+    cached = this.tryProviderCahce(subscriberDestination)
+
+
+
+  }
+
+
+  private async getProviderDestinations():Promise<DestinationsByType>{
+    if(this.selectionStrategy===alwaysSubscriber){
+      return emptyDestinationByType;
+    }
+
+    const providerToken = await this.getProviderToken();
+    const decodedProviderToken = decodeJwt(providerToken);
+    if(this.useCache){
+      const cached = destinationCache.retrieveDestinationFromCache(decodedProviderToken,this.name,this.isolationStrategy)
+      if(cached) {
+        return { subaccount: [cached], instance: [] }
+      }
+    }
+
+      const providerDestinations = await getAllProviderDestinations(providerToken, this.options)
+      if (this.useCache && providerDestinations ) {
+       destinationCache.cacheRetrievedDestinations(
+        decodedProviderToken,
+        providerDestinations,
+        this.isolationStrategy
+      );
+    }
+
+   return providerDestinations
+  }
+
+  private async getSubscriberDestination(){
+    if(!this.decodedUserJwt){
+      return emptyDestinationByType
+    }
+    const providerToken = await this.getProviderToken();
+    const decodedProviderToken = decodeJwt(providerToken);
+
+    const shouldExecuteSubscriberCalls =
+      !isIdenticalTenant(this.decodedUserJwt, decodedProviderToken) &&
+      this.selectionStrategy !== alwaysProvider;
+
+    if(!shouldExecuteSubscriberCalls){
+      return emptyDestinationByType
+    }
+
+    if(this.useCache){
+      const cached = destinationCache.retrieveDestinationFromCache(this.decodedUserJwt,this.name,this.isolationStrategy)
+      if(cached) {
+        return { subaccount: [cached], instance: [] }
+      }
+    }
+
+  const subscriberDestinations =  await getAllSubscriberDestinations(this.decodedUserJwt!, this.options)
+    if (this.useCache && subscriberDestinations ) {
+      destinationCache.cacheRetrievedDestinations(
+        decodedProviderToken,
+        subscriberDestinations,
+        this.isolationStrategy
+      );
+    }
+    return subscriberDestinations;
+  }
+
+  private trySubscriberCache():Destination|undefined{
+    if (
+      this.useCache &&
+      this.decodedUserJwt &&
+      subscriberDestinationIsSelected(this.selectionStrategy)
+    ) {
+      const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(
+        this.decodedUserJwt,
+        this.name,
+        this.isolationStrategy
+      );
+      if (subscriberDestinationCache) {
+        logger.info(
+          'Successfully retrieved destination from destination service cache for subscriber destinations.'
+        );
+        return subscriberDestinationCache;
+      }
+    }
+  }
+
+  private tryProviderCahce(subscriberDestinations:DestinationsByType):Destination|undefined{
+    if (this.useCache) {
+      const providerDestinationCache = destinationCache.retrieveDestinationFromCache(
+        this.decodedProviderJwt,
+        this.name,
+        this.isolationStrategy
+      );    this.selectionStrategy !== alwaysSubscriber
+      if (providerDestinationCache){
+
+        const providerRequested = this.selectionStrategy === alwaysProvider ||
+          (this.decodedUserJwt &&
+            isIdenticalTenant(this.decodedUserJwt, this.decodedProviderJwt))
+        const providerIsFallback =  emptyDestinationsByType(subscriberDestinations) && this.selectionStrategy!==alwaysSubscriber
+        if(providerRequested || providerIsFallback){
+          logger.info(
+            'Successfully retrieved destination from destination service cache for provider destinations.'
+          );
+          return providerDestinationCache;
+        }
+  }}}
+
+}
 /**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
  * Returns null if no destination can be found.
@@ -153,6 +313,57 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
+
+  /**Things to consider:
+
+   destinationCache global const
+
+   iss in options=>leads to JWT
+   decodedUserJwt (default undefined)
+   isolationStrategy (default Tenant)
+   selectionStrategy (default subscriberFirst) related subscriberDestinationIsSelected
+
+   providerToken = await serviceToken('destination', optionsWithoutJwt) related decodedProviderJwt
+   providerDestinationCache fallback value case 3 set in case2
+
+   shouldExecuteSubscriberCalls true if subscriber needs exectution (decodedUserJwt,decodedProviderJwt,selectionStrategy)
+   subscriberDestinations filled if shouldExecuteSubscriberCalls (actual call)
+   providerDestinations filled if selectionStra !== alwaysSubscriber (actual call_)
+
+   destination = apply selection to provider&subscriber
+
+   Flow:
+
+   case1: cache && userJwt && subscriber selection
+   =>return cache value if there
+
+   case2:cache && alwaysProvider || userJwtTenant==providerJwtTennat
+   =>return cache value if there (providerDestinationCache)
+
+   get subscriberDestinationsServiceInfo
+
+   case3:empty(subscriberDestinations) && providerDestinationCache && selectionStrategy provider
+   =>return providerDestinationCache
+
+   get providerDestinations
+   update caches provider + destination
+
+   case4:destination
+   =>return after enrichment
+
+   Enrich destinations:
+   - OAuth2SAMLBearerAssertion
+   - ClientCertificateAuthentication
+   - Proxy Setting
+
+   Good for optimizing after case 1+2"
+   const shouldExecuteSubscriberCalls = longer (decodedUserJwt,decodedProviderJwt,selectionStrategy) else emptyDestinationByType
+   const shouldExecuteProviderCalls = !== alwaysSubscriber else emptyDestinationByType
+
+
+  **/
+
+
   logger.info('Attempting to retrieve destination from destination service.');
   const decodedUserJwt = options.userJwt
     ? await verifyJwt(options.userJwt, options)
@@ -167,46 +378,46 @@ export async function getDestinationFromDestinationService(
     : subscriberFirst;
   let providerDestinationCache;
 
-  if (
-    options.useCache &&
-    options.userJwt &&
-    subscriberDestinationIsSelected(selectionStrategy)
-  ) {
-    const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(
-      decodedUserJwt!,
-      name,
-      isolation
-    );
-    if (subscriberDestinationCache) {
-      logger.info(
-        'Successfully retrieved destination from destination service cache for subscriber destinations.'
-      );
-      return subscriberDestinationCache;
-    }
-  }
+  // if (
+  //   options.useCache &&
+  //   options.userJwt &&
+  //   subscriberDestinationIsSelected(selectionStrategy)
+  // ) {
+  //   const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(
+  //     decodedUserJwt!,
+  //     name,
+  //     isolation
+  //   );
+  //   if (subscriberDestinationCache) {
+  //     logger.info(
+  //       'Successfully retrieved destination from destination service cache for subscriber destinations.'
+  //     );
+  //     return subscriberDestinationCache;
+  //   }
+  // }
 
   const { userJwt, ...optionsWithoutJwt } = options;
   const providerToken = await serviceToken('destination', optionsWithoutJwt);
   const decodedProviderJwt = await decodeJwt(providerToken);
 
-  if (options.useCache) {
-    providerDestinationCache = destinationCache.retrieveDestinationFromCache(
-      decodedProviderJwt,
-      name,
-      isolation
-    );
-    if (
-      providerDestinationCache &&
-      (selectionStrategy === alwaysProvider ||
-        (decodedUserJwt &&
-          isIdenticalTenant(decodedUserJwt!, decodedProviderJwt)))
-    ) {
-      logger.info(
-        'Successfully retrieved destination from destination service cache for provider destinations.'
-      );
-      return providerDestinationCache;
-    }
-  }
+  // if (options.useCache) {
+  //   providerDestinationCache = destinationCache.retrieveDestinationFromCache(
+  //     decodedProviderJwt,
+  //     name,
+  //     isolation
+  //   );
+  //   if (
+  //     providerDestinationCache &&
+  //     (selectionStrategy === alwaysProvider ||
+  //       (decodedUserJwt &&
+  //         isIdenticalTenant(decodedUserJwt!, decodedProviderJwt)))
+  //   ) {
+  //     logger.info(
+  //       'Successfully retrieved destination from destination service cache for provider destinations.'
+  //     );
+  //     return providerDestinationCache;
+  //   }
+  // }
 
   const shouldExecuteSubscriberCalls =
     decodedUserJwt &&
@@ -217,16 +428,16 @@ export async function getDestinationFromDestinationService(
     ? await getAllSubscriberDestinations(decodedUserJwt!, options)
     : emptyDestinationByType;
 
-  if (
-    emptyDestinationsByType(subscriberDestinations) &&
-    providerDestinationCache &&
-    selectionStrategy !== alwaysSubscriber
-  ) {
-    logger.info(
-      'Successfully retrieved destination from destination service cache for provider destinations.'
-    );
-    return providerDestinationCache;
-  }
+  // if (
+  //   emptyDestinationsByType(subscriberDestinations) &&
+  //   providerDestinationCache &&
+  //   selectionStrategy !== alwaysSubscriber
+  // ) {
+  //   logger.info(
+  //     'Successfully retrieved destination from destination service cache for provider destinations.'
+  //   );
+  //   return providerDestinationCache;
+  // }
 
   const providerDestinations =
     selectionStrategy !== alwaysSubscriber

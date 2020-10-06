@@ -101,7 +101,7 @@ On the read request the SDK will automatically try to extract the version identi
 If a service requires this header to be sent: Fetching the entity from the service first is essential to ensure that the ETag is present and up to date.
 :::
 
-#### Handling of CSRF tokens ####
+### Handling of CSRF tokens ###
 
 For create, update and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token). Upon execution the request will try to fetch a token first before issuing the actual create request. Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.
 
@@ -199,9 +199,9 @@ service.getAllBusinessPartner()
 ```
 
 <!--
-### Batch Requests 
+### Batch Requests
 Batch requests allow wrapping multiple OData requests into one single batch call. Thereby we reduce the number of roundtrips to the remote server.
- Refer to the [official OData V4 spec](http://docs.oasis-open.org/odata/odata/v4.0/os/part1-protocol/odata-v4.0-os-part1-protocol.html#_Toc372793748) 
+ Refer to the [official OData V4 spec](http://docs.oasis-open.org/odata/odata/v4.0/os/part1-protocol/odata-v4.0-os-part1-protocol.html#_Toc372793748)
 for further reference about batch requests, their semantics and the request + response format.
 
 :::warning
@@ -228,7 +228,7 @@ final BatchResponse result =
 ```
 
 #### Access Batch Response
-Use the method `get` to access the individual change set responses by index. 
+Use the method `get` to access the individual change set responses by index.
 ```java
 final Try<BatchResponseChangeSet> changeSetTry = result.get(0);
 ```

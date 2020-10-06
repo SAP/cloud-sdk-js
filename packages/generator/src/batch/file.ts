@@ -13,7 +13,7 @@ export function batchSourceFile(
       ...importBatchDeclarations(service),
       batchFunction(service),
       changesetFunction(service),
-      `export const default${service.className}Path = '/sap/opu/odata/sap/${service.namespace}';`,
+      `export const default${service.className}Path = '${service.servicePath}';`,
       `const map = ${mappingInitializer(service)};`,
       readRequestType(service),
       writeReqeustType(service)

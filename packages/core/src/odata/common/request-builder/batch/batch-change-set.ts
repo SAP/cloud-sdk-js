@@ -18,14 +18,3 @@ export class BatchChangeSet<RequestT extends MethodRequestBuilderBase = any> {
     readonly boundary: string = `changeset_${uuid()}`
   ) {}
 }
-
-/**
- * Create a change set containing the given write requests.
- * @param requests Write requests to combine into one changeset.
- * @returns A change containing the given write requests.
- */
-export function changeset<RequestT extends MethodRequestBuilderBase>(
-  ...requests: RequestT[]
-): BatchChangeSet<RequestT> {
-  return new BatchChangeSet(requests);
-}

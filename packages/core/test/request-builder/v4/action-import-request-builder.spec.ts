@@ -56,7 +56,7 @@ describe('action import request builder', () => {
     expect(result).toEqual(response);
   });
 
-  it('should call an action and parse the reponse', async () => {
+  it('should call an action and parse the response', async () => {
     mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
 
     const tsBody = { stringParam: 'LaLa', nonNullableStringParam: 'LuLu' };

@@ -13,11 +13,11 @@ import {
  * Representation of a batch change set, which holds a collection of write operations.
  */
 export class ODataBatchChangeSetV2<
-  T extends
+  RequestT extends
     | CreateRequestBuilderV2<EntityV2>
     | UpdateRequestBuilderV2<EntityV2>
     | DeleteRequestBuilderV2<EntityV2>
-> implements BatchChangeSet<T> {
+> implements BatchChangeSet<RequestT> {
   /**
    * @deprecated Since v1.29.0. Use [[boundary]] instead.
    */
@@ -31,7 +31,7 @@ export class ODataBatchChangeSetV2<
    * @param boundary Boundary used in the multipart request.
    */
   constructor(
-    readonly requests: T[],
+    readonly requests: RequestT[],
     readonly boundary: string = `changeset_${uuid()}`
   ) {}
 }

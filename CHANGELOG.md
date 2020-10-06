@@ -28,6 +28,7 @@
 
 - [OData] Fix parsing the Etag returned from update requests.
 - [OData] Fix the entity builder so that it can set `undefined`/`null` for optional properties.
+- [Generator] Fix the action import in OData V4, where the return type of the action is an edm type like `Edm.String`.
 
 
 # 1.28.2

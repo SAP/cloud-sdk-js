@@ -4,7 +4,8 @@ module.exports = {
     Overview: [
       'overview/about',
       'overview/getting-started',
-      'overview/benefits'
+      'overview/benefits',
+      'overview/who-uses-sap-cloud-sdk'
       // 'overview/key-features'
       // 'overview/what-is-new'
     ],
@@ -184,6 +185,6 @@ module.exports = {
       'related-projects/sap-xsuaa-security-library-for-javascript-and-java'
       //   'related-projects/sap-cloud-for-realestate',
       //   'related-projects/sap-s4-hana',
-    ]
+    ],
   }
 }

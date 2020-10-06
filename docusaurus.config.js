@@ -60,11 +60,11 @@ module.exports = {
             },
             {
               label: 'GitHub JavaScript',
-              href: 'https://github.com/SAP/cloud-sdk/issues'
+              href: 'https://github.com/SAP/cloud-sdk/issues/new/choose'
             },
             {
               label: ' GitHub Java',
-              href: 'https://github.wdf.sap.corp/MA/sdk'
+              href: 'https://github.wdf.sap.corp/MA/sdk/issues/new/choose'
             }
           ]
         },

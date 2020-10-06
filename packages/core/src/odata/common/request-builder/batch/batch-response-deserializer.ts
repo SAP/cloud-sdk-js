@@ -97,8 +97,6 @@ export class BatchResponseDeserializer {
   /**
    * Retrieve the constructor for a specific single response body.
    * @param responseBody The body of a single response as an object.
-   * @param entityToConstructorMap Mapping between entity names and their respective constructors.
-   * @param responseDataAccessor Response data access module.
    * @returns The constructor if found in the mapping, undefined otherwise.
    */
   private getConstructor(

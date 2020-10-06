@@ -8,6 +8,9 @@
                     <NavigationPropertyBinding Path="ToMultiLink" Target="TestEntityLink"/>
                 </EntitySet>
                 <EntitySet Name="TestEntityLink" EntityType="AdminService.TestEntityLink"/>
+                <ActionImport Name="createTestEntity" Action="AdminService.createTestEntity" EntitySet="TestEntity"/>
+                <ActionImport Name="createTestEntityReturnId" Action="AdminService.createTestEntityReturnId"/>
+                <FunctionImport Name="returnSapCloudSdk" Function="AdminService.returnSapCloudSdk"/>
             </EntityContainer>
             <EntityType Name="TestEntity">
                 <Key>
@@ -24,7 +27,9 @@
                 <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay"/>
                 <Property Name="DataTimeOffsetDataTimeProperty" Type="Edm.DateTimeOffset"/>
                 <Property Name="DataTimeOffsetTimestampProperty" Type="Edm.DateTimeOffset" Precision="7"/>
-                <NavigationProperty Name="ToMultiLink" Type="Collection(AdminService.TestEntityLink)"/>
+                <NavigationProperty Name="ToMultiLink" Type="Collection(AdminService.TestEntityLink)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
             </EntityType>
             <EntityType Name="TestEntityLink">
                 <Key>
@@ -33,8 +38,19 @@
                 </Key>
                 <Property Name="KeyTestEntityLink" Type="Edm.Int32" Nullable="false"/>
                 <Property Name="KeyToTestEntity" Type="Edm.Int32" Nullable="false"/>
-                 <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
+                <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
             </EntityType>
+            <Action Name="createTestEntity" IsBound="false">
+                <Parameter Name="id" Type="Edm.Int32"/>
+                <ReturnType Type="AdminService.TestEntity"/>
+            </Action>
+            <Action Name="createTestEntityReturnId" IsBound="false">
+                <Parameter Name="id" Type="Edm.Int32"/>
+                <ReturnType Type="Edm.Int32"/>
+            </Action>
+            <Function Name="returnSapCloudSdk" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.String"/>
+            </Function>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

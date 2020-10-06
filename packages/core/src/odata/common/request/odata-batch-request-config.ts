@@ -24,7 +24,10 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
     readonly defaultServicePath: string,
     readonly boundary = `batch_${uuid()}`
   ) {
-    super('post', defaultServicePath, `multipart/mixed; boundary=${boundary}`);
+    super('post', defaultServicePath, {
+      'content-type': `multipart/mixed; boundary=${boundary}`,
+      accept: 'multipart/mixed'
+    });
   }
 
   resourcePath(): string {

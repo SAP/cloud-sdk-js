@@ -223,8 +223,15 @@ So, in the case that you want to log all requests sent and responses received by
 If you want to set the debug levels of your application running on Cloud Foundry (using the SAP Java Buildpack) you have to set the `SET_LOGGING_LEVEL`.
 This allows you to also change the log level at runtime, as we will see further down in this section.
 
-To set the environment variable with every start of the application it is advised to use the `manifest.yml` file (found in the root of your project).
-This file would then look something like this:
+To set the environment variable with every start of the application it is advised to set it in your deployment descriptor of your project.
+This is typically a [Manifest](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjVv7TknpbsAhUJ36QKHaA_Bp4QFjAAegQIBBAC&url=https%3A%2F%2Fhelp.sap.com%2Fviewer%2F6a4563286d06419cb9927ef448c67432%2FCloud%2Fen-US%2Fe68e33b67c844689b07abf70e7ca5bc8.html&usg=AOvVaw1D_4MogbdbFNLOG1A1xeJy) or [MTA](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/2.0.03/en-US/33548a721e6548688605049792d55295.html) file in your project root directory.
+It usually looks something like this:
+
+<Tabs defaultValue="manifest" values={[
+{ label: 'Manifest', value: 'manifest', },
+{ label: 'MTA', value: 'mta', }]}>
+
+<TabItem value="manifest">
 
 ```yaml
 ---
@@ -236,6 +243,23 @@ applications:
     OTHER_ENVIRONMENT_VARIABLE: 'and their values'
     SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, package.to.log: DEBUG}'
 ```
+
+</TabItem>
+
+<TabItem value="mta">
+
+```yaml
+ID: com.company.project.app
+version: 1.0.1
+modules:
+   - name: <your-module>
+     type: java.tomcat
+     properties: 
+       SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, package.to.log: DEBUG}'
+```
+
+</TabItem>
+</Tabs>
 
 So, in the case that you want to log all requests sent and responses received by the Apache HttpClient in your application on Cloud Foundry you would set `SET_LOGGING_LEVEL` to the following value:
 

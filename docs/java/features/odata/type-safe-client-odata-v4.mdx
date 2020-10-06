@@ -199,9 +199,61 @@ service.getAllBusinessPartner()
 ```
 
 <!--
+### Batch Requests 
+Batch requests allow wrapping multiple OData requests into one single batch call. Thereby we reduce the number of roundtrips to the remote server.
+ Refer to the [official OData V4 spec](http://docs.oasis-open.org/odata/odata/v4.0/os/part1-protocol/odata-v4.0-os-part1-protocol.html#_Toc372793748) 
+for further reference about batch requests, their semantics and the request + response format.
+
+:::warning
+The described API is subject to change
+:::
+
+#### Execute Batch Request
+The `service` object offers the method `batch` which allows access to the batch-related methods that help build the batch request.
+
+Multiple single requests (like `createBusinessPartnerAddress`) can be wrapped into so-called change sets.
+Each change set is opened with `beginChangeSet` and closed with `endChangeSet`. You can wrap multiple change sets into one batch request.
+
+Use `executeRequest` to issue the batch request to the remote system. We receive an instance of `BatchResponse` as result object.
+
+```java
+final BatchResponse result =
+    service
+        .batch()
+        .beginChangeSet()
+        .createBusinessPartnerAddress(address1)
+        .createBusinessPartnerAddress(address2)
+        .endChangeSet()
+        .executeRequest(destination);
+```
+
+#### Access Batch Response
+Use the method `get` to access the individual change set responses by index. 
+```java
+final Try<BatchResponseChangeSet> changeSetTry = result.get(0);
+```
+
+The returned `Try` allows checking if the respective change set was processed successfully by the remote server.
+As per the specification, either all operations or none within the same change set are successful. Hence, if `changeSetTry.isSuccess()` is true,
+you can derive that all operations in the change set are succcessful.
+
+In case the change set contained at least one create operation, you can gain access to the created entity representations by using the
+method `getCreatedEntities`.
+
+```java
+if (changeSetTry.isSuccess()) {
+    //now you can access the created entities
+    final List<VdmEntity<?>> createdEntities = changeSet.get().getCreatedEntities();
+}
+```
+:::note
+You have to cast the entity representations from the generic type `VdmEntity` to the respective sub classes.
+:::
+-->
+
+<!--
 ### Count ###
 
-### Batch Requests ###
 
 ### Advanced OData Features ###
 

@@ -1,0 +1,20 @@
+Assume you have already created a business partner and would like to add a new address to it:
+```ts
+const existingBusinessPartner = await BusinessPartner.requestBuilder().getByKey(myID).execute(myDestination);
+
+const newAddress = BusinessPartnerAddress.builder()
+  .country('DE')
+  .postalCode('14469')
+  .cityName('Potsdam')
+  .streetName('Konrad-Zuse-Ring')
+  .houseNumber('10')
+  .build()
+```
+This can be done by using the `asChildOf` method which allows to create an entity as a child of an existing entity.
+You need to give the parent object and the field connecting the two entities:
+```ts
+BusinessPartnerAddress.requestBuilder()
+  .create(newAddress)
+  .asChildOf(existingBusinessPartner,BusinessPartner.TO_BUSINESS_PARTNER_ADDRESS)
+  .execute(myDestination)
+```

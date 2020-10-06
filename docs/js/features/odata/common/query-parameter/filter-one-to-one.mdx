@@ -1,0 +1,20 @@
+In addition to basic properties, filters can also be applied on one-to-one navigation properties.
+The example below shows how to filter on the `TO_CUSTOMER`, which is a one-to-one navigation property of the BusinessPartner entity.
+Please note, the `CUSTOMER_NAME` and `CUSTOMER_FULL_NAME` are properties of the entity `Customer`, which is the type of the one-to-one navigation property `TO_CUSTOMER`.
+```ts
+/*
+  Get all business partners that match all the following conditions:
+    - Have customer with the customer name 'name'
+    - Have customer with the customer full name 'fullName'
+*/
+.filter(
+  BusinessPartner.TO_CUSTOMER.filter(
+    Customer.CUSTOMER_NAME.equals('name'),
+    Customer.CUSTOMER_FULL_NAME.equals('fullName')
+  )
+)
+```
+The generated `$filter` will be:
+```sql
+$filter=((to_Customer/CustomerName eq 'name' and to_Customer/CustomerFullName eq 'fullName'))
+```

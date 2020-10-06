@@ -1,0 +1,8 @@
+`top` limits the number of returned results. This can also be useful for paging:
+```ts
+BusinessPartner.requestBuilder().
+  .getAll()
+  .top(10)
+```
+
+The example above retrieves the first 10 BusinessPartner entities.

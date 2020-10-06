@@ -1,0 +1,11 @@
+There are predefined filter functions e. g. `length`, `substring`, `substringOf` in the core library, that allow for a wide range of filter expressions:
+
+```ts
+/*
+  Fetch all business partners who have a first name shorter than 5 letters
+*/
+BusinessPartner.requestBuilder()
+  .getAll()
+  .filter(length(BusinessPartner.FIRST_NAME).lessThan(5))
+  .execute(destination);
+```

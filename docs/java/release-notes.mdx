@@ -33,7 +33,7 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 
 ### Compatibility Notes
 
-- To leverage the new **OData v2 client**, you need to adjust existing code. Refer to [documentation on how to switch](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java/#switch-to-improved-odata-v2-type-safe-client) for detailed instructions.
+- To leverage the new **OData v2 client**, you need to adjust existing code. Refer to [documentation on how to switch](features/odata/type-safe-client-odata-v2.mdx#switch-to-improved-odata-v2-type-safe-client) for detailed instructions.
 - We start deprecating APIs of the outdated **OData v2 client**. In this release we deprecated:
   - Methods: `execute`, `toQuery`, `withErrorHandler`, `cachingMetadata`, `withoutCachingMetadata`, `ignoringVersionIdentifier` and `ignoreVersionIdentifier`.
   - Error handler: `ODataVdmErrorResultHandler`.
@@ -43,9 +43,9 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 ### New Functionality
 
 - The improved OData v2 type-safe client is now Generally Available. From now on we recommend it for OData API consumption.
-Refer to the [documentation on how to switch](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java/#switch-to-improved-odata-v2-type-safe-client) for more details on the new OData 2 client.
+Refer to the [documentation on how to switch](features/odata/type-safe-client-odata-v2.mdx#switch-to-improved-odata-v2-type-safe-client) for more details on the new OData 2 client.
   - The methods `executeRequest` are no longer marked as Beta and ready for use in production code.
-  - The new methods `matchAnyVersionIdentifier()` and `disableVersionIdentifier()` allow for better control over [ETag handling](./features/odata/use-typed-odata-v2-client-in-sap-cloud-sdk-for-java/#handling-of-etags).
+  - The new methods `matchAnyVersionIdentifier()` and `disableVersionIdentifier()` allow for better control over [ETag handling](features/odata/type-safe-client-odata-v2.mdx#handling-of-etags).
 
 - The `DefaultHttpDestination` and `DefaulErptHttpDestination` can use a `java.security.KeyStore` and a key store password for HTTP communication. This is especially useful when utilizing mutual TLS (mTLS) for the communication with a remote system. Use the respective builder methods to set these values as in the following code snippet:
 
@@ -179,7 +179,7 @@ final DefaultHttpDestination defaultHttpDestination =
 
 - **We released a regular update for pre-generated type-safe client libraries (also known as VDM) for the [latest RTC release 2008 of SAP S/4HANA Cloud](https://news.sap.com/2020/08/sap-s4hana-cloud-release-2008-stay-ahead-change/).**
   - The update covers all the changes to existing services and introduces new ones. You'll find them in `com.sap.cloud.sdk.s4hana.datamodel.odata.services` and `com.sap.cloud.sdk.s4hana.datamodel.odatav4.services`. Below is the quick reference on difference and compatibility between 2005 and current 2008 S/4HANA Cloud releases:
-  - These deprecated OData **services are no longer allowed/whitelisted**:
+  - These deprecated OData **services are no longer allowed**:
     - Removed deprecated `ChangeMasterService`, use the successor "[ChangeMasterServiceV2Service](https://api.sap.com/api/API_CHANGEMASTER_0002/resource)" instead.
     - Removed deprecated `ProcessOrderConfirmationService`, use the successor "[ProcessOrderConfirmationV2Service](https://api.sap.com/api/API_PROC_ORDER_CONFIRMATION_2_SRV/resource)" instead.
     - Removed deprecated `ProductionOrderConfirmationService`, use the successor "[ProductionOrderConfirmationV2Service](https://api.sap.com/api/API_PROD_ORDER_CONFIRMATION_2_SRV/resource)" instead.

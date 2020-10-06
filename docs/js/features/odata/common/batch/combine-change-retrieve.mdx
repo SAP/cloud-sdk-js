@@ -1,0 +1,11 @@
+In the example below, the changesets will be executed first, and then retrieve requests will be executed sequentially afterward. The order of execution within the changeset is not defined.
+The first `BatchResponse` will be the response to the changeset. The rest will be the responses for your retrieve requests.
+
+```ts
+const [updateChangesetResponse, ...retrieveResponses] =
+  await batch(
+    changeset(...updateRequests),
+    ...retrieveRequests
+  )
+  .execute(destination);
+```

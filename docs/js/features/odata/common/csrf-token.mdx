@@ -1,0 +1,3 @@
+To create, update, and delete requests the SDK will try to send a [CSRF token](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-header_token).
+Upon execution, the request will try to fetch a token first before issuing the create request.
+Many services require this behavior for security reasons. However, the create request will be made without a CSRF token if none could be obtained.

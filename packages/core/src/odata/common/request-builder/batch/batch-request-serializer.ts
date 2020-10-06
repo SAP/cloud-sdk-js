@@ -66,7 +66,6 @@ function getPayload(request: MethodRequestBuilderBase): string[] {
  * @returns String representation of the batch request.
  */
 export function serializeBatchRequest(request: BatchRequestBuilder): string {
-  const crlf = '\r\n';
   const serializedSubRequests = request.requests
     .map(subRequest =>
       subRequest instanceof MethodRequestBuilderBase

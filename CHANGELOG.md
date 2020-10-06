@@ -29,6 +29,7 @@
 
 - [OData] Fix parsing the Etag returned from update requests.
 - [OData] Fix the entity builder so that it can set `undefined`/`null` for optional properties.
+- [OData] Fix wrong service paths for batch requests.
 
 
 # 1.28.2

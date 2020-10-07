@@ -1,6 +1,7 @@
 import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import { Destination, sanitizeDestination } from '../../../scp-cf';
 import {
+  removeLeadingSlashes,
   removeSlashes,
   removeTrailingSlashes
 } from '../../../util/remove-slashes';
@@ -125,9 +126,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns The relative URL of the resource
    */
   relativeResourceUrl(): string {
-    return `${removeTrailingSlashes(
+    const url = `${removeTrailingSlashes(
       this.relativeServiceUrl()
     )}/${this.config.resourcePath()}`;
+    return removeLeadingSlashes(url);
   }
 
   /**
@@ -152,7 +154,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    *
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
-  async headers(): Promise<Record<string, string>> {
+  async headers(): Promise<Record<string, any>> {
     try {
       if (!this.destination) {
         throw Error('The destination is undefined.');

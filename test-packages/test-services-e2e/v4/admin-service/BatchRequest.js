@@ -34,6 +34,6 @@ function changeset() {
     return new core_1.ODataBatchChangeSetV4(requests);
 }
 exports.changeset = changeset;
-exports.defaultAdminServicePath = '/sap/opu/odata/sap/AdminService';
+exports.defaultAdminServicePath = '/admin';
 var map = { 'TestEntity': index_1.TestEntity, 'TestEntityLink': index_1.TestEntityLink };
 //# sourceMappingURL=BatchRequest.js.map

@@ -57,7 +57,7 @@ function mockBatchRequest(matchRequestPayload, reponseData) {
   nock(destination.url, {
     reqheaders: {
       authorization: basicHeader(destination.username!, destination.password!),
-      accept: 'application/json',
+      accept: 'multipart/mixed',
       cookie: 'key1=val1;key2=val2;key3=val3'
     }
   })

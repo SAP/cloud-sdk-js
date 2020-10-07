@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, BatchChangeSet, BatchRequestBuilder, UpdateRequestBuilderV4 } from '@sap-cloud-sdk/core';
 import { TestEntity, TestEntityLink } from './index';
 
 /**
@@ -11,8 +11,8 @@ import { TestEntity, TestEntityLink } from './index';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(...requests: Array<ReadAdminServiceRequestBuilder | ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(defaultAdminServicePath, requests, map);
+export function batch(...requests: (ReadAdminServiceRequestBuilder | BatchChangeSet<WriteAdminServiceRequestBuilder>)[]): BatchRequestBuilder {
+  return new BatchRequestBuilder(defaultAdminServicePath, requests, entityToConstructorMap);
 }
 
 /**
@@ -20,11 +20,11 @@ export function batch(...requests: Array<ReadAdminServiceRequestBuilder | ODataB
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(...requests: WriteAdminServiceRequestBuilder[]): ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(requests);
+export function changeset(...requests: WriteAdminServiceRequestBuilder[]): BatchChangeSet<WriteAdminServiceRequestBuilder> {
+  return new BatchChangeSet(requests);
 }
 
 export const defaultAdminServicePath = '/admin';
-const map = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink };
+const entityToConstructorMap = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink };
 export type ReadAdminServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink>;
 export type WriteAdminServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink>;

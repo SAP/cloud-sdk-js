@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilderV2(exports.defaultMultipleSchemasServicePath, requests, map);
+    return new core_1.BatchRequestBuilder(exports.defaultMultipleSchemasServicePath, requests, entityToConstructorMap);
 }
 exports.batch = batch;
 /**
@@ -31,9 +31,9 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSetV2(requests);
+    return new core_1.BatchChangeSet(requests);
 }
 exports.changeset = changeset;
 exports.defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
-var map = { 'MultiSchemaTestEntity': index_1.MultiSchemaTestEntity };
+var entityToConstructorMap = { 'MultiSchemaTestEntity': index_1.MultiSchemaTestEntity };
 //# sourceMappingURL=BatchRequest.js.map

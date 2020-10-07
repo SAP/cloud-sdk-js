@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilderV4(exports.defaultAdminServicePath, requests, map);
+    return new core_1.BatchRequestBuilder(exports.defaultAdminServicePath, requests, entityToConstructorMap);
 }
 exports.batch = batch;
 /**
@@ -31,9 +31,9 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSetV4(requests);
+    return new core_1.BatchChangeSet(requests);
 }
 exports.changeset = changeset;
 exports.defaultAdminServicePath = '/admin';
-var map = { 'TestEntity': index_1.TestEntity, 'TestEntityLink': index_1.TestEntityLink };
+var entityToConstructorMap = { 'TestEntity': index_1.TestEntity, 'TestEntityLink': index_1.TestEntityLink };
 //# sourceMappingURL=BatchRequest.js.map

@@ -18,7 +18,7 @@ function batch() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilderV4(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, map);
+    return new core_1.BatchRequestBuilder(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, requests, entityToConstructorMap);
 }
 exports.batch = batch;
 /**
@@ -31,9 +31,9 @@ function changeset() {
     for (var _i = 0; _i < arguments.length; _i++) {
         requests[_i] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSetV4(requests);
+    return new core_1.BatchChangeSet(requests);
 }
 exports.changeset = changeset;
 exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
-var map = { 'Photos': index_1.Photos, 'People': index_1.People, 'Airlines': index_1.Airlines, 'Airports': index_1.Airports };
+var entityToConstructorMap = { 'Photos': index_1.Photos, 'People': index_1.People, 'Airlines': index_1.Airlines, 'Airports': index_1.Airports };
 //# sourceMappingURL=BatchRequest.js.map

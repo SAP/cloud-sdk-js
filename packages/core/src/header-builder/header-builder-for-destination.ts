@@ -1,6 +1,6 @@
 import { Destination } from '../scp-cf';
 import { getAuthHeaders } from './authorization-header';
-import { replaceDuplicateKeys, filterNullishValues } from './headers-util';
+import { replaceDuplicateKeys, filterNullishValues } from './header-util';
 
 /**
  * Builds the authorization, proxy authorization and SAP headers for a given destination.

@@ -14,14 +14,12 @@ describe('batch', () => {
       .build();
     const create = TestEntity.requestBuilder().create(testEntity);
 
-    const responses = await batch(
+    const [retrieveResponse, changesetResponse] = await batch(
       getAll.withCustomServicePath('/'),
       changeset(create.withCustomServicePath('/'))
     ).execute(destination);
 
-    expect(responses.length).toBe(2);
-    responses.forEach(response => {
-      expect(response.isSuccess()).toBe(true);
-    });
+    expect(retrieveResponse.isSuccess()).toBe(true);
+    expect(changesetResponse.isSuccess()).toBe(true);
   });
 });

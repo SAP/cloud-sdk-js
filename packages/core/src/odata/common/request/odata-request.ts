@@ -8,8 +8,9 @@ import { HttpResponse, executeHttpRequest } from '../../../http-client';
 import {
   filterNullishValues,
   getHeader,
+  getHeaders,
   getHeaderValue,
-  replaceDuplicateKeys
+  mergeHeaders
 } from '../../../header-builder';
 // TODO: The buildCsrfHeaders import cannot be combined with the rest of the other headers due to circular dependencies
 import { buildCsrfHeaders } from '../../../header-builder/csrf-token-header';
@@ -194,19 +195,15 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   defaultHeaders(): Record<string, any> {
-    const defaultHeaders = replaceDuplicateKeys(
-      filterNullishValues({
-        accept: 'application/json',
-        'content-type': this.config.contentType
-      }),
+    const customDefaultHeaders = getHeaders(
+      Object.keys(this.config.defaultHeaders),
       this.customHeaders()
     );
 
-    return {
-      ...defaultHeaders,
-      ...getHeader('accept', this.customHeaders()),
-      ...getHeader('content-type', this.customHeaders())
-    };
+    return mergeHeaders(
+      filterNullishValues(this.config.defaultHeaders),
+      customDefaultHeaders
+    );
   }
 
   /**

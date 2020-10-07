@@ -4,7 +4,8 @@ import {
   getHeaderValue,
   filterNullishValues,
   replaceDuplicateKeys,
-  mergeHeaders
+  mergeHeaders,
+  getHeaders
 } from '../../../src';
 
 describe('Header-builder:', () => {
@@ -36,6 +37,12 @@ describe('Header-builder:', () => {
     it('returns an empty object for no equal keys', () => {
       expect(getHeader('nonExistentKey', customHeaders)).toEqual({});
     });
+  });
+
+  it('getHeaders picks the given keys', () => {
+    expect(
+      getHeaders(['a', 'B', 'c', 'd'], { A: 'a', b: 'b', c: 'c', e: 'e' })
+    ).toEqual({ A: 'a', b: 'b', c: 'c' });
   });
 
   describe('getHeaderValue', () => {

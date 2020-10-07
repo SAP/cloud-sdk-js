@@ -30,6 +30,25 @@ export function getHeader(
 }
 
 /**
+ * Find headers in a given header object, if available, idepdendent of the case (lower / upper).
+ * @param keys - Name of the header to be found.
+ * @param headers - Header object to be searched for given key.
+ * @returns - An object containing the given keys (and values) in its original case, as found in `headers` or an empty object if not found.
+ */
+export function getHeaders(
+  keys: string[],
+  headers: Record<string, any> = {}
+): Record<string, any> {
+  return keys.reduce(
+    (filteredHeaders, key) => ({
+      ...filteredHeaders,
+      ...getHeader(key, headers)
+    }),
+    {}
+  );
+}
+
+/**
  * Get the value of a header based on the given key, independent of the case (lower / upper).
  * @param key - Name of the header to be found.
  * @param headers - Header object to be searched for given key.

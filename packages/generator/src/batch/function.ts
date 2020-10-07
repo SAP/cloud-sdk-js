@@ -1,19 +1,17 @@
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import { caps } from '@sap-cloud-sdk/util';
 import { addLeadingNewline, getFunctionDoc } from '../typedoc';
 import { VdmServiceMetadata } from '../vdm-types';
 
 export function batchFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const versionInCaps = caps(service.oDataVersion);
   return {
     kind: StructureKind.Function,
     name: 'batch',
     isExported: true,
     parameters: [{ name: '...requests', type: getBatchParameterType(service) }],
-    returnType: `ODataBatchRequestBuilder${versionInCaps}`,
-    statements: `return new ODataBatchRequestBuilder${versionInCaps}(default${service.className}Path, requests, map);`,
+    returnType: 'BatchRequestBuilder',
+    statements: `return new BatchRequestBuilder(default${service.className}Path, requests, entityToConstructorMap);`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
@@ -27,7 +25,7 @@ export function batchFunction(
               }
             ],
             returns: {
-              type: `ODataBatchRequestBuilder${versionInCaps}`,
+              type: 'BatchRequestBuilder',
               description: 'A request builder for batch.'
             }
           }
@@ -40,7 +38,6 @@ export function batchFunction(
 export function changesetFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const versionInCaps = caps(service.oDataVersion);
   return {
     kind: StructureKind.Function,
     name: 'changeset',
@@ -48,8 +45,8 @@ export function changesetFunction(
     parameters: [
       { name: '...requests', type: `Write${service.className}RequestBuilder[]` }
     ],
-    returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`,
-    statements: `return new ODataBatchChangeSet${versionInCaps}(requests);`,
+    returnType: `BatchChangeSet<Write${service.className}RequestBuilder>`,
+    statements: 'return new BatchChangeSet(requests);',
     docs: [
       addLeadingNewline(
         getFunctionDoc(
@@ -63,7 +60,7 @@ export function changesetFunction(
               }
             ],
             returns: {
-              type: `ODataBatchChangeSet${versionInCaps}`,
+              type: 'BatchChangeSet',
               description: 'A change set for batch.'
             }
           }
@@ -74,9 +71,5 @@ export function changesetFunction(
 }
 
 function getBatchParameterType(service: VdmServiceMetadata): string {
-  return `Array<Read${
-    service.className
-  }RequestBuilder | ODataBatchChangeSet${caps(service.oDataVersion)}<Write${
-    service.className
-  }RequestBuilder>>`;
+  return `(Read${service.className}RequestBuilder | BatchChangeSet<Write${service.className}RequestBuilder>)[]`;
 }

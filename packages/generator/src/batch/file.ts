@@ -14,7 +14,7 @@ export function batchSourceFile(
       batchFunction(service),
       changesetFunction(service),
       `export const default${service.className}Path = '${service.servicePath}';`,
-      `const map = ${mappingInitializer(service)};`,
+      `const entityToConstructorMap = ${mappingInitializer(service)};`,
       readRequestType(service),
       writeReqeustType(service)
     ]

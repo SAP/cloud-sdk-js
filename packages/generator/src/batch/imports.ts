@@ -14,8 +14,8 @@ export function importBatchDeclarations(
         `DeleteRequestBuilder${versionInCaps}`,
         `GetAllRequestBuilder${versionInCaps}`,
         `GetByKeyRequestBuilder${versionInCaps}`,
-        `ODataBatchChangeSet${versionInCaps}`,
-        `ODataBatchRequestBuilder${versionInCaps}`,
+        'BatchChangeSet',
+        'BatchRequestBuilder',
         `UpdateRequestBuilder${versionInCaps}`
       ],
       service.oDataVersion

@@ -1,6 +1,7 @@
 import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
 import { Destination, sanitizeDestination } from '../../../scp-cf';
 import {
+  removeLeadingSlashes,
   removeSlashes,
   removeTrailingSlashes
 } from '../../../util/remove-slashes';
@@ -125,9 +126,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns The relative URL of the resource
    */
   relativeResourceUrl(): string {
-    return `${removeTrailingSlashes(
+    const url = `${removeTrailingSlashes(
       this.relativeServiceUrl()
     )}/${this.config.resourcePath()}`;
+    return removeLeadingSlashes(url);
   }
 
   /**

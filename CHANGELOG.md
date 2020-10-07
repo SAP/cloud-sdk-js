@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- Deprecate setting the content type header in the constructor of `ODataRequest`s.
 
 ## New Functionality
 
@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- Allow setting default headers in `ODataRequest`s instead of the content type header only.
 
 ## Fixed Issues
 
@@ -45,7 +45,7 @@ Blog: TBD<br>
 
 ## Improvements
 
-- [OData] Add warning for deep update attempts in OData v2. 
+- [OData] Add warning for deep update attempts in OData v2.
 - [Generator] The transpiling after generation is done in chunks to avoid CPU overloads for high numbers of services.
 
 ## Fixed Issues

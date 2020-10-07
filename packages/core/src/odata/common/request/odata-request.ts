@@ -195,7 +195,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   defaultHeaders(): Record<string, any> {
-    const customDefaultHeaders = getHeaders(Object.keys(this.config.defaultHeaders),this.customHeaders());
+    const customDefaultHeaders = getHeaders(
+      Object.keys(this.config.defaultHeaders),
+      this.customHeaders()
+    );
 
     return mergeHeaders(
       filterNullishValues(this.config.defaultHeaders),

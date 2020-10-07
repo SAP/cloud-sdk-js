@@ -9,8 +9,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 
@@ -20,8 +20,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 
 --batch_boundary
@@ -32,8 +32,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 
@@ -42,8 +42,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 
 
@@ -53,8 +53,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId')?$format=json HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 
 --batch_boundary--
@@ -69,8 +69,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 
@@ -79,8 +79,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 
@@ -95,8 +95,8 @@ Content-Type: application/http
 Content-Transfer-Encoding: binary
 
 POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 
@@ -108,8 +108,8 @@ exports[`batch request serializer serializeRequest serializes create request 1`]
 Content-Transfer-Encoding: binary
 
 POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 "
@@ -120,8 +120,8 @@ exports[`batch request serializer serializeRequest serializes delete request wit
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 If-Match: eTag
 
 
@@ -133,8 +133,8 @@ exports[`batch request serializer serializeRequest serializes delete request wit
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 
 "
@@ -145,8 +145,8 @@ exports[`batch request serializer serializeRequest serializes delete request wit
 Content-Transfer-Encoding: binary
 
 DELETE /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'test',KeyPropertyString='test') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 
 "
@@ -157,8 +157,8 @@ exports[`batch request serializer serializeRequest serializes getAll request 1`]
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 "
 `;
@@ -168,8 +168,8 @@ exports[`batch request serializer serializeRequest serializes getAll request wit
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 Custom-Header: custom
 
 "
@@ -180,8 +180,8 @@ exports[`batch request serializer serializeRequest serializes getByKey request 1
 Content-Transfer-Encoding: binary
 
 GET /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'testId',KeyPropertyString='test')?$format=json HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 "
 `;
@@ -191,8 +191,8 @@ exports[`batch request serializer serializeRequest serializes update request 1`]
 Content-Transfer-Encoding: binary
 
 PATCH /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 "
@@ -203,8 +203,8 @@ exports[`batch request serializer serializeRequest serializes update request usi
 Content-Transfer-Encoding: binary
 
 PUT /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Accept: application/json
 Content-Type: application/json
+Accept: application/json
 
 {\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
 "

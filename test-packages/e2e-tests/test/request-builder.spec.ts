@@ -3,13 +3,8 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
 import moment from 'moment';
+import { destination } from './test-util';
 
-const url = 'http://localhost:4004/';
-const destination = { url };
-interface EntityKey {
-  keyString: string;
-  keyInt: number;
-}
 const entityKey = 123;
 const entityLinkKey = 987;
 
@@ -49,7 +44,7 @@ async function createEntity(key: number): Promise<TestEntity> {
     .execute(destination);
 }
 
-describe('Request builder test', () => {
+describe('Request builder', () => {
   beforeEach(async () => deleteEntity(entityKey));
 
   it('should return a collection of entities for get all request', async () => {

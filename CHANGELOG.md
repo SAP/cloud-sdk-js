@@ -42,6 +42,7 @@ Blog: TBD<br>
 ## New Functionality
 
 - [OData] Support the usage of $count in `getAll` requests e.g.: `Entity.requestBuilder().getAll().count().execute()`.
+- [OData] Support batch requests for OData v4.
 
 ## Improvements
 
@@ -52,6 +53,7 @@ Blog: TBD<br>
 
 - [OData] Fix parsing the Etag returned from update requests.
 - [OData] Fix the entity builder so that it can set `undefined`/`null` for optional properties.
+- [OData] Fix wrong service paths for batch requests.
 
 # 1.28.2
 

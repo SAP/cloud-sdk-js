@@ -215,6 +215,7 @@ function getRequestHeaders(
     return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
   }
 }
+
 export function mockCsrfTokenRequest(
   host: string,
   sapClient: string,

@@ -31,6 +31,19 @@ export abstract class ODataRequestConfig {
   }
 
   /**
+   * @deprecated Since v1.30.0.
+   */
+  constructor(
+    method: RequestMethodType,
+    defaultServicePath: string,
+    contentType: string
+  );
+  constructor(
+    method: RequestMethodType,
+    defaultServicePath: string,
+    defaultHeaders?: Record<string, any>
+  );
+  /**
    * Creates an instance of ODataRequest.
    *
    * @param method - HTTP method of the request

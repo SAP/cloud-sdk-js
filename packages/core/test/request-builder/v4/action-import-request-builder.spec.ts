@@ -42,7 +42,8 @@ describe('action import request builder', () => {
 
   it('is possible to call actions with unknown edm types', async () => {
     mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
-    const response = { something: 'SomeuntypedResponse' };
+    const responseValue = 'SomeUntypedResponse';
+    const response = { value: responseValue };
 
     nock(host)
       .post(`${servicePath}/TestActionImportUnsupportedEdmTypes?$format=json`, {
@@ -53,7 +54,7 @@ describe('action import request builder', () => {
     const result = await testActionImportUnsupportedEdmTypes({
       simpleParam: 'someUntypedParameter'
     }).execute(destination);
-    expect(result).toEqual(response);
+    expect(result).toEqual(responseValue);
   });
 
   it('should call an action and parse the response', async () => {

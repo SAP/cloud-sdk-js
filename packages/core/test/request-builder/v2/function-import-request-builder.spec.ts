@@ -88,8 +88,9 @@ describe('FunctionImportRequestBuilderV2', () => {
     const requestBuilder = testFunctionImportUnsupportedEdmTypes({
       simpleParam: 'SomeUntypedValue'
     });
+    const responseValue = 'AnyReturnType';
     const untypedResponse = {
-      d: { TestFunctionImportUnsupportedEdmTypes: 'AnyReturnType' }
+      d: { TestFunctionImportUnsupportedEdmTypes: responseValue }
     };
 
     nock(defaultHost)
@@ -98,7 +99,7 @@ describe('FunctionImportRequestBuilderV2', () => {
       .reply(200, untypedResponse);
 
     const returnValue = await requestBuilder.execute(defaultDestination);
-    expect(returnValue).toEqual('AnyReturnType');
+    expect(returnValue).toEqual(responseValue);
   });
 
   it('returns edm type collection', async () => {

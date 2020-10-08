@@ -18,7 +18,8 @@ export class UniqueNameFinder {
    */
   public constructor(
     private separator: Separator = '_',
-    private alreadyUsedNames: string[] = []
+    private alreadyUsedNames: string[] = [],
+    private caseSensitive = true
   ) {
     this.alreadyUsedNames = alreadyUsedNames.slice();
   }

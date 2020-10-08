@@ -22,7 +22,8 @@ export class ServiceNameFormatter {
 
   private finderServiceWide = new UniqueNameFinder(
     '_',
-    reservedServiceKeywords
+    reservedServiceKeywords,
+    false
   );
 
   private parameterNamesFinder: {

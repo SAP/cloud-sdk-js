@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [Generator] Fix reference to `execa` dependency.
 
 
 # 1.29.0

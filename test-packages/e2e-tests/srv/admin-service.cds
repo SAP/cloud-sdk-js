@@ -5,6 +5,10 @@ service AdminService @(requires_:'admin') {
 
   function returnSapCloudSdk() returns String;
 
+  function returnInt(param: Integer) returns Integer;
+
+  function getByKey(param: Integer) returns TestEntity;
+
   action createTestEntity(id: Integer) returns TestEntity;
 
   action createTestEntityReturnId(id: Integer) returns Integer;

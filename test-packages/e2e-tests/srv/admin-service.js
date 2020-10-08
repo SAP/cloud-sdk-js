@@ -8,6 +8,17 @@ module.exports = async (srv) => {
     oRequest.reply("SapCloudSdk");
   });
 
+  srv.on("returnInt", async (oRequest) => {
+    const param = oRequest.data.param;
+    oRequest.reply(param);
+  });
+
+  srv.on("getByKey", async (oRequest) => {
+    const param = oRequest.data.param;
+    const entity = await SELECT.one.from(TestEntity).where({KeyTestEntity: param});
+    oRequest.reply( entity );
+  });
+
   srv.on("createTestEntity", async (oRequest) => {
     const id = oRequest.data.id;
     await INSERT

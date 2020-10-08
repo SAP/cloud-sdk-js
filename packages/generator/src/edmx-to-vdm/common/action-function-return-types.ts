@@ -121,12 +121,14 @@ function getEdmReturnType(
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
+  const valueAlias = 'val';
+  const extracted = isCollection ? valueAlias : extractResponse(valueAlias);
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
-    builderFunction: `(val) => edmToTs${caps(oDataVersion)}(${extractResponse(
-      'val'
-    )}, '${typeMapping.edmType}')`,
+    builderFunction: `(${valueAlias}) => edmToTs${caps(
+      oDataVersion
+    )}(${extracted}, '${typeMapping.edmType}')`,
     isMulti: isCollection,
     isCollection
   };

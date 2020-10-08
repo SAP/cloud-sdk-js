@@ -28,7 +28,7 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
  */
 function testFunctionImportEdmReturnTypeCollection(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', function (data) { return core_1.transformReturnValueForEdmTypeListV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', function (data) { return core_1.transformReturnValueForEdmTypeListV4(data, function (val) { return core_1.edmToTsV4(val, 'Edm.String'); }); }, params);
 }
 exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnTypeCollection;
 /**

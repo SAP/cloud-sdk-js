@@ -64,7 +64,7 @@ export function testFunctionImportEdmReturnTypeCollection(parameters: TestFuncti
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeListV2(data, (val) => edmToTsV2(val.TestFunctionImportEdmReturnTypeCollection, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeListV2(data, (val) => edmToTsV2(val, 'Edm.String')), params);
 }
 
 /**

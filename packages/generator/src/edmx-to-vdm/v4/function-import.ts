@@ -23,6 +23,8 @@ function findFunctionForFunctionImport(
   );
 }
 
+const extractResponse = (response: string) => `${response}.value`;
+
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],
@@ -57,6 +59,7 @@ export function generateFunctionImportsV4(
         edmxFunction.ReturnType?.Type,
         entities,
         complexTypes,
+        extractResponse,
         serviceMetadata.edmx.oDataVersion
       )
     };

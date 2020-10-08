@@ -25,7 +25,7 @@ export class UniqueNameFinder {
     private alreadyUsedNames: string[] = [],
     private caseSensitive = true
   ) {
-    this.alreadyUsedNames = alreadyUsedNames.slice();
+    this.addToAlreadyUsedNames(...alreadyUsedNames.slice());
   }
 
   /**

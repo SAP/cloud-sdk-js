@@ -3,7 +3,56 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEdmTypeV4, edmToTsV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEntityV4, transformReturnValueForEdmTypeV4, edmToTsV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { TestEntity } from './TestEntity';
+
+/**
+ * Type of the parameters to be passed to [[getByKey]].
+ */
+export interface GetByKeyParameters {
+  /**
+   * Param.
+   */
+  param: number;
+}
+
+/**
+ * Get By Key.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function getByKey(parameters: GetByKeyParameters): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity> {
+  const params = {
+    param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
+  }
+
+  return new FunctionImportRequestBuilderV4('/admin', 'getByKey', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
+}
+
+/**
+ * Type of the parameters to be passed to [[returnInt]].
+ */
+export interface ReturnIntParameters {
+  /**
+   * Param.
+   */
+  param: number;
+}
+
+/**
+ * Return Int.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function returnInt(parameters: ReturnIntParameters): FunctionImportRequestBuilderV4<ReturnIntParameters, number> {
+  const params = {
+    param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
+  }
+
+  return new FunctionImportRequestBuilderV4('/admin', 'returnInt', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
+}
 
 /**
  * Type of the parameters to be passed to [[returnSapCloudSdk]].
@@ -26,5 +75,7 @@ export function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): Func
 }
 
 export const functionImports = {
+  getByKey,
+  returnInt,
   returnSapCloudSdk
 };

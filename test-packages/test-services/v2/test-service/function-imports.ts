@@ -44,7 +44,7 @@ export function testFunctionImportEdmReturnType(parameters: TestFunctionImportEd
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val, 'Edm.Boolean')), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')), params);
 }
 
 /**
@@ -64,7 +64,7 @@ export function testFunctionImportEdmReturnTypeCollection(parameters: TestFuncti
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeListV2(data, (val) => edmToTsV2(val, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeListV2(data, (val) => edmToTsV2(val.TestFunctionImportEdmReturnTypeCollection, 'Edm.String')), params);
 }
 
 /**
@@ -148,7 +148,7 @@ export function testFunctionImportUnsupportedEdmTypes(parameters: TestFunctionIm
     simpleParam: new FunctionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val, 'Edm.Any')), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')), params);
 }
 
 /**
@@ -192,7 +192,7 @@ export function testFunctionImportGet(parameters: TestFunctionImportGetParameter
     simpleParam: new FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val, 'Edm.Boolean')), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val.TestFunctionImportGET, 'Edm.Boolean')), params);
 }
 
 /**
@@ -216,7 +216,7 @@ export function testFunctionImportPost(parameters: TestFunctionImportPostParamet
     simpleParam: new FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
   }
 
-  return new FunctionImportRequestBuilderV2('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val, 'Edm.Boolean')), params);
+  return new FunctionImportRequestBuilderV2('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val.TestFunctionImportPOST, 'Edm.Boolean')), params);
 }
 
 /**
@@ -245,7 +245,7 @@ export function testFunctionImportMultipleParams(parameters: TestFunctionImportM
     booleanParam: new FunctionImportParameter('BooleanParam', 'Edm.Boolean', parameters.booleanParam)
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val, 'Edm.Boolean')), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val.TestFunctionImportMultipleParams, 'Edm.Boolean')), params);
 }
 
 /**
@@ -285,7 +285,7 @@ export function fContinue(parameters: FContinueParameters): FunctionImportReques
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val, 'Edm.Boolean')), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTsV2(val.Continue, 'Edm.Boolean')), params);
 }
 
 export const functionImports = {

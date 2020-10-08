@@ -8,7 +8,7 @@ import {
 } from '../scp-cf';
 import { ODataRequestConfig } from '../odata/common/request';
 import type { ODataRequest } from '../odata/common/request/odata-request';
-import { getHeader, toSanitizedHeaderObject } from './headers-util';
+import { getHeader, toSanitizedHeaderObject } from './header-util';
 
 const logger = createLogger({
   package: 'core',

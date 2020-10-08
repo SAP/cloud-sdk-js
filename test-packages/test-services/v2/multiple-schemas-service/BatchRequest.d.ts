@@ -12,7 +12,7 @@ export declare function batch(...requests: Array<ReadMultipleSchemasServiceReque
  * @returns A change set for batch.
  */
 export declare function changeset(...requests: WriteMultipleSchemasServiceRequestBuilder[]): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
-export declare const defaultMultipleSchemasServicePath = "/sap/opu/odata/sap/SCHEMA_DATA";
+export declare const defaultMultipleSchemasServicePath = "VALUE_IS_UNDEFINED";
 export declare type ReadMultipleSchemasServiceRequestBuilder = GetAllRequestBuilderV2<MultiSchemaTestEntity> | GetByKeyRequestBuilderV2<MultiSchemaTestEntity>;
 export declare type WriteMultipleSchemasServiceRequestBuilder = CreateRequestBuilderV2<MultiSchemaTestEntity> | UpdateRequestBuilderV2<MultiSchemaTestEntity> | DeleteRequestBuilderV2<MultiSchemaTestEntity>;
 //# sourceMappingURL=BatchRequest.d.ts.map

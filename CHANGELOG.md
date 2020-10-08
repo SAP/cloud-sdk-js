@@ -13,23 +13,47 @@
 -
 
 ## Compatibility Notes
+
+- Deprecate setting the content type header in the constructor of `ODataRequest`s.
+
+## New Functionality
+
+-
+
+## Improvements
+
+- Allow setting default headers in `ODataRequest`s instead of the content type header only.
+
+## Fixed Issues
+
+- [Generator] Fix the function import (OData V2 + V4) and action import, where the return type is an primitive edm type like `Edm.String`.
+
+
+# 1.29.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.29.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - [Generator] The interface `EnityTypeForceMandatory` (e.g., `BusinessPartnerTypeForceMandatory`) is removed.
 
 ## New Functionality
 
 - [OData] Support the usage of $count in `getAll` requests e.g.: `Entity.requestBuilder().getAll().count().execute()`.
+- [OData] Support batch requests for OData v4.
 
 ## Improvements
 
-- [OData] Add warning for deep update attempts in OData v2. 
+- [OData] Add warning for deep update attempts in OData v2.
 - [Generator] The transpiling after generation is done in chunks to avoid CPU overloads for high numbers of services.
 
 ## Fixed Issues
 
 - [OData] Fix parsing the Etag returned from update requests.
 - [OData] Fix the entity builder so that it can set `undefined`/`null` for optional properties.
-- [Generator] Fix the action import in OData V4, where the return type of the action is an edm type like `Edm.String`.
-
+- [OData] Fix wrong service paths for batch requests.
 
 # 1.28.2
 

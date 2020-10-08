@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
-import { filterNullishValues, getHeader, getHeaderValue } from './headers-util';
+import { filterNullishValues, getHeader, getHeaderValue } from './header-util';
 
 const logger = createLogger({
   package: 'core',

@@ -12,7 +12,7 @@ export declare function batch(...requests: Array<ReadAdminServiceRequestBuilder 
  * @returns A change set for batch.
  */
 export declare function changeset(...requests: WriteAdminServiceRequestBuilder[]): ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>;
-export declare const defaultAdminServicePath = "/sap/opu/odata/sap/AdminService";
+export declare const defaultAdminServicePath = "/admin";
 export declare type ReadAdminServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink>;
 export declare type WriteAdminServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink>;
 //# sourceMappingURL=BatchRequest.d.ts.map

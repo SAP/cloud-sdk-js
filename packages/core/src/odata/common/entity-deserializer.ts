@@ -59,7 +59,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
  * @returns a entity deserializer as defined by [[EntityDeserializer]]
  */
-export function entityDeserializer<EntityT, JsonT>(
+export function entityDeserializer(
   edmToTs: EdmToTsTypeV2 | EdmToTsTypeV4,
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType

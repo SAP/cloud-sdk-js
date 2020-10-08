@@ -1,4 +1,5 @@
 import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
+import { mergeHeaders } from '../../../header-builder';
 
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
@@ -14,23 +15,56 @@ export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;
   customServicePath: string;
 
+  readonly defaultHeaders: Record<string, any> = {
+    'content-type': 'application/json',
+    accept: 'application/json'
+  };
+
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};
 
+  /**
+   * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
+   */
+  get contentType() {
+    return this.defaultHeaders['content-type'];
+  }
+
+  /**
+   * @deprecated Since v1.30.0.
+   */
+  constructor(
+    method: RequestMethodType,
+    defaultServicePath: string,
+    contentType: string
+  );
+  constructor(
+    method: RequestMethodType,
+    defaultServicePath: string,
+    defaultHeaders?: Record<string, any>
+  );
   /**
    * Creates an instance of ODataRequest.
    *
    * @param method - HTTP method of the request
    * @param defaultServicePath - default path of the according service
-   * @param contentType - The content type of the request
+   * @param defaultHeadersOrContentType - The default headers of the given request as an object. When passing a string only set the content type header will be set. Setting the content type only is deprecated since v1.30.0.
    */
   constructor(
     public method: RequestMethodType,
     readonly defaultServicePath: string,
-    readonly contentType = 'application/json'
+    defaultHeadersOrContentType?: Record<string, any> | string
   ) {
     if (defaultServicePath === VALUE_IS_UNDEFINED) {
       logger.warn('The service path is undefined in "_defaultServicePath".');
+    }
+    if (typeof defaultHeadersOrContentType === 'string') {
+      this.defaultHeaders['content-type'] = defaultHeadersOrContentType;
+    } else {
+      this.defaultHeaders = mergeHeaders(
+        this.defaultHeaders,
+        defaultHeadersOrContentType
+      );
     }
   }
 

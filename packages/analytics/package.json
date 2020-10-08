@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/analytics",
-  "version": "1.28.2",
+  "version": "1.29.0",
   "description": "SAP Cloud SDK Analytics Usage",
   "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
@@ -31,7 +31,7 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^1.28.2",
+    "@sap-cloud-sdk/util": "^1.29.0",
     "axios": "^0.19.2"
   },
   "devDependencies": {

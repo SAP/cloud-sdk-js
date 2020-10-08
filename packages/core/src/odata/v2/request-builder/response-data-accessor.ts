@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { ResponseDataAccessor } from '../../common/response-data-accessor';
 
 const logger = createLogger({
   package: 'core',
@@ -77,3 +78,10 @@ function validateSingleResult(data): void {
     );
   }
 }
+
+export const responseDataAccessorV2: ResponseDataAccessor = {
+  getCollectionResult,
+  getLinkedCollectionResult,
+  getSingleResult,
+  isCollectionResult
+};

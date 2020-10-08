@@ -57,13 +57,15 @@ function mockBatchRequest(matchRequestPayload, reponseData) {
   nock(destination.url, {
     reqheaders: {
       authorization: basicHeader(destination.username!, destination.password!),
-      accept: 'application/json',
+      accept: 'multipart/mixed',
       cookie: 'key1=val1;key2=val2;key3=val3'
     }
   })
     .matchHeader('content-type', /multipart\/mixed; boundary=batch_*/)
     .post(`${servicePath}/$batch`, new RegExp(matchRequestPayload))
-    .reply(202, reponseData);
+    .reply(202, reponseData, {
+      'Content-Type': 'multipart/mixed; boundary=TEST-RESPONSE'
+    });
 }
 
 describe('Batch', () => {

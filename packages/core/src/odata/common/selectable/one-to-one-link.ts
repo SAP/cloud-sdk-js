@@ -22,10 +22,10 @@ export class OneToOneLink<
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT extends EntityBase, LinkedEntityT extends EntityBase>(
-    link: OneToOneLink<EntityT, LinkedEntityT>
-  ): OneToOneLink<EntityT, LinkedEntityT> {
-    const clonedLink = link.clone() as OneToOneLink<EntityT, LinkedEntityT>;
+  static clone<EntityT1 extends EntityBase, LinkedEntityT1 extends EntityBase>(
+    link: OneToOneLink<EntityT1, LinkedEntityT1>
+  ): OneToOneLink<EntityT1, LinkedEntityT1> {
+    const clonedLink = link.clone() as OneToOneLink<EntityT1, LinkedEntityT1>;
     clonedLink.orderBys = link.orderBys;
     clonedLink.filters = link.filters;
     return clonedLink;

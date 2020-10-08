@@ -34,6 +34,6 @@ function changeset() {
     return new core_1.ODataBatchChangeSetV2(requests);
 }
 exports.changeset = changeset;
-exports.defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/SCHEMA_DATA';
+exports.defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 var map = { 'MultiSchemaTestEntity': index_1.MultiSchemaTestEntity };
 //# sourceMappingURL=BatchRequest.js.map

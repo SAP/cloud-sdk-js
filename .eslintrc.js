@@ -198,13 +198,16 @@ module.exports = {
     'no-multiple-empty-lines': ['error', { max: 1 }],
     'no-new-func': 'error',
     'no-new-wrappers': 'error',
-    'no-redeclare': 'error',
+    'no-redeclare': 'off',
+    "@typescript-eslint/no-redeclare": ["error"],
     'no-restricted-imports': ['error', '../', './'],
     'no-return-await': 'error',
     'no-sequences': 'error',
-    'no-shadow': [
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': [
       'error',
       {
+        ignoreFunctionTypeParameterNameValueShadow: true,
         hoist: 'all'
       }
     ],

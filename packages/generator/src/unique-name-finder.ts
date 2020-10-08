@@ -15,6 +15,8 @@ export class UniqueNameFinder {
     return name.replace(new RegExp('_\\d+$'), '');
   }
 
+  private alreadyUsedNames: string[] = [];
+
   /**
    * Creates an instance of UniqueNameFinder.
    * @param separator The separator to be used
@@ -22,11 +24,12 @@ export class UniqueNameFinder {
    */
   public constructor(
     private separator: Separator = '_',
-    private alreadyUsedNames: string[] = [],
+    alreadyUsedNames: string[] = [],
     private caseSensitive = true
   ) {
-    this.addToAlreadyUsedNames(...alreadyUsedNames.slice());
+    this.addToAlreadyUsedNames(...alreadyUsedNames);
   }
+
 
   /**
    * Adds the name(s) to the already used names.

@@ -110,6 +110,7 @@ export class ServiceNameFormatter {
     this.finderServiceWide.addToAlreadyUsedNames(newName);
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
+
   originalToActionImportName(str: string): string {
     return this.originalToFunctionImportName(str);
   }
@@ -241,5 +242,5 @@ function stripAUnderscore(name: string) {
 }
 
 function getInterfaceNamesSuffixes(): string[] {
-  return ['Type', 'TypeForceMandatory'];
+  return ['Type'];
 }

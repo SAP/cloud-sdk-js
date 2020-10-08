@@ -5,11 +5,14 @@ import {
 
 type Separator = '-' | '_';
 
+/**
+ * Holds state on already used names and provides new names if there are naming conflicts.
+ */
 export class UniqueNameFinder {
   private static readonly MAXIMUM_NUMBER_OF_SUFFIX = 1000;
 
   /**
-   *
+   * Creates an instance of UniqueNameFinder.
    * @param separator The separator to be used
    * @param alreadyUsedNames Sets the already used names considered in the finding process. Reserved TS keywords are always checked.
    */
@@ -22,9 +25,10 @@ export class UniqueNameFinder {
 
   /**
    * Adds the name(s) to the already used names.
-   * @param nameOrnames Names to be added
+   * @param names Names to be added
    * @returns The instance of the finder.
-   */ public addToAlreadyUsedNames(...names: string[]) {
+   */
+  public addToAlreadyUsedNames(...names: string[]) {
     this.alreadyUsedNames.push(...names);
     return this;
   }

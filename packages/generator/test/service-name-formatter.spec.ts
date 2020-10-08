@@ -212,12 +212,12 @@ describe('name-formatter', () => {
       return new ServiceNameFormatter([], [], ['FunctionImport']);
     }
 
-    it('should add class, classType and classTypeForceMandatory to service wide names cache.', () => {
+    it('should add class and classType to service wide names cache.', () => {
       const formatter = getFreshNameFormatter();
       const newName = formatter.originalToEntityClassName('MyClass');
       expect(
-        formatter['finderServiceWide']['alreadyUsedNames'].slice(-3)
-      ).toEqual([newName, `${newName}Type`, `${newName}TypeForceMandatory`]);
+        formatter['finderServiceWide']['alreadyUsedNames'].slice(-2)
+      ).toEqual([newName, `${newName}Type`]);
     });
 
     it('should add the function import parameter to the parameter names cache.', () => {

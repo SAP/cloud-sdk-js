@@ -11,6 +11,10 @@ type Separator = '-' | '_';
 export class UniqueNameFinder {
   private static readonly MAXIMUM_NUMBER_OF_SUFFIX = 1000;
 
+  private static removeSuffixIfPresent(name: string): string {
+    return name.replace(new RegExp('_\\d+$'), '');
+  }
+
   /**
    * Creates an instance of UniqueNameFinder.
    * @param separator The separator to be used
@@ -30,7 +34,9 @@ export class UniqueNameFinder {
    * @returns The instance of the finder.
    */
   public addToAlreadyUsedNames(...names: string[]) {
-    this.alreadyUsedNames.push(...names);
+    this.alreadyUsedNames.push(
+      ...names.map(name => this.getNameForComparison(name))
+    );
     return this;
   }
 
@@ -55,7 +61,9 @@ export class UniqueNameFinder {
     name: string,
     suffixes: string[]
   ): string[] {
-    const relevantAlreadyUsedNames = this.removeUnnecessaryUsedNames(name);
+    const relevantAlreadyUsedNames = this.getUsedNamesStartingWith(
+      this.getNameForComparison(name)
+    );
     if (
       !this.areNamesAlreadyUsed(
         this.getAllNames(name, suffixes),
@@ -72,20 +80,20 @@ export class UniqueNameFinder {
     return this.addSuffixes(name, suffix, suffixes);
   }
 
+  private getNameForComparison(name: string): string {
+    return name;//this.caseSensitive ? name : name.toLowerCase();
+  }
+
   private areNamesAlreadyUsed(
     names: string[],
     alreadyUsedNames: string[]
   ): boolean {
     return names.some(
       name =>
-        alreadyUsedNames.includes(name) ||
+        alreadyUsedNames.includes(this.getNameForComparison(name)) ||
         reservedVdmKeywords.has(name) ||
         reservedObjectPrototypeKeywords.has(name)
     );
-  }
-
-  private removeSuffixIfPresent(name: string): string {
-    return name.replace(new RegExp('_\\d+$'), '');
   }
 
   private addSuffixes(
@@ -93,7 +101,7 @@ export class UniqueNameFinder {
     suffix: number,
     nameSuffixes: string[]
   ): string[] {
-    const nameWithoutSuffix = this.removeSuffixIfPresent(name);
+    const nameWithoutSuffix = UniqueNameFinder.removeSuffixIfPresent(name);
     const numberSuffix = `${nameWithoutSuffix}${this.separator}${suffix}`;
     return this.getAllNames(numberSuffix, nameSuffixes);
   }
@@ -102,10 +110,10 @@ export class UniqueNameFinder {
     return [name, ...suffixes.map(nameSuffix => `${name}${nameSuffix}`)];
   }
 
-  private removeUnnecessaryUsedNames(name: string): string[] {
-    const nameSuffixRemoved = this.removeSuffixIfPresent(name);
+  private getUsedNamesStartingWith(name: string): string[] {
+    const modifiedName = UniqueNameFinder.removeSuffixIfPresent(name);
     return this.alreadyUsedNames.filter(used =>
-      used.startsWith(nameSuffixRemoved)
+      used.startsWith(this.getNameForComparison(modifiedName))
     );
   }
 

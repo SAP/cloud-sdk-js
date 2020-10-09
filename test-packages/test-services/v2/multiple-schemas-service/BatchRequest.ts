@@ -24,7 +24,7 @@ export function changeset(...requests: WriteMultipleSchemasServiceRequestBuilder
   return new ODataBatchChangeSetV2(requests);
 }
 
-export const defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/SCHEMA_DATA';
+export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 const map = { 'MultiSchemaTestEntity': MultiSchemaTestEntity };
 export type ReadMultipleSchemasServiceRequestBuilder = GetAllRequestBuilderV2<MultiSchemaTestEntity> | GetByKeyRequestBuilderV2<MultiSchemaTestEntity>;
 export type WriteMultipleSchemasServiceRequestBuilder = CreateRequestBuilderV2<MultiSchemaTestEntity> | UpdateRequestBuilderV2<MultiSchemaTestEntity> | DeleteRequestBuilderV2<MultiSchemaTestEntity>;

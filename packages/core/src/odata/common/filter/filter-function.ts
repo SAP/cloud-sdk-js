@@ -1,4 +1,3 @@
-import { MapType } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { NumberFilterFunction } from './number-filter-function';
@@ -69,7 +68,8 @@ export function createFilterFunction<EntityT extends EntityBase>(
   }
 }
 
-export const numberReturnTypeMapping: MapType<
+export const numberReturnTypeMapping: Record<
+  string,
   'Edm.Int32' | 'Edm.Double' | 'Edm.Decimal'
 > = {
   int: 'Edm.Int32',

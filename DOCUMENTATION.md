@@ -1,4 +1,4 @@
-## Version: 1.28.2
+## Version: 1.29.0
 
 The SAP Cloud SDK for JavaScript and TypeScript consists of multiple libraries to enable you to write side-by-side extensions on SAP Cloud Platform.
 

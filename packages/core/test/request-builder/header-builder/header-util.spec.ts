@@ -3,7 +3,9 @@ import {
   getHeader,
   getHeaderValue,
   filterNullishValues,
-  replaceDuplicateKeys
+  replaceDuplicateKeys,
+  mergeHeaders,
+  getHeaders
 } from '../../../src';
 
 describe('Header-builder:', () => {
@@ -37,6 +39,12 @@ describe('Header-builder:', () => {
     });
   });
 
+  it('getHeaders picks the given keys', () => {
+    expect(
+      getHeaders(['a', 'B', 'c', 'd'], { A: 'a', b: 'b', c: 'c', e: 'e' })
+    ).toEqual({ A: 'a', b: 'b', c: 'c' });
+  });
+
   describe('getHeaderValue', () => {
     const value = 'value';
     const customHeaders = { key: value };
@@ -48,7 +56,7 @@ describe('Header-builder:', () => {
       expect(getHeaderValue('KEY', customHeaders)).toEqual(value);
     });
 
-    it('returns undefinedt for no equal keys', () => {
+    it('returns undefined for different equal keys', () => {
       expect(getHeaderValue('differentKey', customHeaders)).toBeUndefined();
     });
   });
@@ -89,5 +97,17 @@ describe('Header-builder:', () => {
       DifferentCaseDuplicateKey: customValue,
       nonDuplicateKey: value
     });
+  });
+
+  it('mergeHeaders merges headers with custom headers', () => {
+    expect(
+      mergeHeaders(
+        {
+          a: 'a',
+          B: 'B'
+        },
+        { b: 'b', c: 'c' }
+      )
+    ).toEqual({ a: 'a', b: 'b', c: 'c' });
   });
 });

@@ -27,6 +27,7 @@ import * as destinationService from '../../src/scp-cf/destination-service';
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {
     nock.cleanAll();
+    jest.clearAllMocks(); // clears alls spyes
   });
 
   const destName = 'DESTINATION';
@@ -43,24 +44,24 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     URL: 'http://subscriber.com'
   };
 
-  function mockProvider(): nock.Scope[] {
+  function mockProvider(returnEmpty: boolean): nock.Scope[] {
     return [
       mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
       mockSubaccountDestinationsCall(
         nock,
-        [providerDestination],
+        returnEmpty ? [] : [providerDestination],
         200,
         providerServiceToken
       )
     ];
   }
 
-  function mockSubscriber(): nock.Scope[] {
+  function mockSubscriber(returnEmpty: boolean): nock.Scope[] {
     return [
       mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
       mockSubaccountDestinationsCall(
         nock,
-        [subscriberDestination],
+        returnEmpty ? [] : [subscriberDestination],
         200,
         subscriberServiceToken
       )
@@ -84,18 +85,27 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
   }
 
   // The same destination name is used for provider and subscriber but the URL is different to distinguish which destination was fetched in the end.
-  function mockProviderAndSubscriber(): mocks {
+  function mockProviderAndSubscriber(
+    subscriberEmpty: boolean,
+    providerEmpty: boolean
+  ): mocks {
     return {
-      subscriberMocks: mockSubscriber(),
-      providerMocks: mockProvider()
+      subscriberMocks: mockSubscriber(subscriberEmpty),
+      providerMocks: mockProvider(providerEmpty)
     };
   }
 
-  function mockThingsForCombinations(): mocks {
+  function mockThingsForCombinations(
+    subscriberEmpty = false,
+    providerEmpty = false
+  ): mocks {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    return mockProviderAndSubscriber();
+    return {
+      subscriberMocks: mockSubscriber(subscriberEmpty),
+      providerMocks: mockProvider(providerEmpty)
+    };
   }
 
   function assertSubscriberNotCalledAndProviderFound(
@@ -137,18 +147,33 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       assertSubscriberNotCalledAndProviderFound(mocks, actual!);
     });
 
-    it('subscriberUserToken && subscriberFirst: should try subscriber first, provider second and return subscriber destination', async () => {
+    it('subscriberUserToken && subscriberFirst: should try subscriber first (found something), provider not called and return subscriber destination', async () => {
       mockThingsForCombinations();
 
       const requestSpy = jest.spyOn(
         destinationService,
         'fetchSubaccountDestinations'
       );
-      const actualProvider = await fetchDestination(
-        subscriberUserJwt,
-        subscriberFirst
+      const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
+      expect(requestSpy).toHaveBeenCalledTimes(1);
+      expect(requestSpy).toHaveBeenNthCalledWith(
+        1,
+        'https://destination.example.com',
+        subscriberServiceToken,
+        expect.anything()
       );
+      expect(actual!.url).toBe(subscriberDestination.URL);
+    });
 
+    it('subscriberUserToken && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
+      mockThingsForCombinations(true, false);
+
+      const requestSpy = jest.spyOn(
+        destinationService,
+        'fetchSubaccountDestinations'
+      );
+      const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
+      expect(requestSpy).toHaveBeenCalledTimes(2);
       expect(requestSpy).toHaveBeenNthCalledWith(
         1,
         'https://destination.example.com',
@@ -161,7 +186,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         providerServiceToken,
         expect.anything()
       );
-      expect(actualProvider!.url).toBe(subscriberDestination.URL);
+      expect(actual!.url).toBe(providerDestination.URL);
     });
   });
 

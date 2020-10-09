@@ -14,7 +14,10 @@ import {
 import { IsolationStrategy } from './cache';
 import { addProxyConfigurationOnPrem } from './connectivity-service';
 import { sanitizeDestination } from './destination';
-import { DestinationsByType } from './destination-accessor-types';
+import {
+  AllDestinations,
+  DestinationsByType
+} from './destination-accessor-types';
 import { destinationCache } from './destination-cache';
 import {
   alwaysProvider,
@@ -286,7 +289,7 @@ function emptyDestinationsByType(
   destinationByType: DestinationsByType
 ): boolean {
   return (
-    !destinationByType.instance.length && !destinationByType.instance.length
+    !destinationByType.instance.length && !destinationByType.subaccount.length
   );
 }
 
@@ -307,11 +310,11 @@ class DestinationAccessor {
     return (
       da.trySubscriberCache() ??
       (await da.tryProviderCache()) ??
-      da.postSeriveSteps(await da.tryForOAuth()) ??
-      da.postSeriveSteps(await da.tryForCert()) ??
-      da.postSeriveSteps(await da.tryService())
+      (await da.postSeriveSteps(await da.tryForOAuth())) ??
+      (await da.postSeriveSteps(await da.tryForCert())) ??
+      (await da.postSeriveSteps(await da.tryService())) ??
+      undefined
     );
-    return;
   }
 
   private static async getDecodedUserJwt(
@@ -331,17 +334,18 @@ class DestinationAccessor {
     return serviceToken('destination', optionsWithoutJwt);
   }
 
-  private subscriberDestinationCache:
-    | DestinationsByType
-    | undefined = undefined;
-  private providerDestinationCache: DestinationsByType | undefined = undefined;
+  private subscriberDestinationCache: DestinationsByType | undefined;
+  private providerDestinationCache: DestinationsByType | undefined;
 
   private constructor(
     private name: string,
     private options: DestinationOptions,
     private decodedUserJwt: DecodedJWT | undefined,
     private providerToken: string
-  ) {}
+  ) {
+    this.providerDestinationCache = undefined;
+    this.subscriberDestinationCache = undefined;
+  }
 
   private get useCache(): boolean {
     return this.options.useCache || false;
@@ -418,15 +422,19 @@ class DestinationAccessor {
     if (!destination) {
       return;
     }
-    if (proxyStrategy(destination) === ProxyStrategy.ON_PREMISE_PROXY) {
-      return addProxyConfigurationOnPrem(destination, this.options.userJwt);
+
+    switch (proxyStrategy(destination)) {
+      case ProxyStrategy.ON_PREMISE_PROXY:
+        return addProxyConfigurationOnPrem(destination, this.options.userJwt);
+      case ProxyStrategy.INTERNET_PROXY:
+        return addProxyConfigurationInternet(destination);
+      case ProxyStrategy.NO_PROXY:
+        return destination;
+      default:
+        throw new Error(
+          'Illegal argument: No valid proxy configuration found in the destination input to be aded.'
+        );
     }
-    if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
-      return addProxyConfigurationInternet(destination);
-    }
-    throw new Error(
-      'Illegal argument: No valid proxy configuration found in the destination input to be aded.'
-    );
   }
 
   private async postSeriveSteps(
@@ -435,12 +443,25 @@ class DestinationAccessor {
     if (!destination) {
       return;
     }
-    return this.updateCache(
+    return this.updateCacheSingle(
       this.printSuccess(await this.addProxyConfiguration(destination))
     );
   }
 
-  private updateCache(
+  private updateCacheService(
+    token: DecodedJWT,
+    destinations: DestinationsByType
+  ) {
+    if (this.useCache) {
+      destinationCache.cacheRetrievedDestinations(
+        token,
+        destinations,
+        this.isolationStrategy
+      );
+    }
+  }
+
+  private updateCacheSingle(
     destination: Destination | undefined
   ): Destination | undefined {
     if (!this.useCache || !destination) {
@@ -467,12 +488,15 @@ class DestinationAccessor {
   }
 
   private async tryService(): Promise<Destination | undefined> {
-    const subscriber = await this.getSubscriberDestination();
-    const provider = await this.getProviderDestinations();
+    const allDest: AllDestinations = {
+      provider: await this.getProviderDestinations(),
+      subscriber: await this.getSubscriberDestination()
+    };
     const selectedFromService = await this.selectionStrategy(
-      { provider, subscriber },
+      allDest,
       this.name
     );
+
     if (!selectedFromService) {
       logger.info('Could not retrieve destination from destination service.');
     }
@@ -483,6 +507,13 @@ class DestinationAccessor {
     if (this.selectionStrategy === alwaysSubscriber) {
       return emptyDestinationByType;
     }
+    if (
+      this.selectionStrategy === subscriberFirst &&
+      !emptyDestinationsByType(await this.getSubscriberDestination())
+    ) {
+      return emptyDestinationByType;
+    }
+
     if (this.providerDestinationCache) {
       return this.providerDestinationCache;
     }
@@ -494,6 +525,10 @@ class DestinationAccessor {
         destinationServiceCreds.uri,
         this.providerToken,
         this.options
+      );
+      this.updateCacheService(
+        this.decodedProviderToken,
+        this.providerDestinationCache
       );
     }
 
@@ -512,6 +547,7 @@ class DestinationAccessor {
     if (!shouldExecuteSubscriberCalls) {
       return emptyDestinationByType;
     }
+
     if (!this.subscriberDestinationCache) {
       const destinationServiceCreds = getDestinationServiceCredentials();
 
@@ -519,10 +555,14 @@ class DestinationAccessor {
         userJwt: this.decodedUserJwt,
         ...this.options
       });
-      return getInstanceAndSubaccountDestinations(
+      this.subscriberDestinationCache = await getInstanceAndSubaccountDestinations(
         destinationServiceCreds.uri,
         accessToken,
         this.options
+      );
+      this.updateCacheService(
+        this.decodedUserJwt,
+        this.subscriberDestinationCache
       );
     }
 
@@ -549,7 +589,7 @@ class DestinationAccessor {
     }
   }
 
-  private async useProviderCache(): Promise<boolean> {
+  private async considerProviderCache(): Promise<boolean> {
     if (this.selectionStrategy === alwaysSubscriber) {
       return false;
     }
@@ -563,10 +603,11 @@ class DestinationAccessor {
       return true;
     }
     const subscriberDestinations = await this.getSubscriberDestination();
-    if (emptyDestinationsByType(subscriberDestinations)) {
+    // We are in selection strategy subscriberFirst here. So if we get something from subscriber ignore provider.
+    if (!emptyDestinationsByType(subscriberDestinations)) {
       return false;
     }
-    return false;
+    return true;
   }
 
   private async tryProviderCache(): Promise<Destination | undefined> {
@@ -580,7 +621,7 @@ class DestinationAccessor {
         return;
       }
 
-      if (await this.useProviderCache()) {
+      if (await this.considerProviderCache()) {
         logger.info(
           'Successfully retrieved destination from destination service cache for provider destinations.'
         );

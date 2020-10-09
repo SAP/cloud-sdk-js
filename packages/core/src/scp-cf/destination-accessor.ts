@@ -310,9 +310,9 @@ class DestinationAccessor {
     return (
       da.trySubscriberCache() ??
       (await da.tryProviderCache()) ??
-      (await da.postSeriveSteps(await da.tryForOAuth())) ??
-      (await da.postSeriveSteps(await da.tryForCert())) ??
-      (await da.postSeriveSteps(await da.tryService())) ??
+      (await da.processDestinationResult(await da.tryForOAuth())) ??
+      (await da.processDestinationResult(await da.tryForCert())) ??
+      (await da.processDestinationResult(await da.tryService())) ??
       undefined
     );
   }
@@ -437,14 +437,17 @@ class DestinationAccessor {
     }
   }
 
-  private async postSeriveSteps(
+  private async processDestinationResult(
     destination: Destination | undefined
   ): Promise<Destination | undefined> {
     if (!destination) {
       return;
     }
+
+    logger.info('Successfully retrieved destination from destination service.');
+
     return this.updateCacheSingle(
-      this.printSuccess(await this.addProxyConfiguration(destination))
+      await this.addProxyConfiguration(destination)
     );
   }
 
@@ -476,17 +479,6 @@ class DestinationAccessor {
     return destination;
   }
 
-  private printSuccess(
-    destination: Destination | undefined
-  ): Destination | undefined {
-    if (destination) {
-      logger.info(
-        'Successfully retrieved destination from destination service.'
-      );
-    }
-    return destination;
-  }
-
   private async tryService(): Promise<Destination | undefined> {
     const allDest: AllDestinations = {
       provider: await this.getProviderDestinations(),
@@ -503,7 +495,7 @@ class DestinationAccessor {
     return selectedFromService ?? undefined;
   }
 
-  private async somethindFoundForSubscriber(): Promise<boolean> {
+  private async destinationFoundFromSubscriber(): Promise<boolean> {
     const subscriber = await this.getSubscriberDestination();
     if (
       this.selectionStrategy(
@@ -520,18 +512,8 @@ class DestinationAccessor {
   }
 
   private async getProviderDestinations(): Promise<DestinationsByType> {
-    if (this.selectionStrategy === alwaysSubscriber) {
+    if (!(await this.isProviderNeeded())) {
       return emptyDestinationByType;
-    }
-    if (
-      this.selectionStrategy === subscriberFirst &&
-      (await this.somethindFoundForSubscriber())
-    ) {
-      return emptyDestinationByType;
-    }
-
-    if (this.providerDestinationCache) {
-      return this.providerDestinationCache;
     }
 
     if (!this.providerDestinationCache) {
@@ -552,15 +534,7 @@ class DestinationAccessor {
   }
 
   private async getSubscriberDestination() {
-    if (!this.decodedUserJwt) {
-      return emptyDestinationByType;
-    }
-
-    const shouldExecuteSubscriberCalls =
-      !isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken) &&
-      this.selectionStrategy !== alwaysProvider;
-
-    if (!shouldExecuteSubscriberCalls) {
+    if (!this.isSubscriberNeeded()) {
       return emptyDestinationByType;
     }
 
@@ -577,7 +551,7 @@ class DestinationAccessor {
         this.options
       );
       this.updateCacheService(
-        this.decodedUserJwt,
+        this.decodedUserJwt!,
         this.subscriberDestinationCache
       );
     }
@@ -586,13 +560,9 @@ class DestinationAccessor {
   }
 
   private trySubscriberCache(): Destination | undefined {
-    if (
-      this.useCache &&
-      this.decodedUserJwt &&
-      this.selectionStrategy !== alwaysProvider
-    ) {
+    if (this.useCache && this.isSubscriberNeeded()) {
       const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(
-        this.decodedUserJwt,
+        this.decodedUserJwt!,
         this.name,
         this.isolationStrategy
       );
@@ -604,8 +574,21 @@ class DestinationAccessor {
       }
     }
   }
+  private isSubscriberNeeded(): boolean {
+    if (!this.decodedUserJwt) {
+      return false;
+    }
+    if (this.selectionStrategy === alwaysProvider) {
+      return false;
+    }
+    if (isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken)) {
+      return false;
+    }
 
-  private async considerProviderCache(): Promise<boolean> {
+    return true;
+  }
+
+  private async isProviderNeeded(): Promise<boolean> {
     if (this.selectionStrategy === alwaysSubscriber) {
       return false;
     }
@@ -619,7 +602,7 @@ class DestinationAccessor {
       return true;
     }
     // We are in selection strategy subscriberFirst here. So if we get something from subscriber ignore provider.
-    if (await this.somethindFoundForSubscriber()) {
+    if (await this.destinationFoundFromSubscriber()) {
       return false;
     }
     return true;
@@ -636,7 +619,7 @@ class DestinationAccessor {
         return;
       }
 
-      if (await this.considerProviderCache()) {
+      if (await this.isProviderNeeded()) {
         logger.info(
           'Successfully retrieved destination from destination service cache for provider destinations.'
         );

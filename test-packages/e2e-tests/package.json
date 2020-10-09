@@ -15,10 +15,13 @@
     "sqlite3": "^5.0.0"
   },
   "scripts": {
-    "start:daemon": "pm2 start start.js",
-    "start": "cds run",
-    "deploy:to-sqlite": "cds deploy --to sqlite",
-    "test": "yarn jest --coverage",
+    "pretest": "yarn deploy && yarn start",
+    "posttest": "yarn stop",
+    "start": "pm2 start cds-run.js",
+    "stop": "pm2 stop cds-run.js",
+    "deploy": "cds deploy --to sqlite",
+    "test": "yarn jest",
+    "test:local": "yarn jest",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "cds": {

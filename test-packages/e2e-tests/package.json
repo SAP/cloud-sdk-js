@@ -15,7 +15,7 @@
     "sqlite3": "^5.0.0"
   },
   "scripts": {
-    "pretest": "yarn start",
+    "pretest": "yarn deploy && yarn start",
     "posttest": "yarn stop",
     "start": "pm2 start cds-run.js",
     "stop": "pm2 stop cds-run.js",

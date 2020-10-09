@@ -23,6 +23,7 @@ import {
 } from '../test-util/destination-service-mocks';
 import {
   alwaysProvider,
+  alwaysSubscriber,
   AuthenticationType,
   destinationCache,
   getDestination,
@@ -55,6 +56,24 @@ function getProviderCache(isolationStrategy: IsolationStrategy) {
     'ProviderDest',
     isolationStrategy
   );
+}
+
+function mockDestinationsWithSameName() {
+  nock.cleanAll();
+
+  mockServiceBindings();
+  mockServiceToken();
+
+  const dest = {
+    URL: 'https://subscriber.example',
+    Name: 'SubscriberDest',
+    ProxyType: 'any',
+    Authentication: 'NoAuthentification'
+  };
+  mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+  mockSubaccountDestinationsCall(nock, [dest], 200, subscriberServiceToken);
+  mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+  mockSubaccountDestinationsCall(nock, [dest], 200, providerServiceToken);
 }
 
 describe('caching destination', () => {
@@ -96,7 +115,7 @@ describe('caching destination', () => {
       );
     });
 
-    it('retrieved subscriber destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
+    it('retrieved subscriber and provider destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
       mockVerifyJwt();
 
       await getDestination('ANY', {
@@ -112,36 +131,13 @@ describe('caching destination', () => {
       const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
 
       expect(c1!.url).toBe('https://subscriber.example');
-      expect(c2).toBeUndefined();
-      expect(c3).toBeUndefined();
-      expect(c4).toBeUndefined();
-      expect(c5).toBeUndefined();
-    });
-
-    it('retrieved provider destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
-      mockVerifyJwt();
-
-      await getDestination('ANY', {
-        userJwt: subscriberUserJwt,
-        useCache: true,
-        cacheVerificationKeys: false,
-        selectionStrategy: alwaysProvider
-      });
-
-      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = getProviderCache(IsolationStrategy.Tenant);
-      const c3 = getSubscriberCache(IsolationStrategy.User);
-      const c4 = getSubscriberCache(IsolationStrategy.No_Isolation);
-      const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
-
       expect(c2!.url).toBe('https://provider.example');
-      expect(c1).toBeUndefined();
       expect(c3).toBeUndefined();
       expect(c4).toBeUndefined();
       expect(c5).toBeUndefined();
     });
 
-    it('retrieved subscriber destinations are cached using only destination name in "NoIsolation" type', async () => {
+    it('retrieved subscriber and provider destinations are cached using only destination name in "NoIsolation" type', async () => {
       mockVerifyJwt();
 
       await getDestination('ANY', {
@@ -158,34 +154,58 @@ describe('caching destination', () => {
       const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
 
       expect(c1!.url).toBe('https://subscriber.example');
-      expect(c2).toBeUndefined();
+      expect(c2!.url).toBe('https://provider.example');
       expect(c3).toBeUndefined();
       expect(c4).toBeUndefined();
       expect(c5).toBeUndefined();
     });
 
-    it('retrieved provider destinations are cached using only destination name in "NoIsolation" type', async () => {
-      mockVerifyJwt();
-
+    it('caches only subscriber if the destination names are the same and subscriber first', async () => {
+      mockDestinationsWithSameName();
       await getDestination('ANY', {
         userJwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.No_Isolation,
+        isolationStrategy: IsolationStrategy.Tenant,
+        cacheVerificationKeys: false
+      });
+
+      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = getProviderCache(IsolationStrategy.Tenant);
+
+      expect(c1!.url).toBe('https://subscriber.example');
+      expect(c2).toBeUndefined();
+    });
+
+    it('caches only provider if selection strategy always provider', async () => {
+      await getDestination('ANY', {
+        userJwt: subscriberUserJwt,
+        useCache: true,
+        isolationStrategy: IsolationStrategy.Tenant,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysProvider
       });
 
-      const c1 = getSubscriberCache(IsolationStrategy.No_Isolation);
-      const c2 = getProviderCache(IsolationStrategy.No_Isolation);
-      const c3 = getSubscriberCache(IsolationStrategy.User);
-      const c4 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
+      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = getProviderCache(IsolationStrategy.Tenant);
 
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://provider.example');
-      expect(c3).toBeUndefined();
-      expect(c4).toBeUndefined();
-      expect(c5).toBeUndefined();
+    });
+
+    it('caches only subscriber if selection strategy always subscriber', async () => {
+      await getDestination('ANY', {
+        userJwt: subscriberUserJwt,
+        useCache: true,
+        isolationStrategy: IsolationStrategy.Tenant,
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysSubscriber
+      });
+
+      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = getProviderCache(IsolationStrategy.Tenant);
+
+      expect(c1!.url).toBe('https://subscriber.example');
+      expect(c2).toBeUndefined();
     });
   });
 

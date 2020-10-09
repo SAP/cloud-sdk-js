@@ -503,13 +503,29 @@ class DestinationAccessor {
     return selectedFromService ?? undefined;
   }
 
+  private async somethindFoundForSubscriber(): Promise<boolean> {
+    const subscriber = await this.getSubscriberDestination();
+    if (
+      this.selectionStrategy(
+        {
+          provider: emptyDestinationByType,
+          subscriber
+        },
+        this.name
+      )
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   private async getProviderDestinations(): Promise<DestinationsByType> {
     if (this.selectionStrategy === alwaysSubscriber) {
       return emptyDestinationByType;
     }
     if (
       this.selectionStrategy === subscriberFirst &&
-      !emptyDestinationsByType(await this.getSubscriberDestination())
+      (await this.somethindFoundForSubscriber())
     ) {
       return emptyDestinationByType;
     }
@@ -602,9 +618,8 @@ class DestinationAccessor {
     ) {
       return true;
     }
-    const subscriberDestinations = await this.getSubscriberDestination();
     // We are in selection strategy subscriberFirst here. So if we get something from subscriber ignore provider.
-    if (!emptyDestinationsByType(subscriberDestinations)) {
+    if (await this.somethindFoundForSubscriber()) {
       return false;
     }
     return true;

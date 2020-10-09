@@ -1,0 +1,43 @@
+{
+  "name": "@sap-cloud-sdk/generator-rest",
+  "version": "1.20.1",
+  "description": "SAP Cloud SDK for JavaScript REST api generator",
+  "homepage": "https://www.sap.com/cloud-sdk",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "generate-odata-client": "./dist/generator-cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.wdf.sap.corp/MA/sdk-js"
+  },
+  "scripts": {
+    "compile": "npx tsc",
+    "prepare": "npm run compile",
+    "test": "npx jest --coverage"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/core": "^1.28.1",
+    "@sap-cloud-sdk/util": "^1.28.1",
+    "execa": "^3.4.0",
+    "fs-extra": "^9.0.0",
+    "typescript": "~3.8.3",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "cli-4.2.1",
+    "@types/jest": "^24.0.25",
+    "axios": "0.19.0",
+    "jest": "^24.9.0",
+    "jest-junit": "^6.4.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "3.7.4"
+  }
+}

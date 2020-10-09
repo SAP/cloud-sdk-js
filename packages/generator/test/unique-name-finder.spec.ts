@@ -14,6 +14,11 @@ describe('Unique name finder', () => {
     expect(finder.findUniqueName('SomeEntity')).toBe('SomeEntity_1');
   });
 
+  it('should add a suffix if a name in different casing already exists', () => {
+    const finder = new UniqueNameFinder('_', ['SomeEntity']);
+    expect(finder.findUniqueName('Someentity', false)).toBe('Someentity_1');
+  });
+
   it('should handle names ending with _1 correctly.', () => {
     let finder = new UniqueNameFinder('_', ['MyClass']);
     expect(finder.findUniqueName('MyClass')).toBe('MyClass_1');

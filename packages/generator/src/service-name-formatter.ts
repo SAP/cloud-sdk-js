@@ -22,8 +22,7 @@ export class ServiceNameFormatter {
 
   private finderServiceWide = new UniqueNameFinder(
     '_',
-    reservedServiceKeywords,
-    false
+    reservedServiceKeywords
   );
 
   private parameterNamesFinder: {
@@ -33,6 +32,7 @@ export class ServiceNameFormatter {
   private staticPropertyNamesFinder: {
     [entitySetOrComplexTypeName: string]: UniqueNameFinder;
   } = {};
+
   private instancePropertyNamesFinder: {
     [entitySetOrComplexTypeName: string]: UniqueNameFinder;
   } = {};
@@ -66,6 +66,7 @@ export class ServiceNameFormatter {
         ] = new UniqueNameFinder();
       }
     );
+
     if (functionImportNames) {
       functionImportNames.forEach(functionImportName => {
         this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
@@ -85,7 +86,7 @@ export class ServiceNameFormatter {
     );
     const newName = finder.findUniqueName(transformedName);
 
-    finder.addToAlreadyUsedNames(newName);
+    finder.addToUsedNames(newName);
     return newName;
   }
 
@@ -100,7 +101,7 @@ export class ServiceNameFormatter {
     );
     const newName = finder.findUniqueName(transformedName);
 
-    finder.addToAlreadyUsedNames(newName);
+    finder.addToUsedNames(newName);
     return newName;
   }
 
@@ -108,7 +109,7 @@ export class ServiceNameFormatter {
     const transformedName = voca.camelCase(str);
     const newName = this.finderServiceWide.findUniqueName(transformedName);
 
-    this.finderServiceWide.addToAlreadyUsedNames(newName);
+    this.finderServiceWide.addToUsedNames(newName);
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
 
@@ -122,9 +123,12 @@ export class ServiceNameFormatter {
       ''
     );
 
-    const newName = this.finderServiceWide.findUniqueName(transformedName);
+    const newName = this.finderServiceWide.findUniqueName(
+      transformedName,
+      false
+    );
 
-    this.finderServiceWide.addToAlreadyUsedNames(newName);
+    this.finderServiceWide.addToUsedNames(newName);
     return newName;
   }
 
@@ -151,7 +155,7 @@ export class ServiceNameFormatter {
     }
     const newName = this.finderServiceWide.findUniqueName(factoryName);
 
-    this.finderServiceWide.addToAlreadyUsedNames(newName);
+    this.finderServiceWide.addToUsedNames(newName);
     return newName;
   }
 
@@ -164,7 +168,7 @@ export class ServiceNameFormatter {
     const finder = this.getOrInitInstancePropertyNameFinder(entitySetName);
     const newName = finder.findUniqueName(transformedName);
 
-    finder.addToAlreadyUsedNames(newName);
+    finder.addToUsedNames(newName);
     return newName;
   }
 
@@ -179,7 +183,7 @@ export class ServiceNameFormatter {
     );
     const newName = finder.findUniqueName(transformedName);
 
-    finder.addToAlreadyUsedNames(newName);
+    finder.addToUsedNames(newName);
     return newName;
   }
 
@@ -193,9 +197,14 @@ export class ServiceNameFormatter {
 
     const newNames = this.finderServiceWide.findUniqueNameWithSuffixes(
       transformedName,
-      getInterfaceNamesSuffixes()
+      getInterfaceNamesSuffixes(),
+      false
     );
-    this.finderServiceWide.addToAlreadyUsedNames(...newNames);
+
+    newNames.forEach(name => {
+      this.finderServiceWide.addToUsedNames(name);
+    });
+
     return newNames[0];
   }
 

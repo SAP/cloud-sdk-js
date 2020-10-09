@@ -15,41 +15,45 @@ export class UniqueNameFinder {
     return name.replace(new RegExp('_\\d+$'), '');
   }
 
-  private alreadyUsedNames: string[] = [];
+  private static getNameForComparison(
+    name: string,
+    caseSensitive: boolean
+  ): string {
+    return caseSensitive ? name : name.toLowerCase();
+  }
+
+  private usedNames: string[] = [];
 
   /**
    * Creates an instance of UniqueNameFinder.
    * @param separator The separator to be used
-   * @param alreadyUsedNames Sets the already used names considered in the finding process. Reserved TS keywords are always checked.
+   * @param usedNames Sets the already used names considered in the finding process. Reserved TS keywords are always checked.
    */
   public constructor(
     private separator: Separator = '_',
-    alreadyUsedNames: string[] = [],
-    private caseSensitive = true
+    usedNames: string[] = []
   ) {
-    this.addToAlreadyUsedNames(...alreadyUsedNames);
+    this.addToUsedNames(...usedNames);
   }
-
 
   /**
    * Adds the name(s) to the already used names.
    * @param names Names to be added
    * @returns The instance of the finder.
    */
-  public addToAlreadyUsedNames(...names: string[]) {
-    this.alreadyUsedNames.push(
-      ...names.map(name => this.getNameForComparison(name))
-    );
+  public addToUsedNames(...names: string[]) {
+    this.usedNames.push(...names);
     return this;
   }
 
   /**
    * Find a unique name by appending a suffix of the form this.separator\d+ if necessary. If the name is already unique nothing is appended.
-   * @param name The name to get a unique name from
-   * @returns Unique name
+   * @param name The name to get a unique name from.
+   * @param caseSensitive Whether to check the already used names in a case sensitive manner.
+   * @returns A unique name
    */
-  public findUniqueName(name: string): string {
-    return this.findUniqueNameWithSuffixes(name, [])[0];
+  public findUniqueName(name: string, caseSensitive = true): string {
+    return this.findUniqueNameWithSuffixes(name, [], caseSensitive)[0];
   }
 
   /**
@@ -58,42 +62,56 @@ export class UniqueNameFinder {
    *
    * @param name The name to get a unique name from
    * @param suffixes Additional name suffixed to be considered
-   * @returns Unique names. The length of this array is one plus the number of suffixes provided. The first entry corresponds to the given name.
+   * @param caseSensitive Whether to check the already used names in a case sensitive manner.
+   * @returns A list of unique names. The length of this array is one plus the number of suffixes provided. The first entry corresponds to the given name.
    */
   public findUniqueNameWithSuffixes(
     name: string,
-    suffixes: string[]
+    suffixes: string[],
+    caseSensitive = true
   ): string[] {
-    const relevantAlreadyUsedNames = this.getUsedNamesStartingWith(
-      this.getNameForComparison(name)
+    const relevantUsedNames = this.getUsedNamesStartingWith(
+      name,
+      caseSensitive
     );
     if (
-      !this.areNamesAlreadyUsed(
+      !this.areNamesUsed(
         this.getAllNames(name, suffixes),
-        relevantAlreadyUsedNames
+        relevantUsedNames,
+        caseSensitive
       )
     ) {
       return [name, ...this.getAllNames(name, suffixes)];
     }
     const suffix = this.getUniqueNameUsingSuffix(
       name,
-      relevantAlreadyUsedNames,
-      suffixes
+      relevantUsedNames,
+      suffixes,
+      caseSensitive
     );
     return this.addSuffixes(name, suffix, suffixes);
   }
 
-  private getNameForComparison(name: string): string {
-    return name;//this.caseSensitive ? name : name.toLowerCase();
+  private getUsedNamesForComparison(caseSensitive: boolean): string[] {
+    return this.usedNames.map(name =>
+      UniqueNameFinder.getNameForComparison(name, caseSensitive)
+    );
   }
 
-  private areNamesAlreadyUsed(
+  private areNamesUsed(
     names: string[],
-    alreadyUsedNames: string[]
+    usedNames: string[],
+    caseSensitive: boolean
   ): boolean {
     return names.some(
       name =>
-        alreadyUsedNames.includes(this.getNameForComparison(name)) ||
+        usedNames
+          .map(usedName =>
+            UniqueNameFinder.getNameForComparison(usedName, caseSensitive)
+          )
+          .includes(
+            UniqueNameFinder.getNameForComparison(name, caseSensitive)
+          ) ||
         reservedVdmKeywords.has(name) ||
         reservedObjectPrototypeKeywords.has(name)
     );
@@ -113,17 +131,23 @@ export class UniqueNameFinder {
     return [name, ...suffixes.map(nameSuffix => `${name}${nameSuffix}`)];
   }
 
-  private getUsedNamesStartingWith(name: string): string[] {
+  private getUsedNamesStartingWith(
+    name: string,
+    caseSensitive: boolean
+  ): string[] {
     const modifiedName = UniqueNameFinder.removeSuffixIfPresent(name);
-    return this.alreadyUsedNames.filter(used =>
-      used.startsWith(this.getNameForComparison(modifiedName))
+    return this.getUsedNamesForComparison(caseSensitive).filter(used =>
+      used.startsWith(
+        UniqueNameFinder.getNameForComparison(modifiedName, caseSensitive)
+      )
     );
   }
 
   private getUniqueNameUsingSuffix(
     name: string,
-    alreadyUsedNames: string[],
-    nameSuffixes: string[]
+    usedNames: string[],
+    nameSuffixes: string[],
+    caseSensitive: boolean
   ): number {
     let suffix = 1;
 
@@ -131,7 +155,7 @@ export class UniqueNameFinder {
     // However with the related items in mind this is much easier and N should be small anyway.
     while (suffix < UniqueNameFinder.MAXIMUM_NUMBER_OF_SUFFIX) {
       const newNames = this.addSuffixes(name, suffix, nameSuffixes);
-      if (!this.areNamesAlreadyUsed(newNames, alreadyUsedNames)) {
+      if (!this.areNamesUsed(newNames, usedNames, caseSensitive)) {
         return suffix;
       }
       suffix++;

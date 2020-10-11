@@ -164,7 +164,7 @@ The following code sends a `*` in the `IF-MATCH` header which essentially corres
 ```java
 service.updateBusinessPartner(partner)
                  .matchAnyVersionIdentifier()
-                 .execute(destination);
+                 .executeRequest(destination);
 ```
 
 </TabItem>

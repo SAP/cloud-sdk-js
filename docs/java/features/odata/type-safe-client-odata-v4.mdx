@@ -231,7 +231,7 @@ Use `getModificationResult` to access response for a specific create, update or 
 
 ```java
 final ModificationResponse<BusinessPartner> createResult = response.getModificationResult(createBusinessPartner1);
-final ModificationResponse<BusinessPartner> deleteResult = response.getModificationResult(        .addChangeset(createBusinessPartner1(), createBusinessPartner2(), deleteBusinessPartner()));
+final ModificationResponse<BusinessPartner> deleteResult = response.getModificationResult(deleteBusinessPartner);
 ```
 
 Similarly, use the method `getReadResult` to access response for a specific retrieve request.

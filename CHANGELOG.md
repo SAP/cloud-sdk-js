@@ -30,6 +30,7 @@
 - [OData] Fix wrong service paths for batch requests.
 - [Generator] Fix reference to `execa` dependency.
 - [Generator] Fix writing of files with the same names but different casing.
+- Fix url encoding in batch requests.
 
 # 1.29.0
 

@@ -348,7 +348,7 @@ class DestinationAccessor {
   }
 
   private get useCache(): boolean {
-    return this.options.useCache || false;
+    return !!this.options.useCache;
   }
 
   private get selectionStrategy(): DestinationSelectionStrategy {

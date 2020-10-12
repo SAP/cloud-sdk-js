@@ -27,6 +27,57 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+## 3.30.0 - October 8, 2020
+
+### Compatibility Notes
+
+To unify OData V2 client to OData V4 client APIs, the API of custom header configuration has been simplified and partially deprecated on OData V2 side:
+
+```java
+    requestV2
+        .withHeader("Authorization", "Basic user:secret")
+        .onRequestAndImplicitRequests() // deprecated
+        .withHeader("User-Agent", "Robot")
+        .onRequestOnly() // deprecated
+        .execute(httpDestination);
+
+    // ... still works, but should be migrated to:
+
+    requestV2
+        .withHeader("Authorization", "Basic user:secret")
+        .withHeader("User-Agent", "Robot")
+        .executeRequest(httpDestination);
+ ```
+The deprecated code ist still usable. No breaking changes in code or behavior are introduced.
+
+The internal fluent helper class `FluentHelperCustomHttpHeader` is changed to a deprecated interface. The related methods `getHeadersForRequestAndImplicitRequests` and `getHeadersForRequestOnly` are deprecated. The former modifier will be used by default in the future. Please use the existing `withHeader` and `withHeaders` methods without the stating a deprecated modifier.
+
+The internal protected methods `getHeadersForRequestOnly` and `getHeadersForRequestAndImplicitRequests` from abstract base class `FluentHelperBasic` are deprecated. Please use protected `getHeaders()` instead.
+
+The internal interface `CsrfTokenRetriever` defines another `retrieveCsrfToken` method with additional `headers` parameter to be passed in the HTTP request.
+
+
+## New Functionality
+
+Blockchain Business Services update:
+
+- It is now possible to send, receive, and validate notarizations. Sending a document will automatically also send its notarizations if the visibility configuration is set to include notarizations.
+
+## Improvements
+
+- In case a `DefaultErpHttpDestination` decorates an on-premise `HttpDestination` and the destination configuration
+ lacks a `sap-client` property, an information message is logged to raise awareness for potential authentication issues.
+- Dependency Updates:
+  - Update Spring Boot from `2.3.3.RELEASE` to `2.3.4.RELEASE`
+  - Update JUnit Jupiter from `5.6.2` to `5.7.0`
+  - Update Spring from `5.2.8.RELEASE` to `5.2.9.RELEASE`
+  - Update Spring Security from `5.3.4.RELEASE` to `5.4.0`
+  - Update Mockito from `3.5.10` to `3.5.11`
+- Maven Plugin Updates in Archetypes:
+  - Update Maven Surefire Plugin from `3.0.0-M4` to `3.0.0-M5`
+  - Update Maven Jacoco Plugin from `0.8.5` to `0.8.6`
+
+
 ## 3.29.1 - September 24, 2020
 
 [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.29.1)

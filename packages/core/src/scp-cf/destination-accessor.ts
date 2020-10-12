@@ -470,7 +470,7 @@ class DestinationAccessor {
     if (!this.useCache || !destination) {
       return destination;
     }
-    // The information if the destination originates from a instance of account service is not relevant for the caching.
+    // The information whether the destination originates from an instance of account service is not relevant for caching.
     destinationCache.cacheRetrievedDestinations(
       this.decodedUserJwt || this.decodedProviderToken,
       { instance: [], subaccount: [destination] },

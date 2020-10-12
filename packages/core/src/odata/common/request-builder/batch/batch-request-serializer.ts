@@ -46,7 +46,9 @@ export function serializeRequest(request: MethodRequestBuilderBase) {
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
     '',
-    `${request.requestConfig.method.toUpperCase()} /${request.relativeUrl()} HTTP/1.1`,
+    `${request.requestConfig.method.toUpperCase()} /${encodeURI(
+      request.relativeUrl()
+    )} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',
     ...getPayload(request),

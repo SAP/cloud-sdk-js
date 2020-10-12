@@ -152,12 +152,11 @@ describe('batch request serializer', () => {
     });
 
     it("throws an error if the request option 'absolute' is with a destination without url.", () => {
-      const batchRequestBuilder = batch().withOptions({
-        subRequestPathType: 'absolute'
-      });
+      const batchRequestBuilder = batch().withSubRequestPathType('absolute');
       expect(() =>
         serializeBatchRequest(batchRequestBuilder, {
-          ...batchRequestBuilder.requestConfig.options,
+          subRequestPathType:
+            batchRequestBuilder.requestConfig.subRequestPathType,
           destination: {} as Destination
         })
       ).toThrowErrorMatchingInlineSnapshot(

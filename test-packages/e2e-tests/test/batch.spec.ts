@@ -18,7 +18,7 @@ describe('batch', () => {
       getAll,
       changeset(create)
     )
-      .withOptions({ subrequestPath: 'entityRelative' })
+      .withOptions({ subrequestPath: 'relativeToEntity' })
       .execute(destination);
 
     expect(retrieveResponse.isSuccess()).toBe(true);

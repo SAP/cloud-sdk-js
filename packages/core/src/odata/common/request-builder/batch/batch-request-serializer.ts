@@ -78,7 +78,7 @@ function getUrl<ConfigT extends ODataRequestConfig>(
   switch (options.subrequestPath) {
     case 'absolute':
       return request.url();
-    case 'entityRelative':
+    case 'relativeToEntity':
       return `/${request.relativeUrl(false)}`;
     default:
       return `/${request.relativeUrl()}`;

@@ -1,25 +1,33 @@
 import { Destination } from '../../../../scp-cf';
-
-export interface BatchRequestOptions {
-  subrequestPath?: 'absolute' | 'servicePathRelative' | 'entityRelative';
+interface BatchRequestOptionsAbsolute {
+  subrequestPath: 'absolute';
 }
 
-type BatchRequestOptionsAbsolute = BatchRequestOptions & {
-  subrequestPath: Extract<BatchRequestOptions['subrequestPath'], 'absolute'>;
-};
-
-type BatchRequestOptionsRelative = BatchRequestOptions & {
-  subrequestPath?: Exclude<BatchRequestOptions['subrequestPath'], 'absolute'>;
-};
-
-export type BatchRequestSerializationOptions =
-  | (BatchRequestOptionsAbsolute & Required<DestinationOption>)
-  | (BatchRequestOptionsRelative & DestinationOption);
+interface BatchRequestOptionsRelative {
+  subrequestPath?: 'relativeToService' | 'relativeToEntity';
+}
 
 interface DestinationOption {
   destination?: Destination;
 }
 
-export const defaultOptions: BatchRequestOptions = {
-  subrequestPath: 'servicePathRelative'
+/**
+ * Options to configure batch requests.
+ */
+export interface BatchRequestOptions {
+  /**
+   * The path in the sub request should be serialized as an absolute or relative url.
+   */
+  subrequestPath?: 'absolute' | 'relativeToService' | 'relativeToEntity';
+}
+
+/**
+ * Options to configure batch serialization.
+ */
+export type BatchRequestSerializationOptions =
+  | (BatchRequestOptionsAbsolute & Required<DestinationOption>)
+  | (BatchRequestOptionsRelative & DestinationOption);
+
+export const defaultOptions: BatchRequestSerializationOptions = {
+  subrequestPath: 'relativeToService'
 };

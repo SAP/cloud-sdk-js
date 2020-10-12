@@ -58,7 +58,7 @@ describe('batch request serializer', () => {
     it('serializes getAll request with entity relative sub request path', () => {
       expect(
         serializeRequest(TestEntity.requestBuilder().getAll(), {
-          subrequestPath: 'entityRelative',
+          subrequestPath: 'relativeToEntity',
           destination: { url: 'http://example.com' }
         })
       ).toMatchSnapshot();

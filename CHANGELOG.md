@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Add `withOptions` method to configure batch subrequests.
 
 ## Improvements
 

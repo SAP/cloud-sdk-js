@@ -16,9 +16,11 @@ describe('batch', () => {
 
     // FIXME: It should not be necessary to set a custom service path. This can only be done after batch is fixed in CAP.
     const [retrieveResponse, changesetResponse] = await batch(
-      getAll.withCustomServicePath('/'),
-      changeset(create.withCustomServicePath('/'))
-    ).execute(destination);
+      getAll,
+      changeset(create)
+    )
+      .withOptions({ subrequestPath: 'entityRelative' })
+      .execute(destination);
 
     expect(retrieveResponse.isSuccess()).toBe(true);
     expect(changesetResponse.isSuccess()).toBe(true);

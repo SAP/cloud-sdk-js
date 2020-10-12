@@ -29,9 +29,9 @@ import {
  * @param request - The request builder of the retrieve request.
  * @returns The request body.
  */
-export function toBatchRetrieveBodyV2(
+export async function toBatchRetrieveBodyV2(
   request: GetAllRequestBuilderV2<EntityV2> | GetByKeyRequestBuilderV2<EntityV2>
-): string {
+): Promise<string> {
   return serializeRequest(request);
 }
 

@@ -11,6 +11,7 @@ import {
   serializeChangeSet,
   serializeBatchRequest
 } from '../../src/odata/common/request-builder/batch/batch-request-serializer';
+import { Destination } from '../../src';
 
 describe('batch request serializer', () => {
   let testEntity: TestEntity;
@@ -32,6 +33,24 @@ describe('batch request serializer', () => {
             .getAll()
             .withCustomHeaders({ 'Custom-Header': 'custom' })
         )
+      ).toMatchSnapshot();
+    });
+
+    it('serializes getAll request with absolute sub request path', () => {
+      expect(
+        serializeRequest(TestEntity.requestBuilder().getAll(), {
+          subrequestPath: 'absolute',
+          destination: { url: 'http://example.com' }
+        })
+      ).toMatchSnapshot();
+    });
+
+    it('serializes getAll request with entity relative sub request path', () => {
+      expect(
+        serializeRequest(TestEntity.requestBuilder().getAll(), {
+          subrequestPath: 'entityRelative',
+          destination: { url: 'http://example.com' }
+        })
       ).toMatchSnapshot();
     });
 
@@ -120,6 +139,20 @@ describe('batch request serializer', () => {
       } as ODataBatchRequestConfig;
 
       expect(serializeBatchRequest(request)).toMatchSnapshot();
+    });
+
+    it("throws an error if the request option 'absolute' is with a destination without url.", () => {
+      const batchRequestBuilder = batch().withOptions({
+        subrequestPath: 'absolute'
+      });
+      expect(() =>
+        serializeBatchRequest(batchRequestBuilder, {
+          ...batchRequestBuilder.requestConfig.options,
+          destination: {} as Destination
+        })
+      ).toThrowErrorMatchingInlineSnapshot(
+        '"Cannot serialize batch request. Invalid destination provided for sub request path type \'absolute\'"'
+      );
     });
   });
 });

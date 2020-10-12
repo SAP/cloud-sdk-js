@@ -3,8 +3,8 @@
 import { MethodRequestBuilderBase } from '../request-builder-base';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import { Constructable, EntityBase } from '../../entity';
-import { serializeBatchRequest } from './batch-request-serializer';
 import { BatchChangeSet } from './batch-change-set';
+import { BatchRequestOptions } from './batch-request-options';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
@@ -27,6 +27,10 @@ export class BatchRequestBuilder extends MethodRequestBuilderBase<
     readonly entityToConstructorMap: Record<string, Constructable<EntityBase>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
-    this.requestConfig.payload = serializeBatchRequest(this);
+  }
+
+  withOptions(options: BatchRequestOptions): this {
+    this.requestConfig.withOptions(options);
+    return this;
   }
 }

@@ -221,8 +221,8 @@ Use `execute` to issue the batch request to the remote system. We receive an ins
 final BatchResponse result =
     service
         .batch()
-        .addReadOperations(businessPartners, businessPartnerByKey)
-        .addChangeset(createBusinessPartner1(), createBusinessPartner2(), deleteBusinessPartner())
+        .addReadOperations(getBusinessPartners, getBusinessPartnerByKey)
+        .addChangeset(createBusinessPartner1, createBusinessPartner2, deleteBusinessPartner)
         .execute(destination);
 ```
 

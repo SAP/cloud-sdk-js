@@ -18,7 +18,7 @@ describe('batch', () => {
       getAll,
       changeset(create)
     )
-      .withSubRequestPathType('relativeToService')
+      .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 
     expect(retrieveResponse.isSuccess()).toBe(true);

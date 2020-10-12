@@ -211,7 +211,7 @@ The described API is subject to change
 #### Execute Batch Request
 The `service` object offers the method `batch` which allows access to the batch-related methods that help build the batch request.
 
-Multiple single requests (like `createBusinessPartner`) can be wrapped into so-called change sets.
+Multiple single requests (like `createBusinessPartnerRequest`) can be wrapped into so-called change sets.
 A change set can be added by `addChangeset` and the corresponding create, update or delete operations can be passed as partmenters into it. You can wrap multiple change sets into one batch request.
 Similarly, retrieve operations can be added to the batch request by using `addReadOperations`.
 
@@ -222,7 +222,7 @@ final BatchResponse result =
     service
         .batch()
         .addReadOperations(getBusinessPartners, getBusinessPartnerByKey)
-        .addChangeset(createBusinessPartner1, createBusinessPartner2, deleteBusinessPartner)
+        .addChangeset(createBusinessPartnerRequest1, createBusinessPartnerRequest2, deleteBusinessPartnerRequest)
         .execute(destination);
 ```
 
@@ -230,8 +230,8 @@ final BatchResponse result =
 Use `getModificationResult` to access response for a specific create, update or delete operation.
 
 ```java
-final ModificationResponse<BusinessPartner> createResult = response.getModificationResult(createBusinessPartner1);
-final ModificationResponse<BusinessPartner> deleteResult = response.getModificationResult(deleteBusinessPartner);
+final ModificationResponse<BusinessPartner> createResult = response.getModificationResult(createBusinessPartner1Request);
+final ModificationResponse<BusinessPartner> deleteResult = response.getModificationResult(deleteBusinessPartnerRequest);
 ```
 
 Similarly, use the method `getReadResult` to access response for a specific retrieve request.
@@ -240,6 +240,8 @@ Similarly, use the method `getReadResult` to access response for a specific retr
 final List<BusinessPartners> readAllResult = response.getReadResult(getBusinessPartners);
 final BusinessPartner readByKeyResult = response.getReadResult(getBusinessPartnerByKey);
 ```
+
+As per the OData specification, either all operations or none within the same change set are successful. Hence, if the change set was a failure then evaluating the result of any of the contained requests will contain the failure of the change set.
 
 <!--
 ### Count ###

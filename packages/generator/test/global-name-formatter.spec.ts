@@ -1,7 +1,7 @@
 import { GlobalNameFormatter } from '../src/global-name-formatter';
 import { VdmMapping } from '../src/service-mapping';
 
-describe('GlobalNameFormatter', () => {
+describe('global-name-formatter', () => {
   const vdmMapping: VdmMapping = {
     API_A_SERV: {
       directoryName: 'a-serv',

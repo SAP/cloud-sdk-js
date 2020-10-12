@@ -169,7 +169,7 @@ function builder(
           `Returns an entity builder to construct instances \`${entity.className}\`.`,
           {
             returns: {
-              type: `EntityBuilderType<${entity.className}, ${entity.className}TypeForceMandatory>`,
+              type: `EntityBuilderType<${entity.className}, ${entity.className}Type>`,
               description: `A builder that constructs instances of entity type \`${entity.className}\`.`
             }
           }

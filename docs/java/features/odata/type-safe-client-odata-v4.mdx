@@ -243,8 +243,8 @@ final ModificationResponse<BusinessPartner> deleteResult = response.getModificat
 Similarly, use the method `getReadResult` to access response for a specific retrieve request.
 
 ```java
-final List<BusinessPartners> readAllResult = response.getReadResult(getBusinessPartners);
-final BusinessPartner readByKeyResult = response.getReadResult(getBusinessPartnerByKey);
+List<BusinessPartners> readAllResult = response.getReadResult(getBusinessPartners);
+BusinessPartner readByKeyResult = response.getReadResult(getBusinessPartnerByKey);
 ```
 
 As per the OData specification, either all operations or none within the same change set are successful. Hence, if the change set was a failure then evaluating the result of any of the contained requests will contain the failure of the change set.

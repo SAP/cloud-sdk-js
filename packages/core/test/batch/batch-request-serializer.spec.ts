@@ -49,7 +49,7 @@ describe('batch request serializer', () => {
     it('serializes getAll request with absolute sub request path', () => {
       expect(
         serializeRequest(TestEntity.requestBuilder().getAll(), {
-          subrequestPath: 'absolute',
+          subRequestPathType: 'absolute',
           destination: { url: 'http://example.com' }
         })
       ).toMatchSnapshot();
@@ -58,7 +58,7 @@ describe('batch request serializer', () => {
     it('serializes getAll request with entity relative sub request path', () => {
       expect(
         serializeRequest(TestEntity.requestBuilder().getAll(), {
-          subrequestPath: 'relativeToEntity',
+          subRequestPathType: 'relativeToEntity',
           destination: { url: 'http://example.com' }
         })
       ).toMatchSnapshot();
@@ -153,7 +153,7 @@ describe('batch request serializer', () => {
 
     it("throws an error if the request option 'absolute' is with a destination without url.", () => {
       const batchRequestBuilder = batch().withOptions({
-        subrequestPath: 'absolute'
+        subRequestPathType: 'absolute'
       });
       expect(() =>
         serializeBatchRequest(batchRequestBuilder, {

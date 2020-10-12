@@ -7,9 +7,8 @@ import { MethodRequestBuilderBase } from '../request-builder-base';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchRequestBuilder } from './batch-request-builder';
 import {
-  BatchRequestOptions,
   BatchRequestSerializationOptions,
-  defaultOptions
+  BatchSubRequestPathType
 } from './batch-request-options';
 /**
  * Serialize change set to string.
@@ -19,7 +18,7 @@ import {
  */
 export function serializeChangeSet(
   changeSet: BatchChangeSet,
-  options: BatchRequestSerializationOptions = defaultOptions
+  options: BatchRequestSerializationOptions = {}
 ): string | undefined {
   if (changeSet.requests.length) {
     return [
@@ -42,7 +41,7 @@ export function serializeChangeSet(
  */
 export function serializeRequest(
   request: MethodRequestBuilderBase,
-  options: BatchRequestSerializationOptions = defaultOptions
+  options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
     request.requestConfig,
@@ -62,7 +61,7 @@ export function serializeRequest(
     'Content-Transfer-Encoding: binary',
     '',
     `${request.requestConfig.method.toUpperCase()} ${encodeURI(
-      getUrl(odataRequest, options)
+      getUrl(odataRequest, options.subRequestPathType)
     )} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',
@@ -73,9 +72,9 @@ export function serializeRequest(
 
 function getUrl<ConfigT extends ODataRequestConfig>(
   request: ODataRequest<ConfigT>,
-  options: BatchRequestOptions
+  subRequestPathType?: BatchSubRequestPathType
 ): string {
-  switch (options.subrequestPath) {
+  switch (subRequestPathType) {
     case 'absolute':
       return request.url();
     case 'relativeToEntity':
@@ -92,7 +91,8 @@ function getPayload(request: MethodRequestBuilderBase): string[] {
 }
 
 function validateOptions(options: BatchRequestSerializationOptions): void {
-  if (options.subrequestPath === 'absolute' && !options.destination?.url) {
+  // This should never happen. Can only occur if requestbuilder.build() was called which will be removed.
+  if (options.subRequestPathType === 'absolute' && !options.destination?.url) {
     throw new Error(
       "Cannot serialize batch request. Invalid destination provided for sub request path type 'absolute'"
     );
@@ -107,7 +107,7 @@ function validateOptions(options: BatchRequestSerializationOptions): void {
  */
 export function serializeBatchRequest(
   request: BatchRequestBuilder,
-  options: BatchRequestSerializationOptions = defaultOptions
+  options: BatchRequestSerializationOptions = {}
 ): string {
   validateOptions(options);
   const serializedSubRequests = request.requests

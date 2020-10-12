@@ -19,6 +19,7 @@
 
 ## New Functionality
 
+- [OData] Add `withSubRequestType` method to configure how batch sub requests are serialized.
 - [OData] Support batch requests for OData v4.
 
 ## Improvements

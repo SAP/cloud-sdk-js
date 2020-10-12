@@ -17,7 +17,7 @@
   "scripts": {
     "pretest": "yarn deploy && yarn start",
     "posttest": "yarn stop",
-    "start": "pm2 start cds-run.js",
+    "start": "pm2 start cds-run.js || pm2 restart cds-run.js",
     "stop": "pm2 stop cds-run.js",
     "deploy": "cds deploy --to sqlite",
     "test": "yarn jest",

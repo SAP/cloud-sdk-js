@@ -10,7 +10,6 @@ import { BatchResponse } from '../../common';
 import { parseBatchResponse } from '../../common/request-builder/batch/batch-response-parser';
 import { BatchRequestBuilder } from '../../common/request-builder/batch/batch-request-builder';
 import { deserializeBatchResponse } from '../../common/request-builder/batch/batch-response-deserializer';
-import { serializeBatchRequest } from '../../common/request-builder/batch/batch-request-serializer';
 import { entityDeserializerV2 } from '../entity-deserializer';
 import { responseDataAccessorV2 } from './response-data-accessor';
 
@@ -31,13 +30,6 @@ export class ODataBatchRequestBuilderV2 extends BatchRequestBuilder {
     options?: DestinationOptions
   ): Promise<BatchResponse[]> {
     return this.build(destination, options)
-      .then(request => {
-        this.requestConfig.payload = serializeBatchRequest(this, {
-          ...this.requestConfig.options,
-          destination: request.destination!
-        });
-        return request;
-      })
       .then(request => request.execute())
       .then(response => parseBatchResponse(response))
       .then(parsedResponse =>

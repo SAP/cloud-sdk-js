@@ -237,8 +237,8 @@ final ModificationResponse<BusinessPartner> deleteResult = response.getModificat
 Similarly, use the method `getReadResult` to access response for a specific retrieve request.
 
 ```java
-final List<BusinessPartners> readAllResult = response.getReadResult(businessPartners);
-final BusinessPartner readByKeyResult = response.getReadResult(businessPartnerByKey);
+final List<BusinessPartners> readAllResult = response.getReadResult(getBusinessPartners);
+final BusinessPartner readByKeyResult = response.getReadResult(getBusinessPartnerByKey);
 ```
 
 <!--

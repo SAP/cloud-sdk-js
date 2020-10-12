@@ -59,7 +59,7 @@ describe('service-parser', () => {
       expect(services[0].directoryName).toBe('test-service');
       expect(services[0].npmPackageName).toBe('test-service');
       expect(services[0].servicePath).toBe('/sap/opu/odata/sap/API_TEST_SRV');
-      expect(services[0].entities.length).toBe(10);
+      expect(services[0].entities.length).toBe(11);
     });
 
     it('generates vdm from edmx using swagger', () => {
@@ -70,7 +70,7 @@ describe('service-parser', () => {
         })
       );
 
-      expect(services[0].entities.length).toBe(10);
+      expect(services[0].entities.length).toBe(11);
       expect(
         services[0].apiBusinessHubMetadata!.businessDocumentationUrl
       ).toBeDefined();
@@ -198,6 +198,12 @@ describe('service-parser', () => {
           className: 'TestEntityEndsWithSomethingElse',
           numKeys: 1,
           numProperties: 1
+        },
+        {
+          entitySetName: 'A_Testentity',
+          className: 'Testentity_1',
+          numKeys: 2,
+          numProperties: 19
         }
       ]);
     });

@@ -61,7 +61,7 @@ export function serializeRequest(
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
     '',
-    `${request.requestConfig.method.toUpperCase()} /${getUrl(
+    `${request.requestConfig.method.toUpperCase()} ${getUrl(
       odataRequest,
       options
     )} HTTP/1.1`,
@@ -80,9 +80,9 @@ function getUrl<ConfigT extends ODataRequestConfig>(
     case 'absolute':
       return request.url();
     case 'entityRelative':
-      return request.relativeUrl(false);
+      return `/${request.relativeUrl(false)}`;
     default:
-      return request.relativeUrl();
+      return `/${request.relativeUrl()}`;
   }
 }
 

@@ -167,7 +167,7 @@ exports[`batch request serializer serializeRequest serializes getAll request wit
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
 
-GET /http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
+GET http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 

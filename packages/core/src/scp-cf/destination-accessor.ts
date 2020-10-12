@@ -157,7 +157,7 @@ export async function getDestinationFromDestinationService(
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
   return (
-    (await DestinationAccessor.getDestinationFromDestinationService(
+    (DestinationAccessor.getDestinationFromDestinationService(
       name,
       options
     )) ?? null

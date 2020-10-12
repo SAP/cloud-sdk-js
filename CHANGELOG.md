@@ -15,10 +15,12 @@
 ## Compatibility Notes
 
 - Deprecate setting the content type header in the constructor of `ODataRequest`s.
+- [Generator] Files with the same names, but different casing were previously not considered, e. g. when `SomeEntity.ts` and `Someentity.ts` were generated, the second generated file would overwrite the first. In these cases the generator now adds a suffix to the name, e. g. `Someentity_1.ts`.
 
 ## New Functionality
 
-- Add `withOptions` method to configure batch subrequests.
+- [OData] Add `withOptions` method to configure batch subrequests.
+- [OData] Support batch requests for OData v4.
 
 ## Improvements
 
@@ -26,8 +28,10 @@
 
 ## Fixed Issues
 
+- [OData] Fix wrong service paths for batch requests.
 - [Generator] Fix reference to `execa` dependency.
-
+- [Generator] Fix writing of files with the same names but different casing.
+- Fix url encoding in batch requests.
 
 # 1.29.0
 
@@ -42,7 +46,6 @@ Blog: TBD<br>
 ## New Functionality
 
 - [OData] Support the usage of $count in `getAll` requests e.g.: `Entity.requestBuilder().getAll().count().execute()`.
-- [OData] Support batch requests for OData v4.
 
 ## Improvements
 
@@ -53,7 +56,6 @@ Blog: TBD<br>
 
 - [OData] Fix parsing the Etag returned from update requests.
 - [OData] Fix the entity builder so that it can set `undefined`/`null` for optional properties.
-- [OData] Fix wrong service paths for batch requests.
 
 # 1.28.2
 

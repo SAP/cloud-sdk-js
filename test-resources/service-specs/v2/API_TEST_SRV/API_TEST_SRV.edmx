@@ -218,6 +218,11 @@
         <EntitySet Name="A_TestEntityEndsWithCollection" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityEndsWithSomethingElse" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
 
+        <!-- duplicate_entity_name
+          In some C4C APIs there are entity sets, that have the same with different casing.
+        -->
+        <EntitySet Name="A_Testentity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
+
         <AssociationSet Name="assoc_TestEntityToMultiLink" Association="API_TEST_SRV.assoc_TestEntityToMultiLink" sap:content-version="1">
           <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToMultiLink"/>
           <End EntitySet="A_TestEntityMultiLink" Role="ToRole_assoc_TestEntityToMultiLink"/>

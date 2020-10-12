@@ -26,6 +26,16 @@ describe('batch request serializer', () => {
       ).toMatchSnapshot();
     });
 
+    it('serializes getAll request with filter', () => {
+      expect(
+        serializeRequest(
+          TestEntity.requestBuilder()
+            .getAll()
+            .filter(TestEntity.STRING_PROPERTY.equals('test'))
+        )
+      ).toMatchSnapshot();
+    });
+
     it('serializes getAll request with custom headers', () => {
       expect(
         serializeRequest(

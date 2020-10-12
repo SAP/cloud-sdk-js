@@ -61,9 +61,8 @@ export function serializeRequest(
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
     '',
-    `${request.requestConfig.method.toUpperCase()} ${getUrl(
-      odataRequest,
-      options
+    `${request.requestConfig.method.toUpperCase()} ${encodeURI(
+      getUrl(odataRequest, options)
     )} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',

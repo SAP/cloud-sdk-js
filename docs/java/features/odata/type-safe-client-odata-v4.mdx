@@ -236,8 +236,8 @@ final BatchResponse result =
 Use `getModificationResult` to access response for a specific create, update or delete operation.
 
 ```java
-final ModificationResponse<BusinessPartner> createResult = response.getModificationResult(createBusinessPartnerRequest1);
-final ModificationResponse<BusinessPartner> deleteResult = response.getModificationResult(deleteBusinessPartnerRequest);
+ModificationResponse<BusinessPartner> createResult = response.getModificationResult(createBusinessPartnerRequest1);
+ModificationResponse<BusinessPartner> deleteResult = response.getModificationResult(deleteBusinessPartnerRequest);
 ```
 
 Similarly, use the method `getReadResult` to access response for a specific retrieve request.

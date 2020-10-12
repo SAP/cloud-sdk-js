@@ -14,7 +14,6 @@ describe('batch', () => {
       .build();
     const create = TestEntity.requestBuilder().create(testEntity);
 
-    // FIXME: It should not be necessary to set a custom service path. This can only be done after batch is fixed in CAP.
     const [retrieveResponse, changesetResponse] = await batch(
       getAll,
       changeset(create)

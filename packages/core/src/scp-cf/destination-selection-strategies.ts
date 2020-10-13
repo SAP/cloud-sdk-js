@@ -1,5 +1,14 @@
-import { AllDestinations } from './destination-accessor-types';
+import { createLogger } from '@sap-cloud-sdk/util';
+import {
+  AllDestinations,
+  DestinationsByType
+} from './destination-accessor-types';
 import { Destination } from './destination-service-types';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'destination-selection-strategies'
+});
 
 export type DestinationSelectionStrategy = (
   allDestinations: AllDestinations,
@@ -20,11 +29,7 @@ export function alwaysProvider(
   const isRequestedDestination = (destination: Destination) =>
     destination.name === destinationName;
 
-  return (
-    allDestinations.provider.instance.find(isRequestedDestination) ||
-    allDestinations.provider.subaccount.find(isRequestedDestination) ||
-    null
-  );
+  return findDestination(allDestinations.provider, destinationName) || null;
 }
 
 /**
@@ -41,11 +46,7 @@ export function alwaysSubscriber(
   const isRequestedDestination = (destination: Destination) =>
     destination.name === destinationName;
 
-  return (
-    allDestinations.subscriber.instance.find(isRequestedDestination) ||
-    allDestinations.subscriber.subaccount.find(isRequestedDestination) ||
-    null
-  );
+  return findDestination(allDestinations.subscriber, destinationName) ?? null;
 }
 
 /**
@@ -63,10 +64,8 @@ export function subscriberFirst(
     destination.name === destinationName;
 
   return (
-    allDestinations.subscriber.instance.find(isRequestedDestination) ||
-    allDestinations.subscriber.subaccount.find(isRequestedDestination) ||
-    allDestinations.provider.instance.find(isRequestedDestination) ||
-    allDestinations.provider.subaccount.find(isRequestedDestination) ||
+    findDestination(allDestinations.subscriber, destinationName) ??
+    findDestination(allDestinations.provider, destinationName) ??
     null
   );
 }
@@ -79,3 +78,20 @@ export const DestinationSelectionStrategies = {
   alwaysSubscriber,
   subscriberFirst
 };
+
+function findDestination(
+  destinations: DestinationsByType,
+  destinationName: string
+): Destination | undefined {
+  const isRequestedDestination = (destination: Destination) =>
+    destination.name === destinationName;
+  const instanceDest = destinations.instance.find(isRequestedDestination);
+  const subaccountDest = destinations.subaccount.find(isRequestedDestination);
+
+  if (instanceDest && subaccountDest) {
+    logger.warn(
+      `A destination with name ${destinationName} has been found for the destination serivce instance and subaccount. The instance destination will be used.`
+    );
+  }
+  return instanceDest ?? subaccountDest;
+}

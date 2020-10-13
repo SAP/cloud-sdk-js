@@ -1,7 +1,7 @@
 import { tenantId, userId } from '../util';
 import { Cache, IsolationStrategy } from './cache';
-import { DestinationsByType } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
+import { DestinationsByType } from './destination-accessor-types';
 
 const DestinationCache = (cache: Cache<Destination>) => ({
   retrieveDestinationFromCache: (
@@ -10,26 +10,24 @@ const DestinationCache = (cache: Cache<Destination>) => ({
     isolation: IsolationStrategy
   ): Destination | undefined =>
     cache.get(getDestinationCacheKey(decodedJwt, name, isolation)),
+  cacheRetrievedDestination: (
+    decodedJwt: Record<string, any>,
+    destination: Destination,
+    isolation: IsolationStrategy
+  ): void => {
+    cacheRetrievedDestination(decodedJwt, destination, isolation, cache);
+  },
   cacheRetrievedDestinations: (
     decodedJwt: Record<string, any>,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
   ): void => {
-    [
-      ...retrievedDestinations.instance,
-      ...retrievedDestinations.subaccount
-    ].forEach(destination => {
-      if (!destination.name) {
-        throw new Error('The destination name is undefined.');
-      }
-
-      const key = getDestinationCacheKey(
-        decodedJwt,
-        destination.name,
-        isolation
-      );
-      cache.set(key, destination);
-    });
+    retrievedDestinations.subaccount.forEach(dest =>
+      cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
+    );
+    retrievedDestinations.instance.forEach(dest =>
+      cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
+    );
   },
   clear: () => {
     cache.clear();
@@ -63,6 +61,20 @@ export function getDestinationCacheKey(
     default:
       return `${tenantId(decodedJwt)}::${destinationName}`;
   }
+}
+
+function cacheRetrievedDestination(
+  decodedJwt: Record<string, any>,
+  destination: Destination,
+  isolation: IsolationStrategy,
+  cache: Cache<Destination>
+): void {
+  if (!destination.name) {
+    throw new Error('The destination name is undefined.');
+  }
+
+  const key = getDestinationCacheKey(decodedJwt, destination.name, isolation);
+  cache.set(key, destination);
 }
 
 export const destinationCache = DestinationCache(

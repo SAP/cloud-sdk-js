@@ -22,8 +22,8 @@ import { destinationCache } from './destination-cache';
 import {
   alwaysProvider,
   alwaysSubscriber,
-  DestinationSelectionStrategy,
-  subscriberFirst
+  DestinationSelectionStrategies,
+  DestinationSelectionStrategy
 } from './destination-selection-strategies';
 import {
   fetchDestination,
@@ -44,7 +44,6 @@ import {
   getDestinationServiceCredentialsList,
   getService
 } from './environment-accessor';
-import { DestinationServiceCredentials } from './environment-accessor-types';
 import { serviceToken, userApprovedServiceToken } from './token-accessor';
 import { destinationForServiceBinding } from './vcap-service-destination';
 
@@ -89,6 +88,13 @@ export interface DestinationAccessorOptions {
    * The user token of the current request.
    */
   userJwt?: string;
+
+  /**
+   * @hidden
+   */
+  iss?: string;
+  // FIXME This is used to put a subscriber domain in without having a JWT like for packground processes.
+  // We will create a seperate method for this on the destination accessor wit proper JS doc. This will be deprecated.
 }
 
 export type DestinationOptions = DestinationAccessorOptions &
@@ -133,11 +139,7 @@ export async function getDestination(
   name: string,
   options: DestinationOptions = {}
 ): Promise<Destination | null> {
-  const destination = await (tryDestinationFromEnv(name) ||
-    tryDestinationForServiceBinding(name) ||
-    DestinationAccessor.getDestinationFromDestinationService(name, options));
-
-  return destination ?? null;
+  return DestinationAccessor.getDestination(name, options);
 }
 
 /**
@@ -156,128 +158,10 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions & { iss?: string }
 ): Promise<Destination | null> {
-  return (
-    (DestinationAccessor.getDestinationFromDestinationService(
-      name,
-      options
-    )) ?? null
-  );
-}
-
-function tryDestinationForServiceBinding(
-  name: string
-): Destination | undefined {
-  logger.info('Attempting to retrieve destination from service binding.');
-  try {
-    const destination = destinationForServiceBinding(name);
-    logger.info('Successfully retrieved destination from service binding.');
-    return destination;
-  } catch (error) {
-    logger.info(error.message);
-    logger.info('Could not retrieve destination from service binding.');
-    logger.info(
-      'If you are not using SAP Extension Factory, this information probably does not concern you.'
-    );
-    return undefined;
-  }
-}
-
-function tryDestinationFromEnv(name: string): Destination | undefined {
-  logger.info('Attempting to retrieve destination from environment variable.');
-
-  if (getDestinationsEnvVariable()) {
-    logger.warn(
-      "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
-        'This is discouraged for a productive application! ' +
-        'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
-    );
-
-    try {
-      const destination = getDestinationFromEnvByName(name);
-      if (destination) {
-        logger.info(
-          'Successfully retrieved destination from environment variable.'
-        );
-        return destination;
-      }
-    } catch (error) {
-      logger.info(error.message);
-    }
-  }
-
-  logger.info('Could not retrieve destination from environment variable.');
-}
-
-async function getInstanceAndSubaccountDestinations(
-  destinationServiceUri: string,
-  accessToken: string,
-  options: DestinationRetrievalOptions
-): Promise<DestinationsByType> {
-  const destinations = await Promise.all([
-    fetchInstanceDestinations(destinationServiceUri, accessToken, options),
-    fetchSubaccountDestinations(destinationServiceUri, accessToken, options)
-  ]);
-
-  return {
-    instance: destinations[0],
-    subaccount: destinations[1]
-  };
-}
-
-async function getDestinationWithCertificates(
-  name: string,
-  userJwt: string | DecodedJWT | undefined,
-  options: DestinationRetrievalOptions
-): Promise<Destination> {
-  const destinationServiceCreds = getDestinationServiceCredentials();
-  const accessToken = await serviceToken('destination', {
-    userJwt,
-    ...options
-  });
-
-  return fetchDestination(
-    destinationServiceCreds.uri,
-    accessToken,
+  return DestinationAccessor.getDestinationFromDestinationService(
     name,
     options
   );
-}
-
-async function getDestinationWithAuthTokens(
-  name: string,
-  userJwt: string,
-  options?: DestinationRetrievalOptions
-): Promise<Destination> {
-  const destinationService = getService('destination');
-
-  if (!destinationService) {
-    throw Error(
-      `Failed to fetch destination "${name}"! No binding to a destination service found.`
-    );
-  }
-
-  const accessToken = await userApprovedServiceToken(
-    userJwt,
-    destinationService,
-    options
-  );
-  return fetchDestination(
-    destinationService.credentials.uri,
-    accessToken,
-    name,
-    options
-  );
-}
-
-function getDestinationServiceCredentials(): DestinationServiceCredentials {
-  const credentials = getDestinationServiceCredentialsList();
-  if (!credentials || credentials.length === 0) {
-    throw Error(
-      'No binding to a Destination service instance found. Please bind a destination service instance to your application!'
-    );
-  }
-
-  return credentials[0];
 }
 
 const emptyDestinationByType: DestinationsByType = {
@@ -285,19 +169,22 @@ const emptyDestinationByType: DestinationsByType = {
   subaccount: []
 };
 
-function emptyDestinationsByType(
-  destinationByType: DestinationsByType
-): boolean {
-  return (
-    !destinationByType.instance.length && !destinationByType.subaccount.length
-  );
-}
-
 class DestinationAccessor {
+  public static async getDestination(
+    name: string,
+    options: DestinationOptions = {}
+  ): Promise<Destination | null> {
+    return (
+      DestinationAccessor.tryGetDestinationFromEnvVariable(name) ??
+      DestinationAccessor.tryGetDestinationFromServiceBinding(name) ??
+      DestinationAccessor.getDestinationFromDestinationService(name, options)
+    );
+  }
+
   public static async getDestinationFromDestinationService(
     name: string,
-    options: DestinationOptions & { iss?: string }
-  ): Promise<Destination | undefined> {
+    options: DestinationOptions
+  ): Promise<Destination | null> {
     const decodedUserJwt = await DestinationAccessor.getDecodedUserJwt(options);
     const providerToken = await DestinationAccessor.getProviderToken(options);
     const da = new DestinationAccessor(
@@ -306,19 +193,79 @@ class DestinationAccessor {
       decodedUserJwt,
       providerToken
     );
+    const destinationFromCache = await da.tryGetDestinationFromCache();
+    if (destinationFromCache) {
+      return destinationFromCache;
+    }
 
-    return (
-      da.trySubscriberCache() ??
-      (await da.tryProviderCache()) ??
-      (await da.processDestinationResult(await da.tryForOAuth())) ??
-      (await da.processDestinationResult(await da.tryForCert())) ??
-      (await da.processDestinationResult(await da.tryService())) ??
-      undefined
+    let destination = await da.tryGetDestinationFromService();
+    if (da.isOAuthSamlAuth(destination)) {
+      destination = await da.tryAddOAuthSamlAuth(destination);
+    }
+    if (da.isClientCertAuth(destination)) {
+      destination = await da.tryAddClientCertAuth();
+    }
+    if (destination) {
+      logger.info(
+        'Successfully retrieved destination from destination service.'
+      );
+      const withProxySetting = await da.addProxyConfiguration(destination);
+      da.updateDestinationCache(withProxySetting);
+      return withProxySetting;
+    }
+    return null;
+  }
+
+  private static tryGetDestinationFromServiceBinding(
+    name: string
+  ): Destination | undefined {
+    logger.info('Attempting to retrieve destination from service binding.');
+    try {
+      const destination = destinationForServiceBinding(name);
+      logger.info('Successfully retrieved destination from service binding.');
+      return destination;
+    } catch (error) {
+      logger.info(error.message);
+      logger.info('Could not retrieve destination from service binding.');
+      logger.info(
+        'If you are not using SAP Extension Factory, this information probably does not concern you.'
+      );
+      return undefined;
+    }
+  }
+
+  private static tryGetDestinationFromEnvVariable(
+    name: string
+  ): Destination | undefined {
+    logger.info(
+      'Attempting to retrieve destination from environment variable.'
     );
+
+    if (getDestinationsEnvVariable()) {
+      logger.warn(
+        "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
+          'This is discouraged for a productive application! ' +
+          'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
+      );
+
+      try {
+        const destination = getDestinationFromEnvByName(name);
+        if (destination) {
+          logger.info(
+            'Successfully retrieved destination from environment variable.'
+          );
+          return destination;
+        }
+      } catch (error) {
+        logger.info(error.message);
+      }
+    }
+
+    logger.info('Could not retrieve destination from environment variable.');
   }
 
   private static async getDecodedUserJwt(
-    options: DestinationOptions & { iss?: string }
+    options: DestinationOptions
   ): Promise<DecodedJWT | undefined> {
     return options.userJwt
       ? verifyJwt(options.userJwt, options)
@@ -334,95 +281,127 @@ class DestinationAccessor {
     return serviceToken('destination', optionsWithoutJwt);
   }
 
-  private subscriberDestinationCache: DestinationsByType | undefined;
-  private providerDestinationCache: DestinationsByType | undefined;
+  readonly decodedProviderToken: DecodedJWT;
+  readonly isolationStrategy: IsolationStrategy;
+  readonly selectionStrategy: DestinationSelectionStrategy;
+  readonly useCache: boolean;
+  private subscriberDestinationsFromService: DestinationsByType | undefined;
+  private providerDestinationsFrom: DestinationsByType | undefined;
 
   private constructor(
-    private name: string,
-    private options: DestinationOptions,
-    private decodedUserJwt: DecodedJWT | undefined,
-    private providerToken: string
+    readonly name: string,
+    readonly options: DestinationOptions,
+    readonly decodedUserJwt: DecodedJWT | undefined,
+    readonly providerToken: string
   ) {
-    this.providerDestinationCache = undefined;
-    this.subscriberDestinationCache = undefined;
+    this.providerDestinationsFrom = undefined;
+    this.subscriberDestinationsFromService = undefined;
+    this.decodedProviderToken = decodeJwt(providerToken);
+
+    this.isolationStrategy =
+      options.isolationStrategy ?? IsolationStrategy.Tenant;
+    this.options.isolationStrategy = this.isolationStrategy;
+
+    this.selectionStrategy =
+      options.selectionStrategy ??
+      DestinationSelectionStrategies.subscriberFirst;
+    this.options.selectionStrategy = this.selectionStrategy;
+
+    this.useCache = options.useCache ?? false;
+    this.options.useCache = this.useCache;
   }
 
-  private get useCache(): boolean {
-    return !!this.options.useCache;
+  private async getInstanceAndSubaccountDestinations(
+    accessToken: string
+  ): Promise<DestinationsByType> {
+    const destinations = await Promise.all([
+      fetchInstanceDestinations(
+        this.destionationServiceCredentials.uri,
+        accessToken,
+        this.options
+      ),
+      fetchSubaccountDestinations(
+        this.destionationServiceCredentials.uri,
+        accessToken,
+        this.options
+      )
+    ]);
+
+    return {
+      instance: destinations[0],
+      subaccount: destinations[1]
+    };
   }
 
-  private get selectionStrategy(): DestinationSelectionStrategy {
-    return this.options.selectionStrategy
-      ? this.options.selectionStrategy
-      : subscriberFirst;
+  private get destionationServiceCredentials() {
+    const credentials = getDestinationServiceCredentialsList();
+    if (!credentials || credentials.length === 0) {
+      throw Error(
+        'No binding to a Destination service instance found. Please bind a destination service instance to your application!'
+      );
+    }
+
+    return credentials[0];
   }
 
-  private get isolationStrategy(): IsolationStrategy {
-    return this.options.isolationStrategy
-      ? this.options.isolationStrategy
-      : IsolationStrategy.Tenant;
-  }
+  private async tryAddOAuthSamlAuth(
+    destination: Destination
+  ): Promise<Destination | undefined> {
+    const destinationService = getService('destination');
 
-  private get decodedProviderToken(): DecodedJWT {
-    return decodeJwt(this.providerToken);
-  }
+    if (!destinationService) {
+      throw Error(
+        `Failed to fetch destination "${this.name}"! No binding to a destination service found.`
+      );
+    }
 
-  private async tryForOAuth(): Promise<Destination | undefined> {
-    const destination = await this.tryService();
-    if (
-      destination &&
-      destination.authentication === 'OAuth2SAMLBearerAssertion'
-    ) {
-      if (destination.systemUser) {
-        const destinationService = getService('destination');
-
-        if (!destinationService) {
-          throw Error(
-            `Failed to fetch destination "${this.name}"! No binding to a destination service found.`
-          );
-        }
-        logger.debug(this.providerToken);
-        return fetchDestination(
-          destinationService.credentials.uri,
-          this.providerToken,
-          this.name,
-          this.options
-        );
-      }
-      if (!this.options.userJwt) {
-        throw Error(
-          `No user token (JWT) has been provided! This is strictly necessary for principal propagation. Value of the JWT: ${this.options.userJwt}.`
-        );
-      }
-      return getDestinationWithAuthTokens(
+    if (destination.systemUser) {
+      logger.debug(
+        `System user found on destination. The provider token: ${this.providerToken} is used for destination fetching`
+      );
+      return fetchDestination(
+        destinationService.credentials.uri,
+        this.providerToken,
         this.name,
-        this.options.userJwt,
         this.options
       );
     }
-  }
 
-  private async tryForCert(): Promise<Destination | undefined> {
-    const destination = await this.tryService();
-    if (
-      destination &&
-      destination.authentication === 'ClientCertificateAuthentication'
-    ) {
-      return getDestinationWithCertificates(
-        this.name,
-        this.decodedUserJwt,
-        this.options
+    if (!this.options.userJwt) {
+      throw Error(
+        'No user token (JWT) has been provided! This is strictly necessary for principal propagation.'
       );
     }
+    const accessToken = await userApprovedServiceToken(
+      this.options.userJwt,
+      destinationService,
+      this.options
+    );
+    return fetchDestination(
+      destinationService.credentials.uri,
+      accessToken,
+      this.name,
+      this.options
+    );
+  }
+
+  private async tryAddClientCertAuth(): Promise<Destination | undefined> {
+    const accessToken = await serviceToken('destination', {
+      userJwt: this.decodedUserJwt,
+      ...this.options
+    });
+
+    return fetchDestination(
+      this.destionationServiceCredentials.uri,
+      accessToken,
+      this.name,
+      this.options
+    );
   }
 
   private async addProxyConfiguration(
-    destination: Destination | undefined
-  ): Promise<Destination | undefined> {
-    if (!destination) {
-      return;
-    }
-
+    destination: Destination
+  ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
         return addProxyConfigurationOnPrem(destination, this.options.userJwt);
@@ -437,52 +416,26 @@ class DestinationAccessor {
     }
   }
 
-  private async processDestinationResult(
-    destination: Destination | undefined
-  ): Promise<Destination | undefined> {
-    if (!destination) {
-      return;
-    }
-
-    logger.info('Successfully retrieved destination from destination service.');
-
-    return this.updateCacheSingle(
-      await this.addProxyConfiguration(destination)
-    );
-  }
-
-  private updateCacheService(
-    token: DecodedJWT,
-    destinations: DestinationsByType
-  ) {
-    if (this.useCache) {
-      destinationCache.cacheRetrievedDestinations(
-        token,
-        destinations,
-        this.isolationStrategy
-      );
-    }
-  }
-
-  private updateCacheSingle(
-    destination: Destination | undefined
-  ): Destination | undefined {
-    if (!this.useCache || !destination) {
+  private async updateDestinationCache(destination: Destination) {
+    if (!this.useCache) {
       return destination;
     }
     // The information whether the destination originates from an instance of account service is not relevant for caching.
-    destinationCache.cacheRetrievedDestinations(
-      this.decodedUserJwt || this.decodedProviderToken,
-      { instance: [], subaccount: [destination] },
+    destinationCache.cacheRetrievedDestination(
+      (await this.canFindDestinationFromSubscriber())
+        ? this.decodedUserJwt!
+        : this.decodedProviderToken,
+      destination,
       this.isolationStrategy
     );
-    return destination;
   }
 
-  private async tryService(): Promise<Destination | undefined> {
+  private async tryGetDestinationFromService(): Promise<
+    Destination | undefined
+  > {
     const allDest: AllDestinations = {
       provider: await this.getProviderDestinations(),
-      subscriber: await this.getSubscriberDestination()
+      subscriber: await this.getSubscriberDestinations()
     };
     const selectedFromService = await this.selectionStrategy(
       allDest,
@@ -495,20 +448,15 @@ class DestinationAccessor {
     return selectedFromService ?? undefined;
   }
 
-  private async destinationFoundFromSubscriber(): Promise<boolean> {
-    const subscriber = await this.getSubscriberDestination();
-    if (
-      this.selectionStrategy(
-        {
-          provider: emptyDestinationByType,
-          subscriber
-        },
-        this.name
-      )
-    ) {
-      return true;
-    }
-    return false;
+  /**
+   * Checks if a destination with the name can be found in the subscriber account
+   */
+  private async canFindDestinationFromSubscriber(): Promise<boolean> {
+    const subscriber = await this.getSubscriberDestinations();
+    return !!this.selectionStrategy(
+      { provider: emptyDestinationByType, subscriber },
+      this.name
+    );
   }
 
   private async getProviderDestinations(): Promise<DestinationsByType> {
@@ -516,71 +464,64 @@ class DestinationAccessor {
       return emptyDestinationByType;
     }
 
-    if (!this.providerDestinationCache) {
-      const destinationServiceCreds = getDestinationServiceCredentials();
-
-      this.providerDestinationCache = await getInstanceAndSubaccountDestinations(
-        destinationServiceCreds.uri,
-        this.providerToken,
-        this.options
-      );
-      this.updateCacheService(
-        this.decodedProviderToken,
-        this.providerDestinationCache
+    if (!this.providerDestinationsFrom) {
+      this.providerDestinationsFrom = await this.getInstanceAndSubaccountDestinations(
+        this.providerToken
       );
     }
 
-    return this.providerDestinationCache;
+    return this.providerDestinationsFrom;
   }
 
-  private async getSubscriberDestination() {
-    if (!this.isSubscriberNeeded()) {
+  private async getSubscriberDestinations(): Promise<DestinationsByType> {
+    if (!this.isSubscriberNeeded(this.decodedUserJwt)) {
       return emptyDestinationByType;
     }
 
-    if (!this.subscriberDestinationCache) {
-      const destinationServiceCreds = getDestinationServiceCredentials();
-
+    if (!this.subscriberDestinationsFromService) {
       const accessToken = await serviceToken('destination', {
         userJwt: this.decodedUserJwt,
         ...this.options
       });
-      this.subscriberDestinationCache = await getInstanceAndSubaccountDestinations(
-        destinationServiceCreds.uri,
-        accessToken,
-        this.options
-      );
-      this.updateCacheService(
-        this.decodedUserJwt!,
-        this.subscriberDestinationCache
+      this.subscriberDestinationsFromService = await this.getInstanceAndSubaccountDestinations(
+        accessToken
       );
     }
 
-    return this.subscriberDestinationCache;
+    return this.subscriberDestinationsFromService;
   }
 
-  private trySubscriberCache(): Destination | undefined {
-    if (this.useCache && this.isSubscriberNeeded()) {
-      const subscriberDestinationCache = destinationCache.retrieveDestinationFromCache(
-        this.decodedUserJwt!,
-        this.name,
-        this.isolationStrategy
-      );
-      if (subscriberDestinationCache) {
-        logger.info(
-          'Successfully retrieved destination from destination service cache for subscriber destinations.'
-        );
-        return subscriberDestinationCache;
-      }
-    }
+  private isClientCertAuth(
+    destination: Destination | undefined
+  ): destination is Destination {
+    return (
+      (destination &&
+        destination.authentication === 'ClientCertificateAuthentication') ||
+      false
+    );
   }
-  private isSubscriberNeeded(): boolean {
+
+  private isOAuthSamlAuth(
+    destination: Destination | undefined
+  ): destination is Destination {
+    return (
+      (destination &&
+        destination.authentication === 'OAuth2SAMLBearerAssertion') ||
+      false
+    );
+  }
+
+  private isSubscriberNeeded(
+    decodedUserJwt: DecodedJWT | undefined
+  ): decodedUserJwt is DecodedJWT {
     if (!this.decodedUserJwt) {
       return false;
     }
+
     if (this.selectionStrategy === alwaysProvider) {
       return false;
     }
+
     if (isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken)) {
       return false;
     }
@@ -595,6 +536,7 @@ class DestinationAccessor {
     if (this.selectionStrategy === alwaysProvider) {
       return true;
     }
+    // If subscriber and provider are the same also the provider cache is needed.
     if (
       this.decodedUserJwt &&
       isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken)
@@ -602,29 +544,43 @@ class DestinationAccessor {
       return true;
     }
     // We are in selection strategy subscriberFirst here. So if we get something from subscriber ignore provider.
-    if (await this.destinationFoundFromSubscriber()) {
-      return false;
-    }
-    return true;
+    return !(await this.canFindDestinationFromSubscriber());
   }
 
-  private async tryProviderCache(): Promise<Destination | undefined> {
-    if (this.useCache) {
-      const providerDestinationCache = destinationCache.retrieveDestinationFromCache(
-        this.decodedProviderToken,
+  private async tryGetDestinationFromCache(): Promise<Destination | undefined> {
+    if (!this.useCache) {
+      return;
+    }
+
+    if (this.isSubscriberNeeded(this.decodedUserJwt)) {
+      const subscriberDestination = destinationCache.retrieveDestinationFromCache(
+        this.decodedUserJwt,
         this.name,
         this.isolationStrategy
       );
-      if (!providerDestinationCache) {
-        return;
-      }
 
-      if (await this.isProviderNeeded()) {
+      if (subscriberDestination) {
         logger.info(
-          'Successfully retrieved destination from destination service cache for provider destinations.'
+          'Successfully retrieved destination from destination service cache for subscriber destinations.'
         );
-        return providerDestinationCache;
+        return subscriberDestination;
       }
+    }
+
+    const providerDestination = destinationCache.retrieveDestinationFromCache(
+      this.decodedProviderToken,
+      this.name,
+      this.isolationStrategy
+    );
+    if (!providerDestination) {
+      return;
+    }
+
+    if (await this.isProviderNeeded()) {
+      logger.info(
+        'Successfully retrieved destination from destination service cache for provider destinations.'
+      );
+      return providerDestination;
     }
   }
 }

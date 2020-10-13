@@ -56,7 +56,7 @@ describe('proxy configuration', () => {
       port: 1234
     });
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-  }, 9999999);
+  });
 
   it('should ignore the proxy if the destination is onPrem type.', async () => {
     mockServiceBindings();
@@ -89,7 +89,7 @@ describe('proxy configuration', () => {
     });
     expect(actual?.proxyConfiguration).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-  }, 9999999);
+  });
 
   it('returns a destination with a connectivity service proxy configuration when ProxyType equals "OnPremise"', async () => {
     mockServiceBindings();
@@ -128,5 +128,5 @@ describe('proxy configuration', () => {
     });
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-  }, 9999999);
+  });
 });

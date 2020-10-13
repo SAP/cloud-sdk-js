@@ -1,4 +1,5 @@
 import nock from 'nock';
+import * as jwt123 from 'jsonwebtoken';
 import {
   fetchDestination,
   fetchInstanceDestinations,
@@ -6,10 +7,18 @@ import {
 } from '../../src/scp-cf/destination-service';
 import { Destination } from '../../src/scp-cf/destination-service-types';
 import { destinationServiceUri } from '../test-util/environment-mocks';
+import { privateKey } from '../test-util/keys';
 
-const jwt = 'some.test.jwt';
+const jwt = jwt123.sign(
+  JSON.stringify({ user_id: 'user', zid: 'tenant' }),
+  privateKey(),
+  {
+    algorithm: 'RS512'
+  }
+);
 
 describe('destination service', () => {
+
   describe('fetchInstanceDestinations', () => {
     it('fetches instance destinations and returns them as Destination array', async () => {
       const response = [

@@ -1,6 +1,10 @@
-import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  errorWithCause,
+  propertyExists
+} from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
-import { wrapJwtInHeader } from '../util';
+import { decodeJwt, wrapJwtInHeader } from '../util';
 import { getAxiosConfigWithDefaults } from '../http-client';
 import { parseDestination } from './destination';
 import { Destination } from './destination-service-types';
@@ -8,11 +12,17 @@ import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
 } from './resilience-options';
+import { destinationServiceCache } from './destination-service-cache';
+import { CachingOptions, IsolationStrategy } from './cache';
 
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const CircuitBreaker = require('opossum');
 
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'destination-service'
+});
 /**
  * Fetches all instance destinations from the given URI.
  *
@@ -24,7 +34,7 @@ const CircuitBreaker = require('opossum');
 export function fetchInstanceDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -45,7 +55,7 @@ export function fetchInstanceDestinations(
 export function fetchSubaccountDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -55,24 +65,48 @@ export function fetchSubaccountDestinations(
   );
 }
 
-enum DestinationType {
+export enum DestinationType {
   Instance = 'instance',
   Subaccount = 'subaccount'
 }
 
-function fetchDestinations(
+async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: DestinationType,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination[]> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
     ''
   )}/destination-configuration/v1/${type}Destinations`;
 
+  if (options?.useCache) {
+    const destinationsFromCache = destinationServiceCache.retrieveDestinationsFromCache(
+      targetUri,
+      decodeJwt(jwt),
+      options.isolationStrategy
+    );
+    if (destinationsFromCache) {
+      return destinationsFromCache;
+    }
+  }
+
   return callDestinationService(targetUri, jwt, options)
-    .then(response => response.data.map(d => parseDestination(d)))
+    .then(response => {
+      const destinations: Destination[] = response.data.map(d =>
+        parseDestination(d)
+      );
+      if (options?.useCache) {
+        destinationServiceCache.cacheRetrievedDestinations(
+          targetUri,
+          decodeJwt(jwt),
+          destinations,
+          options.isolationStrategy
+        );
+      }
+      return destinations;
+    })
     .catch(error =>
       Promise.reject(
         errorWithCause(
@@ -95,19 +129,46 @@ function fetchDestinations(
  * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
  */
-export function fetchDestination(
+export async function fetchDestination(
   destinationServiceUri: string,
   jwt: string,
   destinationName: string,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
     ''
   )}/destination-configuration/v1/destinations/${destinationName}`;
 
+  if (options?.useCache) {
+    const destinationsFromCache = destinationServiceCache.retrieveDestinationsFromCache(
+      targetUri,
+      decodeJwt(jwt),
+      options.isolationStrategy
+    );
+    if (destinationsFromCache) {
+      if (destinationsFromCache.length > 1) {
+        logger.warn(
+          'More than one destination found in the cache. This should not happen. First element used.'
+        );
+      }
+      return destinationsFromCache[0];
+    }
+  }
+
   return callDestinationService(targetUri, jwt, options)
-    .then(response => parseDestination(response.data))
+    .then(response => {
+      const destination: Destination = parseDestination(response.data);
+      if (options?.useCache) {
+        destinationServiceCache.cacheRetrievedDestinations(
+          targetUri,
+          decodeJwt(jwt),
+          [destination],
+          options.isolationStrategy
+        );
+      }
+      return destination;
+    })
     .catch(error =>
       Promise.reject(
         errorWithCause(

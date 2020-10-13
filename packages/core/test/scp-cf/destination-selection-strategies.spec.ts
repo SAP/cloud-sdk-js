@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { AllDestinations } from '../../src/scp-cf/destination-accessor-types';
 import {
   alwaysProvider,
@@ -35,6 +36,28 @@ describe('destination-selection-strategies', () => {
     expect(subscriberFirst(allDestinations, 'testination')).toBe(null);
     expect(alwaysSubscriber(allDestinations, 'testination')).toBe(null);
     expect(alwaysProvider(allDestinations, 'testination')).toBe(null);
+  });
+
+  it('warns if there are multiple matches in instance and subaccount', () => {
+    const logger = createLogger({
+      package: 'core',
+      messageContext: 'destination-selection-strategies'
+    });
+    const warnSpy = jest.spyOn(logger, 'warn');
+    const allDestinations: AllDestinations = {
+      subscriber: {
+        instance: [target],
+        subaccount: [failure, target]
+      },
+      provider: {
+        instance: [],
+        subaccount: []
+      }
+    };
+    subscriberFirst(allDestinations, 'testination');
+    expect(warnSpy).toHaveBeenCalledWith(
+      'A destination with name testination has been found for the destination serivce instance and subaccount. The instance destination will be used.'
+    );
   });
 
   describe('subscriberFirst', () => {

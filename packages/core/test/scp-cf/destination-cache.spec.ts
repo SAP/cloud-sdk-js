@@ -22,9 +22,9 @@ const destinationOne: Destination = {
 describe('DestinationCache', () => {
   it('should cache the destination correctly', () => {
     const dummyJwt = { user_id: 'user', zid: 'tenant' };
-    destinationCache.cacheRetrievedDestinations(
+    destinationCache.cacheRetrievedDestination(
       dummyJwt,
-      { instance: [destinationOne], subaccount: [] },
+      destinationOne,
       IsolationStrategy.User
     );
     const actual1 = destinationCache.retrieveDestinationFromCache(
@@ -56,9 +56,9 @@ describe('DestinationCache', () => {
   it('should return undefined when the destination is not valid', () => {
     const clock = install();
     const dummyJwt = { user_id: 'user', zid: 'tenant' };
-    destinationCache.cacheRetrievedDestinations(
+    destinationCache.cacheRetrievedDestination(
       dummyJwt,
-      { instance: [destinationOne], subaccount: [] },
+      destinationOne,
       IsolationStrategy.User
     );
     const minutesToExpire = 6;

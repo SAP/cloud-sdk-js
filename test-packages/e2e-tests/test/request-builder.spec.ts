@@ -164,7 +164,7 @@ describe('Request builder', () => {
   });
 
   // Only supported in OData 4.01 and CAP is 4.0
-  it.only('should update an entity including existing related entities', async () => {
+  it('should update an entity including existing related entities', async () => {
     const entity = TestEntity.builder()
       .keyTestEntity(entityKey)
       .stringProperty('oldValueParent')

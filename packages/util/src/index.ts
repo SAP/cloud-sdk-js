@@ -1,5 +1,6 @@
 export * from './array';
 export * from './constants';
+export * from './equal';
 export * from './error';
 export * from './fs';
 export * from './logger';

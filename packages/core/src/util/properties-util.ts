@@ -17,8 +17,8 @@ export const nonEnumerable = (target: any, propertyKey: string) => {
  * @returns A boolean denoting whether an entity is a navigation property or not.
  */
 export function isNavigationProperty<EntityT extends EntityBase>(
-  key: keyof EntityT,
-  entityConstructor: Constructable<EntityT>
+  key: keyof EntityT | string,
+  entityConstructor: Constructable<EntityT> | any
 ): boolean {
   return (
     '_linkedEntity' in entityConstructor[toStaticPropertyFormat(key as string)]

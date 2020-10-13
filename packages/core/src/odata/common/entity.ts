@@ -1,6 +1,11 @@
 /* eslint-disable max-classes-per-file */
 
-import { nonEnumerable, toPropertyFormat } from '../../util';
+import { equal } from '@sap-cloud-sdk/util';
+import {
+  isNavigationProperty,
+  nonEnumerable,
+  toPropertyFormat
+} from '../../util';
 import { EntityBuilder } from './entity-builder';
 import { Link, Field, Selectable, CustomFieldBase } from './selectable';
 import { RequestBuilder } from './request-builder';
@@ -175,7 +180,7 @@ export abstract class EntityBase {
    * This function is called on all read, create and update requests.
    * This function should be called after [[initializeCustomFields]], if custom fields are defined.
    *
-   * @deprecated Since 1.12.0. Will be removed in version 2.0.
+   * @deprecated Since 1.12.0. Will be hidden in version 2.0.
    * @param state - State to be set as remote state
    * @returns The entity itself, to facilitate method chaining
    */
@@ -236,7 +241,7 @@ export abstract class EntityBase {
       .filter(key => this.propertyIsEnumerable(key))
       .filter(key => !this.hasCustomField(key))
       .forEach(key => {
-        if (this.remoteState[key] !== current[key]) {
+        if (!equal(this.remoteState[key], current[key])) {
           patch[key] = current[key];
         }
       });
@@ -252,9 +257,21 @@ export abstract class EntityBase {
     return Object.keys(this)
       .filter(key => this.propertyIsEnumerable(key))
       .reduce(
-        (accumulatedMap, key) => ({ ...accumulatedMap, [key]: this[key] }),
+        (accumulatedMap, key) => ({
+          ...accumulatedMap,
+          [key]: this.getCurrentStateForKey(key)
+        }),
         this.getCustomFields()
       ) as this;
+  }
+
+  protected getCurrentStateForKey(key: string) {
+    if (isNavigationProperty(key, this.constructor)) {
+      return Array.isArray(this[key])
+        ? this[key].map(linkedEntity => linkedEntity.getCurrentMapKeys())
+        : this[key].getCurrentMapKeys();
+    }
+    return Array.isArray(this[key]) ? [...this[key]] : this[key];
   }
 
   /**

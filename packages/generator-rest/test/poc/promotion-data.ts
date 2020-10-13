@@ -1,8 +1,14 @@
-/*!
+/* !
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
-import { ARTSCommonHeaderTypeActionCodeEnum, ARTSCommonHeaderTypeMessageTypeEnum, BusinessUnitCommonDataTypeCodeEnum, PriceCalculate, PriceCalculateBaseTransactionTypeEnum } from "./generated/calculation";
+import {
+  ARTSCommonHeaderTypeActionCodeEnum,
+  ARTSCommonHeaderTypeMessageTypeEnum,
+  BusinessUnitCommonDataTypeCodeEnum,
+  PriceCalculate,
+  PriceCalculateBaseTransactionTypeEnum
+} from './generated/calculation';
 
 export const transaction: PriceCalculate = {
   ARTSHeader: {

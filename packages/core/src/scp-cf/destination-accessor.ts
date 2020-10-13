@@ -210,7 +210,7 @@ class DestinationAccessor {
         'Successfully retrieved destination from destination service.'
       );
       const withProxySetting = await da.addProxyConfiguration(destination);
-      da.updateDestinationCache(withProxySetting);
+      await da.updateDestinationCache(withProxySetting);
       return withProxySetting;
     }
     return null;
@@ -285,15 +285,17 @@ class DestinationAccessor {
   readonly isolationStrategy: IsolationStrategy;
   readonly selectionStrategy: DestinationSelectionStrategy;
   readonly useCache: boolean;
+  private options: DestinationOptions;
   private subscriberDestinationsFromService: DestinationsByType | undefined;
   private providerDestinationsFrom: DestinationsByType | undefined;
 
   private constructor(
     readonly name: string,
-    readonly options: DestinationOptions,
+    options: DestinationOptions,
     readonly decodedUserJwt: DecodedJWT | undefined,
     readonly providerToken: string
   ) {
+    this.options = { ...options };
     this.providerDestinationsFrom = undefined;
     this.subscriberDestinationsFromService = undefined;
     this.decodedProviderToken = decodeJwt(providerToken);

@@ -7,6 +7,7 @@ import {
 } from '@sap-cloud-sdk/core';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
+import { destinationServiceCache } from '@sap-cloud-sdk/core/dist/scp-cf/destination-service-cache';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall
@@ -34,7 +35,8 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     };
     const providerToken = jwt.sign(
       {
-        zid: 'provider_token'
+        zid: 'provider_token',
+        user_id: 'user_id'
       },
       privateKey(),
       {
@@ -56,6 +58,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   afterEach(() => {
     nock.cleanAll();
     destinationCache.clear();
+    destinationServiceCache.clear();
     clientCredentialsTokenCache.clear();
     delete process.env['VCAP_SERVICES'];
   });
@@ -63,11 +66,13 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   it('getting the same destination twice should produce a cache hit', async () => {
     await getDestination('FINAL-DESTINATION', {
       useCache: true,
-      selectionStrategy: alwaysProvider
+      selectionStrategy: alwaysProvider,
+      isolationStrategy: IsolationStrategy.Tenant
     });
     await getDestination('FINAL-DESTINATION', {
       useCache: true,
-      selectionStrategy: alwaysProvider
+      selectionStrategy: alwaysProvider,
+      isolationStrategy: IsolationStrategy.Tenant
     });
   });
 

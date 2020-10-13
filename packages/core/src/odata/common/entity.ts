@@ -1,6 +1,11 @@
 /* eslint-disable max-classes-per-file */
 
-import { nonEnumerable, toPropertyFormat } from '../../util';
+import { equal, isNullish } from '@sap-cloud-sdk/util';
+import {
+  isNavigationProperty,
+  nonEnumerable,
+  toPropertyFormat
+} from '../../util';
 import { EntityBuilder } from './entity-builder';
 import { Link, Field, Selectable, CustomFieldBase } from './selectable';
 import { RequestBuilder } from './request-builder';
@@ -175,7 +180,7 @@ export abstract class EntityBase {
    * This function is called on all read, create and update requests.
    * This function should be called after [[initializeCustomFields]], if custom fields are defined.
    *
-   * @deprecated Since 1.12.0. Will be removed in version 2.0.
+   * @deprecated Since 1.12.0. Will be hidden in version 2.0.
    * @param state - State to be set as remote state
    * @returns The entity itself, to facilitate method chaining
    */
@@ -236,7 +241,7 @@ export abstract class EntityBase {
       .filter(key => this.propertyIsEnumerable(key))
       .filter(key => !this.hasCustomField(key))
       .forEach(key => {
-        if (this.remoteState[key] !== current[key]) {
+        if (!equal(this.remoteState[key], current[key])) {
           patch[key] = current[key];
         }
       });
@@ -245,16 +250,52 @@ export abstract class EntityBase {
 
   /**
    * Returns a map of all defined fields in entity to their current values.
-   *
+   * @param visitedEntities List of entities to check in case of circular dependencies.
    * @returns Entity with all defined entity fields
    */
-  protected getCurrentMapKeys(): this {
+  protected getCurrentMapKeys(visitedEntities: EntityBase[] = []): this {
+    visitedEntities.push(this);
     return Object.keys(this)
       .filter(key => this.propertyIsEnumerable(key))
+      .filter(
+        key =>
+          !isNavigationProperty(key, this.constructor) ||
+          !this.isVisitedEntity(this[key], visitedEntities)
+      )
       .reduce(
-        (accumulatedMap, key) => ({ ...accumulatedMap, [key]: this[key] }),
+        (accumulatedMap, key) => ({
+          ...accumulatedMap,
+          [key]: this.getCurrentStateForKey(key, visitedEntities)
+        }),
         this.getCustomFields()
       ) as this;
+  }
+
+  protected isVisitedEntity<EntityT extends EntityBase>(
+    entity: EntityT,
+    visitedEntities: EntityBase[] = []
+  ): boolean {
+    const isVisited = Array.isArray(entity)
+      ? entity.some(multiLinkChild => visitedEntities.includes(multiLinkChild))
+      : visitedEntities.includes(entity);
+    return isVisited;
+  }
+
+  protected getCurrentStateForKey(
+    key: string,
+    visitedEntities: EntityBase[] = []
+  ) {
+    if (isNavigationProperty(key, this.constructor)) {
+      if (isNullish(this[key])) {
+        return this[key];
+      }
+      return Array.isArray(this[key])
+        ? this[key].map(linkedEntity =>
+            linkedEntity.getCurrentMapKeys(visitedEntities)
+          )
+        : this[key].getCurrentMapKeys(visitedEntities);
+    }
+    return Array.isArray(this[key]) ? [...this[key]] : this[key];
   }
 
   /**

@@ -14,11 +14,35 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.30.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.30.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - Deprecate setting the content type header in the constructor of `ODataRequest`s.
 - [Generator] Files with the same names, but different casing were previously not considered, e. g. when `SomeEntity.ts` and `Someentity.ts` were generated, the second generated file would overwrite the first. In these cases the generator now adds a suffix to the name, e. g. `Someentity_1.ts`.
 
 ## New Functionality
 
+- [OData] Add `withSubRequestType` method to configure how batch sub requests are serialized.
 - [OData] Support batch requests for OData v4.
 
 ## Improvements
@@ -30,6 +54,7 @@
 - [OData] Fix wrong service paths for batch requests.
 - [Generator] Fix reference to `execa` dependency.
 - [Generator] Fix writing of files with the same names but different casing.
+- Fix url encoding in batch requests.
 
 # 1.29.0
 

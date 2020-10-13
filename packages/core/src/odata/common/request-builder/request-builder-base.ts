@@ -89,6 +89,7 @@ export abstract class MethodRequestBuilderBase<
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
+   * @deprecated Since v1.30.0. This method will be protected and should not be used externally.
    *
    * @param destination - Targeted destination on which the request is performed.
    * @param options - Options to employ when fetching destinations.

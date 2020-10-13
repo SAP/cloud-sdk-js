@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { BatchSubRequestPathType } from '../request-builder/batch/batch-request-options';
 import { ODataRequestConfig } from './odata-request-config';
 
 export class ODataBatchRequestConfig extends ODataRequestConfig {
@@ -6,6 +7,8 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
    * @deprecated Since v1.30.0.
    */
   static readonly content_type_prefix = 'multipart/mixed; boundary=batch_';
+
+  subRequestPathType: BatchSubRequestPathType = 'relativeToService';
 
   /**
    * @deprecated Since v1.30.0. Use [[boundary]] instead.
@@ -28,6 +31,10 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
       'content-type': `multipart/mixed; boundary=${boundary}`,
       accept: 'multipart/mixed'
     });
+  }
+
+  withSubRequestPathType(subRequestPathType: BatchSubRequestPathType) {
+    this.subRequestPathType = subRequestPathType;
   }
 
   resourcePath(): string {

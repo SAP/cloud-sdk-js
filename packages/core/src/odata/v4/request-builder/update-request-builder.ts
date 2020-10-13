@@ -171,7 +171,6 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     if (this.requestConfig.method === 'patch') {
       return pipe(
         () => this.serializedDiff(),
-        body => this.removeNavPropsAndComplexTypes(body),
         body => this.removeKeyFields(body),
         body => this.addRequiredFields(serializedBody, body),
         body => this.removeIgnoredFields(body)
@@ -188,14 +187,6 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
       ),
       ...this._entity.getUpdatedCustomFields()
     };
-  }
-
-  private removeNavPropsAndComplexTypes(
-    body: Record<string, any>
-  ): Record<string, any> {
-    return removePropertyOnCondition(
-      ([key, val]) => typeof val === 'object' && val !== null
-    )(body);
   }
 
   private removeKeyFields(body: Record<string, any>): Record<string, any> {

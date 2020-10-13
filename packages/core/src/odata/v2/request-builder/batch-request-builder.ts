@@ -5,13 +5,13 @@ import {
   Destination,
   DestinationNameAndJwt,
   DestinationOptions
-} from '../../scp-cf';
-import { BatchResponse } from '../common';
-import { parseBatchResponse } from '../common/request-builder/batch/batch-response-parser';
-import { BatchRequestBuilder } from '../common/request-builder/batch/batch-request-builder';
-import { deserializeBatchResponse } from '../common/request-builder/batch/batch-response-deserializer';
-import { responseDataAccessorV2 } from './request-builder/response-data-accessor';
-import { entityDeserializerV2 } from './entity-deserializer';
+} from '../../../scp-cf';
+import { BatchResponse } from '../../common';
+import { parseBatchResponse } from '../../common/request-builder/batch/batch-response-parser';
+import { BatchRequestBuilder } from '../../common/request-builder/batch/batch-request-builder';
+import { deserializeBatchResponse } from '../../common/request-builder/batch/batch-response-deserializer';
+import { entityDeserializerV2 } from '../entity-deserializer';
+import { responseDataAccessorV2 } from './response-data-accessor';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.

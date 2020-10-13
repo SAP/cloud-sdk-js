@@ -47,22 +47,21 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Constructs the url for the request at hand.
-   *
-   * @returns The url for the request
+   * Constructs an absolute URL for the given request.
+   * @returns The absolute URL for the request
    */
   url(): string {
     return `${removeTrailingSlashes(this.resourceUrl())}${this.query()}`;
   }
 
   /**
-   * Constructs the relative url for the batch request.
-   *
-   * @returns The relative url for the batch request
+   * Constructs a URL relative to the destination.
+   * @param includeServicePath Whether or not to include the service path in the URL.
+   * @returns The relative URL for the request.
    */
-  relativeUrl(): string {
+  relativeUrl(includeServicePath = true): string {
     return `${removeTrailingSlashes(
-      this.relativeResourceUrl()
+      this.relativeResourceUrl(includeServicePath)
     )}${this.query()}`;
   }
 
@@ -81,7 +80,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Returns the service URL for a given OData request.
-   *
    * @returns The URL of the service the given entity belongs to
    */
   serviceUrl(): string {
@@ -97,9 +95,8 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Returns the relative service URL for a given OData request.
-   *
-   * @returns The relative URL of the service the given entity belongs to
+   * Returns the service URL relative to the url of the destination for a given OData request.
+   * @returns The relative URL of the service the given entity belongs to.
    */
   relativeServiceUrl(): string {
     const servicePath =
@@ -110,8 +107,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Returns the URL to a specific OData resource, i.e. the entity collection.
-   *
+   * Returns the URL to a specific OData .resource, i.e. the entity collection.
    * @returns The URL of the resource
    */
   resourceUrl(): string {
@@ -122,13 +118,14 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Returns the relative URL to a specific OData resource.
-   *
-   * @returns The relative URL of the resource
+   * @param includeServicePath Whether or not to include the service path in the URL.
+   * @returns The relative URL of the resource.
    */
-  relativeResourceUrl(): string {
-    const url = `${removeTrailingSlashes(
-      this.relativeServiceUrl()
-    )}/${this.config.resourcePath()}`;
+  relativeResourceUrl(includeServicePath = true): string {
+    const baseUrl = includeServicePath
+      ? removeTrailingSlashes(this.relativeServiceUrl())
+      : '';
+    const url = `${baseUrl}/${this.config.resourcePath()}`;
     return removeLeadingSlashes(url);
   }
 

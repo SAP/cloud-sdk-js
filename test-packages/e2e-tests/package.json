@@ -1,28 +1,32 @@
 {
   "name": "@sap-cloud-sdk/e2e-tests",
-  "version": "1.29.0",
+  "version": "1.30.0",
   "description": "End to end tests of the SAP Cloud SDK for JavaScript",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
   "private": true,
   "repository": "github:SAP/cloud-sdk",
-  "dependencies": {
-    "@sap-cloud-sdk/core": "^1.29.0",
-    "@sap-cloud-sdk/test-services-e2e": "^1.29.0",
-    "@sap/cds": "^4.1.9",
-    "@sap/cds-dk": "^3.0.0",
-    "express": "^4.17.1",
-    "sqlite3": "^5.0.0"
-  },
   "scripts": {
     "pretest": "yarn deploy && yarn start",
     "posttest": "yarn stop",
-    "start": "pm2 start cds-run.js",
+    "start": "pm2 start cds-run.js || pm2 restart cds-run.js",
     "stop": "pm2 stop cds-run.js",
     "deploy": "cds deploy --to sqlite",
     "test": "yarn jest",
     "test:local": "yarn jest",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/core": "^1.30.0",
+    "@sap-cloud-sdk/test-services-e2e": "^1.30.0",
+    "@sap/cds": "^4.1.9",
+    "@sap/cds-dk": "^3.0.0",
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "moment": "~2.29.0",
+    "pm2": "^4.4.0"
   },
   "cds": {
     "cdsc": {
@@ -33,9 +37,5 @@
         "kind": "sqlite"
       }
     }
-  },
-  "devDependencies": {
-    "moment": "~2.29.0",
-    "pm2": "^4.4.0"
   }
 }

@@ -22,11 +22,7 @@ describe('equal', () => {
       expect(equal([[1, { a: 'a' }]], [[1, { a: 'a' }]])).toBe(true);
     });
 
-    it('returns false for nullish values', () => {
-      expect(equal([0, 1, '2'], ['', 1, '2'])).toBe(false);
-    });
-
-    it('returns false for differing nested arrays and object', () => {
+    it('returns false for differing nested array and object', () => {
       expect(equal([[1, 2]], [{ 1: 1, 2: 2 }])).toBe(false);
     });
   });

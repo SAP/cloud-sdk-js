@@ -163,7 +163,7 @@ describe('Request builder', () => {
     expect(parentWithChild.toMultiLink[0].keyTestEntityLink).toBe(20);
   });
 
-  // Only supported in OData 4.01 and CAP is 4.0
+  // CAP only supports OData 4.0
   it('should update an entity including existing related entities', async () => {
     const entity = TestEntity.builder()
       .keyTestEntity(entityKey)
@@ -187,7 +187,7 @@ describe('Request builder', () => {
     expect(afterUpdate.toMultiLink[0].stringProperty).toBe('newValueChild');
   });
 
-  // Only supported in OData 4.01 and CAP is 4.0
+  // CAP only supports OData 4.0
   it('should update an entity with related entities (deep update)', async () => {
     await createEntity(entityKey);
     const withoutAssociation = await queryEntity(entityKey);

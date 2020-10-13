@@ -250,29 +250,50 @@ export abstract class EntityBase {
 
   /**
    * Returns a map of all defined fields in entity to their current values.
-   *
+   * @param visitedEntities List of entities to check in case of circular dependencies.
    * @returns Entity with all defined entity fields
    */
-  protected getCurrentMapKeys(): this {
+  protected getCurrentMapKeys(visitedEntities: EntityBase[] = []): this {
+    visitedEntities.push(this);
     return Object.keys(this)
       .filter(key => this.propertyIsEnumerable(key))
+      .filter(
+        key =>
+          !isNavigationProperty(key, this.constructor) ||
+          !this.isVisitedEntity(this[key], visitedEntities)
+      )
       .reduce(
         (accumulatedMap, key) => ({
           ...accumulatedMap,
-          [key]: this.getCurrentStateForKey(key)
+          [key]: this.getCurrentStateForKey(key, visitedEntities)
         }),
         this.getCustomFields()
       ) as this;
   }
 
-  protected getCurrentStateForKey(key: string) {
+  protected isVisitedEntity<EntityT extends EntityBase>(
+    entity: EntityT,
+    visitedEntities: EntityBase[] = []
+  ): boolean {
+    const isVisited = Array.isArray(entity)
+      ? entity.some(multiLinkChild => visitedEntities.includes(multiLinkChild))
+      : visitedEntities.includes(entity);
+    return isVisited;
+  }
+
+  protected getCurrentStateForKey(
+    key: string,
+    visitedEntities: EntityBase[] = []
+  ) {
     if (isNavigationProperty(key, this.constructor)) {
       if (isNullish(this[key])) {
         return this[key];
       }
       return Array.isArray(this[key])
-        ? this[key].map(linkedEntity => linkedEntity.getCurrentMapKeys())
-        : this[key].getCurrentMapKeys();
+        ? this[key].map(linkedEntity =>
+            linkedEntity.getCurrentMapKeys(visitedEntities)
+          )
+        : this[key].getCurrentMapKeys(visitedEntities);
     }
     return Array.isArray(this[key]) ? [...this[key]] : this[key];
   }

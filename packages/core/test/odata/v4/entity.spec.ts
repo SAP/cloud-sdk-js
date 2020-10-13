@@ -1,5 +1,7 @@
 import {
   TestEntity,
+  TestEntityCircularLinkChild,
+  TestEntityCircularLinkParent,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
@@ -66,5 +68,26 @@ describe('entity v4', () => {
     entity.setOrInitializeRemoteState(state);
 
     expect(entity.getUpdatedProperties()).toEqual({});
+  });
+
+  it('getCurrentMapKeys does not run endlessly', () => {
+    const parent = TestEntityCircularLinkParent.builder()
+      .keyProperty('parent')
+      .build();
+    const child = TestEntityCircularLinkChild.builder()
+      .keyProperty('child')
+      .toParent(parent)
+      .build();
+
+    parent.toChild = child;
+
+    const currentState = parent['getCurrentMapKeys']();
+
+    expect(currentState).toEqual({
+      keyProperty: 'parent',
+      toChild: {
+        keyProperty: 'child'
+      }
+    });
   });
 });

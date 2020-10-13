@@ -18,7 +18,6 @@ const jwt = jwt123.sign(
 );
 
 describe('destination service', () => {
-
   describe('fetchInstanceDestinations', () => {
     it('fetches instance destinations and returns them as Destination array', async () => {
       const response = [

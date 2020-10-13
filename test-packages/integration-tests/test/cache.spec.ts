@@ -18,7 +18,6 @@ import {
 } from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
-import { destinationServiceCache } from '@sap-cloud-sdk/core/dist/scp-cf/destination-service-cache';
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
   beforeEach(() => {
@@ -73,9 +72,12 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   });
 
   it('changing the isolation should produce a cache miss', async () => {
-    //The destination-service has an own cahce where only isolation strategy Tenant and Tenant_User are used.
-    //In order to also miss the cache there the two allowed strategies must be used.
-    await getDestination('FINAL-DESTINATION', { useCache: true, isolationStrategy:IsolationStrategy.Tenant });
+    // The destination-service has an own cahce where only isolation strategy Tenant and Tenant_User are used.
+    // In order to also miss the cache there the two allowed strategies must be used.
+    await getDestination('FINAL-DESTINATION', {
+      useCache: true,
+      isolationStrategy: IsolationStrategy.Tenant
+    });
     const destinationRequest = getDestination('FINAL-DESTINATION', {
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant_User

@@ -7,7 +7,7 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   retrieveDestinationsFromCache: (
     destinationServiceUri: string,
     decodedJwt: DecodedJWT,
-    isolationStrategty?:IsolationStrategy
+    isolationStrategty?: IsolationStrategy
   ): Destination[] | undefined =>
     cache.get(
       getDestinationCacheKeyService(
@@ -20,7 +20,7 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
     destinationServiceUri: string,
     decodedJwt: DecodedJWT,
     destinations: Destination[],
-    isolationStrategty?:IsolationStrategy
+    isolationStrategty?: IsolationStrategy
   ): void => {
     const key = getDestinationCacheKeyService(
       destinationServiceUri,
@@ -36,13 +36,17 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
 });
 
 // The destination service Uri contains the destination name (single request) or the instance/subaccount information for get all request
-//The used isolation strategty is either Tenant or Tenat_User because we want to get results for subaccount and provider tenants which rules out no-isolation or user islation
+// The used isolation strategty is either Tenant or Tenat_User because we want to get results for subaccount and provider tenants which rules out no-isolation or user islation
 function getDestinationCacheKeyService(
   destinationServiceUri: string,
   decodedJwt: DecodedJWT,
-  isolationStrategty?:IsolationStrategy
+  isolationStrategty?: IsolationStrategy
 ): string {
-  const usedIsolationStrategy = isolationStrategty ===IsolationStrategy.Tenant || isolationStrategty===IsolationStrategy.Tenant_User ? isolationStrategty : IsolationStrategy.Tenant
+  const usedIsolationStrategy =
+    isolationStrategty === IsolationStrategy.Tenant ||
+    isolationStrategty === IsolationStrategy.Tenant_User
+      ? isolationStrategty
+      : IsolationStrategy.Tenant;
 
   return getDestinationCacheKey(
     decodedJwt,

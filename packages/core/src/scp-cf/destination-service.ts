@@ -13,7 +13,7 @@ import {
   ResilienceOptions
 } from './resilience-options';
 import { destinationServiceCache } from './destination-service-cache';
-import { CachingOptions, IsolationStrategy } from './cache';
+import { CachingOptions } from './cache';
 
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */

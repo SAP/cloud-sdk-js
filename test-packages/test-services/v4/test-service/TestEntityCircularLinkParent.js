@@ -93,16 +93,22 @@ var TestEntityCircularLinkChild_1 = require("./TestEntityCircularLinkChild");
      */
     TestEntityCircularLinkParent.KEY_PROPERTY = new core_1.StringField('KeyProperty', TestEntityCircularLinkParent, 'Edm.String');
     /**
-     * Static representation of the one-to-one navigation property [[toChild]] for query construction.
+     * Static representation of the one-to-one navigation property [[toFirstChild]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TestEntityCircularLinkParent.TO_CHILD = new core_1.OneToOneLink('to_Child', TestEntityCircularLinkParent, TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
+    TestEntityCircularLinkParent.TO_FIRST_CHILD = new core_1.OneToOneLink('to_FirstChild', TestEntityCircularLinkParent, TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
+    /**
+     * Static representation of the one-to-many navigation property [[toChildren]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntityCircularLinkParent.TO_CHILDREN = new core_1.OneToManyLink('to_Children', TestEntityCircularLinkParent, TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
     /**
      * All fields of the TestEntityCircularLinkParent entity.
      */
     TestEntityCircularLinkParent._allFields = [
         TestEntityCircularLinkParent.KEY_PROPERTY,
-        TestEntityCircularLinkParent.TO_CHILD
+        TestEntityCircularLinkParent.TO_FIRST_CHILD,
+        TestEntityCircularLinkParent.TO_CHILDREN
     ];
     /**
      * All fields selector.

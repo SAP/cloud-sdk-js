@@ -74,19 +74,30 @@ describe('entity v4', () => {
     const parent = TestEntityCircularLinkParent.builder()
       .keyProperty('parent')
       .build();
-    const child = TestEntityCircularLinkChild.builder()
-      .keyProperty('child')
+    const child1 = TestEntityCircularLinkChild.builder()
+      .keyProperty('child1')
+      .toParent(parent)
+      .build();
+    const child2 = TestEntityCircularLinkChild.builder()
+      .keyProperty('child2')
       .toParent(parent)
       .build();
 
-    parent.toChild = child;
+    parent.toFirstChild = child1;
+    parent.toChildren = [child1, child2];
 
-    const currentState = parent['getCurrentMapKeys']();
-
-    expect(currentState).toEqual({
+    expect(parent['getCurrentMapKeys']()).toEqual({
       keyProperty: 'parent',
-      toChild: {
-        keyProperty: 'child'
+      toFirstChild: {
+        keyProperty: 'child1'
+      },
+      toChildren: [{ keyProperty: 'child1' }, { keyProperty: 'child2' }]
+    });
+
+    expect(child1['getCurrentMapKeys']()).toEqual({
+      keyProperty: 'child1',
+      toParent: {
+        keyProperty: 'parent'
       }
     });
   });

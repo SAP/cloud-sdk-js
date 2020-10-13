@@ -9,10 +9,10 @@ export class GlobalNameFormatter {
 
   constructor(vdmMapping: VdmMapping | undefined) {
     this.vdmMapping = vdmMapping || {};
-    this.directoryNameFinder.addToAlreadyUsedNames(
+    this.directoryNameFinder.addToUsedNames(
       ...Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName)
     );
-    this.npmPackageNameFinder.addToAlreadyUsedNames(
+    this.npmPackageNameFinder.addToUsedNames(
       ...Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName)
     );
   }
@@ -39,13 +39,13 @@ export class GlobalNameFormatter {
 
   private transformAndCacheDirectoryName(directoryName: string): string {
     const newName = this.directoryNameFinder.findUniqueName(directoryName);
-    this.directoryNameFinder.addToAlreadyUsedNames(newName);
+    this.directoryNameFinder.addToUsedNames(newName);
     return newName;
   }
 
   private transformAndCacheNpmPackageName(npmPackageName: string): string {
     const newName = this.npmPackageNameFinder.findUniqueName(npmPackageName);
-    this.npmPackageNameFinder.addToAlreadyUsedNames(newName);
+    this.npmPackageNameFinder.addToUsedNames(newName);
     return newName;
   }
 

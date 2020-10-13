@@ -3,8 +3,15 @@
 import { MethodRequestBuilderBase } from '../request-builder-base';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import { Constructable, EntityBase } from '../../entity';
-import { serializeBatchRequest } from './batch-request-serializer';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationRetrievalOptions
+} from '../../../../scp-cf';
+import { ODataRequest } from '../../request/odata-request';
 import { BatchChangeSet } from './batch-change-set';
+import { BatchSubRequestPathType } from './batch-request-options';
+import { serializeBatchRequest } from './batch-request-serializer';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
@@ -27,6 +34,38 @@ export class BatchRequestBuilder extends MethodRequestBuilderBase<
     readonly entityToConstructorMap: Record<string, Constructable<EntityBase>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
-    this.requestConfig.payload = serializeBatchRequest(this);
+  }
+
+  withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {
+    this.requestConfig.withSubRequestPathType(subRequestPathType);
+    return this;
+  }
+
+  build(): ODataRequest<ODataBatchRequestConfig>;
+  build(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationRetrievalOptions
+  ): Promise<ODataRequest<ODataBatchRequestConfig>>;
+  build(
+    destination?: Destination | DestinationNameAndJwt,
+    options?: DestinationRetrievalOptions
+  ):
+    | ODataRequest<ODataBatchRequestConfig>
+    | Promise<ODataRequest<ODataBatchRequestConfig>> {
+    return destination
+      ? super
+          .build(destination!, options)
+          .then(request => this.setPayload(request))
+      : this.setPayload(super.build());
+  }
+
+  private setPayload(
+    request: ODataRequest<ODataBatchRequestConfig>
+  ): ODataRequest<ODataBatchRequestConfig> {
+    request.config.payload = serializeBatchRequest(this, {
+      subRequestPathType: request.config.subRequestPathType,
+      destination: request.destination!
+    });
+    return request;
   }
 }

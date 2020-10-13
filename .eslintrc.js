@@ -201,7 +201,7 @@ module.exports = {
     'no-new-func': 'error',
     'no-new-wrappers': 'error',
     'no-redeclare': 'off',
-    "@typescript-eslint/no-redeclare": ["error"],
+    '@typescript-eslint/no-redeclare': ['error'],
     'no-restricted-imports': ['error', '../', './'],
     'no-return-await': 'error',
     'no-sequences': 'error',

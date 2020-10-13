@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { PercentActionEnum } from './generated/calculation';
+import { PercentActionEnum } from './poc/generated/calculation';
 import { getPromotion } from './poc/promotion.service';
 import { setTestDestination, unmockAllTestDestinations } from '@sap-cloud-sdk/test-util';
 

@@ -1,4 +1,4 @@
-import { CalculationApi, Percent } from '../generated/calculation';
+import { CalculationApi, Percent } from './generated/calculation';
 import { transaction } from './promotion-data';
 import { AxiosRequestConfig } from 'axios';
 import { buildAxiosRequestConfig } from '@sap-cloud-sdk/core';

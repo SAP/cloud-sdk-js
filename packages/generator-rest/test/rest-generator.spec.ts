@@ -20,7 +20,7 @@ describe('rest generator test', () => {
     await generateRest({ inputDir, outputDir });
 
     const services = fs.readdirSync(outputDir);
-    expect(services).toEqual(['petstore', 'sales-orders']);
+    expect(services).toEqual(expect.arrayContaining(['petstore', 'sales-orders']));
     services.forEach(serviceName => {
       const serviceFiles = fs.readdirSync(path.join(outputDir, serviceName));
       expect(serviceFiles).toContain('open-api.json');

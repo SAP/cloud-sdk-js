@@ -1431,6 +1431,11 @@
   dependencies:
     "@types/node" ">= 8"
 
+"@openapitools/openapi-generator-cli@cli-4.2.1":
+  version "1.0.18-4.2.1"
+  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-1.0.18-4.2.1.tgz#43a1d41726a6b12c675fdab42b775977cd0c1361"
+  integrity sha512-7lHDKTe1vLFD9kuRs2ZAIrkfidHPhazps+TGKduBdOL6VBFuJvrSV++iX3GNv8ROjzMsTxa4kKz7uGL4xiBNGQ==
+
 "@opencensus/core@0.0.9":
   version "0.0.9"
   resolved "https://registry.npmjs.org/@opencensus/core/-/core-0.0.9.tgz#b16f775435ee309433e4126af194d37313fc93b3"

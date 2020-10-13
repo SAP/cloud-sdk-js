@@ -277,8 +277,7 @@ function warnIfNavigation<EntityT extends EntityV2>(
 ): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
   const setNavigationsProperties = Object.keys(entity).filter(
     key =>
-      !isNullish(entity[key]) &&
-      isNavigationProperty(key as keyof EntityT, entityConstructor)
+      !isNullish(entity[key]) && isNavigationProperty(key, entityConstructor)
   );
 
   if (setNavigationsProperties.length) {

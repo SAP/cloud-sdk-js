@@ -149,7 +149,7 @@ export function parseHttpCode(response: string): number {
  * @param response The string representation of a single response.
  * @returns The parsed JSON representation of the response body.
  */
-function parseResponseBody(response: string): Record<string, any> | any[] {
+function parseResponseBody(response: string): Record<string, any> {
   const responseBody = getResponseBody(response);
   if (responseBody) {
     try {

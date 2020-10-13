@@ -163,8 +163,8 @@ describe('Request builder', () => {
     expect(parentWithChild.toMultiLink[0].keyTestEntityLink).toBe(20);
   });
 
-  // Only supported in OData 4.01 and CAP is 4.0
-  xit('should update an entity including existing related entities', async () => {
+  // CAP only supports OData 4.0
+  it('should update an entity including existing related entities', async () => {
     const entity = TestEntity.builder()
       .keyTestEntity(entityKey)
       .stringProperty('oldValueParent')
@@ -187,8 +187,8 @@ describe('Request builder', () => {
     expect(afterUpdate.toMultiLink[0].stringProperty).toBe('newValueChild');
   });
 
-  // Only supported in OData 4.01 and CAP is 4.0
-  xit('should update an entity with related entities (deep update)', async () => {
+  // CAP only supports OData 4.0
+  it('should update an entity with related entities (deep update)', async () => {
     await createEntity(entityKey);
     const withoutAssociation = await queryEntity(entityKey);
     withoutAssociation.toMultiLink = [
@@ -230,7 +230,7 @@ describe('Request builder', () => {
     expect(resultFiltered).toBe(1);
   });
 
-  // CAP seems not to set the etag
+  // CAP seems to not set the etag
   xit('should set the version identifier (eTag)', async () => {
     const created = await createEntity(entityKey);
     expect(created['_versionIdentifier']).not.toBe(undefined);

@@ -1,6 +1,6 @@
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
 
-describe('Entity Class', () => {
+describe('entity v2', () => {
   let entity: TestEntity;
   const otherStringProperty = 'other';
   const otherDoubleProperty = 0;

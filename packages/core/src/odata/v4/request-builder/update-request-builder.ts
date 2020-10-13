@@ -171,7 +171,6 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     if (this.requestConfig.method === 'patch') {
       const a = pipe(
         () => this.serializedDiff(),
-        // body => this.removeNavPropsAndComplexTypes(body),
         body => this.removeKeyFields(body),
         body => this.addRequiredFields(serializedBody, body),
         body => this.removeIgnoredFields(body)

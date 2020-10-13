@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
-import { equal } from '@sap-cloud-sdk/util';
+import { equal, isNullish } from '@sap-cloud-sdk/util';
 import {
   isNavigationProperty,
   nonEnumerable,
@@ -267,6 +267,9 @@ export abstract class EntityBase {
 
   protected getCurrentStateForKey(key: string) {
     if (isNavigationProperty(key, this.constructor)) {
+      if (isNullish(this[key])) {
+        return this[key];
+      }
       return Array.isArray(this[key])
         ? this[key].map(linkedEntity => linkedEntity.getCurrentMapKeys())
         : this[key].getCurrentMapKeys();

@@ -169,14 +169,12 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     );
 
     if (this.requestConfig.method === 'patch') {
-      const a = pipe(
+      return pipe(
         () => this.serializedDiff(),
         body => this.removeKeyFields(body),
         body => this.addRequiredFields(serializedBody, body),
         body => this.removeIgnoredFields(body)
       )();
-
-      return a;
     }
     return serializedBody;
   }

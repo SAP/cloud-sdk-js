@@ -49,7 +49,8 @@ We decided to not make the "core" (or common) a peer dependency
 * There is no use case for this (https://www.npmjs.com/package/@sap/cloud-sdk-vdm)?
 * Instead provide a way for people to dicover available services
 
-## Get rid of moment
+## Get rid of moment (#after)
+* Consider whether it is possible have two implementations internally (#before)
 
 ## Other backlog items
 

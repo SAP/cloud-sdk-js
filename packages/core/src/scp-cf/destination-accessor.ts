@@ -14,10 +14,7 @@ import {
 import { IsolationStrategy } from './cache';
 import { addProxyConfigurationOnPrem } from './connectivity-service';
 import { sanitizeDestination } from './destination';
-import {
-  AllDestinations,
-  DestinationsByType
-} from './destination-accessor-types';
+import { DestinationsByType } from './destination-accessor-types';
 import { destinationCache } from './destination-cache';
 import {
   alwaysProvider,
@@ -101,6 +98,19 @@ export type DestinationOptions = DestinationAccessorOptions &
   DestinationRetrievalOptions &
   VerifyJwtOptions;
 
+type accountType = 'subscriber' | 'provider';
+
+interface DestinationSearchResult {
+  destination: Destination;
+  fromCache: boolean;
+  account: accountType;
+}
+
+const emptyDestinationByType: DestinationsByType = {
+  instance: [],
+  subaccount: []
+};
+
 /**
  * @deprecated Since v1.0.1. Use [[getDestination]] instead.
  *
@@ -164,19 +174,14 @@ export async function getDestinationFromDestinationService(
   );
 }
 
-const emptyDestinationByType: DestinationsByType = {
-  instance: [],
-  subaccount: []
-};
-
 class DestinationAccessor {
   public static async getDestination(
     name: string,
     options: DestinationOptions = {}
   ): Promise<Destination | null> {
     return (
-      DestinationAccessor.tryGetDestinationFromEnvVariable(name) ??
-      DestinationAccessor.tryGetDestinationFromServiceBinding(name) ??
+      DestinationAccessor.searchEnvVariablesForDestination(name) ??
+      DestinationAccessor.searchServiceBindingForDestination(name) ??
       DestinationAccessor.getDestinationFromDestinationService(name, options)
     );
   }
@@ -193,30 +198,40 @@ class DestinationAccessor {
       decodedUserJwt,
       providerToken
     );
-    const destinationFromCache = await da.tryGetDestinationFromCache();
-    if (destinationFromCache) {
-      return destinationFromCache;
+    const destinationResult =
+      (await da.searchSubscriberAccountForDestination()) ??
+      (await da.searchProviderAccountForDestination());
+
+    if (destinationResult?.fromCache) {
+      return destinationResult.destination;
     }
 
-    let destination = await da.tryGetDestinationFromService();
-    if (da.isOAuthSamlAuth(destination)) {
-      destination = await da.tryAddOAuthSamlAuth(destination);
-    }
-    if (da.isClientCertAuth(destination)) {
-      destination = await da.tryAddClientCertAuth();
-    }
-    if (destination) {
+    if (destinationResult) {
       logger.info(
         'Successfully retrieved destination from destination service.'
       );
-      const withProxySetting = await da.addProxyConfiguration(destination);
-      await da.updateDestinationCache(withProxySetting);
-      return withProxySetting;
+    } else {
+      logger.info('Could not retrieve destination from destination service.');
+      return null;
     }
-    return null;
+
+    let { destination } = destinationResult;
+    if (destination.authentication === 'OAuth2SAMLBearerAssertion') {
+      destination = await da.addOAuthSamlAuth(destination);
+    }
+    if (destination.authentication === 'ClientCertificateAuthentication') {
+      destination = await da.addClientCertAuth();
+    }
+
+    const withProxySetting = await da.addProxyConfiguration(destination);
+    await da.updateDestinationCache(
+      withProxySetting,
+      destinationResult.account
+    );
+    return withProxySetting;
   }
 
-  private static tryGetDestinationFromServiceBinding(
+  private static searchServiceBindingForDestination(
     name: string
   ): Destination | undefined {
     logger.info('Attempting to retrieve destination from service binding.');
@@ -234,7 +249,7 @@ class DestinationAccessor {
     }
   }
 
-  private static tryGetDestinationFromEnvVariable(
+  private static searchEnvVariablesForDestination(
     name: string
   ): Destination | undefined {
     logger.info(
@@ -286,8 +301,6 @@ class DestinationAccessor {
   readonly selectionStrategy: DestinationSelectionStrategy;
   readonly useCache: boolean;
   private options: DestinationOptions;
-  private subscriberDestinationsFromService: DestinationsByType | undefined;
-  private providerDestinationsFrom: DestinationsByType | undefined;
 
   private constructor(
     readonly name: string,
@@ -296,8 +309,6 @@ class DestinationAccessor {
     readonly providerToken: string
   ) {
     this.options = { ...options };
-    this.providerDestinationsFrom = undefined;
-    this.subscriberDestinationsFromService = undefined;
     this.decodedProviderToken = decodeJwt(providerToken);
 
     this.isolationStrategy =
@@ -346,9 +357,9 @@ class DestinationAccessor {
     return credentials[0];
   }
 
-  private async tryAddOAuthSamlAuth(
+  private async addOAuthSamlAuth(
     destination: Destination
-  ): Promise<Destination | undefined> {
+  ): Promise<Destination> {
     const destinationService = getService('destination');
 
     if (!destinationService) {
@@ -387,7 +398,7 @@ class DestinationAccessor {
     );
   }
 
-  private async tryAddClientCertAuth(): Promise<Destination | undefined> {
+  private async addClientCertAuth(): Promise<Destination> {
     const accessToken = await serviceToken('destination', {
       userJwt: this.decodedUserJwt,
       ...this.options
@@ -418,13 +429,15 @@ class DestinationAccessor {
     }
   }
 
-  private async updateDestinationCache(destination: Destination) {
+  private async updateDestinationCache(
+    destination: Destination,
+    account: accountType
+  ) {
     if (!this.useCache) {
       return destination;
     }
-    // The information whether the destination originates from an instance of account service is not relevant for caching.
     destinationCache.cacheRetrievedDestination(
-      (await this.canFindDestinationFromSubscriber())
+      account === 'subscriber'
         ? this.decodedUserJwt!
         : this.decodedProviderToken,
       destination,
@@ -432,85 +445,92 @@ class DestinationAccessor {
     );
   }
 
-  private async tryGetDestinationFromService(): Promise<
-    Destination | undefined
+  private async getProviderDestinationService(): Promise<
+    DestinationSearchResult | undefined
   > {
-    const allDest: AllDestinations = {
-      provider: await this.getProviderDestinations(),
-      subscriber: await this.getSubscriberDestinations()
-    };
-    const selectedFromService = await this.selectionStrategy(
-      allDest,
+    const destination = await this.selectionStrategy(
+      {
+        subscriber: emptyDestinationByType,
+        provider: await this.getInstanceAndSubaccountDestinations(
+          this.providerToken
+        )
+      },
+      this.name
+    );
+    if (destination) {
+      return {
+        destination,
+        fromCache: false,
+        account: 'provider'
+      };
+    }
+  }
+
+  private getProviderDestinationCache(): DestinationSearchResult | undefined {
+    const destination = destinationCache.retrieveDestinationFromCache(
+      this.decodedProviderToken,
+      this.name,
+      this.isolationStrategy
+    );
+
+    if (destination) {
+      logger.info(
+        'Successfully retrieved destination from destination service cache for provider destinations.'
+      );
+      return { destination, fromCache: true, account: 'provider' };
+    }
+  }
+
+  private async getSubscriberDestinationService(): Promise<
+    DestinationSearchResult | undefined
+  > {
+    const accessToken = await serviceToken('destination', {
+      userJwt: this.decodedUserJwt,
+      ...this.options
+    });
+    const destination = this.selectionStrategy(
+      {
+        subscriber: await this.getInstanceAndSubaccountDestinations(
+          accessToken
+        ),
+        provider: emptyDestinationByType
+      },
       this.name
     );
 
-    if (!selectedFromService) {
-      logger.info('Could not retrieve destination from destination service.');
+    if (destination) {
+      return { destination, fromCache: false, account: 'subscriber' };
     }
-    return selectedFromService ?? undefined;
   }
 
-  /**
-   * Checks if a destination with the name can be found in the subscriber account
-   */
-  private async canFindDestinationFromSubscriber(): Promise<boolean> {
-    const subscriber = await this.getSubscriberDestinations();
-    return !!this.selectionStrategy(
-      { provider: emptyDestinationByType, subscriber },
-      this.name
+  private getSubscriberDestinationCache(): DestinationSearchResult | undefined {
+    const destination = destinationCache.retrieveDestinationFromCache(
+      this.decodedUserJwt!,
+      this.name,
+      this.isolationStrategy
     );
-  }
 
-  private async getProviderDestinations(): Promise<DestinationsByType> {
-    if (!(await this.isProviderNeeded())) {
-      return emptyDestinationByType;
-    }
-
-    if (!this.providerDestinationsFrom) {
-      this.providerDestinationsFrom = await this.getInstanceAndSubaccountDestinations(
-        this.providerToken
+    if (destination) {
+      logger.info(
+        'Successfully retrieved destination from destination service cache for subscriber destinations.'
       );
+      return { destination, fromCache: true, account: 'subscriber' };
     }
-
-    return this.providerDestinationsFrom;
   }
 
-  private async getSubscriberDestinations(): Promise<DestinationsByType> {
-    if (!this.isSubscriberNeeded(this.decodedUserJwt)) {
-      return emptyDestinationByType;
-    }
-
-    if (!this.subscriberDestinationsFromService) {
-      const accessToken = await serviceToken('destination', {
-        userJwt: this.decodedUserJwt,
-        ...this.options
-      });
-      this.subscriberDestinationsFromService = await this.getInstanceAndSubaccountDestinations(
-        accessToken
-      );
-    }
-
-    return this.subscriberDestinationsFromService;
-  }
-
-  private isClientCertAuth(
-    destination: Destination | undefined
-  ): destination is Destination {
+  private isProviderAndSubscriberSameTenant() {
     return (
-      (destination &&
-        destination.authentication === 'ClientCertificateAuthentication') ||
-      false
+      this.decodedUserJwt &&
+      isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken)
     );
   }
 
-  private isOAuthSamlAuth(
-    destination: Destination | undefined
-  ): destination is Destination {
-    return (
-      (destination &&
-        destination.authentication === 'OAuth2SAMLBearerAssertion') ||
-      false
-    );
+  private isProviderNeeded(): boolean {
+    if (this.selectionStrategy === alwaysSubscriber) {
+      return false;
+    }
+
+    return true;
   }
 
   private isSubscriberNeeded(
@@ -524,65 +544,44 @@ class DestinationAccessor {
       return false;
     }
 
-    if (isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken)) {
+    if (this.isProviderAndSubscriberSameTenant()) {
       return false;
     }
 
     return true;
   }
 
-  private async isProviderNeeded(): Promise<boolean> {
-    if (this.selectionStrategy === alwaysSubscriber) {
-      return false;
+  private async searchProviderAccountForDestination(): Promise<
+    DestinationSearchResult | undefined
+  > {
+    if (!this.isProviderNeeded()) {
+      return;
     }
-    if (this.selectionStrategy === alwaysProvider) {
-      return true;
+
+    if (this.useCache) {
+      return (
+        this.getProviderDestinationCache() ??
+        this.getProviderDestinationService()
+      );
     }
-    // If subscriber and provider are the same also the provider cache is needed.
-    if (
-      this.decodedUserJwt &&
-      isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken)
-    ) {
-      return true;
-    }
-    // We are in selection strategy subscriberFirst here. So if we get something from subscriber ignore provider.
-    return !(await this.canFindDestinationFromSubscriber());
+
+    return this.getProviderDestinationService();
   }
 
-  private async tryGetDestinationFromCache(): Promise<Destination | undefined> {
-    if (!this.useCache) {
+  private async searchSubscriberAccountForDestination(): Promise<
+    DestinationSearchResult | undefined
+  > {
+    if (!this.isSubscriberNeeded(this.decodedUserJwt)) {
       return;
     }
 
-    if (this.isSubscriberNeeded(this.decodedUserJwt)) {
-      const subscriberDestination = destinationCache.retrieveDestinationFromCache(
-        this.decodedUserJwt,
-        this.name,
-        this.isolationStrategy
+    if (this.useCache) {
+      return (
+        this.getSubscriberDestinationCache() ??
+        this.getSubscriberDestinationService()
       );
-
-      if (subscriberDestination) {
-        logger.info(
-          'Successfully retrieved destination from destination service cache for subscriber destinations.'
-        );
-        return subscriberDestination;
-      }
     }
 
-    const providerDestination = destinationCache.retrieveDestinationFromCache(
-      this.decodedProviderToken,
-      this.name,
-      this.isolationStrategy
-    );
-    if (!providerDestination) {
-      return;
-    }
-
-    if (await this.isProviderNeeded()) {
-      logger.info(
-        'Successfully retrieved destination from destination service cache for provider destinations.'
-      );
-      return providerDestination;
-    }
+    return this.getSubscriberDestinationService();
   }
 }

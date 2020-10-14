@@ -5,16 +5,12 @@ import { getDestinationCacheKey } from './destination-cache';
 
 const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   retrieveDestinationsFromCache: (
-    destinationServiceUri: string,
+    targetUrl: string,
     decodedJwt: DecodedJWT,
     isolationStrategty?: IsolationStrategy
   ): Destination[] | undefined =>
     cache.get(
-      getDestinationCacheKeyService(
-        destinationServiceUri,
-        decodedJwt,
-        isolationStrategty
-      )
+      getDestinationCacheKeyService(targetUrl, decodedJwt, isolationStrategty)
     ),
   cacheRetrievedDestinations: (
     destinationServiceUri: string,

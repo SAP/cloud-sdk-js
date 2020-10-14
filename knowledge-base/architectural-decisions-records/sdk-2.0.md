@@ -58,3 +58,4 @@ We decided to not make the "core" (or common) a peer dependency
   * Release vdm using edmx files + generic vdm
   * maybe generate on install?
 * Is is possible to rename VDM to @sap-cloud-sdk-vdm/xy-service
+* Should we have a shared eslint ruleset for contributions / demo projects?

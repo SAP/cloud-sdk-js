@@ -59,3 +59,5 @@ We decided to not make the "core" (or common) a peer dependency
   * maybe generate on install?
 * Is is possible to rename VDM to @sap-cloud-sdk-vdm/xy-service
 * Should we have a shared eslint ruleset for contributions / demo projects?
+* We can already rename `GetAllRequestBuilderV2` -> `GetAllRequestBuilder`, etc. by exporting files like this:
+  * `export {GetAllRequestBuilder as GetAllRequestBuilderV2}`

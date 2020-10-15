@@ -166,7 +166,7 @@ export async function getDestination(
  */
 export async function getDestinationFromDestinationService(
   name: string,
-  options: DestinationOptions & { iss?: string }
+  options: DestinationOptions
 ): Promise<Destination | null> {
   return DestinationAccessor.getDestinationFromDestinationService(
     name,
@@ -240,10 +240,8 @@ class DestinationAccessor {
       logger.info('Successfully retrieved destination from service binding.');
       return destination;
     } catch (error) {
-      logger.info(error.message);
-      logger.info('Could not retrieve destination from service binding.');
       logger.info(
-        'If you are not using SAP Extension Factory, this information probably does not concern you.'
+        `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
       );
       return undefined;
     }
@@ -272,7 +270,7 @@ class DestinationAccessor {
           return destination;
         }
       } catch (error) {
-        logger.info(error.message);
+        logger.error(`Error in reading the given destinations from the environment variable ${error.message}.`);
       }
     }
 

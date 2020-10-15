@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src/scp-cf/destination-service-types';
 import {
-  getDestinationByName,
+  getDestinationByName, getDestinationFromEnvByName,
   getDestinationsFromEnv
 } from '../../src/scp-cf/env-destination-accessor';
 import {
@@ -90,20 +90,20 @@ describe('env-destination-accessor', () => {
     it('should return a destination for a name', () => {
       mockDestinationsEnv(environmentDestination);
 
-      const actual = getDestinationByName('FINAL-DESTINATION');
+      const actual = getDestinationFromEnvByName('FINAL-DESTINATION');
       expect(actual).toMatchObject(destinationFromEnv);
     });
 
     it('should return a destination for a name, that is given as a destination configuration', () => {
       mockDestinationsEnv(environmentDestinationConfig);
 
-      const actual = getDestinationByName('TESTINATION');
+      const actual = getDestinationFromEnvByName('TESTINATION');
       expect(actual).toMatchObject(destinationFromConfigEnv);
     });
 
     it('should return null when no destination can be found', () => {
       const expected = null;
-      const actual = getDestinationByName('FINAL-DESTINATION');
+      const actual = getDestinationFromEnvByName('FINAL-DESTINATION');
 
       assert.equal(actual, expected, 'Expected null, but got something.');
     });
@@ -117,10 +117,30 @@ describe('env-destination-accessor', () => {
       const logger = createLogger('env-destination-accessor');
       const warnSpy = jest.spyOn(logger, 'warn');
 
-      getDestinationByName('FINAL-DESTINATION');
+      getDestinationFromEnvByName('FINAL-DESTINATION');
       expect(warnSpy).toBeCalledWith(
         "The 'destinations' env variable contains multiple destinations with the name 'FINAL-DESTINATION'. Only the first entry will be respected."
       );
     });
+
+    it('should take the first destination if multple have the same name',()=>{
+      mockDestinationsEnv( {
+        Name: 'FINAL-DESTINATION',
+        URL: 'example-1.com'
+      },{
+        Name: 'FINAL-DESTINATION-DIFFERENT',
+        URL: 'example-2.com'
+      },{
+        Name: 'FINAL-DESTINATION',
+        URL: 'example-3.com'
+      });
+
+      expect(getDestinationFromEnvByName('FINAL-DESTINATION')!.url).toEqual('example-1.com')
+    })
+
+    it('should throw for ill formatted JSON',()=>{
+      process.env.destinations = "Not Proper JSON string"
+      expect(getDestinationsFromEnv()).toThrowErrorMatchingSnapshot()
+    })
   });
 });

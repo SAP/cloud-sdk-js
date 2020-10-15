@@ -1,4 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import {
   proxyStrategy,
   ProxyStrategy,
@@ -23,17 +23,25 @@ const logger = createLogger({
  * @returns A list of destinations
  */
 export function getDestinationsFromEnv(): Destination[] {
-  const destinationsEnv = getDestinationsEnvVariable();
-  if (destinationsEnv) {
-    const destinations = JSON.parse(destinationsEnv);
-    validateDestinations(destinations);
-    return destinations.map(destination =>
-      isDestinationConfiguration(destination)
-        ? parseDestination(destination)
-        : sanitizeDestination(destination)
-    );
-  }
-  return [];
+
+    const destinationsEnv = getDestinationsEnvVariable();
+    logger.debug(`The value for the destination enviorment varialbe is ${destinationsEnv}`).
+    if (destinationsEnv) {
+      let destinations
+      try {
+      const destinations = JSON.parse(destinationsEnv);
+      }catch(e){
+        throw errorWithCause(`Error in parsing the destinations from the environment variable.`,e)
+      }
+      validateDestinations(destinations);
+      return destinations.map(destination =>
+        isDestinationConfiguration(destination)
+          ? parseDestination(destination)
+          : sanitizeDestination(destination)
+      );
+    }
+    return [];
+
 }
 
 /**
@@ -50,7 +58,7 @@ export function getDestinations(): Destination[] {
 }
 
 /**
- * Get a destination from the environment variables by name. Throws an error if there are multiple destinations with the same name.
+ * Get a destination from the environment variables by name. If there are multiple destinations with the same name the first one will be used.
  * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
  * from the Cloud Foundry destination service.
  *

@@ -345,7 +345,7 @@ class DestinationAccessor {
     };
   }
 
-  private get destionationServiceCredentials() {
+  private get destinationServiceCredentials() {
     const credentials = getDestinationServiceCredentialsList();
     if (!credentials || credentials.length === 0) {
       throw Error(

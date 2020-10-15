@@ -220,8 +220,6 @@ export interface DestinationCachingOptions {
 /**
  * Options to use while fetching destinations. Encompasses both [[DestinationCachingOptions]] and [[ResilienceOptions]] interfaces.
  */
-// Prettier will try to remove the parens in the type definition, which changes the meaning of the code
-// Prettier-ignore
 export type DestinationRetrievalOptions = (
   | DestinationCachingOptions
   | CachingOptions

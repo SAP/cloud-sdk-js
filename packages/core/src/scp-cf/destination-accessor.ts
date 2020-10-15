@@ -326,7 +326,7 @@ class DestinationAccessor {
   private async getInstanceAndSubaccountDestinations(
     accessToken: string
   ): Promise<DestinationsByType> {
-    const destinations = await Promise.all([
+    const [instance, subaccount] = await Promise.all([
       fetchInstanceDestinations(
         this.destionationServiceCredentials.uri,
         accessToken,
@@ -340,8 +340,8 @@ class DestinationAccessor {
     ]);
 
     return {
-      instance: destinations[0],
-      subaccount: destinations[1]
+      instance,
+      subaccount
     };
   }
 

@@ -1,5 +1,6 @@
+/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+
 import { toTitleFormat } from '@sap-cloud-sdk/core';
-import { endWithDot } from './generator-utils';
 import {
   VdmComplexType,
   VdmEntity,
@@ -7,7 +8,29 @@ import {
   VdmProperty,
   VdmPropertyValueConstraints,
   VdmServiceMetadata
-} from './vdm-types';
+} from '../vdm-types';
+import { endWithDot } from '../generator-utils';
+
+export function getPropertyDescription(
+  property: VdmProperty,
+  constraints: VdmPropertyValueConstraints = { nullable: false }
+): string[] {
+  return [
+    property.description ||
+      endWithDot(toTitleFormat(property.instancePropertyName).trim()),
+    ...getConstraints(constraints)
+  ];
+}
+
+export function getNavPropertyDescription(
+  property: VdmNavigationProperty
+): string {
+  return `${
+    property.isCollection ? 'One-to-many' : 'One-to-one'
+  } navigation property to the [[${
+    property.toEntityClassName
+  }]] entity.`.trim();
+}
 
 export function getFunctionDoc(
   description: string,
@@ -44,15 +67,21 @@ export function getComplexTypeFieldDescription(
   return `${complexType.fieldType}\n@typeparam EntityT - Type of the entity the complex type field belongs to.`;
 }
 
-export function getPropertyDescription(
-  property: VdmProperty,
-  constraints: VdmPropertyValueConstraints = { nullable: false }
+export function getEntityDescription(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
 ): string {
-  return addConstraints(
-    property.description ||
-      endWithDot(toTitleFormat(property.instancePropertyName).trim()),
-    constraints
-  );
+  let description = entityDescription(entity.entitySetName, service.namespace);
+
+  if (service.apiBusinessHubMetadata?.communicationScenario) {
+    description = `This service is part of the following communication scenarios: ${service.apiBusinessHubMetadata.communicationScenario}.`;
+  }
+
+  if (service.apiBusinessHubMetadata) {
+    description = `See ${service.apiBusinessHubMetadata.url} for more information.`;
+  }
+
+  return description;
 }
 
 /**
@@ -65,16 +94,6 @@ export function addLeadingNewline(documentation: string): string {
     return '\n' + documentation;
   }
   return documentation;
-}
-
-export function getNavPropertyDescription(
-  property: VdmNavigationProperty
-): string {
-  return `${
-    property.isCollection ? 'One-to-many' : 'One-to-one'
-  } navigation property to the [[${
-    property.toEntityClassName
-  }]] entity.`.trim();
 }
 
 export function getComplexTypePropertyDescription(
@@ -98,35 +117,11 @@ export function getStaticNavPropertyDescription(
   }]] for query construction.\nUse to reference this property in query operations such as 'select' in the fluent request API.`;
 }
 
-export function getEntityDescription(
-  entity: VdmEntity,
-  service: VdmServiceMetadata
-): string {
-  let description = entityDescription(entity.entitySetName, service.namespace);
-
-  if (
-    service.apiBusinessHubMetadata &&
-    service.apiBusinessHubMetadata.communicationScenario
-  ) {
-    description += partOfCommunicationScenarios(
-      service.apiBusinessHubMetadata.communicationScenario
-    );
-  }
-
-  if (service.apiBusinessHubMetadata) {
-    description += seeForMoreInformation(service.apiBusinessHubMetadata.url);
-  }
-
-  return description;
-}
-
 const entityDescription = (entitySetName: string, speakingModuleName: string) =>
   `This class represents the entity "${entitySetName}" of service "${speakingModuleName}".`;
 const seeForMoreInformation = (url: string) =>
   `See ${url} for more information.`;
 
-const partOfCommunicationScenarios = (communicationScenarios: string) =>
-  `This service is part of the following communication scenarios: ${communicationScenarios}.`;
 export function getRequestBuilderDescription(entity: VdmEntity) {
   return `Request builder class for operations supported on the [[${entity.className}]] entity.`;
 }
@@ -135,18 +130,15 @@ export function getLookupDescription(service: VdmServiceMetadata) {
   return `Lookup class for finding the constructor for an entity of the [[${service.className}]] service.`;
 }
 
-function addConstraints(
-  description: string,
-  constraints: VdmPropertyValueConstraints
-): string {
-  if (constraints.maxLength) {
-    description += `\nMaximum length: ${constraints.maxLength}.`;
+function getConstraints(constraints: VdmPropertyValueConstraints): string[] {
+  const c: string[] = [];
+  if (typeof constraints.maxLength !== 'undefined') {
+    c.push(`Maximum length: ${constraints.maxLength}.`);
   }
   if (constraints.nullable) {
-    description += '\n@nullable';
+    c.push('@nullable');
   }
-
-  return description;
+  return c;
 }
 
 export interface DocType {

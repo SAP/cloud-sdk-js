@@ -555,12 +555,11 @@ class DestinationAccessor {
       return;
     }
 
+    let destination;
     if (this.useCache) {
-      return (
-        this.getProviderDestinationCache() ??
-        this.getProviderDestinationService()
-      );
+      destination = this.getProviderDestinationCache();
     }
+    return destination || this.getProviderDestinationService();
 
     return this.getProviderDestinationService();
   }

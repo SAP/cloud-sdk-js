@@ -205,11 +205,11 @@ export interface TestEntityType {
     sByteProperty?: number | null;
     geographyPointProperty?: any | null;
     somethingTheSdkDoesNotSupport?: any | null;
-    collectionProperty?: string[];
+    collectionProperty?: string[] | null;
     complexTypeProperty?: TestComplexType | null;
-    complexTypeCollectionProperty?: TestComplexType[];
+    complexTypeCollectionProperty?: TestComplexType[] | null;
     enumProperty?: TestEnumType | null;
-    enumCollectionProperty?: TestEnumType[];
+    enumCollectionProperty?: TestEnumType[] | null;
     toMultiLink: TestEntityMultiLinkType[];
     toOtherMultiLink: TestEntityMultiLinkType[];
     toSingleLink: TestEntitySingleLinkType;

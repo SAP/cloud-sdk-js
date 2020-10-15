@@ -106,8 +106,8 @@ export interface PeopleType {
   userName: string;
   firstName: string;
   lastName: string;
-  emails?: string[];
-  addressInfo?: Location[];
+  emails?: string[] | null;
+  addressInfo?: Location[] | null;
   gender?: PersonGender | null;
   concurrency: BigNumber;
   friends: PeopleType[];

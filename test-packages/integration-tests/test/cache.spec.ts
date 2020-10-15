@@ -1,13 +1,13 @@
 import {
   alwaysProvider,
   clientCredentialsTokenCache,
+  destinationServiceCache,
   destinationCache,
   getDestination,
   IsolationStrategy
 } from '@sap-cloud-sdk/core';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { destinationServiceCache } from '@sap-cloud-sdk/core/dist/scp-cf/destination-service-cache';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall

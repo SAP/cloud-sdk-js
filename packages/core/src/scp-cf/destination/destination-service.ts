@@ -4,16 +4,16 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
-import { decodeJwt, wrapJwtInHeader } from '../util';
-import { getAxiosConfigWithDefaults } from '../http-client';
-import { parseDestination } from './destination';
-import { Destination } from './destination-service-types';
+import { decodeJwt, wrapJwtInHeader } from '../../util';
+import { getAxiosConfigWithDefaults } from '../../http-client';
 import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
-} from './resilience-options';
+} from '../resilience-options';
+import { CachingOptions } from '../cache';
+import { parseDestination } from './destination';
+import { Destination } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
-import { CachingOptions } from './cache';
 
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */

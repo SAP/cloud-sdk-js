@@ -1,10 +1,10 @@
 import * as assert from 'assert';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Destination } from '../../src/scp-cf/destination-service-types';
+import { Destination } from '../../src/scp-cf/destination/destination-service-types';
 import {
-  getDestinationByName, getDestinationFromEnvByName,
+  getDestinationFromEnvByName,
   getDestinationsFromEnv
-} from '../../src/scp-cf/env-destination-accessor';
+} from '../../src/scp-cf/destination/destination-from-env';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv
@@ -123,24 +123,30 @@ describe('env-destination-accessor', () => {
       );
     });
 
-    it('should take the first destination if multple have the same name',()=>{
-      mockDestinationsEnv( {
-        Name: 'FINAL-DESTINATION',
-        URL: 'example-1.com'
-      },{
-        Name: 'FINAL-DESTINATION-DIFFERENT',
-        URL: 'example-2.com'
-      },{
-        Name: 'FINAL-DESTINATION',
-        URL: 'example-3.com'
-      });
+    it('should take the first destination if multple have the same name', () => {
+      mockDestinationsEnv(
+        {
+          Name: 'FINAL-DESTINATION',
+          URL: 'example-1.com'
+        },
+        {
+          Name: 'FINAL-DESTINATION-DIFFERENT',
+          URL: 'example-2.com'
+        },
+        {
+          Name: 'FINAL-DESTINATION',
+          URL: 'example-3.com'
+        }
+      );
 
-      expect(getDestinationFromEnvByName('FINAL-DESTINATION')!.url).toEqual('example-1.com')
-    })
+      expect(getDestinationFromEnvByName('FINAL-DESTINATION')!.url).toEqual(
+        'example-1.com'
+      );
+    });
 
-    it('should throw for ill formatted JSON',()=>{
-      process.env.destinations = "Not Proper JSON string"
-      expect(getDestinationsFromEnv()).toThrowErrorMatchingSnapshot()
-    })
+    it('should throw for ill formatted JSON', () => {
+      process.env.destinations = 'Not Proper JSON string';
+      expect(() => getDestinationsFromEnv()).toThrowErrorMatchingSnapshot();
+    });
   });
 });

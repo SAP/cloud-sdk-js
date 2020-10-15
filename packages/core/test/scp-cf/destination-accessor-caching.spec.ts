@@ -40,7 +40,7 @@ import {
   oauthSingleResponse,
   onPremiseMultipleResponse
 } from '../test-util/example-destination-service-responses';
-import { destinationServiceCache } from '../../src/scp-cf/destination-service-cache';
+import { destinationServiceCache } from '../../src/scp-cf/destination/destination-service-cache';
 
 function getSubscriberCache(
   isolationStrategy: IsolationStrategy,

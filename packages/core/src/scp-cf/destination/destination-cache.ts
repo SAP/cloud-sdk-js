@@ -1,5 +1,5 @@
-import { tenantId, userId } from '../util';
-import { Cache, IsolationStrategy } from './cache';
+import { tenantId, userId } from '../../util';
+import { Cache, IsolationStrategy } from '../cache';
 import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
 

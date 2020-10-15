@@ -1,156 +1,46 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
+  addProxyConfigurationInternet,
   DecodedJWT,
   decodeJwt,
   isIdenticalTenant,
-  verifyJwt,
-  VerifyJwtOptions
-} from '../util/jwt';
-import {
-  addProxyConfigurationInternet,
   ProxyStrategy,
-  proxyStrategy
-} from '../util/proxy-util';
-import { IsolationStrategy } from './cache';
-import { addProxyConfigurationOnPrem } from './connectivity-service';
-import { sanitizeDestination } from './destination';
-import { DestinationsByType } from './destination-accessor-types';
-import { destinationCache } from './destination-cache';
+  proxyStrategy,
+  verifyJwt
+} from '../../util';
+import { IsolationStrategy } from '../cache';
+import { serviceToken, userApprovedServiceToken } from '../token-accessor';
+import { addProxyConfigurationOnPrem } from '../connectivity-service';
+import { getDestinationServiceCredentialsList, getService } from '../environment-accessor';
+import { DestinationOptions } from './destination-accessor';
+import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,
   DestinationSelectionStrategies,
   DestinationSelectionStrategy
 } from './destination-selection-strategies';
-import {
-  fetchDestination,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
-} from './destination-service';
-import {
-  Destination,
-  DestinationNameAndJwt,
-  DestinationRetrievalOptions,
-  isDestinationNameAndJwt
-} from './destination-service-types';
-import {
-  getDestinationFromEnvByName,
-  getDestinationsEnvVariable
-} from './env-destination-accessor';
-import {
-  getDestinationServiceCredentialsList,
-  getService
-} from './environment-accessor';
-import { serviceToken, userApprovedServiceToken } from './token-accessor';
-import { destinationForServiceBinding } from './vcap-service-destination';
+import { DestinationsByType } from './destination-accessor-types';
+import { fetchDestination, fetchInstanceDestinations, fetchSubaccountDestinations } from './destination-service';
+import { destinationCache } from './destination-cache';
+
+type DestinationOrigin = 'subscriber' | 'provider';
 
 const logger = createLogger({
   package: 'core',
-  messageContext: 'destination-accessor'
+  messageContext: 'destination-accessor-service'
 });
-
-/**
- * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
- * from the Cloud Foundry destination service).
- *
- * Fetching a destination requires:
- * - a binding to exactly one XSUAA service instance with service plan "application"
- * - a binding to a destination service instance
- *
- * If either of the prerequisites is not met or one of the services returns an error, this function will either throw an error or return a promise that rejects.
- *
- * @param destination - A destination or the necessary parameters to fetch one.
- * @param options - Caching options by fetching destination.
- * @returns A promise resolving to the requested destination on success.
- */
-export async function useOrFetchDestination(
-  destination: Destination | DestinationNameAndJwt,
-  options: DestinationOptions = {}
-): Promise<Destination | null> {
-  return isDestinationNameAndJwt(destination)
-    ? getDestination(destination.destinationName, {
-        userJwt: destination.jwt,
-        ...options
-      })
-    : sanitizeDestination(destination);
-}
-
-export interface DestinationAccessorOptions {
-  /**
-   * Method that implements the selection strategy of the retrieved destination. Uses [[subscriberFirst]] per default. Use the selector helper [[DestinationSelectionStrategies]] to select the appropriate selection strategy.
-   */
-  selectionStrategy?: DestinationSelectionStrategy;
-
-  /**
-   * The user token of the current request.
-   */
-  userJwt?: string;
-
-  /**
-   * @hidden
-   */
-  iss?: string;
-  // FIXME This is used to put a subscriber domain in without having a JWT like for background processes.
-  // We will create a seperate method for this on the destination accessor wit proper JS doc. This will be deprecated.
-}
-
-export type DestinationOptions = DestinationAccessorOptions &
-  DestinationRetrievalOptions &
-  VerifyJwtOptions;
-
-type accountType = 'subscriber' | 'provider';
 
 interface DestinationSearchResult {
   destination: Destination;
   fromCache: boolean;
-  account: accountType;
+  origin: DestinationOrigin;
 }
 
 const emptyDestinationByType: DestinationsByType = {
   instance: [],
   subaccount: []
 };
-
-/**
- * @deprecated Since v1.0.1. Use [[getDestination]] instead.
- *
- * Retrieves a destination with the given name from the Cloud Foundry destination service.
- * Returns null if no destination can be found.
- * Requires the following service bindings: destination, XSUAA
- * By default, selects subscriber over provider and instance over subaccount destinations.
- *
- * If the destinations are read from the environment, the jwt will be ignored.
- *
- * @param name - The name of the destination to be retrieved.
- * @param options - The options of the fetching query of the destination that include the JWT of the current request and the strategy for selecting a destination.
- * @returns A promise returning the requested destination on success.
- */
-export async function getDestinationOptions(
-  name: string,
-  options: DestinationOptions = {}
-): Promise<Destination | null> {
-  return getDestination(name, options);
-}
-
-/**
- * Builds a destination from one of three sources (in the given order):
- * - from the environment variable "destinations"
- * - from service bindings
- * - from the destination service
- *
- * If you want to get a destination only from a specific source, use the corresponding function directly
- *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
- *
- * @param name - The name of the destination to be retrieved.
- * @param options - Configuration for how to retrieve destinations from the destination service.
- * @returns A promise returning the requested destination on success.
- */
-export async function getDestination(
-  name: string,
-  options: DestinationOptions = {}
-): Promise<Destination | null> {
-  return DestinationAccessor.getDestination(name, options);
-}
 
 /**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
@@ -168,31 +58,24 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions
 ): Promise<Destination | null> {
-  return DestinationAccessor.getDestinationFromDestinationService(
+  return DestinationFromService.getDestinationFromDestinationService(
     name,
     options
   );
 }
 
-class DestinationAccessor {
-  public static async getDestination(
-    name: string,
-    options: DestinationOptions = {}
-  ): Promise<Destination | null> {
-    return (
-      DestinationAccessor.searchEnvVariablesForDestination(name) ??
-      DestinationAccessor.searchServiceBindingForDestination(name) ??
-      DestinationAccessor.getDestinationFromDestinationService(name, options)
-    );
-  }
-
+class DestinationFromService {
   public static async getDestinationFromDestinationService(
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
-    const decodedUserJwt = await DestinationAccessor.getDecodedUserJwt(options);
-    const providerToken = await DestinationAccessor.getProviderToken(options);
-    const da = new DestinationAccessor(
+    const decodedUserJwt = await DestinationFromService.getDecodedUserJwt(
+      options
+    );
+    const providerToken = await DestinationFromService.getProviderToken(
+      options
+    );
+    const da = new DestinationFromService(
       name,
       options,
       decodedUserJwt,
@@ -224,56 +107,8 @@ class DestinationAccessor {
     }
 
     const withProxySetting = await da.addProxyConfiguration(destination);
-    await da.updateDestinationCache(
-      withProxySetting,
-      destinationResult.account
-    );
+    da.updateDestinationCache(withProxySetting, destinationResult.origin);
     return withProxySetting;
-  }
-
-  private static searchServiceBindingForDestination(
-    name: string
-  ): Destination | undefined {
-    logger.info('Attempting to retrieve destination from service binding.');
-    try {
-      const destination = destinationForServiceBinding(name);
-      logger.info('Successfully retrieved destination from service binding.');
-      return destination;
-    } catch (error) {
-      logger.info(
-        `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
-      );
-    }
-  }
-
-  private static searchEnvVariablesForDestination(
-    name: string
-  ): Destination | undefined {
-    logger.info(
-      'Attempting to retrieve destination from environment variable.'
-    );
-
-    if (getDestinationsEnvVariable()) {
-      logger.warn(
-        "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
-          'This is discouraged for a productive application! ' +
-          'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
-      );
-
-      try {
-        const destination = getDestinationFromEnvByName(name);
-        if (destination) {
-          logger.info(
-            'Successfully retrieved destination from environment variable.'
-          );
-          return destination;
-        }
-      } catch (error) {
-        logger.error(`Error in reading the given destinations from the environment variable ${error.message}.`);
-      }
-    }
-
-    logger.info('No environment variable set.');
   }
 
   private static async getDecodedUserJwt(
@@ -326,12 +161,12 @@ class DestinationAccessor {
   ): Promise<DestinationsByType> {
     const [instance, subaccount] = await Promise.all([
       fetchInstanceDestinations(
-        this.destionationServiceCredentials.uri,
+        this.destinationServiceCredentials.uri,
         accessToken,
         this.options
       ),
       fetchSubaccountDestinations(
-        this.destionationServiceCredentials.uri,
+        this.destinationServiceCredentials.uri,
         accessToken,
         this.options
       )
@@ -402,7 +237,7 @@ class DestinationAccessor {
     });
 
     return fetchDestination(
-      this.destionationServiceCredentials.uri,
+      this.destinationServiceCredentials.uri,
       accessToken,
       this.name,
       this.options
@@ -426,15 +261,15 @@ class DestinationAccessor {
     }
   }
 
-  private async updateDestinationCache(
+  private updateDestinationCache(
     destination: Destination,
-    account: accountType
+    destinationOrigin: DestinationOrigin
   ) {
     if (!this.useCache) {
       return destination;
     }
     destinationCache.cacheRetrievedDestination(
-      account === 'subscriber'
+      destinationOrigin === 'subscriber'
         ? this.decodedUserJwt!
         : this.decodedProviderToken,
       destination,
@@ -445,12 +280,13 @@ class DestinationAccessor {
   private async getProviderDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
+    const provider = await this.getInstanceAndSubaccountDestinations(
+      this.providerToken
+    );
     const destination = await this.selectionStrategy(
       {
         subscriber: emptyDestinationByType,
-        provider: await this.getInstanceAndSubaccountDestinations(
-          this.providerToken
-        )
+        provider
       },
       this.name
     );
@@ -458,7 +294,7 @@ class DestinationAccessor {
       return {
         destination,
         fromCache: false,
-        account: 'provider'
+        origin: 'provider'
       };
     }
   }
@@ -474,7 +310,7 @@ class DestinationAccessor {
       logger.info(
         'Successfully retrieved destination from destination service cache for provider destinations.'
       );
-      return { destination, fromCache: true, account: 'provider' };
+      return { destination, fromCache: true, origin: 'subscriber' };
     }
   }
 
@@ -485,18 +321,19 @@ class DestinationAccessor {
       userJwt: this.decodedUserJwt,
       ...this.options
     });
+    const subscriber = await this.getInstanceAndSubaccountDestinations(
+      accessToken
+    );
     const destination = this.selectionStrategy(
       {
-        subscriber: await this.getInstanceAndSubaccountDestinations(
-          accessToken
-        ),
+        subscriber,
         provider: emptyDestinationByType
       },
       this.name
     );
 
     if (destination) {
-      return { destination, fromCache: false, account: 'subscriber' };
+      return { destination, fromCache: false, origin:'subscriber' };
     }
   }
 
@@ -511,7 +348,7 @@ class DestinationAccessor {
       logger.info(
         'Successfully retrieved destination from destination service cache for subscriber destinations.'
       );
-      return { destination, fromCache: true, account: 'subscriber' };
+      return { destination, fromCache: true, origin: 'subscriber' };
     }
   }
 
@@ -559,9 +396,8 @@ class DestinationAccessor {
     if (this.useCache) {
       destination = this.getProviderDestinationCache();
     }
-    return destination || this.getProviderDestinationService();
 
-    return this.getProviderDestinationService();
+    return destination ?? this.getProviderDestinationService();
   }
 
   private async searchSubscriberAccountForDestination(): Promise<
@@ -571,13 +407,11 @@ class DestinationAccessor {
       return;
     }
 
+    let destination;
     if (this.useCache) {
-      return (
-        this.getSubscriberDestinationCache() ??
-        this.getSubscriberDestinationService()
-      );
+      destination = this.getSubscriberDestinationCache();
     }
 
-    return this.getSubscriberDestinationService();
+    return destination ?? this.getSubscriberDestinationService();
   }
 }

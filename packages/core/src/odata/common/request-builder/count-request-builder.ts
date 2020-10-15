@@ -4,7 +4,7 @@ import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
-} from '../../../scp-cf/destination-service-types';
+} from '../../../scp-cf/destination/destination-service-types';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
 import { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 

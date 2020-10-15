@@ -1,11 +1,17 @@
 import { flatten, pipe } from 'rambda';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from '../util/proxy-util';
+} from '../../util/proxy-util';
+import { getVcapService } from '../environment-accessor';
 import { Destination } from './destination-service-types';
-import { getVcapService } from './environment-accessor';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'destination-accessor-vcap'
+});
 
 /**
  * Tries to build a destination from a service binding with the given name.
@@ -168,4 +174,22 @@ function xfS4hanaCloudBindingToDestination(
     username: serviceBinding.credentials.User,
     password: serviceBinding.credentials.Password
   };
+}
+
+/*
+ * @hidden
+ */
+export function searchServiceBindingForDestination(
+  name: string
+): Destination | undefined {
+  logger.info('Attempting to retrieve destination from service binding.');
+  try {
+    const destination = destinationForServiceBinding(name);
+    logger.info('Successfully retrieved destination from service binding.');
+    return destination;
+  } catch (error) {
+    logger.info(
+      `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
+    );
+  }
 }

@@ -26,9 +26,6 @@ export function alwaysProvider(
   allDestinations: AllDestinations,
   destinationName: string
 ): Destination | null {
-  const isRequestedDestination = (destination: Destination) =>
-    destination.name === destinationName;
-
   return findDestination(allDestinations.provider, destinationName) || null;
 }
 
@@ -43,9 +40,6 @@ export function alwaysSubscriber(
   allDestinations: AllDestinations,
   destinationName: string
 ): Destination | null {
-  const isRequestedDestination = (destination: Destination) =>
-    destination.name === destinationName;
-
   return findDestination(allDestinations.subscriber, destinationName) ?? null;
 }
 
@@ -60,9 +54,6 @@ export function subscriberFirst(
   allDestinations: AllDestinations,
   destinationName: string
 ): Destination | null {
-  const isRequestedDestination = (destination: Destination) =>
-    destination.name === destinationName;
-
   return (
     findDestination(allDestinations.subscriber, destinationName) ??
     findDestination(allDestinations.provider, destinationName) ??
@@ -86,12 +77,12 @@ function findDestination(
   const isRequestedDestination = (destination: Destination) =>
     destination.name === destinationName;
   const instanceDest = destinations.instance.find(isRequestedDestination);
-  const subaccountDest = destinations.subaccount.find(isRequestedDestination);
+  const subAccountDest = destinations.subaccount.find(isRequestedDestination);
 
-  if (instanceDest && subaccountDest) {
+  if (instanceDest && subAccountDest) {
     logger.warn(
       `A destination with name ${destinationName} has been found for the destination serivce instance and subaccount. The instance destination will be used.`
     );
   }
-  return instanceDest ?? subaccountDest;
+  return instanceDest ?? subAccountDest;
 }

@@ -1,6 +1,6 @@
-import { CachingOptions, IsolationStrategy } from './cache';
-import { ProxyConfiguration } from './connectivity-service-types';
-import { ResilienceOptions } from './resilience-options';
+import { CachingOptions, IsolationStrategy } from '../cache';
+import { ProxyConfiguration } from '../connectivity-service-types';
+import { ResilienceOptions } from '../resilience-options';
 
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.

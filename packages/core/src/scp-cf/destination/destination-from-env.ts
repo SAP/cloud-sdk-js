@@ -3,7 +3,7 @@ import {
   proxyStrategy,
   ProxyStrategy,
   addProxyConfigurationInternet
-} from '../util/proxy-util';
+} from '../../util/proxy-util';
 import {
   sanitizeDestination,
   isDestinationConfiguration,
@@ -23,25 +23,28 @@ const logger = createLogger({
  * @returns A list of destinations
  */
 export function getDestinationsFromEnv(): Destination[] {
-
-    const destinationsEnv = getDestinationsEnvVariable();
-    logger.debug(`The value for the destination enviorment varialbe is ${destinationsEnv}`).
-    if (destinationsEnv) {
-      let destinations
-      try {
-      const destinations = JSON.parse(destinationsEnv);
-      }catch(e){
-        throw errorWithCause(`Error in parsing the destinations from the environment variable.`,e)
-      }
-      validateDestinations(destinations);
-      return destinations.map(destination =>
-        isDestinationConfiguration(destination)
-          ? parseDestination(destination)
-          : sanitizeDestination(destination)
+  const destinationsEnv = getDestinationsEnvVariable();
+  logger.debug(
+    `The value for the destination enviorment varialbe is ${destinationsEnv}.`
+  );
+  if (destinationsEnv) {
+    let destinations;
+    try {
+      destinations = JSON.parse(destinationsEnv);
+    } catch (e) {
+      throw errorWithCause(
+        'Error in parsing the destinations from the environment variable.',
+        e
       );
     }
-    return [];
-
+    validateDestinations(destinations);
+    return destinations.map(destination =>
+      isDestinationConfiguration(destination)
+        ? parseDestination(destination)
+        : sanitizeDestination(destination)
+    );
+  }
+  return [];
 }
 
 /**
@@ -126,4 +129,37 @@ function validateDestinations(destinations: any[]) {
       );
     }
   });
+}
+
+/**
+ * @hidden
+ */
+export function searchEnvVariablesForDestination(
+  name: string
+): Destination | undefined {
+  logger.info('Attempting to retrieve destination from environment variable.');
+
+  if (getDestinationsEnvVariable()) {
+    logger.warn(
+      "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
+        'This is discouraged for a productive application! ' +
+        'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
+    );
+
+    try {
+      const destination = getDestinationFromEnvByName(name);
+      if (destination) {
+        logger.info(
+          'Successfully retrieved destination from environment variable.'
+        );
+        return destination;
+      }
+    } catch (error) {
+      logger.error(
+        `Error in reading the given destinations from the environment variable ${error.message}.`
+      );
+    }
+  }
+
+  logger.info('No environment variable set.');
 }

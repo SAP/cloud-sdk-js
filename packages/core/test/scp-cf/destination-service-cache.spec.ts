@@ -17,7 +17,7 @@ import {
   providerServiceToken,
   subscriberServiceToken
 } from '../test-util/mocked-access-tokens';
-import { destinationServiceCache } from '../../src/scp-cf/destination-service-cache';
+import { destinationServiceCache } from '../../src/scp-cf/destination/destination-service-cache';
 import { decodeJwt } from '../../src/util';
 
 const destinationServiceUrl = 'https://myDestination.service.url';

@@ -38,7 +38,7 @@ export class TestEntityCircularLinkParent extends EntityV4 implements TestEntity
   toChildren!: TestEntityCircularLinkChild[];
 
   /**
-   * Returns an entity builder to construct instances `TestEntityCircularLinkParent`.
+   * Returns an entity builder to construct instances of `TestEntityCircularLinkParent`.
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
    */
   static builder(): EntityBuilderType<TestEntityCircularLinkParent, TestEntityCircularLinkParentType> {

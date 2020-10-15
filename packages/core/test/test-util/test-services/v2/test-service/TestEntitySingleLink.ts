@@ -59,7 +59,7 @@ export class TestEntitySingleLink extends EntityV2 implements TestEntitySingleLi
   toSingleLink!: TestEntityLvl2SingleLink;
 
   /**
-   * Returns an entity builder to construct instances `TestEntitySingleLink`.
+   * Returns an entity builder to construct instances of `TestEntitySingleLink`.
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
   static builder(): EntityBuilderType<TestEntitySingleLink, TestEntitySingleLinkType> {

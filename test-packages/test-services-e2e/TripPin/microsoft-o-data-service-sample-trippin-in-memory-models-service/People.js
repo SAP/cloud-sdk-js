@@ -42,7 +42,7 @@ var People = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `People`.
+     * Returns an entity builder to construct instances of `People`.
      * @returns A builder that constructs instances of entity type `People`.
      */
     People.builder = function () {

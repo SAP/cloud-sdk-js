@@ -41,7 +41,7 @@ var TestEntity = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `TestEntity`.
+     * Returns an entity builder to construct instances of `TestEntity`.
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     TestEntity.builder = function () {

@@ -90,7 +90,7 @@ export interface DestinationAccessorOptions {
    * @hidden
    */
   iss?: string;
-  // FIXME This is used to put a subscriber domain in without having a JWT like for packground processes.
+  // FIXME This is used to put a subscriber domain in without having a JWT like for background processes.
   // We will create a seperate method for this on the destination accessor wit proper JS doc. This will be deprecated.
 }
 

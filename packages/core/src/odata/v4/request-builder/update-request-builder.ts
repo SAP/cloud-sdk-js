@@ -1,5 +1,4 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
+import { errorWithCause, pipe } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { EntityV4 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';

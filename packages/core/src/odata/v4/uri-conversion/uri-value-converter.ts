@@ -1,6 +1,5 @@
 /* eslint-disable valid-jsdoc */
 
-import { identity } from 'rambda';
 import { tsToEdmV4 } from '../payload-value-converter';
 import { EdmTypeShared, UriConverter } from '../../common';
 import {

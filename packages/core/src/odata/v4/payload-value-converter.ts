@@ -2,13 +2,13 @@
 
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { identity } from 'rambda';
 import { Time, EdmTypeShared } from '../common';
 import {
   deserializersCommon,
   serializersCommom
 } from '../common/payload-value-converter';
 import { EdmTypeV4 } from './edm-types';
+import { identity } from '@sap-cloud-sdk/util';
 
 /**
  * @hidden

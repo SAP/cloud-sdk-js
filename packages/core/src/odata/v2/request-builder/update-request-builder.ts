@@ -1,5 +1,4 @@
-import { createLogger, errorWithCause, isNullish } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
+import { createLogger, errorWithCause, isNullish, pipe } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,

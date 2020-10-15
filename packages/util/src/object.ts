@@ -71,3 +71,15 @@ export const renameKeys = (
     unchangedEntries
   );
 };
+
+export const pick = (keys:string[],object:Object):Object=>{
+  const result = {}
+  keys.forEach(key=>{
+    const value = object[key]
+    if(value){
+      return[key] = value
+    }
+  })
+  return result;
+}
+

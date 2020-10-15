@@ -1,7 +1,6 @@
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { createLogger } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
+import { createLogger, pipe } from '@sap-cloud-sdk/util';
 import { Destination, ProxyConfiguration } from '../scp-cf';
 import { basicHeader } from '../header-builder';
 import { getProtocolOrDefault } from '../get-protocol';

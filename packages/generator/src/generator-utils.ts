@@ -1,6 +1,5 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/core';
-import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
+import { createLogger, ODataVersion, pipe } from '@sap-cloud-sdk/util';
 import {
   VdmNavigationProperty,
   VdmProperty,

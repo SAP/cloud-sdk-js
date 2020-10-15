@@ -1529,30 +1529,37 @@
   dependencies:
     debug "^4.1.1"
 
-"@sap/cds-compiler@^1.39.0":
-  version "1.39.0"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.39.0.tgz#238957214164cf50bf13877d8494f7c1e0ebcc50"
-  integrity sha512-cdyqxac6cqOksqDBIOjCibcFhdscpb8CVi3zgcYbtl50hQF10s08Kl/ZvpZcStD6/FmbwdK+3sVXL8MmAx+fyg==
+"@sap/cds-compiler@^1.42.0":
+  version "1.43.0"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.43.0.tgz#175f9f9e3925594650adf3c41e8ec6903ca154a0"
+  integrity sha512-o5N1Icm10yMu+A4CS/RFfF4vhNvvflblr8iF3av9S3OSzoMMDDNS/YT+Z1JHTJmlK6ifJDq0x9/lbo3q8x2lGQ==
   dependencies:
-    antlr4 "4.7.1"
+    antlr4 "4.8.0"
     resolve "1.8.1"
     sax "^1.2.4"
 
-"@sap/cds-dk@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.0.0.tgz#cc7bbb374b706f6098e6e7deaa280f2369783552"
-  integrity sha512-f3KInXcRfE0VHxdDuIjfJmVW+w0qXNmsukD80Fjbp5kISTlrZlxyltkZkopQEpytZvCIf7SqQOZgBvKJ5ZQ1VA==
+"@sap/cds-dk-foss@^1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk-foss/-/cds-dk-foss-1.0.1.tgz#ac59c44aea84e800da2db0a0b805c53f53f1156f"
+  integrity sha512-slhCY1tJOISZQWS1C54NpDa0iXZ/oys3zXpV9yiSquK+zw5JNjY099iT4AtRNtdi5y/JDGZo5ElFrSTRQEOAYQ==
   dependencies:
-    "@sap/cds" "^4.1.5"
-    "@sap/cds-foss" "^2"
-    "@sap/cds-sidecar-client" "^1.1.6"
-    "@sap/edm-converters" "^1.0.27"
     express "^4.17.1"
     mustache "^4.0.1"
     node-watch "0.6.4"
     passport "^0.4.1"
-    sqlite3 "^5"
-    xml2js "^0.4.3"
+    sqlite3 "^5.0.0"
+    xml2js "^0.4.23"
+
+"@sap/cds-dk@^3.0.0":
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.1.1.tgz#15c210c1a5b1f29783db60ea5df3e40b1b8cbc6e"
+  integrity sha512-fNsZX3GMDjhPqmJpG9gZ+6nuHSp48H7bl840LFsThNZCRm63bkCDpkQPF1qb99pNm4ze5ZTzJpO4V9xZ6NJqMA==
+  dependencies:
+    "@sap/cds" "^4.2.2"
+    "@sap/cds-dk-foss" "^1"
+    "@sap/cds-foss" "^2"
+    "@sap/cds-sidecar-client" "^1.1.6"
+    "@sap/edm-converters" "^1.0.27"
 
 "@sap/cds-foss@^2":
   version "2.0.0"
@@ -1564,15 +1571,15 @@
     uuid "8.2.0"
     yaml "1.10.0"
 
-"@sap/cds-reflect@^2.12.0":
-  version "2.13.0"
-  resolved "https://registry.npmjs.org/@sap/cds-reflect/-/cds-reflect-2.13.0.tgz#eb9847776edaac3370d0c115341c0cc9eaa755da"
-  integrity sha512-o51NjqKPqwutkUBvJLQrGrnSQTIlI51OVQC5U8fTfjmf3runDI80b1cF+886t2tHqM1qqxmM5S9n+ZbCcPBZXg==
+"@sap/cds-reflect@^2.13.0":
+  version "2.13.1"
+  resolved "https://registry.npmjs.org/@sap/cds-reflect/-/cds-reflect-2.13.1.tgz#9e07af234a7f5f3ae4d8dbb6b097c6eae6fb271c"
+  integrity sha512-BoBrv5Ov2VvbrvJnT3zNlOtAv96XCgvCEukJJNmtC+R7zNBDjaSM3TxBjiztlIQiwBDMJBfSs3E62PdURCVD7w==
 
-"@sap/cds-runtime@^2.3.0":
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-2.3.1.tgz#34575134104d5ec52b30a84bb8fce644f43ee715"
-  integrity sha512-Ozbjlo94WbKqE8Z4BOPwI+q3NgqImyl1tu1yX0C5L8RWoLesvANmWoH8xvC4s/ZTcNWQjNFYgjA3u/ma0BcJQQ==
+"@sap/cds-runtime@^2.5.0":
+  version "2.5.2"
+  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-2.5.2.tgz#af8210aba797a9b3296d4cc5d8fbb8114e9eb962"
+  integrity sha512-DUezEUCjUE3Xx97L7liyt6mD7qQJYIPZjaRn3boAFPsjuDDr/RntqN1KLJfS/zij9SAaaEd3yd72rm3gUb/XVA==
   dependencies:
     "@sap-cloud-sdk/core" "^1.18.1"
     "@sap/cds-foss" "^2"
@@ -1586,15 +1593,15 @@
     fs-extra "9.0.1"
     got "10.7.0"
 
-"@sap/cds@^4.1.5", "@sap/cds@^4.1.9":
-  version "4.1.9"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.1.9.tgz#fa3eea3855443a43ebc8bb55c3f67b4dca94827e"
-  integrity sha512-ruh86/uhKEPOBj2c35AS2fx6bxeKDxGPp3wb8edQtCKwPO3pbtKblCH85GqTrFc6k7vSilvTjueO1NMNFsvJMg==
+"@sap/cds@^4.1.9", "@sap/cds@^4.2.2":
+  version "4.2.3"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.2.3.tgz#ed2322c6900bb11068509e6ad19b3cd9127caa5b"
+  integrity sha512-ag8POSpQdWxTQ7zOt9Yt7sWv/eggyE5Z8u6cbZha+8v+WDYUxQ8PsENQftlSCdo7iblZDAxmRnwCXxLDqcSiIQ==
   dependencies:
-    "@sap/cds-compiler" "^1.39.0"
+    "@sap/cds-compiler" "^1.42.0"
     "@sap/cds-foss" "^2"
-    "@sap/cds-reflect" "^2.12.0"
-    "@sap/cds-runtime" "^2.3.0"
+    "@sap/cds-reflect" "^2.13.0"
+    "@sap/cds-runtime" "^2.5.0"
 
 "@sap/edm-converters@^1.0.21", "@sap/edm-converters@^1.0.27":
   version "1.0.29"
@@ -2142,10 +2149,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-antlr4@4.7.1:
-  version "4.7.1"
-  resolved "https://registry.npmjs.org/antlr4/-/antlr4-4.7.1.tgz#69984014f096e9e775f53dd9744bf994d8959773"
-  integrity sha512-haHyTW7Y9joE5MVs37P2lNYfU2RWBLfcRDD8OWldcdZm5TiCE91B5Xl1oWSwiDUSd4rlExpt2pu1fksYQjRBYQ==
+antlr4@4.8.0:
+  version "4.8.0"
+  resolved "https://registry.npmjs.org/antlr4/-/antlr4-4.8.0.tgz#f938ec171be7fc2855cd3a533e87647185b32b6a"
+  integrity sha512-en/MxQ4OkPgGJQ3wD/muzj1uDnFSzdFIhc2+c6bHZokWkuBb6RRvFjpWhPxWLbgQvaEzldJZ0GSQpfSAaE3hqg==
 
 any-promise@^1.0.0:
   version "1.3.0"
@@ -9572,7 +9579,7 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-sqlite3@^5, sqlite3@^5.0.0:
+sqlite3@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.0.tgz#1bfef2151c6bc48a3ab1a6c126088bb8dd233566"
   integrity sha512-rjvqHFUaSGnzxDy2AHCwhHy6Zp6MNJzCPGYju4kD8yi6bze4d1/zMTg6C7JI49b7/EM7jKMTvyfN/4ylBKdwfw==
@@ -10875,7 +10882,7 @@ xml-name-validator@^3.0.0:
   resolved "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
 
-xml2js@^0.4.3:
+xml2js@^0.4.23:
   version "0.4.23"
   resolved "https://registry.npmjs.org/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
   integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==

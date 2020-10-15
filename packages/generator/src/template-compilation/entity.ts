@@ -70,12 +70,12 @@ const potentialExternalImportDeclarations: Import[] = [
   { module: 'bignumber.js', imports: ['BigNumber'] }
 ];
 
-interface Import {
+export interface Import {
   module: string;
   imports: string[];
 }
 
-export function getImports(
+export function entityImports(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): Import[] {
@@ -193,20 +193,20 @@ export function mergeImportDeclarations(imports: Import[]) {
 }
 
 export function otherEntityImports(
-  entity: VdmEntity,
-  service: VdmServiceMetadata
+  service: VdmServiceMetadata,
+  entity: VdmEntity
 ): Import[] {
   return Array.from(new Set(entity.navigationProperties.map(n => n.to)))
     .map(to => {
       const matchedEntity = service.entities.find(e => e.entitySetName === to);
-      if (!matchedEntity) {
-        throw Error(
-          `Failed to find the entity from the service: ${JSON.stringify(
-            service
-          )} for entity ${entity}`
-        );
+      if (matchedEntity) {
+        return matchedEntity.className;
       }
-      return matchedEntity.className;
+      throw Error(
+        `Failed to find the entity from the service: ${JSON.stringify(
+          service
+        )} for entity ${entity}`
+      );
     })
     .filter(name => name !== entity.className)
     .map(name => otherEntityImport(name));
@@ -220,8 +220,8 @@ function otherEntityImport(name: string): Import {
 }
 
 export function allFieldTypes(
-  entity: VdmEntity,
-  service: VdmServiceMetadata
+  service: VdmServiceMetadata,
+  entity: VdmEntity
 ): string[] {
   return unique([
     ...entity.properties.map(

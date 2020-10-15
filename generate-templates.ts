@@ -5,6 +5,13 @@ import { ODataVersion } from './packages/util/src';
 import { generateTsMorph, generateTemplates } from './packages/generator/src';
 
 const serviceSpecsDir = path.join('test-resources', 'service-specs');
+const serviceSpecsDir2 = path.join(
+  '..',
+  'sdk-js',
+  's4-api',
+  'S4HANACloud',
+  'Artifacts'
+);
 const outputDir = path.resolve('generated');
 
 const getConfig = (version: ODataVersion) => ({
@@ -20,17 +27,17 @@ const getConfig = (version: ODataVersion) => ({
   // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false,
-  inputDir: path.join(serviceSpecsDir, version),
+  inputDir: serviceSpecsDir2, // path.join(serviceSpecsDir, version),
   outputDir
 });
 
-async function generateTestServicesPackage(
-  version: ODataVersion,
-  method: string
-) {
-  const t = method?.startsWith('t')
-    ? await generateTemplates(getConfig(version))
-    : await generateTsMorph(getConfig(version));
+function getGenerationFunction(version: ODataVersion, method: string) {
+  return method?.startsWith('t')
+    ? () => generateTemplates(getConfig(version))
+    : () => generateTsMorph(getConfig(version));
 }
 
-generateTestServicesPackage('v4', process.argv[2]);
+const generationFunction = getGenerationFunction('v4', process.argv[2]);
+console.time('total');
+generationFunction();
+console.timeEnd('total');

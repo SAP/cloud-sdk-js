@@ -2,7 +2,7 @@
 import { registerHelper, SafeString } from 'handlebars';
 import { toTitleFormat } from '@sap-cloud-sdk/core';
 import { VdmProperty } from '../vdm-types';
-import { allFieldTypes, getImports, otherEntityImports } from './entity';
+import { allFieldTypes, entityImports, otherEntityImports } from './entity';
 
 function indentString(str: string, context): string {
   const indent = context.loc.start.column;
@@ -73,8 +73,12 @@ export function registerHelpers() {
     return val1 && val2 ? options.fn(this) : options.inverse(this);
   });
 
+  registerHelper('join', function (collection, seperator, options) {
+    return collection.map(x => options.fn(x).trimRight()).join(',\n') + '\n';
+  });
+
   registerHelper('getImports', function (entity, service) {
-    return getImports(entity, service.oDataVersion);
+    return entityImports(entity, service.oDataVersion);
   });
 
   registerHelper('getOtherImports', function (entity, service) {

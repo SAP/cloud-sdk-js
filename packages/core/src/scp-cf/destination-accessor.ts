@@ -245,7 +245,6 @@ class DestinationAccessor {
       logger.info(
         'If you are not using SAP Extension Factory, this information probably does not concern you.'
       );
-      return undefined;
     }
   }
 

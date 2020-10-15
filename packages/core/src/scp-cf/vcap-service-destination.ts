@@ -22,17 +22,14 @@ export function destinationForServiceBinding(
 ): Destination {
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
-  let destination = options.transformationFn
+  const destination = options.transformationFn
     ? options.transformationFn(selected)
     : transform(selected);
 
-  if (
-    destination &&
+  return destination &&
     proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY
-  ) {
-    destination = addProxyConfigurationInternet(destination);
-  }
-  return destination;
+    ? addProxyConfigurationInternet(destination)
+    : destination;
 }
 
 /**

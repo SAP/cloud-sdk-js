@@ -90,7 +90,7 @@ export interface DestinationAccessorOptions {
    * @hidden
    */
   iss?: string;
-  // FIXME This is used to put a subscriber domain in without having a JWT like for packground processes.
+  // FIXME This is used to put a subscriber domain in without having a JWT like for background processes.
   // We will create a seperate method for this on the destination accessor wit proper JS doc. This will be deprecated.
 }
 
@@ -243,7 +243,6 @@ class DestinationAccessor {
       logger.info(
         `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
       );
-      return undefined;
     }
   }
 
@@ -274,7 +273,7 @@ class DestinationAccessor {
       }
     }
 
-    logger.info('Could not retrieve destination from environment variable.');
+    logger.info('No environment variable set.');
   }
 
   private static async getDecodedUserJwt(
@@ -325,7 +324,7 @@ class DestinationAccessor {
   private async getInstanceAndSubaccountDestinations(
     accessToken: string
   ): Promise<DestinationsByType> {
-    const destinations = await Promise.all([
+    const [instance, subaccount] = await Promise.all([
       fetchInstanceDestinations(
         this.destionationServiceCredentials.uri,
         accessToken,
@@ -339,12 +338,12 @@ class DestinationAccessor {
     ]);
 
     return {
-      instance: destinations[0],
-      subaccount: destinations[1]
+      instance,
+      subaccount
     };
   }
 
-  private get destionationServiceCredentials() {
+  private get destinationServiceCredentials() {
     const credentials = getDestinationServiceCredentialsList();
     if (!credentials || credentials.length === 0) {
       throw Error(

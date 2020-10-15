@@ -17,6 +17,7 @@
     "packages/generator",
     "packages/test-util",
     "packages/util",
+    "packages/generator-rest",
     "test-packages/integration-tests",
     "test-packages/e2e-tests",
     "test-packages/test-services",

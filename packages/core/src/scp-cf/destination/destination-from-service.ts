@@ -11,7 +11,10 @@ import {
 import { IsolationStrategy } from '../cache';
 import { serviceToken, userApprovedServiceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import { getDestinationServiceCredentialsList, getService } from '../environment-accessor';
+import {
+  getDestinationServiceCredentialsList,
+  getService
+} from '../environment-accessor';
 import { DestinationOptions } from './destination-accessor';
 import { Destination } from './destination-service-types';
 import {
@@ -21,7 +24,11 @@ import {
   DestinationSelectionStrategy
 } from './destination-selection-strategies';
 import { DestinationsByType } from './destination-accessor-types';
-import { fetchDestination, fetchInstanceDestinations, fetchSubaccountDestinations } from './destination-service';
+import {
+  fetchDestination,
+  fetchInstanceDestinations,
+  fetchSubaccountDestinations
+} from './destination-service';
 import { destinationCache } from './destination-cache';
 
 type DestinationOrigin = 'subscriber' | 'provider';
@@ -333,7 +340,7 @@ class DestinationFromService {
     );
 
     if (destination) {
-      return { destination, fromCache: false, origin:'subscriber' };
+      return { destination, fromCache: false, origin: 'subscriber' };
     }
   }
 

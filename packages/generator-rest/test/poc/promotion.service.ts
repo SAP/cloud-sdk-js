@@ -1,15 +1,51 @@
 import { AxiosRequestConfig } from 'axios';
 import { buildAxiosRequestConfig } from '@sap-cloud-sdk/core';
-import { CalculationApi, Percent } from './generated/calculation';
+import {
+  CalculationApi,
+  PriceCalculateResponse
+} from './generated/calculation';
 import { transaction } from './promotion-data';
+import { CalculationApiWrapper } from './generated/calculation/wrapper';
+import { CalculationApiRequestBuilder } from './generated/calculation/request-builder';
 
-export async function getPromotion(): Promise<Percent> {
-  const token = 'ask the team';
+const token = 'ask the team';
 
-  const requestConfig: AxiosRequestConfig = await buildAxiosRequestConfig(
-    { destinationName: 'VLAB' },
-    { method: 'post' }
-  );
+export async function getPromotionV3(): Promise<PriceCalculateResponse> {
+  return CalculationApiRequestBuilder.calculateViaRestWithTenant(
+    'oppsapihub',
+    transaction
+  )
+    .withCustomHeaders({
+      apiKey: token
+    })
+    .execute({
+      destinationName: 'VLAB'
+    })
+    .then(response => response.data);
+}
+
+export async function getPromotionV2(): Promise<PriceCalculateResponse> {
+  return CalculationApiWrapper.calculateViaRestWithTenant(
+    'oppsapihub',
+    transaction
+  )
+    .execute(
+      {
+        destinationName: 'VLAB'
+      },
+      {
+        headers: {
+          apikey: token
+        }
+      }
+    )
+    .then(response => response.data);
+}
+
+export async function getPromotion(): Promise<PriceCalculateResponse> {
+  const requestConfig: AxiosRequestConfig = await buildAxiosRequestConfig({
+    destinationName: 'VLAB'
+  });
   const calculationApi = new CalculationApi({
     basePath: requestConfig.baseURL
   });
@@ -21,9 +57,5 @@ export async function getPromotion(): Promise<Percent> {
         apikey: token
       }
     })
-    .then(
-      response =>
-        response.data.PriceCalculateBody![0].ShoppingBasket.LineItem[0].Sale!
-          .RetailPriceModifier![0].Percent!
-    );
+    .then(response => response.data);
 }

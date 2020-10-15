@@ -92,14 +92,16 @@ export function execute(executeFn: ExecuteHttpRequestFn) {
 
 export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
-  requestConfig: T
+  requestConfig?: Partial<T>
 ): Promise<AxiosRequestConfig> {
   const destinationRequestConfig = await buildHttpRequest(
     destination,
-    requestConfig.headers
+    requestConfig?.headers
   );
-  const request = merge(destinationRequestConfig, requestConfig);
-  return { ...getAxiosConfigWithDefaults(), ...request };
+  const request = requestConfig
+    ? merge(destinationRequestConfig, requestConfig)
+    : destinationRequestConfig;
+  return { ...getAxiosConfigWithDefaultsWithoutMethod(), ...request };
 }
 
 /**
@@ -153,7 +155,16 @@ function resolveDestination(
 function merge<T extends HttpRequestConfig>(
   destinationRequestConfig: DestinationHttpRequestConfig,
   customRequestConfig: T
-): T & DestinationHttpRequestConfig {
+): T & DestinationHttpRequestConfig;
+function merge<T extends HttpRequestConfig>(
+  destinationRequestConfig: DestinationHttpRequestConfig,
+  customRequestConfig: Partial<T>
+): Partial<T> & DestinationHttpRequestConfig;
+
+function merge<T extends HttpRequestConfig>(
+  destinationRequestConfig: DestinationHttpRequestConfig,
+  customRequestConfig: T | Partial<T>
+): (T | Partial<T>) & DestinationHttpRequestConfig {
   return {
     ...destinationRequestConfig,
     ...customRequestConfig,
@@ -175,7 +186,16 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
  */
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   return {
-    method: 'get',
+    ...getAxiosConfigWithDefaultsWithoutMethod(),
+    method: 'get'
+  };
+}
+
+export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
+  HttpRequestConfig,
+  'method'
+> {
+  return {
     proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent()

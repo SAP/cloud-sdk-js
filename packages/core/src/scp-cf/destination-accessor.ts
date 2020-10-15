@@ -276,7 +276,7 @@ class DestinationAccessor {
       }
     }
 
-    logger.info('Could not retrieve destination from environment variable.');
+    logger.info('No environment variable set.');
   }
 
   private static async getDecodedUserJwt(

@@ -16,7 +16,7 @@ export function parseFunctionImportReturnTypes(
   returnType: string | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: extractResponse,
+  extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
   return parseReturnTypes(
@@ -32,7 +32,7 @@ export function parseActionImportReturnTypes(
   returnType: string | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: extractResponse,
+  extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmActionImportReturnType {
   return parseReturnTypes(
@@ -48,7 +48,7 @@ function parseReturnTypes(
   returnType: string | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: extractResponse,
+  extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
   if (!returnType) {
@@ -117,7 +117,7 @@ function getVoidReturnType(): VdmFunctionImportReturnType {
 function getEdmReturnType(
   isCollection: boolean,
   edmType: string,
-  extractResponse: extractResponse,
+  extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
@@ -163,4 +163,4 @@ function getComplexReturnType(
   };
 }
 
-export type extractResponse = (string) => string;
+export type ExtractResponse = (string) => string;

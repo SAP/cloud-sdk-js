@@ -54,6 +54,7 @@ import { getTemplate } from './template-compilation/get-template';
 import { registerHelpers } from './template-compilation/helpers';
 import { registerPartials } from './template-compilation/partials';
 import { entityClass } from './template-compilation/entity';
+import { entityTemplate } from './template-compilation/templates/entity/entity';
 
 const logger = createLogger({
   package: 'generator',
@@ -76,18 +77,42 @@ export async function generateTemplates(
       service.directoryName
     );
     ensureDirSync(serviceDirectory);
-    [service.entities[0]].forEach(entity => {
+    service.entities.forEach(entity => {
       registerHelpers();
       registerPartials();
-      const entityTemplate = compile(getTemplate('entity/entity.mu'));
+      const entityTempl = compile(getTemplate('entity/entity.mu'));
 
       const filePath = resolve(serviceDirectory, `${entity.className}.ts`);
 
       writeFileSync(
         filePath,
-        entityTemplate({ entity: entityClass(entity), service })
+        entityTempl({ entity: entityClass(entity), service })
       );
     });
+  });
+
+  return;
+}
+
+export async function generateTemplates2(
+  options: GeneratorOptions
+): Promise<void> {
+  options = sanitizeOptions(options);
+  const services = parseServices(options);
+
+  emptyDirSync(options.outputDir.toString());
+
+  services.forEach(service => {
+    console.time('service');
+    const serviceDirectory = resolvePath(service.directoryName, options);
+    ensureDirSync(serviceDirectory);
+    service.entities.forEach(entity => {
+      console.time('entity');
+      const filePath = resolve(serviceDirectory, `${entity.className}.ts`);
+      writeFileSync(filePath, entityTemplate(entity, service));
+      console.timeEnd('entity');
+    });
+    console.timeEnd('service');
   });
 
   return;
@@ -102,10 +127,23 @@ export async function generateTsMorph(
 
   const project = new Project(projectOptions());
 
-  const promises = services.map(service =>
-    generateSourcesForService(service, project, options)
-  );
-  await Promise.all(promises);
+  services.forEach(service => {
+    console.time('service');
+    const serviceDirectory = resolvePath(service.directoryName, options);
+      ensureDirSync(serviceDirectory);
+      const serviceDir = project.createDirectory(serviceDirectory);
+    service.entities.forEach(entity => {
+      console.time('entity');
+      sourceFile(
+        serviceDir,
+        entity.className,
+        entitySourceFile(entity, service),
+        options.forceOverwrite
+      );
+      console.timeEnd('entity');
+    });
+    console.timeEnd('service');
+  });
 
   return project.save();
 }

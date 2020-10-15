@@ -19,6 +19,8 @@ function findActionForActionImport(
   return findActionFunctionByImportName(actions, actionImport.Action, 'action');
 }
 
+const extractResponse = (response: string) => `${response}.value`;
+
 export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],
@@ -50,6 +52,7 @@ export function generateActionImportsV4(
         edmxAction.ReturnType?.Type,
         entities,
         complexTypes,
+        extractResponse,
         serviceMetadata.edmx.oDataVersion
       )
     };

@@ -317,7 +317,7 @@ describe('service-parser', () => {
       expect(functionImport.name).toBe('fContinue');
     });
 
-    it('function imports edm return types are read correctly', () => {
+    it('v2 function imports edm return types are read correctly', () => {
       const [service] = parseAllServices(
         createOptions({
           inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
@@ -331,7 +331,7 @@ describe('service-parser', () => {
 
       expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
       expect(functionImport.returnType.builderFunction).toBe(
-        "(val) => edmToTsV2(val, 'Edm.Boolean')"
+        "(val) => edmToTsV2(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')"
       );
 
       const functionImportUnsupportedEdmTypes = service.functionImports.find(
@@ -339,10 +339,28 @@ describe('service-parser', () => {
       )!;
 
       expect(functionImportUnsupportedEdmTypes.returnType.builderFunction).toBe(
-        "(val) => edmToTsV2(val, 'Edm.Any')"
+        "(val) => edmToTsV2(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')"
       );
       expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toBe(
         'Edm.Any'
+      );
+    });
+
+    it('v4 function imports edm return types are read correctly', () => {
+      const [service] = parseAllServices(
+        createOptions({
+          inputDir: '../../test-resources/service-specs/v4/API_TEST_SRV',
+          useSwagger: false
+        })
+      );
+
+      const functionImport = service.functionImports.find(
+        f => f.originalName === 'TestFunctionImportEdmReturnType'
+      )!;
+
+      expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
+      expect(functionImport.returnType.builderFunction).toBe(
+        "(val) => edmToTsV4(val.value, 'Edm.Boolean')"
       );
     });
 
@@ -361,7 +379,7 @@ describe('service-parser', () => {
         action => action.originalName === 'TestActionImportUnsupportedEdmTypes'
       );
       expect(actionWithUnsupportedEdmType?.returnType.builderFunction).toBe(
-        "(val) => edmToTsV4(val, 'Edm.Any')"
+        "(val) => edmToTsV4(val.value, 'Edm.Any')"
       );
       expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toBe(
         'Edm.Any'

@@ -66,7 +66,7 @@ function isSingleResult(data): boolean {
 function validateSingleResult(data): void {
   if (!isSingleResult(data)) {
     logger.warn(
-      'The given reponse data does not have the standard OData v4 format for single results.'
+      'The given response data does not have the standard OData v4 format for single results.'
     );
   }
 }

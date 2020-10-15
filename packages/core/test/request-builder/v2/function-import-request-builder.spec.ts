@@ -78,17 +78,20 @@ describe('FunctionImportRequestBuilderV2', () => {
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportEdmReturnType`)
       .query({ $format: 'json' })
-      .reply(200, { d: true });
+      .reply(200, { d: { TestFunctionImportEdmReturnType: true } });
 
     const returnValue = await requestBuilder.execute(defaultDestination);
     expect(returnValue).toBe(true);
   });
 
-  it('return any type for unspported edm type in function module', async () => {
+  it('return any type for unsupported edm type in function module', async () => {
     const requestBuilder = testFunctionImportUnsupportedEdmTypes({
       simpleParam: 'SomeUntypedValue'
     });
-    const untypedResponse = { d: { somethingElse: 'AnyReturnType' } };
+    const responseValue = 'AnyReturnType';
+    const untypedResponse = {
+      d: { TestFunctionImportUnsupportedEdmTypes: responseValue }
+    };
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportUnsupportedEdmTypes`)
@@ -96,7 +99,7 @@ describe('FunctionImportRequestBuilderV2', () => {
       .reply(200, untypedResponse);
 
     const returnValue = await requestBuilder.execute(defaultDestination);
-    expect(returnValue).toEqual(untypedResponse.d);
+    expect(returnValue).toEqual(responseValue);
   });
 
   it('returns edm type collection', async () => {

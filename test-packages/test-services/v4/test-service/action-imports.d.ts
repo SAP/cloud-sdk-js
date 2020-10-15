@@ -9,7 +9,7 @@ export interface TestActionImportNoParameterNoReturnTypeParameters {
  * Test Action Import No Parameter No Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNoParameterNoReturnType(parameters: TestActionImportNoParameterNoReturnTypeParameters): ActionImportRequestBuilder<TestActionImportNoParameterNoReturnTypeParameters, undefined>;
 /**
@@ -37,7 +37,7 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
  * Test Action Import Multiple Parameter Complex Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportMultipleParameterComplexReturnType(parameters: TestActionImportMultipleParameterComplexReturnTypeParameters): ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType>;
 /**
@@ -53,7 +53,7 @@ export interface TestActionImportUnsupportedEdmTypesParameters {
  * Test Action Import Unsupported Edm Types.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportUnsupportedEdmTypes(parameters: TestActionImportUnsupportedEdmTypesParameters): ActionImportRequestBuilder<TestActionImportUnsupportedEdmTypesParameters, any>;
 export declare const actionImports: {

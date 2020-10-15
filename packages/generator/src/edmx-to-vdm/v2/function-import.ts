@@ -6,6 +6,9 @@ import { parseFunctionImports } from '../../edmx-parser/v2';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
 
+const extractResponse = (functionName: string) => (response: string) =>
+  `${response}.${functionName}`;
+
 export function generateFunctionImportsV2(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],
@@ -33,6 +36,7 @@ export function generateFunctionImportsV2(
         f.ReturnType,
         entities,
         complexTypes,
+        extractResponse(f.Name),
         serviceMetadata.edmx.oDataVersion
       )
     };

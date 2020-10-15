@@ -63,7 +63,7 @@ describe('response data accessor', () => {
     it('logs warning for wrong format', () => {
       getSingleResult(false);
       expect(warnSpy).toHaveBeenCalledWith(
-        'The given reponse data does not have the standard OData v4 format for single results.'
+        'The given response data does not have the standard OData v4 format for single results.'
       );
     });
   });

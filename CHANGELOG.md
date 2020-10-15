@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [Generator] Fix the function import (OData V2 + V4) and action import, where the return type is an primitive edm type like `Edm.String`.
 
 
 # 1.30.0

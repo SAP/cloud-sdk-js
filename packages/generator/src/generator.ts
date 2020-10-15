@@ -1,7 +1,7 @@
 import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
-import { emptyDirSync } from 'fs-extra';
+import { emptyDirSync, writeFileSync, ensureDirSync } from 'fs-extra';
 import {
   Directory,
   IndentationText,
@@ -14,6 +14,7 @@ import {
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
 import execa = require('execa');
+import { compile } from 'handlebars';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';
@@ -49,11 +50,65 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
+import { getTemplate } from './template-compilation/get-template';
+import { registerHelpers } from './template-compilation/helpers';
+import { registerPartials } from './template-compilation/partials';
+import { entityClass } from './template-compilation/entity';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'generator'
 });
+
+export async function generateTemplates(
+  options: GeneratorOptions
+): Promise<void> {
+  options = sanitizeOptions(options);
+  const services = parseServices(options);
+
+  if (options.clearOutputDir) {
+    emptyDirSync(options.outputDir.toString());
+  }
+
+  services.forEach(service => {
+    const serviceDirectory = resolve(
+      options.outputDir.toString(),
+      service.directoryName
+    );
+    ensureDirSync(serviceDirectory);
+    [service.entities[0]].forEach(entity => {
+      registerHelpers();
+      registerPartials();
+      const entityTemplate = compile(getTemplate('entity/entity.mu'));
+
+      const filePath = resolve(serviceDirectory, `${entity.className}.ts`);
+
+      writeFileSync(
+        filePath,
+        entityTemplate({ entity: entityClass(entity), service })
+      );
+    });
+  });
+
+  return;
+}
+
+export async function generateTsMorph(
+  options: GeneratorOptions
+): Promise<void> {
+  options = sanitizeOptions(options);
+  const services = parseServices(options);
+  emptyDirSync(options.outputDir.toString());
+
+  const project = new Project(projectOptions());
+
+  const promises = services.map(service =>
+    generateSourcesForService(service, project, options)
+  );
+  await Promise.all(promises);
+
+  return project.save();
+}
 
 export async function generate(options: GeneratorOptions): Promise<void> {
   const project = await generateProject(options);

@@ -42,7 +42,7 @@ export class Airports extends EntityV4 implements AirportsType {
   location!: AirportLocation;
 
   /**
-   * Returns an entity builder to construct instances `Airports`.
+   * Returns an entity builder to construct instances of `Airports`.
    * @returns A builder that constructs instances of entity type `Airports`.
    */
   static builder(): EntityBuilderType<Airports, AirportsType> {

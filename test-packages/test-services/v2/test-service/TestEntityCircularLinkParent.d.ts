@@ -26,7 +26,7 @@ export declare class TestEntityCircularLinkParent extends EntityV2 implements Te
      */
     toChild: TestEntityCircularLinkChild[];
     /**
-     * Returns an entity builder to construct instances `TestEntityCircularLinkParent`.
+     * Returns an entity builder to construct instances of `TestEntityCircularLinkParent`.
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
      */
     static builder(): EntityBuilderType<TestEntityCircularLinkParent, TestEntityCircularLinkParentType>;

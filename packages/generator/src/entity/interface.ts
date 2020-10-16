@@ -31,7 +31,7 @@ function property(prop: VdmProperty): PropertySignatureStructure {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
     type: prop.isCollection
-      ? `${prop.jsType}[]`
+      ? `${prop.jsType}[]` + (prop.nullable ? ' | null' : '')
       : prop.jsType + (prop.nullable ? ' | null' : '')
   };
 }

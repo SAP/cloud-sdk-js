@@ -22,7 +22,7 @@ export declare class MultiSchemaTestEntity extends EntityV2 implements MultiSche
      */
     keyProperty: string;
     /**
-     * Returns an entity builder to construct instances `MultiSchemaTestEntity`.
+     * Returns an entity builder to construct instances of `MultiSchemaTestEntity`.
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
     static builder(): EntityBuilderType<MultiSchemaTestEntity, MultiSchemaTestEntityType>;

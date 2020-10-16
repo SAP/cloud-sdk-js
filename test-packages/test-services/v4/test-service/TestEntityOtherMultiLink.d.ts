@@ -23,7 +23,7 @@ export declare class TestEntityOtherMultiLink extends EntityV4 implements TestEn
      */
     keyProperty: string;
     /**
-     * Returns an entity builder to construct instances `TestEntityOtherMultiLink`.
+     * Returns an entity builder to construct instances of `TestEntityOtherMultiLink`.
      * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
      */
     static builder(): EntityBuilderType<TestEntityOtherMultiLink, TestEntityOtherMultiLinkType>;

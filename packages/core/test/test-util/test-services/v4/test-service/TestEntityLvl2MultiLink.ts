@@ -55,7 +55,7 @@ export class TestEntityLvl2MultiLink extends EntityV4 implements TestEntityLvl2M
   toMultiLink2!: TestEntityLvl3MultiLink[];
 
   /**
-   * Returns an entity builder to construct instances `TestEntityLvl2MultiLink`.
+   * Returns an entity builder to construct instances of `TestEntityLvl2MultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
   static builder(): EntityBuilderType<TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType> {

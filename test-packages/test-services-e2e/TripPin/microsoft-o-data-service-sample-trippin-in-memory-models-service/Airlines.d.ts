@@ -26,7 +26,7 @@ export declare class Airlines extends EntityV4 implements AirlinesType {
      */
     name: string;
     /**
-     * Returns an entity builder to construct instances `Airlines`.
+     * Returns an entity builder to construct instances of `Airlines`.
      * @returns A builder that constructs instances of entity type `Airlines`.
      */
     static builder(): EntityBuilderType<Airlines, AirlinesType>;

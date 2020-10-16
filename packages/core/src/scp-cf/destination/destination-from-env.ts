@@ -25,7 +25,7 @@ const logger = createLogger({
 export function getDestinationsFromEnv(): Destination[] {
   const destinationsEnv = getDestinationsEnvVariable();
   logger.debug(
-    `The value for the destination enviorment varialbe is ${destinationsEnv}.`
+    `The value for the destination environment variable is: ${destinationsEnv}`
   );
   if (destinationsEnv) {
     let destinations;

@@ -1,7 +1,7 @@
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { ProxyConfiguration } from './connectivity-service-types';
-import { Destination } from './destination-service-types';
+import { Destination } from './destination/destination-service-types';
 import { EnvironmentAccessor } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';

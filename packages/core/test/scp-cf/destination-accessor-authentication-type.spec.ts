@@ -55,8 +55,6 @@ describe('authentication types', () => {
           200,
           subscriberServiceToken
         ),
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
           nock,
           oauthSingleResponse,
@@ -157,8 +155,6 @@ describe('authentication types', () => {
           200,
           subscriberServiceToken
         ),
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
           nock,
           certificateSingleResponse,
@@ -228,8 +224,6 @@ describe('authentication types', () => {
         200,
         subscriberServiceToken
       );
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
       const expected = parseDestination(basicMultipleResponse[0]);
       const actual = await getDestination(destinationName, {

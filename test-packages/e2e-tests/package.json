@@ -34,7 +34,8 @@
     },
     "requires": {
       "db": {
-        "kind": "sqlite"
+        "kind": "sqlite",
+        "model": "*"
       }
     }
   }

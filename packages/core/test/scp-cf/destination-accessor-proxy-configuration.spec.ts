@@ -9,7 +9,6 @@ import {
 } from '../test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../test-util/destination-service-mocks';
@@ -36,23 +35,15 @@ describe('proxy configuration', () => {
     mockServiceToken();
     mockUserApprovedServiceToken();
 
-    mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-    mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
-
-    mockSubaccountDestinationsCall(
-      nock,
-      basicMultipleResponse,
-      200,
-      subscriberServiceToken
-    );
-    mockSingleDestinationCall(
-      nock,
-      basicMultipleResponse[0],
-      200,
-      destinationName,
-      subscriberServiceToken
-    );
+    const httpMocks = [
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+      mockSubaccountDestinationsCall(
+        nock,
+        basicMultipleResponse,
+        200,
+        subscriberServiceToken
+      )
+    ];
     process.env['https_proxy'] = 'some.proxy.com:1234';
 
     const actual = await getDestination(destinationName, {
@@ -64,6 +55,7 @@ describe('proxy configuration', () => {
       protocol: Protocol.HTTP,
       port: 1234
     });
+    httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 
   it('should ignore the proxy if the destination is onPrem type.', async () => {
@@ -72,15 +64,15 @@ describe('proxy configuration', () => {
     mockServiceToken();
     mockUserApprovedServiceToken();
 
-    mockInstanceDestinationsCall(
-      nock,
-      onPremiseMultipleResponse,
-      200,
-      subscriberServiceToken
-    );
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-    mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
-    mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken);
+    const httpMocks = [
+      mockInstanceDestinationsCall(
+        nock,
+        onPremiseMultipleResponse,
+        200,
+        subscriberServiceToken
+      ),
+      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
+    ];
 
     process.env['https_proxy'] = 'some.proxy.com:1234';
     const expected = {
@@ -96,6 +88,7 @@ describe('proxy configuration', () => {
       cacheVerificationKeys: false
     });
     expect(actual?.proxyConfiguration).toEqual(expected);
+    httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 
   it('returns a destination with a connectivity service proxy configuration when ProxyType equals "OnPremise"', async () => {
@@ -104,14 +97,14 @@ describe('proxy configuration', () => {
     mockServiceToken();
 
     const httpMocks = [
+      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
       mockSubaccountDestinationsCall(
         nock,
         onPremiseMultipleResponse,
         200,
-        subscriberServiceToken
+        providerServiceToken
       ),
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
       mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken)
     ];
 

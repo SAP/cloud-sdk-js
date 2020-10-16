@@ -29,6 +29,7 @@ export async function getPromotionV2(): Promise<PriceCalculateResponse> {
     'oppsapihub',
     transaction
   )
+    // TODO more flexible api is needed instead of execute function only
     .execute(
       {
         destinationName: 'VLAB'

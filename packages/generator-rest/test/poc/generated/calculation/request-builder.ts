@@ -11,6 +11,14 @@ export abstract class RequestBuilder{
     this.requestConfig.addCustomHeaders(headers);
     return this;
   }
+
+  buildRequestConfig(destination: Destination | DestinationNameAndJwt): Promise<AxiosRequestConfig>{
+    return buildAxiosRequestConfig(
+      destination, {
+        headers: this.requestConfig.customHeaders
+      }
+    );
+  }
 }
 
 // todo move to core
@@ -36,11 +44,7 @@ export class CalculateViaRestWithTenantRequestBuilder extends RequestBuilder{
   }
 
   async execute(destination: Destination | DestinationNameAndJwt) {
-    const requestConfig: AxiosRequestConfig = await buildAxiosRequestConfig(
-      destination, {
-        headers: this.requestConfig.customHeaders
-      }
-    );
+    const requestConfig: AxiosRequestConfig = await this.buildRequestConfig(destination);
     return new CalculationApi({
       basePath: requestConfig.baseURL
     }).calculateViaRestWithTenant(this.tenantName,

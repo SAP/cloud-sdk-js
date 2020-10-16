@@ -7,6 +7,7 @@ import {
   uriConvertersCommon
 } from '../../common/uri-conversion/uri-value-converter';
 import { EdmTypeV4 } from '../edm-types';
+import { identity } from '@sap-cloud-sdk/util';
 
 type UriConverterMapping = { [key in EdmTypeV4]: (value: any) => string };
 /**

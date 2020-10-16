@@ -5,7 +5,7 @@ import {
 } from '../util/proxy-util';
 import { Destination } from './destination-service-types';
 import { getVcapService } from './environment-accessor';
-import { pipe } from '@sap-cloud-sdk/util';
+import { flatten, pipe } from '@sap-cloud-sdk/util';
 
 /**
  * Tries to build a destination from a service binding with the given name.

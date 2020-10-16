@@ -1,5 +1,3 @@
-import { assoc, merge } from 'rambda';
-
 /**
  * Checks if a chain of properties exists on the given object.
  *
@@ -20,9 +18,11 @@ export function propertyExists(
   return false;
 }
 
+
+
 /**
- * Calls rambda's assoc function if the provided value is neither null nor undefined.
- * Note that this is different to JS idiomatic checks for truthy/falsy values, i.e. an empty string will result in assoc being called.
+ * Adds the value to the object if it is neither null nor undefined.
+ * Note that this is different to JS idiomatic checks for truthy/falsy values, i.e. an empty string will result in key/value pairs beeing added.
  *
  * @param key - The key to associate with the given value.
  * @param value - The value to associate with the given key.
@@ -31,21 +31,22 @@ export function propertyExists(
  */
 export const assocSome = <T>(key: string, value?: any) => (obj: T): T => {
   if (typeof value !== 'undefined' && value !== null) {
-    return assoc(key, value)(obj);
+   return assoc(key,value,obj)
   }
-  return obj;
+  return {...obj};
 };
 
 /**
- * Calls rambda's merge function if second object is neither null nor undefined.
- *
+ * Merges the two object if second object is neither null nor undefined.
+ * If a key exists on a and b the value from b is taken
+ *  *
  * @param a - The object to merge into.
  * @param b - The object which to merge into a.
  * @returns A copy of the merge(a, b) or a if b is undefined or null.
  */
 export const mergeSome = (a: Record<string, any>, b?: Record<string, any>) => {
   if (typeof b !== 'undefined' && b !== null) {
-    return merge(a, b);
+    return {...a,...b}
   }
   return a;
 };
@@ -77,9 +78,28 @@ export const pick = (keys:string[],object:Object):Object=>{
   keys.forEach(key=>{
     const value = object[key]
     if(value){
-      return[key] = value
+      result[key] = value
     }
   })
   return result;
 }
 
+export const assoc = <T>(key:string,value:any,obj:T) =>{
+  return {...obj,[key]:value}
+}
+
+export const flatten = (input:any)=> {
+  const flatResult: any[] = [];
+  const stack: any[] = [...input]
+
+  while (stack.length > 0) {
+    const current = stack.pop()
+    if(!Array.isArray(current)){
+      flatResult.push(current)
+    }else {
+      stack.push(...current)
+    }
+  }
+
+  return flatResult.reverse()
+}

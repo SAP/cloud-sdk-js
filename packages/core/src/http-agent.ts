@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as https from 'https';
-import { createLogger, last } from '@sap-cloud-sdk/util';
+import { assoc, createLogger, last, pipe } from '@sap-cloud-sdk/util';
 import { Destination, DestinationCertificate } from './scp-cf';
 import { proxyAgent } from './util/proxy-util';
 import { Protocol } from './protocol';

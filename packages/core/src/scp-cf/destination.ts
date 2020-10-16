@@ -6,7 +6,7 @@ import {
   DestinationNameAndJwt,
   isDestinationNameAndJwt
 } from './destination-service-types';
-import { pipe } from '@sap-cloud-sdk/util';
+import { assoc, pipe } from '@sap-cloud-sdk/util';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.

@@ -7797,9 +7797,9 @@ onetime@^5.1.0:
     mimic-fn "^2.1.0"
 
 opossum@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/opossum/-/opossum-5.0.1.tgz#926d57a8dc3d83afd8ccddff7ed03f5bd1098003"
-  integrity sha512-iUDUQmFl3RanaBVLMDTZ6WtXj/Hk84pwJ5JWoJaQd1lXGifdApHhszI3biZvdBDdpTERCmB6x+7+uNvzhzVZIg==
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/opossum/-/opossum-5.0.2.tgz#38d80db319eee6ee3de5cf45efc3742dea2a64cd"
+  integrity sha512-WLroHTijCRgt539CF563QnkEUuoR8j1O1fzFmnXCbUM0Pc6qfb2LOjW7ekVJKoZ4djPaqpXCzAvhJb8T+pQEUg==
 
 optionator@^0.8.1, optionator@^0.8.3:
   version "0.8.3"

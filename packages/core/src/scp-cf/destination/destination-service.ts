@@ -12,7 +12,7 @@ import {
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
 import { parseDestination } from './destination';
-import { Destination } from './destination-service-types';
+import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
 // For some reason, the equivalent import statement does not work
@@ -63,11 +63,6 @@ export function fetchSubaccountDestinations(
     DestinationType.Subaccount,
     options
   );
-}
-
-export enum DestinationType {
-  Instance = 'instance',
-  Subaccount = 'subaccount'
 }
 
 async function fetchDestinations(

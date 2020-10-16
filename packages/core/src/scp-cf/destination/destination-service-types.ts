@@ -243,3 +243,12 @@ export type AuthenticationType =
   | 'OAuth2SAMLBearerAssertion'
   | 'OAuth2ClientCredentials'
   | 'ClientCertificateAuthentication';
+
+/**
+ * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).
+ * This enum is used as a switch in the [[fetchInstanceDestinations]], [[fetchSubaccountDestinations]]  and [[destinationServiceCache]]
+ */
+export enum DestinationType {
+  Instance = 'instance',
+  Subaccount = 'subaccount'
+}

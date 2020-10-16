@@ -40,7 +40,7 @@ export function alwaysSubscriber(
   allDestinations: AllDestinations,
   destinationName: string
 ): Destination | null {
-  return findDestination(allDestinations.subscriber, destinationName) ?? null;
+  return findDestination(allDestinations.subscriber, destinationName) || null;
 }
 
 /**
@@ -55,8 +55,8 @@ export function subscriberFirst(
   destinationName: string
 ): Destination | null {
   return (
-    findDestination(allDestinations.subscriber, destinationName) ??
-    findDestination(allDestinations.provider, destinationName) ??
+    findDestination(allDestinations.subscriber, destinationName) ||
+    findDestination(allDestinations.provider, destinationName) ||
     null
   );
 }
@@ -84,5 +84,5 @@ function findDestination(
       `A destination with name ${destinationName} has been found for the destination serivce instance and subaccount. The instance destination will be used.`
     );
   }
-  return instanceDest ?? subAccountDest;
+  return instanceDest || subAccountDest;
 }

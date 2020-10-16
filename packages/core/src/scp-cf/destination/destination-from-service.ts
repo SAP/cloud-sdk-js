@@ -20,8 +20,7 @@ import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,
-  DestinationSelectionStrategies,
-  DestinationSelectionStrategy
+  subscriberFirst
 } from './destination-selection-strategies';
 import { DestinationsByType } from './destination-accessor-types';
 import {
@@ -65,44 +64,37 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions
 ): Promise<Destination | null> {
-  return DestinationFromService.getDestinationFromDestinationService(
+  return DestinationFromServiceRetriever.getDestinationFromDestinationService(
     name,
     options
   );
 }
 
-class DestinationFromService {
+class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
-    const decodedUserJwt = await DestinationFromService.getDecodedUserJwt(
+    const decodedUserJwt = await DestinationFromServiceRetriever.getDecodedUserJwt(
       options
     );
-    const providerToken = await DestinationFromService.getProviderToken(
+    const providerToken = await DestinationFromServiceRetriever.getProviderToken(
       options
     );
-    const da = new DestinationFromService(
+    const da = new DestinationFromServiceRetriever(
       name,
       options,
       decodedUserJwt,
       providerToken
     );
-    const destinationResult =
-      (await da.searchSubscriberAccountForDestination()) ??
-      (await da.searchProviderAccountForDestination());
 
-    if (destinationResult?.fromCache) {
-      return destinationResult.destination;
+    const destinationResult = await da.searchDestinationWithSelectionStrategyAndCache();
+    if (!destinationResult) {
+      return null;
     }
 
-    if (destinationResult) {
-      logger.info(
-        'Successfully retrieved destination from destination service.'
-      );
-    } else {
-      logger.info('Could not retrieve destination from destination service.');
-      return null;
+    if (destinationResult.fromCache) {
+      return destinationResult.destination;
     }
 
     let { destination } = destinationResult;
@@ -136,9 +128,6 @@ class DestinationFromService {
   }
 
   readonly decodedProviderToken: DecodedJWT;
-  readonly isolationStrategy: IsolationStrategy;
-  readonly selectionStrategy: DestinationSelectionStrategy;
-  readonly useCache: boolean;
   private options: DestinationOptions;
 
   private constructor(
@@ -150,17 +139,39 @@ class DestinationFromService {
     this.options = { ...options };
     this.decodedProviderToken = decodeJwt(providerToken);
 
-    this.isolationStrategy =
-      options.isolationStrategy ?? IsolationStrategy.Tenant;
-    this.options.isolationStrategy = this.isolationStrategy;
+    this.options.isolationStrategy =
+      options.isolationStrategy || IsolationStrategy.Tenant;
+    this.options.selectionStrategy =
+      options.selectionStrategy || subscriberFirst;
+    this.options.useCache = options.useCache || false;
+  }
 
-    this.selectionStrategy =
-      options.selectionStrategy ??
-      DestinationSelectionStrategies.subscriberFirst;
-    this.options.selectionStrategy = this.selectionStrategy;
+  private async searchDestinationWithSelectionStrategyAndCache(): Promise<
+    DestinationSearchResult | undefined
+  > {
+    let destinationSearchResult;
+    if (this.isSubscriberNeeded()) {
+      destinationSearchResult = await this.searchSubscriberAccountForDestination();
+    }
 
-    this.useCache = options.useCache ?? false;
-    this.options.useCache = this.useCache;
+    if (this.isProviderNeeded(destinationSearchResult)) {
+      destinationSearchResult = await this.searchProviderAccountForDestination();
+    }
+    if (destinationSearchResult && !destinationSearchResult.fromCache) {
+      logger.info(
+        'Successfully retrieved destination from destination service.'
+      );
+    }
+    if (destinationSearchResult && destinationSearchResult.fromCache) {
+      logger.info(
+        `Successfully retrieved destination from destination service cache for ${destinationSearchResult.origin} destinations.`
+      );
+    }
+    if (!destinationSearchResult) {
+      logger.info('Could not retrieve destination from destination service.');
+    }
+
+    return destinationSearchResult;
   }
 
   private async getInstanceAndSubaccountDestinations(
@@ -272,7 +283,7 @@ class DestinationFromService {
     destination: Destination,
     destinationOrigin: DestinationOrigin
   ) {
-    if (!this.useCache) {
+    if (!this.options.useCache) {
       return destination;
     }
     destinationCache.cacheRetrievedDestination(
@@ -280,7 +291,7 @@ class DestinationFromService {
         ? this.decodedUserJwt!
         : this.decodedProviderToken,
       destination,
-      this.isolationStrategy
+      this.options.isolationStrategy!
     );
   }
 
@@ -290,7 +301,7 @@ class DestinationFromService {
     const provider = await this.getInstanceAndSubaccountDestinations(
       this.providerToken
     );
-    const destination = await this.selectionStrategy(
+    const destination = await this.options.selectionStrategy!(
       {
         subscriber: emptyDestinationByType,
         provider
@@ -310,13 +321,10 @@ class DestinationFromService {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.decodedProviderToken,
       this.name,
-      this.isolationStrategy
+      this.options.isolationStrategy!
     );
 
     if (destination) {
-      logger.info(
-        'Successfully retrieved destination from destination service cache for provider destinations.'
-      );
       return { destination, fromCache: true, origin: 'subscriber' };
     }
   }
@@ -331,7 +339,7 @@ class DestinationFromService {
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken
     );
-    const destination = this.selectionStrategy(
+    const destination = this.options.selectionStrategy!(
       {
         subscriber,
         provider: emptyDestinationByType
@@ -348,13 +356,10 @@ class DestinationFromService {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.decodedUserJwt!,
       this.name,
-      this.isolationStrategy
+      this.options.isolationStrategy!
     );
 
     if (destination) {
-      logger.info(
-        'Successfully retrieved destination from destination service cache for subscriber destinations.'
-      );
       return { destination, fromCache: true, origin: 'subscriber' };
     }
   }
@@ -366,22 +371,28 @@ class DestinationFromService {
     );
   }
 
-  private isProviderNeeded(): boolean {
-    if (this.selectionStrategy === alwaysSubscriber) {
+  private isProviderNeeded(
+    resultFromSubscriber: DestinationSearchResult
+  ): boolean {
+    if (this.options.selectionStrategy === alwaysSubscriber) {
+      return false;
+    }
+    if (
+      this.options.selectionStrategy === subscriberFirst &&
+      resultFromSubscriber
+    ) {
       return false;
     }
 
     return true;
   }
 
-  private isSubscriberNeeded(
-    decodedUserJwt: DecodedJWT | undefined
-  ): decodedUserJwt is DecodedJWT {
+  private isSubscriberNeeded(): boolean {
     if (!this.decodedUserJwt) {
       return false;
     }
 
-    if (this.selectionStrategy === alwaysProvider) {
+    if (this.options.selectionStrategy === alwaysProvider) {
       return false;
     }
 
@@ -395,30 +406,22 @@ class DestinationFromService {
   private async searchProviderAccountForDestination(): Promise<
     DestinationSearchResult | undefined
   > {
-    if (!this.isProviderNeeded()) {
-      return;
-    }
-
     let destination;
-    if (this.useCache) {
+    if (this.options.useCache) {
       destination = this.getProviderDestinationCache();
     }
 
-    return destination ?? this.getProviderDestinationService();
+    return destination || this.getProviderDestinationService();
   }
 
   private async searchSubscriberAccountForDestination(): Promise<
     DestinationSearchResult | undefined
   > {
-    if (!this.isSubscriberNeeded(this.decodedUserJwt)) {
-      return;
-    }
-
     let destination;
-    if (this.useCache) {
+    if (this.options.useCache) {
       destination = this.getSubscriberDestinationCache();
     }
 
-    return destination ?? this.getSubscriberDestinationService();
+    return destination || this.getSubscriberDestinationService();
   }
 }

@@ -97,94 +97,74 @@ Furthermore, some common IDEs (e.g. IntelliJ, Eclipse) require plugins to recogn
 
 ### Using the OData Generator Maven Plugin ###
 
+The maven plugin is most useful if you would like to use the generated code within a maven project.
+Use it by adding it to your `application/pom.xml` file under the `<plugin>` section:
+
 <Tabs groupId="odataVersion" defaultValue="v4" values={[ { label: 'OData v2', value: 'v2', }, { label: 'OData v4', value: 'v4', }]}>
 <TabItem value="v4">
 
-1. Update your `application/pom.xml` file by adding the generator plugin under the `<plugin>` section.
-
-    ```xml
-    <plugin>
-        <groupId>com.sap.cloud.sdk.datamodel</groupId>
-        <artifactId>odata-v4-generator-maven-plugin</artifactId>
-        <!-- Please use the latest version here-->
-        <version>3.XX.X</version>
-        <executions>
-            <execution>
-                <id>generate-consumption</id>
-                <phase>generate-sources</phase>
-                <goals>
-                    <goal>generate</goal>
-                </goals>
-                <configuration>
-                    <inputDirectory>${project.basedir}/edmx</inputDirectory>
-                    <outputDirectory>${project.build.directory}/vdm</outputDirectory>
-                    <deleteOutputDirectory>true</deleteOutputDirectory>
-                    <packageName>com.mycompany.vdm</packageName>
-                    <defaultBasePath>odata/v4/</defaultBasePath>
-                </configuration>
-            </execution>
-        </executions>
-    </plugin>
-    ```
+```xml
+<plugin>
+    <groupId>com.sap.cloud.sdk.datamodel</groupId>
+    <artifactId>odata-v4-generator-maven-plugin</artifactId>
+    <!-- Please use the latest version here-->
+    <version>3.XX.X</version>
+    <executions>
+        <execution>
+            <id>generate-consumption</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                <inputDirectory>${project.basedir}/edmx</inputDirectory>
+                <outputDirectory>${project.build.directory}/vdm</outputDirectory>
+                <deleteOutputDirectory>true</deleteOutputDirectory>
+                <packageName>com.mycompany.vdm</packageName>
+                <defaultBasePath>odata/v4/</defaultBasePath>
+                <compileScope>COMPILE</compileScope>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
 
 </TabItem>
 <TabItem value="v2">
 
-1. Update your `application/pom.xml` file by adding the generator plugin under the `<plugin>` section.
-
-    ```xml
-    <plugin>
-        <groupId>com.sap.cloud.sdk.datamodel</groupId>
-        <artifactId>odata-generator-maven-plugin</artifactId>
-        <!-- Please use the latest version here-->
-        <version>3.XX.X</version>
-        <executions>
-            <execution>
-                <id>generate-consumption</id>
-                <phase>generate-sources</phase>
-                <goals>
-                    <goal>generate</goal>
-                </goals>
-                <configuration>
-                    <inputDirectory>${project.basedir}/edmx</inputDirectory>
-                    <outputDirectory>${project.build.directory}/vdm</outputDirectory>
-                    <deleteOutputDirectory>true</deleteOutputDirectory>
-                    <packageName>com.mycompany.vdm</packageName>
-                    <defaultBasePath>odata/v4/</defaultBasePath>
-                </configuration>
-            </execution>
-        </executions>
-    </plugin>
-    ```
+```xml
+<plugin>
+    <groupId>com.sap.cloud.sdk.datamodel</groupId>
+    <artifactId>odata-generator-maven-plugin</artifactId>
+    <!-- Please use the latest version here-->
+    <version>3.XX.X</version>
+    <executions>
+        <execution>
+            <id>generate-consumption</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                <inputDirectory>${project.basedir}/edmx</inputDirectory>
+                <outputDirectory>${project.build.directory}/vdm</outputDirectory>
+                <deleteOutputDirectory>true</deleteOutputDirectory>
+                <packageName>com.mycompany.vdm</packageName>
+                <defaultBasePath>odata/v2/</defaultBasePath>
+                <compileScope>COMPILE</compileScope>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
 
 </TabItem>
 </Tabs>
 
-2. Adapt the `<inputDirectory>` to point to the location of your service definitions. A full list of parameters is [available here](#available-parameters).
-
-1. In case the target directory should be automatically added as a source folder by maven you can leverage the build helper plugin:
-    ```xml
-    <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>3.0.0</version>
-        <executions>
-            <execution>
-                <phase>generate-sources</phase>
-                <goals>
-                    <goal>add-source</goal>
-                </goals>
-                <configuration>
-                    <sources>
-                        <source>${project.build.directory}/vdm</source>
-                    </sources>
-                </configuration>
-            </execution>
-        </executions>
-    </plugin>
-    ```
+Adapt the `<inputDirectory>` to point to the location of your service definitions. A full list of parameters is [available here](#available-parameters).
 
 Now maven will run the generator within the `process-sources` phase which is executed before compile.
+Also the `<compileScope>` option instructs maven to add the generated code as sources for the compile phase.
 
 :::note
 Please note that if you use the generator for services other than SAP S/4HANA services, you need to add the parameter `defaultBasePath` to the configuration section, which should provide the base path to the exposed API (e.g _odata/v4/_).
@@ -271,14 +251,15 @@ The following parameters are available on the generator for both OData protocol 
 
 | Parameter                  | Default                                                                      | Description                                                  |
 |:---------------------------|:----------------------------------------------------------------------------:|:-------------------------------------------------------------|
-| `<deleteOutputDirectory>`  | `False`                                                                      |  Target directory is deleted before code generation          |
+| `<compileScope>`           | `NONE`                                                                       | Adds the generated sources to the compile or test phase      |
+| `<deleteOutputDirectory>`  | `False`                                                                      | Target directory is deleted before code generation           |
 | `<defaultBasePath>`        | -                                                                            | Base path of the exposed API                                 |
 | `<includeEntitySets>`      | -                                                                            | Only generate classes for specific entity sets               |
 | `<includeFunctionImports>` | -                                                                            | Only generate classes for specific function imports          |
 | `<inputDirectory>`         | `input`                                                                      | Location of the metadata files                               |
 | `<namingStrategy>`         | - <!--`com.sap.cloud.sdk.datamodel.odata.generator.DefaultNamingStrategy`--> | Fully-qualified Java class to be used as the naming strategy |
 | `<outputDirectory>`        | `output`                                                                     | Output directory for generated sources                       |
-| `<overwriteFiles>`         | `False`                                                                      |  Overwrite existing files                                    |
+| `<overwriteFiles>`         | `False`                                                                      | Overwrite existing files                                     |
 | `<packageName>`            | - <!-- `com.sap.cloud.sdk.s4hana.datamodel.odata` -->                        | Package name for the generated sources                       |
 | `<serviceNameMappingFile>` | - <!--`serviceNameMappings.properties`-->                                    | Determine service names from a given mapping file            |
 

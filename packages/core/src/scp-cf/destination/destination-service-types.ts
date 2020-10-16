@@ -1,6 +1,6 @@
-import { CachingOptions, IsolationStrategy } from './cache';
-import { ProxyConfiguration } from './connectivity-service-types';
-import { ResilienceOptions } from './resilience-options';
+import { CachingOptions, IsolationStrategy } from '../cache';
+import { ProxyConfiguration } from '../connectivity-service-types';
+import { ResilienceOptions } from '../resilience-options';
 
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.
@@ -220,8 +220,6 @@ export interface DestinationCachingOptions {
 /**
  * Options to use while fetching destinations. Encompasses both [[DestinationCachingOptions]] and [[ResilienceOptions]] interfaces.
  */
-// Prettier will try to remove the parens in the type definition, which changes the meaning of the code
-// Prettier-ignore
 export type DestinationRetrievalOptions = (
   | DestinationCachingOptions
   | CachingOptions
@@ -245,3 +243,12 @@ export type AuthenticationType =
   | 'OAuth2SAMLBearerAssertion'
   | 'OAuth2ClientCredentials'
   | 'ClientCertificateAuthentication';
+
+/**
+ * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).
+ * This enum is used as a switch in the [[fetchInstanceDestinations]], [[fetchSubaccountDestinations]]  and [[destinationServiceCache]]
+ */
+export enum DestinationType {
+  Instance = 'instance',
+  Subaccount = 'subaccount'
+}

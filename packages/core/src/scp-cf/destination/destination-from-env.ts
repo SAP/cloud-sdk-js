@@ -1,9 +1,9 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import {
   proxyStrategy,
   ProxyStrategy,
   addProxyConfigurationInternet
-} from '../util/proxy-util';
+} from '../../util/proxy-util';
 import {
   sanitizeDestination,
   isDestinationConfiguration,
@@ -24,8 +24,19 @@ const logger = createLogger({
  */
 export function getDestinationsFromEnv(): Destination[] {
   const destinationsEnv = getDestinationsEnvVariable();
+  logger.debug(
+    `The value for the destination environment variable is: ${destinationsEnv}`
+  );
   if (destinationsEnv) {
-    const destinations = JSON.parse(destinationsEnv);
+    let destinations;
+    try {
+      destinations = JSON.parse(destinationsEnv);
+    } catch (err) {
+      throw errorWithCause(
+        'Error in parsing the destinations from the environment variable.',
+        err
+      );
+    }
     validateDestinations(destinations);
     return destinations.map(destination =>
       isDestinationConfiguration(destination)
@@ -50,7 +61,7 @@ export function getDestinations(): Destination[] {
 }
 
 /**
- * Get a destination from the environment variables by name. Throws an error if there are multiple destinations with the same name.
+ * Get a destination from the environment variables by name. If there are multiple destinations with the same name the first one will be used.
  * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
  * from the Cloud Foundry destination service.
  *
@@ -118,4 +129,37 @@ function validateDestinations(destinations: any[]) {
       );
     }
   });
+}
+
+/**
+ * @hidden
+ */
+export function searchEnvVariablesForDestination(
+  name: string
+): Destination | undefined {
+  logger.info('Attempting to retrieve destination from environment variable.');
+
+  if (getDestinationsEnvVariable()) {
+    logger.warn(
+      "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
+        'This is discouraged for a productive application! ' +
+        'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
+    );
+
+    try {
+      const destination = getDestinationFromEnvByName(name);
+      if (destination) {
+        logger.info(
+          'Successfully retrieved destination from environment variable.'
+        );
+        return destination;
+      }
+    } catch (error) {
+      logger.error(
+        `Error in reading the given destinations from the environment variable ${error.message}.`
+      );
+    }
+  }
+
+  logger.info('No environment variable set.');
 }

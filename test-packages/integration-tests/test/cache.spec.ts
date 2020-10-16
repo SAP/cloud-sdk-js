@@ -1,6 +1,7 @@
 import {
   alwaysProvider,
   clientCredentialsTokenCache,
+  destinationServiceCache,
   destinationCache,
   getDestination,
   IsolationStrategy
@@ -34,7 +35,8 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     };
     const providerToken = jwt.sign(
       {
-        zid: 'provider_token'
+        zid: 'provider_token',
+        user_id: 'user_id'
       },
       privateKey(),
       {
@@ -56,6 +58,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   afterEach(() => {
     nock.cleanAll();
     destinationCache.clear();
+    destinationServiceCache.clear();
     clientCredentialsTokenCache.clear();
     delete process.env['VCAP_SERVICES'];
   });
@@ -63,19 +66,26 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   it('getting the same destination twice should produce a cache hit', async () => {
     await getDestination('FINAL-DESTINATION', {
       useCache: true,
-      selectionStrategy: alwaysProvider
+      selectionStrategy: alwaysProvider,
+      isolationStrategy: IsolationStrategy.Tenant
     });
     await getDestination('FINAL-DESTINATION', {
       useCache: true,
-      selectionStrategy: alwaysProvider
+      selectionStrategy: alwaysProvider,
+      isolationStrategy: IsolationStrategy.Tenant
     });
   });
 
   it('changing the isolation should produce a cache miss', async () => {
-    await getDestination('FINAL-DESTINATION', { useCache: true });
+    // The destination-service has an own cahce where only isolation strategy Tenant and Tenant_User are used.
+    // In order to also miss the cache there the two allowed strategies must be used.
+    await getDestination('FINAL-DESTINATION', {
+      useCache: true,
+      isolationStrategy: IsolationStrategy.Tenant
+    });
     const destinationRequest = getDestination('FINAL-DESTINATION', {
       useCache: true,
-      isolationStrategy: IsolationStrategy.User
+      isolationStrategy: IsolationStrategy.Tenant_User
     });
     await expect(destinationRequest).rejects.toThrowErrorMatchingSnapshot();
   });

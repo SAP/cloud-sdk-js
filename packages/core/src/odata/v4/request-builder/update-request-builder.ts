@@ -11,7 +11,7 @@ import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
-} from '../../../scp-cf/destination-service-types';
+} from '../../../scp-cf/destination/destination-service-types';
 import { oDataUriV4 } from '../uri-conversion';
 import { extractEtagFromHeader } from '../../common/entity-deserializer';
 import { extractODataEtagV4 } from '../extract-odata-etag';

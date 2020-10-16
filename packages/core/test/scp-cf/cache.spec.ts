@@ -1,12 +1,12 @@
 import { install } from '@sinonjs/fake-timers';
 import {
   AuthenticationType,
+  Cache,
   ClientCredentialsResponse,
   clientCredentialsTokenCache,
   Destination,
   destinationCache
 } from '../../src/scp-cf';
-import { Cache } from '../../src/scp-cf/cache';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',

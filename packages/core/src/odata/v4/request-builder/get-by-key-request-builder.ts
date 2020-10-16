@@ -11,7 +11,7 @@ import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
-} from '../../../scp-cf/destination-service-types';
+} from '../../../scp-cf/destination/destination-service-types';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../../common/request/odata-get-by-key-request-config';
 import { Expandable } from '../../common/expandable';

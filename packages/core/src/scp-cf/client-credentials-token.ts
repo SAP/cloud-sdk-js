@@ -1,4 +1,4 @@
-import { Destination } from './destination-service-types';
+import { Destination } from './destination/destination-service-types';
 import { clientCredentialsGrant } from './xsuaa-service';
 import {
   ClientCredentials,

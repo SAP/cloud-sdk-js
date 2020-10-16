@@ -41,7 +41,7 @@ var TestEntityLvl3MultiLink = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `TestEntityLvl3MultiLink`.
+     * Returns an entity builder to construct instances of `TestEntityLvl3MultiLink`.
      * @returns A builder that constructs instances of entity type `TestEntityLvl3MultiLink`.
      */
     TestEntityLvl3MultiLink.builder = function () {

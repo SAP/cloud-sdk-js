@@ -29,7 +29,7 @@ export class TestEntityEndsWithSomethingElse extends EntityV2 implements TestEnt
   keyProperty!: string;
 
   /**
-   * Returns an entity builder to construct instances `TestEntityEndsWithSomethingElse`.
+   * Returns an entity builder to construct instances of `TestEntityEndsWithSomethingElse`.
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
   static builder(): EntityBuilderType<TestEntityEndsWithSomethingElse, TestEntityEndsWithSomethingElseType> {

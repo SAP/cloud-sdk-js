@@ -41,7 +41,7 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `TestEntityCircularLinkParent`.
+     * Returns an entity builder to construct instances of `TestEntityCircularLinkParent`.
      * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
      */
     TestEntityCircularLinkParent.builder = function () {

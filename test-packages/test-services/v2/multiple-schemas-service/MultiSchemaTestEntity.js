@@ -41,7 +41,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `MultiSchemaTestEntity`.
+     * Returns an entity builder to construct instances of `MultiSchemaTestEntity`.
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
     MultiSchemaTestEntity.builder = function () {

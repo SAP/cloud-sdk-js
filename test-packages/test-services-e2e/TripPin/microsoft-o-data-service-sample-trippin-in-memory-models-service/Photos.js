@@ -41,7 +41,7 @@ var Photos = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `Photos`.
+     * Returns an entity builder to construct instances of `Photos`.
      * @returns A builder that constructs instances of entity type `Photos`.
      */
     Photos.builder = function () {

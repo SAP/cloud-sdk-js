@@ -1,4 +1,9 @@
-import { createLogger, errorWithCause, isNullish, pipe } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  errorWithCause,
+  isNullish,
+  pipe
+} from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,

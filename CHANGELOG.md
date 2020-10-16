@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- Remove the `rambda` library to save  approx 2MB or 10% of the SDK size.
 
 ## Fixed Issues
 

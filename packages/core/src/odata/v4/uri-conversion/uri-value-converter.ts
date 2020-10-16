@@ -1,5 +1,6 @@
 /* eslint-disable valid-jsdoc */
 
+import { identity } from '@sap-cloud-sdk/util';
 import { tsToEdmV4 } from '../payload-value-converter';
 import { EdmTypeShared, UriConverter } from '../../common';
 import {
@@ -7,7 +8,6 @@ import {
   uriConvertersCommon
 } from '../../common/uri-conversion/uri-value-converter';
 import { EdmTypeV4 } from '../edm-types';
-import { identity } from '@sap-cloud-sdk/util';
 
 type UriConverterMapping = { [key in EdmTypeV4]: (value: any) => string };
 /**

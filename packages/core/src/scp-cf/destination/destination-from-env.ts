@@ -31,10 +31,10 @@ export function getDestinationsFromEnv(): Destination[] {
     let destinations;
     try {
       destinations = JSON.parse(destinationsEnv);
-    } catch (e) {
+    } catch (err) {
       throw errorWithCause(
         'Error in parsing the destinations from the environment variable.',
-        e
+        err
       );
     }
     validateDestinations(destinations);

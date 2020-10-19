@@ -2,8 +2,8 @@
 
 import { PathLike } from 'fs';
 import { join, resolve } from 'path';
-import { toPascalCase, toPropertyFormat } from '@sap-cloud-sdk/core';
-import { caps, createLogger, last, ODataVersion } from '@sap-cloud-sdk/util';
+import { toPascalCase } from '@sap-cloud-sdk/core';
+import { createLogger } from '@sap-cloud-sdk/util';
 import execa from 'execa';
 import {
   existsSync,

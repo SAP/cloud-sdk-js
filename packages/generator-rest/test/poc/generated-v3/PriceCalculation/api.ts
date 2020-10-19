@@ -30,49 +30,49 @@ export interface ARTSCommonHeaderType {
      * @type {MessageID}
      * @memberof ARTSCommonHeaderType
      */
-    messageID: MessageID;
+    MessageID: MessageID;
     /**
      * The date and time when the request was created. Although this is an array, only 1 entry is allowed.
      * @type {Array<HeaderDateTime>}
      * @memberof ARTSCommonHeaderType
      */
-    dateTime?: Array<HeaderDateTime>;
+    DateTime?: Array<HeaderDateTime>;
     /**
      * 
      * @type {Response}
      * @memberof ARTSCommonHeaderType
      */
-    response?: Response;
+    Response?: Response;
     /**
      * Identifies the agent which sent this message.
      * @type {string}
      * @memberof ARTSCommonHeaderType
      */
-    requestor?: string;
+    Requestor?: string;
     /**
      * Business unit for which prices and promotions should be determined. Although this is an array, only 1 entry is allowed.
      * @type {Array<BusinessUnitCommonData>}
      * @memberof ARTSCommonHeaderType
      */
-    businessUnit: Array<BusinessUnitCommonData>;
+    BusinessUnit: Array<BusinessUnitCommonData>;
     /**
      * 
      * @type {WorkstationIDCommonData}
      * @memberof ARTSCommonHeaderType
      */
-    workstationID?: WorkstationIDCommonData;
+    WorkstationID?: WorkstationIDCommonData;
     /**
      * Uppercase ISO code of the language in which language-dependent texts like a promotion description should be returned. Uppercase representation. RequestedLanguage is not applied in conjunction with RequestedMultiLanguage. If not set, any language found will be used with Client API version 1.0. As of Client API version 2.0, use RequestedMultiLanguage instead. 
      * @type {string}
      * @memberof ARTSCommonHeaderType
      */
-    requestedLanguage?: string;
+    RequestedLanguage?: string;
     /**
      * Uppercase ISO codes of the languages in which language dependent-texts like a promotion description should be returned. Not to be used in conjunction with RequestedLanguage. Requires at least API version 2.0. If not set, all languages found will be used.
      * @type {Array<string>}
      * @memberof ARTSCommonHeaderType
      */
-    requestedMultiLanguage?: Array<string>;
+    RequestedMultiLanguage?: Array<string>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -84,19 +84,19 @@ export interface ARTSCommonHeaderType {
      * @type {string}
      * @memberof ARTSCommonHeaderType
      */
-    masterDataSourceSystemID: string;
+    MasterDataSourceSystemID: string;
     /**
      * Describes what to do with the provided data.
      * @type {string}
      * @memberof ARTSCommonHeaderType
      */
-    actionCode: ARTSCommonHeaderTypeActionCodeEnum;
+    ActionCode: ARTSCommonHeaderTypeActionCodeEnum;
     /**
      * Defines whether this is a calculation request or a calculation response if the consumer only sends type \"Request\".
      * @type {string}
      * @memberof ARTSCommonHeaderType
      */
-    messageType: ARTSCommonHeaderTypeMessageTypeEnum;
+    MessageType: ARTSCommonHeaderTypeMessageTypeEnum;
 }
 
 /**
@@ -132,13 +132,13 @@ export interface Amount {
      * @type {string}
      * @memberof Amount
      */
-    currency?: string;
+    Currency?: string;
     /**
      * 
      * @type {string}
      * @memberof Amount
      */
-    action: AmountActionEnum;
+    Action: AmountActionEnum;
 }
 
 /**
@@ -167,7 +167,7 @@ export interface AmountCommonData {
      * @type {string}
      * @memberof AmountCommonData
      */
-    currency?: string;
+    Currency?: string;
 }
 /**
  * Additional information for the consumer about issues during the price calculation.
@@ -186,19 +186,19 @@ export interface BusinessError {
      * @type {string}
      * @memberof BusinessError
      */
-    errorID?: string;
+    ErrorID?: string;
     /**
      * 
      * @type {DescriptionCommonData}
      * @memberof BusinessError
      */
-    description?: DescriptionCommonData;
+    Description?: DescriptionCommonData;
     /**
      * Issues with severity error or higher lead to an HTTP response code 400.
      * @type {string}
      * @memberof BusinessError
      */
-    severity?: BusinessErrorSeverityEnum;
+    Severity?: BusinessErrorSeverityEnum;
 }
 
 /**
@@ -228,7 +228,7 @@ export interface BusinessUnitCommonData {
      * @type {string}
      * @memberof BusinessUnitCommonData
      */
-    typeCode?: BusinessUnitCommonDataTypeCodeEnum;
+    TypeCode?: BusinessUnitCommonDataTypeCodeEnum;
 }
 
 /**
@@ -260,121 +260,121 @@ export interface CustomerOrderForDeliveryBase {
      * @type {Array<ItemID>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * For information purposes only. The relevant list of hierarchy nodes is expected on the level of LineItemDomainSpecific.
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof CustomerOrderForDeliveryBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof CustomerOrderForDeliveryBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof CustomerOrderForDeliveryBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * The quantity of this line item. Although this is an array, only 1 entry is allowed.
      * @type {Array<QuantityCommonData>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * The list of modifiers of the sales price triggered by applied price derivation rules.
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * Reserved for future use.
      * @type {Array<ItemLink>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * Reserved for future use.
      * @type {string}
      * @memberof CustomerOrderForDeliveryBase
      */
-    itemType?: CustomerOrderForDeliveryBaseItemTypeEnum;
+    ItemType?: CustomerOrderForDeliveryBaseItemTypeEnum;
     /**
      * Specifies whether this line item may be discounted or not. If set to true, the line item may still be used as an eligibility for promotions. However, such an item does not contribute to fulfill the amount or quantity threshold that is needed for a promotion to become effective. 
      * @type {boolean}
      * @memberof CustomerOrderForDeliveryBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * If set to true, the price calculation uses the provided value of RegularSalesUnitPrice as regular price and does not perform a price lookup for this line item.
      * @type {boolean}
      * @memberof CustomerOrderForDeliveryBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * Reserved for future use.
      * @type {boolean}
      * @memberof CustomerOrderForDeliveryBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * Set this flag to true, if the specified quantity has a different dimension than \"piece\", for example, if fractional quantities are possible.
      * @type {boolean}
      * @memberof CustomerOrderForDeliveryBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * Set this flag to true if the corresponding line item is eligible for receiving loyalty points.
      * @type {boolean}
      * @memberof CustomerOrderForDeliveryBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * Reserved for future use.
      * @type {string}
      * @memberof CustomerOrderForDeliveryBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * Reserved for future use. Value 00 corresponds to \"regular price\".
      * @type {string}
      * @memberof CustomerOrderForDeliveryBase
      */
-    priceTypeCode?: CustomerOrderForDeliveryBasePriceTypeCodeEnum;
+    PriceTypeCode?: CustomerOrderForDeliveryBasePriceTypeCodeEnum;
     /**
      * Determines if the price calculation should consider the line item as a trigger. This information is needed if another process (e.g. a return regarding to an existing transaction) applies rules for the line item that should not be applied. Assuming that the line item is discountable in general, the line item does not trigger a line-item-releated price derivation rule, get discount or get bonus points, if you set this flag to true. However, it can do so for a transaction-related price derivation rule. 
      * @type {boolean}
      * @memberof CustomerOrderForDeliveryBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * The list of modifiers for loyalty points determined by applied price rules.
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * The list of promotions for which the corresponding line item contributed as an eligibility.
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * Manual triggers created by the client in order to make the transaction eligible for promotions that contain eligibilities of type manual trigger.
      * @type {Array<PromotionManualTriggerType>}
      * @memberof CustomerOrderForDeliveryBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 
 /**
@@ -411,121 +411,121 @@ export interface CustomerOrderForPickupBase {
      * @type {Array<ItemID>}
      * @memberof CustomerOrderForPickupBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * 
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof CustomerOrderForPickupBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof CustomerOrderForPickupBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof CustomerOrderForPickupBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof CustomerOrderForPickupBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * 
      * @type {Array<QuantityCommonData>}
      * @memberof CustomerOrderForPickupBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * 
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof CustomerOrderForPickupBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * 
      * @type {Array<ItemLink>}
      * @memberof CustomerOrderForPickupBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * 
      * @type {string}
      * @memberof CustomerOrderForPickupBase
      */
-    itemType?: string;
+    ItemType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof CustomerOrderForPickupBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof CustomerOrderForPickupBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof CustomerOrderForPickupBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof CustomerOrderForPickupBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof CustomerOrderForPickupBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * 
      * @type {string}
      * @memberof CustomerOrderForPickupBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * 
      * @type {string}
      * @memberof CustomerOrderForPickupBase
      */
-    priceTypeCode?: string;
+    PriceTypeCode?: string;
     /**
      * 
      * @type {boolean}
      * @memberof CustomerOrderForPickupBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * 
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof CustomerOrderForPickupBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * 
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof CustomerOrderForPickupBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * 
      * @type {Array<PromotionManualTriggerType>}
      * @memberof CustomerOrderForPickupBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 /**
  * When used as pricing date, time zones are not considered.
@@ -557,7 +557,7 @@ export interface DescriptionCommonData {
      * @type {string}
      * @memberof DescriptionCommonData
      */
-    language?: string;
+    Language?: string;
 }
 /**
  * Generated during the price calculation as a separate line item.
@@ -570,7 +570,7 @@ export interface DiscountBase {
      * @type {Array<PriceDerivationRuleBase>}
      * @memberof DiscountBase
      */
-    priceDerivationRule: Array<PriceDerivationRuleBase>;
+    PriceDerivationRule: Array<PriceDerivationRuleBase>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -582,85 +582,85 @@ export interface DiscountBase {
      * @type {number}
      * @memberof DiscountBase
      */
-    manualTriggerSequenceNumber?: number;
+    ManualTriggerSequenceNumber?: number;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof DiscountBase
      */
-    extraAmount?: AmountCommonData;
+    ExtraAmount?: AmountCommonData;
     /**
      * Determines if this discount was created by an external system. If yes, it must not be changed, but its own modifications with higher sequence may be applied. Default value is false. 
      * @type {boolean}
      * @memberof DiscountBase
      */
-    externalSystemOriginatorFlag?: boolean;
+    ExternalSystemOriginatorFlag?: boolean;
     /**
      * Identifies this retail price modifier in the corresponding line item.
      * @type {number}
      * @memberof DiscountBase
      */
-    sequenceNumber: number;
+    SequenceNumber: number;
     /**
      * 
      * @type {Amount}
      * @memberof DiscountBase
      */
-    amount?: Amount;
+    Amount?: Amount;
     /**
      * 
      * @type {Percent}
      * @memberof DiscountBase
      */
-    percent?: Percent;
+    Percent?: Percent;
     /**
      * 
      * @type {PreviousPrice}
      * @memberof DiscountBase
      */
-    previousPrice?: PreviousPrice;
+    PreviousPrice?: PreviousPrice;
     /**
      * 
      * @type {NewPrice}
      * @memberof DiscountBase
      */
-    newPrice?: NewPrice;
+    NewPrice?: NewPrice;
     /**
      * 
      * @type {PromotionID}
      * @memberof DiscountBase
      */
-    promotionID?: PromotionID;
+    PromotionID?: PromotionID;
     /**
      * The link to the discount line item that triggered the creation of this RetailPriceModifier in order to keep the prorated transaction-related discount for the current line item. Is not used in the context of the modification of the price of a single line item (item-related discount). Although this is an array, it contains at most one entry. 
      * @type {Array<number>}
      * @memberof DiscountBase
      */
-    itemLink?: Array<number>;
+    ItemLink?: Array<number>;
     /**
      * 
      * @type {QuantityCommonData}
      * @memberof DiscountBase
      */
-    quantity?: QuantityCommonData;
+    Quantity?: QuantityCommonData;
     /**
      * 
      * @type {RoundingCommonData}
      * @memberof DiscountBase
      */
-    rounding?: RoundingCommonData;
+    Rounding?: RoundingCommonData;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof DiscountBase
      */
-    computationBaseAmount?: AmountCommonData;
+    ComputationBaseAmount?: AmountCommonData;
     /**
      * Specifies whether the discount amount applies to the whole transaction or is prorated to the discountable line items of the transaction. Currently always true. 
      * @type {boolean}
      * @memberof DiscountBase
      */
-    proratedFlag?: boolean;
+    ProratedFlag?: boolean;
 }
 /**
  * The total value of this line item, considering quantity and discounts.
@@ -679,7 +679,7 @@ export interface ExtendedAmountType {
      * @type {string}
      * @memberof ExtendedAmountType
      */
-    currency?: string;
+    Currency?: string;
 }
 /**
  * Specifies the value of an external action parameter if the applied price derivation rule has type \"External Action\".
@@ -717,7 +717,7 @@ export interface ExternalActionTextType {
      * @type {string}
      * @memberof ExternalActionTextType
      */
-    language?: string;
+    Language?: string;
     /**
      * Identifies this text.
      * @type {string}
@@ -736,13 +736,13 @@ export interface ExternalActionType {
      * @type {Array<ExternalActionTextType>}
      * @memberof ExternalActionType
      */
-    text?: Array<ExternalActionTextType>;
+    Text?: Array<ExternalActionTextType>;
     /**
      * 
      * @type {Array<ExternalActionParameterType>}
      * @memberof ExternalActionType
      */
-    parameter?: Array<ExternalActionParameterType>;
+    Parameter?: Array<ExternalActionParameterType>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -767,43 +767,43 @@ export interface FrequentShopperPointsModifierType {
      * @type {string}
      * @memberof FrequentShopperPointsModifierType
      */
-    promotionID: string;
+    PromotionID: string;
     /**
      * The number of points awarded by the line item.
      * @type {Array<PointsAwarded>}
      * @memberof FrequentShopperPointsModifierType
      */
-    pointsAwarded?: Array<PointsAwarded>;
+    PointsAwarded?: Array<PointsAwarded>;
     /**
      * The sequence number for the trigger to be assigned to a single LoyaltyReward. It references the ManualTriggerSequenceNumber of PromotionManualTriggerType that triggered this reward. 
      * @type {number}
      * @memberof FrequentShopperPointsModifierType
      */
-    manualTriggerSequenceNumber?: number;
+    ManualTriggerSequenceNumber?: number;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof FrequentShopperPointsModifierType
      */
-    pointsAwardedAmount?: AmountCommonData;
+    PointsAwardedAmount?: AmountCommonData;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof FrequentShopperPointsModifierType
      */
-    computationBaseAmount?: AmountCommonData;
+    ComputationBaseAmount?: AmountCommonData;
     /**
      * Determines if this LoyaltyReward was created by an external system. If yes, it must not be changed, but its own modifications with higher sequence may be applied. 
      * @type {boolean}
      * @memberof FrequentShopperPointsModifierType
      */
-    externalSystemOriginatorFlag?: boolean;
+    ExternalSystemOriginatorFlag?: boolean;
     /**
      * 
      * @type {PriceDerivationRuleBase}
      * @memberof FrequentShopperPointsModifierType
      */
-    priceDerivationRule?: PriceDerivationRuleBase;
+    PriceDerivationRule?: PriceDerivationRuleBase;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -815,25 +815,25 @@ export interface FrequentShopperPointsModifierType {
      * @type {string}
      * @memberof FrequentShopperPointsModifierType
      */
-    typeCode?: FrequentShopperPointsModifierTypeTypeCodeEnum;
+    TypeCode?: FrequentShopperPointsModifierTypeTypeCodeEnum;
     /**
      * Identifies this loyalty points modifier in the current line item.
      * @type {number}
      * @memberof FrequentShopperPointsModifierType
      */
-    sequenceNumber: number;
+    SequenceNumber: number;
     /**
      * The line item quantity contributing to this modifier.
      * @type {number}
      * @memberof FrequentShopperPointsModifierType
      */
-    appliedQuantity?: number;
+    AppliedQuantity?: number;
     /**
      * Link to the LoyaltyReward line item that forced the creation of this FrequentShopperPointsPriceModifier in order to keep the share of the prorated transaction-related points for the current line item. It is not used in the context of modifying points for a dedicated line item. 
      * @type {number}
      * @memberof FrequentShopperPointsModifierType
      */
-    itemLink?: number;
+    ItemLink?: number;
 }
 
 /**
@@ -913,91 +913,91 @@ export interface LineItemDomainSpecific {
      * @type {SaleBase}
      * @memberof LineItemDomainSpecific
      */
-    sale?: SaleBase;
+    Sale?: SaleBase;
     /**
      * 
      * @type {SaleForDeliveryBase}
      * @memberof LineItemDomainSpecific
      */
-    saleForDelivery?: SaleForDeliveryBase;
+    SaleForDelivery?: SaleForDeliveryBase;
     /**
      * 
      * @type {SaleForPickupBase}
      * @memberof LineItemDomainSpecific
      */
-    saleForPickup?: SaleForPickupBase;
+    SaleForPickup?: SaleForPickupBase;
     /**
      * 
      * @type {ReturnBase}
      * @memberof LineItemDomainSpecific
      */
-    _return?: ReturnBase;
+    Return?: ReturnBase;
     /**
      * 
      * @type {ReturnForDeliveryBase}
      * @memberof LineItemDomainSpecific
      */
-    returnForDelivery?: ReturnForDeliveryBase;
+    ReturnForDelivery?: ReturnForDeliveryBase;
     /**
      * 
      * @type {ReturnForPickupBase}
      * @memberof LineItemDomainSpecific
      */
-    returnForPickup?: ReturnForPickupBase;
+    ReturnForPickup?: ReturnForPickupBase;
     /**
      * 
      * @type {CustomerOrderForDeliveryBase}
      * @memberof LineItemDomainSpecific
      */
-    customerOrderForDelivery?: CustomerOrderForDeliveryBase;
+    CustomerOrderForDelivery?: CustomerOrderForDeliveryBase;
     /**
      * 
      * @type {CustomerOrderForPickupBase}
      * @memberof LineItemDomainSpecific
      */
-    customerOrderForPickup?: CustomerOrderForPickupBase;
+    CustomerOrderForPickup?: CustomerOrderForPickupBase;
     /**
      * 
      * @type {DiscountBase}
      * @memberof LineItemDomainSpecific
      */
-    discount?: DiscountBase;
+    Discount?: DiscountBase;
     /**
      * 
      * @type {LoyaltyRewardBase}
      * @memberof LineItemDomainSpecific
      */
-    loyaltyReward?: LoyaltyRewardBase;
+    LoyaltyReward?: LoyaltyRewardBase;
     /**
      * 
      * @type {TenderCouponBase}
      * @memberof LineItemDomainSpecific
      */
-    coupon?: TenderCouponBase;
+    Coupon?: TenderCouponBase;
     /**
      * 
      * @type {PromotionManualTriggerType}
      * @memberof LineItemDomainSpecific
      */
-    promotionManualTrigger?: PromotionManualTriggerType;
+    PromotionManualTrigger?: PromotionManualTriggerType;
     /**
      * 
      * @type {PromotionExternalTriggerType}
      * @memberof LineItemDomainSpecific
      */
-    promotionExternalTrigger?: PromotionExternalTriggerType;
+    PromotionExternalTrigger?: PromotionExternalTriggerType;
     /**
      * Identifies the line item. Although this is an array, exactly 1 entry is required.
      * @type {Array<number>}
      * @memberof LineItemDomainSpecific
      */
-    sequenceNumber?: Array<number>;
+    SequenceNumber?: Array<number>;
     /**
      * This information is taken for checking eligibilities on item hierarchy level.
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof LineItemDomainSpecific
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
 }
 /**
  * 
@@ -1010,19 +1010,19 @@ export interface LoyaltyAccountCommonData {
      * @type {string}
      * @memberof LoyaltyAccountCommonData
      */
-    customerID?: string;
+    CustomerID?: string;
     /**
      * List of loyalty programs to which this customer is assigned for this loyalty account.
      * @type {Array<LoyaltyAccountType>}
      * @memberof LoyaltyAccountCommonData
      */
-    loyaltyProgram?: Array<LoyaltyAccountType>;
+    LoyaltyProgram?: Array<LoyaltyAccountType>;
     /**
      * Indicates if the specified customer is also an employee. Currently not used.
      * @type {boolean}
      * @memberof LoyaltyAccountCommonData
      */
-    customerIsEmployeeFlag?: boolean;
+    CustomerIsEmployeeFlag?: boolean;
 }
 /**
  * 
@@ -1035,7 +1035,7 @@ export interface LoyaltyAccountType {
      * @type {Array<LoyaltyProgramIDType>}
      * @memberof LoyaltyAccountType
      */
-    loyaltyProgramID?: Array<LoyaltyProgramIDType>;
+    LoyaltyProgramID?: Array<LoyaltyProgramIDType>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1067,43 +1067,43 @@ export interface LoyaltyRewardBase {
      * @type {string}
      * @memberof LoyaltyRewardBase
      */
-    promotionID: string;
+    PromotionID: string;
     /**
      * The number of points awarded by the line item.
      * @type {Array<PointsAwarded>}
      * @memberof LoyaltyRewardBase
      */
-    pointsAwarded?: Array<PointsAwarded>;
+    PointsAwarded?: Array<PointsAwarded>;
     /**
      * The sequence number for the trigger to be assigned to a single LoyaltyReward. It references the ManualTriggerSequenceNumber of PromotionManualTriggerType that triggered this reward. 
      * @type {number}
      * @memberof LoyaltyRewardBase
      */
-    manualTriggerSequenceNumber?: number;
+    ManualTriggerSequenceNumber?: number;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof LoyaltyRewardBase
      */
-    pointsAwardedAmount?: AmountCommonData;
+    PointsAwardedAmount?: AmountCommonData;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof LoyaltyRewardBase
      */
-    computationBaseAmount?: AmountCommonData;
+    ComputationBaseAmount?: AmountCommonData;
     /**
      * Determines if this LoyaltyReward was created by an external system. If yes, it must not be changed, but its own modifications with higher sequence may be applied. 
      * @type {boolean}
      * @memberof LoyaltyRewardBase
      */
-    externalSystemOriginatorFlag?: boolean;
+    ExternalSystemOriginatorFlag?: boolean;
     /**
      * 
      * @type {PriceDerivationRuleBase}
      * @memberof LoyaltyRewardBase
      */
-    priceDerivationRule?: PriceDerivationRuleBase;
+    PriceDerivationRule?: PriceDerivationRuleBase;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1115,7 +1115,7 @@ export interface LoyaltyRewardBase {
      * @type {string}
      * @memberof LoyaltyRewardBase
      */
-    typeCode?: LoyaltyRewardBaseTypeCodeEnum;
+    TypeCode?: LoyaltyRewardBaseTypeCodeEnum;
 }
 
 /**
@@ -1175,7 +1175,7 @@ export interface MonetaryAmountCommonData {
      * @type {string}
      * @memberof MonetaryAmountCommonData
      */
-    currency?: string;
+    Currency?: string;
 }
 /**
  * The price of the line item after the price derivation rule was applied.
@@ -1194,7 +1194,7 @@ export interface NewPrice {
      * @type {string}
      * @memberof NewPrice
      */
-    currency?: string;
+    Currency?: string;
 }
 /**
  * Percentage discount and the action how it was applied.
@@ -1213,7 +1213,7 @@ export interface Percent {
      * @type {string}
      * @memberof Percent
      */
-    action: PercentActionEnum;
+    Action: PercentActionEnum;
 }
 
 /**
@@ -1242,7 +1242,7 @@ export interface PointsAwarded {
      * @type {string}
      * @memberof PointsAwarded
      */
-    type?: PointsAwardedTypeEnum;
+    Type?: PointsAwardedTypeEnum;
 }
 
 /**
@@ -1270,7 +1270,7 @@ export interface PreviousPrice {
      * @type {string}
      * @memberof PreviousPrice
      */
-    currency?: string;
+    Currency?: string;
 }
 /**
  * Request sent by the client. Contains all relevant information for the price calculation.
@@ -1283,13 +1283,13 @@ export interface PriceCalculate {
      * @type {ARTSCommonHeaderType}
      * @memberof PriceCalculate
      */
-    aRTSHeader: ARTSCommonHeaderType;
+    ARTSHeader: ARTSCommonHeaderType;
     /**
      * Contains the items for which a price calculation should be performed and additional information about how it is performed.
      * @type {Array<PriceCalculateBase>}
      * @memberof PriceCalculate
      */
-    priceCalculateBody: Array<PriceCalculateBase>;
+    PriceCalculateBody: Array<PriceCalculateBase>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1301,13 +1301,13 @@ export interface PriceCalculate {
      * @type {number}
      * @memberof PriceCalculate
      */
-    internalMajorVersion: number;
+    InternalMajorVersion: number;
     /**
      * Minor version of the Client API version to be used. For Client API version X.Y, this field corresponds to the Y part.
      * @type {number}
      * @memberof PriceCalculate
      */
-    internalMinorVersion?: number;
+    InternalMinorVersion?: number;
 }
 /**
  * Contains relevant information for the price calculation like the items, date and time, and more.
@@ -1320,31 +1320,31 @@ export interface PriceCalculateBase {
      * @type {IDCommonData}
      * @memberof PriceCalculateBase
      */
-    transactionID?: IDCommonData;
+    TransactionID?: IDCommonData;
     /**
      * 
      * @type {DateTimeCommonData}
      * @memberof PriceCalculateBase
      */
-    dateTime?: DateTimeCommonData;
+    DateTime?: DateTimeCommonData;
     /**
      * Refers to the end customer.
      * @type {Array<LoyaltyAccountCommonData>}
      * @memberof PriceCalculateBase
      */
-    loyalty?: Array<LoyaltyAccountCommonData>;
+    Loyalty?: Array<LoyaltyAccountCommonData>;
     /**
      * 
      * @type {ShoppingBasketBase}
      * @memberof PriceCalculateBase
      */
-    shoppingBasket: ShoppingBasketBase;
+    ShoppingBasket: ShoppingBasketBase;
     /**
      * 
      * @type {RoundingRuleType}
      * @memberof PriceCalculateBase
      */
-    regularSalesUnitPriceRoundingRule?: RoundingRuleType;
+    RegularSalesUnitPriceRoundingRule?: RoundingRuleType;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1356,25 +1356,25 @@ export interface PriceCalculateBase {
      * @type {string}
      * @memberof PriceCalculateBase
      */
-    transactionType?: PriceCalculateBaseTransactionTypeEnum;
+    TransactionType?: PriceCalculateBaseTransactionTypeEnum;
     /**
      * If set to true, the net regular prices are used for the price calculation. Otherwise, the gross prices are considered.
      * @type {boolean}
      * @memberof PriceCalculateBase
      */
-    netPriceFlag: boolean;
+    NetPriceFlag: boolean;
     /**
      * Controls if the items of the ShoppingBasket element are considered as part of a shared basket (\"Basket\") or if they are treated as separate items (\"LineItem\"). If not specified, \"Basket\" is used as default. 
      * @type {string}
      * @memberof PriceCalculateBase
      */
-    calculationMode?: PriceCalculateBaseCalculationModeEnum;
+    CalculationMode?: PriceCalculateBaseCalculationModeEnum;
     /**
      * Controls which price derivation rules are used for the price calculation. This is defined by the transaction control break code/price rule control code and the point in time for the application of price derivation rules (immediately or after subtotal).  For the calculation scheme type \'CalcAll\', all transaction control break codes/price rule control codes can be applied (PC, PO, SP, SU). For the calculation scheme type \"CalcForItem\", only rules with transaction control break code/price rule control code PO and SP can be applied. If not specified, \"CalcAll\" is used as default. The calculation scheme is available as of version 4.0. 
      * @type {string}
      * @memberof PriceCalculateBase
      */
-    calculationScheme?: PriceCalculateBaseCalculationSchemeEnum;
+    CalculationScheme?: PriceCalculateBaseCalculationSchemeEnum;
 }
 
 /**
@@ -1412,13 +1412,13 @@ export interface PriceCalculateResponse {
      * @type {ARTSCommonHeaderType}
      * @memberof PriceCalculateResponse
      */
-    aRTSHeader?: ARTSCommonHeaderType;
+    ARTSHeader?: ARTSCommonHeaderType;
     /**
      * Contains the items for which a price calculation should be performed and additional information about how the it is performed.
      * @type {Array<PriceCalculateBase>}
      * @memberof PriceCalculateResponse
      */
-    priceCalculateBody?: Array<PriceCalculateBase>;
+    PriceCalculateBody?: Array<PriceCalculateBase>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1430,13 +1430,13 @@ export interface PriceCalculateResponse {
      * @type {number}
      * @memberof PriceCalculateResponse
      */
-    internalMajorVersion: number;
+    InternalMajorVersion: number;
     /**
      * The same value as contained in the request.
      * @type {number}
      * @memberof PriceCalculateResponse
      */
-    internalMinorVersion?: number;
+    InternalMinorVersion?: number;
 }
 /**
  * Contains information of an applied price derivation rule.
@@ -1449,13 +1449,13 @@ export interface PriceDerivationRuleBase {
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    priceDerivationRuleID: string;
+    PriceDerivationRuleID: string;
     /**
      * Only relevant for of coupon eligibilities. Each coupon that is used results in a separate eligibility element.
      * @type {Array<PriceDerivationRuleEligibility>}
      * @memberof PriceDerivationRuleBase
      */
-    eligibility?: Array<PriceDerivationRuleEligibility>;
+    Eligibility?: Array<PriceDerivationRuleEligibility>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1467,211 +1467,211 @@ export interface PriceDerivationRuleBase {
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    promotionDescription?: string;
+    PromotionDescription?: string;
     /**
      * Promotion descriptions in the languages requested by the client via RequestedMultiLanguage in the ARTSHeader. Only provided with Client API version 2.0 or higher.
      * @type {Array<DescriptionCommonData>}
      * @memberof PriceDerivationRuleBase
      */
-    promotionDescriptionMultiLanguage?: Array<DescriptionCommonData>;
+    PromotionDescriptionMultiLanguage?: Array<DescriptionCommonData>;
     /**
      * This is specified in the promotion master data and controls in which order rules are applied. Line-item-related price derivation rules and transaction-related price derivation rules are treated independently (all line-item-related promotions are applied first). 
      * @type {number}
      * @memberof PriceDerivationRuleBase
      */
-    promotionPriceDerivationRuleSequence?: number;
+    PromotionPriceDerivationRuleSequence?: number;
     /**
      * This is specified in the promotion master data and controls which rule is applied if several rules have the same sequence value. If there are price derivation rules with an identical sequence number and identical highest resolution, the service tries to perform a best-price calculation. It is not guaranteed that this will succeed. 
      * @type {number}
      * @memberof PriceDerivationRuleBase
      */
-    promotionPriceDerivationRuleResolution?: number;
+    PromotionPriceDerivationRuleResolution?: number;
     /**
      * Holds the condition type if this promotion discount should be mapped into an SAP ERP or SAP S/4 HANA condition record.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    promotionPriceDerivationRuleTypeCode?: string;
+    PromotionPriceDerivationRuleTypeCode?: string;
     /**
      * Indicates whether this is a line-item-related price derivation rule (PO/PC) or a transaction-related price derivation rule (SU/SP).
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    transactionControlBreakCode?: PriceDerivationRuleBaseTransactionControlBreakCodeEnum;
+    TransactionControlBreakCode?: PriceDerivationRuleBaseTransactionControlBreakCodeEnum;
     /**
      * Reserved for future use.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    priceDerivationRuleDescription?: string;
+    PriceDerivationRuleDescription?: string;
     /**
      * Contains information about the origin of the promotion as specifed in the promotion master data.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    promotionOriginatorTypeCode?: string;
+    PromotionOriginatorTypeCode?: string;
     /**
      * The total quantity that needs to be purchased in order to trigger the price derivation rule.
      * @type {number}
      * @memberof PriceDerivationRuleBase
      */
-    triggerQuantity?: number;
+    TriggerQuantity?: number;
     /**
      * Determines how the discount impacts the calculation of the transaction. Possible values are: 00 - The discount reduces the transaction total. 01 - The discount does not influence the transaction total or the amount that the customer has to pay. However, the customer gets a gift certificate for the discount amount that he can use to pay for the next purchase. 02 - The discount is used as a tender for the current transaction, for example it reduces the remaining amount that the customer has to pay. 03 - The discount reduces the transaction total but is counterbalanced by some gift certificate sale. 04 - A coupon is given to the customer instead of a discount. Transaction total is not reduced. 
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    discountMethodCode?: string;
+    DiscountMethodCode?: string;
     /**
      * Determines whether a discount (false) or loyalty points (true) are granted by the price derivation rule
      * @type {boolean}
      * @memberof PriceDerivationRuleBase
      */
-    frequentShopperPointsFlag?: boolean;
+    FrequentShopperPointsFlag?: boolean;
     /**
      * Reserved for future use.
      * @type {number}
      * @memberof PriceDerivationRuleBase
      */
-    customerGroupLoyaltyPointsDefaultQuantity?: number;
+    CustomerGroupLoyaltyPointsDefaultQuantity?: number;
     /**
      * Determines if the result of the applied price derivation rule is to be suppressed on displays and accordingly not printed on the receipt. If this element is missing in the request, the default value is set to false and the applied price derivation is printed on the receipt. 
      * @type {boolean}
      * @memberof PriceDerivationRuleBase
      */
-    prohibitPrintFlag?: boolean;
+    ProhibitPrintFlag?: boolean;
     /**
      * Type code of the tender. This value is needed only for DiscountMethodCode = 02.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    tenderTypeCode?: string;
+    TenderTypeCode?: string;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof PriceDerivationRuleBase
      */
-    pointsConversionAmount?: AmountCommonData;
+    PointsConversionAmount?: AmountCommonData;
     /**
      * Determines whether applying this price derivation rule influences the calculation base of subsequent price derivation rules (false) or not (true). This is only relevant for line-item-related monetary price derivation rules. 
      * @type {boolean}
      * @memberof PriceDerivationRuleBase
      */
-    noEffectOnSubsequentPriceDerivationRulesFlag?: boolean;
+    NoEffectOnSubsequentPriceDerivationRulesFlag?: boolean;
     /**
      * Determines whether applying this price derivation rule influences the calculation base of subsequent transaction-related price derivation rules (false) or not (true). This is only relevant for line-item-related monetary price derivation rules. 
      * @type {boolean}
      * @memberof PriceDerivationRuleBase
      */
-    prohibitTransactionRelatedPriceDerivationRulesFlag?: boolean;
+    ProhibitTransactionRelatedPriceDerivationRulesFlag?: boolean;
     /**
      * Determines whether this price derivation rule is an exclusive one. This impacts the application of further price derivation rules with a higher sequence.  
      * @type {boolean}
      * @memberof PriceDerivationRuleBase
      */
-    exclusiveFlag?: boolean;
+    ExclusiveFlag?: boolean;
     /**
      * This is currently not supported.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    concurrenceControlVector?: string;
+    ConcurrenceControlVector?: string;
     /**
      * Describes how often the current price derivation rule was applied.
      * @type {number}
      * @memberof PriceDerivationRuleBase
      */
-    appliedCount?: number;
+    AppliedCount?: number;
     /**
      * Exists for compatibility reasons with earlier versions of the Client API (1.0). As of Client API 2.0, use ReceiptLineMultiLanguage instead of ReceiptLine.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    receiptLine?: string;
+    ReceiptLine?: string;
     /**
      * The texts to be printed on the receipt in the languages requested by the client via RequestedMultiLanguage in the ARTSHeader. Only provided with Client API version 2.0 or higher.
      * @type {Array<DescriptionCommonData>}
      * @memberof PriceDerivationRuleBase
      */
-    receiptLineMultiLanguage?: Array<DescriptionCommonData>;
+    ReceiptLineMultiLanguage?: Array<DescriptionCommonData>;
     /**
      * Identifies an external promotion that was the origin for the corresponding OPP promotion.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    externalPromotionID?: string;
+    ExternalPromotionID?: string;
     /**
      * Decimal representation of a 64 bit integer value. Not used.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    externalPriceDerivationRuleID?: string;
+    ExternalPriceDerivationRuleID?: string;
     /**
      * The coupon number of the printout coupon. Only relevant for DiscountMethodCode = 04.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    couponPrintoutID?: string;
+    CouponPrintoutID?: string;
     /**
      * Describes how the printout of the coupon is to be done. Only relevant for DiscountMethodCode = 04. Possible values are: 00 - A separate receipt is to be printed. 01 - The coupon is to be printed at the end of the receipt of the current transaction. 
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    couponPrintoutRule?: string;
+    CouponPrintoutRule?: string;
     /**
      * The (formatted) text to be printed. Only relevant for DiscountMethodCode = 04.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    couponPrintoutText?: string;
+    CouponPrintoutText?: string;
     /**
      * Describes for how many days the coupon will be valid. Only relevant for DiscountMethodCode = 04.
      * @type {number}
      * @memberof PriceDerivationRuleBase
      */
-    printoutValidityPeriod?: number;
+    PrintoutValidityPeriod?: number;
     /**
      * Reserved for future use.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    giftCertificateExpirationDate?: string;
+    GiftCertificateExpirationDate?: string;
     /**
      * 
      * @type {ExternalActionType}
      * @memberof PriceDerivationRuleBase
      */
-    externalAction?: ExternalActionType;
+    ExternalAction?: ExternalActionType;
     /**
      * Texts shown to the operator in the languages requested by the client via RequestedMultiLanguage in the ARTSHeader. Only provided with Client API version 2.0 or higher.
      * @type {Array<DescriptionCommonData>}
      * @memberof PriceDerivationRuleBase
      */
-    operatorDisplayText?: Array<DescriptionCommonData>;
+    OperatorDisplayText?: Array<DescriptionCommonData>;
     /**
      * Texts shown to the customer in the languages requested by the client via RequestedMultiLanguage in the ARTSHeader. Only provided with Client API version 2.0 or higher.
      * @type {Array<DescriptionCommonData>}
      * @memberof PriceDerivationRuleBase
      */
-    customerDisplayText?: Array<DescriptionCommonData>;
+    CustomerDisplayText?: Array<DescriptionCommonData>;
     /**
      * Can be used to control further processing on client side. Only provided with Client API version 2.0 or higher.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    promotionType?: string;
+    PromotionType?: string;
     /**
      * The sequence value of the price derivation rule of which the result is taken as the basis for this price derivation rule. Only provided with Client API version 2.0 or higher. The type of this element is a string although its content has a numeric value. It could also contain a negative value. In that case the corresponding sign is reflected as a postfix. For example value  \"-1\" is reflected in this element by type string as follows: \"1-\". 
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    calculationBaseSequence?: string;
+    CalculationBaseSequence?: string;
     /**
      * Describes the type of the applied price derivation rule.
      * @type {string}
      * @memberof PriceDerivationRuleBase
      */
-    applicationType?: PriceDerivationRuleBaseApplicationTypeEnum;
+    ApplicationType?: PriceDerivationRuleBaseApplicationTypeEnum;
 }
 
 /**
@@ -1712,7 +1712,7 @@ export interface PriceDerivationRuleEligibility {
      * @type {string}
      * @memberof PriceDerivationRuleEligibility
      */
-    referenceID?: string;
+    ReferenceID?: string;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1724,13 +1724,13 @@ export interface PriceDerivationRuleEligibility {
      * @type {number}
      * @memberof PriceDerivationRuleEligibility
      */
-    referenceSequenceNumber?: number;
+    ReferenceSequenceNumber?: number;
     /**
      * 
      * @type {string}
      * @memberof PriceDerivationRuleEligibility
      */
-    type: PriceDerivationRuleEligibilityTypeEnum;
+    Type: PriceDerivationRuleEligibilityTypeEnum;
 }
 
 /**
@@ -1752,13 +1752,13 @@ export interface PromotionExternalTriggerType {
      * @type {string}
      * @memberof PromotionExternalTriggerType
      */
-    externalTriggerType: string;
+    ExternalTriggerType: string;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof PromotionExternalTriggerType
      */
-    externalTriggerAmount: AmountCommonData;
+    ExternalTriggerAmount: AmountCommonData;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1790,37 +1790,37 @@ export interface PromotionManualTriggerType {
      * @type {number}
      * @memberof PromotionManualTriggerType
      */
-    manualTriggerSequenceNumber: number;
+    ManualTriggerSequenceNumber: number;
     /**
      * Type of the manual trigger as defined in the promotion master data. This type is to be set by the client and used to determine relevant promotions.
      * @type {string}
      * @memberof PromotionManualTriggerType
      */
-    manualTriggerType: string;
+    ManualTriggerType: string;
     /**
      * Value for the manual trigger as defined in the promotion master data. This value is to be set by the client and used to determine relevant promotions.
      * @type {string}
      * @memberof PromotionManualTriggerType
      */
-    manualTriggerValue: string;
+    ManualTriggerValue: string;
     /**
      * Specifies the type of the price adjustment. Valid values are: Absolute discount (RS), percentage discount (RP), new price (PS) or the reduction specified in the promotion master data (AM). 
      * @type {string}
      * @memberof PromotionManualTriggerType
      */
-    privilegeType: PromotionManualTriggerTypePrivilegeTypeEnum;
+    PrivilegeType: PromotionManualTriggerTypePrivilegeTypeEnum;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof PromotionManualTriggerType
      */
-    privilegeValue: AmountCommonData;
+    PrivilegeValue: AmountCommonData;
     /**
      * A value that is to be added to the sequence of the promotion price derivation rule. This allows to apply multiple manual discounts with the same price derivation rule. 
      * @type {number}
      * @memberof PromotionManualTriggerType
      */
-    manualTriggerSequenceAddend: number;
+    ManualTriggerSequenceAddend: number;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1851,19 +1851,19 @@ export interface PromotionPriceDerivationRuleReferenceType {
      * @type {string}
      * @memberof PromotionPriceDerivationRuleReferenceType
      */
-    promotionID: string;
+    PromotionID: string;
     /**
      * Identifies a price derivation rule. Decimal representation of a 64 bit integer value.
      * @type {string}
      * @memberof PromotionPriceDerivationRuleReferenceType
      */
-    priceDerivationRuleID: string;
+    PriceDerivationRuleID: string;
     /**
      * The quantity relevant for the applied price derivation rule.
      * @type {number}
      * @memberof PromotionPriceDerivationRuleReferenceType
      */
-    referenceQuantity: number;
+    ReferenceQuantity: number;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1888,13 +1888,13 @@ export interface QuantityCommonData {
      * @type {number}
      * @memberof QuantityCommonData
      */
-    units?: number;
+    Units?: number;
     /**
      * Must match with the information specified in the promotions and regular prices. No conversion of unit of measures is done. Uppercase format.
      * @type {string}
      * @memberof QuantityCommonData
      */
-    unitOfMeasureCode?: string;
+    UnitOfMeasureCode?: string;
 }
 /**
  * Holds response specific information of an ARTSHeader.
@@ -1913,25 +1913,25 @@ export interface Response {
      * @type {string}
      * @memberof Response
      */
-    requestID: string;
+    RequestID: string;
     /**
      * Timestamp of the request to which this response relates.
      * @type {string}
      * @memberof Response
      */
-    responseTimestamp?: string;
+    ResponseTimestamp?: string;
     /**
      * The list of business errors created during the processing of the corresponding request.
      * @type {Array<BusinessError>}
      * @memberof Response
      */
-    businessError?: Array<BusinessError>;
+    BusinessError?: Array<BusinessError>;
     /**
      * Indicates if the message was successful (OK) or not (Rejected).
      * @type {string}
      * @memberof Response
      */
-    responseCode?: ResponseResponseCodeEnum;
+    ResponseCode?: ResponseResponseCodeEnum;
 }
 
 /**
@@ -1954,7 +1954,7 @@ export interface RetailPriceModifierDomainSpecific {
      * @type {Array<PriceDerivationRuleBase>}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    priceDerivationRule: Array<PriceDerivationRuleBase>;
+    PriceDerivationRule: Array<PriceDerivationRuleBase>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -1966,79 +1966,79 @@ export interface RetailPriceModifierDomainSpecific {
      * @type {number}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    manualTriggerSequenceNumber?: number;
+    ManualTriggerSequenceNumber?: number;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    extraAmount?: AmountCommonData;
+    ExtraAmount?: AmountCommonData;
     /**
      * Determines if this discount was created by an external system. If yes, it must not be changed, but its own modifications with higher sequence may be applied. Default value is false. 
      * @type {boolean}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    externalSystemOriginatorFlag?: boolean;
+    ExternalSystemOriginatorFlag?: boolean;
     /**
      * Identifies this retail price modifier in the corresponding line item.
      * @type {number}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    sequenceNumber: number;
+    SequenceNumber: number;
     /**
      * 
      * @type {Amount}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    amount?: Amount;
+    Amount?: Amount;
     /**
      * 
      * @type {Percent}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    percent?: Percent;
+    Percent?: Percent;
     /**
      * 
      * @type {PreviousPrice}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    previousPrice?: PreviousPrice;
+    PreviousPrice?: PreviousPrice;
     /**
      * 
      * @type {NewPrice}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    newPrice?: NewPrice;
+    NewPrice?: NewPrice;
     /**
      * 
      * @type {PromotionID}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    promotionID?: PromotionID;
+    PromotionID?: PromotionID;
     /**
      * The link to the discount line item that triggered the creation of this RetailPriceModifier in order to keep the prorated transaction-related discount for the current line item. Is not used in the context of the modification of the price of a single line item (item-related discount). Although this is an array, it contains at most one entry. 
      * @type {Array<number>}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    itemLink?: Array<number>;
+    ItemLink?: Array<number>;
     /**
      * 
      * @type {QuantityCommonData}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    quantity?: QuantityCommonData;
+    Quantity?: QuantityCommonData;
     /**
      * 
      * @type {RoundingCommonData}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    rounding?: RoundingCommonData;
+    Rounding?: RoundingCommonData;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof RetailPriceModifierDomainSpecific
      */
-    computationBaseAmount?: AmountCommonData;
+    ComputationBaseAmount?: AmountCommonData;
 }
 /**
  * A flavor of a line item whereby customers return an item that they brought at the same location. ReturnForDelivery is currently not supported. 
@@ -2057,121 +2057,121 @@ export interface ReturnBase {
      * @type {Array<ItemID>}
      * @memberof ReturnBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * 
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof ReturnBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof ReturnBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof ReturnBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof ReturnBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * 
      * @type {Array<QuantityCommonData>}
      * @memberof ReturnBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * 
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof ReturnBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * 
      * @type {Array<ItemLink>}
      * @memberof ReturnBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * 
      * @type {string}
      * @memberof ReturnBase
      */
-    itemType?: string;
+    ItemType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * 
      * @type {string}
      * @memberof ReturnBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * 
      * @type {string}
      * @memberof ReturnBase
      */
-    priceTypeCode?: string;
+    PriceTypeCode?: string;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * 
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof ReturnBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * 
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof ReturnBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * 
      * @type {Array<PromotionManualTriggerType>}
      * @memberof ReturnBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 /**
  * A flavor of a line item whereby customers return an item that is to be delivered to a location on a future date and time. ReturnForDelivery is currently not supported. 
@@ -2190,121 +2190,121 @@ export interface ReturnForDeliveryBase {
      * @type {Array<ItemID>}
      * @memberof ReturnForDeliveryBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * 
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof ReturnForDeliveryBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof ReturnForDeliveryBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof ReturnForDeliveryBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof ReturnForDeliveryBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * 
      * @type {Array<QuantityCommonData>}
      * @memberof ReturnForDeliveryBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * 
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof ReturnForDeliveryBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * 
      * @type {Array<ItemLink>}
      * @memberof ReturnForDeliveryBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * 
      * @type {string}
      * @memberof ReturnForDeliveryBase
      */
-    itemType?: string;
+    ItemType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForDeliveryBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForDeliveryBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForDeliveryBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForDeliveryBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForDeliveryBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * 
      * @type {string}
      * @memberof ReturnForDeliveryBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * 
      * @type {string}
      * @memberof ReturnForDeliveryBase
      */
-    priceTypeCode?: string;
+    PriceTypeCode?: string;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForDeliveryBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * 
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof ReturnForDeliveryBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * 
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof ReturnForDeliveryBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * 
      * @type {Array<PromotionManualTriggerType>}
      * @memberof ReturnForDeliveryBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 /**
  * A flavor of a line item whereby customers return an item and the store will pick it up from a location on a future date and time. ReturnForPickup is currently not supported. 
@@ -2323,121 +2323,121 @@ export interface ReturnForPickupBase {
      * @type {Array<ItemID>}
      * @memberof ReturnForPickupBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * 
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof ReturnForPickupBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof ReturnForPickupBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof ReturnForPickupBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof ReturnForPickupBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * 
      * @type {Array<QuantityCommonData>}
      * @memberof ReturnForPickupBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * 
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof ReturnForPickupBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * 
      * @type {Array<ItemLink>}
      * @memberof ReturnForPickupBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * 
      * @type {string}
      * @memberof ReturnForPickupBase
      */
-    itemType?: string;
+    ItemType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForPickupBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForPickupBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForPickupBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForPickupBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForPickupBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * 
      * @type {string}
      * @memberof ReturnForPickupBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * 
      * @type {string}
      * @memberof ReturnForPickupBase
      */
-    priceTypeCode?: string;
+    PriceTypeCode?: string;
     /**
      * 
      * @type {boolean}
      * @memberof ReturnForPickupBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * 
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof ReturnForPickupBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * 
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof ReturnForPickupBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * 
      * @type {Array<PromotionManualTriggerType>}
      * @memberof ReturnForPickupBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 /**
  * Contains information about the rounding of discounts.
@@ -2456,13 +2456,13 @@ export interface RoundingCommonData {
      * @type {string}
      * @memberof RoundingCommonData
      */
-    currency?: string;
+    Currency?: string;
     /**
      * Describes whether the discount was rounded up or down.
      * @type {string}
      * @memberof RoundingCommonData
      */
-    roundingDirection?: RoundingCommonDataRoundingDirectionEnum;
+    RoundingDirection?: RoundingCommonDataRoundingDirectionEnum;
 }
 
 /**
@@ -2491,13 +2491,13 @@ export interface RoundingRuleType {
      * @type {string}
      * @memberof RoundingRuleType
      */
-    roundingMethod?: RoundingRuleTypeRoundingMethodEnum;
+    RoundingMethod?: RoundingRuleTypeRoundingMethodEnum;
     /**
      * The rounding result must be an integer multiple of the specified value. Example: If the value to be rounded is 12.345, rounding method is Commercial and Multple is 0.05, then the rounding result is 12.35. Default value is 0.01. 
      * @type {number}
      * @memberof RoundingRuleType
      */
-    multiple?: number;
+    Multiple?: number;
 }
 
 /**
@@ -2527,121 +2527,121 @@ export interface SaleBase {
      * @type {Array<ItemID>}
      * @memberof SaleBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * 
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof SaleBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof SaleBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof SaleBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof SaleBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * 
      * @type {Array<QuantityCommonData>}
      * @memberof SaleBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * 
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof SaleBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * 
      * @type {Array<ItemLink>}
      * @memberof SaleBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * 
      * @type {string}
      * @memberof SaleBase
      */
-    itemType?: string;
+    ItemType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SaleBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * 
      * @type {string}
      * @memberof SaleBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * 
      * @type {string}
      * @memberof SaleBase
      */
-    priceTypeCode?: string;
+    PriceTypeCode?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SaleBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * 
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof SaleBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * 
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof SaleBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * 
      * @type {Array<PromotionManualTriggerType>}
      * @memberof SaleBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 /**
  * A flavor of a line item whereby customers purchase an item that will be delivered to a location on a future date and time. SaleForDelivery is currently not supported. 
@@ -2660,121 +2660,121 @@ export interface SaleForDeliveryBase {
      * @type {Array<ItemID>}
      * @memberof SaleForDeliveryBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * 
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof SaleForDeliveryBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof SaleForDeliveryBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof SaleForDeliveryBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof SaleForDeliveryBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * 
      * @type {Array<QuantityCommonData>}
      * @memberof SaleForDeliveryBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * 
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof SaleForDeliveryBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * 
      * @type {Array<ItemLink>}
      * @memberof SaleForDeliveryBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * 
      * @type {string}
      * @memberof SaleForDeliveryBase
      */
-    itemType?: string;
+    ItemType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForDeliveryBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForDeliveryBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForDeliveryBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForDeliveryBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForDeliveryBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * 
      * @type {string}
      * @memberof SaleForDeliveryBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * 
      * @type {string}
      * @memberof SaleForDeliveryBase
      */
-    priceTypeCode?: string;
+    PriceTypeCode?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForDeliveryBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * 
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof SaleForDeliveryBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * 
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof SaleForDeliveryBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * 
      * @type {Array<PromotionManualTriggerType>}
      * @memberof SaleForDeliveryBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 /**
  * A flavor of a line item whereby customers purchase an item and pick it up from a location on a future date and time. SaleForPickup is currently not supported. 
@@ -2793,121 +2793,121 @@ export interface SaleForPickupBase {
      * @type {Array<ItemID>}
      * @memberof SaleForPickupBase
      */
-    itemID?: Array<ItemID>;
+    ItemID?: Array<ItemID>;
     /**
      * 
      * @type {Array<MerchandiseHierarchyCommonData>}
      * @memberof SaleForPickupBase
      */
-    merchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
+    MerchandiseHierarchy?: Array<MerchandiseHierarchyCommonData>;
     /**
      * 
      * @type {UnitPriceCommonData}
      * @memberof SaleForPickupBase
      */
-    regularSalesUnitPrice?: UnitPriceCommonData;
+    RegularSalesUnitPrice?: UnitPriceCommonData;
     /**
      * 
      * @type {ExtendedAmountType}
      * @memberof SaleForPickupBase
      */
-    extendedAmount?: ExtendedAmountType;
+    ExtendedAmount?: ExtendedAmountType;
     /**
      * 
      * @type {AmountCommonData}
      * @memberof SaleForPickupBase
      */
-    extendedDiscountAmount?: AmountCommonData;
+    ExtendedDiscountAmount?: AmountCommonData;
     /**
      * 
      * @type {Array<QuantityCommonData>}
      * @memberof SaleForPickupBase
      */
-    quantity?: Array<QuantityCommonData>;
+    Quantity?: Array<QuantityCommonData>;
     /**
      * 
      * @type {Array<RetailPriceModifierDomainSpecific>}
      * @memberof SaleForPickupBase
      */
-    retailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
+    RetailPriceModifier?: Array<RetailPriceModifierDomainSpecific>;
     /**
      * 
      * @type {Array<ItemLink>}
      * @memberof SaleForPickupBase
      */
-    itemLink?: Array<ItemLink>;
+    ItemLink?: Array<ItemLink>;
     /**
      * 
      * @type {string}
      * @memberof SaleForPickupBase
      */
-    itemType?: string;
+    ItemType?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForPickupBase
      */
-    nonDiscountableFlag?: boolean;
+    NonDiscountableFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForPickupBase
      */
-    fixedPriceFlag?: boolean;
+    FixedPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForPickupBase
      */
-    taxIncludedInPriceFlag?: boolean;
+    TaxIncludedInPriceFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForPickupBase
      */
-    nonPieceGoodFlag?: boolean;
+    NonPieceGoodFlag?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForPickupBase
      */
-    frequentShopperPointsEligibilityFlag?: boolean;
+    FrequentShopperPointsEligibilityFlag?: boolean;
     /**
      * 
      * @type {string}
      * @memberof SaleForPickupBase
      */
-    discountTypeCode?: string;
+    DiscountTypeCode?: string;
     /**
      * 
      * @type {string}
      * @memberof SaleForPickupBase
      */
-    priceTypeCode?: string;
+    PriceTypeCode?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SaleForPickupBase
      */
-    notConsideredByPriceEngineFlag?: boolean;
+    NotConsideredByPriceEngineFlag?: boolean;
     /**
      * 
      * @type {Array<FrequentShopperPointsModifierType>}
      * @memberof SaleForPickupBase
      */
-    frequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
+    FrequentShopperPointsModifier?: Array<FrequentShopperPointsModifierType>;
     /**
      * 
      * @type {Array<PromotionPriceDerivationRuleReferenceType>}
      * @memberof SaleForPickupBase
      */
-    promotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
+    PromotionPriceDerivationRuleReference?: Array<PromotionPriceDerivationRuleReferenceType>;
     /**
      * 
      * @type {Array<PromotionManualTriggerType>}
      * @memberof SaleForPickupBase
      */
-    promotionManualTrigger?: Array<PromotionManualTriggerType>;
+    PromotionManualTrigger?: Array<PromotionManualTriggerType>;
 }
 /**
  * The collection of the line items to be processed.
@@ -2920,7 +2920,7 @@ export interface ShoppingBasketBase {
      * @type {Array<LineItemDomainSpecific>}
      * @memberof ShoppingBasketBase
      */
-    lineItem: Array<LineItemDomainSpecific>;
+    LineItem: Array<LineItemDomainSpecific>;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -2939,19 +2939,19 @@ export interface TenderCouponBase {
      * @type {QuantityCommonData}
      * @memberof TenderCouponBase
      */
-    quantity?: QuantityCommonData;
+    Quantity?: QuantityCommonData;
     /**
      * Must be unique within this request.
      * @type {string}
      * @memberof TenderCouponBase
      */
-    primaryLabel: string;
+    PrimaryLabel: string;
     /**
      * Reserved for future use.
      * @type {number}
      * @memberof TenderCouponBase
      */
-    rewardValue?: number;
+    RewardValue?: number;
     /**
      * This is currently not supported.
      * @type {Array<object>}
@@ -2963,13 +2963,13 @@ export interface TenderCouponBase {
      * @type {number}
      * @memberof TenderCouponBase
      */
-    appliedQuantity?: number;
+    AppliedQuantity?: number;
     /**
      * Reserved for future use.
      * @type {string}
      * @memberof TenderCouponBase
      */
-    rewardType?: string;
+    RewardType?: string;
 }
 /**
  * Depending on the usage, this might refer to one single unit or the total quantity of the line item.
@@ -2988,7 +2988,7 @@ export interface UnitPriceCommonData {
      * @type {string}
      * @memberof UnitPriceCommonData
      */
-    currency?: string;
+    Currency?: string;
 }
 /**
  * Could be the identifier of a POS system.
@@ -3018,7 +3018,7 @@ export const CalculationApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options: any = {}): RequestArgs {
+        calculateViaRestWithTenant: async (tenantName: string, priceCalculate: PriceCalculate, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'tenantName' is not null or undefined
             if (tenantName === null || tenantName === undefined) {
                 throw new RequiredError('tenantName','Required parameter tenantName was null or undefined when calling calculateViaRestWithTenant.');
@@ -3053,8 +3053,10 @@ export const CalculationApiAxiosParamCreator = function (configuration?: Configu
 
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof priceCalculate !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(priceCalculate !== undefined ? priceCalculate : {}) : (priceCalculate || "");
 
@@ -3080,8 +3082,8 @@ export const CalculationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PriceCalculateResponse> {
-            const localVarAxiosArgs = CalculationApiAxiosParamCreator(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options);
+        async calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PriceCalculateResponse>> {
+            const localVarAxiosArgs = await CalculationApiAxiosParamCreator(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3104,8 +3106,8 @@ export const CalculationApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any) {
-            return CalculationApiFp(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options)(axios, basePath);
+        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any): AxiosPromise<PriceCalculateResponse> {
+            return CalculationApiFp(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3127,7 +3129,7 @@ export class CalculationApi extends BaseAPI {
      * @memberof CalculationApi
      */
     public calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any) {
-        return CalculationApiFp(this.configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options)(this.axios, this.basePath);
+        return CalculationApiFp(this.configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -3147,7 +3149,7 @@ export const PriceCalculationApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options: any = {}): RequestArgs {
+        calculateViaRestWithTenant: async (tenantName: string, priceCalculate: PriceCalculate, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'tenantName' is not null or undefined
             if (tenantName === null || tenantName === undefined) {
                 throw new RequiredError('tenantName','Required parameter tenantName was null or undefined when calling calculateViaRestWithTenant.');
@@ -3182,8 +3184,10 @@ export const PriceCalculationApiAxiosParamCreator = function (configuration?: Co
 
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof priceCalculate !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(priceCalculate !== undefined ? priceCalculate : {}) : (priceCalculate || "");
 
@@ -3209,8 +3213,8 @@ export const PriceCalculationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PriceCalculateResponse> {
-            const localVarAxiosArgs = PriceCalculationApiAxiosParamCreator(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options);
+        async calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PriceCalculateResponse>> {
+            const localVarAxiosArgs = await PriceCalculationApiAxiosParamCreator(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3233,8 +3237,8 @@ export const PriceCalculationApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any) {
-            return PriceCalculationApiFp(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options)(axios, basePath);
+        calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any): AxiosPromise<PriceCalculateResponse> {
+            return PriceCalculationApiFp(configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3256,7 +3260,7 @@ export class PriceCalculationApi extends BaseAPI {
      * @memberof PriceCalculationApi
      */
     public calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate, options?: any) {
-        return PriceCalculationApiFp(this.configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options)(this.axios, this.basePath);
+        return PriceCalculationApiFp(this.configuration).calculateViaRestWithTenant(tenantName, priceCalculate, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

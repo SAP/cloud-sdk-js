@@ -6,6 +6,8 @@ We should provide a functionality to set the log levels of the sdk loggers dynam
 
 For this we have to consider an environment variable on each call of the logger.
 No static state is possible - only as fallback.
+We expect that the setting of the env variables works on CF via [cf set-env name value](https://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#app-system-env)
+as expected and the variable is then accessible on the node servier via `process.env`.
 
 The env check should be flexible:
 - If you set `logger.cloud.sdk=debug` all logger shold log debug and below.
@@ -27,4 +29,4 @@ LoggerWrapper{
 }
 ``` 
 
-Collect other idea in call.
+Collect other idea in call. 

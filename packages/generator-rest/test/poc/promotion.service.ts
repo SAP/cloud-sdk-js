@@ -1,11 +1,8 @@
 import {
   PriceCalculateResponse, CalculationApi
-} from './generated-v3/PriceCalculation';
+} from './generated/PriceCalculation';
 import { transaction } from './promotion-data';
-// import { PriceCalculationApiRequestBuilder } from './generated-v3/PriceCalculation/request-builder';
-import { buildAxiosRequestConfig } from '@sap-cloud-sdk/core';
-import { AxiosRequestConfig } from 'axios';
-import { PriceCalculationApiRequestBuilder } from './generated-v3/PriceCalculation/request-builder';
+import { PriceCalculationApiRequestBuilder } from './generated/PriceCalculation/request-builder';
 
 const token = 'ask the team';
 

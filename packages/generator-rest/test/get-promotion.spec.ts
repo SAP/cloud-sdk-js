@@ -4,8 +4,8 @@ import {
   setTestDestination,
   unmockAllTestDestinations
 } from '@sap-cloud-sdk/test-util';
-import { PercentActionEnum } from './poc/generated/calculation';
 import { getPromotionV3 } from './poc/promotion.service';
+import { PercentActionEnum } from './poc/generated/PriceCalculation';
 
 describe('Get promotion', () => {
   it('should get value and action', async () => {

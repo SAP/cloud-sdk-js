@@ -25,22 +25,21 @@ export async function getPromotionV3(): Promise<PriceCalculateResponse> {
 }
 
 export async function getPromotionV2(): Promise<PriceCalculateResponse> {
-  return CalculationApiWrapper.calculateViaRestWithTenant(
-    'oppsapihub',
-    transaction
-  )
-    // TODO more flexible api is needed instead of execute function only
-    .execute(
-      {
-        destinationName: 'VLAB'
-      },
-      {
-        headers: {
-          apikey: token
+  return (
+    CalculationApiWrapper.calculateViaRestWithTenant('oppsapihub', transaction)
+      // TODO more flexible api is needed instead of execute function only
+      .execute(
+        {
+          destinationName: 'VLAB'
+        },
+        {
+          headers: {
+            apikey: token
+          }
         }
-      }
-    )
-    .then(response => response.data);
+      )
+      .then(response => response.data)
+  );
 }
 
 export async function getPromotion(): Promise<PriceCalculateResponse> {

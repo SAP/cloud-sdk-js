@@ -1,45 +1,15 @@
 import { CalculationApi, PriceCalculate } from './api';
 import { AxiosRequestConfig } from 'axios';
-import { buildAxiosRequestConfig, Destination, DestinationNameAndJwt, HttpRequestConfig } from '@sap-cloud-sdk/core';
-
-// todo move to core
-export abstract class RequestBuilder{
-  constructor(public requestConfig: RequestConfig) {
-  }
-
-  withCustomHeaders(headers: Record<string, string>): this {
-    this.requestConfig.addCustomHeaders(headers);
-    return this;
-  }
-
-  buildRequestConfig(destination: Destination | DestinationNameAndJwt): Promise<AxiosRequestConfig>{
-    return buildAxiosRequestConfig(
-      destination, {
-        headers: this.requestConfig.customHeaders
-      }
-    );
-  }
-}
-
-// todo move to core
-export class RequestConfig{
-  public customHeaders: Record<string, string> = {};
-
-  addCustomHeaders(headers: Record<string, string>): void {
-    Object.entries(headers).forEach(([key, value]) => {
-      this.customHeaders[key.toLowerCase()] = value;
-    });
-  }
-}
+import { Destination, DestinationNameAndJwt, RestRequestBuilder, RestRequestConfig } from '@sap-cloud-sdk/core';
 
 export class CalculationApiRequestBuilder{
   static calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate){
-    return new CalculateViaRestWithTenantRequestBuilder(new RequestConfig(), tenantName, priceCalculate);
+    return new CalculateViaRestWithTenantRequestBuilder(new RestRequestConfig(), tenantName, priceCalculate);
   }
 }
 
-export class CalculateViaRestWithTenantRequestBuilder extends RequestBuilder{
-  constructor(public requestConfig: RequestConfig, public tenantName: string, public priceCalculate: PriceCalculate) {
+export class CalculateViaRestWithTenantRequestBuilder extends RestRequestBuilder{
+  constructor(public requestConfig: RestRequestConfig, public tenantName: string, public priceCalculate: PriceCalculate) {
     super(requestConfig);
   }
 

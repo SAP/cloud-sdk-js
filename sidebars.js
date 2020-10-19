@@ -126,7 +126,8 @@ module.exports = {
         items: [
           'java/video/video-tutorial-about-getting-started-with-sap-cloudsdk-for-java',
           'java/video/video-tutorial-about-type-safe-client-generator-for-odata-with-sap-cloudsdk-for-java',
-          'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java'
+          'java/video/video-tutorial-about-connectivity--for-odata-with-sap-cloudsdk-for-java',
+          'java/video/video-tutorial-about-calling-odata-v4-services-via-type-safe-client'
         ]
       },
       'java/sdk-java-troubleshooting-frequent-problems',

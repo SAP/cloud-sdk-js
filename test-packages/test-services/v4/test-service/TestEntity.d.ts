@@ -159,7 +159,7 @@ export declare class TestEntity extends EntityV4 implements TestEntityType {
      */
     toSingleLink: TestEntitySingleLink;
     /**
-     * Returns an entity builder to construct instances `TestEntity`.
+     * Returns an entity builder to construct instances of `TestEntity`.
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     static builder(): EntityBuilderType<TestEntity, TestEntityType>;
@@ -205,11 +205,11 @@ export interface TestEntityType {
     sByteProperty?: number | null;
     geographyPointProperty?: any | null;
     somethingTheSdkDoesNotSupport?: any | null;
-    collectionProperty?: string[];
+    collectionProperty?: string[] | null;
     complexTypeProperty?: TestComplexType | null;
-    complexTypeCollectionProperty?: TestComplexType[];
+    complexTypeCollectionProperty?: TestComplexType[] | null;
     enumProperty?: TestEnumType | null;
-    enumCollectionProperty?: TestEnumType[];
+    enumCollectionProperty?: TestEnumType[] | null;
     toMultiLink: TestEntityMultiLinkType[];
     toOtherMultiLink: TestEntityMultiLinkType[];
     toSingleLink: TestEntitySingleLinkType;

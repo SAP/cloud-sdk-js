@@ -1,4 +1,4 @@
-import { Constructable, EntityBase } from '../odata/common';
+import { EntityBase } from '../odata/common';
 import { toStaticPropertyFormat } from './name-converter';
 
 export const nonEnumerable = (target: any, propertyKey: string) => {
@@ -17,10 +17,8 @@ export const nonEnumerable = (target: any, propertyKey: string) => {
  * @returns A boolean denoting whether an entity is a navigation property or not.
  */
 export function isNavigationProperty<EntityT extends EntityBase>(
-  key: keyof EntityT,
-  entityConstructor: Constructable<EntityT>
+  key: string,
+  entityConstructor: any
 ): boolean {
-  return (
-    '_linkedEntity' in entityConstructor[toStaticPropertyFormat(key as string)]
-  );
+  return '_linkedEntity' in entityConstructor[toStaticPropertyFormat(key)];
 }

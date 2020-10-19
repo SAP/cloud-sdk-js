@@ -1,4 +1,4 @@
-import { createLogger, muteLoggers } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockCountRequest
@@ -12,10 +12,6 @@ describe('CountRequestBuilderV2', () => {
     TestEntityV2.requestBuilder(),
     TestEntityV4.requestBuilder()
   ];
-
-  beforeAll(() => {
-    muteLoggers();
-  });
 
   describe('url', () => {
     it('is built basic count correctly', async () =>

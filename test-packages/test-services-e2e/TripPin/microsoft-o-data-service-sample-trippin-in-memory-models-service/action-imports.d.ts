@@ -8,7 +8,7 @@ export interface ResetDataSourceParameters {
  * Reset Data Source.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function resetDataSource(parameters: ResetDataSourceParameters): ActionImportRequestBuilder<ResetDataSourceParameters, undefined>;
 export declare const actionImports: {

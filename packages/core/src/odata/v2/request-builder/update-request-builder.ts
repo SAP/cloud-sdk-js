@@ -17,7 +17,7 @@ import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
-} from '../../../scp-cf/destination-service-types';
+} from '../../../scp-cf/destination/destination-service-types';
 import { oDataUriV2 } from '../uri-conversion';
 import { extractEtagFromHeader } from '../../common/entity-deserializer';
 import { extractODataEtagV2 } from '../extract-odata-etag';
@@ -277,8 +277,7 @@ function warnIfNavigation<EntityT extends EntityV2>(
 ): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
   const setNavigationsProperties = Object.keys(entity).filter(
     key =>
-      !isNullish(entity[key]) &&
-      isNavigationProperty(key as keyof EntityT, entityConstructor)
+      !isNullish(entity[key]) && isNavigationProperty(key, entityConstructor)
   );
 
   if (setNavigationsProperties.length) {

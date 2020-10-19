@@ -16,7 +16,7 @@ export interface TestActionImportNoParameterNoReturnTypeParameters {
  * Test Action Import No Parameter No Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNoParameterNoReturnType(parameters: TestActionImportNoParameterNoReturnTypeParameters): ActionImportRequestBuilder<TestActionImportNoParameterNoReturnTypeParameters, undefined> {
   const params = {
@@ -52,7 +52,7 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
  * Test Action Import Multiple Parameter Complex Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportMultipleParameterComplexReturnType(parameters: TestActionImportMultipleParameterComplexReturnTypeParameters): ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType> {
   const params = {
@@ -79,14 +79,14 @@ export interface TestActionImportUnsupportedEdmTypesParameters {
  * Test Action Import Unsupported Edm Types.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportUnsupportedEdmTypes(parameters: TestActionImportUnsupportedEdmTypesParameters): ActionImportRequestBuilder<TestActionImportUnsupportedEdmTypesParameters, any> {
   const params = {
     simpleParam: new ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val, 'Edm.Any')), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Any')), params);
 }
 
 export const actionImports = {

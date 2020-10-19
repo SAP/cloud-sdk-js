@@ -41,7 +41,7 @@ export class TestEntityLvl3MultiLink extends EntityV4 implements TestEntityLvl3M
   keyProperty!: string;
 
   /**
-   * Returns an entity builder to construct instances `TestEntityLvl3MultiLink`.
+   * Returns an entity builder to construct instances of `TestEntityLvl3MultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLvl3MultiLink`.
    */
   static builder(): EntityBuilderType<TestEntityLvl3MultiLink, TestEntityLvl3MultiLinkType> {

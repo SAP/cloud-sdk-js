@@ -16,12 +16,14 @@ export function parseFunctionImportReturnTypes(
   returnType: string | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
+    extractResponse,
     oDataVersion
   ) as VdmFunctionImportReturnType;
 }
@@ -30,12 +32,14 @@ export function parseActionImportReturnTypes(
   returnType: string | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmActionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
+    extractResponse,
     oDataVersion
   ) as VdmActionImportReturnType;
 }
@@ -44,6 +48,7 @@ function parseReturnTypes(
   returnType: string | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
   if (!returnType) {
@@ -53,7 +58,12 @@ function parseReturnTypes(
   const isCollection = isCollectionType(returnType);
   const edmType = findEdmType(returnType);
   if (edmType) {
-    return getEdmReturnType(isCollection, edmType, oDataVersion);
+    return getEdmReturnType(
+      isCollection,
+      edmType,
+      extractResponse,
+      oDataVersion
+    );
   }
 
   const entity = findEntityType(returnType, entities);
@@ -78,11 +88,11 @@ function findEdmType(returnType: string): string | undefined {
 
 function findEntityType(
   returnType: string,
-  entites: VdmEntity[]
+  entities: VdmEntity[]
 ): VdmEntity | undefined {
   returnType = parseTypeName(returnType);
   const parsedReturnType = returnType.split('.').slice(-1)[0];
-  return entites.find(e => e.entityTypeName === parsedReturnType);
+  return entities.find(e => e.entityTypeName === parsedReturnType);
 }
 
 function findComplexType(
@@ -107,15 +117,18 @@ function getVoidReturnType(): VdmFunctionImportReturnType {
 function getEdmReturnType(
   isCollection: boolean,
   edmType: string,
-  oDataVerion: ODataVersion
+  extractResponse: ExtractResponse,
+  oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
+  const valueAlias = 'val';
+  const extracted = isCollection ? valueAlias : extractResponse(valueAlias);
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
-    builderFunction: `(val) => edmToTs${caps(oDataVerion)}(val, '${
-      typeMapping.edmType
-    }')`,
+    builderFunction: `(${valueAlias}) => edmToTs${caps(
+      oDataVersion
+    )}(${extracted}, '${typeMapping.edmType}')`,
     isMulti: isCollection,
     isCollection
   };
@@ -149,3 +162,5 @@ function getComplexReturnType(
     isCollection
   };
 }
+
+export type ExtractResponse = (string) => string;

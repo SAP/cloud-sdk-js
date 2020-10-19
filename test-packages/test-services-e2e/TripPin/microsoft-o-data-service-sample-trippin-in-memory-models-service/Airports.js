@@ -42,7 +42,7 @@ var Airports = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `Airports`.
+     * Returns an entity builder to construct instances of `Airports`.
      * @returns A builder that constructs instances of entity type `Airports`.
      */
     Airports.builder = function () {

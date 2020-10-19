@@ -23,7 +23,7 @@ export declare class TestEntityEndsWith extends EntityV4 implements TestEntityEn
      */
     keyProperty: string;
     /**
-     * Returns an entity builder to construct instances `TestEntityEndsWith`.
+     * Returns an entity builder to construct instances of `TestEntityEndsWith`.
      * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
      */
     static builder(): EntityBuilderType<TestEntityEndsWith, TestEntityEndsWithType>;

@@ -12,7 +12,7 @@ var TestComplexType_1 = require("./TestComplexType");
  * Test Action Import No Parameter No Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNoParameterNoReturnType(parameters) {
     var params = {};
@@ -23,7 +23,7 @@ exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoR
  * Test Action Import Multiple Parameter Complex Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportMultipleParameterComplexReturnType(parameters) {
     var params = {
@@ -39,13 +39,13 @@ exports.testActionImportMultipleParameterComplexReturnType = testActionImportMul
  * Test Action Import Unsupported Edm Types.
  *
  * @param parameters - Object containing all parameters for the action import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportUnsupportedEdmTypes(parameters) {
     var params = {
         simpleParam: new core_1.ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
     };
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val, 'Edm.Any'); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.Any'); }); }, params);
 }
 exports.testActionImportUnsupportedEdmTypes = testActionImportUnsupportedEdmTypes;
 exports.actionImports = {

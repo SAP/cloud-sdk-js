@@ -107,8 +107,6 @@ describe('Failure cases', () => {
         200,
         subscriberServiceToken
       ),
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
       mockSingleDestinationCall(
         nock,
         {

@@ -28,7 +28,7 @@ exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
  */
 function testFunctionImportEdmReturnType(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val, 'Edm.Boolean'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val.TestFunctionImportEdmReturnType, 'Edm.Boolean'); }); }, params);
 }
 exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
 /**
@@ -85,7 +85,7 @@ function testFunctionImportUnsupportedEdmTypes(parameters) {
     var params = {
         simpleParam: new core_1.FunctionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
     };
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val, 'Edm.Any'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any'); }); }, params);
 }
 exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdmTypes;
 /**
@@ -109,7 +109,7 @@ function testFunctionImportGet(parameters) {
     var params = {
         simpleParam: new core_1.FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
     };
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val, 'Edm.Boolean'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val.TestFunctionImportGET, 'Edm.Boolean'); }); }, params);
 }
 exports.testFunctionImportGet = testFunctionImportGet;
 /**
@@ -122,7 +122,7 @@ function testFunctionImportPost(parameters) {
     var params = {
         simpleParam: new core_1.FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
     };
-    return new core_1.FunctionImportRequestBuilderV2('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val, 'Edm.Boolean'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val.TestFunctionImportPOST, 'Edm.Boolean'); }); }, params);
 }
 exports.testFunctionImportPost = testFunctionImportPost;
 /**
@@ -136,7 +136,7 @@ function testFunctionImportMultipleParams(parameters) {
         stringParam: new core_1.FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
         booleanParam: new core_1.FunctionImportParameter('BooleanParam', 'Edm.Boolean', parameters.booleanParam)
     };
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val, 'Edm.Boolean'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val.TestFunctionImportMultipleParams, 'Edm.Boolean'); }); }, params);
 }
 exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 /**
@@ -158,7 +158,7 @@ exports.createTestComplexType = createTestComplexType;
  */
 function fContinue(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val, 'Edm.Boolean'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', function (data) { return core_1.transformReturnValueForEdmTypeV2(data, function (val) { return core_1.edmToTsV2(val.Continue, 'Edm.Boolean'); }); }, params);
 }
 exports.fContinue = fContinue;
 exports.functionImports = {

@@ -52,7 +52,7 @@ export declare class TestEntityMultiLink extends EntityV4 implements TestEntityM
      */
     toSingleLink: TestEntityLvl2SingleLink;
     /**
-     * Returns an entity builder to construct instances `TestEntityMultiLink`.
+     * Returns an entity builder to construct instances of `TestEntityMultiLink`.
      * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
      */
     static builder(): EntityBuilderType<TestEntityMultiLink, TestEntityMultiLinkType>;

@@ -3,33 +3,11 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
 import moment from 'moment';
+import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';
 
 const entityKey = 123;
 const entityLinkKey = 987;
-
-async function queryEntity(key: number): Promise<TestEntity> {
-  return TestEntity.requestBuilder()
-    .getByKey(key)
-    .expand(TestEntity.TO_MULTI_LINK)
-    .execute(destination);
-}
-
-async function deleteEntity(key: number): Promise<void> {
-  try {
-    const fetched = await queryEntity(key);
-    await Promise.all(
-      fetched.toMultiLink.map(link =>
-        TestEntityLink.requestBuilder().delete(link).execute(destination)
-      )
-    );
-    return TestEntity.requestBuilder().delete(fetched).execute(destination);
-  } catch (e) {
-    if (!e.stack.includes('Request failed with status code 404')) {
-      throw new Error(e);
-    }
-  }
-}
 
 async function createEntity(key: number): Promise<TestEntity> {
   const dataForCreation = TestEntity.builder()
@@ -45,7 +23,7 @@ async function createEntity(key: number): Promise<TestEntity> {
 }
 
 describe('Request builder', () => {
-  beforeEach(async () => deleteEntity(entityKey));
+  beforeEach(async () => deleteEntity(entityKey, destination));
 
   it('should return a collection of entities for get all request', async () => {
     const testEntities = await TestEntity.requestBuilder()
@@ -89,7 +67,7 @@ describe('Request builder', () => {
       .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
       .execute(destination);
 
-    const queried = await queryEntity(entityKey);
+    const queried = await queryEntity(entityKey, destination);
 
     expect(queried.dateProperty?.toISOString()).toBe(moment(0).toISOString());
     expect(queried.toMultiLink).toEqual(
@@ -105,7 +83,7 @@ describe('Request builder', () => {
   it('should update an entity', async () => {
     await createEntity(entityKey);
 
-    const queriedBeforeUpdate = await queryEntity(entityKey);
+    const queriedBeforeUpdate = await queryEntity(entityKey, destination);
     expect(queriedBeforeUpdate.stringProperty).not.toBe(null);
 
     const newDate = moment.utc('2020-01-01', 'YYYY-MM-DD');
@@ -116,7 +94,7 @@ describe('Request builder', () => {
       .build();
     await TestEntity.requestBuilder().update(newEntity).execute(destination);
 
-    const queriedAfterUpdate = await queryEntity(entityKey);
+    const queriedAfterUpdate = await queryEntity(entityKey, destination);
     expect(queriedAfterUpdate.stringProperty).toBe(null);
     expect(queriedAfterUpdate.dateProperty!.toISOString()).toBe(
       moment(newDate).toISOString()
@@ -139,9 +117,9 @@ describe('Request builder', () => {
       .build();
 
     await TestEntity.requestBuilder().create(entity).execute(destination);
-    const quried = await queryEntity(entityKey);
-    expect(quried.toMultiLink.length).toBe(2);
-    expect(quried.toMultiLink.map(link => link.keyTestEntityLink)).toEqual([
+    const queried = await queryEntity(entityKey, destination);
+    expect(queried.toMultiLink.length).toBe(2);
+    expect(queried.toMultiLink.map(link => link.keyTestEntityLink)).toEqual([
       20,
       30
     ]);
@@ -158,13 +136,13 @@ describe('Request builder', () => {
       .create(child)
       .asChildOf(parent, TestEntity.TO_MULTI_LINK)
       .execute(destination);
-    const parentWithChild = await queryEntity(entityKey);
+    const parentWithChild = await queryEntity(entityKey, destination);
     expect(parentWithChild.toMultiLink.length).toBe(1);
     expect(parentWithChild.toMultiLink[0].keyTestEntityLink).toBe(20);
   });
 
-  // Only supported in OData 4.01 and CAP is 4.0
-  xit('should update an entity including existing related entities', async () => {
+  // CAP only supports OData 4.0
+  it('should update an entity including existing related entities', async () => {
     const entity = TestEntity.builder()
       .keyTestEntity(entityKey)
       .stringProperty('oldValueParent')
@@ -177,20 +155,20 @@ describe('Request builder', () => {
       ])
       .build();
     await TestEntity.requestBuilder().create(entity).execute(destination);
-    const beforeUpdate = await queryEntity(entityKey);
+    const beforeUpdate = await queryEntity(entityKey, destination);
     beforeUpdate.stringProperty = 'newValueParent';
     beforeUpdate.toMultiLink[0].stringProperty = 'newValueChild';
     await TestEntity.requestBuilder().update(beforeUpdate).execute(destination);
 
-    const afterUpdate = await queryEntity(entityKey);
+    const afterUpdate = await queryEntity(entityKey, destination);
     expect(afterUpdate.stringProperty).toBe('newValueParent');
     expect(afterUpdate.toMultiLink[0].stringProperty).toBe('newValueChild');
   });
 
-  // Only supported in OData 4.01 and CAP is 4.0
-  xit('should update an entity with related entities (deep update)', async () => {
+  // CAP only supports OData 4.0
+  it('should update an entity with related entities (deep update)', async () => {
     await createEntity(entityKey);
-    const withoutAssociation = await queryEntity(entityKey);
+    const withoutAssociation = await queryEntity(entityKey, destination);
     withoutAssociation.toMultiLink = [
       TestEntityLink.builder()
         .keyToTestEntity(entityKey)
@@ -202,7 +180,7 @@ describe('Request builder', () => {
       .update(withoutAssociation)
       .execute(destination);
 
-    const afterUpdate = await queryEntity(entityKey);
+    const afterUpdate = await queryEntity(entityKey, destination);
     expect(afterUpdate.stringProperty).toBe('newValue');
     expect(afterUpdate.toMultiLink.length).toBe(1);
     expect(afterUpdate.toMultiLink[0].keyTestEntityLink).toBe(20);
@@ -230,7 +208,7 @@ describe('Request builder', () => {
     expect(resultFiltered).toBe(1);
   });
 
-  // CAP seems not to set the etag
+  // CAP seems to not set the etag
   xit('should set the version identifier (eTag)', async () => {
     const created = await createEntity(entityKey);
     expect(created['_versionIdentifier']).not.toBe(undefined);

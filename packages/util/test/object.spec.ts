@@ -67,6 +67,11 @@ describe('renameKeys', () => {
     expect(flatten(input)).toEqual(expected);
   });
 
+  it('can flatten empty or simple objects',()=>{
+    expect(flatten([])).toEqual([])
+    expect(flatten([1])).toEqual([1])
+  })
+
   it('picks elements from an object', () => {
     const input = { a: 1, b: 2, c: 3, d: 4 };
     expect(pick(['a', 'd'], input)).toEqual({ a: 1, d: 4 });

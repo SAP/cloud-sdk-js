@@ -38,6 +38,7 @@ Rename all functionality with V2/V4 suffix, e. g.:
 `GetAllRequestBuilderV2` -> `GetAllRequestBuilder`(`@sap-cloud-sdk/odata-v2`)
 `GetAllRequestBuilderV4` -> `GetAllRequestBuilder`(`@sap-cloud-sdk/odata-v4`)
 `GetAllRequestBuilderBase` -> `GetAllRequestBuilder`(`@sap-cloud-sdk/odata-common`)
+* We can already rename `GetAllRequestBuilderV2` -> `GetAllRequestBuilder`, etc. by exporting files like this `export {GetAllRequestBuilder as GetAllRequestBuilderV2}` (#before)
 
 ## Make core a peer dependency (#after) - (revised decision)
 We decided to not make the "core" (or common) a peer dependency
@@ -52,13 +53,16 @@ We decided to not make the "core" (or common) a peer dependency
 ## Get rid of moment (#after)
 * Consider whether it is possible have two implementations internally (#before)
 
-## Other backlog items
+## Improve filtering of root entity based on navigation properties
 
 ## Other ideas
 * What about a generic vdm?
-  * Release vdm using edmx files + generic vdm
-  * maybe generate on install?
-* Is is possible to rename VDM to @sap-cloud-sdk-vdm/xy-service
-* Should we have a shared eslint ruleset for contributions / demo projects?
-* We can already rename `GetAllRequestBuilderV2` -> `GetAllRequestBuilder`, etc. by exporting files like this:
-  * `export {GetAllRequestBuilder as GetAllRequestBuilderV2}`
+  * Release vdm using edmx files + generic vdm (we don't do that)
+* Is it possible to rename VDM to @sap-cloud-sdk-vdm/xy-service / @sap-cloud-sdk/vdm-xy-service (investigate - decide which version)
+* Should we have a shared eslint ruleset for contributions / demo projects? @sap-cloud-sdk/eslint-config
+
+
+## Timeline
+* #before: do it in 2020
+* #after: do it in 2021Q1
+* Beta version in 2021Q1

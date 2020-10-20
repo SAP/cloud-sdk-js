@@ -1,5 +1,4 @@
-import { flatten } from '@sap-cloud-sdk/util';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { flatten, createLogger } from '@sap-cloud-sdk/util';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,

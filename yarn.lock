@@ -8625,10 +8625,10 @@ quick-lru@^4.0.1:
   resolved "https://registry.npmjs.org/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
-rambda@^6.1.0, rambda@~6.2.0:
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/rambda/-/rambda-6.2.0.tgz#4afb776b198b054341bdf53f40edc300bea9a969"
-  integrity sha512-2fIT02e45V2orajVC/TlmNtSyqbaWi/0hB6hfzNigV7qfrllS+mQeST1OQaveKWeVCNVKlXus0F2CAO8lDQNvw==
+rambda@^6.1.0, rambda@~6.3.0:
+  version "6.3.0"
+  resolved "https://registry.npmjs.org/rambda/-/rambda-6.3.0.tgz#ee3ea07c772ca9a1b4b683d2f03ecbdd979f8a53"
+  integrity sha512-CEQu2sIckQfMw5mqGilZi+p7/g4bAiC80qTiKjGfFuAlJbIRNSEALaqGw8xwLtgX0qRrt9N8NkEC9P9w3d+sVg==
 
 range-parser@~1.2.1:
   version "1.2.1"

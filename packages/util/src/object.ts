@@ -22,6 +22,8 @@ export function propertyExists(
  * Adds the value to the object if it is neither null nor undefined.
  * Note that this is different to JS idiomatic checks for truthy/falsy values, i.e. an empty string will result in key/value pairs beeing added.
  *
+ * @deprecated This will be removed in version 2.0 of the SDK.
+ *
  * @param key - The key to associate with the given value.
  * @param value - The value to associate with the given key.
  * @param obj - The object on which to create the association.
@@ -37,6 +39,8 @@ export const assocSome = <T>(key: string, value?: any) => (obj: T): T => {
 /**
  * Merges the two object if second object is neither null nor undefined.
  * If a key exists on a and b the value from b is taken
+ *
+ * @deprecated This will be removed in version 2.0 of the SDK.
  *
  * @param a - The object to merge into.
  * @param b - The object which to merge into a.

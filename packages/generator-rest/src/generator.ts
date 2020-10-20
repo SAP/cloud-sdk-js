@@ -13,20 +13,16 @@ import {
   removeSync,
   writeJsonSync
 } from 'fs-extra';
+import { Project } from 'ts-morph';
 import { GeneratorOptions } from './generator-cli';
-import {
-  ClassDeclarationStructure,
-  MethodDeclarationStructure,
-  Project,
-  SourceFileStructure, StructureKind
-} from 'ts-morph';
 import { projectOptions, sourceFile } from './utils';
 import { toOpenApiModel } from './parse-open-api-json';
-import { OpenApiPath, OpenApiServiceMetadata } from './open-api-types';
+import { OpenApiServiceMetadata } from './open-api-types';
 import { requestBuilderSourceFile } from './request-builder/file';
 
 const logger = createLogger({
   level: 'info',
+  package: 'generator',
   messageContext: 'rest-generator'
 });
 
@@ -40,13 +36,22 @@ export async function generateRest(options: GeneratorOptions): Promise<void> {
   const project = new Project(projectOptions());
 
   const openApiServiceMetadata = await Promise.all(
-    files.map(async file => generateOneApi(file, options, pathToTemplates, pathToMustacheValues))
+    files.map(async file =>
+      generateOneApi(file, options, pathToTemplates, pathToMustacheValues)
+    )
   );
-  openApiServiceMetadata.map(metadata => generateSourcesForService(metadata, project, options));
+  openApiServiceMetadata.map(metadata =>
+    generateSourcesForService(metadata, project, options)
+  );
   await project.save();
 }
 
-async function generateOneApi(file: string, options: GeneratorOptions, pathToTemplates: string, pathToMustacheValues: string) {
+async function generateOneApi(
+  file: string,
+  options: GeneratorOptions,
+  pathToTemplates: string,
+  pathToMustacheValues: string
+) {
   const folderForService = getFolderForService(options.outputDir, file);
   mkdirSync(folderForService);
 
@@ -55,23 +60,33 @@ async function generateOneApi(file: string, options: GeneratorOptions, pathToTem
     join(options.inputDir, file),
     serviceName
   );
-  const pathToAdjustedOpenApiDefFile = join(
-    folderForService,
-    'open-api.json'
-  );
+  const pathToAdjustedOpenApiDefFile = join(folderForService, 'open-api.json');
   writeJsonSync(pathToAdjustedOpenApiDefFile, adjustedOpenApiContent);
   // todo
-  await generateFilesUsingOpenAPI(folderForService, pathToAdjustedOpenApiDefFile, pathToTemplates, pathToMustacheValues);
+  await generateFilesUsingOpenAPI(
+    folderForService,
+    pathToAdjustedOpenApiDefFile,
+    pathToTemplates,
+    pathToMustacheValues
+  );
 
-  const openApiModel = toOpenApiModel(pathToAdjustedOpenApiDefFile, serviceName, folderForService);
+  const openApiModel = toOpenApiModel(
+    pathToAdjustedOpenApiDefFile,
+    serviceName,
+    folderForService
+  );
   return openApiModel;
 }
 
-function generateSourcesForService(  serviceMetadata: OpenApiServiceMetadata,
-                                     project: Project,
-                                     options: GeneratorOptions){
-  const serviceDir = project.createDirectory(resolve(options.outputDir.toString(), serviceMetadata.serviceDir));
-  console.log(`Generating request builder in ${serviceDir}.`);
+function generateSourcesForService(
+  serviceMetadata: OpenApiServiceMetadata,
+  project: Project,
+  options: GeneratorOptions
+) {
+  const serviceDir = project.createDirectory(
+    resolve(options.outputDir.toString(), serviceMetadata.serviceDir)
+  );
+  logger.info(`Generating request builder in ${serviceDir}.`);
   sourceFile(
     serviceDir,
     'request-builder',
@@ -80,7 +95,12 @@ function generateSourcesForService(  serviceMetadata: OpenApiServiceMetadata,
   );
 }
 
-async function generateFilesUsingOpenAPI(folderForService: string, pathToAdjustedOpenApiDefFile: string, pathToTemplates: string, pathToMustacheValues: string) {
+async function generateFilesUsingOpenAPI(
+  folderForService: string,
+  pathToAdjustedOpenApiDefFile: string,
+  pathToTemplates: string,
+  pathToMustacheValues: string
+) {
   const generationArguments = [
     'openapi-generator',
     'generate',

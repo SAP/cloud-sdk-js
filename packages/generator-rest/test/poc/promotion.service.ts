@@ -1,6 +1,4 @@
-import {
-  PriceCalculateResponse, CalculationApi
-} from './generated/PriceCalculation';
+import { PriceCalculateResponse } from './generated/PriceCalculation';
 import { transaction } from './promotion-data';
 import { PriceCalculationApiRequestBuilder } from './generated/PriceCalculation/request-builder';
 

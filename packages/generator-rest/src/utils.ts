@@ -1,14 +1,17 @@
 import {
-  Directory, ImportDeclarationStructure,
+  Directory,
+  ImportDeclarationStructure,
   IndentationText,
   ModuleResolutionKind,
   ProjectOptions,
   QuoteKind,
-  ScriptTarget, SourceFile,
-  SourceFileStructure, StructureKind
+  ScriptTarget,
+  SourceFile,
+  SourceFileStructure,
+  StructureKind
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
-import { ODataVersion, unique } from '@sap-cloud-sdk/util';
+import { unique } from '@sap-cloud-sdk/util';
 
 export function projectOptions(): ProjectOptions {
   return {

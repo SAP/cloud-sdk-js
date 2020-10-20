@@ -1,4 +1,4 @@
-export class RestRequestConfig{
+export class RestRequestConfig {
   public customHeaders: Record<string, string> = {};
 
   addCustomHeaders(headers: Record<string, string>): void {

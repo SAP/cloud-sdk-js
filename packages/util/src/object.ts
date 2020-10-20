@@ -110,7 +110,7 @@ export const assoc = <T>(key: string, value: any, obj: T) => ({
  * @param input - array to be flattened
  * @returns the flat array.
  */
-export const flatten = (input: any[]):any[] => {
+export const flatten = (input: any[]): any[] => {
   const flatResult: any[] = [];
   const stack: any[] = [...input];
 

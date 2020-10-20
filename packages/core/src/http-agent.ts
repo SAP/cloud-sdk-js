@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as https from 'https';
-import { assoc, createLogger, last, pipe } from '@sap-cloud-sdk/util';
+import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
 import { Destination, DestinationCertificate } from './scp-cf';
 import { proxyAgent } from './util/proxy-util';
 import { Protocol } from './protocol';
@@ -123,10 +123,9 @@ function createDefaultAgent(
         '"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.'
       );
     }
-    const options = pipe(
-      trustAllOptions(destination),
-      certificateOptions(destination)
-    )({});
+    let options = trustAllOptions(destination)({});
+    options = certificateOptions(destination)(options);
+
     return { httpsAgent: new https.Agent(options) };
   }
 

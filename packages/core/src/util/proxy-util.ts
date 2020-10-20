@@ -1,6 +1,6 @@
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { createLogger, pipe } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination, ProxyConfiguration } from '../scp-cf';
 import { basicHeader } from '../header-builder';
 import { getProtocolOrDefault } from '../get-protocol';
@@ -206,12 +206,11 @@ export function parseProxyEnv(
     logger.debug(
       `Start to extract protocol, host and port from proxy env: ${proxyEnvValue}`
     );
-    const proxyConfiguration = pipe(
-      addHost(groups),
-      addProtocol(groups),
-      addPort(groups),
-      addAuthHeaders(groups)
-    )({});
+
+    let proxyConfiguration = addHost(groups)({});
+    proxyConfiguration = addProtocol(groups)(proxyConfiguration);
+    proxyConfiguration = addPort(groups)(proxyConfiguration);
+    proxyConfiguration = addAuthHeaders(groups)(proxyConfiguration);
 
     if (proxyConfiguration) {
       logger.debug(`Used Proxy Configuration:

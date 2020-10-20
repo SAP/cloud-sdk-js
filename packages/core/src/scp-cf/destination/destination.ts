@@ -1,4 +1,4 @@
-import { assoc, pipe } from '@sap-cloud-sdk/util';
+import { assoc } from '@sap-cloud-sdk/util';
 import {
   AuthenticationType,
   Destination,
@@ -18,15 +18,14 @@ export function sanitizeDestination(
   destination: Record<string, any>
 ): Destination {
   validateDestinationInput(destination);
-  const parsedDestination = pipe(
-    parseAuthTokens,
-    parseCertificates
-  )(destination) as Destination;
-  return pipe(
-    setDefaultAuthenticationFallback,
-    setTrustAll,
-    setOriginalProperties
-  )(parsedDestination);
+  const destAuthToken = parseAuthTokens(destination);
+  let parsedDestination = parseCertificates(destAuthToken) as Destination;
+
+  parsedDestination = setDefaultAuthenticationFallback(parsedDestination);
+  parsedDestination = setTrustAll(parsedDestination);
+  parsedDestination = setOriginalProperties(parsedDestination);
+
+  return parsedDestination;
 }
 
 /**

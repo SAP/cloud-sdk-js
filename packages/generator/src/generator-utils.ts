@@ -1,5 +1,5 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/core';
-import { createLogger, ODataVersion, pipe } from '@sap-cloud-sdk/util';
+import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmNavigationProperty,
   VdmProperty,
@@ -249,7 +249,9 @@ export function prefixString(string: string, prefix?: string): string {
  * @returns Name that is guaranteed to be compliant.
  */
 export function npmCompliantName(name: string): string {
-  return pipe(trimToNpmMaxLength, transformIfNecessary)(name);
+  let compliantName = trimToNpmMaxLength(name);
+  compliantName = transformIfNecessary(compliantName);
+  return compliantName;
 }
 
 // We use this function to still be able to generate the "cloud-sdk-vdm" package, even though the prefix + name logic does not allow it normally
@@ -301,11 +303,12 @@ const stripLeadingDotsAndUnderscores = (str: string): string =>
 const replaceNonNpmPackageCharacters = (str: string): string =>
   str.replace(/[^a-z0-9-~._]/g, '');
 
-const makeNpmCompliant = pipe(
-  lowerCase,
-  stripLeadingDotsAndUnderscores,
-  replaceNonNpmPackageCharacters
-);
+const makeNpmCompliant = (name: string) => {
+  let compliantName = lowerCase(name);
+  compliantName = stripLeadingDotsAndUnderscores(compliantName);
+  compliantName = replaceNonNpmPackageCharacters(compliantName);
+  return compliantName;
+};
 
 const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;

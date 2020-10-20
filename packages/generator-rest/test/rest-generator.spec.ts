@@ -5,7 +5,7 @@ import * as fs from 'fs-extra';
 import { generateRest } from '../src/generator';
 
 describe('rest generator test', () => {
-  const inputDir = path.resolve(__dirname, 'resources');
+  const inputDir = path.resolve(__dirname, 'resources', 'test-apis');
   const outputDir = path.resolve(__dirname, 'generated');
 
   beforeAll(() => {

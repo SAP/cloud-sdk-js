@@ -25,7 +25,7 @@
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
-    "moment": "~2.29.0",
+    "moment": "^2.29.0",
     "pm2": "^4.4.0"
   },
   "cds": {

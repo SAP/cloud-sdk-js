@@ -33,7 +33,7 @@
     "check:dependencies": "depcheck . --ignore-bin-package=true"
   },
   "dependencies": {
-    "@openapitools/openapi-generator-cli": "cli-4.2.1",
+    "@openapitools/openapi-generator-cli": "^2.0.3",
     "@sap-cloud-sdk/core": "^1.29.0",
     "@sap-cloud-sdk/util": "^1.29.0",
     "execa": "^4.0.3",

@@ -2,7 +2,7 @@
 
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { identity } from 'rambda';
+import { identity } from '@sap-cloud-sdk/util';
 import { Time, EdmTypeShared } from '../common';
 import {
   deserializersCommon,

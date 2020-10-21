@@ -1,5 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util';
-import { pick } from 'rambda';
+import { createLogger, pick } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity';
 import { removeTrailingSlashes } from '../../../util';
 import { GetAllRequestBuilderBase } from '../request-builder/get-all-request-builder-base';

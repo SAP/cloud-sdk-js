@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 
 import BigNumber from 'bignumber.js';
-import { identity } from 'rambda';
+import { identity } from '@sap-cloud-sdk/util';
 import { EdmTypeSameConverters } from '../common';
 
 type EdmTypeMapping = { [key in EdmTypeSameConverters]: (value: any) => any };

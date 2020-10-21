@@ -1,5 +1,4 @@
-import { flatten, pipe } from 'rambda';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { flatten, createLogger } from '@sap-cloud-sdk/util';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -84,10 +83,11 @@ function loadServiceBindings(): ServiceBinding[] {
   return transformServiceBindings(vcapServices) as ServiceBinding[];
 }
 
-const transformServiceBindings = pipe(
-  inlineServiceTypes,
-  flattenServiceBindings
-);
+const transformServiceBindings = (vcapService: Record<string, any>) => {
+  const serviceTypes = inlineServiceTypes(vcapService);
+  const flattened = flattenServiceBindings(serviceTypes);
+  return flattened;
+};
 
 function flattenServiceBindings(
   vcapServices: Record<string, any>

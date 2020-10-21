@@ -554,7 +554,7 @@ Blog: https://blogs.sap.com/?p=899516<br>
 ## Compatibility Notes
 
 - Introduce new module `@sap-cloud-sdk/analytics` to provide insights into the SDK usage for further improving the SDK in the future.
-  - To review what data is collected and enable analytics, you need to opt-in as described [here](https://github.com/SAP/cloud-sdk-cli/blob/master/usage-analytics.md).
+  - To review what data is collected and enable analytics, you need to opt-in as described [here](https://github.com/SAP/cloud-sdk-cli/blob/main/usage-analytics.md).
   - No data about your projects will be collected as long as you don't opt-in. We never collect personal data.
 - Due to a change of the naming strategy for entity classes in the OData client generator, entities that were previously named using the pattern `EntityType_<number>` might now have a different name when regenerated.
 
@@ -587,7 +587,7 @@ Blog: https://blogs.sap.com/2019/11/08/new-versions-of-sap-cloud-sdk-3.7.0-for-j
 
 - Release SAP Cloud SDK Command Line Interface (CLI) `@sap-cloud-sdk/cli` on the [central registry npmjs.com](https://www.npmjs.com/package/@sap-cloud-sdk/cli). The CLI makes it easy to add the SAP Cloud SDK for JavaScript to an existing project and simplifies several other tasks when building applications on SAP Cloud Platform.
   - Install the CLI via [npm](https://www.npmjs.com/package/@sap-cloud-sdk/cli) (`npm install @sap-cloud-sdk/cli`).
-  - For more information on how to use the CLI, take a look at the [Readme](https://github.com/SAP/cloud-sdk-cli/blob/master/README.md) or call `sap-cloud-sdk --help` after installing.
+  - For more information on how to use the CLI, take a look at the [Readme](https://github.com/SAP/cloud-sdk-cli/blob/main/README.md) or call `sap-cloud-sdk --help` after installing.
   - The CLI is available as open source under Apache License 2.0 from the [github.com repository](https://github.com/SAP/cloud-sdk-cli). Contributions are welcome.
 - Add an [SDK-specific logger](https://help.sap.com/doc/15b6f206672d42ad852fa1466d6ad0d5/1.0/en-US/modules/_sap_cloud_sdk_util.html#createlogger) based on [winston](https://github.com/winstonjs/winston) that produces filterable logs in Kibana / on SAP Cloud Platform as well as better formatted logs locally. It is consistently used within the SDK and can be used for application code as well.
 - Support the handling of destinations with `OAuth2SAMLBearerAssertion` authentication type that include a property `SystemUser`. The system user will be used instead of the currently logged in user to retrieve an access token to the destination. That is, no principal propagation takes place. As a consequence, no user JWT is required.

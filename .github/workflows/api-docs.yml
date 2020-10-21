@@ -2,7 +2,7 @@ name: update-api-documentation
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
     - 'docs/**'
 

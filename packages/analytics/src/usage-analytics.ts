@@ -66,7 +66,7 @@ export async function performUsageAnalytics(
 
 /**
  * Sends development environment data to SAP Web Analytic.
- * For detailed information, check https://github.com/SAP/cloud-sdk-cli/blob/master/usage-analytics.md
+ * For detailed information, check https://github.com/SAP/cloud-sdk-cli/blob/main/usage-analytics.md
  *
  * @param config - Configuration for web analytics.
  * @param data - Data to be sent.

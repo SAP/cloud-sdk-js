@@ -11,6 +11,7 @@ import {
   HttpRequest,
   Protocol
 } from '../../src';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 describe('generic http client', () => {
   const httpsDestination: Destination = {
@@ -70,6 +71,17 @@ describe('generic http client', () => {
 
       expect(actualProxy).toMatchObject(expectedProxy);
       expect(actualProxy.httpAgent).toBeDefined();
+    });
+
+    it('warn when custom headers are used', async () => {
+      const logger = createLogger({
+        package: 'core',
+        messageContext: 'http-client'
+      });
+      const warnSpy = jest.spyOn(logger, 'warn');
+
+      await buildHttpRequest(httpsDestination, {'authorization' : 'abc', 'sap-client': '001', 'SAP-Connectivity-SCC-Location_ID': 'efg'})
+      expect(warnSpy).toBeCalledWith('The custom headers are provided with the keys: authorization,sap-client,SAP-Connectivity-SCC-Location_ID.');
     });
 
     it('throws useful error messages when finding the destination fails', async () => {

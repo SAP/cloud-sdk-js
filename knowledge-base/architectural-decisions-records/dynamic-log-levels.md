@@ -29,4 +29,11 @@ LoggerWrapper{
 }
 ``` 
 
-Collect other idea in call. 
+Conclusion:
+- Open to the wrapper and env approach but try to investigate if other libs make it easier.
+
+Questions:
+- investigate the `cf-nodejs-logging-support`  https://github.com/SAP/cf-nodejs-logging-support, this should support
+- Ask them about non JWT alternatives
+- Artem asks around
+- Browser support?

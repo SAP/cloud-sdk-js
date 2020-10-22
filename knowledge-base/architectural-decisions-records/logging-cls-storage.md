@@ -41,3 +41,86 @@ Cons:
 - works only for node 13 and higher
 - performance not great for async/await see [here](https://itnext.io/one-node-js-cls-api-to-rule-them-all-1670ac66a9e8)
 - API not really stable yet
+
+## Conclusion:
+- try option B answer the question below
+- Definitely a switch to turn it off for non error cases. 
+
+## Related Question:
+
+### What are the supported node version on CF
+
+I have checked via `cf buildpacks` that nodejs buildpack with version `1.7.25` is availible.
+The availible [node version](https://github.com/cloudfoundry/nodejs-buildpack/releases/tag/v1.7.25) for this tag are 10,12,14.
+They can be specified via the [engines.npm](https://docs.cloudfoundry.org/buildpacks/node/index.html) attribute in the package.json 
+
+### Older node version support
+
+I have checked and found out that they did a [backport](https://github.com/nodejs/node/pull/32318) of `AsyncLocalStorage` for version 12.
+For node 10 it is really not there. A easy way to ensure computability also for node 10 would be:
+```ts
+const AsyncLocalStorage1 = require('async_hooks')
+export const instance = AsyncLocalStorage1?.AsyncLocalStorage ? new AsyncLocalStorage1.AsyncLocalStorage():undefined
+
+//The instance.run executes the function call asyn and does not return something. 
+//To get the result one could wrap it like this.
+new Promise<TestEntity[]>(resolve => {
+  if(instance) {
+    instance.run({ data: i }, async () => {
+      const result = await requestBuilder.execute(defaultDestination)
+      resolve(result)
+    })
+  }else{
+   requestBuilder.execute(defaultDestination).then(result=>resolve(result))
+  }
+})
+}
+
+//The lookup works on the central instance of the storage
+if(instance) {
+  const data = instance.getStore()
+  if (data?.data === 42) {
+    console.log("I found 42")
+  }
+}
+``` 
+
+### Work on frontend
+
+The import should not return something in the frontend and the code is ignored.
+
+### Performance test
+
+In order to measure performance the following test has been done. 
+A fixed number of `TestEntity.requestBuilder().getAll()` request are executed in parallel using a mock response.
+The time is measured for all promises to finished.
+
+|Case|node version|number requests| time | variance|
+|:---:|:---:|:---:|---:|---:|
+|No Change|14|10.000|2.964|0.465|
+|Wrapped no lookup|14|10.000|3.634|0.520|
+|One lookup|14|10.000|3.674|0.515|
+| Three lookups|14|10.000|3.686|0.453|
+
+So we see around 20% increase by the lookup.
+The number of calls seems not to matter.
+For node 12 and node 13 a out of memory exception was created even without the wrapping. 
+So the number was reduced:
+
+|Case|node version|number requests| time | variance|
+|:---:|:---:|:---:|---:|---:|
+|Three lookups| 12| 5.000 | 2.089| 0.314|
+|Three lookups| 13| 5.000 | 2.128| 0.326|
+|Three lookups| 14| 5.000 | 1.684| 0.219|
+|No Change    | 12| 5.000 | 1.411| 0.201|
+|No Change    | 13| 5.000 | 1.429| 0.248|
+|No Change    | 14| 5.000 | 1.378| 0.191|
+
+So to summarize: 
+- Node implementation has become more efficient in general. Can handle more request in 14 compared to 13 and 12.
+- The time increase for node 14 is approx 20% if we use the CLS.
+- For node 12 an 13 the effect is stronger 40% increase. 
+- Per default I would switch the wrapping which decreases performance off.
+Then there are two ways to switch it on:
+  - Via a env variable temporarily
+  - Via a `withTenantLogging` method on the request builder permanently in the code if your application wants it.

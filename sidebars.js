@@ -174,6 +174,13 @@ module.exports = {
           'js/guides/tutorial-overview-sdk-js'
         ]
       },
+      {
+        type: 'category',
+        label: 'Video Tutorials',
+        items: [
+          'js/video/demo-of-cloud-sdk-for-javascript-with-cloud-alm-and-cap',
+        ]
+      },
       'js/api',
       'js/release-notes-sap-cloud-sdk-for-javascript-and-typescript',
       'js/frequently-asked-questions'

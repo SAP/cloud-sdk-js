@@ -34,9 +34,9 @@ function parsePath(pathName: string, pathValue): OpenApiPath {
   return { name: pathName, pathParameters, operations };
 }
 
-function toPathParameters(path: string): string[] {
-  const matches = Array.from(path.matchAll(/{(.*?)}/g));
-  return matches.map(m => m[1]);
+export function toPathParameters(path: string): string[] {
+  const matches = path.match(/{.*?}/g);
+  return matches ? Array.from(matches!).map(m => m.slice(1, m.length - 1)) : [];
 }
 
 function toOpenApiOperation(obj, method: string): OpenApiOperation | undefined {

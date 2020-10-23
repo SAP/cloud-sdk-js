@@ -34,7 +34,6 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "logform": "^2.2.0",
-    "rambda": "~6.2.0",
     "winston": "^3.3.3"
   }
 }

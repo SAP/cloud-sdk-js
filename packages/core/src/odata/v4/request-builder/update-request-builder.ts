@@ -1,5 +1,4 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { EntityV4 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
@@ -169,12 +168,11 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     );
 
     if (this.requestConfig.method === 'patch') {
-      return pipe(
-        () => this.serializedDiff(),
-        body => this.removeKeyFields(body),
-        body => this.addRequiredFields(serializedBody, body),
-        body => this.removeIgnoredFields(body)
-      )();
+      let body = this.serializedDiff();
+      body = this.removeKeyFields(body);
+      body = this.addRequiredFields(serializedBody, body);
+      body = this.removeIgnoredFields(body);
+      return body;
     }
     return serializedBody;
   }

@@ -1,4 +1,4 @@
-import { propertyExists, renameKeys } from '../src';
+import { assoc, flatten, pick, propertyExists, renameKeys } from '../src';
 
 describe('propertyExists', () => {
   it('checks whether an object has a nested chain of properties', () => {
@@ -59,5 +59,37 @@ describe('renameKeys', () => {
     };
 
     expect(renameKeys({ a: 'A', b: 'B' }, input)).toEqual(expected);
+  });
+
+  it('flattens a object', () => {
+    const input = [1, 2, [3, 4], 5, [6, [7, 8, [9, [10, 11], 12]]]];
+    const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    expect(flatten(input)).toEqual(expected);
+  });
+
+  it('can flatten empty or simple objects', () => {
+    expect(flatten([])).toEqual([]);
+    expect(flatten([1])).toEqual([1]);
+  });
+
+  it('picks elements from an object', () => {
+    const input = { a: 1, b: 2, c: 3, d: 4 };
+    expect(pick(['a', 'd'], input)).toEqual({ a: 1, d: 4 });
+  });
+
+  it('picks elements ignoring non exisiting keys', () => {
+    const input = { a: 1, b: 2, c: 3, d: 4 };
+    expect(pick(['a', 'f'], input)).toEqual({ a: 1 });
+  });
+
+  it('picks elements also with falsy values', () => {
+    const input = { a: 1, b: 2, c: undefined, d: 0 };
+    expect(pick(['a', 'c', 'd'], input)).toEqual({ a: 1, c: undefined, d: 0 });
+  });
+
+  it('assoc elements to an object', () => {
+    const input = { a: 1, b: 2 };
+    const expected = { a: 1, b: 2, c: 3 };
+    expect(assoc('c', 3, input)).toEqual(expected);
   });
 });

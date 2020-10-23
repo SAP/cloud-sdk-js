@@ -116,7 +116,8 @@ So the number was reduced:
 |No Change    | 13| 5.000 | 1.429| 0.248|
 |No Change    | 14| 5.000 | 1.378| 0.191|
 
-So to summarize: 
+#### Summary
+ 
 - Node implementation has become more efficient in general. Can handle more request in 14 compared to 13 and 12.
 - The time increase for node 14 is approx 20% if we use the CLS.
 - For node 12 an 13 the effect is stronger 40% increase. 

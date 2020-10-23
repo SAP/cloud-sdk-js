@@ -29,11 +29,44 @@ LoggerWrapper{
 }
 ``` 
 
-Conclusion:
-- Open to the wrapper and env approach but try to investigate if other libs make it easier.
+## Conclusion:
 
-Questions:
-- investigate the `cf-nodejs-logging-support`  https://github.com/SAP/cf-nodejs-logging-support, this should support
-- Ask them about non JWT alternatives
-- Artem asks around
-- Browser support?
+We are open to the wrapper and env approach.
+It seems like the lib can not be used directly since it does not consider really dynamic adjustment, the same as winston.
+
+## Questions
+
+### The `cf-nodejs-logging-support`
+
+The lib [cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support) does not cover what we want to achieve.
+A context bound logging is acheived via binding to the `req,res` object:
+```js
+const server = http.createServer((req, res) => {
+    //binds logging to the given request for request tracking
+    log.logNetwork(req, res);
+    
+    // Context bound custom message
+    req.logger.info("request bound information:");
+    res.end('ok');
+});
+```
+Dynamic log level adjustment is done via a `header` field:
+```json
+{
+  "issuer": "<valid e-mail address>",
+  "level": "debug",
+  "iat": 1506016127,
+  "exp": 1506188927
+}
+```
+We should also consider the level from the header as an additional option to set the log level.
+Also we can perhaps use methods to extract the fields:
+- correlation_id
+- request_id
+- tenant_id
+- tenant_subdomain
+from the request.
+
+### How Does the Rest of The Community Do it?
+
+Artem wanted to ask around. Please put findings here.

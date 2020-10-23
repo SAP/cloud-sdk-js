@@ -5,6 +5,7 @@ import {
   StructureKind
 } from 'ts-morph';
 import { toPascalCase } from '@sap-cloud-sdk/core';
+import { flat } from '@sap-cloud-sdk/util';
 import { OpenApiServiceMetadata } from '../open-api-types';
 import { coreImportDeclaration } from '../utils';
 import { apiRequestBuilderClass } from './api-request-builder-class';
@@ -38,9 +39,11 @@ export function requestBuilderSourceFile(
 function getOperationRequestBuilders(
   serviceMetadata: OpenApiServiceMetadata
 ): ClassDeclarationStructure[] {
-  return serviceMetadata.paths.flatMap(path =>
-    path.operations.map(o =>
-      operationRequestBuilderClass(serviceMetadata, path, o)
+  return flat(
+    serviceMetadata.paths.map(path =>
+      path.operations.map(o =>
+        operationRequestBuilderClass(serviceMetadata, path, o)
+      )
     )
   );
 }
@@ -56,11 +59,15 @@ function importAxiosRequestConfig(): ImportDeclarationStructure {
 function importFromOpenApi(
   serviceMetadata: OpenApiServiceMetadata
 ): ImportDeclarationStructure {
-  const refNames = serviceMetadata.paths.flatMap(path =>
-    path.operations.flatMap(o =>
-      o.requestBodySchemaRefName
-        ? [toPascalCase(o.requestBodySchemaRefName)]
-        : []
+  const refNames: string[] = flat(
+    serviceMetadata.paths.map(path =>
+      flat(
+        path.operations.map(o =>
+          o.requestBodySchemaRefName
+            ? [toPascalCase(o.requestBodySchemaRefName)]
+            : []
+        )
+      )
     )
   );
   const apiClassName = `${toPascalCase(serviceMetadata.apiName)}Api`;

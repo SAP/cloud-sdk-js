@@ -6,6 +6,7 @@ import {
   StructureKind
 } from 'ts-morph';
 import { toPascalCase, toPropertyFormat } from '@sap-cloud-sdk/core';
+import { flat } from '@sap-cloud-sdk/util';
 import { OpenApiPath, OpenApiServiceMetadata } from '../open-api-types';
 
 /**
@@ -25,7 +26,7 @@ export function apiRequestBuilderClass(
 }
 
 function method(paths: OpenApiPath[]): MethodDeclarationStructure[] {
-  return paths.flatMap(p => getMethods(p));
+  return flat(paths.map(p => getMethods(p)));
 }
 
 function getMethods(openApiPath: OpenApiPath): MethodDeclarationStructure[] {

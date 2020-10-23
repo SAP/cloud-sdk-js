@@ -22,6 +22,7 @@ import {
  * @param metadata The service metadata model converted from the open api file.
  * @param openApiPath The open api path object. The service metadata contains multiple open api paths.
  * @param operation The open api operation object. The open api path contains multiple open api operations.
+ * @returns class declaration structure of the operation request builder class.
  */
 export function operationRequestBuilderClass(
   metadata: OpenApiServiceMetadata,

@@ -12,7 +12,7 @@ module.exports = {
         'test-packages/test-services/**/*',
         'test-packages/test-services-e2e/**/*',
         'packages/core/test/test-util/test-services/**/*',
-        'packages/generator-rest/test/poc/generated/**/*'
+        'packages/rest-generator/test/poc/generated/**/*'
       ]
     },
     sourceType: 'module'
@@ -23,7 +23,7 @@ module.exports = {
     'packages/core/test/test-util/test-services',
     'test-packages/test-services',
     'test-packages/test-services-e2e',
-    'packages/generator-rest/test/poc/generated'
+    'packages/rest-generator/test/poc/generated'
   ],
   plugins: [
     '@typescript-eslint',

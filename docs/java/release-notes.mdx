@@ -27,9 +27,48 @@ We highly recommend regularly updating to the latest SDK version. It will help y
 - update client libraries giving access to latest SAP services on SAP Cloud Platform and S4/HANA
 - protect yourself from bugs and breaking changes in the future
 
+## 3.31.0 - October 22, 2020
+
+Javadoc | [Release blog](https://blogs.sap.com/?p=1207517) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.31.0)
+
+### New Functionality
+
+- Generated OData V4 client library service types provide a new method `batch()` to conveniently create instances of `BatchRequestBuilder`. It can be used to combine multiple reading and modifying OData operations into one OData Batch request.
+- We released new pre-generated type-safe client libraries (also known as Virtual Data Model - VDM) for the [latest RTC release 2020 of SAP S/4HANA On-premise](https://blogs.sap.com/2020/10/07/sap-s-4hana-2020-release/). With the exception of the following services, everything else available in [SAP API Business Hub for SAP S/4HANA On-Premise 2020](https://api.sap.com/package/S4HANAOPAPI?section=Artifacts) are available:
+    - [Settlement Document](https://api.sap.com/api/OP_API_SETTLMT_DOC_0001/resource)
+    - [Settlement Process Type - Read](https://api.sap.com/api/OP_API_SETTLMT_PROC_TYPE_0001/resource)
+    - [Responsibility Management Team Configurations - Read](https://api.sap.com/api/OP_API_RESPYM_TEAM_CONFIG_SRV_0001/resource)
+    - [Real Estate Contract (Synchronous A2X)](https://api.sap.com/api/OP_API_RECONTRACT_0001/resource)
+    - [Settlement Document Type - Read](https://api.sap.com/api/OP_API_SETTLMT_DOC_TYPE_0001/resource)
+    - [Responsibility Management Teams - Read](https://api.sap.com/api/OP_API_RESPYM_TEAM_SRV_0001/resource)
+
+### Improvements
+
+- The Workflow API client library in module `scp-workflow-cf` got enhanced to reflect the latest Workflow API features.
+- Update Dependencies
+  - Spring dependency for the SAP Cloud Platform multitenancy implementation module to version `4.3.29.RELEASE` to overcome the security vulnerability [CVE-2020-5421](https://nvd.nist.gov/vuln/detail/CVE-2020-5421).
+  - Apache HttpComponents from version `4.5.12` to `4.5.13`
+  - Jackson from `2.11.2` to `2.11.3`
+  - Java JWT from `3.10.3` to `3.11.0`
+  - JUnit Pioneer from version `0.9.0` to `1.0.0`
+  - Lombok from version `1.18.12` to `1.18.14`
+  - Mockito from version `3.5.11` to `3.5.13`
+  - Resilience4J from version 1.5.0 to 1.6.0
+  - Spring Security from `5.4.0` to `5.4.1`
+  - `io.projectreactor:reactor-core` from `3.3.9.RELEASE` to `3.3.10.RELEASE`
+  - JUnit from version `4.13` to `4.13.1` 
+  - Tomcat from `9.0.37` to `9.0.39`, fixing the vulnerability [CVE-2020-13943](https://nvd.nist.gov/vuln/detail/CVE-2020-13943)
+
+### Fixed Issues
+
+- Fix an issue where responses of OData batch requests could not be evaluated if the batch request contained semantically identical request objects (e.g. creating two similar entities).
+- Fix an issue where an OData VDM generated with the OData V4 generator would not compile when a complex type contained a list of properties. 
+- Fix an issue where error responses of OData V2 requests could not be parsed correctly.
+
+
 ## 3.30.0 - October 8, 2020
 
-[Javadoc](https://help.sap.com/doc/0a2f2acc08ef4bf4a21c1e346f249afe/1.0/en-US/index.html) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.30.0)
+[Javadoc](https://help.sap.com/doc/0a2f2acc08ef4bf4a21c1e346f249afe/1.0/en-US/index.html) | [Release blog](https://blogs.sap.com/?p=1207517) | [Maven Central](https://search.maven.org/search?q=g:com.sap.cloud.sdk*%20AND%20v:3.30.0)
 
 ### Compatibility Notes
 

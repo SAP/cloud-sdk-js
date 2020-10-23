@@ -10,6 +10,10 @@ import { coreImportDeclaration } from '../utils';
 import { apiRequestBuilderClass } from './api-request-builder-class';
 import { operationRequestBuilderClass } from './operation-request-builder-class';
 
+/**
+ * Used by the generator for generating the request builder source file.
+ * @param serviceMetadata The service metadata model converted from the open api file.
+ */
 export function requestBuilderSourceFile(
   serviceMetadata: OpenApiServiceMetadata
 ): SourceFileStructure {

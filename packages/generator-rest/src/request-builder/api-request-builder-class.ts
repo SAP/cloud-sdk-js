@@ -8,6 +8,10 @@ import {
 import { toPascalCase, toPropertyFormat } from '@sap-cloud-sdk/core';
 import { OpenApiPath, OpenApiServiceMetadata } from '../open-api-types';
 
+/**
+ * Used by the generator for generating a API request builder class
+ * @param serviceMetadata The service metadata model converted from the open api file.
+ */
 export function apiRequestBuilderClass(
   serviceMetadata: OpenApiServiceMetadata
 ): ClassDeclarationStructure {

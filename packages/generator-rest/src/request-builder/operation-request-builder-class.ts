@@ -17,6 +17,12 @@ import {
   refNameToParamStructure
 } from './api-request-builder-class';
 
+/**
+ * Used by the generator for generating operation request builder classes.
+ * @param metadata The service metadata model converted from the open api file.
+ * @param openApiPath The open api path object. The service metadata contains multiple open api paths.
+ * @param operation The open api operation object. The open api path contains multiple open api operations.
+ */
 export function operationRequestBuilderClass(
   metadata: OpenApiServiceMetadata,
   openApiPath: OpenApiPath,

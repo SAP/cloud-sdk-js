@@ -8,7 +8,7 @@ import { getPromotionV3 } from './poc/promotion.service';
 import { PercentActionEnum } from './poc/generated/PriceCalculation';
 
 describe('Get promotion', () => {
-  xit('should get value and action', async () => {
+  it('should get value and action', async () => {
     setTestDestination({
       name: 'VLAB',
       url:

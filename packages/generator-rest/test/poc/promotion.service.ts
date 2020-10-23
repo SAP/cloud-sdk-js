@@ -2,15 +2,13 @@ import { PriceCalculateResponse } from './generated/PriceCalculation';
 import { transaction } from './promotion-data';
 import { PriceCalculationApiRequestBuilder } from './generated/PriceCalculation/request-builder';
 
-const token = 'ask the team';
-
 export async function getPromotionV3(): Promise<PriceCalculateResponse> {
   return PriceCalculationApiRequestBuilder.calculateViaRestWithTenant(
     'oppsapihub',
     transaction
   )
     .withCustomHeaders({
-      apiKey: token
+      apiKey: process.env.SANDBOX_TOKEN as string
     })
     .execute({
       destinationName: 'VLAB'

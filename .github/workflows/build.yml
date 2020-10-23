@@ -32,6 +32,8 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit
+        env:
+          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - run: yarn test:integration
       - run: yarn test:type
   checks:

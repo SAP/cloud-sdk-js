@@ -43,8 +43,8 @@ Cons:
 - API not really stable yet
 
 ## Conclusion:
-- try option B answer the question below
-- Definitely a switch to turn it off for non error cases. 
+- Try option B answer after the question below have been answered I see no blocker.
+- Definitely a switch to turn it off due to performance implication. 
 
 ## Related Question:
 

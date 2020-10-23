@@ -67,6 +67,11 @@ Also we can perhaps use methods to extract the fields:
 - tenant_subdomain
 from the request.
 
+### Work on frontend
+
+The wrapping and reading of env varialbes should cause no problems on the frontend. 
+The logging lib will be used only partially with very simple methods.
+
 ### How Does the Rest of The Community Do it?
 
 Artem wanted to ask around. Please put findings here.

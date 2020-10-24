@@ -62,7 +62,7 @@ async function generateOneApi(
   );
   const pathToAdjustedOpenApiDefFile = join(folderForService, 'open-api.json');
   writeJsonSync(pathToAdjustedOpenApiDefFile, adjustedOpenApiContent);
-  // todo
+
   await generateFilesUsingOpenAPI(
     folderForService,
     pathToAdjustedOpenApiDefFile,
@@ -102,7 +102,7 @@ async function generateFilesUsingOpenAPI(
   pathToMustacheValues: string
 ) {
   const generationArguments = [
-    'openapi-generator',
+    'openapi-generator-cli',
     'generate',
     '-i',
     pathToAdjustedOpenApiDefFile,

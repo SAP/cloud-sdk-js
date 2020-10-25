@@ -49,7 +49,9 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     .then(response => response.headers)
     .catch(error => {
       if (!error.response) {
-        throw new Error(`The error response is undefined. The original error is: ${error}.`);
+        throw new Error(
+          `The error response is undefined. The original error is: ${error}.`
+        );
       }
       return error.response.headers;
     });

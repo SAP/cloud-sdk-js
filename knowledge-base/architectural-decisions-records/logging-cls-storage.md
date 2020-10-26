@@ -46,7 +46,7 @@ Cons:
 - Try option B answer after the question below have been answered I see no blocker.
 - Definitely a switch to turn it off due to performance implication. 
 
-## Related Question:
+## Questions:
 
 
 ### How Does the Rest of The Community Do it?

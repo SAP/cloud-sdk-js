@@ -96,7 +96,7 @@ if(instance) {
 
 ### Work on frontend
 
-The import should not return something in the frontend and the code is ignored.
+The import should not return anything in the frontend and the code should be ignored.
 
 ### Performance test
 

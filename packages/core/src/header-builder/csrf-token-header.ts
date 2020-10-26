@@ -1,4 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
 import { filterNullishValues, getHeader, getHeaderValue } from './header-util';
@@ -49,7 +49,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     .then(response => response.headers)
     .catch(error => {
       if (!error.response) {
-        throw new Error('The error response is undefined.');
+        throw errorWithCause('The error response is undefined.', error);
       }
       return error.response.headers;
     });

@@ -64,6 +64,7 @@ module.exports = {
               'java/features/resilience/caching'
             ]
           },
+          // 'java/features/events/enterprise-messaging-with-cloud-sdk-and-cap',
           {
             type: 'category',
             label: 'SDK extensions',

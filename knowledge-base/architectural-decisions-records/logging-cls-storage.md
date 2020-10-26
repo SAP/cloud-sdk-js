@@ -66,7 +66,7 @@ They can be specified via the [engines.npm](https://docs.cloudfoundry.org/buildp
 ### Older node version support
 
 I have checked and found out that they did a [backport](https://github.com/nodejs/node/pull/32318) of `AsyncLocalStorage` for version 12.
-For node 10 it is really not there. A easy way to ensure computability also for node 10 would be:
+For node 10 it is really not there. An easy way to ensure compatibility with node 10 would be:
 ```ts
 const AsyncLocalStorage1 = require('async_hooks')
 export const instance = AsyncLocalStorage1?.AsyncLocalStorage ? new AsyncLocalStorage1.AsyncLocalStorage():undefined

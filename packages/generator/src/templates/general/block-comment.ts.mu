@@ -1,5 +1,0 @@
-/**
-{{#each commentLines}}
- * {{.}}
-{{/each}}
- */

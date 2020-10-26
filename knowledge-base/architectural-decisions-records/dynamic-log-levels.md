@@ -32,7 +32,7 @@ LoggerWrapper{
 ## Conclusion:
 
 We are open to the wrapper and env approach.
-It seems like the lib can not be used directly since it does not consider really dynamic adjustment, the same as winston.
+It seems like the [cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support) can not be used directly since it does not consider really dynamic adjustment, the same as winston.
 
 ## Questions
 

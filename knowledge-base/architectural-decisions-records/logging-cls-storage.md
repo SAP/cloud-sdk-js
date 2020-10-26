@@ -133,4 +133,4 @@ So the number was reduced:
 - Per default I would switch the wrapping which decreases performance off.
 Then there are two ways to switch it on:
   - Via a env variable temporarily
-  - Via a `withTenantLogging` method on the request builder permanently in the code if your application wants it.
+  - Via an `enableTenantLogging` method on the logger util permanently for all loggers and also for some log context and packages.

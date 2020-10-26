@@ -123,9 +123,9 @@ export function getFallbackEdmTypeIfNeeded(
   if (edmType in edmToTsTypeMapping) {
     return edmType as EdmTypeShared<any>;
   }
-  logger.warn(
-    `The type ${edmType} is currently not supported by the sdk. Type "any" is used as fallback.`
-  );
+  // logger.warn(
+  //   `The type ${edmType} is currently not supported by the sdk. Type "any" is used as fallback.`
+  // );
   return 'Edm.Any';
 }
 

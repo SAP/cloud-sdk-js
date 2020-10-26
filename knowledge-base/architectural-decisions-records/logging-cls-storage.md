@@ -127,7 +127,7 @@ So the number was reduced:
 
 #### Summary
  
-- Node implementation has become more efficient in general. Can handle more request in 14 compared to 13 and 12.
+- Node implementation has become more efficient in general. Can handle more requests in 14 compared to 13 and 12.
 - The time increase for node 14 is approx 20% if we use the CLS.
 - For node 12 an 13 the effect is stronger 40% increase. 
 - Per default I would switch the wrapping which decreases performance off.

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Cache } from './cache';
 import { headerForClientCredentials } from './xsuaa-service';
 import {
@@ -21,7 +22,11 @@ const ClientCredentialsTokenCache = (
     credentials: ClientCredentials,
     token: ClientCredentialsResponse
   ): void => {
-    cache.set(getGrantTokenCacheKey(url, credentials), token, token.expires_in);
+    cache.set(
+      getGrantTokenCacheKey(url, credentials),
+      token,
+      moment().add(token.expires_in, 'second').unix() * 1000
+    );
   },
   clear: (): void => {
     cache.clear();

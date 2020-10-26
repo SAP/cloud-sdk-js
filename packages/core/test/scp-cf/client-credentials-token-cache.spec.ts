@@ -1,4 +1,5 @@
 import { install } from '@sinonjs/fake-timers';
+import moment from 'moment';
 import { clientCredentialsTokenCache } from '../../src/scp-cf';
 
 describe('ClientCredentialsTokenCache', () => {
@@ -8,14 +9,15 @@ describe('ClientCredentialsTokenCache', () => {
     const validToken = {
       access_token: '1234567890',
       token_type: 'UserToken',
-      expires_in: now + 100000,
+      // x second later
+      expires_in: 100000,
       jti: '',
       scope: ''
     };
     const expiredToken = {
       access_token: '1234567890',
       token_type: 'UserToken',
-      expires_in: now + 50000,
+      expires_in: 50000,
       jti: '',
       scope: ''
     };
@@ -31,8 +33,8 @@ describe('ClientCredentialsTokenCache', () => {
       credentials,
       expiredToken
     );
-
-    clock.tick(75000);
+    // millisecond
+    clock.tick(75000 * 1000);
 
     const valid = clientCredentialsTokenCache.getGrantTokenFromCache(
       'https://url_valid',

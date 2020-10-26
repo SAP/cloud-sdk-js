@@ -101,7 +101,7 @@ The import should not return something in the frontend and the code is ignored.
 ### Performance test
 
 In order to measure performance the following test has been done. 
-A fixed number of `TestEntity.requestBuilder().getAll()` request are executed in parallel using a mock response.
+A fixed number of `TestEntity.requestBuilder().getAll()` request are executed in parallel using a mocked response.
 The time is measured for all promises when finished.
 
 |Case|node version|number requests| time | variance|

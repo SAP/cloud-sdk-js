@@ -53,7 +53,7 @@ Cons:
 
 Two findings from Artem were:
 - [Open telemetry](https://github.com/open-telemetry/opentelemetry-js). This configures a tracer system which will receive traces from your app.
-If you use this one stil needs to store/pass the contex. Setting the [level dynamic](./dynamic-log-levels.md) I have not [really found](https://github.com/open-telemetry/opentelemetry-js/issues/578). 
+If you use this one stil needs to store/pass the context. Setting the [level dynamic](./dynamic-log-levels.md) I have not [really found](https://github.com/open-telemetry/opentelemetry-js/issues/578). 
 - [CLS-rtracer](https://github.com/puzpuzpuz/cls-rtracer) ads some nice automatic to the CLS approach, if you know which framework you are using e.g. `express`.
 Since we do not know this in the SDK we do not get really much from it.
 

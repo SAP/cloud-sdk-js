@@ -39,7 +39,7 @@ export async function buildHttpRequest(
     logger.warn(
       `The custom headers are provided with the keys: ${Object.keys(
         customHeaders
-      )}.`
+      )}. These keys will overwrite the headers created by the SDK.`
     );
   }
   const resolvedDestination = await resolveDestination(destination);

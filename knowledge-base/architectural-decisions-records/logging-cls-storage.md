@@ -54,7 +54,7 @@ Cons:
 Two findings from Artem were:
 - [Open telemetry](https://github.com/open-telemetry/opentelemetry-js). This configures a tracer system which will receive traces from your app.
 If you use this one, you still need to store/pass the context. Setting the log level [dynamically](./dynamic-log-levels.md) does not seem to be possible([related issue](https://github.com/open-telemetry/opentelemetry-js/issues/578)). 
-- [CLS-rtracer](https://github.com/puzpuzpuz/cls-rtracer) ads some nice automatic to the CLS approach, if you know which framework you are using e.g. `express`.
+- [CLS-rtracer](https://github.com/puzpuzpuz/cls-rtracer) adds some nice automation to the CLS approach, if you know which framework you are using e.g. `express`.
 Since we do not know this in the SDK we do not get really much from it.
 
 ### What are the supported node version on CF

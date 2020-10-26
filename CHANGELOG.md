@@ -23,6 +23,7 @@
 ## Improvements
 
 - Remove the `rambda` library to save  approx 2MB or 10% of the SDK size.
+- [Connectivity] Warn the user when using custom headers for executing http requests.
 
 ## Fixed Issues
 

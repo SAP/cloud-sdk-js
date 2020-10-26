@@ -69,6 +69,5 @@ from the request.
 
 ### Work on frontend
 
-The wrapping and reading of env varialbes should cause no problems on the frontend. 
+The wrapping and reading of env variables should cause no problems on the frontend. 
 The logging lib will be used only partially with very simple methods.
-

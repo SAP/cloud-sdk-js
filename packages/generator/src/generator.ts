@@ -14,7 +14,6 @@ import {
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
 import execa = require('execa');
-import { compile } from 'handlebars';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';
@@ -50,10 +49,6 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import { getTemplate } from './template-compilation/get-template';
-import { registerHelpers } from './template-compilation/helpers';
-import { registerPartials } from './template-compilation/partials';
-import { entityClass } from './template-compilation/entity';
 import { entityTemplate } from './template-compilation/templates/entity/entity';
 
 const logger = createLogger({
@@ -62,39 +57,6 @@ const logger = createLogger({
 });
 
 export async function generateTemplates(
-  options: GeneratorOptions
-): Promise<void> {
-  options = sanitizeOptions(options);
-  const services = parseServices(options);
-
-  if (options.clearOutputDir) {
-    emptyDirSync(options.outputDir.toString());
-  }
-
-  services.forEach(service => {
-    const serviceDirectory = resolve(
-      options.outputDir.toString(),
-      service.directoryName
-    );
-    ensureDirSync(serviceDirectory);
-    service.entities.forEach(entity => {
-      registerHelpers();
-      registerPartials();
-      const entityTempl = compile(getTemplate('entity/entity.mu'));
-
-      const filePath = resolve(serviceDirectory, `${entity.className}.ts`);
-
-      writeFileSync(
-        filePath,
-        entityTempl({ entity: entityClass(entity), service })
-      );
-    });
-  });
-
-  return;
-}
-
-export async function generateTemplates2(
   options: GeneratorOptions
 ): Promise<void> {
   options = sanitizeOptions(options);
@@ -130,8 +92,8 @@ export async function generateTsMorph(
   services.forEach(service => {
     console.time('service');
     const serviceDirectory = resolvePath(service.directoryName, options);
-      ensureDirSync(serviceDirectory);
-      const serviceDir = project.createDirectory(serviceDirectory);
+    ensureDirSync(serviceDirectory);
+    const serviceDir = project.createDirectory(serviceDirectory);
     service.entities.forEach(entity => {
       console.time('entity');
       sourceFile(

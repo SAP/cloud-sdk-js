@@ -88,11 +88,11 @@ export function isEnumType(name: string, enumTypes: VdmEnumType[]): boolean {
 }
 
 export function checkCollectionKind(property: EdmxProperty) {
-  if (property.hasOwnProperty('CollectionKind')) {
-    logger.warn(
-      `"CollectionKind" attribute found in the "${property.Name}" property. Currently, handling collection of properties is not supported by the generator.`
-    );
-  }
+  // if (property.hasOwnProperty('CollectionKind')) {
+  //   logger.warn(
+  //     `"CollectionKind" attribute found in the "${property.Name}" property. Currently, handling collection of properties is not supported by the generator.`
+  //   );
+  // }
 }
 
 export function complexTypeFieldType(typeName: string) {

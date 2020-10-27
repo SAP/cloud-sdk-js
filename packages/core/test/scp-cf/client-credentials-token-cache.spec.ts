@@ -1,11 +1,9 @@
 import { install } from '@sinonjs/fake-timers';
-import moment from 'moment';
 import { clientCredentialsTokenCache } from '../../src/scp-cf';
 
 describe('ClientCredentialsTokenCache', () => {
   it('should return token when valid, return undefined otherwise', () => {
     const clock = install();
-    const now = Date.now();
     const validToken = {
       access_token: '1234567890',
       token_type: 'UserToken',

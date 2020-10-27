@@ -4,11 +4,9 @@ import * as fs from 'fs-extra';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(process.cwd(), 'src/generator-cli.ts');
-  const inputDir = path.resolve(
-    process.cwd(),
-    '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
-  );
-  const outputDir = path.resolve(process.cwd(), 'test/generator-test-output');
+  const inputDir =
+    '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx';
+  const outputDir = 'test/generator-test-output';
 
   beforeEach(() => {
     if (!fs.existsSync(outputDir)) {
@@ -38,6 +36,20 @@ describe('generator-cli', () => {
       inputDir,
       '-o',
       outputDir
+    ]);
+    const services = fs.readdirSync(outputDir);
+    expect(services.length).toBeGreaterThan(0);
+    const entities = fs.readdirSync(path.resolve(outputDir, services[0]));
+    expect(entities).toContain('TestEntity.ts');
+    expect(entities).toContain('package.json');
+  }, 60000);
+
+  it('should generate VDM if there is a valid config file', async () => {
+    await execa('npx', [
+      'ts-node',
+      pathToGenerator,
+      '-c',
+      'test/generator/v2/generator.config.json'
     ]);
     const services = fs.readdirSync(outputDir);
     expect(services.length).toBeGreaterThan(0);

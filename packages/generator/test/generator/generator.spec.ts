@@ -1,10 +1,7 @@
-import { SourceFile } from 'ts-morph';
 import { generateProject } from '../../src';
 import { createOptions } from '../test-util/create-generator-options';
 
 describe('generator', () => {
-  let files: SourceFile[];
-
   describe('common', () => {
     it('copies the additional files matching the glob.', async () => {
       const project = await generateProject(

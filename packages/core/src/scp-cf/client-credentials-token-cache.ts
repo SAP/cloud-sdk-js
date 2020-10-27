@@ -25,7 +25,9 @@ const ClientCredentialsTokenCache = (
     cache.set(
       getGrantTokenCacheKey(url, credentials),
       token,
-      moment().add(token.expires_in, 'second').unix() * 1000
+      token.expires_in
+        ? moment().add(token.expires_in, 'second').unix() * 1000
+        : undefined
     );
   },
   clear: (): void => {

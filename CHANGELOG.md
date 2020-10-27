@@ -28,7 +28,7 @@
 ## Fixed Issues
 
 - [Generator] Fix the function import (OData V2 + V4) and action import, where the return type is a primitive edm type like `Edm.String`.
-- [Cache] Fix the client credential cache, which is never hit due to wrong expire time.
+- [Cache] Fix the client credentials cache, which is never hit due to wrong expire time.
 - [CSRF] Fix the error message of fetching the csrf token, it should show original error.
 
 

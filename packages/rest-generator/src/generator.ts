@@ -109,7 +109,7 @@ async function generateFilesUsingOpenAPI(
     '-g',
     'typescript-axios',
     '-o',
-    dirForService,
+    resolve(dirForService, 'open-api'),
     '-t',
     pathToTemplates,
     '--api-package',
@@ -138,18 +138,18 @@ async function generateFilesUsingOpenAPI(
 }
 
 function getServiceNameCamelCase(openApiFileName: string) {
-  const result = getServiceNameWithoutExtentions(openApiFileName);
+  const result = getServiceNameWithoutExtensions(openApiFileName);
   return toPascalCase(result);
 }
 
-function getServiceNameWithoutExtentions(openApiFileName: string): string {
+function getServiceNameWithoutExtensions(openApiFileName: string): string {
   let fileNameWithoutExtension = openApiFileName.replace('.json', '');
   fileNameWithoutExtension = fileNameWithoutExtension.replace('-openapi', '');
   return fileNameWithoutExtension;
 }
 
 function getDirForService(outputDir: PathLike, inputFileName: string) {
-  const withoutExtension = getServiceNameWithoutExtentions(inputFileName);
+  const withoutExtension = getServiceNameWithoutExtensions(inputFileName);
   return join(outputDir as string, withoutExtension);
 }
 

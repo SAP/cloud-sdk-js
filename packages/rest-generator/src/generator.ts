@@ -47,24 +47,24 @@ export async function generateRest(options: GeneratorOptions): Promise<void> {
 }
 
 async function generateOneApi(
-  file: string,
+  inputFileName: string,
   options: GeneratorOptions,
   pathToTemplates: string,
   pathToMustacheValues: string
 ) {
-  const folderForService = getFolderForService(options.outputDir, file);
-  mkdirSync(folderForService);
+  const dirForService = getDirForService(options.outputDir, inputFileName);
+  mkdirSync(dirForService);
 
-  const serviceName = getServiceNameCamelCase(file);
+  const serviceName = getServiceNameCamelCase(inputFileName);
   const adjustedOpenApiContent = getAdjustedOpenApiFile(
-    join(options.inputDir, file),
+    join(options.inputDir, inputFileName),
     serviceName
   );
-  const pathToAdjustedOpenApiDefFile = join(folderForService, 'open-api.json');
+  const pathToAdjustedOpenApiDefFile = join(dirForService, 'open-api.json');
   writeJsonSync(pathToAdjustedOpenApiDefFile, adjustedOpenApiContent);
 
   await generateFilesUsingOpenAPI(
-    folderForService,
+    dirForService,
     pathToAdjustedOpenApiDefFile,
     pathToTemplates,
     pathToMustacheValues
@@ -73,7 +73,7 @@ async function generateOneApi(
   const openApiModel = toOpenApiModel(
     pathToAdjustedOpenApiDefFile,
     serviceName,
-    folderForService
+    dirForService
   );
   return openApiModel;
 }
@@ -96,7 +96,7 @@ function generateSourcesForService(
 }
 
 async function generateFilesUsingOpenAPI(
-  folderForService: string,
+  dirForService: string,
   pathToAdjustedOpenApiDefFile: string,
   pathToTemplates: string,
   pathToMustacheValues: string
@@ -109,7 +109,7 @@ async function generateFilesUsingOpenAPI(
     '-g',
     'typescript-axios',
     '-o',
-    folderForService,
+    dirForService,
     '-t',
     pathToTemplates,
     '--api-package',
@@ -148,9 +148,9 @@ function getServiceNameWithoutExtentions(openApiFileName: string): string {
   return fileNameWithoutExtension;
 }
 
-function getFolderForService(folderDestination: PathLike, fileName: string) {
-  const withoutExtension = getServiceNameWithoutExtentions(fileName);
-  return join(folderDestination as string, withoutExtension);
+function getDirForService(outputDir: PathLike, inputFileName: string) {
+  const withoutExtension = getServiceNameWithoutExtentions(inputFileName);
+  return join(outputDir as string, withoutExtension);
 }
 
 function getAdjustedOpenApiFile(filePath: string, tag: string): JSON {

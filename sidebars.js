@@ -5,7 +5,9 @@ module.exports = {
       'overview/about',
       'overview/getting-started',
       'overview/benefits',
-      'overview/who-uses-sap-cloud-sdk'
+      'overview/who-uses-sap-cloud-sdk',
+      'overview/frequently-asked-questions-about-sap-cloud-sdk',
+      'overview/get-support'
       // 'overview/key-features'
       // 'overview/what-is-new'
     ],

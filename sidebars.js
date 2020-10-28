@@ -163,7 +163,8 @@ module.exports = {
               'js/features/connectivity/generic-http-client',
               'js/features/connectivity/on-premise-connectivity-in-the-sap-cloud-sdk-for-javascript'
             ]
-          }
+          },
+          // 'js/features/browser/use-sap-cloud-sdk-for-javascript-in-browser'
         ]
       },
       {

@@ -27,6 +27,11 @@ const logger = createLogger({
 });
 
 export async function generateRest(options: GeneratorOptions): Promise<void> {
+  const project = await generateProject(options);
+  await project.save();
+}
+
+export async function generateProject(options: GeneratorOptions){
   cleanDirectory(options.outputDir);
 
   const files = readdirSync(options.inputDir);
@@ -43,7 +48,7 @@ export async function generateRest(options: GeneratorOptions): Promise<void> {
   openApiServiceMetadata.map(metadata =>
     generateSourcesForService(metadata, project, options)
   );
-  await project.save();
+  return project;
 }
 
 async function generateOneApi(
@@ -55,7 +60,7 @@ async function generateOneApi(
   const dirForService = getDirForService(options.outputDir, inputFileName);
   mkdirSync(dirForService);
 
-  const serviceName = getServiceNameCamelCase(inputFileName);
+  const serviceName = getServiceNamePascalCase(inputFileName);
   const adjustedOpenApiContent = getAdjustedOpenApiFile(
     join(options.inputDir, inputFileName),
     serviceName
@@ -137,7 +142,7 @@ async function generateFilesUsingOpenAPI(
   }
 }
 
-function getServiceNameCamelCase(openApiFileName: string) {
+function getServiceNamePascalCase(openApiFileName: string) {
   const result = getServiceNameWithoutExtensions(openApiFileName);
   return toPascalCase(result);
 }

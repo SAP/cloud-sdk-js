@@ -1,5 +1,5 @@
-import { CalculationApi, PriceCalculateResponse } from '../poc/generated/PriceCalculation';
-import { PriceCalculationApiRequestBuilder } from '../poc/generated/PriceCalculation/request-builder';
+import { CalculationApi, PriceCalculateResponse } from '../test-services/PriceCalculation';
+import { PriceCalculationApiRequestBuilder } from '../test-services/PriceCalculation/request-builder';
 import { transaction } from './price-calculate-payload';
 import { AxiosRequestConfig } from 'axios';
 import { buildAxiosRequestConfig } from '@sap-cloud-sdk/core';

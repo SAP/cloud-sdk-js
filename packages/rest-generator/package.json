@@ -30,7 +30,7 @@
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
-    "generate:poc": "ts-node src/generator-cli.ts -i test/resources/PriceCalculation  -o test/poc/generated",
+    "generate:poc": "ts-node src/generator-cli.ts -i test/resources/PriceCalculation  -o test/test-services",
     "check:dependencies": "depcheck . --ignore-bin-package=true"
   },
   "dependencies": {

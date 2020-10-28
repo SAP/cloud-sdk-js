@@ -73,7 +73,7 @@ function importFromOpenApi(
   const apiClassName = `${toPascalCase(serviceMetadata.apiName)}Api`;
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: './api',
+    moduleSpecifier: './open-api/api',
     namedImports: [apiClassName, ...refNames]
   };
 }

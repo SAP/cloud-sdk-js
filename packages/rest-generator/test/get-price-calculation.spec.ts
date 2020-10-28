@@ -4,7 +4,7 @@ import {
   setTestDestination,
   unmockAllTestDestinations
 } from '@sap-cloud-sdk/test-util';
-import { PercentActionEnum, PriceCalculateResponse } from './test-services/PriceCalculation';
+import { PercentActionEnum, PriceCalculateResponse } from './test-services/PriceCalculation/open-api/api';
 import { getPriceCalculate, getPriceCalculateWithVanillaOpenApi } from './util/get-price-calculate';
 
 beforeEach(() => {

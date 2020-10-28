@@ -1,4 +1,4 @@
-import { CalculationApi, PriceCalculateResponse } from '../test-services/PriceCalculation';
+import { CalculationApi, PriceCalculateResponse } from '../test-services/PriceCalculation/open-api/api';
 import { PriceCalculationApiRequestBuilder } from '../test-services/PriceCalculation/request-builder';
 import { transaction } from './price-calculate-payload';
 import { AxiosRequestConfig } from 'axios';

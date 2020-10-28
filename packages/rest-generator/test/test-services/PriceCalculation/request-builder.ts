@@ -5,7 +5,7 @@
  */
 import { Destination, DestinationNameAndJwt, RestRequestBuilder, RestRequestConfig } from '@sap-cloud-sdk/core';
 import { AxiosRequestConfig } from 'axios';
-import { PriceCalculationApi, PriceCalculate } from './api';
+import { PriceCalculationApi, PriceCalculate } from './open-api/api';
 
 export class PriceCalculationApiRequestBuilder {
   static calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate): CalculateViaRestWithTenantRequestBuilder {

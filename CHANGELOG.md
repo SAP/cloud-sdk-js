@@ -24,6 +24,7 @@
 
 - Remove the `rambda` library to save  approx 2MB or 10% of the SDK size.
 - [Connectivity] Warn the user when using custom headers for executing http requests.
+- Pass through original error message in case of failure when fetching the csrf token.
 
 ## Fixed Issues
 

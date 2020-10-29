@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as https from 'https';
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import { buildHeadersForDestination } from '../header-builder/header-builder-for-destination';
 import {
@@ -18,6 +18,11 @@ import {
   HttpResponse
 } from './http-client-types';
 
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'http-client'
+});
+
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination.
  * If a destination name (and a JWT) are provided, it will try to resolve the destination.
@@ -30,6 +35,13 @@ export async function buildHttpRequest(
   destination: Destination | DestinationNameAndJwt,
   customHeaders?: Record<string, any>
 ): Promise<DestinationHttpRequestConfig> {
+  if (customHeaders) {
+    logger.warn(
+      `The custom headers are provided with the keys: ${Object.keys(
+        customHeaders
+      )}. These keys will overwrite the headers created by the SDK.`
+    );
+  }
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
     throw Error(

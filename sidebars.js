@@ -5,7 +5,9 @@ module.exports = {
       'overview/about',
       'overview/getting-started',
       'overview/benefits',
-      'overview/who-uses-sap-cloud-sdk'
+      'overview/who-uses-sap-cloud-sdk',
+      'overview/frequently-asked-questions-about-sap-cloud-sdk',
+      'overview/get-support'
       // 'overview/key-features'
       // 'overview/what-is-new'
     ],
@@ -163,7 +165,8 @@ module.exports = {
               'js/features/connectivity/generic-http-client',
               'js/features/connectivity/on-premise-connectivity-in-the-sap-cloud-sdk-for-javascript'
             ]
-          }
+          },
+          // 'js/features/browser/use-sap-cloud-sdk-for-javascript-in-browser'
         ]
       },
       {

@@ -12,12 +12,129 @@ keywords:
 - sap cloud sdk
 ---
 
-The SAP Cloud SDK for JavaScript can be used both as a backend and frontend library when used in a browser. Because of the specifics of a browser environment, some features might be unavailable. To help you get up and running faster in a browser, we'll outline the main steps and caveats of using SDK on the frontend.
+The SAP Cloud SDK for JavaScript can be used both as a backend and frontend library when used in a browser.
+Because of the specifics of a browser environment, some features might be unavailable.
+To help you get up and running faster in a browser, we'll outline the main steps and caveats of using SDK on the frontend.
+We will use `Angular` to illustrate the usage/
 
-## Package the SAP Cloud SDK for a Browser
+## Prerequisite
 
-## Configuring destinations
+You have a front-end application set up.
+For example an [Angular application](https://angular.io/cli/new) via `ng new myProject`.
 
-## Making requests
+## Include the SDK
 
-## Integration with frontend frameworks
+As for most examples we will use the business partner API.
+Add the package `@sap/cloud-sdk-vdm-business-partner-service` to your package.json introduce some call via:
+```
+//In the .html part of the component
+<button (click)="callApi()">Click me!</button>
+
+//In the .ts part of the component
+import {BusinessPartner} from '@sap/cloud-sdk-vdm-business-partner-service'
+
+async function callApi(){
+    const result await BusinessPartner.requestBuilder().getAll().execute(myDest)
+    console.log(result)
+}
+```
+
+:::note
+For the destination lookup the SDK relies on `nodejs` functionality like process.env for example.
+However, the request building, execution and result parsing does not require any `nodejs` modules and can be used in the frontend.
+Hence you have to create the destination variable `myDest` manually.
+:::
+
+When you run `npm run build` your project should compile.
+Currently, we are facing compilation errors of the kind `Module not found: Error: Can't resolve 'https' in ...'`
+Please checkout the [workaround](#workaround) for these kind of errors.
+
+## Run Locally
+
+As discussed above the `myDest` can not be fetched via the destination service.
+When you run locally you can simply provide it
+```
+import {Destination} from '@sap-cloud-sdk/core'
+
+const myDest:Destination = {
+  url: 'https://my123456.s4hana.ondemand.com',
+  username: 'myUser',
+  password: 'myPassowrd'
+}
+```
+
+When you execute `npm run serve` your project is compiled and hosted on a local server.
+
+:::note
+When you trigger a request from a browser to the remote system all modern browser will block this to ensure [same origin policy](https://en.wikipedia.org/wiki/Same-origin_policy).
+One simple way to overcome this issue locally is to disable web security of your  browser temporarily (e.g. --disable-web-security for Chrome)
+Alternatively you can also create a second localhost proxy server which adds the `access-allow-origin-header` to the request.
+:::
+
+## Run On Cloud Foundry
+
+For productive usage the methods mentioned above for running locally are of course not needed.
+You simply configure the `xs-app.json` of the used app-router with an entry like this:
+```
+ {
+    "source": "/REMOTE-SYSTEM-IDENTIFIER/(.*)",
+    "target": "/$1",
+    "destination": "DESTINATION-NAME-ON-CF"
+  }
+```
+
+and then in your application simply define the destination as:
+```
+import {Destination} from '@sap-cloud-sdk/core'
+
+const myDest:Destination = {
+  url: '/REMOTE-SYSTEM-IDENTIFIER'
+}
+```
+
+The created request to `/REMOTE-SYSTEM-IDENTIFIER/sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartner` will be matched by the app-router and the destination with the given URL and credentials is used.
+
+:::note
+This approach does not support principal propagation to On-Premise systems.
+:::
+
+## <a name="workaround"></a>Workaround
+
+Currently, we are facing the issue, that on compilation from TS to JS the `nodejs` parts cause problems even if they are not used.
+We hope to resolve these issues in the future but here is a workaround:
+
+- Include @angular-builders/custom-webpack to the dev dependencies
+- Create a custom webpack config named `node-webpack.config.js` and list the following node modules:
+```node: {
+    crypto: true,
+    stream: true,
+    zlib: true,
+    path: true,
+    os: true,
+    http: true,
+    https: true
+  }
+```
+- In the `angular.json` adjust the `build` target to use the custom builder:
+```
+ "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "customWebpackConfig": {
+              "path": "./node-webpack.config.js"
+            }...
+```
+- In the `angular.json adjust the `serve` target to use the custom builder as well:
+```
+ "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+```
+- In the package.json exclude the node modules not existing in the browser:
+```
+"browser": {
+      "fs": false,
+      "net": false,
+      "tls": false
+    }
+```
+Now the project should build and the run locally.

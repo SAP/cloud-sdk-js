@@ -97,6 +97,11 @@ The created request to `/REMOTE-SYSTEM-IDENTIFIER/sap/opu/odata/sap/API_BUSINESS
 This approach does not support principal propagation to On-Premise systems.
 :::
 
+:::note
+With webpack it is possible to [load resources](https://webpack.js.org/plugins/normal-module-replacement-plugin/) for local or a productive usage.
+Using such a switch you can easily adjust the value of the destination for the two cases.
+:::
+
 ## <a name="workaround"></a>Workaround
 
 Currently, we are facing the issue, that on compilation from TS to JS the `nodejs` parts cause problems even if they are not used.

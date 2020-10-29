@@ -14,6 +14,7 @@ const logger = createLogger({
 export interface GeneratorOptions {
   inputDir: string;
   outputDir: string;
+  clearOutputDir: boolean;
 }
 
 /*
@@ -55,6 +56,10 @@ function parseCmdArgs(): GeneratorOptions {
       requiresArg: true,
       demandOption: true,
       alias: 'o'
+    })
+    .options('clearOutputDir', {
+      type: 'string',
+      default: false
     })
     .strict(true)
     .recommendCommands().argv;

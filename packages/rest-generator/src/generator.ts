@@ -32,7 +32,9 @@ export async function generateRest(options: GeneratorOptions): Promise<void> {
 }
 
 export async function generateProject(options: GeneratorOptions){
-  cleanDirectory(options.outputDir);
+  if(options.clearOutputDir) {
+    cleanDirectory(options.outputDir);
+  }
 
   const files = readdirSync(options.inputDir);
   const pathToTemplates = resolve(__dirname, '../templates');
@@ -58,7 +60,9 @@ async function generateOneApi(
   pathToMustacheValues: string
 ) {
   const dirForService = getDirForService(options.outputDir, inputFileName);
-  mkdirSync(dirForService);
+  if (!existsSync(dirForService)) {
+    mkdirSync(dirForService);
+  }
 
   const serviceName = getServiceNamePascalCase(inputFileName);
   const adjustedOpenApiContent = getAdjustedOpenApiFile(

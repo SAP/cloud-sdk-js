@@ -51,7 +51,7 @@ function getMethods(openApiPath: OpenApiPath): MethodDeclarationStructure[] {
 }
 
 function toStatement(className: string, parameters: string[]) {
-  const paramString = ['new RestRequestConfig()', ...parameters].join(', ');
+  const paramString = [...parameters].join(', ');
   return `return new ${className}(${paramString});`;
 }
 

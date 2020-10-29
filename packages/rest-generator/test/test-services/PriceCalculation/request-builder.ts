@@ -3,19 +3,19 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Destination, DestinationNameAndJwt, RestRequestBuilder, RestRequestConfig } from '@sap-cloud-sdk/core';
+import { Destination, DestinationNameAndJwt, RestRequestBuilder } from '@sap-cloud-sdk/core';
 import { AxiosRequestConfig } from 'axios';
 import { PriceCalculationApi, PriceCalculate } from './open-api/api';
 
 export class PriceCalculationApiRequestBuilder {
   static calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate): CalculateViaRestWithTenantRequestBuilder {
-    return new CalculateViaRestWithTenantRequestBuilder(new RestRequestConfig(), tenantName, priceCalculate);
+    return new CalculateViaRestWithTenantRequestBuilder(tenantName, priceCalculate);
   }
 }
 
 export class CalculateViaRestWithTenantRequestBuilder extends RestRequestBuilder {
-  constructor(public requestConfig: RestRequestConfig, public tenantName: string, public priceCalculate: PriceCalculate) {
-    super(requestConfig);
+  constructor(public tenantName: string, public priceCalculate: PriceCalculate) {
+    super();
   }
 
   async execute(destination: Destination | DestinationNameAndJwt) {

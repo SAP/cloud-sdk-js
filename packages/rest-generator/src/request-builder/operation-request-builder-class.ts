@@ -38,7 +38,6 @@ export function operationRequestBuilderClass(
     ctors: [
       {
         parameters: [
-          ...addPublicScope([getRequestConfigParameter()]),
           ...addPublicScope(
             pathParamToParamStructure(openApiPath.pathParameters)
           ),
@@ -46,7 +45,7 @@ export function operationRequestBuilderClass(
             refNameToParamStructure(operation.requestBodySchemaRefName)
           )
         ],
-        statements: 'super(requestConfig);'
+        statements: 'super();'
       }
     ]
   };
@@ -105,13 +104,4 @@ function buildParameterFromRefName(refName?: string): string[] {
     return [`this.${toPropertyFormat(refName)}`];
   }
   return [];
-}
-
-function getRequestConfigParameter(): OptionalKind<
-  ParameterDeclarationStructure
-> {
-  return {
-    name: 'requestConfig',
-    type: 'RestRequestConfig'
-  };
 }

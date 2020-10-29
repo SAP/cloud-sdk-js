@@ -1,13 +1,14 @@
 import { AxiosRequestConfig } from 'axios';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
 import { buildAxiosRequestConfig } from '../http-client';
-import { RestRequestConfig } from './rest-request-config';
 
 export abstract class RestRequestBuilder {
-  constructor(public requestConfig: RestRequestConfig) {}
+  public customHeaders: Record<string, string> = {};
 
   withCustomHeaders(headers: Record<string, string>): this {
-    this.requestConfig.addCustomHeaders(headers);
+    Object.entries(headers).forEach(([key, value]) => {
+      this.customHeaders[key.toLowerCase()] = value;
+    });
     return this;
   }
 
@@ -15,7 +16,7 @@ export abstract class RestRequestBuilder {
     destination: Destination | DestinationNameAndJwt
   ): Promise<AxiosRequestConfig> {
     return buildAxiosRequestConfig(destination, {
-      headers: this.requestConfig.customHeaders
+      headers: this.customHeaders
     });
   }
 }

@@ -25,8 +25,7 @@ export function requestBuilderSourceFile(
       coreImportDeclaration([
         'Destination',
         'DestinationNameAndJwt',
-        'RestRequestBuilder',
-        'RestRequestConfig'
+        'RestRequestBuilder'
       ]),
       importAxiosRequestConfig(),
       importFromOpenApi(serviceMetadata),

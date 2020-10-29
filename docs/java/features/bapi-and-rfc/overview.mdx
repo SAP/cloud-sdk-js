@@ -14,6 +14,9 @@ keywords:
 - rfc
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## What is a BAPI/an RFC Module?
 
 As per the [official SAP documentation](https://help.sap.com/saphelp_46c/helpdata/en/a5/3ec8464ac011d1894e0000e829fbbd/content.htm?no_cache=true), a BAPI (Business Application Programming Interface) is a *precisely defined interface providing access to processes and data in business application systems*. BAPIs allow external systems to integrate with ABAP systems by reading and writing business data through the BAPI as an interface. By contrast, an RFC module can also be used for such integrations. However, the recommended approach is to leverage BAPIs wherever possible as BAPIs guarantee more stable and intuitive interfaces.
@@ -268,6 +271,9 @@ Simply speaking, for RFC destinations such decorations do not exist.
 
 ### Local Deployment
 It is possible to execute BAPI calls from a Java app that runs on `localhost`. That requires a few configuration steps.
+:::note
+Some configuration steps differ depending on which Maven archetype (Spring or TomEE) you use.
+:::
 
 #### Download and Install JCo Library
 - Download the JCO library from the official [product page](https://support.sap.com/en/product/connectors/jco.html).
@@ -280,28 +286,79 @@ Before running the command, replace `<sapjco-version>` with the JCo version you 
 - Now Maven uses the JCo JAR file when declaring the dependency in your pom file.
 
 #### Add Dependency to you POM
+<Tabs groupId="archetype" defaultValue="tomee" values={[ { label: 'TomEE', value: 'tomee', }, { label: 'Spring', value: 'spring', }]}>
+
+<TabItem value="tomee">
+
 - Add this new dependency to your `pom.xml` in the `application` folder:
+
 ```xml
 <dependency>
     <groupId>com.sap.conn.jco</groupId>
     <artifactId>com.sap.conn.jco.sapjco3</artifactId>
-    <version>${sapjco-version}</version>
+    <version>X.Y.Z</version>
 </dependency>
 ```
+- Build the app with `mvn clean package`.
+
 :::tip 
-Replace the placeholder `${sapjco-version}` with the JCo version you downloaded.
+Replace the placeholder `X.Y.Z` with the JCo version you downloaded.
 :::
+
+</TabItem>
+<TabItem value="spring">
+
+- Add this new dependency to your `pom.xml` in the `application` folder:
+
+```xml
+<dependency>
+    <groupId>com.sap.conn.jco</groupId>
+    <artifactId>com.sap.conn.jco.sapjco3</artifactId>
+    <version>X.Y.Z</version>
+</dependency>
+```
+
+:::tip 
+Replace the placeholder `X.Y.Z` with the JCo version you downloaded.
+:::
+
+- Change the packaging format to `war` file by adding:
+
+```xml
+`<packaging>war</packaging>`
+```
+
+- Use the latest version of the `maven-war-plugin` by specifiying it explicitly in your pom.xml:
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-war-plugin</artifactId>
+    <version>3.3.1</version> <!-- use latest version -->
+</plugin>
+```
+
+- Build the app with `mvn clean package`.
+
+</TabItem>
+</Tabs>
+
+
 
 #### Add JCo Library to System Path
 Open the file `javadoc/installation.html` from the extracted JCo archive and follow the installation instructions. Essentially you have to add the directory where you extracted the JCo archive to one system environment variable. The variable name depends on your operating system. 
 - For Windows, add the directory which contains the downloaded JCo archive to the system environment variable `PATH`.
 - For MacOS, add the directory which contains the downloaded JCo archive to the system environment variable `DYLD_LIBRARY_PATH`.
 
+<Tabs groupId="archetype" defaultValue="tomee" values={[ { label: 'TomEE', value: 'tomee', }, { label: 'Spring', value: 'spring', }]}>
+
+<TabItem value="tomee">
 If you face an exception like the following ones, then you must configure the classpath to contain the `sapjco3.jar` file to as shown hereafter.
 - `Could not initialize class com.sap.conn.jco.JCo`
 - `java.lang.UnsatisfiedLinkError: no sapjco3 in java.library.path`
 
 To overcome these exceptions, configure the classpath via the TomEE Maven plugin.
+
 ```xml
 <plugin>
     <groupId>org.apache.tomee.maven</groupId>
@@ -314,7 +371,16 @@ To overcome these exceptions, configure the classpath via the TomEE Maven plugin
 </plugin>
 ```
 
-#### Create a Destination
+</TabItem>
+
+<TabItem value="spring">
+For Spring-based apps, we'll use a standalone Tomcat later on. For this purpose setting the operating system-specific environment variable suffices.
+</TabItem>
+
+</Tabs>
+
+
+#### Create a Destination File
 - Create a file `<destination-name>.jcoDestination` where you replace `<destination-name>` with the name of the destination.
 - Add the following properties to the file:
 ```
@@ -328,14 +394,23 @@ jco.client.passwd=<password>
 Replace every `<placeholder>` with the respective value.
 :::
 
-#### Point JCo to your Destination
+#### Point JCo to your Destination File
 JCo considers the system property `jco.destinations.dir` to look for destination files. The property value must be the directory where the destination file resides.
+:::note
+Note that the system property must point to the directory, not to the Destination file.
+:::
 
 You can set the property in your Java code like so:
 ```java
 System.setProperty("jco.destinations.dir", "here-comes-the-directory-with-destination");
 ```
-Alternatively, you can pass the system property to the JVM via the Maven plugin configuration.
+Alternatively, you can pass the system property to the JVM via configuration in different ways depending on the chosen archetype.
+
+<Tabs groupId="archetype" defaultValue="tomee" values={[ { label: 'TomEE', value: 'tomee', }, { label: 'Spring', value: 'spring', }]}>
+
+<TabItem value="tomee">
+You can see the system property `jco.destinations.dir` via the Maven plugin configuration as follows:
+
 ```xml
 <plugin>
     <groupId>org.apache.tomee.maven</groupId>
@@ -344,6 +419,43 @@ Alternatively, you can pass the system property to the JVM via the Maven plugin 
         <args>-Djco.destinations.dir=here-comes-the-directory-with-the-destination</args>
 ...
 ```
+
+</TabItem>
+
+<TabItem value="spring">
+
+You can see the system property `jco.destinations.dir` via the environment variable `CATALINA_OPTS`. 
+Example value: `-Djco.destinations.dir=here-comes-the-directory-with-the-destination`
+
+</TabItem>
+
+</Tabs>
+
+#### Launch App on Localhost
+
+<Tabs groupId="archetype" defaultValue="tomee" values={[ { label: 'TomEE', value: 'tomee', }, { label: 'Spring', value: 'spring', }]}>
+
+<TabItem value="tomee">
+
+Build your app with `mvn clean package` and launch it with `mvn tomee:run`. Then, access the HTTP endpoint exposed by your app.
+
+</TabItem>
+
+<TabItem value="spring">
+
+- Build your app with `mvn clean package`.
+- Download Tomcat from its [official page](http://mirror.23media.de/apache/tomcat/tomcat-8/v8.5.30/bin/)
+- Extract the archive and copy it to a `tomcat` folder
+- Copy the war file into the `webapps` folder in the `tomcat` folder
+- From a terminal navigate to tomcat/bin folder and execute
+  - `catalina.bat run` (on Windows)
+  - `catalina.sh run` (on Unix-based systems)
+- Open `http://localhost:8080/<appname>>-application/<rest-endpoint>` to invoke your app
+
+</TabItem>
+
+</Tabs>
+
 
 ### WebSocket RFC Client Communication
 JCo supports RFC calls from the client-side via web sockets as of version `3.1.2`. For this scenario, a certain configuration is required within the SAP ERP system

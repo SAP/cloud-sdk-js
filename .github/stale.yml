@@ -1,8 +1,9 @@
-daysUntilStale: 60
+daysUntilStale: 14
 daysUntilClose: 7
 exemptLabels:
   - pinned
   - security
+  - in backlog
 staleLabel: stale
 markComment: >
   This issue has been automatically marked as stale because it has not had

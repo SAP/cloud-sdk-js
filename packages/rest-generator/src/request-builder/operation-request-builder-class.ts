@@ -73,6 +73,7 @@ function method(
           type: 'Destination | DestinationNameAndJwt'
         }
       ],
+      returnType: `Promise<AxiosResponse<${operation.responseSchemaRefName}>>`,
       statements: toStatement(metadata, openApiPath, operation)
     }
   ];

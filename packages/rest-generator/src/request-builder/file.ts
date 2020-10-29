@@ -51,14 +51,14 @@ function importAxiosRequestConfig(): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier: 'axios',
-    namedImports: ['AxiosRequestConfig']
+    namedImports: ['AxiosRequestConfig', 'AxiosResponse']
   };
 }
 
 function importFromOpenApi(
   serviceMetadata: OpenApiServiceMetadata
 ): ImportDeclarationStructure {
-  const refNames: string[] = flat(
+  const paramRefNames: string[] = flat(
     serviceMetadata.paths.map(path =>
       flat(
         path.operations.map(o =>
@@ -69,10 +69,21 @@ function importFromOpenApi(
       )
     )
   );
+  const responseRefNames: string[] = flat(
+    serviceMetadata.paths.map(path =>
+      flat(
+        path.operations.map(o =>
+          o.responseSchemaRefName
+            ? [toPascalCase(o.responseSchemaRefName)]
+            : []
+        )
+      )
+    )
+  );
   const apiClassName = `${toPascalCase(serviceMetadata.apiName)}Api`;
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier: './open-api/api',
-    namedImports: [apiClassName, ...refNames]
+    namedImports: [apiClassName, ...paramRefNames, ...responseRefNames]
   };
 }

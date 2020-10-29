@@ -5,8 +5,5 @@ exemptLabels:
   - security
   - in backlog
 staleLabel: stale
-markComment: >
-  This issue has been automatically marked as stale because it has not had
-  recent activity. It will be closed if no further activity occurs. Thank you
-  for your contributions.
-closeComment: false
+markComment: This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs within 7 days. Feel free to comment, if you want to keep it open. Thank you for your contributions!
+closeComment: This issue has been automatically closed because it has not had recent activity. If you need further assistance feel free to comment or create a new issue. Thank you for your contributions!

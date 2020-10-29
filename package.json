@@ -89,7 +89,7 @@
   },
   "dependencies": {},
   "resolutions": {
-    "agent-base": "6.0.2",
+    "agent-base": "^6.0.2",
     "@types/node": "^12.0.0",
     "dot-prop": "^5.1.1"
   }

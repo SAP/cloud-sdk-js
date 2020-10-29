@@ -14,6 +14,7 @@ export interface OpenApiOperation {
   method: SupportedOperation;
   operationName: string;
   requestBodySchemaRefName?: string;
+  responseSchemaRefName?: string;
 }
 
 export enum SupportedOperation {

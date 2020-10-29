@@ -4,8 +4,8 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { Destination, DestinationNameAndJwt, RestRequestBuilder } from '@sap-cloud-sdk/core';
-import { AxiosRequestConfig } from 'axios';
-import { PriceCalculationApi, PriceCalculate } from './open-api/api';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { PriceCalculationApi, PriceCalculate, PriceCalculateResponse } from './open-api/api';
 
 export class PriceCalculationApiRequestBuilder {
   static calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate): CalculateViaRestWithTenantRequestBuilder {
@@ -18,7 +18,7 @@ export class CalculateViaRestWithTenantRequestBuilder extends RestRequestBuilder
     super();
   }
 
-  async execute(destination: Destination | DestinationNameAndJwt) {
+  async execute(destination: Destination | DestinationNameAndJwt): Promise<AxiosResponse<PriceCalculateResponse>> {
     const requestConfig: AxiosRequestConfig = await this.buildRequestConfig(destination);
     return new PriceCalculationApi({ basePath: requestConfig.baseURL }).calculateViaRestWithTenant(this.tenantName, this.priceCalculate, requestConfig);
   }

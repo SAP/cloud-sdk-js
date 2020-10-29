@@ -43,21 +43,44 @@ function toOpenApiOperation(obj, method: string): OpenApiOperation | undefined {
   if (obj[method]) {
     const operation = obj[method];
     const requestBodySchemaRefName = toRequestBodySchemaRefName(operation);
+    const responseSchemaRefName = toResponseSchemaRefName(operation);
     return {
       method: SupportedOperation[method],
       operationName: operation.operationId,
-      requestBodySchemaRefName
+      requestBodySchemaRefName,
+      responseSchemaRefName
     };
   }
 }
 
 function toRequestBodySchemaRefName(operation): string | undefined {
   const content = operation.requestBody?.content;
+  return getRefNameFromContent(content);
+}
+
+function getRefNameFromContent(content): string | undefined{
   if (content) {
     const contentAppJson = content['application/json'];
     const ref = contentAppJson?.schema['$ref'];
     return ref && getRefName(ref);
   }
+}
+
+function toResponseSchemaRefName(operation): string | undefined {
+  const responses = operation.responses;
+  if (!responses){
+    return;
+  }
+  const key2XX = Object.keys(responses).find(httpStatusCode => is2XXCode(httpStatusCode))
+  if(!key2XX){
+    return;
+  }
+
+  return getRefNameFromContent(responses[key2XX]?.content);
+}
+
+export function is2XXCode(httpStatusCode: string): boolean {
+  return httpStatusCode.match(/^2\d\d$/) != null;
 }
 
 function getRefName(ref: string) {

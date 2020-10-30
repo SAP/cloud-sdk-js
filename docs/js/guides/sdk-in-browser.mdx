@@ -109,15 +109,18 @@ We hope to resolve these issues in the future but here is a workaround:
 
 - Include @angular-builders/custom-webpack to the dev dependencies
 - Create a custom webpack config named `node-webpack.config.js` and list the following node modules:
-```node: {
-    crypto: true,
-    stream: true,
-    zlib: true,
-    path: true,
-    os: true,
-    http: true,
-    https: true
-  }
+```
+module.exports={
+     node: {
+       crypto: true,
+       stream: true,
+       zlib: true,
+       path: true,
+       os: true,
+       http: true,
+       https: true
+     }
+   }
 ```
 - In the `angular.json` adjust the `build` target to use the custom builder:
 ```

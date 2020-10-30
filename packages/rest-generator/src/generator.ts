@@ -61,7 +61,7 @@ async function generateOneApi(
 ) {
   const dirForService = getDirForService(options.outputDir, inputFileName);
   if (!existsSync(dirForService)) {
-    mkdirSync(dirForService);
+    mkdirSync(dirForService, { recursive: true });
   }
 
   const serviceName = getServiceNamePascalCase(inputFileName);

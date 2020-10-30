@@ -23,17 +23,17 @@ Binding the connectivity service to your app gives you an entry in the environme
     "credentials": {
      "clientid": "clientid",
      "clientsecret": "clientsecret",
-     "identityzone": "s4sdk",
-     "onpremise_proxy_host": "connectivityproxy.internal.cf.sap.hana.ondemand.com",
+     "identityzone": "identityzone",
+     "onpremise_proxy_host": "connectivityproxy.cf.sap.hana.ondemand.com",
      "onpremise_proxy_port": "20003",
      "onpremise_proxy_rfc_port": "20001",
      "onpremise_socks5_proxy_port": "20004",
-     "tenantid": "a89ea924-d9c2-4eab-84fb-3ffcaadf5d24",
+     "tenantid": "abcdefg-1234-5678-hijk-7890lmnop",
      "tenantmode": "dedicated",
      "uaadomain": "authentication.sap.hana.ondemand.com",
      "url": "https://s4sdk.authentication.sap.hana.ondemand.com",
-     "verificationkey": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx/jN5v1mp/TVn9nTQoYVIUfCsUDHa3Upr5tDZC7mzlTrN2PnwruzyS7w1Jd+StqwW4/vn87ua2YlZzU8Ob0jR4lbOPCKaHIi0kyNtJXQvQ7LZPG8epQLbx0IIP/WLVVVtB8bL5OWuHma3pUnibbmATtbHIi0kyNtJXQvQ7LZPG8epQLbx0IIP/WLVVVtB8bL5OWuHma3pUnibbmATtbOh5LksQ2zLMngEjUF52JQyzTpjoQkahp0BNe/drlAqO253keiY63FL6belKjJGmSqdnotSXxB2ym+HQ0ShaNvTFLEvi2+ObkyjGWgFpQaoCcGq0KX0y0mPzOvdFsNT+rBDQIDAQAB-----END PUBLIC KEY-----",
-     "xsappname": "clone714465bab477466ba097e647388e61b4!b2499|connectivity!b137"
+     "verificationkey": "-----BEGIN PUBLIC KEY-----the public key-----END PUBLIC KEY-----",
+     "xsappname": "xsappname"
     },
     "instance_name": "my-connectivity",
     "label": "connectivity",

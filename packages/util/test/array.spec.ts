@@ -13,9 +13,9 @@ describe('array', () => {
       function functionWithVariableArguments(...varargs: string[]);
       function functionWithVariableArguments(array: string[]);
       function functionWithVariableArguments(
-        firstOrArray: string | string[],
+        firstOrArray: undefined| string | string[],
         ...rest: string[]
-      ): string[] | undefined {
+      ): string[] {
         return variableArgumentToArray(firstOrArray, rest);
       }
       expect(functionWithVariableArguments()).toEqual([]);

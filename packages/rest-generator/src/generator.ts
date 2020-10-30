@@ -43,14 +43,8 @@ export async function generateProject(options: GeneratorOptions) {
   const project = new Project(projectOptions());
 
   const openApiServiceMetadata = await Promise.all(
-    files.map(
-      async file =>
-        await generateOneApi(
-          file,
-          options,
-          pathToTemplates,
-          pathToMustacheValues
-        )
+    files.map(async file =>
+      generateOneApi(file, options, pathToTemplates, pathToMustacheValues)
     )
   );
   openApiServiceMetadata.map(metadata =>

@@ -190,9 +190,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Equivalent to `enableUpdateBy`.
           showLastUpdateAuthor: true,
-          // Equivalent to `enableUpdateTime`.
           showLastUpdateTime: true,
           editUrl:
           'https://github.com/SAP/cloud-sdk/edit/documentation',

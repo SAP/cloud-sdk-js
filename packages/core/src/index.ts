@@ -8,3 +8,4 @@ export * from './http-agent';
 export * from './http-client';
 export * from './protocol';
 export * from './get-protocol';
+export * from './rest';

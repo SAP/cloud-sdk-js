@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as https from 'https';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { buildHeadersForDestination } from '../header-builder/header-builder-for-destination';
 import {
   Destination,
@@ -96,6 +96,27 @@ export function execute(executeFn: ExecuteHttpRequestFn) {
 }
 
 /**
+ *
+ * @experimental This is an experimental function, which might be removed later.
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ */
+
+export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
+  destination: Destination | DestinationNameAndJwt,
+  requestConfig?: Partial<T>
+): Promise<AxiosRequestConfig> {
+  const destinationRequestConfig = await buildHttpRequest(
+    destination,
+    requestConfig?.headers
+  );
+  const request = requestConfig
+    ? merge(destinationRequestConfig, requestConfig)
+    : destinationRequestConfig;
+  return { ...getAxiosConfigWithDefaultsWithoutMethod(), ...request };
+}
+
+/**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
  * and executes it (using Axios).
  *
@@ -146,7 +167,16 @@ function resolveDestination(
 function merge<T extends HttpRequestConfig>(
   destinationRequestConfig: DestinationHttpRequestConfig,
   customRequestConfig: T
-): T & DestinationHttpRequestConfig {
+): T & DestinationHttpRequestConfig;
+function merge<T extends HttpRequestConfig>(
+  destinationRequestConfig: DestinationHttpRequestConfig,
+  customRequestConfig: Partial<T>
+): Partial<T> & DestinationHttpRequestConfig;
+
+function merge<T extends HttpRequestConfig>(
+  destinationRequestConfig: DestinationHttpRequestConfig,
+  customRequestConfig: T | Partial<T>
+): (T | Partial<T>) & DestinationHttpRequestConfig {
   return {
     ...destinationRequestConfig,
     ...customRequestConfig,
@@ -168,7 +198,16 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
  */
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   return {
-    method: 'get',
+    ...getAxiosConfigWithDefaultsWithoutMethod(),
+    method: 'get'
+  };
+}
+
+export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
+  HttpRequestConfig,
+  'method'
+> {
+  return {
     proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent()

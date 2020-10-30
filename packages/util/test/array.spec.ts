@@ -2,6 +2,32 @@ import { flat, unique, last, first, splitInChunks } from '../src';
 
 describe('array', () => {
   describe('flat', () => {
+    it('some test for wrapping',()=>{
+
+      function wrapArrayIfNeeded<T>(first:T|T[],rest:T[]|undefined):T[]{
+        let result:T[]=[];
+        if(Array.isArray(first)){
+          result = [...first]
+        }else {
+
+          result = rest ? [first, ...rest] : [first]
+        }
+        return result;
+      }
+
+      function someTestOverload(...varargs:string[])
+      function someTestOverload(array:string[])
+      function someTestOverload(first:string|string[],...rest:string[]){
+        const foo = wrapArrayIfNeeded(first,rest)
+         foo.forEach(s1=>{console.log(s1)})
+      }
+
+    someTestOverload(['a1','a2'])
+    someTestOverload('b1')
+      someTestOverload('c1','c2','c3')
+    })
+
+
     it('flattens a nested array of numbers', () => {
       expect(flat([[1], [2], [3]])).toStrictEqual([1, 2, 3]);
     });

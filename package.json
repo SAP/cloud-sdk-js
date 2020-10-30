@@ -10,8 +10,8 @@
     "lint": "standard --fix"
   },
   "dependencies": {
-    "@docusaurus/core": "next",
-    "@docusaurus/preset-classic": "next",
+    "@docusaurus/core": "2.0.0-alpha.65",
+    "@docusaurus/preset-classic": "2.0.0-alpha.65",
     "classnames": "^2.2.6",
     "interactjs": "^1.9.22",
     "moment": "^2.27.0",

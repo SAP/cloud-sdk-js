@@ -28,7 +28,7 @@ export declare class Photos extends EntityV4 implements PhotosType {
      */
     name?: string;
     /**
-     * Returns an entity builder to construct instances `Photos`.
+     * Returns an entity builder to construct instances of `Photos`.
      * @returns A builder that constructs instances of entity type `Photos`.
      */
     static builder(): EntityBuilderType<Photos, PhotosType>;

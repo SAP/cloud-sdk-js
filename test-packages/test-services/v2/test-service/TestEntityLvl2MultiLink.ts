@@ -51,7 +51,7 @@ export class TestEntityLvl2MultiLink extends EntityV2 implements TestEntityLvl2M
   int16Property?: number;
 
   /**
-   * Returns an entity builder to construct instances `TestEntityLvl2MultiLink`.
+   * Returns an entity builder to construct instances of `TestEntityLvl2MultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
   static builder(): EntityBuilderType<TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType> {

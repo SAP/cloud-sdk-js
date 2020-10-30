@@ -67,7 +67,7 @@ export class People extends EntityV4 implements PeopleType {
   photo!: Photos;
 
   /**
-   * Returns an entity builder to construct instances `People`.
+   * Returns an entity builder to construct instances of `People`.
    * @returns A builder that constructs instances of entity type `People`.
    */
   static builder(): EntityBuilderType<People, PeopleType> {
@@ -106,8 +106,8 @@ export interface PeopleType {
   userName: string;
   firstName: string;
   lastName: string;
-  emails?: string[];
-  addressInfo?: Location[];
+  emails?: string[] | null;
+  addressInfo?: Location[] | null;
   gender?: PersonGender | null;
   concurrency: BigNumber;
   friends: PeopleType[];

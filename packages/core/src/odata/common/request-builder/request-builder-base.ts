@@ -1,11 +1,11 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import { useOrFetchDestination } from '../../../scp-cf/destination-accessor';
+import { useOrFetchDestination } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt,
   DestinationRetrievalOptions,
   isDestinationNameAndJwt
-} from '../../../scp-cf/destination-service-types';
+} from '../../../scp-cf/destination/destination-service-types';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
 

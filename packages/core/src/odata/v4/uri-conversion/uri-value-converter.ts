@@ -1,6 +1,6 @@
 /* eslint-disable valid-jsdoc */
 
-import { identity } from 'rambda';
+import { identity } from '@sap-cloud-sdk/util';
 import { tsToEdmV4 } from '../payload-value-converter';
 import { EdmTypeShared, UriConverter } from '../../common';
 import {

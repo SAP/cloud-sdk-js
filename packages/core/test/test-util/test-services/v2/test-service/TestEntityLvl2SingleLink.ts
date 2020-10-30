@@ -51,7 +51,7 @@ export class TestEntityLvl2SingleLink extends EntityV2 implements TestEntityLvl2
   int16Property?: number;
 
   /**
-   * Returns an entity builder to construct instances `TestEntityLvl2SingleLink`.
+   * Returns an entity builder to construct instances of `TestEntityLvl2SingleLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
    */
   static builder(): EntityBuilderType<TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType> {

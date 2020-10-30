@@ -41,7 +41,7 @@ var TestEntitySingleLink = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * Returns an entity builder to construct instances `TestEntitySingleLink`.
+     * Returns an entity builder to construct instances of `TestEntitySingleLink`.
      * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
      */
     TestEntitySingleLink.builder = function () {

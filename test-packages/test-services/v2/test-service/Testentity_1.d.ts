@@ -127,7 +127,7 @@ export declare class Testentity_1 extends EntityV2 implements Testentity_1Type {
      */
     toSingleLink: TestEntitySingleLink;
     /**
-     * Returns an entity builder to construct instances `Testentity_1`.
+     * Returns an entity builder to construct instances of `Testentity_1`.
      * @returns A builder that constructs instances of entity type `Testentity_1`.
      */
     static builder(): EntityBuilderType<Testentity_1, Testentity_1Type>;

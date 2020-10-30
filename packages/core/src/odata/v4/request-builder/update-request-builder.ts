@@ -1,5 +1,4 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import { pipe } from 'rambda';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { EntityV4 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
@@ -12,7 +11,7 @@ import { DestinationOptions } from '../../../scp-cf';
 import {
   Destination,
   DestinationNameAndJwt
-} from '../../../scp-cf/destination-service-types';
+} from '../../../scp-cf/destination/destination-service-types';
 import { oDataUriV4 } from '../uri-conversion';
 import { extractEtagFromHeader } from '../../common/entity-deserializer';
 import { extractODataEtagV4 } from '../extract-odata-etag';
@@ -169,12 +168,11 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     );
 
     if (this.requestConfig.method === 'patch') {
-      return pipe(
-        () => this.serializedDiff(),
-        body => this.removeKeyFields(body),
-        body => this.addRequiredFields(serializedBody, body),
-        body => this.removeIgnoredFields(body)
-      )();
+      let body = this.serializedDiff();
+      body = this.removeKeyFields(body);
+      body = this.addRequiredFields(serializedBody, body);
+      body = this.removeIgnoredFields(body);
+      return body;
     }
     return serializedBody;
   }

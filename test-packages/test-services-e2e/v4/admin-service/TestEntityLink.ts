@@ -39,7 +39,7 @@ export class TestEntityLink extends EntityV4 implements TestEntityLinkType {
   stringProperty?: string;
 
   /**
-   * Returns an entity builder to construct instances `TestEntityLink`.
+   * Returns an entity builder to construct instances of `TestEntityLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLink`.
    */
   static builder(): EntityBuilderType<TestEntityLink, TestEntityLinkType> {

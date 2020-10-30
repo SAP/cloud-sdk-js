@@ -166,7 +166,7 @@ function builder(
     docs: [
       addLeadingNewline(
         getFunctionDoc(
-          `Returns an entity builder to construct instances \`${entity.className}\`.`,
+          `Returns an entity builder to construct instances of \`${entity.className}\`.`,
           {
             returns: {
               type: `EntityBuilderType<${entity.className}, ${entity.className}Type>`,

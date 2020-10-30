@@ -165,8 +165,7 @@ module.exports = {
               'js/features/connectivity/generic-http-client',
               'js/features/connectivity/on-premise-connectivity-in-the-sap-cloud-sdk-for-javascript'
             ]
-          },
-          // 'js/features/browser/use-sap-cloud-sdk-for-javascript-in-browser'
+          }
         ]
       },
       {
@@ -175,7 +174,8 @@ module.exports = {
         items: [
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript',
           'js/guides/bas-external-system',
-          'js/guides/tutorial-overview-sdk-js'
+          'js/guides/tutorial-overview-sdk-js',
+          'js/guides/sdk-in-browser'
         ]
       },
       {

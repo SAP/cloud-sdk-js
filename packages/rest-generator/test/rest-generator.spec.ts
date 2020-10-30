@@ -24,11 +24,16 @@ describe('rest generator test', () => {
       expect.arrayContaining(['petstore', 'sales-orders'])
     );
     services.forEach(serviceName => {
-      const rootFiles = readdirSync(path.join(outputDir, serviceName));
-      expect(rootFiles).toContain('request-builder.ts');
-      expect(rootFiles).toContain('open-api.json');
+      const rootFiles = readdirSync(path.resolve(outputDir, serviceName));
+      expect(rootFiles).toEqual(
+        expect.arrayContaining([
+          'request-builder.ts',
+          'open-api.json',
+          'open-api'
+        ])
+      );
       const serviceFiles = readdirSync(
-        path.join(outputDir, serviceName, 'open-api')
+        path.resolve(outputDir, serviceName, 'open-api')
       );
       expect(serviceFiles).toContain('api.ts');
       expect(serviceFiles).toContain('base.ts');

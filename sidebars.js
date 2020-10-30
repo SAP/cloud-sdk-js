@@ -146,13 +146,6 @@ module.exports = {
         items: [
           {
             type: 'category',
-            label: 'Browser',
-            items:[
-              'js/features/browser/sdk-in-browser'
-            ]
-          },
-          {
-            type: 'category',
             label: 'OData',
             items: [
 
@@ -181,7 +174,8 @@ module.exports = {
         items: [
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript',
           'js/guides/bas-external-system',
-          'js/guides/tutorial-overview-sdk-js'
+          'js/guides/tutorial-overview-sdk-js',
+          'js/guides/browser/sdk-in-browser'
         ]
       },
       {

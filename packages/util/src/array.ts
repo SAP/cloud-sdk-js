@@ -1,3 +1,26 @@
+function wrapArrayIfNeeded<T>(args:T|T[]):T[]{
+  return Array.isArray(args) ? args: [args]
+}
+
+function someTest(args:string|string[]){
+  const foo:string[] = wrapArrayIfNeeded(args)
+  foo.forEach(s1=>{console.log(s1)})
+}
+
+function someTestOverload(single:string)
+function someTestOverload(array:string[])
+function someTestOverload(arrayOrSingel:string|string[]){
+  const foo:string[] = wrapArrayIfNeeded(arrayOrSingel)
+  foo.forEach(s1=>{console.log(s1)})
+}
+
+someTest(['a','b'])
+someTest('a')
+
+someTestOverload(['a','b'])
+someTestOverload('a')
+
+
 /**
  * Flatten a two dimensional array into a one dimensional array
  * @param arr The array to be flattened.

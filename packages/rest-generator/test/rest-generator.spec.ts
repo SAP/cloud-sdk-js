@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import * as path from 'path';
-import * as fs from 'fs-extra';
+import { readdirSync, removeSync } from 'fs-extra';
 import { generateProject, generateRest } from '../src/generator';
 
 describe('rest generator test', () => {
@@ -9,25 +9,25 @@ describe('rest generator test', () => {
   const outputDir = path.resolve(__dirname, 'generated');
 
   beforeAll(() => {
-    fs.removeSync(outputDir);
+    removeSync(outputDir);
   });
 
   afterAll(() => {
-    fs.removeSync(outputDir);
+    removeSync(outputDir);
   });
 
   it('should generate the sap graph client', async () => {
     await generateRest({ inputDir, outputDir });
 
-    const services = fs.readdirSync(outputDir);
+    const services = readdirSync(outputDir);
     expect(services).toEqual(
       expect.arrayContaining(['petstore', 'sales-orders'])
     );
     services.forEach(serviceName => {
-      const rootFiles = fs.readdirSync(path.join(outputDir, serviceName));
+      const rootFiles = readdirSync(path.join(outputDir, serviceName));
       expect(rootFiles).toContain('request-builder.ts');
       expect(rootFiles).toContain('open-api.json');
-      const serviceFiles = fs.readdirSync(
+      const serviceFiles = readdirSync(
         path.join(outputDir, serviceName, 'open-api')
       );
       expect(serviceFiles).toContain('api.ts');

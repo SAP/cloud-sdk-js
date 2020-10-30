@@ -62,6 +62,7 @@ async function generateOneApi(
   const dirForService = getDirForService(options.outputDir, inputFileName);
   if (!existsSync(dirForService)) {
     mkdirSync(dirForService, { recursive: true });
+    logger.info(`Created directory: ${dirForService}`);
   }
 
   const serviceName = getServiceNamePascalCase(inputFileName);
@@ -139,6 +140,15 @@ async function generateFilesUsingOpenAPI(
     if (response !== undefined) {
       logger.info(`Generated the client ${response.stdout}`);
     }
+    const filesGeneratedByOpenApi = readdirSync(
+      resolve(dirForService, 'open-api')
+    );
+    logger.info(
+      `Generated files: ${filesGeneratedByOpenApi} in the directory: ${resolve(
+        dirForService,
+        'open-api'
+      )}`
+    );
   } catch (err) {
     logger.error('In exception block');
     logger.error(err);

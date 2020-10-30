@@ -14,7 +14,7 @@ const logger = createLogger({
 export interface GeneratorOptions {
   inputDir: string;
   outputDir: string;
-  clearOutputDir: boolean;
+  clearOutputDir?: boolean;
 }
 
 /*

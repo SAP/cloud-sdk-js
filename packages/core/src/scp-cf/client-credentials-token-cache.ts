@@ -27,7 +27,7 @@ const ClientCredentialsTokenCache = (
       token,
       token.expires_in
         ? moment().add(token.expires_in, 'second').unix() * 1000
-        : 0
+        : undefined
     );
   },
   clear: (): void => {

@@ -49,3 +49,29 @@ export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
   }
   return result;
 }
+
+/**
+ * We want to provide methods which accept a variable single number of elements and arrays.
+ * The overloaded signature to achieve this is:
+ * function doSomething(array:T[])
+ * function doSomething(...varArgs:T[])
+ * functiondoSomething(first:undefined|T|T[],...rest:T[]){
+ *   //implementation
+ * }
+ * This wrapper methods makes it easy build an array from the input.
+ * @param firstOrArray - Either an array or the first element of the var args.
+ * @param rest - Second to last element if var args were used, undefined otherwise.
+ * @returns Array from the input or undefined if no var args was given.
+ */
+export function variableArgumentToArray<T>(
+  firstOrArray: undefined | T | T[],
+  rest: T[]
+): T[] {
+  if (typeof firstOrArray === 'undefined') {
+    return [];
+  }
+  if (Array.isArray(firstOrArray)) {
+    return firstOrArray;
+  }
+  return [firstOrArray, ...rest];
+}

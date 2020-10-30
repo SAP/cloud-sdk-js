@@ -1,3 +1,4 @@
+import { variableArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
@@ -42,8 +43,13 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
    * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Selectable<EntityT>[]): this {
-    this.requestConfig.selects = selects;
+  select(...selects: Selectable<EntityT>[]): this;
+  select(selects: Selectable<EntityT>[]): this;
+  select(
+    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
+    ...rest: Selectable<EntityT>[]
+  ): this {
+    this.requestConfig.selects = variableArgumentToArray(first, rest);
     return this;
   }
 
@@ -53,8 +59,13 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
    * @param orderBy - OrderBy statements to order the response by
    * @returns The request builder itself, to facilitate method chaining
    */
-  orderBy(...orderBy: Orderable<EntityT>[]): this {
-    this.requestConfig.orderBy = orderBy;
+  orderBy(orderBy: Orderable<EntityT>[]): this;
+  orderBy(...orderBy: Orderable<EntityT>[]): this;
+  orderBy(
+    first: undefined | Orderable<EntityT> | Orderable<EntityT>[],
+    ...rest: Orderable<EntityT>[]
+  ): this {
+    this.requestConfig.orderBy = variableArgumentToArray(first, rest);
     return this;
   }
 

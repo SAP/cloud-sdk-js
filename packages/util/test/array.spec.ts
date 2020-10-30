@@ -1,32 +1,34 @@
-import { flat, unique, last, first, splitInChunks } from '../src';
+import {
+  flat,
+  unique,
+  last,
+  first,
+  splitInChunks,
+  variableArgumentToArray
+} from '../src';
 
 describe('array', () => {
   describe('flat', () => {
-    it('some test for wrapping',()=>{
-
-      function wrapArrayIfNeeded<T>(first:T|T[],rest:T[]|undefined):T[]{
-        let result:T[]=[];
-        if(Array.isArray(first)){
-          result = [...first]
-        }else {
-
-          result = rest ? [first, ...rest] : [first]
-        }
-        return result;
+    it('wraps variable arguments', () => {
+      function functionWithVariableArguments(...varargs: string[]);
+      function functionWithVariableArguments(array: string[]);
+      function functionWithVariableArguments(
+        firstOrArray: string | string[],
+        ...rest: string[]
+      ): string[] | undefined {
+        return variableArgumentToArray(firstOrArray, rest);
       }
-
-      function someTestOverload(...varargs:string[])
-      function someTestOverload(array:string[])
-      function someTestOverload(first:string|string[],...rest:string[]){
-        const foo = wrapArrayIfNeeded(first,rest)
-         foo.forEach(s1=>{console.log(s1)})
-      }
-
-    someTestOverload(['a1','a2'])
-    someTestOverload('b1')
-      someTestOverload('c1','c2','c3')
-    })
-
+      expect(functionWithVariableArguments()).toEqual([]);
+      expect(functionWithVariableArguments([])).toEqual([]);
+      expect(functionWithVariableArguments('a')).toEqual(['a']);
+      expect(functionWithVariableArguments('a', 'b')).toEqual(['a', 'b']);
+      expect(functionWithVariableArguments(['a'])).toEqual(['a']);
+      expect(functionWithVariableArguments(['a', 'b', 'c'])).toEqual([
+        'a',
+        'b',
+        'c'
+      ]);
+    });
 
     it('flattens a nested array of numbers', () => {
       expect(flat([[1], [2], [3]])).toStrictEqual([1, 2, 3]);

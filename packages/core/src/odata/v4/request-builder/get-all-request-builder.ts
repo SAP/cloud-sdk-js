@@ -1,3 +1,4 @@
+import { variableArgumentToArray } from '@sap-cloud-sdk/util';
 import { EntityV4 } from '../entity';
 import { deserializeEntityV4 } from '../entity-deserializer';
 import { DestinationOptions } from '../../../scp-cf';
@@ -47,8 +48,13 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
     );
   }
 
-  expand(...expands: Expandable<EntityT>[]): this {
-    this.requestConfig.expands = expands;
+  expand(expands: Expandable<EntityT>[]): this;
+  expand(...expands: Expandable<EntityT>[]): this;
+  expand(
+    first: undefined | Expandable<EntityT> | Expandable<EntityT>[],
+    ...rest: Expandable<EntityT>[]
+  ): this {
+    this.requestConfig.expands = variableArgumentToArray(first, rest);
     return this;
   }
 

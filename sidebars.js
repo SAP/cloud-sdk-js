@@ -175,7 +175,7 @@ module.exports = {
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript',
           'js/guides/bas-external-system',
           'js/guides/tutorial-overview-sdk-js',
-          'js/guides/browser/sdk-in-browser'
+          'js/guides/sdk-in-browser'
         ]
       },
       {

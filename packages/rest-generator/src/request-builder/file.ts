@@ -73,9 +73,7 @@ function importFromOpenApi(
     serviceMetadata.paths.map(path =>
       flat(
         path.operations.map(o =>
-          o.responseSchemaRefName
-            ? [toPascalCase(o.responseSchemaRefName)]
-            : []
+          o.responseSchemaRefName ? [toPascalCase(o.responseSchemaRefName)] : []
         )
       )
     )

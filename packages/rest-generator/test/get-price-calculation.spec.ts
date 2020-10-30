@@ -4,8 +4,14 @@ import {
   setTestDestination,
   unmockAllTestDestinations
 } from '@sap-cloud-sdk/test-util';
-import { PercentActionEnum, PriceCalculateResponse } from './test-services/PriceCalculation/open-api/api';
-import { getPriceCalculate, getPriceCalculateWithVanillaOpenApi } from './util/get-price-calculate';
+import {
+  PercentActionEnum,
+  PriceCalculateResponse
+} from './test-services/PriceCalculation/open-api/api';
+import {
+  getPriceCalculate,
+  getPriceCalculateWithVanillaOpenApi
+} from './util/get-price-calculate';
 
 beforeEach(() => {
   setTestDestination({
@@ -25,14 +31,13 @@ describe('Get price calculate', () => {
     assertPriceCalculateResponse(response);
   });
 
-
   it('should get value and action from the vanilla version of the getPriceCalculate', async () => {
     const response = await getPriceCalculateWithVanillaOpenApi();
     assertPriceCalculateResponse(response);
   });
 });
 
-function assertPriceCalculateResponse(response: PriceCalculateResponse){
+function assertPriceCalculateResponse(response: PriceCalculateResponse) {
   const percent = response.PriceCalculateBody![0].ShoppingBasket.LineItem[0]
     .Sale!.RetailPriceModifier![0].Percent!;
   expect(percent.value).toBe(10);

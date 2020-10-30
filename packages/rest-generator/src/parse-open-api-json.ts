@@ -7,7 +7,14 @@ import {
   SupportedOperation
 } from './open-api-types';
 
-export function toOpenApiModel(
+/**
+ * Builds an [[OpenApiServiceMetadata]] from the given open api definition file.
+ * @param pathToAdjustedOpenApiDefFile the path to the open api definition file
+ * @param serviceName the service name
+ * @param serviceDir the directory name to store generated files for the service
+ * @returns A [[OpenApiServiceMetadata]]
+ */
+export function toOpenApiServiceMetaData(
   pathToAdjustedOpenApiDefFile: string,
   serviceName: string,
   serviceDir: string
@@ -58,7 +65,7 @@ function toRequestBodySchemaRefName(operation): string | undefined {
   return getRefNameFromContent(content);
 }
 
-function getRefNameFromContent(content): string | undefined{
+function getRefNameFromContent(content): string | undefined {
   if (content) {
     const contentAppJson = content['application/json'];
     const ref = contentAppJson?.schema['$ref'];
@@ -68,11 +75,13 @@ function getRefNameFromContent(content): string | undefined{
 
 function toResponseSchemaRefName(operation): string | undefined {
   const responses = operation.responses;
-  if (!responses){
+  if (!responses) {
     return;
   }
-  const key2XX = Object.keys(responses).find(httpStatusCode => is2XXCode(httpStatusCode))
-  if(!key2XX){
+  const key2XX = Object.keys(responses).find(httpStatusCode =>
+    is2XXCode(httpStatusCode)
+  );
+  if (!key2XX) {
     return;
   }
 

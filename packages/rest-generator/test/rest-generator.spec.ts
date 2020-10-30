@@ -27,7 +27,9 @@ describe('rest generator test', () => {
       const rootFiles = fs.readdirSync(path.join(outputDir, serviceName));
       expect(rootFiles).toContain('request-builder.ts');
       expect(rootFiles).toContain('open-api.json');
-      const serviceFiles = fs.readdirSync(path.join(outputDir, serviceName, 'open-api'));
+      const serviceFiles = fs.readdirSync(
+        path.join(outputDir, serviceName, 'open-api')
+      );
       expect(serviceFiles).toContain('api.ts');
       expect(serviceFiles).toContain('base.ts');
     });
@@ -38,15 +40,15 @@ describe('rest generator test', () => {
     const sourceFiles = project.getSourceFiles();
     expect(sourceFiles.length).toBe(2);
 
-    const salesOrderRequestBuilder = sourceFiles.find(
-      file => file.getDirectoryPath().endsWith('sales-orders')
+    const salesOrderRequestBuilder = sourceFiles.find(file =>
+      file.getDirectoryPath().endsWith('sales-orders')
     );
     const classes = salesOrderRequestBuilder!.getClasses();
     expect(classes.length).toBe(9);
 
-    const apiCLass = classes.find(
-      clazz => clazz.getName()?.endsWith('ApiRequestBuilder')
-    )
+    const apiCLass = classes.find(clazz =>
+      clazz.getName()?.endsWith('ApiRequestBuilder')
+    );
     expect(apiCLass!.getStaticMethods().length).toBe(8);
   }, 60000);
 });

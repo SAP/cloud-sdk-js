@@ -16,7 +16,7 @@ import {
 import { Project } from 'ts-morph';
 import { GeneratorOptions } from './generator-cli';
 import { projectOptions, sourceFile } from './utils';
-import { toOpenApiModel } from './parse-open-api-json';
+import { toOpenApiServiceMetaData } from './parse-open-api-json';
 import { OpenApiServiceMetadata } from './open-api-types';
 import { requestBuilderSourceFile } from './request-builder/file';
 
@@ -31,8 +31,8 @@ export async function generateRest(options: GeneratorOptions): Promise<void> {
   await project.save();
 }
 
-export async function generateProject(options: GeneratorOptions){
-  if(options.clearOutputDir) {
+export async function generateProject(options: GeneratorOptions) {
+  if (options.clearOutputDir) {
     cleanDirectory(options.outputDir);
   }
 
@@ -79,12 +79,11 @@ async function generateOneApi(
     pathToMustacheValues
   );
 
-  const openApiModel = toOpenApiModel(
+  return toOpenApiServiceMetaData(
     pathToAdjustedOpenApiDefFile,
     serviceName,
     dirForService
   );
-  return openApiModel;
 }
 
 function generateSourcesForService(

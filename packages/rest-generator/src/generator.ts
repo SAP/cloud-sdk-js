@@ -28,7 +28,7 @@ const logger = createLogger({
 
 export async function generateRest(options: GeneratorOptions): Promise<void> {
   const project = await generateProject(options);
-  await project.save();
+  return project.save();
 }
 
 export async function generateProject(options: GeneratorOptions) {
@@ -44,7 +44,7 @@ export async function generateProject(options: GeneratorOptions) {
 
   const openApiServiceMetadata = await Promise.all(
     files.map(async file =>
-      generateOneApi(file, options, pathToTemplates, pathToMustacheValues)
+      await generateOneApi(file, options, pathToTemplates, pathToMustacheValues)
     )
   );
   openApiServiceMetadata.map(metadata =>

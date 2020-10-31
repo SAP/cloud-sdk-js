@@ -261,7 +261,9 @@ Function Imports / Functions & Actions
 
 ## Error Handling
 
-Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `executeRequest` methods may throw a runtime exception (extending) `ODataException`. This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. To handle all kind of failures consider the following code:
+Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `execute` methods may throw a runtime exception (extending) `ODataException`.
+This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. 
+To handle all kind of failures consider the following code:
 
 ```java
 try { ... }
@@ -273,7 +275,8 @@ try { ... }
 ```
 
 This handling is the most generic, handling all possible failures.
-For more specific information there are dedicated exceptions inheriting from `ODataException`. Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/client/exception/ODataException.html) for all the exception types.
+For more specific information there are dedicated exceptions inheriting from `ODataException`.
+Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/client/exception/ODataException.html) for all the exception types.
 
 In order to handle different kinds of failure one can list multiple catch clauses to cover different levels or cases that might occur, e.g.:
 

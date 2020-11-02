@@ -13,7 +13,7 @@ describe('array', () => {
       function functionWithVariableArguments(...varargs: string[]);
       function functionWithVariableArguments(array: string[]);
       function functionWithVariableArguments(
-        firstOrArray: undefined| string | string[],
+        firstOrArray: undefined | string | string[],
         ...rest: string[]
       ): string[] {
         return variableArgumentToArray(firstOrArray, rest);

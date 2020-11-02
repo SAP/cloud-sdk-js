@@ -54,7 +54,7 @@ Binding the connectivity service to your app gives you an entry in the environme
 }
 ```
 
-`onpmremise_proxy_host` and `onpremise_proxy_port` give you the URI that a request has to be tunneled through, in this case `http://connectivityproxy.internal.cf.sap.hana.ondemand.com:20003`.
+`onpremise_proxy_host` and `onpremise_proxy_port` give you the URI that a request has to be tunneled through, in this case `http://connectivityproxy.internal.cf.sap.hana.ondemand.com:20003`.
 
 **NOTE:** It's HTTP, not HTTPS.
 

@@ -132,10 +132,7 @@ async function generateFilesUsingOpenAPI(
   logger.info(`Argument for openapi generator ${generationArguments}`);
 
   try {
-    const response = await execa('npx', generationArguments).catch(err => {
-      logger.error('In exception block 2');
-      logger.error(err);
-    });
+    const response = await execa.sync('npx', generationArguments);
     if (response !== undefined) {
       logger.info(`Generated the client ${response.stdout}`);
     }

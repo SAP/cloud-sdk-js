@@ -20,9 +20,7 @@ describe('rest generator test', () => {
     await generateRest({ inputDir, outputDir });
 
     const services = fs.readdirSync(outputDir);
-    expect(services).toEqual(
-      expect.arrayContaining(['petstore', 'sales-orders'])
-    );
+    expect(services).toEqual(expect.arrayContaining(['petstore']));
     services.forEach(serviceName => {
       const rootFiles = fs.readdirSync(path.join(outputDir, serviceName));
       expect(rootFiles).toContain('request-builder.ts');
@@ -38,17 +36,17 @@ describe('rest generator test', () => {
   it('should generate request builder file', async () => {
     const project = await generateProject({ inputDir, outputDir });
     const sourceFiles = project.getSourceFiles();
-    expect(sourceFiles.length).toBe(2);
+    expect(sourceFiles.length).toBe(1);
 
-    const salesOrderRequestBuilder = sourceFiles.find(file =>
-      file.getDirectoryPath().endsWith('sales-orders')
+    const requestBuilder = sourceFiles.find(file =>
+      file.getDirectoryPath().endsWith('petstore')
     );
-    const classes = salesOrderRequestBuilder!.getClasses();
-    expect(classes.length).toBe(9);
+    const classes = requestBuilder!.getClasses();
+    expect(classes.length).toBe(4);
 
     const apiCLass = classes.find(clazz =>
       clazz.getName()?.endsWith('ApiRequestBuilder')
     );
-    expect(apiCLass!.getStaticMethods().length).toBe(8);
+    expect(apiCLass!.getStaticMethods().length).toBe(3);
   }, 60000);
 });

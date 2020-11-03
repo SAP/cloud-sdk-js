@@ -46,11 +46,6 @@ module.exports = {
           position: 'left'
         },
         {
-          href: 'https://blogs.sap.com/',
-          label: 'Blog',
-          position: 'left'
-        },
-        {
           label: 'Support',
           position: 'left',
           items: [

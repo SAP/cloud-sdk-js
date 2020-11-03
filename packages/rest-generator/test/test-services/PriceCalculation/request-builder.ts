@@ -6,17 +6,11 @@
 import { RestRequestBuilder } from '@sap-cloud-sdk/core';
 import { PriceCalculationApi } from './open-api';
 import { PriceCalculate } from './open-api/model';
-
-export class PriceCalculationApiRequestBuilder {
-  static calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate): RestRequestBuilder<
-    typeof PriceCalculationApi,
-    'calculateViaRestWithTenant'
-  > {
-    return new RestRequestBuilder(
-      PriceCalculationApi,
-      'calculateViaRestWithTenant',
-      tenantName,
-      priceCalculate
-    );
-  }
-}
+export const PriceCalculationApiRequestBuilder = {
+  calculateViaRestWithTenant: (tenantName: string, priceCalculate: PriceCalculate) => new RestRequestBuilder<PriceCalculationApi>(
+    PriceCalculationApi,
+    'calculateViaRestWithTenant',
+    tenantName,
+    priceCalculate
+  )
+};

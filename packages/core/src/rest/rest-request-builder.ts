@@ -1,20 +1,22 @@
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
 import { buildAxiosRequestConfig } from '../http-client';
 
-type FunctionType<
-  ApiT extends ConstrutorType,
-  FnT extends keyof InstanceType<ApiT>
-> = InstanceType<ApiT>[FnT];
+type FunctionReturnType<ApiT, FnT extends keyof ApiT> = ApiT[FnT] extends (
+  ...args: any
+) => any
+  ? UnPromisify<ReturnType<ApiT[FnT]>>
+  : never;
+type UnPromisify<T> = T extends Promise<infer U> ? U : T;
+type ConstructorType<T> = new (...args: any[]) => T;
 
-type ConstrutorType = new (...args: any[]) => any;
-
-export class RestRequestBuilder<
-  ApiT extends ConstrutorType,
-  FnT extends keyof InstanceType<ApiT>
-> {
+export class RestRequestBuilder<ApiT> {
   private customHeaders: Record<string, string> = {};
   private args: any[];
-  constructor(private api: ApiT, private fn: FnT, ...args: any[]) {
+  constructor(
+    private apiConstructor: ConstructorType<ApiT>,
+    private fn: keyof ApiT,
+    ...args: any[]
+  ) {
     this.args = args;
   }
 
@@ -27,12 +29,19 @@ export class RestRequestBuilder<
 
   async execute(
     destination: Destination | DestinationNameAndJwt
-  ): Promise<ReturnType<FunctionType<ApiT, FnT>>> {
+  ): Promise<FunctionReturnType<ApiT, keyof ApiT>> {
     const requestConfig = await buildAxiosRequestConfig(destination, {
       headers: this.customHeaders
     });
 
-    const apiInstance = new this.api(requestConfig);
-    return apiInstance[this.fn](...this.args);
+    const fn = new this.apiConstructor(requestConfig)[this.fn];
+
+    if (typeof fn === 'function') {
+      return fn(...this.args);
+    }
+
+    throw new Error(
+      `'${this.fn}' is not a function of ${this.apiConstructor.name}`
+    );
   }
 }

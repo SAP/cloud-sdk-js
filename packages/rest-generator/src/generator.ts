@@ -94,7 +94,7 @@ function generateSourcesForService(
   const serviceDir = project.createDirectory(
     resolve(options.outputDir.toString(), serviceMetadata.serviceDir)
   );
-  logger.info(`Generating request builder in ${serviceDir}.`);
+  logger.info(`Generating request builder in ${serviceDir.getBaseName()}.`);
   sourceFile(
     serviceDir,
     'request-builder',

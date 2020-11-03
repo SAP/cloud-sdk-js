@@ -20,19 +20,25 @@ export function apiRequestBuilderClass(
   return {
     kind: StructureKind.Class,
     name: `${serviceMetadata.apiName}ApiRequestBuilder`,
-    methods: method(serviceMetadata.paths),
+    methods: method(serviceMetadata.apiName, serviceMetadata.paths),
     isExported: true
   };
 }
 
-function method(paths: OpenApiPath[]): MethodDeclarationStructure[] {
-  return flat(paths.map(p => getMethods(p)));
+function method(
+  apiName: string,
+  paths: OpenApiPath[]
+): MethodDeclarationStructure[] {
+  return flat(paths.map(p => getMethods(apiName, p)));
 }
 
-function getMethods(openApiPath: OpenApiPath): MethodDeclarationStructure[] {
+function getMethods(
+  apiName: string,
+  openApiPath: OpenApiPath
+): MethodDeclarationStructure[] {
   return openApiPath.operations.map(o => {
     const returnType = `RestRequestBuilder<
-    typeof ${openApiPath.name},
+    typeof ${apiName},
     '${o.operationName}'
   >`;
     const parameters = [
@@ -46,7 +52,7 @@ function getMethods(openApiPath: OpenApiPath): MethodDeclarationStructure[] {
       parameters,
       returnType,
       statements: toStatement(
-        openApiPath.name,
+        apiName,
         o.operationName,
         parameters.map(p => p.name)
       )

@@ -9,15 +9,15 @@ import { PriceCalculationApi, PriceCalculate, PriceCalculateResponse } from './o
 
 export class PriceCalculationApiRequestBuilder {
   static calculateViaRestWithTenant(tenantName: string, priceCalculate: PriceCalculate): RestRequestBuilder<
-    typeof /restapi/{ tenantName },
-'calculateViaRestWithTenant'
+    typeof PriceCalculation,
+    'calculateViaRestWithTenant'
   > {
-  new RestRequestBuilder(
-    /restapi/{ tenantName },
-    'calculateViaRestWithTenant',
-    tenantName,
-    priceCalculate
-  );
-}
+    new RestRequestBuilder(
+      PriceCalculation,
+      'calculateViaRestWithTenant',
+      tenantName,
+      priceCalculate
+    );
   }
+}
 }

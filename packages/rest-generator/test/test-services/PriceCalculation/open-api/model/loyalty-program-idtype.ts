@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Corresponds to a customer group identifer of a customer group eligibility.
+ * @export
+ * @interface LoyaltyProgramIDType
+ */
+export interface LoyaltyProgramIDType {
+    /**
+     * 
+     * @type {string}
+     * @memberof LoyaltyProgramIDType
+     */
+    value?: string;
+}
+
+

@@ -12,5 +12,26 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+import { LoyaltyProgramIDType } from './loyalty-program-idtype';
+
+/**
+ * 
+ * @export
+ * @interface LoyaltyAccountType
+ */
+export interface LoyaltyAccountType {
+    /**
+     * List
+     * @type {Array<LoyaltyProgramIDType>}
+     * @memberof LoyaltyAccountType
+     */
+    LoyaltyProgramID?: Array<LoyaltyProgramIDType>;
+    /**
+     * This is currently not supported.
+     * @type {Array<object>}
+     * @memberof LoyaltyAccountType
+     */
+    any?: Array<object>;
+}
+
+

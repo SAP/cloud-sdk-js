@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Language-dependent description.
+ * @export
+ * @interface DescriptionCommonData
+ */
+export interface DescriptionCommonData {
+    /**
+     * 
+     * @type {string}
+     * @memberof DescriptionCommonData
+     */
+    value?: string;
+    /**
+     * Provided in format ISO 639 as uppercase.
+     * @type {string}
+     * @memberof DescriptionCommonData
+     */
+    Language?: string;
+}
+
+

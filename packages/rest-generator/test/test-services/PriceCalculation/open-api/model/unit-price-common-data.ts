@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Depending on the usage, this might refer to one single unit or the total quantity of the line item.
+ * @export
+ * @interface UnitPriceCommonData
+ */
+export interface UnitPriceCommonData {
+    /**
+     * 
+     * @type {number}
+     * @memberof UnitPriceCommonData
+     */
+    value?: number;
+    /**
+     * Uppercase currency is expected in uppercase ISO format.
+     * @type {string}
+     * @memberof UnitPriceCommonData
+     */
+    Currency?: string;
+}
+
+

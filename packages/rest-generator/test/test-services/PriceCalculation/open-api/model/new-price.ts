@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * The price of the line item after the price derivation rule was applied.
+ * @export
+ * @interface NewPrice
+ */
+export interface NewPrice {
+    /**
+     * 
+     * @type {number}
+     * @memberof NewPrice
+     */
+    value?: number;
+    /**
+     * Uppercase currency is expected in uppercase ISO format.
+     * @type {string}
+     * @memberof NewPrice
+     */
+    Currency?: string;
+}
+
+

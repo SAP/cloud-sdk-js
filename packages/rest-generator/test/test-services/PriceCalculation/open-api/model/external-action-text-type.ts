@@ -12,5 +12,31 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Specifies the value of an external action text if the applied price derivation rule has type \"External Action\".
+ * @export
+ * @interface ExternalActionTextType
+ */
+export interface ExternalActionTextType {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalActionTextType
+     */
+    value?: string;
+    /**
+     * Provided in format ISO 639 as uppercase.
+     * @type {string}
+     * @memberof ExternalActionTextType
+     */
+    Language?: string;
+    /**
+     * Identifies this text.
+     * @type {string}
+     * @memberof ExternalActionTextType
+     */
+    ID: string;
+}
+
+

@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * When used as pricing date, time zones are not considered.
+ * @export
+ * @interface DateTimeCommonData
+ */
+export interface DateTimeCommonData {
+    /**
+     * In format yyyy-MM-dd HH:mm:ss.SSS
+     * @type {string}
+     * @memberof DateTimeCommonData
+     */
+    value?: string;
+}
+
+

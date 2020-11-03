@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Monetary value plus currency.
+ * @export
+ * @interface AmountCommonData
+ */
+export interface AmountCommonData {
+    /**
+     * 
+     * @type {number}
+     * @memberof AmountCommonData
+     */
+    value?: number;
+    /**
+     * Uppercase currency is expected in uppercase ISO format.
+     * @type {string}
+     * @memberof AmountCommonData
+     */
+    Currency?: string;
+}
+
+

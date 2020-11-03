@@ -12,5 +12,32 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+import { AmountCommonData } from './amount-common-data';
+
+/**
+ * Reserved for future use.
+ * @export
+ * @interface PromotionExternalTriggerType
+ */
+export interface PromotionExternalTriggerType {
+    /**
+     * 
+     * @type {string}
+     * @memberof PromotionExternalTriggerType
+     */
+    ExternalTriggerType: string;
+    /**
+     * 
+     * @type {AmountCommonData}
+     * @memberof PromotionExternalTriggerType
+     */
+    ExternalTriggerAmount: AmountCommonData;
+    /**
+     * This is currently not supported.
+     * @type {Array<object>}
+     * @memberof PromotionExternalTriggerType
+     */
+    any?: Array<object>;
+}
+
+

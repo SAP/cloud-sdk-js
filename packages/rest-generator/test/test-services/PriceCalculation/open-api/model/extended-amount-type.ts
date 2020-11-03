@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * The total value of this line item, considering quantity and discounts.
+ * @export
+ * @interface ExtendedAmountType
+ */
+export interface ExtendedAmountType {
+    /**
+     * 
+     * @type {number}
+     * @memberof ExtendedAmountType
+     */
+    value?: number;
+    /**
+     * Uppercase currency is expected in uppercase ISO format.
+     * @type {string}
+     * @memberof ExtendedAmountType
+     */
+    Currency?: string;
+}
+
+

@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Specifies the value of an external action parameter if the applied price derivation rule has type \"External Action\".
+ * @export
+ * @interface ExternalActionParameterType
+ */
+export interface ExternalActionParameterType {
+    /**
+     * The value as stored in the promotion master data.
+     * @type {string}
+     * @memberof ExternalActionParameterType
+     */
+    value?: string;
+    /**
+     * Identifier as stored in the promotion master data.
+     * @type {string}
+     * @memberof ExternalActionParameterType
+     */
+    ID: string;
+}
+
+

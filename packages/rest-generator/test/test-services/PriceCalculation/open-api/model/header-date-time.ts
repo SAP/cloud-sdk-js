@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Defines the timestamp of the request or the response. It is not used as pricing date.
+ * @export
+ * @interface HeaderDateTime
+ */
+export interface HeaderDateTime {
+    /**
+     * In format yyyy-MM-dd HH:mm:ss.SSS
+     * @type {string}
+     * @memberof HeaderDateTime
+     */
+    value?: string;
+}
+
+

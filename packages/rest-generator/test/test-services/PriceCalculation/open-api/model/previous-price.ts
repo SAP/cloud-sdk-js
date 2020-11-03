@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * The price of the line item before the price derivation rule was applied.
+ * @export
+ * @interface PreviousPrice
+ */
+export interface PreviousPrice {
+    /**
+     * 
+     * @type {number}
+     * @memberof PreviousPrice
+     */
+    value?: number;
+    /**
+     * Uppercase currency is expected in uppercase ISO format.
+     * @type {string}
+     * @memberof PreviousPrice
+     */
+    Currency?: string;
+}
+
+

@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Could be the identifier of a POS system.
+ * @export
+ * @interface WorkstationIDCommonData
+ */
+export interface WorkstationIDCommonData {
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkstationIDCommonData
+     */
+    value?: string;
+}
+
+

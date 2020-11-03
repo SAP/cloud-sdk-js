@@ -12,5 +12,41 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Action to be performed for a monetary amount.
+ * @export
+ * @interface Amount
+ */
+export interface Amount {
+    /**
+     * 
+     * @type {number}
+     * @memberof Amount
+     */
+    value?: number;
+    /**
+     * Uppercase currency is expected in uppercase ISO format.
+     * @type {string}
+     * @memberof Amount
+     */
+    Currency?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Amount
+     */
+    Action: AmountActionEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AmountActionEnum {
+    Add = 'Add',
+    Subtract = 'Subtract'
+}
+
+
+

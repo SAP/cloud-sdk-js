@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Meaning depends on the referencing field.
+ * @export
+ * @interface IDCommonData
+ */
+export interface IDCommonData {
+    /**
+     * 
+     * @type {string}
+     * @memberof IDCommonData
+     */
+    value?: string;
+}
+
+

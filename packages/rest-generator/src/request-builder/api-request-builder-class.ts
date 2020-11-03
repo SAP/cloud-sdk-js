@@ -31,7 +31,10 @@ function method(paths: OpenApiPath[]): MethodDeclarationStructure[] {
 
 function getMethods(openApiPath: OpenApiPath): MethodDeclarationStructure[] {
   return openApiPath.operations.map(o => {
-    const returnType = `${toPascalCase(o.operationName)}RequestBuilder`;
+    const returnType = `RestRequestBuilder<
+    typeof ${openApiPath.name},
+    '${o.operationName}'
+  >`;
     const parameters = [
       ...pathParamToParamStructure(openApiPath.pathParameters),
       ...refNameToParamStructure(o.requestBodySchemaRefName)
@@ -43,16 +46,26 @@ function getMethods(openApiPath: OpenApiPath): MethodDeclarationStructure[] {
       parameters,
       returnType,
       statements: toStatement(
-        returnType,
+        openApiPath.name,
+        o.operationName,
         parameters.map(p => p.name)
       )
     };
   });
 }
 
-function toStatement(className: string, parameters: string[]) {
-  const paramString = [...parameters].join(', ');
-  return `return new ${className}(${paramString});`;
+function toStatement(
+  apiName: string,
+  operationName: string,
+  parameters: string[]
+) {
+  const paramString = [apiName, `'${operationName}'`, ...parameters].join(
+    ',\n'
+  );
+  return `new RestRequestBuilder(
+    ${paramString}
+  );
+}`;
 }
 
 export function refNameToParamStructure(

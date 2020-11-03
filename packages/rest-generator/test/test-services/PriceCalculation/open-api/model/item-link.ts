@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Sequence number of a line item that contains a linked reward. Usually, a transaction discount that is prorated to the other line items. In this case, the line item with the transaction discount includes links to the line items that receive a prorated share of this discount. Vice versa, the receiving line items include an link to the discount line item from which they received a prorated discount. 
+ * @export
+ * @interface ItemLink
+ */
+export interface ItemLink {
+    /**
+     * 
+     * @type {number}
+     * @memberof ItemLink
+     */
+    value?: number;
+}
+
+

@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Identifes an item. Unique in combination with the master data source system identifier.
+ * @export
+ * @interface ItemID
+ */
+export interface ItemID {
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemID
+     */
+    value?: string;
+}
+
+

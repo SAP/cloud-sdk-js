@@ -12,5 +12,26 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+import { LineItemDomainSpecific } from './line-item-domain-specific';
+
+/**
+ * The collection of the line items to be processed.
+ * @export
+ * @interface ShoppingBasketBase
+ */
+export interface ShoppingBasketBase {
+    /**
+     * The response might contain more line items than the request due to generated transaction discounts.
+     * @type {Array<LineItemDomainSpecific>}
+     * @memberof ShoppingBasketBase
+     */
+    LineItem: Array<LineItemDomainSpecific>;
+    /**
+     * This is currently not supported.
+     * @type {Array<object>}
+     * @memberof ShoppingBasketBase
+     */
+    any?: Array<object>;
+}
+
+

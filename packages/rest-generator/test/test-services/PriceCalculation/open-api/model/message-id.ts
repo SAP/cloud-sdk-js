@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Defines a price calculation message.
+ * @export
+ * @interface MessageID
+ */
+export interface MessageID {
+    /**
+     * 
+     * @type {string}
+     * @memberof MessageID
+     */
+    value?: string;
+}
+
+

@@ -12,5 +12,34 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Specifies how many points were used by the price derivation rule.
+ * @export
+ * @interface PointsAwarded
+ */
+export interface PointsAwarded {
+    /**
+     * Number of points
+     * @type {number}
+     * @memberof PointsAwarded
+     */
+    value?: number;
+    /**
+     * Specifies whether the points were earned or something else.
+     * @type {string}
+     * @memberof PointsAwarded
+     */
+    Type?: PointsAwardedTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PointsAwardedTypeEnum {
+    PointsEarned = 'PointsEarned'
+}
+
+
+

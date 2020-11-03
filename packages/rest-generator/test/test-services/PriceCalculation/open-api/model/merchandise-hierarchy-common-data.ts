@@ -12,5 +12,25 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Unique in combination with the master data source system ID.
+ * @export
+ * @interface MerchandiseHierarchyCommonData
+ */
+export interface MerchandiseHierarchyCommonData {
+    /**
+     * Requires ID field to be unique.
+     * @type {string}
+     * @memberof MerchandiseHierarchyCommonData
+     */
+    value?: string;
+    /**
+     * Several hierarchies may exist in parallel. In one request, at the most 2 different hierarchy identifiers can be specified.
+     * @type {string}
+     * @memberof MerchandiseHierarchyCommonData
+     */
+    ID?: string;
+}
+
+

@@ -12,5 +12,35 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Percentage discount and the action how it was applied.
+ * @export
+ * @interface Percent
+ */
+export interface Percent {
+    /**
+     * The value that is, for example, used for a percentage discount. It has to be a positive number.
+     * @type {number}
+     * @memberof Percent
+     */
+    value?: number;
+    /**
+     * Specifies whether the percentage was added or subtracted.
+     * @type {string}
+     * @memberof Percent
+     */
+    Action: PercentActionEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PercentActionEnum {
+    Add = 'Add',
+    Subtract = 'Subtract'
+}
+
+
+

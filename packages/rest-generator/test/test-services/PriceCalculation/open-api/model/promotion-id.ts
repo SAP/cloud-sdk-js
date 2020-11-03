@@ -12,5 +12,19 @@
 */
 
 
-export * from "./api";
-export * from "./configuration";
+
+/**
+ * Identifies a promotion. Decimal representation of a 64 bit integer value
+ * @export
+ * @interface PromotionID
+ */
+export interface PromotionID {
+    /**
+     * 
+     * @type {string}
+     * @memberof PromotionID
+     */
+    value?: string;
+}
+
+

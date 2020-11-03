@@ -124,8 +124,8 @@ async function generateFilesUsingOpenAPI(
     'api',
     '--model-package',
     'model',
-    '--config',
-    pathToMustacheValues,
+    '--additional-properties',
+    'withSeparateModelsAndApi=true',
     '--skip-validate-spec'
   ];
 

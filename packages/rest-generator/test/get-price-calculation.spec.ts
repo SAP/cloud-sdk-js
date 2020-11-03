@@ -43,3 +43,8 @@
 //   expect(percent.value).toBe(10);
 //   expect(percent.Action).toBe(PercentActionEnum.Subtract);
 // }
+
+describe('To make a valid spec file', () => {
+  it('should pass', async () => {
+  });
+})

@@ -45,5 +45,5 @@
 // }
 
 describe('To make a valid spec file', () => {
-  it('should pass', async () => {});
+  it('should pass', () => {});
 });

@@ -2,6 +2,7 @@
 
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { SyntaxKind } from 'ts-morph';
 import { generateProject, generateRest } from '../src/generator';
 
 describe('rest generator', () => {
@@ -41,14 +42,16 @@ describe('rest generator', () => {
     expect(sourceFiles.length).toBe(4);
 
     const salesOrderRequestBuilder = sourceFiles.find(file =>
-      file.getDirectoryPath().endsWith('sales-orders')
+      file.getFilePath().endsWith('sales-orders/request-builder.ts')
     );
-    const classes = salesOrderRequestBuilder!.getClasses();
-    expect(classes.length).toBe(9);
+    const declarations = salesOrderRequestBuilder!.getVariableStatements();
+    expect(declarations.length).toBe(1);
 
-    const apiCLass = classes.find(clazz =>
-      clazz.getName()?.endsWith('ApiRequestBuilder')
-    );
-    expect(apiCLass!.getStaticMethods().length).toBe(8);
+    const functions = declarations[0]
+      .getDeclarations()[0]
+      .getInitializerIfKindOrThrow(SyntaxKind.ObjectLiteralExpression)
+      .getProperties();
+
+    expect(functions.length).toBe(8);
   }, 60000);
 });

@@ -12,19 +12,9 @@ import { OpenApiPath, OpenApiServiceMetadata } from '../open-api-types';
  * @param serviceMetadata The service metadata model converted from the open api file.
  * @returns class declaration structure of the API request builder class
  */
-export function apiRequestBuilderClass(
+export function operationsVariable(
   serviceMetadata: OpenApiServiceMetadata
 ): VariableStatementStructure {
-  /*
-  export const PriceCalculationApiRequestBuilder: ApiRequestBuilder<PriceCalculationApi> = {
-  calculateViaRestWithTenant: (tenantName: string, priceCalculate: PriceCalculate) => new RestRequestBuilder<PriceCalculationApiInterface, 'calculateViaRestWithTenant'>(
-    PriceCalculationApi,
-   'calculateViaRestWithTenant',
-    tenantName,
-    priceCalculate
-  )
-}
-  */
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,

@@ -22,16 +22,20 @@ export async function getPriceCalculate(): Promise<PriceCalculateResponse> {
 export async function getPriceCalculateWithVanillaOpenApi(): Promise<
   PriceCalculateResponse
 > {
-  const requestConfig: AxiosRequestConfig = await buildAxiosRequestConfig({
-    destinationName: 'VLAB'
-  });
-  const calculationApi = new CalculationApi(requestConfig);
-  return calculationApi
-    .calculateViaRestWithTenant('oppsapihub', transaction, {
-      ...requestConfig,
+  const requestConfig: AxiosRequestConfig = await buildAxiosRequestConfig(
+    {
+      destinationName: 'VLAB'
+    },
+    {
       headers: {
         apikey: process.env.SANDBOX_TOKEN
       }
+    }
+  );
+  const calculationApi = new CalculationApi(requestConfig);
+  return calculationApi
+    .calculateViaRestWithTenant('oppsapihub', transaction, {
+      ...requestConfig
     })
     .then(response => response.data);
 }

@@ -7,7 +7,7 @@ import { toPascalCase } from '@sap-cloud-sdk/core';
 import { flat } from '@sap-cloud-sdk/util';
 import { OpenApiServiceMetadata } from '../open-api-types';
 import { coreImportDeclaration } from '../utils';
-import { apiRequestBuilderClass } from './class';
+import { operationsVariable } from './operations';
 export function requestBuilderSourceFile(
   serviceMetadata: OpenApiServiceMetadata
 ): SourceFileStructure {
@@ -16,7 +16,7 @@ export function requestBuilderSourceFile(
     statements: [
       coreImportDeclaration(['RestRequestBuilder']),
       ...openApiImports(serviceMetadata),
-      apiRequestBuilderClass(serviceMetadata)
+      operationsVariable(serviceMetadata)
     ]
   };
 }
@@ -35,19 +35,11 @@ function openApiImports(
       )
     )
   );
-  const responseRefNames: string[] = flat(
-    serviceMetadata.paths.map(path =>
-      flat(
-        path.operations.map(o =>
-          o.responseSchemaRefName ? [toPascalCase(o.responseSchemaRefName)] : []
-        )
-      )
-    )
-  );
+
   return [
     {
       kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: './open-api',
+      moduleSpecifier: './open-api/api',
       namedImports: [`${toPascalCase(serviceMetadata.apiName)}Api`]
     },
     {

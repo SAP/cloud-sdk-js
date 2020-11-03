@@ -13,9 +13,6 @@
  */
 
 
-import { AxiosRequestConfig } from 'axios';
-
-
 export interface ConfigurationParameters {
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
     username?: string;
@@ -26,6 +23,4 @@ export interface ConfigurationParameters {
     formDataCtor?: new () => any;
 }
 
-export interface Configuration extends ConfigurationParameters {
-    requestConfig: AxiosRequestConfig;
-}
+export interface Configuration extends ConfigurationParameters {}

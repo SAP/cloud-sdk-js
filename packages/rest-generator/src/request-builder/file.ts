@@ -7,7 +7,7 @@ import { toPascalCase } from '@sap-cloud-sdk/core';
 import { flat } from '@sap-cloud-sdk/util';
 import { OpenApiServiceMetadata } from '../open-api-types';
 import { coreImportDeclaration } from '../utils';
-import { apiRequestBuilderClass } from './api-request-builder-class';
+import { apiRequestBuilderClass } from './class';
 export function requestBuilderSourceFile(
   serviceMetadata: OpenApiServiceMetadata
 ): SourceFileStructure {

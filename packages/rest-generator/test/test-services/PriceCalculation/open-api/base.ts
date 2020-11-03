@@ -48,7 +48,7 @@ export interface RequestArgs {
  */
 export class BaseAPI {
     protected configuration: Configuration | undefined;
-    protected basePath: string = BASE_PATH;
+    protected basePath: string | undefined = BASE_PATH;
     protected axios: AxiosInstance = globalAxios;
 
     constructor(requestConfig: AxiosRequestConfig) {

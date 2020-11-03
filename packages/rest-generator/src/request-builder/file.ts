@@ -14,29 +14,16 @@ export function requestBuilderSourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      coreImportDeclaration([
-        'Destination',
-        'DestinationNameAndJwt',
-        'RestRequestBuilder'
-      ]),
-      importAxiosRequestConfig(),
-      importFromOpenApi(serviceMetadata),
+      coreImportDeclaration(['RestRequestBuilder']),
+      ...openApiImports(serviceMetadata),
       apiRequestBuilderClass(serviceMetadata)
     ]
   };
 }
 
-function importAxiosRequestConfig(): ImportDeclarationStructure {
-  return {
-    kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: 'axios',
-    namedImports: ['AxiosRequestConfig', 'AxiosResponse']
-  };
-}
-
-function importFromOpenApi(
+function openApiImports(
   serviceMetadata: OpenApiServiceMetadata
-): ImportDeclarationStructure {
+): ImportDeclarationStructure[] {
   const paramRefNames: string[] = flat(
     serviceMetadata.paths.map(path =>
       flat(
@@ -57,10 +44,16 @@ function importFromOpenApi(
       )
     )
   );
-  const apiClassName = `${toPascalCase(serviceMetadata.apiName)}Api`;
-  return {
-    kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: './open-api/api',
-    namedImports: [apiClassName, ...paramRefNames, ...responseRefNames]
-  };
+  return [
+    {
+      kind: StructureKind.ImportDeclaration,
+      moduleSpecifier: './open-api',
+      namedImports: [`${toPascalCase(serviceMetadata.apiName)}Api`]
+    },
+    {
+      kind: StructureKind.ImportDeclaration,
+      moduleSpecifier: './open-api/model',
+      namedImports: [...paramRefNames]
+    }
+  ];
 }

@@ -19,6 +19,7 @@ import { projectOptions, sourceFile } from './utils';
 import { toOpenApiServiceMetaData } from './parse-open-api-json';
 import { OpenApiServiceMetadata } from './open-api-types';
 import { requestBuilderSourceFile } from './request-builder/file';
+import { indexFile } from './index-file';
 
 const logger = createLogger({
   level: 'info',
@@ -101,6 +102,8 @@ function generateSourcesForService(
     requestBuilderSourceFile(serviceMetadata),
     true
   );
+
+  sourceFile(serviceDir, 'index', indexFile(), true);
 }
 
 async function generateFilesUsingOpenAPI(

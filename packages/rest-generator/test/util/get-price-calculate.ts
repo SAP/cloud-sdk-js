@@ -1,9 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import { buildAxiosRequestConfig } from '@sap-cloud-sdk/core';
-import {
-  CalculationApi,
-  PriceCalculateResponse
-} from '../test-services/PriceCalculation/open-api/api';
+import { CalculationApi } from '../test-services/PriceCalculation/open-api/api';
+import { PriceCalculateResponse } from '../test-services/PriceCalculation';
 import { PriceCalculationApiRequestBuilder } from '../test-services/PriceCalculation/request-builder';
 import { transaction } from './price-calculate-payload';
 
@@ -27,9 +25,7 @@ export async function getPriceCalculateWithVanillaOpenApi(): Promise<
   const requestConfig: AxiosRequestConfig = await buildAxiosRequestConfig({
     destinationName: 'VLAB'
   });
-  const calculationApi = new CalculationApi({
-    basePath: requestConfig.baseURL
-  });
+  const calculationApi = new CalculationApi(requestConfig);
   return calculationApi
     .calculateViaRestWithTenant('oppsapihub', transaction, {
       ...requestConfig,

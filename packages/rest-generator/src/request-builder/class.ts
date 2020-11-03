@@ -20,7 +20,7 @@ export function apiRequestBuilderClass(
   return {
     kind: StructureKind.Class,
     name: `${serviceMetadata.apiName}ApiRequestBuilder`,
-    methods: method(serviceMetadata.apiName, serviceMetadata.paths),
+    methods: method(`${serviceMetadata.apiName}Api`, serviceMetadata.paths),
     isExported: true
   };
 }
@@ -68,10 +68,9 @@ function toStatement(
   const paramString = [apiName, `'${operationName}'`, ...parameters].join(
     ',\n'
   );
-  return `new RestRequestBuilder(
+  return `return new RestRequestBuilder(
     ${paramString}
-  );
-}`;
+  );`;
 }
 
 export function refNameToParamStructure(

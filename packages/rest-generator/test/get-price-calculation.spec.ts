@@ -7,7 +7,7 @@ import {
 import {
   PercentActionEnum,
   PriceCalculateResponse
-} from './test-services/PriceCalculation/open-api/api';
+} from './test-services/PriceCalculation';
 import {
   getPriceCalculate,
   getPriceCalculateWithVanillaOpenApi

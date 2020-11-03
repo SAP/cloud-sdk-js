@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { generateProject, generateRest } from '../src/generator';
 
-describe('rest generator test', () => {
+describe('rest generator', () => {
   const inputDir = path.resolve(__dirname, 'resources', 'test-apis');
   const outputDir = path.resolve(__dirname, 'generated');
 
@@ -38,7 +38,7 @@ describe('rest generator test', () => {
   it('should generate request builder file', async () => {
     const project = await generateProject({ inputDir, outputDir });
     const sourceFiles = project.getSourceFiles();
-    expect(sourceFiles.length).toBe(2);
+    expect(sourceFiles.length).toBe(4);
 
     const salesOrderRequestBuilder = sourceFiles.find(file =>
       file.getDirectoryPath().endsWith('sales-orders')

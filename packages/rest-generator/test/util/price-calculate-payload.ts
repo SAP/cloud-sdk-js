@@ -8,7 +8,7 @@ import {
   BusinessUnitCommonDataTypeCodeEnum,
   PriceCalculate,
   PriceCalculateBaseTransactionTypeEnum
-} from '../test-services/PriceCalculation/open-api/api';
+} from '../test-services/PriceCalculation';
 
 export const transaction: PriceCalculate = {
   ARTSHeader: {

@@ -34,10 +34,11 @@ export class RestRequestBuilder<ApiT> {
       headers: this.customHeaders
     });
 
-    const fn = new this.apiConstructor(requestConfig)[this.fn];
+    const api = new this.apiConstructor(requestConfig);
+    const fn = api[this.fn];
 
     if (typeof fn === 'function') {
-      return fn(...this.args);
+      return fn.apply(api, this.args);
     }
 
     throw new Error(

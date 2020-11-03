@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { RestRequestBuilder } from '@sap-cloud-sdk/core';
-import { PriceCalculationApi } from './open-api';
+import { PriceCalculationApi } from './open-api/api';
 import { PriceCalculate } from './open-api/model';
 export const PriceCalculationApiRequestBuilder = {
   calculateViaRestWithTenant: (tenantName: string, priceCalculate: PriceCalculate) => new RestRequestBuilder<PriceCalculationApi>(

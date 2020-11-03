@@ -38,15 +38,12 @@ export async function generateProject(options: GeneratorOptions) {
   }
 
   const files = readdirSync(options.inputDir);
-  const pathToTemplates = resolve(__dirname, '../templates');
-  const pathToMustacheValues = join(__dirname, '../mustache-values.json');
+  const pathToTemplates = resolve(__dirname, './templates');
 
   const project = new Project(projectOptions());
 
   const openApiServiceMetadata = await Promise.all(
-    files.map(async file =>
-      generateOneApi(file, options, pathToTemplates, pathToMustacheValues)
-    )
+    files.map(async file => generateOneApi(file, options, pathToTemplates))
   );
   openApiServiceMetadata.map(metadata =>
     generateSourcesForService(metadata, project, options)
@@ -57,8 +54,7 @@ export async function generateProject(options: GeneratorOptions) {
 async function generateOneApi(
   inputFileName: string,
   options: GeneratorOptions,
-  pathToTemplates: string,
-  pathToMustacheValues: string
+  pathToTemplates: string
 ) {
   const dirForService = getDirForService(options.outputDir, inputFileName);
   if (!existsSync(dirForService)) {
@@ -76,8 +72,7 @@ async function generateOneApi(
   await generateFilesUsingOpenAPI(
     dirForService,
     pathToAdjustedOpenApiDefFile,
-    pathToTemplates,
-    pathToMustacheValues
+    pathToTemplates
   );
 
   return toOpenApiServiceMetaData(
@@ -109,8 +104,7 @@ function generateSourcesForService(
 async function generateFilesUsingOpenAPI(
   dirForService: string,
   pathToAdjustedOpenApiDefFile: string,
-  pathToTemplates: string,
-  pathToMustacheValues: string
+  pathToTemplates: string
 ) {
   const generationArguments = [
     'openapi-generator-cli',

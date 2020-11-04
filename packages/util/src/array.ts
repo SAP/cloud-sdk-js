@@ -59,19 +59,19 @@ export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
  *   //implementation
  * }
  * This wrapper methods makes it easy build an array from the input.
- * @param firstOrArray - Either an array or the first element of the var args.
- * @param rest - Second to last element if var args were used, undefined otherwise.
- * @returns Array from the input or undefined if no var args was given.
+ * @param firstOrArray - Either an array, the first element of the var args or undefined if no argument was given.
+ * @param rest - Second to last element if var args were used, empty array if the frist argument is an array.
+ * @returns Array from the input or empty array if no input was given.
  */
 export function variableArgumentToArray<T>(
   firstOrArray: undefined | T | T[],
   rest: T[]
 ): T[] {
-  if (typeof firstOrArray === 'undefined') {
-    return [];
-  }
   if (Array.isArray(firstOrArray)) {
-    return firstOrArray;
+    return [...firstOrArray, ...rest];
   }
-  return [firstOrArray, ...rest];
+  return firstOrArray ? [firstOrArray, ...rest] : [...rest];
 }
+
+type Rest<T> = T extends T[] ? undefined : T[];
+type First<T> = undefined | T | T[];

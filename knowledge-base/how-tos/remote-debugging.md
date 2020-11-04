@@ -2,13 +2,14 @@
 
 ## TLDR;
 
-Change your app to start to start in debug mode, ssh tunnel your local port 9229 to the remote port of 9229 of your application and start a remote debugging session from your IDE.
+Change your app to start in debug mode, ssh tunnel your local port 9229 to the remote port of 9229 of your application and start a remote debugging session from your IDE.
 
 ## Steps
 
 ### Deploy your application with debug mode
 
-* Replace the start script to run in debug mode. E. g. instead of `node start.js` use `node --inspect start.js` for node and instead of `ts-node start.ts` use `node -r ts-node/register --inspect start.ts`.
+Replace the start script to run in debug mode. E. g. instead of `node start.js` use `node --inspect start.js` for node and instead of `ts-node start.ts` use `node -r ts-node/register --inspect start.ts`.
+You can do this by either changing your `start` script in the `package.json` or the `command` script in the `manifest.yml`.
   **Note:** Don't use `--inspect-brk`, this will make the start timeout on SAP Cloud Platform.
 
 Deploy your application as usual, run:

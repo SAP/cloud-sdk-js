@@ -1,5 +1,5 @@
 {
-    "fileExtensions" : ["ts"],
+  "fileExtensions" : ["ts"],
 	"detectiveOptions": {
 		"ts": {
 			"skipTypeImports": true

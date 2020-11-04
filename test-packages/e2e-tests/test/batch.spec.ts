@@ -3,13 +3,18 @@ import {
   changeset,
   TestEntity
 } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
+import { deleteEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';
 
+const entityKey = 123;
+
 describe('batch', () => {
+  beforeEach(async () => deleteEntity(entityKey, destination));
+
   it('should execute retrieve and change set requests', async () => {
     const getAll = TestEntity.requestBuilder().getAll();
     const testEntity = TestEntity.builder()
-      .keyTestEntity(123)
+      .keyTestEntity(entityKey)
       .stringProperty('batch')
       .build();
     const create = TestEntity.requestBuilder().create(testEntity);

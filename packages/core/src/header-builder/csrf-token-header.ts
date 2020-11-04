@@ -66,10 +66,7 @@ function axiosWorkaround<T extends HttpRequestConfig>(
   axiosConfig: Partial<T>,
   destination: Destination | DestinationNameAndJwt
 ) {
-  if (
-    error.config.headers['Proxy-Authorization'] &&
-    error.request._isRedirect
-  ) {
+  if (error.request._isRedirect) {
     return makeCsrfRequest(destination, {
       ...axiosConfig,
       url: error.request._options.path

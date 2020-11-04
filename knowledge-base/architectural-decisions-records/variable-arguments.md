@@ -9,14 +9,13 @@ function doSomething(...strings:string[]){
 
 You can call the method with no, one, two,... arguments.
 We used this feature quite regularly for example for the `and` and `or` filter functions.
-In the TypeScript universe there is also nothing wrong wit it, because you will get and type if you call
+In the TypeScript universe there is also nothing wrong wit it, because you will get a type error if you call the function with an array.
 
 ```
-function doSomething(['a','b','c'])
+function doSomething(['a','b','c']) //type error
 ```
 
-the function with an array.
-However, in the JavaScript use case you do not get a type error if you call it with an array.
+However, in the JavaScript use case you do not get a type error if you call it with an array only a strange error at runtime.
 From the method signature it also looks like an array is a valid input.
 Hence, we decided to be lenient to the users and allow also for:
 

@@ -22,6 +22,11 @@ export function importBatchDeclarations(
     ),
     {
       kind: StructureKind.ImportDeclaration,
+      moduleSpecifier: '@sap-cloud-sdk/util',
+      namedImports: ['variableArgumentToArray']
+    },
+    {
+      kind: StructureKind.ImportDeclaration,
       moduleSpecifier: './index',
       namedImports: getNamedImports(service)
     }

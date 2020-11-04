@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import { variableArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity, TestEntityLink } from './index';
 
 /**
@@ -11,8 +12,10 @@ import { TestEntity, TestEntityLink } from './index';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(...requests: Array<ReadAdminServiceRequestBuilder | ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(defaultAdminServicePath, requests, map);
+export function batch(...requests: Array<ReadAdminServiceRequestBuilder | ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
+export function batch(requests: Array<ReadAdminServiceRequestBuilder | ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
+export function batch(first: undefined | ReadAdminServiceRequestBuilder | ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder> | Array<ReadAdminServiceRequestBuilder | ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>>, ...rest: Array<ReadAdminServiceRequestBuilder | ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
+  return new ODataBatchRequestBuilderV4(defaultAdminServicePath, variableArgumentToArray(first, rest), map);
 }
 
 /**
@@ -20,8 +23,10 @@ export function batch(...requests: Array<ReadAdminServiceRequestBuilder | ODataB
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(...requests: WriteAdminServiceRequestBuilder[]): ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(requests);
+export function changeset(...requests: Array<WriteAdminServiceRequestBuilder>): ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>;
+export function changeset(requests: Array<WriteAdminServiceRequestBuilder>): ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder>;
+export function changeset(first: undefined | WriteAdminServiceRequestBuilder | Array<WriteAdminServiceRequestBuilder>, ...rest: Array<WriteAdminServiceRequestBuilder>): ODataBatchChangeSetV4<WriteAdminServiceRequestBuilder> {
+  return new ODataBatchChangeSetV4(variableArgumentToArray(first, rest));
 }
 
 export const defaultAdminServicePath = '/admin';

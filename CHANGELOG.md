@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- Most public methods using variable arguments allow now also arrays as input.
+- Most public methods using variable arguments now also accept arrays as input.
 
 ## Improvements
 

@@ -21,9 +21,7 @@ describe('rest generator', () => {
     await generateRest({ inputDir, outputDir });
 
     const services = fs.readdirSync(outputDir);
-    expect(services).toEqual(
-      expect.arrayContaining(['petstore', 'sales-orders'])
-    );
+    expect(services).toEqual(expect.arrayContaining(['petstore']));
     services.forEach(serviceName => {
       const rootFiles = fs.readdirSync(path.join(outputDir, serviceName));
       expect(rootFiles).toContain('request-builder.ts');
@@ -39,12 +37,12 @@ describe('rest generator', () => {
   it('should generate request builder file', async () => {
     const project = await generateProject({ inputDir, outputDir });
     const sourceFiles = project.getSourceFiles();
-    expect(sourceFiles.length).toBe(4);
+    expect(sourceFiles.length).toBe(2);
 
-    const salesOrderRequestBuilder = sourceFiles.find(file =>
-      file.getFilePath().endsWith('sales-orders/request-builder.ts')
+    const requestBuilder = sourceFiles.find(file =>
+      file.getFilePath().endsWith('petstore/request-builder.ts')
     );
-    const declarations = salesOrderRequestBuilder!.getVariableStatements();
+    const declarations = requestBuilder!.getVariableStatements();
     expect(declarations.length).toBe(1);
 
     const functions = declarations[0]
@@ -52,6 +50,6 @@ describe('rest generator', () => {
       .getInitializerIfKindOrThrow(SyntaxKind.ObjectLiteralExpression)
       .getProperties();
 
-    expect(functions.length).toBe(8);
+    expect(functions.length).toBe(3);
   }, 60000);
 });

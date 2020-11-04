@@ -37,7 +37,6 @@
     "@openapitools/openapi-generator-cli": "^2.0.3",
     "@sap-cloud-sdk/core": "^1.29.0",
     "@sap-cloud-sdk/util": "^1.29.0",
-    "@sap-cloud-sdk/test-util": "^1.29.0",
     "axios": "^0.21.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.0",

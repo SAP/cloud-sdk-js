@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [Generator] Paths referenced in configuration files for the generator are treated as relative to this file as stated in the documentation. Projects relying on the previous erroneous behavior might have to adjust their configuration.
 
 ## New Functionality
 
@@ -24,12 +24,13 @@
 
 - Remove the `rambda` library to save  approx 2MB or 10% of the SDK size.
 - [Connectivity] Warn the user when using custom headers for executing http requests.
+- Pass through original error message in case of failure when fetching the csrf token.
 
 ## Fixed Issues
 
-- [Generator] Fix the function import (OData V2 + V4) and action import, where the return type is a primitive edm type like `Edm.String`.
-- [Cache] Fix expiration times in the client credentials cache.
-- [CSRF] Fix the error message of fetching the csrf token, it should show original error.
+- [Generator] Fix function imports (OData V2 + V4) and action imports, where the return type is a primitive edm type like `Edm.String`.
+- [Generator] Fix path references in generator configuration file to be treated as relative to the configuration file.
+- [Core] Fix expiration times in the client credentials cache.
 
 
 # 1.30.0

@@ -55,7 +55,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
         if (retry) {
           return retry;
         }
-        throw errorWithCause('The error response is undefined.', error);
+        throw errorWithCause('Csrf fetch failed.', error);
       }
       return error.response.headers;
     });
@@ -67,6 +67,9 @@ function axiosWorkaround<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt
 ) {
   if (error.request._isRedirect) {
+    logger.warn(
+      'Csrf fetch was redirected and failed. This might be a bug in the underlying request library (https://github.com/axios/axios/issues/3369).\nRetrying with full configuration.'
+    );
     return makeCsrfRequest(destination, {
       ...axiosConfig,
       url: error.request._options.path

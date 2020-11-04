@@ -43,3 +43,5 @@
 //   expect(percent.value).toBe(10);
 //   expect(percent.Action).toBe(PercentActionEnum.Subtract);
 // }
+
+test.skip('Workaround', () => 1);

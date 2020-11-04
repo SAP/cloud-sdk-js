@@ -4,7 +4,7 @@ import {
   last,
   first,
   splitInChunks,
-  variableArgumentToArray
+  variadicArgumentToArray
 } from '../src';
 
 describe('array', () => {
@@ -16,7 +16,7 @@ describe('array', () => {
         firstOrArray: undefined | string | string[],
         ...rest: string[]
       ): string[] {
-        return variableArgumentToArray(firstOrArray, rest);
+        return variadicArgumentToArray(firstOrArray, rest);
       }
       expect(functionWithVariableArguments()).toEqual([]);
       expect(functionWithVariableArguments([])).toEqual([]);

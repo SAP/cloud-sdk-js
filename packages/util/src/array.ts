@@ -63,7 +63,7 @@ export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
  * @param rest - Second to last element if var args were used, empty array if the frist argument is an array.
  * @returns Array from the input or empty array if no input was given.
  */
-export function variableArgumentToArray<T>(
+export function variadicArgumentToArray<T>(
   firstOrArray: undefined | T | T[],
   rest: T[]
 ): T[] {

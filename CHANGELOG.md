@@ -30,6 +30,7 @@
 
 - [Generator] Fix function imports (OData V2 + V4) and action imports, where the return type is a primitive edm type like `Edm.String`.
 - [Generator] Fix path references in generator configuration file to be treated as relative to the configuration file.
+- [Core] Fix expiration times in the client credentials cache.
 
 
 # 1.30.0

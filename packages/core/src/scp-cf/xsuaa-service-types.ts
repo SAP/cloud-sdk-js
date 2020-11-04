@@ -5,6 +5,7 @@ export interface ClientCredentials {
 
 /**
  * @hidden
+ * @property expires_in - The number of seconds until the access token expires.
  */
 export interface ClientCredentialsResponse {
   access_token: string;

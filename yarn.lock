@@ -1691,9 +1691,9 @@
     xmlbuilder "=13.0.2"
 
 "@sap/xsenv@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.0.0.tgz#a2862b3e40cbea9dfb71205aa60e8cc7a08f51ec"
-  integrity sha512-P4WssqUpwMu8KVBsUfd9Uhzz6NyHX34Otilh5PBz2UlgF1SRGWQHsdAjc/erILf+Kk0fTn5rtbUjC8i8778BPQ==
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.1.0.tgz#86cf4a5229c7f3d3b4425aa1fab674cf8505051e"
+  integrity sha512-Z+fwO13tcad+eoe8iTrbR471OacU754puabhRn8OI1MU2pPebDQu8rcHN7sR9JQinh4dSs953WkbDneOmvCWuA==
   dependencies:
     debug "3.1.0"
     verror "1.10.0"

@@ -106,9 +106,7 @@ export async function generateProject(
   const services = parseServices(options);
 
   if (!services.length) {
-    logger.warn(
-      `No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`
-    );
+    logger.warn('No services parsed.');
     return;
   }
 
@@ -366,9 +364,7 @@ function projectOptions(): ProjectOptions {
 function parseServices(options: GeneratorOptions): VdmServiceMetadata[] {
   const services = parseAllServices(options);
   if (!services.length) {
-    logger.warn(
-      `No service definition files found. Recursively traversing directory: ${options.inputDir.toString()}!`
-    );
+    logger.warn('No service definition files found.');
     return [];
   }
   return services;

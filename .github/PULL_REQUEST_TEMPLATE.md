@@ -14,4 +14,4 @@ Please consider all items and remove only if not applicable.
   * Use indicative and present tense. For example, write "Provide function `name` that does X in order to Y" over "Now X can be done by calling a new function".
 - [ ] PR title adheres to [conventional commit guidelines](https://www.conventionalcommits.org) (please note that only `fix:` and `feat:` will end up in the release notes)
 - [ ] If applicable: Properly documented (JSDoc of public API)
-- [ ] If applicable: Check if `node run doc` still works.
+- [ ] If applicable: Check if `yarn run doc` still works.

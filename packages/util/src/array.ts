@@ -72,6 +72,3 @@ export function variableArgumentToArray<T>(
   }
   return firstOrArray ? [firstOrArray, ...rest] : [...rest];
 }
-
-type Rest<T> = T extends T[] ? undefined : T[];
-type First<T> = undefined | T | T[];

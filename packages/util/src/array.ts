@@ -53,9 +53,9 @@ export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
 /**
  * We want to provide methods which accept a variable single number of elements and arrays.
  * The overloaded signature to achieve this is:
- * function doSomething(array:T[])
- * function doSomething(...varArgs:T[])
- * functiondoSomething(first:undefined|T|T[],...rest:T[]){
+ * function doSomething(array: T[])
+ * function doSomething(...varArgs: T[])
+ * functiondoSomething(first: undefined | T | T[], ...rest: T[]) {
  *   //implementation
  * }
  * This wrapper methods makes it easy build an array from the input.

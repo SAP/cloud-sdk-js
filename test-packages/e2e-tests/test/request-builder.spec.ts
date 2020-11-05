@@ -24,6 +24,7 @@ async function createEntity(key: number): Promise<TestEntity> {
 
 describe('Request builder', () => {
   beforeEach(async () => deleteEntity(entityKey, destination));
+  beforeEach(async () => deleteEntity(entityKey, destination));
 
   it('should return a collection of entities for get all request', async () => {
     const testEntities = await TestEntity.requestBuilder()

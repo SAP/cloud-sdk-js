@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.31.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.31.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - [Generator] Paths referenced in configuration files for the generator are treated as relative to this file as stated in the documentation. Projects relying on the previous erroneous behavior might have to adjust their configuration.
 
 ## New Functionality

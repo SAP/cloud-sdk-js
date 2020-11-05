@@ -1600,28 +1600,21 @@
     resolve "1.8.1"
     sax "^1.2.4"
 
-"@sap/cds-dk-foss@^1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk-foss/-/cds-dk-foss-1.0.1.tgz#ac59c44aea84e800da2db0a0b805c53f53f1156f"
-  integrity sha512-slhCY1tJOISZQWS1C54NpDa0iXZ/oys3zXpV9yiSquK+zw5JNjY099iT4AtRNtdi5y/JDGZo5ElFrSTRQEOAYQ==
+"@sap/cds-dk@^3.0.0":
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.2.0.tgz#6a8b4170c1524774dba51436315171126a46cc0e"
+  integrity sha512-SOSuKWYdCdRi6BnzEudpPBR3iC+sWZxCO4FlstTAdn9KMynogiZebh4LTyQIUdrLjgdkCoRxa7kn+bnmlALfrg==
   dependencies:
+    "@sap/cds" "^4.2.2"
+    "@sap/cds-foss" "^2"
+    "@sap/cds-sidecar-client" "^1.1.6"
+    "@sap/edm-converters" "^1.0.27"
     express "^4.17.1"
     mustache "^4.0.1"
     node-watch "0.6.4"
     passport "^0.4.1"
-    sqlite3 "^5.0.0"
-    xml2js "^0.4.23"
-
-"@sap/cds-dk@^3.0.0":
-  version "3.1.4"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.1.4.tgz#2c178c8bdcaf0656a939ec925fb6ad1fec7e02a4"
-  integrity sha512-+HhhA3HNGZDbBI/RaISN2Nk5+F2FSattqDV32jTZi+NlZSqFJZIaThj3U6pNES39hkY/6+WXxavYFraq5+Bs/Q==
-  dependencies:
-    "@sap/cds" "^4.2.6"
-    "@sap/cds-dk-foss" "^1"
-    "@sap/cds-foss" "^2"
-    "@sap/cds-sidecar-client" "^1.1.6"
-    "@sap/edm-converters" "^1.0.27"
+    sqlite3 "^5"
+    xml2js "^0.4.3"
 
 "@sap/cds-foss@^2":
   version "2.1.0"
@@ -1655,7 +1648,7 @@
     fs-extra "9.0.1"
     got "10.7.0"
 
-"@sap/cds@^4.1.9", "@sap/cds@^4.2.6":
+"@sap/cds@^4.1.9", "@sap/cds@^4.2.2":
   version "4.3.0"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.3.0.tgz#932422ef73f26c9d93fe948f5f460d87146fb8d9"
   integrity sha512-KdWY8+KbL81jIOQ5Th24jeWdJIgF7y+ySR1ORmM2//p0JR1MbUw+ceBclInbp7nPg2Gy5tmgy9YNMTEt2/1ekg==
@@ -9753,7 +9746,7 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-sqlite3@^5.0.0:
+sqlite3@^5, sqlite3@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.0.tgz#1bfef2151c6bc48a3ab1a6c126088bb8dd233566"
   integrity sha512-rjvqHFUaSGnzxDy2AHCwhHy6Zp6MNJzCPGYju4kD8yi6bze4d1/zMTg6C7JI49b7/EM7jKMTvyfN/4ylBKdwfw==
@@ -11078,7 +11071,7 @@ xml-name-validator@^3.0.0:
   resolved "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
 
-xml2js@^0.4.23:
+xml2js@^0.4.3:
   version "0.4.23"
   resolved "https://registry.npmjs.org/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
   integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==

@@ -1,4 +1,4 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { errorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
@@ -48,8 +48,13 @@ export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
    * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Selectable<EntityT>[]): this {
-    this.requestConfig.selects = selects;
+  select(...selects: Selectable<EntityT>[]): this;
+  select(selects: Selectable<EntityT>[]): this;
+  select(
+    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
+    ...rest: Selectable<EntityT>[]
+  ): this {
+    this.requestConfig.selects = variadicArgumentToArray(first, rest);
     return this;
   }
 

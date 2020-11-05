@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { CreateRequestBuilderV2, DeleteRequestBuilderV2, GetAllRequestBuilderV2, GetByKeyRequestBuilderV2, ODataBatchChangeSetV2, ODataBatchRequestBuilderV2, UpdateRequestBuilderV2 } from '../../../../../src';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLvl2MultiLink, TestEntitySingleLink, TestEntityLvl2SingleLink, TestEntityCircularLinkParent, TestEntityCircularLinkChild, TestEntityEndsWith, TestEntityEndsWithSomethingElse, Testentity_1 } from './index';
 
 /**
@@ -11,8 +12,10 @@ import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLv
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV2 {
-  return new ODataBatchRequestBuilderV2(defaultTestServicePath, requests, map);
+export function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV2;
+export function batch(requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV2;
+export function batch(first: undefined | ReadTestServiceRequestBuilder | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder> | Array<ReadTestServiceRequestBuilder | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>>, ...rest: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV2 {
+  return new ODataBatchRequestBuilderV2(defaultTestServicePath, variadicArgumentToArray(first, rest), map);
 }
 
 /**
@@ -20,8 +23,10 @@ export function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBa
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(...requests: WriteTestServiceRequestBuilder[]): ODataBatchChangeSetV2<WriteTestServiceRequestBuilder> {
-  return new ODataBatchChangeSetV2(requests);
+export function changeset(...requests: Array<WriteTestServiceRequestBuilder>): ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>;
+export function changeset(requests: Array<WriteTestServiceRequestBuilder>): ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>;
+export function changeset(first: undefined | WriteTestServiceRequestBuilder | Array<WriteTestServiceRequestBuilder>, ...rest: Array<WriteTestServiceRequestBuilder>): ODataBatchChangeSetV2<WriteTestServiceRequestBuilder> {
+  return new ODataBatchChangeSetV2(variadicArgumentToArray(first, rest));
 }
 
 export const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

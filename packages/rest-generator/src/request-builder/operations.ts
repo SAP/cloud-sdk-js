@@ -75,7 +75,7 @@ function getOperations(
       ...operations,
       [toPropertyFormat(
         operation.operationName
-      )]: `(${apiFunctionParameters}) => new RestRequestBuilder<${apiName}>(
+      )]: `(${apiFunctionParameters}) => new RestRequestBuilder<${apiName}, '${operation.operationName}'>(
         ${requestBuilderParameters}
       )`
     };

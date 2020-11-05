@@ -8,6 +8,7 @@ import { flat } from '@sap-cloud-sdk/util';
 import { OpenApiServiceMetadata } from '../open-api-types';
 import { coreImportDeclaration } from '../utils';
 import { operationsVariable } from './operations';
+
 export function requestBuilderSourceFile(
   serviceMetadata: OpenApiServiceMetadata
 ): SourceFileStructure {

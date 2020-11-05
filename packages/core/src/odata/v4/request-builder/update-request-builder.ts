@@ -1,4 +1,4 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { errorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { EntityV4 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
@@ -122,8 +122,13 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
    * @param fields - Enumeration of the fields to be required
    * @returns The entity itself, to facilitate method chaining
    */
-  requiredFields(...fields: Selectable<EntityT>[]): this {
-    this.required = this.toSet(...fields);
+  requiredFields(...fields: Selectable<EntityT>[]): this;
+  requiredFields(fields: Selectable<EntityT>[]): this;
+  requiredFields(
+    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
+    ...rest: Selectable<EntityT>[]
+  ): this {
+    this.required = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }
@@ -134,8 +139,13 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
    * @param fields - Enumeration of the fields to be ignored
    * @returns The entity itself, to facilitate method chaining
    */
-  ignoredFields(...fields: Selectable<EntityT>[]): this {
-    this.ignored = this.toSet(...fields);
+  ignoredFields(...fields: Selectable<EntityT>[]): this;
+  ignoredFields(fields: Selectable<EntityT>[]): this;
+  ignoredFields(
+    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
+    ...rest: Selectable<EntityT>[]
+  ): this {
+    this.ignored = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }
@@ -215,7 +225,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     return Object.keys(this._entityConstructor._keys);
   }
 
-  private toSet(...fields: Selectable<EntityT>[]) {
+  private toSet(fields: Selectable<EntityT>[]) {
     const set = new Set<string>();
     Object.values(fields).forEach(field => {
       set.add(field._fieldName);

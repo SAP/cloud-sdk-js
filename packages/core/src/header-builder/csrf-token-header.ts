@@ -1,4 +1,5 @@
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { AxiosError } from 'axios';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
 import { filterNullishValues, getHeader, getHeaderValue } from './header-util';
@@ -49,10 +50,31 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     .then(response => response.headers)
     .catch(error => {
       if (!error.response) {
-        throw errorWithCause('The error response is undefined.', error);
+        // TODO: remove once https://github.com/axios/axios/issues/3369 is fixed
+        const retry = axiosWorkaround(error, requestConfig, destination);
+        if (retry) {
+          return retry;
+        }
+        throw errorWithCause('Csrf fetch failed.', error);
       }
       return error.response.headers;
     });
+}
+
+function axiosWorkaround<T extends HttpRequestConfig>(
+  error: AxiosError,
+  axiosConfig: Partial<T>,
+  destination: Destination | DestinationNameAndJwt
+) {
+  if (error.request?._isRedirect && error.request?._options?.path) {
+    logger.warn(
+      'Csrf fetch was redirected and failed. This might be a bug in the underlying request library (https://github.com/axios/axios/issues/3369).\nRetrying with full configuration.'
+    );
+    return makeCsrfRequest(destination, {
+      ...axiosConfig,
+      url: error.request._options.path
+    });
+  }
 }
 
 function validateCsrfTokenResponse(responseHeaders: Record<string, any>) {

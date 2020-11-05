@@ -17,7 +17,7 @@ If this run is successful a Github release will be drafted. The name of the rele
 
 The information from the CHANGELOG.md is automatically copied as description for the draft.
 If you are not happy with this, adjust the release notes on this tag.
-![](../img/addjust-notes.png)
+![Adjust release notes](../img/adjust-notes.png)
 
  When you decide that you are ready for releasing, publish the release by pressing the green button.
  This will trigger the release pipeline, that publishes all modules to npm.

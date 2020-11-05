@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/rest-generator",
-  "version": "1.29.0",
+  "version": "1.31.0",
   "description": "SAP Cloud SDK for JavaScript REST api generator",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -30,13 +30,13 @@
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
-    "generate:test-services": "ts-node src/generator-cli.ts -i test/resources/test-apis -o test/test-services",
+    "generate:test-services": "ts-node src/generator-cli.ts -i test/resources/PriceCalculation  -o test/test-services",
     "check:dependencies": "depcheck . --ignore-bin-package=true"
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.0.3",
-    "@sap-cloud-sdk/core": "^1.29.0",
-    "@sap-cloud-sdk/util": "^1.29.0",
+    "@sap-cloud-sdk/core": "^1.31.0",
+    "@sap-cloud-sdk/util": "^1.31.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.0",
     "ts-morph": "^8.1.0",

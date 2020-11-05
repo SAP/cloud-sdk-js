@@ -1,3 +1,4 @@
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity';
 import { FieldType } from '../selectable';
 import { Filter } from './filter';
@@ -38,9 +39,16 @@ export type Filterable<EntityT extends EntityBase> =
  * @returns The newly created FilterList
  */
 export function and<EntityT extends EntityBase>(
+  expressions: Filterable<EntityT>[]
+): FilterList<EntityT>;
+export function and<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
+): FilterList<EntityT>;
+export function and<EntityT extends EntityBase>(
+  first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
+  ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
-  return new FilterList(expressions);
+  return new FilterList(variadicArgumentToArray(first, rest));
 }
 
 /**
@@ -58,9 +66,16 @@ export function and<EntityT extends EntityBase>(
  * @returns The newly created FilterList
  */
 export function or<EntityT extends EntityBase>(
+  expressions: Filterable<EntityT>[]
+): FilterList<EntityT>;
+export function or<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
+): FilterList<EntityT>;
+export function or<EntityT extends EntityBase>(
+  first: Filterable<EntityT> | Filterable<EntityT>[],
+  ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
-  return new FilterList([], expressions);
+  return new FilterList([], variadicArgumentToArray(first, rest));
 }
 
 // TODO:

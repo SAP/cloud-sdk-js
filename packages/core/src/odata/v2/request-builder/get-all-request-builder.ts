@@ -1,3 +1,4 @@
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
@@ -48,8 +49,13 @@ export class GetAllRequestBuilderV2<EntityT extends EntityV2>
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(...expressions: Filterable<EntityT>[]): this {
-    this.requestConfig.filter = and(...expressions);
+  filter(expressions: Filterable<EntityT>[]): this;
+  filter(...expressions: Filterable<EntityT>[]): this;
+  filter(
+    first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
+    ...rest: Filterable<EntityT>[]
+  ): this {
+    this.requestConfig.filter = and(variadicArgumentToArray(first, rest));
     return this;
   }
 

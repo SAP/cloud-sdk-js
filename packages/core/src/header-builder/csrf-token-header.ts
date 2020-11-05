@@ -1,7 +1,7 @@
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
-import { Destination, DestinationNameAndJwt } from '../scp-cf';
+import { Destination, DestinationNameAndJwt } from '../connectivity/scp-cf';
 import { filterNullishValues, getHeader, getHeaderValue } from './header-util';
 
 const logger = createLogger({

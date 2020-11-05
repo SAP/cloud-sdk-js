@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { DeleteRequestBuilderV4, uriConverterV4 } from '../../../src/odata/v4';
+import { DeleteRequestBuilderV4, uriConverterV4 } from '../../../src/odata-v4';
 import {
   defaultDestination,
   mockDeleteRequest

@@ -1,4 +1,4 @@
-import { Destination } from '../scp-cf';
+import { Destination } from '../connectivity/scp-cf';
 import { getAuthHeaders } from './authorization-header';
 import { replaceDuplicateKeys, filterNullishValues } from './header-util';
 

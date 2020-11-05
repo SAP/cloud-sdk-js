@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { Destination, DestinationNameAndJwt } from '../scp-cf';
+import { Destination, DestinationNameAndJwt } from '../connectivity/scp-cf';
 import { buildAxiosRequestConfig } from '../http-client';
 
 export abstract class RestRequestBuilder {

@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { buildHeaders } from '../../../src/header-builder/header-builder';
-import { Destination } from '../../../src/scp-cf/destination/destination-service-types';
+import { Destination } from '../../../src/connectivity/scp-cf';
 import { mockedConnectivityServiceProxyConfig } from '../../test-util/environment-mocks';
 import {
   defaultDestination,

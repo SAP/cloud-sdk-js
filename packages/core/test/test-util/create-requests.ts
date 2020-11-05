@@ -1,8 +1,5 @@
-import { ODataUpdateRequestConfig } from '../../src/odata/common/request/odata-update-request-config';
-import { ODataGetAllRequestConfig } from '../../src/odata/common/request/odata-get-all-request-config';
-import { ODataCreateRequestConfig } from '../../src/odata/common/request/odata-create-request-config';
-import { ODataRequest } from '../../src/odata/common/request/odata-request';
-import { Destination } from '../../src/scp-cf';
+import { ODataUpdateRequestConfig,ODataGetAllRequestConfig,ODataCreateRequestConfig,ODataRequest } from '../../src/odata-common';
+import { Destination } from '../../src/connectivity/scp-cf';
 import { oDataUriV2 } from '../../src';
 import { TestEntity } from './test-services/v2/test-service';
 

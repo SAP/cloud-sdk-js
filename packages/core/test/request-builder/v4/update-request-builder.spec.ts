@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { UpdateRequestBuilderV4, uriConverterV4 } from '../../../src/odata/v4';
+import { UpdateRequestBuilderV4, uriConverterV4 } from '../../../src/odata-v4';
 import {
   defaultDestination,
   mockUpdateRequest

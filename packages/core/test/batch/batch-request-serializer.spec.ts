@@ -5,12 +5,12 @@ import {
   buildTestEntity,
   createChangeSetWithFakeId
 } from '../test-util/batch-test-util';
-import { ODataBatchRequestConfig } from '../../src/odata/common/request/odata-batch-request-config';
+import { ODataBatchRequestConfig } from '../../src/odata-common';
 import {
   serializeRequest,
   serializeChangeSet,
   serializeBatchRequest
-} from '../../src/odata/common/request-builder/batch/batch-request-serializer';
+} from '../../src/odata-common';
 import { Destination } from '../../src';
 
 describe('batch request serializer', () => {

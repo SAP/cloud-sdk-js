@@ -1,5 +1,5 @@
 import assert = require('assert');
-import { mapping, userFromJwt } from '../../src/scp-cf/user';
+import { mappingUserFields, userFromJwt } from '../../src/connectivity/scp-cf';
 import { DecodedJWT } from '../../src/util';
 
 function getSampleJwt(scopes?: string[]): DecodedJWT {
@@ -29,14 +29,14 @@ describe('user builder from decoded jwt', () => {
       userFromJwt({ user_name: 'userNameThere' });
       assert.fail('No exception while building from jwt without user id.');
     } catch (e) {
-      expect(e.message).toContain(mapping.id.keyInJwt);
+      expect(e.message).toContain(mappingUserFields.id.keyInJwt);
     }
 
     try {
       userFromJwt({ user_id: 'userIdThere' });
       assert.fail('No exception while building from jwt without user name.');
     } catch (e) {
-      expect(e.message).toContain(mapping.userName.keyInJwt);
+      expect(e.message).toContain(mappingUserFields.userName.keyInJwt);
     }
 
     userFromJwt({ user_id: 'userIdThere', user_name: 'userNameThere' });
@@ -67,7 +67,7 @@ describe('user builder from decoded jwt', () => {
     const userWithCustomFields = userFromJwt({
       user_name: 'someName',
       user_id: 'someId',
-      [mapping.customAttributes.keyInJwt]: customAttributes
+      [mappingUserFields.customAttributes.keyInJwt]: customAttributes
     });
     expect(userWithCustomFields.customAttributes).toMatchObject(
       customAttributes

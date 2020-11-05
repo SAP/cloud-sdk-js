@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { DestinationServiceCredentials } from '../../src/scp-cf';
-import { EnvironmentAccessor } from '../../src/scp-cf/environment-accessor';
+import { DestinationServiceCredentials } from '../../src/connectivity/scp-cf';
+import { EnvironmentAccessor } from '../../src/connectivity/scp-cf';
 
 const logger = createLogger('environment-accessor');
 

@@ -5,7 +5,7 @@ import {
   fetchDestination,
   fetchSubaccountDestinations,
   IsolationStrategy
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 import {
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
@@ -17,7 +17,7 @@ import {
   providerServiceToken,
   subscriberServiceToken
 } from '../test-util/mocked-access-tokens';
-import { destinationServiceCache } from '../../src/scp-cf/destination/destination-service-cache';
+import { destinationServiceCache } from '../../src/connectivity/scp-cf';
 import { decodeJwt } from '../../src/util';
 
 const destinationServiceUrl = 'https://myDestination.service.url';

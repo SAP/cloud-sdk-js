@@ -1,5 +1,5 @@
 import assert = require('assert');
-import { mapping, tenantFromJwt } from '../../src/scp-cf/tenant';
+import { mapping, tenantFromJwt } from '../../src/connectivity/scp-cf';
 import { DecodedJWT } from '../../src/util';
 
 describe('tenant builder from jwt', () => {

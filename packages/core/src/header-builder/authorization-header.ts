@@ -5,9 +5,9 @@ import {
   DestinationAuthToken,
   getOAuth2ClientCredentialsToken,
   sanitizeDestination
-} from '../scp-cf';
-import { ODataRequestConfig } from '../odata/common/request';
-import type { ODataRequest } from '../odata/common/request/odata-request';
+} from '../connectivity/scp-cf';
+import { ODataRequestConfig } from '../odata-common';
+import type { ODataRequest } from '../odata-common';
 import { getHeader, toSanitizedHeaderObject } from './header-util';
 
 const logger = createLogger({

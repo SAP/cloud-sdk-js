@@ -8,7 +8,7 @@ import {
   DestinationNameAndJwt,
   toDestinationNameUrl,
   useOrFetchDestination
-} from '../scp-cf';
+} from '../connectivity/scp-cf';
 import { getAgentConfig } from '../http-agent';
 import {
   DestinationHttpRequestConfig,

@@ -4,7 +4,7 @@ import {
   Destination,
   destinationCache,
   IsolationStrategy
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',

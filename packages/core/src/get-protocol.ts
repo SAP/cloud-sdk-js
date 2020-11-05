@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Protocol } from './protocol';
-import { Destination } from './scp-cf';
+import { Destination } from './connectivity/scp-cf';
 
 const logger = createLogger({
   package: 'core',

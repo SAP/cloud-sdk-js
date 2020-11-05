@@ -9,16 +9,16 @@ import {
   getXsuaaServiceCredentials,
   TokenKey,
   XsuaaServiceCredentials
-} from '../scp-cf';
+} from '../connectivity/scp-cf';
 import {
   mapping as mappingTenantFields,
   RegisteredJWTClaimsTenant
-} from '../scp-cf/tenant';
+} from '../connectivity/scp-cf';
 import {
-  mapping as mappingUserFields,
+  mappingUserFields,
   RegisteredJWTClaimsUser,
   Scope
-} from '../scp-cf/user';
+} from '../connectivity/scp-cf';
 
 const logger = createLogger({
   package: 'core',

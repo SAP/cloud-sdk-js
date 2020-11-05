@@ -6,7 +6,7 @@ import {
   fetchVerificationKeys,
   refreshTokenGrant,
   userTokenGrant
-} from '../../src/scp-cf/xsuaa-service';
+} from '../../src/connectivity/scp-cf';
 import { providerXsuaaUrl } from '../test-util/environment-mocks';
 
 describe('xsuaa', () => {

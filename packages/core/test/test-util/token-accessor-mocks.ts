@@ -1,5 +1,5 @@
-import { decodeJwt } from '../../src/util/jwt';
-import * as tokenAccessor from '../../src/scp-cf/token-accessor';
+import { decodeJwt } from '../../src/util';
+import * as tokenAccessor from '../../src/connectivity/scp-cf/token-accessor';
 import { TestTenants } from './environment-mocks';
 import {
   providerServiceToken,

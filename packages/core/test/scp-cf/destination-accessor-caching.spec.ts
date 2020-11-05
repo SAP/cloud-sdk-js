@@ -31,7 +31,7 @@ import {
   IsolationStrategy,
   parseDestination,
   subscriberFirst
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 import {
   certificateMultipleResponse,
   certificateSingleResponse,
@@ -40,7 +40,7 @@ import {
   oauthSingleResponse,
   onPremiseMultipleResponse
 } from '../test-util/example-destination-service-responses';
-import { destinationServiceCache } from '../../src/scp-cf/destination/destination-service-cache';
+import { destinationServiceCache } from '../../src/connectivity/scp-cf';
 
 function getSubscriberCache(
   isolationStrategy: IsolationStrategy,

@@ -1,4 +1,4 @@
-import { getQueryParametersForSelection } from '../../../../src/odata/v2/uri-conversion/get-selection';
+import { getQueryParametersForSelection } from '../../../../src/odata-v2';
 import {
   TestEntity,
   TestEntityLvl2MultiLink,

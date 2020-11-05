@@ -1,7 +1,7 @@
 import {
   GetByKeyRequestBuilderV4,
   uriConverterV4
-} from '../../../src/odata/v4';
+} from '../../../src/odata-v4';
 import {
   defaultDestination,
   mockGetRequest

@@ -1,5 +1,5 @@
 import { unmockAllTestDestinations } from '../../../test-util/src';
-import { Destination } from '../../src/scp-cf';
+import { Destination } from '../../src/connectivity/scp-cf';
 import { basicHeader, Protocol } from '../../src';
 import {
   addProxyConfigurationInternet,

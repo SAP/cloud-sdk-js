@@ -1,13 +1,13 @@
 import {
   transformReturnValueForEdmTypeV4,
   transformReturnValueForEntityV4
-} from '../../../src/odata/v4/request-builder';
+} from '../../../src/odata-v4';
 import { TestEntity } from '../../test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createTestEntityV4
 } from '../../test-util/test-data';
-import { edmToTsV4 } from '../../../src/odata/v4';
+import { edmToTsV4 } from '../../../src/odata-v4';
 
 describe('Response transformer', () => {
   it('should transform for TestEntity', () => {

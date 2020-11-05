@@ -261,7 +261,9 @@ Function Imports / Functions & Actions
 
 ## Error Handling
 
-Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `execute` methods may throw a runtime exception (extending) `ODataException`. This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. To handle all kind of failures consider the following code:
+Sometimes requests fail and the SDK provides a flexible way to deal with such failures on multiple levels. All `execute` methods may throw a runtime exception (extending) `ODataException`.
+This will always contain the request which was (attempted to be) sent out as well as the cause of the exception. 
+To handle all kind of failures consider the following code:
 
 ```java
 try { ... }
@@ -272,19 +274,23 @@ try { ... }
 }
 ```
 
-This handling is the most generic, handling all possible failures. For more specific information there are dedicated exceptions inheriting from `ODataException`. Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/client/exception/ODataException.html) for all the exception types.
+This handling is the most generic, handling all possible failures.
+For more specific information there are dedicated exceptions inheriting from `ODataException`.
+Please tend to the [documentation](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/datamodel/odata/client/exception/ODataException.html) for all the exception types.
 
 In order to handle different kinds of failure one can list multiple catch clauses to cover different levels or cases that might occur, e.g.:
 
 ```java
 try { ... }
-catch( ODataErrorResponseException e ) {
-    // ...
-} catch( ODataRequestException e ) {
-    // ...
+catch( ODataServiceErrorException e ) {
+    // handle the specific error message from the response payload
+    ODataServiceError odataError = e.getODataError();
+    logger.debug("The OData service responded with an error: {}", odataError);
 } catch( ODataDeserializationException e ) {
-    // ...
-}
+    // handle failures in deserialization
+} catch( ODataResponseException e ) {
+    // handle all other errors originating from handling the HTTP response
+} 
 ```
 
 Note that instead of applying `try/catch` one can also make use of `tryExecute` on the request builders.

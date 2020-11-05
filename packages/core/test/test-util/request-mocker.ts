@@ -7,11 +7,13 @@ import {
   GetAllRequestBuilderV4,
   oDataUriV2
 } from '../../src';
-import { ODataCreateRequestConfig } from '../../src/odata-common';
-import { ODataDeleteRequestConfig } from '../../src/odata-common';
-import { ODataGetAllRequestConfig } from '../../src/odata-common';
-import { ODataRequest } from '../../src/odata-common';
-import { ODataUpdateRequestConfig } from '../../src/odata-common';
+import {
+  ODataCreateRequestConfig,
+  ODataDeleteRequestConfig,
+  ODataGetAllRequestConfig,
+  ODataRequest,
+  ODataUpdateRequestConfig
+} from '../../src/odata-common';
 import { oDataUriV4 } from '../../src/odata-v4';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';
 import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';

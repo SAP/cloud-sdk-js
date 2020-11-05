@@ -1,7 +1,10 @@
 import { EntityBase } from '../entity';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  DestinationOptions,
+  Destination,
+  DestinationNameAndJwt
+} from '../../connectivity/scp-cf';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
 import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 

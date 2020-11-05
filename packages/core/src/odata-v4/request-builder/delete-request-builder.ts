@@ -2,13 +2,16 @@ import { errorWithCause } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
-  FieldType
+  FieldType,
+  MethodRequestBuilderBase,
+  ODataDeleteRequestConfig
 } from '../../odata-common';
-import { MethodRequestBuilderBase } from '../../odata-common';
-import { ODataDeleteRequestConfig } from '../../odata-common';
 import { EntityV4 } from '../entity';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions
+} from '../../connectivity/scp-cf';
 import { oDataUriV4 } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.

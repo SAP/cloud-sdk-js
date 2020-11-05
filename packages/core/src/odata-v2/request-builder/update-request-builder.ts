@@ -3,19 +3,22 @@ import {
   Constructable,
   EntityIdentifiable,
   ODataRequest,
-  Selectable
+  Selectable,
+  MethodRequestBuilderBase,
+  ODataUpdateRequestConfig,
+  extractEtagFromHeader
 } from '../../odata-common';
 import { EntityV2 } from '../entity';
-import { MethodRequestBuilderBase } from '../../odata-common';
-import { ODataUpdateRequestConfig } from '../../odata-common';
 import {
   serializeEntityV2,
   serializeEntityNonCustomFieldsV2
 } from '../entity-serializer';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions
+} from '../../connectivity/scp-cf';
 import { oDataUriV2 } from '../uri-conversion';
-import { extractEtagFromHeader } from '../../odata-common';
 import { extractODataEtagV2 } from '../extract-odata-etag';
 import { isNavigationProperty } from '../../util';
 

@@ -1,4 +1,9 @@
-import { ODataUpdateRequestConfig,ODataGetAllRequestConfig,ODataCreateRequestConfig,ODataRequest } from '../../src/odata-common';
+import {
+  ODataUpdateRequestConfig,
+  ODataGetAllRequestConfig,
+  ODataCreateRequestConfig,
+  ODataRequest
+} from '../../src/odata-common';
 import { Destination } from '../../src/connectivity/scp-cf';
 import { oDataUriV2 } from '../../src';
 import { TestEntity } from './test-services/v2/test-service';

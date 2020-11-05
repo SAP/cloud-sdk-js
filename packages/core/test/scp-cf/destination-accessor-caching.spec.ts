@@ -22,6 +22,7 @@ import {
   mockVerifyJwt
 } from '../test-util/destination-service-mocks';
 import {
+  destinationServiceCache,
   alwaysProvider,
   alwaysSubscriber,
   AuthenticationType,
@@ -40,7 +41,6 @@ import {
   oauthSingleResponse,
   onPremiseMultipleResponse
 } from '../test-util/example-destination-service-responses';
-import { destinationServiceCache } from '../../src/connectivity/scp-cf';
 
 function getSubscriberCache(
   isolationStrategy: IsolationStrategy,

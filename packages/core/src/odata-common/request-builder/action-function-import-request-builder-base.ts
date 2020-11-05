@@ -1,5 +1,8 @@
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  DestinationOptions,
+  Destination,
+  DestinationNameAndJwt
+} from '../../connectivity/scp-cf';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 import { ODataActionImportRequestConfig } from '../../odata-v4';

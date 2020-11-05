@@ -1,8 +1,11 @@
 /* eslint-disable valid-jsdoc */
 
 import { edmToTsV2, tsToEdmV2 } from '../payload-value-converter';
-import { EdmTypeShared, UriConverter } from '../../odata-common';
-import { uriConvertersCommon } from '../../odata-common';
+import {
+  EdmTypeShared,
+  UriConverter,
+  uriConvertersCommon
+} from '../../odata-common';
 import { EdmTypeV2 } from '../edm-types';
 
 type UriConverterMapping = { [key in EdmTypeV2]: (value: any) => string };

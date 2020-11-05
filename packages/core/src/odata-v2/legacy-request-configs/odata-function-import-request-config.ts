@@ -1,7 +1,9 @@
 import { oDataUriV2 } from '../uri-conversion';
-import { FunctionImportParameters } from '../../odata-common';
-import { ODataFunctionImportRequestConfig as Base } from '../../odata-common';
-import { RequestMethodType } from '../../odata-common';
+import {
+  RequestMethodType,
+  FunctionImportParameters,
+  ODataFunctionImportRequestConfig as Base
+} from '../../odata-common';
 
 /**
  * @deprecated Since v1.21.0. Use superclass instead.

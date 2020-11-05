@@ -2,10 +2,11 @@
 
 import { identity } from '@sap-cloud-sdk/util';
 import { tsToEdmV4 } from '../payload-value-converter';
-import { EdmTypeShared, UriConverter } from '../../odata-common';
 import {
   convertToUriForEdmString,
-  uriConvertersCommon
+  uriConvertersCommon,
+  EdmTypeShared,
+  UriConverter
 } from '../../odata-common';
 import { EdmTypeV4 } from '../edm-types';
 

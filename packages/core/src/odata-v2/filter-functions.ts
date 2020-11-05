@@ -1,10 +1,10 @@
 import {
   Field,
   StringFilterFunction,
-  BooleanFilterFunction
+  BooleanFilterFunction,
+  filterFunction,
+  filterFunctions as filterFunctionsCommon
 } from '../odata-common';
-import { filterFunction } from '../odata-common';
-import { filterFunctions as filterFunctionsCommon } from '../odata-common';
 import { EntityV2 } from './entity';
 
 /* String Functions */

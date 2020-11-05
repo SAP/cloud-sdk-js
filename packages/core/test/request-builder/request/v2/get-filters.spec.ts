@@ -1,10 +1,5 @@
 import moment from 'moment';
-import {
-  and,
-  or,
-  filterFunction,
-  oDataUriV2
-} from '../../../../src';
+import { and, or, filterFunction, oDataUriV2 } from '../../../../src';
 import {
   testFilterBoolean,
   testFilterGuid,

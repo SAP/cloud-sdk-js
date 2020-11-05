@@ -1,20 +1,23 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { EntityV4 } from '../entity';
 import { deserializeEntityV4 } from '../entity-deserializer';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  DestinationOptions,
+  Destination,
+  DestinationNameAndJwt
+} from '../../connectivity/scp-cf';
 import {
   EntityIdentifiable,
   Constructable,
   Filterable,
   and,
-  FilterList
+  FilterList,
+  ODataGetAllRequestConfig,
+  Expandable,
+  GetAllRequestBuilderBase,
+  OneToManyLink
 } from '../../odata-common';
-import { ODataGetAllRequestConfig } from '../../odata-common';
-import { Expandable } from '../../odata-common';
 import { oDataUriV4 } from '../uri-conversion';
-import { OneToManyLink } from '../../odata-common';
-import { GetAllRequestBuilderBase } from '../../odata-common';
 import { getCollectionResult } from './response-data-accessor';
 
 /**

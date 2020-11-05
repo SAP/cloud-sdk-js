@@ -1,13 +1,13 @@
 import { EntityV4 } from '../entity';
-import { Expandable } from '../../odata-common';
 import {
+  Expandable,
+  OneToManyLink,
   Constructable,
   AllFields,
   Link,
   and,
   createGetFilter
 } from '../../odata-common';
-import { OneToManyLink } from '../../odata-common';
 import { getSelectV4 } from './get-select';
 import { uriConverterV4 } from './uri-value-converter';
 import { oDataUriV4 } from './odata-uri';

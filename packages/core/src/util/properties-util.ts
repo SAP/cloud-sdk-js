@@ -1,4 +1,4 @@
-import { EntityBase } from '../';
+import { EntityBase } from '../odata-common';
 import { toStaticPropertyFormat } from './name-converter';
 
 export const nonEnumerable = (target: any, propertyKey: string) => {

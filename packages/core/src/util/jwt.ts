@@ -8,13 +8,9 @@ import {
   fetchVerificationKeys,
   getXsuaaServiceCredentials,
   TokenKey,
-  XsuaaServiceCredentials
-} from '../connectivity/scp-cf';
-import {
+  XsuaaServiceCredentials,
   mapping as mappingTenantFields,
-  RegisteredJWTClaimsTenant
-} from '../connectivity/scp-cf';
-import {
+  RegisteredJWTClaimsTenant,
   mappingUserFields,
   RegisteredJWTClaimsUser,
   Scope

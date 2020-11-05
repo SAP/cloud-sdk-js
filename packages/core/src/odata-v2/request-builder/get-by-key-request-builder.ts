@@ -3,14 +3,17 @@ import {
   Constructable,
   EntityIdentifiable,
   FieldType,
+  MethodRequestBuilderBase,
+  ODataGetByKeyRequestConfig,
   Selectable
 } from '../../odata-common';
 import { EntityV2 } from '../entity';
 import { deserializeEntityV2 } from '../entity-deserializer';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
-import { MethodRequestBuilderBase } from '../../odata-common';
-import { ODataGetByKeyRequestConfig } from '../../odata-common';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions
+} from '../../connectivity/scp-cf';
 import { oDataUriV2 } from '../uri-conversion';
 import { getSingleResult } from './response-data-accessor';
 /**

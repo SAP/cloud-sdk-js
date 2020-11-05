@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
-import { ODataCreateRequestConfig } from '../../../src/odata-common';
-import { ODataDeleteRequestConfig } from '../../../src/odata-common';
-import { ODataGetAllRequestConfig } from '../../../src/odata-common';
-import { ODataRequest } from '../../../src/odata-common';
-import { ODataUpdateRequestConfig } from '../../../src/odata-common';
+import {
+  ODataCreateRequestConfig,
+  ODataDeleteRequestConfig,
+  ODataGetAllRequestConfig,
+  ODataRequest,
+  ODataUpdateRequestConfig
+} from '../../../src/odata-common';
 import { Destination } from '../../../src/connectivity/scp-cf';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
 import { oDataUriV2 } from '../../../src';

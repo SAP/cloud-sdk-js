@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { AllDestinations } from '../../src/connectivity/scp-cf';
 import {
+  AllDestinations,
   alwaysProvider,
   alwaysSubscriber,
   subscriberFirst

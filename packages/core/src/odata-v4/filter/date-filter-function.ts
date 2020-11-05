@@ -1,7 +1,9 @@
 import moment from 'moment';
-import { EntityBase } from '../../odata-common';
-import { FilterFunctionParameterType } from '../../odata-common';
-import { OrderableFilterFunction } from '../../odata-common';
+import {
+  EntityBase,
+  FilterFunctionParameterType,
+  OrderableFilterFunction
+} from '../../odata-common';
 
 /**
  * Representation of a filter function, that returns a value of type date. This supports DateTimeOffset values.

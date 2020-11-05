@@ -11,12 +11,12 @@ import {
   getHeader,
   getHeaders,
   getHeaderValue,
+  buildCsrfHeaders,
+  buildHeadersForDestination,
   mergeHeaders
 } from '../../header-builder';
 // TODO: The buildCsrfHeaders import cannot be combined with the rest of the other headers due to circular dependencies
-import { buildCsrfHeaders } from '../../header-builder';
 // TODO: The buildHeadersForDestination import cannot be combined with the rest of the other headers due to circular dependencies
-import { buildHeadersForDestination } from '../../header-builder';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 

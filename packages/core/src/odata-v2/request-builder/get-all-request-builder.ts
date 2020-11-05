@@ -3,15 +3,18 @@ import {
   Constructable,
   EntityIdentifiable,
   Filterable,
-  and
+  GetAllRequestBuilderBase,
+  and,
+  ODataGetAllRequestConfig
 } from '../../odata-common';
-import { ODataGetAllRequestConfig } from '../../odata-common';
 import { EntityV2 } from '../entity';
 import { deserializeEntityV2 } from '../entity-deserializer';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions
+} from '../../connectivity/scp-cf';
 import { oDataUriV2 } from '../uri-conversion';
-import { GetAllRequestBuilderBase } from '../../odata-common';
 import { getCollectionResult } from './response-data-accessor';
 
 /**

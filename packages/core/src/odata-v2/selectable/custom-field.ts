@@ -1,6 +1,5 @@
 import type { EntityV2 } from '../entity';
-import { CustomFieldBase } from '../../odata-common';
-import { DateField, TimeField } from '../../odata-common';
+import { CustomFieldBase, DateField, TimeField } from '../../odata-common';
 
 export class CustomFieldV2<EntityT extends EntityV2> extends CustomFieldBase<
   EntityT

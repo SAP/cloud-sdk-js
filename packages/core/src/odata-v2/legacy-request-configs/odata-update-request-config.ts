@@ -1,5 +1,8 @@
-import { EntityBase, Constructable } from '../../odata-common';
-import { ODataUpdateRequestConfig as Base } from '../../odata-common';
+import {
+  EntityBase,
+  Constructable,
+  ODataUpdateRequestConfig as Base
+} from '../../odata-common';
 import { oDataUriV2 } from '../uri-conversion';
 
 /**

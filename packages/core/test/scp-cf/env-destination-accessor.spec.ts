@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Destination } from '../../src/connectivity/scp-cf';
 import {
+  Destination,
   getDestinationFromEnvByName,
   getDestinationsFromEnv
 } from '../../src/connectivity/scp-cf';

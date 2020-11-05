@@ -1,12 +1,19 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import { Constructable, EntityIdentifiable, Link } from '../../odata-common';
-import { MethodRequestBuilderBase } from '../../odata-common';
-import { ODataCreateRequestConfig } from '../../odata-common';
+import {
+  Constructable,
+  EntityIdentifiable,
+  Link,
+  MethodRequestBuilderBase,
+  ODataCreateRequestConfig
+} from '../../odata-common';
 import { EntityV2 } from '../entity';
 import { deserializeEntityV2 } from '../entity-deserializer';
 import { serializeEntityV2 } from '../entity-serializer';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  DestinationOptions,
+  Destination,
+  DestinationNameAndJwt
+} from '../../connectivity/scp-cf';
 import { oDataUriV2 } from '../uri-conversion';
 import { getSingleResult } from './response-data-accessor';
 /**

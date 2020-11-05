@@ -5,8 +5,8 @@ import {
   buildTestEntity,
   createChangeSetWithFakeId
 } from '../test-util/batch-test-util';
-import { ODataBatchRequestConfig } from '../../src/odata-common';
 import {
+  ODataBatchRequestConfig,
   serializeRequest,
   serializeChangeSet,
   serializeBatchRequest

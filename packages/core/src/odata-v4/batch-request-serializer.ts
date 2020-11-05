@@ -1,7 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { serializeChangeSet, serializeRequest } from '../odata-common';
-import { BatchChangeSet } from '../odata-common';
+import {
+  BatchChangeSet,
+  serializeChangeSet,
+  serializeRequest
+} from '../odata-common';
 import { EntityV4 } from './entity';
 import {
   CreateRequestBuilderV4,

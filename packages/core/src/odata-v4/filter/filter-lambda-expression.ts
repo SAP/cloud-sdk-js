@@ -1,8 +1,13 @@
-import { FieldType } from '../../odata-common';
-import { and, Filterable, FilterList } from '../../odata-common';
-import { EntityBase } from '../../odata-common';
-import { OneToManyLink } from '../../odata-common';
-import { FilterLambdaExpression } from '../../odata-common';
+import {
+  FilterLambdaExpression,
+  OneToManyLink,
+  EntityBase,
+  FieldType,
+  and,
+  Filterable,
+  FilterList
+} from '../../odata-common';
+
 /**
  * Will return the entity if at least one element of the multilink relation fulfills the condition.
  * @param filters - A filter condition like MyEntity.someMultiLink.someProperty.eq('value')

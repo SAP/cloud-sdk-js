@@ -1,6 +1,6 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import { useOrFetchDestination } from '../../connectivity/scp-cf';
 import {
+  useOrFetchDestination,
   Destination,
   DestinationNameAndJwt,
   DestinationRetrievalOptions,

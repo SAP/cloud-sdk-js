@@ -3,9 +3,9 @@ import * as jwt123 from 'jsonwebtoken';
 import {
   fetchDestination,
   fetchInstanceDestinations,
-  fetchSubaccountDestinations
+  fetchSubaccountDestinations,
+  Destination
 } from '../../src/connectivity/scp-cf';
-import { Destination } from '../../src/connectivity/scp-cf';
 import { destinationServiceUri } from '../test-util/environment-mocks';
 import { privateKey } from '../test-util/keys';
 

@@ -1,10 +1,10 @@
 import {
   FunctionImportParameters,
-  RequestMethodType
+  RequestMethodType,
+  ActionFunctionImportRequestBuilderBase,
+  ODataFunctionImportRequestConfig
 } from '../../odata-common';
 import { oDataUriV2 } from '../uri-conversion';
-import { ActionFunctionImportRequestBuilderBase } from '../../odata-common';
-import { ODataFunctionImportRequestConfig } from '../../odata-common';
 
 /**
  * Create OData request to execute a function import.

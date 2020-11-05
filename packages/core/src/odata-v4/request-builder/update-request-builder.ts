@@ -2,19 +2,22 @@ import { errorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
-  Selectable
+  Selectable,
+  MethodRequestBuilderBase,
+  ODataUpdateRequestConfig,
+  extractEtagFromHeader
 } from '../../odata-common';
 import { EntityV4 } from '../entity';
-import { MethodRequestBuilderBase } from '../../odata-common';
-import { ODataUpdateRequestConfig } from '../../odata-common';
 import {
   serializeEntityV4,
   serializeEntityNonCustomFieldsV4
 } from '../entity-serializer';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  DestinationOptions,
+  Destination,
+  DestinationNameAndJwt
+} from '../../connectivity/scp-cf';
 import { oDataUriV4 } from '../uri-conversion';
-import { extractEtagFromHeader } from '../../odata-common';
 import { extractODataEtagV4 } from '../extract-odata-etag';
 
 /**

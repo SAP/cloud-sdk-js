@@ -6,10 +6,12 @@ import {
   DestinationNameAndJwt,
   DestinationOptions
 } from '../../connectivity/scp-cf';
-import { BatchResponse } from '../../odata-common';
-import { parseBatchResponse } from '../../odata-common';
-import { BatchRequestBuilder } from '../../odata-common';
-import { deserializeBatchResponse } from '../../odata-common';
+import {
+  BatchRequestBuilder,
+  deserializeBatchResponse,
+  BatchResponse,
+  parseBatchResponse
+} from '../../odata-common';
 import { entityDeserializerV2 } from '../entity-deserializer';
 import { responseDataAccessorV2 } from './response-data-accessor';
 

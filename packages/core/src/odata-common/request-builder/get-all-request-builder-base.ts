@@ -3,8 +3,11 @@ import { Constructable, EntityIdentifiable, EntityBase } from '../entity';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
-import { DestinationOptions } from '../../connectivity/scp-cf';
-import { Destination, DestinationNameAndJwt } from '../../connectivity/scp-cf';
+import {
+  DestinationOptions,
+  Destination,
+  DestinationNameAndJwt
+} from '../../connectivity/scp-cf';
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
 

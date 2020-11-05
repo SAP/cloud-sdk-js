@@ -9,27 +9,6 @@ import {
 
 describe('array', () => {
   describe('flat', () => {
-    it('wraps variable arguments', () => {
-      function functionWithVariableArguments(...varargs: string[]);
-      function functionWithVariableArguments(array: string[]);
-      function functionWithVariableArguments(
-        firstOrArray: undefined | string | string[],
-        ...rest: string[]
-      ): string[] {
-        return variadicArgumentToArray(firstOrArray, rest);
-      }
-      expect(functionWithVariableArguments()).toEqual([]);
-      expect(functionWithVariableArguments([])).toEqual([]);
-      expect(functionWithVariableArguments('a')).toEqual(['a']);
-      expect(functionWithVariableArguments('a', 'b')).toEqual(['a', 'b']);
-      expect(functionWithVariableArguments(['a'])).toEqual(['a']);
-      expect(functionWithVariableArguments(['a', 'b', 'c'])).toEqual([
-        'a',
-        'b',
-        'c'
-      ]);
-    });
-
     it('flattens a nested array of numbers', () => {
       expect(flat([[1], [2], [3]])).toStrictEqual([1, 2, 3]);
     });
@@ -40,6 +19,32 @@ describe('array', () => {
 
     it('returns an empty array for empty arrays', () => {
       expect(flat([])).toStrictEqual([]);
+    });
+  });
+
+  describe('variadic arguments', () => {
+    function functionVariadicArguments(...varargs: string[]);
+    function functionVariadicArguments(array: string[]);
+    function functionVariadicArguments(
+      firstOrArray: undefined | string | string[],
+      ...rest: string[]
+    ): string[] {
+      return variadicArgumentToArray(firstOrArray, rest);
+    }
+
+    it('returns empty array if nothing is given', () => {
+      expect(functionVariadicArguments()).toEqual([]);
+      expect(functionVariadicArguments([])).toEqual([]);
+    });
+
+    it('wraps variadic arguments', () => {
+      expect(functionVariadicArguments('a')).toEqual(['a']);
+      expect(functionVariadicArguments('a', 'b')).toEqual(['a', 'b']);
+    });
+
+    it('wraps array arguments', () => {
+      expect(functionVariadicArguments(['a'])).toEqual(['a']);
+      expect(functionVariadicArguments(['a', 'b'])).toEqual(['a', 'b']);
     });
   });
 

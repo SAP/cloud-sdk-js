@@ -19,10 +19,10 @@ const createTestEntityFromOtherService = MultiSchemaTestEntity.requestBuilder().
 const changeSetTestEntity = testEntityChangeset(createTestEntity);
 
 // $ExpectType ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>
-testEntityChangeset(createTestEntity,createTestEntity)
+testEntityChangeset(createTestEntity, createTestEntity);
 
 // $ExpectType ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>
-testEntityChangeset([createTestEntity,createTestEntity]);
+testEntityChangeset([createTestEntity, createTestEntity]);
 
 // $ExpectType ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
 const changeSetOtherServiceTestEntity = otherServiceChangeset(

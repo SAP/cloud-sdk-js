@@ -1,4 +1,4 @@
-import { variableArgumentToArray } from '@sap-cloud-sdk/util';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity';
 import { FieldType } from '../selectable';
 import { Filter } from './filter';
@@ -48,7 +48,7 @@ export function and<EntityT extends EntityBase>(
   first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
-  return new FilterList(variableArgumentToArray(first, rest));
+  return new FilterList(variadicArgumentToArray(first, rest));
 }
 
 /**
@@ -75,7 +75,7 @@ export function or<EntityT extends EntityBase>(
   first: Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
-  return new FilterList([], variableArgumentToArray(first, rest));
+  return new FilterList([], variadicArgumentToArray(first, rest));
 }
 
 // TODO:

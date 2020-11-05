@@ -1,4 +1,4 @@
-import { variableArgumentToArray } from '@sap-cloud-sdk/util';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
@@ -55,7 +55,7 @@ export class GetAllRequestBuilderV2<EntityT extends EntityV2>
     first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
     ...rest: Filterable<EntityT>[]
   ): this {
-    this.requestConfig.filter = and(variableArgumentToArray(first, rest));
+    this.requestConfig.filter = and(variadicArgumentToArray(first, rest));
     return this;
   }
 

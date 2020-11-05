@@ -1,4 +1,4 @@
-import { variableArgumentToArray } from '@sap-cloud-sdk/util';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { EntityV4 } from '../entity';
 import { deserializeEntityV4 } from '../entity-deserializer';
 import { DestinationOptions } from '../../../scp-cf';
@@ -54,7 +54,7 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
     first: undefined | Expandable<EntityT> | Expandable<EntityT>[],
     ...rest: Expandable<EntityT>[]
   ): this {
-    this.requestConfig.expands = variableArgumentToArray(first, rest);
+    this.requestConfig.expands = variadicArgumentToArray(first, rest);
     return this;
   }
 

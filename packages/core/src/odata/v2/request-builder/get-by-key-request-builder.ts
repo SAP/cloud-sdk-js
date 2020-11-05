@@ -1,4 +1,4 @@
-import { errorWithCause, variableArgumentToArray } from '@sap-cloud-sdk/util';
+import { errorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
@@ -54,7 +54,7 @@ export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
     first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
     ...rest: Selectable<EntityT>[]
   ): this {
-    this.requestConfig.selects = variableArgumentToArray(first, rest);
+    this.requestConfig.selects = variadicArgumentToArray(first, rest);
     return this;
   }
 

@@ -1,4 +1,4 @@
-import { variableArgumentToArray } from '@sap-cloud-sdk/util';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityIdentifiable,
@@ -49,7 +49,7 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
     first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
     ...rest: Selectable<EntityT>[]
   ): this {
-    this.requestConfig.selects = variableArgumentToArray(first, rest);
+    this.requestConfig.selects = variadicArgumentToArray(first, rest);
     return this;
   }
 
@@ -65,7 +65,7 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
     first: undefined | Orderable<EntityT> | Orderable<EntityT>[],
     ...rest: Orderable<EntityT>[]
   ): this {
-    this.requestConfig.orderBy = variableArgumentToArray(first, rest);
+    this.requestConfig.orderBy = variadicArgumentToArray(first, rest);
     return this;
   }
 

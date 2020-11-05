@@ -57,7 +57,7 @@ export function batchFunction(
       { name: '...rest', type: asArray(type) }
     ],
     returnType: `ODataBatchRequestBuilder${versionInCaps}`,
-    statements: `return new ODataBatchRequestBuilder${versionInCaps}(default${service.className}Path, variableArgumentToArray(first,rest), map);`,
+    statements: `return new ODataBatchRequestBuilder${versionInCaps}(default${service.className}Path, variadicArgumentToArray(first,rest), map);`,
     overloads
   };
 }
@@ -112,7 +112,7 @@ export function changesetFunction(
       { name: '...rest', type: asArray(type) }
     ],
     returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`,
-    statements: `return new ODataBatchChangeSet${versionInCaps}(variableArgumentToArray(first,rest));`,
+    statements: `return new ODataBatchChangeSet${versionInCaps}(variadicArgumentToArray(first,rest));`,
     overloads
   };
 }

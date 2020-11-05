@@ -1,4 +1,4 @@
-import { errorWithCause, variableArgumentToArray } from '@sap-cloud-sdk/util';
+import { errorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Constructable, EntityIdentifiable, Selectable } from '../../common';
 import { EntityV4 } from '../entity';
 import { MethodRequestBuilderBase } from '../../common/request-builder/request-builder-base';
@@ -128,7 +128,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
     ...rest: Selectable<EntityT>[]
   ): this {
-    this.required = this.toSet(variableArgumentToArray(first, rest));
+    this.required = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }
@@ -145,7 +145,7 @@ export class UpdateRequestBuilderV4<EntityT extends EntityV4>
     first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
     ...rest: Selectable<EntityT>[]
   ): this {
-    this.ignored = this.toSet(variableArgumentToArray(first, rest));
+    this.ignored = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }

@@ -23,7 +23,7 @@ export function importBatchDeclarations(
     {
       kind: StructureKind.ImportDeclaration,
       moduleSpecifier: '@sap-cloud-sdk/util',
-      namedImports: ['variableArgumentToArray']
+      namedImports: ['variadicArgumentToArray']
     },
     {
       kind: StructureKind.ImportDeclaration,

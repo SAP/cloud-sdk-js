@@ -63,7 +63,7 @@ Similarly, for BAPI endpoints you need to use `asRfc()`:
 DestinationAccessor.getDestination("my-destination").asRfc();
 ```
 
-### Connect to on-premise S/4HANA system ###
+### Connect to on-premise S/4HANA System ###
 If your destination is exposing an on-premise S/4HANA service via a **[Cloud
 Connector](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/e6c7616abb5710148cfcf3e75d96d596.html)**
 you need to decorate the destination with `DefaultErpHttpDestination`:
@@ -75,10 +75,13 @@ destination.asHttp().decorate(DefaultErpHttpDestination::new);
 
 This ensures the mapping of all S/4 properties like `sap-client` and `sap-locale` as HTTP request headers.
 
-## Testing destinations in local environment ##
+## Registering Destinations at Runtime ##
 
-For testing purposes, the SDK provides functionality to provide such a destination in a local development environment. 
-This is especially useful when working with destinations from the destination service since the service is not available in a local setting.
+The SDK offers convenient ways to create a destination at runtime and register it so that it will be available via `DestinationAccessor.getDestination()`.
+This is especially useful when working in a local environment.
+Destinations configured in destination service are not available in a local setting and have to be mocked.
+
+### Mocking Destinations for Testing ###
 
 The SDK offers a `MockUtil` class that is capable of injecting destinations into the `DestinationAccessor`:
 
@@ -99,9 +102,39 @@ This helps with keeping production and test code nicely separated.
 There are more overloads of the mocking on the [MockUtil class](https://help.sap.com/doc/b579bf8578954412aea2b458e8452201/1.0/en-US/com/sap/cloud/sdk/testutil/MockUtil.html) that you can use.
 Also refer to [these tutorial steps](https://developers.sap.com/tutorials/s4sdk-odata-service-cloud-foundry.html#b77d53b0-2d8b-449c-9a9a-9df80ee09a4e) on how to mock destinations for local development and testing.
 
-## Retrieving destinations
 
-### Get all destinations from the Destination Service on Cloud Foundry  ###
+### Using Custom Destination Loaders ###
+
+The above is useful for testing but not suited for productive code.
+If you want to register custom destinations in your productive code you can leverage the following API:
+
+```java
+customHttpDestination = DefaultHttpDestination.builder("http://url")
+        .name("custom-destination")
+        .build();
+
+customLoader = new DefaultDestinationLoader()
+        .registerDestination(customHttpDestination);
+
+DestinationAccessor.appendDestinationLoader(loader);
+
+// This will now return the custom destination
+DestinationAccessor.getDestination("custom-destination").asHttp();
+```
+
+By default the `DestinationAccessor` is using a `DestinationLoaderChain` that comprises multiple loaders.
+These are e.g. a loader to get destinations from the destination service and a loader that reads destinations from environment variables.
+
+The above `appendDestinationLoader()` will add the provided loader at the end of such a chain.
+That means the new loader can operate as a fallback.
+Use `prependDestinationLoader()` to add it at the beginning if you would like it to take precedence.
+Lastly use `setLoader()` to replace all existing loaders.
+
+
+
+## Retrieving Destinations
+
+### Get all Destinations from the Destination Service on Cloud Foundry  ###
 
 To fetch all destinations from the Destination Service, you need to make a call to `tryGetAllDestinations`.The method queries the [Destination Service API](https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/overview) and retrieves all the destinations available at the service instance and sub-account level. In case there is a destination available on both the levels with the same name, then this method prioritizes the destination at the service instance level.
 

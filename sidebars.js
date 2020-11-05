@@ -5,7 +5,9 @@ module.exports = {
       'overview/about',
       'overview/getting-started',
       'overview/benefits',
-      'overview/who-uses-sap-cloud-sdk'
+      'overview/who-uses-sap-cloud-sdk',
+      'overview/frequently-asked-questions-about-sap-cloud-sdk',
+      'overview/get-support'
       // 'overview/key-features'
       // 'overview/what-is-new'
     ],
@@ -64,7 +66,6 @@ module.exports = {
               'java/features/resilience/caching'
             ]
           },
-          // 'java/features/events/enterprise-messaging-with-cloud-sdk-and-cap',
           {
             type: 'category',
             label: 'SDK extensions',
@@ -172,7 +173,8 @@ module.exports = {
         items: [
           'js/guides/migrate-to-open-source-version-of-cloud-sdk-for-javascript-typescript',
           'js/guides/bas-external-system',
-          'js/guides/tutorial-overview-sdk-js'
+          'js/guides/tutorial-overview-sdk-js',
+          'js/guides/sdk-in-browser'
         ]
       },
       {

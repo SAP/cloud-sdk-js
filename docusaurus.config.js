@@ -46,11 +46,6 @@ module.exports = {
           position: 'left'
         },
         {
-          href: 'https://blogs.sap.com/',
-          label: 'Blog',
-          position: 'left'
-        },
-        {
           label: 'Support',
           position: 'left',
           items: [
@@ -190,9 +185,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Equivalent to `enableUpdateBy`.
           showLastUpdateAuthor: true,
-          // Equivalent to `enableUpdateTime`.
           showLastUpdateTime: true,
           editUrl:
           'https://github.com/SAP/cloud-sdk/edit/documentation',

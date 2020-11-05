@@ -1,0 +1,49 @@
+---
+id: frequently-asked-questions-about-sap-cloud-sdk
+title: "FAQ: SAP Cloud SDK"
+sidebar_label: FAQ
+description: You asked, we answered!
+keywords:
+- sap
+- cloud
+- sdk
+- cloud native
+- cloud sdk
+- sap cloud sdk
+---
+
+:::note
+This FAQ section is for generic Cloud SDK questions. Please, check out also language-specific FAQs.
+- [Java](../java/faq.mdx)
+- [JavaScript](../js/faq.mdx)
+:::
+
+## What programming languages can I use?
+
+You can code in [Java](../java/getting-started.mdx) or [JavaScript](../js/getting-started.mdx)
+
+## How was the SAP Cloud SDK started?
+
+We've been and still are developing cloud-native applications in the SAP ecosystem. After some time, we've noticed that many useful patterns repeat themselves, and we abstracted them for reuse. Our colleagues showed interest in our work because of solving similar problems with their applications. That's where we decided to wrap that value in a library and make it available for SAP developers and later to SAP customers for benefiting from our experience of building from scratch and extending SAP applications.
+
+## Cloud SDK & [CAP](../related-projects/cap.mdx)? What is the difference?
+
+Cloud Application Programming model (CAP) and SAP Cloud SDK are complementary tools to publish and consume APIs like OData and REST. They play nicely together to cover the full stack of cloud-native application development. The SAP CAP plays more on the API and service publishing side, while SAP Cloud SDK deals more with API consumption and deployment of applications to SAP Cloud Platform.
+
+You can easily use SAP Cloud SDK and CAP together in one project. Find more details about CAP [here](../related-projects/cap.mdx ) and check out our [tutorial about using Cloud SDK for Java and CAP together](https://developers.sap.com/tutorials/cloudsdk-integrate-cap.html).
+
+## Can I run SAP Cloud SDK App locally
+
+Yes you can. Check respective documentation for [Java](../java/getting-started.mdx) and [JavaScript](../js/getting-started.mdx#run-the-project) you expedience any issues let us know via our support channels.
+
+## Is it expensive?
+
+The SAP Cloud SDK is free for everyone. Parts of it are [open source](https://github.com/SAP/cloud-sdk) or will become open source soon. Other parts containing SAP Intellectual Property are distributed free of charge under [SAP Developer License](https://tools.hana.ondemand.com/developer-license-3.0.0.txt).
+
+## How often do you release a new version?
+
+We release bi-weekly on average. You can find release notes for Java and JavaScript in their respective documentation sections. Some packages or modules like pre-generated type-safe client libraries are released according to the release-cycle of underlying service. They can be updated if we made a change to the code generator in between the releases.
+
+## Getting help?
+
+Checkout our [support channels info](./support.mdx). Support is handled by SDK developers. To help us save time and help you quicker we ask you to be mindful and provide as much relevant information about you issue or question as reasonably possible.

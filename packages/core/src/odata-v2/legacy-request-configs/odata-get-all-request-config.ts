@@ -24,4 +24,4 @@ class ODataGetAllRequestConfig<EntityT extends EntityBase> extends Base<
   }
 }
 
-export {ODataGetAllRequestConfig as ODataGetAllRequestConfigLegacy};
+export { ODataGetAllRequestConfig as ODataGetAllRequestConfigLegacy };

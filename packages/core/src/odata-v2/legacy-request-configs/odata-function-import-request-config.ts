@@ -11,9 +11,7 @@ import {
  *
  * @typeparam ParametersT - Type of the original parameters object
  */
-class ODataFunctionImportRequestConfig<ParametersT> extends Base<
-  ParametersT
-> {
+class ODataFunctionImportRequestConfig<ParametersT> extends Base<ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    *
@@ -38,4 +36,4 @@ class ODataFunctionImportRequestConfig<ParametersT> extends Base<
   }
 }
 
-export {ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigLegacy};
+export { ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigLegacy };

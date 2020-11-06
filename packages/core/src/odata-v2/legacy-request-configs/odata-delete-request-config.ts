@@ -23,4 +23,4 @@ class ODataDeleteRequestConfig<EntityT extends EntityBase> extends Base<
   }
 }
 
-export {ODataDeleteRequestConfig as ODataDeleteRequestConfigLegacy};
+export { ODataDeleteRequestConfig as ODataDeleteRequestConfigLegacy };

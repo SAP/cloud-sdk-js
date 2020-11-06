@@ -24,4 +24,4 @@ class ODataUpdateRequestConfig<EntityT extends EntityBase> extends Base<
   }
 }
 
-export {ODataUpdateRequestConfig as ODataUpdateRequestConfigLegacy};
+export { ODataUpdateRequestConfig as ODataUpdateRequestConfigLegacy };

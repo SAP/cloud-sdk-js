@@ -10,6 +10,7 @@ const entityKey = 999;
 
 describe('Action test', () => {
   beforeEach(async () => deleteEntity(entityKey, destination));
+  afterEach(async () => deleteEntity(entityKey, destination));
 
   it('should return entity', async () => {
     const response = await createTestEntity({ id: entityKey }).execute(

@@ -1,12 +1,12 @@
 import { unmockAllTestDestinations } from '../../../test-util/src';
-import { Destination } from '../../src/scp-cf';
+import { Destination } from '../../src/connectivity/scp-cf';
 import { basicHeader, Protocol } from '../../src';
 import {
   addProxyConfigurationInternet,
   parseProxyEnv,
   ProxyStrategy,
   proxyStrategy
-} from '../../src/util/proxy-util';
+} from '../../src/connectivity/scp-cf/proxy-util';
 
 describe('proxy-util', () => {
   afterEach(() => {

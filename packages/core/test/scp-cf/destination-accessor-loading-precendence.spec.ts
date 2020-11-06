@@ -1,4 +1,7 @@
-import { sanitizeDestination, useOrFetchDestination } from '../../src/scp-cf';
+import {
+  sanitizeDestination,
+  useOrFetchDestination
+} from '../../src/connectivity/scp-cf';
 
 function mockEnvDestinations() {
   process.env['destinations'] = JSON.stringify(environmentDestinations);

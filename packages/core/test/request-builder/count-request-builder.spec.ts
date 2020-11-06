@@ -5,7 +5,7 @@ import {
 } from '../test-util/request-mocker';
 import { TestEntity as TestEntityV2 } from '../test-util/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '../test-util/test-services/v4/test-service';
-import { Filter } from '../../src/odata/common';
+import { Filter } from '../../src/odata-common';
 
 describe('CountRequestBuilderV2', () => {
   const requestBuilders = [

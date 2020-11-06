@@ -8,15 +8,15 @@ import {
 } from '../../../src';
 import {
   addAuthorizationHeader,
-  buildAuthorizationHeaders
-} from '../../../src/header-builder/authorization-header';
-import { ODataGetAllRequestConfig } from '../../../src/odata/common/request/odata-get-all-request-config';
+  buildAuthorizationHeaders,
+  buildHeadersForDestination
+} from '../../../src/connectivity/scp-cf';
+import { ODataGetAllRequestConfig } from '../../../src/odata-common';
 import {
   defaultDestination,
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { buildHeadersForDestination } from '../../../src/header-builder/header-builder-for-destination';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {

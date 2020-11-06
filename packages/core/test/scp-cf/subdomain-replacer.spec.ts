@@ -1,4 +1,4 @@
-import { replaceSubdomain } from '../../src/scp-cf/subdomain-replacer';
+import { replaceSubdomain } from '../../src/connectivity/scp-cf/subdomain-replacer';
 
 describe('subdomain replacer', () => {
   const issuerUrl =

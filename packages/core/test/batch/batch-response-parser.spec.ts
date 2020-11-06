@@ -7,7 +7,7 @@ import {
   splitChangeSetResponse,
   parseHttpCode,
   parseResponseData
-} from '../../src/odata/common/request-builder/batch/batch-response-parser';
+} from '../../src/odata-common';
 
 describe('batch response parser', () => {
   describe('detectNewLineSymbol', () => {

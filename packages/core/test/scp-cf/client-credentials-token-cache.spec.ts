@@ -1,5 +1,5 @@
 import { install } from '@sinonjs/fake-timers';
-import { clientCredentialsTokenCache } from '../../src/scp-cf';
+import { clientCredentialsTokenCache } from '../../src/connectivity/scp-cf';
 
 describe('ClientCredentialsTokenCache', () => {
   it('should return token when valid, return undefined otherwise', () => {

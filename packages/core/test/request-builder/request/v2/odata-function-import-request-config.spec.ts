@@ -1,5 +1,5 @@
 import { FunctionImportParameter, oDataUriV2 } from '../../../../src';
-import { ODataFunctionImportRequestConfig } from '../../../../src/odata/common/request/odata-function-import-request-config';
+import { ODataFunctionImportRequestConfig } from '../../../../src/odata-common';
 
 interface TestParameterType {
   test1: string;

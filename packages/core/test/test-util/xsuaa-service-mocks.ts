@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { basicHeader } from '../../src/header-builder';
+import { basicHeader } from '../../src/connectivity/scp-cf';
 
 export function mockClientCredentialsGrantCall(
   uri: string,

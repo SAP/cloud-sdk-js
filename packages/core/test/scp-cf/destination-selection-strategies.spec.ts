@@ -1,10 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { AllDestinations } from '../../src/scp-cf/destination/destination-accessor-types';
 import {
+  AllDestinations,
   alwaysProvider,
   alwaysSubscriber,
   subscriberFirst
-} from '../../src/scp-cf/destination/destination-selection-strategies';
+} from '../../src/connectivity/scp-cf';
 
 const target = {
   name: 'testination',

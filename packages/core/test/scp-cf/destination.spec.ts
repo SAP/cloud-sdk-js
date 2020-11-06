@@ -3,7 +3,7 @@ import {
   parseDestination,
   sanitizeDestination,
   DestinationConfiguration
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,

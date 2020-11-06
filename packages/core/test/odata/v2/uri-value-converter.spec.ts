@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import moment = require('moment');
 import { edmToTsV2 } from '../../../src';
-import { uriConverterV2 } from '../../../src/odata/v2/uri-conversion';
+import { uriConverterV2 } from '../../../src/odata-v2';
 
 const { convertToUriFormat } = uriConverterV2;
 

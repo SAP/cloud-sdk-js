@@ -2,7 +2,7 @@ name: Build Cloud SDK Documentation
 
 on:
   pull_request:
-    branches: [documentation]
+    branches: [main]
 
 jobs:
   build:

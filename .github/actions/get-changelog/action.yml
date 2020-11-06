@@ -1,8 +1,0 @@
-name: 'Get current changelog'
-description: 'Gets the current changelog'
-outputs:
-  changelog:
-    description: 'The current changelog'
-runs:
-  using: 'node12'
-  main: 'index.js'

@@ -2,7 +2,7 @@ name: Release Cloud SDK documentation
 
 on:
   push:
-    branches: [documentation]
+    branches: [main]
 
 jobs:
  release:

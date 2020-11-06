@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: SAP Cloud SDK for JavaScript / TypeScript issues
+    url: https://github.com/SAP/cloud-sdk-js/issues/new/choose
+    about: Please report issues concerning the SAP Cloud SDK for JavaScript / TypeScript here.
+  - name: SAP Cloud SDK for Java issues
+    url: https://stackoverflow.com/questions/tagged/sap-cloud-sdk
+    about: Please report issues concerning the SAP Cloud SDK for Java here.

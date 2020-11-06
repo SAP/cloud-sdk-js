@@ -1,6 +1,6 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 
-![build](https://github.com/SAP/cloud-sdk/workflows/build/badge.svg)
+![build](https://github.com/SAP/cloud-sdk-js/workflows/build/badge.svg)
 # SAP Cloud SDK
 An SDK to reduce your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
@@ -80,7 +80,7 @@ Part of project "Piper" is the [SAP Cloud SDK Pipeline](https://sap.github.io/je
 Feel free to leave your feedback in form of GitHub issues for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.
 
 ## Contribute
-Want to contribute? Check out our [contributing](./CONTRIBUTING.md) guide.
+Want to contribute? Check out our [contribution](./CONTRIBUTING.md) guide and follow our [code of conduct](./CODE_OF_CONDUCT).
 
 ## Links
 
@@ -90,3 +90,7 @@ Want to contribute? Check out our [contributing](./CONTRIBUTING.md) guide.
 - [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
 - [SAP Cloud SDK community page](https://community.sap.com/topics/cloud-sdk)
 - [Community Call for SAP Cloud SDK](https://blogs.sap.com/2019/06/26/sap-cloud-sdk-new-format-of-the-update-call-for-sap-community/)
+
+## License
+
+This project is licensed under Apache 2.0 except as noted otherwise in the [license file](./LICENSES/Apache-2.0.txt).

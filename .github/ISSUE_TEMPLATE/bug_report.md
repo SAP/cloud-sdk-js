@@ -1,10 +1,9 @@
 ---
 name: Bug report
-about: Released feature does not work as expected.
+about: Released feature does not work as expected in the SAP Cloud SDK for JavaScript / TypeScript.
 title: ''
 labels: bug
 assignees: ''
-
 ---
 
 <!-- Please note that this repository is for JavaScript / TypeScript related issues only. If you have a question about the SAP Cloud SDK for Java open a question on StackOverflow: https://stackoverflow.com/questions/tagged/sap-cloud-sdk+java -->
@@ -31,20 +30,10 @@ If applicable, add screenshots to help explain your problem.
  - SAP Cloud SDK version you used as dependency
 
 **Code Examples**
-If applicable, add code snippets as examples to help explain your problem. Please remove sensitive information as it will be shown in the internet.
+If applicable, add code snippets as examples to help explain your problem. Please remove sensitive information.
 
 **Log file**
 If applicable, add your log file or related error message. Again, please remove your sensitive information.
 
 **Additional context**
 Add any other context about the problem here.
-
-**Please check the following points**
-- [ ] Have you provided detailed description about your issue?
-- [ ] Have you shared all the necessary information to help the cloud-sdk developer reproduce the issue?
-- [ ] Have you provided the expected behaviour?
-- [ ] Have you attached some useful screenshots?
-- [ ] Have you provided the node/npm/cloud-sdk versions?
-- [ ] Have you shared your code snippets as a minial example?
-- [ ] Have you provided you log file or related error messages?
-- [ ] Have you searched for related issues on [Stackoverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk) or [answers.sap.com](https://answers.sap.com/tags/73555000100800000895)?

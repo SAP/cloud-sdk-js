@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: SAP Cloud SDK for Java issues
+    url: https://stackoverflow.com/questions/tagged/sap-cloud-sdk
+    about: Please report issues concerning the SAP Cloud SDK for Java here.
+  - name: SAP Cloud SDK documentation portal issues
+    url: https://github.com/SAP/cloud-sdk/issues/new/choose
+    about: Please report problems in the SAP Cloud SDK documentation portal here.

@@ -28,9 +28,9 @@ jobs:
     - name: Release Documentation to GitHub Pages
       env:
         USE_SSH: true
-        GIT_USER: irrelevant
+        GIT_USER: gh-actions
       run: |
-        git config --global user.email "irrelevant@completely.irrelevant"
-        git config --global user.name "irrelevant"
+        git config --global user.email "gh-actions@github.com"
+        git config --global user.name "gh-actions"
         npm ci
         npx docusaurus deploy

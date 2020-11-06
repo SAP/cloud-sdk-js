@@ -19,6 +19,7 @@ import { projectOptions, sourceFile } from './utils';
 import { toOpenApiServiceMetaData } from './parse-open-api-json';
 import { OpenApiServiceMetadata } from './open-api-types';
 import { requestBuilderSourceFile } from './request-builder/file';
+import { indexFile } from './index-file';
 
 const logger = createLogger({
   level: 'info',
@@ -37,15 +38,12 @@ export async function generateProject(options: GeneratorOptions) {
   }
 
   const files = readdirSync(options.inputDir);
-  const pathToTemplates = resolve(__dirname, '../templates');
-  const pathToMustacheValues = join(__dirname, '../mustache-values.json');
+  const pathToTemplates = resolve(__dirname, './templates');
 
   const project = new Project(projectOptions());
 
   const openApiServiceMetadata = await Promise.all(
-    files.map(async file =>
-      generateOneApi(file, options, pathToTemplates, pathToMustacheValues)
-    )
+    files.map(async file => generateOneApi(file, options, pathToTemplates))
   );
   openApiServiceMetadata.map(metadata =>
     generateSourcesForService(metadata, project, options)
@@ -56,8 +54,7 @@ export async function generateProject(options: GeneratorOptions) {
 async function generateOneApi(
   inputFileName: string,
   options: GeneratorOptions,
-  pathToTemplates: string,
-  pathToMustacheValues: string
+  pathToTemplates: string
 ) {
   const dirForService = getDirForService(options.outputDir, inputFileName);
   if (!existsSync(dirForService)) {
@@ -75,8 +72,7 @@ async function generateOneApi(
   await generateFilesUsingOpenAPI(
     dirForService,
     pathToAdjustedOpenApiDefFile,
-    pathToTemplates,
-    pathToMustacheValues
+    pathToTemplates
   );
 
   return toOpenApiServiceMetaData(
@@ -94,20 +90,21 @@ function generateSourcesForService(
   const serviceDir = project.createDirectory(
     resolve(options.outputDir.toString(), serviceMetadata.serviceDir)
   );
-  logger.info(`Generating request builder in ${serviceDir}.`);
+  logger.info(`Generating request builder in ${serviceDir.getBaseName()}.`);
   sourceFile(
     serviceDir,
     'request-builder',
     requestBuilderSourceFile(serviceMetadata),
     true
   );
+
+  sourceFile(serviceDir, 'index', indexFile(), true);
 }
 
 async function generateFilesUsingOpenAPI(
   dirForService: string,
   pathToAdjustedOpenApiDefFile: string,
-  pathToTemplates: string,
-  pathToMustacheValues: string
+  pathToTemplates: string
 ) {
   const generationArguments = [
     'openapi-generator-cli',
@@ -124,8 +121,8 @@ async function generateFilesUsingOpenAPI(
     'api',
     '--model-package',
     'model',
-    '--config',
-    pathToMustacheValues,
+    '--additional-properties',
+    'withSeparateModelsAndApi=true',
     '--skip-validate-spec'
   ];
 

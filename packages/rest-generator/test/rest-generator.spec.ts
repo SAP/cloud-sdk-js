@@ -2,9 +2,10 @@
 
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { SyntaxKind } from 'ts-morph';
 import { generateProject, generateRest } from '../src/generator';
 
-describe('rest generator test', () => {
+describe('rest generator', () => {
   const inputDir = path.resolve(__dirname, 'resources', 'test-apis');
   const outputDir = path.resolve(__dirname, 'generated');
 
@@ -36,17 +37,19 @@ describe('rest generator test', () => {
   it('should generate request builder file', async () => {
     const project = await generateProject({ inputDir, outputDir });
     const sourceFiles = project.getSourceFiles();
-    expect(sourceFiles.length).toBe(1);
+    expect(sourceFiles.length).toBe(2);
 
     const requestBuilder = sourceFiles.find(file =>
-      file.getDirectoryPath().endsWith('petstore')
+      file.getFilePath().endsWith('petstore/request-builder.ts')
     );
-    const classes = requestBuilder!.getClasses();
-    expect(classes.length).toBe(4);
+    const declarations = requestBuilder!.getVariableStatements();
+    expect(declarations.length).toBe(1);
 
-    const apiCLass = classes.find(clazz =>
-      clazz.getName()?.endsWith('ApiRequestBuilder')
-    );
-    expect(apiCLass!.getStaticMethods().length).toBe(3);
+    const functions = declarations[0]
+      .getDeclarations()[0]
+      .getInitializerIfKindOrThrow(SyntaxKind.ObjectLiteralExpression)
+      .getProperties();
+
+    expect(functions.length).toBe(3);
   }, 60000);
 });

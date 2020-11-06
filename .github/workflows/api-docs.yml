@@ -27,13 +27,13 @@ jobs:
       - name: Push generated API documentation to documentation branch
         env:
           USE_SSH: true
-          GIT_USER: irrelevant
+          GIT_USER: gh-actions
         run: |
-          git config --global user.email "irrelevant@completely.irrelevant"
-          git config --global user.name "irrelevant"
+          git config --global user.email "gh-actions@github.com"
+          git config --global user.name "gh-actions"
           set -x
           cd ..
-          git clone --depth 1 -b documentation git@github.com:SAP/cloud-sdk.git documentation
+          git clone --depth 1 git@github.com:SAP/cloud-sdk.git documentation
           rsync -avz cloud-sdk/docs/api/ documentation/static/api/
           cd documentation
           git add -A

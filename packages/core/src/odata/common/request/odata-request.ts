@@ -1,4 +1,11 @@
-import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
+import {
+  errorWithCause,
+  mergeIgnoreCase,
+  pickIgnoreCase,
+  pickNonNullishIgnoreCase,
+  pickValueIgnoreCase,
+  propertyExists
+} from '@sap-cloud-sdk/util';
 import { Destination, sanitizeDestination } from '../../../scp-cf';
 import {
   removeLeadingSlashes,
@@ -6,14 +13,6 @@ import {
   removeTrailingSlashes
 } from '../../../util/remove-slashes';
 import { HttpResponse, executeHttpRequest } from '../../../http-client';
-import {
-  filterNullishValues,
-  getHeader,
-  getHeaders,
-  getHeaderValue,
-  mergeHeaders
-} from '../../../header-builder';
-// TODO: The buildCsrfHeaders import cannot be combined with the rest of the other headers due to circular dependencies
 import { buildCsrfHeaders } from '../../../header-builder/csrf-token-header';
 // TODO: The buildHeadersForDestination import cannot be combined with the rest of the other headers due to circular dependencies
 import { buildHeadersForDestination } from '../../../header-builder/header-builder-for-destination';
@@ -194,13 +193,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   defaultHeaders(): Record<string, any> {
-    const customDefaultHeaders = getHeaders(
-      Object.keys(this.config.defaultHeaders),
-      this.customHeaders()
+    const customDefaultHeaders = pickIgnoreCase(
+      this.customHeaders(),
+      ...Object.keys(this.config.defaultHeaders)
     );
 
-    return mergeHeaders(
-      filterNullishValues(this.config.defaultHeaders),
+    return mergeIgnoreCase(
+      pickNonNullishIgnoreCase(this.config.defaultHeaders),
       customDefaultHeaders
     );
   }
@@ -209,16 +208,16 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * Get the eTag related headers, e. g. `if-match`.
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
-  eTagHeaders(): Record<string, string> {
-    if (getHeaderValue('if-match', this.customHeaders())) {
-      return getHeader('if-match', this.customHeaders());
+  eTagHeaders(): Record<string, any> {
+    if (pickValueIgnoreCase(this.customHeaders(), 'if-match')) {
+      return pickIgnoreCase(this.customHeaders(), 'if-match');
     }
     const eTag = isWithETag(this.config)
       ? this.config.versionIdentifierIgnored
         ? '*'
         : this.config.eTag
       : undefined;
-    return filterNullishValues({ 'if-match': eTag });
+    return pickNonNullishIgnoreCase({ 'if-match': eTag });
   }
 
   /**
@@ -246,10 +245,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   private async getCsrfHeaders(
     destinationRelatedHeaders: Record<string, string>
-  ): Promise<Record<string, string>> {
-    const customCsrfHeaders = getHeader(
-      'x-csrf-token',
-      this.config.customHeaders
+  ): Promise<Record<string, any>> {
+    const customCsrfHeaders = pickIgnoreCase(
+      this.config.customHeaders,
+      'x-csrf-token'
     );
     return Object.keys(customCsrfHeaders).length
       ? customCsrfHeaders

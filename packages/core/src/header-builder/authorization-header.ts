@@ -1,4 +1,10 @@
-import { errorWithCause, isNullish, createLogger } from '@sap-cloud-sdk/util';
+import {
+  errorWithCause,
+  isNullish,
+  createLogger,
+  toSanitizedObject,
+  pickIgnoreCase
+} from '@sap-cloud-sdk/util';
 import {
   AuthenticationType,
   Destination,
@@ -8,8 +14,6 @@ import {
 } from '../scp-cf';
 import { ODataRequestConfig } from '../odata/common/request';
 import type { ODataRequest } from '../odata/common/request/odata-request';
-import { getHeader, toSanitizedHeaderObject } from './header-util';
-
 const logger = createLogger({
   package: 'core',
   messageContext: 'authorization-header'
@@ -60,7 +64,7 @@ export async function getAuthHeaders(
   destination: Destination,
   customHeaders?: Record<string, any>
 ): Promise<Record<string, string>> {
-  const customAuthHeaders = getHeader('authorization', customHeaders);
+  const customAuthHeaders = pickIgnoreCase(customHeaders, 'authorization');
 
   if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
     logger.warn(
@@ -91,7 +95,7 @@ export function buildAndAddAuthorizationHeader(destination: Destination) {
   };
 }
 function toAuthorizationHeader(authorization: string): Record<string, string> {
-  return toSanitizedHeaderObject('authorization', authorization);
+  return toSanitizedObject('authorization', authorization);
 }
 
 function headerFromTokens(

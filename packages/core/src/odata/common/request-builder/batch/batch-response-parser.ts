@@ -1,6 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { last, createLogger, errorWithCause } from '@sap-cloud-sdk/util';
-import { getHeaderValue } from '../../../../header-builder';
+import {
+  last,
+  createLogger,
+  errorWithCause,
+  pickValueIgnoreCase
+} from '@sap-cloud-sdk/util';
 import { HttpResponse } from '../../../../http-client';
 
 const logger = createLogger({
@@ -87,7 +91,7 @@ export function splitBatchResponse(response: HttpResponse): string[] {
 
   try {
     const boundary = getBoundary(
-      getHeaderValue('content-type', response.headers)
+      pickValueIgnoreCase(response.headers, 'content-type')
     );
     return splitResponse(body, boundary);
   } catch (err) {
@@ -104,7 +108,7 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
   const headers = parseHeaders(changeSetResponse);
 
   try {
-    const boundary = getBoundary(getHeaderValue('content-type', headers));
+    const boundary = getBoundary(pickValueIgnoreCase(headers, 'content-type'));
     return splitResponse(changeSetResponse, boundary);
   } catch (err) {
     throw errorWithCause('Could not parse change set response.', err);
@@ -184,7 +188,10 @@ export function parseBatchResponse(
   batchResponse: HttpResponse
 ): (ResponseData | ResponseData[])[] {
   return splitBatchResponse(batchResponse).map(response => {
-    const contentType = getHeaderValue('content-type', parseHeaders(response));
+    const contentType = pickValueIgnoreCase(
+      parseHeaders(response),
+      'content-type'
+    );
 
     if (isChangeSetContentType(contentType)) {
       return splitChangeSetResponse(response).map(subResponse =>

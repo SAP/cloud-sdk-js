@@ -1,8 +1,13 @@
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  errorWithCause,
+  pickIgnoreCase,
+  pickNonNullishIgnoreCase,
+  pickValueIgnoreCase
+} from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
 import { HttpRequestConfig, executeHttpRequest } from '../http-client';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
-import { filterNullishValues, getHeader, getHeaderValue } from './header-util';
 
 const logger = createLogger({
   package: 'core',
@@ -19,12 +24,14 @@ const logger = createLogger({
 export async function buildCsrfHeaders<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: Partial<T>
-): Promise<Record<string, string>> {
+): Promise<Record<string, any>> {
   const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
   validateCsrfTokenResponse(csrfHeaders);
-  return filterNullishValues({
-    ...getHeader('x-csrf-token', csrfHeaders),
-    cookie: buildCookieHeaderValue(getHeaderValue('set-cookie', csrfHeaders))
+  return pickNonNullishIgnoreCase({
+    ...pickIgnoreCase(csrfHeaders, 'x-csrf-token'),
+    cookie: buildCookieHeaderValue(
+      pickValueIgnoreCase(csrfHeaders, 'set-cookie')
+    )
   });
 }
 
@@ -32,9 +39,9 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
-  const fetchHeader = !getHeaderValue(
-    'x-csrf-token',
-    requestConfig.headers
+  const fetchHeader = !pickValueIgnoreCase(
+    requestConfig.headers,
+    'x-csrf-token'
   ) && { 'x-csrf-token': 'Fetch' };
   const axiosConfig: HttpRequestConfig = {
     method: 'get',

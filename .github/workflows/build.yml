@@ -1,8 +1,7 @@
 name: build
 
 on:
-  pull_request:
-    branches-ignore: [documentation, gh-pages]
+  pull_request: ~
   push:
     branches: [main]
     tags: ['v*']

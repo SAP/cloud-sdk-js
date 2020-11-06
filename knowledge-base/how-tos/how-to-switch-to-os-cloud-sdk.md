@@ -1,6 +1,6 @@
 ## Switch to Open Source version
 
- Some packages of the SAP Cloud SDK for JavaScript have been migrated to [github.com](https://github.com/SAP/cloud-sdk).
+ Some packages of the SAP Cloud SDK for JavaScript have been migrated to [github.com](https://github.com/SAP/cloud-sdk-js).
  As a result, the packages were renamed as shown in the table below. No Breaking changes were made. Please use the new packages from now on.
 
   | old package name         | new package name         |

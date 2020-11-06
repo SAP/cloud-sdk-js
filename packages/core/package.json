@@ -29,7 +29,7 @@
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
     "postinstall": "node usage-analytics.js",
-    "test": "yarn jest --coverage",
+    "test": "yarn jest --coverage --forceExit",
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",

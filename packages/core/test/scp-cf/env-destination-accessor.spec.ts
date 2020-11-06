@@ -1,10 +1,10 @@
 import * as assert from 'assert';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Destination } from '../../src/scp-cf/destination/destination-service-types';
 import {
+  Destination,
   getDestinationFromEnvByName,
   getDestinationsFromEnv
-} from '../../src/scp-cf/destination/destination-from-env';
+} from '../../src/connectivity/scp-cf';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv

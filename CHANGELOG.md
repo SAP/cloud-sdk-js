@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- Renaming of deprecated ODataRequestConfigs e.g. `ODataCreateRequestConfig` -> `ODataCreateRequestConfigLegacy` due to naming conflicts. 
 
 ## New Functionality
 
@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- Export the `tenant` interface from the scp-cf module.
 
 ## Fixed Issues
 

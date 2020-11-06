@@ -3,8 +3,8 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../../../test-util/test-services/v4/test-service';
-import { getExpandV4 } from '../../../../src/odata/v4/uri-conversion';
-import { asc } from '../../../../src/odata/common/order';
+import { getExpandV4 } from '../../../../src/odata-v4';
+import { asc } from '../../../../src/odata-common';
 
 describe('get expand', () => {
   it('for first level expand without sub-query', () => {

@@ -8,7 +8,7 @@ import {
   DestinationSelectionStrategy,
   getDestination,
   subscriberFirst
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
@@ -22,7 +22,7 @@ import {
 } from '../test-util/mocked-access-tokens';
 import { mockServiceBindings } from '../test-util/environment-mocks';
 import { mockServiceToken } from '../test-util/token-accessor-mocks';
-import * as destinationService from '../../src/scp-cf/destination/destination-service';
+import * as destinationService from '../../src/connectivity/scp-cf/destination/destination-service';
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {

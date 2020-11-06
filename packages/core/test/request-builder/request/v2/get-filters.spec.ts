@@ -1,11 +1,5 @@
 import moment from 'moment';
-import {
-  and,
-  or,
-  filterFunction,
-  filterFunctionsV2,
-  oDataUriV2
-} from '../../../../src';
+import { and, or, filterFunction, oDataUriV2 } from '../../../../src';
 import {
   testFilterBoolean,
   testFilterGuid,
@@ -14,6 +8,7 @@ import {
   testFilterString
 } from '../../../test-util/filter-factory';
 import { TestEntity } from '../../../test-util/test-services/v2/test-service';
+import { filterFunctionsV2 } from '../../../../src/odata-v2/filter-functions';
 
 describe('get filters', () => {
   it('for simple filters', () => {

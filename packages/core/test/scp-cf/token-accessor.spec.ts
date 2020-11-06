@@ -3,7 +3,7 @@ import { clientCredentialsTokenCache } from '../../src';
 import {
   serviceToken,
   userApprovedServiceToken
-} from '../../src/scp-cf/token-accessor';
+} from '../../src/connectivity/scp-cf';
 import {
   mockDestinationServiceBinding,
   mockServiceBindings,

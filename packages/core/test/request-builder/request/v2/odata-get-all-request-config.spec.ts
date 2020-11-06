@@ -1,5 +1,5 @@
 import { asc, oDataUriV2 } from '../../../../src';
-import { ODataGetAllRequestConfig } from '../../../../src/odata/common/request/odata-get-all-request-config';
+import { ODataGetAllRequestConfig } from '../../../../src/odata-common';
 import { testFilterString } from '../../../test-util/filter-factory';
 import { TestEntity } from '../../../test-util/test-services/v2/test-service';
 

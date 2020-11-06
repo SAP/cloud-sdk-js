@@ -1,6 +1,6 @@
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
-import { uriConverterV4 } from '../src/odata/v4/uri-conversion';
+import { uriConverterV4 } from '../src/odata-v4';
 
 const { convertToUriFormat } = uriConverterV4;
 

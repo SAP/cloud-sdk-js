@@ -4,7 +4,7 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../../test-util/test-services/v2/test-service';
-import { extractCustomFields } from '../../../src/odata/common/entity-deserializer';
+import { extractCustomFields } from '../../../src/odata-common';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {

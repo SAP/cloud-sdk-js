@@ -1,7 +1,7 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
-import { CreateRequestBuilderV4 } from '../../../src/odata/v4';
+import { CreateRequestBuilderV4 } from '../../../src/odata-v4';
 import {
   defaultDestination,
   mockCreateRequestV4

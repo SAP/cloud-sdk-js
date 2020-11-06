@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { BatchRequestBuilder } from '../../src/odata/common/request-builder/batch/batch-request-builder';
+import { BatchRequestBuilder } from '../../src/odata-common';
 
 describe('batch request builder', () => {
   it('initializes headers correctly', () => {

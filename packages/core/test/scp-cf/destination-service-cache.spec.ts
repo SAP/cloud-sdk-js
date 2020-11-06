@@ -1,11 +1,13 @@
 import nock from 'nock';
 import {
+  destinationServiceCache,
   Destination,
   DestinationType,
   fetchDestination,
   fetchSubaccountDestinations,
-  IsolationStrategy
-} from '../../src/scp-cf';
+  IsolationStrategy,
+  decodeJwt
+} from '../../src/connectivity/scp-cf';
 import {
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
@@ -17,8 +19,6 @@ import {
   providerServiceToken,
   subscriberServiceToken
 } from '../test-util/mocked-access-tokens';
-import { destinationServiceCache } from '../../src/scp-cf/destination/destination-service-cache';
-import { decodeJwt } from '../../src/util';
 
 const destinationServiceUrl = 'https://myDestination.service.url';
 const singleDest = {

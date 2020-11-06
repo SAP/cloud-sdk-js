@@ -7,7 +7,7 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk",
   "scripts": {
-    "test": "yarn jest --coverage",
+    "test": "yarn jest --coverage ",
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",

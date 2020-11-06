@@ -1,4 +1,4 @@
-import { any, GetAllRequestBuilderV4 } from '../../../src/odata/v4';
+import { any, GetAllRequestBuilderV4 } from '../../../src/odata-v4';
 import {
   defaultDestination,
   mockGetRequest,

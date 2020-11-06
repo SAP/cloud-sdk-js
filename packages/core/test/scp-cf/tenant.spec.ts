@@ -1,6 +1,9 @@
 import assert = require('assert');
-import { mapping, tenantFromJwt } from '../../src/scp-cf/tenant';
-import { DecodedJWT } from '../../src/util';
+import {
+  DecodedJWT,
+  mappingTenantFields,
+  tenantFromJwt
+} from '../../src/connectivity/scp-cf';
 
 describe('tenant builder from jwt', () => {
   it('should contain the fields from decodedJwt', () => {
@@ -36,7 +39,7 @@ describe('tenant builder from jwt', () => {
       tenantFromJwt({});
       assert.fail('No exception while building from jwt without id.');
     } catch (e) {
-      expect(e.message).toContain(mapping.id.keyInJwt);
+      expect(e.message).toContain(mappingTenantFields.id.keyInJwt);
     }
   });
 });

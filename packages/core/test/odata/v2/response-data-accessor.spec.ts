@@ -4,7 +4,7 @@ import {
   isCollectionResult,
   getSingleResult,
   getLinkedCollectionResult
-} from '../../../src/odata/v2/request-builder/response-data-accessor';
+} from '../../../src/odata-v2/request-builder/response-data-accessor';
 
 describe('response data accessor', () => {
   const logger = createLogger('response-data-accessor');

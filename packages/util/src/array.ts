@@ -72,3 +72,26 @@ export function variadicArgumentToArray<T>(
   }
   return firstOrArray ? [firstOrArray, ...rest] : [...rest];
 }
+
+/**
+ * Flattens a array: [1,[2,[3,4]],5] will become [1,2,3,4,5].
+ * Non primitive values are copied by reference.
+ *
+ * @param input - array to be flattened
+ * @returns the flat array.
+ */
+export const flatten = (input: any[]): any[] => {
+  const flatResult: any[] = [];
+  const stack: any[] = [...input];
+
+  while (stack.length > 0) {
+    const current = stack.pop();
+    if (!Array.isArray(current)) {
+      flatResult.push(current);
+    } else {
+      stack.push(...current);
+    }
+  }
+
+  return flatResult.reverse();
+};

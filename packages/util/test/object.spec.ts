@@ -1,5 +1,16 @@
-import { assoc, flatten, pick, propertyExists, renameKeys } from '../src';
-
+import {
+  assoc,
+  flatten,
+  pick,
+  propertyExists,
+  renameKeys,
+  toSanitizedObject,
+  pickIgnoreCase,
+  pickValueIgnoreCase,
+  pickNonNullishIgnoreCase,
+  mergeLeftIgnoreCase,
+  mergeIgnoreCase
+} from '../src';
 describe('propertyExists', () => {
   it('checks whether an object has a nested chain of properties', () => {
     expect(propertyExists({ a: { b: { c: 0 } } }, 'a')).toBe(true);
@@ -92,4 +103,106 @@ describe('renameKeys', () => {
     const expected = { a: 1, b: 2, c: 3 };
     expect(assoc('c', 3, input)).toEqual(expected);
   });
+});
+
+describe('toSanitizedObject', () => {
+  it('creates simple header object', () => {
+    expect(toSanitizedObject('key', 'value')).toEqual({ key: 'value' });
+  });
+
+  it('creates empty header object for nullish value', () => {
+    expect(toSanitizedObject('key', null)).toEqual({});
+  });
+
+  it('creates empty header object for nullish key', () => {
+    expect(toSanitizedObject(null as any, 'value')).toEqual({});
+  });
+});
+
+describe('pickIgnoreCase', () => {
+  const header = { key: 'value' };
+  const customHeaders = { ...header, differentKey: 'differentValue' };
+  it('finds a header for an equal key', () => {
+    expect(pickIgnoreCase(customHeaders, 'key')).toEqual(header);
+  });
+
+  it('finds a header for an equal key in a different case', () => {
+    expect(pickIgnoreCase(customHeaders, 'KEY')).toEqual(header);
+  });
+
+  it('returns an empty object for no equal keys', () => {
+    expect(pickIgnoreCase(customHeaders, 'nonExistentKey')).toEqual({});
+  });
+
+  it('picks the given keys', () => {
+    expect(
+      pickIgnoreCase({ A: 'a', b: 'b', c: 'c', e: 'e' }, 'a', 'B', 'c', 'd')
+    ).toEqual({ A: 'a', b: 'b', c: 'c' });
+  });
+});
+
+describe('pickValueIgnoreCase', () => {
+  const value = 'value';
+  const customHeaders = { key: value };
+  it('finds a value for an equal key', () => {
+    expect(pickValueIgnoreCase(customHeaders, 'key')).toEqual(value);
+  });
+
+  it('finds a value for an equal key in a different case', () => {
+    expect(pickValueIgnoreCase(customHeaders, 'KEY')).toEqual(value);
+  });
+
+  it('returns undefined for different equal keys', () => {
+    expect(pickValueIgnoreCase(customHeaders, 'differentKey')).toBeUndefined();
+  });
+});
+
+it('pickNonNullishIgnoreCase removes null and undefined values from object', () => {
+  const notNullish = {
+    false: false,
+    emptyString: '',
+    zero: 0
+  };
+
+  const nullish = {
+    null: null,
+    undefined
+  };
+  expect(pickNonNullishIgnoreCase({ ...notNullish, ...nullish })).toEqual(
+    notNullish
+  );
+});
+
+it('mergeLeftIgnoreCase returns an object with replaced duplicate keys', () => {
+  const value = 'value';
+  const customValue = 'customValue';
+  const headers = {
+    equalDuplicateKey: value,
+    differentCaseDuplicateKey: value,
+    nonDuplicateKey: value
+  };
+
+  const customHeaders = {
+    equalDuplicateKey: customValue,
+    DifferentCaseDuplicateKey: customValue,
+    additionalCustomKey: customValue
+  };
+
+  expect(mergeLeftIgnoreCase(headers, customHeaders)).toEqual({
+    equalDuplicateKey: customValue,
+    DifferentCaseDuplicateKey: customValue,
+    nonDuplicateKey: value
+  });
+});
+
+it('mergeIgnoreCase merges headers with custom headers', () => {
+  expect(
+    mergeIgnoreCase(
+      {
+        a: 'a',
+        B: 'B'
+      },
+      { b: 'b', c: 'c' }
+    )
+  ).toEqual({ a: 'a', b: 'b', c: 'c' });
 });

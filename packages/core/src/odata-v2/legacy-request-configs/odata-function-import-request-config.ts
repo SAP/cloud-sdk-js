@@ -37,3 +37,5 @@ export class ODataFunctionImportRequestConfig<ParametersT> extends Base<
     );
   }
 }
+
+export {ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigLegacy};

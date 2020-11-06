@@ -23,3 +23,5 @@ export class ODataUpdateRequestConfig<EntityT extends EntityBase> extends Base<
     super(_entityConstructor, oDataUriV2);
   }
 }
+
+export {ODataUpdateRequestConfig as ODataUpdateRequestConfigLegacy};

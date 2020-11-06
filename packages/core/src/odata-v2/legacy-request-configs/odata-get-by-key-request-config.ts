@@ -23,3 +23,5 @@ export class ODataGetByKeyRequestConfig<
     super(_entityConstructor, oDataUriV2);
   }
 }
+
+export {ODataGetByKeyRequestConfig as ODataGetByKeyRequestConfigLegacy};

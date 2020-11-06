@@ -22,3 +22,5 @@ export class ODataDeleteRequestConfig<EntityT extends EntityBase> extends Base<
     super(_entityConstructor, oDataUriV2);
   }
 }
+
+export {ODataDeleteRequestConfig as ODataDeleteRequestConfigLegacy};

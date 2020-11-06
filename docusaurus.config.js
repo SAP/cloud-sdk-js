@@ -55,7 +55,7 @@ module.exports = {
             },
             {
               label: 'GitHub JavaScript',
-              href: 'https://github.com/SAP/cloud-sdk/issues/new/choose'
+              href: 'https://github.com/SAP/cloud-sdk-js/issues/new/choose'
             },
             {
               label: ' GitHub Java',
@@ -188,6 +188,7 @@ module.exports = {
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           editUrl:
+          // TODO: this link does not work
           'https://github.com/SAP/cloud-sdk/edit/documentation',
           routeBasePath: 'docs'
         },

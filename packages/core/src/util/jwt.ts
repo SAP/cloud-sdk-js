@@ -9,7 +9,7 @@ import {
   getXsuaaServiceCredentials,
   TokenKey,
   XsuaaServiceCredentials,
-  mapping as mappingTenantFields,
+  mappingTenantFields,
   RegisteredJWTClaimsTenant,
   mappingUserFields,
   RegisteredJWTClaimsUser,

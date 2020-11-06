@@ -12,7 +12,7 @@
     "start": "pm2 start cds-run.js || pm2 restart cds-run.js",
     "stop": "pm2 stop cds-run.js",
     "deploy": "cds deploy --to sqlite",
-    "test": "yarn jest",
+    "test": "yarn jest --runInBand",
     "test:local": "yarn jest",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },

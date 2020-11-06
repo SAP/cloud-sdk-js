@@ -10,7 +10,12 @@ export * from './resilience-options';
 export * from './token-accessor';
 export * from './xsuaa-service';
 export * from './xsuaa-service-types';
-export * from './tenant';
+export {
+  mapping as mappingTenantFields,
+  Tenant,
+  tenantFromJwt,
+  RegisteredJWTClaimsTenant
+} from './tenant';
 export {
   RegisteredJWTClaimsUser,
   Scope,

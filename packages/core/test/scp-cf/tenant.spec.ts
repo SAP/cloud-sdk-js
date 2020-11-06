@@ -1,5 +1,5 @@
 import assert = require('assert');
-import { mapping, tenantFromJwt } from '../../src/connectivity/scp-cf';
+import { mappingTenantFields, tenantFromJwt } from '../../src/connectivity/scp-cf';
 import { DecodedJWT } from '../../src/util';
 
 describe('tenant builder from jwt', () => {
@@ -36,7 +36,7 @@ describe('tenant builder from jwt', () => {
       tenantFromJwt({});
       assert.fail('No exception while building from jwt without id.');
     } catch (e) {
-      expect(e.message).toContain(mapping.id.keyInJwt);
+      expect(e.message).toContain(mappingTenantFields.id.keyInJwt);
     }
   });
 });

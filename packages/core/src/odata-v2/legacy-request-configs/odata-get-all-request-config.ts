@@ -11,7 +11,7 @@ import { oDataUriV2 } from '../uri-conversion';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataGetAllRequestConfig<EntityT extends EntityBase> extends Base<
+class ODataGetAllRequestConfig<EntityT extends EntityBase> extends Base<
   EntityT
 > {
   /**

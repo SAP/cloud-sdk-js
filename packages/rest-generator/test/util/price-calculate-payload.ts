@@ -1,15 +1,15 @@
 // /* !
 //  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
 //  */
-//
+
 // import {
 //   ARTSCommonHeaderTypeActionCodeEnum,
 //   ARTSCommonHeaderTypeMessageTypeEnum,
 //   BusinessUnitCommonDataTypeCodeEnum,
 //   PriceCalculate,
 //   PriceCalculateBaseTransactionTypeEnum
-// } from '../test-services/PriceCalculation/open-api/api';
-//
+// } from '../test-services/PriceCalculation';
+
 // export const transaction: PriceCalculate = {
 //   ARTSHeader: {
 //     MessageID: {

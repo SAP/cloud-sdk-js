@@ -20,7 +20,7 @@ import {
 } from '../../connectivity/scp-cf';
 import { oDataUriV2 } from '../uri-conversion';
 import { extractODataEtagV2 } from '../extract-odata-etag';
-import { isNavigationProperty } from '../../util';
+import { isNavigationProperty } from '../../odata-common/properties-util';
 
 const logger = createLogger({
   package: 'core',

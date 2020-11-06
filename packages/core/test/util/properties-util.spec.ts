@@ -1,5 +1,5 @@
-import { isNavigationProperty } from '../../src';
 import { TestEntity } from '../test-util/test-services/v2/test-service';
+import { isNavigationProperty } from '../../src/odata-common/';
 
 describe('properties-util', () => {
   describe('isNavigationProperty', () => {

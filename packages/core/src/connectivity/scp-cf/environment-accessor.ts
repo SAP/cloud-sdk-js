@@ -1,6 +1,6 @@
 import { createLogger, errorWithCause, first } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
-import { audiences, DecodedJWT, decodeJwt } from '../../util';
+import { audiences, DecodedJWT, decodeJwt } from './jwt';
 import {
   DestinationServiceCredentials,
   Service,

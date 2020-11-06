@@ -1,13 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { DecodedJWT, decodeJwt, isIdenticalTenant, verifyJwt } from '../jwt';
 import {
   addProxyConfigurationInternet,
-  DecodedJWT,
-  decodeJwt,
-  isIdenticalTenant,
   ProxyStrategy,
-  proxyStrategy,
-  verifyJwt
-} from '../../../util';
+  proxyStrategy
+} from '../proxy-util';
 import { IsolationStrategy } from '../cache';
 import { serviceToken, userApprovedServiceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';

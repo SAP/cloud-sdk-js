@@ -4,7 +4,7 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
-import { decodeJwt, wrapJwtInHeader } from '../../../util';
+import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { getAxiosConfigWithDefaults } from '../../../http-client';
 import {
   circuitBreakerDefaultOptions,

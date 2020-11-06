@@ -3,7 +3,7 @@ import {
   proxyStrategy,
   ProxyStrategy,
   addProxyConfigurationInternet
-} from '../../../util';
+} from '../proxy-util';
 import {
   sanitizeDestination,
   isDestinationConfiguration,

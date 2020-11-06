@@ -6,7 +6,7 @@ import {
   parseProxyEnv,
   ProxyStrategy,
   proxyStrategy
-} from '../../src/util/proxy-util';
+} from '../../src/connectivity/scp-cf/proxy-util';
 
 describe('proxy-util', () => {
   afterEach(() => {

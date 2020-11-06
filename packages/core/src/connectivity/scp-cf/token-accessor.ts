@@ -1,5 +1,5 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
-import { DecodedJWT, decodeJwt } from '../../util';
+import { DecodedJWT, decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import {

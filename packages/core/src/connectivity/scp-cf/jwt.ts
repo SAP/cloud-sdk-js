@@ -3,18 +3,13 @@ import * as url from 'url';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosRequestConfig } from 'axios';
 import jwt from 'jsonwebtoken';
-import {
-  Cache,
-  fetchVerificationKeys,
-  getXsuaaServiceCredentials,
-  TokenKey,
-  XsuaaServiceCredentials,
-  mappingTenantFields,
-  RegisteredJWTClaimsTenant,
-  mappingUserFields,
-  RegisteredJWTClaimsUser,
-  Scope
-} from '../connectivity/scp-cf';
+import { getXsuaaServiceCredentials } from './environment-accessor';
+import { TokenKey } from './xsuaa-service-types';
+import { XsuaaServiceCredentials } from './environment-accessor-types';
+import { mappingTenantFields, RegisteredJWTClaimsTenant } from './tenant';
+import { RegisteredJWTClaimsUser, mappingUserFields } from './user';
+import { Cache } from './cache';
+import { fetchVerificationKeys } from './xsuaa-service';
 
 const logger = createLogger({
   package: 'core',
@@ -272,89 +267,6 @@ export function issuerUrl(decodedToken: DecodedJWT): string | undefined {
 }
 
 /**
- * Get the user id of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
- */
-export function userId(decodedToken: DecodedJWT): string | undefined {
-  return readPropertyWithWarn(decodedToken, mappingUserFields.id.keyInJwt);
-}
-
-/**
- * Get the user's given name of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
- */
-export function userGivenName(decodedToken: DecodedJWT): string | undefined {
-  if (mappingUserFields.givenName) {
-    return readPropertyWithWarn(
-      decodedToken,
-      mappingUserFields.givenName.keyInJwt
-    );
-  }
-}
-
-/**
- * Get the user's family name of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
- */
-export function userFamilyName(decodedToken: DecodedJWT): string | undefined {
-  if (mappingUserFields && mappingUserFields.familyName) {
-    return readPropertyWithWarn(
-      decodedToken,
-      mappingUserFields!.familyName.keyInJwt
-    );
-  }
-}
-
-/**
- * Get the user name of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
- */
-export function userName(decodedToken: DecodedJWT): string | undefined {
-  return readPropertyWithWarn(
-    decodedToken,
-    mappingUserFields.userName.keyInJwt
-  );
-}
-
-/**
- * Get the user's email of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
- */
-export function userEmail(decodedToken: DecodedJWT): string | undefined {
-  if (mappingUserFields && mappingUserFields.email) {
-    return readPropertyWithWarn(decodedToken, mappingUserFields.email.keyInJwt);
-  }
-}
-
-/**
- * Get the user's scopes of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
- */
-export function userScopes(decodedToken: DecodedJWT): Scope[] | [] {
-  if (!(decodedToken.scope instanceof Array && decodedToken.scope.length)) {
-    return [];
-  }
-  return decodedToken.scope
-    .map(s => (s.includes('.') ? s.substr(s.indexOf('.') + 1, s.length) : s))
-    .map(s => ({ name: s }));
-}
-
-/**
- * Get the tenant id of a decoded JWT.
- * @param decodedToken - Token to read the tenant id from.
- * @returns The tenant id if available.
- */
-export function tenantId(decodedToken: DecodedJWT): string | undefined {
-  return readPropertyWithWarn(decodedToken, mappingTenantFields.id.keyInJwt);
-}
-
-/**
  * Extracts the custom attributes in the JWT
  * @param decodedToken - Token to read the custom attributes
  * @returns custom attributes added by the xsuaa to the issued JWT.
@@ -369,19 +281,6 @@ export function customAttributes(
     ) as Map<string, string[]>;
   }
   return new Map<string, string[]>();
-}
-
-/**
- * Get the tenant name of a decoded JWT.
- * @param decodedToken - Token to read the tenant id from.
- * @returns The tenant id if available.
- */
-export function tenantName(decodedToken: DecodedJWT): string | undefined {
-  const extAttr = readPropertyWithWarn(decodedToken, 'ext_attr');
-  if (extAttr) {
-    return readPropertyWithWarn(extAttr, 'zdn');
-  }
-  return undefined;
 }
 
 /**
@@ -437,7 +336,10 @@ export function wrapJwtInHeader(token: string): AxiosRequestConfig {
   return { headers: { Authorization: 'Bearer ' + token } };
 }
 
-function readPropertyWithWarn(decodedJwt: DecodedJWT, property: string): any {
+export function readPropertyWithWarn(
+  decodedJwt: DecodedJWT,
+  property: string
+): any {
   if (!decodedJwt[property]) {
     logger.warn(
       `WarningJWT: The provided JWT does not include "${property}" property.`

@@ -1,8 +1,13 @@
 import * as http from 'http';
 import * as https from 'https';
 import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
-import { proxyAgent } from './util';
-import { Destination, DestinationCertificate, Protocol,getProtocolOrDefault } from './connectivity/scp-cf';
+import {
+  Destination,
+  DestinationCertificate,
+  Protocol,
+  proxyAgent,
+  getProtocolOrDefault
+} from '../connectivity/scp-cf';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({

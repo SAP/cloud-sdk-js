@@ -1,4 +1,4 @@
-import { DecodedJWT } from '../../../util';
+import { DecodedJWT } from '../jwt';
 import { Cache, IsolationStrategy } from '../cache';
 import { Destination } from './destination-service-types';
 import { getDestinationCacheKey } from './destination-cache';

@@ -1,4 +1,11 @@
-import { errorWithCause, isNullish, createLogger } from '@sap-cloud-sdk/util';
+import {
+  errorWithCause,
+  isNullish,
+  createLogger,
+  getHeader,
+  toSanitizedHeaderObject
+} from '@sap-cloud-sdk/util';
+import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
 import {
   AuthenticationType,
   Destination,
@@ -6,8 +13,6 @@ import {
   getOAuth2ClientCredentialsToken,
   sanitizeDestination
 } from './index';
-import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
-import { getHeader, toSanitizedHeaderObject } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'core',

@@ -1,6 +1,6 @@
-import { Destination } from './index';
-import { getAuthHeaders } from './authorization-header';
 import { replaceDuplicateKeys, filterNullishValues } from '@sap-cloud-sdk/util';
+import { getAuthHeaders } from './authorization-header';
+import { Destination } from './index';
 
 /**
  * Builds the authorization, proxy authorization and SAP headers for a given destination.

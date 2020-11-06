@@ -1,8 +1,13 @@
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
+import {
+  createLogger,
+  errorWithCause,
+  filterNullishValues,
+  getHeader,
+  getHeaderValue
+} from '@sap-cloud-sdk/util';
 import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
 import type { Destination, DestinationNameAndJwt } from './index';
-import { filterNullishValues, getHeader, getHeaderValue } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'core',

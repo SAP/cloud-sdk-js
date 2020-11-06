@@ -1,5 +1,4 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { toPropertyFormat } from '../util';
 import {
   isSelectedProperty,
   Field,
@@ -19,6 +18,7 @@ import {
 } from '../odata-common';
 import { EdmToPrimitiveV2, EdmTypeV2 } from '../odata-v2';
 import { EdmToPrimitiveV4, EdmTypeV4 } from '../odata-v4';
+import { toPropertyFormat } from './name-converter';
 
 const logger = createLogger({
   package: 'core',

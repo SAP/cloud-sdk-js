@@ -1,6 +1,6 @@
 import { EntityBase, Constructable } from '../entity';
-import { toPropertyFormat } from '../../util';
 import { Field } from '../selectable';
+import { toPropertyFormat } from '../name-converter';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.

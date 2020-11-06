@@ -13,4 +13,6 @@ export * from './uri-conversion';
 export * from './expandable';
 export * from './entity-deserializer';
 export * from './payload-value-converter';
+export * from './name-converter';
+export * from './properties-util';
 export { ResponseDataAccessor } from './response-data-accessor';

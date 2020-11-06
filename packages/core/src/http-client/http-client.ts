@@ -2,14 +2,14 @@ import * as http from 'http';
 import * as https from 'https';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
-import { buildHeadersForDestination } from '../connectivity/scp-cf';
 import {
+  buildHeadersForDestination,
   Destination,
   DestinationNameAndJwt,
   toDestinationNameUrl,
   useOrFetchDestination
 } from '../connectivity/scp-cf';
-import { getAgentConfig } from '../http-agent';
+import { getAgentConfig } from './http-agent';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,

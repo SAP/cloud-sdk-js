@@ -1,5 +1,5 @@
-import { EntityBase } from '../odata-common';
 import { toStaticPropertyFormat } from './name-converter';
+import { EntityBase } from './index';
 
 export const nonEnumerable = (target: any, propertyKey: string) => {
   const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};

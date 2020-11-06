@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { Constructable, EntityBase } from '../entity';
-import { toStaticPropertyFormat } from '../../util';
 import {
   Filterable,
   isFilterList,
@@ -13,6 +12,7 @@ import { EdmTypeShared } from '../edm-types';
 import { ComplexTypeField, FieldType } from '../selectable';
 import { UriConverter } from '../uri-conversion';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
+import { toStaticPropertyFormat } from '../name-converter';
 
 type GetFilterType<EntityT extends EntityBase> = (
   filter: Filterable<EntityT>,

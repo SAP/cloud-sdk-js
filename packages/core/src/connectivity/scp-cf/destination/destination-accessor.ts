@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { VerifyJwtOptions } from '../../../util';
+import { VerifyJwtOptions } from '../jwt';
 import { sanitizeDestination } from './destination';
 import {
   Destination,

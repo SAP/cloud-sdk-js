@@ -2,16 +2,15 @@ import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import {
   Destination,
-  getAgentConfig,
   getProtocolOrDefault,
-  getUrlProtocol,
-  Protocol
+  Protocol,
+  proxyAgent
 } from '../../src';
-import { proxyAgent } from '../../src/util';
 import {
   mockedConnectivityServiceProxyConfig,
   mockedConnectivityServiceProxyURL
 } from '../test-util/environment-mocks';
+import { getAgentConfig, getUrlProtocol } from '../../src/http-client';
 
 describe('createAgent', () => {
   const baseDestination: Destination = {

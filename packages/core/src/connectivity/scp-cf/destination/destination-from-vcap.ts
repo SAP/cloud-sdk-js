@@ -3,7 +3,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from '../../../util';
+} from '../proxy-util';
 import { getVcapService } from '../environment-accessor';
 import { Destination } from './destination-service-types';
 

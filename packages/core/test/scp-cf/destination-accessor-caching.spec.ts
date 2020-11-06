@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { decodeJwt } from '../../src/util';
+import { decodeJwt } from '../../src';
 import {
   providerServiceToken,
   providerUserJwt,

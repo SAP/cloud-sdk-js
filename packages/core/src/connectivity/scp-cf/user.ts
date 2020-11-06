@@ -3,13 +3,8 @@ import {
   customAttributes,
   DecodedJWT,
   JwtKeyMapping,
-  userEmail,
-  userFamilyName,
-  userGivenName,
-  userId,
-  userName,
-  userScopes
-} from '../../util';
+  readPropertyWithWarn
+} from './jwt';
 
 /**
  * Representation of the user i.e. authenticated persona. The authentication is done by the XSUAA.
@@ -31,7 +26,10 @@ export interface User extends UserData {
 /**
  * Mapping between key name in the User and key name in decoded JWT and the
  */
-export const mapping: JwtKeyMapping<UserData, RegisteredJWTClaimsUser> = {
+export const mappingUserFields: JwtKeyMapping<
+  UserData,
+  RegisteredJWTClaimsUser
+> = {
   id: { keyInJwt: 'user_id', extractorFunction: userId },
   userName: { keyInJwt: 'user_name', extractorFunction: userName },
   givenName: { keyInJwt: 'given_name', extractorFunction: userGivenName },
@@ -43,6 +41,80 @@ export const mapping: JwtKeyMapping<UserData, RegisteredJWTClaimsUser> = {
     extractorFunction: customAttributes
   }
 };
+
+/**
+ * Get the user's given name of a decoded JWT.
+ * @param decodedToken - Token to read the user id from.
+ * @returns The user id if available.
+ */
+export function userGivenName(decodedToken: DecodedJWT): string | undefined {
+  if (mappingUserFields.givenName) {
+    return readPropertyWithWarn(
+      decodedToken,
+      mappingUserFields.givenName.keyInJwt
+    );
+  }
+}
+
+/**
+ * Get the user's family name of a decoded JWT.
+ * @param decodedToken - Token to read the user id from.
+ * @returns The user id if available.
+ */
+export function userFamilyName(decodedToken: DecodedJWT): string | undefined {
+  if (mappingUserFields && mappingUserFields.familyName) {
+    return readPropertyWithWarn(
+      decodedToken,
+      mappingUserFields!.familyName.keyInJwt
+    );
+  }
+}
+
+/**
+ * Get the user name of a decoded JWT.
+ * @param decodedToken - Token to read the user id from.
+ * @returns The user id if available.
+ */
+export function userName(decodedToken: DecodedJWT): string | undefined {
+  return readPropertyWithWarn(
+    decodedToken,
+    mappingUserFields.userName.keyInJwt
+  );
+}
+
+/**
+ * Get the user's email of a decoded JWT.
+ * @param decodedToken - Token to read the user id from.
+ * @returns The user id if available.
+ */
+export function userEmail(decodedToken: DecodedJWT): string | undefined {
+  if (mappingUserFields && mappingUserFields.email) {
+    return readPropertyWithWarn(decodedToken, mappingUserFields.email.keyInJwt);
+  }
+}
+
+/**
+ * Get the user's scopes of a decoded JWT.
+ * @param decodedToken - Token to read the user id from.
+ * @returns The user id if available.
+ */
+export function userScopes(decodedToken: DecodedJWT): Scope[] | [] {
+  if (!(decodedToken.scope instanceof Array && decodedToken.scope.length)) {
+    return [];
+  }
+  return decodedToken.scope
+    .map(s => (s.includes('.') ? s.substr(s.indexOf('.') + 1, s.length) : s))
+    .map(s => ({ name: s }));
+}
+
+/**
+ * Get the user id of a decoded JWT.
+ * @param decodedToken - Token to read the user id from.
+ * @returns The user id if available.
+ */
+export function userId(decodedToken: DecodedJWT): string | undefined {
+  return readPropertyWithWarn(decodedToken, mappingUserFields.id.keyInJwt);
+}
 
 /**
  * Keys in the JWT related to the user
@@ -81,8 +153,8 @@ function hasScopeWrapper(scopes: Scope[]): hasScopeType {
  * @exception Error Raised if no id is found in the decoded JWT.
  */
 export function userFromJwt(decodedJWT: DecodedJWT): User {
-  checkMandatoryValue('id', mapping, decodedJWT);
-  checkMandatoryValue('userName', mapping, decodedJWT);
+  checkMandatoryValue('id', mappingUserFields, decodedJWT);
+  checkMandatoryValue('userName', mappingUserFields, decodedJWT);
   return {
     id: userId(decodedJWT)!,
     givenName: userGivenName(decodedJWT),

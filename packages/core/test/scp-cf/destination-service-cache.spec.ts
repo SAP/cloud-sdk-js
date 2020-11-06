@@ -5,7 +5,8 @@ import {
   DestinationType,
   fetchDestination,
   fetchSubaccountDestinations,
-  IsolationStrategy
+  IsolationStrategy,
+  decodeJwt
 } from '../../src/connectivity/scp-cf';
 import {
   mockSingleDestinationCall,
@@ -18,7 +19,6 @@ import {
   providerServiceToken,
   subscriberServiceToken
 } from '../test-util/mocked-access-tokens';
-import { decodeJwt } from '../../src/util';
 
 const destinationServiceUrl = 'https://myDestination.service.url';
 const singleDest = {

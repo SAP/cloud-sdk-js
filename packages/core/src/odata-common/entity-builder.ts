@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { toStaticPropertyFormat } from '../util';
 import type { Constructable, EntityBase } from './entity';
+import { toStaticPropertyFormat } from './name-converter';
 
 const logger = createLogger({
   package: 'core',

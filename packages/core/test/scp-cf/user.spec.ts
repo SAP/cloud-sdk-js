@@ -1,6 +1,9 @@
 import assert = require('assert');
-import { mappingUserFields, userFromJwt } from '../../src/connectivity/scp-cf';
-import { DecodedJWT } from '../../src/util';
+import {
+  DecodedJWT,
+  mappingUserFields,
+  userFromJwt
+} from '../../src/connectivity/scp-cf';
 
 function getSampleJwt(scopes?: string[]): DecodedJWT {
   return {

@@ -1,13 +1,13 @@
 ## Motivation
 
-Typescript allows for variable arguments e.g.:
+Typescript allows for variadic functions e.g.:
 
 ```
 function doSomething(...strings:string[]){
 }
 ```
 
-You can call the method with no, one, two,... arguments.
+You can call the method with no, one, two, ... arguments.
 We used this feature quite regularly for example for the `and` and `or` filter functions.
 In the TypeScript universe there is also nothing wrong wit it, because you will get a type error if you call the function with an array.
 
@@ -21,7 +21,7 @@ Hence, we decided to be lenient to the users and allow also for:
 
 ```
 doSomething([])
-doSomething([a]) 
+doSomething([a])
 doSomething([a,b])
 ```
 in addition to the already possible:
@@ -41,7 +41,7 @@ function functionWithVariableArguments(
     firstOrArray: undefined | string | string[],
     ...rest: string[]
   ): string[] {
-  
+
   }
 ```
 

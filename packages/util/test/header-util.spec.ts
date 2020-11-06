@@ -6,7 +6,7 @@ import {
   replaceDuplicateKeys,
   mergeHeaders,
   getHeaders
-} from '../../../src';
+} from '../src/header-util';
 
 describe('Header-builder:', () => {
   describe('toSanitizedHeaderObject', () => {

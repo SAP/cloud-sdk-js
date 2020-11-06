@@ -5,9 +5,9 @@ import {
   DestinationAuthToken,
   getOAuth2ClientCredentialsToken,
   sanitizeDestination
-} from '../connectivity/scp-cf';
-import type { ODataRequest, ODataRequestConfig } from '../odata-common';
-import { getHeader, toSanitizedHeaderObject } from './header-util';
+} from './index';
+import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
+import { getHeader, toSanitizedHeaderObject } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'core',

@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { last, createLogger, errorWithCause } from '@sap-cloud-sdk/util';
-import { getHeaderValue } from '../../../header-builder';
+import { last, createLogger, errorWithCause, getHeaderValue } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '../../../http-client';
 
 const logger = createLogger({

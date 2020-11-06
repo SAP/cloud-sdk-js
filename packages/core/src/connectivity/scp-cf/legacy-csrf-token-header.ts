@@ -1,4 +1,4 @@
-import { ODataRequest, ODataRequestConfig } from '../odata-common';
+import { ODataRequest, ODataRequestConfig } from '../../odata-common';
 import { buildCsrfHeaders } from './csrf-token-header';
 
 /**

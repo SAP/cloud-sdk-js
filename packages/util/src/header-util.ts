@@ -1,4 +1,4 @@
-import { isNullish } from '@sap-cloud-sdk/util';
+import { isNullish } from './nullish'
 
 /**
  * Create a header object based on the given key and value if neither key nor value are nullish.

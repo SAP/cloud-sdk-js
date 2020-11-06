@@ -9,3 +9,4 @@ export * from './object';
 export * from './pipe';
 export * from './string';
 export * from './types';
+export * from './header-util';

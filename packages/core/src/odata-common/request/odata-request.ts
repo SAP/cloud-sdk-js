@@ -1,4 +1,8 @@
-import { errorWithCause, propertyExists } from '@sap-cloud-sdk/util';
+import { errorWithCause, propertyExists ,  filterNullishValues,
+  getHeader,
+  getHeaders,
+  getHeaderValue,
+  mergeHeaders} from '@sap-cloud-sdk/util';
 import { Destination, sanitizeDestination } from '../../connectivity/scp-cf';
 import {
   removeLeadingSlashes,
@@ -6,17 +10,10 @@ import {
   removeTrailingSlashes
 } from '../../util/remove-slashes';
 import { HttpResponse, executeHttpRequest } from '../../http-client';
-import {
-  filterNullishValues,
-  getHeader,
-  getHeaders,
-  getHeaderValue,
-  buildCsrfHeaders,
-  buildHeadersForDestination,
-  mergeHeaders
-} from '../../header-builder';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
+import { buildCsrfHeaders } from '../../connectivity/scp-cf';
+import { buildHeadersForDestination } from '../../connectivity/scp-cf';
 
 /**
  * OData request configuration for an entity type.

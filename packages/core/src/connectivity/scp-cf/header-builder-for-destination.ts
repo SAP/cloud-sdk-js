@@ -1,6 +1,6 @@
-import { Destination } from '../connectivity/scp-cf';
+import { Destination } from './index';
 import { getAuthHeaders } from './authorization-header';
-import { replaceDuplicateKeys, filterNullishValues } from './header-util';
+import { replaceDuplicateKeys, filterNullishValues } from '@sap-cloud-sdk/util';
 
 /**
  * Builds the authorization, proxy authorization and SAP headers for a given destination.

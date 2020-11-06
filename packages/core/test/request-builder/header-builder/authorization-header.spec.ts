@@ -9,14 +9,14 @@ import {
 import {
   addAuthorizationHeader,
   buildAuthorizationHeaders
-} from '../../../src/header-builder/authorization-header';
+} from '../../../src/connectivity/scp-cf';
 import { ODataGetAllRequestConfig } from '../../../src/odata-common';
 import {
   defaultDestination,
   defaultBasicCredentials
 } from '../../test-util/request-mocker';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { buildHeadersForDestination } from '../../../src/header-builder/header-builder-for-destination';
+import { buildHeadersForDestination } from '../../../src/connectivity/scp-cf';
 
 describe('Authorization header builder', () => {
   it('does not throw on NoAuthentication', async () => {

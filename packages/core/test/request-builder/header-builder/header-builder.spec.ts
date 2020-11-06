@@ -1,12 +1,12 @@
 import nock from 'nock';
-import { buildHeaders } from '../../../src/header-builder/header-builder';
+import { buildHeaders } from '../../../src/odata-common/header-builder';
 import { Destination } from '../../../src/connectivity/scp-cf';
 import { mockedConnectivityServiceProxyConfig } from '../../test-util/environment-mocks';
 import {
   defaultDestination,
   mockHeaderRequest
 } from '../../test-util/request-mocker';
-import * as csrfHeaders from '../../../src/header-builder/csrf-token-header';
+import * as csrfHeaders from '../../../src/connectivity/scp-cf/csrf-token-header';
 import {
   createGetAllRequest,
   createUpdateRequest,

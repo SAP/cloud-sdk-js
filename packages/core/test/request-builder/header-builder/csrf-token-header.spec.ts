@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock = require('nock');
-import { buildCsrfHeaders } from '../../../src/header-builder';
+import { buildCsrfHeaders } from '../../../src/connectivity/scp-cf';
 import {
   createCreateRequest,
   createGetAllRequest,
@@ -12,7 +12,7 @@ import {
   defaultHost,
   mockHeaderRequest
 } from '../../test-util/request-mocker';
-import { addCsrfTokenAndCookies } from '../../../src/header-builder/legacy-csrf-token-header';
+import { addCsrfTokenAndCookies } from '../../../src/connectivity/scp-cf/legacy-csrf-token-header';
 import { Destination } from '../../../src';
 
 const standardHeaders = {

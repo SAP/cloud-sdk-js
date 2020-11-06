@@ -1,5 +1,4 @@
-import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
-import { mergeHeaders } from '../../header-builder';
+import { createLogger, VALUE_IS_UNDEFINED, mergeHeaders } from '@sap-cloud-sdk/util';
 
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 

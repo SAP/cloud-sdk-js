@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as https from 'https';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
-import { buildHeadersForDestination } from '../header-builder/header-builder-for-destination';
+import { buildHeadersForDestination } from '../connectivity/scp-cf';
 import {
   Destination,
   DestinationNameAndJwt,

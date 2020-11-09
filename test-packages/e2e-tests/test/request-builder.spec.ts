@@ -3,6 +3,7 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
 import moment from 'moment';
+import { and } from '@sap-cloud-sdk/core';
 import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';
 
@@ -29,14 +30,21 @@ describe('Request builder', () => {
   it('should return a collection of entities for get all request', async () => {
     const testEntities = await TestEntity.requestBuilder()
       .getAll()
+      .filter(
+        and(
+          TestEntity.KEY_TEST_ENTITY.greaterOrEqual(101),
+          TestEntity.KEY_TEST_ENTITY.lessOrEqual(104),
+          TestEntity.KEY_TEST_ENTITY.notEquals(102)
+        )
+      )
       .execute(destination);
-    expect(testEntities).toHaveLength(4);
+    expect(testEntities).toHaveLength(3);
     expect(testEntities).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           keyTestEntity: 101
         }),
-        expect.objectContaining({
+        expect.not.objectContaining({
           keyTestEntity: 102
         }),
         expect.objectContaining({

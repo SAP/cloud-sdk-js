@@ -1,4 +1,4 @@
-import { ODataCreateRequestConfig } from '../../../../src/odata/common/request/odata-create-request-config';
+import { ODataCreateRequestConfig } from '../../../../src/odata-common';
 import { TestEntity } from '../../../test-util/test-services/v2/test-service';
 import { oDataUriV2 } from '../../../../src';
 

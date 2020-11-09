@@ -7,31 +7,22 @@ exports.defaultMultipleSchemasServicePath = exports.changeset = exports.batch = 
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var core_1 = require("@sap-cloud-sdk/core");
+var util_1 = require("@sap-cloud-sdk/util");
 var index_1 = require("./index");
-/**
- * Batch builder for operations supported on the Multiple Schemas Service.
- * @param requests The requests of the batch
- * @returns A request builder for batch.
- */
-function batch() {
-    var requests = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        requests[_i] = arguments[_i];
+function batch(first) {
+    var rest = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        rest[_i - 1] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilderV2(exports.defaultMultipleSchemasServicePath, requests, map);
+    return new core_1.ODataBatchRequestBuilderV2(exports.defaultMultipleSchemasServicePath, util_1.variadicArgumentToArray(first, rest), map);
 }
 exports.batch = batch;
-/**
- * Change set constructor consists of write operations supported on the Multiple Schemas Service.
- * @param requests The requests of the change set
- * @returns A change set for batch.
- */
-function changeset() {
-    var requests = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        requests[_i] = arguments[_i];
+function changeset(first) {
+    var rest = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        rest[_i - 1] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSetV2(requests);
+    return new core_1.ODataBatchChangeSetV2(util_1.variadicArgumentToArray(first, rest));
 }
 exports.changeset = changeset;
 exports.defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';

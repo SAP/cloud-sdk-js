@@ -1,5 +1,8 @@
 import nock from 'nock';
-import { clientCredentialsTokenCache, getDestination } from '../../src/scp-cf';
+import {
+  clientCredentialsTokenCache,
+  getDestination
+} from '../../src/connectivity/scp-cf';
 import {
   mockServiceBindings,
   mockXsuaaBinding

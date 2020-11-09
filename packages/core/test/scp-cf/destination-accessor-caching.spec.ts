@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { decodeJwt } from '../../src/util';
+import { decodeJwt } from '../../src';
 import {
   providerServiceToken,
   providerUserJwt,
@@ -22,6 +22,7 @@ import {
   mockVerifyJwt
 } from '../test-util/destination-service-mocks';
 import {
+  destinationServiceCache,
   alwaysProvider,
   alwaysSubscriber,
   AuthenticationType,
@@ -31,7 +32,7 @@ import {
   IsolationStrategy,
   parseDestination,
   subscriberFirst
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 import {
   certificateMultipleResponse,
   certificateSingleResponse,
@@ -40,7 +41,6 @@ import {
   oauthSingleResponse,
   onPremiseMultipleResponse
 } from '../test-util/example-destination-service-responses';
-import { destinationServiceCache } from '../../src/scp-cf/destination/destination-service-cache';
 
 function getSubscriberCache(
   isolationStrategy: IsolationStrategy,

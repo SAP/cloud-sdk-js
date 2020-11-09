@@ -13,87 +13,146 @@ import {
   removeSync,
   writeJsonSync
 } from 'fs-extra';
+import { Project } from 'ts-morph';
 import { GeneratorOptions } from './generator-cli';
+import { projectOptions, sourceFile } from './utils';
+import { toOpenApiServiceMetaData } from './parse-open-api-json';
+import { OpenApiServiceMetadata } from './open-api-types';
+import { requestBuilderSourceFile } from './request-builder/file';
+import { indexFile } from './index-file';
 
 const logger = createLogger({
   level: 'info',
+  package: 'generator',
   messageContext: 'rest-generator'
 });
 
-export async function generateRest(options: GeneratorOptions): Promise<any> {
-  cleanDirectory(options.outputDir);
+export async function generateRest(options: GeneratorOptions): Promise<void> {
+  const project = await generateProject(options);
+  return project.save();
+}
+
+export async function generateProject(options: GeneratorOptions) {
+  if (options.clearOutputDir) {
+    cleanDirectory(options.outputDir);
+  }
 
   const files = readdirSync(options.inputDir);
-  const pathToTemplates = resolve(__dirname, '../templates');
-  const pathToMustacheValues = join(__dirname, '../mustache-values.json');
+  const pathToTemplates = resolve(__dirname, './templates');
 
-  return Promise.all(
-    files.map(async file => {
-      const folderForService = getFolderForService(options.outputDir, file);
-      mkdirSync(folderForService);
+  const project = new Project(projectOptions());
 
-      const adjustedOpenApiContent = getAdjustedOpenApiFile(
-        join(options.inputDir, file),
-        getServiceNameCamelCase(file)
-      );
-      const pathToAdjustedOpenApiDefFile = join(
-        folderForService,
-        'open-api.json'
-      );
-      writeJsonSync(pathToAdjustedOpenApiDefFile, adjustedOpenApiContent);
+  const openApiServiceMetadata = await Promise.all(
+    files.map(async file => generateOneApi(file, options, pathToTemplates))
+  );
+  openApiServiceMetadata.map(metadata =>
+    generateSourcesForService(metadata, project, options)
+  );
+  return project;
+}
 
-      const generationArguments = [
-        'openapi-generator',
-        'generate',
-        '-i',
-        pathToAdjustedOpenApiDefFile,
-        '-g',
-        'typescript-axios',
-        '-o',
-        folderForService,
-        '-t',
-        pathToTemplates,
-        '--api-package',
-        'api',
-        '--model-package',
-        'model',
-        '--config',
-        pathToMustacheValues,
-        '--skip-validate-spec'
-      ];
+async function generateOneApi(
+  inputFileName: string,
+  options: GeneratorOptions,
+  pathToTemplates: string
+) {
+  const dirForService = getDirForService(options.outputDir, inputFileName);
+  if (!existsSync(dirForService)) {
+    mkdirSync(dirForService, { recursive: true });
+  }
 
-      logger.info(`Argument for openapi generator ${generationArguments}`);
+  const serviceName = getServiceNamePascalCase(inputFileName);
+  const adjustedOpenApiContent = getAdjustedOpenApiFile(
+    join(options.inputDir, inputFileName),
+    serviceName
+  );
+  const pathToAdjustedOpenApiDefFile = join(dirForService, 'open-api.json');
+  writeJsonSync(pathToAdjustedOpenApiDefFile, adjustedOpenApiContent);
 
-      try {
-        const response = await execa('npx', generationArguments).catch(err => {
-          logger.error('In exception block 2');
-          logger.error(err);
-        });
-        if (response !== undefined) {
-          logger.info(`Generated the client ${response.stdout}`);
-        }
-      } catch (err) {
-        logger.error('In exception block');
-        logger.error(err);
-      }
-    })
+  await generateFilesUsingOpenAPI(
+    dirForService,
+    pathToAdjustedOpenApiDefFile,
+    pathToTemplates
+  );
+
+  return toOpenApiServiceMetaData(
+    pathToAdjustedOpenApiDefFile,
+    serviceName,
+    dirForService
   );
 }
 
-function getServiceNameCamelCase(openApiFileName: string) {
-  const result = getServiceNameWithoutExtentions(openApiFileName);
+function generateSourcesForService(
+  serviceMetadata: OpenApiServiceMetadata,
+  project: Project,
+  options: GeneratorOptions
+) {
+  const serviceDir = project.createDirectory(
+    resolve(options.outputDir.toString(), serviceMetadata.serviceDir)
+  );
+  logger.info(`Generating request builder in ${serviceDir.getBaseName()}.`);
+  sourceFile(
+    serviceDir,
+    'request-builder',
+    requestBuilderSourceFile(serviceMetadata),
+    true
+  );
+
+  sourceFile(serviceDir, 'index', indexFile(), true);
+}
+
+async function generateFilesUsingOpenAPI(
+  dirForService: string,
+  pathToAdjustedOpenApiDefFile: string,
+  pathToTemplates: string
+) {
+  const generationArguments = [
+    'openapi-generator-cli',
+    'generate',
+    '-i',
+    pathToAdjustedOpenApiDefFile,
+    '-g',
+    'typescript-axios',
+    '-o',
+    resolve(dirForService, 'open-api'),
+    '-t',
+    pathToTemplates,
+    '--api-package',
+    'api',
+    '--model-package',
+    'model',
+    '--additional-properties',
+    'withSeparateModelsAndApi=true',
+    '--skip-validate-spec'
+  ];
+
+  logger.info(`Argument for openapi generator ${generationArguments}`);
+
+  try {
+    const response = await execa.sync('npx', generationArguments);
+    if (response !== undefined) {
+      logger.info(`Generated the client ${response.stdout}`);
+    }
+  } catch (err) {
+    logger.error('In exception block');
+    logger.error(err);
+  }
+}
+
+function getServiceNamePascalCase(openApiFileName: string) {
+  const result = getServiceNameWithoutExtensions(openApiFileName);
   return toPascalCase(result);
 }
 
-function getServiceNameWithoutExtentions(openApiFileName: string): string {
+function getServiceNameWithoutExtensions(openApiFileName: string): string {
   let fileNameWithoutExtension = openApiFileName.replace('.json', '');
   fileNameWithoutExtension = fileNameWithoutExtension.replace('-openapi', '');
   return fileNameWithoutExtension;
 }
 
-function getFolderForService(folderDestination: PathLike, fileName: string) {
-  const withoutExtension = getServiceNameWithoutExtentions(fileName);
-  return join(folderDestination as string, withoutExtension);
+function getDirForService(outputDir: PathLike, inputFileName: string) {
+  const withoutExtension = getServiceNameWithoutExtensions(inputFileName);
+  return join(outputDir as string, withoutExtension);
 }
 
 function getAdjustedOpenApiFile(filePath: string, tag: string): JSON {

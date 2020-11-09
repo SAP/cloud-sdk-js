@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EntityDeserializer } from '../../src/odata/common/entity-deserializer';
 import {
+  EntityDeserializer,
   BatchResponseDeserializer,
   parseEntityNameFromMetadataUri
-} from '../../src/odata/common/request-builder/batch/batch-response-deserializer';
-import { responseDataAccessorV2 } from '../../src/odata/v2/request-builder/response-data-accessor';
+} from '../../src/odata-common';
+import { responseDataAccessorV2 } from '../../src/odata-v2/request-builder/response-data-accessor';
 
 describe('batch response transformer', () => {
   describe('getEntityNameFromMetadata', () => {

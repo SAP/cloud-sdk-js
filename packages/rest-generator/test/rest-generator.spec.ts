@@ -2,10 +2,11 @@
 
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { generateRest } from '../src/generator';
+import { SyntaxKind } from 'ts-morph';
+import { generateProject, generateRest } from '../src/generator';
 
-describe('rest generator test', () => {
-  const inputDir = path.resolve(__dirname, 'resources');
+describe('rest generator', () => {
+  const inputDir = path.resolve(__dirname, 'resources', 'test-apis');
   const outputDir = path.resolve(__dirname, 'generated');
 
   beforeAll(() => {
@@ -20,14 +21,35 @@ describe('rest generator test', () => {
     await generateRest({ inputDir, outputDir });
 
     const services = fs.readdirSync(outputDir);
-    expect(services).toEqual(
-      expect.arrayContaining(['petstore', 'sales-orders'])
-    );
+    expect(services).toEqual(expect.arrayContaining(['petstore']));
     services.forEach(serviceName => {
-      const serviceFiles = fs.readdirSync(path.join(outputDir, serviceName));
-      expect(serviceFiles).toContain('open-api.json');
+      const rootFiles = fs.readdirSync(path.join(outputDir, serviceName));
+      expect(rootFiles).toContain('request-builder.ts');
+      expect(rootFiles).toContain('open-api.json');
+      const serviceFiles = fs.readdirSync(
+        path.join(outputDir, serviceName, 'open-api')
+      );
       expect(serviceFiles).toContain('api.ts');
       expect(serviceFiles).toContain('base.ts');
     });
+  }, 60000);
+
+  it('should generate request builder file', async () => {
+    const project = await generateProject({ inputDir, outputDir });
+    const sourceFiles = project.getSourceFiles();
+    expect(sourceFiles.length).toBe(2);
+
+    const requestBuilder = sourceFiles.find(file =>
+      file.getFilePath().endsWith('petstore/request-builder.ts')
+    );
+    const declarations = requestBuilder!.getVariableStatements();
+    expect(declarations.length).toBe(1);
+
+    const functions = declarations[0]
+      .getDeclarations()[0]
+      .getInitializerIfKindOrThrow(SyntaxKind.ObjectLiteralExpression)
+      .getProperties();
+
+    expect(functions.length).toBe(3);
   }, 60000);
 });

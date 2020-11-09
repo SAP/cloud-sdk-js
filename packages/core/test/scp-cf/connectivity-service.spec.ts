@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination } from '../../src';
-import { addProxyConfiguration } from '../../src/scp-cf/connectivity-service';
+import { addProxyConfiguration } from '../../src/connectivity/scp-cf';
 import {
   mockConnectivityServiceBinding,
   mockedConnectivityServiceProxyConfig,

@@ -2,16 +2,15 @@ import https from 'https';
 import Axios from 'axios';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { Destination, Protocol } from '../../src';
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  Destination,
   DestinationHttpRequestConfig,
   executeHttpRequest,
   HttpMethod,
-  HttpRequest,
-  Protocol
-} from '../../src';
+  HttpRequest
+} from '../../src/http-client';
 
 describe('generic http client', () => {
   const httpsDestination: Destination = {

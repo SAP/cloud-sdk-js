@@ -6,12 +6,14 @@ import { MultiSchemaTestEntity } from './index';
  * @returns A request builder for batch.
  */
 export declare function batch(...requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV2;
+export declare function batch(requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV2;
 /**
  * Change set constructor consists of write operations supported on the Multiple Schemas Service.
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export declare function changeset(...requests: WriteMultipleSchemasServiceRequestBuilder[]): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
+export declare function changeset(...requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
+export declare function changeset(requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
 export declare const defaultMultipleSchemasServicePath = "VALUE_IS_UNDEFINED";
 export declare type ReadMultipleSchemasServiceRequestBuilder = GetAllRequestBuilderV2<MultiSchemaTestEntity> | GetByKeyRequestBuilderV2<MultiSchemaTestEntity>;
 export declare type WriteMultipleSchemasServiceRequestBuilder = CreateRequestBuilderV2<MultiSchemaTestEntity> | UpdateRequestBuilderV2<MultiSchemaTestEntity> | DeleteRequestBuilderV2<MultiSchemaTestEntity>;

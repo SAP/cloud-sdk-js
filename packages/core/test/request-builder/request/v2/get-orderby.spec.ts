@@ -1,5 +1,5 @@
 import { asc, desc } from '../../../../src';
-import { getQueryParametersForOrderBy } from '../../../../src/odata/v2/uri-conversion/get-orderby';
+import { getQueryParametersForOrderBy } from '../../../../src/odata-v2';
 import {
   TestEntity,
   TestEntitySingleLink

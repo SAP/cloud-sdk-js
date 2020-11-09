@@ -32,7 +32,7 @@ import {
   getDestination,
   getDestinationFromDestinationService,
   parseDestination
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 
 describe('authentication types', () => {
   afterEach(() => {

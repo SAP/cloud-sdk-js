@@ -6,7 +6,7 @@ import {
   clientCredentialsTokenCache,
   Destination,
   destinationCache
-} from '../../src/scp-cf';
+} from '../../src/connectivity/scp-cf';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',

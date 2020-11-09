@@ -1,4 +1,11 @@
-import { flat, unique, last, first, splitInChunks } from '../src';
+import {
+  flat,
+  unique,
+  last,
+  first,
+  splitInChunks,
+  variadicArgumentToArray
+} from '../src';
 
 describe('array', () => {
   describe('flat', () => {
@@ -12,6 +19,32 @@ describe('array', () => {
 
     it('returns an empty array for empty arrays', () => {
       expect(flat([])).toStrictEqual([]);
+    });
+  });
+
+  describe('variadic arguments', () => {
+    function functionVariadicArguments(...varargs: string[]);
+    function functionVariadicArguments(array: string[]);
+    function functionVariadicArguments(
+      firstOrArray: undefined | string | string[],
+      ...rest: string[]
+    ): string[] {
+      return variadicArgumentToArray(firstOrArray, rest);
+    }
+
+    it('returns empty array if nothing is given', () => {
+      expect(functionVariadicArguments()).toEqual([]);
+      expect(functionVariadicArguments([])).toEqual([]);
+    });
+
+    it('wraps variadic arguments', () => {
+      expect(functionVariadicArguments('a')).toEqual(['a']);
+      expect(functionVariadicArguments('a', 'b')).toEqual(['a', 'b']);
+    });
+
+    it('wraps array arguments', () => {
+      expect(functionVariadicArguments(['a'])).toEqual(['a']);
+      expect(functionVariadicArguments(['a', 'b'])).toEqual(['a', 'b']);
     });
   });
 

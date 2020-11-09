@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/core",
-  "version": "1.30.0",
+  "version": "1.31.0",
   "description": "SAP Cloud SDK for JavaScript core",
   "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
@@ -37,10 +37,10 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.30.0",
-    "@sap-cloud-sdk/util": "^1.30.0",
+    "@sap-cloud-sdk/analytics": "^1.31.0",
+    "@sap-cloud-sdk/util": "^1.31.0",
     "@sap/xsenv": "^3.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.0",
     "bignumber.js": "^9.0.0",
     "http-proxy-agent": "^4.0.1",
     "https-proxy-agent": "^5.0.0",

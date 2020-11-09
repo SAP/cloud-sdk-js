@@ -3,14 +3,14 @@ import {
   defaultDestination,
   mockCsrfTokenRequest
 } from '../../test-util/request-mocker';
-import { Destination } from '../../../src/scp-cf';
+import { Destination } from '../../../src/connectivity/scp-cf';
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
   testActionImportUnsupportedEdmTypes
 } from '../../test-util/test-services/v4/test-service/action-imports';
 import { TestComplexType } from '../../test-util/test-services/v4/test-service';
-import { serializeComplexTypeV4 } from '../../../src/odata/v4';
+import { serializeComplexTypeV4 } from '../../../src/odata-v4';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';

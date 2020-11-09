@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/e2e-tests",
-  "version": "1.30.0",
+  "version": "1.31.0",
   "description": "End to end tests of the SAP Cloud SDK for JavaScript",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -12,13 +12,13 @@
     "start": "pm2 start cds-run.js || pm2 restart cds-run.js",
     "stop": "pm2 stop cds-run.js",
     "deploy": "cds deploy --to sqlite",
-    "test": "yarn jest",
+    "test": "yarn jest --runInBand",
     "test:local": "yarn jest",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.30.0",
-    "@sap-cloud-sdk/test-services-e2e": "^1.30.0",
+    "@sap-cloud-sdk/core": "^1.31.0",
+    "@sap-cloud-sdk/test-services-e2e": "^1.31.0",
     "@sap/cds": "^4.1.9",
     "@sap/cds-dk": "^3.0.0",
     "express": "^4.17.1",

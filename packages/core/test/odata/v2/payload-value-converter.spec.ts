@@ -7,10 +7,7 @@ import {
   momentToEdmDateTime,
   tsToEdmV2
 } from '../../../src';
-import {
-  fromEdmToNumber,
-  fromNumberToEdm
-} from '../../../src/odata/common/payload-value-converter';
+import { fromEdmToNumber, fromNumberToEdm } from '../../../src/odata-common';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {

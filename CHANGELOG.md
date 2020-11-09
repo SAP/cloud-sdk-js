@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- Renaming of deprecated ODataRequestConfigs e.g. `ODataCreateRequestConfig` -> `ODataCreateRequestConfigLegacy` due to naming conflicts. 
 
 ## New Functionality
 
@@ -22,14 +22,39 @@
 
 ## Improvements
 
-- Remove the `rambda` library to save  approx 2MB or 10% of the SDK size.
-- [Connectivity] Warn the user when using custom headers for executing http requests.
+- Export the `tenant` interface from the scp-cf module.
 
 ## Fixed Issues
 
-- [Generator] Fix the function import (OData V2 + V4) and action import, where the return type is an primitive edm type like `Edm.String`.
-- [CSRF] Fix the error message of fetching the csrf token, it should show original error.
+-
 
+
+# 1.31.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.31.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [Generator] Paths referenced in configuration files for the generator are treated as relative to this file as stated in the documentation. Projects relying on the previous erroneous behavior might have to adjust their configuration.
+
+## New Functionality
+
+- Most public methods using variable arguments now also accept arrays as input.
+
+## Improvements
+
+- Remove the `rambda` library to save  approx 2MB or 10% of the SDK size.
+- [Connectivity] Warn the user when using custom headers for executing http requests.
+- Pass through original error message in case of failure when fetching the csrf token.
+
+## Fixed Issues
+
+- [Generator] Fix function imports (OData V2 + V4) and action imports, where the return type is a primitive edm type like `Edm.String`.
+- [Generator] Fix path references in generator configuration file to be treated as relative to the configuration file.
+- [Core] Fix expiration times in the client credentials cache.
+- [Core] Fix csrf request redirects against On-Premise systems
 
 # 1.30.0
 
@@ -401,7 +426,7 @@ Blog: https://blogs.sap.com/?p=1060707<br>
 
 ## Compatibility Notes
 
-- Some packages of the SAP Cloud SDK for JavaScript have been migrated to [external GitHub](https://github.com/SAP/cloud-sdk) and are now available as open-source software.
+- Some packages of the SAP Cloud SDK for JavaScript have been migrated to [external GitHub](https://github.com/SAP/cloud-sdk-js) and are now available as open-source software.
 As a result, the packages have been renamed as shown in the list below.
 No Breaking changes are made.
 The old versions of the packages will not receive further updates, so we heavily encourage switching to the new version of the packages.

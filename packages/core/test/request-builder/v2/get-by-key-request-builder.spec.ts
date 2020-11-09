@@ -10,7 +10,7 @@ import {
   testEntityResourcePath
 } from '../../test-util/test-data';
 import { TestEntity } from '../../test-util/test-services/v2/test-service';
-import { GetByKeyRequestBuilderV2 } from '../../../src/odata/v2/request-builder';
+import { GetByKeyRequestBuilderV2 } from '../../../src/odata-v2';
 
 describe('GetByKeyRequestBuilderV2', () => {
   describe('execute', () => {

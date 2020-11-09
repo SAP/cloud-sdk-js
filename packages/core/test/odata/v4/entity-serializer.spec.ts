@@ -1,7 +1,7 @@
 import {
   serializeEntityV4,
   serializeComplexTypeV4
-} from '../../../src/odata/v4/entity-serializer';
+} from '../../../src/odata-v4';
 import {
   TestEntity,
   TestComplexType

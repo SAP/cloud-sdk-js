@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
 import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
-import { emptyDirSync, writeFileSync, ensureDirSync } from 'fs-extra';
+import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
   IndentationText,
@@ -50,66 +49,10 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import { entityTemplate } from './template-generation/templates/entity/entity';
-
 const logger = createLogger({
   package: 'generator',
   messageContext: 'generator'
 });
-
-export async function generateTemplates(
-  options: GeneratorOptions
-): Promise<void> {
-  options = sanitizeOptions(options);
-  const services = parseServices(options);
-
-  emptyDirSync(options.outputDir.toString());
-
-  services.forEach(service => {
-    console.time('service');
-    const serviceDirectory = resolvePath(service.directoryName, options);
-    ensureDirSync(serviceDirectory);
-    service.entities.forEach(entity => {
-      console.time('entity');
-      const filePath = resolve(serviceDirectory, `${entity.className}.ts`);
-      writeFileSync(filePath, entityTemplate(entity, service));
-      console.timeEnd('entity');
-    });
-    console.timeEnd('service');
-  });
-
-  return;
-}
-
-export async function generateTsMorph(
-  options: GeneratorOptions
-): Promise<void> {
-  options = sanitizeOptions(options);
-  const services = parseServices(options);
-  emptyDirSync(options.outputDir.toString());
-
-  const project = new Project(projectOptions());
-
-  services.forEach(service => {
-    console.time('service');
-    const serviceDirectory = resolvePath(service.directoryName, options);
-    ensureDirSync(serviceDirectory);
-    const serviceDir = project.createDirectory(serviceDirectory);
-    service.entities.forEach(entity => {
-      console.time('entity');
-      sourceFile(
-        serviceDir,
-        entity.className,
-        entitySourceFile(entity, service),
-        options.forceOverwrite
-      );
-      console.timeEnd('entity');
-    });
-    console.timeEnd('service');
-  });
-
-  return project.save();
-}
 
 export async function generate(options: GeneratorOptions): Promise<void> {
   const project = await generateProject(options);
@@ -394,7 +337,7 @@ export async function generateSourcesForService(
   }
 }
 
-function projectOptions(): ProjectOptions {
+export function projectOptions(): ProjectOptions {
   return {
     addFilesFromTsConfig: false,
     manipulationSettings: {
@@ -417,7 +360,7 @@ function projectOptions(): ProjectOptions {
   };
 }
 
-function parseServices(options: GeneratorOptions): VdmServiceMetadata[] {
+export function parseServices(options: GeneratorOptions): VdmServiceMetadata[] {
   const services = parseAllServices(options);
   if (!services.length) {
     logger.warn('No service definition files found.');
@@ -426,7 +369,7 @@ function parseServices(options: GeneratorOptions): VdmServiceMetadata[] {
   return services;
 }
 
-function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
+export function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.inputDir.toString(), 'service-mapping.json');
@@ -465,6 +408,6 @@ function serviceDescription(
     : genericDescription(service.directoryName);
 }
 
-function resolvePath(path: PathLike, options: GeneratorOptions): string {
+export function resolvePath(path: PathLike, options: GeneratorOptions): string {
   return resolve(options.outputDir.toString(), path.toString());
 }

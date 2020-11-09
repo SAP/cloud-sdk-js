@@ -3,7 +3,10 @@
 
 import path from 'path';
 import { ODataVersion } from './packages/util/src';
-import { generateTsMorph, generateTemplates } from './packages/generator/src';
+import {
+  generateTsMorph,
+  generateTemplates
+} from './packages/generator/src/generator-templates';
 
 const serviceSpecsDir = path.join('test-resources', 'service-specs');
 const serviceSpecsDir2 = path.join(

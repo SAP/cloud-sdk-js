@@ -3,7 +3,7 @@ import {
   zip,
   indent,
   trim
-} from '../src/template-compilation/templates/general/common';
+} from '../src/template-generation/templates/general/common';
 
 describe('zip', () => {
   it('zips two arrays', () => {

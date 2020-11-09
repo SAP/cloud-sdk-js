@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
@@ -49,7 +50,7 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import { entityTemplate } from './template-compilation/templates/entity/entity';
+import { entityTemplate } from './template-generation/templates/entity/entity';
 
 const logger = createLogger({
   package: 'generator',

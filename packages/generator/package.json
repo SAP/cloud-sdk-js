@@ -40,7 +40,6 @@
     "@sap/edm-converters": "^1.0.21",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",
-    "common-tags": "^1.8.0",
     "execa": "^4.0.3",
     "fast-xml-parser": "^3.16.0",
     "fs-extra": "^9.0.0",
@@ -51,7 +50,6 @@
     "yargs": "^16.0.3"
   },
   "devDependencies": {
-    "@types/common-tags": "^1.8.0",
     "@types/yargs": "^15.0.4"
   }
 }

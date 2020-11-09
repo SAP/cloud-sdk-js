@@ -1,4 +1,3 @@
-import { stripIndent } from 'common-tags';
 import { VdmNavigationProperty, VdmProperty } from '../../../vdm-types';
 import { codeBlock } from '../general/common';
 import { titleFormat } from '../general/title-format';
@@ -26,7 +25,7 @@ ${property.instancePropertyName}${property.nullable ? '?' : '!'}: ${
 
 export const instanceNavigationProperty = (
   navigationProperty: VdmNavigationProperty
-) => stripIndent`
+) => `
 /**
  * ${
    navigationProperty.isCollection ? 'One-to-many' : 'One-to-one'

@@ -2,13 +2,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import path from 'path';
-import { ODataVersion } from './packages/util/src';
 import {
   generateTsMorph,
   generateTemplates
 } from './packages/generator/src/generator-templates';
 
-const serviceSpecsDir = path.join('test-resources', 'service-specs');
+const serviceSpecsDir = path.join('test-resources', 'service-specs', 'v4');
 const serviceSpecsDir2 = path.join(
   '..',
   'sdk-js',
@@ -18,7 +17,7 @@ const serviceSpecsDir2 = path.join(
 );
 const outputDir = path.resolve('generated');
 
-const getConfig = (version: ODataVersion) => ({
+const config = {
   forceOverwrite: true,
   generateJs: false,
   useSwagger: false,
@@ -31,17 +30,17 @@ const getConfig = (version: ODataVersion) => ({
   // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false,
-  inputDir: serviceSpecsDir2, // path.join(serviceSpecsDir, version),
+  inputDir: serviceSpecsDir,
   outputDir
-});
+};
 
-function getGenerationFunction(version: ODataVersion, method: string) {
+function getGenerationFunction(method: string) {
   return method?.startsWith('t')
-    ? () => generateTemplates(getConfig(version))
-    : () => generateTsMorph(getConfig(version));
+    ? () => generateTemplates(config)
+    : () => generateTsMorph(config);
 }
 
-const generationFunction = getGenerationFunction('v4', process.argv[2]);
+const generationFunction = getGenerationFunction(process.argv[2]);
 console.time('total');
 generationFunction();
 console.timeEnd('total');

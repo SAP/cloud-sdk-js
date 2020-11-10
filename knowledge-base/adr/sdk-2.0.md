@@ -66,9 +66,17 @@ We decided to not make the "core" (or common) a peer dependency
 * #after: do it in 2021Q1
 * Beta version in 2021Q1
 
-## What do I have from this as a customer?
+## Benefits for the customer
 * Slimmer packages
- * Smaller packages
- * Slimmer API
+  * Smaller packages
+  * Slimmer API
 * More flexibility
- * Choice of serializers 
+  * Choice of serializers
+  
+## TBD
+
+## Benefits for SDK team
+
+## Other API improvements?
+
+## Final moment replacement decision

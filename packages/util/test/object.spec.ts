@@ -1,6 +1,5 @@
 import {
   assoc,
-  flatten,
   pick,
   propertyExists,
   renameKeys,
@@ -70,17 +69,6 @@ describe('renameKeys', () => {
     };
 
     expect(renameKeys({ a: 'A', b: 'B' }, input)).toEqual(expected);
-  });
-
-  it('flattens a object', () => {
-    const input = [1, 2, [3, 4], 5, [6, [7, 8, [9, [10, 11], 12]]]];
-    const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    expect(flatten(input)).toEqual(expected);
-  });
-
-  it('can flatten empty or simple objects', () => {
-    expect(flatten([])).toEqual([]);
-    expect(flatten([1])).toEqual([1]);
   });
 
   it('picks elements from an object', () => {
@@ -168,9 +156,7 @@ it('pickNonNullish removes null and undefined values from object', () => {
     null: null,
     undefined
   };
-  expect(pickNonNullish({ ...notNullish, ...nullish })).toEqual(
-    notNullish
-  );
+  expect(pickNonNullish({ ...notNullish, ...nullish })).toEqual(notNullish);
 });
 
 it('mergeLeftIgnoreCase returns an object with replaced duplicate keys', () => {

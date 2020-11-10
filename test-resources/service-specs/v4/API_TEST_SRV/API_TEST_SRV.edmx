@@ -33,6 +33,7 @@
         <Property Name="ComplexTypeCollectionProperty" Type="Collection(API_TEST_SRV.A_TestComplexType)"/>
 
         <Property Name="EnumProperty" Type="API_TEST_SRV.A_TestEnumType"/>
+        <Property Name="EnumPropertyWithOneMember" Type="API_TEST_SRV.A_TestEnumType_WithOneMember"/>
         <Property Name="EnumCollectionProperty" Type="Collection(API_TEST_SRV.A_TestEnumType)"/>
 
         <NavigationProperty Name="to_MultiLink" Type="Collection(API_TEST_SRV.A_TestEntityMultiLinkType)"/>
@@ -154,6 +155,9 @@
         <Member Name="Member2" Value="2"/>
       </EnumType>
 
+      <EnumType Name="A_TestEnumType_WithOneMember">
+        <Member Name="Member1" Value="0"/>
+      </EnumType>
 
       <Action Name="TestActionImportNoParameterNoReturnType">
       </Action>

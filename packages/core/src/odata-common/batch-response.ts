@@ -17,7 +17,7 @@ export interface ReadResponse {
   httpCode: number;
   body: Record<string, any>;
   type: Constructable<EntityBase>;
-  as: <T extends EntityBase>(constructor: Constructable<T>) => Error | T[];
+  as: <T extends EntityBase>(constructor: Constructable<T>) => T[];
   isSuccess: () => boolean;
 }
 

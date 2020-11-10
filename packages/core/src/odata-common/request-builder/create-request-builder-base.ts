@@ -1,22 +1,18 @@
 import { errorWithCause } from '@sap-cloud-sdk/util';
 import {
-  Constructable,
-  EntityBase,
-  EntityDeserializer,
-  EntityIdentifiable,
-  Link,
-  MethodRequestBuilderBase,
-  ODataCreateRequestConfig,
-  ODataUri,
-  ResponseDataAccessor
-} from '../../odata-common';
-import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
-import { EntitySerializer } from '../entity-serializer';
-import { oDataUri } from '../../odata-v2/uri-conversion';
+import type { EntitySerializer } from '../entity-serializer';
+import type { ODataUri } from '../uri-conversion/odata-uri';
+import type { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import type { EntityDeserializer } from '../entity-deserializer';
+import type { ResponseDataAccessor } from '../response-data-accessor';
+import { ODataCreateRequestConfig } from '../request';
+import type { Link } from '../selectable';
+import { MethodRequestBuilderBase } from './request-builder-base';
+
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
  *
@@ -35,8 +31,8 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT,
     readonly odataUri: ODataUri,
-    readonly serializer: EntitySerializer<EntityT>,
-    readonly deserializer: EntityDeserializer<EntityT>,
+    readonly serializer: EntitySerializer,
+    readonly deserializer: EntityDeserializer,
     readonly responseDataAccessor: ResponseDataAccessor
   ) {
     super(new ODataCreateRequestConfig(_entityConstructor, odataUri));
@@ -61,7 +57,7 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, EntityT>
   ): this {
-    this.requestConfig.parentKeys = oDataUri.getEntityKeys(
+    this.requestConfig.parentKeys = this.odataUri.getEntityKeys(
       parentEntity,
       linkField._entityConstructor
     );

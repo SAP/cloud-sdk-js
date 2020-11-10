@@ -14,7 +14,8 @@
 
 ## Compatibility Notes
 
-- Renaming of deprecated ODataRequestConfigs e.g. `ODataCreateRequestConfig` -> `ODataCreateRequestConfigLegacy` due to naming conflicts. 
+- Batch `ReadResponse.as` does not parse errors anymore, but throws an error if the response in fact was an `ErrorResponse`. To avoid this check `response.isSuccess()` before casting.
+- Rename deprecated ODataRequestConfigs e.g. `ODataCreateRequestConfig` -> `ODataCreateRequestConfigLegacy` due to naming conflicts.
 
 ## New Functionality
 
@@ -23,6 +24,7 @@
 ## Improvements
 
 - Export the `tenant` interface from the scp-cf module.
+- Throw an error when attempting to parse a batch `ReadResponse` that in fact is an `ErrorResponse`.
 
 ## Fixed Issues
 

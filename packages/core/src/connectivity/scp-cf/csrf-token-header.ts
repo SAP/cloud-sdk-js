@@ -2,7 +2,7 @@ import {
   createLogger,
   errorWithCause,
   pickIgnoreCase,
-  pickNonNullishIgnoreCase,
+  pickNonNullish,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
@@ -27,7 +27,7 @@ export async function buildCsrfHeaders<T extends HttpRequestConfig>(
 ): Promise<Record<string, any>> {
   const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
   validateCsrfTokenResponse(csrfHeaders);
-  return pickNonNullishIgnoreCase({
+  return pickNonNullish({
     ...pickIgnoreCase(csrfHeaders, 'x-csrf-token'),
     cookie: buildCookieHeaderValue(
       pickValueIgnoreCase(csrfHeaders, 'set-cookie')

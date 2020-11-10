@@ -2,7 +2,7 @@ import {
   mergeIgnoreCase,
   mergeLeftIgnoreCase,
   pickIgnoreCase,
-  pickNonNullishIgnoreCase,
+  pickNonNullish,
   pickValueIgnoreCase,
   toSanitizedObject
 } from '@sap-cloud-sdk/util';
@@ -67,7 +67,7 @@ export function getHeaderValue(
 }
 
 /**
- * @deprecated Since v1.31.1. Use [[pickNonNullishIgnoreCase]] instead.
+ * @deprecated Since v1.31.1. Use [[pickNonNullish]] instead.
  *
  * Filter headers that have nullish values.
  * @param headers - A header object to be filtered.
@@ -76,7 +76,7 @@ export function getHeaderValue(
 export function filterNullishValues(
   headers: Record<string, any> = {}
 ): Record<string, any> {
-  return pickNonNullishIgnoreCase(headers);
+  return pickNonNullish(headers);
 }
 
 /**

@@ -7,7 +7,7 @@ import {
   toSanitizedObject,
   pickIgnoreCase,
   pickValueIgnoreCase,
-  pickNonNullishIgnoreCase,
+  pickNonNullish,
   mergeLeftIgnoreCase,
   mergeIgnoreCase
 } from '../src';
@@ -157,7 +157,7 @@ describe('pickValueIgnoreCase', () => {
   });
 });
 
-it('pickNonNullishIgnoreCase removes null and undefined values from object', () => {
+it('pickNonNullish removes null and undefined values from object', () => {
   const notNullish = {
     false: false,
     emptyString: '',
@@ -168,7 +168,7 @@ it('pickNonNullishIgnoreCase removes null and undefined values from object', () 
     null: null,
     undefined
   };
-  expect(pickNonNullishIgnoreCase({ ...notNullish, ...nullish })).toEqual(
+  expect(pickNonNullish({ ...notNullish, ...nullish })).toEqual(
     notNullish
   );
 });

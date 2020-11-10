@@ -1,6 +1,6 @@
 import {
   mergeLeftIgnoreCase,
-  pickNonNullishIgnoreCase
+  pickNonNullish
 } from '@sap-cloud-sdk/util';
 import { Destination } from '../scp-cf';
 import { getAuthHeaders } from './authorization-header';
@@ -11,7 +11,7 @@ export async function buildHeadersForDestination(
   const authHeaders = await getAuthHeaders(destination, customHeaders);
 
   const sapHeaders = mergeLeftIgnoreCase(
-    pickNonNullishIgnoreCase({
+    pickNonNullish({
       'sap-client': destination.sapClient,
       'SAP-Connectivity-SCC-Location_ID': destination.cloudConnectorLocationId
     }),

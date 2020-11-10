@@ -2,7 +2,7 @@ import {
   errorWithCause,
   mergeIgnoreCase,
   pickIgnoreCase,
-  pickNonNullishIgnoreCase,
+  pickNonNullish,
   pickValueIgnoreCase,
   propertyExists
 } from '@sap-cloud-sdk/util';
@@ -201,7 +201,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     );
 
     return mergeIgnoreCase(
-      pickNonNullishIgnoreCase(this.config.defaultHeaders),
+      pickNonNullish(this.config.defaultHeaders),
       customDefaultHeaders
     );
   }
@@ -219,7 +219,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         ? '*'
         : this.config.eTag
       : undefined;
-    return pickNonNullishIgnoreCase({ 'if-match': eTag });
+    return pickNonNullish({ 'if-match': eTag });
   }
 
   /**

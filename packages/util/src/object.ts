@@ -39,7 +39,7 @@ export const assocSome = <T>(key: string, value?: any) => (obj: T): T => {
 };
 
 /**
- * Merges the two object if second object is neither null nor undefined.
+ * Merges the two objects, if second object is neither null nor undefined.
  * If a key exists on a and b the value from b is taken
  *
  * @deprecated This will be removed in version 2.0 of the SDK.
@@ -77,7 +77,7 @@ export const renameKeys = (
   );
 };
 /**
- * Selects  properties of an objects and returns a shallow copy.
+ * Create a shallow copy of the given object, that contains the given keys.
  * Non existing keys in the source object are ignored.
  *
  * @param keys - properties to be selected
@@ -111,6 +111,7 @@ export const assoc = <T>(key: string, value: any, obj: T) => ({
 
 /**
  * Create an object based on the given key and value if neither key nor value are nullish.
+ *
  * @param key - Name of the header.
  * @param value - Value of the header.
  * @returns - An object containing the given key and value of an empty object.
@@ -123,7 +124,9 @@ export function toSanitizedObject(
 }
 
 /**
- * Pick a partial object from the given object indepdendent of casing - if available.
+ * Create a shallow copy of the given object, that contains the given keys, independent of casing.
+ * Non existing keys in the source object are ignored.
+ *
  * @param obj - Object to pick the given key from.
  * @param keys - Keys of the pair to be picked.
  * @returns - An object containing the given key-value pairs in its original case or an empty object if none of them are found.
@@ -145,7 +148,8 @@ export function pickIgnoreCase<T extends Record<string, any>>(
 }
 
 /**
- * Pick the value of an object based on the given key, independent of casing.
+ * Returns the value of an object based on the given key, independent of casing.
+ *
  * @param obj - Object to be searched for the given key.
  * @param key - Key of the value to pick.
  * @returns The value of for the given key or undefined if not available.
@@ -158,11 +162,12 @@ export function pickValueIgnoreCase<T extends Record<string, any>>(
 }
 
 /**
- * Pick entries that have non-nullish values (and keys).
- * @param obj - An object to pick frmo.
- * @returns - A filtered object containing only headers with non-nullish values.
+ * Create a shallow copy of the given object, that contains all entries with non-nullish values.
+ *
+ * @param obj - An object to pick from.
+ * @returns - A filtered object containing only keys with non-nullish values.
  */
-export function pickNonNullishIgnoreCase<T extends Record<string, any>>(
+export function pickNonNullish<T extends Record<string, any>>(
   obj: T = {} as T
 ): Partial<T> {
   return Object.entries(obj)
@@ -171,10 +176,11 @@ export function pickNonNullishIgnoreCase<T extends Record<string, any>>(
 }
 
 /**
- * Create an object by merging the `right` object into the `left` object ignoring casing, but keeping the right casing. Only keys present in the left object will be present in the merged object.
+ * Create an object by merging the `right` object into a shallow copy of the `left` object ignoring casing, but keeping the `right` casing. Only keys present in the `left` object will be present in the merged object.
+ *
  * @param left - Object to merge into. They keys of this object will be present in the returned object.
  * @param right - Object to merge. Only keys in `left` will be considered for merging.
- * @returns - An object containing all keys from the `left` object, where headers present in the `right` object are replaced. Note that the casing used by `right` will be used.
+ * @returns - An object containing all keys from the `left` object, where entries present in the `right` object are replaced. Note that the casing used by `right` will be used.
  */
 export function mergeLeftIgnoreCase<
   LeftT extends Record<string, any>,
@@ -193,10 +199,10 @@ export function mergeLeftIgnoreCase<
 }
 
 /**
- * Create an object by merging the `right` object into the `left` object ignoring casing, but keeping the right casing. Keys present both objects will be present in the merged object.
+ * Create an object by merging the `right` object into a shallow copy of the `left` object ignoring casing, but keeping the right casing. Keys present both objects will be present in the merged object.
  * @param left - Object to merge.
  * @param right - Object to merge. The casing of the keys of this object takes precedence.
- * @returns - An object containing all keys from both objects, where headers present in the `right` object are replaced. Note that the casing used by `right` will be used.
+ * @returns - An object containing all keys from both objects, where entries present in the `right` object are replaced. Note that the casing used by `right` will be used.
  */
 export function mergeIgnoreCase<
   LeftT extends Record<string, any>,

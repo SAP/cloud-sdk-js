@@ -18,7 +18,7 @@ import {
 import { EntitySerializer } from '../entity-serializer';
 import { oDataUri } from '../../odata-v2/uri-conversion';
 /**
- * Create OData request to create an entity.
+ * Abstract create request class holding the parts shared in OData v2 and v4.
  *
  * @typeparam EntityT - Type of the entity to be created
  */

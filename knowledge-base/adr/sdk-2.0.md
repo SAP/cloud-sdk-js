@@ -61,8 +61,14 @@ We decided to not make the "core" (or common) a peer dependency
 * Is it possible to rename VDM to @sap-cloud-sdk-vdm/xy-service / @sap-cloud-sdk/vdm-xy-service (investigate - decide which version)
 * Should we have a shared eslint ruleset for contributions / demo projects? @sap-cloud-sdk/eslint-config
 
-
 ## Timeline
 * #before: do it in 2020
 * #after: do it in 2021Q1
 * Beta version in 2021Q1
+
+## What do I have from this as a customer?
+* Slimmer packages
+ * Smaller packages
+ * Slimmer API
+* More flexibility
+ * Choice of serializers 

@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [Generator] Fix the enum type (V4), when only one enum member is defined in the metadata.
 
 
 # 1.31.0

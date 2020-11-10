@@ -24,7 +24,7 @@ describe('edmx-edmx-parser', () => {
     expect(parseActionImport(metadataEdmx.root).length).toBe(3);
     expect(parseActions(metadataEdmx.root).length).toBe(3);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
-    expect(parseEnumTypes(metadataEdmx.root).length).toBe(1);
+    expect(parseEnumTypes(metadataEdmx.root).length).toBe(2);
 
     parseEntitySetsV4(metadataEdmx.root).forEach(e => {
       expect(e.NavigationPropertyBinding).toBeInstanceOf(Array);

@@ -18,7 +18,7 @@ function getByKey(parameters) {
     var params = {
         param: new core_1.FunctionImportParameter('param', 'Edm.Int32', parameters.param)
     };
-    return new core_1.FunctionImportRequestBuilderV4('/admin', 'getByKey', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity_1.TestEntity); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/test-service', 'getByKey', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity_1.TestEntity); }, params);
 }
 exports.getByKey = getByKey;
 /**
@@ -31,7 +31,7 @@ function returnInt(parameters) {
     var params = {
         param: new core_1.FunctionImportParameter('param', 'Edm.Int32', parameters.param)
     };
-    return new core_1.FunctionImportRequestBuilderV4('/admin', 'returnInt', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.Int32'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/test-service', 'returnInt', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.Int32'); }); }, params);
 }
 exports.returnInt = returnInt;
 /**
@@ -42,7 +42,7 @@ exports.returnInt = returnInt;
  */
 function returnSapCloudSdk(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/admin', 'returnSapCloudSdk', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/test-service', 'returnSapCloudSdk', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
 }
 exports.returnSapCloudSdk = returnSapCloudSdk;
 exports.functionImports = {

@@ -1,7 +1,7 @@
 import {
   TestEntity,
   TestEntityLink
-} from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
+} from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 
 export async function queryEntity(
   key: number,

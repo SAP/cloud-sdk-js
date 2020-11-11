@@ -1,4 +1,4 @@
-namespace my.namespace;
+namespace cloudsdk.test;
 
 entity TestEntityLink{
   key KeyTestEntityLink: Integer;

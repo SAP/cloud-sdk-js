@@ -1,7 +1,7 @@
 import {
   createTestEntity,
   createTestEntityReturnId
-} from '@sap-cloud-sdk/test-services-e2e/v4/admin-service/action-imports';
+} from '@sap-cloud-sdk/test-services-e2e/v4/test-service/action-imports';
 import { deleteEntity } from './test-utils/test-entity-operations';
 
 const url = 'http://localhost:4004/';

@@ -24,7 +24,7 @@ export class TestEntity extends EntityV4 implements TestEntityType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/admin';
+  static _defaultServicePath = '/test-service';
   /**
    * Key Test Entity.
    */

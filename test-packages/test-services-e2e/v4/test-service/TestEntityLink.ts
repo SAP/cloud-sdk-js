@@ -22,7 +22,7 @@ export class TestEntityLink extends EntityV4 implements TestEntityLinkType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/admin';
+  static _defaultServicePath = '/test-service';
   /**
    * Key Test Entity Link.
    */

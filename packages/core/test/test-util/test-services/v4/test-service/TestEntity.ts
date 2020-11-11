@@ -8,6 +8,7 @@ import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
+import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
 import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
 
 /**
@@ -148,6 +149,11 @@ export class TestEntity extends EntityV4 implements TestEntityType {
    */
   enumProperty?: TestEnumType;
   /**
+   * Enum Property With One Member.
+   * @nullable
+   */
+  enumPropertyWithOneMember?: TestEnumTypeWithOneMember;
+  /**
    * Enum Collection Property.
    * @nullable
    */
@@ -227,6 +233,7 @@ export interface TestEntityType {
   complexTypeProperty?: TestComplexType | null;
   complexTypeCollectionProperty?: TestComplexType[] | null;
   enumProperty?: TestEnumType | null;
+  enumPropertyWithOneMember?: TestEnumTypeWithOneMember | null;
   enumCollectionProperty?: TestEnumType[] | null;
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityMultiLinkType[];
@@ -355,6 +362,11 @@ export namespace TestEntity {
    */
   export const ENUM_PROPERTY: EnumField<TestEntity> = new EnumField('EnumProperty', TestEntity);
   /**
+   * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const ENUM_PROPERTY_WITH_ONE_MEMBER: EnumField<TestEntity> = new EnumField('EnumPropertyWithOneMember', TestEntity);
+  /**
    * Static representation of the [[enumCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -402,6 +414,7 @@ export namespace TestEntity {
     TestEntity.COMPLEX_TYPE_PROPERTY,
     TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
     TestEntity.ENUM_PROPERTY,
+    TestEntity.ENUM_PROPERTY_WITH_ONE_MEMBER,
     TestEntity.ENUM_COLLECTION_PROPERTY,
     TestEntity.TO_MULTI_LINK,
     TestEntity.TO_OTHER_MULTI_LINK,

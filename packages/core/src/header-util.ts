@@ -1,6 +1,14 @@
-import { isNullish } from './nullish';
+import {
+  mergeIgnoreCase,
+  mergeLeftIgnoreCase,
+  pickIgnoreCase,
+  pickNonNullish,
+  pickValueIgnoreCase,
+  toSanitizedObject
+} from '@sap-cloud-sdk/util';
 
 /**
+ * @deprecated Since v1.31.1. Use [[toSanitizedObject]] instead.
  * Create a header object based on the given key and value if neither key nor value are nullish.
  * @param key - Name of the header.
  * @param value - Value of the header.
@@ -10,11 +18,13 @@ export function toSanitizedHeaderObject(
   key: string,
   value: any
 ): Record<string, any> {
-  return isNullish(key) || isNullish(value) ? {} : { [key]: value };
+  return toSanitizedObject(key, value);
 }
 
 /**
- * Find a header in a given header object, if available, idepdendent of the case (lower / upper).
+ * @deprecated Since v1.31.1. Use [[pickIgnoreCase]] instead.
+ *
+ * Find a header in a given header object, if available, indepdendent of the case (lower / upper).
  * @param key - Name of the header to be found.
  * @param headers - Header object to be searched for given key.
  * @returns - An object containing the given key (and value) in its original case, as found in `headers` or an empty object if not found.
@@ -23,14 +33,13 @@ export function getHeader(
   key: string,
   headers: Record<string, any> = {}
 ): Record<string, any> {
-  const entry = Object.entries(headers).find(
-    ([entryKey]) => entryKey.toLowerCase() === key.toLowerCase()
-  );
-  return entry ? { [entry[0]]: entry[1] } : {};
+  return pickIgnoreCase(headers, key);
 }
 
 /**
- * Find headers in a given header object, if available, idepdendent of the case (lower / upper).
+ * @deprecated Since v1.31.1. Use [[pickIgnoreCase]] instead.
+ *
+ * Find headers in a given header object, if available, indepdendent of the case (lower / upper).
  * @param keys - Name of the header to be found.
  * @param headers - Header object to be searched for given key.
  * @returns - An object containing the given keys (and values) in its original case, as found in `headers` or an empty object if not found.
@@ -39,16 +48,12 @@ export function getHeaders(
   keys: string[],
   headers: Record<string, any> = {}
 ): Record<string, any> {
-  return keys.reduce(
-    (filteredHeaders, key) => ({
-      ...filteredHeaders,
-      ...getHeader(key, headers)
-    }),
-    {}
-  );
+  return pickIgnoreCase(headers, ...keys);
 }
 
 /**
+ * @deprecated Since v1.31.1. Use [[pickValueIgnoreCase]] instead.
+ *
  * Get the value of a header based on the given key, independent of the case (lower / upper).
  * @param key - Name of the header to be found.
  * @param headers - Header object to be searched for given key.
@@ -58,10 +63,12 @@ export function getHeaderValue(
   key: string,
   headers: Record<string, any> = {}
 ): any | undefined {
-  return Object.values(getHeader(key, headers))[0];
+  return pickValueIgnoreCase(headers, key);
 }
 
 /**
+ * @deprecated Since v1.31.1. Use [[pickNonNullish]] instead.
+ *
  * Filter headers that have nullish values.
  * @param headers - A header object to be filtered.
  * @returns - A filtered header object containing only headers with non-nullish values.
@@ -69,12 +76,12 @@ export function getHeaderValue(
 export function filterNullishValues(
   headers: Record<string, any> = {}
 ): Record<string, any> {
-  return Object.entries(headers)
-    .filter(([_, value]) => !isNullish(value))
-    .reduce((filtered, [key, value]) => ({ ...filtered, [key]: value }), {});
+  return pickNonNullish(headers);
 }
 
 /**
+ * @deprecated Since v1.31.1. Use [[mergeLeftIgnoreCase]] instead.
+ *
  * Create a header object by replacing headers that are set as custom headers.
  * @param headers - A base header object that contains the headers that will be compared with `customHeaders`.
  * @param customHeaders - A header object to be compared with headers. Only headers present in `headers` will be compared.
@@ -84,17 +91,13 @@ export function replaceDuplicateKeys(
   headers: Record<string, any> = {},
   customHeaders: Record<string, any> = {}
 ): Record<string, any> {
-  return Object.entries(headers)
-    .map(([key, value]) =>
-      getHeaderValue(key, customHeaders)
-        ? getHeader(key, customHeaders)
-        : { [key]: value }
-    )
-    .reduce((replaced, header) => ({ ...replaced, ...header }), {});
+  return mergeLeftIgnoreCase(headers, customHeaders);
 }
 
 /**
- * Create a header object by merging two header objects, where the custom headers take precedence. .
+ * @deprecated Since v1.31.1. Use [[mergeIgnoreCase]] instead.
+ *
+ * Create a header object by merging two header objects, where the custom headers take precedence.
  * @param headers - A base header object that contains the headers that will be compared with `customHeaders`.
  * @param customHeaders - A header object to be compared with headers. Only headers present in `headers` will be compared.
  * @returns - An object containing all keys from both the header objects, where headers present in the `customHeaders` are replaced. Note that the case (upper / lower) used by `customHeaders` will be used.
@@ -103,8 +106,5 @@ export function mergeHeaders(
   headers: Record<string, any> = {},
   customHeaders: Record<string, any> = {}
 ): Record<string, any> {
-  return {
-    ...replaceDuplicateKeys(headers, customHeaders),
-    ...customHeaders
-  };
+  return mergeIgnoreCase(headers, customHeaders);
 }

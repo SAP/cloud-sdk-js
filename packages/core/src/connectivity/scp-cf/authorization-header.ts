@@ -2,17 +2,17 @@ import {
   errorWithCause,
   isNullish,
   createLogger,
-  getHeader,
-  toSanitizedHeaderObject
+  pickIgnoreCase,
+  toSanitizedObject
 } from '@sap-cloud-sdk/util';
 import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
+import { getOAuth2ClientCredentialsToken } from './client-credentials-token';
 import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  getOAuth2ClientCredentialsToken,
   sanitizeDestination
-} from './index';
+} from './destination';
 
 const logger = createLogger({
   package: 'core',
@@ -64,7 +64,7 @@ export async function getAuthHeaders(
   destination: Destination,
   customHeaders?: Record<string, any>
 ): Promise<Record<string, string>> {
-  const customAuthHeaders = getHeader('authorization', customHeaders);
+  const customAuthHeaders = pickIgnoreCase(customHeaders, 'authorization');
 
   if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
     logger.warn(
@@ -95,7 +95,7 @@ export function buildAndAddAuthorizationHeader(destination: Destination) {
   };
 }
 function toAuthorizationHeader(authorization: string): Record<string, string> {
-  return toSanitizedHeaderObject('authorization', authorization);
+  return toSanitizedObject('authorization', authorization);
 }
 
 function headerFromTokens(

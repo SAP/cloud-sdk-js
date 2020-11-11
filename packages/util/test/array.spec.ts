@@ -1,5 +1,6 @@
 import {
   flat,
+  flatten,
   unique,
   last,
   first,
@@ -20,6 +21,17 @@ describe('array', () => {
     it('returns an empty array for empty arrays', () => {
       expect(flat([])).toStrictEqual([]);
     });
+  });
+
+  it('flattens a object', () => {
+    const input = [1, 2, [3, 4], 5, [6, [7, 8, [9, [10, 11], 12]]]];
+    const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    expect(flatten(input)).toEqual(expected);
+  });
+
+  it('can flatten empty or simple objects', () => {
+    expect(flatten([])).toEqual([]);
+    expect(flatten([1])).toEqual([1]);
   });
 
   describe('variadic arguments', () => {

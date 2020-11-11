@@ -6,7 +6,7 @@ describe('service-parser', () => {
     it('enum property is read correctly', () => {
       const services = parseAllServices(
         createOptions({
-          inputDir: '../../test-resources/service-specs/v4/API_TEST_SRV'
+          inputDir: '../../test-resources/odata-service-specs/v4/API_TEST_SRV'
         })
       );
       const properties = services[0].entities.find(

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.returnSapCloudSdk2 = exports.returnSapCloudSdk = exports.returnInt = exports.getByKey = void 0;
+exports.functionImports = exports.concatStrings = exports.returnSapCloudSdk = exports.returnInt = exports.getByKey = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -46,23 +46,23 @@ function returnSapCloudSdk(parameters) {
 }
 exports.returnSapCloudSdk = returnSapCloudSdk;
 /**
- * Return Sap Cloud Sdk 2.
+ * Concat Strings.
  *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-function returnSapCloudSdk2(parameters) {
+function concatStrings(parameters) {
     var params = {
-        str: new core_1.FunctionImportParameter('Str', 'Edm.String', parameters.str),
-        int: new core_1.FunctionImportParameter('Int', 'Edm.Int32', parameters.int)
+        str1: new core_1.FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
+        str2: new core_1.FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
     };
-    return new core_1.FunctionImportRequestBuilderV4('/test-service', 'returnSapCloudSdk2', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/test-service', 'concatStrings', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
 }
-exports.returnSapCloudSdk2 = returnSapCloudSdk2;
+exports.concatStrings = concatStrings;
 exports.functionImports = {
     getByKey: getByKey,
     returnInt: returnInt,
     returnSapCloudSdk: returnSapCloudSdk,
-    returnSapCloudSdk2: returnSapCloudSdk2
+    concatStrings: concatStrings
 };
 //# sourceMappingURL=function-imports.js.map

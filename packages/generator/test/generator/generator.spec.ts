@@ -6,7 +6,7 @@ describe('generator', () => {
     it('copies the additional files matching the glob.', async () => {
       const project = await generateProject(
         createOptions({
-          inputDir: '../../test-resources/service-specs/v2/API_TEST_SRV',
+          inputDir: '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
           additionalFiles: '../../test-resources/*.md'
         })
       );

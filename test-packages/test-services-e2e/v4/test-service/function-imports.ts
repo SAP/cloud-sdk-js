@@ -27,7 +27,7 @@ export function getByKey(parameters: GetByKeyParameters): FunctionImportRequestB
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   }
 
-  return new FunctionImportRequestBuilderV4('/admin', 'getByKey', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
+  return new FunctionImportRequestBuilderV4('/test-service', 'getByKey', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
 }
 
 /**
@@ -51,7 +51,7 @@ export function returnInt(parameters: ReturnIntParameters): FunctionImportReques
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   }
 
-  return new FunctionImportRequestBuilderV4('/admin', 'returnInt', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
+  return new FunctionImportRequestBuilderV4('/test-service', 'returnInt', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
 }
 
 /**
@@ -71,7 +71,7 @@ export function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): Func
 
   }
 
-  return new FunctionImportRequestBuilderV4('/admin', 'returnSapCloudSdk', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV4('/test-service', 'returnSapCloudSdk', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
 /**
@@ -100,7 +100,7 @@ export function returnSapCloudSdk2(parameters: ReturnSapCloudSdk2Parameters): Fu
     int: new FunctionImportParameter('Int', 'Edm.Int32', parameters.int)
   }
 
-  return new FunctionImportRequestBuilderV4('/admin', 'returnSapCloudSdk2', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV4('/test-service', 'returnSapCloudSdk2', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
 export const functionImports = {

@@ -1,0 +1,7 @@
+{
+  "API-TEST_SRV": {
+    "directoryName": "test-service",
+    "servicePath": "/test-service",
+    "npmPackageName": "test-service"
+  }
+}

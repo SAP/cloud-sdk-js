@@ -1,8 +1,9 @@
-using {my.namespace as my} from '../db/schema';
+using {cloudsdk.test as cloudsdk} from '../db/schema';
 
-service AdminService @(requires_ : 'admin') {
-  entity TestEntity     as projection on my.TestEntity;
-  entity TestEntityLink as projection on my.TestEntityLink;
+@path : 'test-service'
+service TestService {
+  entity TestEntity     as projection on cloudsdk.TestEntity;
+  entity TestEntityLink as projection on cloudsdk.TestEntityLink;
   function returnSapCloudSdk() returns String;
   function returnSapCloudSdk2(Int : Integer, Str : String) returns String;
   function returnInt(param : Integer) returns Integer;

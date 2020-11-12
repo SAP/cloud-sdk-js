@@ -11,7 +11,7 @@ import {
 describe('edmx-edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
-      '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
+      '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
     );
 
     expect(parseEntitySetsV2(metadataEdmx.root).length).toBe(11);
@@ -47,7 +47,7 @@ describe('edmx-edmx-parser', () => {
   it('does not fail for multiple schema entries in the edmx file', () => {
     expect(() =>
       readEdmxFile(
-        '../../test-resources/service-specs/v2/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
+        '../../test-resources/odata-service-specs/v2/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
       )
     ).not.toThrow();
   });

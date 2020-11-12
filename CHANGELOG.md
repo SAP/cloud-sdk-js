@@ -19,7 +19,7 @@
 
 ## New Functionality
 
--
+- [OData] Support for function imports with and without parameters using the OData V4 syntax.
 
 ## Improvements
 

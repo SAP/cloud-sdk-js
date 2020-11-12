@@ -163,6 +163,11 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'import/no-internal-modules': 'error',
     'import/order': 'error',
+    'import/no-cycle': 'error',
+    'import/no-self-import': 'error',
+    'import/no-internal-modules': 'error',
+    'import/no-useless-path-segments': 'error',
+    'import/no-relative-parent-imports': 'error',
     indent: 'off',
     // Does not work for typescript yet
     // "lines-around-comment": [

@@ -44,9 +44,30 @@ export interface ReturnSapCloudSdkParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string>;
+/**
+ * Type of the parameters to be passed to [[returnSapCloudSdk2]].
+ */
+export interface ReturnSapCloudSdk2Parameters {
+    /**
+     * Str.
+     */
+    str: string;
+    /**
+     * Int.
+     */
+    int: number;
+}
+/**
+ * Return Sap Cloud Sdk 2.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export declare function returnSapCloudSdk2(parameters: ReturnSapCloudSdk2Parameters): FunctionImportRequestBuilderV4<ReturnSapCloudSdk2Parameters, string>;
 export declare const functionImports: {
     getByKey: typeof getByKey;
     returnInt: typeof returnInt;
     returnSapCloudSdk: typeof returnSapCloudSdk;
+    returnSapCloudSdk2: typeof returnSapCloudSdk2;
 };
 //# sourceMappingURL=function-imports.d.ts.map

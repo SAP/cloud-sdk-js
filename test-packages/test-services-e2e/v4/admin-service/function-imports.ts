@@ -74,8 +74,38 @@ export function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): Func
   return new FunctionImportRequestBuilderV4('/admin', 'returnSapCloudSdk', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
+/**
+ * Type of the parameters to be passed to [[returnSapCloudSdk2]].
+ */
+export interface ReturnSapCloudSdk2Parameters {
+  /**
+   * Str.
+   */
+  str: string;
+  /**
+   * Int.
+   */
+  int: number;
+}
+
+/**
+ * Return Sap Cloud Sdk 2.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function returnSapCloudSdk2(parameters: ReturnSapCloudSdk2Parameters): FunctionImportRequestBuilderV4<ReturnSapCloudSdk2Parameters, string> {
+  const params = {
+    str: new FunctionImportParameter('Str', 'Edm.String', parameters.str),
+    int: new FunctionImportParameter('Int', 'Edm.Int32', parameters.int)
+  }
+
+  return new FunctionImportRequestBuilderV4('/admin', 'returnSapCloudSdk2', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
+}
+
 export const functionImports = {
   getByKey,
   returnInt,
-  returnSapCloudSdk
+  returnSapCloudSdk,
+  returnSapCloudSdk2
 };

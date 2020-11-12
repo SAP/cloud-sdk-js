@@ -13,6 +13,7 @@
                 <FunctionImport Name="getByKey" Function="AdminService.getByKey" EntitySet="TestEntity"/>
                 <FunctionImport Name="returnInt" Function="AdminService.returnInt"/>
                 <FunctionImport Name="returnSapCloudSdk" Function="AdminService.returnSapCloudSdk"/>
+                <FunctionImport Name="returnSapCloudSdk2" Function="AdminService.returnSapCloudSdk2"/>
             </EntityContainer>
             <EntityType Name="TestEntity">
                 <Key>
@@ -59,6 +60,11 @@
                 <ReturnType Type="Edm.Int32"/>
             </Function>
             <Function Name="returnSapCloudSdk" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Function Name="returnSapCloudSdk2" IsBound="false" IsComposable="false">
+                <Parameter Name="Str" Type="Edm.String" MaxLength="111"/>
+                <Parameter Name="Int" Type="Edm.Int32"/>
                 <ReturnType Type="Edm.String"/>
             </Function>
         </Schema>

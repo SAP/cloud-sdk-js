@@ -1,10 +1,10 @@
+import { oDataUriV2 } from '../uri-conversion';
 import {
   FunctionImportParameters,
   RequestMethodType,
-  ActionFunctionImportRequestBuilderBase,
-  ODataFunctionImportRequestConfig
+  ActionFunctionImportRequestBuilderBase
 } from '../../odata-common';
-import { oDataUriV2 } from '../uri-conversion';
+import { ODataFunctionImportRequestConfigV2 } from '../request';
 
 /**
  * Create OData request to execute a function import.
@@ -33,7 +33,7 @@ export class FunctionImportRequestBuilderV2<
   ) {
     super(
       responseTransformer,
-      new ODataFunctionImportRequestConfig(
+      new ODataFunctionImportRequestConfigV2(
         method,
         defaultServicePath,
         functionImportName,

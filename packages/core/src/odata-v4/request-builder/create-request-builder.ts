@@ -42,18 +42,6 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
   }
 
   /**
-   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.   * Builds the payload of the query.
-   * @returns the builder itself
-   */
-  prepare(): this {
-    this.requestConfig.payload = this.serializer.serializeEntity(
-      this._entity,
-      this._entityConstructor
-    );
-    return this;
-  }
-
-  /**
    * Execute query.
    *
    * @param destination - Destination to execute the request against
@@ -64,7 +52,6 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT> {
-    this.prepare();
     return super.execute(destination, options);
   }
 }

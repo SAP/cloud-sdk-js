@@ -47,6 +47,18 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
   }
 
   /**
+   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.   * Builds the payload of the query.
+   * @returns the builder itself
+   */
+  prepare(): this {
+    this.requestConfig.payload = this.serializer.serializeEntity(
+      this._entity,
+      this._entityConstructor
+    );
+    return this;
+  }
+
+  /**
    * Specifies the parent of the entity to create.
    *
    * @param parentEntity - Parent of the entity to create

@@ -10,12 +10,8 @@ import {
 } from '../../connectivity/scp-cf';
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
-
-/**
- * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
- *
- * @typeparam EntityT - Type of the entity to be requested
- */
+import { EntityDeserializer } from '../entity-deserializer';
+import { getCollectionResult } from '../../odata-v4/request-builder';
 export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
@@ -29,7 +25,8 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    getAllRequestConfig: ODataGetAllRequestConfig<EntityT>
+    getAllRequestConfig: ODataGetAllRequestConfig<EntityT>,
+    readonly entityDeserializer: EntityDeserializer
   ) {
     super(getAllRequestConfig);
   }
@@ -94,6 +91,30 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
    */
   count(): CountRequestBuilder<EntityT> {
     return new CountRequestBuilder(this);
+  }
+
+  /**
+   * Execute request.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to the requested entities
+   */
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<EntityT[]> {
+    return this.build(destination, options)
+      .then(request => request.execute())
+      .then(response =>
+        getCollectionResult(response.data).map(json =>
+          this.entityDeserializer.deserializeEntity(
+            json,
+            this._entityConstructor,
+            response.headers
+          )
+        )
+      );
   }
 
   /**

@@ -5,3 +5,4 @@ export * from './batch';
 export * from './count-request-builder';
 export * from './action-function-import-request-builder-base';
 export * from './delete-request-builder-base';
+export * from './get-by-key-request-builder';

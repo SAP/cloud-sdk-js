@@ -1,7 +1,7 @@
 ## E2E Test of price calculation
 ### Generate type safe clients
 1. Put the open api json file of the price calculation in the folder `packages/rest-generator/test/resources/PriceCalculation`
-2. Run the command `generate:test-services` defined int the `packages/rest-generator/package.json` for generating clients.
+2. Run the command `generate:test-services` defined in the `packages/rest-generator/package.json` for generating clients.
 
 ### Uncomment test files listed below
 1. `packages/rest-generator/test/util/get-price-calculate.ts`

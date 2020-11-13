@@ -31,7 +31,11 @@ export function parseComplexTypes(root): EdmxComplexType[] {
 }
 
 export function parseEnumTypes(root): EdmxEnumType[] {
-  return forceArray(root.EnumType);
+  const types: EdmxEnumType[] = forceArray(root.EnumType);
+  return types.map(edmxEnumType => ({
+    Name: edmxEnumType.Name,
+    Member: forceArray(edmxEnumType.Member)
+  }));
 }
 
 export function parseEntityType(root): EdmxEntityType[] {

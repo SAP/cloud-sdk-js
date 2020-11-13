@@ -1,17 +1,10 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
 import {
   Constructable,
+  DeleteRequestBuilderBase,
   EntityIdentifiable,
-  FieldType,
-  MethodRequestBuilderBase,
-  ODataDeleteRequestConfig
+  FieldType
 } from '../../odata-common';
 import { EntityV4 } from '../entity';
-import {
-  Destination,
-  DestinationNameAndJwt,
-  DestinationOptions
-} from '../../connectivity/scp-cf';
 import { oDataUriV4 } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.
@@ -19,7 +12,7 @@ import { oDataUriV4 } from '../uri-conversion';
  * @typeparam EntityT - Type of the entity to be deleted
  */
 export class DeleteRequestBuilderV4<EntityT extends EntityV4>
-  extends MethodRequestBuilderBase<ODataDeleteRequestConfig<EntityT>>
+  extends DeleteRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
@@ -34,18 +27,7 @@ export class DeleteRequestBuilderV4<EntityT extends EntityV4>
     entityConstructor: Constructable<EntityT>,
     keysOrEntity: Record<string, FieldType> | EntityV4
   ) {
-    super(new ODataDeleteRequestConfig(entityConstructor, oDataUriV4));
-    this._entityConstructor = entityConstructor;
-
-    if (keysOrEntity instanceof EntityV4) {
-      this.requestConfig.keys = oDataUriV4.getEntityKeys(
-        keysOrEntity,
-        entityConstructor
-      );
-      this.setVersionIdentifier(keysOrEntity.versionIdentifier);
-    } else {
-      this.requestConfig.keys = keysOrEntity;
-    }
+    super(entityConstructor, oDataUriV4, keysOrEntity);
   }
 
   /**
@@ -59,34 +41,5 @@ export class DeleteRequestBuilderV4<EntityT extends EntityV4>
       this.requestConfig.addCustomHeaders({ 'if-match': etag });
     }
     return this;
-  }
-
-  /**
-   * Instructs the request to force an overwrite of the entity by sending an 'If-Match: *' header instead of sending the ETag version identifier.
-   *
-   * @returns this The request itself to ease chaining while executing the request
-   */
-  ignoreVersionIdentifier(): this {
-    this.requestConfig.versionIdentifierIgnored = true;
-    return this;
-  }
-
-  /**
-   * Execute query.
-   *
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving once the entity was deleted
-   */
-  async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
-  ): Promise<void> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(() => Promise.resolve())
-      .catch(error =>
-        Promise.reject(errorWithCause('OData delete request failed!', error))
-      );
   }
 }

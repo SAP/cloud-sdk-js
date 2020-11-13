@@ -5,7 +5,7 @@ import * as fs from 'fs-extra';
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(process.cwd(), 'src/generator-cli.ts');
   const inputDir =
-    '../../test-resources/service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx';
+    '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx';
   const outputDir = 'test/generator-test-output';
 
   beforeEach(() => {

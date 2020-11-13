@@ -1,7 +1,7 @@
 import {
   TestEntity,
   TestEntityLink
-} from '@sap-cloud-sdk/test-services-e2e/v4/admin-service';
+} from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
 import { and } from '@sap-cloud-sdk/core';
 import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';

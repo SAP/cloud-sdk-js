@@ -1,9 +1,8 @@
 import {
   createLogger,
-  VALUE_IS_UNDEFINED,
-  mergeHeaders
+  mergeIgnoreCase,
+  VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
-
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
 const logger = createLogger({
@@ -64,7 +63,7 @@ export abstract class ODataRequestConfig {
     if (typeof defaultHeadersOrContentType === 'string') {
       this.defaultHeaders['content-type'] = defaultHeadersOrContentType;
     } else {
-      this.defaultHeaders = mergeHeaders(
+      this.defaultHeaders = mergeIgnoreCase(
         this.defaultHeaders,
         defaultHeadersOrContentType
       );

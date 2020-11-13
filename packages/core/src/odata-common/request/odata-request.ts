@@ -1,18 +1,17 @@
 import {
   errorWithCause,
-  propertyExists,
-  filterNullishValues,
-  getHeader,
-  getHeaders,
-  getHeaderValue,
-  mergeHeaders
+  mergeIgnoreCase,
+  pickIgnoreCase,
+  pickNonNullish,
+  pickValueIgnoreCase,
+  propertyExists
 } from '@sap-cloud-sdk/util';
 import {
   Destination,
   sanitizeDestination,
   buildHeadersForDestination,
   buildCsrfHeaders
-} from '../../connectivity/scp-cf';
+} from '../../connectivity';
 import {
   removeLeadingSlashes,
   removeSlashes,
@@ -196,13 +195,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   defaultHeaders(): Record<string, any> {
-    const customDefaultHeaders = getHeaders(
-      Object.keys(this.config.defaultHeaders),
-      this.customHeaders()
+    const customDefaultHeaders = pickIgnoreCase(
+      this.customHeaders(),
+      ...Object.keys(this.config.defaultHeaders)
     );
 
-    return mergeHeaders(
-      filterNullishValues(this.config.defaultHeaders),
+    return mergeIgnoreCase(
+      pickNonNullish(this.config.defaultHeaders),
       customDefaultHeaders
     );
   }
@@ -211,16 +210,16 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * Get the eTag related headers, e. g. `if-match`.
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
-  eTagHeaders(): Record<string, string> {
-    if (getHeaderValue('if-match', this.customHeaders())) {
-      return getHeader('if-match', this.customHeaders());
+  eTagHeaders(): Record<string, any> {
+    if (pickValueIgnoreCase(this.customHeaders(), 'if-match')) {
+      return pickIgnoreCase(this.customHeaders(), 'if-match');
     }
     const eTag = isWithETag(this.config)
       ? this.config.versionIdentifierIgnored
         ? '*'
         : this.config.eTag
       : undefined;
-    return filterNullishValues({ 'if-match': eTag });
+    return pickNonNullish({ 'if-match': eTag });
   }
 
   /**
@@ -248,10 +247,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   private async getCsrfHeaders(
     destinationRelatedHeaders: Record<string, string>
-  ): Promise<Record<string, string>> {
-    const customCsrfHeaders = getHeader(
-      'x-csrf-token',
-      this.config.customHeaders
+  ): Promise<Record<string, any>> {
+    const customCsrfHeaders = pickIgnoreCase(
+      this.config.customHeaders,
+      'x-csrf-token'
     );
     return Object.keys(customCsrfHeaders).length
       ? customCsrfHeaders

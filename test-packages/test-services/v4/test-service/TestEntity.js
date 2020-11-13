@@ -210,6 +210,11 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      */
     TestEntity.ENUM_PROPERTY = new core_1.EnumField('EnumProperty', TestEntity);
     /**
+     * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TestEntity.ENUM_PROPERTY_WITH_ONE_MEMBER = new core_1.EnumField('EnumPropertyWithOneMember', TestEntity);
+    /**
      * Static representation of the [[enumCollectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
@@ -257,6 +262,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
         TestEntity.COMPLEX_TYPE_PROPERTY,
         TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
         TestEntity.ENUM_PROPERTY,
+        TestEntity.ENUM_PROPERTY_WITH_ONE_MEMBER,
         TestEntity.ENUM_COLLECTION_PROPERTY,
         TestEntity.TO_MULTI_LINK,
         TestEntity.TO_OTHER_MULTI_LINK,

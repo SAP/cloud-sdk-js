@@ -12,6 +12,12 @@ import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { getCollectionResult } from '../../odata-v4/request-builder';
+
+/**
+ * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
+ *
+ * @typeparam EntityT - Type of the entity to be requested
+ */
 export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {

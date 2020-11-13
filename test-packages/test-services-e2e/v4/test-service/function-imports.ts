@@ -74,8 +74,38 @@ export function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): Func
   return new FunctionImportRequestBuilderV4('/test-service', 'returnSapCloudSdk', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
+/**
+ * Type of the parameters to be passed to [[concatStrings]].
+ */
+export interface ConcatStringsParameters {
+  /**
+   * Str 1.
+   */
+  str1: string;
+  /**
+   * Str 2.
+   */
+  str2: string;
+}
+
+/**
+ * Concat Strings.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function concatStrings(parameters: ConcatStringsParameters): FunctionImportRequestBuilderV4<ConcatStringsParameters, string> {
+  const params = {
+    str1: new FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
+    str2: new FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
+  }
+
+  return new FunctionImportRequestBuilderV4('/test-service', 'concatStrings', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
+}
+
 export const functionImports = {
   getByKey,
   returnInt,
-  returnSapCloudSdk
+  returnSapCloudSdk,
+  concatStrings
 };

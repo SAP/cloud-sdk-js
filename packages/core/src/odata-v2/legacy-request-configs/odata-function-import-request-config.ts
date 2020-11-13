@@ -1,9 +1,9 @@
 import { oDataUriV2 } from '../uri-conversion';
 import {
   RequestMethodType,
-  FunctionImportParameters,
-  ODataFunctionImportRequestConfig as Base
+  FunctionImportParameters
 } from '../../odata-common';
+import { ODataFunctionImportRequestConfigV2 } from '../request';
 
 /**
  * @deprecated Since v1.21.0. Use superclass instead.
@@ -11,7 +11,9 @@ import {
  *
  * @typeparam ParametersT - Type of the original parameters object
  */
-class ODataFunctionImportRequestConfig<ParametersT> extends Base<ParametersT> {
+class ODataFunctionImportRequestConfig<
+  ParametersT
+> extends ODataFunctionImportRequestConfigV2<ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    *

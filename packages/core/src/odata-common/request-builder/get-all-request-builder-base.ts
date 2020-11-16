@@ -122,16 +122,4 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
         )
       );
   }
-
-  /**
-   * Execute request.
-   *
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to the requested entities
-   */
-  abstract async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
-  );
 }

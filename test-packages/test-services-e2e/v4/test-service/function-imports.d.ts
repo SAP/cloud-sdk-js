@@ -44,9 +44,30 @@ export interface ReturnSapCloudSdkParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string>;
+/**
+ * Type of the parameters to be passed to [[concatStrings]].
+ */
+export interface ConcatStringsParameters {
+    /**
+     * Str 1.
+     */
+    str1: string;
+    /**
+     * Str 2.
+     */
+    str2: string;
+}
+/**
+ * Concat Strings.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export declare function concatStrings(parameters: ConcatStringsParameters): FunctionImportRequestBuilderV4<ConcatStringsParameters, string>;
 export declare const functionImports: {
     getByKey: typeof getByKey;
     returnInt: typeof returnInt;
     returnSapCloudSdk: typeof returnSapCloudSdk;
+    concatStrings: typeof concatStrings;
 };
 //# sourceMappingURL=function-imports.d.ts.map

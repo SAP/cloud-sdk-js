@@ -1,11 +1,8 @@
 import { ODataUri } from '../uri-conversion';
-import {
-  FunctionImportParameter,
-  FunctionImportParameters
-} from './function-import-parameter';
+import { FunctionImportParameters } from './function-import-parameter';
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
 
-export class ODataFunctionImportRequestConfig<
+export abstract class ODataFunctionImportRequestConfig<
   ParametersT
 > extends ODataRequestConfig {
   /**
@@ -21,40 +18,12 @@ export class ODataFunctionImportRequestConfig<
     defaultServicePath: string,
     readonly functionImportName: string,
     public parameters: FunctionImportParameters<ParametersT>,
-    private oDataUri: ODataUri
+    protected oDataUri: ODataUri
   ) {
     super(method, defaultServicePath);
   }
 
-  resourcePath(): string {
-    return this.functionImportName;
-  }
+  abstract resourcePath(): string;
 
-  queryParameters(): Record<string, any> {
-    return {
-      ...this.prependDollarToQueryParameters({
-        format: 'json'
-      }),
-      ...(Object.values(this.parameters)
-        .filter(
-          (parameter: FunctionImportParameter<ParametersT>) =>
-            typeof parameter.value !== 'undefined'
-        )
-        .reduce(
-          (
-            queryParams: Record<string, any>,
-            parameter: FunctionImportParameter<ParametersT>
-          ) => {
-            queryParams[
-              parameter.originalName
-            ] = this.oDataUri.convertToUriFormat(
-              parameter.value,
-              parameter.edmType
-            );
-            return queryParams;
-          },
-          {}
-        ) as Record<string, any>)
-    };
-  }
+  abstract queryParameters(): Record<string, any>;
 }

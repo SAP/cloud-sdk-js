@@ -6,10 +6,10 @@ import {
   Constructable,
   Filterable,
   and,
-  FilterList,
   ODataGetAllRequestConfig,
   Expandable,
   GetAllRequestBuilderBase,
+  toFilterableList,
   OneToManyLink
 } from '../../odata-common';
 import { oDataUriV4 } from '../uri-conversion';
@@ -53,16 +53,7 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
   filter(
     ...expressions: (Filterable<EntityT> | OneToManyLink<EntityT, any>)[]
   ): this {
-    this.requestConfig.filter = toFilterList(expressions);
+    this.requestConfig.filter = and(toFilterableList(expressions));
     return this;
   }
-}
-
-// TODO: remove this code duplication
-function toFilterList<EntityT extends EntityV4, LinkedEntityT extends EntityV4>(
-  filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
-): FilterList<EntityT> {
-  return and(
-    ...filters.map(f => (f instanceof OneToManyLink ? f._filters : f))
-  );
 }

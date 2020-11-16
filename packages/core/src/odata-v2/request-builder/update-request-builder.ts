@@ -70,8 +70,10 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
   }
 
   protected getPayload(): Record<string, any> {
-    const body = super.getPayload();
-    return this.removeNavPropsAndComplexTypes(body);
+    if (this.requestConfig.method === 'patch') {
+      return this.removeNavPropsAndComplexTypes(super.getPayload());
+    }
+    return super.getPayload();
   }
 
   private removeNavPropsAndComplexTypes(

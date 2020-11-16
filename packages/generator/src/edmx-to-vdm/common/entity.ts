@@ -20,8 +20,8 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
-  EdmxEntitySetBase,
-  EdmxEntityTypeBase,
+  EdmxEntitySetBase, EdmxEntitySetBaseNamespaced,
+  EdmxEntityTypeBase, EdmxEntityTypeBaseNamespaced,
   EdmxNamed,
   JoinedEntityMetadata
 } from '../../edmx-parser/common';
@@ -130,19 +130,26 @@ const propertyFieldType = (type: string): string | undefined =>
 
 export function joinEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,
-  EntityTypeT extends EdmxEntityTypeBase<any>
+  EntityTypeT extends EdmxEntityTypeBaseNamespaced<any>
 >(
   entitySets: EntitySetT[],
   entityTypes: EntityTypeT[],
+  // TODO 1584
   namespace: string,
   swagger?: SwaggerMetadata
 ): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
-    // We assume metadata files to have a maximum of two schemas currently
-    // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
-    const entityType = entityTypes.find(
-      t => t.Name === entitySet.EntityType.split('.').slice(-1)[0]
+    let entityType = entityTypes.find(
+      t => `${t.Namespace}.${t.Name}` === entitySet.EntityType
     );
+    // TODO 1584 backwards compatibility
+    if (!entityType) {
+      // We assume metadata files to have a maximum of two schemas currently
+      // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
+      entityType = entityTypes.find(
+        t => t.Name === entitySet.EntityType.split('.').slice(-1)[0]
+      );
+    }
 
     if (!entityType) {
       throw Error(

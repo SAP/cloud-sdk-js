@@ -1,4 +1,4 @@
-import { readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
+import { EdmxMetadataSchemaV4Merged, readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
 import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-parser';
 import {
   parseActionImport,
@@ -17,17 +17,23 @@ describe('edmx-edmx-parser', () => {
       '../../test-resources/odata-service-specs/v4/API_TEST_SRV/API_TEST_SRV.edmx'
     );
 
-    expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(11);
+    expect(
+      parseEntitySetsV4(metadataEdmx.root as EdmxMetadataSchemaV4Merged).length
+    ).toBe(11);
     expect(parseEntityTypeV4(metadataEdmx.root).length).toBe(12);
-    expect(parseFunctionImportsV4(metadataEdmx.root).length).toBe(8);
+    expect(
+      parseFunctionImportsV4(metadataEdmx.root as EdmxMetadataSchemaV4Merged)
+        .length
+    ).toBe(8);
     expect(parseFunctions(metadataEdmx.root).length).toBe(8);
     expect(parseActionImport(metadataEdmx.root).length).toBe(3);
     expect(parseActions(metadataEdmx.root).length).toBe(3);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(2);
 
-    parseEntitySetsV4(metadataEdmx.root).forEach(e => {
-      expect(e.NavigationPropertyBinding).toBeInstanceOf(Array);
+    parseEntitySetsV4(metadataEdmx.root as EdmxMetadataSchemaV4Merged).forEach(
+      e => {
+        expect(e.NavigationPropertyBinding).toBeInstanceOf(Array);
     });
 
     parseEntityTypeV4(metadataEdmx.root).forEach(e => {
@@ -68,5 +74,25 @@ describe('edmx-edmx-parser', () => {
     parseComplexTypes(metadataEdmx.root).forEach(c => {
       expect(c.Property).toBeInstanceOf(Array);
     });
+  });
+
+  it('v4: parses edmx file to JSON and coerces properties to arrays1', () => {
+    const metadataEdmx = readEdmxFile(
+      '../../test-resources/odata-service-specs/v4/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
+    );
+
+    expect(
+      parseEntitySetsV4(metadataEdmx.root as EdmxMetadataSchemaV4Merged).length
+    ).toBe(4);
+    expect(parseEntityTypeV4(metadataEdmx.root).length).toBe(4);
+    expect(
+      parseFunctionImportsV4(metadataEdmx.root as EdmxMetadataSchemaV4Merged)
+        .length
+    ).toBe(2);
+    expect(parseFunctions(metadataEdmx.root).length).toBe(2);
+    expect(parseActionImport(metadataEdmx.root).length).toBe(2);
+    expect(parseActions(metadataEdmx.root).length).toBe(2);
+    expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(2);
+    expect(parseEnumTypes(metadataEdmx.root).length).toBe(2);
   });
 });

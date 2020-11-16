@@ -66,6 +66,7 @@ class ServiceGenerator {
   ): VdmServicePackageMetaData {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
       ServiceNameFormatter.originalToServiceName(
+        // TODO 1584
         serviceMetadata.edmx.namespace
       ),
       serviceMetadata.edmx.fileName
@@ -81,6 +82,7 @@ class ServiceGenerator {
 
     return {
       oDataVersion: serviceMetadata.edmx.oDataVersion,
+      // TODO 1584
       namespace: serviceMetadata.edmx.namespace,
       originalFileName: serviceMetadata.edmx.fileName,
       directoryName,

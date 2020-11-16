@@ -3,6 +3,7 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 
 export interface VdmServicePackageMetaData {
   oDataVersion: ODataVersion;
+  // TODO 1584
   namespace: string;
   originalFileName: string;
   servicePath: string;

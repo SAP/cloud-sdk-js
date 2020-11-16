@@ -17,13 +17,13 @@ import {
   parseEntitySets,
   parseEntityType
 } from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { EdmxMetadataSchemaV4Merged, ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { isCollectionType } from '../edmx-to-vdm-util';
 
-export function joinEntityTypes(
-  entityType: EdmxEntityType,
-  baseType: EdmxEntityType
-): EdmxEntityType {
+export function joinEntityTypes<T extends EdmxEntityType>(
+  entityType: T,
+  baseType: T
+): T {
   // TODO: only join properties / nav properties of the respective type
   return {
     ...entityType,
@@ -44,7 +44,9 @@ export function generateEntitiesV4(
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
-  const entitySets = parseEntitySets(serviceMetadata.edmx.root);
+  const entitySets = parseEntitySets(
+    serviceMetadata.edmx.root as EdmxMetadataSchemaV4Merged
+  );
   const entityTypes = parseEntityType(serviceMetadata.edmx.root);
 
   const entitiesMetadata = joinEntityMetadata(

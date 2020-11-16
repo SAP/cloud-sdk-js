@@ -1,8 +1,7 @@
-import { EdmxEntityTypeBase, EdmxNamed, EdmxParameter } from '../common';
+import { EdmxEntityTypeBase, EdmxNamed, EdmxNamespaced, EdmxParameter } from '../common';
 
-export interface EdmxNavigationProperty {
+export interface EdmxNavigationProperty extends EdmxNamed {
   FromRole: string;
-  Name: string;
   Relationship: string;
   ToRole: string;
 }
@@ -13,8 +12,7 @@ export interface EdmxAssociationEnd {
   Role: string;
 }
 
-export interface EdmxAssociationSet {
-  Name: string;
+export interface EdmxAssociationSet extends EdmxNamed {
   Association: string;
   'sap:creatable': string;
   'sap:updatable': string;
@@ -23,19 +21,21 @@ export interface EdmxAssociationSet {
   End: EdmxAssociationSetEnd[];
 }
 
+export type EdmxAssociationSetNamespaced = EdmxAssociationSet & EdmxNamespaced;
+
 interface EdmxAssociationSetEnd {
   Role: string;
   EntitySet: string;
 }
 
-export interface EdmxAssociation {
-  Name: string;
+export interface EdmxAssociation extends EdmxNamed {
   'sap:content-version': string;
   End: EdmxAssociationEnd[];
 }
 
-export interface JoinedAssociationMetadata {
-  Name: string;
+export type EdmxAssociationNamespaced = EdmxAssociation & EdmxNamespaced;
+
+export interface JoinedAssociationMetadata extends EdmxNamed {
   'sap:creatable': string;
   'sap:updatable': string;
   'sap:deletable': string;
@@ -44,6 +44,8 @@ export interface JoinedAssociationMetadata {
 }
 
 export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty>;
+
+export type EdmxEntityTypeNamespaced = EdmxEntityType & EdmxNamespaced;
 
 export interface End {
   EntitySet: string;
@@ -59,3 +61,5 @@ export interface EdmxFunctionImport extends EdmxNamed {
   Parameter: EdmxParameter[];
   'm:HttpMethod': string;
 }
+
+export type EdmxFunctionImportNamespaced = EdmxFunctionImport & EdmxNamespaced;

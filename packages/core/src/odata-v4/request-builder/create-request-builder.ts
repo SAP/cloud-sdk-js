@@ -40,18 +40,4 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
       responseDataAccessorV4
     );
   }
-
-  /**
-   * Execute query.
-   *
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to the created entity
-   */
-  async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
-  ): Promise<EntityT> {
-    return super.execute(destination, options);
-  }
 }

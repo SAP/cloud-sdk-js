@@ -11,7 +11,7 @@ import {
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
 import { EntityDeserializer } from '../entity-deserializer';
-import { getCollectionResult } from '../../odata-v4/request-builder';
+import { ResponseDataAccessor } from '../response-data-accessor';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
@@ -32,7 +32,8 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
     getAllRequestConfig: ODataGetAllRequestConfig<EntityT>,
-    readonly entityDeserializer: EntityDeserializer
+    readonly entityDeserializer: EntityDeserializer,
+    readonly dataAccessor: ResponseDataAccessor
   ) {
     super(getAllRequestConfig);
   }
@@ -113,13 +114,15 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
-        getCollectionResult(response.data).map(json =>
-          this.entityDeserializer.deserializeEntity(
-            json,
-            this._entityConstructor,
-            response.headers
+        this.dataAccessor
+          .getCollectionResult(response.data)
+          .map(json =>
+            this.entityDeserializer.deserializeEntity(
+              json,
+              this._entityConstructor,
+              response.headers
+            )
           )
-        )
       );
   }
 }

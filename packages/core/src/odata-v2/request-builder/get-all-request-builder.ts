@@ -10,6 +10,7 @@ import {
 import { EntityV2 } from '../entity';
 import { entityDeserializerV2 } from '../entity-deserializer';
 import { oDataUriV2 } from '../uri-conversion';
+import { responseDataAccessorV2 } from './response-data-accessor';
 export class GetAllRequestBuilderV2<EntityT extends EntityV2>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
@@ -22,7 +23,8 @@ export class GetAllRequestBuilderV2<EntityT extends EntityV2>
     super(
       entityConstructor,
       new ODataGetAllRequestConfig(entityConstructor, oDataUriV2),
-      entityDeserializerV2
+      entityDeserializerV2,
+      responseDataAccessorV2
     );
   }
 

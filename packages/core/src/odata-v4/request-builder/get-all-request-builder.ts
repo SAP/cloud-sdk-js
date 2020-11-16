@@ -13,6 +13,7 @@ import {
   OneToManyLink
 } from '../../odata-common';
 import { oDataUriV4 } from '../uri-conversion';
+import { responseDataAccessorV4 } from './response-data-accessor';
 export class GetAllRequestBuilderV4<EntityT extends EntityV4>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
@@ -27,7 +28,8 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
     super(
       entityConstructor,
       new ODataGetAllRequestConfig(entityConstructor, oDataUriV4),
-      entityDeserializerV4
+      entityDeserializerV4,
+      responseDataAccessorV4
     );
   }
 

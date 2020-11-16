@@ -4,11 +4,6 @@ import {
   EntityIdentifiable
 } from '../../odata-common';
 import { EntityV4 } from '../entity';
-import {
-  DestinationOptions,
-  Destination,
-  DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
 import { oDataUriV4 } from '../uri-conversion';
 import { entitySerializerV4 } from '../entity-serializer';
 import { entityDeserializerV4 } from '../entity-deserializer';

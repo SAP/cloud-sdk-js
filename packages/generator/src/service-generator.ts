@@ -67,7 +67,9 @@ class ServiceGenerator {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
       ServiceNameFormatter.originalToServiceName(
         // TODO 1584
-        serviceMetadata.edmx.namespace
+        serviceMetadata.edmx.namespace.length === 1
+          ? serviceMetadata.edmx.namespace[0]
+          : serviceMetadata.edmx.fileName
       ),
       serviceMetadata.edmx.fileName
     );
@@ -140,4 +142,11 @@ export function parseService(
     .withServiceMapping(mappings)
     .withGlobalNameFormatter(globalNameFormatter)
     .generateService(serviceDefinitionPaths);
+}
+
+export function getServiceName(service: VdmServiceMetadata) {
+  // TODO 1584
+  return service.namespace.length === 1
+    ? service.namespace[0]
+    : service.originalFileName;
 }

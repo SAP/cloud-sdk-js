@@ -14,7 +14,7 @@ describe('service-mapping', () => {
         enumTypes: [],
         entities: [],
         functionImports: [],
-        namespace: 'fghjkl',
+        namespace: ['fghjkl'],
         speakingModuleName: 'fghjk',
         className: 'AService',
         edmxPath: 'fghjkl'
@@ -29,7 +29,7 @@ describe('service-mapping', () => {
         enumTypes: [],
         entities: [],
         functionImports: [],
-        namespace: 'fghjkl',
+        namespace: ['fghjkl'],
         speakingModuleName: 'fghjk',
         className: 'BService',
         edmxPath: 'fghjkl'

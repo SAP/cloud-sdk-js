@@ -19,6 +19,7 @@ import {
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
+import { getServiceName } from '../service-generator';
 
 export function entityClass(
   entity: VdmEntity,
@@ -69,7 +70,7 @@ function serviceName(
     kind: StructureKind.Property,
     name: prependPrefix('serviceName'),
     isStatic: true,
-    initializer: `\'${service.namespace}\'`,
+    initializer: `\'${getServiceName(service)}\'`,
     docs: [
       `@deprecated Since v1.0.1 Use [[${prependPrefix(
         'defaultServicePath'

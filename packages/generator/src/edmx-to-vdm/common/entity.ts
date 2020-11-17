@@ -136,7 +136,7 @@ export function joinEntityMetadata<
   entitySets: EntitySetT[],
   entityTypes: EntityTypeT[],
   // TODO 1584
-  namespace: string,
+  namespace: string[],
   swagger?: SwaggerMetadata
 ): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
@@ -163,12 +163,17 @@ export function joinEntityMetadata<
       entityType
     };
 
-    if (swagger) {
-      const defKey = Object.keys(swagger.definitions).find(
-        name => `${namespace}.${name}` === entitySet.EntityType
+    if (namespace.length !== 1) {
+      logger.warn(
+        `Currently only support 1 namespace with swagger file, but detects ${namespace.length} in the edmx file.`
       );
-      if (defKey) {
-        joined.swaggerDefinition = swagger.definitions[defKey];
+      if (swagger) {
+        const defKey = Object.keys(swagger.definitions).find(
+          name => `${namespace[0]}.${name}` === entitySet.EntityType
+        );
+        if (defKey) {
+          joined.swaggerDefinition = swagger.definitions[defKey];
+        }
       }
     }
 

@@ -33,7 +33,7 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from './package-description';
-import { parseAllServices } from './edmx-to-vdm/';
+import { getServiceName, parseAllServices } from './edmx-to-vdm/';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
@@ -194,7 +194,7 @@ export async function generateSourcesForService(
     resolvePath(service.directoryName, options)
   );
 
-  logger.info(`Generating entities for service: ${service.namespace}...`);
+  logger.info(`Generating entities for service: ${getServiceName(service)}...`);
 
   if (options.generatePackageJson) {
     otherFile(
@@ -215,7 +215,7 @@ export async function generateSourcesForService(
 
   if (hasEntities(service)) {
     logger.info(
-      `Generating batch request builder for: ${service.namespace}...`
+      `Generating batch request builder for: ${getServiceName(service)}...`
     );
     sourceFile(
       serviceDir,
@@ -263,7 +263,7 @@ export async function generateSourcesForService(
 
   if (service.functionImports && service.functionImports.length) {
     logger.info(
-      `Generating function imports for service: ${service.namespace}...`
+      `Generating function imports for service: ${getServiceName(service)}...`
     );
     sourceFile(
       serviceDir,
@@ -275,7 +275,7 @@ export async function generateSourcesForService(
 
   if (service.actionsImports && service.actionsImports.length) {
     logger.info(
-      `Generating action imports for service: ${service.namespace}...`
+      `Generating action imports for service: ${getServiceName(service)}...`
     );
     sourceFile(
       serviceDir,
@@ -288,7 +288,7 @@ export async function generateSourcesForService(
   sourceFile(serviceDir, 'index', indexFile(service), options.forceOverwrite);
 
   if (options.writeReadme) {
-    logger.info(`Generating readme for service: ${service.namespace}...`);
+    logger.info(`Generating readme for service: ${getServiceName(service)}...`);
     otherFile(
       serviceDir,
       'README.md',
@@ -305,12 +305,14 @@ export async function generateSourcesForService(
   }
 
   if (options.generateNpmrc) {
-    logger.info(`Generating .npmrc for service: ${service.namespace}...`);
+    logger.info(`Generating .npmrc for service: ${getServiceName(service)}...`);
     otherFile(serviceDir, '.npmrc', npmrc(), options.forceOverwrite);
   }
 
   if (options.generateTypedocJson) {
-    logger.info(`Generating typedoc.json for service: ${service.namespace}...`);
+    logger.info(
+      `Generating typedoc.json for service: ${getServiceName(service)}...`
+    );
     otherFile(
       serviceDir,
       'typedoc.json',
@@ -322,7 +324,9 @@ export async function generateSourcesForService(
   if (options.generateCSN) {
     try {
       logger.info(
-        `Generating ${service.directoryName}-csn.json for service: ${service.namespace}...`
+        `Generating ${
+          service.directoryName
+        }-csn.json for service: ${getServiceName(service)}...`
       );
       otherFile(
         serviceDir,

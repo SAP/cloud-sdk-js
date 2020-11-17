@@ -6,6 +6,7 @@
         <Key>
           <PropertyRef Name="KeyPropertyString"/>
         </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
         <Property Name="Int16Property" Type="Edm.Int16"/>
         <Property Name="EnumProperty" Type="Namespace1.A_TestEnumType1"/>
         <Property Name="ComplexTypeProperty" Type="Namespace1.A_TestComplexType1"/>
@@ -29,6 +30,7 @@
         <Key>
           <PropertyRef Name="KeyPropertyString"/>
         </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
         <Property Name="SingleProperty" Type="Edm.Single"/>
       </EntityType>
       <ComplexType Name="A_TestComplexType2">
@@ -46,6 +48,7 @@
         <Key>
           <PropertyRef Name="KeyPropertyString"/>
         </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
         <Property Name="EnumProperty" Type="Namespace4.A_TestEnumType2"/>
         <Property Name="ComplexTypeProperty" Type="Namespace2.A_TestComplexType2"/>
       </EntityType>
@@ -53,6 +56,7 @@
         <Key>
           <PropertyRef Name="KeyPropertyString"/>
         </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
       </EntityType>
     </Schema>

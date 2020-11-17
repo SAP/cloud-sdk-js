@@ -104,7 +104,7 @@ export interface EdmxMetadata {
   oDataVersion: ODataVersion;
   fileName: string;
   // TODO 1584
-  namespace: string;
+  namespace: string[];
   selfLink?: string;
   root: EdmxMetadataSchemaV2Merged | EdmxMetadataSchemaV4Merged;
 }
@@ -114,16 +114,12 @@ function parseMetadata(
   oDataVersion: ODataVersion,
   edmxPath: PathLike
 ): EdmxMetadata {
-  let namespace;
-  if (root.Namespace.length > 0) {
-    namespace = root.Namespace[0];
-  }
   return {
     path: edmxPath,
     oDataVersion,
     fileName: basename(edmxPath.toString()).split('.')[0],
     // TODO 1584
-    namespace: namespace || root.Namespace,
+    namespace: root.Namespace,
     selfLink: parseLink(root),
     root
   };

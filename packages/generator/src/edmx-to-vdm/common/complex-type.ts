@@ -9,7 +9,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType, VdmMappedEdmType, VdmEnumType } from '../../vdm-types';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
-import { EdmxComplexTypeBase, EdmxComplexTypeBaseNamespaced } from '../../edmx-parser/common';
+import { EdmxComplexTypeBaseNamespaced } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
   complexTypeFieldType,

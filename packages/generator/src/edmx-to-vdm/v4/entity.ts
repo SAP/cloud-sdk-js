@@ -17,7 +17,10 @@ import {
   parseEntitySets,
   parseEntityType
 } from '../../edmx-parser/v4';
-import { EdmxMetadataSchemaV4Merged, ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import {
+  EdmxMetadataSchemaV4Merged,
+  ServiceMetadata
+} from '../../edmx-parser/edmx-file-reader';
 import { isCollectionType } from '../edmx-to-vdm-util';
 
 export function joinEntityTypes<T extends EdmxEntityType>(

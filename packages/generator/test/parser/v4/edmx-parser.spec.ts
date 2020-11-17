@@ -1,4 +1,7 @@
-import { EdmxMetadataSchemaV4Merged, readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
+import {
+  EdmxMetadataSchemaV4Merged,
+  readEdmxFile
+} from '../../../src/edmx-parser/edmx-file-reader';
 import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-parser';
 import {
   parseActionImport,
@@ -34,7 +37,8 @@ describe('edmx-edmx-parser', () => {
     parseEntitySetsV4(metadataEdmx.root as EdmxMetadataSchemaV4Merged).forEach(
       e => {
         expect(e.NavigationPropertyBinding).toBeInstanceOf(Array);
-    });
+      }
+    );
 
     parseEntityTypeV4(metadataEdmx.root).forEach(e => {
       expect(e.Key.PropertyRef).toBeInstanceOf(Array);

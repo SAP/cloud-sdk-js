@@ -1,5 +1,4 @@
 import {
-  EdmxMetadataEntityContainerV2Merged,
   EdmxMetadataSchemaV2Merged,
   readEdmxFile
 } from '../../../src/edmx-parser/edmx-file-reader';

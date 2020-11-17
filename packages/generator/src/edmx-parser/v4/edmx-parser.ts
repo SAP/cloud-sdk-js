@@ -13,9 +13,10 @@ import {
 import {
   EdmxAction,
   EdmxActionImport,
-  EdmxComplexType, EdmxComplexTypeNamespaced,
+  EdmxComplexType,
+  EdmxComplexTypeNamespaced,
   EdmxEntitySet,
-  EdmxEntityType, EdmxEntityTypeNamespaced,
+  EdmxEntityTypeNamespaced,
   EdmxEnumType,
   EdmxFunction,
   EdmxFunctionImport

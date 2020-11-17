@@ -20,8 +20,8 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
-  EdmxEntitySetBase, EdmxEntitySetBaseNamespaced,
-  EdmxEntityTypeBase, EdmxEntityTypeBaseNamespaced,
+  EdmxEntitySetBase,
+  EdmxEntityTypeBaseNamespaced,
   EdmxNamed,
   JoinedEntityMetadata
 } from '../../edmx-parser/common';

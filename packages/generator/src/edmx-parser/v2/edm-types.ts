@@ -1,4 +1,9 @@
-import { EdmxEntityTypeBase, EdmxNamed, EdmxNamespaced, EdmxParameter } from '../common';
+import {
+  EdmxEntityTypeBase,
+  EdmxNamed,
+  EdmxNamespaced,
+  EdmxParameter
+} from '../common';
 
 export interface EdmxNavigationProperty extends EdmxNamed {
   FromRole: string;

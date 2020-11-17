@@ -22,8 +22,10 @@ import {
   EdmxFunctionNamespaced
 } from './v4';
 import {
-  EdmxAssociation, EdmxAssociationNamespaced,
-  EdmxAssociationSet, EdmxAssociationSetNamespaced,
+  EdmxAssociation,
+  EdmxAssociationNamespaced,
+  EdmxAssociationSet,
+  EdmxAssociationSetNamespaced,
   EdmxFunctionImport as EdmxFunctionImportV2,
   EdmxFunctionImportNamespaced as EdmxFunctionImportNamespacedV2
 } from './v2';
@@ -85,15 +87,13 @@ export interface EdmxMetadataEntityContainer extends EdmxNamed {
   AssociationSet?: EdmxAssociationSet[];
 }
 
-export interface EdmxMetadataEntityContainerV2Merged
-  extends EdmxNamed {
+export interface EdmxMetadataEntityContainerV2Merged extends EdmxNamed {
   EntitySet: EdmxEntitySetBaseNamespaced[];
   FunctionImport: EdmxFunctionImportNamespacedV2[];
   AssociationSet: EdmxAssociationSetNamespaced[];
 }
 
-export interface EdmxMetadataEntityContainerV4Merged
-  extends EdmxNamed {
+export interface EdmxMetadataEntityContainerV4Merged extends EdmxNamed {
   EntitySet: EdmxEntitySetNamespaced[];
   FunctionImport: EdmxFunctionImportNamespacedV4[];
   ActionImport: EdmxActionImportNamespaced[];

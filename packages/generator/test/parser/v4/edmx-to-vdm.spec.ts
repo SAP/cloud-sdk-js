@@ -240,8 +240,6 @@ describe('edmx-to-vdm-v4', () => {
       'n3'
     );
 
-
-
     const service = createTestServiceData(
       [entityType1, entityType2],
       [entitySet1, entitySet2],

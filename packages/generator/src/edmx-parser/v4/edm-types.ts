@@ -2,7 +2,8 @@ import {
   EdmxComplexTypeBase,
   EdmxEntitySetBase,
   EdmxEntityTypeBase,
-  EdmxNamed, EdmxNamespaced,
+  EdmxNamed,
+  EdmxNamespaced,
   EdmxParameter
 } from '../common';
 

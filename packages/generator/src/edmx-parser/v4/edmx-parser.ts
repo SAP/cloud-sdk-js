@@ -13,7 +13,7 @@ import {
 import {
   EdmxAction,
   EdmxActionImport,
-  EdmxComplexType,
+  EdmxComplexType, EdmxComplexTypeNamespaced,
   EdmxEntitySet,
   EdmxEntityType, EdmxEntityTypeNamespaced,
   EdmxEnumType,
@@ -21,17 +21,17 @@ import {
   EdmxFunctionImport
 } from './edm-types';
 
-export function joinComplexTypes(
-  complexType: EdmxComplexType,
-  baseType: EdmxComplexType
-): EdmxComplexType {
+export function joinComplexTypes<T extends EdmxComplexType>(
+  complexType: T,
+  baseType: T
+): T {
   return {
     ...complexType,
     Property: [...complexType.Property, ...baseType.Property]
   };
 }
 
-export function parseComplexTypes(root): EdmxComplexType[] {
+export function parseComplexTypes(root): EdmxComplexTypeNamespaced[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);
 }
 

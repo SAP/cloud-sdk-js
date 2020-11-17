@@ -1,3 +1,4 @@
+import { flat } from '@sap-cloud-sdk/util';
 import {
   parseComplexTypesBase,
   parseEntitySetsBase,
@@ -5,14 +6,13 @@ import {
 } from '../common/edmx-parser';
 import { EdmxEntitySetBase } from '../common';
 import { forceArray } from '../../generator-utils';
+import { EdmxMetadataSchemaV2Merged } from '../edmx-file-reader';
 import {
   EdmxAssociation,
   EdmxAssociationSet,
-  EdmxEntityType, EdmxEntityTypeNamespaced,
+  EdmxEntityTypeNamespaced,
   EdmxFunctionImport
 } from './edm-types';
-import { flat } from '@sap-cloud-sdk/util';
-import { EdmxMetadataSchemaV2Merged, EdmxMetadataSchemaV4Merged } from '../edmx-file-reader';
 
 export function parseComplexTypes(root) {
   return parseComplexTypesBase(root);

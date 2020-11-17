@@ -52,6 +52,7 @@ export function transformEntityBase(
   const entity = {
     entitySetName: entityMetadata.entitySet.Name,
     entityTypeName: entityMetadata.entityType.Name,
+    entityTypeNamespace: entityMetadata.entityType.Namespace,
     className: classNames[entityMetadata.entitySet.Name],
     properties: properties(entityMetadata, complexTypes, formatter, enumTypes),
     creatable: entityMetadata.entitySet

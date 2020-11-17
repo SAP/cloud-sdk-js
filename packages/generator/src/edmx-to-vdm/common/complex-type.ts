@@ -9,7 +9,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType, VdmMappedEdmType, VdmEnumType } from '../../vdm-types';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
-import { EdmxComplexTypeBase } from '../../edmx-parser/common';
+import { EdmxComplexTypeBase, EdmxComplexTypeBaseNamespaced } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
   complexTypeFieldType,
@@ -40,7 +40,7 @@ export function includeFactoryName(
 }
 
 export function transformComplexTypesBase(
-  complexTypes: EdmxComplexTypeBase[],
+  complexTypes: EdmxComplexTypeBaseNamespaced[],
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): Omit<VdmComplexType, 'factoryName'>[] {
@@ -96,7 +96,8 @@ export function transformComplexTypesBase(
           isEnum,
           isCollection
         };
-      })
+      }),
+      namespace: c.Namespace
     };
   });
 }

@@ -201,18 +201,8 @@ describe('edmx-to-vdm-v4', () => {
   });
 
   it('transforms entities from different namespaces', () => {
-    const entityType1 = createEntityType(
-      'TestEntityType1',
-      [],
-      [],
-      'ns1'
-    );
-    const entityType2 = createEntityType(
-      'TestEntityType2',
-      [],
-      [],
-      'ns2'
-    );
+    const entityType1 = createEntityType('TestEntityType1', [], [], 'ns1');
+    const entityType2 = createEntityType('TestEntityType2', [], [], 'ns2');
     const entitySet1 = createTestEntitySet(
       'TestEntity1',
       'ns1.TestEntityType1',
@@ -225,10 +215,58 @@ describe('edmx-to-vdm-v4', () => {
       [],
       'ns3'
     );
+    const complexType1 = createComplexType(
+      'TestComplexType1',
+      [createTestProperty('ComplexTypeProp')],
+      'ns1'
+    );
+    const complexType2 = createComplexType(
+      'TestComplexType2',
+      [createTestProperty('ComplexTypeProp')],
+      'ns2'
+    );
 
-    const service = createTestServiceData([entityType1, entityType2], [entitySet1, entitySet2]);
-    const entity = generateEntitiesV4(service, [], [], getFormatter());
-    expect(entity.length).toBe(2);
+    const actionReturnsEntityType = createAction(
+      'ActionReturnsEntityType',
+      'ns1.TestEntityType1',
+      [],
+      'n3'
+    );
+
+    const actionReturnsComplexType = createAction(
+      'ActionReturnsComplexType',
+      'ns2.TestComplexType2',
+      [],
+      'n3'
+    );
+
+
+
+    const service = createTestServiceData(
+      [entityType1, entityType2],
+      [entitySet1, entitySet2],
+      [complexType1, complexType2],
+      [actionReturnsEntityType, actionReturnsComplexType]
+    );
+
+    const complexTypes = generateComplexTypesV4(service, [], getFormatter());
+    expect(complexTypes.length).toBe(2);
+
+    const entities = generateEntitiesV4(
+      service,
+      complexTypes,
+      [],
+      getFormatter()
+    );
+    expect(entities.length).toBe(2);
+
+    const actionImports = generateActionImportsV4(
+      service,
+      entities,
+      complexTypes,
+      getFormatter()
+    );
+    expect(actionImports.length).toBe(2);
   });
 });
 
@@ -296,6 +334,18 @@ function getComplexType(
   return {
     Name: 'TestComplexType',
     Property: [createTestProperty('ComplexTypeProp', 'Edm.String')],
+    Namespace: namespace
+  };
+}
+
+function createComplexType(
+  name: string,
+  property: EdmxProperty[],
+  namespace: string = defaultNamespace
+): EdmxComplexTypeNamespaced {
+  return {
+    Name: name,
+    Property: property,
     Namespace: namespace
   };
 }
@@ -377,7 +427,7 @@ function createTestEntitySet(
 ): EdmxEntitySetNamespaced {
   return {
     Namespace: namespace,
-    EntityType: `${namespace}.${type}`,
+    EntityType: `${type}`,
     Name: name,
     NavigationPropertyBinding: navPropertyBindings.map(([path, target]) => ({
       Path: path,

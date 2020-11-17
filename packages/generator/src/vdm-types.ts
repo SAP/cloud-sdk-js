@@ -37,6 +37,7 @@ export interface VdmEntity {
   properties: VdmProperty[];
   navigationProperties: VdmNavigationProperty[];
   description: string;
+  entityTypeNamespace: string;
 }
 
 // Properties
@@ -90,6 +91,7 @@ export interface VdmComplexType {
   typeName: string;
   factoryName: string;
   fieldType: string;
+  namespace: string;
 }
 
 export interface VdmFunctionImportBase {

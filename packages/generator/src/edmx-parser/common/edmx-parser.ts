@@ -1,16 +1,17 @@
 import { forceArray } from '../../generator-utils';
 import {
-  EdmxComplexTypeBase,
+  EdmxComplexTypeBase, EdmxComplexTypeBaseNamespaced,
   EdmxEntitySetBase,
   EdmxEntityTypeBase, EdmxEntityTypeBaseNamespaced
 } from './edmx-types';
 import { EdmxMetadataSchemaMerged } from '../edmx-file-reader';
 import { flat } from '@sap-cloud-sdk/util';
 
-export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
+export function parseComplexTypesBase(root): EdmxComplexTypeBaseNamespaced[] {
   return forceArray(root.ComplexType).map(c => ({
     ...c,
-    Property: forceArray(c.Property)
+    Property: forceArray(c.Property),
+    Namespace: c.Namespace
   }));
 }
 

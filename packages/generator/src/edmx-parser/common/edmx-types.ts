@@ -65,6 +65,9 @@ export interface EdmxComplexTypeBase extends EdmxNamed {
   Property: EdmxProperty[];
 }
 
+export type EdmxComplexTypeBaseNamespaced = EdmxComplexTypeBase &
+  EdmxNamespaced;
+
 export interface JoinedEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,
   EntityTypeT extends EdmxEntityTypeBase<any>

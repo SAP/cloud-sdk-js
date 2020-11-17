@@ -16,10 +16,11 @@
 
 - Batch `ReadResponse.as` does not parse errors anymore, but throws an error if the response in fact was an `ErrorResponse`. To avoid this check `response.isSuccess()` before casting.
 - Rename deprecated ODataRequestConfigs e.g. `ODataCreateRequestConfig` -> `ODataCreateRequestConfigLegacy` due to naming conflicts.
+- [Generator] In order to support multi-schema generation, the edmx schema/namespace related types are adjusted.
 
 ## New Functionality
 
--
+- [Generator] Multiple schemas in the edmx file are now supported.
 
 ## Improvements
 

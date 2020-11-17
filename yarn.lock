@@ -2167,7 +2167,7 @@ agentkeepalive@^3.4.1:
   dependencies:
     humanize-ms "^1.2.1"
 
-ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3, ajv@^6.12.4, ajv@^6.5.2, ajv@^6.5.4:
+ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3, ajv@^6.12.4, ajv@^6.5.2:
   version "6.12.6"
   resolved "https://registry.npmjs.org/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
   integrity sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==
@@ -3342,7 +3342,7 @@ content-disposition@0.5.3:
   dependencies:
     safe-buffer "5.1.2"
 
-content-type@^1.0.4, content-type@~1.0.4:
+content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
@@ -3944,13 +3944,6 @@ diff@^4.0.1:
   resolved "https://registry.npmjs.org/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
-difunc@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.npmjs.org/difunc/-/difunc-0.0.4.tgz#09322073e67f82effd2f22881985e7d3e441b3ac"
-  integrity sha512-zBiL4ALDmviHdoLC0g0G6wVme5bwAow9WfhcZLLopXCAWgg3AEf7RYTs2xugszIGulRHzEVDF/SHl9oyQU07Pw==
-  dependencies:
-    esprima "^4.0.0"
-
 dir-glob@^2.2.2:
   version "2.2.2"
   resolved "https://registry.npmjs.org/dir-glob/-/dir-glob-2.2.2.tgz#fa09f0694153c8918b18ba0deafae94769fc50c4"
@@ -4530,20 +4523,6 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-express-normalize-query-params-middleware@^0.5.0:
-  version "0.5.1"
-  resolved "https://registry.npmjs.org/express-normalize-query-params-middleware/-/express-normalize-query-params-middleware-0.5.1.tgz#dbe1e8139aecb234fb6adb5c0059c75db9733d2a"
-  integrity sha1-2+HoE5rssjT7attcAFnHXblzPSo=
-
-express-openapi@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/express-openapi/-/express-openapi-7.1.0.tgz#25c84d668f612b7ed6a2be57579e8dccaa30a879"
-  integrity sha512-YfXypgMfXLex91IlF8Fd9cdyuwoSIYZp/Io3LN3HFuBvQGN8TIXTPOI7sHmpbP3Q7nbJZdBiAkj65mKxEqWfLQ==
-  dependencies:
-    express-normalize-query-params-middleware "^0.5.0"
-    openapi-framework "^7.1.0"
-    openapi-types "^7.0.1"
-
 express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.npmjs.org/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
@@ -4971,11 +4950,6 @@ fs-minipass@^1.2.5:
   dependencies:
     minipass "^2.6.0"
 
-fs-routes@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/fs-routes/-/fs-routes-7.0.1.tgz#41fcfea23f23ecd2d740a7397813e9b169cdfb54"
-  integrity sha512-kSAfx/P8oLSi5+tblecTETcJJ/Q+qL+xzGx4hns/+gHXMkTOZEzG73/2dBDW1FFy5+ZW080XoMaBAN2kCN55aQ==
-
 fs-write-stream-atomic@^1.0.8:
   version "1.0.10"
   resolved "https://registry.npmjs.org/fs-write-stream-atomic/-/fs-write-stream-atomic-1.0.10.tgz#b47df53493ef911df75731e70a9ded0189db40c9"
@@ -5204,7 +5178,7 @@ glob-to-regexp@^0.3.0:
   resolved "https://registry.npmjs.org/glob-to-regexp/-/glob-to-regexp-0.3.0.tgz#8c5a1494d2066c570cc3bfe4496175acc4d502ab"
   integrity sha1-jFoUlNIGbFcMw7/kSWF1rMTVAqs=
 
-glob@*, glob@7.1.6, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
+glob@7.1.6, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
   version "7.1.6"
   resolved "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
   integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
@@ -5828,11 +5802,6 @@ is-descriptor@^1.0.0, is-descriptor@^1.0.2:
     is-accessor-descriptor "^1.0.0"
     is-data-descriptor "^1.0.0"
     kind-of "^6.0.2"
-
-is-dir@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/is-dir/-/is-dir-1.0.0.tgz#41d37f495fccacc05a4778d66e83024c292ba3ff"
-  integrity sha1-QdN/SV/MrMBaR3jWboMCTCkro/8=
 
 is-directory@^0.3.1:
   version "0.3.1"
@@ -6536,7 +6505,7 @@ js-tokens@^3.0.2:
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
   integrity sha1-mGbfOVECEw449/mWvOtlRDIJwls=
 
-js-yaml@^3.10.0, js-yaml@^3.12.1, js-yaml@^3.13.1, js-yaml@^3.14.0, js-yaml@^3.7.0:
+js-yaml@^3.12.1, js-yaml@^3.13.1, js-yaml@^3.14.0, js-yaml@^3.7.0:
   version "3.14.0"
   resolved "https://registry.npmjs.org/js-yaml/-/js-yaml-3.14.0.tgz#a7a34170f26a21bb162424d8adacb4113a69e482"
   integrity sha512-/4IbIeHcD9VMHFqDR/gQ7EdZdLimOvW2DdcxFjdyyZ9NsbS+ccrXqVWDtab/lRl5AlUqmpBx8EhPaWR+OtY17A==
@@ -8041,66 +8010,6 @@ openapi-backend@^3.6.3:
     qs "^6.9.3"
     swagger-parser "^10.0.2"
 
-openapi-default-setter@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/openapi-default-setter/-/openapi-default-setter-7.0.1.tgz#08679bbd6bcf74a13407965cef78de128e8046ae"
-  integrity sha512-O9jhaZPEEJzI1HSG3Yw5rOIC0EpZ9PjRJgtksXKuSMyEoxUDnl7zQ27LuFRR1ykSMVhMt8vHMrQBQIwLW8S0yQ==
-  dependencies:
-    openapi-types "^7.0.1"
-
-openapi-framework@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/openapi-framework/-/openapi-framework-7.1.0.tgz#3ae511ddca7b60c8ee27743411eac5dc790ce51f"
-  integrity sha512-GB1TUdv51fYKdvzy0Xg3fLtsuHXJY0v0PR6XGjdSKgxLYK8PA1/dQfxtTRftzx7XVI6uMegdG8aCAPwYTsypWQ==
-  dependencies:
-    difunc "0.0.4"
-    fs-routes "^7.0.1"
-    glob "*"
-    is-dir "^1.0.0"
-    js-yaml "^3.10.0"
-    openapi-default-setter "^7.0.1"
-    openapi-request-coercer "^7.1.0"
-    openapi-request-validator "^7.0.2"
-    openapi-response-validator "^7.0.1"
-    openapi-schema-validator "^7.0.1"
-    openapi-security-handler "^7.0.1"
-    openapi-types "^7.0.1"
-    ts-log "^2.1.4"
-
-openapi-jsonschema-parameters@^7.0.2:
-  version "7.0.2"
-  resolved "https://registry.npmjs.org/openapi-jsonschema-parameters/-/openapi-jsonschema-parameters-7.0.2.tgz#165bcec0103e282223c5a5e85c9d8517e0ee79f5"
-  integrity sha512-hCC8wsWu9qU/pWCUClAYmUyXRhAeXSZUCRV7NVlj/8+3fWrtTBwk8GKI2dRa5Up0yZ3pstGi3Ewzzuixbmh8sw==
-  dependencies:
-    openapi-types "^7.0.1"
-
-openapi-request-coercer@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/openapi-request-coercer/-/openapi-request-coercer-7.1.0.tgz#6890d7d962d993d1183afe4cdaa80e364ad8525d"
-  integrity sha512-6nvSgvOvLYMkUBu3NbHQU6Lcol1WxDr0DsOe3oYHb2tZhokrNEuOF20QYPV+CGZYyEzc0f+Hdas774n5B0euLg==
-  dependencies:
-    openapi-types "^7.0.1"
-    ts-log "^2.1.4"
-
-openapi-request-validator@^7.0.2:
-  version "7.0.2"
-  resolved "https://registry.npmjs.org/openapi-request-validator/-/openapi-request-validator-7.0.2.tgz#b4c717e63732b9d5d79a9767d640f59afc8c79d1"
-  integrity sha512-0JV3gdHNqJgcHwgojPj2f6RqUI02uHI5yUBcKAtLhvQ9tkrgcVTAHdengPyfoLT35NDRWhhQuc8VhS/mUtFI0g==
-  dependencies:
-    ajv "^6.5.4"
-    content-type "^1.0.4"
-    openapi-jsonschema-parameters "^7.0.2"
-    openapi-types "^7.0.1"
-    ts-log "^2.1.4"
-
-openapi-response-validator@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/openapi-response-validator/-/openapi-response-validator-7.0.1.tgz#9c3526594c27cdfedbb31b0b81abb1333555a223"
-  integrity sha512-Fxr9YdQ6s7/SIvvM888iWnc1GUn/fFxTaMFqHkUv0/eNCYoBfOwAKj9aptaRfL+BJXlsVdXWCJd3GWkwn8sIJA==
-  dependencies:
-    ajv "^6.5.4"
-    openapi-types "^7.0.1"
-
 openapi-schema-validator@^7.0.1:
   version "7.0.1"
   resolved "https://registry.npmjs.org/openapi-schema-validator/-/openapi-schema-validator-7.0.1.tgz#0dd333419f55ef882183294bce5db6ee980fab59"
@@ -8110,13 +8019,6 @@ openapi-schema-validator@^7.0.1:
     lodash.merge "^4.6.1"
     openapi-types "^7.0.1"
     swagger-schema-official "2.0.0-bab6bed"
-
-openapi-security-handler@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/openapi-security-handler/-/openapi-security-handler-7.0.1.tgz#52a05795de7ad36395ee555a73d74a298c309115"
-  integrity sha512-fiRJE2Z5F0tY9QBssBX9g8Txtr0oj1BOU0nOZ6QHHXQdCYxebszGgcXD63uy0UJQwzwVOMs/AlCnKNVS/yMSEg==
-  dependencies:
-    openapi-types "^7.0.1"
 
 openapi-types@^1.3.2:
   version "1.3.5"
@@ -10597,11 +10499,6 @@ ts-jest@^26.4.1:
     mkdirp "1.x"
     semver "7.x"
     yargs-parser "20.x"
-
-ts-log@^2.1.4:
-  version "2.2.3"
-  resolved "https://registry.npmjs.org/ts-log/-/ts-log-2.2.3.tgz#4da5640fe25a9fb52642cd32391c886721318efb"
-  integrity sha512-XvB+OdKSJ708Dmf9ore4Uf/q62AYDTzFcAdxc8KNML1mmAWywRFVt/dn1KYJH8Agt5UJNujfM3znU5PxgAzA2w==
 
 ts-morph@^8.1.0:
   version "8.2.0"

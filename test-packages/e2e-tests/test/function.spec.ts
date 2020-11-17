@@ -11,7 +11,7 @@ describe('functions', () => {
     const request = returnSapCloudSdk({});
     it('should serialize url', async () => {
       expect(await request.url(destination)).toBe(
-        `${url}/odata/test-service/returnSapCloudSdk()?$format=json`
+        `${url}odata/test-service/returnSapCloudSdk()?$format=json`
       );
     });
 
@@ -28,7 +28,7 @@ describe('functions', () => {
 
     it('should serialize url', async () => {
       expect(await request.url(destination)).toBe(
-        `${url}/odata/test-service/concatStrings(Str1='test',Str2='string')?$format=json`
+        `${url}odata/test-service/concatStrings(Str1='test',Str2='string')?$format=json`
       );
     });
 

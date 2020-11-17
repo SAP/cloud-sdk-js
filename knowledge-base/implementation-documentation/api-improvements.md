@@ -194,6 +194,7 @@ const buPa: BusinessPartner = await BusinessPartner.requestBuilder().getAll().ex
 ```
 
 ### Issues
+This currently does not allow to access the response (or request) object, which means not having information on the HTTP code, raw response and other information, that might be relevant.
 
 ### Alternatives
 

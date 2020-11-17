@@ -65,7 +65,7 @@ const buPa: BusinessPartner = await BusinessPartnerApi.getAll()
   .execute(destination);
 ```
 * Could fix circular dependencies.
-* Could be implemented as a non-breaking change initially.
+* Could be implemented as a non-breaking change initially by deprecating the old `BusinessPartner.requestBuilder()` methods and delegate to the new `BusinessPartnerApi`.
 * Realistic for 2.0.
 
 

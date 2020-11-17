@@ -303,7 +303,7 @@ function createTestServiceData(
   return {
     edmx: {
       fileName: '',
-      namespace: '',
+      namespace: [''],
       path: '',
       oDataVersion: 'v4',
       root: {

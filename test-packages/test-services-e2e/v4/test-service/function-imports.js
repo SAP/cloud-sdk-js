@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.returnSapCloudSdk = exports.returnInt = exports.getByKey = void 0;
+exports.functionImports = exports.concatStrings = exports.returnSapCloudSdk = exports.returnInt = exports.getByKey = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -45,9 +45,24 @@ function returnSapCloudSdk(parameters) {
     return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'returnSapCloudSdk', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
 }
 exports.returnSapCloudSdk = returnSapCloudSdk;
+/**
+ * Concat Strings.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+function concatStrings(parameters) {
+    var params = {
+        str1: new core_1.FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
+        str2: new core_1.FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
+    };
+    return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'concatStrings', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
+}
+exports.concatStrings = concatStrings;
 exports.functionImports = {
     getByKey: getByKey,
     returnInt: returnInt,
-    returnSapCloudSdk: returnSapCloudSdk
+    returnSapCloudSdk: returnSapCloudSdk,
+    concatStrings: concatStrings
 };
 //# sourceMappingURL=function-imports.js.map

@@ -8,6 +8,10 @@ module.exports = async srv => {
     oRequest.reply('SapCloudSdk');
   });
 
+  srv.on('concatStrings', async oRequest => {
+    oRequest.reply(Object.values(oRequest.data).join(''));
+  });
+
   srv.on('returnInt', async oRequest => {
     const param = oRequest.data.param;
     oRequest.reply(param);

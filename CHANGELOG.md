@@ -19,7 +19,7 @@
 
 ## New Functionality
 
--
+- 
 
 ## Improvements
 
@@ -29,6 +29,7 @@
 ## Fixed Issues
 
 - [Generator] Fix the enum type (V4), when only one enum member is defined in the metadata.
+- [OData] Fix function imports with and without parameters using the OData V4 syntax.
 
 
 # 1.31.0

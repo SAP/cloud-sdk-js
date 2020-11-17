@@ -1,3 +1,4 @@
+import { identity } from '@sap-cloud-sdk/util';
 import { Constructable, UpdateRequestBuilderBase } from '../../odata-common';
 import { EntityV4 } from '../entity';
 import { entitySerializerV4 } from '../entity-serializer';
@@ -32,7 +33,8 @@ export class UpdateRequestBuilderV4<
       _entity,
       oDataUriV4,
       entitySerializerV4,
-      extractODataEtagV4
+      extractODataEtagV4,
+      identity
     );
   }
 

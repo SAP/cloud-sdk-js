@@ -124,7 +124,7 @@ describe('deep-update and change detection', () => {
       }
     );
 
-    const request = TestEntity.requestBuilder()
+    const request = await TestEntity.requestBuilder()
       .update(testEntity)
       .requiredFields(
         TestEntity.TO_SINGLE_LINK,
@@ -132,6 +132,6 @@ describe('deep-update and change detection', () => {
       )
       .execute(destination);
 
-    await expect(request).resolves.not.toThrow();
+    // await expect(request).resolves.not.toThrow();
   });
 });

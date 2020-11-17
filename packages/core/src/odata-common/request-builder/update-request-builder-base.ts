@@ -34,13 +34,19 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    * @param oDataUri - Collection of URI conversion methods
    * @param entitySerializer - Entity serializer
    * @param extractODataEtag - Extractor for etag from payload
+   * @param payloadManipulator - Manipulator for the payload.
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT,
     readonly oDataUri: ODataUri,
     readonly entitySerializer: EntitySerializer,
-    readonly extractODataEtag: (json: Record<string, any>) => string | undefined
+    readonly extractODataEtag: (
+      json: Record<string, any>
+    ) => string | undefined,
+    readonly payloadManipulator: (
+      body: Record<string, any>
+    ) => Record<string, any>
   ) {
     super(new ODataUpdateRequestConfig(_entityConstructor, oDataUri));
     this.requestConfig.eTag = _entity.versionIdentifier;
@@ -180,6 +186,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
 
     if (this.requestConfig.method === 'patch') {
       let body = this.serializedDiff();
+      body = this.payloadManipulator(body);
       body = this.removeKeyFields(body);
       body = this.addRequiredFields(serializedBody, body);
       body = this.removeIgnoredFields(body);
@@ -195,18 +202,6 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
       }
     }
     return true;
-  }
-
-  protected removePropertyOnCondition(
-    condition: (objectEntry: [string, any]) => boolean,
-    body: Record<string, any>
-  ): Record<string, any> {
-    return Object.entries(body).reduce((resultBody, [key, val]) => {
-      if (condition([key, val])) {
-        return resultBody;
-      }
-      return { ...resultBody, [key]: val };
-    }, {});
   }
 
   private addRequiredFields(
@@ -242,17 +237,33 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
       ...this._entity.getUpdatedCustomFields()
     };
   }
+
   private removeKeyFields(body: Record<string, any>): Record<string, any> {
-    return this.removePropertyOnCondition(
+    return removePropertyOnCondition(
       ([key, val]) => this.getKeyFieldNames().includes(key),
       body
     );
   }
 
   private removeIgnoredFields(body: Record<string, any>): Record<string, any> {
-    return this.removePropertyOnCondition(
+    return removePropertyOnCondition(
       ([key, val]) => this.ignored.has(key),
       body
     );
   }
+}
+
+/*
+hidden
+ */
+export function removePropertyOnCondition(
+  condition: (objectEntry: [string, any]) => boolean,
+  body: Record<string, any>
+): Record<string, any> {
+  return Object.entries(body).reduce((resultBody, [key, val]) => {
+    if (condition([key, val])) {
+      return resultBody;
+    }
+    return { ...resultBody, [key]: val };
+  }, {});
 }

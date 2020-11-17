@@ -4,6 +4,7 @@ import {
   EntityIdentifiable,
   ODataRequest,
   ODataUpdateRequestConfig,
+  removePropertyOnCondition,
   UpdateRequestBuilderBase
 } from '../../odata-common';
 import { EntityV2 } from '../entity';
@@ -44,7 +45,8 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
       _entity,
       oDataUriV2,
       entitySerializerV2,
-      extractODataEtagV2
+      extractODataEtagV2,
+      removeNavPropsAndComplexTypes
     );
   }
 
@@ -68,22 +70,6 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
 
     return super.executeRequest(request);
   }
-
-  protected getPayload(): Record<string, any> {
-    if (this.requestConfig.method === 'patch') {
-      return this.removeNavPropsAndComplexTypes(super.getPayload());
-    }
-    return super.getPayload();
-  }
-
-  private removeNavPropsAndComplexTypes(
-    body: Record<string, any>
-  ): Record<string, any> {
-    return this.removePropertyOnCondition(
-      ([key, val]) => typeof val === 'object',
-      body
-    );
-  }
 }
 
 /*
@@ -106,6 +92,15 @@ function warnIfNavigation<EntityT extends EntityV2>(
   }
 
   return request;
+}
+
+function removeNavPropsAndComplexTypes(
+  body: Record<string, any>
+): Record<string, any> {
+  return removePropertyOnCondition(
+    ([key, val]) => typeof val === 'object',
+    body
+  );
 }
 
 export { UpdateRequestBuilderV2 as UpdateRequestBuilder };

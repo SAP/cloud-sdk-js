@@ -1,7 +1,7 @@
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
 import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
 /**
- * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
+ * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
 export declare class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEntityType {
     /**

@@ -33,7 +33,7 @@ exports.MultiSchemaTestEntity = void 0;
 var MultiSchemaTestEntityRequestBuilder_1 = require("./MultiSchemaTestEntityRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
 /**
- * This class represents the entity "MultiSchemaTestEntity" of service "SCHEMA_DATA".
+ * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
 var MultiSchemaTestEntity = /** @class */ (function (_super) {
     __extends(MultiSchemaTestEntity, _super);
@@ -77,7 +77,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
      * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
      * Technical service name for MultiSchemaTestEntity.
      */
-    MultiSchemaTestEntity._serviceName = 'SCHEMA_DATA';
+    MultiSchemaTestEntity._serviceName = 'API_MULTIPLE_SCHEMAS_SRV';
     /**
      * Default url path for the according service.
      */

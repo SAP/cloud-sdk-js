@@ -1,4 +1,4 @@
-# Root Cause in Error Object 
+# More Structure in Error Object
 
 ## Status
 

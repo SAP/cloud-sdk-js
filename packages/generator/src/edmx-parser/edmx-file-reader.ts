@@ -106,7 +106,7 @@ export interface EdmxMetadata {
   // TODO 1584
   namespace: string[];
   selfLink?: string;
-  root: EdmxMetadataSchemaV2Merged | EdmxMetadataSchemaV4Merged;
+  root: any;
 }
 
 function parseMetadata(
@@ -150,15 +150,12 @@ function getRoot(edmx) {
   if (schema.length > 1) {
     // We assume SFSF edmx files to always have multiple schema tags
     logger.info(`${schema.length} schemas found. Schemas will be merged.`);
-    const ret = mergeSchema(schema);
-    return ret;
+    return mergeSchema(schema);
   }
-  const ret2 = mergeSchema(forceArray(schema));
-  return ret2;
+  return mergeSchema(forceArray(schema));
 }
 
 function mergeSchema(schema: EdmxMetadataSchema[]) {
-  // : EdmxMetadataSchemaV2Merged | EdmxMetadataSchemaV4Merged
   return {
     EntityContainer: flat(
       schema.map(s =>

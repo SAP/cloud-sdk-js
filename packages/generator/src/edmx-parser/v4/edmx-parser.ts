@@ -56,9 +56,7 @@ export function parseEntitySets(
 ): EdmxEntitySet[] {
   return flat(root.EntityContainer.map(ec => ec.EntitySet)).map(entitySet => ({
     ...entitySet,
-    NavigationPropertyBinding: forceArray(
-      entitySet['NavigationPropertyBinding']
-    )
+    NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)
   }));
 }
 

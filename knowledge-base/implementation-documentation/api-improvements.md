@@ -76,7 +76,8 @@ const buPa: BusinessPartner = await BusinessPartnerApi.getAll()
   .execute(destination);
 ```
 * Cleaner separation between responsibilities.
-* Importing three things is quite complex
+* Importing three things is quite complex. 
+This could be avoided by using the function style filtering as discussed below.
 * Could be implemented as a non-breaking change initially.
 * Optionally call BusinessPartner => BusinessPartnerEntity.
 * Realistic for 2.0, but only useful if we consider function style filtering (at any point).

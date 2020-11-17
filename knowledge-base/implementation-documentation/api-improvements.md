@@ -104,6 +104,7 @@ BusinessPartner.requestBuilder().getAll()
 * We are only using static variables here. This is not clear anymore and might be more confusing than before.
 * Makes more sense when the schema is split from entity and api.
 * The examples below could be non-breaking changes done sequentially over time.
+We would keep the original way to filter, deprecate it and allow for the new function in addition.
 
 Futher examples (and options):
 ```ts

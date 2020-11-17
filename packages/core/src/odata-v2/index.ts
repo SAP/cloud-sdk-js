@@ -6,6 +6,7 @@ export * from './batch-change-set';
 export * from './request-builder/batch-request-builder';
 export * from './batch-request-serializer';
 export * from './payload-value-converter';
+export * from './request';
 export * from './request-builder';
 export * from './selectable/custom-field';
 export * from './uri-conversion';

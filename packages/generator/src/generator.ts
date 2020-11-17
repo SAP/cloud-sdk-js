@@ -89,9 +89,7 @@ export function transpileDirectory(dir: Directory): Promise<void> {
   logger.info(`Transpiling files in the directory: ${dir.getPath()} started.`);
   return execa('tsc', { cwd: dir.getPath() })
     .then(() => {
-      logger.info(
-        `Transpiling files in direcotory:  ${dir.getPath()} finished.`
-      );
+      logger.info(`Transpiling files in directory: ${dir.getPath()} finished.`);
     })
     .catch(err => {
       logger.error(`Error: Failed to generate js files: ${err}`);

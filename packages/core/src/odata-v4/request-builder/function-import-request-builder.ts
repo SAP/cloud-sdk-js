@@ -1,9 +1,9 @@
 import { oDataUriV4 } from '../uri-conversion';
 import {
   ActionFunctionImportRequestBuilderBase,
-  FunctionImportParameters,
-  ODataFunctionImportRequestConfig
+  FunctionImportParameters
 } from '../../odata-common';
+import { ODataFunctionImportRequestConfigV4 } from '../request';
 
 /**
  * Create OData request to execute a function import.
@@ -30,7 +30,7 @@ export class FunctionImportRequestBuilderV4<
   ) {
     super(
       responseTransformer,
-      new ODataFunctionImportRequestConfig(
+      new ODataFunctionImportRequestConfigV4(
         'get',
         defaultServicePath,
         functionImportName,

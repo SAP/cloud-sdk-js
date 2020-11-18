@@ -121,7 +121,7 @@ One could include a `httpNoThrow` flag to the `execute` methods.
 If switched on the request builder will not throw HTTP related error but include them in the return. 
 
 ```typescript
-const [buPa, httpError]: [BusinessPartner,HttpError] = await BusinessPartner.requestBuilder().httpNoThrow().getAll().execute(destination);
+const [buPa, httpError]: [BusinessPartner, HttpError] = await BusinessPartner.requestBuilder().httpNoThrow().getAll().execute(destination);
 ```
 
 The `httpError` object contains information on  HTTP errors appearing during the request. 

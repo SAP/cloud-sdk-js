@@ -3,7 +3,7 @@ const cds = require('@sap/cds');
 const express = require('express');
 
 module.exports = {
-  createODataApp() {
+  createCapApp() {
     const app = express();
     cds
       .serve('all')

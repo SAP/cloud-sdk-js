@@ -1,6 +1,6 @@
 import { createLogger, last } from '@sap-cloud-sdk/util';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
-import { EdmxProperty } from '../edmx-parser/common';
+import { EdmxParameter, EdmxProperty } from '../edmx-parser/common';
 import {
   edmToFieldType,
   edmToTsType,
@@ -155,3 +155,16 @@ export function typesForCollection(
 
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
+
+export function hasUnsupportedParameterTypes(parameters: EdmxParameter[]) {
+  const ret = parameters.find(p => {
+    if (!isEdmType(p.Type)) {
+      logger.warn(
+        `Only Edm type is supported as action/function parameter now, but detects ${p.Type}. Ignore the whole function/action import.`
+      );
+      return true;
+    }
+    return false;
+  });
+  return ret !== undefined;
+}

@@ -10,12 +10,13 @@ import {
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
 
 function findFunctionForFunctionImport(
   functions: EdmxFunction[],
   functionImport: EdmxFunctionImport
-): EdmxFunction {
+): EdmxFunction | undefined {
   return findActionFunctionByImportName(
     functions,
     functionImport.Function,
@@ -34,34 +35,48 @@ export function generateFunctionImportsV4(
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImports(serviceMetadata.edmx.root);
 
-  return functionImports.map(functionImport => {
-    const edmxFunction = findFunctionForFunctionImport(
-      functions,
-      functionImport
-    );
+  return functionImports
+    .map(functionImport => {
+      const edmxFunction = findFunctionForFunctionImport(
+        functions,
+        functionImport
+      );
 
-    const httpMethod = 'get';
-    const swaggerDefinition = swaggerDefinitionForFunctionImport(
-      functionImport.Name,
-      httpMethod,
-      serviceMetadata.swagger
-    );
+      if (!edmxFunction) {
+        return undefined;
+      }
 
-    return {
-      ...transformFunctionImportBase(
-        functionImport,
-        edmxFunction.Parameter,
-        swaggerDefinition,
-        formatter
-      ),
-      httpMethod,
-      returnType: parseFunctionImportReturnTypes(
-        edmxFunction.ReturnType?.Type,
-        entities,
-        complexTypes,
-        extractResponse,
-        serviceMetadata.edmx.oDataVersion
-      )
-    };
-  });
+      const httpMethod = 'get';
+      const swaggerDefinition = swaggerDefinitionForFunctionImport(
+        functionImport.Name,
+        httpMethod,
+        serviceMetadata.swagger
+      );
+
+      // TODO 1571
+      if (
+        edmxFunction.Parameter &&
+        hasUnsupportedParameterTypes(edmxFunction.Parameter)
+      ) {
+        return undefined;
+      }
+
+      return {
+        ...transformFunctionImportBase(
+          functionImport,
+          edmxFunction.Parameter,
+          swaggerDefinition,
+          formatter
+        ),
+        httpMethod,
+        returnType: parseFunctionImportReturnTypes(
+          edmxFunction.ReturnType?.Type,
+          entities,
+          complexTypes,
+          extractResponse,
+          serviceMetadata.edmx.oDataVersion
+        )
+      };
+    })
+    .filter(e => e !== undefined) as VdmFunctionImport[];
 }

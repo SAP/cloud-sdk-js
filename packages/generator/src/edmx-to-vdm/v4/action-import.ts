@@ -10,12 +10,13 @@ import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmActionImport, VdmComplexType, VdmEntity } from '../../vdm-types';
 import { parseActionImportReturnTypes } from '../common/action-function-return-types';
 import { transformActionImportBase } from '../common/action-import';
+import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
 
 function findActionForActionImport(
   actions: EdmxAction[],
   actionImport: EdmxActionImport
-): EdmxAction {
+): EdmxAction | undefined {
   return findActionFunctionByImportName(actions, actionImport.Action, 'action');
 }
 
@@ -30,31 +31,44 @@ export function generateActionImportsV4(
   const actions = parseActions(serviceMetadata.edmx.root);
   const actionImports = parseActionImport(serviceMetadata.edmx.root);
 
-  return actionImports.map(actionImport => {
-    const edmxAction = findActionForActionImport(actions, actionImport);
+  return actionImports
+    .map(actionImport => {
+      const edmxAction = findActionForActionImport(actions, actionImport);
 
-    const httpMethod = 'post';
-    const swaggerDefinition = swaggerDefinitionForFunctionImport(
-      actionImport.Name,
-      httpMethod,
-      serviceMetadata.swagger
-    );
+      if (!edmxAction) {
+        return undefined;
+      }
 
-    return {
-      ...transformActionImportBase(
-        actionImport,
-        edmxAction.Parameter || [],
-        swaggerDefinition,
-        formatter
-      ),
-      httpMethod,
-      returnType: parseActionImportReturnTypes(
-        edmxAction.ReturnType?.Type,
-        entities,
-        complexTypes,
-        extractResponse,
-        serviceMetadata.edmx.oDataVersion
-      )
-    };
-  });
+      const httpMethod = 'post';
+      const swaggerDefinition = swaggerDefinitionForFunctionImport(
+        actionImport.Name,
+        httpMethod,
+        serviceMetadata.swagger
+      );
+      // TODO 1571
+      if (
+        edmxAction.Parameter &&
+        hasUnsupportedParameterTypes(edmxAction.Parameter)
+      ) {
+        return undefined;
+      }
+
+      return {
+        ...transformActionImportBase(
+          actionImport,
+          edmxAction.Parameter || [],
+          swaggerDefinition,
+          formatter
+        ),
+        httpMethod,
+        returnType: parseActionImportReturnTypes(
+          edmxAction.ReturnType?.Type,
+          entities,
+          complexTypes,
+          extractResponse,
+          serviceMetadata.edmx.oDataVersion
+        )
+      };
+    })
+    .filter(e => e !== undefined) as VdmActionImport[];
 }

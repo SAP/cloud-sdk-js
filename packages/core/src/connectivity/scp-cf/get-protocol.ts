@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { Destination } from './destination';
 import { Protocol } from './protocol';
-import { Destination } from './index';
 
 const logger = createLogger({
   package: 'core',

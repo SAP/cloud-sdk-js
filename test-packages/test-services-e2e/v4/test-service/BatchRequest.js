@@ -25,6 +25,6 @@ function changeset(first) {
     return new core_1.ODataBatchChangeSetV4(util_1.variadicArgumentToArray(first, rest));
 }
 exports.changeset = changeset;
-exports.defaultTestServicePath = '/test-service';
+exports.defaultTestServicePath = '/odata/test-service';
 var map = { 'TestEntity': index_1.TestEntity, 'TestEntityLink': index_1.TestEntityLink };
 //# sourceMappingURL=BatchRequest.js.map

@@ -9,8 +9,8 @@
   "scripts": {
     "pretest": "yarn deploy && yarn start",
     "posttest": "yarn stop",
-    "start": "pm2 start cds-run.js || pm2 restart cds-run.js",
-    "stop": "pm2 stop cds-run.js",
+    "start": "pm2 start server.js || pm2 restart server.js",
+    "stop": "pm2 stop server.js",
     "deploy": "cds deploy --to sqlite",
     "test": "yarn jest --runInBand",
     "test:local": "yarn jest",
@@ -25,7 +25,10 @@
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
+    "@apidevtools/swagger-parser": "^10.0.2",
+    "json-schema-faker": "^0.5.0-rcv.30",
     "moment": "^2.29.0",
+    "openapi-backend": "^3.6.3",
     "pm2": "^4.4.0"
   },
   "cds": {

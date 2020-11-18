@@ -89,11 +89,13 @@ This becomes even more problematic since there are no `throws declaration` possi
 We could at least include  a `root` property to the error:
 
 ```typescript
-interface ErrorWithRoot {
+class ErrorWithRoot extends Error {
     name: string;
     message: string;
     stack?: string;
-    rootMessage?:string   
+    originalError?:Error   
+    get rootError():Error|undefined{}
+    //recursibly check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
 }
 ```
 
@@ -119,7 +121,7 @@ One could include a `httpNoThrow` flag to the `execute` methods.
 If switched on the request builder will not throw HTTP related error but include them in the return. 
 
 ```typescript
-const [buPa, httpError]: [BusinessPartner, Request, Response] = await BusinessPartner.requestBuilder().httpNoThrow().getAll().execute(destination);
+const [buPa, httpError]: [BusinessPartner,HttpError] = await BusinessPartner.requestBuilder().httpNoThrow().getAll().execute(destination);
 ```
 
 The `httpError` object contains information on  HTTP errors appearing during the request. 
@@ -131,7 +133,7 @@ Pros:
 Cons:
 - Errors are handled differently (Http vs. deserializing errors for example).
 
-### Option D: Introduce `failible` return types
+### Option D: Introduce `failable` return types
 
 A pattern I found [here](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9) is a failable type:
 ```typescript
@@ -164,8 +166,13 @@ Cons:
 
 ## Decision
 
-To be discussed
+We take option B.
+Check convention on MDN how what to throw i.e. should you extend from the error object. 
+Also adjust the name `ErrorWithRoot` to something better.
+
+The colleagues from exchange rate lib had problems with the [prototype chain](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#support-for-newtarget).
+Just consider these kind of problems.
 
 ## Consequences
 
-What becomes easier or more difficult to do because of this change?
+none

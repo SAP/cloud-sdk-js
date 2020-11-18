@@ -1,4 +1,4 @@
-import { ODataRequest, ODataRequestConfig } from './index';
+import { ODataRequest, ODataRequestConfig } from './request';
 
 /**
  * Create object containing all headers, including custom headers for a given  OData request configuration and destination.

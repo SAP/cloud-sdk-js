@@ -212,7 +212,13 @@ module.exports = {
     'no-new-wrappers': 'error',
     'no-redeclare': 'off',
     '@typescript-eslint/no-redeclare': ['error'],
-    'no-restricted-imports': ['error', '../', './'],
+    'no-restricted-imports': [
+      'error',
+      {
+        paths: ['../', '../../', './'],
+        patterns: ['*/index']
+      }
+    ],
     'no-return-await': 'error',
     'no-sequences': 'error',
     'no-shadow': 'off',

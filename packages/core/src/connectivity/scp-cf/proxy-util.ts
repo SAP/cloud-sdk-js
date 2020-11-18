@@ -2,13 +2,11 @@ import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { HttpAgentConfig, HttpsAgentConfig } from '../../http-client';
-import {
-  Destination,
-  ProxyConfiguration,
-  Protocol,
-  basicHeader,
-  getProtocolOrDefault
-} from './index';
+import { getProtocolOrDefault } from './get-protocol';
+import { Destination } from './destination';
+import { Protocol } from './protocol';
+import { ProxyConfiguration } from './connectivity-service-types';
+import { basicHeader } from './authorization-header';
 
 const logger = createLogger({
   package: 'core',

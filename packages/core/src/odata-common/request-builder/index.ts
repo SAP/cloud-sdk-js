@@ -6,3 +6,4 @@ export * from './count-request-builder';
 export * from './action-function-import-request-builder-base';
 export * from './create-request-builder-base';
 export * from './delete-request-builder-base';
+export * from './update-request-builder-base';

@@ -29,7 +29,7 @@ export function changeset(first: undefined | WriteTestServiceRequestBuilder | Ar
   return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
 }
 
-export const defaultTestServicePath = '/test-service';
+export const defaultTestServicePath = '/odata/test-service';
 const map = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink };
 export type ReadTestServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink>;
 export type WriteTestServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink>;

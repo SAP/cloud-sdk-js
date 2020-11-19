@@ -56,9 +56,9 @@ export class GenerateRestClient extends Command {
 
   async run() {
     try {
-      const { flags } = this.parse(GenerateRestClient);
+      const parsed = this.parse(GenerateRestClient);
       await checkJavaPresent();
-      await generateRest(flags);
+      await generateRest(parsed.flags);
     } catch (e) {
       logger.error(e.message);
       return cli.exit(1);

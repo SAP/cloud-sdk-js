@@ -60,7 +60,7 @@ describe('service-parser', () => {
 
       const actions = services[0].actionsImports;
 
-      expect(actions?.length).toBe(3);
+      expect(actions?.length).toBe(4);
       const actionWithUnsupportedEdmType = actions?.find(
         action => action.originalName === 'TestActionImportUnsupportedEdmTypes'
       );

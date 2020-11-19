@@ -153,7 +153,7 @@ Introducing such a types is a bit like a throw declaration and you can list the 
 function execute():Failable<BusinessPartner,AxiosError| ParseError | Error>
 ```
 
-Nothe that his also goes a bit in the direction of checked exceptions but you have union types and can define type aliases which avoid that you have to change a zillion files you add one more error cause.
+Note that his also goes a bit in the direction of checked exceptions but you have union types and can define type aliases which avoid that you have to change a zillion files you add one more error cause.
 
 Pros:
 - Error handling strongly typed

@@ -156,11 +156,18 @@ export function typesForCollection(
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
-export function hasUnsupportedParameterTypes(parameters: EdmxParameter[]): boolean {
+export function hasUnsupportedParameterTypes(
+  name: string,
+  parameters: EdmxParameter[]
+): boolean {
   const unsupportedParameters = parameters.filter(p => !isEdmType(p.Type));
   if (unsupportedParameters) {
-      logger.warn(
-        `Unsupported function or action import parameter types ${unsupportedParameters.map(p => p.Type).join(', ')} found. The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
+    logger.warn(
+      `Unsupported function or action import parameter types ${unsupportedParameters
+        .map(p => p.Type)
+        .join(
+          ', '
+        )} found, which is used by the function import or action import "${name}". The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
     );
   }
   return !!unsupportedParameters;

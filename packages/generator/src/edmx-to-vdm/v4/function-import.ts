@@ -55,8 +55,7 @@ export function generateFunctionImportsV4(
 
       // TODO 1571
       if (
-        edmxFunction.Parameter &&
-        hasUnsupportedParameterTypes(edmxFunction.Parameter)
+        hasUnsupportedParameterTypes(edmxFunction.Name, edmxFunction.Parameter)
       ) {
         return undefined;
       }

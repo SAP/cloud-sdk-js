@@ -46,10 +46,7 @@ export function generateActionImportsV4(
         serviceMetadata.swagger
       );
       // TODO 1571
-      if (
-        edmxAction.Parameter &&
-        hasUnsupportedParameterTypes(edmxAction.Parameter)
-      ) {
+      if (hasUnsupportedParameterTypes(edmxAction.Name, edmxAction.Parameter)) {
         return undefined;
       }
 

@@ -28,7 +28,7 @@ export function generateFunctionImportsV2(
       );
 
       // TODO 1571
-      if (f.Parameter && hasUnsupportedParameterTypes(f.Parameter)) {
+      if (hasUnsupportedParameterTypes(f.Name, f.Parameter)) {
         return undefined;
       }
 

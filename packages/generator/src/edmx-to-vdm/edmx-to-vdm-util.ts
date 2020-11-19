@@ -156,7 +156,7 @@ export function typesForCollection(
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
-export function hasUnsupportedParameterTypes(parameters: EdmxParameter[]) {
+export function hasUnsupportedParameterTypes(parameters: EdmxParameter[]): boolean {
   const ret = parameters.find(p => {
     if (!isEdmType(p.Type)) {
       logger.warn(

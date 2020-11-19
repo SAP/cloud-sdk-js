@@ -161,14 +161,15 @@ export function hasUnsupportedParameterTypes(
   parameters: EdmxParameter[]
 ): boolean {
   const unsupportedParameters = parameters.filter(p => !isEdmType(p.Type));
-  if (unsupportedParameters) {
+  if (unsupportedParameters.length > 0) {
     logger.warn(
-      `Unsupported function or action import parameter types ${unsupportedParameters
+      `Unsupported function or action import parameter types "${unsupportedParameters
         .map(p => p.Type)
         .join(
           ', '
-        )} found, which is used by the function import or action import "${name}". The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
+        )}" found, which is used by the function import or action import "${name}". The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
     );
+    return true;
   }
-  return !!unsupportedParameters;
+  return false;
 }

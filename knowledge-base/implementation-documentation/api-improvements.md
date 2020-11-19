@@ -2,8 +2,11 @@
 
 This document contains some ideas for API changes, that would be a breaking change and would result in a major version upgrade.
 
-
 ## Filtering root elements based on 1-1 relationships
+
+**Decision** (Version 2 candidate)
+* Leaning towards option 2
+* Feedback from users would be helpful
 
 ### Current API
 ```ts
@@ -20,7 +23,7 @@ The inner filter is quite confusing, because `filter` implies that we are filter
 
 ### Alternatives
 
-`filterBy`
+**1. `filterBy`**
 
 ```ts
 BusinessPartner.requestBuilder().getAll()
@@ -30,8 +33,12 @@ BusinessPartner.requestBuilder().getAll()
     )
   )
 ```
+Cons:
+* Might not really solve the issue:
+  * The difference in language `filter` versus `filterBy` is quite subtle and could still be confused.
+  * Potentially from the context this is not clear
 
-flatten filters
+**2. flatten filters**
 
 ```ts
 BusinessPartner.requestBuilder().getAll()
@@ -41,12 +48,16 @@ BusinessPartner.requestBuilder().getAll()
     any(BusinessPartner.TO_MULTI_LINK.CITY.equals('Berlin'))
   )
 ```
-Concerns:
+Cons:
 * Matter of taste - not clearly better.
 * Longer for "deep" paths.
 * Not straight forward to implement. (Further investigation needed.)
 
 ## Seperate Entity(Set) API and entity
+
+**Decision** (Version 2 decided)
+* Option 1 required
+* Option 2 optional, only if we do function style filtering
 
 ### Current API
 ```ts
@@ -54,11 +65,11 @@ const buPa: BusinessPartner = await BusinessPartner.requestBuilder().getAll().ex
 ```
 
 ### Issues
-The entity is a god-like element here. Separating could clean up.
+The entity is a god-like element here and might cause confusion. Separating could clean up.
 
 ### Alternatives
 
-Split entity and api
+**1. Split entity and api**
 ```ts
 const buPa: BusinessPartner = await BusinessPartnerApi.getAll()
   .filter(BusinessPartner.FIRST_NAME.equals('Peter'))
@@ -69,20 +80,27 @@ const buPa: BusinessPartner = await BusinessPartnerApi.getAll()
 * Realistic for 2.0.
 
 
-Split entity instance, api, and "helpers" (schema)
+**2. Split entity instance, api, and schema**
 ```ts
 const buPa: BusinessPartner = await BusinessPartnerApi.getAll()
   .filter(BusinessPartnerSchema.FIRST_NAME.equals('Peter'))
   .execute(destination);
 ```
-* Cleaner separation between responsibilities.
-* Importing three things is quite complex. 
-This could be avoided by using the function style filtering as discussed below.
 * Could be implemented as a non-breaking change initially.
 * Optionally call BusinessPartner => BusinessPartnerEntity.
 * Realistic for 2.0, but only useful if we consider function style filtering (at any point).
 
+Pros:
+* Cleaner separation between responsibilities.
+
+Cons:
+* Importing three things is quite complex.
+  * This could be avoided by using the function style filtering as discussed below.
+
 ## Function style filtering
+**Decision** (Version 2 candidate)
+* Options 1 and 2 required
+* Option 3b optional
 
 ### Current API
 ```ts
@@ -96,17 +114,21 @@ To get closer to the look and feel of native JavaScript, instead of passing filt
 
 ### Alternatives
 
-Using a function:
+**1. Using a function**
 ```ts
 BusinessPartner.requestBuilder().getAll()
   .filter(bupa => bupa.FIRST_NAME.equals('Peter'))
 ```
-* We are only using static variables here. This is not clear anymore and might be more confusing than before.
-* Makes more sense when the schema is split from entity and api.
-* The examples below could be non-breaking changes done sequentially over time.
-We would keep the original way to filter, deprecate it and allow for the new function in addition.
+Pros:
+  * More "javascripty"
 
-Futher examples (and options):
+Cons:
+* Does not make much sense without separating api and entity from schema: We are only using static variables here. This is not clear anymore and might be more confusing than before.
+
+* The examples below could be non-breaking changes done sequentially over time.
+  * We would keep the original way to filter, deprecate it and allow for the new function in addition.
+
+**2. Futher examples (and options)**
 ```ts
 BusinessPartner.requestBuilder().getAll()
   .filter((bupa, { and }) => and(
@@ -114,18 +136,43 @@ BusinessPartner.requestBuilder().getAll()
   ))
 ```
 
+Pros:
+* Users don't have to import core anymore
+* Potentially easier to find
+
+**3a. Passing functions for comparison**
+
 ```ts
 BusinessPartner.requestBuilder().getAll()
   .filter((bupa, { and, equals }) => and(
     equals(bupa.FIRST_NAME, 'Peter')
   ))
 ```
+* Similar behavior to filter functions.
 
-Using a JavaScript function:
+Cons:
+* Not all comparison funtions are available on all types, how would you know which ones you can use
+  * Lose discoverability
+
+```ts
+BusinessPartner.requestBuilder().getAll()
+  .filter((bupa, { and, expect }) => and(
+    expect(bupa.FIRST_NAME).equals('Peter')
+  ))
+```
+* Naming of `expect` needs to be discussed futher. Other options: `filter`, `f`
+
+Pros:
+* Allows discoverability
+* Reduces the complexity of the schema
+
+**4. Using JavaScript functions**
 ```ts
 BusinessPartner.requestBuilder().getAll()
   .filter(buPa => buPa.FIRST_NAME === 'Peter' && buPa.LAST_NAME === 'Pan')
 ```
+
+Cons:
 * Difficult to implement.
 * Not realistic for 2.0, but maybe later.
 
@@ -137,6 +184,7 @@ const buPa: BusinessPartner = await BusinessPartner.requestBuilder().getAll().ex
 ```
 
 ### Issues
+Matter of taste.
 
 ### Alternatives
 
@@ -150,6 +198,14 @@ const buPa: BusinessPartner = await BusinessPartnerApi(destination).getAll({
 * Not realistic for 2.0, but maybe later.
 
 ## Batch
+
+**Decision** (Version 2 candidate **quick wins only**)
+* Implement quick wins (which contain breaking changes)
+* Potentially get feedback from users on other issues (not necessarily the listed ones)
+
+**Questions**
+* Is the remote state handling a hard requirement (potential confusion for users)?
+* If yes, should this also be handled the same way in batch?
 
 ### Current API
 
@@ -182,11 +238,14 @@ Quick wins:
 * Rename WriteResponses to ChangesetResponse
 
 Investigation needed:
-* Root level types with 10 arguements (generics) for batch and changeset
+* Root level types with 10 arguments (generics) for batch and changeset
 * If possible map incoming requests to responses (x-request-id, content-id, message-id headers?)
 
 
 ## Execute raw
+
+**Decision** (No API changes, thus normal backlog item)
+* Option 1 required, implementation of executeRaw should follow structure in option 2
 
 ### Current API
 ```ts
@@ -198,15 +257,23 @@ This currently does not allow to access the response (or request) object, which 
 
 ### Alternatives
 
+**1. executeRaw**
 ```ts
 const buPa: Response<BusinessPartner> = await BusinessPartner.requestBuilder().getAll().executeRaw(destination);
 ```
+* Could be implemented without breaking change
+Pros:
+* Allows usage of old `execute` to get parsed response data directly
 
+**2. Return a response object on execute**
+```ts
+const {data: buPa, req, res}: Response<BusinessPartner> = await BusinessPartner.requestBuilder().getAll().execute(destination);
+```
+* Basically Option 1, only with breaking change
+
+**3. Return a response array on execute**
 ```ts
 const [buPa, req, res]: [BusinessPartner, Request, Response] = await BusinessPartner.requestBuilder().getAll().execute(destination);
-```
-
-```ts
-const [buPa, req, res]: [BusinessPartner, Request, Response] = await BusinessPartner.requestBuilder().getAll().executeRaw(destination);
-const buPa: BusinessPartner = await BusinessPartner.requestBuilder().getAll().execute(destination);
+// Could also be
+const [buPa] = await BusinessPartner.requestBuilder().getAll().execute(destination);
 ```

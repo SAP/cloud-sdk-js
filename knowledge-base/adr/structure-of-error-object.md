@@ -93,9 +93,10 @@ class ErrorWithRoot extends Error {
     name: string;
     message: string;
     stack?: string;
-    originalError?:Error   
-    get rootError():Error|undefined{}
-    //recursibly check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
+    originalError?: Error;
+    get rootError(): Error | undefined {
+      //recursibly check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
+    }
 }
 ```
 

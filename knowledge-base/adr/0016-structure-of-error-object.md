@@ -2,7 +2,7 @@
 
 ## Status
 
-proposed
+decided
 
 ## Context
 
@@ -86,7 +86,7 @@ This becomes even more problematic since there are no `throws declaration` possi
 
 ### Option B: Include the original error
 
-We could at least include  a `root` property to the error:
+We could include an `originalError` object which contains the original error which we want to wrap in the `ErrorWithRoot`.
 
 ```typescript
 class ErrorWithRoot extends Error {
@@ -96,19 +96,23 @@ class ErrorWithRoot extends Error {
     originalError?: Error;
     get rootError(): Error | undefined {
       //recursibly check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
+      if(this.originalError instanceof ErrorWithRoot){
+        return this.originalError.rootError
+      }  
+      return this.originalError;
     }
 }
 ```
 
-the variable `rootMessage` would contain `Request failed with status code 400` in the example above.
+In addition we also add a getter `rootError` which handles chained ErrorWithRoot.  
 
 Pros:
-- You can access the root message  quickly
+- You can access the original and root error  quickly
 - No inheritance
 
 Cons:
-- No structured information on the kind of error
 - A check if the property is there is needed
+- Also here some kind of down cast is needed by the customer to get the information on the original error.
 
 ### Option C: Make the RequestBuilder non-throwy
 
@@ -147,7 +151,7 @@ type Failable<ResultType, ErrorType=Error> = {
 }
 ``` 
 
-Introducing such a types is a bit like a throw declaration and you can list the exception which are appearing.
+Introducing such  types is a bit like a throw declaration and you can list the errors which are appearing.
 
 ```typescript
 function execute():Failable<BusinessPartner,AxiosError| ParseError | Error>
@@ -176,4 +180,4 @@ Just consider these kind of problems.
 
 ## Consequences
 
-none
+This will allow users to get the original error object as well as the root error object from the error thrown by the SDK.

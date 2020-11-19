@@ -3,7 +3,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { SyntaxKind } from 'ts-morph';
-import { generateProject, generateRest } from '../src/generator';
+import { generateProject } from '../src/generator';
+import { GenerateRestClient } from '../src/commands/generate-rest-client';
 
 describe('rest generator', () => {
   const inputDir = path.resolve(__dirname, 'resources', 'test-apis');
@@ -18,7 +19,7 @@ describe('rest generator', () => {
   });
 
   it('should generate the sap graph client', async () => {
-    await generateRest({ inputDir, outputDir });
+    await GenerateRestClient.run(['-i', inputDir, '-o', outputDir]);
 
     const services = fs.readdirSync(outputDir);
     expect(services).toEqual(expect.arrayContaining(['petstore']));

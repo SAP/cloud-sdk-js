@@ -14,7 +14,7 @@ import {
   writeJsonSync
 } from 'fs-extra';
 import { Project } from 'ts-morph';
-import { GeneratorOptions } from './generator-cli';
+import { GeneratorOptions } from './commands/generate-rest-client';
 import { projectOptions, sourceFile } from './utils';
 import { toOpenApiServiceMetaData } from './parse-open-api-json';
 import { OpenApiServiceMetadata } from './open-api-types';
@@ -128,14 +128,12 @@ async function generateFilesUsingOpenAPI(
 
   logger.info(`Argument for openapi generator ${generationArguments}`);
 
-  try {
-    const response = await execa.sync('npx', generationArguments);
-    if (response !== undefined) {
-      logger.info(`Generated the client ${response.stdout}`);
-    }
-  } catch (err) {
-    logger.error('In exception block');
-    logger.error(err);
+  const response = await execa.sync('npx', generationArguments);
+  if (response.stderr !== '') {
+    throw new Error(response.stderr);
+  }
+  if (response !== undefined) {
+    logger.info(`Generated the client ${response.stdout}`);
   }
 }
 

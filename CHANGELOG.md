@@ -10,7 +10,7 @@
 
 ## Known Issues
 
--
+- [Gemerator] Using entity type as the parameter of function or action imports is not supported.
 
 ## Compatibility Notes
 
@@ -25,7 +25,7 @@
 
 - Export the `tenant` interface from the scp-cf module.
 - Throw an error when attempting to parse a batch `ReadResponse` that in fact is an `ErrorResponse`.
-- [Generator] Log warnings when generating code for function or action imports with unknown parameter or return types, instead of throwing errors.
+- [Generator] Log warnings when generating code for function or action imports with unknown parameter, instead of throwing errors.
 
 ## Fixed Issues
 

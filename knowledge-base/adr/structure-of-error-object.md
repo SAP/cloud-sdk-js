@@ -136,7 +136,7 @@ Cons:
 
 ### Option D: Introduce `failable` return types
 
-A pattern I found [here](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9) is a failable type:
+This pattern](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9) is a failable type:
 ```typescript
 type Failable<ResultType, ErrorType=Error> = {
   isError: true;

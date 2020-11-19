@@ -8,7 +8,7 @@ import {
 } from '@sap-cloud-sdk/util';
 
 /**
- * @deprecated Since v1.31.1. Use [[toSanitizedObject]] instead.
+ * @deprecated Since v1.32.0. Use [[toSanitizedObject]] instead.
  * Create a header object based on the given key and value if neither key nor value are nullish.
  * @param key - Name of the header.
  * @param value - Value of the header.
@@ -22,7 +22,7 @@ export function toSanitizedHeaderObject(
 }
 
 /**
- * @deprecated Since v1.31.1. Use [[pickIgnoreCase]] instead.
+ * @deprecated Since v1.32.0. Use [[pickIgnoreCase]] instead.
  *
  * Find a header in a given header object, if available, indepdendent of the case (lower / upper).
  * @param key - Name of the header to be found.
@@ -37,7 +37,7 @@ export function getHeader(
 }
 
 /**
- * @deprecated Since v1.31.1. Use [[pickIgnoreCase]] instead.
+ * @deprecated Since v1.32.0. Use [[pickIgnoreCase]] instead.
  *
  * Find headers in a given header object, if available, indepdendent of the case (lower / upper).
  * @param keys - Name of the header to be found.
@@ -52,7 +52,7 @@ export function getHeaders(
 }
 
 /**
- * @deprecated Since v1.31.1. Use [[pickValueIgnoreCase]] instead.
+ * @deprecated Since v1.32.0. Use [[pickValueIgnoreCase]] instead.
  *
  * Get the value of a header based on the given key, independent of the case (lower / upper).
  * @param key - Name of the header to be found.
@@ -67,7 +67,7 @@ export function getHeaderValue(
 }
 
 /**
- * @deprecated Since v1.31.1. Use [[pickNonNullish]] instead.
+ * @deprecated Since v1.32.0. Use [[pickNonNullish]] instead.
  *
  * Filter headers that have nullish values.
  * @param headers - A header object to be filtered.
@@ -80,7 +80,7 @@ export function filterNullishValues(
 }
 
 /**
- * @deprecated Since v1.31.1. Use [[mergeLeftIgnoreCase]] instead.
+ * @deprecated Since v1.32.0. Use [[mergeLeftIgnoreCase]] instead.
  *
  * Create a header object by replacing headers that are set as custom headers.
  * @param headers - A base header object that contains the headers that will be compared with `customHeaders`.
@@ -95,7 +95,7 @@ export function replaceDuplicateKeys(
 }
 
 /**
- * @deprecated Since v1.31.1. Use [[mergeIgnoreCase]] instead.
+ * @deprecated Since v1.32.0. Use [[mergeIgnoreCase]] instead.
  *
  * Create a header object by merging two header objects, where the custom headers take precedence.
  * @param headers - A base header object that contains the headers that will be compared with `customHeaders`.

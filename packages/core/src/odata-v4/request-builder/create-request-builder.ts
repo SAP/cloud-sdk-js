@@ -1,28 +1,20 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
 import {
   Constructable,
-  EntityIdentifiable,
-  Link,
-  MethodRequestBuilderBase,
-  ODataCreateRequestConfig
+  CreateRequestBuilderBase,
+  EntityIdentifiable
 } from '../../odata-common';
 import { EntityV4 } from '../entity';
-import { deserializeEntityV4 } from '../entity-deserializer';
-import { serializeEntityV4 } from '../entity-serializer';
-import {
-  DestinationOptions,
-  Destination,
-  DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
 import { oDataUriV4 } from '../uri-conversion';
-import { getSingleResult } from './response-data-accessor';
+import { entitySerializerV4 } from '../entity-serializer';
+import { entityDeserializerV4 } from '../entity-deserializer';
+import { responseDataAccessorV4 } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  *
  * @typeparam EntityT - Type of the entity to be created
  */
 export class CreateRequestBuilderV4<EntityT extends EntityV4>
-  extends MethodRequestBuilderBase<ODataCreateRequestConfig<EntityT>>
+  extends CreateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of CreateRequestBuilder.
@@ -34,73 +26,13 @@ export class CreateRequestBuilderV4<EntityT extends EntityV4>
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor, oDataUriV4));
-
-    this.requestConfig.payload = serializeEntityV4(
-      this._entity,
-      this._entityConstructor
+    super(
+      _entityConstructor,
+      _entity,
+      oDataUriV4,
+      entitySerializerV4,
+      entityDeserializerV4,
+      responseDataAccessorV4
     );
-  }
-
-  get entity(): EntityT {
-    return this._entity;
-  }
-
-  /**
-   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.
-   * Builds the payload of the query.
-   * @returns the builder itself
-   */
-  prepare(): this {
-    this.requestConfig.payload = serializeEntityV4(
-      this._entity,
-      this._entityConstructor
-    );
-    return this;
-  }
-
-  /**
-   * Specifies the parent of the entity to create.
-   *
-   * @param parentEntity - Parent of the entity to create
-   * @param linkField - Static representation of the navigation property that navigates from the parent entity to the child entity
-   * @returns The entity itself, to facilitate method chaining
-   */
-  asChildOf<ParentEntityT extends EntityV4>(
-    parentEntity: ParentEntityT,
-    linkField: Link<ParentEntityT, EntityT>
-  ): this {
-    this.requestConfig.parentKeys = oDataUriV4.getEntityKeys(
-      parentEntity,
-      linkField._entityConstructor
-    );
-    this.requestConfig.childField = linkField;
-    return this;
-  }
-
-  /**
-   * Execute query.
-   *
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to the created entity
-   */
-  async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
-  ): Promise<EntityT> {
-    this.prepare();
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(response =>
-        deserializeEntityV4(
-          getSingleResult(response.data),
-          this._entityConstructor,
-          response.headers
-        )
-      )
-      .catch(error =>
-        Promise.reject(errorWithCause('Create request failed!', error))
-      );
   }
 }

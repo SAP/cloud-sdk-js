@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { edmToTsV4, tsToEdmV4 } from '../src/';
+import { edmToTsV4, tsToEdmV4 } from '../src';
 
 describe('edmToTsV4()', () => {
   it('should parse Edm.Date to moment', () => {

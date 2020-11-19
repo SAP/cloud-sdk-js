@@ -84,7 +84,7 @@ Cons:
 - The consumer needs some kind of "down cast" to find the actual error type returned (catch blocks, instanceof check)
 This becomes even more problematic since there are no `throws declaration` possible.
 
-### Option B: Include the Root cause error Message 
+### Option B: Include the original error
 
 We could at least include  a `root` property to the error:
 

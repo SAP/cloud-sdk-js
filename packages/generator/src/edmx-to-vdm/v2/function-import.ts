@@ -27,7 +27,7 @@ export function generateFunctionImportsV2(
         serviceMetadata.swagger
       );
 
-      // TODO 1571
+      // TODO 1571 remove when supporting entity type as parameter
       if (hasUnsupportedParameterTypes(f.Name, f.Parameter)) {
         return undefined;
       }

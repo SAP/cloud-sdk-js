@@ -45,7 +45,7 @@ export function generateActionImportsV4(
         httpMethod,
         serviceMetadata.swagger
       );
-      // TODO 1571
+      // TODO 1571 remove when supporting entity type as parameter
       if (hasUnsupportedParameterTypes(edmxAction.Name, edmxAction.Parameter)) {
         return undefined;
       }

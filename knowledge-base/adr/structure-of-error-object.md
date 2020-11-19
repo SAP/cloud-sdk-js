@@ -59,7 +59,7 @@ This ADR decides the way to improve the situation for the customer.
 
 ## Options
 
-### Option A: Extending the Error Interface/Object
+### Option A: Extending the Error interface/object
 
 We could extend the Error object: 
 

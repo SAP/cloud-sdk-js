@@ -25,7 +25,7 @@
 
 - Export the `tenant` interface from the scp-cf module.
 - Throw an error when attempting to parse a batch `ReadResponse` that in fact is an `ErrorResponse`.
-- [Generator] Generator will log with warning messages when detecting function/action import with unsupported types, e.g., entity type instead of throwing errors. Similarly, when function/action import has undefined function/action, using log with warn level instead of throwing errors.
+- [Generator] Log warnings when generating code for function or action imports with unknown parameter or return types, instead of throwing errors.
 
 ## Fixed Issues
 

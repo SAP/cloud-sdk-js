@@ -66,9 +66,8 @@ class ServiceGenerator {
   ): VdmServicePackageMetaData {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
       ServiceNameFormatter.originalToServiceName(
-        // TODO 1584
-        serviceMetadata.edmx.namespace.length === 1
-          ? serviceMetadata.edmx.namespace[0]
+        serviceMetadata.edmx.namespaces.length === 1
+          ? serviceMetadata.edmx.namespaces[0]
           : serviceMetadata.edmx.fileName
       ),
       serviceMetadata.edmx.fileName
@@ -84,8 +83,7 @@ class ServiceGenerator {
 
     return {
       oDataVersion: serviceMetadata.edmx.oDataVersion,
-      // TODO 1584
-      namespace: serviceMetadata.edmx.namespace,
+      namespaces: serviceMetadata.edmx.namespaces,
       originalFileName: serviceMetadata.edmx.fileName,
       directoryName,
       npmPackageName,
@@ -145,8 +143,7 @@ export function parseService(
 }
 
 export function getServiceName(service: VdmServiceMetadata) {
-  // TODO 1584
-  return service.namespace.length === 1
-    ? service.namespace[0]
+  return service.namespaces.length === 1
+    ? service.namespaces[0]
     : service.originalFileName;
 }

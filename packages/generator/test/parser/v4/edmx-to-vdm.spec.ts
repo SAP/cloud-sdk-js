@@ -1,11 +1,11 @@
 import { ServiceNameFormatter } from '../../../src/service-name-formatter';
 import { EdmxParameter, EdmxProperty } from '../../../src/edmx-parser/common';
 import {
-  EdmxActionImportNamespaced,
-  EdmxActionNamespaced,
-  EdmxComplexTypeNamespaced,
-  EdmxEntitySetNamespaced,
-  EdmxEntityTypeNamespaced
+  EdmxAction,
+  EdmxActionImport,
+  EdmxComplexType,
+  EdmxEntitySet,
+  EdmxEntityType
 } from '../../../src/edmx-parser/v4';
 import {
   generateComplexTypesV4,
@@ -294,16 +294,16 @@ function createServiceWithActions(): ServiceMetadata {
 }
 
 function createTestServiceData(
-  entityTypes: EdmxEntityTypeNamespaced[],
-  entitySets: EdmxEntitySetNamespaced[],
-  complexType: EdmxComplexTypeNamespaced[] = [getComplexType()],
-  actions: EdmxActionNamespaced[] = [],
+  entityTypes: EdmxEntityType[],
+  entitySets: EdmxEntitySet[],
+  complexType: EdmxComplexType[] = [getComplexType()],
+  actions: EdmxAction[] = [],
   namespace: string = defaultNamespace
 ): ServiceMetadata {
   return {
     edmx: {
       fileName: '',
-      namespace: [''],
+      namespaces: [''],
       path: '',
       oDataVersion: 'v4',
       root: {
@@ -326,9 +326,7 @@ function createTestServiceData(
   };
 }
 
-function getComplexType(
-  namespace: string = defaultNamespace
-): EdmxComplexTypeNamespaced {
+function getComplexType(namespace: string = defaultNamespace): EdmxComplexType {
   return {
     Name: 'TestComplexType',
     Property: [createTestProperty('ComplexTypeProp', 'Edm.String')],
@@ -340,7 +338,7 @@ function createComplexType(
   name: string,
   property: EdmxProperty[],
   namespace: string = defaultNamespace
-): EdmxComplexTypeNamespaced {
+): EdmxComplexType {
   return {
     Name: name,
     Property: property,
@@ -348,9 +346,7 @@ function createComplexType(
   };
 }
 
-function createImportsForActions(
-  actions: EdmxActionNamespaced[]
-): EdmxActionImportNamespaced[] {
+function createImportsForActions(actions: EdmxAction[]): EdmxActionImport[] {
   return actions.map(action => ({
     Name: action.Name,
     Action: `SomePrefix.${action.Name}`,
@@ -363,7 +359,7 @@ function createAction(
   returnType: string | undefined,
   parameter: EdmxParameter[],
   namespace: string = defaultNamespace
-): EdmxActionNamespaced {
+): EdmxAction {
   return {
     Name: name,
     Parameter: parameter,
@@ -382,7 +378,7 @@ function createEntityType(
   properties: [string, string, boolean][],
   navigationProperties: [string, string][] = [],
   namespace: string = defaultNamespace
-): EdmxEntityTypeNamespaced {
+): EdmxEntityType {
   return {
     'sap:content-version': '',
     Key: {
@@ -422,7 +418,7 @@ function createTestEntitySet(
   type: string,
   navPropertyBindings: [string, string][] = [],
   namespace: string = defaultNamespace
-): EdmxEntitySetNamespaced {
+): EdmxEntitySet {
   return {
     Namespace: namespace,
     EntityType: `${type}`,

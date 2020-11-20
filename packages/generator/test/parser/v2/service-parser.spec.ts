@@ -55,7 +55,7 @@ describe('service-parser', () => {
         })
       );
 
-      expect(services[0].namespace[0]).toBe('API_TEST_SRV');
+      expect(services[0].namespaces[0]).toBe('API_TEST_SRV');
       expect(services[0].directoryName).toBe('test-service');
       expect(services[0].npmPackageName).toBe('test-service');
       expect(services[0].servicePath).toBe('/sap/opu/odata/sap/API_TEST_SRV');

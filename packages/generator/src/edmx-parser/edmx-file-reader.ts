@@ -90,8 +90,7 @@ export interface EdmxMetadata {
   path: PathLike;
   oDataVersion: ODataVersion;
   fileName: string;
-  // TODO 1584
-  namespace: string[];
+  namespaces: string[];
   selfLink?: string;
   root: any;
 }
@@ -105,8 +104,7 @@ function parseMetadata(
     path: edmxPath,
     oDataVersion,
     fileName: basename(edmxPath.toString()).split('.')[0],
-    // TODO 1584
-    namespace: root.Namespace,
+    namespaces: root.Namespace,
     selfLink: parseLink(root),
     root
   };

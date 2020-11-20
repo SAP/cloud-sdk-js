@@ -141,12 +141,10 @@ export function joinEntityMetadata<
     let entityType = entityTypes.find(
       t => `${t.Namespace}.${t.Name}` === entitySet.EntityType
     );
-    // TODO 1584 backwards compatibility
+    // TODO 1584 remove this block after testing all the s/4 edmx files
     if (!entityType) {
-      // We assume metadata files to have a maximum of two schemas currently
-      // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
       entityType = entityTypes.find(
-        t => t.Name === entitySet.EntityType.split('.').slice(-1)[0]
+        t => t.Name === last(entitySet.EntityType.split('.'))
       );
     }
 

@@ -33,9 +33,9 @@ jobs:
           git config --global user.name "gh-actions"
           set -x
           cd ..
-          git clone --depth 1 git@github.com:SAP/cloud-sdk.git documentation
-          rsync -avz cloud-sdk/docs/api/ documentation/static/api/
-          cd documentation
+          git clone --depth 1 git@github.com:SAP/cloud-sdk.git
+          rsync -avz cloud-sdk-js/docs/api/ cloud-sdk/static/api/
+          cd cloud-sdk
           git add -A
           git commit -a -m "JS API documentation update via pipeline" || exit 0
           git push

@@ -50,7 +50,6 @@ export function generateEntitiesV4(
   const entitiesMetadata = joinEntityMetadata(
     entitySets,
     entityTypes,
-    serviceMetadata.edmx.namespace,
     serviceMetadata.swagger
   );
   const classNames = createEntityClassNames(entitiesMetadata, formatter);

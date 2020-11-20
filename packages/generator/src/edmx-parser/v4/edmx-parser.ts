@@ -1,15 +1,13 @@
-import { flat } from '@sap-cloud-sdk/util';
 import {
+  extractPropertiesFromEntityContainer,
   parseComplexTypesBase,
+  parseEntitySetsBase,
   parseEntityTypesBase
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
 import { joinEntityTypes } from '../../edmx-to-vdm/v4';
 import { joinTypesWithBaseTypes } from '../legacy/v4';
-import {
-  EdmxMetadataSchemaMerged,
-  EdmxMetadataSchemaV4Merged
-} from '../edmx-file-reader';
+import { EdmxMetadataSchemaMerged } from '../edmx-file-reader';
 import {
   EdmxAction,
   EdmxActionImport,
@@ -18,7 +16,8 @@ import {
   EdmxEntityType,
   EdmxEnumType,
   EdmxFunction,
-  EdmxFunctionImport
+  EdmxFunctionImport,
+  EdmxNavigationPropertyBinding
 } from './edm-types';
 
 export function joinComplexTypes<T extends EdmxComplexType>(
@@ -51,21 +50,25 @@ export function parseEntityType(
   return joinTypesWithBaseTypes(entityTypes, joinEntityTypes);
 }
 
-export function parseEntitySets(
-  root: EdmxMetadataSchemaV4Merged
-): EdmxEntitySet[] {
-  return flat(root.EntityContainer.map(ec => ec.EntitySet)).map(entitySet => ({
+export function parseEntitySets(root): EdmxEntitySet[] {
+  return parseEntitySetsBase(root).map(entitySet => ({
     ...entitySet,
-    NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)
+    NavigationPropertyBinding: parseNavigationPropertyBinding(entitySet)
   }));
 }
 
+function parseNavigationPropertyBinding(
+  entitySet
+): EdmxNavigationPropertyBinding[] {
+  return forceArray(entitySet.NavigationPropertyBinding);
+}
+
 export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return flat(root.EntityContainer.map(ec => ec.FunctionImport));
+  return extractPropertiesFromEntityContainer(root, ec => ec.FunctionImport);
 }
 
 export function parseActionImport(root): EdmxActionImport[] {
-  return flat(root.EntityContainer.map(ec => ec.ActionImport));
+  return extractPropertiesFromEntityContainer(root, ec => ec.ActionImport);
 }
 
 function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {

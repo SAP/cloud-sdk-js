@@ -19,8 +19,6 @@ import {
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
-import { getServiceName } from '../service-generator';
-
 export function entityClass(
   entity: VdmEntity,
   service: VdmServiceMetadata
@@ -45,11 +43,7 @@ function staticProperties(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): PropertyDeclarationStructure[] {
-  return [
-    entityName(entity),
-    serviceName(entity, service),
-    defaultServicePath(service)
-  ];
+  return [entityName(entity), defaultServicePath(service)];
 }
 
 function entityName(entity: VdmEntity): PropertyDeclarationStructure {
@@ -59,23 +53,6 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
     isStatic: true,
     initializer: `\'${entity.entitySetName}\'`,
     docs: [addLeadingNewline(`Technical entity name for ${entity.className}.`)]
-  };
-}
-
-function serviceName(
-  entity: VdmEntity,
-  service: VdmServiceMetadata
-): PropertyDeclarationStructure {
-  return {
-    kind: StructureKind.Property,
-    name: prependPrefix('serviceName'),
-    isStatic: true,
-    initializer: `\'${getServiceName(service)}\'`,
-    docs: [
-      `@deprecated Since v1.0.1 Use [[${prependPrefix(
-        'defaultServicePath'
-      )}]] instead.\nTechnical service name for ${entity.className}.`
-    ]
   };
 }
 

@@ -30,5 +30,12 @@ export function parseEntityTypesBase(
 }
 
 export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
-  return flat(root.EntityContainer.map(ec => ec.EntitySet));
+  return extractPropertiesFromEntityContainer(root, ec => ec.EntitySet);
+}
+
+export function extractPropertiesFromEntityContainer(
+  root,
+  entityContainerToPropFn
+): any[] {
+  return flat(root.EntityContainer.map(entityContainerToPropFn));
 }

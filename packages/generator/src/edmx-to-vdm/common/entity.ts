@@ -20,7 +20,8 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
-  EdmxEntitySetBase, EdmxEntityTypeBase,
+  EdmxEntitySetBase,
+  EdmxEntityTypeBase,
   EdmxNamed,
   JoinedEntityMetadata
 } from '../../edmx-parser/common';
@@ -134,8 +135,6 @@ export function joinEntityMetadata<
 >(
   entitySets: EntitySetT[],
   entityTypes: EntityTypeT[],
-  // TODO 1584
-  namespace: string[],
   swagger?: SwaggerMetadata
 ): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
@@ -162,17 +161,12 @@ export function joinEntityMetadata<
       entityType
     };
 
-    if (namespace.length !== 1) {
-      logger.warn(
-        `Currently only support 1 namespace with swagger file, but detects ${namespace.length} in the edmx file.`
+    if (swagger) {
+      const defKey = Object.keys(swagger.definitions).find(
+        name => `${entityType!.Namespace}.${name}` === entitySet.EntityType
       );
-      if (swagger) {
-        const defKey = Object.keys(swagger.definitions).find(
-          name => `${namespace[0]}.${name}` === entitySet.EntityType
-        );
-        if (defKey) {
-          joined.swaggerDefinition = swagger.definitions[defKey];
-        }
+      if (defKey) {
+        joined.swaggerDefinition = swagger.definitions[defKey];
       }
     }
 

@@ -135,13 +135,13 @@ function getODataVersion(edmx): ODataVersion {
 function getRoot(edmx) {
   const schema = edmx['edmx:Edmx']['edmx:DataServices'].Schema;
   if (schema.length > 1) {
-    return mergeSchema(schema);
+    return mergeSchemas(schema);
   }
-  return mergeSchema(forceArray(schema));
+  return mergeSchemas(forceArray(schema));
 }
 
 // todo remove schema type
-function mergeSchema(schema: EdmxMetadataSchema[]) {
+function mergeSchemas(schema: EdmxMetadataSchema[]) {
   return {
     EntityContainer: flat(
       schema.map(s =>

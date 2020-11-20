@@ -1,12 +1,11 @@
-import { flat } from '@sap-cloud-sdk/util';
 import {
+  extractPropertiesFromEntityContainer,
   parseComplexTypesBase,
   parseEntitySetsBase,
   parseEntityTypesBase
 } from '../common/edmx-parser';
 import { EdmxEntitySetBase } from '../common';
 import { forceArray } from '../../generator-utils';
-import { EdmxMetadataSchemaV2Merged } from '../edmx-file-reader';
 import {
   EdmxAssociation,
   EdmxAssociationSet,
@@ -31,13 +30,14 @@ export function parseAssociation(root): EdmxAssociation[] {
 }
 
 export function parseAssociationSets(root): EdmxAssociationSet[] {
-  return flat(root.EntityContainer.map(ec => ec.AssociationSet));
+  return extractPropertiesFromEntityContainer(root, ec => ec.AssociationSet);
 }
 
-export function parseFunctionImports(
-  root: EdmxMetadataSchemaV2Merged
-): EdmxFunctionImport[] {
-  return flat(root.EntityContainer.map(ec => ec.FunctionImport)).map(f => ({
+export function parseFunctionImports(root): EdmxFunctionImport[] {
+  return extractPropertiesFromEntityContainer(
+    root,
+    ec => ec.FunctionImport
+  ).map(f => ({
     ...f,
     Parameter: forceArray(f.Parameter)
   }));

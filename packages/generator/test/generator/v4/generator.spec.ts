@@ -41,7 +41,7 @@ describe('generator', () => {
       ]);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(32);
+      expect(entityClass!.getProperties().length).toBe(31);
 
       checkStaticProperties(entityClass!);
 

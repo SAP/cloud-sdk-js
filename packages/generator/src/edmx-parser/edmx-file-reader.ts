@@ -148,8 +148,6 @@ function getODataVersion(edmx): ODataVersion {
 function getRoot(edmx) {
   const schema = edmx['edmx:Edmx']['edmx:DataServices'].Schema;
   if (schema.length > 1) {
-    // We assume SFSF edmx files to always have multiple schema tags
-    logger.info(`${schema.length} schemas found. Schemas will be merged.`);
     return mergeSchema(schema);
   }
   return mergeSchema(forceArray(schema));

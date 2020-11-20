@@ -1,4 +1,4 @@
-name: update-api-documentation
+name: api-docs
 
 on:
   push:

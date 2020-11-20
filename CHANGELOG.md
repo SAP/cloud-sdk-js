@@ -20,7 +20,7 @@
 
 ## New Functionality
 
-- [Generator] Multiple schemas in the edmx file are now supported.
+- [Generator] Support parsing of multiple schemas in the edmx service specification.
 
 ## Improvements
 

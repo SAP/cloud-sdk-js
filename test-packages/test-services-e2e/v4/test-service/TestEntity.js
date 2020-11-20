@@ -76,7 +76,7 @@ var TestEntity = /** @class */ (function (_super) {
     /**
      * Default url path for the according service.
      */
-    TestEntity._defaultServicePath = '/test-service';
+    TestEntity._defaultServicePath = '/odata/test-service';
     return TestEntity;
 }(core_1.EntityV4));
 exports.TestEntity = TestEntity;

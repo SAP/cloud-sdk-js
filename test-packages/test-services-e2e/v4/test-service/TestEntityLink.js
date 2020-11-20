@@ -76,7 +76,7 @@ var TestEntityLink = /** @class */ (function (_super) {
     /**
      * Default url path for the according service.
      */
-    TestEntityLink._defaultServicePath = '/test-service';
+    TestEntityLink._defaultServicePath = '/odata/test-service';
     return TestEntityLink;
 }(core_1.EntityV4));
 exports.TestEntityLink = TestEntityLink;

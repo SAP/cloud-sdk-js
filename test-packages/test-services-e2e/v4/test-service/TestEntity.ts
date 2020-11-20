@@ -19,7 +19,7 @@ export class TestEntity extends EntityV4 implements TestEntityType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/test-service';
+  static _defaultServicePath = '/odata/test-service';
   /**
    * Key Test Entity.
    */

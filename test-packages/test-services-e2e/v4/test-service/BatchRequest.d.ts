@@ -14,7 +14,7 @@ export declare function batch(requests: Array<ReadTestServiceRequestBuilder | OD
  */
 export declare function changeset(...requests: Array<WriteTestServiceRequestBuilder>): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
 export declare function changeset(requests: Array<WriteTestServiceRequestBuilder>): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
-export declare const defaultTestServicePath = "/test-service";
+export declare const defaultTestServicePath = "/odata/test-service";
 export declare type ReadTestServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink>;
 export declare type WriteTestServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink>;
 //# sourceMappingURL=BatchRequest.d.ts.map

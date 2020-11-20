@@ -33,7 +33,7 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from './package-description';
-import { parseAllServices } from './edmx-to-vdm/';
+import { parseAllServices } from './edmx-to-vdm';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';

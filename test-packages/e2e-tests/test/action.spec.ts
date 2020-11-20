@@ -2,13 +2,12 @@ import {
   createTestEntity,
   createTestEntityReturnId
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/action-imports';
+import { destination } from './test-util';
 import { deleteEntity } from './test-utils/test-entity-operations';
 
-const url = 'http://localhost:4004/';
-const destination = { url };
 const entityKey = 999;
 
-describe('Action test', () => {
+describe('action', () => {
   beforeEach(async () => deleteEntity(entityKey, destination));
   afterEach(async () => deleteEntity(entityKey, destination));
 

@@ -1,9 +1,10 @@
+/* eslint-disable-next-line */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'
 }
 
-/* eslint-disable-next-line  @typescript-eslint/no-redeclare */
+/* eslint-disable-next-line */
 export namespace Protocol {
   /**
    * Get [[Protocol]] from its string representation.

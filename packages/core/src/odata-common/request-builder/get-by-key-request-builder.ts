@@ -1,0 +1,85 @@
+import { errorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions
+} from '../../connectivity/scp-cf';
+import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import { ODataGetByKeyRequestConfig } from '../request';
+import { ODataUri } from '../uri-conversion';
+import { FieldType, Selectable } from '../selectable';
+import { EntityDeserializer } from '../entity-deserializer';
+import { ResponseDataAccessor } from '../response-data-accessor';
+import { MethodRequestBuilderBase } from './request-builder-base';
+/**
+ * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
+ *
+ * @typeparam EntityT - Type of the entity to be requested
+ */
+export abstract class GetByKeyRequestBuilderBase<EntityT extends EntityBase>
+  extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
+  implements EntityIdentifiable<EntityT> {
+  readonly _entity: EntityT;
+
+  /**
+   * Creates an instance of GetByKeyRequestBuilder.
+   *
+   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
+   * @param oDataUri - Uri conversion methods
+   * @param entityDeserializer - Entity deserializer
+   */
+  constructor(
+    readonly _entityConstructor: Constructable<EntityT>,
+    keys: Record<string, FieldType>,
+    oDataUri: ODataUri,
+    readonly entityDeserializer: EntityDeserializer,
+    readonly dataAccessor: ResponseDataAccessor
+  ) {
+    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUri));
+    this.requestConfig.keys = keys;
+  }
+
+  /**
+   * Restrict the response to the given selection of properties in the request.
+   *
+   * @param selects - Fields to select in the request
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  select(...selects: Selectable<EntityT>[]): this;
+  select(selects: Selectable<EntityT>[]): this;
+  select(
+    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
+    ...rest: Selectable<EntityT>[]
+  ): this {
+    this.requestConfig.selects = variadicArgumentToArray(first, rest);
+    return this;
+  }
+
+  /**
+   * Execute request.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to the requested entity
+   */
+  async execute(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<EntityT> {
+    return this.build(destination, options)
+      .then(request => request.execute())
+      .then(response =>
+        this.entityDeserializer.deserializeEntity(
+          this.dataAccessor.getSingleResult(response.data),
+          this._entityConstructor,
+          response.headers
+        )
+      )
+      .catch(error =>
+        Promise.reject(
+          errorWithCause('OData get by key request failed!', error)
+        )
+      );
+  }
+}

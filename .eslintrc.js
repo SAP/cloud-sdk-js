@@ -158,11 +158,21 @@ module.exports = {
     'guard-for-in': 'off',
     'id-blacklist': 'off',
     'id-match': 'off',
-    'import/no-absolute-path': 'error',
+    'import/no-unresolved': 'off',
     'import/named': 'error',
-    'import/no-extraneous-dependencies': 'off',
+    'import/default': 'error',
+    'import/namespace': 'error',
+    'import/no-absolute-path': 'error',
+    'import/no-dynamic-require': 'error',
     'import/no-internal-modules': 'error',
+    'import/no-self-import': 'error',
+    'import/no-cycle': 'error',
+    'import/no-useless-path-segments': 'error',
+    'import/no-relative-parent-imports': 'error',
+    'import/export': 'error',
     'import/order': 'error',
+    'import/no-extraneous-dependencies': 'off',
+    'import/no-duplicates': 'error',
     indent: 'off',
     // Does not work for typescript yet
     // "lines-around-comment": [
@@ -202,7 +212,13 @@ module.exports = {
     'no-new-wrappers': 'error',
     'no-redeclare': 'off',
     '@typescript-eslint/no-redeclare': ['error'],
-    'no-restricted-imports': ['error', '../', './'],
+    'no-restricted-imports': [
+      'error',
+      {
+        paths: ['../', '../../', './'],
+        patterns: ['*/index']
+      }
+    ],
     'no-return-await': 'error',
     'no-sequences': 'error',
     'no-shadow': 'off',

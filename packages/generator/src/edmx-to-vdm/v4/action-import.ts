@@ -67,5 +67,5 @@ export function generateActionImportsV4(
         )
       };
     })
-    .filter(e => e !== undefined) as VdmActionImport[];
+    .filter(e => e) as VdmActionImport[];
 }

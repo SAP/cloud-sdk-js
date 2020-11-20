@@ -1,7 +1,4 @@
-import {
-  EdmxMetadataSchemaV2Merged,
-  readEdmxFile
-} from '../../../src/edmx-parser/edmx-file-reader';
+import { readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
 import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-parser';
 import {
   parseAssociation,
@@ -19,10 +16,7 @@ describe('edmx-edmx-parser', () => {
 
     expect(parseEntitySetsV2(metadataEdmx.root).length).toBe(11);
     expect(parseEntityTypesV2(metadataEdmx.root).length).toBe(10);
-    expect(
-      parseFunctionImportsV2(metadataEdmx.root as EdmxMetadataSchemaV2Merged)
-        .length
-    ).toBe(13);
+    expect(parseFunctionImportsV2(metadataEdmx.root).length).toBe(13);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(3);
     expect(parseAssociationSets(metadataEdmx.root).length).toBe(8);
     expect(parseAssociation(metadataEdmx.root).length).toBe(8);
@@ -41,9 +35,7 @@ describe('edmx-edmx-parser', () => {
       expect(a.End.length).toBe(2);
     });
 
-    parseFunctionImportsV2(
-      metadataEdmx.root as EdmxMetadataSchemaV2Merged
-    ).forEach(f => {
+    parseFunctionImportsV2(metadataEdmx.root).forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 

@@ -4,87 +4,11 @@ import { parse } from 'fast-xml-parser';
 import { assoc, createLogger, flat, ODataVersion } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
 import { SwaggerMetadata } from '../swagger-parser/swagger-types';
-import {
-  EdmxAction,
-  EdmxActionImport,
-  EdmxComplexType,
-  EdmxEntitySet,
-  EdmxEntityType,
-  EdmxEnumType,
-  EdmxFunction,
-  EdmxFunctionImport as EdmxFunctionImportV4
-} from './v4';
-import {
-  EdmxAssociation,
-  EdmxAssociationSet,
-  EdmxFunctionImport as EdmxFunctionImportV2
-} from './v2';
-import { EdmxEntitySetBase, EdmxNamed } from './common';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-edmx-parser'
 });
-
-// todo remove
-export interface EdmxMetadataSchema {
-  EntityContainer?: EdmxMetadataEntityContainer | EdmxMetadataEntityContainer[];
-  Namespace: string;
-  EntityType?: EdmxEntityType | EdmxEntityType[];
-  EnumType?: EdmxEnumType | EdmxEnumType[];
-  ComplexType?: EdmxComplexType | EdmxComplexType[];
-  Action?: EdmxAction | EdmxAction[];
-  Function?:
-    | EdmxFunction
-    | EdmxFunctionImportV2
-    | EdmxFunction[]
-    | EdmxFunctionImportV2[];
-  Association?: EdmxAssociation[];
-  'atom:link'?: [];
-}
-
-export interface EdmxMetadataSchemaMerged {
-  EntityType: EdmxEntityType[];
-  EnumType: EdmxEnumType;
-  ComplexType: EdmxComplexType[];
-  Action: EdmxAction[];
-  Namespace: string[];
-}
-
-export interface EdmxMetadataSchemaV2Merged extends EdmxMetadataSchemaMerged {
-  EntityContainer: EdmxMetadataEntityContainerV2Merged[];
-  Function: EdmxFunctionImportV2[];
-  Association: EdmxAssociation[];
-  'atom:link'?: string;
-}
-
-export interface EdmxMetadataSchemaV4Merged extends EdmxMetadataSchemaMerged {
-  EntityContainer: EdmxMetadataEntityContainerV4Merged[];
-  Function: EdmxFunction[];
-}
-
-export interface EdmxMetadataEntityContainer extends EdmxNamed {
-  EntitySet?: EdmxEntitySetBase | EdmxEntitySetBase[];
-  ActionImport?: EdmxActionImport | EdmxActionImport[];
-  FunctionImport?:
-    | EdmxFunctionImportV2
-    | EdmxFunctionImportV4
-    | EdmxFunctionImportV2[]
-    | EdmxFunctionImportV4[];
-  AssociationSet?: EdmxAssociationSet[];
-}
-
-export interface EdmxMetadataEntityContainerV2Merged extends EdmxNamed {
-  EntitySet: EdmxEntitySetBase[];
-  FunctionImport: EdmxFunctionImportV2[];
-  AssociationSet: EdmxAssociationSet[];
-}
-
-export interface EdmxMetadataEntityContainerV4Merged extends EdmxNamed {
-  EntitySet: EdmxEntitySet[];
-  FunctionImport: EdmxFunctionImportV4[];
-  ActionImport: EdmxActionImport[];
-}
 
 export interface EdmxMetadata {
   path: PathLike;
@@ -138,8 +62,7 @@ function getRoot(edmx) {
   return mergeSchemas(forceArray(schema));
 }
 
-// todo remove schema type
-function mergeSchemas(schema: EdmxMetadataSchema[]) {
+function mergeSchemas(schema) {
   return {
     EntityContainer: flat(
       schema.map(s =>
@@ -173,10 +96,7 @@ function mergeSchemas(schema: EdmxMetadataSchema[]) {
   };
 }
 
-function addNamespaceToEntityContainer(
-  entityContainer: EdmxMetadataEntityContainer,
-  namespace: string
-): EdmxMetadataEntityContainerV2Merged | EdmxMetadataEntityContainerV4Merged {
+function addNamespaceToEntityContainer(entityContainer, namespace: string) {
   return {
     Name: entityContainer.Name,
     EntitySet: forceArray(entityContainer.EntitySet).map(

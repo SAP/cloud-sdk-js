@@ -1,7 +1,4 @@
-import {
-  EdmxMetadataSchemaV4Merged,
-  readEdmxFile
-} from '../../../src/edmx-parser/edmx-file-reader';
+import { readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
 import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-parser';
 import {
   parseActionImport,
@@ -20,9 +17,7 @@ describe('edmx-edmx-parser', () => {
       '../../test-resources/odata-service-specs/v4/API_TEST_SRV/API_TEST_SRV.edmx'
     );
 
-    expect(
-      parseEntitySets(metadataEdmx.root as EdmxMetadataSchemaV4Merged).length
-    ).toBe(11);
+    expect(parseEntitySets(metadataEdmx.root).length).toBe(11);
     expect(parseEntityType(metadataEdmx.root).length).toBe(12);
     expect(parseFunctionImports(metadataEdmx.root).length).toBe(8);
     expect(parseFunctions(metadataEdmx.root).length).toBe(8);
@@ -75,7 +70,7 @@ describe('edmx-edmx-parser', () => {
     });
   });
 
-  it('v4: parses edmx file to JSON and coerces properties to arrays1', () => {
+  it('v4: parses edmx file that contains multiple schemas to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
       '../../test-resources/odata-service-specs/v4/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
     );

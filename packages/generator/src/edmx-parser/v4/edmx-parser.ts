@@ -7,7 +7,6 @@ import {
 import { forceArray } from '../../generator-utils';
 import { joinEntityTypes } from '../../edmx-to-vdm/v4';
 import { joinTypesWithBaseTypes } from '../legacy/v4';
-import { EdmxMetadataSchemaMerged } from '../edmx-file-reader';
 import {
   EdmxAction,
   EdmxActionImport,
@@ -43,9 +42,7 @@ export function parseEnumTypes(root): EdmxEnumType[] {
   }));
 }
 
-export function parseEntityType(
-  root: EdmxMetadataSchemaMerged
-): EdmxEntityType[] {
+export function parseEntityType(root): EdmxEntityType[] {
   const entityTypes = parseEntityTypesBase(root);
   return joinTypesWithBaseTypes(entityTypes, joinEntityTypes);
 }

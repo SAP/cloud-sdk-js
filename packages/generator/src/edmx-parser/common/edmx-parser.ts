@@ -1,6 +1,5 @@
 import { flat } from '@sap-cloud-sdk/util';
 import { forceArray } from '../../generator-utils';
-import { EdmxMetadataSchemaMerged } from '../edmx-file-reader';
 import {
   EdmxComplexTypeBase,
   EdmxEntitySetBase,
@@ -15,9 +14,7 @@ export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
   }));
 }
 
-export function parseEntityTypesBase(
-  root: EdmxMetadataSchemaMerged
-): EdmxEntityTypeBase<any>[] {
+export function parseEntityTypesBase(root): EdmxEntityTypeBase<any>[] {
   return forceArray(root.EntityType).map(e => ({
     ...e,
     Key: {

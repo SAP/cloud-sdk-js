@@ -74,11 +74,6 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
      */
     TestEntityLvl2SingleLink._entityName = 'A_TestEntityLvl2SingleLink';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntityLvl2SingleLink.
-     */
-    TestEntityLvl2SingleLink._serviceName = 'API_TEST_SRV';
-    /**
      * Default url path for the according service.
      */
     TestEntityLvl2SingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

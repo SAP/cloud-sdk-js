@@ -74,11 +74,6 @@ var TestEntity2 = /** @class */ (function (_super) {
      */
     TestEntity2._entityName = 'A_TestEntity2';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntity2.
-     */
-    TestEntity2._serviceName = 'API_MULTIPLE_SCHEMAS_SRV';
-    /**
      * Default url path for the according service.
      */
     TestEntity2._defaultServicePath = 'VALUE_IS_UNDEFINED';

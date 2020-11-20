@@ -74,11 +74,6 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
      */
     TestEntityOtherMultiLink._entityName = 'A_TestEntityOtherMultiLink';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntityOtherMultiLink.
-     */
-    TestEntityOtherMultiLink._serviceName = 'API_TEST_SRV';
-    /**
      * Default url path for the according service.
      */
     TestEntityOtherMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

@@ -17,11 +17,6 @@ export class TestEntity3 extends EntityV4 implements TestEntity3Type {
    */
   static _entityName = 'A_TestEntity3';
   /**
-   * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-   * Technical service name for TestEntity3.
-   */
-  static _serviceName = 'API_MULTIPLE_SCHEMAS_SRV';
-  /**
    * Default url path for the according service.
    */
   static _defaultServicePath = 'VALUE_IS_UNDEFINED';

@@ -9,11 +9,6 @@ export declare class TestEntityOtherMultiLink extends EntityV4 implements TestEn
      */
     static _entityName: string;
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntityOtherMultiLink.
-     */
-    static _serviceName: string;
-    /**
      * Default url path for the according service.
      */
     static _defaultServicePath: string;

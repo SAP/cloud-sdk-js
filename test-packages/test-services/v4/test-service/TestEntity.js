@@ -75,11 +75,6 @@ var TestEntity = /** @class */ (function (_super) {
      */
     TestEntity._entityName = 'A_TestEntity';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntity.
-     */
-    TestEntity._serviceName = 'API_TEST_SRV';
-    /**
      * Default url path for the according service.
      */
     TestEntity._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

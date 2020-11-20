@@ -15,11 +15,6 @@ export class TestEntityEndsWith extends EntityV2 implements TestEntityEndsWithTy
    */
   static _entityName = 'A_TestEntityEndsWithCollection';
   /**
-   * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-   * Technical service name for TestEntityEndsWith.
-   */
-  static _serviceName = 'API_TEST_SRV';
-  /**
    * Default url path for the according service.
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

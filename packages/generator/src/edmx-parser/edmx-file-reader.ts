@@ -7,39 +7,26 @@ import { SwaggerMetadata } from '../swagger-parser/swagger-types';
 import {
   EdmxAction,
   EdmxActionImport,
-  EdmxActionImportNamespaced,
-  EdmxActionNamespaced,
   EdmxComplexType,
-  EdmxComplexTypeNamespaced,
-  EdmxEntitySetNamespaced,
+  EdmxEntitySet,
   EdmxEntityType,
-  EdmxEntityTypeNamespaced,
   EdmxEnumType,
-  EdmxEnumTypeNamespaced,
   EdmxFunction,
-  EdmxFunctionImport as EdmxFunctionImportV4,
-  EdmxFunctionImportNamespaced as EdmxFunctionImportNamespacedV4,
-  EdmxFunctionNamespaced
+  EdmxFunctionImport as EdmxFunctionImportV4
 } from './v4';
 import {
   EdmxAssociation,
-  EdmxAssociationNamespaced,
   EdmxAssociationSet,
-  EdmxAssociationSetNamespaced,
-  EdmxFunctionImport as EdmxFunctionImportV2,
-  EdmxFunctionImportNamespaced as EdmxFunctionImportNamespacedV2
+  EdmxFunctionImport as EdmxFunctionImportV2
 } from './v2';
-import {
-  EdmxEntitySetBase,
-  EdmxEntitySetBaseNamespaced,
-  EdmxNamed
-} from './common';
+import { EdmxEntitySetBase, EdmxNamed } from './common';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-edmx-parser'
 });
 
+// todo remove
 export interface EdmxMetadataSchema {
   EntityContainer?: EdmxMetadataEntityContainer | EdmxMetadataEntityContainer[];
   Namespace: string;
@@ -57,23 +44,23 @@ export interface EdmxMetadataSchema {
 }
 
 export interface EdmxMetadataSchemaMerged {
-  EntityType: EdmxEntityTypeNamespaced[];
-  EnumType: EdmxEnumTypeNamespaced[];
-  ComplexType: EdmxComplexTypeNamespaced[];
-  Action: EdmxActionNamespaced[];
+  EntityType: EdmxEntityType[];
+  EnumType: EdmxEnumType;
+  ComplexType: EdmxComplexType[];
+  Action: EdmxAction[];
   Namespace: string[];
 }
 
 export interface EdmxMetadataSchemaV2Merged extends EdmxMetadataSchemaMerged {
   EntityContainer: EdmxMetadataEntityContainerV2Merged[];
-  Function: EdmxFunctionImportNamespacedV2[];
-  Association: EdmxAssociationNamespaced[];
+  Function: EdmxFunctionImportV2[];
+  Association: EdmxAssociation[];
   'atom:link'?: string;
 }
 
 export interface EdmxMetadataSchemaV4Merged extends EdmxMetadataSchemaMerged {
   EntityContainer: EdmxMetadataEntityContainerV4Merged[];
-  Function: EdmxFunctionNamespaced[];
+  Function: EdmxFunction[];
 }
 
 export interface EdmxMetadataEntityContainer extends EdmxNamed {
@@ -88,15 +75,15 @@ export interface EdmxMetadataEntityContainer extends EdmxNamed {
 }
 
 export interface EdmxMetadataEntityContainerV2Merged extends EdmxNamed {
-  EntitySet: EdmxEntitySetBaseNamespaced[];
-  FunctionImport: EdmxFunctionImportNamespacedV2[];
-  AssociationSet: EdmxAssociationSetNamespaced[];
+  EntitySet: EdmxEntitySetBase[];
+  FunctionImport: EdmxFunctionImportV2[];
+  AssociationSet: EdmxAssociationSet[];
 }
 
 export interface EdmxMetadataEntityContainerV4Merged extends EdmxNamed {
-  EntitySet: EdmxEntitySetNamespaced[];
-  FunctionImport: EdmxFunctionImportNamespacedV4[];
-  ActionImport: EdmxActionImportNamespaced[];
+  EntitySet: EdmxEntitySet[];
+  FunctionImport: EdmxFunctionImportV4[];
+  ActionImport: EdmxActionImport[];
 }
 
 export interface EdmxMetadata {
@@ -153,6 +140,7 @@ function getRoot(edmx) {
   return mergeSchema(forceArray(schema));
 }
 
+// todo remove schema type
 function mergeSchema(schema: EdmxMetadataSchema[]) {
   return {
     EntityContainer: flat(

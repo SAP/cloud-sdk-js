@@ -14,9 +14,8 @@ import {
   EdmxAction,
   EdmxActionImport,
   EdmxComplexType,
-  EdmxComplexTypeNamespaced,
   EdmxEntitySet,
-  EdmxEntityTypeNamespaced,
+  EdmxEntityType,
   EdmxEnumType,
   EdmxFunction,
   EdmxFunctionImport
@@ -32,7 +31,7 @@ export function joinComplexTypes<T extends EdmxComplexType>(
   };
 }
 
-export function parseComplexTypes(root): EdmxComplexTypeNamespaced[] {
+export function parseComplexTypes(root): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);
 }
 
@@ -40,13 +39,14 @@ export function parseEnumTypes(root): EdmxEnumType[] {
   const types: EdmxEnumType[] = forceArray(root.EnumType);
   return types.map(edmxEnumType => ({
     Name: edmxEnumType.Name,
-    Member: forceArray(edmxEnumType.Member)
+    Member: forceArray(edmxEnumType.Member),
+    Namespace: edmxEnumType.Namespace
   }));
 }
 
 export function parseEntityType(
   root: EdmxMetadataSchemaMerged
-): EdmxEntityTypeNamespaced[] {
+): EdmxEntityType[] {
   const entityTypes = parseEntityTypesBase(root);
   return joinTypesWithBaseTypes(entityTypes, joinEntityTypes);
 }

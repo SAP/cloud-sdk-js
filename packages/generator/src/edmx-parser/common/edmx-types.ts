@@ -33,7 +33,7 @@ export interface EdmxParameter extends EdmxDocumented, EdmxNamed {
   Nullable?: string;
 }
 
-export interface EdmxEntitySetBase extends EdmxNamed {
+export interface EdmxEntitySetBase extends EdmxNamed, EdmxNamespaced {
   EntityType: string;
   'sap:content-version': string;
   'sap:creatable': string;
@@ -42,13 +42,13 @@ export interface EdmxEntitySetBase extends EdmxNamed {
   'sap:updatable': string;
 }
 
-export type EdmxEntitySetBaseNamespaced = EdmxEntitySetBase & EdmxNamespaced;
-
 export interface EdmxKey {
   PropertyRef: EdmxNamed[];
 }
 
-export interface EdmxEntityTypeBase<NavigationT> extends EdmxNamed {
+export interface EdmxEntityTypeBase<NavigationT>
+  extends EdmxNamed,
+    EdmxNamespaced {
   Key: EdmxKey;
   Property: EdmxProperty[];
   'sap:content-version': string;
@@ -56,17 +56,9 @@ export interface EdmxEntityTypeBase<NavigationT> extends EdmxNamed {
   NavigationProperty: NavigationT[];
 }
 
-export type EdmxEntityTypeBaseNamespaced<NavigationT> = EdmxEntityTypeBase<
-  NavigationT
-> &
-  EdmxNamespaced;
-
-export interface EdmxComplexTypeBase extends EdmxNamed {
+export interface EdmxComplexTypeBase extends EdmxNamed, EdmxNamespaced {
   Property: EdmxProperty[];
 }
-
-export type EdmxComplexTypeBaseNamespaced = EdmxComplexTypeBase &
-  EdmxNamespaced;
 
 export interface JoinedEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,

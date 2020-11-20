@@ -17,56 +17,41 @@ export interface EdmxNavigationPropertyBinding {
 }
 
 export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty> &
-  EdmxDerivedType;
-
-export type EdmxEntityTypeNamespaced = EdmxEntityType & EdmxNamespaced;
+  EdmxDerivedType &
+  EdmxNamespaced;
 
 export interface EdmxEntitySet extends EdmxEntitySetBase {
   NavigationPropertyBinding: EdmxNavigationPropertyBinding[];
 }
 
-export type EdmxEntitySetNamespaced = EdmxEntitySet & EdmxNamespaced;
-
 export interface EdmxEnumMember extends EdmxNamed {
   Value: string;
 }
 
-export interface EdmxEnumType extends EdmxNamed {
+export interface EdmxEnumType extends EdmxNamed, EdmxNamespaced {
   Member: EdmxEnumMember[];
 }
 
-export type EdmxEnumTypeNamespaced = EdmxEnumType & EdmxNamespaced;
-
-export interface EdmxFunctionImport extends EdmxNamed {
+export interface EdmxFunctionImport extends EdmxNamed, EdmxNamespaced {
   EntitySet?: string;
   Function: string;
 }
 
-export type EdmxFunctionImportNamespaced = EdmxFunctionImport & EdmxNamespaced;
-
-export interface EdmxActionImport extends EdmxNamed {
+export interface EdmxActionImport extends EdmxNamed, EdmxNamespaced {
   EntitySet?: string;
   Action: string;
 }
 
-export type EdmxActionImportNamespaced = EdmxActionImport & EdmxNamespaced;
-
-export interface EdmxFunction extends EdmxNamed {
+export interface EdmxFunction extends EdmxNamed, EdmxNamespaced {
   ReturnType?: { Type: string };
   Parameter: EdmxParameter[];
   IsBound: boolean;
 }
 
-export type EdmxFunctionNamespaced = EdmxFunction & EdmxNamespaced;
-
 export type EdmxAction = EdmxFunction;
-
-export type EdmxActionNamespaced = EdmxFunctionNamespaced;
 
 export interface EdmxDerivedType extends EdmxNamed {
   BaseType?: string;
 }
 
 export type EdmxComplexType = EdmxComplexTypeBase & EdmxDerivedType;
-
-export type EdmxComplexTypeNamespaced = EdmxComplexType & EdmxNamespaced;

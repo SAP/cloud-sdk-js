@@ -9,7 +9,6 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType, VdmMappedEdmType, VdmEnumType } from '../../vdm-types';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
-import { EdmxComplexTypeBaseNamespaced } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
   complexTypeFieldType,
@@ -21,6 +20,7 @@ import {
   parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
+import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import { enumTypeForName } from './entity';
 
 const logger = createLogger({
@@ -40,7 +40,7 @@ export function includeFactoryName(
 }
 
 export function transformComplexTypesBase(
-  complexTypes: EdmxComplexTypeBaseNamespaced[],
+  complexTypes: EdmxComplexTypeBase[],
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): Omit<VdmComplexType, 'factoryName'>[] {

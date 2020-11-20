@@ -10,7 +10,7 @@ import { EdmxMetadataSchemaV2Merged } from '../edmx-file-reader';
 import {
   EdmxAssociation,
   EdmxAssociationSet,
-  EdmxEntityTypeNamespaced,
+  EdmxEntityType,
   EdmxFunctionImport
 } from './edm-types';
 
@@ -22,7 +22,7 @@ export function parseEntitySets(root): EdmxEntitySetBase[] {
   return parseEntitySetsBase(root);
 }
 
-export function parseEntityTypes(root): EdmxEntityTypeNamespaced[] {
+export function parseEntityTypes(root): EdmxEntityType[] {
   return parseEntityTypesBase(root);
 }
 

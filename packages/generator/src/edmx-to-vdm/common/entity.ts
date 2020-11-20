@@ -20,8 +20,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
-  EdmxEntitySetBase,
-  EdmxEntityTypeBaseNamespaced,
+  EdmxEntitySetBase, EdmxEntityTypeBase,
   EdmxNamed,
   JoinedEntityMetadata
 } from '../../edmx-parser/common';
@@ -131,7 +130,7 @@ const propertyFieldType = (type: string): string | undefined =>
 
 export function joinEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,
-  EntityTypeT extends EdmxEntityTypeBaseNamespaced<any>
+  EntityTypeT extends EdmxEntityTypeBase<any>
 >(
   entitySets: EntitySetT[],
   entityTypes: EntityTypeT[],

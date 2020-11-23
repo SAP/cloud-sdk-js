@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
@@ -13,6 +14,11 @@ import { parseFunctionImportReturnTypes } from '../common/action-function-return
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
 
+const logger = createLogger({
+  package: 'generator',
+  messageContext: 'function-import'
+});
+
 function findFunctionForFunctionImport(
   functions: EdmxFunction[],
   functionImport: EdmxFunctionImport
@@ -26,6 +32,44 @@ function findFunctionForFunctionImport(
 
 const extractResponse = (response: string) => `${response}.value`;
 
+interface JoinedFunctionImportData {
+  functionImport: EdmxFunctionImport;
+  function: EdmxFunction;
+}
+
+function joinFunctionImportData(
+  functionImports: EdmxFunctionImport[],
+  functions: EdmxFunction[]
+): JoinedFunctionImportData[] {
+  const functionImportsWithoutFunctions: string[] = [];
+  const joinedFunctionImportData = functionImports.reduce(
+    (joined, functionImport) => {
+      const edmxFunction = findFunctionForFunctionImport(
+        functions,
+        functionImport
+      );
+
+      if (edmxFunction) {
+        return [
+          ...joined,
+          {
+            functionImport,
+            function: edmxFunction
+          }
+        ];
+      }
+      functionImportsWithoutFunctions.push(functionImport.Name);
+      return joined;
+    },
+    []
+  );
+
+  if (functionImportsWithoutFunctions) {
+    logger.warn(functionImportsWithoutFunctions);
+  }
+  return joinedFunctionImportData;
+}
+
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],
@@ -34,41 +78,39 @@ export function generateFunctionImportsV4(
 ): VdmFunctionImport[] {
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImports(serviceMetadata.edmx.root);
+  const joinedFunctionData = joinFunctionImportData(functionImports, functions);
 
-  return functionImports
-    .map(functionImport => {
-      const edmxFunction = findFunctionForFunctionImport(
-        functions,
-        functionImport
-      );
+  return (
+    joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
-      if (!edmxFunction || hasUnsupportedParameterTypes(edmxFunction)) {
-        return undefined;
-      }
+      .filter(
+        ({ function: edmxFunction }) =>
+          !hasUnsupportedParameterTypes(edmxFunction)
+      )
+      .map(({ functionImport, function: edmxFunction }) => {
+        const httpMethod = 'get';
+        const swaggerDefinition = swaggerDefinitionForFunctionImport(
+          functionImport.Name,
+          httpMethod,
+          serviceMetadata.swagger
+        );
 
-      const httpMethod = 'get';
-      const swaggerDefinition = swaggerDefinitionForFunctionImport(
-        functionImport.Name,
-        httpMethod,
-        serviceMetadata.swagger
-      );
-
-      return {
-        ...transformFunctionImportBase(
-          functionImport,
-          edmxFunction.Parameter,
-          swaggerDefinition,
-          formatter
-        ),
-        httpMethod,
-        returnType: parseFunctionImportReturnTypes(
-          edmxFunction.ReturnType?.Type,
-          entities,
-          complexTypes,
-          extractResponse,
-          serviceMetadata.edmx.oDataVersion
-        )
-      };
-    })
-    .filter(e => e) as VdmFunctionImport[];
+        return {
+          ...transformFunctionImportBase(
+            functionImport,
+            edmxFunction.Parameter,
+            swaggerDefinition,
+            formatter
+          ),
+          httpMethod,
+          returnType: parseFunctionImportReturnTypes(
+            edmxFunction.ReturnType?.Type,
+            entities,
+            complexTypes,
+            extractResponse,
+            serviceMetadata.edmx.oDataVersion
+          )
+        };
+      })
+  );
 }

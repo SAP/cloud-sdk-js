@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import {
@@ -13,6 +14,11 @@ import { transformActionImportBase } from '../common/action-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
 
+const logger = createLogger({
+  package: 'generator',
+  messageContext: 'action-import'
+});
+
 function findActionForActionImport(
   actions: EdmxAction[],
   actionImport: EdmxActionImport
@@ -21,6 +27,41 @@ function findActionForActionImport(
 }
 
 const extractResponse = (response: string) => `${response}.value`;
+
+interface JoinedActionImportData {
+  actionImport: EdmxActionImport;
+  action: EdmxAction;
+}
+
+function joinActionImportData(
+  actionImports: EdmxActionImport[],
+  actions: EdmxAction[]
+): JoinedActionImportData[] {
+  const actionImportsWithoutActions: string[] = [];
+  const joinedActionImportData = actionImports.reduce(
+    (joined, actionImport) => {
+      const edmxAction = findActionForActionImport(actions, actionImport);
+
+      if (edmxAction) {
+        return [
+          ...joined,
+          {
+            actionImport,
+            action: edmxAction
+          }
+        ];
+      }
+      actionImportsWithoutActions.push(actionImport.Name);
+      return joined;
+    },
+    []
+  );
+
+  if (actionImportsWithoutActions) {
+    logger.warn(actionImportsWithoutActions);
+  }
+  return joinedActionImportData;
+}
 
 export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
@@ -31,37 +72,37 @@ export function generateActionImportsV4(
   const actions = parseActions(serviceMetadata.edmx.root);
   const actionImports = parseActionImport(serviceMetadata.edmx.root);
 
-  return actionImports
-    .map(actionImport => {
-      const edmxAction = findActionForActionImport(actions, actionImport);
+  const joinedFunctionData = joinActionImportData(actionImports, actions);
+  return (
+    joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
-      if (!edmxAction || hasUnsupportedParameterTypes(edmxAction)) {
-        return undefined;
-      }
+      .filter(
+        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction)
+      )
+      .map(({ actionImport, action: edmxAction }) => {
+        const httpMethod = 'post';
+        const swaggerDefinition = swaggerDefinitionForFunctionImport(
+          actionImport.Name,
+          httpMethod,
+          serviceMetadata.swagger
+        );
 
-      const httpMethod = 'post';
-      const swaggerDefinition = swaggerDefinitionForFunctionImport(
-        actionImport.Name,
-        httpMethod,
-        serviceMetadata.swagger
-      );
-
-      return {
-        ...transformActionImportBase(
-          actionImport,
-          edmxAction.Parameter || [],
-          swaggerDefinition,
-          formatter
-        ),
-        httpMethod,
-        returnType: parseActionImportReturnTypes(
-          edmxAction.ReturnType?.Type,
-          entities,
-          complexTypes,
-          extractResponse,
-          serviceMetadata.edmx.oDataVersion
-        )
-      };
-    })
-    .filter(e => e) as VdmActionImport[];
+        return {
+          ...transformActionImportBase(
+            actionImport,
+            edmxAction.Parameter || [],
+            swaggerDefinition,
+            formatter
+          ),
+          httpMethod,
+          returnType: parseActionImportReturnTypes(
+            edmxAction.ReturnType?.Type,
+            entities,
+            complexTypes,
+            extractResponse,
+            serviceMetadata.edmx.oDataVersion
+          )
+        };
+      })
+  );
 }

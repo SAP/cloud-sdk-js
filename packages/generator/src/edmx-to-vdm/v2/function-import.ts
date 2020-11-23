@@ -18,35 +18,35 @@ export function generateFunctionImportsV2(
 ): VdmFunctionImport[] {
   const edmxFunctionImports = parseFunctionImports(serviceMetadata.edmx.root);
 
-  return edmxFunctionImports
-    .map(f => {
-      const httpMethod = f['m:HttpMethod'].toLowerCase();
-      const swaggerDefinition = swaggerDefinitionForFunctionImport(
-        f.Name,
-        httpMethod,
-        serviceMetadata.swagger
-      );
+  return (
+    edmxFunctionImports
       // TODO 1571 remove when supporting entity type as parameter
-      if (hasUnsupportedParameterTypes(f)) {
-        return undefined;
-      }
+      .filter(functionImport => !hasUnsupportedParameterTypes(functionImport))
+      .map(f => {
+        const httpMethod = f['m:HttpMethod'].toLowerCase();
+        const swaggerDefinition = swaggerDefinitionForFunctionImport(
+          f.Name,
+          httpMethod,
+          serviceMetadata.swagger
+        );
 
-      return {
-        ...transformFunctionImportBase(
-          f,
-          f.Parameter,
-          swaggerDefinition,
-          formatter
-        ),
-        httpMethod,
-        returnType: parseFunctionImportReturnTypes(
-          f.ReturnType,
-          entities,
-          complexTypes,
-          extractResponse(f.Name),
-          serviceMetadata.edmx.oDataVersion
-        )
-      };
-    })
-    .filter(e => e) as VdmFunctionImport[];
+        return {
+          ...transformFunctionImportBase(
+            f,
+            f.Parameter,
+            swaggerDefinition,
+            formatter
+          ),
+          httpMethod,
+          returnType: parseFunctionImportReturnTypes(
+            f.ReturnType,
+            entities,
+            complexTypes,
+            extractResponse(f.Name),
+            serviceMetadata.edmx.oDataVersion
+          )
+        };
+      })
+      .filter(e => e) as VdmFunctionImport[]
+  );
 }

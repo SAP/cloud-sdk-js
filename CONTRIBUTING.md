@@ -55,6 +55,10 @@ If you need to extend the existing services, run the following to regenerate the
 $ yarn generate:test-services
 ```
 
+### E2E Tests
+
+#### 
+
 ## Linting
 To fix all linting issues, run:
 ```sh-session

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
+import { generateRest } from '../packages/rest-generator/src';
 import { generate } from '../packages/generator/src';
 import { ODataVersion } from '../packages/util/src';
 
@@ -112,6 +113,14 @@ if (arg === 'v2' || arg === 'all') {
 if (arg === 'v4' || arg === 'all') {
   generateTestServicesPackage(packageOutputDir, 'v4');
   generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
+}
+
+if (arg === 'rest' || arg === 'all') {
+  // "yarn rest-generator ts-node src/generator-cli.ts -i ../../test-resources/rest-service-specs -o ../../test-packages/test-services/rest && yarn lint:fix && yarn --frozen-lockfile",
+  generateRest({
+    inputDir: path.join('test-resources', 'rest-service-specs'),
+    outputDir: path.resolve('test-packages', 'test-services', 'rest')
+  });
 }
 
 if (arg === 'e2e' || arg === 'all') {

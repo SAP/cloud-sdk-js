@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [Generator] Log warnings when generating code for function or action imports with unknown parameters, instead of throwing errors.
 
 ## Fixed Issues
 
@@ -48,7 +48,6 @@ Blog: TBD<br>
 
 - Export the `tenant` interface from the scp-cf module.
 - Throw an error when attempting to parse a batch `ReadResponse` that in fact is an `ErrorResponse`.
-- [Generator] Log warnings when generating code for function or action imports with unknown parameter, instead of throwing errors.
 
 ## Fixed Issues
 

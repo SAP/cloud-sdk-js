@@ -41,8 +41,8 @@ export function generateFunctionImportsV4(
         functions,
         functionImport
       );
-
-      if (!edmxFunction) {
+      // TODO 1571 remove when supporting entity type as parameter
+      if (!edmxFunction || hasUnsupportedParameterTypes(edmxFunction)) {
         return undefined;
       }
 
@@ -52,13 +52,6 @@ export function generateFunctionImportsV4(
         httpMethod,
         serviceMetadata.swagger
       );
-
-      // TODO 1571 remove when supporting entity type as parameter
-      if (
-        hasUnsupportedParameterTypes(edmxFunction.Name, edmxFunction.Parameter)
-      ) {
-        return undefined;
-      }
 
       return {
         ...transformFunctionImportBase(

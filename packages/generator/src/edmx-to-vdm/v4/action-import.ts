@@ -34,8 +34,8 @@ export function generateActionImportsV4(
   return actionImports
     .map(actionImport => {
       const edmxAction = findActionForActionImport(actions, actionImport);
-
-      if (!edmxAction) {
+      // TODO 1571 remove when supporting entity type as parameter
+      if (!edmxAction || hasUnsupportedParameterTypes(edmxAction)) {
         return undefined;
       }
 
@@ -45,10 +45,6 @@ export function generateActionImportsV4(
         httpMethod,
         serviceMetadata.swagger
       );
-      // TODO 1571 remove when supporting entity type as parameter
-      if (hasUnsupportedParameterTypes(edmxAction.Name, edmxAction.Parameter)) {
-        return undefined;
-      }
 
       return {
         ...transformActionImportBase(

@@ -1,12 +1,14 @@
 import { createLogger, last } from '@sap-cloud-sdk/util';
 import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
-import { EdmxParameter, EdmxProperty } from '../edmx-parser/common';
+import { EdmxProperty } from '../edmx-parser/common';
 import {
   edmToFieldType,
   edmToTsType,
   getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
+import { EdmxAction, EdmxFunction } from '../edmx-parser/v4';
+import { EdmxFunctionImport } from '../edmx-parser/v2';
 import {
   complexTypeForName,
   enumTypeForName,
@@ -157,17 +159,20 @@ export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
 export function hasUnsupportedParameterTypes(
-  name: string,
-  parameters: EdmxParameter[]
+  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImport
 ): boolean {
-  const unsupportedParameters = parameters.filter(p => !isEdmType(p.Type));
+  const unsupportedParameters = functionOrAction.Parameter.filter(
+    p => !isEdmType(p.Type)
+  );
   if (unsupportedParameters.length > 0) {
     logger.warn(
       `Unsupported function or action import parameter types "${unsupportedParameters
         .map(p => p.Type)
         .join(
           ', '
-        )}" found, which is used by the function import or action import "${name}". The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
+        )}" found, which is used by the function import or action import "${
+        functionOrAction.Name
+      }". The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
     );
     return true;
   }

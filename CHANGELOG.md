@@ -10,7 +10,7 @@
 
 ## Known Issues
 
-- [Gemerator] Using entity type as the parameter of function or action imports is not supported.
+- [Generator] Using entity type as the parameter of function or action imports is not supported.
 
 ## Compatibility Notes
 

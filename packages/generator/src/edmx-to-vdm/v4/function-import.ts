@@ -23,11 +23,7 @@ function findFunctionForFunctionImport(
   functions: EdmxFunction[],
   functionImport: EdmxFunctionImport
 ): EdmxFunction | undefined {
-  return findActionFunctionByImportName(
-    functions,
-    functionImport.Function,
-    'function'
-  );
+  return findActionFunctionByImportName(functions, functionImport.Function);
 }
 
 const extractResponse = (response: string) => `${response}.value`;
@@ -65,7 +61,11 @@ function joinFunctionImportData(
   );
 
   if (functionImportsWithoutFunctions) {
-    logger.warn(functionImportsWithoutFunctions);
+    logger.warn(
+      `Unable to find a function import with name: ${functionImportsWithoutFunctions}, in the list of given functions: ${functions
+        .map(f => f.Name)
+        .join(',')}`
+    );
   }
   return joinedFunctionImportData;
 }

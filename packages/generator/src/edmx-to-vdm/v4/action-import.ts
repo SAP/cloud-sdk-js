@@ -23,7 +23,7 @@ function findActionForActionImport(
   actions: EdmxAction[],
   actionImport: EdmxActionImport
 ): EdmxAction | undefined {
-  return findActionFunctionByImportName(actions, actionImport.Action, 'action');
+  return findActionFunctionByImportName(actions, actionImport.Action);
 }
 
 const extractResponse = (response: string) => `${response}.value`;
@@ -58,7 +58,11 @@ function joinActionImportData(
   );
 
   if (actionImportsWithoutActions) {
-    logger.warn(actionImportsWithoutActions);
+    logger.warn(
+      `Unable to find a action import with name: ${actionImportsWithoutActions}, in the list of given actions: ${actions
+        .map(action => action.Name)
+        .join(',')}`
+    );
   }
   return joinedActionImportData;
 }

@@ -47,6 +47,5 @@ export function generateFunctionImportsV2(
           )
         };
       })
-      .filter(e => e) as VdmFunctionImport[]
   );
 }

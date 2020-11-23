@@ -70,5 +70,5 @@ export function generateFunctionImportsV4(
         )
       };
     })
-    .filter(e => e !== undefined) as VdmFunctionImport[];
+    .filter(e => e) as VdmFunctionImport[];
 }

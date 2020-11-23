@@ -130,6 +130,29 @@
           }
         }
       }
+    },
+    "/entities/count": {
+      "get": {
+        "summary": "Count entities",
+        "description": "Count entities",
+        "operationId": "countEntities",
+        "responses": {
+          "200": {
+            "description": "entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
     }
   },
   "components": {

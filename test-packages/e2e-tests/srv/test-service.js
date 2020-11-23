@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const cds = require('@sap/cds');
 
 module.exports = async srv => {

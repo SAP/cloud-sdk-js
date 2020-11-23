@@ -5,7 +5,8 @@ import {
   last,
   first,
   splitInChunks,
-  variadicArgumentToArray
+  variadicArgumentToArray,
+  zip
 } from './array';
 
 describe('array', () => {
@@ -118,5 +119,32 @@ describe('array', () => {
         [7]
       ]);
     });
+  });
+});
+
+describe('zip', () => {
+  it('zips two arrays where left is longer than right', () => {
+    expect(zip([1, 3, 5], [2, 4])).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it('zips two arrays where right is longer than left', () => {
+    expect(zip([1, 3], [2, 4, 5])).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it('zips two arrays when the second is empty', () => {
+    expect(zip(['test', 'test'], [])).toEqual(['test', 'test']);
+  });
+
+  it('zips two arrays of the same length', () => {
+    expect(zip([1, 3], [2, 4])).toEqual([1, 2, 3, 4]);
+  });
+
+  it('zips falsy values', () => {
+    expect(zip([0, null, false], [undefined])).toEqual([
+      0,
+      undefined,
+      null,
+      false
+    ]);
   });
 });

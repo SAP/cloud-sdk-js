@@ -68,9 +68,9 @@ export function totalOffsetMinutes<EntityT extends EntityV4>(
  * Build a filter function to get the latest possible point in time. Evaluates to DateTimeOffset.
  * @returns The newly created filter function
  */
-export function maxDateTime<EntityT extends EntityV4>(): NumberFilterFunction<
-  EntityT
-> {
+export function maxDateTime<
+  EntityT extends EntityV4
+>(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('maxdatetime', 'decimal');
 }
 
@@ -78,9 +78,9 @@ export function maxDateTime<EntityT extends EntityV4>(): NumberFilterFunction<
  * Build a filter function to get the earliest possible point in time. Evaluates to DateTimeOffset.
  * @returns The newly created filter function
  */
-export function minDateTime<EntityT extends EntityV4>(): NumberFilterFunction<
-  EntityT
-> {
+export function minDateTime<
+  EntityT extends EntityV4
+>(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('mindatetime', 'decimal');
 }
 

@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.32.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.32.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - Batch `ReadResponse.as` does not parse errors anymore, but throws an error if the response in fact was an `ErrorResponse`. To avoid this check `response.isSuccess()` before casting.
 - Rename deprecated ODataRequestConfigs e.g. `ODataCreateRequestConfig` -> `ODataCreateRequestConfigLegacy` due to naming conflicts.
 
@@ -31,7 +54,6 @@
 
 - [Generator] Fix the enum type (V4), when only one enum member is defined in the metadata.
 - [OData] Fix function imports with and without parameters using the OData V4 syntax.
-
 
 # 1.31.0
 

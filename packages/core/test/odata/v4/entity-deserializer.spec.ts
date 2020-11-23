@@ -2,7 +2,7 @@ import {
   TestEntity,
   TestComplexType
 } from '../../test-util/test-services/v4/test-service';
-import { deserializeEntityV4, deserializeComplexTypeV4 } from '../../../src/';
+import { deserializeEntityV4, deserializeComplexTypeV4 } from '../../../src';
 import { TestEnumType } from '../../test-util/test-services/v4/test-service/TestEnumType';
 
 describe('entity-deserializer', () => {

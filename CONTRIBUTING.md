@@ -43,6 +43,19 @@ $ yarn test:type
 ```
 
 ### Test Services
+
+We have multiple test services. 
+If you change a service definition file run:
+
+```sh-session
+$ yarn generate:test-services
+```
+
+This will regenerate all service. 
+Or have a look in the root package.json for the scripts to re-generate only a particular service e.g. `generate:test-services:v2` 
+
+#### Test Service OData v2 and v4
+
 To simplify testing we are using tests services. The specifications for those can be found in [`test-resources`](./test-resources).
 They are used from different tests on different levels.
 The service specifications are directly used by the unit tests of the `generator`.
@@ -50,10 +63,9 @@ From the specifications, we generate two OData clients.
 First, we generate type script sources, that are generated into the test-utils of the `core`, where we replace all references to the `@sap-cloud-sdk/core` with a reference to the local sources. The resulting test service is used in the unit tests of the `core` package.
 Second, we generate a transpiled version of a non-modified OData client based on the specifications, that is located at [`test-packages/test-services`](./test-packages/test-services). This is used in the integration tests and type tests.
 
-If you need to extend the existing services, run the following to regenerate the OData clients.
-```sh-session
-$ yarn generate:test-services
-```
+#### Test Service Rest
+
+We also have a rest generator with has some unit test service in the `packages/rest-generator` and service definitions 
 
 ### E2E Tests
 

@@ -115,6 +115,7 @@ if (arg === 'v4' || arg === 'all') {
   generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
 }
 
+//TODO decide on folders test-services and test-services-e2e distinction is kind of argitrary
 if (arg === 'rest' || arg === 'all') {
   // "yarn rest-generator ts-node src/generator-cli.ts -i ../../test-resources/rest-service-specs -o ../../test-packages/test-services/rest && yarn lint:fix && yarn --frozen-lockfile",
   generateRest({

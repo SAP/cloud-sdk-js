@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "1.32.0",
+  "version": "1.32.1",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://community.sap.com/topics/cloud-sdk",
   "license": "Apache-2.0",
@@ -35,8 +35,8 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.32.0",
-    "@sap-cloud-sdk/util": "^1.32.0",
+    "@sap-cloud-sdk/core": "^1.32.1",
+    "@sap-cloud-sdk/util": "^1.32.1",
     "@sap/edm-converters": "^1.0.21",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",

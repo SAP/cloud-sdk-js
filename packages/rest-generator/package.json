@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/rest-generator",
-  "version": "1.32.0",
+  "version": "1.32.1",
   "description": "SAP Cloud SDK for JavaScript REST api generator",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.1.4",
-    "@sap-cloud-sdk/core": "^1.32.0",
-    "@sap-cloud-sdk/util": "^1.32.0",
+    "@sap-cloud-sdk/core": "^1.32.1",
+    "@sap-cloud-sdk/util": "^1.32.1",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.0",
     "ts-morph": "^8.1.0",

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/e2e-tests",
-  "version": "1.32.0",
+  "version": "1.32.1",
   "description": "End to end tests of the SAP Cloud SDK for JavaScript",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
@@ -17,8 +17,8 @@
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.32.0",
-    "@sap-cloud-sdk/test-services-e2e": "^1.32.0",
+    "@sap-cloud-sdk/core": "^1.32.1",
+    "@sap-cloud-sdk/test-services-e2e": "^1.32.1",
     "@sap/cds": "^4.1.9",
     "@sap/cds-dk": "^3.0.0",
     "express": "^4.17.1",

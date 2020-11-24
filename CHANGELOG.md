@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- Version 1.32.0 introduced a breaking change by removing the export of all generic HTTP client functionality. This version adds it again.
+-
 
 ## New Functionality
 
@@ -26,8 +26,22 @@
 
 ## Fixed Issues
 
-- Add missing export for http-client
+-
 
+
+# 1.32.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.32.1<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- Version 1.32.0 introduced a breaking change by removing the export of all generic HTTP client functionality. This version adds it again.
+
+## Fixed Issues
+
+- Add missing export for http-client
 
 # 1.32.0
 

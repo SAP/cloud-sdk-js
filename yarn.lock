@@ -1717,9 +1717,9 @@
     "@sap/cds-runtime" "^2.5.0"
 
 "@sap/edm-converters@^1.0.21", "@sap/edm-converters@^1.0.27":
-  version "1.0.38"
-  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.38.tgz#8993e7609891f5e0dd1084ddc08fadc8beb278cf"
-  integrity sha512-72TQA+dCFaPLnFGjgdojHWlx0hWySByVCyaFcdtgbrXfWkbRvgn5ZFg+k4bpt2UYkX09jFLMZRgw+s9+zZ79rw==
+  version "1.0.39"
+  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.39.tgz#a9643b43f952c32f5f839a26de6f4b99a8ce7158"
+  integrity sha512-GxBKb3yRletzXWY/mUzYpXwxFXNC0TDVs31ZpIbX+394zGN2M4lEhYniLUu7CdWuk/owFFZFcLXTAtsUvgKw4g==
   dependencies:
     commander "=2.19.0"
     multimap "1.1.0"

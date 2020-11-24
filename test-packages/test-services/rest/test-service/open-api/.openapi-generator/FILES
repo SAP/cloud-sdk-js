@@ -1,0 +1,12 @@
+.gitignore
+.npmignore
+api.ts
+api/some-tag-api.ts
+api/test-service-api.ts
+base.ts
+configuration.ts
+git_push.sh
+index.ts
+model/index.ts
+model/simple-test-entity.ts
+model/test-entity.ts

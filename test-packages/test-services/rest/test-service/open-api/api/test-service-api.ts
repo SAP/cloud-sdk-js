@@ -27,6 +27,42 @@ import { TestEntity } from '../model';
 export const TestServiceApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Count entities
+         * @summary Count entities
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        countEntities: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/entities/count`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Create entity
          * @summary Create entity
          * @param {TestEntity} [testEntity] Enitity to create
@@ -160,6 +196,19 @@ export const TestServiceApiAxiosParamCreator = function (configuration?: Configu
 export const TestServiceApiFp = function(configuration?: Configuration) {
     return {
         /**
+         * Count entities
+         * @summary Count entities
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async countEntities(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
+            const localVarAxiosArgs = await TestServiceApiAxiosParamCreator(configuration).countEntities(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Create entity
          * @summary Create entity
          * @param {TestEntity} [testEntity] Enitity to create
@@ -211,6 +260,15 @@ export const TestServiceApiFp = function(configuration?: Configuration) {
 export const TestServiceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
+         * Count entities
+         * @summary Count entities
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        countEntities(options?: any): AxiosPromise<number> {
+            return TestServiceApiFp(configuration).countEntities(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Create entity
          * @summary Create entity
          * @param {TestEntity} [testEntity] Enitity to create
@@ -250,6 +308,17 @@ export const TestServiceApiFactory = function (configuration?: Configuration, ba
  * @extends {BaseAPI}
  */
 export class TestServiceApi extends BaseAPI {
+    /**
+     * Count entities
+     * @summary Count entities
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestServiceApi
+     */
+    public countEntities(options?: any) {
+        return TestServiceApiFp(this.configuration).countEntities(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Create entity
      * @summary Create entity

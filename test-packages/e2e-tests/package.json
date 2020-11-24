@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.32.1",
+    "@sap-cloud-sdk/test-services": "^1.32.1",
     "@sap-cloud-sdk/test-services-e2e": "^1.32.1",
     "@sap/cds": "^4.1.9",
     "@sap/cds-dk": "^3.0.0",

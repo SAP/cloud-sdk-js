@@ -11,7 +11,7 @@ export function equalObjects(
 
 export function equal<T>(item1: T, item2: T): boolean {
   if (Array.isArray(item1) && Array.isArray(item2)) {
-    return equalArrays(item1, item2);
+    return equalArrays(item1 as any[], item2 as any[]);
   }
   if (
     typeof item1 === 'object' &&

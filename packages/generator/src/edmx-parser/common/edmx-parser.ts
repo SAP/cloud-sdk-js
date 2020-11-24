@@ -27,12 +27,14 @@ export function parseEntityTypesBase(root): EdmxEntityTypeBase<any>[] {
 }
 
 export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
-  return extractPropertiesFromEntityContainer(root, ec => ec.EntitySet);
+  return getPropertyFromEntityContainer(root, 'EntitySet');
 }
 
-export function extractPropertiesFromEntityContainer(
+export function getPropertyFromEntityContainer(
   root,
-  entityContainerToPropFn
+  entityContainerProperty: string
 ): any[] {
-  return flat(root.EntityContainer.map(entityContainerToPropFn));
+  return flat(
+    root.EntityContainer.map(ec => forceArray(ec[entityContainerProperty]))
+  );
 }

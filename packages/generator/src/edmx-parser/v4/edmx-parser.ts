@@ -1,5 +1,5 @@
 import {
-  extractPropertiesFromEntityContainer,
+  getPropertyFromEntityContainer,
   parseComplexTypesBase,
   parseEntitySetsBase,
   parseEntityTypesBase
@@ -61,11 +61,11 @@ function parseNavigationPropertyBinding(
 }
 
 export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return extractPropertiesFromEntityContainer(root, ec => ec.FunctionImport);
+  return getPropertyFromEntityContainer(root, 'FunctionImport');
 }
 
 export function parseActionImport(root): EdmxActionImport[] {
-  return extractPropertiesFromEntityContainer(root, ec => ec.ActionImport);
+  return getPropertyFromEntityContainer(root, 'ActionImport');
 }
 
 function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {

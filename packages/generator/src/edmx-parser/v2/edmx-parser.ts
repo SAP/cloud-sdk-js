@@ -1,5 +1,5 @@
 import {
-  extractPropertiesFromEntityContainer,
+  getPropertyFromEntityContainer,
   parseComplexTypesBase,
   parseEntitySetsBase,
   parseEntityTypesBase
@@ -30,14 +30,11 @@ export function parseAssociation(root): EdmxAssociation[] {
 }
 
 export function parseAssociationSets(root): EdmxAssociationSet[] {
-  return extractPropertiesFromEntityContainer(root, ec => ec.AssociationSet);
+  return getPropertyFromEntityContainer(root, 'AssociationSet');
 }
 
 export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return extractPropertiesFromEntityContainer(
-    root,
-    ec => ec.FunctionImport
-  ).map(f => ({
+  return getPropertyFromEntityContainer(root, 'FunctionImport').map(f => ({
     ...f,
     Parameter: forceArray(f.Parameter)
   }));

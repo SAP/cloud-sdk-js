@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- Version 1.32.0 introduced a breaking change by removing the export of all generic HTTP client functionality. This version adds it again.
 
 ## New Functionality
 
@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Add missing export for http-client
 
 
 # 1.32.0
@@ -42,7 +42,7 @@ Blog: TBD<br>
 
 ## New Functionality
 
-- 
+-
 
 ## Improvements
 

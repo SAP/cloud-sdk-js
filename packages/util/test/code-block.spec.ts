@@ -1,4 +1,4 @@
-import { codeBlock } from '../../src/code-templates';
+import { codeBlock } from '../src';
 
 describe('codeBlock', () => {
   it('transforms empty string', () => {

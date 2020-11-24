@@ -1,31 +1,23 @@
-import {
-  ImportDeclarationStructure,
-  SourceFileStructure,
-  StructureKind
-} from 'ts-morph';
 import { toPascalCase } from '@sap-cloud-sdk/core';
-import { flat } from '@sap-cloud-sdk/util';
+import { codeBlock, flat } from '@sap-cloud-sdk/util';
 import { OpenApiServiceMetadata } from '../open-api-types';
-import { coreImportDeclaration } from '../utils';
 import { operationsVariable } from './operations';
 
 export function requestBuilderSourceFile(
   serviceMetadata: OpenApiServiceMetadata
-): SourceFileStructure {
-  return {
-    kind: StructureKind.SourceFile,
-    statements: [
-      coreImportDeclaration(['RestRequestBuilder']),
-      ...openApiImports(serviceMetadata),
-      operationsVariable(serviceMetadata)
-    ]
-  };
+): string {
+  return codeBlock`
+import { RestRequestBuilder } from '@sap-cloud-sdk/core';
+import { ${toPascalCase(serviceMetadata.apiName)}Api } from './open-api/api';
+import { ${parameterTypes(serviceMetadata).join(
+    ', '
+  )} } from './open-api/model';
+${operationsVariable(serviceMetadata)}
+  `;
 }
 
-function openApiImports(
-  serviceMetadata: OpenApiServiceMetadata
-): ImportDeclarationStructure[] {
-  const paramRefNames: string[] = flat(
+function parameterTypes(serviceMetadata: OpenApiServiceMetadata): string[] {
+  return flat(
     serviceMetadata.paths.map(path =>
       flat(
         path.operations.map(operation =>
@@ -36,17 +28,4 @@ function openApiImports(
       )
     )
   );
-
-  return [
-    {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: './open-api/api',
-      namedImports: [`${toPascalCase(serviceMetadata.apiName)}Api`]
-    },
-    {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: './open-api/model',
-      namedImports: [...paramRefNames]
-    }
-  ];
 }

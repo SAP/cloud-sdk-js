@@ -1,17 +1,15 @@
+import { promises } from 'fs';
 import {
-  Directory,
-  ImportDeclarationStructure,
   IndentationText,
   ModuleResolutionKind,
   ProjectOptions,
   QuoteKind,
-  ScriptTarget,
-  SourceFile,
-  SourceFileStructure,
-  StructureKind
+  ScriptTarget
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
-import { unique } from '@sap-cloud-sdk/util';
+import { codeBlock } from '@sap-cloud-sdk/util';
+const { writeFile, mkdir } = promises;
+import { join } from 'path';
 
 export function projectOptions(): ProjectOptions {
   return {
@@ -36,42 +34,31 @@ export function projectOptions(): ProjectOptions {
   };
 }
 
-export function sourceFile(
-  directory: Directory,
-  relativePath: string,
-  content: SourceFileStructure,
+export function createDirectory(directoryPath: string): Promise<void> {
+  return mkdir(directoryPath, { recursive: true });
+}
+
+export function createFile(
+  directoryPath: string,
+  fileName: string,
+  content: string,
   overwrite: boolean
-): SourceFile {
-  const file = directory.createSourceFile(
-    `${relativePath}.ts`,
-    addFileComment(content),
-    {
-      overwrite
-    }
+): Promise<void> {
+  return writeFile(join(directoryPath, fileName), wrapContent(content), {
+    encoding: 'utf8',
+    flag: overwrite ? 'w' : 'wx'
+  });
+}
+
+function wrapContent(content: string): string {
+  return (
+    codeBlock`
+/*
+ * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+${content}
+` + '\n'
   );
-
-  file.formatText({ insertSpaceAfterCommaDelimiter: true });
-  return file;
-}
-
-function addFileComment(content: SourceFileStructure): SourceFileStructure {
-  content.leadingTrivia = [
-    '/*',
-    ' * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.',
-    ' *',
-    ' * This is a generated file powered by the SAP Cloud SDK for JavaScript.',
-    ' */',
-    ''
-  ].join('\n');
-  return content;
-}
-
-export function coreImportDeclaration(
-  namedImports: string[]
-): ImportDeclarationStructure {
-  return {
-    kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: '@sap-cloud-sdk/core',
-    namedImports: unique(namedImports)
-  };
 }

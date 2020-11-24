@@ -33,7 +33,7 @@
     "test:e2e": "yarn e2e-tests test",
     "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --frozen-lockfile",
-    "generate:test-services:rest": "yarn rest-generator ts-node src/generator-cli.ts -i ../../test-resources/rest-service-specs -o ../../test-packages/test-services/rest && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:test-services:rest": "yarn rest-generator ts-node src/generator-cli.ts -i ../../test-resources/rest-service-specs -o ../../test-packages/test-services/rest && yarn --frozen-lockfile",
     "generate:test-services:e2e": "yarn generate e2e && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services": "yarn generate all && generate:test-services:rest",
     "generate": "yarn workspace @sap-cloud-sdk/generator run compile && yarn ts-node scripts/generate-test-services.ts",

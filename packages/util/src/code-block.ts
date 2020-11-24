@@ -1,5 +1,5 @@
-import { zip } from '../array';
-import { trim, trimRight } from '../string';
+import { zip } from './array';
+import { trim, trimRight } from './string';
 
 export const codeBlock = (strings, ...args) => {
   const pre = strings.slice(0, -1).map(string => {

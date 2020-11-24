@@ -15,7 +15,7 @@ import {
 } from 'fs-extra';
 import { Project } from 'ts-morph';
 import { GeneratorOptions } from './commands/generate-rest-client';
-import { projectOptions, sourceFile } from './utils';
+import { createDirectory, createFile, projectOptions } from './utils';
 import { toOpenApiServiceMetaData } from './parse-open-api-json';
 import { OpenApiServiceMetadata } from './open-api-types';
 import { requestBuilderSourceFile } from './request-builder/file';
@@ -87,18 +87,20 @@ function generateSourcesForService(
   project: Project,
   options: GeneratorOptions
 ) {
-  const serviceDir = project.createDirectory(
-    resolve(options.outputDir.toString(), serviceMetadata.serviceDir)
+  const serviceDir = resolve(
+    options.outputDir.toString(),
+    serviceMetadata.serviceDir
   );
-  logger.info(`Generating request builder in ${serviceDir.getBaseName()}.`);
-  sourceFile(
+  createDirectory(serviceDir);
+  logger.info(`Generating request builder in ${serviceDir}.`);
+  createFile(
     serviceDir,
-    'request-builder',
+    'request-builder.ts',
     requestBuilderSourceFile(serviceMetadata),
     true
   );
 
-  sourceFile(serviceDir, 'index', indexFile(), true);
+  createFile(serviceDir, 'index.ts', indexFile(), true);
 }
 
 async function generateFilesUsingOpenAPI(

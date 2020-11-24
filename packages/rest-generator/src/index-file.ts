@@ -1,16 +1,8 @@
-import { SourceFileStructure, StructureKind } from 'ts-morph';
-export function indexFile(): SourceFileStructure {
-  return {
-    kind: StructureKind.SourceFile,
-    statements: [
-      {
-        kind: StructureKind.ExportDeclaration,
-        moduleSpecifier: './open-api/model'
-      },
-      {
-        kind: StructureKind.ExportDeclaration,
-        moduleSpecifier: './request-builder'
-      }
-    ]
-  };
+import { codeBlock } from '@sap-cloud-sdk/util';
+
+export function indexFile(): string {
+  return codeBlock`
+export * from './open-api/model';
+export * from './request-builder';
+`;
 }

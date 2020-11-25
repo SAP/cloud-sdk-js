@@ -66,6 +66,9 @@ This server is used by the E2E tests located at [test-packages/e2e-tests](./test
 **Attention** The imports in the E2E tests use the root packages e.g. `@sap-cloud-sdk/core` to mimic the way a customer would use it.
 So if you made code changes in one of the packages you need to run `yarn compile` to make the changes take effect.  
 
+For manual E2E to a real remote system we have also some tests agains the [tripping service](https://www.odata.org/blog/trippin-new-odata-v4-sample-service/) which is the standard OData V4 sample service.
+Since the remote service is not really stable we commented out the tests under [test-packages/e2e-tests/test/TripPin](./test-packages/e2e-tests/test/TripPin) but for manual testing they can be useful.
+
 ## Linting
 To fix all linting issues, run:
 ```sh-session

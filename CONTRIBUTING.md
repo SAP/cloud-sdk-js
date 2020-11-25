@@ -55,6 +55,17 @@ If you need to extend the existing services, run the following to regenerate the
 $ yarn generate:test-services
 ```
 
+### End to End (E2E) tests
+
+The E2E are the most realistic tests included in this repo and run on each pull request.
+There are also nightly tests executed on the internal jenkins - see the internal repo for more details on these.
+These are also called E2E tests but are not meant here. 
+
+The E2E tests are based on a locally running server providing an OData interface using [CAP](https://cap.cloud.sap/docs/) and a Rest interface using OpenApi.
+This server is used by the E2E tests located at [test-packages/e2e-tests](./test-packages/e2e-tests).
+**Attention** The imports in the E2E tests use the root packages e.g. `@sap-cloud-sdk/core` to mimic the way a customer would use it.
+So if you made code changes in one of the packages you need to run `yarn compile` to make the changes take effect.  
+
 ## Linting
 To fix all linting issues, run:
 ```sh-session

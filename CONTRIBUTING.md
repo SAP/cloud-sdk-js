@@ -84,3 +84,7 @@ Once you are ready to make a change, please test it appropriately, create a pull
 
 ## Developer Certificate of Origin (DCO)
 Due to legal reasons, contributors will be asked to accept a DCO before they submit the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
+
+## Release Process
+
+Information on the release process can be found in the [release documentation](./knowledge-base/how-tos/release.md).

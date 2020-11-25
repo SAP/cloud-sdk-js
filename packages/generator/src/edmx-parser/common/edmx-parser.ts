@@ -1,4 +1,4 @@
-import { flat } from '@sap-cloud-sdk/util';
+import { assoc, flat } from '@sap-cloud-sdk/util';
 import { forceArray } from '../../generator-utils';
 import {
   EdmxComplexTypeBase,
@@ -7,7 +7,7 @@ import {
 } from './edmx-types';
 
 export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
-  return forceArray(root.ComplexType).map(c => ({
+  return getMergedPropertyWithNamespace(root, 'ComplexType').map(c => ({
     ...c,
     Property: forceArray(c.Property),
     Namespace: c.Namespace
@@ -15,7 +15,7 @@ export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
 }
 
 export function parseEntityTypesBase(root): EdmxEntityTypeBase<any>[] {
-  return forceArray(root.EntityType).map(e => ({
+  return getMergedPropertyWithNamespace(root, 'EntityType').map(e => ({
     ...e,
     Key: {
       PropertyRef: forceArray(e.Key?.PropertyRef)
@@ -31,10 +31,28 @@ export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
 }
 
 export function getPropertyFromEntityContainer(
-  root,
+  schema,
   entityContainerProperty: string
 ): any[] {
   return flat(
-    root.EntityContainer.map(ec => forceArray(ec[entityContainerProperty]))
+    forceArray(schema)
+      .filter(s => s.EntityContainer)
+      .map(s =>
+        forceArray(s['EntityContainer'][entityContainerProperty]).map(
+          addNamespace(schema.Namespace)
+        )
+      )
+  );
+}
+
+export function addNamespace(namespace) {
+  return obj => assoc('Namespace', namespace, obj);
+}
+
+export function getMergedPropertyWithNamespace(root, property: string): any[] {
+  return flat(
+    forceArray(root).map(s =>
+      forceArray(s[property]).map(addNamespace(s.Namespace))
+    )
   );
 }

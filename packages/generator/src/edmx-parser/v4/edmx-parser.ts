@@ -1,4 +1,5 @@
 import {
+  getMergedPropertyWithNamespace,
   getPropertyFromEntityContainer,
   parseComplexTypesBase,
   parseEntitySetsBase,
@@ -34,8 +35,7 @@ export function parseComplexTypes(root): EdmxComplexType[] {
 }
 
 export function parseEnumTypes(root): EdmxEnumType[] {
-  const types: EdmxEnumType[] = forceArray(root.EnumType);
-  return types.map(edmxEnumType => ({
+  return getMergedPropertyWithNamespace(root, 'EnumType').map(edmxEnumType => ({
     Name: edmxEnumType.Name,
     Member: forceArray(edmxEnumType.Member),
     Namespace: edmxEnumType.Namespace
@@ -69,11 +69,13 @@ export function parseActionImport(root): EdmxActionImport[] {
 }
 
 function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {
-  return forceArray(root[actionFunctionKey]).map(actionOrFunction => ({
-    ...actionOrFunction,
-    Parameter: forceArray(actionOrFunction.Parameter),
-    IsBound: false
-  }));
+  return getMergedPropertyWithNamespace(root, actionFunctionKey).map(
+    actionOrFunction => ({
+      ...actionOrFunction,
+      Parameter: forceArray(actionOrFunction.Parameter),
+      IsBound: false
+    })
+  );
 }
 
 export function parseFunctions(root): EdmxFunction[] {

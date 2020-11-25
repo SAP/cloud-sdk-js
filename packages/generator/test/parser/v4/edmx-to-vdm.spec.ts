@@ -307,14 +307,12 @@ function createTestServiceData(
       path: '',
       oDataVersion: 'v4',
       root: {
-        EntityContainer: [
-          {
-            EntitySet: entitySets,
-            ActionImport: createImportsForActions(actions),
-            FunctionImport: [],
-            Name: ''
-          }
-        ],
+        EntityContainer: {
+          EntitySet: entitySets,
+          ActionImport: createImportsForActions(actions),
+          FunctionImport: [],
+          Name: ''
+        },
         Action: actions,
         EntityType: entityTypes,
         ComplexType: complexType,

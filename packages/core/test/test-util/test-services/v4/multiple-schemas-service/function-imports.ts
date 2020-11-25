@@ -24,7 +24,7 @@ export function testFunctionImportEntityReturnType1(parameters: TestFunctionImpo
 
   }
 
-  return new FunctionImportRequestBuilderV4('VALUE_IS_UNDEFINED', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntityV4(data, TestEntity1), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntityV4(data, TestEntity1), params);
 }
 
 /**
@@ -44,7 +44,7 @@ export function testFunctionImportEntityReturnType2(parameters: TestFunctionImpo
 
   }
 
-  return new FunctionImportRequestBuilderV4('VALUE_IS_UNDEFINED', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntityV4(data, TestEntity2), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntityV4(data, TestEntity2), params);
 }
 
 export const functionImports = {

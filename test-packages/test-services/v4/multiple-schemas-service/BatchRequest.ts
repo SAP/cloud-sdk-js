@@ -29,7 +29,7 @@ export function changeset(first: undefined | WriteMultipleSchemasServiceRequestB
   return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
 }
 
-export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
+export const defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const map = { 'A_TestEntity1': TestEntity1, 'A_TestEntity2': TestEntity2, 'A_TestEntity3': TestEntity3, 'A_TestEntity4': TestEntity4 };
 export type ReadMultipleSchemasServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity1> | GetAllRequestBuilderV4<TestEntity2> | GetAllRequestBuilderV4<TestEntity3> | GetAllRequestBuilderV4<TestEntity4> | GetByKeyRequestBuilderV4<TestEntity1> | GetByKeyRequestBuilderV4<TestEntity2> | GetByKeyRequestBuilderV4<TestEntity3> | GetByKeyRequestBuilderV4<TestEntity4>;
 export type WriteMultipleSchemasServiceRequestBuilder = CreateRequestBuilderV4<TestEntity1> | UpdateRequestBuilderV4<TestEntity1> | DeleteRequestBuilderV4<TestEntity1> | CreateRequestBuilderV4<TestEntity2> | UpdateRequestBuilderV4<TestEntity2> | DeleteRequestBuilderV4<TestEntity2> | CreateRequestBuilderV4<TestEntity3> | UpdateRequestBuilderV4<TestEntity3> | DeleteRequestBuilderV4<TestEntity3> | CreateRequestBuilderV4<TestEntity4> | UpdateRequestBuilderV4<TestEntity4> | DeleteRequestBuilderV4<TestEntity4>;

@@ -24,7 +24,7 @@ export function testActionImportNoParameterComplexReturnType1(parameters: TestAc
 
   }
 
-  return new ActionImportRequestBuilder('VALUE_IS_UNDEFINED', 'TestActionImportNoParameterComplexReturnType1', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType1)), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType1', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType1)), params);
 }
 
 /**
@@ -44,7 +44,7 @@ export function testActionImportNoParameterComplexReturnType2(parameters: TestAc
 
   }
 
-  return new ActionImportRequestBuilder('VALUE_IS_UNDEFINED', 'TestActionImportNoParameterComplexReturnType2', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType2)), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType2)), params);
 }
 
 export const actionImports = {

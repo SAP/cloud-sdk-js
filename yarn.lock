@@ -1650,9 +1650,9 @@
     sax "^1.2.4"
 
 "@sap/cds-dk@^3.0.0":
-  version "3.2.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.2.0.tgz#6a8b4170c1524774dba51436315171126a46cc0e"
-  integrity sha512-SOSuKWYdCdRi6BnzEudpPBR3iC+sWZxCO4FlstTAdn9KMynogiZebh4LTyQIUdrLjgdkCoRxa7kn+bnmlALfrg==
+  version "3.2.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.2.1.tgz#56eb5e490be3f724a428ffc373c16ddcc0b9c706"
+  integrity sha512-o0J+1F03XiFmV3uUONUR1/oUJZB5XRkA0oBx7q7aFMHA7aNQyvpg22tJYhnP0z+HW8uDnzj3zMhId8AyDnkSlA==
   dependencies:
     "@sap/cds" "^4.2.2"
     "@sap/cds-foss" "^2"

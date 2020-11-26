@@ -1,4 +1,4 @@
-import { assoc, flat } from '@sap-cloud-sdk/util';
+import { flat } from '@sap-cloud-sdk/util';
 import { forceArray } from '../../generator-utils';
 import {
   EdmxComplexTypeBase,
@@ -38,21 +38,27 @@ export function getPropertyFromEntityContainer(
     forceArray(schema)
       .filter(s => s.EntityContainer)
       .map(s =>
-        forceArray(s['EntityContainer'][entityContainerProperty]).map(
-          addNamespace(schema.Namespace)
+        forceArray(s['EntityContainer'][entityContainerProperty]).map(p =>
+          addNamespace(p, schema.Namespace)
         )
       )
   );
 }
 
-export function addNamespace(namespace) {
-  return obj => assoc('Namespace', namespace, obj);
+function addNamespace<T>(obj: T, namespace: string): T & { Namespace: string } {
+  return { ...obj, Namespace: namespace };
 }
 
+/**
+ * Merge a property defined in one or more schemas and add the namespace information
+ * @param root One or more schemas
+ * @param property The property that will be merged
+ * @returns A collection containing the merged property
+ */
 export function getMergedPropertyWithNamespace(root, property: string): any[] {
   return flat(
     forceArray(root).map(s =>
-      forceArray(s[property]).map(addNamespace(s.Namespace))
+      forceArray(s[property]).map(p => addNamespace(p, s.Namespace))
     )
   );
 }

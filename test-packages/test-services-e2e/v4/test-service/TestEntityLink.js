@@ -74,11 +74,6 @@ var TestEntityLink = /** @class */ (function (_super) {
      */
     TestEntityLink._entityName = 'TestEntityLink';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntityLink.
-     */
-    TestEntityLink._serviceName = 'AdminService';
-    /**
      * Default url path for the according service.
      */
     TestEntityLink._defaultServicePath = '/odata/test-service';

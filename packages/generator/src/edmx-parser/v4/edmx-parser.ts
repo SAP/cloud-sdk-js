@@ -1,5 +1,8 @@
 import {
+  getMergedPropertyWithNamespace,
+  getPropertyFromEntityContainer,
   parseComplexTypesBase,
+  parseEntitySetsBase,
   parseEntityTypesBase
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
@@ -13,13 +16,14 @@ import {
   EdmxEntityType,
   EdmxEnumType,
   EdmxFunction,
-  EdmxFunctionImport
+  EdmxFunctionImport,
+  EdmxNavigationPropertyBinding
 } from './edm-types';
 
-export function joinComplexTypes(
-  complexType: EdmxComplexType,
-  baseType: EdmxComplexType
-): EdmxComplexType {
+export function joinComplexTypes<T extends EdmxComplexType>(
+  complexType: T,
+  baseType: T
+): T {
   return {
     ...complexType,
     Property: [...complexType.Property, ...baseType.Property]
@@ -31,10 +35,10 @@ export function parseComplexTypes(root): EdmxComplexType[] {
 }
 
 export function parseEnumTypes(root): EdmxEnumType[] {
-  const types: EdmxEnumType[] = forceArray(root.EnumType);
-  return types.map(edmxEnumType => ({
+  return getMergedPropertyWithNamespace(root, 'EnumType').map(edmxEnumType => ({
     Name: edmxEnumType.Name,
-    Member: forceArray(edmxEnumType.Member)
+    Member: forceArray(edmxEnumType.Member),
+    Namespace: edmxEnumType.Namespace
   }));
 }
 
@@ -44,26 +48,34 @@ export function parseEntityType(root): EdmxEntityType[] {
 }
 
 export function parseEntitySets(root): EdmxEntitySet[] {
-  return forceArray(root.EntityContainer.EntitySet).map(entitySet => ({
+  return parseEntitySetsBase(root).map(entitySet => ({
     ...entitySet,
-    NavigationPropertyBinding: forceArray(entitySet.NavigationPropertyBinding)
+    NavigationPropertyBinding: parseNavigationPropertyBinding(entitySet)
   }));
+}
+
+function parseNavigationPropertyBinding(
+  entitySet
+): EdmxNavigationPropertyBinding[] {
+  return forceArray(entitySet.NavigationPropertyBinding);
 }
 
 export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return forceArray(root.EntityContainer.FunctionImport);
+  return getPropertyFromEntityContainer(root, 'FunctionImport');
 }
 
 export function parseActionImport(root): EdmxActionImport[] {
-  return forceArray(root.EntityContainer.ActionImport);
+  return getPropertyFromEntityContainer(root, 'ActionImport');
 }
 
 function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {
-  return forceArray(root[actionFunctionKey]).map(actionOrFunction => ({
-    ...actionOrFunction,
-    Parameter: forceArray(actionOrFunction.Parameter),
-    IsBound: false
-  }));
+  return getMergedPropertyWithNamespace(root, actionFunctionKey).map(
+    actionOrFunction => ({
+      ...actionOrFunction,
+      Parameter: forceArray(actionOrFunction.Parameter),
+      IsBound: false
+    })
+  );
 }
 
 export function parseFunctions(root): EdmxFunction[] {

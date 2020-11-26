@@ -14,11 +14,12 @@
 
 ## Compatibility Notes
 
--
+- [Generator] In order to support multi-schema generation, the edmx schema/namespace related types have been extended.
+- [Generator] The deprecated static property `_serviceName` will not be generated.
 
 ## New Functionality
 
--
+- [Generator] Support parsing of multiple schemas in the edmx service specification.
 
 ## Improvements
 

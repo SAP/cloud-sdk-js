@@ -4,10 +4,10 @@ import {
   parseActionImport,
   parseActions,
   parseComplexTypes,
-  parseEntitySets as parseEntitySetsV4,
-  parseEntityType as parseEntityTypeV4,
+  parseEntitySets,
+  parseEntityType,
   parseEnumTypes,
-  parseFunctionImports as parseFunctionImportsV4,
+  parseFunctionImports,
   parseFunctions
 } from '../../../src/edmx-parser/v4';
 
@@ -17,30 +17,30 @@ describe('edmx-edmx-parser', () => {
       '../../test-resources/odata-service-specs/v4/API_TEST_SRV/API_TEST_SRV.edmx'
     );
 
-    expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(11);
-    expect(parseEntityTypeV4(metadataEdmx.root).length).toBe(12);
-    expect(parseFunctionImportsV4(metadataEdmx.root).length).toBe(8);
+    expect(parseEntitySets(metadataEdmx.root).length).toBe(11);
+    expect(parseEntityType(metadataEdmx.root).length).toBe(12);
+    expect(parseFunctionImports(metadataEdmx.root).length).toBe(8);
     expect(parseFunctions(metadataEdmx.root).length).toBe(8);
     expect(parseActionImport(metadataEdmx.root).length).toBe(6);
     expect(parseActions(metadataEdmx.root).length).toBe(5);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(2);
 
-    parseEntitySetsV4(metadataEdmx.root).forEach(e => {
+    parseEntitySets(metadataEdmx.root).forEach(e => {
       expect(e.NavigationPropertyBinding).toBeInstanceOf(Array);
     });
 
-    parseEntityTypeV4(metadataEdmx.root).forEach(e => {
+    parseEntityType(metadataEdmx.root).forEach(e => {
       expect(e.Key.PropertyRef).toBeInstanceOf(Array);
       expect(e.Key.PropertyRef.length).toBeGreaterThan(0);
       expect(e.NavigationProperty).toBeInstanceOf(Array);
       expect(e.Property).toBeInstanceOf(Array);
     });
 
-    const baseType = parseEntityTypeV4(metadataEdmx.root).find(
+    const baseType = parseEntityType(metadataEdmx.root).find(
       e => e.Name === 'A_TestEntityBaseType'
     );
-    const entityWithBaseType = parseEntityTypeV4(metadataEdmx.root).find(
+    const entityWithBaseType = parseEntityType(metadataEdmx.root).find(
       e => e.BaseType && e.BaseType.endsWith(baseType!.Name)
     );
     baseType?.Property.forEach(p => {
@@ -68,5 +68,20 @@ describe('edmx-edmx-parser', () => {
     parseComplexTypes(metadataEdmx.root).forEach(c => {
       expect(c.Property).toBeInstanceOf(Array);
     });
+  });
+
+  it('v4: parses edmx file that contains multiple schemas to JSON and coerces properties to arrays', () => {
+    const metadataEdmx = readEdmxFile(
+      '../../test-resources/odata-service-specs/v4/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
+    );
+
+    expect(parseEntitySets(metadataEdmx.root).length).toBe(4);
+    expect(parseEntityType(metadataEdmx.root).length).toBe(4);
+    expect(parseFunctionImports(metadataEdmx.root).length).toBe(2);
+    expect(parseFunctions(metadataEdmx.root).length).toBe(2);
+    expect(parseActionImport(metadataEdmx.root).length).toBe(2);
+    expect(parseActions(metadataEdmx.root).length).toBe(2);
+    expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(2);
+    expect(parseEnumTypes(metadataEdmx.root).length).toBe(2);
   });
 });

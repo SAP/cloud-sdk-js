@@ -12,11 +12,6 @@ export declare class Testentity_1 extends EntityV2 implements Testentity_1Type {
      */
     static _entityName: string;
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for Testentity_1.
-     */
-    static _serviceName: string;
-    /**
      * Default url path for the according service.
      */
     static _defaultServicePath: string;

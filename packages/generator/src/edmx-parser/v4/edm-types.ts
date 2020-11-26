@@ -3,11 +3,11 @@ import {
   EdmxEntitySetBase,
   EdmxEntityTypeBase,
   EdmxNamed,
+  EdmxNamespaced,
   EdmxParameter
 } from '../common';
 
-export interface EdmxNavigationProperty {
-  Name: string;
+export interface EdmxNavigationProperty extends EdmxNamed {
   Type: string;
 }
 
@@ -17,32 +17,32 @@ export interface EdmxNavigationPropertyBinding {
 }
 
 export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty> &
-  EdmxDerivedType;
+  EdmxDerivedType &
+  EdmxNamespaced;
 
 export interface EdmxEntitySet extends EdmxEntitySetBase {
   NavigationPropertyBinding: EdmxNavigationPropertyBinding[];
 }
 
-export interface EdmxEnumMember {
-  Name: string;
+export interface EdmxEnumMember extends EdmxNamed {
   Value: string;
 }
 
-export interface EdmxEnumType extends EdmxNamed {
+export interface EdmxEnumType extends EdmxNamed, EdmxNamespaced {
   Member: EdmxEnumMember[];
 }
 
-export interface EdmxFunctionImport extends EdmxNamed {
+export interface EdmxFunctionImport extends EdmxNamed, EdmxNamespaced {
   EntitySet?: string;
   Function: string;
 }
 
-export interface EdmxActionImport extends EdmxNamed {
+export interface EdmxActionImport extends EdmxNamed, EdmxNamespaced {
   EntitySet?: string;
   Action: string;
 }
 
-export interface EdmxFunction extends EdmxNamed {
+export interface EdmxFunction extends EdmxNamed, EdmxNamespaced {
   ReturnType?: { Type: string };
   Parameter: EdmxParameter[];
   IsBound: boolean;

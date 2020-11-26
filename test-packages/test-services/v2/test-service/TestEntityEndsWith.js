@@ -74,11 +74,6 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
      */
     TestEntityEndsWith._entityName = 'A_TestEntityEndsWithCollection';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntityEndsWith.
-     */
-    TestEntityEndsWith._serviceName = 'API_TEST_SRV';
-    /**
      * Default url path for the according service.
      */
     TestEntityEndsWith._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

@@ -1,4 +1,6 @@
 import {
+  getMergedPropertyWithNamespace,
+  getPropertyFromEntityContainer,
   parseComplexTypesBase,
   parseEntitySetsBase,
   parseEntityTypesBase
@@ -25,15 +27,15 @@ export function parseEntityTypes(root): EdmxEntityType[] {
 }
 
 export function parseAssociation(root): EdmxAssociation[] {
-  return forceArray(root.Association);
+  return getMergedPropertyWithNamespace(root, 'Association');
 }
 
 export function parseAssociationSets(root): EdmxAssociationSet[] {
-  return forceArray(root.EntityContainer.AssociationSet);
+  return getPropertyFromEntityContainer(root, 'AssociationSet');
 }
 
 export function parseFunctionImports(root): EdmxFunctionImport[] {
-  return forceArray(root.EntityContainer.FunctionImport).map(f => ({
+  return getPropertyFromEntityContainer(root, 'FunctionImport').map(f => ({
     ...f,
     Parameter: forceArray(f.Parameter)
   }));

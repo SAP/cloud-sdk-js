@@ -58,7 +58,8 @@ export const brunchEntity: VdmEntity = {
   keys: [entityName],
   creatable: true,
   deletable: true,
-  updatable: true
+  updatable: true,
+  entityTypeNamespace: ''
 };
 
 export const toBrunch: VdmNavigationProperty = {
@@ -84,13 +85,14 @@ export const breakfastEntity: VdmEntity = {
   keys: [entityName, breakfastTime],
   creatable: true,
   deletable: false,
-  updatable: true
+  updatable: true,
+  entityTypeNamespace: ''
 };
 
 export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
-  namespace: 'FOOD_SERVICE',
+  namespaces: ['FOOD_SERVICE'],
   servicePath: 'some/path/to/food',
   npmPackageName: '@hello/food-service',
   originalFileName: 'food.service.edmx',
@@ -139,7 +141,8 @@ export const complexMeal: VdmComplexType = {
       staticPropertyName: 'AMOUNT',
       isCollection: false
     }
-  ]
+  ],
+  namespace: ''
 };
 
 export const complexDesert: VdmComplexType = {
@@ -172,7 +175,8 @@ export const complexDesert: VdmComplexType = {
       staticPropertyName: 'NAME',
       isCollection: false
     }
-  ]
+  ],
+  namespace: ''
 };
 
 export const complexMealWithDesert: VdmComplexType = {
@@ -206,7 +210,8 @@ export const complexMealWithDesert: VdmComplexType = {
       staticPropertyName: 'AMOUNT',
       isCollection: false
     }
-  ]
+  ],
+  namespace: ''
 };
 
 export const orderBreakfast: VdmFunctionImport = {

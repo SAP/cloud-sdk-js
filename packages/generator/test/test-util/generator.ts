@@ -7,15 +7,13 @@ export function checkStaticProperties(entityClass: ClassDeclaration): void {
   const properties = entityClass.getProperties();
   const staticProperties = [
     properties.find(p => p.getName() === '_entityName')!,
-    properties.find(p => p.getName() === '_serviceName')!,
     properties.find(p => p.getName() === '_defaultServicePath')!
   ];
 
-  expect(staticProperties.map(p => p.isStatic())).toEqual([true, true, true]);
+  expect(staticProperties.map(p => p.isStatic())).toEqual([true, true]);
 
   expect(staticProperties.map(p => p.getInitializer()!.getText())).toEqual([
     "'A_TestEntity'",
-    "'API_TEST_SRV'",
     "'/sap/opu/odata/sap/API_TEST_SRV'"
   ]);
 }

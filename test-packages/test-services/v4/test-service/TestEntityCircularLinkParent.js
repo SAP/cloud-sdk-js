@@ -74,11 +74,6 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
      */
     TestEntityCircularLinkParent._entityName = 'A_TestEntityCircularLinkParent';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntityCircularLinkParent.
-     */
-    TestEntityCircularLinkParent._serviceName = 'API_TEST_SRV';
-    /**
      * Default url path for the according service.
      */
     TestEntityCircularLinkParent._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

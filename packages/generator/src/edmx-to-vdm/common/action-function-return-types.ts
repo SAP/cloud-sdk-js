@@ -1,4 +1,4 @@
-import { caps, ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, last, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
@@ -91,8 +91,15 @@ function findEntityType(
   entities: VdmEntity[]
 ): VdmEntity | undefined {
   returnType = parseTypeName(returnType);
-  const parsedReturnType = returnType.split('.').slice(-1)[0];
-  return entities.find(e => e.entityTypeName === parsedReturnType);
+  const entity = entities.find(
+    e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
+  );
+  // TODO 1584 remove this block after testing all the s/4 edmx files
+  if (!entity) {
+    const parsedReturnType = last(returnType.split('.'));
+    return entities.find(e => e.entityTypeName === parsedReturnType);
+  }
+  return entity;
 }
 
 function findComplexType(
@@ -100,8 +107,15 @@ function findComplexType(
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): Omit<VdmComplexType, 'factoryName'> | undefined {
   returnType = parseTypeName(returnType);
-  const parsedReturnType = returnType.split('.').slice(-1)[0];
-  return complexTypes.find(c => c.originalName === parsedReturnType);
+  const complexType = complexTypes.find(
+    e => `${e.namespace}.${e.originalName}` === returnType
+  );
+  // TODO 1584 remove this block after testing all the s/4 edmx files
+  if (!complexType) {
+    const parsedReturnType = last(returnType.split('.'));
+    return complexTypes.find(c => c.originalName === parsedReturnType);
+  }
+  return complexType;
 }
 
 function getVoidReturnType(): VdmFunctionImportReturnType {

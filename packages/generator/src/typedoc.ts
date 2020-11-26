@@ -8,6 +8,7 @@ import {
   VdmPropertyValueConstraints,
   VdmServiceMetadata
 } from './vdm-types';
+import { getServiceName } from './service-generator';
 
 export function getFunctionDoc(
   description: string,
@@ -102,7 +103,10 @@ export function getEntityDescription(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): string {
-  let description = entityDescription(entity.entitySetName, service.namespace);
+  let description = entityDescription(
+    entity.entitySetName,
+    getServiceName(service)
+  );
 
   if (
     service.apiBusinessHubMetadata &&

@@ -1,6 +1,3 @@
-/**
- * @hidden
- */
 export function equalObjects(
   obj1: Record<string, any>,
   obj2: Record<string, any>
@@ -12,9 +9,6 @@ export function equalObjects(
   );
 }
 
-/**
- * @hidden
- */
 export function equal<T>(item1: T, item2: T): boolean {
   if (Array.isArray(item1) && Array.isArray(item2)) {
     return equalArrays(item1 as any[], item2 as any[]);
@@ -29,9 +23,6 @@ export function equal<T>(item1: T, item2: T): boolean {
   return item1 === item2;
 }
 
-/**
- * @hidden
- */
 export function equalArrays<T>(arr1: T[], arr2: T[]): boolean {
   return (
     arr1.length === arr2.length &&

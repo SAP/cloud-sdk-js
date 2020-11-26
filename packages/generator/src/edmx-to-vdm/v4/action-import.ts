@@ -51,7 +51,7 @@ function joinActionImportData(
           }
         ];
       }
-      actionImportsWithoutActions.push(actionImport.Name);
+      actionImportsWithoutActions.push(actionImport);
       return joined;
     },
     []

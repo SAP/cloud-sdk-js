@@ -37,7 +37,7 @@ function joinActionImportData(
   actionImports: EdmxActionImport[],
   actions: EdmxAction[]
 ): JoinedActionImportData[] {
-  const actionImportsWithoutActions: string[] = [];
+  const actionImportsWithoutActions: EdmxActionImport[] = [];
   const joinedActionImportData = actionImports.reduce(
     (joined, actionImport) => {
       const edmxAction = findActionForActionImport(actions, actionImport);
@@ -57,9 +57,15 @@ function joinActionImportData(
     []
   );
 
-      `Could not find actions referenced by the following action imports. Skipping code generation: ${actionImportsWithoutActions
-        .map(f => `${f.Name} => ${f.Action}`)
-        .join(', \n')}`
+  if (actionImportsWithoutActions) {
+    logger.warn(
+      `Could not find actions referenced by the following action imports. Skipping code generation: 
+${actionImportsWithoutActions
+  .map(f => `${f.Name} => ${f.Action}`)
+  .join(', \n')}`
+    );
+  }
+
   return joinedActionImportData;
 }
 

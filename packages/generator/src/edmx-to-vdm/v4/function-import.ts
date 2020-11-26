@@ -37,7 +37,7 @@ function joinFunctionImportData(
   functionImports: EdmxFunctionImport[],
   functions: EdmxFunction[]
 ): JoinedFunctionImportData[] {
-  const functionImportsWithoutFunctions: string[] = [];
+  const functionImportsWithoutFunctions: EdmxFunctionImport[] = [];
   const joinedFunctionImportData = functionImports.reduce(
     (joined, functionImport) => {
       const edmxFunction = findFunctionForFunctionImport(

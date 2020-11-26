@@ -57,13 +57,9 @@ function joinActionImportData(
     []
   );
 
-  if (actionImportsWithoutActions) {
-    logger.warn(
-      `Unable to find a action import with name: ${actionImportsWithoutActions}, in the list of given actions: ${actions
-        .map(action => action.Name)
-        .join(',')}`
-    );
-  }
+      `Could not find actions referenced by the following action imports. Skipping code generation: ${actionImportsWithoutActions
+        .map(f => `${f.Name} => ${f.Action}`)
+        .join(', \n')}`
   return joinedActionImportData;
 }
 

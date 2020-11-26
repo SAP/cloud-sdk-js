@@ -62,9 +62,9 @@ function joinFunctionImportData(
 
   if (functionImportsWithoutFunctions) {
     logger.warn(
-      `Unable to find a function import with name: ${functionImportsWithoutFunctions}, in the list of given functions: ${functions
-        .map(f => f.Name)
-        .join(',')}`
+      `Could not find functions referenced by the following function imports. Skipping code generation: ${functionImportsWithoutFunctions
+        .map(f => `${f.Name} => ${f.Function}`)
+        .join(', \n')}`
     );
   }
   return joinedFunctionImportData;

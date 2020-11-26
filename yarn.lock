@@ -1771,17 +1771,17 @@
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@ts-morph/common@~0.6.0":
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.6.0.tgz#cbd4ee57c5ef971511b9c5778e0bb8eb27de4783"
-  integrity sha512-pI35nZz5bs3tL3btSVX2cWkAE8rc80F+Fn4TwSC6bQvn7fgn9IyLXVcAfpG6X6NBY5wN9TkSWXn/QYUkBvR/Fw==
+"@ts-morph/common@~0.7.0":
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.7.0.tgz#fe50e04666e8ee6bbc61dd101679c4cdb08aad7d"
+  integrity sha512-1EJYuiAjfOxrxB0VRZR4KVvPr4S7ylQv9M0IvUiBVB1HTcXAgWfineqx8n/tNIu5OhNjPQ8w9Qd7JzHbcVa64g==
   dependencies:
     "@dsherret/to-absolute-glob" "^2.0.2"
     fast-glob "^3.2.4"
-    fs-extra "^9.0.1"
     is-negated-glob "^1.0.0"
-    multimatch "^4.0.0"
-    typescript "~4.0.2"
+    mkdirp "^1.0.4"
+    multimatch "^5.0.0"
+    typescript "~4.1.2"
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.11"
@@ -1915,9 +1915,9 @@
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
 "@types/node@*", "@types/node@>= 8", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.19.6"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.6.tgz#fbf249fa46487dd8c7386d785231368b92a33a53"
-  integrity sha512-U2VopDdmBoYBmtm8Rz340mvvSz34VgX/K9+XCuckvcLGMkt3rbMX8soqFOikIPlPBc5lmw8By9NUK7bEFSBFlQ==
+  version "12.19.7"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.7.tgz#cf8b6ac088dd9182ac9a1d765f787a8d12490c04"
+  integrity sha512-zvjOU1g4CpPilbTDUATnZCUb/6lARMRAqzT7ILwl1P3YvU2leEcZ2+fw9+Jrw/paXB1CgQyXTrN4hWDtqT9O2A==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -3087,10 +3087,10 @@ co@^4.6.0:
   resolved "https://registry.npmjs.org/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
 
-code-block-writer@^10.1.0:
-  version "10.1.0"
-  resolved "https://registry.npmjs.org/code-block-writer/-/code-block-writer-10.1.0.tgz#54fc410ebef2af836d9c2314ac40af7d7b37eee9"
-  integrity sha512-RG9hpXtWFeUWhuUav1YuP/vGcyncW+t90yJLk9fNZs1De2OuHTHKAKThVCokt29PYq5RoJ0QSZaIZ+rvPO23hA==
+code-block-writer@^10.1.1:
+  version "10.1.1"
+  resolved "https://registry.npmjs.org/code-block-writer/-/code-block-writer-10.1.1.tgz#ad5684ed4bfb2b0783c8b131281ae84ee640a42f"
+  integrity sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==
 
 code-point-at@^1.0.0:
   version "1.1.0"
@@ -7456,17 +7456,6 @@ multimatch@^3.0.0:
     arrify "^1.0.1"
     minimatch "^3.0.4"
 
-multimatch@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/multimatch/-/multimatch-4.0.0.tgz#8c3c0f6e3e8449ada0af3dd29efb491a375191b3"
-  integrity sha512-lDmx79y1z6i7RNx0ZGCPq1bzJ6ZoDDKbvh7jxr9SJcWLkShMzXrHbYVpTdnhNM5MXpDUxCQ4DgqVttVXlBgiBQ==
-  dependencies:
-    "@types/minimatch" "^3.0.3"
-    array-differ "^3.0.0"
-    array-union "^2.1.0"
-    arrify "^2.0.1"
-    minimatch "^3.0.4"
-
 multimatch@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/multimatch/-/multimatch-5.0.0.tgz#932b800963cea7a31a033328fa1e0c3a1874dbe6"
@@ -10466,14 +10455,14 @@ ts-jest@^26.4.1:
     semver "7.x"
     yargs-parser "20.x"
 
-ts-morph@^8.1.0:
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-8.2.0.tgz#41d83cd501cbd897eb029ac489d6d5b927555c57"
-  integrity sha512-NHHWu+7I2/AOZiTni5w3f+xCfIxrkzPCcQbTGa81Yk3pr23a4h9xLLEE6tIGuYIubWjkjr9QVC3ITqgmA5touQ==
+ts-morph@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-9.0.0.tgz#0cc2d4a78ed75899bf963cbaa0d920339764950f"
+  integrity sha512-uhu0I4EDTdHCMptsR1GuEZU3gSKS5p0n41EOEZ69y5klmOAHNzntI0ivcZL5Ip9+G+o8dgQScAKSHeHXN2vEDw==
   dependencies:
     "@dsherret/to-absolute-glob" "^2.0.2"
-    "@ts-morph/common" "~0.6.0"
-    code-block-writer "^10.1.0"
+    "@ts-morph/common" "~0.7.0"
+    code-block-writer "^10.1.1"
 
 ts-node@^9.0.0:
   version "9.0.0"
@@ -10666,11 +10655,6 @@ typescript@^4.0.3, typescript@~4.1.2:
   version "4.1.2"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.1.2.tgz#6369ef22516fe5e10304aae5a5c4862db55380e9"
   integrity sha512-thGloWsGH3SOxv1SoY7QojKi0tc+8FnOmiarEGMbd/lar7QOEd3hvlx3Fp5y6FlDUGl9L+pd4n2e+oToGMmhRQ==
-
-typescript@~4.0.2:
-  version "4.0.5"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.0.5.tgz#ae9dddfd1069f1cb5beb3ef3b2170dd7c1332389"
-  integrity sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
 
 uglify-js@^3.1.4:
   version "3.11.4"

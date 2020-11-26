@@ -10,7 +10,7 @@
 
 ## Known Issues
 
--
+- [Generator] Using entity type as the parameter of function or action imports is not supported.
 
 ## Compatibility Notes
 
@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [Generator] Log warnings when generating code for function or action imports with unknown parameters, instead of throwing errors.
 
 ## Fixed Issues
 

@@ -63,7 +63,7 @@ describe('generator', () => {
 
     it('generates action-imports.ts file', () => {
       const actionImports = getActionImportDeclarations(files);
-      expect(actionImports.length).toBe(3);
+      expect(actionImports.length).toBe(4);
       const actionImportNames = actionImports.map(action => action.getName());
       expect(actionImportNames).toEqual(
         expect.arrayContaining(['testActionImportNoParameterNoReturnType'])

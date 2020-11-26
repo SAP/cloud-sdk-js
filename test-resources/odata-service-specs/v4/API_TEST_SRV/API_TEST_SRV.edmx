@@ -175,6 +175,14 @@
         <ReturnType Type="Edm.SomethingTheSDKDoesNotSupport"/>
       </Action>
 
+      <Action Name="TestActionImportEntityParameterNoReturnType">
+        <Parameter Name="TestEntityParam" Type="API_TEST_SRV.A_TestEntityType"/>
+      </Action>
+
+      <Action Name="TestActionImportNoParameterEntityReturnType">
+        <ReturnType Type="API_TEST_SRV.A_TestEntityType"/>
+      </Action>
+
       <Function Name="TestFunctionImportNoReturnType">
       </Function>
 
@@ -255,8 +263,17 @@
         <ActionImport Name="TestActionImportMultipleParameterComplexReturnType" Action="API_TEST_SRV.TestActionImportMultipleParameterComplexReturnType">
         </ActionImport>
 
-       <ActionImport Name="TestActionImportUnsupportedEdmTypes" Action="API_TEST_SRV.TestActionImportUnsupportedEdmTypes">
-       </ActionImport>
+        <ActionImport Name="TestActionImportUnsupportedEdmTypes" Action="API_TEST_SRV.TestActionImportUnsupportedEdmTypes">
+        </ActionImport>
+
+        <ActionImport Name="TestActionImportNoParameterEntityReturnType" Action="API_TEST_SRV.TestActionImportNoParameterEntityReturnType">
+        </ActionImport>
+
+        <ActionImport Name="TestActionImportEntityParameterNoReturnType" Action="API_TEST_SRV.TestActionImportEntityParameterNoReturnType">
+        </ActionImport>
+
+        <ActionImport Name="TestActionImportNoActionDefined" Action="API_TEST_SRV.TestActionImportNoActionDefined">
+        </ActionImport>
 
         <FunctionImport Name="TestFunctionImportEdmReturnType" Function="API_TEST_SRV.TestFunctionImportEdmReturnType">
         </FunctionImport>

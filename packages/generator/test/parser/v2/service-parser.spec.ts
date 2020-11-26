@@ -346,46 +346,6 @@ describe('service-parser', () => {
       );
     });
 
-    it('v4 function imports edm return types are read correctly', () => {
-      const [service] = parseAllServices(
-        createOptions({
-          inputDir: '../../test-resources/odata-service-specs/v4/API_TEST_SRV',
-          useSwagger: false
-        })
-      );
-
-      const functionImport = service.functionImports.find(
-        f => f.originalName === 'TestFunctionImportEdmReturnType'
-      )!;
-
-      expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
-      expect(functionImport.returnType.builderFunction).toBe(
-        "(val) => edmToTsV4(val.value, 'Edm.Boolean')"
-      );
-    });
-
-    it('should parse actions imports correctly', () => {
-      const services = parseAllServices(
-        createOptions({
-          inputDir: '../../test-resources/odata-service-specs/v4/API_TEST_SRV',
-          useSwagger: false
-        })
-      );
-
-      const actions = services[0].actionsImports;
-
-      expect(actions?.length).toBe(3);
-      const actionWithUnsupportedEdmType = actions?.find(
-        action => action.originalName === 'TestActionImportUnsupportedEdmTypes'
-      );
-      expect(actionWithUnsupportedEdmType?.returnType.builderFunction).toBe(
-        "(val) => edmToTsV4(val.value, 'Edm.Any')"
-      );
-      expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toBe(
-        'Edm.Any'
-      );
-    });
-
     it('should parse C4C service definitions with proper class names.', () => {
       const services = parseAllServices(
         createOptions({

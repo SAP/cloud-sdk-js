@@ -54,7 +54,7 @@ function joinFunctionImportData(
           }
         ];
       }
-      functionImportsWithoutFunctions.push(functionImport.Name);
+      functionImportsWithoutFunctions.push(functionImport);
       return joined;
     },
     []

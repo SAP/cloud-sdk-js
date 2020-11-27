@@ -14,10 +14,10 @@ describe('service-mapping', () => {
         enumTypes: [],
         entities: [],
         functionImports: [],
-        namespace: 'fghjkl',
-        speakingModuleName: 'fghjk',
+        namespaces: ['namespace'],
+        speakingModuleName: 'moduleName',
         className: 'AService',
-        edmxPath: 'fghjkl'
+        edmxPath: 'edmxPath'
       },
       {
         oDataVersion: 'v2',
@@ -29,10 +29,10 @@ describe('service-mapping', () => {
         enumTypes: [],
         entities: [],
         functionImports: [],
-        namespace: 'fghjkl',
-        speakingModuleName: 'fghjk',
+        namespaces: ['namespace'],
+        speakingModuleName: 'moduleName',
         className: 'BService',
-        edmxPath: 'fghjkl'
+        edmxPath: 'edmxPath'
       }
     ];
 

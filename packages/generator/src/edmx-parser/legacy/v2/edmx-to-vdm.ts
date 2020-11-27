@@ -69,7 +69,7 @@ export function transformEntitiesV2(
   serviceMetadata: ParsedServiceMetadata,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
-): VdmEntity[] {
+): Omit<VdmEntity, 'entityTypeNamespace'>[] {
   const edmxMetadata = serviceMetadata.edmx as EdmxMetadata;
   const entitiesMetadata = joinEntityMetadata(serviceMetadata);
   const classNames = createEntityClassNames(entitiesMetadata, formatter);

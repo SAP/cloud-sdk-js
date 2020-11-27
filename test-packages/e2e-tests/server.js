@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
-const { createCapApp: createODataApp } = require('./cap');
+const { createCapApp } = require('./cap');
 const { createRestApp } = require('./rest');
 
 async function startServer() {
   const app = express();
-  const odataApp = createODataApp();
+  const odataApp = createCapApp();
   const restApp = await createRestApp();
 
   app.use('/odata', odataApp);

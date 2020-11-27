@@ -5,7 +5,7 @@ import {
   FieldType,
   and,
   Filterable,
-  FilterList
+  toFilterableList
 } from '../../odata-common';
 
 /**
@@ -19,7 +19,7 @@ export function any<
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
-  return new FilterLambdaExpression(toFilterList(filters), 'any');
+  return new FilterLambdaExpression(and(toFilterableList(filters)), 'any');
 }
 
 // eslint-disable-next-line valid-jsdoc
@@ -34,16 +34,5 @@ export function all<
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
-  return new FilterLambdaExpression(toFilterList(filters), 'all');
-}
-
-function toFilterList<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
->(
-  filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
-): FilterList<EntityT> {
-  return and(
-    ...filters.map(f => (f instanceof OneToManyLink ? f._filters : f))
-  );
+  return new FilterLambdaExpression(and(toFilterableList(filters)), 'all');
 }

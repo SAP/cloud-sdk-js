@@ -37,6 +37,7 @@ async function createApi() {
 
   api.register({
     getAllEntities: (c, req, res) => res.status(200).json(entities),
+    countEntities: (c, req, res) => res.status(200).json(entities.length),
     getEntityByKey: (c, req, res) => {
       const entityId = c.request.params.entityId;
       const entity = entities.find(e => e.keyProperty === entityId);
@@ -49,8 +50,10 @@ async function createApi() {
       entities.push(c.request.requestBody);
       return res.status(201).end();
     },
-    validationFail: (c, req, res) =>
-      res.status(400).json({ err: c.validation.errors }),
+    validationFail: (c, req, res) => {
+      console.log('fail');
+      res.status(400).json({ err: c.validation.errors });
+    },
     notFound: (c, req, res) => res.status(404).json({ err: 'not found' })
   });
 

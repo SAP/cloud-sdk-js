@@ -20,5 +20,9 @@ export const TestServiceApiRequestBuilder = {
     TestServiceApi,
     'getEntityByKey',
     entityId
+  ),
+  countEntities: () => new RestRequestBuilder<TestServiceApi, 'countEntities'>(
+    TestServiceApi,
+    'countEntities'
   )
 };

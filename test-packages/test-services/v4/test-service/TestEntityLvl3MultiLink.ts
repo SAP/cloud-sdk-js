@@ -15,11 +15,6 @@ export class TestEntityLvl3MultiLink extends EntityV4 implements TestEntityLvl3M
    */
   static _entityName = 'A_TestEntityLvl3MultiLink';
   /**
-   * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-   * Technical service name for TestEntityLvl3MultiLink.
-   */
-  static _serviceName = 'API_TEST_SRV';
-  /**
    * Default url path for the according service.
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

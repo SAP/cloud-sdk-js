@@ -10,7 +10,45 @@
 
 ## Known Issues
 
+- [Generator] Using entity type as the parameter of function or action imports is not supported.
+
+## Compatibility Notes
+
+- [Generator] In order to support multi-schema generation, the edmx schema/namespace related types have been extended.
+- [Generator] The deprecated static property `_serviceName` will not be generated.
+
+## New Functionality
+
+- [Generator] Support parsing of multiple schemas in the edmx service specification.
+
+## Improvements
+
+- [Generator] Log warnings when generating code for function or action imports with unknown parameters, instead of throwing errors.
+
+## Fixed Issues
+
 -
+
+
+# 1.32.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.32.1<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- Version 1.32.0 introduced a breaking change by removing the export of all generic HTTP client functionality. This version adds it again.
+
+## Fixed Issues
+
+- Add missing export for http-client
+
+# 1.32.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.32.0<br>
+Blog: TBD<br>
 
 ## Compatibility Notes
 
@@ -19,7 +57,7 @@
 
 ## New Functionality
 
-- 
+-
 
 ## Improvements
 
@@ -30,7 +68,6 @@
 
 - [Generator] Fix the enum type (V4), when only one enum member is defined in the metadata.
 - [OData] Fix function imports with and without parameters using the OData V4 syntax.
-
 
 # 1.31.0
 

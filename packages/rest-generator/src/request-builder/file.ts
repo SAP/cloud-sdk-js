@@ -28,9 +28,9 @@ function openApiImports(
   const paramRefNames: string[] = flat(
     serviceMetadata.paths.map(path =>
       flat(
-        path.operations.map(o =>
-          o.requestBodySchemaRefName
-            ? [toPascalCase(o.requestBodySchemaRefName)]
+        path.operations.map(operation =>
+          operation.requestBodySchemaRefName
+            ? [toPascalCase(operation.requestBodySchemaRefName)]
             : []
         )
       )

@@ -16,11 +16,6 @@ export class Airports extends EntityV4 implements AirportsType {
    */
   static _entityName = 'Airports';
   /**
-   * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-   * Technical service name for Airports.
-   */
-  static _serviceName = 'Microsoft.OData.SampleService.Models.TripPin';
-  /**
    * Default url path for the according service.
    */
   static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';

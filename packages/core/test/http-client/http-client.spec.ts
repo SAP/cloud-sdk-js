@@ -205,7 +205,7 @@ describe('generic http client', () => {
 
       return new Promise((resolve, reject) =>
         https.get('https://example.com', response =>
-          response.statusCode === 200 ? resolve() : reject()
+          response.statusCode === 200 ? resolve(200) : reject()
         )
       );
     });

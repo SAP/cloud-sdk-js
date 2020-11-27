@@ -7,6 +7,8 @@ import {
   getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
+import { EdmxAction, EdmxFunction } from '../edmx-parser/v4';
+import { EdmxFunctionImport } from '../edmx-parser/v2';
 import {
   complexTypeForName,
   enumTypeForName,
@@ -155,3 +157,24 @@ export function typesForCollection(
 
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
+
+export function hasUnsupportedParameterTypes(
+  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImport
+): boolean {
+  const unsupportedParameters = functionOrAction.Parameter.filter(
+    p => !isEdmType(p.Type)
+  );
+  if (unsupportedParameters.length > 0) {
+    logger.warn(
+      `Unsupported function or action import parameter types "${unsupportedParameters
+        .map(p => p.Type)
+        .join(
+          ', '
+        )}" found, which is used by the function import or action import "${
+        functionOrAction.Name
+      }". The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
+    );
+    return true;
+  }
+  return false;
+}

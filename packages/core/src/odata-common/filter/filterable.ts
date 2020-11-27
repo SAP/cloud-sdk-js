@@ -1,6 +1,6 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity';
-import { FieldType } from '../selectable';
+import { FieldType, OneToManyLink } from '../selectable';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
 import { FilterList } from './filter-list';
@@ -76,6 +76,18 @@ export function or<EntityT extends EntityBase>(
   ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
   return new FilterList([], variadicArgumentToArray(first, rest));
+}
+
+/*
+  hidden
+ */
+export function toFilterableList<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
+>(
+  filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
+): Filterable<EntityT>[] {
+  return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
 }
 
 // TODO:

@@ -110,7 +110,7 @@ export function transformEntity(
   classNames: Record<string, any>,
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
-): Omit<VdmEntity, 'navigationProperties'> {
+): Omit<VdmEntity, 'navigationProperties' | 'entityTypeNamespace'> {
   const entity = {
     entitySetName: entityMetadata.entitySet.Name,
     entityTypeName: entityMetadata.entityType.Name,
@@ -341,7 +341,7 @@ export function transformComplexTypes(
   complexTypes: EdmxComplexTypeBase[],
   formatter: ServiceNameFormatter,
   reservedNames: Set<string>
-): VdmComplexType[] {
+): Omit<VdmComplexType, 'namespace'>[] {
   const formattedTypes = complexTypes.reduce(
     (formatted, c) => ({
       ...formatted,

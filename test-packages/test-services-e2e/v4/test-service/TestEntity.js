@@ -74,11 +74,6 @@ var TestEntity = /** @class */ (function (_super) {
      */
     TestEntity._entityName = 'TestEntity';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for TestEntity.
-     */
-    TestEntity._serviceName = 'AdminService';
-    /**
      * Default url path for the according service.
      */
     TestEntity._defaultServicePath = '/odata/test-service';

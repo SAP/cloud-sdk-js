@@ -74,11 +74,6 @@ var Airlines = /** @class */ (function (_super) {
      */
     Airlines._entityName = 'Airlines';
     /**
-     * @deprecated Since v1.0.1 Use [[_defaultServicePath]] instead.
-     * Technical service name for Airlines.
-     */
-    Airlines._serviceName = 'Microsoft.OData.SampleService.Models.TripPin';
-    /**
      * Default url path for the according service.
      */
     Airlines._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';

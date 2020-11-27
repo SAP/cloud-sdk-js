@@ -6,6 +6,10 @@ export function indexFile(): SourceFileStructure {
       {
         kind: StructureKind.ExportDeclaration,
         moduleSpecifier: './open-api/model'
+      },
+      {
+        kind: StructureKind.ExportDeclaration,
+        moduleSpecifier: './request-builder'
       }
     ]
   };

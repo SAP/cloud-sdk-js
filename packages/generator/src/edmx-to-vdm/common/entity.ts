@@ -52,6 +52,7 @@ export function transformEntityBase(
   const entity = {
     entitySetName: entityMetadata.entitySet.Name,
     entityTypeName: entityMetadata.entityType.Name,
+    entityTypeNamespace: entityMetadata.entityType.Namespace,
     className: classNames[entityMetadata.entitySet.Name],
     properties: properties(entityMetadata, complexTypes, formatter, enumTypes),
     creatable: entityMetadata.entitySet
@@ -134,15 +135,18 @@ export function joinEntityMetadata<
 >(
   entitySets: EntitySetT[],
   entityTypes: EntityTypeT[],
-  namespace: string,
   swagger?: SwaggerMetadata
 ): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
-    // We assume metadata files to have a maximum of two schemas currently
-    // So entitySet.EntityType.split('.').slice(-1)[0] that we will only find one matching entry (and thus never forget anything)
-    const entityType = entityTypes.find(
-      t => t.Name === entitySet.EntityType.split('.').slice(-1)[0]
+    let entityType = entityTypes.find(
+      t => `${t.Namespace}.${t.Name}` === entitySet.EntityType
     );
+    // TODO 1584 remove this block after testing all the s/4 edmx files
+    if (!entityType) {
+      entityType = entityTypes.find(
+        t => t.Name === last(entitySet.EntityType.split('.'))
+      );
+    }
 
     if (!entityType) {
       throw Error(
@@ -157,7 +161,7 @@ export function joinEntityMetadata<
 
     if (swagger) {
       const defKey = Object.keys(swagger.definitions).find(
-        name => `${namespace}.${name}` === entitySet.EntityType
+        name => `${entityType!.Namespace}.${name}` === entitySet.EntityType
       );
       if (defKey) {
         joined.swaggerDefinition = swagger.definitions[defKey];

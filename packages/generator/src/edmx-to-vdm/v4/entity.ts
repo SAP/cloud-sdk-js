@@ -20,10 +20,10 @@ import {
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { isCollectionType } from '../edmx-to-vdm-util';
 
-export function joinEntityTypes(
-  entityType: EdmxEntityType,
-  baseType: EdmxEntityType
-): EdmxEntityType {
+export function joinEntityTypes<T extends EdmxEntityType>(
+  entityType: T,
+  baseType: T
+): T {
   // TODO: only join properties / nav properties of the respective type
   return {
     ...entityType,
@@ -50,7 +50,6 @@ export function generateEntitiesV4(
   const entitiesMetadata = joinEntityMetadata(
     entitySets,
     entityTypes,
-    serviceMetadata.edmx.namespace,
     serviceMetadata.swagger
   );
   const classNames = createEntityClassNames(entitiesMetadata, formatter);

@@ -1,5 +1,5 @@
 import { EntityBase } from '../entity';
-import { Filterable, FilterLink } from '../filter';
+import { Filterable, FilterLink, toFilterableList } from '../filter';
 import { Orderable } from '../order';
 import { Link } from './link';
 
@@ -41,10 +41,7 @@ export class OneToManyLink<
   ): this {
     const link = this.clone();
 
-    link._filters = new FilterLink(
-      this,
-      expressions.map(e => (e instanceof OneToManyLink ? e._filters : e))
-    );
+    link._filters = new FilterLink(this, toFilterableList(expressions));
     return link;
   }
 

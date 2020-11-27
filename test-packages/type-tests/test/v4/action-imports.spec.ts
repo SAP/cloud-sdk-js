@@ -1,7 +1,7 @@
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
-  testActionImportUnsupportedEdmTypes,
+  testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services/v4/test-service/action-imports';
 
 // $ExpectType ActionImportRequestBuilder<TestActionImportNoParameterNoReturnTypeParameters, undefined>

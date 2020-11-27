@@ -1,6 +1,4 @@
-import {
-  defaultDestination,
-} from '../../test-util/request-mocker';
+import { defaultDestination } from '../../test-util/request-mocker';
 import { testFunctionImportMultipleParams } from '../../test-util/test-services/v4/test-service';
 
 describe('FunctionImportRequestBuilderV4', () => {

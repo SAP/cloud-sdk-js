@@ -70,11 +70,12 @@ export const SomeTagApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Get all entities
          * @summary Get entities
-         * @param {number} [limit] maximum number of records to return
+         * @param {string} [stringParameter] A parameter of type string
+         * @param {number} [integerParameter] A parameter of type integer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities: async (limit?: number, options: any = {}): Promise<RequestArgs> => {
+        getAllEntities: async (stringParameter?: string, integerParameter?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/entities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -86,8 +87,12 @@ export const SomeTagApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
+            if (stringParameter !== undefined) {
+                localVarQueryParameter['stringParameter'] = stringParameter;
+            }
+
+            if (integerParameter !== undefined) {
+                localVarQueryParameter['integerParameter'] = integerParameter;
             }
 
 
@@ -176,12 +181,13 @@ export const SomeTagApiFp = function(configuration?: Configuration) {
         /**
          * Get all entities
          * @summary Get entities
-         * @param {number} [limit] maximum number of records to return
+         * @param {string} [stringParameter] A parameter of type string
+         * @param {number} [integerParameter] A parameter of type integer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllEntities(limit?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
-            const localVarAxiosArgs = await SomeTagApiAxiosParamCreator(configuration).getAllEntities(limit, options);
+        async getAllEntities(stringParameter?: string, integerParameter?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
+            const localVarAxiosArgs = await SomeTagApiAxiosParamCreator(configuration).getAllEntities(stringParameter, integerParameter, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -223,12 +229,13 @@ export const SomeTagApiFactory = function (configuration?: Configuration, basePa
         /**
          * Get all entities
          * @summary Get entities
-         * @param {number} [limit] maximum number of records to return
+         * @param {string} [stringParameter] A parameter of type string
+         * @param {number} [integerParameter] A parameter of type integer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities(limit?: number, options?: any): AxiosPromise<Array<TestEntity>> {
-            return SomeTagApiFp(configuration).getAllEntities(limit, options).then((request) => request(axios, basePath));
+        getAllEntities(stringParameter?: string, integerParameter?: number, options?: any): AxiosPromise<Array<TestEntity>> {
+            return SomeTagApiFp(configuration).getAllEntities(stringParameter, integerParameter, options).then((request) => request(axios, basePath));
         },
         /**
          * Get entity by id
@@ -265,13 +272,14 @@ export class SomeTagApi extends BaseAPI {
     /**
      * Get all entities
      * @summary Get entities
-     * @param {number} [limit] maximum number of records to return
+     * @param {string} [stringParameter] A parameter of type string
+     * @param {number} [integerParameter] A parameter of type integer
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SomeTagApi
      */
-    public getAllEntities(limit?: number, options?: any) {
-        return SomeTagApiFp(this.configuration).getAllEntities(limit, options).then((request) => request(this.axios, this.basePath));
+    public getAllEntities(stringParameter?: string, integerParameter?: number, options?: any) {
+        return SomeTagApiFp(this.configuration).getAllEntities(stringParameter, integerParameter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

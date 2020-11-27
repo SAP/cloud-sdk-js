@@ -1,124 +1,94 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { PathLike } from 'fs';
-import { join, resolve } from 'path';
-import { toPascalCase } from '@sap-cloud-sdk/core';
+import { promises } from 'fs';
+import { resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import execa from 'execa';
-import {
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  readJsonSync,
-  removeSync,
-  writeJsonSync
-} from 'fs-extra';
-import { Project } from 'ts-morph';
 import { GeneratorOptions } from './commands/generate-rest-client';
-import { createDirectory, createFile, projectOptions } from './utils';
-import { toOpenApiServiceMetaData } from './parse-open-api-json';
-import { OpenApiServiceMetadata } from './open-api-types';
-import { requestBuilderSourceFile } from './request-builder/file';
+import { cleanDirectory, createDirectory, createFile } from './util';
+import { apiFile } from './api-file';
 import { indexFile } from './index-file';
+import { parseOpenApiDocument } from './openapi-parser';
+import { OpenApiDocument } from './openapi-types';
+const { readdir, readFile, writeFile } = promises;
+const logger = createLogger('rest-generator');
 
-const logger = createLogger({
-  level: 'info',
-  package: 'generator',
-  messageContext: 'rest-generator'
-});
-
-export async function generateRest(options: GeneratorOptions): Promise<void> {
-  const project = await generateProject(options);
-  return project.save();
-}
-
-export async function generateProject(options: GeneratorOptions) {
+/**
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ * Main entry point for REST client generation.
+ * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
+ * @param options Options to configure generation.
+ */
+export async function generateClients(
+  options: GeneratorOptions
+): Promise<void> {
   if (options.clearOutputDir) {
     cleanDirectory(options.outputDir);
   }
 
-  const files = readdirSync(options.inputDir);
-  const pathToTemplates = resolve(__dirname, './templates');
-
-  const project = new Project(projectOptions());
-
-  const openApiServiceMetadata = await Promise.all(
-    files.map(async file => generateOneApi(file, options, pathToTemplates))
+  // TODO: should be recursive
+  const inputFilePaths = (await readdir(options.inputDir)).map(fileName =>
+    resolve(options.inputDir, fileName)
   );
-  openApiServiceMetadata.map(metadata =>
-    generateSourcesForService(metadata, project, options)
-  );
-  return project;
+
+  inputFilePaths.forEach(async filePath => {
+    // TODO: get kebapcase unique directory name
+    const openApiDocument = await parseOpenApiDocument(filePath);
+    const serviceDir = resolve(
+      options.outputDir,
+      openApiDocument.serviceDirName
+    );
+    const adjustedInputFilePath = resolve(serviceDir, 'open-api.json');
+    const fileContent = await readFile(filePath, 'utf8');
+
+    await createDirectory(serviceDir);
+    await createSpecWithGlobalTag(fileContent, adjustedInputFilePath);
+
+    await generateOpenApiService(adjustedInputFilePath, serviceDir);
+
+    generateSDKSources(serviceDir, openApiDocument, options);
+  });
 }
 
-async function generateOneApi(
-  inputFileName: string,
-  options: GeneratorOptions,
-  pathToTemplates: string
-) {
-  const dirForService = getDirForService(options.outputDir, inputFileName);
-  if (!existsSync(dirForService)) {
-    mkdirSync(dirForService, { recursive: true });
-  }
-
-  const serviceName = getServiceNamePascalCase(inputFileName);
-  const adjustedOpenApiContent = getAdjustedOpenApiFile(
-    join(options.inputDir, inputFileName),
-    serviceName
-  );
-  const pathToAdjustedOpenApiDefFile = join(dirForService, 'open-api.json');
-  writeJsonSync(pathToAdjustedOpenApiDefFile, adjustedOpenApiContent);
-
-  await generateFilesUsingOpenAPI(
-    dirForService,
-    pathToAdjustedOpenApiDefFile,
-    pathToTemplates
-  );
-
-  return toOpenApiServiceMetaData(
-    pathToAdjustedOpenApiDefFile,
-    serviceName,
-    dirForService
-  );
-}
-
-function generateSourcesForService(
-  serviceMetadata: OpenApiServiceMetadata,
-  project: Project,
+/**
+ * Generate sources for the wrapped SAP Cloud SDK Api.
+ * @param serviceDir Directory to generate the service to.
+ * @param openApiDocument Parsed service.
+ * @param options Generation options
+ */
+function generateSDKSources(
+  serviceDir: string,
+  openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ) {
-  const serviceDir = resolve(
-    options.outputDir.toString(),
-    serviceMetadata.serviceDir
-  );
-  createDirectory(serviceDir);
   logger.info(`Generating request builder in ${serviceDir}.`);
-  createFile(
-    serviceDir,
-    'request-builder.ts',
-    requestBuilderSourceFile(serviceMetadata),
-    true
-  );
+  // TODO: what about overwrite?
+  createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
 
   createFile(serviceDir, 'index.ts', indexFile(), true);
 }
 
-async function generateFilesUsingOpenAPI(
-  dirForService: string,
-  pathToAdjustedOpenApiDefFile: string,
-  pathToTemplates: string
+/**
+ * Generate an OpenApiClient using the OpenApi Generator CLI.
+ * @param inputFilePath Location of the spec file.
+ * @param serviceDir Directory to generate the service to. The resulting client will be created in `serviceDir/openapi`
+ */
+async function generateOpenApiService(
+  inputFilePath: string,
+  serviceDir: string
 ) {
+  // TODO: what about overwrite?
   const generationArguments = [
     'openapi-generator-cli',
     'generate',
-    '-i',
-    pathToAdjustedOpenApiDefFile,
-    '-g',
+    '--input-spec',
+    inputFilePath,
+    '--generator-name',
     'typescript-axios',
-    '-o',
-    resolve(dirForService, 'open-api'),
-    '-t',
-    pathToTemplates,
+    '--output',
+    resolve(serviceDir, 'openapi'),
+    '--template-dir',
+    resolve(__dirname, './templates'),
     '--api-package',
     'api',
     '--model-package',
@@ -128,7 +98,7 @@ async function generateFilesUsingOpenAPI(
     '--skip-validate-spec'
   ];
 
-  logger.info(`Argument for openapi generator ${generationArguments}`);
+  logger.debug(`OpenAPI generator arguments: ${generationArguments}`);
 
   const response = await execa.sync('npx', generationArguments);
   // The exitCode of the response is sometimes 0 even if errors appeared. Hence we check if something is in stderr.
@@ -143,46 +113,27 @@ async function generateFilesUsingOpenAPI(
   logger.info(`Generated the client ${response.stdout}`);
 }
 
-function getServiceNamePascalCase(openApiFileName: string) {
-  const result = getServiceNameWithoutExtensions(openApiFileName);
-  return toPascalCase(result);
-}
+/**
+ * Workaround for OpenApi generation to build one and only one API for all tags.
+ * Write a new spec with only one 'default' tag.
+ * @param fileContent File content of the original spec.
+ * @param ouputFilePath Path to write the altered spec to.
+ */
+async function createSpecWithGlobalTag(
+  fileContent: string,
+  ouputFilePath: string
+): Promise<void> {
+  const openApiDocument = JSON.parse(fileContent);
+  const tag = 'default';
+  openApiDocument.tags = [{ name: tag }];
 
-function getServiceNameWithoutExtensions(openApiFileName: string): string {
-  let fileNameWithoutExtension = openApiFileName.replace('.json', '');
-  fileNameWithoutExtension = fileNameWithoutExtension.replace('-openapi', '');
-  return fileNameWithoutExtension;
-}
+  Object.values(openApiDocument.paths).forEach(
+    (pathDefinition: Record<string, any>) => {
+      Object.values(pathDefinition).forEach(methodDefinition => {
+        methodDefinition.tags = [tag];
+      });
+    }
+  );
 
-function getDirForService(outputDir: PathLike, inputFileName: string) {
-  const withoutExtension = getServiceNameWithoutExtensions(inputFileName);
-  return join(outputDir as string, withoutExtension);
-}
-
-function getAdjustedOpenApiFile(filePath: string, tag: string): JSON {
-  const contentInitial = readJsonSync(filePath);
-  const contentAdjusted = addTagToService(tag, contentInitial);
-  return contentAdjusted;
-}
-
-function cleanDirectory(path: PathLike) {
-  if (existsSync(path)) {
-    removeSync(path.toString());
-  }
-  mkdirSync(path);
-}
-
-function addTagToService(tag: string, fileContent: JSON): JSON {
-  const copy = { ...fileContent };
-  copy['tags'] = [{ name: tag }];
-  const paths = copy['paths'];
-  Object.keys(paths).forEach(path => {
-    Object.keys(paths[path]).forEach(method => {
-      paths[path][method]['tags'] = [
-        ...(paths[path][method]['tags'] || []),
-        tag
-      ];
-    });
-  });
-  return copy;
+  return writeFile(ouputFilePath, JSON.stringify(openApiDocument, null, 2));
 }

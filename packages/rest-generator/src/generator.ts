@@ -129,12 +129,16 @@ async function generateFilesUsingOpenAPI(
   logger.info(`Argument for openapi generator ${generationArguments}`);
 
   const response = await execa.sync('npx', generationArguments);
-  if (response.stderr !== '') {
+  // The exitCode of the response is sometimes 0 even if errors appeared. Hence we check if something is in stderr.
+  if (response === undefined) {
+    throw new Error(
+      'An error appeared in the generation using the openppi CLI.'
+    );
+  }
+  if (response.stderr) {
     throw new Error(response.stderr);
   }
-  if (response !== undefined) {
-    logger.info(`Generated the client ${response.stdout}`);
-  }
+  logger.info(`Generated the client ${response.stdout}`);
 }
 
 function getServiceNamePascalCase(openApiFileName: string) {

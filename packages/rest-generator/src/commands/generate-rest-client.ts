@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { resolve } from 'path';
+import { readFileSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import execa from 'execa';
 import Command from '@oclif/command';
@@ -21,14 +22,16 @@ export interface GeneratorOptions {
 
 export class GenerateRestClient extends Command {
   static description =
-    'Generates a Rest client from a openApi service file definition. For SAP solutions, you can find these definitions at https://api.sap.com/.';
+    'Generates a Rest client from an openApi service file definition. For SAP solutions, you can find these definitions at https://api.sap.com/.';
 
   static examples = [
     '$ generate-rest-client generate-rest-client -i directoryWithOpenApiFiles -o outputDirectory',
     '$ generate-rest-client generate-rest-client --help'
   ];
 
-  static version = 'ABC';
+  static version = JSON.parse(
+    readFileSync(resolve(__dirname, '../../package.json'), { encoding: 'utf8' })
+  ).version;
 
   static flags = {
     inputDir: flags.string({
@@ -50,7 +53,7 @@ export class GenerateRestClient extends Command {
       char: 'c',
       description: 'Output directory for the generated rest client.',
       default: false,
-      required: true
+      required: false
     })
   };
 
@@ -81,7 +84,7 @@ async function checkJavaPresent() {
     return Promise.resolve();
   } catch (err) {
     logger.error(
-      `Error in checking the jave version. Is Java installed? Thisn is mandatory for the rest client generation. ${err.message}`
+      `Error in checking the java version. Is Java installed? This is mandatory for the rest client generation. ${err.message}`
     );
     return Promise.reject();
   }

@@ -64,7 +64,6 @@ function generateSDKSources(
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
   createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
-
   createFile(serviceDir, 'index.ts', indexFile(), true);
 }
 

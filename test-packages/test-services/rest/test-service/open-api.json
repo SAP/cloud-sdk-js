@@ -1,1 +1,247 @@
-{"openapi":"3.0.0","info":{"title":"Test API","description":"Test API","license":{"name":"Apache 2.0","url":"http://www.apache.org/licenses/LICENSE-2.0.html"},"version":"1.0.0"},"tags":[{"name":"TestService"}],"paths":{"/entities":{"get":{"tags":["someTag","TestService"],"summary":"Get entities","description":"Get all entities","operationId":"getAllEntities","parameters":[{"name":"limit","in":"query","description":"maximum number of records to return","required":false,"style":"form","explode":true,"schema":{"maximum":50,"minimum":0,"type":"integer","format":"int32"}}],"responses":{"200":{"description":"entities","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TestEntity"}}}}},"400":{"description":"bad input parameter"}}},"post":{"tags":["someTag","TestService"],"summary":"Create entity","description":"Create entity","operationId":"createEntity","requestBody":{"description":"Enitity to create","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TestEntity"}}}},"responses":{"201":{"description":"entity created"},"400":{"description":"bad input"},"409":{"description":"entity already exists"}}}},"/entities/{entityId}":{"get":{"tags":["someTag","TestService"],"summary":"Get entity by id","description":"Get entity by id","operationId":"getEntityByKey","parameters":[{"name":"entityId","in":"path","description":"Key property of the entity","required":true,"style":"simple","explode":false,"schema":{"type":"string","format":"uuid"}}],"responses":{"200":{"description":"entity","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TestEntity"}}}}},"400":{"description":"bad input parameter"}}}},"/entities/count":{"get":{"summary":"Count entities","description":"Count entities","operationId":"countEntities","responses":{"200":{"description":"entity","content":{"application/json":{"schema":{"type":"integer","format":"int32"}}}},"400":{"description":"bad input parameter"}},"tags":["TestService"]}}},"components":{"schemas":{"TestEntity":{"type":"object","required":["keyProperty"],"properties":{"keyProperty":{"type":"string","format":"uuid","example":"d290f1ee-6c54-4b01-90e6-d701748f0851"},"stringProperty":{"type":"string","example":"Example string"},"dateProperty":{"type":"string","format":"date","example":"2016-08-29"},"dateTimeProperty":{"type":"string","format":"date-time","example":"2016-08-29T09:12:33.001Z"},"int32Property":{"type":"integer","format":"int32","example":1},"int64Property":{"type":"integer","format":"int64","example":1},"floatProperty":{"type":"number","format":"float","example":1},"doubleProperty":{"type":"number","format":"double","example":1},"linkedSimpleTestEntity":{"$ref":"#/components/schemas/SimpleTestEntity"},"linkedSimpleTestEntityCollection":{"type":"array","items":{"$ref":"#/components/schemas/SimpleTestEntity"}}},"description":"TestEntity schema"},"SimpleTestEntity":{"type":"object","required":["stringProperty"],"properties":{"stringProperty":{"type":"string","example":"Example string"}},"description":"SimpleTestEntity schema"}}}}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Test API",
+    "description": "Test API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "paths": {
+    "/entities": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Get entities",
+        "description": "Get all entities",
+        "operationId": "getAllEntities",
+        "parameters": [
+          {
+            "name": "stringParameter",
+            "in": "query",
+            "description": "A parameter of type string",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 50,
+              "minimum": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "integerParameter",
+            "in": "query",
+            "description": "A parameter of type integer",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 50,
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "entities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TestEntity"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Create entity",
+        "description": "Create entity",
+        "operationId": "createEntity",
+        "requestBody": {
+          "description": "Enitity to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestEntity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "entity created"
+          },
+          "400": {
+            "description": "bad input"
+          },
+          "409": {
+            "description": "entity already exists"
+          }
+        }
+      }
+    },
+    "/entities/{entityId}": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Get entity by id",
+        "description": "Get entity by id",
+        "operationId": "getEntityByKey",
+        "parameters": [
+          {
+            "name": "entityId",
+            "in": "path",
+            "description": "Key property of the entity",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TestEntity"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/entities/count": {
+      "get": {
+        "summary": "Count entities",
+        "description": "Count entities",
+        "operationId": "countEntities",
+        "responses": {
+          "200": {
+            "description": "entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TestEntity": {
+        "type": "object",
+        "required": [
+          "keyProperty"
+        ],
+        "properties": {
+          "keyProperty": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "stringProperty": {
+            "type": "string",
+            "example": "Example string"
+          },
+          "dateProperty": {
+            "type": "string",
+            "format": "date",
+            "example": "2016-08-29"
+          },
+          "dateTimeProperty": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2016-08-29T09:12:33.001Z"
+          },
+          "int32Property": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "int64Property": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "floatProperty": {
+            "type": "number",
+            "format": "float",
+            "example": 1
+          },
+          "doubleProperty": {
+            "type": "number",
+            "format": "double",
+            "example": 1
+          },
+          "linkedSimpleTestEntity": {
+            "$ref": "#/components/schemas/SimpleTestEntity"
+          },
+          "linkedSimpleTestEntityCollection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimpleTestEntity"
+            }
+          }
+        },
+        "description": "TestEntity schema"
+      },
+      "SimpleTestEntity": {
+        "type": "object",
+        "required": [
+          "stringProperty"
+        ],
+        "properties": {
+          "stringProperty": {
+            "type": "string",
+            "example": "Example string"
+          }
+        },
+        "description": "SimpleTestEntity schema"
+      }
+    }
+  }
+}

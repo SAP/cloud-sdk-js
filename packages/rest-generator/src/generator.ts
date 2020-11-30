@@ -14,7 +14,7 @@ import {
   writeJsonSync
 } from 'fs-extra';
 import { Project } from 'ts-morph';
-import { GeneratorOptions } from './generator-cli';
+import { GeneratorOptions } from './commands/generate-rest-client';
 import { projectOptions, sourceFile } from './utils';
 import { toOpenApiServiceMetaData } from './parse-open-api-json';
 import { OpenApiServiceMetadata } from './open-api-types';
@@ -128,15 +128,17 @@ async function generateFilesUsingOpenAPI(
 
   logger.info(`Argument for openapi generator ${generationArguments}`);
 
-  try {
-    const response = await execa.sync('npx', generationArguments);
-    if (response !== undefined) {
-      logger.info(`Generated the client ${response.stdout}`);
-    }
-  } catch (err) {
-    logger.error('In exception block');
-    logger.error(err);
+  const response = await execa.sync('npx', generationArguments);
+  // The exitCode of the response is sometimes 0 even if errors appeared. Hence we check if something is in stderr.
+  if (response === undefined) {
+    throw new Error(
+      'An error appeared in the generation using the openppi CLI.'
+    );
   }
+  if (response.stderr) {
+    throw new Error(response.stderr);
+  }
+  logger.info(`Generated the client ${response.stdout}`);
 }
 
 function getServiceNamePascalCase(openApiFileName: string) {

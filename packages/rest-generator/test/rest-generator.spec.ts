@@ -1,9 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import * as path from 'path';
+import { readFileSync } from 'fs';
 import * as fs from 'fs-extra';
 import { SyntaxKind } from 'ts-morph';
-import { generateProject, generateRest } from '../src/generator';
+import { generateProject } from '../src/generator';
+import { GenerateRestClient } from '../src/commands/generate-rest-client';
 
 describe('rest generator', () => {
   const inputDir = path.resolve(__dirname, 'resources', 'test-apis');
@@ -18,7 +20,7 @@ describe('rest generator', () => {
   });
 
   it('should generate the sap graph client', async () => {
-    await generateRest({ inputDir, outputDir });
+    await GenerateRestClient.run(['-i', inputDir, '-o', outputDir]);
 
     const services = fs.readdirSync(outputDir);
     expect(services).toEqual(expect.arrayContaining(['petstore']));
@@ -52,4 +54,14 @@ describe('rest generator', () => {
 
     expect(functions.length).toBe(3);
   }, 60000);
+
+  it('should read the version from the package.json', async () => {
+    const sdkVersion = JSON.parse(
+      readFileSync(path.resolve(__dirname, '../package.json'), {
+        encoding: 'utf8'
+      })
+    ).version;
+    expect(typeof GenerateRestClient.version).toBe('string');
+    expect(GenerateRestClient.version).toBe(sdkVersion);
+  });
 });

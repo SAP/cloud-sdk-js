@@ -15,7 +15,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "generate-rest-client": "./dist/generator-cli.js"
+    "sap-cloud-sdk-rest": "./bin/run"
   },
   "publishConfig": {
     "access": "public"
@@ -30,17 +30,43 @@
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
-    "generate:test-services": "ts-node src/generator-cli.ts -i test/resources/test-apis -o test/test-services",
-    "check:dependencies": "depcheck . --ignore-bin-package=true"
+    "generate:test-services": "ts-node src/commands/generate-rest-client.ts -i test/resources/test-apis -o test/test-services",
+    "check:dependencies": "depcheck . --ignore-bin-package=true --ignores=@oclif/plugin-*"
+  },
+  "oclif": {
+    "commands": "./dist/commands",
+    "bin": "sap-cloud-sdk-rest",
+    "warn-if-update-available": {
+      "timeoutInDays": 7
+    },
+    "macos": {
+      "identifier": "com.sap.sap-cloud-sdk-rest"
+    },
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-not-found",
+      "@oclif/plugin-warn-if-update-available"
+    ]
   },
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.1.4",
     "@sap-cloud-sdk/core": "^1.32.1",
     "@sap-cloud-sdk/util": "^1.32.1",
+    "@oclif/command": "^1.5.19",
+    "@oclif/config": "^1.14.0",
+    "@oclif/parser": "^3.8.4",
+    "@oclif/plugin-autocomplete": "^0.2.0",
+    "@oclif/plugin-help": "^3.1.0",
+    "@oclif/plugin-not-found": "^1.2.3",
+    "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.0",
     "ts-morph": "^8.1.0",
     "typescript": "~4.1.2",
-    "yargs": "^16.0.3"
+    "cli-ux": "^5.4.5"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2"
   }
 }

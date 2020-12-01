@@ -1,4 +1,4 @@
-import { readSwaggerFile } from '../../../src/swagger-parser/swagger-parser';
+import { readSwaggerFile } from './swagger-parser';
 
 describe('swagger-parser', () => {
   it('parseSwaggerFromPath should parse service info', () => {

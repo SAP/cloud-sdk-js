@@ -1,5 +1,5 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import { exportStatement } from '../../src/action-function-import/export-statement';
+import { exportStatement } from './export-statement';
 
 describe('export-statement', () => {
   it('exportStatement', () => {

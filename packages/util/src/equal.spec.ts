@@ -1,4 +1,4 @@
-import { equal, equalArrays, equalObjects } from '../src/equal';
+import { equal, equalArrays, equalObjects } from './equal';
 describe('equal', () => {
   describe('equal', () => {
     it('returns true for same values', () => {

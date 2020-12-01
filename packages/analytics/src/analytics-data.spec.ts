@@ -1,5 +1,5 @@
 import os from 'os';
-import { getAnalyticsData } from '../src/analytics-data';
+import { getAnalyticsData } from './analytics-data';
 
 jest.mock('fs', () => {
   const fs = jest.requireActual('fs');

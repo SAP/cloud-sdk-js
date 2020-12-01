@@ -1,4 +1,4 @@
-import { isNullish } from '../src';
+import { isNullish } from './nullish';
 
 describe('nullish', () => {
   it('returns true for undefined', () => {

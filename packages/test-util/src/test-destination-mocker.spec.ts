@@ -1,13 +1,13 @@
 import { unlinkSync, writeFileSync } from 'fs';
 import { Destination } from '@sap-cloud-sdk/core';
+import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   mockAllTestDestinations,
   mockTestDestination,
   setTestDestination,
   unmockAllTestDestinations,
   unmockTestDestination
-} from '../src/test-destination-mocker';
-import { credentials, systems } from './test-util/test-destinations';
+} from './test-destination-mocker';
 
 describe('setTestDestinationInEnv', () => {
   let envDestination: Destination = {

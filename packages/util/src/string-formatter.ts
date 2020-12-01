@@ -26,7 +26,7 @@ export function toCamelCase(str: string): string {
  * @param str - The string to be transformed.
  * @returns The transformed string.
  */
-export function toTitleCase(str: string): string {
+export function toTitleFormat(str: string): string {
   return voca.titleCase(voca.words(str).join(' '));
 }
 

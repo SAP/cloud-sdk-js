@@ -1,7 +1,7 @@
 import {
   toCamelCase,
   toUpperCaseSnakeCase,
-  toTitleCase,
+  toTitleFormat,
   toPascalCase
 } from './string-formatter';
 
@@ -80,23 +80,23 @@ describe('converts names', () => {
 
   describe('from original names to human readable names', () => {
     it('for camel case properties', () => {
-      expect(toTitleCase('fieldName')).toBe('Field Name');
+      expect(toTitleFormat('fieldName')).toBe('Field Name');
     });
 
     it('for pascal case properties', () => {
-      expect(toTitleCase('FieldName')).toBe('Field Name');
+      expect(toTitleFormat('FieldName')).toBe('Field Name');
     });
 
     it('for snake case properties', () => {
-      expect(toTitleCase('field_name')).toBe('Field Name');
+      expect(toTitleFormat('field_name')).toBe('Field Name');
     });
 
     it('for kebab case properties', () => {
-      expect(toTitleCase('field-name')).toBe('Field Name');
+      expect(toTitleFormat('field-name')).toBe('Field Name');
     });
 
     it('for properties with numbers', () => {
-      expect(toTitleCase('Field13Name')).toBe('Field 13 Name');
+      expect(toTitleFormat('Field13Name')).toBe('Field 13 Name');
     });
   });
 

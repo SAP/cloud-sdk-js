@@ -8,4 +8,5 @@ export * from './nullish';
 export * from './object';
 export * from './pipe';
 export * from './string';
+export * from './string-formatter';
 export * from './types';

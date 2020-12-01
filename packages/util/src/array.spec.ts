@@ -6,7 +6,7 @@ import {
   first,
   splitInChunks,
   variadicArgumentToArray
-} from '../src';
+} from './array';
 
 describe('array', () => {
   describe('flat', () => {

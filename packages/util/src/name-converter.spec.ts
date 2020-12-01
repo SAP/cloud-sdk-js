@@ -3,7 +3,7 @@ import {
   toStaticPropertyFormat,
   toTitleFormat,
   toTypeNameFormat
-} from '../../src';
+} from './name-converter';
 
 describe('converts names', () => {
   describe('from original names to static field names', () => {

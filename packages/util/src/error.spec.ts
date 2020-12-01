@@ -1,4 +1,4 @@
-import { errorWithCause } from '../src';
+import { errorWithCause } from './error';
 
 describe('SdkError', () => {
   it("creates a new error and appends the cause's stacktrace", () => {

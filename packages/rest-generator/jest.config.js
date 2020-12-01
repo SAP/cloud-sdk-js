@@ -1,11 +1,6 @@
+// eslint-disable-next-line
+const commonConfig = require('../../test-resources/jest.common.config');
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest'
-  },
-  moduleFileExtensions: ['js', 'json', 'ts'],
-  coverageReporters: ['text', 'cobertura', 'html'],
-  coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/'],
-  reporters: ['default', 'jest-junit']
+  ...commonConfig,
+  displayName: 'rest-generator'
 };

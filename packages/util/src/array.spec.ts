@@ -6,7 +6,8 @@ import {
   first,
   splitInChunks,
   variadicArgumentToArray,
-  zip
+  zip,
+  partition
 } from './array';
 
 describe('array', () => {
@@ -145,6 +146,19 @@ describe('zip', () => {
       undefined,
       null,
       false
+    ]);
+  });
+});
+
+describe('partition', () => {
+  it('partitions empty array', () => {
+    expect(partition([], () => false)).toStrictEqual([[], []]);
+  });
+
+  it('partitions array based on value', () => {
+    expect(partition([true, false, false, true], i => i)).toStrictEqual([
+      [true, true],
+      [false, false]
     ]);
   });
 });

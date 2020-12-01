@@ -1,12 +1,12 @@
 import {
-  toCamelCase,
-  toUpperCaseSnakeCase,
-  toPascalCase as toPascalCaseUtil,
-  toTitleFormat as toTitleFormatUtil
+  camelCase,
+  upperCaseSnakeCase,
+  pascalCase,
+  titleFormat
 } from '@sap-cloud-sdk/util';
 
 export function toStaticPropertyFormat(str: string): string {
-  return toUpperCaseSnakeCase(str);
+  return upperCaseSnakeCase(str);
 }
 
 /**
@@ -17,7 +17,7 @@ export function toStaticPropertyFormat(str: string): string {
  * @returns The transformed string.
  */
 export function toPropertyFormat(str: string): string {
-  return toCamelCase(str);
+  return camelCase(str);
 }
 
 /**
@@ -28,7 +28,7 @@ export function toPropertyFormat(str: string): string {
  * @returns The transformed string.
  */
 export function toPascalCase(str: string): string {
-  return toPascalCaseUtil(str);
+  return pascalCase(str);
 }
 
 /**
@@ -39,7 +39,7 @@ export function toPascalCase(str: string): string {
  * @returns The transformed string.
  */
 export function toTitleFormat(str: string): string {
-  return toTitleFormatUtil(str);
+  return titleFormat(str);
 }
 
 /**
@@ -49,5 +49,5 @@ export function toTitleFormat(str: string): string {
  * @returns The transformed string.
  */
 export function toTypeNameFormat(str: string): string {
-  return toPascalCaseUtil(str);
+  return pascalCase(str);
 }

@@ -1,4 +1,4 @@
-import { indent, trim, encodeBase64 } from '../src';
+import { indent, trim, encodeBase64 } from './string';
 
 describe('encodeBase64', () => {
   it('encodes a string', () => {

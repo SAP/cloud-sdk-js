@@ -45,7 +45,7 @@ export function getType(originalType: string | undefined): string {
   const type = originalType ? typeMapping[originalType] : 'any';
   if (!type) {
     logger.warn(
-      `Could not map type ${originalType} to a native type. Using any.`
+      `Could not map type '${originalType}' to a native type. Using any.`
     );
     return 'any';
   }

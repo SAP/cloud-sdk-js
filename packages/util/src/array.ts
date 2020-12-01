@@ -115,3 +115,22 @@ export function zip<T>(left: T[], right: T[]): T[] {
     return [...zipped, ...currentZipped];
   }, []);
 }
+
+/**
+ * Split an array into two based on a condition.
+ * @param arr Array to partition
+ * @param condition Function to determine to where to put each item.
+ * @returns A two dimensional array containting two arrays, where the first one includes all items where the given condition was met and the second one includes all items where it was not met.
+ */
+export function partition<T>(
+  arr: T[],
+  condition: (item: T) => boolean
+): [T[], T[]] {
+  return arr.reduce(
+    ([conditionTrue, conditionFalse]: [T[], T[]], item) =>
+      condition(item)
+        ? [[...conditionTrue, item], conditionFalse]
+        : [conditionTrue, [...conditionFalse, item]],
+    [[], []]
+  );
+}

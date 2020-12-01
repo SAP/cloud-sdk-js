@@ -2,15 +2,15 @@
 
 import { promises } from 'fs';
 import { resolve } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa from 'execa';
+import { OpenAPIV3 } from 'openapi-types';
 import { GeneratorOptions } from './commands/generate-rest-client';
-import { cleanDirectory, createDirectory, createFile } from './util';
-import { apiFile } from './api-file';
-import { indexFile } from './index-file';
-import { parseOpenApiDocument } from './openapi-parser';
+import { apiFile, indexFile, createFile } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
-const { readdir, readFile, writeFile } = promises;
+import { parseOpenApiDocument } from './parser';
+
+const { readdir, readFile, writeFile, rmdir, mkdir } = promises;
 const logger = createLogger('rest-generator');
 
 /**
@@ -23,7 +23,7 @@ export async function generateClients(
   options: GeneratorOptions
 ): Promise<void> {
   if (options.clearOutputDir) {
-    cleanDirectory(options.outputDir);
+    rmdir(options.outputDir, { recursive: true });
   }
 
   // TODO: should be recursive
@@ -32,8 +32,14 @@ export async function generateClients(
   );
 
   inputFilePaths.forEach(async filePath => {
-    // TODO: get kebapcase unique directory name
     const openApiDocument = await parseOpenApiDocument(filePath);
+    if (!!openApiDocument.operations.length) {
+      logger.warn(
+        `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
+      );
+      return;
+    }
+    // TODO: get kebapcase unique directory name
     const serviceDir = resolve(
       options.outputDir,
       openApiDocument.serviceDirName
@@ -41,12 +47,10 @@ export async function generateClients(
     const adjustedInputFilePath = resolve(serviceDir, 'open-api.json');
     const fileContent = await readFile(filePath, 'utf8');
 
-    await createDirectory(serviceDir);
-    await createSpecWithGlobalTag(fileContent, adjustedInputFilePath);
-
+    await mkdir(serviceDir, { recursive: true });
+    await generateSpecWithGlobalTag(fileContent, adjustedInputFilePath);
     await generateOpenApiService(adjustedInputFilePath, serviceDir);
-
-    generateSDKSources(serviceDir, openApiDocument, options);
+    await generateSDKSources(serviceDir, openApiDocument, options);
   });
 }
 
@@ -56,15 +60,15 @@ export async function generateClients(
  * @param openApiDocument Parsed service.
  * @param options Generation options
  */
-function generateSDKSources(
+async function generateSDKSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
   options: GeneratorOptions
-) {
+): Promise<void> {
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
-  createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
-  createFile(serviceDir, 'index.ts', indexFile(), true);
+  await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
+  await createFile(serviceDir, 'index.ts', indexFile(), true);
 }
 
 /**
@@ -97,19 +101,28 @@ async function generateOpenApiService(
     '--skip-validate-spec'
   ];
 
-  logger.debug(`OpenAPI generator arguments: ${generationArguments}`);
+  logger.debug(`OpenAPI generator CLI arguments: ${generationArguments}`);
 
-  const response = await execa.sync('npx', generationArguments);
-  // The exitCode of the response is sometimes 0 even if errors appeared. Hence we check if something is in stderr.
-  if (response === undefined) {
-    throw new Error(
-      'An error appeared in the generation using the openppi CLI.'
+  try {
+    const response = await execa('npx', generationArguments);
+    // if (response === undefined) {
+    //   throw new Error(
+    //     'An error appeared in the generation using the OpenApi generator CLI.'
+    //   );
+    // }
+    // The exitCode of the response is sometimes 0 even if errors appeared. Hence we check if something is in stderr.
+    if (response.stderr) {
+      throw new Error(response.stderr);
+    }
+    logger.info(
+      `Sucessfully generated a client using the OpenApi generator CLI ${response.stdout}`
+    );
+  } catch (err) {
+    throw errorWithCause(
+      'Could not generate the OpenApi client using the OpenApi generator CLI.',
+      err
     );
   }
-  if (response.stderr) {
-    throw new Error(response.stderr);
-  }
-  logger.info(`Generated the client ${response.stdout}`);
 }
 
 /**
@@ -118,11 +131,27 @@ async function generateOpenApiService(
  * @param fileContent File content of the original spec.
  * @param ouputFilePath Path to write the altered spec to.
  */
-async function createSpecWithGlobalTag(
+async function generateSpecWithGlobalTag(
   fileContent: string,
   ouputFilePath: string
 ): Promise<void> {
   const openApiDocument = JSON.parse(fileContent);
+  const modifiedOpenApiDocument = createSpecWithGlobalTag(openApiDocument);
+  return writeFile(
+    ouputFilePath,
+    JSON.stringify(modifiedOpenApiDocument, null, 2)
+  );
+}
+
+/**
+ * Workaround for OpenApi generation to build one and only one API for all tags.
+ * Modify spec to contain only one 'default' tag.
+ * @param openApiDocument OpenApi JSON document.
+ * @returns The modified document.
+ */
+export function createSpecWithGlobalTag(
+  openApiDocument: OpenAPIV3.Document
+): OpenAPIV3.Document {
   const tag = 'default';
   openApiDocument.tags = [{ name: tag }];
 
@@ -134,5 +163,5 @@ async function createSpecWithGlobalTag(
     }
   );
 
-  return writeFile(ouputFilePath, JSON.stringify(openApiDocument, null, 2));
+  return openApiDocument;
 }

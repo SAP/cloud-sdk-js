@@ -1,4 +1,4 @@
-import { codeBlock } from '../src';
+import { codeBlock } from './code-block';
 
 describe('codeBlock', () => {
   it('transforms empty string', () => {

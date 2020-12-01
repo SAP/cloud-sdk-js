@@ -6,7 +6,7 @@ import voca from 'voca';
  * @param str - The string to be transformed.
  * @returns The input string in the case used by static methods on entity-classes.
  */
-export function toUpperCaseSnakeCase(str: string): string {
+export function upperCaseSnakeCase(str: string): string {
   return voca.upperCase(voca.snakeCase(str));
 }
 
@@ -16,7 +16,7 @@ export function toUpperCaseSnakeCase(str: string): string {
  * @param str - The string to be transformed.
  * @returns The transformed string.
  */
-export function toCamelCase(str: string): string {
+export function camelCase(str: string): string {
   return voca.camelCase(str);
 }
 
@@ -26,7 +26,7 @@ export function toCamelCase(str: string): string {
  * @param str - The string to be transformed.
  * @returns The transformed string.
  */
-export function toTitleFormat(str: string): string {
+export function titleFormat(str: string): string {
   return voca.titleCase(voca.words(str).join(' '));
 }
 
@@ -35,7 +35,7 @@ export function toTitleFormat(str: string): string {
  * @param str - The string to be transformed.
  * @returns The transformed string.
  */
-export function toPascalCase(str: string): string {
+export function pascalCase(str: string): string {
   return voca
     .words(str)
     .map(word => voca.capitalize(word))

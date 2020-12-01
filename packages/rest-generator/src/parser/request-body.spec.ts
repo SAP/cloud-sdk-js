@@ -1,0 +1,78 @@
+import { createLogger } from '@sap-cloud-sdk/util';
+import { createRefs } from './refs.spec';
+import { parseRequestBody } from './request-body';
+
+describe('getRequestBody', () => {
+  it('returns undefined for undefined', async () => {
+    expect(parseRequestBody(undefined, await createRefs())).toBeUndefined();
+  });
+
+  it('returns type from referenced schema', async () => {
+    const requestBody = {
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/components/schemas/TestEntity'
+          }
+        }
+      }
+    };
+
+    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
+      ...requestBody,
+      parameterName: 'testEntity',
+      parameterType: 'TestEntity'
+    });
+  });
+
+  it('returns type from referenced schema in reference object', async () => {
+    const requestBody = {
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/components/schemas/TestEntity'
+          }
+        }
+      }
+    };
+
+    expect(
+      parseRequestBody(
+        {
+          $ref: '#/components/requestBodies/Body'
+        },
+        await createRefs({
+          requestBodies: {
+            Body: requestBody
+          }
+        })
+      )
+    ).toEqual({
+      ...requestBody,
+      parameterName: 'testEntity',
+      parameterType: 'TestEntity'
+    });
+  });
+
+  it('logs warning for inline schema', async () => {
+    const logger = createLogger('rest-generator');
+    spyOn(logger, 'warn');
+
+    expect(
+      parseRequestBody(
+        {
+          content: {
+            'application/json': {
+              schema: {}
+            }
+          }
+        },
+        await createRefs()
+      )
+    ).toBeUndefined();
+
+    expect(logger.warn).toHaveBeenCalledWith(
+      'The SAP Cloud SDK REST generator currently does not support inline schemas. This will likely cause issues when using this client.'
+    );
+  });
+});

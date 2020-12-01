@@ -1,6 +1,5 @@
-import { toPropertyFormat } from '@sap-cloud-sdk/core';
 import { codeBlock, unique } from '@sap-cloud-sdk/util';
-import { OpenApiDocument, OpenApiOperation } from './openapi-types';
+import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -32,7 +31,7 @@ export const ${openApiDocument.apiName} = {
  */
 function getRequestBodyTypes(openApiDocument: OpenApiDocument): string {
   const bodyTypes = openApiDocument.operations
-    .map(operation => operation.requestBody?.type)
+    .map(operation => operation.requestBody?.parameterType)
     .filter(requestBody => typeof requestBody !== 'undefined') as string[];
 
   return unique(bodyTypes).join(', ');
@@ -55,22 +54,40 @@ function getOperations(openApiDocument: OpenApiDocument): string {
  * @returns The operation as a string.
  */
 function getOperation(operation: OpenApiOperation): string {
-  const apiFunctionSignatureParams = operation.parameters
-    .map(param => `${param.name}: ${param.type}`)
-    .join(', ');
+  const parameters = getAllParameters(operation);
 
+  const apiFunctionSignatureParams = parameters.map(
+    param => `${param.name}: ${param.type}`
+  );
   const requestBuilderParams = [
     'DefaultApi',
-    // TODO: What if there is no operationId
-    `'${operation.operationId}'`,
-    ...operation.parameters.map(param => param.name)
-  ].join(',\n');
-
-  // TODO: Remove !
-  const operationName = toPropertyFormat(operation.operationId!);
+    `'${operation.operationName}'`,
+    ...parameters.map(param => param.name)
+  ];
 
   return codeBlock`
-${operationName}: (${apiFunctionSignatureParams}) => new RestRequestBuilder<DefaultApi, '${operationName}'>(
-  ${requestBuilderParams}
+${operation.operationName}: (${apiFunctionSignatureParams.join(
+    ', '
+  )}) => new RestRequestBuilder<DefaultApi, '${operation.operationName}'>(
+  ${requestBuilderParams.join(',\n')}
 )`;
+}
+
+interface Parameter {
+  type: string;
+  name: string;
+}
+
+function getAllParameters(operation: OpenApiOperation): Parameter[] {
+  if (operation.requestBody) {
+    return [
+      ...operation.parameters,
+      {
+        name: operation.requestBody.parameterName,
+        type: operation.requestBody.parameterType
+      }
+    ];
+  }
+
+  return operation.parameters;
 }

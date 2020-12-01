@@ -1,4 +1,3 @@
-import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 
 /**
@@ -8,7 +7,6 @@ import { OpenAPIV3 } from 'openapi-types';
 export interface OpenApiDocument {
   apiName: string;
   serviceDirName: string;
-  refs: $Refs;
   operations: OpenApiOperation[];
 }
 
@@ -17,24 +15,36 @@ export interface OpenApiDocument {
  * Representation of an operation.
  */
 export interface OpenApiOperation extends OpenAPIV3.OperationObject {
+  operationName: string;
   method: string;
   pattern: string;
   requestBody?: OpenApiRequestBody;
   parameters: OpenApiParameter[];
 }
 
+const supportedMethods = {
+  get: 'get',
+  put: 'put',
+  post: 'post',
+  patch: 'patch',
+  delete: 'delete',
+  head: 'head',
+  options: 'options'
+} as const;
+
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Methods supported by OpenApi and SAP Cloud SDK.
  */
-export enum Method {
-  get = 'get',
-  put = 'put',
-  post = 'post',
-  patch = 'patch',
-  delete = 'delete',
-  head = 'head',
-  options = 'options'
+export type Method = typeof supportedMethods[keyof typeof supportedMethods];
+
+/**
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ * Get supported methods.
+ * @returns Methods supported by OpenApi and SAP Cloud SDK.
+ */
+export function methods(): Method[] {
+  return Object.values(supportedMethods);
 }
 
 /**
@@ -50,6 +60,6 @@ export interface OpenApiParameter extends OpenAPIV3.ParameterObject {
  * Represenation of the request body.
  */
 export interface OpenApiRequestBody extends OpenAPIV3.RequestBodyObject {
-  name: string;
-  type: string;
+  parameterName: string;
+  parameterType: string;
 }

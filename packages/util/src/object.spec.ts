@@ -9,7 +9,8 @@ import {
   pickNonNullish,
   mergeLeftIgnoreCase,
   mergeIgnoreCase
-} from '../src';
+} from './object';
+
 describe('propertyExists', () => {
   it('checks whether an object has a nested chain of properties', () => {
     expect(propertyExists({ a: { b: { c: 0 } } }, 'a')).toBe(true);

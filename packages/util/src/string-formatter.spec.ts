@@ -1,82 +1,78 @@
 import {
-  toPropertyFormat,
-  toStaticPropertyFormat,
+  toCamelCase,
+  toUpperCaseSnakeCase,
   toTitleFormat,
-  toTypeNameFormat
-} from '../../src';
+  toPascalCase
+} from './string-formatter';
 
 describe('converts names', () => {
   describe('from original names to static field names', () => {
     it('for camel case properties', () => {
-      expect(toStaticPropertyFormat('fieldName')).toBe('FIELD_NAME');
+      expect(toUpperCaseSnakeCase('fieldName')).toBe('FIELD_NAME');
     });
 
     it('for pascal case properties', () => {
-      expect(toStaticPropertyFormat('FieldName')).toBe('FIELD_NAME');
+      expect(toUpperCaseSnakeCase('FieldName')).toBe('FIELD_NAME');
     });
 
     it('for snake case properties', () => {
-      expect(toStaticPropertyFormat('field_name')).toBe('FIELD_NAME');
+      expect(toUpperCaseSnakeCase('field_name')).toBe('FIELD_NAME');
     });
 
     it('for kebab case properties', () => {
-      expect(toStaticPropertyFormat('field-name')).toBe('FIELD_NAME');
+      expect(toUpperCaseSnakeCase('field-name')).toBe('FIELD_NAME');
     });
 
     it('for properties with numbers', () => {
-      expect(toStaticPropertyFormat('Field13Name')).toBe('FIELD_13_NAME');
+      expect(toUpperCaseSnakeCase('Field13Name')).toBe('FIELD_13_NAME');
     });
   });
 
   describe('from original names to property names', () => {
     it('for camel case properties', () => {
-      expect(toPropertyFormat('fieldName')).toBe('fieldName');
+      expect(toCamelCase('fieldName')).toBe('fieldName');
     });
 
     it('for pascal case properties', () => {
-      expect(toPropertyFormat('FieldName')).toBe('fieldName');
+      expect(toCamelCase('FieldName')).toBe('fieldName');
     });
 
     it('for snake case properties', () => {
-      expect(toPropertyFormat('field_name')).toBe('fieldName');
+      expect(toCamelCase('field_name')).toBe('fieldName');
     });
 
     it('for kebab case properties', () => {
-      expect(toPropertyFormat('field-name')).toBe('fieldName');
+      expect(toCamelCase('field-name')).toBe('fieldName');
     });
 
     it('for properties with numbers', () => {
-      expect(toPropertyFormat('Field13Name')).toBe('field13Name');
+      expect(toCamelCase('Field13Name')).toBe('field13Name');
     });
   });
 
   describe('from property names to static field names', () => {
     it('for camel case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('fieldName'))).toBe(
-        'FIELD_NAME'
-      );
+      expect(toUpperCaseSnakeCase(toCamelCase('fieldName'))).toBe('FIELD_NAME');
     });
 
     it('for pascal case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('FieldName'))).toBe(
-        'FIELD_NAME'
-      );
+      expect(toUpperCaseSnakeCase(toCamelCase('FieldName'))).toBe('FIELD_NAME');
     });
 
     it('for snake case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('field_name'))).toBe(
+      expect(toUpperCaseSnakeCase(toCamelCase('field_name'))).toBe(
         'FIELD_NAME'
       );
     });
 
     it('for kebab case properties', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('field-name'))).toBe(
+      expect(toUpperCaseSnakeCase(toCamelCase('field-name'))).toBe(
         'FIELD_NAME'
       );
     });
 
     it('for properties with numbers', () => {
-      expect(toStaticPropertyFormat(toPropertyFormat('Field13Name'))).toBe(
+      expect(toUpperCaseSnakeCase(toCamelCase('Field13Name'))).toBe(
         'FIELD_13_NAME'
       );
     });
@@ -106,23 +102,23 @@ describe('converts names', () => {
 
   describe('from original names to human readable names', () => {
     it('for camel case properties', () => {
-      expect(toTypeNameFormat('fieldName')).toBe('FieldName');
+      expect(toPascalCase('fieldName')).toBe('FieldName');
     });
 
     it('for pascal case properties', () => {
-      expect(toTypeNameFormat('FieldName')).toBe('FieldName');
+      expect(toPascalCase('FieldName')).toBe('FieldName');
     });
 
     it('for snake case properties', () => {
-      expect(toTypeNameFormat('field_name')).toBe('FieldName');
+      expect(toPascalCase('field_name')).toBe('FieldName');
     });
 
     it('for kebab case properties', () => {
-      expect(toTypeNameFormat('field-name')).toBe('FieldName');
+      expect(toPascalCase('field-name')).toBe('FieldName');
     });
 
     it('for properties with numbers', () => {
-      expect(toTypeNameFormat('Field13Name')).toBe('Field13Name');
+      expect(toPascalCase('Field13Name')).toBe('Field13Name');
     });
   });
 });

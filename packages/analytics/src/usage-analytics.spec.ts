@@ -1,8 +1,8 @@
 import os from 'os';
 import nock from 'nock';
-import { getAnalyticsData } from '../src';
-import { UsageAnalyticsOptions } from '../src/analytics-types';
-import { sendAnalyticsData } from '../src/usage-analytics';
+import { UsageAnalyticsOptions } from './analytics-types';
+import { sendAnalyticsData } from './usage-analytics';
+import { getAnalyticsData } from './analytics-data';
 
 describe('sendAnalyticsData()', () => {
   const salt =

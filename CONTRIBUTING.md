@@ -55,6 +55,20 @@ If you need to extend the existing services, run the following to regenerate the
 $ yarn generate:test-services
 ```
 
+### End to End (E2E) tests
+
+The E2E are the most realistic tests included in this repo and run on each pull request.
+There are also nightly tests executed on the internal jenkins - see the internal repo for more details on these.
+These are also called E2E tests but are not meant here. 
+
+The E2E tests are based on a locally running server providing an OData interface using [CAP](https://cap.cloud.sap/docs/) and a Rest interface using OpenApi.
+This server is used by the E2E tests located at [test-packages/e2e-tests](./test-packages/e2e-tests).
+**Attention** The imports in the E2E tests use the root packages e.g. `@sap-cloud-sdk/core` to mimic the way a customer would use it.
+So if you made code changes in one of the packages you need to run `yarn compile` to make the changes take effect.  
+
+For manual E2E to a real remote system we have also some tests agains the [TripPin service](https://www.odata.org/blog/trippin-new-odata-v4-sample-service/) which is the standard OData V4 sample service.
+Since the remote service is not really stable we commented out the tests under [test-packages/e2e-tests/test/TripPin](./test-packages/e2e-tests/test/TripPin) but for manual testing they can be useful.
+
 ## Linting
 To fix all linting issues, run:
 ```sh-session
@@ -70,3 +84,7 @@ Once you are ready to make a change, please test it appropriately, create a pull
 
 ## Developer Certificate of Origin (DCO)
 Due to legal reasons, contributors will be asked to accept a DCO before they submit the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
+
+## Release Process
+
+Information on the release process can be found in the [release documentation](./knowledge-base/how-tos/release.md).

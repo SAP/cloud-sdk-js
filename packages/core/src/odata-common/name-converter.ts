@@ -2,7 +2,7 @@ import {
   toCamelCase,
   toUpperCaseSnakeCase,
   toPascalCase as toPascalCaseUtil,
-  toTitleCase
+  toTitleFormat as toTitleFormatUtil
 } from '@sap-cloud-sdk/util';
 
 export function toStaticPropertyFormat(str: string): string {
@@ -39,7 +39,7 @@ export function toPascalCase(str: string): string {
  * @returns The transformed string.
  */
 export function toTitleFormat(str: string): string {
-  return toTitleCase(str);
+  return toTitleFormatUtil(str);
 }
 
 /**

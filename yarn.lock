@@ -1453,9 +1453,9 @@
     tslib "^2.0.0"
 
 "@oclif/dev-cli@^1.22.2":
-  version "1.24.1"
-  resolved "https://registry.npmjs.org/@oclif/dev-cli/-/dev-cli-1.24.1.tgz#e95600ffb3927608232a96295e6277de707c336f"
-  integrity sha512-cJL0o+S6jA1HgO7bpTBTDkUTU5j31B7ngJWnpDGAS2GoA1t00lfQ1K75oFBPBIqEB6HQmhs7guIKQISLzoDyXg==
+  version "1.24.3"
+  resolved "https://registry.npmjs.org/@oclif/dev-cli/-/dev-cli-1.24.3.tgz#d674251bacfcdf7a39417054020a025544c9b51d"
+  integrity sha512-ApW7Q/sli0UCfVuzI9/nWTGfPLXOa81ZO4ZXB6m0dhi2c3Fg4JIhBIzEzC90Uuc7j+61Z5QAaC3cRygymqtMpw==
   dependencies:
     "@oclif/command" "^1.8.0"
     "@oclif/config" "^1.17.0"

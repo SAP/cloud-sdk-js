@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { TestEntity } from '../../../test-util/test-services/v2/test-service';
-import { oDataUriV2 } from '../../../../src';
+import { oDataUriV2 } from '../../../../src/odata-v2/uri-conversion';
 
 describe('extractEntityKeys', () => {
   it('should extract entity keys correctly', () => {

@@ -1,6 +1,6 @@
 import {
   TestEntity,
-  TestServiceApiRequestBuilder
+  TestServiceApi
 } from '@sap-cloud-sdk/test-services/rest/test-service';
 import { destination } from './test-util';
 
@@ -10,7 +10,7 @@ import { destination } from './test-util';
 const restDestination = { ...destination, url: destination.url + 'rest' };
 describe('rest request builder', () => {
   it('executes getAll request', async () => {
-    const request = TestServiceApiRequestBuilder.getAllEntities();
+    const request = TestServiceApi.getAllEntities();
     expect(
       (await request.execute(restDestination)).data.length
     ).toBeGreaterThanOrEqual(4);
@@ -22,16 +22,12 @@ describe('rest request builder', () => {
       keyProperty: 'a13e7a92-cb9c-8f4a-b1e1-6b5c8458a9fb',
       stringProperty: 'string'
     };
-    await TestServiceApiRequestBuilder.createEntity(testEntity).execute(
-      restDestination
-    );
+    await TestServiceApi.createEntity(testEntity).execute(restDestination);
     const postCreateCount = await countEntities();
     expect(postCreateCount).toEqual(preCreateCount + 1);
   });
 });
 
 async function countEntities(): Promise<number> {
-  return (
-    await TestServiceApiRequestBuilder.countEntities().execute(restDestination)
-  ).data;
+  return (await TestServiceApi.countEntities().execute(restDestination)).data;
 }

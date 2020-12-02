@@ -3,7 +3,7 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
-import execa from 'execa';
+import execa = require('execa');
 import { OpenAPIV3 } from 'openapi-types';
 import { GeneratorOptions } from './commands/generate-rest-client';
 import { apiFile, indexFile, createFile } from './wrapper-files';

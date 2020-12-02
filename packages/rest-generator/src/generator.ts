@@ -33,7 +33,7 @@ export async function generateClients(
 
   inputFilePaths.forEach(async filePath => {
     const openApiDocument = await parseOpenApiDocument(filePath);
-    if (!!openApiDocument.operations.length) {
+    if (!openApiDocument.operations.length) {
       logger.warn(
         `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
       );

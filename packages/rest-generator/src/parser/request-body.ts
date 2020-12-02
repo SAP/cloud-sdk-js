@@ -38,15 +38,17 @@ export function parseRequestBody(
 function parseRequestBodyType(
   requestBody: OpenAPIV3.RequestBodyObject | undefined
 ): string | undefined {
-  const mediaType = getMediaType(requestBody, 'application/json');
-  const schema = mediaType?.schema;
-  // TODO: What about inline schemas?
-  if (isReferenceObject(schema)) {
-    return parseTypeName(schema);
+  if (requestBody) {
+    const mediaType = getMediaType(requestBody, 'application/json');
+    const schema = mediaType?.schema;
+    // TODO: What about inline schemas?
+    if (isReferenceObject(schema)) {
+      return parseTypeName(schema);
+    }
+    logger.warn(
+      'The SAP Cloud SDK OpenApi generator currently does not support inline schemas. This will likely cause issues when using this client.'
+    );
   }
-  logger.warn(
-    'The SAP Cloud SDK REST generator currently does not support inline schemas. This will likely cause issues when using this client.'
-  );
 }
 
 /**

@@ -3,7 +3,7 @@
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import execa from 'execa';
+import execa = require('execa');
 import Command from '@oclif/command';
 import { flags } from '@oclif/parser';
 import cli from 'cli-ux';

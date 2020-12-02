@@ -4,7 +4,10 @@ import { parseRequestBody } from './request-body';
 
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
+    const logger = createLogger('rest-generator');
+    spyOn(logger, 'warn');
     expect(parseRequestBody(undefined, await createRefs())).toBeUndefined();
+    expect(logger.warn).not.toHaveBeenCalled();
   });
 
   it('returns type from referenced schema', async () => {
@@ -72,7 +75,7 @@ describe('getRequestBody', () => {
     ).toBeUndefined();
 
     expect(logger.warn).toHaveBeenCalledWith(
-      'The SAP Cloud SDK REST generator currently does not support inline schemas. This will likely cause issues when using this client.'
+      'The SAP Cloud SDK OpenApi generator currently does not support inline schemas. This will likely cause issues when using this client.'
     );
   });
 });

@@ -1,5 +1,6 @@
+import { createRefs, emptyApiDefinition } from '../../test/test-util';
 import { parseAllOperations } from './document';
-import { createRefs, emptyApiDefinition } from './refs.spec';
+
 describe('parseAllOperations', () => {
   it('returns empty array when there are no paths', async () => {
     expect(parseAllOperations(emptyApiDefinition, await createRefs())).toEqual(

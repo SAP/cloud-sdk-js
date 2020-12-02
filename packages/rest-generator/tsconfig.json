@@ -6,7 +6,7 @@
     "target": "es2017"
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts", "test/emptyApiDefinition.ts"
   ],
   "exclude": [
     "dist/**/*",

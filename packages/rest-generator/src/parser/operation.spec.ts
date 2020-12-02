@@ -1,5 +1,5 @@
+import { createRefs } from '../../test/test-util';
 import { parseOperationName, parseParameters } from './operation';
-import { createRefs } from './refs.spec';
 
 describe('parseOperationName', () => {
   it('parses the operation name from the operationId', () => {

@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { createRefs } from './refs.spec';
+import { createRefs } from '../../test/test-util';
 import { parseRequestBody } from './request-body';
 
 describe('getRequestBody', () => {

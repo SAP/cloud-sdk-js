@@ -1,5 +1,6 @@
+import { emptyApiDefinition } from '../test/test-util';
 import { createSpecWithGlobalTag } from './generator';
-import { emptyApiDefinition } from './parser/refs.spec';
+
 describe('createSpecWithGlobalTag', () => {
   it("replaces all tags with 'default'", () => {
     const newSpec = createSpecWithGlobalTag({

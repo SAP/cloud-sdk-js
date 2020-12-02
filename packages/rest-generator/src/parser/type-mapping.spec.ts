@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getType } from './type-mapping';
+
 describe('getType', () => {
   it('returns any for undefined', () => {
     expect(getType(undefined)).toEqual('any');

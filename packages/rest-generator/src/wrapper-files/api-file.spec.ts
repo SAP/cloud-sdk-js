@@ -13,7 +13,8 @@ describe('api-file', () => {
             {
               in: 'path',
               name: 'id',
-              type: 'string'
+              type: 'string',
+              required: true
             },
             {
               in: 'query',
@@ -30,7 +31,8 @@ describe('api-file', () => {
             {
               in: 'path',
               name: 'id',
-              type: 'string'
+              type: 'string',
+              required: true
             }
           ],
           pattern: 'test/{id}'
@@ -51,7 +53,8 @@ describe('api-file', () => {
           parameters: [],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body'
+            parameterType: 'Body',
+            required: true
           } as OpenApiRequestBody,
           pattern: 'test'
         },
@@ -62,12 +65,14 @@ describe('api-file', () => {
             {
               in: 'path',
               name: 'id',
-              type: 'string'
+              type: 'string',
+              required: true
             }
           ],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body'
+            parameterType: 'Body',
+            required: true
           } as OpenApiRequestBody,
           pattern: 'test/{id}'
         }

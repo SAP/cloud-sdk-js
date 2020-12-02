@@ -39,7 +39,7 @@ import { DefaultApi } from './openapi/api';
 
 
 export const TestServiceApi = {
-  getEntity: (id: string, limit: number) => new RestRequestBuilder<DefaultApi, 'getEntity'>(
+  getEntity: (id: string, limit?: number) => new RestRequestBuilder<DefaultApi, 'getEntity'>(
     DefaultApi,
     'getEntity',
     id,

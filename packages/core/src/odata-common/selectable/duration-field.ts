@@ -67,9 +67,9 @@ export class DurtionFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DurationField<
-  EntityT extends EntityBase
-> extends DurtionFieldBase<EntityT> {
+export class DurationField<EntityT extends EntityBase> extends DurtionFieldBase<
+  EntityT
+> {
   readonly selectable: true;
 }
 

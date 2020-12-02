@@ -12,9 +12,9 @@ import type { SimpleTypeFields } from './simple-type-fields';
  * @typeparam EntityT - Type of the entity to be selected on
  */
 
-export type Selectable<
-  EntityT extends EntityBase
-> = ODataVersionOf<EntityT> extends 'v2'
+export type Selectable<EntityT extends EntityBase> = ODataVersionOf<
+  EntityT
+> extends 'v2'
   ?
       | SimpleTypeFields<EntityT>
       | Link<EntityT>

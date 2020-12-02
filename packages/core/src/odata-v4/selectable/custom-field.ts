@@ -6,9 +6,9 @@ import {
   TimeField
 } from '../../odata-common';
 
-export class CustomFieldV4<
-  EntityT extends EntityV4
-> extends CustomFieldBase<EntityT> {
+export class CustomFieldV4<EntityT extends EntityV4> extends CustomFieldBase<
+  EntityT
+> {
   edmDate(): DateField<EntityT> {
     return new DateField<EntityT>(
       this._fieldName,

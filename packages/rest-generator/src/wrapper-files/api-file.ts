@@ -56,8 +56,9 @@ function getOperations(openApiDocument: OpenApiDocument): string {
 function getOperation(operation: OpenApiOperation): string {
   const parameters = getAllParameters(operation);
 
+  // TODO: The order of parameters should be changed if the parameters are required, so that required parameters come first
   const apiFunctionSignatureParams = parameters.map(
-    param => `${param.name}: ${param.type}`
+    param => `${param.name}${param.required ? '' : '?'}: ${param.type}`
   );
   const requestBuilderParams = [
     'DefaultApi',
@@ -76,6 +77,7 @@ ${operation.operationName}: (${apiFunctionSignatureParams.join(
 interface Parameter {
   type: string;
   name: string;
+  required?: boolean;
 }
 
 function getAllParameters(operation: OpenApiOperation): Parameter[] {

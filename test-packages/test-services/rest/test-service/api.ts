@@ -8,13 +8,13 @@ import { DefaultApi } from './openapi/api';
 import { TestEntity } from './openapi/model';
 
 export const TestServiceApi = {
-  getAllEntities: (stringParameter: string, integerParameter: number) => new RestRequestBuilder<DefaultApi, 'getAllEntities'>(
+  getAllEntities: (stringParameter?: string, integerParameter?: number) => new RestRequestBuilder<DefaultApi, 'getAllEntities'>(
     DefaultApi,
     'getAllEntities',
     stringParameter,
     integerParameter
   ),
-  createEntity: (testEntity: TestEntity) => new RestRequestBuilder<DefaultApi, 'createEntity'>(
+  createEntity: (testEntity?: TestEntity) => new RestRequestBuilder<DefaultApi, 'createEntity'>(
     DefaultApi,
     'createEntity',
     testEntity

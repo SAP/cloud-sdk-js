@@ -1,4 +1,0 @@
-{
-  "inputDir": "../../../../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx",
-  "outputDir": "../../generator-test-output"
-}

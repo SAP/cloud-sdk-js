@@ -1,10 +1,10 @@
 import { fail } from 'assert';
 import { unlinkSync, writeFileSync } from 'fs';
+import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   getTestDestinationByAlias,
   getTestDestinations
-} from '../src/test-destination-provider';
-import { credentials, systems } from './test-util/test-destinations';
+} from './test-destination-provider';
 // This replaces the fs module with the mocked one defined in __mock__/fs.js
 jest.mock('fs');
 // eslint-disable-next-line @typescript-eslint/no-var-requires

@@ -7,13 +7,11 @@ import {
   testFilterString,
   testFilterStringV4,
   testNestedFilterLambdaExpressionOnLink
-} from '../../../test-util/filter-factory';
-import { TestEntity } from '../../../test-util/test-services/v4/test-service';
-import {
-  oDataUriV4,
-  filterFunctionsV4,
-  filterFunctionV4
-} from '../../../../src';
+} from '../../../test/test-util/filter-factory';
+import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
+import { filterFunctionsV4 } from '../filter-functions';
+import { filterFunctionV4 } from '../filter-function';
+import { oDataUriV4 } from './odata-uri';
 
 const { getFilter } = oDataUriV4;
 

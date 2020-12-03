@@ -1,9 +1,9 @@
-import { asc, desc } from '../../../../src';
-import { getQueryParametersForOrderBy } from '../../../../src/odata-v2';
+import { asc, desc } from '../../odata-common/order';
 import {
   TestEntity,
   TestEntitySingleLink
-} from '../../../test-util/test-services/v2/test-service';
+} from '../../../test/test-util/test-services/v2/test-service';
+import { getQueryParametersForOrderBy } from './get-orderby';
 
 describe('get orderby', () => {
   it('is empty for empty orderbys', () => {

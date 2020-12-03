@@ -86,7 +86,8 @@ function getAllParameters(operation: OpenApiOperation): Parameter[] {
       ...operation.parameters,
       {
         name: operation.requestBody.parameterName,
-        type: operation.requestBody.parameterType
+        type: operation.requestBody.parameterType,
+        required: operation.requestBody.required
       }
     ];
   }

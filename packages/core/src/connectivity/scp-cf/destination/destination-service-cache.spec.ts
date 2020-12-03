@@ -3,7 +3,7 @@ import {
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util';
 import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
 import { mockServiceToken } from '../../../../test/test-util/token-accessor-mocks';
 import {

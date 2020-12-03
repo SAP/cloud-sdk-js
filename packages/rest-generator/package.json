@@ -30,7 +30,6 @@
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
-    "generate:test-services": "ts-node src/commands/generate-rest-client.ts -i test/resources/test-apis -o test/test-services",
     "check:dependencies": "depcheck . --ignore-bin-package=true --ignores=@oclif/plugin-*"
   },
   "oclif": {

@@ -105,12 +105,6 @@ async function generateOpenApiService(
 
   try {
     const response = await execa('npx', generationArguments);
-    // if (response === undefined) {
-    //   throw new Error(
-    //     'An error appeared in the generation using the OpenApi generator CLI.'
-    //   );
-    // }
-    // The exitCode of the response is sometimes 0 even if errors appeared. Hence we check if something is in stderr.
     if (response.stderr) {
       throw new Error(response.stderr);
     }

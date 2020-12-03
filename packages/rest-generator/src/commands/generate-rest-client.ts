@@ -21,6 +21,7 @@ export class GenerateRestClient extends Command {
   static description =
     'Generates a Rest client from an openApi service file definition. For SAP solutions, you can find these definitions at https://api.sap.com/.';
 
+  // TODO: These examples are wrong, but this should be a single command api anyways
   static examples = [
     '$ generate-rest-client generate-rest-client -i directoryWithOpenApiFiles -o outputDirectory',
     '$ generate-rest-client generate-rest-client --help'
@@ -69,7 +70,8 @@ export class GenerateRestClient extends Command {
 /*
 The openapi generator requires a java runtime. In order to get a proper message to the user, we check this here.
  */
-async function checkJavaPresent() {
+async function checkJavaPresent(): Promise<void> {
+  // TODO: Improve the return values here.
   try {
     const response = await execa('java', ['-version']);
     if (response.exitCode !== 0 || !response.stderr.includes('version')) {

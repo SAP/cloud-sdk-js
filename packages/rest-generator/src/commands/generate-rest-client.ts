@@ -7,7 +7,7 @@ import execa = require('execa');
 import Command from '@oclif/command';
 import { flags } from '@oclif/parser';
 import cli from 'cli-ux';
-import { generateClients } from '../generator';
+import { generate } from '../generator';
 
 const logger = createLogger('rest-generator');
 
@@ -59,7 +59,7 @@ export class GenerateRestClient extends Command {
     try {
       const parsed = this.parse(GenerateRestClient);
       await checkJavaPresent();
-      await generateClients(parsed.flags);
+      await generate(parsed.flags);
     } catch (e) {
       logger.error(e.message);
       return cli.exit(1);

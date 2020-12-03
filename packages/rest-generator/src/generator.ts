@@ -19,9 +19,7 @@ const logger = createLogger('rest-generator');
  * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
  * @param options Options to configure generation.
  */
-export async function generateClients(
-  options: GeneratorOptions
-): Promise<void> {
+export async function generate(options: GeneratorOptions): Promise<void> {
   if (options.clearOutputDir) {
     rmdir(options.outputDir, { recursive: true });
   }

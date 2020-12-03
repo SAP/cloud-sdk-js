@@ -11,7 +11,7 @@ import {
 } from '../../../test/test-util/request-mocker';
 import { Destination } from './destination';
 import {
-  addAuthorizationHeader,
+  addAuthorizationHeader, basicHeader,
   buildAndAddAuthorizationHeader,
   buildAuthorizationHeaders
 } from './authorization-header';
@@ -102,7 +102,7 @@ describe('buildAuthorizationHeaders', () => {
       nock('https://token.example.com', {
         reqheaders: {
           'content-type': 'application/x-www-form-urlencoded',
-          authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA=='
+          authorization: basicHeader(destination.clientId!,destination.clientSecret!)
         }
       })
         .post('/oauth/token', requestBody)
@@ -122,8 +122,7 @@ describe('buildAuthorizationHeaders', () => {
       nock('https://token.example.com', {
         reqheaders: {
           'content-type': 'application/x-www-form-urlencoded',
-          authorization:
-            'Basic VG9rZW5TZXJ2aWNlVXNlcjpUb2tlblNlcnZpY2VQYXNzd29yZA=='
+          authorization: basicHeader(destination.tokenServiceUser,destination.tokenServicePassword)
         }
       })
         .post('/oauth/token', requestBody)
@@ -149,7 +148,7 @@ describe('buildAuthorizationHeaders', () => {
       nock('https://token.example.com', {
         reqheaders: {
           'content-type': 'application/x-www-form-urlencoded',
-          authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA=='
+          authorization: basicHeader(destination.clientId!,destination.clientSecret!)
         }
       })
         .post('/oauth/token', requestBody)

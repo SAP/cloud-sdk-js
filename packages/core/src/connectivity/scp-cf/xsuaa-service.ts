@@ -1,4 +1,9 @@
-import { createLogger, errorWithCause, renameKeys } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  encodeBase64,
+  errorWithCause,
+  renameKeys
+} from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
@@ -258,11 +263,6 @@ export function headerForClientCredentials(
     encodeBase64(`${clientCredentials.username}:${clientCredentials.password}`)
   );
 }
-
-function encodeBase64(str: string): string {
-  return Buffer.from(str).toString('base64');
-}
-
 function objectToXWwwUrlEncodedBodyString(
   bodyAsObject: Record<string, any>
 ): string {

@@ -1,18 +1,8 @@
-import { indent, trim, encodeBase64 } from './string';
+import { trim, encodeBase64 } from './string';
 
 describe('encodeBase64', () => {
   it('encodes a string', () => {
     expect(encodeBase64('test')).toMatchInlineSnapshot('"dGVzdA=="');
-  });
-});
-
-describe('indent', () => {
-  it('indents one lined string', () => {
-    expect(indent('A', ' ')).toEqual(' A');
-  });
-
-  it('indents multi lined string', () => {
-    expect(indent('\nA\n', ' ')).toEqual(' \n A\n ');
   });
 });
 

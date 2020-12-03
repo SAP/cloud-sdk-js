@@ -23,7 +23,7 @@ export function parseTypeName(obj: OpenAPIV3.ReferenceObject): string {
 
 /**
  * Check whether the given object is a reference object and resolve if necessary.
- * This operates only on the current level.
+ * This operates only on the current level and does not resolve the object recursively.
  * @param obj Object to resolve if necessary.
  * @param refs References to resolve by.
  * @returns A resolved object.

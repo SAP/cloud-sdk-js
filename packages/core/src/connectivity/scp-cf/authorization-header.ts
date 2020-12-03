@@ -3,7 +3,8 @@ import {
   isNullish,
   createLogger,
   pickIgnoreCase,
-  toSanitizedObject
+  toSanitizedObject,
+  encodeBase64
 } from '@sap-cloud-sdk/util';
 import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
 import { getOAuth2ClientCredentialsToken } from './client-credentials-token';
@@ -153,7 +154,7 @@ function headerFromBasicAuthDestination(
 }
 
 export function basicHeader(username: string, password: string): string {
-  return `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
+  return 'Basic ' + encodeBase64(`${username}:${password}`);
 }
 
 function headerForPrincipalPropagation(

@@ -97,7 +97,7 @@ export function execute(executeFn: ExecuteHttpRequestFn) {
 
 /**
  *
- * @experimental This is an experimental function, which might be removed later.
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  */

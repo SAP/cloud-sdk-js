@@ -8,46 +8,36 @@ export function encodeBase64(str: string): string {
 }
 
 /**
- * Prepend a string by the given indentation.
- * @param string String to indent.
- * @param indentation Indentation to use.
- * @returns A string with a prefix consisting of spaces with the length of the given indentation.
- */
-export const indent = (string, indentation) =>
-  string
-    .split('\n')
-    .map(subString => `${indentation}${subString}`)
-    .join('\n');
-
-/**
  * Remove whitespace from the left side of a string.
  * @param string String to trim.
  * @returns String without whitespace on the left side.
  */
-export const trimLeft = string => {
+export function trimLeft(string: string): string {
   let subStrings = string.split('\n');
   if (!subStrings[0].trim()) {
     subStrings = subStrings.slice(1);
   }
   return subStrings.join('\n');
-};
+}
 
 /**
  * Remove whitespace from the right side of a string.
  * @param string String to trim.
  * @returns String without whitespace on the right side.
  */
-export const trimRight = string => {
+export function trimRight(string: string): string {
   let subStrings = string.split('\n');
   if (!subStrings[subStrings.length - 1].trim()) {
     subStrings = subStrings.slice(0, -1);
   }
   return subStrings.join('\n');
-};
+}
 
 /**
  * Remove whitespace from the left side of a string.
  * @param string String to trim.
  * @returns String without outer whitespace.
  */
-export const trim = string => trimRight(trimLeft(string));
+export function trim(string: string): string {
+  return trimRight(trimLeft(string));
+}

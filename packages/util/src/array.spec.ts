@@ -125,11 +125,11 @@ describe('array', () => {
 
 describe('zip', () => {
   it('zips two arrays where left is longer than right', () => {
-    expect(zip([1, 3, 5], [2, 4])).toEqual([1, 2, 3, 4, 5]);
+    expect(zip([1, 2, 3, 4], [5, 6])).toEqual([1, 5, 2, 6, 3, 4]);
   });
 
   it('zips two arrays where right is longer than left', () => {
-    expect(zip([1, 3], [2, 4, 5])).toEqual([1, 2, 3, 4, 5]);
+    expect(zip([1, 2], [3, 4, 5, 6])).toEqual([1, 3, 2, 4, 5, 6]);
   });
 
   it('zips two arrays when the second is empty', () => {

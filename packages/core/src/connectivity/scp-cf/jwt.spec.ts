@@ -4,7 +4,7 @@ import nock = require('nock');
 import {
   publicKey,
   signedJwtForVerification
-} from '../../../test/test-util/keys';
+} from '@sap-cloud-sdk/test-util';
 import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from './jwt';
 
 const jwtPayload = {

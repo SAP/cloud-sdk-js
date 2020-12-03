@@ -3,7 +3,7 @@ import {
   mockConnectivityServiceBinding,
   mockedConnectivityServiceProxyConfig,
   mockServiceBindings
-} from '@sap-cloud-sdk/test-util';
+} from '../../../test/test-util/environment-mocks';
 import {
   providerServiceToken,
   providerUserJwt

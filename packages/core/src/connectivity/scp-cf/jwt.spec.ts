@@ -1,7 +1,10 @@
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
 import nock = require('nock');
-import { publicKey, signedJwtForVerification } from '@sap-cloud-sdk/test-util';
+import {
+  publicKey,
+  signedJwtForVerification
+} from '../../../test/test-util/keys';
 import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from './jwt';
 
 const jwtPayload = {

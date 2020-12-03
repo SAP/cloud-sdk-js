@@ -1,6 +1,6 @@
 import { fail } from 'assert';
 import nock from 'nock';
-import { providerXsuaaUrl } from '@sap-cloud-sdk/test-util';
+import { providerXsuaaUrl } from '../../../test/test-util/environment-mocks';
 import {
   clientCredentialsGrant,
   fetchVerificationKeys,

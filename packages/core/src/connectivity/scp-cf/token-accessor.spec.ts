@@ -4,7 +4,7 @@ import {
   mockServiceBindings,
   providerXsuaaUrl,
   subscriberXsuaaUrl
-} from '@sap-cloud-sdk/test-util';
+} from '../../../test/test-util/environment-mocks';
 import { signedJwt } from '../../../test/test-util/keys';
 import {
   providerServiceToken,

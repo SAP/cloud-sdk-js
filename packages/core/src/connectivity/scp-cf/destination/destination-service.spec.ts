@@ -1,7 +1,7 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 import { destinationServiceUri } from '../../../../test/test-util/environment-mocks';
-import { privateKey } from '../../../../test/test-util/keys';
+import { privateKey } from '@sap-cloud-sdk/test-util';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,

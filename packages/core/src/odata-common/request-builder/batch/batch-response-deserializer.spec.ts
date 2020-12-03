@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
-import { responseDataAccessorV2 } from '../../../odata-v2/request-builder/response-data-accessor';
 import { EntityDeserializer } from '../../entity-deserializer';
+import { ResponseDataAccessor } from '../../response-data-accessor';
 import {
   BatchResponseDeserializer,
   parseEntityNameFromMetadataUri
@@ -43,39 +43,50 @@ describe('batch response transformer', () => {
     const entityToConstructorMap = {
       entity: 'entity' as any
     };
-    describe('v2', () => {
-      const batchTransformer = new BatchResponseDeserializer(
-        entityToConstructorMap,
-        responseDataAccessorV2,
-        {} as EntityDeserializer
+
+    const batchTransformerCollection = new BatchResponseDeserializer(
+      entityToConstructorMap,
+      {
+        isCollectionResult: input => true,
+        getCollectionResult: input => input.d.results
+      } as ResponseDataAccessor,
+      {} as EntityDeserializer
+    );
+
+    const batchTransformerSingle = new BatchResponseDeserializer(
+      entityToConstructorMap,
+      {
+        isCollectionResult: input => false,
+        getSingleResult: input => input.d
+      } as ResponseDataAccessor,
+      {} as EntityDeserializer
+    );
+
+    it('returns constructor for single result', () => {
+      expect(
+        batchTransformerSingle['getConstructor']({
+          d: { __metadata: { uri: 'entity' } }
+        })
+      ).toEqual(entityToConstructorMap.entity);
+    });
+
+    it('returns constructor for collection result', () => {
+      expect(
+        batchTransformerCollection['getConstructor']({
+          d: { results: [{ __metadata: { uri: 'entity' } }] }
+        })
+      ).toEqual(entityToConstructorMap.entity);
+    });
+
+    it('returns undefined for empty collection result and logs a warning', () => {
+      const logger = createLogger('batch-response-transformer');
+      spyOn(logger, 'warn');
+      expect(
+        batchTransformerCollection['getConstructor']({ d: { results: [] } })
+      ).toBeUndefined();
+      expect(logger.warn).toHaveBeenCalledWith(
+        'Could not parse constructor from response body.'
       );
-
-      it('returns constructor for single result', () => {
-        expect(
-          batchTransformer['getConstructor']({
-            d: { __metadata: { uri: 'entity' } }
-          })
-        ).toEqual(entityToConstructorMap.entity);
-      });
-
-      it('returns constructor for collection result', () => {
-        expect(
-          batchTransformer['getConstructor']({
-            d: { results: [{ __metadata: { uri: 'entity' } }] }
-          })
-        ).toEqual(entityToConstructorMap.entity);
-      });
-
-      it('returns undefined for empty collection result and logs a warning', () => {
-        const logger = createLogger('batch-response-transformer');
-        spyOn(logger, 'warn');
-        expect(
-          batchTransformer['getConstructor']({ d: { results: [] } })
-        ).toBeUndefined();
-        expect(logger.warn).toHaveBeenCalledWith(
-          'Could not parse constructor from response body.'
-        );
-      });
     });
   });
 });

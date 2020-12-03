@@ -21,11 +21,47 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { TestEntity } from '../model';
 /**
- * SomeTagApi - axios parameter creator
+ * DefaultApi - axios parameter creator
  * @export
  */
-export const SomeTagApiAxiosParamCreator = function (configuration?: Configuration) {
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Count entities
+         * @summary Count entities
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        countEntities: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/entities/count`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Create entity
          * @summary Create entity
@@ -70,11 +106,12 @@ export const SomeTagApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Get all entities
          * @summary Get entities
-         * @param {number} [limit] maximum number of records to return
+         * @param {string} [stringParameter] A parameter of type string
+         * @param {number} [integerParameter] A parameter of type integer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities: async (limit?: number, options: any = {}): Promise<RequestArgs> => {
+        getAllEntities: async (stringParameter?: string, integerParameter?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/entities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -86,8 +123,12 @@ export const SomeTagApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
+            if (stringParameter !== undefined) {
+                localVarQueryParameter['stringParameter'] = stringParameter;
+            }
+
+            if (integerParameter !== undefined) {
+                localVarQueryParameter['integerParameter'] = integerParameter;
             }
 
 
@@ -154,11 +195,24 @@ export const SomeTagApiAxiosParamCreator = function (configuration?: Configurati
 };
 
 /**
- * SomeTagApi - functional programming interface
+ * DefaultApi - functional programming interface
  * @export
  */
-export const SomeTagApiFp = function(configuration?: Configuration) {
+export const DefaultApiFp = function(configuration?: Configuration) {
     return {
+        /**
+         * Count entities
+         * @summary Count entities
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async countEntities(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).countEntities(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
         /**
          * Create entity
          * @summary Create entity
@@ -167,7 +221,7 @@ export const SomeTagApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async createEntity(testEntity?: TestEntity, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await SomeTagApiAxiosParamCreator(configuration).createEntity(testEntity, options);
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).createEntity(testEntity, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -176,12 +230,13 @@ export const SomeTagApiFp = function(configuration?: Configuration) {
         /**
          * Get all entities
          * @summary Get entities
-         * @param {number} [limit] maximum number of records to return
+         * @param {string} [stringParameter] A parameter of type string
+         * @param {number} [integerParameter] A parameter of type integer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllEntities(limit?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
-            const localVarAxiosArgs = await SomeTagApiAxiosParamCreator(configuration).getAllEntities(limit, options);
+        async getAllEntities(stringParameter?: string, integerParameter?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getAllEntities(stringParameter, integerParameter, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -195,7 +250,7 @@ export const SomeTagApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getEntityByKey(entityId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
-            const localVarAxiosArgs = await SomeTagApiAxiosParamCreator(configuration).getEntityByKey(entityId, options);
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getEntityByKey(entityId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -205,11 +260,20 @@ export const SomeTagApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * SomeTagApi - factory interface
+ * DefaultApi - factory interface
  * @export
  */
-export const SomeTagApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
+        /**
+         * Count entities
+         * @summary Count entities
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        countEntities(options?: any): AxiosPromise<number> {
+            return DefaultApiFp(configuration).countEntities(options).then((request) => request(axios, basePath));
+        },
         /**
          * Create entity
          * @summary Create entity
@@ -218,17 +282,18 @@ export const SomeTagApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         createEntity(testEntity?: TestEntity, options?: any): AxiosPromise<void> {
-            return SomeTagApiFp(configuration).createEntity(testEntity, options).then((request) => request(axios, basePath));
+            return DefaultApiFp(configuration).createEntity(testEntity, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all entities
          * @summary Get entities
-         * @param {number} [limit] maximum number of records to return
+         * @param {string} [stringParameter] A parameter of type string
+         * @param {number} [integerParameter] A parameter of type integer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities(limit?: number, options?: any): AxiosPromise<Array<TestEntity>> {
-            return SomeTagApiFp(configuration).getAllEntities(limit, options).then((request) => request(axios, basePath));
+        getAllEntities(stringParameter?: string, integerParameter?: number, options?: any): AxiosPromise<Array<TestEntity>> {
+            return DefaultApiFp(configuration).getAllEntities(stringParameter, integerParameter, options).then((request) => request(axios, basePath));
         },
         /**
          * Get entity by id
@@ -238,40 +303,52 @@ export const SomeTagApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         getEntityByKey(entityId: string, options?: any): AxiosPromise<Array<TestEntity>> {
-            return SomeTagApiFp(configuration).getEntityByKey(entityId, options).then((request) => request(axios, basePath));
+            return DefaultApiFp(configuration).getEntityByKey(entityId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * SomeTagApi - object-oriented interface
+ * DefaultApi - object-oriented interface
  * @export
- * @class SomeTagApi
+ * @class DefaultApi
  * @extends {BaseAPI}
  */
-export class SomeTagApi extends BaseAPI {
+export class DefaultApi extends BaseAPI {
+    /**
+     * Count entities
+     * @summary Count entities
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public countEntities(options?: any) {
+        return DefaultApiFp(this.configuration).countEntities(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Create entity
      * @summary Create entity
      * @param {TestEntity} [testEntity] Enitity to create
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SomeTagApi
+     * @memberof DefaultApi
      */
     public createEntity(testEntity?: TestEntity, options?: any) {
-        return SomeTagApiFp(this.configuration).createEntity(testEntity, options).then((request) => request(this.axios, this.basePath));
+        return DefaultApiFp(this.configuration).createEntity(testEntity, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get all entities
      * @summary Get entities
-     * @param {number} [limit] maximum number of records to return
+     * @param {string} [stringParameter] A parameter of type string
+     * @param {number} [integerParameter] A parameter of type integer
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SomeTagApi
+     * @memberof DefaultApi
      */
-    public getAllEntities(limit?: number, options?: any) {
-        return SomeTagApiFp(this.configuration).getAllEntities(limit, options).then((request) => request(this.axios, this.basePath));
+    public getAllEntities(stringParameter?: string, integerParameter?: number, options?: any) {
+        return DefaultApiFp(this.configuration).getAllEntities(stringParameter, integerParameter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -280,9 +357,9 @@ export class SomeTagApi extends BaseAPI {
      * @param {string} entityId Key property of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SomeTagApi
+     * @memberof DefaultApi
      */
     public getEntityByKey(entityId: string, options?: any) {
-        return SomeTagApiFp(this.configuration).getEntityByKey(entityId, options).then((request) => request(this.axios, this.basePath));
+        return DefaultApiFp(this.configuration).getEntityByKey(entityId, options).then((request) => request(this.axios, this.basePath));
     }
 }

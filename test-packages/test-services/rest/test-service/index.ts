@@ -3,5 +3,5 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-export * from './open-api/model';
-export * from './request-builder';
+export * from './openapi/model';
+export * from './api';

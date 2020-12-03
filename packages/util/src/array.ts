@@ -36,18 +36,18 @@ export function first<T>(arr: T[]): T | undefined {
 
 /**
  * Split the given array in chunks
- * @param arr - Array to be splitted. The last aray could be shorter.
+ * @param arr - Array to be split into chunks.
  * @param chunkSize - Size of the chunks
- * @returns Array with arrays of chunks size.
+ * @returns Two dimensional array with arrays of length chunkSize. The last subarray could be shorter.
  */
 export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
-  let result: T[][] = [];
+  const chunks: T[][] = [];
   if (arr) {
     for (let i = 0; i < arr.length; i += chunkSize) {
-      result = [...result, arr.slice(i, i + chunkSize)];
+      chunks.push(arr.slice(i, i + chunkSize));
     }
   }
-  return result;
+  return chunks;
 }
 
 /**
@@ -77,8 +77,8 @@ export function variadicArgumentToArray<T>(
  * Flattens a array: [1,[2,[3,4]],5] will become [1,2,3,4,5].
  * Non primitive values are copied by reference.
  *
- * @param input - array to be flattened
- * @returns the flat array.
+ * @param input - Array to be flattened
+ * @returns The flattened array.
  */
 export const flatten = (input: any[]): any[] => {
   const flatResult: any[] = [];
@@ -95,3 +95,43 @@ export const flatten = (input: any[]): any[] => {
 
   return flatResult.reverse();
 };
+
+/**
+ * Merge two arrays by alternately adding inserting values from both arrays, starting from the left.
+ * For example: `zip([1, 2], [3, 4, 5, 6])` => `[1, 3, 2, 4, 5, 6]`
+ * @param left Array to start alternately merging from.
+ * @param right Second array to merge.
+ * @returns Zipped array.
+ */
+export function zip<T>(left: T[], right: T[]): T[] {
+  const longerArr = left.length > right.length ? left : right;
+  return longerArr.reduce((zipped, _, i) => {
+    const currentZipped: T[] = [];
+    if (left.length > i) {
+      currentZipped.push(left[i]);
+    }
+    if (right.length > i) {
+      currentZipped.push(right[i]);
+    }
+    return [...zipped, ...currentZipped];
+  }, []);
+}
+
+/**
+ * Split an array into two based on a condition.
+ * @param arr Array to partition
+ * @param condition Function to determine to where to put each item.
+ * @returns A two dimensional array containting two arrays, where the first one includes all items where the given condition was met and the second one includes all items where it was not met.
+ */
+export function partition<T>(
+  arr: T[],
+  condition: (item: T) => boolean
+): [T[], T[]] {
+  return arr.reduce(
+    ([conditionTrue, conditionFalse]: [T[], T[]], item) =>
+      condition(item)
+        ? [[...conditionTrue, item], conditionFalse]
+        : [conditionTrue, [...conditionFalse, item]],
+    [[], []]
+  );
+}

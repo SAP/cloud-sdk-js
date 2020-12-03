@@ -5,7 +5,9 @@ import {
   last,
   first,
   splitInChunks,
-  variadicArgumentToArray
+  variadicArgumentToArray,
+  zip,
+  partition
 } from './array';
 
 describe('array', () => {
@@ -118,5 +120,45 @@ describe('array', () => {
         [7]
       ]);
     });
+  });
+});
+
+describe('zip', () => {
+  it('zips two arrays where left is longer than right', () => {
+    expect(zip([1, 2, 3, 4], [5, 6])).toEqual([1, 5, 2, 6, 3, 4]);
+  });
+
+  it('zips two arrays where right is longer than left', () => {
+    expect(zip([1, 2], [3, 4, 5, 6])).toEqual([1, 3, 2, 4, 5, 6]);
+  });
+
+  it('zips two arrays when the second is empty', () => {
+    expect(zip(['test', 'test'], [])).toEqual(['test', 'test']);
+  });
+
+  it('zips two arrays of the same length', () => {
+    expect(zip([1, 3], [2, 4])).toEqual([1, 2, 3, 4]);
+  });
+
+  it('zips falsy values', () => {
+    expect(zip([0, null, false], [undefined])).toEqual([
+      0,
+      undefined,
+      null,
+      false
+    ]);
+  });
+});
+
+describe('partition', () => {
+  it('partitions empty array', () => {
+    expect(partition([], () => false)).toStrictEqual([[], []]);
+  });
+
+  it('partitions array based on value', () => {
+    expect(partition([true, false, false, true], i => i)).toStrictEqual([
+      [true, true],
+      [false, false]
+    ]);
   });
 });

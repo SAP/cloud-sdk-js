@@ -3,16 +3,13 @@
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import execa from 'execa';
+import execa = require('execa');
 import Command from '@oclif/command';
 import { flags } from '@oclif/parser';
 import cli from 'cli-ux';
-import { generateRest } from '../generator';
+import { generate } from '../generator';
 
-const logger = createLogger({
-  level: 'info',
-  messageContext: 'rest-generator-cli'
-});
+const logger = createLogger('rest-generator');
 
 export interface GeneratorOptions {
   inputDir: string;
@@ -24,6 +21,7 @@ export class GenerateRestClient extends Command {
   static description =
     'Generates a Rest client from an openApi service file definition. For SAP solutions, you can find these definitions at https://api.sap.com/.';
 
+  // TODO: These examples are wrong, but this should be a single command api anyways
   static examples = [
     '$ generate-rest-client generate-rest-client -i directoryWithOpenApiFiles -o outputDirectory',
     '$ generate-rest-client generate-rest-client --help'
@@ -61,7 +59,7 @@ export class GenerateRestClient extends Command {
     try {
       const parsed = this.parse(GenerateRestClient);
       await checkJavaPresent();
-      await generateRest(parsed.flags);
+      await generate(parsed.flags);
     } catch (e) {
       logger.error(e.message);
       return cli.exit(1);
@@ -72,7 +70,8 @@ export class GenerateRestClient extends Command {
 /*
 The openapi generator requires a java runtime. In order to get a proper message to the user, we check this here.
  */
-async function checkJavaPresent() {
+async function checkJavaPresent(): Promise<void> {
+  // TODO: Improve the return values here.
   try {
     const response = await execa('java', ['-version']);
     if (response.exitCode !== 0 || !response.stderr.includes('version')) {

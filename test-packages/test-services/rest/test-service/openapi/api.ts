@@ -14,6 +14,5 @@
 
 
 
-export * from './api/some-tag-api';
-export * from './api/test-service-api';
+export * from './api/default-api';
 

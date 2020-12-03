@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
-import { generate } from '../packages/generator/src';
+import { generate as generateOdata } from '../packages/generator/src';
+import { generateClients as generateOpenApi } from '../packages/rest-generator/src';
 import { ODataVersion } from '../packages/util/src';
 
 type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
@@ -37,7 +38,7 @@ const generatorConfig = {
 };
 
 function generateTestServicesPackage(outputDir: string, version: ODataVersion) {
-  generate({
+  generateOdata({
     ...generatorConfig,
     inputDir: path.join(serviceSpecsDir, version),
     outputDir: `${outputDir}/${version}`,
@@ -50,7 +51,7 @@ async function generateTestServicesWithLocalCoreModules(
   version: ODataVersion
 ) {
   const outputDir = path.resolve(outputDirBase, version);
-  await generate({
+  await generateOdata({
     ...generatorConfig,
     inputDir: path.join(serviceSpecsDir, version),
     outputDir
@@ -104,28 +105,40 @@ async function generateTestServicesWithLocalCoreModules(
 }
 
 const arg = process.argv[2];
-if (arg === 'v2' || arg === 'all') {
+if (arg === 'v2' || arg === 'odata' || arg === 'all') {
   generateTestServicesPackage(packageOutputDir, 'v2');
   generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
 }
 
-if (arg === 'v4' || arg === 'all') {
+if (arg === 'v4' || arg === 'odata' || arg === 'all') {
   generateTestServicesPackage(packageOutputDir, 'v4');
   generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
 }
 
 if (arg === 'e2e' || arg === 'all') {
-  generate({
+  generateOdata({
     ...generatorConfig,
-    inputDir: path.join('test-resources', 'odata-service-specs-e2e', 'v4'),
+    inputDir: path.resolve('test-resources', 'odata-service-specs-e2e', 'v4'),
     outputDir: path.resolve('test-packages', 'test-services-e2e', 'v4'),
     generateJs: true
   });
 
-  generate({
+  generateOdata({
     ...generatorConfig,
-    inputDir: path.join('test-resources', 'odata-service-specs-e2e', 'TripPin'),
+    inputDir: path.resolve(
+      'test-resources',
+      'odata-service-specs-e2e',
+      'TripPin'
+    ),
     outputDir: path.resolve('test-packages', 'test-services-e2e', 'TripPin'),
     generateJs: true
+  });
+}
+
+if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
+  generateOpenApi({
+    inputDir: path.resolve('test-resources', 'rest-service-specs'),
+    outputDir: path.resolve('test-packages', 'test-services', 'rest'),
+    clearOutputDir: true
   });
 }

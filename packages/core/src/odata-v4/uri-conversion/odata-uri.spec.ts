@@ -15,7 +15,7 @@ import { oDataUriV4 } from './odata-uri';
 
 const { getFilter } = oDataUriV4;
 
-describe('get filters', () => {
+describe('getFilter', () => {
   it('for simple filters', () => {
     expect(getFilter(testFilterStringV4.filter, TestEntity).filter).toBe(
       `${testFilterString.odataStr}`

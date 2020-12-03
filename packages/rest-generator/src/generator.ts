@@ -21,7 +21,7 @@ const logger = createLogger('rest-generator');
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
   if (options.clearOutputDir) {
-    rmdir(options.outputDir, { recursive: true });
+    await rmdir(options.outputDir, { recursive: true });
   }
 
   // TODO: should be recursive

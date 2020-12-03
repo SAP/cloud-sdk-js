@@ -51,6 +51,7 @@
     "voca": "^1.4.0"
   },
   "devDependencies": {
+    "@sap-cloud-sdk/test-util": "^1.32.1",
     "@sinonjs/fake-timers": "^6.0.1",
     "@types/sinonjs__fake-timers": "^6.0.0",
     "nock": "^13.0.3"

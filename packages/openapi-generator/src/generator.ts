@@ -11,7 +11,7 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 
 const { readdir, readFile, writeFile, rmdir, mkdir } = promises;
-const logger = createLogger('rest-generator');
+const logger = createLogger('openapi-generator');
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.

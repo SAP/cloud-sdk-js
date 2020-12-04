@@ -1,8 +1,8 @@
-## REST Generator
+## OpenApi Client Generator
 
 This is currently not release ready. excluded in `mail.ts`.
 
-The generator wraps only the openapi-generator. 
+The generator wraps only the openapi-generator.
 This is a flexible tool using many commandline flags and templates for easy adjustment.
 <br>[Command line arguments](https://github.com/OpenAPITools/openapi-generator#3---usage)
 <br>[Repo For mustache files](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-axios)
@@ -12,13 +12,13 @@ In the wrapping `generator-cli` we currently only expose `inputDir` and `outputD
 
 ### Things we have adjusted to the OpenApi Generator
 - Since the SAP graph definitions were lacking any tags we added a tag with the service name in camel case to each path of the service.
-- The method singature of the constructor was changed to take the accesstoken or basic for auth  and URL. 
+- The method singature of the constructor was changed to take the accesstoken or basic for auth  and URL.
   This was done by changing the `templates/baseApi.mustache` to achieve that.
 
 ### Usage
 
 To run the generator use:
- 
+
  ```shell script
  ts-node `src/generator-cli.ts` -i <FolderContainingOpenApiDefinitions> -o <OutputDirectory>
 ```

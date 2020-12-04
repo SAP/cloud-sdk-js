@@ -9,7 +9,7 @@ import { flags } from '@oclif/parser';
 import cli from 'cli-ux';
 import { generate } from '../generator';
 
-const logger = createLogger('rest-generator');
+const logger = createLogger('openapi-generator');
 
 export interface GeneratorOptions {
   inputDir: string;

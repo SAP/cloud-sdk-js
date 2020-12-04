@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 
-const logger = createLogger('rest-generator');
+const logger = createLogger('openapi-generator');
 
 /**
  * Type names based on potential types from the OpenApi specification.

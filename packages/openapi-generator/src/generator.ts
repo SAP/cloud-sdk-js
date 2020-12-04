@@ -15,7 +15,7 @@ const logger = createLogger('openapi-generator');
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Main entry point for REST client generation.
+ * Main entry point for OpenApi client generation.
  * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
  * @param options Options to configure generation.
  */

@@ -1,14 +1,14 @@
 import {
   TestEntity,
   TestServiceApi
-} from '@sap-cloud-sdk/test-services/rest/test-service';
+} from '@sap-cloud-sdk/test-services/openapi/test-service';
 import { destination } from './test-util';
 
 // TODO: How do I handle paths in rest requests?
 // TODO: Transpilation needed + tsconfig needs dom typings
 // TODO: Response is never "parsed"
-const restDestination = { ...destination, url: destination.url + 'rest' };
-describe('rest request builder', () => {
+const restDestination = { ...destination, url: destination.url + 'openapi' };
+describe('openapi request builder', () => {
   it('executes getAll request', async () => {
     const request = TestServiceApi.getAllEntities();
     expect(

@@ -5,17 +5,17 @@ import { resolve } from 'path';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { OpenAPIV3 } from 'openapi-types';
-import { GeneratorOptions } from './commands/generate-rest-client';
+import { GeneratorOptions } from './options';
 import { apiFile, indexFile, createFile } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 
 const { readdir, readFile, writeFile, rmdir, mkdir } = promises;
-const logger = createLogger('rest-generator');
+const logger = createLogger('openapi-generator');
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Main entry point for REST client generation.
+ * Main entry point for OpenApi client generation.
  * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
  * @param options Options to configure generation.
  */

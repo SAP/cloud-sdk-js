@@ -7,7 +7,7 @@ describe('getType', () => {
   });
 
   it('logs warning for unknown values and returns any', () => {
-    const logger = createLogger('rest-generator');
+    const logger = createLogger('openapi-generator');
     spyOn(logger, 'warn');
     expect(getType('unknown')).toEqual('any');
     expect(logger.warn).toHaveBeenCalledWith(

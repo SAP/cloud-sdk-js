@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
 const { createCapApp } = require('./cap');
-const { createRestApp } = require('./rest');
+const { createOpenApiApp } = require('./openapi');
 
 async function startServer() {
   const app = express();
   const odataApp = createCapApp();
-  const restApp = await createRestApp();
+  const restApp = await createOpenApiApp();
 
   app.use('/odata', odataApp);
-  app.use('/rest', restApp);
+  app.use('/openapi', restApp);
 
   app.listen(4004, () => {
     console.info('listening at http://localhost:4004');

@@ -1,7 +1,7 @@
 {
-  "name": "@sap-cloud-sdk/rest-generator",
+  "name": "@sap-cloud-sdk/openapi-generator",
   "version": "1.32.1",
-  "description": "SAP Cloud SDK for JavaScript REST api generator",
+  "description": "SAP Cloud SDK for JavaScript OpenApi client generator",
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
   "keywords": [
@@ -15,7 +15,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "sap-cloud-sdk-rest": "./bin/run"
+    "generate-openapi-client": "./bin/run"
   },
   "publishConfig": {
     "access": "public"
@@ -23,6 +23,21 @@
   "files": [
     "dist"
   ],
+  "oclif": {
+    "bin": "generate-openapi-client",
+    "warn-if-update-available": {
+      "timeoutInDays": 7
+    },
+    "macos": {
+      "identifier": "com.sap.generate-openapi-client"
+    },
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-not-found",
+      "@oclif/plugin-warn-if-update-available"
+    ]
+  },
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
@@ -31,22 +46,6 @@
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
     "check:dependencies": "depcheck . --ignore-bin-package=true --ignores=@oclif/plugin-*"
-  },
-  "oclif": {
-    "commands": "./dist/commands",
-    "bin": "sap-cloud-sdk-rest",
-    "warn-if-update-available": {
-      "timeoutInDays": 7
-    },
-    "macos": {
-      "identifier": "com.sap.sap-cloud-sdk-rest"
-    },
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-autocomplete",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-warn-if-update-available"
-    ]
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
@@ -61,10 +60,10 @@
     "@sap-cloud-sdk/util": "^1.32.1",
     "cli-ux": "^5.4.5",
     "execa": "^4.1.0",
-    "openapi-types": "^7.0.1",
-    "typescript": "~4.1.2"
+    "openapi-types": "^7.0.1"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.22.2"
+    "@oclif/dev-cli": "^1.22.2",
+    "typescript": "~4.1.2"
   }
 }

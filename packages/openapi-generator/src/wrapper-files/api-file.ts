@@ -10,7 +10,7 @@ import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
 export function apiFile(openApiDocument: OpenApiDocument): string {
   const requestBodyTypes = getRequestBodyTypes(openApiDocument);
   return codeBlock`
-import { RestRequestBuilder } from '@sap-cloud-sdk/core';
+import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
 ${
   requestBodyTypes
@@ -69,7 +69,7 @@ function getOperation(operation: OpenApiOperation): string {
   return codeBlock`
 ${operation.operationName}: (${apiFunctionSignatureParams.join(
     ', '
-  )}) => new RestRequestBuilder<DefaultApi, '${operation.operationName}'>(
+  )}) => new OpenApiRequestBuilder<DefaultApi, '${operation.operationName}'>(
   ${requestBuilderParams.join(',\n')}
 )`;
 }

@@ -2,5 +2,5 @@
 const commonConfig = require('../../test-resources/jest.common.config');
 module.exports = {
   ...commonConfig,
-  displayName: 'rest-generator'
+  displayName: 'openapi-generator'
 };

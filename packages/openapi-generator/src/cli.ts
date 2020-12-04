@@ -7,49 +7,41 @@ import execa = require('execa');
 import Command from '@oclif/command';
 import { flags } from '@oclif/parser';
 import cli from 'cli-ux';
-import { generate } from '../generator';
+import { generate } from './generator';
 
-const logger = createLogger('rest-generator');
+const logger = createLogger('openapi-generator');
 
-export interface GeneratorOptions {
-  inputDir: string;
-  outputDir: string;
-  clearOutputDir?: boolean;
-}
-
-export class GenerateRestClient extends Command {
+export = class GenerateOpenApiClient extends Command {
   static description =
-    'Generates a Rest client from an openApi service file definition. For SAP solutions, you can find these definitions at https://api.sap.com/.';
+    'Generate an OpenApi client using the connectivity features of the SAP Cloud SDK for JavaScript.';
 
-  // TODO: These examples are wrong, but this should be a single command api anyways
   static examples = [
-    '$ generate-rest-client generate-rest-client -i directoryWithOpenApiFiles -o outputDirectory',
-    '$ generate-rest-client generate-rest-client --help'
+    '$ generate-openapi-client -i directoryWithOpenApiFiles -o outputDirectory',
+    '$ generate-openapi-client --help'
   ];
 
   static version = JSON.parse(
-    readFileSync(resolve(__dirname, '../../package.json'), { encoding: 'utf8' })
+    readFileSync(resolve(__dirname, '../package.json'), { encoding: 'utf8' })
   ).version;
 
   static flags = {
     inputDir: flags.string({
       name: 'inputDir',
       char: 'i',
-      description: 'Input directory for the openApi service definitions.',
+      description: 'Input directory for the OpenApi service definitions.',
       parse: input => resolve(input),
       required: true
     }),
     outputDir: flags.string({
       name: 'outputDir',
       char: 'o',
-      description: 'Output directory for the generated rest client.',
+      description: 'Output directory for the generated OpenApi client.',
       parse: input => resolve(input),
       required: true
     }),
     clearOutputDir: flags.boolean({
       name: 'clearOutputDir',
-      char: 'c',
-      description: 'Output directory for the generated rest client.',
+      description: 'Remove all files in the ouput directory before generation.',
       default: false,
       required: false
     })
@@ -57,7 +49,7 @@ export class GenerateRestClient extends Command {
 
   async run() {
     try {
-      const parsed = this.parse(GenerateRestClient);
+      const parsed = this.parse(GenerateOpenApiClient);
       await checkJavaPresent();
       await generate(parsed.flags);
     } catch (e) {
@@ -65,7 +57,7 @@ export class GenerateRestClient extends Command {
       return cli.exit(1);
     }
   }
-}
+};
 
 /*
 The openapi generator requires a java runtime. In order to get a proper message to the user, we check this here.
@@ -83,7 +75,7 @@ async function checkJavaPresent(): Promise<void> {
     return Promise.resolve();
   } catch (err) {
     logger.error(
-      `Error in checking the java version. Is Java installed? This is mandatory for the rest client generation. ${err.message}`
+      `Error in checking the java version. Is Java installed? This is mandatory for the OpenApi client generation. ${err.message}`
     );
     return Promise.reject();
   }

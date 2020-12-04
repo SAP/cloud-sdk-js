@@ -4,7 +4,7 @@ import { parseRequestBody } from './request-body';
 
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
-    const logger = createLogger('rest-generator');
+    const logger = createLogger('openapi-generator');
     spyOn(logger, 'warn');
     expect(parseRequestBody(undefined, await createRefs())).toBeUndefined();
     expect(logger.warn).not.toHaveBeenCalled();
@@ -58,7 +58,7 @@ describe('getRequestBody', () => {
   });
 
   it('logs warning for inline schema', async () => {
-    const logger = createLogger('rest-generator');
+    const logger = createLogger('openapi-generator');
     spyOn(logger, 'warn');
 
     expect(

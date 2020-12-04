@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`api-file creates api file content for operation with no parameters or request body 1`] = `
-"import { RestRequestBuilder } from '@sap-cloud-sdk/core';
+"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
 
 
 export const TestServiceApi = {
-  getEntity: () => new RestRequestBuilder<DefaultApi, 'getEntity'>(
+  getEntity: () => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
     DefaultApi,
     'getEntity'
   )
@@ -14,17 +14,17 @@ export const TestServiceApi = {
 `;
 
 exports[`api-file creates api file content for operation with request body 1`] = `
-"import { RestRequestBuilder } from '@sap-cloud-sdk/core';
+"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
 import { Body } from './openapi/model';
 
 export const TestServiceApi = {
-  createEntity: (body: Body) => new RestRequestBuilder<DefaultApi, 'createEntity'>(
+  createEntity: (body: Body) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
     DefaultApi,
     'createEntity',
     body
   ),
-  updateEntity: (id: string, body: Body) => new RestRequestBuilder<DefaultApi, 'updateEntity'>(
+  updateEntity: (id: string, body: Body) => new OpenApiRequestBuilder<DefaultApi, 'updateEntity'>(
     DefaultApi,
     'updateEntity',
     id,
@@ -34,18 +34,18 @@ export const TestServiceApi = {
 `;
 
 exports[`api-file creates api file content for operations with parameters and no request bodies 1`] = `
-"import { RestRequestBuilder } from '@sap-cloud-sdk/core';
+"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
 
 
 export const TestServiceApi = {
-  getEntity: (id: string, limit?: number) => new RestRequestBuilder<DefaultApi, 'getEntity'>(
+  getEntity: (id: string, limit?: number) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
     DefaultApi,
     'getEntity',
     id,
     limit
   ),
-  deleteEntity: (id: string) => new RestRequestBuilder<DefaultApi, 'deleteEntity'>(
+  deleteEntity: (id: string) => new OpenApiRequestBuilder<DefaultApi, 'deleteEntity'>(
     DefaultApi,
     'deleteEntity',
     id

@@ -4,7 +4,7 @@ import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenApiRequestBody } from '../openapi-types';
 import { isReferenceObject, parseTypeName, resolveObject } from './refs';
 
-const logger = createLogger('rest-generator');
+const logger = createLogger('openapi-generator');
 
 /**
  * Parse the request body.

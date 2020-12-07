@@ -105,7 +105,7 @@ describe('authentication types', () => {
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
 
-    it('should use provider token first instead of the userJwt when SystemUser exists in destination', async () => {
+    it('should use provider client credentials token for SystemUser exists in provider destination', async () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
@@ -134,6 +134,41 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination(destinationName, {
         cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+
+    it('should use subscriber client credentials token for SystemUser exists in subscriber destination', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const samlDestinationsWithSystemUser = { ...oauthMultipleResponse[0] };
+      // Insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
+      samlDestinationsWithSystemUser['SystemUser'] = 'defined';
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(
+          nock,
+          [samlDestinationsWithSystemUser],
+          200,
+          subscriberServiceToken
+        ),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSingleDestinationCall(
+          nock,
+          oauthSingleResponse,
+          200,
+          destinationName,
+          subscriberServiceToken
+        )
+      ];
+
+      const expected = parseDestination(oauthSingleResponse);
+      const actual = await getDestination(destinationName, {
+        cacheVerificationKeys: false,
+        userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));

@@ -50,6 +50,32 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "$dollarParameter",
+            "in": "query",
+            "description": "A parameter that contains $",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 50,
+              "minimum": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "prefix.SuffixParameter",
+            "in": "query",
+            "description": "A parameter that contains . in the middle",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 50,
+              "minimum": 0,
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -79,7 +105,7 @@
         "description": "Create entity",
         "operationId": "createEntity",
         "requestBody": {
-          "description": "Enitity to create",
+          "description": "Entity to create",
           "content": {
             "application/json": {
               "schema": {

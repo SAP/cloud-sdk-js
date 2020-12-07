@@ -11,7 +11,7 @@ import { resolveObject } from './refs';
  * @param pattern The url pattern, i. e. the key in the original operation definition object.
  * @param method HTTP method for this operation.
  * @param operation The original operation definition.
- * @param refs List of crossreferences that can occur in the document.
+ * @param refs List of cross references that can occur in the document.
  * @returns The parsed operation.
  */
 export function parseOperation(
@@ -38,7 +38,7 @@ export function parseOperation(
 /**
  * Parse parameters of an operation.
  * @param operation The original operation definition.
- * @param refs List of crossreferences that can occur in the document.
+ * @param refs List of cross references that can occur in the document.
  * @returns A list of parsed parameters.
  */
 export function parseParameters(
@@ -46,12 +46,13 @@ export function parseParameters(
   refs: $Refs
 ): OpenApiParameter[] {
   // TODO: What if this is a reference? What does OpenApi do?
-  // TODO: What about oneof and other operations?
+  // TODO: What about one of and other operations?
   return (
     operation.parameters
       ?.map(param => resolveObject(param, refs))
       .map(param => ({
         ...param,
+        name: camelCase(param.name),
         type: getType(resolveObject(param.schema, refs)?.type?.toString())
       })) || []
   );

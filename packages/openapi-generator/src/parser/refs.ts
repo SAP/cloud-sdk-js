@@ -3,7 +3,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
 
 /**
- * Typeguard to check wheter an object is of type `OpenAPIV3.ReferenceObject`.
+ * Type guard to check whether an object is of type `OpenAPIV3.ReferenceObject`.
  * @param obj Object to check.
  * @returns True if the object is a reference object, false otherwise.
  */

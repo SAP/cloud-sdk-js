@@ -122,6 +122,7 @@ describe('authentication types', () => {
           providerServiceToken
         ),
         mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+        // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
         mockSingleDestinationCall(
           nock,
           oauthSingleResponse,
@@ -156,6 +157,7 @@ describe('authentication types', () => {
           subscriberServiceToken
         ),
         mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
         mockSingleDestinationCall(
           nock,
           oauthSingleResponse,

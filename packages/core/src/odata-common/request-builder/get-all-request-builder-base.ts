@@ -12,16 +12,23 @@ import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
+import { EdmTypeMappingAll } from '../payload-value-converter';
+import { DataTimeDefault, DateTime } from '../../temporal-deserializers';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
+export abstract class GetAllRequestBuilderBase<
+    EntityT extends EntityBase,
+    DateTimeT extends DateTime = DataTimeDefault
+  >
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
+  dateTimeMiddleware: DateTime;
+  customDeserializer?: Partial<EdmTypeMappingAll>;
 
   /**
    * Creates an instance of GetAllRequestBuilder.
@@ -111,13 +118,14 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT[]> {
+    this.entityDeserializer.customDeserializer = this.customDeserializer;
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>
         this.dataAccessor
           .getCollectionResult(response.data)
           .map(json =>
-            this.entityDeserializer.deserializeEntity(
+            this.entityDeserializer.deserializeEntityCustomized(
               json,
               this._entityConstructor,
               response.headers

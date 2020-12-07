@@ -15,15 +15,23 @@ import { EdmTypeV4 } from './edm-types';
  */
 export function edmToTsV4<T extends EdmTypeV4>(
   value: any,
-  edmType: EdmTypeShared<'v4'>
+  edmType: EdmTypeShared<'v4'>,
+  customDeserializer?: Partial<EdmTypeMapping>
 ): EdmToPrimitiveV4<T> {
   if (value === null || typeof value === 'undefined') {
     return value;
   }
-  if (deserializers[edmType]) {
-    return deserializers[edmType](value);
+  const customizeDeserializers = getDeserializers(customDeserializer);
+  if (customizeDeserializers[edmType]) {
+    return customizeDeserializers[edmType](value);
   }
   return value;
+}
+
+function getDeserializers(
+  customDeserializer?: Partial<EdmTypeMapping>
+): EdmTypeMapping {
+  return { ...deserializers, ...customDeserializer };
 }
 
 /**
@@ -42,6 +50,8 @@ export function tsToEdmV4(value: any, edmType: EdmTypeShared<'v4'>): any {
 type EdmTypeMapping = {
   [key in EdmTypeV4]: (value: any) => any;
 };
+
+export { EdmTypeMapping as EdmTypeMappingV4 };
 
 function edmDateToMoment(date: string): moment.Moment {
   const parsed = moment.utc(date, 'YYYY-MM-DD', true);
@@ -138,7 +148,7 @@ export type EdmToPrimitiveV4<T extends EdmTypeV4> = T extends
   ? Time
   : any;
 
-const deserializers: EdmTypeMapping = {
+export const deserializers: EdmTypeMapping = {
   ...deserializersCommon,
   'Edm.Date': edmDateToMoment,
   'Edm.DateTimeOffset': edmDateTimeOffsetToMoment,

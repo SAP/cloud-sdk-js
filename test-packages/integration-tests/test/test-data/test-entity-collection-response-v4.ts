@@ -16,6 +16,8 @@ export const testEntityCollectionResponse = () => ({
       DoubleProperty: '432.5',
       FloatProperty: null,
       TimeProperty: 'PT11H43M43S',
+      DateProperty: '2020-05-19',
+      DurationProperty: 'P1D',
       DateTimeProperty: '/Date(1535932800000)/',
       DateTimeOffSetProperty: '1970-01-01T00:00:00.000Z',
       ByteProperty: null,

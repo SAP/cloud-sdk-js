@@ -14,11 +14,13 @@ import {
   isComplexTypeNameSpace,
   EdmTypeShared,
   isEdmType,
-  PropertyMetadata
+  PropertyMetadata, EdmTypeMappingAll
 } from '../odata-common';
 import { EdmToPrimitiveV2, EdmTypeV2 } from '../odata-v2';
 import { EdmToPrimitiveV4, EdmTypeV4 } from '../odata-v4';
 import { toPropertyFormat } from './name-converter';
+import { EdmTypeMappingV2} from '../odata-v2';
+import { EdmTypeMappingV4} from '../odata-v4';
 
 const logger = createLogger({
   package: 'core',
@@ -28,16 +30,34 @@ const logger = createLogger({
 /**
  * Interface representing the return type of the builder function [[entityDeserializer]]
  */
-export interface EntityDeserializer<EntityT extends EntityBase = any> {
-  deserializeEntity: (
+export class EntityDeserializer<EntityT extends EntityBase = any> {
+  customDeserializer?: Partial<EdmTypeMappingAll>;
+  constructor(
+    // TODO rename to defaultDeserializeEntity
+    public deserializeEntity: (
+      json: any,
+      entityConstructor: Constructable<EntityT>,
+      requestHeader?: any,
+      customDeserializer?: Partial<EdmTypeMappingAll>
+    ) => EntityT,
+    public deserializeComplexType: (
+      json: Record<string, any>,
+      complexType: ComplexTypeNamespace<any>
+    ) => any
+  ) {}
+  // TODO rename to deserializeEntity
+  deserializeEntityCustomized(
     json: any,
     entityConstructor: Constructable<EntityT>,
     requestHeader?: any
-  ) => EntityT;
-  deserializeComplexType: (
-    json: Record<string, any>,
-    complexType: ComplexTypeNamespace<any>
-  ) => any;
+  ): EntityT {
+    return this.deserializeEntity(
+      json,
+      entityConstructor,
+      requestHeader,
+      this.customDeserializer
+    );
+  }
 }
 
 type EdmToTsTypeV2<EdmT extends EdmTypeV2 = any> = (
@@ -46,7 +66,8 @@ type EdmToTsTypeV2<EdmT extends EdmTypeV2 = any> = (
 ) => EdmToPrimitiveV2<EdmT>;
 type EdmToTsTypeV4<EdmT extends EdmTypeV4 = any> = (
   value: any,
-  edmType: EdmTypeShared<'v4'>
+  edmType: EdmTypeShared<'v4'>,
+  customDeserializer?: Partial<EdmTypeMappingV4>
 ) => EdmToPrimitiveV4<EdmT>;
 type ExtractODataETagType = (json: Record<string, any>) => string | undefined;
 type ExtractDataFromOneToManyLinkType = (data: any) => any[];
@@ -77,7 +98,8 @@ export function entityDeserializer(
   function deserializeEntity<EntityT extends EntityBase, JsonT>(
     json: Partial<JsonT>,
     entityConstructor: Constructable<EntityT>,
-    requestHeader?: any
+    requestHeader?: any,
+    customDeserializer?: Partial<EdmTypeMappingAll>
   ): EntityT {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
     return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
@@ -85,7 +107,8 @@ export function entityDeserializer(
       .reduce((entity, staticField) => {
         entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
           json,
-          staticField
+          staticField,
+          customDeserializer
         );
         return entity;
       }, new entityConstructor())
@@ -96,10 +119,11 @@ export function entityDeserializer(
 
   function getFieldValue<EntityT extends EntityBase, JsonT>(
     json: Partial<JsonT>,
-    field: Field<EntityT> | Link<EntityT>
+    field: Field<EntityT> | Link<EntityT>,
+    customDeserializer?: Partial<EdmTypeMappingAll>
   ) {
     if (field instanceof EdmTypeField) {
-      return edmToTs(json[field._fieldName], field.edmType);
+      return edmToTs(json[field._fieldName], field.edmType, customDeserializer);
     }
     if (field instanceof Link) {
       return getLinkFromJson(json, field);
@@ -191,7 +215,7 @@ export function entityDeserializer(
         {}
       );
   }
-
+  // TODO fix this
   function deserializeComplexTypeProperty(
     propertyValue: any,
     propertyMetadata: PropertyMetadata
@@ -206,7 +230,7 @@ export function entityDeserializer(
 
     return edmToTs(propertyValue, propertyMetadata.type);
   }
-
+  // TODO fix this
   function deserializeComplexType(
     json: Record<string, any>,
     complexType: ComplexTypeNamespace<any>
@@ -229,7 +253,7 @@ export function entityDeserializer(
         ...property
       }));
   }
-
+  // TODO fix this
   function deserializeCollectionType<
     FieldT extends EdmTypeShared<'any'> | Record<string, any>
   >(json: any[], fieldType: FieldT) {
@@ -241,10 +265,7 @@ export function entityDeserializer(
     }
   }
 
-  return {
-    deserializeEntity,
-    deserializeComplexType
-  };
+  return new EntityDeserializer(deserializeEntity, deserializeComplexType);
 }
 
 export function extractEtagFromHeader(headers: any): string | undefined {

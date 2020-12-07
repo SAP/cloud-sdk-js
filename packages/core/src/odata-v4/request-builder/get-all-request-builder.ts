@@ -13,9 +13,14 @@ import {
   OneToManyLink
 } from '../../odata-common';
 import { oDataUriV4 } from '../uri-conversion';
+import { EdmTypeMappingV4 } from '../../odata-v4/payload-value-converter';
+import { DateTime } from '../../temporal-deserializers';
 import { responseDataAccessorV4 } from './response-data-accessor';
-export class GetAllRequestBuilderV4<EntityT extends EntityV4>
-  extends GetAllRequestBuilderBase<EntityT>
+export class GetAllRequestBuilderV4<
+    EntityT extends EntityV4<DateTimeT>,
+    DateTimeT extends DateTime
+  >
+  extends GetAllRequestBuilderBase<EntityT, DateTimeT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
 
@@ -24,7 +29,7 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
    *
    * @param entityConstructor - Constructor of the entity to create the request for
    */
-  constructor(entityConstructor: Constructable<EntityT>) {
+  constructor(entityConstructor: Constructable<EntityT>, dateTime?: DateTimeT) {
     super(
       entityConstructor,
       new ODataGetAllRequestConfig(entityConstructor, oDataUriV4),
@@ -55,5 +60,17 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
   ): this {
     this.requestConfig.filter = and(toFilterableList(expressions));
     return this;
+  }
+  // TODO make global config to avoid calling all the time
+  transformV3<
+    targetDateTimeT extends DateTime,
+    targetEntityT extends EntityV4<targetDateTimeT>
+  >(
+    dateTimeMiddleware: targetDateTimeT,
+    entityCons: Constructable<targetEntityT>
+  ): GetAllRequestBuilderV4<targetEntityT, targetDateTimeT> {
+    this.dateTimeMiddleware = dateTimeMiddleware;
+
+    return new GetAllRequestBuilderV4(entityCons, dateTimeMiddleware);
   }
 }

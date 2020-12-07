@@ -2,9 +2,11 @@
 
 import BigNumber from 'bignumber.js';
 import { identity } from '@sap-cloud-sdk/util';
-import { EdmTypeSameConverters } from '../odata-common';
+import { EdmTypeSameConverters, EdmTypeShared } from '../odata-common';
 
 type EdmTypeMapping = { [key in EdmTypeSameConverters]: (value: any) => any };
+
+export type EdmTypeMappingAll = { [key in EdmTypeShared<'any'>]: (value: any) => any };
 
 const toNumber = (value: any): number => Number(value);
 const toBigNumber = (value: any): BigNumber => new BigNumber(value);

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
-import { basicHeader } from '@sap-cloud-sdk/core';
+import { TestEntity as TestEntityTemporal } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service-temporal';
+import { basicHeader, dataTimeTemporal } from '@sap-cloud-sdk/core';
 import { privateKey } from '@sap-cloud-sdk/core/test/test-util/keys';
 import { mockCsrfTokenRequest } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response-v4';
@@ -51,9 +52,20 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder().getAll().execute(destination);
-
-    await expect(request).resolves.not.toThrow();
+    // const customizeDeserializer = temporalDeserializersNs.all;
+    // const testEntities = await TestEntityTemporal.requestBuilder()
+    //   .getAll()
+    //   .transform(customizeDeserializer)
+    //   .execute(destination);
+    // expect(testEntities[0]!.dateProperty!.toString()).toEqual('2020-05-19');
+    // expect(
+    //   testEntities[0]!.durationProperty!.total({ unit: 'millisecond' })
+    // ).toEqual(86400000);
+    //
+    //
+    // const tV3 = TestEntityTemporal.requestBuilder()
+    //   .getAll()
+    //   .transformV3(dataTimeTemporal);
   });
 
   it('should resolve for getByKey request', async () => {
@@ -75,7 +87,7 @@ describe('Request Builder', () => {
       })
       .reply(200, response);
 
-    const request = TestEntity.requestBuilder()
+    const request = await TestEntity.requestBuilder()
       .create(
         TestEntity.builder()
           .stringProperty('someProperty')

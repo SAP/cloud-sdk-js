@@ -10,6 +10,7 @@ import {
 } from '../odata-common';
 import { CollectionFilterFunction } from '../odata-common/filter/collection-filter-function';
 import { filterFunctions as filterFunctionsCommon } from '../odata-common/filter/filter-functions';
+import { DataTimeDefault, DateTime } from '../temporal-deserializers';
 import { EntityV4 } from './entity';
 import { filterFunctionV4 } from './filter-function';
 
@@ -21,7 +22,10 @@ import { filterFunctionV4 } from './filter-function';
  *
  * @returns The newly created filter function
  */
-export function contains<EntityT extends EntityV4>(
+export function contains<
+  EntityT extends EntityV4<DateTimeT>,
+  DateTimeT extends DateTime = DataTimeDefault
+>(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
@@ -34,7 +38,10 @@ export function contains<EntityT extends EntityV4>(
  * @param regex - The pattern to test against. This should be a regular expression as a string.
  * @returns The newly created filter function
  */
-export function matchesPattern<EntityT extends EntityV4>(
+export function matchesPattern<
+  EntityT extends EntityV4<DateTimeT>,
+  DateTimeT extends DateTime = DataTimeDefault
+>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   regex: string
 ): BooleanFilterFunction<EntityT> {
@@ -47,9 +54,10 @@ export function matchesPattern<EntityT extends EntityV4>(
  * @param date - The date to get the fractional seconds for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function fractionalSeconds<EntityT extends EntityV4>(
-  date: moment.Moment | Field<EntityT>
-): NumberFilterFunction<EntityT> {
+export function fractionalSeconds<
+  EntityT extends EntityV4<DateTimeT>,
+  DateTimeT extends DateTime = DataTimeDefault
+>(date: moment.Moment | Field<EntityT>): NumberFilterFunction<EntityT> {
   return filterFunctionV4('fractionalseconds', 'decimal', date);
 }
 
@@ -58,9 +66,10 @@ export function fractionalSeconds<EntityT extends EntityV4>(
  * @param date - The date to get the offset minutes for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function totalOffsetMinutes<EntityT extends EntityV4>(
-  date: moment.Moment | Field<EntityT>
-): NumberFilterFunction<EntityT> {
+export function totalOffsetMinutes<
+  EntityT extends EntityV4<DateTimeT>,
+  DateTimeT extends DateTime = DataTimeDefault
+>(date: moment.Moment | Field<EntityT>): NumberFilterFunction<EntityT> {
   return filterFunctionV4('totaloffsetminutes', 'decimal', date);
 }
 
@@ -69,7 +78,8 @@ export function totalOffsetMinutes<EntityT extends EntityV4>(
  * @returns The newly created filter function
  */
 export function maxDateTime<
-  EntityT extends EntityV4
+  EntityT extends EntityV4<DateTimeT>,
+  DateTimeT extends DateTime = DataTimeDefault
 >(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('maxdatetime', 'decimal');
 }
@@ -79,7 +89,8 @@ export function maxDateTime<
  * @returns The newly created filter function
  */
 export function minDateTime<
-  EntityT extends EntityV4
+  EntityT extends EntityV4<DateTimeT>,
+  DateTimeT extends DateTime = DataTimeDefault
 >(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('mindatetime', 'decimal');
 }
@@ -88,7 +99,10 @@ export function minDateTime<
  * Build a filter function to get the current point in time. Evaluates to DateTimeOffset.
  * @returns The newly created filter function
  */
-export function now<EntityT extends EntityV4>(): NumberFilterFunction<EntityT> {
+export function now<
+  EntityT extends EntityV4<DateTimeT>,
+  DateTimeT extends DateTime = DataTimeDefault
+>(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('now', 'decimal');
 }
 
@@ -101,9 +115,10 @@ export function now<EntityT extends EntityV4>(): NumberFilterFunction<EntityT> {
  * @returns The newly created filter function
  */
 export function hasSubset<
-  EntityT extends EntityV4,
+  EntityT extends EntityV4<DateTimeT>,
   ParamT extends FilterFunctionPrimitiveParameterType,
-  ReturnT extends FieldType
+  ReturnT extends FieldType,
+  DateTimeT extends DateTime = DataTimeDefault
 >(
   subset:
     | ParamT[]
@@ -125,9 +140,10 @@ export function hasSubset<
  * @returns The newly created filter function
  */
 export function hasSubsequence<
-  EntityT extends EntityV4,
+  EntityT extends EntityV4<DateTimeT>,
   ParamT extends FilterFunctionPrimitiveParameterType,
-  ReturnT extends FieldType
+  ReturnT extends FieldType,
+  DateTimeT extends DateTime = DataTimeDefault
 >(
   subsequence:
     | ParamT[]

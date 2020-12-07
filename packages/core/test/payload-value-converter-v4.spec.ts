@@ -1,11 +1,26 @@
 import moment from 'moment';
+import { Temporal } from 'proposal-temporal';
 import { edmToTsV4, tsToEdmV4 } from '../src';
+import { temporalDeserializersNs } from '../src/temporal-deserializers';
+import PlainDate = Temporal.PlainDate;
+import Duration = Temporal.Duration;
 
 describe('edmToTsV4()', () => {
   it('should parse Edm.Date to moment', () => {
     const date = '2020-05-13';
     const actual = edmToTsV4(date, 'Edm.Date') as moment.Moment;
     expect(actual.format('YYYY-MM-DD')).toBe(date);
+  });
+
+  it('should parse Edm.Date to Temporal.PlainDate', () => {
+    const date = '2020-05-13';
+    const customizeDeserializer = { 'Edm.Date': temporalDeserializersNs.date };
+    const actual = edmToTsV4(
+      date,
+      'Edm.Date',
+      customizeDeserializer
+    ) as PlainDate;
+    expect(actual.toString()).toBe(date);
   });
 
   it('should throw on wrong formatted Edm.Date', () => {
@@ -78,6 +93,39 @@ describe('edmToTsV4()', () => {
     expected = 24 * 60 * 60 * 1000;
     actual = edmToTsV4(durationOnlyDays, 'Edm.Duration') as moment.Duration;
     expect(actual.asMilliseconds()).toBe(expected);
+  });
+
+  it('should parse Edm.Duration to Temporal.Duration', () => {
+    const customizeDeserializer = {
+      'Edm.Duration': temporalDeserializersNs.duration
+    };
+    const durationAll = '-P3DT6H32M49.987S';
+    let expected =
+      -1 * ((3 * 24 * 60 * 60 + 6 * 60 * 60 + 32 * 60 + 49) * 1000 + 987);
+    let actual = edmToTsV4(
+      durationAll,
+      'Edm.Duration',
+      customizeDeserializer
+    ) as Duration;
+    expect(actual.total({ unit: 'millisecond' })).toBe(expected);
+
+    const durationSomeDefaults = 'PT6H49S';
+    expected = (6 * 60 * 60 + 49) * 1000;
+    actual = edmToTsV4(
+      durationSomeDefaults,
+      'Edm.Duration',
+      customizeDeserializer
+    ) as Duration;
+    expect(actual.total({ unit: 'millisecond' })).toBe(expected);
+
+    const durationOnlyDays = 'P1D';
+    expected = 24 * 60 * 60 * 1000;
+    actual = edmToTsV4(
+      durationOnlyDays,
+      'Edm.Duration',
+      customizeDeserializer
+    ) as Duration;
+    expect(actual.total({ unit: 'millisecond' })).toBe(expected);
   });
 
   it('should throw on a wrongly formatted Edm.Duration', () => {

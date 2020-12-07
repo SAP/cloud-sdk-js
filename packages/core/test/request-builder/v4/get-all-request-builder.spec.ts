@@ -9,12 +9,14 @@ import {
   TestEntityLvl2MultiLink,
   TestEntityMultiLink
 } from '../../test-util/test-services/v4/test-service';
+import { TestEntity as TestEntityTemporal } from '../../test-util/test-services/v4/test-service-temporal';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks,
   createTestEntityV4
 } from '../../test-util/test-data';
+import { dataTimeTemporal } from '../../../src';
 
 describe('GetAllRequestBuilderV4', () => {
   let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
@@ -70,6 +72,21 @@ describe('GetAllRequestBuilderV4', () => {
         createTestEntityV4(testEntity1),
         createTestEntityV4(testEntity2)
       ]);
+    });
+
+    it('returns all entities Temporal', async () => {
+      // const req = await TestEntityTemporal.requestBuilder()
+      //   .getAll()
+      //   .transformV3(dataTimeTemporal, TestEntityTemporal)
+      //   .execute(defaultDestination);
+      //
+      // const d = req[0].durationProperty;
+
+      const req2 = await TestEntityTemporal.requestBuilder()
+        .getAllV2()
+        .transformV4(dataTimeTemporal)
+        .executeV4(defaultDestination);
+      const d2 = req2[0].durationProperty;
     });
 
     it('top(1) returns the first entity', async () => {

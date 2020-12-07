@@ -39,6 +39,7 @@ export function tsToEdmV2(value: any, edmType: EdmTypeShared<'v2'>): any {
 }
 
 type EdmTypeMapping = { [key in EdmTypeV2]: (value: any) => any };
+export { EdmTypeMapping as EdmTypeMappingV2 };
 
 const toTime = (value: string): Time => {
   const timeComponents = /PT(\d{1,2})H(\d{1,2})M(\d{1,2})S/.exec(value);

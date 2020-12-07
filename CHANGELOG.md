@@ -20,6 +20,7 @@
 ## New Functionality
 
 - [Generator] Support parsing of multiple schemas in the edmx service specification.
+- [Util] Add string formatting functions.
 
 ## Improvements
 

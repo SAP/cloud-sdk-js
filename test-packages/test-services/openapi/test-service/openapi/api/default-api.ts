@@ -19,6 +19,8 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
+import { SimpleTestEntity } from '../model';
+// @ts-ignore
 import { TestEntity } from '../model';
 /**
  * DefaultApi - axios parameter creator
@@ -191,6 +193,158 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} requiredPathItemQueryParam 
+         * @param {string} requiredPathItemPathParam 
+         * @param {string} requiredQueryParam 
+         * @param {string} [optionalQueryParam] 
+         * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+         * @param {SimpleTestEntity} [simpleTestEntity] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        testCaseGetRequiredParameters: async (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requiredPathItemQueryParam' is not null or undefined
+            if (requiredPathItemQueryParam === null || requiredPathItemQueryParam === undefined) {
+                throw new RequiredError('requiredPathItemQueryParam','Required parameter requiredPathItemQueryParam was null or undefined when calling testCaseGetRequiredParameters.');
+            }
+            // verify required parameter 'requiredPathItemPathParam' is not null or undefined
+            if (requiredPathItemPathParam === null || requiredPathItemPathParam === undefined) {
+                throw new RequiredError('requiredPathItemPathParam','Required parameter requiredPathItemPathParam was null or undefined when calling testCaseGetRequiredParameters.');
+            }
+            // verify required parameter 'requiredQueryParam' is not null or undefined
+            if (requiredQueryParam === null || requiredQueryParam === undefined) {
+                throw new RequiredError('requiredQueryParam','Required parameter requiredQueryParam was null or undefined when calling testCaseGetRequiredParameters.');
+            }
+            const localVarPath = `/test-cases/parameters/required-parameters/{requiredPathItemPathParam}`
+                .replace(`{${"requiredPathItemPathParam"}}`, encodeURIComponent(String(requiredPathItemPathParam)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (requiredPathItemQueryParam !== undefined) {
+                localVarQueryParameter['requiredPathItemQueryParam'] = requiredPathItemQueryParam;
+            }
+
+            if (optionalQueryParam !== undefined) {
+                localVarQueryParameter['optionalQueryParam'] = optionalQueryParam;
+            }
+
+            if (requiredQueryParam !== undefined) {
+                localVarQueryParameter['requiredQueryParam'] = requiredQueryParam;
+            }
+
+            if (optionalPathItemQueryParam !== undefined) {
+                localVarQueryParameter['optionalPathItemQueryParam'] = optionalPathItemQueryParam;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof simpleTestEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(simpleTestEntity !== undefined ? simpleTestEntity : {}) : (simpleTestEntity || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} requiredPathItemQueryParam 
+         * @param {string} requiredPathItemPathParam 
+         * @param {string} requiredQueryParam 
+         * @param {SimpleTestEntity} simpleTestEntity 
+         * @param {string} [optionalPathItemQueryParam] 
+         * @param {string} [optionalQueryParam] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        testCasePostRequiredParameters: async (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requiredPathItemQueryParam' is not null or undefined
+            if (requiredPathItemQueryParam === null || requiredPathItemQueryParam === undefined) {
+                throw new RequiredError('requiredPathItemQueryParam','Required parameter requiredPathItemQueryParam was null or undefined when calling testCasePostRequiredParameters.');
+            }
+            // verify required parameter 'requiredPathItemPathParam' is not null or undefined
+            if (requiredPathItemPathParam === null || requiredPathItemPathParam === undefined) {
+                throw new RequiredError('requiredPathItemPathParam','Required parameter requiredPathItemPathParam was null or undefined when calling testCasePostRequiredParameters.');
+            }
+            // verify required parameter 'requiredQueryParam' is not null or undefined
+            if (requiredQueryParam === null || requiredQueryParam === undefined) {
+                throw new RequiredError('requiredQueryParam','Required parameter requiredQueryParam was null or undefined when calling testCasePostRequiredParameters.');
+            }
+            // verify required parameter 'simpleTestEntity' is not null or undefined
+            if (simpleTestEntity === null || simpleTestEntity === undefined) {
+                throw new RequiredError('simpleTestEntity','Required parameter simpleTestEntity was null or undefined when calling testCasePostRequiredParameters.');
+            }
+            const localVarPath = `/test-cases/parameters/required-parameters/{requiredPathItemPathParam}`
+                .replace(`{${"requiredPathItemPathParam"}}`, encodeURIComponent(String(requiredPathItemPathParam)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (optionalPathItemQueryParam !== undefined) {
+                localVarQueryParameter['optionalPathItemQueryParam'] = optionalPathItemQueryParam;
+            }
+
+            if (requiredPathItemQueryParam !== undefined) {
+                localVarQueryParameter['requiredPathItemQueryParam'] = requiredPathItemQueryParam;
+            }
+
+            if (optionalQueryParam !== undefined) {
+                localVarQueryParameter['optionalQueryParam'] = optionalQueryParam;
+            }
+
+            if (requiredQueryParam !== undefined) {
+                localVarQueryParameter['requiredQueryParam'] = requiredQueryParam;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof simpleTestEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(simpleTestEntity !== undefined ? simpleTestEntity : {}) : (simpleTestEntity || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -256,6 +410,42 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} requiredPathItemQueryParam 
+         * @param {string} requiredPathItemPathParam 
+         * @param {string} requiredQueryParam 
+         * @param {string} [optionalQueryParam] 
+         * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+         * @param {SimpleTestEntity} [simpleTestEntity] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalQueryParam, optionalPathItemQueryParam, simpleTestEntity, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} requiredPathItemQueryParam 
+         * @param {string} requiredPathItemPathParam 
+         * @param {string} requiredQueryParam 
+         * @param {SimpleTestEntity} simpleTestEntity 
+         * @param {string} [optionalPathItemQueryParam] 
+         * @param {string} [optionalQueryParam] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async testCasePostRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).testCasePostRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, simpleTestEntity, optionalPathItemQueryParam, optionalQueryParam, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -304,6 +494,34 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getEntityByKey(entityId: string, options?: any): AxiosPromise<Array<TestEntity>> {
             return DefaultApiFp(configuration).getEntityByKey(entityId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} requiredPathItemQueryParam 
+         * @param {string} requiredPathItemPathParam 
+         * @param {string} requiredQueryParam 
+         * @param {string} [optionalQueryParam] 
+         * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+         * @param {SimpleTestEntity} [simpleTestEntity] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalQueryParam, optionalPathItemQueryParam, simpleTestEntity, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} requiredPathItemQueryParam 
+         * @param {string} requiredPathItemPathParam 
+         * @param {string} requiredQueryParam 
+         * @param {SimpleTestEntity} simpleTestEntity 
+         * @param {string} [optionalPathItemQueryParam] 
+         * @param {string} [optionalQueryParam] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        testCasePostRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).testCasePostRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, simpleTestEntity, optionalPathItemQueryParam, optionalQueryParam, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -361,5 +579,37 @@ export class DefaultApi extends BaseAPI {
      */
     public getEntityByKey(entityId: string, options?: any) {
         return DefaultApiFp(this.configuration).getEntityByKey(entityId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} requiredPathItemQueryParam 
+     * @param {string} requiredPathItemPathParam 
+     * @param {string} requiredQueryParam 
+     * @param {string} [optionalQueryParam] 
+     * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+     * @param {SimpleTestEntity} [simpleTestEntity] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options?: any) {
+        return DefaultApiFp(this.configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalQueryParam, optionalPathItemQueryParam, simpleTestEntity, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} requiredPathItemQueryParam 
+     * @param {string} requiredPathItemPathParam 
+     * @param {string} requiredQueryParam 
+     * @param {SimpleTestEntity} simpleTestEntity 
+     * @param {string} [optionalPathItemQueryParam] 
+     * @param {string} [optionalQueryParam] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public testCasePostRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string, options?: any) {
+        return DefaultApiFp(this.configuration).testCasePostRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, simpleTestEntity, optionalPathItemQueryParam, optionalQueryParam, options).then((request) => request(this.axios, this.basePath));
     }
 }

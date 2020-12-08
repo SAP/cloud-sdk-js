@@ -11,15 +11,15 @@ describe('api-file', () => {
           method: 'get',
           parameters: [
             {
+              in: 'query',
+              name: 'limit',
+              type: 'number'
+            },
+            {
               in: 'path',
               name: 'id',
               type: 'string',
               required: true
-            },
-            {
-              in: 'query',
-              name: 'limit',
-              type: 'number'
             }
           ],
           pattern: 'test/{id}'
@@ -90,6 +90,45 @@ describe('api-file', () => {
           operationName: 'getEntity',
           method: 'get',
           parameters: [],
+          pattern: 'test'
+        }
+      ],
+      serviceDirName: 'test-service'
+    };
+    expect(apiFile(openApiDocument)).toMatchSnapshot();
+  });
+
+  it('creates api file content for operation with differently ordered parameters', () => {
+    const openApiDocument: OpenApiDocument = {
+      apiName: 'TestServiceApi',
+      operations: [
+        {
+          operationName: 'getEntity',
+          method: 'post',
+          parameters: [
+            {
+              in: 'query',
+              name: 'optionalQueryParam',
+              type: 'number'
+            },
+            {
+              in: 'query',
+              name: 'requiredQueryParam',
+              type: 'number',
+              required: true
+            },
+            {
+              in: 'path',
+              name: 'requiredPathParam',
+              type: 'number',
+              required: true
+            }
+          ],
+          requestBody: {
+            parameterName: 'body',
+            parameterType: 'Body',
+            required: true
+          } as OpenApiRequestBody,
           pattern: 'test'
         }
       ],

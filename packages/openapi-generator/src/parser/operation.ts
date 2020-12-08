@@ -7,19 +7,20 @@ import { parseRequestBody } from './request-body';
 import { resolveObject } from './refs';
 
 /**
- * Parse one operation.
+ * Parse one operation for a path item and method.
  * @param pattern The url pattern, i. e. the key in the original operation definition object.
+ * @param pathItem The original path item definition.
  * @param method HTTP method for this operation.
- * @param operation The original operation definition.
  * @param refs List of crossreferences that can occur in the document.
  * @returns The parsed operation.
  */
 export function parseOperation(
   pattern: string,
+  pathItem: OpenAPIV3.PathItemObject,
   method: Method,
-  operation: OpenAPIV3.OperationObject,
   refs: $Refs
 ): OpenApiOperation {
+  const operation = getOperation(pathItem, method);
   // TODO: What does the OpenApi generator do in this case?
   const requestBody = parseRequestBody(operation.requestBody, refs);
   const parameters = parseParameters(operation, refs);
@@ -36,6 +37,29 @@ export function parseOperation(
 }
 
 /**
+ * Get the operation for the given method and merge path parameters with operation parameters.
+ * @param pathItem Path Item to get the operation from.
+ * @param method HTTP method to get the operation for.
+ * @returns The sanitized original operation.
+ */
+export function getOperation(
+  pathItem: OpenAPIV3.PathItemObject,
+  method: Method
+): OpenAPIV3.OperationObject {
+  const operation = pathItem[method];
+  if (!operation) {
+    throw new Error(
+      `Could not parse operation. Operation for method '${method}' does not exist.`
+    );
+  }
+  operation.parameters = [
+    ...(pathItem.parameters || []),
+    ...(operation.parameters || [])
+  ];
+  return operation;
+}
+
+/**
  * Parse parameters of an operation.
  * @param operation The original operation definition.
  * @param refs List of crossreferences that can occur in the document.
@@ -47,13 +71,29 @@ export function parseParameters(
 ): OpenApiParameter[] {
   // TODO: What if this is a reference? What does OpenApi do?
   // TODO: What about oneof and other operations?
-  return (
-    operation.parameters
-      ?.map(param => resolveObject(param, refs))
-      .map(param => ({
-        ...param,
-        type: getType(resolveObject(param.schema, refs)?.type?.toString())
-      })) || []
+  return filterDuplicates(
+    operation.parameters?.map(param => resolveObject(param, refs)) || []
+  ).map(param => ({
+    ...param,
+    type: getType(resolveObject(param.schema, refs)?.type?.toString())
+  }));
+}
+
+export function filterDuplicates(
+  parameters: OpenAPIV3.ParameterObject[]
+): OpenAPIV3.ParameterObject[] {
+  return parameters.reduce(
+    (params: OpenAPIV3.ParameterObject[], currentParam) => {
+      const duplicateIndex = params.findIndex(
+        param =>
+          param.name === currentParam.name && param.in === currentParam.in
+      );
+      if (duplicateIndex >= 0) {
+        params.splice(duplicateIndex, 1);
+      }
+      return [...params, currentParam];
+    },
+    []
   );
 }
 

@@ -1,4 +1,4 @@
-import { codeBlock, unique } from '@sap-cloud-sdk/util';
+import { codeBlock, partition, unique } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
 
 /**
@@ -54,16 +54,13 @@ function getOperations(openApiDocument: OpenApiDocument): string {
  * @returns The operation as a string.
  */
 function getOperation(operation: OpenApiOperation): string {
-  const parameters = getAllParameters(operation);
-
-  // TODO: The order of parameters should be changed if the parameters are required, so that required parameters come first
-  const apiFunctionSignatureParams = parameters.map(
-    param => `${param.name}${param.required ? '' : '?'}: ${param.type}`
-  );
+  const apiFunctionSignatureParams = getApiFunctionSignatureParams(
+    operation
+  ).map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`);
   const requestBuilderParams = [
     'DefaultApi',
     `'${operation.operationName}'`,
-    ...parameters.map(param => param.name)
+    ...getRequestBuilderParams(operation).map(param => param.name)
   ];
 
   return codeBlock`
@@ -80,17 +77,52 @@ interface Parameter {
   required?: boolean;
 }
 
-function getAllParameters(operation: OpenApiOperation): Parameter[] {
-  if (operation.requestBody) {
-    return [
-      ...operation.parameters,
-      {
-        name: operation.requestBody.parameterName,
-        type: operation.requestBody.parameterType,
-        required: operation.requestBody.required
-      }
-    ];
-  }
+function getApiFunctionSignatureParams(
+  operation: OpenApiOperation
+): Parameter[] {
+  // const parameters = operation.operationName //getAllParameters(operation);
+  const [required, optional] = partition(
+    operation.parameters,
+    param => !!param.required
+  );
 
-  return operation.parameters;
+  const [requiredPathParams, requiredQueryParams] = partition(
+    required,
+    param => param.in === 'path'
+  );
+
+  const [optionalPathParams, optionalQueryParams] = partition(
+    optional,
+    param => param.in === 'path'
+  );
+
+  return [
+    ...requiredPathParams,
+    ...getRequestBodyParams(operation),
+    ...requiredQueryParams,
+    ...optionalPathParams,
+    ...optionalQueryParams
+  ];
+}
+
+function getRequestBuilderParams(operation: OpenApiOperation): Parameter[] {
+  const parameters = [
+    ...operation.parameters,
+    ...getRequestBodyParams(operation)
+  ];
+
+  const [required, optional] = partition(parameters, param => !!param.required);
+  return [...required, ...optional];
+}
+
+function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
+  return operation.requestBody
+    ? [
+        {
+          name: operation.requestBody.parameterName,
+          type: operation.requestBody.parameterType,
+          required: operation.requestBody.required
+        }
+      ]
+    : [];
 }

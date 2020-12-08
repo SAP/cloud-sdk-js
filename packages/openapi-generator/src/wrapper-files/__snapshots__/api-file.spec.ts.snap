@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`api-file creates api file content for operation with differently ordered parameters 1`] = `
+"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+import { DefaultApi } from './openapi/api';
+import { Body } from './openapi/model';
+
+export const TestServiceApi = {
+  getEntity: (requiredPathParam: number, body: Body, requiredQueryParam: number, optionalQueryParam?: number) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
+    DefaultApi,
+    'getEntity',
+    requiredQueryParam,
+    requiredPathParam,
+    body,
+    optionalQueryParam
+  )
+};"
+`;
+
 exports[`api-file creates api file content for operation with no parameters or request body 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';

@@ -5,7 +5,7 @@
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
-import { TestEntity } from './openapi/model';
+import { TestEntity, SimpleTestEntity } from './openapi/model';
 
 export const TestServiceApi = {
   getAllEntities: (stringParameter?: string, integerParameter?: number) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
@@ -27,5 +27,25 @@ export const TestServiceApi = {
   countEntities: () => new OpenApiRequestBuilder<DefaultApi, 'countEntities'>(
     DefaultApi,
     'countEntities'
+  ),
+  testCaseGetRequiredParameters: (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity) => new OpenApiRequestBuilder<DefaultApi, 'testCaseGetRequiredParameters'>(
+    DefaultApi,
+    'testCaseGetRequiredParameters',
+    requiredPathItemQueryParam,
+    requiredPathItemPathParam,
+    requiredQueryParam,
+    optionalQueryParam,
+    optionalPathItemQueryParam,
+    simpleTestEntity
+  ),
+  testCasePostRequiredParameters: (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string) => new OpenApiRequestBuilder<DefaultApi, 'testCasePostRequiredParameters'>(
+    DefaultApi,
+    'testCasePostRequiredParameters',
+    requiredPathItemQueryParam,
+    requiredPathItemPathParam,
+    requiredQueryParam,
+    simpleTestEntity,
+    optionalPathItemQueryParam,
+    optionalQueryParam
   )
 };

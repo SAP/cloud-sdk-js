@@ -6,7 +6,7 @@ import {
   subscriberServiceToken
 } from '../../../../test/test-util/mocked-access-tokens';
 import { IsolationStrategy } from '../cache';
-import { decodeJwt } from '../jwt';
+import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
@@ -71,7 +71,7 @@ describe('DestinationServiceCache', () => {
       singleDest,
       200,
       singleDest.Name,
-      subscriberServiceToken,
+      wrapJwtInHeader(subscriberServiceToken).headers,
       destinationServiceUrl
     );
   });

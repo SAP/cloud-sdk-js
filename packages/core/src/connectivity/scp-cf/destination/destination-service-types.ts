@@ -242,6 +242,7 @@ export type AuthenticationType =
   | 'BasicAuthentication'
   | 'OAuth2SAMLBearerAssertion'
   | 'OAuth2ClientCredentials'
+  | 'OAuth2UserTokenExchange'
   | 'ClientCertificateAuthentication';
 
 /**

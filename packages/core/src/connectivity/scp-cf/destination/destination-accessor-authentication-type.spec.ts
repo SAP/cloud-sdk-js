@@ -24,13 +24,20 @@ import {
   certificateSingleResponse,
   destinationName,
   oauthMultipleResponse,
-  oauthSingleResponse
+  oauthSingleResponse,
+  oauthUserTokenExchangeMultipleResponse,
+  oauthUserTokenExchangeSingleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
+import { wrapJwtInHeader } from '../jwt';
 import { parseDestination } from './destination';
 import { getDestination } from './destination-accessor';
 import { destinationCache } from './destination-cache';
 import { getDestinationFromDestinationService } from './destination-from-service';
+import {
+  alwaysProvider,
+  alwaysSubscriber
+} from './destination-selection-strategies';
 
 describe('authentication types', () => {
   afterEach(() => {
@@ -58,7 +65,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          userApprovedSubscriberServiceToken
+          wrapJwtInHeader(userApprovedSubscriberServiceToken).headers
         )
       ];
 
@@ -89,7 +96,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          userApprovedProviderServiceToken
+          wrapJwtInHeader(userApprovedProviderServiceToken).headers
         )
       ];
 
@@ -126,7 +133,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          providerServiceToken
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 
@@ -161,13 +168,116 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          subscriberServiceToken
+          wrapJwtInHeader(subscriberServiceToken).headers
         )
       ];
 
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination(destinationName, {
         cacheVerificationKeys: false,
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+  });
+
+  describe('authentication type OAuth2UserTokenExchange', () => {
+    it('should use the userApprovedProviderServiceToken as auth header and no exchange header for provider destination and provider jwt', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthUserTokenExchangeMultipleResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthUserTokenExchangeSingleResponse,
+          200,
+          destinationName,
+          wrapJwtInHeader(userApprovedProviderServiceToken).headers
+        )
+      ];
+
+      const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
+      const actual = await getDestination(destinationName, {
+        userJwt: providerUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+
+    it('should use the provider access token as auth header and subscriber jwt as exchange header for provider destination and provider jwt', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthUserTokenExchangeMultipleResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthUserTokenExchangeSingleResponse,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(providerServiceToken).headers,
+            'X-user-token': subscriberUserJwt
+          }
+        )
+      ];
+
+      const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
+      const actual = await getDestination(destinationName, {
+        selectionStrategy: alwaysProvider,
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+
+    it('should use the subscriber access token as auth header and subscriber jwt as exchange header for provider destination and provider jwt', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthUserTokenExchangeMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthUserTokenExchangeSingleResponse,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(subscriberServiceToken).headers,
+            'X-user-token': subscriberUserJwt
+          }
+        )
+      ];
+
+      const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
+      const actual = await getDestination(destinationName, {
+        selectionStrategy: alwaysSubscriber,
         userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
@@ -195,7 +305,7 @@ describe('authentication types', () => {
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
-          subscriberServiceToken
+          wrapJwtInHeader(subscriberServiceToken).headers
         )
       ];
 
@@ -228,7 +338,7 @@ describe('authentication types', () => {
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
-          providerServiceToken
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 
@@ -308,7 +418,7 @@ describe('authentication types', () => {
         certificateSingleResponse,
         200,
         'ERNIE-UND-CERT',
-        subscriberServiceToken
+        wrapJwtInHeader(subscriberServiceToken).headers
       );
 
       const expected = parseDestination(certificateSingleResponse);

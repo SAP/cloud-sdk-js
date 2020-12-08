@@ -111,6 +111,23 @@ export function getService(service: string): Service | undefined {
 }
 
 /**
+ * Get destination service if one is present.
+ *
+ * @returns Destination service
+ * @throws Error in case no destination service is found in the VCAP variables
+ */
+export function getDestinationService() {
+  const destinationService = getService('destination');
+
+  if (!destinationService) {
+    throw Error(
+      `Failed to fetch destination "${this.name}"! No binding to a destination service found.`
+    );
+  }
+  return destinationService;
+}
+
+/**
  * 'VCAP_SERVICES' Getter from environment variables.
  * This function returns the VCAP_SERVICES as object or null if it is not defined (i.e. no services are bound to the application).
  *

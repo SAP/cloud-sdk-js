@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 /**
  * Type of the parameters of a given function
  *
@@ -24,6 +26,11 @@ export type FunctionReturnType<
 > = ApiT[FnT] extends (...args: any) => any
   ? UnPromisify<ReturnType<ApiT[FnT]>>
   : never;
+
+/**
+ * Unwrap the Axios response type.
+ */
+export type UnwrapAxiosResponse<T> = T extends AxiosResponse<infer U> ? U : T;
 
 /**
  * Get the type of the promised response, e. g. for `Promise<SomeType>` this gives you `SomeType`.

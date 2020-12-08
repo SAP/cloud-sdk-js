@@ -1,9 +1,11 @@
+import { AxiosResponse } from 'axios';
 import { Destination, DestinationNameAndJwt } from '../connectivity/scp-cf';
 import { buildAxiosRequestConfig } from '../http-client';
 import type {
   ConstructorType,
   FunctionReturnType,
-  ParametersType
+  ParametersType,
+  UnwrapAxiosResponse
 } from './types';
 
 /**
@@ -45,11 +47,11 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
 
   /**
    * Execute request.
-   * @param destination  Destination to execute the request against.
+   * @param destination Destination to execute the request against.
    * @param options Options to employ when fetching destinations.
-   * @returns A promise resolving to the requested return type.
+   * @returns A promise resolving to an AxiosResponse.
    */
-  async execute(
+  async executeRaw(
     destination: Destination | DestinationNameAndJwt
   ): Promise<FunctionReturnType<ApiT, FnT>> {
     const requestConfig = await buildAxiosRequestConfig(destination, {
@@ -64,7 +66,29 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
     }
 
     throw new Error(
-      `'${this.fn}' is not a function of ${this.apiConstructor.name}`
+      `Could not execute request. '${this.fn}' is not a function of ${this.apiConstructor.name}.`
     );
   }
+
+  /**
+   * Execute request.
+   * @param destination Destination to execute the request against.
+   * @param options Options to employ when fetching destinations.
+   * @returns A promise resolving to the requested return type.
+   */
+  async execute(
+    destination: Destination | DestinationNameAndJwt
+  ): Promise<UnwrapAxiosResponse<FunctionReturnType<ApiT, FnT>>> {
+    const response = await this.executeRaw(destination);
+    if (isAxiosResponse(response)) {
+      return response.data;
+    }
+    throw new Error(
+      'Could not execute request. Response was not an axios response.'
+    );
+  }
+}
+
+function isAxiosResponse(val: any): val is AxiosResponse {
+  return 'data' in val;
 }

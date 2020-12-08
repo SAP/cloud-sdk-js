@@ -46,8 +46,7 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
   }
 
   /**
-   * Execute request and get a raw AxiosResponse, including all information about the HTTP response.
-   * This especially comes in handy, when you need to access the headers or status code of the response.
+   * Execute request.
    * @param destination Destination to execute the request against.
    * @param options Options to employ when fetching destinations.
    * @returns A promise resolving to an AxiosResponse.
@@ -72,7 +71,7 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
   }
 
   /**
-   * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
+   * Execute request.
    * @param destination Destination to execute the request against.
    * @param options Options to employ when fetching destinations.
    * @returns A promise resolving to the requested return type.
@@ -85,7 +84,7 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
       return response.data;
     }
     throw new Error(
-      'Could not access response data. Response was not an axios response.'
+      'Could not execute request. Response was not an axios response.'
     );
   }
 }

@@ -1,12 +1,12 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
-const rawResponse = {
-  data: 1
-} as AxiosResponse<number>;
 class TestApi {
   constructor(public axiosConfig: AxiosRequestConfig) {}
-  fn: () => Promise<AxiosResponse<number>> = async () => rawResponse;
+  fn: () => Promise<AxiosResponse<number>> = async () =>
+    ({
+      data: 1
+    } as AxiosResponse<number>);
   nonAxiosResponse = async () => 1;
 }
 
@@ -19,14 +19,7 @@ describe('openapi-request-builder', () => {
     const requestBuilder = new OpenApiRequestBuilder(TestApi, 'fn');
     const response = await requestBuilder.execute(destination);
 
-    expect(response).toEqual(rawResponse.data);
-  });
-
-  it('executes a raw request', async () => {
-    const requestBuilder = new OpenApiRequestBuilder(TestApi, 'fn');
-    const response = await requestBuilder.executeRaw(destination);
-
-    expect(response).toEqual(rawResponse);
+    expect(response).toEqual(1);
   });
 
   it('throws an error if the given function does not exist', async () => {

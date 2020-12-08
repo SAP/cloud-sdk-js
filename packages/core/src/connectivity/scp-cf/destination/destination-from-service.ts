@@ -23,7 +23,6 @@ import { DestinationsByType } from './destination-accessor-types';
 import {
   AuthAndExchangeTokens,
   fetchDestination,
-  fetchDestinationOAuth2UserTokenExchange,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
@@ -240,7 +239,7 @@ class DestinationFromServiceRetriever {
         this.options
       );
     }
-    return fetchDestinationOAuth2UserTokenExchange(
+    return fetchDestination(
       destinationService.credentials.uri,
       jwt,
       this.name,
@@ -258,7 +257,7 @@ class DestinationFromServiceRetriever {
     }
     // This covers the three OAuth2UserTokenExchange cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html
 
-    // Case 1 Destination in provider jwt issued for provider account
+    // Case 1 Destination in provider and jwt issued for provider account
     if (this.isProviderAndSubscriberSameTenant()) {
       const authHeaderJwt = await userApprovedServiceToken(
         this.options.userJwt,

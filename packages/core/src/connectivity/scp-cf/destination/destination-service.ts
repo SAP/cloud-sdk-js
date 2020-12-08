@@ -136,15 +136,7 @@ export async function fetchDestination(
   jwt: string,
   destinationName: string,
   options?: ResilienceOptions & CachingOptions
-): Promise<Destination> {
-  return fetchDestinationByTokens(
-    destinationServiceUri,
-    { authHeaderJwt: jwt },
-    destinationName,
-    options
-  );
-}
-
+): Promise<Destination>;
 /**
  * Fetches a specific destination with authenticationType OAuth2SAMLBearerAssertion by name from the given URI, including authorization tokens.
  *
@@ -154,15 +146,29 @@ export async function fetchDestination(
  * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
  */
-export async function fetchDestinationOAuth2UserTokenExchange(
+export async function fetchDestination(
   destinationServiceUri: string,
   authAndExchangeTokens: AuthAndExchangeTokens,
   destinationName: string,
   options?: ResilienceOptions & CachingOptions
+): Promise<Destination>;
+export async function fetchDestination(
+  destinationServiceUri: string,
+  tokens: string | AuthAndExchangeTokens,
+  destinationName: string,
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination> {
+  if (typeof tokens === 'string') {
+    return fetchDestinationByTokens(
+      destinationServiceUri,
+      { authHeaderJwt: tokens },
+      destinationName,
+      options
+    );
+  }
   return fetchDestinationByTokens(
     destinationServiceUri,
-    authAndExchangeTokens,
+    tokens,
     destinationName,
     options
   );

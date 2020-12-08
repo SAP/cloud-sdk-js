@@ -28,7 +28,7 @@
 
 ## Fixed Issues
 
--
+- Fix `OAuth2SAMLBearerAssertion` flow for technical users and subscriber account destinations. 
 
 
 # 1.32.1

@@ -2,27 +2,29 @@ import nock from 'nock';
 import {
   mockedConnectivityServiceProxyConfig,
   mockServiceBindings
-} from '../test-util/environment-mocks';
+} from '../../../../test/test-util/environment-mocks';
 import {
   mockServiceToken,
   mockUserApprovedServiceToken
-} from '../test-util/token-accessor-mocks';
+} from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../test-util/destination-service-mocks';
+} from '../../../../test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../test-util/mocked-access-tokens';
+} from '../../../../test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   destinationName,
   onPremiseMultipleResponse
-} from '../test-util/example-destination-service-responses';
-import { getDestination, parseDestination, Protocol } from '../../src';
+} from '../../../../test/test-util/example-destination-service-responses';
+import { Protocol } from '../protocol';
+import { getDestination } from './destination-accessor';
+import { parseDestination } from './destination';
 
 describe('proxy configuration', () => {
   afterEach(() => {

@@ -1,34 +1,32 @@
 import nock from 'nock';
 import {
-  clientCredentialsTokenCache,
-  getDestination
-} from '../../src/connectivity/scp-cf';
-import {
   mockServiceBindings,
   mockXsuaaBinding
-} from '../test-util/environment-mocks';
+} from '../../../../test/test-util/environment-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken,
   subscriberServiceTokenWithVerificationURL,
   subscriberUserJwt,
   userApprovedSubscriberServiceToken
-} from '../test-util/mocked-access-tokens';
+} from '../../../../test/test-util/mocked-access-tokens';
 import {
   mockServiceToken,
   mockUserApprovedServiceToken
-} from '../test-util/token-accessor-mocks';
+} from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../test-util/destination-service-mocks';
+} from '../../../../test/test-util/destination-service-mocks';
 import {
   basicMultipleResponse,
   destinationName,
   oauthMultipleResponse
-} from '../test-util/example-destination-service-responses';
+} from '../../../../test/test-util/example-destination-service-responses';
+import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
+import { getDestination } from './destination-accessor';
 
 describe('Failure cases', () => {
   beforeEach(() => {

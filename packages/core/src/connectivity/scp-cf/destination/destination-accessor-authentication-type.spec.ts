@@ -1,15 +1,15 @@
 import nock from 'nock';
-import { mockServiceBindings } from '../test-util/environment-mocks';
+import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
 import {
   mockServiceToken,
   mockUserApprovedServiceToken
-} from '../test-util/token-accessor-mocks';
+} from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../test-util/destination-service-mocks';
+} from '../../../../test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
   providerUserJwt,
@@ -17,7 +17,7 @@ import {
   subscriberUserJwt,
   userApprovedProviderServiceToken,
   userApprovedSubscriberServiceToken
-} from '../test-util/mocked-access-tokens';
+} from '../../../../test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
@@ -25,14 +25,12 @@ import {
   destinationName,
   oauthMultipleResponse,
   oauthSingleResponse
-} from '../test-util/example-destination-service-responses';
-import {
-  clientCredentialsTokenCache,
-  destinationCache,
-  getDestination,
-  getDestinationFromDestinationService,
-  parseDestination
-} from '../../src/connectivity/scp-cf';
+} from '../../../../test/test-util/example-destination-service-responses';
+import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
+import { parseDestination } from './destination';
+import { getDestination } from './destination-accessor';
+import { destinationCache } from './destination-cache';
+import { getDestinationFromDestinationService } from './destination-from-service';
 
 describe('authentication types', () => {
   afterEach(() => {

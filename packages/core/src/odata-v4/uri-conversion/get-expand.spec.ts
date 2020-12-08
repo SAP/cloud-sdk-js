@@ -2,9 +2,9 @@ import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../../test-util/test-services/v4/test-service';
-import { getExpandV4 } from '../../../../src/odata-v4';
-import { asc } from '../../../../src/odata-common';
+} from '../../../test/test-util/test-services/v4/test-service';
+import { asc } from '../../odata-common/order';
+import { getExpandV4 } from './get-expand';
 
 describe('get expand', () => {
   it('for first level expand without sub-query', () => {

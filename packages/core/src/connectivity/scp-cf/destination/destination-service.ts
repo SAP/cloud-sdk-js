@@ -124,51 +124,32 @@ export interface AuthAndExchangeTokens {
 /**
  * Fetches a specific destination by name from the given URI, including authorization tokens.
  * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
+ * In this pass the access token as string.
+ * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
  *
  * @param destinationServiceUri - The URI of the destination service
- * @param jwt - The access token
+ * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
  * @param destinationName - The name of the desired destination
  * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
  */
 export async function fetchDestination(
   destinationServiceUri: string,
-  jwt: string,
-  destinationName: string,
-  options?: ResilienceOptions & CachingOptions
-): Promise<Destination>;
-/**
- * Fetches a specific destination with authenticationType OAuth2SAMLBearerAssertion by name from the given URI, including authorization tokens.
- *
- * @param destinationServiceUri - The URI of the destination service
- * @param authAndExchangeTokens - Tokens used in the authorization header and user exchange header in the destination service call
- * @param destinationName - The name of the desired destination
- * @param options - Options to use by retrieving destinations
- * @returns A Promise resolving to the destination
- */
-export async function fetchDestination(
-  destinationServiceUri: string,
-  authAndExchangeTokens: AuthAndExchangeTokens,
-  destinationName: string,
-  options?: ResilienceOptions & CachingOptions
-): Promise<Destination>;
-export async function fetchDestination(
-  destinationServiceUri: string,
-  tokens: string | AuthAndExchangeTokens,
+  token: string | AuthAndExchangeTokens,
   destinationName: string,
   options?: ResilienceOptions & CachingOptions
 ): Promise<Destination> {
-  if (typeof tokens === 'string') {
+  if (typeof token === 'string') {
     return fetchDestinationByTokens(
       destinationServiceUri,
-      { authHeaderJwt: tokens },
+      { authHeaderJwt: token },
       destinationName,
       options
     );
   }
   return fetchDestinationByTokens(
     destinationServiceUri,
-    tokens,
+    token,
     destinationName,
     options
   );

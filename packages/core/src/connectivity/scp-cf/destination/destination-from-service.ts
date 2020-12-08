@@ -231,14 +231,6 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     const destinationService = getDestinationService();
 
-    if (typeof jwt === 'string') {
-      return fetchDestination(
-        destinationService.credentials.uri,
-        jwt,
-        this.name,
-        this.options
-      );
-    }
     return fetchDestination(
       destinationService.credentials.uri,
       jwt,

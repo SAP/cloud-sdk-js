@@ -1,4 +1,4 @@
-import { destinationForServiceBinding } from '../../src/connectivity/scp-cf';
+import { destinationForServiceBinding } from './destination-from-vcap';
 
 describe('vcap-service-destination', () => {
   beforeAll(() => {

@@ -1,16 +1,18 @@
 import moment from 'moment';
-import { and, or, filterFunction, oDataUriV2 } from '../../../../src';
+import { v4 as uuid } from 'uuid';
+import { and, filterFunction, or } from '../../odata-common/filter';
 import {
   testFilterBoolean,
   testFilterGuid,
   testFilterInt16,
   testFilterSingleLink,
   testFilterString
-} from '../../../test-util/filter-factory';
-import { TestEntity } from '../../../test-util/test-services/v2/test-service';
-import { filterFunctionsV2 } from '../../../../src/odata-v2/filter-functions';
+} from '../../../test/test-util/filter-factory';
+import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
+import { filterFunctionsV2 } from '../filter-functions';
+import { oDataUriV2 } from './odata-uri';
 
-describe('get filters', () => {
+describe('getFilter', () => {
   it('for simple filters', () => {
     expect(
       oDataUriV2.getFilter(
@@ -84,7 +86,7 @@ describe('get filters', () => {
   });
 });
 
-describe('get-filter for custom fields', () => {
+describe('getFilter for custom fields', () => {
   it('for custom string field', () => {
     expect(
       oDataUriV2.getFilter(
@@ -139,7 +141,7 @@ describe('get-filter for custom fields', () => {
   });
 });
 
-describe('get-filter for filter functions', () => {
+describe('getFilter for filter functions', () => {
   it('for custom filter function', () => {
     const fn = filterFunction(
       'fn',
@@ -192,5 +194,22 @@ describe('get-filter for filter functions', () => {
     expect(oDataUriV2.getFilter(dateFn, TestEntity).filter).toEqual(
       "fn(datetimeoffset'2000-01-01T00:00:00.000Z') eq 1"
     );
+  });
+});
+
+describe('getEntityKeys', () => {
+  it('should extract entity keys correctly', () => {
+    const entity = TestEntity.builder()
+      .keyPropertyGuid(uuid())
+      .keyPropertyString('987654321')
+      .stringProperty('any')
+      .build();
+
+    const actual = oDataUriV2.getEntityKeys(entity, TestEntity);
+
+    expect(actual).toEqual({
+      KeyPropertyGuid: entity.keyPropertyGuid,
+      KeyPropertyString: entity.keyPropertyString
+    });
   });
 });

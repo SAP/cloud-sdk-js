@@ -1,28 +1,27 @@
 import nock from 'nock';
 import {
-  alwaysProvider,
-  alwaysSubscriber,
-  Destination,
-  DestinationConfiguration,
-  DestinationOptions,
-  DestinationSelectionStrategy,
-  getDestination,
-  subscriberFirst
-} from '../../src/connectivity/scp-cf';
-import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../test-util/destination-service-mocks';
+} from '../../../../test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../test-util/mocked-access-tokens';
-import { mockServiceBindings } from '../test-util/environment-mocks';
-import { mockServiceToken } from '../test-util/token-accessor-mocks';
-import * as destinationService from '../../src/connectivity/scp-cf/destination/destination-service';
+} from '../../../../test/test-util/mocked-access-tokens';
+import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
+import { mockServiceToken } from '../../../../test/test-util/token-accessor-mocks';
+import * as destinationService from './destination-service';
+import { DestinationConfiguration } from './destination';
+import {
+  alwaysProvider,
+  alwaysSubscriber,
+  DestinationSelectionStrategy,
+  subscriberFirst
+} from './destination-selection-strategies';
+import { Destination } from './destination-service-types';
+import { DestinationOptions, getDestination } from './destination-accessor';
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {

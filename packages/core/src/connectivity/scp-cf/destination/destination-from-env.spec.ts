@@ -1,14 +1,14 @@
 import * as assert from 'assert';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  Destination,
-  getDestinationFromEnvByName,
-  getDestinationsFromEnv
-} from '../../src/connectivity/scp-cf';
-import {
   mockDestinationsEnv,
   unmockDestinationsEnv
-} from '../test-util/request-mocker';
+} from '../../../../test/test-util/request-mocker';
+import { Destination } from './destination-service-types';
+import {
+  getDestinationFromEnvByName,
+  getDestinationsFromEnv
+} from './destination-from-env';
 
 const environmentDestination = {
   name: 'FINAL-DESTINATION',

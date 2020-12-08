@@ -132,7 +132,7 @@ class DestinationFromServiceRetriever {
   ): Promise<string> {
     if (!options.userJwt) {
       throw new Error(
-        'User Jwt is needed to obtain a client credentials token for the subscriber account.'
+        'User JWT is needed to obtain a client credentials token for the subscriber account.'
       );
     }
     return serviceToken('destination', options);
@@ -232,7 +232,7 @@ class DestinationFromServiceRetriever {
       );
     }
     /* This covers the two technical user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
-    If the destination comes from the provider account the  the client credentials token from the xsuaa.url is used (provider token).
+    If the destination comes from the provider account the client credentials token from the xsuaa.url is used (provider token).
     If the destination comes from the subscriber account the subscriber subdomain is used fetch the client credentials token (subscriber token).
     */
     if (destination.systemUser) {

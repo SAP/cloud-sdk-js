@@ -1789,20 +1789,24 @@
     sax "^1.2.4"
 
 "@sap/cds-dk@^3.0.0":
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.2.1.tgz#56eb5e490be3f724a428ffc373c16ddcc0b9c706"
-  integrity sha512-o0J+1F03XiFmV3uUONUR1/oUJZB5XRkA0oBx7q7aFMHA7aNQyvpg22tJYhnP0z+HW8uDnzj3zMhId8AyDnkSlA==
+  version "3.3.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.3.2.tgz#296e19285cd2bc979b560ed58916e688051cb36d"
+  integrity sha512-f9nMIvR14pw5N1k1MxsLJgl6yapeZmqR5849VV8cP3x0IRkgCWyi2rccC4DDEFaRUSBmHc57Pl9FzIROjat+BQ==
   dependencies:
     "@sap/cds" "^4.2.2"
     "@sap/cds-foss" "^2"
     "@sap/cds-sidecar-client" "^1.1.6"
     "@sap/edm-converters" "^1.0.27"
+    axios "^0.20.0"
     express "^4.17.1"
+    htmlparser2 "5.0.1"
     mustache "^4.0.1"
     node-watch "0.6.4"
     passport "^0.4.1"
-    sqlite3 "^5"
+    pluralize "^8.0.0"
     xml2js "^0.4.3"
+  optionalDependencies:
+    sqlite3 "^5"
 
 "@sap/cds-foss@^2":
   version "2.1.0"
@@ -2664,6 +2668,13 @@ axios@^0.19.0:
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
   dependencies:
     follow-redirects "1.5.10"
+
+axios@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
+  integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 babel-code-frame@^6.22.0:
   version "6.26.0"
@@ -4215,12 +4226,49 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dom-serializer@^1.0.1:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/dom-serializer/-/dom-serializer-1.2.0.tgz#3433d9136aeb3c627981daa385fc7f32d27c48f1"
+  integrity sha512-n6kZFH/KlCrqs/1GHMOd5i2fd/beQHuehKdWvNNffbGHTr/almdhuVvTVFb3V7fglz+nC50fFusu3lY33h12pA==
+  dependencies:
+    domelementtype "^2.0.1"
+    domhandler "^4.0.0"
+    entities "^2.0.0"
+
+domelementtype@^2.0.1, domelementtype@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-2.1.0.tgz#a851c080a6d1c3d94344aed151d99f669edf585e"
+  integrity sha512-LsTgx/L5VpD+Q8lmsXSHW2WpA+eBlZ9HPf3erD1IoPF00/3JKHZ3BknUVA2QGDNu69ZNmyFmCWBSO45XjYKC5w==
+
 domexception@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/domexception/-/domexception-2.0.1.tgz#fb44aefba793e1574b0af6aed2801d057529f304"
   integrity sha512-yxJ2mFy/sibVQlu5qHjOkf9J3K6zgmCxgJ94u2EdvDOV09H+32LtRswEcUsmUWN72pVLOEnTSRaIVVzVQgS0dg==
   dependencies:
     webidl-conversions "^5.0.0"
+
+domhandler@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/domhandler/-/domhandler-3.3.0.tgz#6db7ea46e4617eb15cf875df68b2b8524ce0037a"
+  integrity sha512-J1C5rIANUbuYK+FuFL98650rihynUOEzRLxW+90bKZRWB6A1X1Tf82GxR1qAWLyfNPRvjqfip3Q5tdYlmAa9lA==
+  dependencies:
+    domelementtype "^2.0.1"
+
+domhandler@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/domhandler/-/domhandler-4.0.0.tgz#01ea7821de996d85f69029e81fa873c21833098e"
+  integrity sha512-KPTbnGQ1JeEMQyO1iYXoagsI6so/C96HZiFyByU3T6iAzpXn8EGEvct6unm1ZGoed8ByO2oirxgwxBmqKF9haA==
+  dependencies:
+    domelementtype "^2.1.0"
+
+domutils@^2.4.2:
+  version "2.4.3"
+  resolved "https://registry.npmjs.org/domutils/-/domutils-2.4.3.tgz#b8ca888695db9baf65b58462c0eff46d2d5cd85d"
+  integrity sha512-MDMfEjgtzHvRX7i21XQfkk/vfZbLOe0VJk8dDETkTTo3BTeH3NXz3Xvs94UQ+GzTw/GjRYKsfVKIIOheYX63fw==
+  dependencies:
+    dom-serializer "^1.0.1"
+    domelementtype "^2.0.1"
+    domhandler "^4.0.0"
 
 dot-prop@^4.2.0, dot-prop@^5.1.0, dot-prop@^5.1.1:
   version "5.3.0"
@@ -4374,6 +4422,11 @@ enquirer@2.3.6, enquirer@^2.3.5:
   integrity sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==
   dependencies:
     ansi-colors "^4.1.1"
+
+entities@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
+  integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
 
 env-paths@^2.2.0:
   version "2.2.0"
@@ -5717,6 +5770,16 @@ html-escaper@^2.0.0:
   version "2.0.2"
   resolved "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
+
+htmlparser2@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/htmlparser2/-/htmlparser2-5.0.1.tgz#7daa6fc3e35d6107ac95a4fc08781f091664f6e7"
+  integrity sha512-vKZZra6CSe9qsJzh0BjBGXo8dvzNsq/oGvsjfRdOrrryfeD9UOBEEQdeoqCRmKZchF5h2zOBMQ6YuQ0uRUmdbQ==
+  dependencies:
+    domelementtype "^2.0.1"
+    domhandler "^3.3.0"
+    domutils "^2.4.2"
+    entities "^2.0.0"
 
 http-cache-semantics@^3.8.1:
   version "3.8.1"

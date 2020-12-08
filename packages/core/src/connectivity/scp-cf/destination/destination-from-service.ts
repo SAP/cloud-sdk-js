@@ -132,7 +132,7 @@ class DestinationFromServiceRetriever {
   ): Promise<string> {
     if (!options.userJwt) {
       throw new Error(
-        'User Jwt is needed to obtain a client credentials token for the subscriber account.'
+        'User JWT is needed to obtain a client credentials token for the subscriber account.'
       );
     }
     return serviceToken('destination', options);

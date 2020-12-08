@@ -8,13 +8,13 @@ import { DefaultApi } from './openapi/api';
 import { TestEntity } from './openapi/model';
 
 export const TestServiceApi = {
-  getAllEntities: (stringParameter?: string, integerParameter?: number, dollarParameter?: string, prefixSuffixParameter?: string) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
+  getAllEntities: (stringParameter?: string, integerParameter?: number, dollarParameter?: string, docParameter?: string) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
     DefaultApi,
     'getAllEntities',
     stringParameter,
     integerParameter,
     dollarParameter,
-    prefixSuffixParameter
+    docParameter
   ),
   createEntity: (testEntity?: TestEntity) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
     DefaultApi,

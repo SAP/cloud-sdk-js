@@ -109,11 +109,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [stringParameter] A parameter of type string
          * @param {number} [integerParameter] A parameter of type integer
          * @param {string} [$dollarParameter] A parameter that contains $
-         * @param {string} [prefixSuffixParameter] A parameter that contains . in the middle
+         * @param {string} [docParameter] A parameter that contains . in the middle
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities: async (stringParameter?: string, integerParameter?: number, $dollarParameter?: string, prefixSuffixParameter?: string, options: any = {}): Promise<RequestArgs> => {
+        getAllEntities: async (stringParameter?: string, integerParameter?: number, $dollarParameter?: string, docParameter?: string, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/entities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -137,8 +137,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 localVarQueryParameter['$dollarParameter'] = $dollarParameter;
             }
 
-            if (prefixSuffixParameter !== undefined) {
-                localVarQueryParameter['prefix.SuffixParameter'] = prefixSuffixParameter;
+            if (docParameter !== undefined) {
+                localVarQueryParameter['doc.parameter'] = docParameter;
             }
 
 
@@ -243,12 +243,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [stringParameter] A parameter of type string
          * @param {number} [integerParameter] A parameter of type integer
          * @param {string} [$dollarParameter] A parameter that contains $
-         * @param {string} [prefixSuffixParameter] A parameter that contains . in the middle
+         * @param {string} [docParameter] A parameter that contains . in the middle
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, prefixSuffixParameter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, prefixSuffixParameter, options);
+        async getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, docParameter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, docParameter, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -302,12 +302,12 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [stringParameter] A parameter of type string
          * @param {number} [integerParameter] A parameter of type integer
          * @param {string} [$dollarParameter] A parameter that contains $
-         * @param {string} [prefixSuffixParameter] A parameter that contains . in the middle
+         * @param {string} [docParameter] A parameter that contains . in the middle
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, prefixSuffixParameter?: string, options?: any): AxiosPromise<Array<TestEntity>> {
-            return DefaultApiFp(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, prefixSuffixParameter, options).then((request) => request(axios, basePath));
+        getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, docParameter?: string, options?: any): AxiosPromise<Array<TestEntity>> {
+            return DefaultApiFp(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, docParameter, options).then((request) => request(axios, basePath));
         },
         /**
          * Get entity by id
@@ -358,13 +358,13 @@ export class DefaultApi extends BaseAPI {
      * @param {string} [stringParameter] A parameter of type string
      * @param {number} [integerParameter] A parameter of type integer
      * @param {string} [$dollarParameter] A parameter that contains $
-     * @param {string} [prefixSuffixParameter] A parameter that contains . in the middle
+     * @param {string} [docParameter] A parameter that contains . in the middle
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, prefixSuffixParameter?: string, options?: any) {
-        return DefaultApiFp(this.configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, prefixSuffixParameter, options).then((request) => request(this.axios, this.basePath));
+    public getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, docParameter?: string, options?: any) {
+        return DefaultApiFp(this.configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, docParameter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

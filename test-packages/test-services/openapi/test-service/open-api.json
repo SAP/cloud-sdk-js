@@ -59,21 +59,17 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "maximum": 50,
-              "minimum": 0,
               "type": "string"
             }
           },
           {
-            "name": "prefix.SuffixParameter",
+            "name": "doc.parameter",
             "in": "query",
             "description": "A parameter that contains . in the middle",
             "required": false,
             "style": "form",
             "explode": true,
             "schema": {
-              "maximum": 50,
-              "minimum": 0,
               "type": "string"
             }
           }

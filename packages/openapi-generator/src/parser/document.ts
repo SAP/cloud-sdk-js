@@ -34,9 +34,7 @@ export function parseAllOperations(
       ...allOperations,
       ...methods()
         .filter(method => method in pathDefinition)
-        .map(method =>
-          parseOperation(pattern, pathDefinition, method, refs)
-        )
+        .map(method => parseOperation(pattern, pathDefinition, method, refs))
     ],
     []
   );

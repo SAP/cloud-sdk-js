@@ -2,7 +2,7 @@
   "name": "@sap-cloud-sdk/generator",
   "version": "1.32.1",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
-  "homepage": "https://community.sap.com/topics/cloud-sdk",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -24,7 +24,7 @@
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map"
   ],
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",

@@ -2,11 +2,11 @@
   "name": "@sap-cloud-sdk/type-tests",
   "version": "1.32.1",
   "description": "Tests to ensure correct types in the SAP Cloud SDK for JavaScript.",
-  "homepage": "https://www.sap.com/cloud-sdk",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "private": true,
   "types": "types",
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "test": "yarn dtslint --expectOnly --localTs ../../node_modules/typescript/lib test",
     "check:dependencies": "echo Nothing to check here."

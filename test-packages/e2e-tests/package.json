@@ -2,10 +2,10 @@
   "name": "@sap-cloud-sdk/e2e-tests",
   "version": "1.32.1",
   "description": "End to end tests of the SAP Cloud SDK for JavaScript",
-  "homepage": "https://www.sap.com/cloud-sdk",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "private": true,
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "pretest": "yarn deploy && yarn start",
     "posttest": "yarn stop",

@@ -11,7 +11,7 @@
     "generator"
   ],
   "private": true,
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {

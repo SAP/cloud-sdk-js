@@ -5,7 +5,7 @@
   "homepage": "https://www.sap.com/cloud-sdk",
   "license": "Apache-2.0",
   "private": true,
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "pretest": "yarn deploy && yarn start",
     "posttest": "yarn stop",

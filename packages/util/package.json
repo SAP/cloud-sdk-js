@@ -21,7 +21,7 @@
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map"
   ],
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",

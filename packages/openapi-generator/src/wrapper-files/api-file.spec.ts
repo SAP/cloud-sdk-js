@@ -136,4 +136,26 @@ describe('api-file', () => {
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
+
+  it('creates api file content for operation with only  optional parameters', () => {
+    const openApiDocument: OpenApiDocument = {
+      apiName: 'TestServiceApi',
+      operations: [
+        {
+          operationName: 'getEntity',
+          method: 'get',
+          parameters: [
+            {
+              in: 'query',
+              name: 'optionalQueryParam',
+              type: 'number'
+            }
+          ],
+          pattern: 'test'
+        }
+      ],
+      serviceDirName: 'test-service'
+    };
+    expect(apiFile(openApiDocument)).toMatchSnapshot();
+  });
 });

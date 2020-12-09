@@ -55,17 +55,18 @@ function getOperations(openApiDocument: OpenApiDocument): string {
  */
 function getOperation(operation: OpenApiOperation): string {
   const params = getParams(operation);
+  const argsQuestionMark = params.every(param => !param.required) ? '?' : '';
   const paramsArg = params.length
-    ? codeBlock`args: {
-    ${params
-      .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
-      .join(',\n')}
-  }`
+    ? codeBlock`args${argsQuestionMark}: {
+  ${params
+    .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
+    .join(',\n')}
+}`
     : '';
   const requestBuilderParams = [
     'DefaultApi',
     `'${operation.operationName}'`,
-    ...params.map(param => param.name)
+    ...params.map(param => `args${argsQuestionMark}.${param.name}`)
   ];
 
   return codeBlock`

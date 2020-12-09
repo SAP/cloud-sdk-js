@@ -7,17 +7,17 @@ import { Body } from './openapi/model';
 
 export const TestServiceApi = {
   getEntity: (args: {
-      requiredQueryParam: number,
-      requiredPathParam: number,
-      body: Body,
-      optionalQueryParam?: number
-    }) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
+    requiredQueryParam: number,
+    requiredPathParam: number,
+    body: Body,
+    optionalQueryParam?: number
+  }) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
     DefaultApi,
     'getEntity',
-    requiredQueryParam,
-    requiredPathParam,
-    body,
-    optionalQueryParam
+    args.requiredQueryParam,
+    args.requiredPathParam,
+    args.body,
+    args.optionalQueryParam
   )
 };"
 `;
@@ -35,6 +35,22 @@ export const TestServiceApi = {
 };"
 `;
 
+exports[`api-file creates api file content for operation with only  optional parameters 1`] = `
+"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+import { DefaultApi } from './openapi/api';
+
+
+export const TestServiceApi = {
+  getEntity: (args?: {
+    optionalQueryParam?: number
+  }) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
+    DefaultApi,
+    'getEntity',
+    args?.optionalQueryParam
+  )
+};"
+`;
+
 exports[`api-file creates api file content for operation with request body 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
@@ -42,20 +58,20 @@ import { Body } from './openapi/model';
 
 export const TestServiceApi = {
   createEntity: (args: {
-      body: Body
-    }) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
+    body: Body
+  }) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
     DefaultApi,
     'createEntity',
-    body
+    args.body
   ),
   updateEntity: (args: {
-      id: string,
-      body: Body
-    }) => new OpenApiRequestBuilder<DefaultApi, 'updateEntity'>(
+    id: string,
+    body: Body
+  }) => new OpenApiRequestBuilder<DefaultApi, 'updateEntity'>(
     DefaultApi,
     'updateEntity',
-    id,
-    body
+    args.id,
+    args.body
   )
 };"
 `;
@@ -67,20 +83,20 @@ import { DefaultApi } from './openapi/api';
 
 export const TestServiceApi = {
   getEntity: (args: {
-      id: string,
-      limit?: number
-    }) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
+    id: string,
+    limit?: number
+  }) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
     DefaultApi,
     'getEntity',
-    id,
-    limit
+    args.id,
+    args.limit
   ),
   deleteEntity: (args: {
-      id: string
-    }) => new OpenApiRequestBuilder<DefaultApi, 'deleteEntity'>(
+    id: string
+  }) => new OpenApiRequestBuilder<DefaultApi, 'deleteEntity'>(
     DefaultApi,
     'deleteEntity',
-    id
+    args.id
   )
 };"
 `;

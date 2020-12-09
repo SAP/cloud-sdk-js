@@ -1,11 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { createRefs } from '../../test/test-util';
-import {
-  parseOperationName,
-  parseParameters,
-  getOperation,
-  filterDuplicates
-} from './operation';
+import { parseOperationName, parseParameters, getOperation } from './operation';
 
 describe('parseOperationName', () => {
   it('parses the operation name from the operationId', () => {
@@ -147,36 +142,5 @@ describe('getOperation', () => {
     ).toThrowErrorMatchingInlineSnapshot(
       '"Could not parse operation. Operation for method \'post\' does not exist."'
     );
-  });
-});
-
-describe('filterDuplicates', () => {
-  it('removes duplicates from parameters, keeping the last elements only', () => {
-    const queryParam1 = {
-      name: 'param1',
-      in: 'query'
-    };
-    const queryParam2 = {
-      name: 'param2',
-      in: 'query'
-    };
-    const pathParam1 = {
-      name: 'param1',
-      in: 'path'
-    };
-    const queryParam1Replacement = {
-      name: 'param1',
-      in: 'query',
-      format: 'uuid'
-    };
-
-    expect(
-      filterDuplicates([
-        queryParam1,
-        queryParam2,
-        queryParam1Replacement,
-        pathParam1
-      ])
-    ).toStrictEqual([queryParam2, queryParam1Replacement, pathParam1]);
   });
 });

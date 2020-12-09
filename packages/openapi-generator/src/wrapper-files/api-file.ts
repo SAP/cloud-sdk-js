@@ -54,19 +54,26 @@ function getOperations(openApiDocument: OpenApiDocument): string {
  * @returns The operation as a string.
  */
 function getOperation(operation: OpenApiOperation): string {
-  const apiFunctionSignatureParams = getApiFunctionSignatureParams(
-    operation
-  ).map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`);
+  const params = getParams(operation);
+  const paramsArg = params.length
+    ? codeBlock`args: {
+    ${params
+      .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
+      .join(',\n')}
+  }`
+    : '';
   const requestBuilderParams = [
     'DefaultApi',
     `'${operation.operationName}'`,
-    ...getRequestBuilderParams(operation).map(param => param.name)
+    ...params.map(param => param.name)
   ];
 
   return codeBlock`
-${operation.operationName}: (${apiFunctionSignatureParams.join(
-    ', '
-  )}) => new OpenApiRequestBuilder<DefaultApi, '${operation.operationName}'>(
+${
+  operation.operationName
+}: (${paramsArg}) => new OpenApiRequestBuilder<DefaultApi, '${
+    operation.operationName
+  }'>(
   ${requestBuilderParams.join(',\n')}
 )`;
 }
@@ -77,34 +84,7 @@ interface Parameter {
   required?: boolean;
 }
 
-function getApiFunctionSignatureParams(
-  operation: OpenApiOperation
-): Parameter[] {
-  const [required, optional] = partition(
-    operation.parameters,
-    param => !!param.required
-  );
-
-  const [requiredPathParams, requiredQueryParams] = partition(
-    required,
-    param => param.in === 'path'
-  );
-
-  const [optionalPathParams, optionalQueryParams] = partition(
-    optional,
-    param => param.in === 'path'
-  );
-
-  return [
-    ...requiredPathParams,
-    ...getRequestBodyParams(operation),
-    ...requiredQueryParams,
-    ...optionalPathParams,
-    ...optionalQueryParams
-  ];
-}
-
-function getRequestBuilderParams(operation: OpenApiOperation): Parameter[] {
+function getParams(operation: OpenApiOperation): Parameter[] {
   const parameters = [
     ...operation.parameters,
     ...getRequestBodyParams(operation)

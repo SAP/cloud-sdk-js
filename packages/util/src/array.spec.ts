@@ -8,7 +8,8 @@ import {
   variadicArgumentToArray,
   zip,
   partition,
-  removeDuplicatesLeft
+  filterDuplicates,
+  filterDuplicatesRight
 } from './array';
 
 describe('array', () => {
@@ -164,18 +165,37 @@ describe('partition', () => {
   });
 });
 
-describe('removeDuplicatesLeft', () => {
+describe('filterDuplicates', () => {
   it('can handle empty array', () => {
-    expect(removeDuplicatesLeft([])).toEqual([]);
+    expect(filterDuplicates([])).toEqual([]);
   });
 
   it('removes duplicates using the default comparator', () => {
-    expect(removeDuplicatesLeft([1, 2, 1, 4])).toEqual([2, 1, 4]);
+    expect(filterDuplicates([1, 2, 1, 4])).toEqual([1, 2, 4]);
   });
 
   it('removes duplicates using a custom comparator', () => {
     expect(
-      removeDuplicatesLeft(
+      filterDuplicates(
+        [{ a: 1, b: 1 }, { a: 2 }, { a: 1, b: 2 }, { a: 4 }],
+        (left, right) => left.a === right.a
+      )
+    ).toEqual([{ a: 1, b: 1 }, { a: 2 }, { a: 4 }]);
+  });
+});
+
+describe('filterDuplicatesRight', () => {
+  it('can handle empty array', () => {
+    expect(filterDuplicatesRight([])).toEqual([]);
+  });
+
+  it('removes duplicates using the default comparator', () => {
+    expect(filterDuplicatesRight([1, 2, 1, 4])).toEqual([2, 1, 4]);
+  });
+
+  it('removes duplicates using a custom comparator', () => {
+    expect(
+      filterDuplicatesRight(
         [{ a: 1, b: 1 }, { a: 2 }, { a: 1, b: 2 }, { a: 4 }],
         (left, right) => left.a === right.a
       )

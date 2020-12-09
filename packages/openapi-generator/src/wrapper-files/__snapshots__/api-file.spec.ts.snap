@@ -6,7 +6,12 @@ import { DefaultApi } from './openapi/api';
 import { Body } from './openapi/model';
 
 export const TestServiceApi = {
-  getEntity: (requiredPathParam: number, body: Body, requiredQueryParam: number, optionalQueryParam?: number) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
+  getEntity: (args: {
+      requiredQueryParam: number,
+      requiredPathParam: number,
+      body: Body,
+      optionalQueryParam?: number
+    }) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
     DefaultApi,
     'getEntity',
     requiredQueryParam,
@@ -36,12 +41,17 @@ import { DefaultApi } from './openapi/api';
 import { Body } from './openapi/model';
 
 export const TestServiceApi = {
-  createEntity: (body: Body) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
+  createEntity: (args: {
+      body: Body
+    }) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
     DefaultApi,
     'createEntity',
     body
   ),
-  updateEntity: (id: string, body: Body) => new OpenApiRequestBuilder<DefaultApi, 'updateEntity'>(
+  updateEntity: (args: {
+      id: string,
+      body: Body
+    }) => new OpenApiRequestBuilder<DefaultApi, 'updateEntity'>(
     DefaultApi,
     'updateEntity',
     id,
@@ -56,13 +66,18 @@ import { DefaultApi } from './openapi/api';
 
 
 export const TestServiceApi = {
-  getEntity: (id: string, limit?: number) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
+  getEntity: (args: {
+      id: string,
+      limit?: number
+    }) => new OpenApiRequestBuilder<DefaultApi, 'getEntity'>(
     DefaultApi,
     'getEntity',
     id,
     limit
   ),
-  deleteEntity: (id: string) => new OpenApiRequestBuilder<DefaultApi, 'deleteEntity'>(
+  deleteEntity: (args: {
+      id: string
+    }) => new OpenApiRequestBuilder<DefaultApi, 'deleteEntity'>(
     DefaultApi,
     'deleteEntity',
     id

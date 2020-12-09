@@ -137,22 +137,30 @@ export function partition<T>(
 }
 
 /**
- * Remove duplicates from an array, keeping the right most occurence.
+ * Filter an array by removing duplicates and keeping the left most occurence. By default this compares by identity.
  * @param arr Array to remove duplicates from.
  * @param comparator Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
  * @returns A filtered array containing no duplicates.
  */
-export function removeDuplicatesLeft<T>(
+export function filterDuplicates<T>(
   arr: T[],
   comparator: (left: T, right: T) => boolean = (left, right) => left === right
 ): T[] {
-  return arr.reduce((reducedArr: T[], currentItem: T) => {
-    const duplicateIndex = reducedArr.findIndex(item =>
-      comparator(item, currentItem)
-    );
-    if (duplicateIndex >= 0) {
-      reducedArr.splice(duplicateIndex, 1);
-    }
-    return [...reducedArr, currentItem];
-  }, []);
+  return arr.filter(
+    (item, index) =>
+      !arr.slice(0, index).find(filteredItem => comparator(item, filteredItem))
+  );
+}
+
+/**
+ * Filter an array by removing duplicates and keeping the right most occurence. By default this compares by identity.
+ * @param arr Array to remove duplicates from.
+ * @param comparator Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
+ * @returns A filtered array containing no duplicates.
+ */
+export function filterDuplicatesRight<T>(
+  arr: T[],
+  comparator: (left: T, right: T) => boolean = (left, right) => left === right
+): T[] {
+  return filterDuplicates(arr.reverse(), comparator).reverse();
 }

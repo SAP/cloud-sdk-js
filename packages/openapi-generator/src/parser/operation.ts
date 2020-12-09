@@ -4,7 +4,7 @@ import {
   camelCase,
   partition,
   pascalCase,
-  removeDuplicatesLeft
+  filterDuplicatesRight
 } from '@sap-cloud-sdk/util';
 import { Method, OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { getType } from './type-mapping';
@@ -76,11 +76,12 @@ export function parseParameters(
 ): OpenApiParameter[] {
   // TODO: What if this is a reference? What does OpenApi do?
   // TODO: What about oneof and other operations?
-  return removeDuplicatesLeft(
+  return filterDuplicatesRight(
     operation.parameters?.map(param => resolveObject(param, refs)) || [],
     (left, right) => left.name === right.name && left.in === right.in
   ).map(param => ({
     ...param,
+    // TODO: Check whether types are correct here and whether we can use union types here.
     type: getType(resolveObject(param.schema, refs)?.type?.toString())
   }));
 }

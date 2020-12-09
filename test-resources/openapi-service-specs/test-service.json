@@ -273,6 +273,34 @@
           }
         }
       }
+    },
+    "/test-cases/parameters/{duplicateParam}": {
+      "get": {
+        "operationId": "testCaseGetDuplicateParameters",
+        "parameters": [
+          {
+            "name": "duplicateParam",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "duplicateParam",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
     }
   },
   "components": {

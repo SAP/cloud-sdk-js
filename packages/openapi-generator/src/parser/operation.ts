@@ -1,24 +1,10 @@
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import {
-  camelCase,
-  partition,
-  pascalCase,
-  filterDuplicatesRight
-} from '@sap-cloud-sdk/util';
-import { Method, OpenApiOperation, OpenApiParameter } from '../openapi-types';
-import { getType } from './type-mapping';
+import { camelCase, partition, pascalCase } from '@sap-cloud-sdk/util';
+import { Method, OpenApiOperation } from '../openapi-types';
 import { parseRequestBody } from './request-body';
-import { resolveObject } from './refs';
+import { parseParameters } from './parameters';
 
-/**
- * Parse one operation for a path item and method.
- * @param pattern The url pattern, i. e. the key in the original operation definition object.
- * @param pathItem The original path item definition.
- * @param method HTTP method for this operation.
- * @param refs List of crossreferences that can occur in the document.
- * @returns The parsed operation.
- */
 export function parseOperation(
   pattern: string,
   pathItem: OpenAPIV3.PathItemObject,
@@ -62,28 +48,6 @@ export function getOperation(
     ...(operation.parameters || [])
   ];
   return operation;
-}
-
-/**
- * Parse parameters of an operation.
- * @param operation The original operation definition.
- * @param refs List of crossreferences that can occur in the document.
- * @returns A list of parsed parameters.
- */
-export function parseParameters(
-  operation: OpenAPIV3.OperationObject,
-  refs: $Refs
-): OpenApiParameter[] {
-  // TODO: What if this is a reference? What does OpenApi do?
-  // TODO: What about oneof and other operations?
-  return filterDuplicatesRight(
-    operation.parameters?.map(param => resolveObject(param, refs)) || [],
-    (left, right) => left.name === right.name && left.in === right.in
-  ).map(param => ({
-    ...param,
-    // TODO: Check whether types are correct here and whether we can use union types here.
-    type: getType(resolveObject(param.schema, refs)?.type?.toString())
-  }));
 }
 
 export function parseOperationName(

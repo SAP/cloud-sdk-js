@@ -68,5 +68,14 @@ export const TestServiceApi = {
     args.simpleTestEntity,
     args.optionalPathItemQueryParam,
     args.optionalQueryParam
+  ),
+  testCaseGetDuplicateParameters: (args: {
+    duplicateParam: string,
+    duplicateParam2: string
+  }) => new OpenApiRequestBuilder<DefaultApi, 'testCaseGetDuplicateParameters'>(
+    DefaultApi,
+    'testCaseGetDuplicateParameters',
+    args.duplicateParam,
+    args.duplicateParam2
   )
 };

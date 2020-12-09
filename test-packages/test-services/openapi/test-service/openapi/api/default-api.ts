@@ -195,6 +195,56 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {string} duplicateParam 
+         * @param {string} duplicateParam2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        testCaseGetDuplicateParameters: async (duplicateParam: string, duplicateParam2: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'duplicateParam' is not null or undefined
+            if (duplicateParam === null || duplicateParam === undefined) {
+                throw new RequiredError('duplicateParam','Required parameter duplicateParam was null or undefined when calling testCaseGetDuplicateParameters.');
+            }
+            // verify required parameter 'duplicateParam2' is not null or undefined
+            if (duplicateParam2 === null || duplicateParam2 === undefined) {
+                throw new RequiredError('duplicateParam2','Required parameter duplicateParam2 was null or undefined when calling testCaseGetDuplicateParameters.');
+            }
+            const localVarPath = `/test-cases/parameters/{duplicateParam}`
+                .replace(`{${"duplicateParam"}}`, encodeURIComponent(String(duplicateParam2)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (duplicateParam !== undefined) {
+                localVarQueryParameter['duplicateParam'] = duplicateParam;
+            }
+
+
+    
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} requiredPathItemQueryParam 
          * @param {string} requiredPathItemPathParam 
          * @param {string} requiredQueryParam 
@@ -412,6 +462,20 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} duplicateParam 
+         * @param {string} duplicateParam2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async testCaseGetDuplicateParameters(duplicateParam: string, duplicateParam2: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).testCaseGetDuplicateParameters(duplicateParam, duplicateParam2, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} requiredPathItemQueryParam 
          * @param {string} requiredPathItemPathParam 
          * @param {string} requiredQueryParam 
@@ -497,6 +561,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @param {string} duplicateParam 
+         * @param {string} duplicateParam2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        testCaseGetDuplicateParameters(duplicateParam: string, duplicateParam2: string, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).testCaseGetDuplicateParameters(duplicateParam, duplicateParam2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} requiredPathItemQueryParam 
          * @param {string} requiredPathItemPathParam 
          * @param {string} requiredQueryParam 
@@ -579,6 +653,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getEntityByKey(entityId: string, options?: any) {
         return DefaultApiFp(this.configuration).getEntityByKey(entityId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} duplicateParam 
+     * @param {string} duplicateParam2 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public testCaseGetDuplicateParameters(duplicateParam: string, duplicateParam2: string, options?: any) {
+        return DefaultApiFp(this.configuration).testCaseGetDuplicateParameters(duplicateParam, duplicateParam2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

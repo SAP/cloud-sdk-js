@@ -4,10 +4,10 @@ import { apiFile } from './api-file';
 describe('api-file', () => {
   it('creates api file content for operations with parameters and no request bodies', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getEntity',
+          operationName: 'getFn',
           method: 'get',
           parameters: [
             {
@@ -25,7 +25,7 @@ describe('api-file', () => {
           pattern: 'test/{id}'
         },
         {
-          operationName: 'deleteEntity',
+          operationName: 'deleteFn',
           method: 'delete',
           parameters: [
             {
@@ -45,10 +45,10 @@ describe('api-file', () => {
 
   it('creates api file content for operation with request body', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'createEntity',
+          operationName: 'createFn',
           method: 'post',
           parameters: [],
           requestBody: {
@@ -59,7 +59,7 @@ describe('api-file', () => {
           pattern: 'test'
         },
         {
-          operationName: 'updateEntity',
+          operationName: 'updateFn',
           method: 'patch',
           parameters: [
             {
@@ -84,10 +84,10 @@ describe('api-file', () => {
 
   it('creates api file content for operation with no parameters or request body', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getEntity',
+          operationName: 'getFn',
           method: 'get',
           parameters: [],
           pattern: 'test'
@@ -98,12 +98,12 @@ describe('api-file', () => {
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
 
-  it('creates api file content for operation with differently ordered parameters', () => {
+  it('creates api file content for operation with required parameters defined after optional parameters', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getEntity',
+          operationName: 'createFn',
           method: 'post',
           parameters: [
             {
@@ -137,12 +137,12 @@ describe('api-file', () => {
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
 
-  it('creates api file content for operation with only  optional parameters', () => {
+  it('creates api file content for operation with only optional parameters', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getEntity',
+          operationName: 'getFn',
           method: 'get',
           parameters: [
             {

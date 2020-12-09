@@ -80,7 +80,6 @@ interface Parameter {
 function getApiFunctionSignatureParams(
   operation: OpenApiOperation
 ): Parameter[] {
-  // const parameters = operation.operationName //getAllParameters(operation);
   const [required, optional] = partition(
     operation.parameters,
     param => !!param.required

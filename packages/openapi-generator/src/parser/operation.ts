@@ -1,6 +1,11 @@
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { camelCase, partition, pascalCase } from '@sap-cloud-sdk/util';
+import {
+  camelCase,
+  partition,
+  pascalCase,
+  removeDuplicatesLeft
+} from '@sap-cloud-sdk/util';
 import { Method, OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { getType } from './type-mapping';
 import { parseRequestBody } from './request-body';
@@ -71,30 +76,13 @@ export function parseParameters(
 ): OpenApiParameter[] {
   // TODO: What if this is a reference? What does OpenApi do?
   // TODO: What about oneof and other operations?
-  return filterDuplicates(
-    operation.parameters?.map(param => resolveObject(param, refs)) || []
+  return removeDuplicatesLeft(
+    operation.parameters?.map(param => resolveObject(param, refs)) || [],
+    (left, right) => left.name === right.name && left.in === right.in
   ).map(param => ({
     ...param,
     type: getType(resolveObject(param.schema, refs)?.type?.toString())
   }));
-}
-
-export function filterDuplicates(
-  parameters: OpenAPIV3.ParameterObject[]
-): OpenAPIV3.ParameterObject[] {
-  return parameters.reduce(
-    (params: OpenAPIV3.ParameterObject[], currentParam) => {
-      const duplicateIndex = params.findIndex(
-        param =>
-          param.name === currentParam.name && param.in === currentParam.in
-      );
-      if (duplicateIndex >= 0) {
-        params.splice(duplicateIndex, 1);
-      }
-      return [...params, currentParam];
-    },
-    []
-  );
 }
 
 export function parseOperationName(

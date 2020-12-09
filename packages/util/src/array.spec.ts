@@ -7,7 +7,8 @@ import {
   splitInChunks,
   variadicArgumentToArray,
   zip,
-  partition
+  partition,
+  removeDuplicatesLeft
 } from './array';
 
 describe('array', () => {
@@ -160,5 +161,24 @@ describe('partition', () => {
       [true, true],
       [false, false]
     ]);
+  });
+});
+
+describe('removeDuplicatesLeft', () => {
+  it('can handle empty array', () => {
+    expect(removeDuplicatesLeft([])).toEqual([]);
+  });
+
+  it('removes duplicates using the default comparator', () => {
+    expect(removeDuplicatesLeft([1, 2, 1, 4])).toEqual([2, 1, 4]);
+  });
+
+  it('removes duplicates using a custom comparator', () => {
+    expect(
+      removeDuplicatesLeft(
+        [{ a: 1, b: 1 }, { a: 2 }, { a: 1, b: 2 }, { a: 4 }],
+        (left, right) => left.a === right.a
+      )
+    ).toEqual([{ a: 2 }, { a: 1, b: 2 }, { a: 4 }]);
   });
 });

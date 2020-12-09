@@ -103,7 +103,7 @@ jobs:
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           date=`date +%Y%m%d.%H%M%S`
           commit=`git rev-parse --short HEAD`
-          yarn lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid ${date}.${commit} -y
+          yarn lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid ${date}+${commit} -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:

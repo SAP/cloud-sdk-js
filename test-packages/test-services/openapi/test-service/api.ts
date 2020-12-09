@@ -28,7 +28,7 @@ export const TestServiceApi = {
     DefaultApi,
     'countEntities'
   ),
-  testCaseGetRequiredParameters: (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity) => new OpenApiRequestBuilder<DefaultApi, 'testCaseGetRequiredParameters'>(
+  testCaseGetRequiredParameters: (requiredPathItemPathParam: string, simpleTestEntity?: SimpleTestEntity, requiredPathItemQueryParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string) => new OpenApiRequestBuilder<DefaultApi, 'testCaseGetRequiredParameters'>(
     DefaultApi,
     'testCaseGetRequiredParameters',
     requiredPathItemQueryParam,
@@ -38,7 +38,7 @@ export const TestServiceApi = {
     optionalPathItemQueryParam,
     simpleTestEntity
   ),
-  testCasePostRequiredParameters: (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string) => new OpenApiRequestBuilder<DefaultApi, 'testCasePostRequiredParameters'>(
+  testCasePostRequiredParameters: (requiredPathItemPathParam: string, simpleTestEntity: SimpleTestEntity, requiredPathItemQueryParam: string, requiredQueryParam: string, optionalPathItemQueryParam?: string, optionalQueryParam?: string) => new OpenApiRequestBuilder<DefaultApi, 'testCasePostRequiredParameters'>(
     DefaultApi,
     'testCasePostRequiredParameters',
     requiredPathItemQueryParam,

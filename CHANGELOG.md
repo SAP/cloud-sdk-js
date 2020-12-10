@@ -28,7 +28,7 @@
 
 ## Fixed Issues
 
-- [Destination] Fix the authentication type OAuth2ClientCredentials to keep using the token url from the destination without adding the path `/oauth/token` to the end.
+- [Destination] Fix the authentication type `OAuth2ClientCredentials` to keep using the token url from the destination without adding the path `/oauth/token` to the end.
 - [Destination] Fix `OAuth2SAMLBearerAssertion` flow for technical users and subscriber account destinations. 
 
 

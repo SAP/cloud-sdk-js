@@ -22,7 +22,7 @@ describe('openapi request builder', () => {
       keyProperty: 'a13e7a92-cb9c-8f4a-b1e1-6b5c8458a9fb',
       stringProperty: 'string'
     };
-    await TestServiceApi.createEntity(testEntity).execute(restDestination);
+    await TestServiceApi.createEntity({ testEntity }).execute(restDestination);
     const postCreateCount = await countEntities();
     expect(postCreateCount).toEqual(preCreateCount + 1);
   });

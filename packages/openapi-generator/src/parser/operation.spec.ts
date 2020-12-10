@@ -1,5 +1,5 @@
-import { createRefs } from '../../test/test-util';
-import { parseOperationName, parseParameters } from './operation';
+import { OpenAPIV3 } from 'openapi-types';
+import { parseOperationName, getOperation } from './operation';
 
 describe('parseOperationName', () => {
   it('parses the operation name from the operationId', () => {
@@ -43,79 +43,26 @@ describe('parseOperationName', () => {
   });
 });
 
-describe('parseParameters', () => {
-  it('returns empty array if there are no parameters', async () => {
-    expect(parseParameters({}, await createRefs())).toEqual([]);
-  });
+describe('getOperation', () => {
+  const operationParam = { in: 'query', name: 'operationParam' };
+  const pathParam = { in: 'path', required: true, name: 'pathParam' };
+  const pathItem: OpenAPIV3.PathItemObject = {
+    get: { parameters: [operationParam] },
+    parameters: [pathParam]
+  };
 
-  it('parses inline parameters', async () => {
-    const anyParamNoSchema = { in: 'query', name: 'anyParamNoSchema' };
-    const anyParamWithSchema = {
-      in: 'query',
-      name: 'anyParamWithSchema',
-      schema: {}
-    };
-    const stringParam = {
-      in: 'query',
-      name: 'anyParamWithSchema',
-      schema: { type: 'string' }
-    };
-    const numberParam = {
-      in: 'query',
-      name: 'anyParamWithSchema',
-      schema: { type: 'integer' }
-    };
-
-    expect(
-      parseParameters(
-        {
-          parameters: [
-            anyParamNoSchema,
-            anyParamWithSchema,
-            stringParam,
-            numberParam
-          ]
-        },
-        await createRefs()
-      )
-    ).toStrictEqual([
-      { ...anyParamNoSchema, type: 'any' },
-      { ...anyParamWithSchema, type: 'any' },
-      { ...stringParam, type: 'string' },
-      { ...numberParam, type: 'number' }
+  it('merges parameters', () => {
+    expect(getOperation(pathItem, 'get').parameters).toStrictEqual([
+      pathParam,
+      operationParam
     ]);
   });
 
-  it('parses referenced parameters', async () => {
-    const referencedParam = { in: 'query', name: 'referencedParam' };
-    const parameterSchema = { $ref: '#/components/schemas/parameterSchema' };
-    const referencedParamWithReferencedSchema = {
-      in: 'query',
-      name: 'referencedParamWithReferencedSchema',
-      schema: parameterSchema
-    };
-
-    expect(
-      parseParameters(
-        {
-          parameters: [
-            {
-              $ref: '#/components/parameters/referencedParam'
-            },
-            {
-              $ref:
-                '#/components/parameters/referencedParamWithReferencedSchema'
-            }
-          ]
-        },
-        await createRefs({
-          parameters: { referencedParam, referencedParamWithReferencedSchema },
-          schemas: { parameterSchema }
-        })
-      )
-    ).toStrictEqual([
-      { ...referencedParam, type: 'any' },
-      { ...referencedParamWithReferencedSchema, type: 'any' }
-    ]);
+  it('throws an error if there is no operation for the given method', () => {
+    expect(() =>
+      getOperation(pathItem, 'post')
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Could not parse operation. Operation for method \'post\' does not exist."'
+    );
   });
 });

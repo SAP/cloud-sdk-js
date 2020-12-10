@@ -4,28 +4,28 @@ import { apiFile } from './api-file';
 describe('api-file', () => {
   it('creates api file content for operations with parameters and no request bodies', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getEntity',
+          operationName: 'getFn',
           method: 'get',
           parameters: [
+            {
+              in: 'query',
+              name: 'limit',
+              type: 'number'
+            },
             {
               in: 'path',
               name: 'id',
               type: 'string',
               required: true
-            },
-            {
-              in: 'query',
-              name: 'limit',
-              type: 'number'
             }
           ],
           pattern: 'test/{id}'
         },
         {
-          operationName: 'deleteEntity',
+          operationName: 'deleteFn',
           method: 'delete',
           parameters: [
             {
@@ -45,10 +45,10 @@ describe('api-file', () => {
 
   it('creates api file content for operation with request body', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'createEntity',
+          operationName: 'createFn',
           method: 'post',
           parameters: [],
           requestBody: {
@@ -59,7 +59,7 @@ describe('api-file', () => {
           pattern: 'test'
         },
         {
-          operationName: 'updateEntity',
+          operationName: 'updateFn',
           method: 'patch',
           parameters: [
             {
@@ -84,12 +84,73 @@ describe('api-file', () => {
 
   it('creates api file content for operation with no parameters or request body', () => {
     const openApiDocument: OpenApiDocument = {
-      apiName: 'TestServiceApi',
+      apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getEntity',
+          operationName: 'getFn',
           method: 'get',
           parameters: [],
+          pattern: 'test'
+        }
+      ],
+      serviceDirName: 'test-service'
+    };
+    expect(apiFile(openApiDocument)).toMatchSnapshot();
+  });
+
+  it('creates api file content for operation with required parameters defined after optional parameters', () => {
+    const openApiDocument: OpenApiDocument = {
+      apiName: 'TestApi',
+      operations: [
+        {
+          operationName: 'createFn',
+          method: 'post',
+          parameters: [
+            {
+              in: 'query',
+              name: 'optionalQueryParam',
+              type: 'number'
+            },
+            {
+              in: 'query',
+              name: 'requiredQueryParam',
+              type: 'number',
+              required: true
+            },
+            {
+              in: 'path',
+              name: 'requiredPathParam',
+              type: 'number',
+              required: true
+            }
+          ],
+          requestBody: {
+            parameterName: 'body',
+            parameterType: 'Body',
+            required: true
+          } as OpenApiRequestBody,
+          pattern: 'test'
+        }
+      ],
+      serviceDirName: 'test-service'
+    };
+    expect(apiFile(openApiDocument)).toMatchSnapshot();
+  });
+
+  it('creates api file content for operation with only optional parameters', () => {
+    const openApiDocument: OpenApiDocument = {
+      apiName: 'TestApi',
+      operations: [
+        {
+          operationName: 'getFn',
+          method: 'get',
+          parameters: [
+            {
+              in: 'query',
+              name: 'optionalQueryParam',
+              type: 'number'
+            }
+          ],
           pattern: 'test'
         }
       ],

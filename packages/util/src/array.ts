@@ -135,3 +135,32 @@ export function partition<T>(
     [[], []]
   );
 }
+
+/**
+ * Filter an array by removing duplicates and keeping the left most occurence. By default this compares by identity.
+ * @param arr Array to remove duplicates from.
+ * @param comparator Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
+ * @returns A filtered array containing no duplicates.
+ */
+export function filterDuplicates<T>(
+  arr: T[],
+  comparator: (left: T, right: T) => boolean = (left, right) => left === right
+): T[] {
+  return arr.filter(
+    (item, index) =>
+      !arr.slice(0, index).find(filteredItem => comparator(item, filteredItem))
+  );
+}
+
+/**
+ * Filter an array by removing duplicates and keeping the right most occurence. By default this compares by identity.
+ * @param arr Array to remove duplicates from.
+ * @param comparator Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
+ * @returns A filtered array containing no duplicates.
+ */
+export function filterDuplicatesRight<T>(
+  arr: T[],
+  comparator: (left: T, right: T) => boolean = (left, right) => left === right
+): T[] {
+  return filterDuplicates(arr.reverse(), comparator).reverse();
+}

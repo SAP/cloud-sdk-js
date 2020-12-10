@@ -1,4 +1,4 @@
-import { codeBlock, unique } from '@sap-cloud-sdk/util';
+import { codeBlock, partition, unique } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
 
 /**
@@ -54,22 +54,27 @@ function getOperations(openApiDocument: OpenApiDocument): string {
  * @returns The operation as a string.
  */
 function getOperation(operation: OpenApiOperation): string {
-  const parameters = getAllParameters(operation);
-
-  // TODO: The order of parameters should be changed if the parameters are required, so that required parameters come first
-  const apiFunctionSignatureParams = parameters.map(
-    param => `${param.name}${param.required ? '' : '?'}: ${param.type}`
-  );
+  const params = getParams(operation);
+  const argsQuestionMark = params.every(param => !param.required) ? '?' : '';
+  const paramsArg = params.length
+    ? codeBlock`args${argsQuestionMark}: {
+  ${params
+    .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
+    .join(',\n')}
+}`
+    : '';
   const requestBuilderParams = [
     'DefaultApi',
     `'${operation.operationName}'`,
-    ...parameters.map(param => param.name)
+    ...params.map(param => `args${argsQuestionMark}.${param.name}`)
   ];
 
   return codeBlock`
-${operation.operationName}: (${apiFunctionSignatureParams.join(
-    ', '
-  )}) => new OpenApiRequestBuilder<DefaultApi, '${operation.operationName}'>(
+${
+  operation.operationName
+}: (${paramsArg}) => new OpenApiRequestBuilder<DefaultApi, '${
+    operation.operationName
+  }'>(
   ${requestBuilderParams.join(',\n')}
 )`;
 }
@@ -80,17 +85,24 @@ interface Parameter {
   required?: boolean;
 }
 
-function getAllParameters(operation: OpenApiOperation): Parameter[] {
-  if (operation.requestBody) {
-    return [
-      ...operation.parameters,
-      {
-        name: operation.requestBody.parameterName,
-        type: operation.requestBody.parameterType,
-        required: operation.requestBody.required
-      }
-    ];
-  }
+function getParams(operation: OpenApiOperation): Parameter[] {
+  const parameters = [
+    ...operation.parameters,
+    ...getRequestBodyParams(operation)
+  ];
 
-  return operation.parameters;
+  const [required, optional] = partition(parameters, param => !!param.required);
+  return [...required, ...optional];
+}
+
+function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
+  return operation.requestBody
+    ? [
+        {
+          name: operation.requestBody.parameterName,
+          type: operation.requestBody.parameterType,
+          required: operation.requestBody.required
+        }
+      ]
+    : [];
 }

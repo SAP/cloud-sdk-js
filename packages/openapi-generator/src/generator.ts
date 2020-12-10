@@ -121,16 +121,16 @@ async function generateOpenApiService(
  * Workaround for OpenApi generation to build one and only one API for all tags.
  * Write a new spec with only one 'default' tag.
  * @param fileContent File content of the original spec.
- * @param ouputFilePath Path to write the altered spec to.
+ * @param outputFilePath Path to write the altered spec to.
  */
 async function generateSpecWithGlobalTag(
   fileContent: string,
-  ouputFilePath: string
+  outputFilePath: string
 ): Promise<void> {
   const openApiDocument = JSON.parse(fileContent);
   const modifiedOpenApiDocument = createSpecWithGlobalTag(openApiDocument);
   return writeFile(
-    ouputFilePath,
+    outputFilePath,
     JSON.stringify(modifiedOpenApiDocument, null, 2)
   );
 }

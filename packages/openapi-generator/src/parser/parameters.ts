@@ -1,5 +1,9 @@
 import { $Refs } from '@apidevtools/swagger-parser';
-import { filterDuplicatesRight, partition } from '@sap-cloud-sdk/util';
+import {
+  camelCase,
+  filterDuplicatesRight,
+  partition
+} from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiParameter } from '../openapi-types';
 import { resolveObject } from './refs';
@@ -8,7 +12,7 @@ import { getType } from './type-mapping';
 /**
  * Parse parameters of an operation.
  * @param operation The original operation definition.
- * @param refs List of crossreferences that can occur in the document.
+ * @param refs List of cross references that can occur in the document.
  * @returns A list of parsed parameters.
  */
 export function parseParameters(
@@ -16,7 +20,7 @@ export function parseParameters(
   refs: $Refs
 ): OpenApiParameter[] {
   // TODO: What if this is a reference? What does OpenApi do?
-  // TODO: What about oneof and other operations?
+  // TODO: What about one of and other operations?
   let parameters =
     operation.parameters?.map(param => resolveObject(param, refs)) || [];
   parameters = filterDuplicateParams(parameters);
@@ -24,6 +28,7 @@ export function parseParameters(
   parameters = renameEquallyNamedParams(parameters);
   return parameters.map(param => ({
     ...param,
+    name: camelCase(param.name),
     // TODO: Check whether types are correct here and whether we can use union types here.
     type: getType(resolveObject(param.schema, refs)?.type?.toString())
   }));

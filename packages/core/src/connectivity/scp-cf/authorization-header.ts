@@ -221,6 +221,9 @@ function getProxyRelatedAuthHeaders(
 async function getAuthenticationRelatedHeaders(
   destination: Destination
 ): Promise<Record<string, string>> {
+  logger.debug(
+    `Getting authentication related headers for authentication type: ${destination.authentication}`
+  );
   switch (destination.authentication) {
     case null:
     case undefined:

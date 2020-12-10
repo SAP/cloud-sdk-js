@@ -277,11 +277,16 @@ enum GrantType {
   CLIENT_CREDENTIALS = 'client_credentials'
 }
 
+// TODO: the caller should understand whether this method is applicable. 1. No, when the url comes from a destination. 2. Yes, when the url comes from the XsuaaServiceCredentials.
 function getTargetUri(xsuaaUri: string): string {
   xsuaaUri = xsuaaUri.replace(/\/$/, '');
-  return xsuaaUri.endsWith('/oauth/token')
-    ? xsuaaUri
-    : `${xsuaaUri}/oauth/token`;
+  if (xsuaaUri.includes('/oauth/token')) {
+    return xsuaaUri;
+  }
+  logger.warn(
+    `Adding "/oauth/token" to the end of the target uri: ${xsuaaUri}.`
+  );
+  return `${xsuaaUri}/oauth/token`;
 }
 
 function accessTokenError(error: Error, grant: string): Error {

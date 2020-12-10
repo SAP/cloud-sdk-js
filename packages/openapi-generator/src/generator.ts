@@ -4,14 +4,13 @@ import { promises } from 'fs';
 import { resolve, parse } from 'path';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
-import { OpenAPIV3 } from 'openapi-types';
-import { convert } from 'swagger2openapi';
 import { GeneratorOptions } from './options';
 import { apiFile, indexFile, createFile } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
+import { convertOpenApiSpec } from './document-converter';
 
-const { readdir, readFile, writeFile, rmdir, mkdir } = promises;
+const { readdir, writeFile, rmdir, mkdir } = promises;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -34,9 +33,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const serviceName = parseServiceName(filePath);
     // TODO: get kebapcase unique directory name
     const serviceDir = resolve(options.outputDir, serviceName);
-    const openApiDocument = await convertDocForGeneration(
-      await readFile(filePath, 'utf8')
-    );
+    const openApiDocument = await convertOpenApiSpec(filePath);
     const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
     const parsedOpenApiDocument = await parseOpenApiDocument(
       openApiDocument,
@@ -124,51 +121,6 @@ async function generateOpenApiService(
       err
     );
   }
-}
-
-/**
- * Workaround for OpenApi generation to build one and only one API for all tags.
- * Write a new spec with only one 'default' tag.
- * @param fileContent File content of the original spec.
- * @param ouputFilePath Path to write the altered spec to.
- */
-async function convertDocForGeneration(
-  fileContent: string
-): Promise<OpenAPIV3.Document> {
-  let openApiDocument = JSON.parse(fileContent);
-  openApiDocument = await convertDocToOpenApi3(openApiDocument);
-  openApiDocument = convertDocToGlobalTag(openApiDocument);
-  return openApiDocument;
-}
-
-/**
- * Workaround for OpenApi generation to build one and only one API for all tags.
- * Modify spec to contain only one 'default' tag.
- * @param openApiDocument OpenApi JSON document.
- * @returns The modified document.
- */
-export function convertDocToGlobalTag(
-  openApiDocument: OpenAPIV3.Document
-): OpenAPIV3.Document {
-  const tag = 'default';
-  openApiDocument.tags = [{ name: tag }];
-
-  Object.values(openApiDocument.paths).forEach(
-    (pathDefinition: Record<string, any>) => {
-      Object.values(pathDefinition).forEach(methodDefinition => {
-        methodDefinition.tags = [tag];
-      });
-    }
-  );
-
-  return openApiDocument;
-}
-
-export async function convertDocToOpenApi3(
-  openApiDocument: Record<string, any>
-): Promise<OpenAPIV3.Document> {
-  // This is a hidden cast to OpenAPIV3.Document
-  return (await convert(openApiDocument, {})).openapi;
 }
 
 /**

@@ -2,7 +2,7 @@
 
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import Command from '@oclif/command';
 import { flags } from '@oclif/parser';
@@ -50,7 +50,7 @@ export = class GenerateOpenApiClient extends Command {
   async run() {
     try {
       const parsed = this.parse(GenerateOpenApiClient);
-      await checkJavaPresent();
+      await validateJavaRuntime();
       await generate(parsed.flags);
     } catch (e) {
       logger.error(e.message);
@@ -60,23 +60,25 @@ export = class GenerateOpenApiClient extends Command {
 };
 
 /*
-The openapi generator requires a java runtime. In order to get a proper message to the user, we check this here.
+The OpenApi generator requires a Java runtime. In order to get a proper message to the user, we check this here.
  */
-async function checkJavaPresent(): Promise<void> {
-  // TODO: Improve the return values here.
+async function validateJavaRuntime(): Promise<void> {
+  logger.info(
+    'The OpenApi client generation requires a Java runtime. Checking which Java version is installed...'
+  );
+
+  let response;
   try {
-    const response = await execa('java', ['-version']);
-    if (response.exitCode !== 0 || !response.stderr.includes('version')) {
-      logger.error(
-        `Java -version did not return a Java version. Check Java version response: ${response.stderr}`
-      );
-      return Promise.reject();
-    }
-    return Promise.resolve();
+    response = await execa('java', ['-version']);
   } catch (err) {
-    logger.error(
-      `Error in checking the java version. Is Java installed? This is mandatory for the OpenApi client generation. ${err.message}`
+    throw errorWithCause(
+      'Could not invoke `java` command. Probably no Java runtime is installed.',
+      err
     );
-    return Promise.reject();
+  }
+  if (response.exitCode !== 0 || !response.stderr.includes('version')) {
+    throw new Error(
+      `Could not validate Java version. Probably Java runtime is corrupt. Version check failed with "${response.stderr}"`
+    );
   }
 }

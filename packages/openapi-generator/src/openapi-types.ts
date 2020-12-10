@@ -6,7 +6,6 @@ import { OpenAPIV3 } from 'openapi-types';
  */
 export interface OpenApiDocument {
   apiName: string;
-  serviceDirName: string;
   operations: OpenApiOperation[];
 }
 

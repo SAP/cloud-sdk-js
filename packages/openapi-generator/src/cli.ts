@@ -78,7 +78,7 @@ async function validateJavaRuntime(): Promise<void> {
   }
   if (response.exitCode !== 0 || !response.stderr.includes('version')) {
     throw new Error(
-      `Could not validate Java version. Probably Java runtime is corrupt. Version check failed with "${response.stderr}"`
+      `Could not validate Java version. Probably Java runtime is not installed or misconfigured. Version check failed with "${response.stderr}"`
     );
   }
 }

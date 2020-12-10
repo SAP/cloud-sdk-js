@@ -1,5 +1,9 @@
 import { $Refs } from '@apidevtools/swagger-parser';
-import { camelCase, filterDuplicatesRight, partition } from '@sap-cloud-sdk/util';
+import {
+  camelCase,
+  filterDuplicatesRight,
+  partition
+} from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiParameter } from '../openapi-types';
 import { resolveObject } from './refs';
@@ -8,7 +12,7 @@ import { getType } from './type-mapping';
 /**
  * Parse parameters of an operation.
  * @param operation The original operation definition.
- * @param refs List of crossreferences that can occur in the document.
+ * @param refs List of cross references that can occur in the document.
  * @returns A list of parsed parameters.
  */
 export function parseParameters(

@@ -64,7 +64,7 @@
             }
           },
           {
-            "name": "doc.parameter",
+            "name": "dot.parameter",
             "in": "query",
             "description": "A parameter that contains . in the middle",
             "required": false,

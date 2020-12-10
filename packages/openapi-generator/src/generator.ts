@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { OpenAPIV3 } from 'openapi-types';
+import { convert } from 'swagger2openapi';
 import { GeneratorOptions } from './options';
 import { apiFile, indexFile, createFile } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
@@ -121,16 +122,18 @@ async function generateOpenApiService(
  * Workaround for OpenApi generation to build one and only one API for all tags.
  * Write a new spec with only one 'default' tag.
  * @param fileContent File content of the original spec.
- * @param outputFilePath Path to write the altered spec to.
+ * @param ouputFilePath Path to write the altered spec to.
  */
 async function generateSpecWithGlobalTag(
   fileContent: string,
-  outputFilePath: string
+  ouputFilePath: string
 ): Promise<void> {
   const openApiDocument = JSON.parse(fileContent);
-  const modifiedOpenApiDocument = createSpecWithGlobalTag(openApiDocument);
+  const modifiedOpenApiDocument = createSpecWithGlobalTag(
+    await convertDocToOpenApi3(openApiDocument)
+  );
   return writeFile(
-    outputFilePath,
+    ouputFilePath,
     JSON.stringify(modifiedOpenApiDocument, null, 2)
   );
 }
@@ -156,4 +159,8 @@ export function createSpecWithGlobalTag(
   );
 
   return openApiDocument;
+}
+
+export async function convertDocToOpenApi3(doc: any) {
+  return (await convert(doc, {})).openapi;
 }

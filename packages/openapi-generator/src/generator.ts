@@ -2,10 +2,10 @@
 
 import { promises } from 'fs';
 import { resolve } from 'path';
-import { safeLoad } from 'js-yaml';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { OpenAPIV3 } from 'openapi-types';
+import { convert } from 'swagger2openapi';
 import { GeneratorOptions } from './options';
 import { apiFile, indexFile, createFile } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
@@ -45,10 +45,9 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     );
     const adjustedInputFilePath = resolve(serviceDir, 'open-api.json');
     const fileContent = await readFile(filePath, 'utf8');
-    const fileContentAsObj = parseYamlOrJson(fileContent, filePath);
 
     await mkdir(serviceDir, { recursive: true });
-    await generateSpecWithGlobalTag(fileContentAsObj, adjustedInputFilePath);
+    await generateSpecWithGlobalTag(fileContent, adjustedInputFilePath);
     await generateOpenApiService(adjustedInputFilePath, serviceDir);
     await generateSDKSources(serviceDir, openApiDocument, options);
   });
@@ -123,35 +122,19 @@ async function generateOpenApiService(
  * Workaround for OpenApi generation to build one and only one API for all tags.
  * Write a new spec with only one 'default' tag.
  * @param fileContent File content of the original spec.
- * @param outputFilePath Path to write the altered spec to.
+ * @param ouputFilePath Path to write the altered spec to.
  */
 async function generateSpecWithGlobalTag(
-  fileContent: any,
-  outputFilePath: string
+  fileContent: string,
+  ouputFilePath: string
 ): Promise<void> {
-  const modifiedOpenApiDocument = createSpecWithGlobalTag(fileContent);
-  return writeFile(
-    outputFilePath,
-    JSON.stringify(modifiedOpenApiDocument, null, 2)
+  const openApiDocument = JSON.parse(fileContent);
+  const modifiedOpenApiDocument = createSpecWithGlobalTag(
+    await convertDocToOpenApi3(openApiDocument)
   );
-}
-
-/**
- * Parse a yaml or a json file to an object.
- * @param fileContent File content of the original spec.
- * @param filePath File path of the original spec.
- * @returns File content as an object.
- */
-function parseYamlOrJson(fileContent: string, filePath: string) {
-  const filePathLowerCase = filePath.toLocaleLowerCase();
-  if (filePathLowerCase.endsWith('yaml') || filePathLowerCase.endsWith('yml')) {
-    return safeLoad(fileContent);
-  }
-  if (filePathLowerCase.endsWith('json')) {
-    return JSON.parse(fileContent);
-  }
-  throw new Error(
-    `Only support Json and Yaml files as input files, but detected: ${filePath}.`
+  return writeFile(
+    ouputFilePath,
+    JSON.stringify(modifiedOpenApiDocument, null, 2)
   );
 }
 
@@ -176,4 +159,8 @@ export function createSpecWithGlobalTag(
   );
 
   return openApiDocument;
+}
+
+export async function convertDocToOpenApi3(doc: any) {
+  return (await convert(doc, {})).openapi;
 }

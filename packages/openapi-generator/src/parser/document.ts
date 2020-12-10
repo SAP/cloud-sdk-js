@@ -1,4 +1,3 @@
-import * as path from 'path';
 import { parse, resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { pascalCase } from '@sap-cloud-sdk/util';
@@ -6,16 +5,15 @@ import { OpenApiOperation, OpenApiDocument, methods } from '../openapi-types';
 import { parseOperation } from './operation';
 
 export async function parseOpenApiDocument(
-  filePath: string
+  fileContent: OpenAPIV3.Document,
+  serviceName: string
 ): Promise<OpenApiDocument> {
-  const document = (await parse(filePath)) as OpenAPIV3.Document;
+  const document = (await parse(fileContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
   const operations = parseAllOperations(document, refs);
-  const serviceName = parseServiceName(filePath);
   return {
     operations,
-    apiName: pascalCase(serviceName) + 'Api',
-    serviceDirName: serviceName
+    apiName: pascalCase(serviceName) + 'Api'
   };
 }
 
@@ -38,13 +36,4 @@ export function parseAllOperations(
     ],
     []
   );
-}
-
-/**
- * Parse the name of the service based on the file path.
- * @param filePath Path of the service specification.
- * @returns The parsed name.
- */
-function parseServiceName(filePath: string): string {
-  return path.parse(filePath).name.replace(/-openapi$/, '');
 }

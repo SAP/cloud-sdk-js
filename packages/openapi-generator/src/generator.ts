@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises } from 'fs';
-import { resolve } from 'path';
+import { resolve, parse } from 'path';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { OpenAPIV3 } from 'openapi-types';
@@ -31,25 +31,33 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   );
 
   inputFilePaths.forEach(async filePath => {
-    const openApiDocument = await parseOpenApiDocument(filePath);
-    if (!openApiDocument.operations.length) {
+    const serviceName = parseServiceName(filePath);
+    // TODO: get kebapcase unique directory name
+    const serviceDir = resolve(options.outputDir, serviceName);
+    const openApiDocument = await convertDocForGeneration(
+      await readFile(filePath, 'utf8')
+    );
+    const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
+    const parsedOpenApiDocument = await parseOpenApiDocument(
+      openApiDocument,
+      serviceName
+    );
+
+    if (!parsedOpenApiDocument.operations.length) {
       logger.warn(
         `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
       );
       return;
     }
-    // TODO: get kebapcase unique directory name
-    const serviceDir = resolve(
-      options.outputDir,
-      openApiDocument.serviceDirName
-    );
-    const adjustedInputFilePath = resolve(serviceDir, 'open-api.json');
-    const fileContent = await readFile(filePath, 'utf8');
 
     await mkdir(serviceDir, { recursive: true });
-    await generateSpecWithGlobalTag(fileContent, adjustedInputFilePath);
-    await generateOpenApiService(adjustedInputFilePath, serviceDir);
-    await generateSDKSources(serviceDir, openApiDocument, options);
+    await writeFile(
+      convertedInputFilePath,
+      JSON.stringify(openApiDocument, null, 2)
+    );
+
+    await generateOpenApiService(convertedInputFilePath, serviceDir);
+    await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
   });
 }
 
@@ -124,18 +132,13 @@ async function generateOpenApiService(
  * @param fileContent File content of the original spec.
  * @param ouputFilePath Path to write the altered spec to.
  */
-async function generateSpecWithGlobalTag(
-  fileContent: string,
-  ouputFilePath: string
-): Promise<void> {
-  const openApiDocument = JSON.parse(fileContent);
-  const modifiedOpenApiDocument = createSpecWithGlobalTag(
-    await convertDocToOpenApi3(openApiDocument)
-  );
-  return writeFile(
-    ouputFilePath,
-    JSON.stringify(modifiedOpenApiDocument, null, 2)
-  );
+async function convertDocForGeneration(
+  fileContent: string
+): Promise<OpenAPIV3.Document> {
+  let openApiDocument = JSON.parse(fileContent);
+  openApiDocument = await convertDocToOpenApi3(openApiDocument);
+  openApiDocument = convertDocToGlobalTag(openApiDocument);
+  return openApiDocument;
 }
 
 /**
@@ -144,7 +147,7 @@ async function generateSpecWithGlobalTag(
  * @param openApiDocument OpenApi JSON document.
  * @returns The modified document.
  */
-export function createSpecWithGlobalTag(
+export function convertDocToGlobalTag(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
   const tag = 'default';
@@ -161,6 +164,18 @@ export function createSpecWithGlobalTag(
   return openApiDocument;
 }
 
-export async function convertDocToOpenApi3(doc: any) {
-  return (await convert(doc, {})).openapi;
+export async function convertDocToOpenApi3(
+  openApiDocument: Record<string, any>
+): Promise<OpenAPIV3.Document> {
+  // This is a hidden cast to OpenAPIV3.Document
+  return (await convert(openApiDocument, {})).openapi;
+}
+
+/**
+ * Parse the name of the service based on the file path.
+ * @param filePath Path of the service specification.
+ * @returns The parsed name.
+ */
+function parseServiceName(filePath: string): string {
+  return parse(filePath).name.replace(/-openapi$/, '');
 }

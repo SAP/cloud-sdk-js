@@ -1,9 +1,9 @@
 import { emptyApiDefinition } from '../test/test-util';
-import { createSpecWithGlobalTag } from './generator';
+import { convertDocToGlobalTag } from './generator';
 
-describe('createSpecWithGlobalTag', () => {
+describe('convertDocToGlobalTag', () => {
   it("replaces all tags with 'default'", () => {
-    const newSpec = createSpecWithGlobalTag({
+    const newSpec = convertDocToGlobalTag({
       ...emptyApiDefinition,
       paths: {
         '/pattern1': {

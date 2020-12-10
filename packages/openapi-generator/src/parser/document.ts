@@ -34,10 +34,7 @@ export function parseAllOperations(
       ...allOperations,
       ...methods()
         .filter(method => method in pathDefinition)
-        .map(method =>
-          // The line above makes sure that the pathDefinition[method] is not undefined
-          parseOperation(pattern, method, pathDefinition[method]!, refs)
-        )
+        .map(method => parseOperation(pattern, pathDefinition, method, refs))
     ],
     []
   );

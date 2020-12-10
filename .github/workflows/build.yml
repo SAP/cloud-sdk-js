@@ -101,7 +101,8 @@ jobs:
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-          yarn lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid `git rev-parse --short HEAD` -y
+          date=`date +%Y%m%d%H%M%S`
+          yarn lerna publish --canary --no-push --no-git-tag-version --dist-tag canary --force-publish --preid ${date} -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:

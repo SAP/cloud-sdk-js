@@ -10,6 +10,33 @@
 
 ## Known Issues
 
+-
+
+## Compatibility Notes
+
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.33.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.33.0<br>
+Blog: TBD<br>
+
+## Known Issues
+
 - [Generator] Using entity type as the parameter of function or action imports is not supported.
 
 ## Compatibility Notes
@@ -28,8 +55,8 @@
 
 ## Fixed Issues
 
--
-
+- [Destination] Fix the authentication type `OAuth2ClientCredentials` to keep using the token url from the destination without adding the path `/oauth/token` to the end.
+- [Destination] Fix `OAuth2SAMLBearerAssertion` flow for technical users and subscriber account destinations. 
 
 # 1.32.1
 

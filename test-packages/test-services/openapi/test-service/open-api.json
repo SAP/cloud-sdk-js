@@ -151,7 +151,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/TestEntity"
                   }
@@ -184,6 +183,151 @@
           },
           "400": {
             "description": "bad input parameter"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/test-cases/parameters/required-parameters/{requiredPathItemPathParam}": {
+      "parameters": [
+        {
+          "name": "optionalPathItemQueryParam",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "requiredPathItemQueryParam",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "requiredPathItemPathParam",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "testCaseGetRequiredParameters",
+        "parameters": [
+          {
+            "name": "optionalQueryParam",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requiredQueryParam",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "optionalPathItemQueryParam",
+            "description": "Overrides original path item query parameter.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      },
+      "post": {
+        "operationId": "testCasePostRequiredParameters",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "optionalQueryParam",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requiredQueryParam",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/test-cases/parameters/{duplicateParam}": {
+      "get": {
+        "operationId": "testCaseGetDuplicateParameters",
+        "parameters": [
+          {
+            "name": "duplicateParam",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "duplicateParam",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
           }
         },
         "tags": [

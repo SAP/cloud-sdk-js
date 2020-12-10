@@ -1,8 +1,8 @@
 {
   "name": "@sap-cloud-sdk/analytics",
-  "version": "1.32.1",
+  "version": "1.33.0",
   "description": "SAP Cloud SDK Analytics Usage",
-  "homepage": "https://community.sap.com/topics/cloud-sdk",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -21,7 +21,7 @@
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map"
   ],
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
@@ -31,7 +31,7 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^1.32.1",
+    "@sap-cloud-sdk/util": "^1.33.0",
     "axios": "^0.21.0"
   },
   "devDependencies": {

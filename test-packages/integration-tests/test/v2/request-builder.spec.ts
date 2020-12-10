@@ -551,7 +551,10 @@ describe('Request Builder', () => {
 
     nock(destination.tokenServiceURL, {
       reqheaders: {
-        authorization: 'Basic VG9rZW5DbGllbnRJZDpUb2tlbkNsaWVudFNlY3JldA=='
+        authorization: basicHeader(
+          destination.clientId,
+          destination.clientSecret
+        )
       }
     })
       .post(

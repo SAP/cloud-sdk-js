@@ -6,6 +6,11 @@ Change your app to start in debug mode, ssh tunnel your local port 9229 to the r
 
 ## Steps
 
+### Assign yourself as a Space Developer.
+1. Go to the space on CF where your application will be pushed to.
+2. Click `Member` on the left side.
+3. Add yourself as a `Space Developer`.
+
 ### Deploy your application with debug mode
 
 Replace the start script to run in debug mode.

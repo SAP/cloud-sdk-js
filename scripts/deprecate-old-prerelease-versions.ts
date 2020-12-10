@@ -1,7 +1,7 @@
 import execa = require('execa');
 import { createLogger } from '@sap-cloud-sdk/util';
 
-const logger = createLogger('scripts')
+const logger = createLogger('scripts');
 
 const packageName = '@sap-cloud-sdk/core';
 // const packageName ='@sap-cloud-sdk/util'
@@ -19,14 +19,13 @@ async function deprecateVersions() {
     '--json'
   ]);
   const allVersions = JSON.parse(response.stdout);
-  const relevantVersions = allVersions.filter(version =>
+  const oldPrereleaseVersions = allVersions.filter(version =>
     version.match(/.*\-\w{8,8}\.\w/)
   );
-  console.log(relevantVersions);
-  for (let i in relevantVersions) {
+  for (const i in oldPrereleaseVersions) {
     const reason =
       'The used prerelease version did not fulfill semantic versioning.';
-    const packageToBeRemoved = `${packageName}@${relevantVersions[i]}`;
+    const packageToBeRemoved = `${packageName}@${oldPrereleaseVersions[i]}`;
     const npmArguments = ['deprecate', packageToBeRemoved, reason];
     if (!dryRun) {
       await execa('npm', npmArguments);

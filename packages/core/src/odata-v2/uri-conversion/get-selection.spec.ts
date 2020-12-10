@@ -1,10 +1,10 @@
-import { getQueryParametersForSelection } from '../../../../src/odata-v2';
 import {
   TestEntity,
   TestEntityLvl2MultiLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../../test-util/test-services/v2/test-service';
+} from '../../../test/test-util/test-services/v2/test-service';
+import { getQueryParametersForSelection } from './get-selection';
 
 describe('get selection', () => {
   it('is empty for empty selection', () => {

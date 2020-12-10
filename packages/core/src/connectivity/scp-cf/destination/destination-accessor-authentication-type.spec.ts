@@ -1,15 +1,15 @@
 import nock from 'nock';
-import { mockServiceBindings } from '../test-util/environment-mocks';
+import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
 import {
   mockServiceToken,
   mockUserApprovedServiceToken
-} from '../test-util/token-accessor-mocks';
+} from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../test-util/destination-service-mocks';
+} from '../../../../test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
   providerUserJwt,
@@ -17,7 +17,7 @@ import {
   subscriberUserJwt,
   userApprovedProviderServiceToken,
   userApprovedSubscriberServiceToken
-} from '../test-util/mocked-access-tokens';
+} from '../../../../test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
@@ -25,14 +25,12 @@ import {
   destinationName,
   oauthMultipleResponse,
   oauthSingleResponse
-} from '../test-util/example-destination-service-responses';
-import {
-  clientCredentialsTokenCache,
-  destinationCache,
-  getDestination,
-  getDestinationFromDestinationService,
-  parseDestination
-} from '../../src/connectivity/scp-cf';
+} from '../../../../test/test-util/example-destination-service-responses';
+import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
+import { parseDestination } from './destination';
+import { getDestination } from './destination-accessor';
+import { destinationCache } from './destination-cache';
+import { getDestinationFromDestinationService } from './destination-from-service';
 
 describe('authentication types', () => {
   afterEach(() => {
@@ -105,7 +103,7 @@ describe('authentication types', () => {
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
 
-    it('should use provider token first instead of the userJwt when SystemUser exists in destination', async () => {
+    it('should use provider client credentials token for SystemUser exists in provider destination', async () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
@@ -122,6 +120,7 @@ describe('authentication types', () => {
           providerServiceToken
         ),
         mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
+        // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
         mockSingleDestinationCall(
           nock,
           oauthSingleResponse,
@@ -134,6 +133,42 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination(destinationName, {
         cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+
+    it('should use subscriber client credentials token for SystemUser exists in subscriber destination', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const samlDestinationsWithSystemUser = { ...oauthMultipleResponse[0] };
+      // Insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
+      samlDestinationsWithSystemUser['SystemUser'] = 'defined';
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(
+          nock,
+          [samlDestinationsWithSystemUser],
+          200,
+          subscriberServiceToken
+        ),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
+        mockSingleDestinationCall(
+          nock,
+          oauthSingleResponse,
+          200,
+          destinationName,
+          subscriberServiceToken
+        )
+      ];
+
+      const expected = parseDestination(oauthSingleResponse);
+      const actual = await getDestination(destinationName, {
+        cacheVerificationKeys: false,
+        userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));

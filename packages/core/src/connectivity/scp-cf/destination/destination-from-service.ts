@@ -76,7 +76,7 @@ class DestinationFromServiceRetriever {
     const decodedUserJwt = await DestinationFromServiceRetriever.getDecodedUserJwt(
       options
     );
-    const providerToken = await DestinationFromServiceRetriever.getProviderToken(
+    const providerToken = await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
       options
     );
     const da = new DestinationFromServiceRetriever(
@@ -97,7 +97,10 @@ class DestinationFromServiceRetriever {
 
     let { destination } = destinationResult;
     if (destination.authentication === 'OAuth2SAMLBearerAssertion') {
-      destination = await da.addOAuthSamlAuth(destination);
+      destination = await da.addOAuthSamlAuth(
+        destination,
+        destinationResult.origin
+      );
     }
     if (destination.authentication === 'ClientCertificateAuthentication') {
       destination = await da.addClientCertAuth();
@@ -118,24 +121,37 @@ class DestinationFromServiceRetriever {
       : undefined;
   }
 
-  private static async getProviderToken(
+  private static async getProviderClientCredentialsToken(
     options: DestinationOptions
   ): Promise<string> {
     const { userJwt, ...optionsWithoutJwt } = options;
     return serviceToken('destination', optionsWithoutJwt);
   }
 
-  readonly decodedProviderToken: DecodedJWT;
+  private static async getSubscriberClientCredentialsToken(
+    options: DestinationOptions
+  ): Promise<string> {
+    if (!options.userJwt) {
+      throw new Error(
+        'User JWT is needed to obtain a client credentials token for the subscriber account.'
+      );
+    }
+    return serviceToken('destination', options);
+  }
+
+  readonly decodedProviderClientCredentialsToken: DecodedJWT;
   private options: DestinationOptions;
 
   private constructor(
     readonly name: string,
     options: DestinationOptions,
     readonly decodedUserJwt: DecodedJWT | undefined,
-    readonly providerToken: string
+    readonly providerClientCredentialsToken: string
   ) {
     this.options = { ...options };
-    this.decodedProviderToken = decodeJwt(providerToken);
+    this.decodedProviderClientCredentialsToken = decodeJwt(
+      providerClientCredentialsToken
+    );
 
     this.options.isolationStrategy =
       options.isolationStrategy || IsolationStrategy.Tenant;
@@ -206,7 +222,8 @@ class DestinationFromServiceRetriever {
   }
 
   private async addOAuthSamlAuth(
-    destination: Destination
+    destination: Destination,
+    destinationOrigin: DestinationOrigin
   ): Promise<Destination> {
     const destinationService = getService('destination');
 
@@ -215,19 +232,33 @@ class DestinationFromServiceRetriever {
         `Failed to fetch destination "${this.name}"! No binding to a destination service found.`
       );
     }
-
+    /* This covers the two technical user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
+    If the destination comes from the provider account the client credentials token from the xsuaa.url is used (provider token).
+    If the destination comes from the subscriber account the subscriber subdomain is used fetch the client credentials token (subscriber token).
+    */
     if (destination.systemUser) {
+      const token =
+        destinationOrigin === 'provider'
+          ? this.providerClientCredentialsToken
+          : await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
+              this.options
+            );
       logger.debug(
-        `System user found on destination. The provider token: ${this.providerToken} is used for destination fetching`
+        `System user found on destination. The ${destinationOrigin} token: ${token} is used for destination fetching`
       );
-      return fetchDestination(
-        destinationService.credentials.uri,
-        this.providerToken,
-        this.name,
-        this.options
-      );
-    }
 
+      if (destinationOrigin) {
+        return fetchDestination(
+          destinationService.credentials.uri,
+          token,
+          this.name,
+          this.options
+        );
+      }
+    }
+    /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
+     The two cases are JWT issued from provider or JWT from subscriber - the two cases are handled automatically.
+     In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */
     if (!this.options.userJwt) {
       throw Error(
         'No user token (JWT) has been provided! This is strictly necessary for principal propagation.'
@@ -287,7 +318,7 @@ class DestinationFromServiceRetriever {
     destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
         ? this.decodedUserJwt!
-        : this.decodedProviderToken,
+        : this.decodedProviderClientCredentialsToken,
       destination,
       this.options.isolationStrategy!
     );
@@ -297,7 +328,7 @@ class DestinationFromServiceRetriever {
     DestinationSearchResult | undefined
   > {
     const provider = await this.getInstanceAndSubaccountDestinations(
-      this.providerToken
+      this.providerClientCredentialsToken
     );
     const destination = await this.options.selectionStrategy!(
       {
@@ -317,7 +348,7 @@ class DestinationFromServiceRetriever {
 
   private getProviderDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-      this.decodedProviderToken,
+      this.decodedProviderClientCredentialsToken,
       this.name,
       this.options.isolationStrategy!
     );
@@ -365,7 +396,10 @@ class DestinationFromServiceRetriever {
   private isProviderAndSubscriberSameTenant() {
     return (
       this.decodedUserJwt &&
-      isIdenticalTenant(this.decodedUserJwt, this.decodedProviderToken)
+      isIdenticalTenant(
+        this.decodedUserJwt,
+        this.decodedProviderClientCredentialsToken
+      )
     );
   }
 

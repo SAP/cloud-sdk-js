@@ -1,5 +1,5 @@
-import { ODataBatchRequestConfig } from '../../src/odata-common';
-import { defaultTestServicePath } from '../test-util/test-services/v2/test-service';
+import { defaultTestServicePath } from '../../../test/test-util/test-services/v2/test-service';
+import { ODataBatchRequestConfig } from './odata-batch-request-config';
 
 describe('ODataBatchConfig', () => {
   let config: ODataBatchRequestConfig;

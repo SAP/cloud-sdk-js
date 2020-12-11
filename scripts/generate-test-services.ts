@@ -140,13 +140,13 @@ if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
     inputDir: path.resolve(
       'test-resources',
       'openapi-service-specs',
-      'test-service'
+      'test-service-json'
     ),
     outputDir: path.resolve(
       'test-packages',
       'test-services',
       'openapi',
-      'test-service'
+      'test-service-json'
     ),
     clearOutputDir: true
   });

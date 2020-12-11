@@ -1,7 +1,7 @@
 import {
   TestEntity,
   TestServiceApi
-} from '@sap-cloud-sdk/test-services/openapi/test-service/test-service';
+} from '@sap-cloud-sdk/test-services/openapi/test-service/test-service-json';
 import { destination } from './test-util';
 
 // TODO: How do I handle paths in rest requests?

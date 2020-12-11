@@ -226,7 +226,7 @@ class DestinationFromServiceRetriever {
     return credentials[0];
   }
 
-  private fetchDestinationByToken(
+  private async fetchDestinationByToken(
     jwt: string | AuthAndExchangeTokens
   ): Promise<Destination> {
     const destinationService = getDestinationService();

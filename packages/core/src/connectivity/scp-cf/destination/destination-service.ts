@@ -139,17 +139,9 @@ export async function fetchDestination(
   destinationName: string,
   options?: ResilienceOptions & CachingOptions
 ): Promise<Destination> {
-  if (typeof token === 'string') {
-    return fetchDestinationByTokens(
-      destinationServiceUri,
-      { authHeaderJwt: token },
-      destinationName,
-      options
-    );
-  }
   return fetchDestinationByTokens(
     destinationServiceUri,
-    token,
+    typeof token === 'string' ? { authHeaderJwt: token } : token,
     destinationName,
     options
   );

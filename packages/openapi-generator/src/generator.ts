@@ -2,6 +2,7 @@
 
 import { promises } from 'fs';
 import { resolve } from 'path';
+import { safeLoad } from 'js-yaml';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { OpenAPIV3 } from 'openapi-types';
@@ -44,9 +45,10 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     );
     const adjustedInputFilePath = resolve(serviceDir, 'open-api.json');
     const fileContent = await readFile(filePath, 'utf8');
+    const fileContentAsObj = parseYamlOrJson(fileContent, filePath);
 
     await mkdir(serviceDir, { recursive: true });
-    await generateSpecWithGlobalTag(fileContent, adjustedInputFilePath);
+    await generateSpecWithGlobalTag(fileContentAsObj, adjustedInputFilePath);
     await generateOpenApiService(adjustedInputFilePath, serviceDir);
     await generateSDKSources(serviceDir, openApiDocument, options);
   });
@@ -124,14 +126,32 @@ async function generateOpenApiService(
  * @param outputFilePath Path to write the altered spec to.
  */
 async function generateSpecWithGlobalTag(
-  fileContent: string,
+  fileContent: any,
   outputFilePath: string
 ): Promise<void> {
-  const openApiDocument = JSON.parse(fileContent);
-  const modifiedOpenApiDocument = createSpecWithGlobalTag(openApiDocument);
+  const modifiedOpenApiDocument = createSpecWithGlobalTag(fileContent);
   return writeFile(
     outputFilePath,
     JSON.stringify(modifiedOpenApiDocument, null, 2)
+  );
+}
+
+/**
+ * Parse a yaml or a json file to an object.
+ * @param fileContent File content of the original spec.
+ * @param filePath File path of the original spec.
+ * @returns File content as an object.
+ */
+function parseYamlOrJson(fileContent: string, filePath: string) {
+  const filePathLowerCase = filePath.toLocaleLowerCase();
+  if (filePathLowerCase.endsWith('yaml') || filePathLowerCase.endsWith('yml')) {
+    return safeLoad(fileContent);
+  }
+  if (filePathLowerCase.endsWith('json')) {
+    return JSON.parse(fileContent);
+  }
+  throw new Error(
+    `Only support Json and Yaml files as input files, but detected: ${filePath}.`
   );
 }
 

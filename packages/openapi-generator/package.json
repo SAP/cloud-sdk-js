@@ -60,6 +60,7 @@
     "@sap-cloud-sdk/util": "^1.33.0",
     "cli-ux": "^5.4.5",
     "execa": "^5.0.0",
+    "js-yaml": "^3.14.1",
     "openapi-types": "^7.0.1"
   },
   "devDependencies": {

@@ -173,12 +173,12 @@ async function fetchDestinationByTokens(
       return destinationsFromCache[0];
     }
   }
-  const authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
-  const headers = tokens.exchangeHeaderJwt
+  let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
+  authHeader = tokens.exchangeHeaderJwt
     ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
     : authHeader;
 
-  return callDestinationService(targetUri, headers, options)
+  return callDestinationService(targetUri, authHeader, options)
     .then(response => {
       const destination: Destination = parseDestination(response.data);
       if (options?.useCache) {

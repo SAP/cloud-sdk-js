@@ -11,15 +11,15 @@ export const TestServiceYamlApi = {
   getAllEntities: (args?: {
     stringParameter?: string,
     integerParameter?: number,
-    dollarParameter?: string,
-    dotParameter?: string
+    $dollarParameter?: string,
+    dot.parameter?: string
   }) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
     DefaultApi,
     'getAllEntities',
     args?.stringParameter,
     args?.integerParameter,
-    args?.dollarParameter,
-    args?.dotParameter
+    args?.$dollarParameter,
+    args?.dot.parameter
   ),
   createEntity: (args?: {
     testEntity?: TestEntity

@@ -98,7 +98,8 @@
           "409": {
             "description": "entity already exists"
           }
-        }
+        },
+        "parameters": []
       }
     },
     "/entities/{entityId}": {
@@ -165,7 +166,8 @@
         },
         "tags": [
           "default"
-        ]
+        ],
+        "parameters": []
       }
     },
     "/test-cases/parameters/required-parameters/{requiredPathItemPathParam}": {
@@ -198,6 +200,30 @@
       "get": {
         "operationId": "testCaseGetRequiredParameters",
         "parameters": [
+          {
+            "name": "optionalPathItemQueryParam",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requiredPathItemQueryParam",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requiredPathItemPathParam",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "optionalQueryParam",
             "in": "query",
@@ -256,6 +282,30 @@
         },
         "parameters": [
           {
+            "name": "optionalPathItemQueryParam",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requiredPathItemQueryParam",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requiredPathItemPathParam",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "optionalQueryParam",
             "in": "query",
             "required": false,
@@ -295,7 +345,7 @@
             }
           },
           {
-            "name": "duplicateParam",
+            "name": "duplicateParam2",
             "in": "path",
             "required": true,
             "schema": {

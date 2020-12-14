@@ -48,14 +48,6 @@ describe('converts names', () => {
     it('for properties with numbers', () => {
       expect(camelCase('Field13Name')).toBe('field13Name');
     });
-
-    it('for properties with dot', () => {
-      expect(camelCase('field.name')).toBe('fieldName');
-    });
-
-    it('for properties with dollar', () => {
-      expect(camelCase('$fieldName')).toBe('fieldName');
-    });
   });
 
   describe('from property names to static field names', () => {

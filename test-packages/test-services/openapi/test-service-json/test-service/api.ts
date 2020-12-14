@@ -10,16 +10,12 @@ import { TestEntity, SimpleTestEntity } from './openapi/model';
 export const TestServiceApi = {
   getAllEntities: (args?: {
     stringParameter?: string,
-    integerParameter?: number,
-    dollarParameter?: string,
-    dotParameter?: string
+    integerParameter?: number
   }) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
     DefaultApi,
     'getAllEntities',
     args?.stringParameter,
-    args?.integerParameter,
-    args?.dollarParameter,
-    args?.dotParameter
+    args?.integerParameter
   ),
   createEntity: (args?: {
     testEntity?: TestEntity

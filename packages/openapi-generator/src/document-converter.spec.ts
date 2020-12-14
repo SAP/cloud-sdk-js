@@ -2,8 +2,24 @@ import { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 import { emptyApiDefinition } from '../test/test-util';
 import {
   convertDocToGlobalTag,
-  convertDocToOpenApi3
+  convertDocToOpenApiV3,
+  parseFileAsJson
 } from './document-converter';
+
+const jsonContent = { test: 'test' };
+const files = {
+  '/path/spec.json': JSON.stringify(jsonContent),
+  '/path/spec.yaml': 'test: test',
+  '/path/spec.yml': 'test: test',
+  '/path/no-extension': 'test',
+  '/path/other-extension.test': 'test'
+};
+
+jest.mock('fs', () => ({
+  promises: {
+    readFile: jest.fn().mockImplementation(path => files[path])
+  }
+}));
 
 describe('convertDocToGlobalTag', () => {
   it("replaces all tags with 'default'", () => {
@@ -50,7 +66,7 @@ describe('convertDocToGlobalTag', () => {
   });
 });
 
-describe('convertDocToOpenApi3', () => {
+describe('convertDocToOpenApiV3', () => {
   const swaggerDoc: OpenAPIV2.Document = {
     info: { title: 'Test Service', version: '1.0.0' },
     swagger: '2.0',
@@ -173,11 +189,33 @@ describe('convertDocToOpenApi3', () => {
       }
     }
   };
+
   it('converts Swagger documents to OpenApi', async () => {
-    expect(await convertDocToOpenApi3(swaggerDoc)).toStrictEqual(openApiDoc);
+    expect(await convertDocToOpenApiV3(swaggerDoc)).toStrictEqual(openApiDoc);
   });
 
   it('does not change OpenApi documents', async () => {
-    expect(await convertDocToOpenApi3(openApiDoc)).toStrictEqual(openApiDoc);
+    expect(await convertDocToOpenApiV3(openApiDoc)).toStrictEqual(openApiDoc);
+  });
+});
+
+describe('parseFileAsJson', () => {
+  it('does not throw error for JSON or YAML files', async () => {
+    expect(await parseFileAsJson('/path/spec.json')).toStrictEqual(jsonContent);
+    expect(await parseFileAsJson('/path/spec.yaml')).toStrictEqual(jsonContent);
+    expect(await parseFileAsJson('/path/spec.yml')).toStrictEqual(jsonContent);
+  });
+
+  it('throws an error for non JSON or YAML files', async () => {
+    await expect(() =>
+      parseFileAsJson('/path/no-extension')
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Could not parse /path/no-extension. Only JSON and YAML files are allowed."'
+    );
+    await expect(() =>
+      parseFileAsJson('/path/other-extension.test')
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Could not parse /path/other-extension.test. Only JSON and YAML files are allowed."'
+    );
   });
 });

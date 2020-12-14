@@ -21,7 +21,7 @@ export async function convertOpenApiSpec(
   } catch (err) {
     throw errorWithCause('Could not parse OpenApi specification.', err);
   }
-  const openApiDocument = await convertDocToOpenApi3(file);
+  const openApiDocument = await convertDocToOpenApiV3(file);
   return convertDocToGlobalTag(openApiDocument);
 }
 
@@ -34,9 +34,17 @@ export async function parseFileAsJson(
   filePath: string
 ): Promise<Record<string, any>> {
   const fileContent = await readFile(filePath, 'utf8');
-  return parse(filePath).ext === '.json'
-    ? JSON.parse(fileContent)
-    : safeLoad(fileContent);
+  const extension = parse(filePath).ext;
+  if (extension === '.json') {
+    return JSON.parse(fileContent);
+  }
+  if (['.yaml', '.yml'].includes(extension)) {
+    return safeLoad(fileContent) as Record<string, any>;
+  }
+
+  throw new Error(
+    `Could not parse ${filePath}. Only JSON and YAML files are allowed.`
+  );
 }
 
 /**
@@ -45,7 +53,7 @@ export async function parseFileAsJson(
  * @param openApiDocument OpenApi version 2 (Swagger) or 3 document to be converted to version 3.
  * @returns A promise of an OpenApi version 3 document.
  */
-export async function convertDocToOpenApi3(
+export async function convertDocToOpenApiV3(
   openApiDocument: Record<string, any>
 ): Promise<OpenAPIV3.Document> {
   // This is a hidden cast to OpenAPIV3.Document

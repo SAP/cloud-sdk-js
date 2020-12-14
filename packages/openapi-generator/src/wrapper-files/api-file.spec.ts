@@ -128,8 +128,7 @@ describe('api-file', () => {
           } as OpenApiRequestBody,
           pattern: 'test'
         }
-      ],
-      serviceDirName: 'test-service'
+      ]
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -150,8 +149,7 @@ describe('api-file', () => {
           ],
           pattern: 'test'
         }
-      ],
-      serviceDirName: 'test-service'
+      ]
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });

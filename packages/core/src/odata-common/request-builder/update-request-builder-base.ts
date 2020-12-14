@@ -97,6 +97,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    *
    * @param fields - Enumeration of the fields to be required
    * @returns The entity itself, to facilitate method chaining
+   * @deprecated Since version 1.34.0 Use [[setRequiredFields]] instead.
    */
   requiredFields(...fields: Selectable<EntityT>[]): this;
   requiredFields(fields: Selectable<EntityT>[]): this;
@@ -110,14 +111,49 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   }
 
   /**
+   * Sets required entity keys for the update request.
+   *
+   * @param fields - Enumeration of the fields to be required
+   * @returns The entity itself, to facilitate method chaining
+   */
+  setRequiredFields(...fields: Selectable<EntityT>[]): this;
+  setRequiredFields(fields: Selectable<EntityT>[]): this;
+  setRequiredFields(
+    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
+    ...rest: Selectable<EntityT>[]
+  ): this {
+    this.required = this.toSet(variadicArgumentToArray(first, rest));
+    this.requestConfig.payload = this.getPayload();
+    return this;
+  }
+
+  /**
    * Specifies entity fields to ignore by the update request.
    *
    * @param fields - Enumeration of the fields to be ignored
    * @returns The entity itself, to facilitate method chaining
+   * @deprecated Since version 1.34.0 Use [[setIgnoredFields]] instead.
    */
   ignoredFields(...fields: Selectable<EntityT>[]): this;
   ignoredFields(fields: Selectable<EntityT>[]): this;
   ignoredFields(
+    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
+    ...rest: Selectable<EntityT>[]
+  ): this {
+    this.ignored = this.toSet(variadicArgumentToArray(first, rest));
+    this.requestConfig.payload = this.getPayload();
+    return this;
+  }
+
+  /**
+   * Sets entity fields to ignore by the update request.
+   *
+   * @param fields - Enumeration of the fields to be ignored
+   * @returns The entity itself, to facilitate method chaining
+   */
+  setIgnoredFields(...fields: Selectable<EntityT>[]): this;
+  setIgnoredFields(fields: Selectable<EntityT>[]): this;
+  setIgnoredFields(
     first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
     ...rest: Selectable<EntityT>[]
   ): this {
@@ -141,8 +177,20 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    *
    * @param etag - Custom ETag version identifier to be sent in the header of the request
    * @returns The request itself to ease chaining while executing the request
+   * @deprecated Since version 1.34.0 Use [[setVersionIdentifier]] instead.
    */
   withCustomVersionIdentifier(etag: string): this {
+    this.requestConfig.eTag = etag;
+    return this;
+  }
+
+  /**
+   * Sets ETag version identifier of the entity to update.
+   *
+   * @param etag - Custom ETag version identifier to be sent in the header of the request
+   * @returns The request itself to ease chaining while executing the request
+   */
+  setVersionIdentifier(etag: string): this {
     this.requestConfig.eTag = etag;
     return this;
   }

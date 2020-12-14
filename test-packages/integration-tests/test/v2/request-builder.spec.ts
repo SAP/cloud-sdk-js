@@ -461,10 +461,10 @@ describe('Request Builder', () => {
 
     const request = TestEntity.requestBuilder()
       .getAll()
-      .withCustomHeaders({
+      .addCustomHeaders({
         authorization: 'customcustom'
       })
-      .withCustomHeaders({
+      .addCustomHeaders({
         additionalHeader: 'additional'
       })
       .execute({
@@ -485,7 +485,7 @@ describe('Request Builder', () => {
 
     const request = TestEntity.requestBuilder()
       .getAll()
-      .withCustomQueryParameters({
+      .addCustomQueryParameters({
         testParameter: 'customcustom'
       })
       .execute({
@@ -507,10 +507,10 @@ describe('Request Builder', () => {
 
     const request = TestEntity.requestBuilder()
       .getAll()
-      .withCustomQueryParameters({
+      .addCustomQueryParameters({
         testParameter: 'customcustom'
       })
-      .withCustomQueryParameters({
+      .addCustomQueryParameters({
         additionalParameter: 'additional'
       })
       .execute({

@@ -33,12 +33,12 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
   }
 
   /**
-   * Add custom headers to the request.
+   * Add custom headers to the request. If a header field with the given name already exists it is overwritten.
    *
    * @param headers Key-value pairs denoting additional custom headers
    * @returns The request builder itself, to facilitate method chaining
    */
-  withCustomHeaders(headers: Record<string, string>): this {
+  addCustomHeaders(headers: Record<string, string>): this {
     Object.entries(headers).forEach(([key, value]) => {
       this.customHeaders[key.toLowerCase()] = value;
     });

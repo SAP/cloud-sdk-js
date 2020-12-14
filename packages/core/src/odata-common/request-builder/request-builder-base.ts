@@ -53,8 +53,20 @@ export abstract class MethodRequestBuilderBase<
    *
    * @param headers - Key-value pairs denoting additional custom headers
    * @returns The request builder itself, to facilitate method chaining
+   * @deprecated Since version 1.34.0 Use [[addCustomHeaders]] instead.
    */
   withCustomHeaders(headers: Record<string, string>): this {
+    this.requestConfig.addCustomHeaders(headers);
+    return this;
+  }
+
+  /**
+   * Add custom headers to the request. If a header field with the given name already exists it is overwritten.
+   *
+   * @param headers - Key-value pairs denoting additional custom headers
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  addCustomHeaders(headers: Record<string, string>): this {
     this.requestConfig.addCustomHeaders(headers);
     return this;
   }
@@ -64,8 +76,20 @@ export abstract class MethodRequestBuilderBase<
    *
    * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request
    * @returns The request builder itself, to facilitate method chaining
+   * @deprecated Since version 1.34.0 Use [[addCustomQueryParameters]] instead.
    */
   withCustomQueryParameters(queryParameters: Record<string, string>): this {
+    this.requestConfig.addCustomQueryParameters(queryParameters);
+    return this;
+  }
+
+  /**
+   * Add custom query parameters to the request. If a query parameter with the given name already exists it is overwritten.
+   *
+   * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  addCustomQueryParameters(queryParameters: Record<string, string>): this {
     this.requestConfig.addCustomQueryParameters(queryParameters);
     return this;
   }
@@ -76,8 +100,21 @@ export abstract class MethodRequestBuilderBase<
    *
    * @param servicePath - Path to override the default with
    * @returns The request builder itself, to facilitate method chaining
+   * @deprecated Since version 1.34.0 Use [[setCustomServicePath]] instead.
    */
   withCustomServicePath(servicePath: string): this {
+    this.requestConfig.customServicePath = servicePath;
+    return this;
+  }
+
+  /**
+   * Replace the default service path with the given custom path.
+   * In case of the S/4HANA apis the servicePath defaults to '/sap/opu/odata/sap/<SERVICE_NAME>' and can be overwritten here.
+   *
+   * @param servicePath - Path to override the default with
+   * @returns The request builder itself, to facilitate method chaining
+   */
+  setCustomServicePath(servicePath: string): this {
     this.requestConfig.customServicePath = servicePath;
     return this;
   }

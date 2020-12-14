@@ -1,5 +1,5 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { Constructable, EntityIdentifiable, EntityBase } from '../entity';
+import { Constructable, EntityBase } from '../entity';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
@@ -9,33 +9,31 @@ import {
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
-import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
+import { GetRequestBuilderBase } from './get-request-builder-base';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT> {
-  readonly _entity: EntityT;
-
+export abstract class GetAllRequestBuilderBase<
+  EntityT extends EntityBase
+> extends GetRequestBuilderBase<EntityT, ODataGetAllRequestConfig<EntityT>> {
   /**
    * Creates an instance of GetAllRequestBuilder.
    *
-   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param entityConstructor - Constructor of the entity to create the request for
    * @param getAllRequestConfig - Request config of the get all request.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    entityConstructor: Constructable<EntityT>,
     getAllRequestConfig: ODataGetAllRequestConfig<EntityT>,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor
   ) {
-    super(getAllRequestConfig);
+    super(entityConstructor, getAllRequestConfig);
   }
   /**
    * Restrict the response to the given selection of properties in the request.

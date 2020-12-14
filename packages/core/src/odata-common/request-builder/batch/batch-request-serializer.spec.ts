@@ -44,7 +44,7 @@ describe('batch request serializer', () => {
         serializeRequest(
           TestEntity.requestBuilder()
             .getAll()
-            .withCustomHeaders({ 'Custom-Header': 'custom' })
+            .addCustomHeaders({ 'Custom-Header': 'custom' })
         )
       ).toMatchSnapshot();
     });

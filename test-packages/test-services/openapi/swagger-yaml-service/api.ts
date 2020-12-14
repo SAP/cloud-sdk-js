@@ -7,7 +7,7 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
 
 
-export const SwaggerServiceApi = {
+export const SwaggerYamlServiceApi = {
   postEntity: (queryParam?: string) => new OpenApiRequestBuilder<DefaultApi, 'postEntity'>(
     DefaultApi,
     'postEntity',

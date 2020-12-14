@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Swagger Test Service
- * Test Service for OpenApi version 2 aka. Swagger as YAML file
+ * Test Service for OpenApi version 2 aka. Swagger as YAML file.
  *
  * The version of the OpenAPI document: 1.0.0
  * 
@@ -13,6 +13,6 @@
  */
 
 
-
-export * from './api/default-api';
-
+export * from "./api";
+export * from "./configuration";
+export * from "./model";

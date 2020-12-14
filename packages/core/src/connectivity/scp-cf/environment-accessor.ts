@@ -120,9 +120,7 @@ export function getDestinationService() {
   const destinationService = getService('destination');
 
   if (!destinationService) {
-    throw Error(
-      `Failed to fetch destination "${this.name}"! No binding to a destination service found.`
-    );
+    throw Error('No binding to a destination service found.');
   }
   return destinationService;
 }

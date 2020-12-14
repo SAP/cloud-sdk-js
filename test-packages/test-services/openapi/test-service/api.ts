@@ -5,81 +5,27 @@
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
-import { TestEntity, SimpleTestEntity } from './openapi/model';
+import { TestEntity } from './openapi/model';
 
 export const TestServiceApi = {
-  getAllEntities: (args?: {
-    stringParameter?: string,
-    integerParameter?: number,
-    dollarParameter?: string,
-    dotParameter?: string
-  }) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
+  getAllEntities: (stringParameter?: string, integerParameter?: number) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
     DefaultApi,
     'getAllEntities',
-    args?.stringParameter,
-    args?.integerParameter,
-    args?.dollarParameter,
-    args?.dotParameter
+    stringParameter,
+    integerParameter
   ),
-  createEntity: (args?: {
-    testEntity?: TestEntity
-  }) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
+  createEntity: (testEntity?: TestEntity) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
     DefaultApi,
     'createEntity',
-    args?.testEntity
+    testEntity
   ),
-  getEntityByKey: (args: {
-    entityId: string
-  }) => new OpenApiRequestBuilder<DefaultApi, 'getEntityByKey'>(
+  getEntityByKey: (entityId: string) => new OpenApiRequestBuilder<DefaultApi, 'getEntityByKey'>(
     DefaultApi,
     'getEntityByKey',
-    args.entityId
+    entityId
   ),
   countEntities: () => new OpenApiRequestBuilder<DefaultApi, 'countEntities'>(
     DefaultApi,
     'countEntities'
-  ),
-  testCaseGetRequiredParameters: (args: {
-    requiredPathItemQueryParam: string,
-    requiredPathItemPathParam: string,
-    requiredQueryParam: string,
-    optionalQueryParam?: string,
-    optionalPathItemQueryParam?: string,
-    simpleTestEntity?: SimpleTestEntity
-  }) => new OpenApiRequestBuilder<DefaultApi, 'testCaseGetRequiredParameters'>(
-    DefaultApi,
-    'testCaseGetRequiredParameters',
-    args.requiredPathItemQueryParam,
-    args.requiredPathItemPathParam,
-    args.requiredQueryParam,
-    args.optionalQueryParam,
-    args.optionalPathItemQueryParam,
-    args.simpleTestEntity
-  ),
-  testCasePostRequiredParameters: (args: {
-    requiredPathItemQueryParam: string,
-    requiredPathItemPathParam: string,
-    requiredQueryParam: string,
-    simpleTestEntity: SimpleTestEntity,
-    optionalPathItemQueryParam?: string,
-    optionalQueryParam?: string
-  }) => new OpenApiRequestBuilder<DefaultApi, 'testCasePostRequiredParameters'>(
-    DefaultApi,
-    'testCasePostRequiredParameters',
-    args.requiredPathItemQueryParam,
-    args.requiredPathItemPathParam,
-    args.requiredQueryParam,
-    args.simpleTestEntity,
-    args.optionalPathItemQueryParam,
-    args.optionalQueryParam
-  ),
-  testCaseGetDuplicateParameters: (args: {
-    duplicateParam: string,
-    duplicateParam2: string
-  }) => new OpenApiRequestBuilder<DefaultApi, 'testCaseGetDuplicateParameters'>(
-    DefaultApi,
-    'testCaseGetDuplicateParameters',
-    args.duplicateParam,
-    args.duplicateParam2
   )
 };

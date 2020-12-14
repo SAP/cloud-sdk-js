@@ -1,25 +1,17 @@
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { camelCase, partition, pascalCase } from '@sap-cloud-sdk/util';
-import { Method, OpenApiOperation, OpenApiParameter } from '../openapi-types';
-import { getType } from './type-mapping';
+import { Method, OpenApiOperation } from '../openapi-types';
 import { parseRequestBody } from './request-body';
-import { resolveObject } from './refs';
+import { parseParameters } from './parameters';
 
-/**
- * Parse one operation.
- * @param pattern The url pattern, i. e. the key in the original operation definition object.
- * @param method HTTP method for this operation.
- * @param operation The original operation definition.
- * @param refs List of crossreferences that can occur in the document.
- * @returns The parsed operation.
- */
 export function parseOperation(
   pattern: string,
+  pathItem: OpenAPIV3.PathItemObject,
   method: Method,
-  operation: OpenAPIV3.OperationObject,
   refs: $Refs
 ): OpenApiOperation {
+  const operation = getOperation(pathItem, method);
   // TODO: What does the OpenApi generator do in this case?
   const requestBody = parseRequestBody(operation.requestBody, refs);
   const parameters = parseParameters(operation, refs);
@@ -36,25 +28,26 @@ export function parseOperation(
 }
 
 /**
- * Parse parameters of an operation.
- * @param operation The original operation definition.
- * @param refs List of crossreferences that can occur in the document.
- * @returns A list of parsed parameters.
+ * Get the operation for the given method and merge path parameters with operation parameters.
+ * @param pathItem Path Item to get the operation from.
+ * @param method HTTP method to get the operation for.
+ * @returns The sanitized original operation.
  */
-export function parseParameters(
-  operation: OpenAPIV3.OperationObject,
-  refs: $Refs
-): OpenApiParameter[] {
-  // TODO: What if this is a reference? What does OpenApi do?
-  // TODO: What about oneof and other operations?
-  return (
-    operation.parameters
-      ?.map(param => resolveObject(param, refs))
-      .map(param => ({
-        ...param,
-        type: getType(resolveObject(param.schema, refs)?.type?.toString())
-      })) || []
-  );
+export function getOperation(
+  pathItem: OpenAPIV3.PathItemObject,
+  method: Method
+): OpenAPIV3.OperationObject {
+  const operation = pathItem[method];
+  if (!operation) {
+    throw new Error(
+      `Could not parse operation. Operation for method '${method}' does not exist.`
+    );
+  }
+  operation.parameters = [
+    ...(pathItem.parameters || []),
+    ...(operation.parameters || [])
+  ];
+  return operation;
 }
 
 export function parseOperationName(

@@ -1,11 +1,11 @@
 {
   "name": "@sap-cloud-sdk/integration-tests",
-  "version": "1.32.1",
+  "version": "1.33.0",
   "description": "SAP Cloud SDK for JavaScript integration tests",
-  "homepage": "https://www.sap.com/cloud-sdk",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "private": true,
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "test": "yarn jest --coverage ",
     "test:local": "yarn jest",
@@ -14,10 +14,10 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.32.1",
-    "@sap-cloud-sdk/core": "^1.32.1",
-    "@sap-cloud-sdk/test-services": "^1.32.1",
-    "@sap-cloud-sdk/test-util": "^1.32.1"
+    "@sap-cloud-sdk/analytics": "^1.33.0",
+    "@sap-cloud-sdk/core": "^1.33.0",
+    "@sap-cloud-sdk/test-services": "^1.33.0",
+    "@sap-cloud-sdk/test-util": "^1.33.0"
   },
   "devDependencies": {
     "bignumber.js": "^9.0.0",

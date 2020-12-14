@@ -1,8 +1,8 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "1.32.1",
+  "version": "1.33.0",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
-  "homepage": "https://community.sap.com/topics/cloud-sdk",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -24,7 +24,7 @@
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map"
   ],
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
@@ -35,8 +35,8 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.32.1",
-    "@sap-cloud-sdk/util": "^1.32.1",
+    "@sap-cloud-sdk/core": "^1.33.0",
+    "@sap-cloud-sdk/util": "^1.33.0",
     "@sap/edm-converters": "^1.0.21",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",
@@ -44,7 +44,7 @@
     "fast-xml-parser": "^3.16.0",
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
-    "ts-morph": "^8.1.0",
+    "ts-morph": "^9.1.0",
     "typescript": "~4.1.2",
     "voca": "^1.4.0",
     "yargs": "^16.0.3"

@@ -336,7 +336,7 @@ export async function generateSourcesForService(
 
 function projectOptions(): ProjectOptions {
   return {
-    addFilesFromTsConfig: false,
+    skipAddingFilesFromTsConfig: true,
     manipulationSettings: {
       indentationText: IndentationText.TwoSpaces,
       insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,

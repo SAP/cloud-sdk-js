@@ -17,7 +17,7 @@ describe('xsuaa', () => {
   const basicHeader = 'Basic aG9yc3RpOmJvcnN0aQ==';
 
   describe('clientCredentialsGrant', () => {
-    it('returns a valid token for a given set of client credentials', async () => {
+    it('returns a valid token for a given set of client credentials when the url comes from XsuaaServiceCredentials', async () => {
       const expectedResponse = {
         access_token: 'sometoken',
         token_type: 'bearer',
@@ -33,6 +33,28 @@ describe('xsuaa', () => {
         .reply(200, expectedResponse);
 
       const response = await clientCredentialsGrant(providerXsuaaUrl, creds);
+      expect(response).toEqual(expectedResponse);
+    });
+
+    it('returns a valid token for a given set of client credentials when the url comes from destination', async () => {
+      const tokenUrlEndpointAndPathParam =
+        '/oauth/token?grant_type=client_credentials';
+      const tokenUrl = `${providerXsuaaUrl}${tokenUrlEndpointAndPathParam}`;
+      const expectedResponse = {
+        access_token: 'sometoken',
+        token_type: 'bearer',
+        expires_in: 0,
+        scope: 'some scopes',
+        jti: 'uhm'
+      };
+
+      nock(providerXsuaaUrl, {
+        reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
+      })
+        .post(tokenUrlEndpointAndPathParam, 'grant_type=client_credentials')
+        .reply(200, expectedResponse);
+
+      const response = await clientCredentialsGrant(tokenUrl, creds);
       expect(response).toEqual(expectedResponse);
     });
 

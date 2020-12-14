@@ -1,8 +1,8 @@
 {
   "name": "@sap-cloud-sdk/core",
-  "version": "1.32.1",
+  "version": "1.33.0",
   "description": "SAP Cloud SDK for JavaScript core",
-  "homepage": "https://community.sap.com/topics/cloud-sdk",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -24,7 +24,7 @@
     "dist/**/*.d.ts.map",
     "usage-analytics.js"
   ],
-  "repository": "github:SAP/cloud-sdk",
+  "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
@@ -37,8 +37,8 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.32.1",
-    "@sap-cloud-sdk/util": "^1.32.1",
+    "@sap-cloud-sdk/analytics": "^1.33.0",
+    "@sap-cloud-sdk/util": "^1.33.0",
     "@sap/xsenv": "^3.0.0",
     "axios": "^0.21.0",
     "bignumber.js": "^9.0.0",
@@ -51,7 +51,7 @@
     "voca": "^1.4.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-util": "^1.32.1",
+    "@sap-cloud-sdk/test-util": "^1.33.0",
     "@sinonjs/fake-timers": "^6.0.1",
     "@types/sinonjs__fake-timers": "^6.0.0",
     "nock": "^13.0.3"

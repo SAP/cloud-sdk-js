@@ -62,6 +62,7 @@ export async function getDestinationFromDestinationService(
   name: string,
   options: DestinationOptions
 ): Promise<Destination | null> {
+  logger.info('Attempting to retrieve destination from destination service.');
   return DestinationFromServiceRetriever.getDestinationFromDestinationService(
     name,
     options

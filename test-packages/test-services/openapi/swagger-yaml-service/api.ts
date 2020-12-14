@@ -8,9 +8,13 @@ import { DefaultApi } from './openapi/api';
 
 
 export const SwaggerYamlServiceApi = {
-  postEntity: (queryParam?: string) => new OpenApiRequestBuilder<DefaultApi, 'postEntity'>(
+  postEntity: (args: {
+    pathParam: string,
+    queryParam?: string
+  }) => new OpenApiRequestBuilder<DefaultApi, 'postEntity'>(
     DefaultApi,
     'postEntity',
-    queryParam
+    args.pathParam,
+    args.queryParam
   )
 };

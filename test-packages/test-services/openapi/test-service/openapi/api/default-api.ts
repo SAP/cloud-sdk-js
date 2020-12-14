@@ -220,7 +220,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 throw new RequiredError('duplicateParam2','Required parameter duplicateParam2 was null or undefined when calling testCaseGetDuplicateParameters.');
             }
             const localVarPath = `/test-cases/parameters/{duplicateParam}`
-                .replace(`{${"duplicateParam"}}`, encodeURIComponent(String(duplicateParam2)));
+                .replace(`{${"duplicateParam2"}}`, encodeURIComponent(String(duplicateParam2)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -258,13 +258,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} requiredPathItemQueryParam 
          * @param {string} requiredPathItemPathParam 
          * @param {string} requiredQueryParam 
+         * @param {string} [optionalPathItemQueryParam] 
          * @param {string} [optionalQueryParam] 
-         * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+         * @param {string} [optionalPathItemQueryParam2] Overrides original path item query parameter.
          * @param {SimpleTestEntity} [simpleTestEntity] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCaseGetRequiredParameters: async (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options: any = {}): Promise<RequestArgs> => {
+        testCaseGetRequiredParameters: async (requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalPathItemQueryParam?: string, optionalQueryParam?: string, optionalPathItemQueryParam2?: string, simpleTestEntity?: SimpleTestEntity, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'requiredPathItemQueryParam' is not null or undefined
             if (requiredPathItemQueryParam === null || requiredPathItemQueryParam === undefined) {
                 throw new RequiredError('requiredPathItemQueryParam','Required parameter requiredPathItemQueryParam was null or undefined when calling testCaseGetRequiredParameters.');
@@ -289,6 +290,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (optionalPathItemQueryParam !== undefined) {
+                localVarQueryParameter['optionalPathItemQueryParam'] = optionalPathItemQueryParam;
+            }
+
             if (requiredPathItemQueryParam !== undefined) {
                 localVarQueryParameter['requiredPathItemQueryParam'] = requiredPathItemQueryParam;
             }
@@ -301,8 +306,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 localVarQueryParameter['requiredQueryParam'] = requiredQueryParam;
             }
 
-            if (optionalPathItemQueryParam !== undefined) {
-                localVarQueryParameter['optionalPathItemQueryParam'] = optionalPathItemQueryParam;
+            if (optionalPathItemQueryParam2 !== undefined) {
+                localVarQueryParameter['optionalPathItemQueryParam'] = optionalPathItemQueryParam2;
             }
 
 
@@ -491,14 +496,15 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} requiredPathItemQueryParam 
          * @param {string} requiredPathItemPathParam 
          * @param {string} requiredQueryParam 
+         * @param {string} [optionalPathItemQueryParam] 
          * @param {string} [optionalQueryParam] 
-         * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+         * @param {string} [optionalPathItemQueryParam2] Overrides original path item query parameter.
          * @param {SimpleTestEntity} [simpleTestEntity] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalQueryParam, optionalPathItemQueryParam, simpleTestEntity, options);
+        async testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalPathItemQueryParam?: string, optionalQueryParam?: string, optionalPathItemQueryParam2?: string, simpleTestEntity?: SimpleTestEntity, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalPathItemQueryParam, optionalQueryParam, optionalPathItemQueryParam2, simpleTestEntity, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -588,14 +594,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {string} requiredPathItemQueryParam 
          * @param {string} requiredPathItemPathParam 
          * @param {string} requiredQueryParam 
+         * @param {string} [optionalPathItemQueryParam] 
          * @param {string} [optionalQueryParam] 
-         * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+         * @param {string} [optionalPathItemQueryParam2] Overrides original path item query parameter.
          * @param {SimpleTestEntity} [simpleTestEntity] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options?: any): AxiosPromise<void> {
-            return DefaultApiFp(configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalQueryParam, optionalPathItemQueryParam, simpleTestEntity, options).then((request) => request(axios, basePath));
+        testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalPathItemQueryParam?: string, optionalQueryParam?: string, optionalPathItemQueryParam2?: string, simpleTestEntity?: SimpleTestEntity, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalPathItemQueryParam, optionalQueryParam, optionalPathItemQueryParam2, simpleTestEntity, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -688,15 +695,16 @@ export class DefaultApi extends BaseAPI {
      * @param {string} requiredPathItemQueryParam 
      * @param {string} requiredPathItemPathParam 
      * @param {string} requiredQueryParam 
+     * @param {string} [optionalPathItemQueryParam] 
      * @param {string} [optionalQueryParam] 
-     * @param {string} [optionalPathItemQueryParam] Overrides original path item query parameter.
+     * @param {string} [optionalPathItemQueryParam2] Overrides original path item query parameter.
      * @param {SimpleTestEntity} [simpleTestEntity] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalQueryParam?: string, optionalPathItemQueryParam?: string, simpleTestEntity?: SimpleTestEntity, options?: any) {
-        return DefaultApiFp(this.configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalQueryParam, optionalPathItemQueryParam, simpleTestEntity, options).then((request) => request(this.axios, this.basePath));
+    public testCaseGetRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, optionalPathItemQueryParam?: string, optionalQueryParam?: string, optionalPathItemQueryParam2?: string, simpleTestEntity?: SimpleTestEntity, options?: any) {
+        return DefaultApiFp(this.configuration).testCaseGetRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalPathItemQueryParam, optionalQueryParam, optionalPathItemQueryParam2, simpleTestEntity, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

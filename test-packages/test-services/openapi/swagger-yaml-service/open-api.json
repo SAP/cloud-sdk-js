@@ -23,6 +23,14 @@
         "description": "Test POST",
         "parameters": [
           {
+            "in": "path",
+            "name": "pathParam",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "in": "query",
             "name": "queryParam",
             "schema": {

@@ -51,28 +51,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "$dollarParameter",
-            "in": "query",
-            "description": "A parameter that contains $",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "dot.parameter",
-            "in": "query",
-            "description": "A parameter that contains . in the middle",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -102,7 +80,7 @@
         "description": "Create entity",
         "operationId": "createEntity",
         "requestBody": {
-          "description": "Entity to create",
+          "description": "Enitity to create",
           "content": {
             "application/json": {
               "schema": {

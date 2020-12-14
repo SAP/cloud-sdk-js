@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- Unification on the methods of the request builders. See [this adr](./knowledge-base/adr/0017-builder-methods-multiple-calls.md) for a list of the changed methods.
 
 ## Fixed Issues
 

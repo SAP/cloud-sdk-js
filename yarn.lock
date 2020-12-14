@@ -1487,16 +1487,16 @@
     tslib "^1.9.3"
 
 "@oclif/plugin-autocomplete@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@oclif/plugin-autocomplete/-/plugin-autocomplete-0.2.0.tgz#e965ae83abdb81ff97eb7d63a975bcedb78dfdd9"
-  integrity sha512-pHbaE2PH7d9lHjCgFrrQ+ZIwvY+7OAQaGoaANqDbicBNDK/Rszt4N4oGj22dJT7sCQ8a/3Eh942rjxYIq9Mi9Q==
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/@oclif/plugin-autocomplete/-/plugin-autocomplete-0.2.1.tgz#169cd9a88c0c60d8ecf59887ca9bfdd3b1a755ac"
+  integrity sha512-EOcoh1x3auFg1a7NNVTT+hJ1PPih7Kg1it7WtG8oBgYKe+YD/bvHnX2QlXqi9S7H0XsQQMUb8hxbLP+XwQY/8Q==
   dependencies:
     "@oclif/command" "^1.5.13"
     "@oclif/config" "^1.13.0"
     chalk "^2.4.1"
     cli-ux "^5.2.1"
     debug "^4.0.0"
-    fs-extra "^7.0.0"
+    fs-extra "^9.0.1"
     moment "^2.22.1"
 
 "@oclif/plugin-help@^3", "@oclif/plugin-help@^3.1.0", "@oclif/plugin-help@^3.2.0":

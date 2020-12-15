@@ -26,12 +26,25 @@ export function parseParameters(
   parameters = filterDuplicateParams(parameters);
   parameters = reorderParameters(parameters);
   parameters = renameEquallyNamedParams(parameters);
-  return parameters.map(param => ({
+  return parameters.map(param => toOpenApiParameter(param, refs));
+}
+
+function toOpenApiParameter(
+  param: OpenAPIV3.ParameterObject,
+  refs: $Refs
+): OpenApiParameter {
+  const enumValue = resolveObject(param.schema, refs)?.enum;
+  const ret = {
     ...param,
     name: camelCase(param.name),
     // TODO: Check whether types are correct here and whether we can use union types here.
-    type: getType(resolveObject(param.schema, refs)?.type?.toString())
-  }));
+    type: getType(resolveObject(param.schema, refs)?.type?.toString()),
+    enum: resolveObject(param.schema, refs)?.enum
+  };
+  if (!enumValue) {
+    delete ret.enum;
+  }
+  return ret;
 }
 
 export function filterDuplicateParams(

@@ -73,6 +73,19 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "enumParameter",
+            "in": "query",
+            "description": "A parameter of type string with enum",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "value1",
+                "value2"
+              ]
+            }
           }
         ],
         "responses": {

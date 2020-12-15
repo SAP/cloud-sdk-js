@@ -59,7 +59,9 @@ function getOperation(operation: OpenApiOperation): string {
   const paramsArg = params.length
     ? codeBlock`args${argsQuestionMark}: {
   ${params
-    .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
+    .map(
+      param => `${param.name}${param.required ? '' : '?'}: ${getType(param)}`
+    )
     .join(',\n')}
 }`
     : '';
@@ -83,6 +85,7 @@ interface Parameter {
   type: string;
   name: string;
   required?: boolean;
+  enum?: string[];
 }
 
 function getParams(operation: OpenApiOperation): Parameter[] {
@@ -105,4 +108,10 @@ function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
         }
       ]
     : [];
+}
+
+function getType(parameter: Parameter) {
+  return parameter.enum
+    ? parameter.enum.map(e => `'${e}'`).join(' | ')
+    : parameter.type;
 }

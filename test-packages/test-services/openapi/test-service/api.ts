@@ -12,14 +12,16 @@ export const TestServiceApi = {
     stringParameter?: string,
     integerParameter?: number,
     dollarParameter?: string,
-    dotParameter?: string
+    dotParameter?: string,
+    enumParameter?: 'value1' | 'value2'
   }) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
     DefaultApi,
     'getAllEntities',
     args?.stringParameter,
     args?.integerParameter,
     args?.dollarParameter,
-    args?.dotParameter
+    args?.dotParameter,
+    args?.enumParameter
   ),
   createEntity: (args?: {
     testEntity?: TestEntity

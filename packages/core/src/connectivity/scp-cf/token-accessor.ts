@@ -104,7 +104,7 @@ export async function userApprovedServiceToken(
   const xsuaa = multiTenantXsuaaCredentials(userJwt);
   const serviceCreds = extractClientCredentials(resolvedService.credentials);
 
-  return userTokenGrant(xsuaa.url, userJwt, serviceCreds.username, opts)
+  return userTokenGrant(xsuaa, userJwt, serviceCreds.username, opts)
     .then(userToken =>
       refreshTokenGrant(xsuaa, serviceCreds, userToken.refresh_token, opts)
     )

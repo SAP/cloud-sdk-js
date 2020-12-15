@@ -8,6 +8,7 @@ import {
   userTokenGrant
 } from './xsuaa-service';
 import { TokenKey } from './xsuaa-service-types';
+import { XsuaaServiceCredentials } from './environment-accessor-types';
 
 describe('xsuaa', () => {
   const creds = {
@@ -15,6 +16,9 @@ describe('xsuaa', () => {
     password: 'borsti'
   };
   const basicHeader = 'Basic aG9yc3RpOmJvcnN0aQ==';
+  const xsuaaClientCredentials = {
+    url: providerXsuaaUrl
+  } as XsuaaServiceCredentials;
 
   describe('clientCredentialsGrant', () => {
     it('returns a valid token for a given set of client credentials when the url comes from XsuaaServiceCredentials', async () => {
@@ -32,7 +36,10 @@ describe('xsuaa', () => {
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(200, expectedResponse);
 
-      const response = await clientCredentialsGrant(providerXsuaaUrl, creds);
+      const response = await clientCredentialsGrant(
+        xsuaaClientCredentials,
+        creds
+      );
       expect(response).toEqual(expectedResponse);
     });
 
@@ -70,7 +77,7 @@ describe('xsuaa', () => {
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(401, response);
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+        await clientCredentialsGrant(xsuaaClientCredentials, creds, {
           enableCircuitBreaker: false
         });
       } catch (error) {
@@ -84,7 +91,7 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl).post('/oauth/token').reply(404);
 
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+        await clientCredentialsGrant(xsuaaClientCredentials, creds, {
           enableCircuitBreaker: false
         });
         fail();
@@ -97,7 +104,7 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl).post('/oauth/token').reply(500);
 
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+        await clientCredentialsGrant(xsuaaClientCredentials, creds, {
           enableCircuitBreaker: false
         });
         fail();
@@ -130,7 +137,7 @@ describe('xsuaa', () => {
         .reply(200, expectedResponse);
 
       const userToken = await userTokenGrant(
-        providerXsuaaUrl,
+        xsuaaClientCredentials,
         userJwt,
         clientId
       );
@@ -154,7 +161,7 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
+        await userTokenGrant(xsuaaClientCredentials, userJwt, clientId, {
           enableCircuitBreaker: false
         });
       } catch (error) {
@@ -181,7 +188,7 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
+        await userTokenGrant(xsuaaClientCredentials, userJwt, clientId, {
           enableCircuitBreaker: false
         });
       } catch (error) {
@@ -207,7 +214,7 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
+        await userTokenGrant(xsuaaClientCredentials, userJwt, clientId, {
           enableCircuitBreaker: false
         });
       } catch (error) {
@@ -240,7 +247,7 @@ describe('xsuaa', () => {
         .reply(200, expectedResponse);
 
       const response = await refreshTokenGrant(
-        providerXsuaaUrl,
+        xsuaaClientCredentials,
         creds,
         refreshToken
       );
@@ -263,7 +270,7 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, {
+        await refreshTokenGrant(xsuaaClientCredentials, creds, refreshToken, {
           enableCircuitBreaker: false
         });
       } catch (error) {
@@ -290,7 +297,7 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, {
+        await refreshTokenGrant(xsuaaClientCredentials, creds, refreshToken, {
           enableCircuitBreaker: false
         });
       } catch (error) {

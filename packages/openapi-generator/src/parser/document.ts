@@ -8,7 +8,8 @@ export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
   serviceName: string
 ): Promise<OpenApiDocument> {
-  const document = (await parse(fileContent)) as OpenAPIV3.Document;
+  const clonedContent = JSON.parse(JSON.stringify(fileContent));
+  const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
   const operations = parseAllOperations(document, refs);
   return {

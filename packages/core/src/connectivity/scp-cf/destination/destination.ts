@@ -148,7 +148,8 @@ function parseAuthToken(authToken: Record<string, any>): DestinationAuthToken {
     type: authToken.type,
     value: authToken.value,
     expiresIn: authToken.expires_in,
-    error: 'error' in authToken ? authToken.error : null
+    error: 'error' in authToken ? authToken.error : null,
+    http_header: authToken.http_header
   };
 }
 

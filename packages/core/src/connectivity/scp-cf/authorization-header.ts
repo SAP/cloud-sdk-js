@@ -56,6 +56,7 @@ function hasAuthHeaders(destination: Destination): boolean {
     'BasicAuthentication',
     'OAuth2ClientCredentials',
     'OAuth2SAMLBearerAssertion',
+    'OAuth2UserTokenExchange',
     'PrincipalPropagation'
   ];
   return authTypesWithAuthorizationHeader.includes(destination.authentication);
@@ -100,11 +101,12 @@ function toAuthorizationHeader(authorization: string): Record<string, string> {
 }
 
 function headerFromTokens(
+  authenticationType: AuthenticationType,
   authTokens?: DestinationAuthToken[] | null
 ): Record<string, string> {
   if (!authTokens || !authTokens.length) {
     throw Error(
-      'AuthenticationType is "OAuth2SAMLBearerAssertion", but no AuthTokens could be fetched from the destination service!'
+      `AuthenticationType is ${authenticationType}, but no AuthTokens could be fetched from the destination service!`
     );
   }
 
@@ -122,7 +124,7 @@ function headerFromTokens(
     );
   }
   const authToken = usableTokens[0];
-  return toAuthorizationHeader(`${authToken.type} ${authToken.value}`);
+  return toAuthorizationHeader(authToken.http_header.value);
 }
 
 async function headerFromOAuth2ClientCredentialsDestination(
@@ -235,7 +237,11 @@ async function getAuthenticationRelatedHeaders(
     case 'ClientCertificateAuthentication':
       return {};
     case 'OAuth2SAMLBearerAssertion':
-      return headerFromTokens(destination.authTokens);
+    case 'OAuth2UserTokenExchange':
+      return headerFromTokens(
+        destination.authentication,
+        destination.authTokens
+      );
     case 'OAuth2ClientCredentials':
       return headerFromOAuth2ClientCredentialsDestination(destination);
     case 'BasicAuthentication':

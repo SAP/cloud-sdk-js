@@ -32,7 +32,11 @@ describe('Header-Builder', () => {
           type: 'Bearer',
           value: 'some.token',
           expiresIn: '3600',
-          error: null
+          error: null,
+          http_header: {
+            key: 'Authorization',
+            value: 'Bearer some.token'
+          }
         }
       ]
     };

@@ -1,17 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises } from 'fs';
-import { resolve } from 'path';
-import { safeLoad } from 'js-yaml';
+import { resolve, parse } from 'path';
 import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
-import { OpenAPIV3 } from 'openapi-types';
 import { GeneratorOptions } from './options';
 import { apiFile, indexFile, createFile } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
+import { convertOpenApiSpec } from './document-converter';
 
-const { readdir, readFile, writeFile, rmdir, mkdir } = promises;
+const { readdir, writeFile, rmdir, mkdir } = promises;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -31,26 +30,39 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   );
 
   inputFilePaths.forEach(async filePath => {
-    const openApiDocument = await parseOpenApiDocument(filePath);
-    if (!openApiDocument.operations.length) {
+    const serviceName = parseServiceName(filePath);
+    // TODO: get kebapcase unique directory name
+    const serviceDir = resolve(options.outputDir, serviceName);
+    let openApiDocument;
+    try {
+      openApiDocument = await convertOpenApiSpec(filePath);
+    } catch (err) {
+      logger.error(
+        `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
+      );
+      return;
+    }
+    const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
+    const parsedOpenApiDocument = await parseOpenApiDocument(
+      openApiDocument,
+      serviceName
+    );
+
+    if (!parsedOpenApiDocument.operations.length) {
       logger.warn(
         `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
       );
       return;
     }
-    // TODO: get kebapcase unique directory name
-    const serviceDir = resolve(
-      options.outputDir,
-      openApiDocument.serviceDirName
-    );
-    const adjustedInputFilePath = resolve(serviceDir, 'open-api.json');
-    const fileContent = await readFile(filePath, 'utf8');
-    const fileContentAsObj = parseYamlOrJson(fileContent, filePath);
 
     await mkdir(serviceDir, { recursive: true });
-    await generateSpecWithGlobalTag(fileContentAsObj, adjustedInputFilePath);
-    await generateOpenApiService(adjustedInputFilePath, serviceDir);
-    await generateSDKSources(serviceDir, openApiDocument, options);
+    await writeFile(
+      convertedInputFilePath,
+      JSON.stringify(openApiDocument, null, 2)
+    );
+
+    await generateOpenApiService(convertedInputFilePath, serviceDir);
+    await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
   });
 }
 
@@ -120,60 +132,10 @@ async function generateOpenApiService(
 }
 
 /**
- * Workaround for OpenApi generation to build one and only one API for all tags.
- * Write a new spec with only one 'default' tag.
- * @param fileContent File content of the original spec.
- * @param outputFilePath Path to write the altered spec to.
+ * Parse the name of the service based on the file path.
+ * @param filePath Path of the service specification.
+ * @returns The parsed name.
  */
-async function generateSpecWithGlobalTag(
-  fileContent: any,
-  outputFilePath: string
-): Promise<void> {
-  const modifiedOpenApiDocument = createSpecWithGlobalTag(fileContent);
-  return writeFile(
-    outputFilePath,
-    JSON.stringify(modifiedOpenApiDocument, null, 2)
-  );
-}
-
-/**
- * Parse a yaml or a json file to an object.
- * @param fileContent File content of the original spec.
- * @param filePath File path of the original spec.
- * @returns File content as an object.
- */
-function parseYamlOrJson(fileContent: string, filePath: string) {
-  const filePathLowerCase = filePath.toLocaleLowerCase();
-  if (filePathLowerCase.endsWith('yaml') || filePathLowerCase.endsWith('yml')) {
-    return safeLoad(fileContent);
-  }
-  if (filePathLowerCase.endsWith('json')) {
-    return JSON.parse(fileContent);
-  }
-  throw new Error(
-    `Only support Json and Yaml files as input files, but detected: ${filePath}.`
-  );
-}
-
-/**
- * Workaround for OpenApi generation to build one and only one API for all tags.
- * Modify spec to contain only one 'default' tag.
- * @param openApiDocument OpenApi JSON document.
- * @returns The modified document.
- */
-export function createSpecWithGlobalTag(
-  openApiDocument: OpenAPIV3.Document
-): OpenAPIV3.Document {
-  const tag = 'default';
-  openApiDocument.tags = [{ name: tag }];
-
-  Object.values(openApiDocument.paths).forEach(
-    (pathDefinition: Record<string, any>) => {
-      Object.values(pathDefinition).forEach(methodDefinition => {
-        methodDefinition.tags = [tag];
-      });
-    }
-  );
-
-  return openApiDocument;
+function parseServiceName(filePath: string): string {
+  return parse(filePath).name.replace(/-openapi$/, '');
 }

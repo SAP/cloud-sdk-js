@@ -58,10 +58,12 @@
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "@openapitools/openapi-generator-cli": "^2.1.4",
     "@sap-cloud-sdk/util": "^1.33.0",
+    "@types/js-yaml": "^3.12.5",
     "cli-ux": "^5.4.5",
     "execa": "^5.0.0",
     "js-yaml": "^3.14.1",
-    "openapi-types": "^7.0.1"
+    "openapi-types": "^7.0.1",
+    "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",

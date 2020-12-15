@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Test API
- * Test API
+ * Swagger Test Service
+ * Test Service for OpenApi version 2 aka. Swagger as YAML file.
  *
  * The version of the OpenAPI document: 1.0.0
  * 

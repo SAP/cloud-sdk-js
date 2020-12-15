@@ -8,5 +8,4 @@ configuration.ts
 git_push.sh
 index.ts
 model/index.ts
-model/simple-test-entity.ts
 model/test-entity.ts

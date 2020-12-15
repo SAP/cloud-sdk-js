@@ -137,32 +137,8 @@ if (arg === 'e2e' || arg === 'all') {
 
 if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
   generateOpenApi({
-    inputDir: path.resolve(
-      'test-resources',
-      'openapi-service-specs',
-      'test-service-json'
-    ),
-    outputDir: path.resolve(
-      'test-packages',
-      'test-services',
-      'openapi',
-      'test-service-json'
-    ),
-    clearOutputDir: true
-  });
-
-  generateOpenApi({
-    inputDir: path.resolve(
-      'test-resources',
-      'openapi-service-specs',
-      'test-service-yaml'
-    ),
-    outputDir: path.resolve(
-      'test-packages',
-      'test-services',
-      'openapi',
-      'test-service-yaml'
-    ),
+    inputDir: path.resolve('test-resources', 'openapi-service-specs'),
+    outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
     clearOutputDir: true
   });
 }

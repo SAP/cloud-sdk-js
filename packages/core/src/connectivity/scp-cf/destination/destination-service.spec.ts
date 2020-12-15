@@ -360,7 +360,11 @@ describe('destination service', () => {
             type: 'Bearer',
             value: 'token',
             expiresIn: '3600',
-            error: null
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer token'
+            }
           }
         ]
       };
@@ -411,7 +415,11 @@ describe('destination service', () => {
             type: '',
             error: 'ERROR',
             value: '',
-            expires_in: '0'
+            expires_in: '0',
+            http_header: {
+              key: '',
+              value: ''
+            }
           }
         ]
       };
@@ -427,7 +435,11 @@ describe('destination service', () => {
             type: '',
             error: 'ERROR',
             value: '',
-            expiresIn: '0'
+            expiresIn: '0',
+            http_header: {
+              key: '',
+              value: ''
+            }
           }
         ],
         originalProperties: response

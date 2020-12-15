@@ -7,20 +7,15 @@ import { errorWithCause } from '@sap-cloud-sdk/util';
 const { readFile } = promises;
 
 /**
- * Convert an OpenApi document to ensure smooth parsing and generation thereafter.
- * Documents are expected to be formatted as JSON, OpenApi version 3 and only have one "default" tag.
+ * Convert an OpenAPI document to ensure smooth parsing and generation thereafter.
+ * Documents are expected to be formatted as JSON, OpenAPI version 3 and only have one "default" tag.
  * @param filePath File content of the original spec.
  * @param ouputFilePath Path to write the altered spec to.
  */
 export async function convertOpenApiSpec(
   filePath: string
 ): Promise<OpenAPIV3.Document> {
-  let file;
-  try {
-    file = await parseFileAsJson(filePath);
-  } catch (err) {
-    throw errorWithCause('Could not parse OpenApi specification.', err);
-  }
+  const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
   return convertDocToGlobalTag(openApiDocument);
 }
@@ -34,7 +29,7 @@ export async function parseFileAsJson(
   filePath: string
 ): Promise<Record<string, any>> {
   const fileContent = await readFile(filePath, 'utf8');
-  const extension = parse(filePath).ext;
+  const extension = parse(filePath).ext.toLowerCase();
   if (extension === '.json') {
     return JSON.parse(fileContent);
   }
@@ -43,27 +38,34 @@ export async function parseFileAsJson(
   }
 
   throw new Error(
-    `Could not parse ${filePath}. Only JSON and YAML files are allowed.`
+    `Could not parse OpenAPI specification at ${filePath}. Only JSON and YAML files are allowed.`
   );
 }
 
 /**
- * Convert Swagger documents to OpenApi documents.
- * If an OpenApi document is passed it is not modified.
- * @param openApiDocument OpenApi version 2 (Swagger) or 3 document to be converted to version 3.
- * @returns A promise of an OpenApi version 3 document.
+ * Convert Swagger documents to OpenAPI documents.
+ * If an OpenAPI document is passed it is not modified.
+ * @param openApiDocument OpenAPI version 2 (Swagger) or 3 document to be converted to version 3.
+ * @returns A promise of an OpenAPI version 3 document.
  */
 export async function convertDocToOpenApiV3(
   openApiDocument: Record<string, any>
 ): Promise<OpenAPIV3.Document> {
   // This is a hidden cast to OpenAPIV3.Document
-  return (await convert(openApiDocument, {})).openapi;
+  try {
+    return (await convert(openApiDocument, {})).openapi;
+  } catch (err) {
+    throw errorWithCause(
+      'Could not convert OpenAPI specification to OpenAPI version 3.',
+      err
+    );
+  }
 }
 
 /**
- * Workaround for OpenApi generation to build one and only one API for all tags.
+ * Workaround for OpenAPI generation to build one and only one API for all tags.
  * Modify spec to contain only one 'default' tag.
- * @param openApiDocument OpenApi JSON document.
+ * @param openApiDocument OpenAPI JSON document.
  * @returns The modified document.
  */
 export function convertDocToGlobalTag(

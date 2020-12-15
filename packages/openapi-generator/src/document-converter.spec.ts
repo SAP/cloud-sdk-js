@@ -210,12 +210,12 @@ describe('parseFileAsJson', () => {
     await expect(() =>
       parseFileAsJson('/path/no-extension')
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not parse /path/no-extension. Only JSON and YAML files are allowed."'
+      '"Could not parse OpenAPI specification at /path/no-extension. Only JSON and YAML files are allowed."'
     );
     await expect(() =>
       parseFileAsJson('/path/other-extension.test')
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not parse /path/other-extension.test. Only JSON and YAML files are allowed."'
+      '"Could not parse OpenAPI specification at /path/other-extension.test. Only JSON and YAML files are allowed."'
     );
   });
 });

@@ -33,7 +33,15 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const serviceName = parseServiceName(filePath);
     // TODO: get kebapcase unique directory name
     const serviceDir = resolve(options.outputDir, serviceName);
-    const openApiDocument = await convertOpenApiSpec(filePath);
+    let openApiDocument;
+    try {
+      openApiDocument = await convertOpenApiSpec(filePath);
+    } catch (err) {
+      logger.error(
+        `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
+      );
+      return;
+    }
     const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
     const parsedOpenApiDocument = await parseOpenApiDocument(
       openApiDocument,

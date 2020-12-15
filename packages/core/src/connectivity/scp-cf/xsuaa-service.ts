@@ -219,7 +219,7 @@ function post(
   const targetUri =
     typeof tokenServiceUrlOrXsuaaServiceCerednetials === 'string'
       ? tokenServiceUrlOrXsuaaServiceCerednetials
-      : getTargetUri(tokenServiceUrlOrXsuaaServiceCerednetials);
+      : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCerednetials);
 
   if (
     options.enableCircuitBreaker ||
@@ -268,14 +268,11 @@ enum GrantType {
   CLIENT_CREDENTIALS = 'client_credentials'
 }
 
-function getTargetUri(
+function getTokenServiceUrl(
   xsuaaServiceCredentials: XsuaaServiceCredentials
 ): string {
   const xsuaaUri = xsuaaServiceCredentials.url.replace(/\/$/, '');
-  if (xsuaaUri.includes('/oauth/token')) {
-    return xsuaaUri;
-  }
-  logger.warn(
+  logger.info(
     `Adding "/oauth/token" to the end of the target uri: ${xsuaaUri}.`
   );
   return `${xsuaaUri}/oauth/token`;

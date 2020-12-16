@@ -61,7 +61,7 @@ export abstract class MethodRequestBuilderBase<
   }
 
   /**
-   * Add custom headers to the request. If a header field with the given name already exists it is overwritten.
+   * Add custom headers to the request. Existing headers will be overwritten.
    *
    * @param headers - Key-value pairs denoting additional custom headers
    * @returns The request builder itself, to facilitate method chaining

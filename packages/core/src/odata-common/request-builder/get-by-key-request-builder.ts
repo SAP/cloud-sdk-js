@@ -4,39 +4,40 @@ import {
   DestinationNameAndJwt,
   DestinationOptions
 } from '../../connectivity/scp-cf';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import { Constructable, EntityBase } from '../entity';
 import { ODataGetByKeyRequestConfig } from '../request';
 import { ODataUri } from '../uri-conversion';
 import { FieldType, Selectable } from '../selectable';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { MethodRequestBuilderBase } from './request-builder-base';
+import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export abstract class GetByKeyRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilderBase<ODataGetByKeyRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT> {
-  readonly _entity: EntityT;
-
+export abstract class GetByKeyRequestBuilderBase<
+  EntityT extends EntityBase
+> extends GetRequestBuilderBase<EntityT, ODataGetByKeyRequestConfig<EntityT>> {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    *
-   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param entityConstructor - Constructor of the entity to create the request for
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    * @param oDataUri - Uri conversion methods
    * @param entityDeserializer - Entity deserializer
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    entityConstructor: Constructable<EntityT>,
     keys: Record<string, FieldType>,
     oDataUri: ODataUri,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor
   ) {
-    super(new ODataGetByKeyRequestConfig(_entityConstructor, oDataUri));
+    super(
+      entityConstructor,
+      new ODataGetByKeyRequestConfig(entityConstructor, oDataUri)
+    );
     this.requestConfig.keys = keys;
   }
 

@@ -26,7 +26,7 @@ In the past the suffix was also appended for `string` inputs.
 
 ## Improvements
 
--
+- Unify naming of the request builder methods. See [this adr](./knowledge-base/adr/0017-builder-methods-multiple-calls.md) for a list of the changed methods.
 
 ## Fixed Issues
 

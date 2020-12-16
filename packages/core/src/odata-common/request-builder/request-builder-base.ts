@@ -63,8 +63,8 @@ export abstract class MethodRequestBuilderBase<
   /**
    * Add custom headers to the request. Existing headers will be overwritten.
    *
-   * @param headers - Key-value pairs denoting additional custom headers
-   * @returns The request builder itself, to facilitate method chaining
+   * @param headers - Key-value pairs denoting additional custom headers.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomHeaders(headers: Record<string, string>): this {
     this.requestConfig.addCustomHeaders(headers);

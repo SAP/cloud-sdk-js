@@ -76,7 +76,7 @@
           {
             "name": "enumStringParameter",
             "in": "query",
-            "description": "A parameter of type string with enum",
+            "description": "A parameter of type enum with string",
             "required": false,
             "schema": {
               "type": "string",
@@ -103,7 +103,7 @@
           {
             "name": "enumFloatParameter",
             "in": "query",
-            "description": "A parameter of type string with enum",
+            "description": "A parameter of type enum with float",
             "required": false,
             "schema": {
               "type": "number",
@@ -117,7 +117,7 @@
           {
             "name": "enumDoubleParameter",
             "in": "query",
-            "description": "A parameter of type string with enum",
+            "description": "A parameter of type enum with double",
             "required": false,
             "schema": {
               "type": "number",
@@ -131,7 +131,7 @@
           {
             "name": "enumBooleanParameter",
             "in": "query",
-            "description": "A parameter of type string with enum",
+            "description": "A parameter of type enum with boolean",
             "required": false,
             "schema": {
               "type": "boolean",

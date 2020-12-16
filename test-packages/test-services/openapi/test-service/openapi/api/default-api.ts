@@ -112,11 +112,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} [integerParameter] A parameter of type integer
          * @param {string} [$dollarParameter] A parameter that contains $
          * @param {string} [dotParameter] A parameter that contains . in the middle
-         * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type string with enum
+         * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
          * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-         * @param {1 | 2} [enumFloatParameter] A parameter of type string with enum
-         * @param {1 | 2} [enumDoubleParameter] A parameter of type string with enum
-         * @param {boolean} [enumBooleanParameter] A parameter of type string with enum
+         * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
+         * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+         * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -473,11 +473,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {number} [integerParameter] A parameter of type integer
          * @param {string} [$dollarParameter] A parameter that contains $
          * @param {string} [dotParameter] A parameter that contains . in the middle
-         * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type string with enum
+         * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
          * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-         * @param {1 | 2} [enumFloatParameter] A parameter of type string with enum
-         * @param {1 | 2} [enumDoubleParameter] A parameter of type string with enum
-         * @param {boolean} [enumBooleanParameter] A parameter of type string with enum
+         * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
+         * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+         * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -587,11 +587,11 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {number} [integerParameter] A parameter of type integer
          * @param {string} [$dollarParameter] A parameter that contains $
          * @param {string} [dotParameter] A parameter that contains . in the middle
-         * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type string with enum
+         * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
          * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-         * @param {1 | 2} [enumFloatParameter] A parameter of type string with enum
-         * @param {1 | 2} [enumDoubleParameter] A parameter of type string with enum
-         * @param {boolean} [enumBooleanParameter] A parameter of type string with enum
+         * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
+         * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+         * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -686,11 +686,11 @@ export class DefaultApi extends BaseAPI {
      * @param {number} [integerParameter] A parameter of type integer
      * @param {string} [$dollarParameter] A parameter that contains $
      * @param {string} [dotParameter] A parameter that contains . in the middle
-     * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type string with enum
+     * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
      * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-     * @param {1 | 2} [enumFloatParameter] A parameter of type string with enum
-     * @param {1 | 2} [enumDoubleParameter] A parameter of type string with enum
-     * @param {boolean} [enumBooleanParameter] A parameter of type string with enum
+     * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
+     * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+     * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi

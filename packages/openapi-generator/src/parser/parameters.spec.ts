@@ -63,8 +63,8 @@ describe('parseParameters', () => {
       { ...anyParamWithSchema, type: 'any' },
       { ...stringParam, type: 'string' },
       { ...numberParam, type: 'number' },
-      { ...enumStringParam, type: 'string' },
-      { ...enumNumberParam, type: 'number' }
+      { ...enumStringParam, type: "'value1' | 'value2'" },
+      { ...enumNumberParam, type: '1 | 2' }
     ]);
   });
 

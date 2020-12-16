@@ -1,6 +1,6 @@
-import { codeBlock, partition, unique } from '@sap-cloud-sdk/util';
+import { codeBlock, createLogger, partition, unique } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
-
+const logger = createLogger('openapi-generator');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Get the content of the SAP Cloud SDK API wrapper.
@@ -8,7 +8,7 @@ import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
  * @returns The generated code for the SDK API wrapper.
  */
 export function apiFile(openApiDocument: OpenApiDocument): string {
-  const requestBodyTypes = getRequestBodyTypes(openApiDocument);
+  const requestBodyTypes = getRequestBodyReferenceTypes(openApiDocument);
   return codeBlock`
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
@@ -25,16 +25,25 @@ export const ${openApiDocument.apiName} = {
 }
 
 /**
- * Get the types for all request body types in the given service.
+ * Get the reference types for all request body types in the given service.
  * @param openApiDocument Parsed service metadata.
  * @returns The list of body types as a string.
  */
-function getRequestBodyTypes(openApiDocument: OpenApiDocument): string {
+function getRequestBodyReferenceTypes(
+  openApiDocument: OpenApiDocument
+): string {
   const bodyTypes = openApiDocument.operations
     .map(operation => operation.requestBody?.parameterType)
-    .filter(requestBody => typeof requestBody !== 'undefined') as string[];
+    .filter(requestBody => typeof requestBody !== 'undefined')
+    .filter(requestBody => !isKnownType(requestBody)) as string[];
 
   return unique(bodyTypes).join(', ');
+}
+
+const knownTypes = ['number', 'string', 'boolean', 'object', 'any'];
+
+function isKnownType(type): boolean {
+  return knownTypes.includes(type);
 }
 
 /**
@@ -111,6 +120,7 @@ function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
 }
 
 function getType(parameter: Parameter) {
+    // logger.warn(parameter.type);
   return parameter.enum
     ? parameter.enum.map(e => `'${e}'`).join(' | ')
     : parameter.type;

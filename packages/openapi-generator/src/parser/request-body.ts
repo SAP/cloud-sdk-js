@@ -3,6 +3,8 @@ import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenApiRequestBody } from '../openapi-types';
 import { isReferenceObject, parseTypeName, resolveObject } from './refs';
+import { getType } from './type-mapping';
+import { isArraySchemaObject, isNonArraySchemaObject } from './schema';
 
 const logger = createLogger('openapi-generator');
 
@@ -21,11 +23,12 @@ export function parseRequestBody(
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
   const requestBodyType = parseRequestBodyType(resolvedRequestBody);
+  logger.warn(requestBodyType);
   if (requestBodyType && resolvedRequestBody) {
     return {
       ...resolvedRequestBody,
       parameterName: camelCase(requestBodyType),
-      parameterType: pascalCase(requestBodyType)
+      parameterType: requestBodyType
     };
   }
 }
@@ -45,9 +48,16 @@ function parseRequestBodyType(
     if (isReferenceObject(schema)) {
       return parseTypeName(schema);
     }
-    logger.warn(
-      'The SAP Cloud SDK OpenApi generator currently does not support inline schemas. This will likely cause issues when using this client.'
-    );
+    if (isArraySchemaObject(schema)) {
+      return undefined;
+    }
+    if (isNonArraySchemaObject(schema)) {
+      return getType(schema.type);
+    }
+    // logger.warn(
+    //   'The SAP Cloud SDK OpenApi generator currently does not support inline schemas. This will likely cause issues when using this client.'
+    // );
+    // logger.warn(requestBody.description);
   }
 }
 

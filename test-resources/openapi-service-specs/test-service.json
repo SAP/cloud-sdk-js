@@ -75,6 +75,15 @@
             }
           },
           {
+            "name": "objectParameter",
+            "in": "body",
+            "description": "A parameter of type object",
+            "required": false,
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
             "name": "enumParameter",
             "in": "query",
             "description": "A parameter of type string with enum",
@@ -85,6 +94,30 @@
                 "value1",
                 "value2"
               ]
+            }
+          },
+          {
+            "name": "stringArrayParameter",
+            "in": "query",
+            "description": "A parameter of type array with enum",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "refArrayParameter",
+            "in": "query",
+            "description": "A parameter of type array with reference",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TestEntity"
+              }
             }
           }
         ],

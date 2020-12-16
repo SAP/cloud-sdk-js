@@ -35,8 +35,8 @@ export abstract class GetRequestBuilderBase<
   /**
    * Restrict the response to the given selection of properties in the request.
    *
-   * @param selects - Fields to select in the request
-   * @returns The request builder itself, to facilitate method chaining
+   * @param selects - Fields to select in the request.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   select(...selects: Selectable<EntityT>[]): this;
   select(selects: Selectable<EntityT>[]): this;

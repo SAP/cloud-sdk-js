@@ -39,7 +39,7 @@ function parseType(param: OpenAPIV3.ParameterObject, refs: $Refs) {
   const tsType = getType(originalType);
   const enumValue = resolveObject(param.schema, refs)?.enum;
   if (enumValue && isValidEnumType(tsType)) {
-    enumAsUnionType(tsType, enumValue, originalType);
+    return enumAsUnionType(tsType, enumValue, originalType);
   }
   return tsType;
 }

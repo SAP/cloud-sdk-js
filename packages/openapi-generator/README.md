@@ -1,39 +1,90 @@
-## OpenApi Client Generator
+## SAP Cloud SDK OpenAPI Client Generator (Beta)
 
-This is currently not release ready. excluded in `mail.ts`.
+Generate custom JavaScript/TypeScript clients for OpenAPI services.
+This generator is based on the official [OpenAPI generator](https://openapi-generator.tech/) and adds some additional code for convenience to better integrate with the SAP Cloud SDK.
 
-The generator wraps only the openapi-generator.
-This is a flexible tool using many commandline flags and templates for easy adjustment.
-<br>[Command line arguments](https://github.com/OpenAPITools/openapi-generator#3---usage)
-<br>[Repo For mustache files](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-axios)
+## Prerequisites
 
-In the wrapping `generator-cli` we currently only expose `inputDir` and `outputDir` to generate tyescript-axios sources from the openapi.json files.
+The official OpenAPI generator is Java based, therefore you need to have a Java runtime installed to use the SAP Cloud SDK OpenAPI generator.
 
+# Installation
+```sh-session
+$ npm install @sap-cloud-sdk/openapi-generator
+```
+# Usage (CLI)
+<!-- commands -->
+* [`generate-openapi-client autocomplete [SHELL]`](#generate-openapi-client-autocomplete-shell)
+* [`generate-openapi-client help [COMMAND]`](#generate-openapi-client-help-command)
 
-### Things we have adjusted to the OpenApi Generator
-- Since the SAP graph definitions were lacking any tags we added a tag with the service name in camel case to each path of the service.
-- The method singature of the constructor was changed to take the accesstoken or basic for auth  and URL.
-  This was done by changing the `templates/baseApi.mustache` to achieve that.
+## `generate-openapi-client autocomplete [SHELL]`
 
-### Usage
+display autocomplete installation instructions
 
-To run the generator use:
+```
+USAGE
+  $ generate-openapi-client autocomplete [SHELL]
 
- ```shell script
- ts-node `src/generator-cli.ts` -i <FolderContainingOpenApiDefinitions> -o <OutputDirectory>
+ARGUMENTS
+  SHELL  shell type
+
+OPTIONS
+  -r, --refresh-cache  Refresh cache (ignores displaying instructions)
+
+EXAMPLES
+  $ generate-openapi-client autocomplete
+  $ generate-openapi-client autocomplete bash
+  $ generate-openapi-client autocomplete zsh
+  $ generate-openapi-client autocomplete --refresh-cache
 ```
 
-Once you have the generated classes, you can make calls via:
-```typescript
-import { AxiosResponse } from 'axios';
-import { SalesOrdersApi, InlineResponse200 as ResponseSalesOrder } from 'generated/sales-orders';
+_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v0.2.1/src/commands/autocomplete/index.ts)_
 
-const response: AxiosResponse<ResponseSalesOrder> = await new SalesOrdersApi({ accessToken, basePath }).getSalesOrders()
+## `generate-openapi-client help [COMMAND]`
+
+display help for generate-openapi-client
+
+```
+USAGE
+  $ generate-openapi-client help [COMMAND]
+
+ARGUMENTS
+  COMMAND  command to show help for
+
+OPTIONS
+  --all  see all commands in CLI
 ```
 
-Besides bearer token also basic is supported for authentication.
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
+<!-- commandsstop -->
 
-### Problem Generator
+# Usage (programatically)
+```ts
+import { generate } from '@sap-cloud-sdk/openapi-generator';
 
-- If you add the option `'--additional-properties=withSeparateModelsAndApi=true'`
-and you have the templates enables, the model files are empty. Most likely there is no template found for the type.
+// initialize generator options based on what you want to do
+// note that inputDir and outputDir are mandatory
+const options: GeneratorOptions = {
+  inputDir: 'path/to/inputDir',
+  outputDir: 'path/to/outputDir'
+};
+
+// generates the files and writes them to the outputDir
+await generate(options);
+```
+
+### Documentation
+[Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
+[API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts)
+
+### Helpful Links
+
+- [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk/)
+- [Tutorials on developers.sap.com](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:javascript)
+- [SAP Cloud SDK on StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest)
+- [SAP Cloud SDK on answers.sap.com](https://answers.sap.com/tags/73555000100800000895)
+- [Release notes on help.sap.com](https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html)
+- [Release notes on Github](https://github.com/SAP/cloud-sdk-js/releases)
+- [All versions of this documentation](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
+- [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
+- [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
+

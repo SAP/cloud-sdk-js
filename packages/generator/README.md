@@ -10,7 +10,7 @@ Generate your own service module using a service specification (.edmx file).
 $ npm install @sap-cloud-sdk/generator
 ```
 
-## Usage
+## Usage (CLI)
 
 The generator is primarily meant to be used on the command line:
 
@@ -20,6 +20,7 @@ generate-odata-client --inputDir path/to/your/service-specification(s) --outputD
 
 Run `generate-odata-client --help` for further options.
 
+## Usage (programatically)
 You can also use the generator programmatically. You will have to provide the options anyways.
 
 ```ts

@@ -17,9 +17,13 @@ describe('api-file', () => {
             },
             {
               in: 'query',
-              name: 'enum',
-              type: 'string',
-              enum: ['value1', 'value2']
+              name: 'enumString',
+              type: "'value1 | value2'"
+            },
+            {
+              in: 'query',
+              name: 'enumNumber',
+              type: '1 | 2'
             },
             {
               in: 'path',

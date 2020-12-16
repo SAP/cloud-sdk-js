@@ -26,25 +26,40 @@ export function parseParameters(
   parameters = filterDuplicateParams(parameters);
   parameters = reorderParameters(parameters);
   parameters = renameEquallyNamedParams(parameters);
-  return parameters.map(param => toOpenApiParameter(param, refs));
-}
-
-function toOpenApiParameter(
-  param: OpenAPIV3.ParameterObject,
-  refs: $Refs
-): OpenApiParameter {
-  const enumValue = resolveObject(param.schema, refs)?.enum;
-  const ret = {
+  return parameters.map(param => ({
     ...param,
     name: camelCase(param.name),
     // TODO: Check whether types are correct here and whether we can use union types here.
-    type: getType(resolveObject(param.schema, refs)?.type?.toString()),
-    enum: resolveObject(param.schema, refs)?.enum
-  };
-  if (!enumValue) {
-    delete ret.enum;
+    type: parseType(param, refs)
+  }));
+}
+
+function parseType(param: OpenAPIV3.ParameterObject, refs: $Refs) {
+  const originalType = resolveObject(param.schema, refs)?.type?.toString();
+  const tsType = getType(originalType);
+  const enumValue = resolveObject(param.schema, refs)?.enum;
+  if (enumValue && isValidEnumType(tsType)) {
+    enumAsUnionType(tsType, enumValue, originalType);
   }
-  return ret;
+  return tsType;
+}
+
+function isValidEnumType(tsType: string): boolean {
+  return tsType === 'number' || tsType === 'string';
+}
+
+function enumAsUnionType(
+  tsType: string,
+  enumValue: any[],
+  originalType
+): string {
+  if (tsType === 'number') {
+    return enumValue.join(' | ');
+  }
+  if (tsType === 'string') {
+    return enumValue.map(e => `'${e}'`).join(' | ');
+  }
+  throw new Error(`Cannot parse enum with original type: ${originalType}.`);
 }
 
 export function filterDuplicateParams(

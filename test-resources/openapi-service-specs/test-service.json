@@ -75,7 +75,7 @@
             }
           },
           {
-            "name": "enumParameter",
+            "name": "enumStringParameter",
             "in": "query",
             "description": "A parameter of type string with enum",
             "required": false,
@@ -84,6 +84,61 @@
               "enum": [
                 "value1",
                 "value2"
+              ]
+            }
+          },
+          {
+            "name": "enumInt32Parameter",
+            "in": "query",
+            "description": "A parameter of type string with enum",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "enum": [
+                1,
+                2
+              ]
+            }
+          },
+          {
+            "name": "enumFloatParameter",
+            "in": "query",
+            "description": "A parameter of type string with enum",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "enum": [
+                1,
+                2
+              ]
+            }
+          },
+          {
+            "name": "enumDoubleParameter",
+            "in": "query",
+            "description": "A parameter of type string with enum",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum": [
+                1,
+                2
+              ]
+            }
+          },
+          {
+            "name": "enumBooleanParameter",
+            "in": "query",
+            "description": "A parameter of type string with enum",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                "true",
+                "false"
               ]
             }
           }

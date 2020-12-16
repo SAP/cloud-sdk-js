@@ -52,7 +52,6 @@ export function methods(): Method[] {
  */
 export interface OpenApiParameter extends OpenAPIV3.ParameterObject {
   type: string;
-  enum?: string[];
 }
 
 /**

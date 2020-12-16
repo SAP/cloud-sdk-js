@@ -8,7 +8,7 @@ import { ODataGetByKeyRequestConfig } from '../request';
 /**
  * Base class for the get all and get by key request builders.
  *
- * @typeparam EntityT - Type of the entity to be requested
+ * @typeparam EntityT - Type of the entity to be requested.
  */
 export abstract class GetRequestBuilderBase<
     EntityT extends EntityBase,

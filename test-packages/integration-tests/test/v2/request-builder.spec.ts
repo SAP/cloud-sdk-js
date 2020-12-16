@@ -531,7 +531,7 @@ describe('Request Builder', () => {
       URL: url,
       authTokens: [],
       Authentication: 'OAuth2ClientCredentials',
-      tokenServiceURL: 'https://token.example.com',
+      tokenServiceURL: 'https://token.example.com/some/token/endpoint',
       clientId: 'TokenClientId',
       clientSecret: 'TokenClientSecret'
     };
@@ -549,7 +549,7 @@ describe('Request Builder', () => {
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
     mockSubaccountDestinationsCall(nock, [], 200, providerToken);
 
-    nock(destination.tokenServiceURL, {
+    nock('https://token.example.com', {
       reqheaders: {
         authorization: basicHeader(
           destination.clientId,
@@ -558,7 +558,7 @@ describe('Request Builder', () => {
       }
     })
       .post(
-        '/oauth/token',
+        '/some/token/endpoint',
         'grant_type=client_credentials&client_id=TokenClientId&client_secret=TokenClientSecret'
       )
       .reply(200, { access_token: fakeOAuthToken });

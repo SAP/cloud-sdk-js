@@ -8,6 +8,7 @@ import {
   userTokenGrant
 } from './xsuaa-service';
 import { TokenKey } from './xsuaa-service-types';
+import { XsuaaServiceCredentials } from './environment-accessor-types';
 
 describe('xsuaa', () => {
   const creds = {
@@ -15,6 +16,9 @@ describe('xsuaa', () => {
     password: 'borsti'
   };
   const basicHeader = 'Basic aG9yc3RpOmJvcnN0aQ==';
+  const providerXsuaaClientCredentials = {
+    url: providerXsuaaUrl
+  } as XsuaaServiceCredentials;
 
   describe('clientCredentialsGrant', () => {
     it('returns a valid token for a given set of client credentials when the url comes from XsuaaServiceCredentials', async () => {
@@ -32,7 +36,54 @@ describe('xsuaa', () => {
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(200, expectedResponse);
 
-      const response = await clientCredentialsGrant(providerXsuaaUrl, creds);
+      const response = await clientCredentialsGrant(
+        providerXsuaaClientCredentials,
+        creds
+      );
+      expect(response).toEqual(expectedResponse);
+    });
+
+    it('does not change the given token service URL if a string is passed', async () => {
+      const expectedResponse = {
+        access_token: 'sometoken',
+        token_type: 'bearer',
+        expires_in: 0,
+        scope: 'some scopes',
+        jti: 'uhm'
+      };
+
+      nock('https://some.token.service.url.com', {
+        reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
+      })
+        .post('/token/path', 'grant_type=client_credentials')
+        .reply(200, expectedResponse);
+
+      const response = await clientCredentialsGrant(
+        'https://some.token.service.url.com/token/path',
+        creds
+      );
+      expect(response).toEqual(expectedResponse);
+    });
+
+    it('adds /oauth/token if the XsuaaServiceCredentials are passed', async () => {
+      const expectedResponse = {
+        access_token: 'sometoken',
+        token_type: 'bearer',
+        expires_in: 0,
+        scope: 'some scopes',
+        jti: 'uhm'
+      };
+
+      nock(providerXsuaaUrl, {
+        reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
+      })
+        .post('/oauth/token', 'grant_type=client_credentials')
+        .reply(200, expectedResponse);
+
+      const response = await clientCredentialsGrant(
+        providerXsuaaClientCredentials,
+        creds
+      );
       expect(response).toEqual(expectedResponse);
     });
 
@@ -70,7 +121,7 @@ describe('xsuaa', () => {
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(401, response);
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+        await clientCredentialsGrant(providerXsuaaClientCredentials, creds, {
           enableCircuitBreaker: false
         });
       } catch (error) {
@@ -84,7 +135,7 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl).post('/oauth/token').reply(404);
 
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+        await clientCredentialsGrant(providerXsuaaClientCredentials, creds, {
           enableCircuitBreaker: false
         });
         fail();
@@ -97,7 +148,7 @@ describe('xsuaa', () => {
       nock(providerXsuaaUrl).post('/oauth/token').reply(500);
 
       try {
-        await clientCredentialsGrant(providerXsuaaUrl, creds, {
+        await clientCredentialsGrant(providerXsuaaClientCredentials, creds, {
           enableCircuitBreaker: false
         });
         fail();
@@ -130,7 +181,7 @@ describe('xsuaa', () => {
         .reply(200, expectedResponse);
 
       const userToken = await userTokenGrant(
-        providerXsuaaUrl,
+        providerXsuaaClientCredentials,
         userJwt,
         clientId
       );
@@ -154,9 +205,14 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
-          enableCircuitBreaker: false
-        });
+        await userTokenGrant(
+          providerXsuaaClientCredentials,
+          userJwt,
+          clientId,
+          {
+            enableCircuitBreaker: false
+          }
+        );
       } catch (error) {
         expect(error.message).toBe(
           'FetchTokenError: User token Grant failed! Request failed with status code 401'
@@ -181,9 +237,14 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
-          enableCircuitBreaker: false
-        });
+        await userTokenGrant(
+          providerXsuaaClientCredentials,
+          userJwt,
+          clientId,
+          {
+            enableCircuitBreaker: false
+          }
+        );
       } catch (error) {
         expect(error.message).toBe(
           'FetchTokenError: User token Grant failed! Request failed with status code 401'
@@ -207,9 +268,14 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await userTokenGrant(providerXsuaaUrl, userJwt, clientId, {
-          enableCircuitBreaker: false
-        });
+        await userTokenGrant(
+          providerXsuaaClientCredentials,
+          userJwt,
+          clientId,
+          {
+            enableCircuitBreaker: false
+          }
+        );
       } catch (error) {
         expect(error.message).toBe(
           'FetchTokenError: User token Grant failed! Request failed with status code 401'
@@ -240,7 +306,7 @@ describe('xsuaa', () => {
         .reply(200, expectedResponse);
 
       const response = await refreshTokenGrant(
-        providerXsuaaUrl,
+        providerXsuaaClientCredentials,
         creds,
         refreshToken
       );
@@ -263,9 +329,14 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, {
-          enableCircuitBreaker: false
-        });
+        await refreshTokenGrant(
+          providerXsuaaClientCredentials,
+          creds,
+          refreshToken,
+          {
+            enableCircuitBreaker: false
+          }
+        );
       } catch (error) {
         expect(error.message).toBe(
           'FetchTokenError: Refresh token Grant failed! Request failed with status code 401'
@@ -290,9 +361,14 @@ describe('xsuaa', () => {
         .reply(401, expectedResponse);
 
       try {
-        await refreshTokenGrant(providerXsuaaUrl, creds, refreshToken, {
-          enableCircuitBreaker: false
-        });
+        await refreshTokenGrant(
+          providerXsuaaClientCredentials,
+          creds,
+          refreshToken,
+          {
+            enableCircuitBreaker: false
+          }
+        );
       } catch (error) {
         expect(error.message).toBe(
           'FetchTokenError: Refresh token Grant failed! Request failed with status code 401'

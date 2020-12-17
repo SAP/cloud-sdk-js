@@ -3,7 +3,8 @@ import {
   createLogger,
   pickIgnoreCase,
   toSanitizedObject,
-  encodeBase64
+  encodeBase64,
+  ErrorWithCause
 } from '@sap-cloud-sdk/util';
 import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
 import { getOAuth2ClientCredentialsToken } from './client-credentials-token';

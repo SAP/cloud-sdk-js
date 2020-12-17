@@ -54,7 +54,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1/src/commands/help.ts)_
 <!-- commandsstop -->
 
 # Usage (programatically)
@@ -87,4 +87,3 @@ await generate(options);
 - [All versions of this documentation](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
 - [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
 - [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
-

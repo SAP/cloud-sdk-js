@@ -89,21 +89,31 @@
           },
           {
             "name": "enumInt32Parameter",
-            "type": "integer",
-            "format": "int32",
-            "enum": [
-              1,
-              2
-            ]
+            "in": "query",
+            "description": "A parameter of type enum with int 32",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "enum": [
+                1,
+                2
+              ]
+            }
           },
           {
             "name": "enumDoubleParameter",
-            "type": "number",
-            "format": "double",
-            "enum": [
-              1,
-              2
-            ]
+            "in": "query",
+            "description": "A parameter of type enum with double",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum": [
+                1,
+                2
+              ]
+            }
           },
           {
             "name": "enumBooleanParameter",
@@ -116,39 +126,6 @@
                 "true",
                 "false"
               ]
-            }
-          },
-          {
-            "name": "objectParameter",
-            "in": "body",
-            "description": "A parameter of type object",
-            "required": false,
-            "schema": {
-              "type": "object"
-            }
-          },
-          {
-            "name": "stringArrayParameter",
-            "in": "query",
-            "description": "A parameter of type array with enum",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "refArrayParameter",
-            "in": "query",
-            "description": "A parameter of type array with reference",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/TestEntity"
-              }
             }
           }
         ],
@@ -197,6 +174,26 @@
           },
           "409": {
             "description": "entity already exists"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "someTag"
+        ],
+        "operationId": "updateEntity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "entity updated"
           }
         }
       }

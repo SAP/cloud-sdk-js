@@ -11,15 +11,14 @@
   },
   "tags": [
     {
-      "name": "someTag",
-      "description": "Some test tag"
+      "name": "default"
     }
   ],
   "paths": {
     "/entities": {
       "get": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "summary": "Get entities",
         "description": "Get all entities",
@@ -150,7 +149,7 @@
       },
       "post": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "summary": "Create entity",
         "description": "Create entity",
@@ -179,7 +178,7 @@
       },
       "patch": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "operationId": "updateEntity",
         "requestBody": {
@@ -199,7 +198,7 @@
       },
       "delete": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "operationId": "deleteEntity",
         "requestBody": {
@@ -222,7 +221,7 @@
       },
       "put": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "operationId": "updateEntityWithPut",
         "requestBody": {
@@ -247,7 +246,7 @@
     "/entities/{entityId}": {
       "get": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "summary": "Get entity by id",
         "description": "Get entity by id",
@@ -305,7 +304,10 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       }
     },
     "/test-cases/parameters/required-parameters/{requiredPathItemPathParam}": {
@@ -377,7 +379,10 @@
           "201": {
             "description": "no content"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       },
       "post": {
         "operationId": "testCasePostRequiredParameters",
@@ -413,7 +418,10 @@
           "201": {
             "description": "no content"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       }
     },
     "/test-cases/parameters/{duplicateParam}": {
@@ -441,7 +449,10 @@
           "201": {
             "description": "no content"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       }
     }
   },

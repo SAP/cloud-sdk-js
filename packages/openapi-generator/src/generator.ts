@@ -113,8 +113,6 @@ async function generateOpenApiService(
     '--skip-validate-spec'
   ];
 
-  logger.debug(`OpenAPI generator CLI arguments: ${generationArguments}`);
-
   try {
     const response = await execa('npx', generationArguments);
     if (response.stderr) {

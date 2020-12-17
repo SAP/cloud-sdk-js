@@ -1,5 +1,5 @@
 import { OpenApiDocument, OpenApiRequestBody } from '../openapi-types';
-import { apiFile } from './api-file';
+import { apiFile, getGenericTypeFromArray } from './api-file';
 
 describe('api-file', () => {
   it('creates api file content for operations with parameters and no request bodies', () => {
@@ -152,5 +152,17 @@ describe('api-file', () => {
       ]
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
+  });
+});
+
+describe('getGenericTypeFromArray', () => {
+  it('should unwrap generic type from array', () => {
+    expect(getGenericTypeFromArray('Array<string>')).toEqual('string');
+  });
+  it('should unwrap generic type from nested array', () => {
+    expect(getGenericTypeFromArray('Array<Array<number>>')).toEqual('number');
+  });
+  it('should return original type for non-array type', () => {
+    expect(getGenericTypeFromArray('string')).toEqual('string');
   });
 });

@@ -40,15 +40,31 @@ function getRequestBodyReferenceTypes(
   const bodyTypes = openApiDocument.operations
     .map(operation => operation.requestBody?.parameterType)
     .filter(requestBody => typeof requestBody !== 'undefined')
-    .filter(requestBody => !isKnownType(requestBody)) as string[];
+    .map(requestBody => getGenericTypeFromArray(requestBody!))
+    .filter(requestBody => !isKnownTSType(requestBody!)) as string[];
 
   return unique(bodyTypes).join(', ');
 }
 
-const knownTypes = ['number', 'string', 'boolean', 'object', 'any'];
+/**
+ * Recursively get the deepest generic type of an array type.
+ * @param type The given type.
+ * @returns The deepest generic type.
+ */
+export function getGenericTypeFromArray(type: string): string {
+  const match = /^Array<(.*?)>$/.exec(type);
+  return !!match ? getGenericTypeFromArray(match[1]) : type;
+}
 
-function isKnownType(type): boolean {
-  return knownTypes.includes(type);
+const knownTSTypes = ['number', 'string', 'boolean', 'object', 'any'];
+
+/**
+ * Check whether a given type is a built-in TS type.
+ * @param type The type to be checked
+ * @returns True if the type is a built-in TS type, false otherwise.
+ */
+function isKnownTSType(type: string): boolean {
+  return knownTSTypes.includes(type);
 }
 
 /**

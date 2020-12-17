@@ -1,4 +1,4 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   DestinationOptions,
   Destination,
@@ -66,12 +66,15 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<void> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(() => Promise.resolve())
-      .catch(error =>
-        Promise.reject(errorWithCause('OData delete request failed!', error))
-      );
+    return (
+      this.build(destination, options)
+        .then(request => request.execute())
+        // Transform response to void
+        .then(() => Promise.resolve())
+        .catch(error => {
+          throw new ErrorWithCause('OData delete request failed!', error);
+        })
+    );
   }
 
   abstract setVersionIdentifier(eTag: string): this;

@@ -1,4 +1,4 @@
-import { errorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationNameAndJwt,
@@ -77,10 +77,8 @@ export abstract class GetByKeyRequestBuilderBase<
           response.headers
         )
       )
-      .catch(error =>
-        Promise.reject(
-          errorWithCause('OData get by key request failed!', error)
-        )
-      );
+      .catch(error => {
+        throw new ErrorWithCause('OData get by key request failed!', error);
+      });
   }
 }

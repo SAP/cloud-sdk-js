@@ -3,7 +3,7 @@ import { parse } from 'path';
 import { OpenAPIV3 } from 'openapi-types';
 import { convert } from 'swagger2openapi';
 import { safeLoad } from 'js-yaml';
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 const { readFile } = promises;
 
 /**
@@ -55,7 +55,7 @@ export async function convertDocToOpenApiV3(
   try {
     return (await convert(openApiDocument, {})).openapi;
   } catch (err) {
-    throw errorWithCause(
+    throw new ErrorWithCause(
       'Could not convert OpenAPI specification to OpenAPI version 3.',
       err
     );

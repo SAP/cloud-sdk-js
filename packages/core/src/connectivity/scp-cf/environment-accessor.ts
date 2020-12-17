@@ -1,4 +1,4 @@
-import { createLogger, errorWithCause, first } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause, first } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { audiences, DecodedJWT, decodeJwt } from './jwt';
 import {
@@ -126,7 +126,7 @@ export function getVcapService(): Record<string, any> | null {
   try {
     vcapServices = JSON.parse(env);
   } catch (error) {
-    throw errorWithCause(
+    throw new ErrorWithCause(
       "Failed to parse environment variable 'VCAP_SERVICES'.",
       error
     );

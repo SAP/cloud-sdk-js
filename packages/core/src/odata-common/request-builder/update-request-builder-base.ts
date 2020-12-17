@@ -1,6 +1,6 @@
 import {
   createLogger,
-  errorWithCause,
+  ErrorWithCause,
   variadicArgumentToArray
 } from '@sap-cloud-sdk/util';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
@@ -220,9 +220,9 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
             .setOrInitializeRemoteState()
             .setVersionIdentifier(eTag);
         })
-        .catch(error =>
-          Promise.reject(errorWithCause('OData update request failed!', error))
-        )
+        .catch(error => {
+          throw new ErrorWithCause('OData update request failed!', error);
+        })
     );
   }
 

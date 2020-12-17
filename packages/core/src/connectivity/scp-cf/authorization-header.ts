@@ -1,5 +1,4 @@
 import {
-  errorWithCause,
   isNullish,
   createLogger,
   pickIgnoreCase,
@@ -130,7 +129,7 @@ async function headerFromOAuth2ClientCredentialsDestination(
 ): Promise<Record<string, string>> {
   const response = await getOAuth2ClientCredentialsToken(destination).catch(
     error => {
-      throw errorWithCause(
+      throw new ErrorWithCause(
         'Request for "OAuth2ClientCredentials" authentication access token failed or denied.',
         error
       );

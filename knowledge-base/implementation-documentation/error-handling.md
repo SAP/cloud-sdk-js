@@ -4,7 +4,7 @@ Here's the best practices of error handling (in asynchronous scenarios):
 
 - ALWAYS use `Error` objects, as they automatically capture their context in the program (i.e. stacktrace)
 - consequently, NEVER throw or reject litarals or plain objects
-- in the utils package (`@sap-cloud-sdk/util`) there's a function `errorWithCause` that "concatenates" errors, e.g.:
+- in the utils package (`@sap-cloud-sdk/util`) there's a class `ErrorWithCause` that "concatenates" errors, e.g.:
 
 ```
 Error: Failed to fetch instance destinations. Unable to parse the JWT in Authorization Header.
@@ -24,7 +24,7 @@ Caused by: Error: Request failed with status code 400
   at processImmediate (timers.js:611:7)
 ```
 
-- contrary to my prior belief/understanding, using `await` without `try/catch` is actually fine. In fact, the following two functions behave equivalently:
+- using `await` without `try/catch` is fine. In fact, the following two functions behave equivalently:
 
 ```ts
 function goGetIt() {

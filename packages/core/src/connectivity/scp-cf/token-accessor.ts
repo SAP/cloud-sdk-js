@@ -1,4 +1,4 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { DecodedJWT, decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
@@ -69,7 +69,7 @@ export async function serviceToken(
       return resp.access_token;
     })
     .catch(error => {
-      throw errorWithCause(
+      throw new ErrorWithCause(
         `Fetching an access token for service "${resolvedService.label}" failed!`,
         error
       );
@@ -110,7 +110,7 @@ export async function userApprovedServiceToken(
     )
     .then((refreshToken: UserTokenResponse) => refreshToken.access_token)
     .catch(error => {
-      throw errorWithCause(
+      throw new ErrorWithCause(
         `Fetching a user approved access token for service "${resolvedService.label}" failed!`,
         error
       );

@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'http';
 import * as url from 'url';
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosRequestConfig } from 'axios';
 import jwt from 'jsonwebtoken';
 import { getXsuaaServiceCredentials } from './environment-accessor';
@@ -158,14 +158,12 @@ function fetchAndCacheKeyAndVerify(
   options?: VerifyJwtOptions
 ) {
   return getVerificationKey(creds, verificationKeyURL)
-    .catch(error =>
-      Promise.reject(
-        errorWithCause(
-          'Failed to verify JWT - unable to get verification key!',
-          error
-        )
-      )
-    )
+    .catch(error => {
+      throw new ErrorWithCause(
+        'Failed to verify JWT - unable to get verification key!',
+        error
+      );
+    })
     .then(key =>
       options ? cacheVerificationKey(verificationKeyURL, key, options) : key
     )
@@ -225,7 +223,7 @@ export function verifyJwtWithKey(
   return new Promise((resolve, reject) => {
     jwt.verify(token, sanitizeVerificationKey(key), (err, decodedToken) => {
       if (err) {
-        reject(errorWithCause('JWT invalid', err));
+        reject(new ErrorWithCause('JWT invalid', err));
       } else {
         resolve(decodedToken as DecodedJWT);
       }

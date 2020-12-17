@@ -1,4 +1,4 @@
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   proxyStrategy,
   ProxyStrategy,
@@ -32,7 +32,7 @@ export function getDestinationsFromEnv(): Destination[] {
     try {
       destinations = JSON.parse(destinationsEnv);
     } catch (err) {
-      throw errorWithCause(
+      throw new ErrorWithCause(
         'Error in parsing the destinations from the environment variable.',
         err
       );

@@ -19,5 +19,5 @@ export function isArraySchemaObject(
 export function isNonArraySchemaObject(
   obj: any
 ): obj is OpenAPIV3.NonArraySchemaObject {
-  return !!obj?.type && obj.type !== 'array';
+  return !obj?.type || obj?.type !== 'array';
 }

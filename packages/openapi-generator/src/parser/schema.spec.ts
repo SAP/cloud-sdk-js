@@ -43,11 +43,11 @@ describe('isNonArraySchemaObject', () => {
     ).toEqual(false);
   });
 
-  it('returns false when detecting a reference object', () => {
+  it('returns true when detecting a reference object', () => {
     expect(
       isNonArraySchemaObject({
         $ref: '#/components/schemas/typeName'
       })
-    ).toEqual(false);
+    ).toEqual(true);
   });
 });

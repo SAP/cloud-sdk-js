@@ -70,7 +70,7 @@ describe('api-file', () => {
           ],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body',
+            parameterType: 'Array<Body>',
             required: true
           } as OpenApiRequestBody,
           pattern: 'test/{id}'

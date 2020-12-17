@@ -44,7 +44,7 @@ export const TestApi = {
   ),
   updateFn: (args: {
     id: string,
-    body: Body
+    body: Array<Body>
   }) => new OpenApiRequestBuilder<DefaultApi, 'updateFn'>(
     DefaultApi,
     'updateFn',

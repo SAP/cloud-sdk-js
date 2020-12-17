@@ -24,6 +24,7 @@ export function parseRequestBody(
   if (requestBodyType && resolvedRequestBody) {
     return {
       ...resolvedRequestBody,
+      // TODO: discuss naming. How about use "body" or "requestBody" or "payload"?
       parameterName: camelCase(requestBodyType),
       parameterType: requestBodyType
     };

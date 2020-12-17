@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { OpenAPIV3 } from 'openapi-types';
 import { createRefs } from '../../test/test-util';
 import { parseRequestBody } from './request-body';
 
@@ -57,25 +58,42 @@ describe('getRequestBody', () => {
     });
   });
 
-  it('logs warning for inline schema', async () => {
-    const logger = createLogger('openapi-generator');
-    spyOn(logger, 'warn');
+  it('returns object type from in line schema', async () => {
+    const requestBody: OpenAPIV3.RequestBodyObject = {
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object'
+          }
+        }
+      }
+    };
 
-    expect(
-      parseRequestBody(
-        {
-          content: {
-            'application/json': {
-              schema: {}
+    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
+      ...requestBody,
+      parameterName: 'object',
+      parameterType: 'object'
+    });
+  });
+
+  it('returns string array type from in line schema', async () => {
+    const requestBody: OpenAPIV3.RequestBodyObject = {
+      content: {
+        'application/json': {
+          schema: {
+            type: 'array',
+            items: {
+              type: 'string'
             }
           }
-        },
-        await createRefs()
-      )
-    ).toBeUndefined();
+        }
+      }
+    };
 
-    expect(logger.warn).toHaveBeenCalledWith(
-      'The SAP Cloud SDK OpenApi generator currently does not support inline schemas. This will likely cause issues when using this client.'
-    );
+    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
+      ...requestBody,
+      parameterName: 'arrayString',
+      parameterType: 'Array<string>'
+    });
   });
 });

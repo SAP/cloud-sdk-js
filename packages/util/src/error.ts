@@ -1,3 +1,10 @@
+/**
+ * @deprecated Since v1.34.0. Use `ErrorWithCause` class instead.
+ * Creates a new Error and adds the stack trace of the original error to the stack trace of the new one.
+ * @param message Error message.
+ * @param cause Original error, causing the new error.
+ * @returns A new error with the given cause.
+ */
 export function errorWithCause(message: string, cause: Error): Error {
   const newError = new Error(message);
   // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
@@ -7,7 +14,15 @@ export function errorWithCause(message: string, cause: Error): Error {
   return newError;
 }
 
+/**
+ * Represents an error that was caused by another error.
+ */
 export class ErrorWithCause extends Error {
+  /**
+   * Create an instance of ErrorWithCause.
+   * @param message Error message.
+   * @param cause Original error, causing this error.
+   */
   constructor(message: string, public cause?: Error) {
     super(message); // 'Error' breaks prototype chain here
     Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
@@ -19,11 +34,23 @@ export class ErrorWithCause extends Error {
     }
   }
 
-  get rootCause(): Error {
-    return isErrorWithCause(this.cause) ? this.cause.rootCause : this.cause || this;
+  /**
+   * Root cause of the error.
+   * If there are multiple errors caused one by another, the root cause is the first error that occurred.
+   * In case there is no root cause.
+   */
+  get rootCause(): Error | undefined {
+    return isErrorWithCause(this.cause) ? this.cause.rootCause : this.cause;
   }
 }
 
-export function isErrorWithCause(err: Error | undefined): err is ErrorWithCause {
+/**
+ * Type guard to check whether an error is of type ErrorWithCause.
+ * @param err An error.
+ * @returns Whether the given error is of type ErrorWithCause.
+ */
+export function isErrorWithCause(
+  err: Error | undefined
+): err is ErrorWithCause {
   return err?.name === 'ErrorWithCause';
 }

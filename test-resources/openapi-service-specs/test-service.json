@@ -75,18 +75,9 @@
             }
           },
           {
-            "name": "objectParameter",
-            "in": "body",
-            "description": "A parameter of type object",
-            "required": false,
-            "schema": {
-              "type": "object"
-            }
-          },
-          {
-            "name": "enumParameter",
+            "name": "enumStringParameter",
             "in": "query",
-            "description": "A parameter of type string with enum",
+            "description": "A parameter of type enum with string",
             "required": false,
             "schema": {
               "type": "string",
@@ -94,6 +85,46 @@
                 "value1",
                 "value2"
               ]
+            }
+          },
+          {
+            "name": "enumInt32Parameter",
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          {
+            "name": "enumDoubleParameter",
+            "type": "number",
+            "format": "double",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          {
+            "name": "enumBooleanParameter",
+            "in": "query",
+            "description": "A parameter of type enum with boolean",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
+          },
+          {
+            "name": "objectParameter",
+            "in": "body",
+            "description": "A parameter of type object",
+            "required": false,
+            "schema": {
+              "type": "object"
             }
           },
           {

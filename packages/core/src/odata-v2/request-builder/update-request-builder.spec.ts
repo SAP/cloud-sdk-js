@@ -165,7 +165,7 @@ describe('UpdateRequestBuilderV2', () => {
     });
 
     const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
-      .requiredFields(TestEntity.KEY_PROPERTY_GUID)
+      .setRequiredFields(TestEntity.KEY_PROPERTY_GUID)
       .execute(defaultDestination);
 
     expect(scope.isDone()).toBe(true);
@@ -178,7 +178,7 @@ describe('UpdateRequestBuilderV2', () => {
     const scope = nock(/.*/).patch(/.*/).reply(500);
 
     const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
-      .ignoredFields(TestEntity.INT_32_PROPERTY)
+      .setIgnoredFields(TestEntity.INT_32_PROPERTY)
       .execute(defaultDestination);
 
     expect(scope.isDone()).toBe(false);
@@ -219,7 +219,7 @@ describe('UpdateRequestBuilderV2', () => {
     });
 
     const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
-      .withCustomVersionIdentifier(customVersionIdentifier)
+      .setVersionIdentifier(customVersionIdentifier)
       .execute(defaultDestination);
 
     expect(actual).toEqual(entity.setOrInitializeRemoteState());

@@ -1,4 +1,9 @@
-import { codeBlock, createLogger, partition, unique } from '@sap-cloud-sdk/util';
+import {
+  codeBlock,
+  createLogger,
+  partition,
+  unique
+} from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
 const logger = createLogger('openapi-generator');
 /**
@@ -68,9 +73,7 @@ function getOperation(operation: OpenApiOperation): string {
   const paramsArg = params.length
     ? codeBlock`args${argsQuestionMark}: {
   ${params
-    .map(
-      param => `${param.name}${param.required ? '' : '?'}: ${getType(param)}`
-    )
+    .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
     .join(',\n')}
 }`
     : '';
@@ -94,7 +97,6 @@ interface Parameter {
   type: string;
   name: string;
   required?: boolean;
-  enum?: string[];
 }
 
 function getParams(operation: OpenApiOperation): Parameter[] {
@@ -117,11 +119,4 @@ function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
         }
       ]
     : [];
-}
-
-function getType(parameter: Parameter) {
-    // logger.warn(parameter.type);
-  return parameter.enum
-    ? parameter.enum.map(e => `'${e}'`).join(' | ')
-    : parameter.type;
 }

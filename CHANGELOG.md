@@ -22,7 +22,7 @@ In the past the suffix was also appended for `string` inputs.
 
 ## New Functionality
 
--
+- Introduce `ErrorWithCause` for better analysis of errors, their causes and their root causes. All errors that have been caused by other errors throught the SDK are based on this class.
 
 ## Improvements
 
@@ -31,7 +31,7 @@ In the past the suffix was also appended for `string` inputs.
 ## Fixed Issues
 
 - Stop appending `oauth/token` if the service token URL is given to `clientCredentialsGrant()`.
-See related compatibility note above. 
+See related compatibility note above.
 
 
 # 1.33.0
@@ -61,7 +61,7 @@ Blog: TBD<br>
 ## Fixed Issues
 
 - [Destination] Fix the authentication type `OAuth2ClientCredentials` to keep using the token url from the destination without adding the path `/oauth/token` to the end.
-- [Destination] Fix `OAuth2SAMLBearerAssertion` flow for technical users and subscriber account destinations. 
+- [Destination] Fix `OAuth2SAMLBearerAssertion` flow for technical users and subscriber account destinations.
 
 # 1.32.1
 

@@ -83,7 +83,6 @@ interface Parameter {
   type: string;
   name: string;
   required?: boolean;
-  enum?: string[];
 }
 
 function getParams(operation: OpenApiOperation): Parameter[] {

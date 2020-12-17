@@ -84,16 +84,12 @@ import { DefaultApi } from './openapi/api';
 export const TestApi = {
   getFn: (args: {
     id: string,
-    limit?: number,
-    enumString?: 'value1 | value2',
-    enumNumber?: 1 | 2
+    limit?: number
   }) => new OpenApiRequestBuilder<DefaultApi, 'getFn'>(
     DefaultApi,
     'getFn',
     args.id,
-    args.limit,
-    args.enumString,
-    args.enumNumber
+    args.limit
   ),
   deleteFn: (args: {
     id: string

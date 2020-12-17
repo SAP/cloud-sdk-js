@@ -101,20 +101,6 @@
             }
           },
           {
-            "name": "enumFloatParameter",
-            "in": "query",
-            "description": "A parameter of type enum with float",
-            "required": false,
-            "schema": {
-              "type": "number",
-              "format": "float",
-              "enum": [
-                1,
-                2
-              ]
-            }
-          },
-          {
             "name": "enumDoubleParameter",
             "in": "query",
             "description": "A parameter of type enum with double",

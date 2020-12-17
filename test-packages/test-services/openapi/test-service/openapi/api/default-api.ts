@@ -114,13 +114,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [dotParameter] A parameter that contains . in the middle
          * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
          * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-         * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
          * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
          * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities: async (stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumFloatParameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options: any = {}): Promise<RequestArgs> => {
+        getAllEntities: async (stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/entities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -154,10 +153,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (enumInt32Parameter !== undefined) {
                 localVarQueryParameter['enumInt32Parameter'] = enumInt32Parameter;
-            }
-
-            if (enumFloatParameter !== undefined) {
-                localVarQueryParameter['enumFloatParameter'] = enumFloatParameter;
             }
 
             if (enumDoubleParameter !== undefined) {
@@ -475,14 +470,13 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [dotParameter] A parameter that contains . in the middle
          * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
          * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-         * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
          * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
          * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumFloatParameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, dotParameter, enumStringParameter, enumInt32Parameter, enumFloatParameter, enumDoubleParameter, enumBooleanParameter, options);
+        async getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, dotParameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -589,14 +583,13 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [dotParameter] A parameter that contains . in the middle
          * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
          * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-         * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
          * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
          * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumFloatParameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options?: any): AxiosPromise<Array<TestEntity>> {
-            return DefaultApiFp(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, dotParameter, enumStringParameter, enumInt32Parameter, enumFloatParameter, enumDoubleParameter, enumBooleanParameter, options).then((request) => request(axios, basePath));
+        getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options?: any): AxiosPromise<Array<TestEntity>> {
+            return DefaultApiFp(configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, dotParameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter, options).then((request) => request(axios, basePath));
         },
         /**
          * Get entity by id
@@ -688,15 +681,14 @@ export class DefaultApi extends BaseAPI {
      * @param {string} [dotParameter] A parameter that contains . in the middle
      * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
      * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
-     * @param {1 | 2} [enumFloatParameter] A parameter of type enum with float
      * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
      * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumFloatParameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options?: any) {
-        return DefaultApiFp(this.configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, dotParameter, enumStringParameter, enumInt32Parameter, enumFloatParameter, enumDoubleParameter, enumBooleanParameter, options).then((request) => request(this.axios, this.basePath));
+    public getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options?: any) {
+        return DefaultApiFp(this.configuration).getAllEntities(stringParameter, integerParameter, $dollarParameter, dotParameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

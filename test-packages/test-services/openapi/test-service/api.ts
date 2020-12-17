@@ -15,7 +15,6 @@ export const TestServiceApi = {
     dotParameter?: string,
     enumStringParameter?: 'value1' | 'value2',
     enumInt32Parameter?: 1 | 2,
-    enumFloatParameter?: 1 | 2,
     enumDoubleParameter?: 1 | 2,
     enumBooleanParameter?: boolean
   }) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
@@ -27,7 +26,6 @@ export const TestServiceApi = {
     args?.dotParameter,
     args?.enumStringParameter,
     args?.enumInt32Parameter,
-    args?.enumFloatParameter,
     args?.enumDoubleParameter,
     args?.enumBooleanParameter
   ),

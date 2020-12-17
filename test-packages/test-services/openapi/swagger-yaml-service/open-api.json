@@ -49,6 +49,28 @@
         "tags": [
           "default"
         ]
+      },
+      "patch": {
+        "summary": "Test PATCH",
+        "operationId": "patchEntity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestEntity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "type": "string"
+          }
+        },
+        "tags": [
+          "default"
+        ]
       }
     }
   },

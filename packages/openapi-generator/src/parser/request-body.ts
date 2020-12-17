@@ -1,4 +1,4 @@
-import { camelCase, createLogger } from '@sap-cloud-sdk/util';
+import { camelCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenApiRequestBody } from '../openapi-types';

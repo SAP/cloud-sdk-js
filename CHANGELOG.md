@@ -48,7 +48,7 @@ Blog: TBD<br>
 
 - [Generator] Support parsing of multiple schemas in the edmx service specification.
 - [Util] Add string formatting functions.
-- [Core] Support for `Destination` with authentication type [`OAuth2UserTokenExchange`](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html)
+- [Core] Support `Destination` with authentication type [`OAuth2UserTokenExchange`](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html).
 
 ## Improvements
 

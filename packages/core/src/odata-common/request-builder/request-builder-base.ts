@@ -1,4 +1,4 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   useOrFetchDestination,
   Destination,
@@ -144,11 +144,12 @@ export abstract class MethodRequestBuilderBase<
           }
           return new ODataRequest(this.requestConfig, dest);
         })
-        .catch(error =>
-          Promise.reject(
-            errorWithCause(noDestinationErrorMessage(destination), error)
-          )
-        );
+        .catch(error => {
+          throw new ErrorWithCause(
+            noDestinationErrorMessage(destination),
+            error
+          );
+        });
     }
     return new ODataRequest(this.requestConfig);
   }

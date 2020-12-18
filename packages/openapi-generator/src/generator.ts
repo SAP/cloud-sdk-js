@@ -2,7 +2,7 @@
 
 import { promises } from 'fs';
 import { resolve, parse } from 'path';
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
 import { apiFile, indexFile, createFile } from './wrapper-files';
@@ -126,7 +126,7 @@ async function generateOpenApiService(
       `Sucessfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
-    throw errorWithCause(
+    throw new ErrorWithCause(
       'Could not generate the OpenApi client using the OpenApi generator CLI.',
       err
     );

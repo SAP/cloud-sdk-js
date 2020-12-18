@@ -1,5 +1,5 @@
 import {
-  errorWithCause,
+  ErrorWithCause,
   mergeIgnoreCase,
   pickIgnoreCase,
   pickNonNullish,
@@ -176,8 +176,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         ...this.customHeaders()
       };
     } catch (error) {
-      return Promise.reject(
-        errorWithCause('Constructing headers for OData request failed!', error)
+      throw new ErrorWithCause(
+        'Constructing headers for OData request failed!',
+        error
       );
     }
   }
@@ -269,7 +270,7 @@ function constructError(error, requestMethod: string, url: string): Error {
       : '';
     const message = [defaultMessage, s4SpecificMessage].join(' ');
 
-    return errorWithCause(message, error);
+    return new ErrorWithCause(message, error);
   }
   return error;
 }

@@ -1,4 +1,4 @@
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { Protocol } from './protocol';
 import { ProxyConfiguration } from './connectivity-service-types';
 import { Destination } from './destination/destination-service-types';
@@ -101,7 +101,7 @@ function proxyAuthorizationHeader(
       'Proxy-Authorization': `Bearer ${token}`
     }))
     .catch(error => {
-      throw errorWithCause(
+      throw new ErrorWithCause(
         'Failed to add proxy authorization header - client credentials grant failed!',
         error
       );

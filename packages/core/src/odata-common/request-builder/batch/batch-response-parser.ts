@@ -2,8 +2,8 @@
 import {
   last,
   createLogger,
-  errorWithCause,
-  pickValueIgnoreCase
+  pickValueIgnoreCase,
+  ErrorWithCause
 } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '../../../http-client';
 
@@ -95,7 +95,7 @@ export function splitBatchResponse(response: HttpResponse): string[] {
     );
     return splitResponse(body, boundary);
   } catch (err) {
-    throw errorWithCause('Could not parse batch response.', err);
+    throw new ErrorWithCause('Could not parse batch response.', err);
   }
 }
 
@@ -111,7 +111,7 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
     const boundary = getBoundary(pickValueIgnoreCase(headers, 'content-type'));
     return splitResponse(changeSetResponse, boundary);
   } catch (err) {
-    throw errorWithCause('Could not parse change set response.', err);
+    throw new ErrorWithCause('Could not parse change set response.', err);
   }
 }
 

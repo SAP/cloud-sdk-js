@@ -1,6 +1,6 @@
 import {
   createLogger,
-  errorWithCause,
+  ErrorWithCause,
   propertyExists
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
@@ -102,16 +102,14 @@ async function fetchDestinations(
       }
       return destinations;
     })
-    .catch(error =>
-      Promise.reject(
-        errorWithCause(
-          `Failed to fetch ${type} destinations.${errorMessageFromResponse(
-            error
-          )}`,
+    .catch(error => {
+      throw new ErrorWithCause(
+        `Failed to fetch ${type} destinations.${errorMessageFromResponse(
           error
-        )
-      )
-    );
+        )}`,
+        error
+      );
+    });
 }
 
 /**
@@ -164,16 +162,16 @@ export async function fetchDestination(
       }
       return destination;
     })
-    .catch(error =>
-      Promise.reject(
-        errorWithCause(
+    .catch(error => {
+      {
+        throw new ErrorWithCause(
           `Failed to fetch destination ${destinationName}.${errorMessageFromResponse(
             error
           )}`,
           error
-        )
-      )
-    );
+        );
+      }
+    });
 }
 
 function errorMessageFromResponse(error: AxiosError): string {

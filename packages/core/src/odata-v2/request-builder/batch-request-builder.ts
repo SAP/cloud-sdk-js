@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationNameAndJwt,
@@ -42,9 +42,9 @@ export class ODataBatchRequestBuilderV2 extends BatchRequestBuilder {
           entityDeserializerV2
         )
       )
-      .catch(error =>
-        Promise.reject(errorWithCause('Batch request failed!', error))
-      );
+      .catch(error => {
+        throw new ErrorWithCause('Batch request failed!', error);
+      });
   }
 }
 

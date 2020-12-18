@@ -1,6 +1,6 @@
 import {
   createLogger,
-  errorWithCause,
+  ErrorWithCause,
   pickIgnoreCase,
   pickNonNullish,
   pickValueIgnoreCase
@@ -62,7 +62,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
         if (retry) {
           return retry;
         }
-        throw errorWithCause('Csrf fetch failed.', error);
+        throw new ErrorWithCause('Csrf fetch failed.', error);
       }
       return error.response.headers;
     });

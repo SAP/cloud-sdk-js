@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { sep } from 'path';
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosResponse } from 'axios';
 import { AnalyticsData, getAnalyticsData } from './analytics-data';
 import {
@@ -49,7 +49,7 @@ export async function performUsageAnalytics(
       let config: UsageAnalyticsProjectConfig =
         configPath && JSON.parse(readFileSync(configPath, 'utf8'));
 
-      if (config && config.enabled) {
+      if (config?.enabled) {
         config = enforceValidConfig(config);
         const data = await getAnalyticsData(config);
         await sendAnalyticsData(config, data, options).catch(
@@ -65,7 +65,7 @@ export async function performUsageAnalytics(
 }
 
 /**
- * Sends development environment data to SAP Web Analytic.
+ * Sends development environment data to SAP Web Analytics.
  * For detailed information, check https://github.com/SAP/cloud-sdk-cli/blob/main/usage-analytics.md
  *
  * @param config - Configuration for web analytics.
@@ -80,7 +80,7 @@ export async function sendAnalyticsData(
   options: UsageAnalyticsOptions = {}
 ): Promise<AxiosResponse | void> {
   if (!config.enabled) {
-    return Promise.resolve();
+    return;
   }
 
   const mergedOption = { ...defaultOptions, ...options };
@@ -92,11 +92,9 @@ export async function sendAnalyticsData(
         ...payloadToCustomParameters(data)
       }
     })
-    .catch(error =>
-      Promise.reject(
-        errorWithCause('Failed to send usage analytics data.', error)
-      )
-    );
+    .catch(error => {
+      throw new ErrorWithCause('Failed to send usage analytics data.', error);
+    });
 }
 
 /**

@@ -1,4 +1,4 @@
-import { errorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   DestinationOptions,
   Destination,
@@ -97,8 +97,8 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
           response.headers
         )
       )
-      .catch(error =>
-        Promise.reject(errorWithCause('Create request failed!', error))
-      );
+      .catch(error => {
+        throw new ErrorWithCause('Create request failed!', error);
+      });
   }
 }

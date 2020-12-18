@@ -2,7 +2,7 @@
 
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import Command from '@oclif/command';
 import { flags } from '@oclif/parser';
@@ -71,7 +71,7 @@ async function validateJavaRuntime(): Promise<void> {
   try {
     response = await execa('java', ['-version']);
   } catch (err) {
-    throw errorWithCause(
+    throw new ErrorWithCause(
       'Could not invoke `java` command. Probably no Java runtime is installed.',
       err
     );

@@ -1,7 +1,7 @@
 import {
   createLogger,
   encodeBase64,
-  errorWithCause,
+  ErrorWithCause,
   renameKeys
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
@@ -189,14 +189,12 @@ export function fetchVerificationKeys(
   return axios
     .request(config)
     .then(resp => resp.data.keys.map(k => renameKeys(tokenKeyKeyMapping, k)))
-    .catch(error =>
-      Promise.reject(
-        errorWithCause(
-          `Failed to fetch verification keys from XSUAA service instance ${xsuaaUriOrCredentials}!`,
-          error
-        )
-      )
-    );
+    .catch(error => {
+      throw new ErrorWithCause(
+        `Failed to fetch verification keys from XSUAA service instance ${xsuaaUriOrCredentials}!`,
+        error
+      );
+    });
 }
 
 const tokenKeyKeyMapping: { [key: string]: keyof TokenKey } = {
@@ -279,7 +277,7 @@ function getTokenServiceUrl(
 }
 
 function accessTokenError(error: Error, grant: string): Error {
-  return errorWithCause(
+  return new ErrorWithCause(
     `FetchTokenError: ${grantTypeMapper[grant]} Grant failed! ${error.message}`,
     error
   );

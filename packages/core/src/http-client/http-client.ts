@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as https from 'https';
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import {
   buildHeadersForDestination,
@@ -141,27 +141,23 @@ function buildHeaders(
   destination: Destination,
   customHeaders?: Record<string, any>
 ): Promise<Record<string, string>> {
-  return buildHeadersForDestination(destination, customHeaders).catch(error =>
-    Promise.reject(
-      errorWithCause(
-        'Failed to build HTTP request for destination: failed to build headers!',
-        error
-      )
-    )
-  );
+  return buildHeadersForDestination(destination, customHeaders).catch(error => {
+    throw new ErrorWithCause(
+      'Failed to build HTTP request for destination: failed to build headers!',
+      error
+    );
+  });
 }
 
 function resolveDestination(
   destination: Destination | DestinationNameAndJwt
 ): Promise<Destination | null> {
-  return useOrFetchDestination(destination).catch(error =>
-    Promise.reject(
-      errorWithCause(
-        'Failed to build HTTP request for destination: failed to load destination!',
-        error
-      )
-    )
-  );
+  return useOrFetchDestination(destination).catch(error => {
+    throw new ErrorWithCause(
+      'Failed to build HTTP request for destination: failed to load destination!',
+      error
+    );
+  });
 }
 
 function merge<T extends HttpRequestConfig>(

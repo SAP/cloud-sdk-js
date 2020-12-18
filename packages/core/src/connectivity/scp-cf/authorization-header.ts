@@ -1,10 +1,10 @@
 import {
-  errorWithCause,
   isNullish,
   createLogger,
   pickIgnoreCase,
   toSanitizedObject,
-  encodeBase64
+  encodeBase64,
+  ErrorWithCause
 } from '@sap-cloud-sdk/util';
 import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
 import { getOAuth2ClientCredentialsToken } from './client-credentials-token';
@@ -130,7 +130,7 @@ async function headerFromOAuth2ClientCredentialsDestination(
 ): Promise<Record<string, string>> {
   const response = await getOAuth2ClientCredentialsToken(destination).catch(
     error => {
-      throw errorWithCause(
+      throw new ErrorWithCause(
         'Request for "OAuth2ClientCredentials" authentication access token failed or denied.',
         error
       );

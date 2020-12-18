@@ -1,4 +1,4 @@
-import { createLogger, errorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   ErrorResponse,
   ReadResponse,
@@ -156,7 +156,7 @@ function asReadResponse(
     constructor: Constructable<EntityT>
   ): EntityT[] => {
     if (body.error) {
-      throw errorWithCause('Could not parse read response.', body.error);
+      throw new ErrorWithCause('Could not parse read response.', body.error);
     }
     if (responseDataAccessor.isCollectionResult(body)) {
       return responseDataAccessor

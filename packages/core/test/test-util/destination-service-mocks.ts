@@ -41,13 +41,11 @@ export function mockSingleDestinationCall(
   response: any,
   responseCode: number,
   destName: string,
-  accessToken: string,
+  headers: Record<string, any>,
   uri: string = destinationServiceUri
 ) {
   return nockRef(uri, {
-    reqheaders: {
-      Authorization: `Bearer ${accessToken}`
-    }
+    reqheaders: headers
   })
     .get(`/destination-configuration/v1/destinations/${destName}`)
     .reply(responseCode, response);

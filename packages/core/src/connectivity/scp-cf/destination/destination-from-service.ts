@@ -9,8 +9,8 @@ import { IsolationStrategy } from '../cache';
 import { serviceToken, userApprovedServiceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
-  getDestinationServiceCredentialsList,
-  getService
+  getDestinationService,
+  getDestinationServiceCredentialsList
 } from '../environment-accessor';
 import type { DestinationOptions } from './destination-accessor';
 import { Destination } from './destination-service-types';
@@ -21,6 +21,7 @@ import {
 } from './destination-selection-strategies';
 import { DestinationsByType } from './destination-accessor-types';
 import {
+  AuthAndExchangeTokens,
   fetchDestination,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
@@ -99,6 +100,11 @@ class DestinationFromServiceRetriever {
     if (destination.authentication === 'OAuth2SAMLBearerAssertion') {
       destination = await da.addOAuthSamlAuth(
         destination,
+        destinationResult.origin
+      );
+    }
+    if (destination.authentication === 'OAuth2UserTokenExchange') {
+      destination = await da.addOAuth2UserTokenExchange(
         destinationResult.origin
       );
     }
@@ -221,21 +227,88 @@ class DestinationFromServiceRetriever {
     return credentials[0];
   }
 
+  private async fetchDestinationByToken(
+    jwt: string | AuthAndExchangeTokens
+  ): Promise<Destination> {
+    const destinationService = getDestinationService();
+
+    return fetchDestination(
+      destinationService.credentials.uri,
+      jwt,
+      this.name,
+      this.options
+    );
+  }
+  private async getAuthTokenForOAuth2UserTokenExchange(
+    destinationOrigin: DestinationOrigin
+  ): Promise<AuthAndExchangeTokens> {
+    if (!this.options.userJwt) {
+      throw Error(
+        'No user token (JWT) has been provided! This is strictly necessary for OAuth2UserTokenExchange.'
+      );
+    }
+
+    // Case 1 Destination in provider and jwt issued for provider account
+    if (this.isProviderAndSubscriberSameTenant()) {
+      logger.debug(
+        `OAuth2UserTokenExchange flow started without user exchange token for destination ${this.name} of the provider account.`
+      );
+      return {
+        authHeaderJwt: await userApprovedServiceToken(
+          this.options.userJwt,
+          getDestinationService(),
+          this.options
+        )
+      };
+    }
+    // Case 2 Destination in provider and jwt issued for subscriber account
+    if (destinationOrigin === 'provider') {
+      logger.debug(
+        `OAuth2UserTokenExchange flow started for destination ${this.name} of the provider account.`
+      );
+      return {
+        authHeaderJwt: this.providerClientCredentialsToken,
+        exchangeHeaderJwt: this.options.userJwt
+      };
+    }
+
+    // Case 3 Destination in subscriber and jwt issued for subscriber account
+    if (destinationOrigin === 'subscriber') {
+      logger.debug(
+        `OAuth2UserTokenExchange flow started for destination ${this.name} of the subscriber account.`
+      );
+      return {
+        authHeaderJwt: await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
+          this.options
+        ),
+        exchangeHeaderJwt: this.options.userJwt
+      };
+    }
+    throw new Error(
+      'Not possible to build tokens for OAuth2UserTokenExchange flow.'
+    );
+  }
+
+  private async addOAuth2UserTokenExchange(
+    destinationOrigin: DestinationOrigin
+  ): Promise<Destination> {
+    // This covers the three OAuth2UserTokenExchange cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html
+    const token = await this.getAuthTokenForOAuth2UserTokenExchange(
+      destinationOrigin
+    );
+    return this.fetchDestinationByToken(token);
+  }
+
   private async addOAuthSamlAuth(
     destination: Destination,
     destinationOrigin: DestinationOrigin
   ): Promise<Destination> {
-    const destinationService = getService('destination');
+    const destinationService = getDestinationService();
 
-    if (!destinationService) {
-      throw Error(
-        `Failed to fetch destination "${this.name}"! No binding to a destination service found.`
-      );
-    }
     /* This covers the two technical user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
-    If the destination comes from the provider account the client credentials token from the xsuaa.url is used (provider token).
-    If the destination comes from the subscriber account the subscriber subdomain is used fetch the client credentials token (subscriber token).
-    */
+   If the destination comes from the provider account the client credentials token from the xsuaa.url is used (provider token).
+   If the destination comes from the subscriber account the subscriber subdomain is used fetch the client credentials token (subscriber token).
+   */
     if (destination.systemUser) {
       const token =
         destinationOrigin === 'provider'
@@ -248,12 +321,7 @@ class DestinationFromServiceRetriever {
       );
 
       if (destinationOrigin) {
-        return fetchDestination(
-          destinationService.credentials.uri,
-          token,
-          this.name,
-          this.options
-        );
+        return this.fetchDestinationByToken(token);
       }
     }
     /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
@@ -269,12 +337,7 @@ class DestinationFromServiceRetriever {
       destinationService,
       this.options
     );
-    return fetchDestination(
-      destinationService.credentials.uri,
-      accessToken,
-      this.name,
-      this.options
-    );
+    return this.fetchDestinationByToken(accessToken);
   }
 
   private async addClientCertAuth(): Promise<Destination> {

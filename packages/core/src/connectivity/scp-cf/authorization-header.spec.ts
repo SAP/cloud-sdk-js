@@ -86,6 +86,33 @@ describe('buildAuthorizationHeaders', () => {
     });
   });
 
+  describe('OAuth2UserTokenExchange', () => {
+    it('should add the auth token from the destination', async () => {
+      const destination: Destination = {
+        ...defaultDestination,
+        authentication: 'OAuth2UserTokenExchange',
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'some.token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
+          }
+        ]
+      };
+
+      const actual = await buildAuthorizationHeaders(destination);
+
+      expect(actual).toEqual({
+        authorization: destination.authTokens![0].http_header.value
+      });
+    });
+  });
+
   describe('OAuth2ClientCredentials', () => {
     const destination: Destination = {
       ...defaultDestination,
@@ -184,13 +211,21 @@ describe('buildAuthorizationHeaders', () => {
             type: 'Bearer',
             value: 'some.token',
             expiresIn: '3600',
-            error: 'error'
+            error: 'error',
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
           },
           {
             type: 'Bearer',
             value: 'some.other.token',
             expiresIn: '3600',
-            error: 'error'
+            error: 'error',
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.other.token'
+            }
           }
         ]
       };
@@ -209,13 +244,21 @@ describe('buildAuthorizationHeaders', () => {
             type: 'Bearer',
             value: 'some.token',
             expiresIn: '3600',
-            error: 'error'
+            error: 'error',
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
           },
           {
             type: 'Bearer',
             value: 'some.other.token',
             expiresIn: '3600',
-            error: null
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.other.token'
+            }
           }
         ]
       };

@@ -1,7 +1,7 @@
 import { install } from '@sinonjs/fake-timers';
 import nock from 'nock';
 import { IsolationStrategy } from '../cache';
-import { decodeJwt } from '../jwt';
+import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   providerServiceToken,
   providerUserJwt,
@@ -289,7 +289,7 @@ describe('caching destination integraion tests', () => {
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
-          providerServiceToken
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 
@@ -334,7 +334,7 @@ describe('caching destination integraion tests', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          userApprovedProviderServiceToken
+          wrapJwtInHeader(userApprovedProviderServiceToken).headers
         )
       ];
 

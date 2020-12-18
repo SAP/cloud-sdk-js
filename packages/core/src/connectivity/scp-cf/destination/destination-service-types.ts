@@ -145,6 +145,10 @@ export interface DestinationAuthToken {
   value: string;
   expiresIn: string;
   error: string | null;
+  http_header: {
+    key: string;
+    value: string;
+  };
 }
 
 export type DestinationProxyType = 'OnPremise' | 'Internet' | null;
@@ -242,6 +246,7 @@ export type AuthenticationType =
   | 'BasicAuthentication'
   | 'OAuth2SAMLBearerAssertion'
   | 'OAuth2ClientCredentials'
+  | 'OAuth2UserTokenExchange'
   | 'ClientCertificateAuthentication';
 
 /**

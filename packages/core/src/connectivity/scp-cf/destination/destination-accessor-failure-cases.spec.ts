@@ -26,6 +26,7 @@ import {
   oauthMultipleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
+import { wrapJwtInHeader } from '../jwt';
 import { getDestination } from './destination-accessor';
 
 describe('Failure cases', () => {
@@ -115,7 +116,7 @@ describe('Failure cases', () => {
         },
         401,
         destinationName,
-        userApprovedSubscriberServiceToken
+        wrapJwtInHeader(userApprovedSubscriberServiceToken).headers
       )
     ];
 

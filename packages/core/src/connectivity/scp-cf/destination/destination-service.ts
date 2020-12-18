@@ -87,7 +87,9 @@ async function fetchDestinations(
     }
   }
 
-  return callDestinationService(targetUri, jwt, options)
+  const headers = wrapJwtInHeader(jwt).headers;
+
+  return callDestinationService(targetUri, headers, options)
     .then(response => {
       const destinations: Destination[] = response.data.map(d =>
         parseDestination(d)
@@ -112,19 +114,40 @@ async function fetchDestinations(
     });
 }
 
+export interface AuthAndExchangeTokens {
+  authHeaderJwt: string;
+  exchangeHeaderJwt?: string;
+}
+
 /**
  * Fetches a specific destination by name from the given URI, including authorization tokens.
  * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
+ * In this pass the access token as string.
+ * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
  *
  * @param destinationServiceUri - The URI of the destination service
- * @param jwt - The access token
+ * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
  * @param destinationName - The name of the desired destination
  * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
  */
 export async function fetchDestination(
   destinationServiceUri: string,
-  jwt: string,
+  token: string | AuthAndExchangeTokens,
+  destinationName: string,
+  options?: ResilienceOptions & CachingOptions
+): Promise<Destination> {
+  return fetchDestinationByTokens(
+    destinationServiceUri,
+    typeof token === 'string' ? { authHeaderJwt: token } : token,
+    destinationName,
+    options
+  );
+}
+
+async function fetchDestinationByTokens(
+  destinationServiceUri: string,
+  tokens: AuthAndExchangeTokens,
   destinationName: string,
   options?: ResilienceOptions & CachingOptions
 ): Promise<Destination> {
@@ -136,7 +159,7 @@ export async function fetchDestination(
   if (options?.useCache) {
     const destinationsFromCache = destinationServiceCache.retrieveDestinationsFromCache(
       targetUri,
-      decodeJwt(jwt),
+      decodeJwt(tokens.authHeaderJwt),
       options.isolationStrategy
     );
     if (destinationsFromCache) {
@@ -148,14 +171,18 @@ export async function fetchDestination(
       return destinationsFromCache[0];
     }
   }
+  let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
+  authHeader = tokens.exchangeHeaderJwt
+    ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
+    : authHeader;
 
-  return callDestinationService(targetUri, jwt, options)
+  return callDestinationService(targetUri, authHeader, options)
     .then(response => {
       const destination: Destination = parseDestination(response.data);
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(
           targetUri,
-          decodeJwt(jwt),
+          decodeJwt(tokens.authHeaderJwt),
           [destination],
           options.isolationStrategy
         );
@@ -182,13 +209,13 @@ function errorMessageFromResponse(error: AxiosError): string {
 
 function callDestinationService(
   uri: string,
-  jwt: string,
+  headers: Record<string, any>,
   options: ResilienceOptions = { enableCircuitBreaker: true }
 ): AxiosPromise {
   const config: AxiosRequestConfig = {
     ...getAxiosConfigWithDefaults(),
     url: uri,
-    headers: wrapJwtInHeader(jwt).headers
+    headers
   };
 
   if (

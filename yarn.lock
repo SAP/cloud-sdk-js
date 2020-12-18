@@ -1353,20 +1353,20 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nestjs/common@7.6.1":
-  version "7.6.1"
-  resolved "https://registry.npmjs.org/@nestjs/common/-/common-7.6.1.tgz#d62a3207c6db031a44f0fdc55e207586149d9fd1"
-  integrity sha512-Tq95a6a0kP3rxtV49xal168QNx49JPfO3s6SZ01sCJMWJVtGy8KCaC8YHAx7+KYamH43K6bd9Qv0K9R8lZxEtg==
+"@nestjs/common@7.6.3":
+  version "7.6.3"
+  resolved "https://registry.npmjs.org/@nestjs/common/-/common-7.6.3.tgz#95cd05af4f8f023b7ba34fd27e9fa5f3ce2b8da7"
+  integrity sha512-y6aOMZfWSBnAPi2g/UuhK0IIGNafIvgxAmOVjw9punui1mFpkBe0c0hkEnUOG3iDEVncqooqEgln48D160JA5g==
   dependencies:
     axios "0.21.0"
     iterare "1.2.1"
     tslib "2.0.3"
     uuid "8.3.2"
 
-"@nestjs/core@7.6.1":
-  version "7.6.1"
-  resolved "https://registry.npmjs.org/@nestjs/core/-/core-7.6.1.tgz#3b04ac45dd158f9373650d43894cbd2ae016a694"
-  integrity sha512-Rd0hqV2TsseMfZFTZBQH6zlNe5Hif5kVe5KNOnXADghKVaSLOO9SQ+VVPqXzeRYvC+xvJxnSdDyeTIriVsgMlg==
+"@nestjs/core@7.6.3":
+  version "7.6.3"
+  resolved "https://registry.npmjs.org/@nestjs/core/-/core-7.6.3.tgz#0b3c3518b6ec5e2ca3d5751820d4142639e3c24f"
+  integrity sha512-sOtIcuEYoj0PXhF/aULIXAUS5SW9wYLGkIAtkk8DMjW2CJJkCuAPIQk7LIqAS6tRDnXTluexnQ6artolVd/iDg==
   dependencies:
     "@nuxtjs/opencollective" "0.3.2"
     fast-safe-stringify "2.0.7"
@@ -1661,12 +1661,12 @@
     "@types/node" ">= 8"
 
 "@openapitools/openapi-generator-cli@^2.1.4":
-  version "2.1.10"
-  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.10.tgz#a1e768477949172e5c10272a3bdfbbd8a14adcde"
-  integrity sha512-gVfieuXDzGxRlaANHd3HxFw2bYx8wx95ASVittt6IotUWyiU9RT7qxZL517vl0fDZk8qkt0n/4bglhHgAxLEzw==
+  version "2.1.12"
+  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.12.tgz#c38fb110f1f1fa19b4c940efcbf1fcdaf8cc6de8"
+  integrity sha512-r/L5Fy5TBvWTYugqIJhsGUcC9f8godhtGiqMFkhm7vqBiM7MQj5jgV0pqBbFagHHb84tL3p1fqIeL0dW1I5vqA==
   dependencies:
-    "@nestjs/common" "7.6.1"
-    "@nestjs/core" "7.6.1"
+    "@nestjs/common" "7.6.3"
+    "@nestjs/core" "7.6.3"
     "@nuxtjs/opencollective" "0.3.2"
     chalk "4.1.0"
     commander "6.2.1"
@@ -2164,23 +2164,10 @@
     "@typescript-eslint/types" "4.10.0"
     "@typescript-eslint/visitor-keys" "4.10.0"
 
-"@typescript-eslint/scope-manager@4.9.1":
-  version "4.9.1"
-  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-4.9.1.tgz#cc2fde310b3f3deafe8436a924e784eaab265103"
-  integrity sha512-sa4L9yUfD/1sg9Kl8OxPxvpUcqxKXRjBeZxBuZSSV1v13hjfEJkn84n0An2hN8oLQ1PmEl2uA6FkI07idXeFgQ==
-  dependencies:
-    "@typescript-eslint/types" "4.9.1"
-    "@typescript-eslint/visitor-keys" "4.9.1"
-
 "@typescript-eslint/types@4.10.0":
   version "4.10.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-4.10.0.tgz#12f983750ebad867f0c806e705c1953cd6415789"
   integrity sha512-+dt5w1+Lqyd7wIPMa4XhJxUuE8+YF+vxQ6zxHyhLGHJjHiunPf0wSV8LtQwkpmAsRi1lEOoOIR30FG5S2HS33g==
-
-"@typescript-eslint/types@4.9.1":
-  version "4.9.1"
-  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-4.9.1.tgz#a1a7dd80e4e5ac2c593bc458d75dd1edaf77faa2"
-  integrity sha512-fjkT+tXR13ks6Le7JiEdagnwEFc49IkOyys7ueWQ4O8k4quKPwPJudrwlVOJCUQhXo45PrfIvIarcrEjFTNwUA==
 
 "@typescript-eslint/typescript-estree@4.10.0":
   version "4.10.0"
@@ -2189,20 +2176,6 @@
   dependencies:
     "@typescript-eslint/types" "4.10.0"
     "@typescript-eslint/visitor-keys" "4.10.0"
-    debug "^4.1.1"
-    globby "^11.0.1"
-    is-glob "^4.0.1"
-    lodash "^4.17.15"
-    semver "^7.3.2"
-    tsutils "^3.17.1"
-
-"@typescript-eslint/typescript-estree@4.9.1":
-  version "4.9.1"
-  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-4.9.1.tgz#6e5b86ff5a5f66809e1f347469fadeec69ac50bf"
-  integrity sha512-bzP8vqwX6Vgmvs81bPtCkLtM/Skh36NE6unu6tsDeU/ZFoYthlTXbBmpIrvosgiDKlWTfb2ZpPELHH89aQjeQw==
-  dependencies:
-    "@typescript-eslint/types" "4.9.1"
-    "@typescript-eslint/visitor-keys" "4.9.1"
     debug "^4.1.1"
     globby "^11.0.1"
     is-glob "^4.0.1"
@@ -2229,14 +2202,6 @@
   integrity sha512-hPyz5qmDMuZWFtHZkjcCpkAKHX8vdu1G3YsCLEd25ryZgnJfj6FQuJ5/O7R+dB1ueszilJmAFMtlU4CA6se3Jg==
   dependencies:
     "@typescript-eslint/types" "4.10.0"
-    eslint-visitor-keys "^2.0.0"
-
-"@typescript-eslint/visitor-keys@4.9.1":
-  version "4.9.1"
-  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-4.9.1.tgz#d76374a58c4ead9e92b454d186fea63487b25ae1"
-  integrity sha512-9gspzc6UqLQHd7lXQS7oWs+hrYggspv/rk6zzEMhCbYwPE/sF7oxo7GAjkS35Tdlt7wguIG+ViWCPtVZHz/ybQ==
-  dependencies:
-    "@typescript-eslint/types" "4.9.1"
     eslint-visitor-keys "^2.0.0"
 
 "@zkochan/cmd-shim@^3.1.0":

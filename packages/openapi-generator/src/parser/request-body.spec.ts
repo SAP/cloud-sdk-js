@@ -96,4 +96,28 @@ describe('getRequestBody', () => {
       parameterType: 'Array<string>'
     });
   });
+
+  it('returns nested array type from in line schema', async () => {
+    const requestBody: OpenAPIV3.RequestBodyObject = {
+      content: {
+        'application/json': {
+          schema: {
+            type: 'array',
+            items: {
+              type: 'array',
+              items: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      }
+    };
+
+    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
+      ...requestBody,
+      parameterName: 'arrayArrayString',
+      parameterType: 'Array<Array<string>>'
+    });
+  });
 });

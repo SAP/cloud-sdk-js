@@ -31,14 +31,14 @@ const logger = createLogger({
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is an URI, the response will not be verified.
  *
- * @param xsuaaUriOrCredentials - The URI or the credentials of a XSUAA service instance.
+ * @param tokenServiceUrlOrXsuaaServiceCerednetials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param clientCredentials - Client credentials for which to request a token
  * @param options - Options to use by retrieving access token
  * @param customBody - Object containing value required for the body request
  * @returns A promise resolving to the response
  */
 export function clientCredentialsGrant(
-  xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
+  tokenServiceUrlOrXsuaaServiceCerednetials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
   options?: ResilienceOptions,
   customBody: Record<string, any> = {}
@@ -46,8 +46,8 @@ export function clientCredentialsGrant(
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = { grant_type: GrantType.CLIENT_CREDENTIALS, ...customBody };
 
-  return executeXsuaaPostRequest(
-    xsuaaUriOrCredentials,
+  return post(
+    tokenServiceUrlOrXsuaaServiceCerednetials,
     authHeader,
     objectToXWwwUrlEncodedBodyString(body),
     options
@@ -61,14 +61,14 @@ export function clientCredentialsGrant(
 /**
  * Executes a user token grant request against the given URI.
  *
- * @param xsuaaUri - The URI of the target XSUAA service instance.
+ * @param tokenServiceUrlOrXsuaaServiceCerednetials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param userJwt - The JWT of the user on whose behalf the request is executed.
  * @param clientId - The client_id of the target XSUAA service instance.
  * @param options - Options to use by retrieving access token
  * @returns A promise resolving to the response of the XSUAA service.
  */
 export function userTokenGrant(
-  xsuaaUri: string,
+  tokenServiceUrlOrXsuaaServiceCerednetials: string | XsuaaServiceCredentials,
   userJwt: string,
   clientId: string,
   options?: ResilienceOptions
@@ -80,8 +80,8 @@ export function userTokenGrant(
     response_type: 'token'
   });
 
-  return executeXsuaaPostRequest(
-    getTargetUri(xsuaaUri),
+  return post(
+    tokenServiceUrlOrXsuaaServiceCerednetials,
     authHeader,
     body,
     options
@@ -97,14 +97,14 @@ export function userTokenGrant(
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is an URI, the response will not be verified.
  *
- * @param xsuaaUriOrCredentials - The URI or the credentials of a XSUAA service instance.
+ * @param tokenServiceUrlOrXsuaaServiceCerednetials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param clientCredentials - The credentials (client_id, client_secret) if the target XSUAA service instance.
  * @param refreshToken - The refresh token that should be used to generate a new access token.
  * @param options - Options to use by retrieving access token.
  * @returns A promise resolving to the response of the XSUAA service.
  */
 export function refreshTokenGrant(
-  xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
+  tokenServiceUrlOrXsuaaServiceCerednetials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
   refreshToken: string,
   options?: ResilienceOptions
@@ -115,8 +115,8 @@ export function refreshTokenGrant(
     refresh_token: refreshToken
   });
 
-  return executeXsuaaPostRequest(
-    xsuaaUriOrCredentials,
+  return post(
+    tokenServiceUrlOrXsuaaServiceCerednetials,
     authHeader,
     body,
     options
@@ -209,26 +209,17 @@ const tokenKeyKeyMapping: { [key: string]: keyof TokenKey } = {
   n: 'publicKeyModulus'
 };
 
-function executeXsuaaPostRequest(
-  uriOrCredentials: string | XsuaaServiceCredentials,
-  authHeader: string,
-  body: string,
-  options: ResilienceOptions = { enableCircuitBreaker: true }
-): AxiosPromise {
-  if (typeof uriOrCredentials === 'string') {
-    return post(uriOrCredentials, authHeader, body, options);
-  }
-  return post(uriOrCredentials.url, authHeader, body, options);
-}
-
 function post(
-  uri: string,
+  tokenServiceUrlOrXsuaaServiceCerednetials: string | XsuaaServiceCredentials,
   authHeader: string,
   body: string,
   options: ResilienceOptions = { enableCircuitBreaker: true }
 ): AxiosPromise {
   const config = wrapXsuaaPostRequestHeader(authHeader);
-  const targetUri = getTargetUri(uri);
+  const targetUri =
+    typeof tokenServiceUrlOrXsuaaServiceCerednetials === 'string'
+      ? tokenServiceUrlOrXsuaaServiceCerednetials
+      : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCerednetials);
 
   if (
     options.enableCircuitBreaker ||
@@ -277,13 +268,11 @@ enum GrantType {
   CLIENT_CREDENTIALS = 'client_credentials'
 }
 
-// TODO: the caller should understand whether this method is applicable. 1. No, when the url comes from a destination. 2. Yes, when the url comes from the XsuaaServiceCredentials.
-function getTargetUri(xsuaaUri: string): string {
-  xsuaaUri = xsuaaUri.replace(/\/$/, '');
-  if (xsuaaUri.includes('/oauth/token')) {
-    return xsuaaUri;
-  }
-  logger.warn(
+function getTokenServiceUrl(
+  xsuaaServiceCredentials: XsuaaServiceCredentials
+): string {
+  const xsuaaUri = xsuaaServiceCredentials.url.replace(/\/$/, '');
+  logger.info(
     `Adding "/oauth/token" to the end of the target uri: ${xsuaaUri}.`
   );
   return `${xsuaaUri}/oauth/token`;

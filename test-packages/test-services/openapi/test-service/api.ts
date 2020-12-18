@@ -7,19 +7,27 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
 import { TestEntity, SimpleTestEntity } from './openapi/model';
 
-export const TestServiceYamlApi = {
+export const TestServiceApi = {
   getAllEntities: (args?: {
     stringParameter?: string,
     integerParameter?: number,
     dollarParameter?: string,
-    dotParameter?: string
+    dotParameter?: string,
+    enumStringParameter?: 'value1' | 'value2',
+    enumInt32Parameter?: 1 | 2,
+    enumDoubleParameter?: 1 | 2,
+    enumBooleanParameter?: boolean
   }) => new OpenApiRequestBuilder<DefaultApi, 'getAllEntities'>(
     DefaultApi,
     'getAllEntities',
     args?.stringParameter,
     args?.integerParameter,
     args?.dollarParameter,
-    args?.dotParameter
+    args?.dotParameter,
+    args?.enumStringParameter,
+    args?.enumInt32Parameter,
+    args?.enumDoubleParameter,
+    args?.enumBooleanParameter
   ),
   createEntity: (args?: {
     testEntity?: TestEntity

@@ -11,15 +11,14 @@
   },
   "tags": [
     {
-      "name": "someTag",
-      "description": "Some test tag"
+      "name": "default"
     }
   ],
   "paths": {
     "/entities": {
       "get": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "summary": "Get entities",
         "description": "Get all entities",
@@ -73,6 +72,60 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "enumStringParameter",
+            "in": "query",
+            "description": "A parameter of type enum with string",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "value1",
+                "value2"
+              ]
+            }
+          },
+          {
+            "name": "enumInt32Parameter",
+            "in": "query",
+            "description": "A parameter of type string with enum",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "enum": [
+                1,
+                2
+              ]
+            }
+          },
+          {
+            "name": "enumDoubleParameter",
+            "in": "query",
+            "description": "A parameter of type enum with double",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "enum": [
+                1,
+                2
+              ]
+            }
+          },
+          {
+            "name": "enumBooleanParameter",
+            "in": "query",
+            "description": "A parameter of type enum with boolean",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
           }
         ],
         "responses": {
@@ -96,7 +149,7 @@
       },
       "post": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "summary": "Create entity",
         "description": "Create entity",
@@ -127,7 +180,7 @@
     "/entities/{entityId}": {
       "get": {
         "tags": [
-          "someTag"
+          "default"
         ],
         "summary": "Get entity by id",
         "description": "Get entity by id",
@@ -185,7 +238,10 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       }
     },
     "/test-cases/parameters/required-parameters/{requiredPathItemPathParam}": {
@@ -257,7 +313,10 @@
           "201": {
             "description": "no content"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       },
       "post": {
         "operationId": "testCasePostRequiredParameters",
@@ -293,7 +352,10 @@
           "201": {
             "description": "no content"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       }
     },
     "/test-cases/parameters/{duplicateParam}": {
@@ -321,7 +383,10 @@
           "201": {
             "description": "no content"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       }
     }
   },

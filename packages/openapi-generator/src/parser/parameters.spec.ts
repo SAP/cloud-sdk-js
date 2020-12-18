@@ -27,6 +27,30 @@ describe('parseParameters', () => {
       name: 'numberParam',
       schema: { type: 'integer' }
     };
+    const enumStringParam = {
+      in: 'query',
+      name: 'enumStringParam',
+      schema: {
+        type: 'string',
+        enum: ['value1', 'value2']
+      }
+    };
+    const enumNumberParam = {
+      in: 'query',
+      name: 'enumNumberParam',
+      schema: {
+        type: 'integer',
+        enum: [1, 2]
+      }
+    };
+    const enumBooleanParam = {
+      in: 'query',
+      name: 'enumBooleanParam',
+      schema: {
+        type: 'boolean',
+        enum: ['true', 'false']
+      }
+    };
 
     expect(
       parseParameters(
@@ -35,7 +59,10 @@ describe('parseParameters', () => {
             anyParamNoSchema,
             anyParamWithSchema,
             stringParam,
-            numberParam
+            numberParam,
+            enumStringParam,
+            enumNumberParam,
+            enumBooleanParam
           ]
         },
         await createRefs()
@@ -44,7 +71,10 @@ describe('parseParameters', () => {
       { ...anyParamNoSchema, type: 'any' },
       { ...anyParamWithSchema, type: 'any' },
       { ...stringParam, type: 'string' },
-      { ...numberParam, type: 'number' }
+      { ...numberParam, type: 'number' },
+      { ...enumStringParam, type: "'value1' | 'value2'" },
+      { ...enumNumberParam, type: '1 | 2' },
+      { ...enumBooleanParam, type: 'boolean' }
     ]);
   });
 

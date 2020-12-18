@@ -14,7 +14,11 @@
 
 ## Compatibility Notes
 
--
+- The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` accept now a `string` or `XsuaaServiceCredentials` as first argument.
+This argument represents the `URL` used to fetch the access token from and represent two cases.
+A `string` values denotes the URL of the token service and it is not changed.
+A  `XsuaaServiceCredentials` denotes that the XSUAA is used to receive the token and a suffix `oauth/token` is appended to the URL property within `XsuaaServiceCredentials`.
+In the past the suffix was also appended for `string` inputs.
 
 ## New Functionality
 
@@ -22,11 +26,12 @@
 
 ## Improvements
 
--
+- Unify naming of the request builder methods. See [this adr](./knowledge-base/adr/0017-builder-methods-multiple-calls.md) for a list of the changed methods.
 
 ## Fixed Issues
 
--
+- Stop appending `oauth/token` if the service token URL is given to `clientCredentialsGrant()`.
+See related compatibility note above. 
 
 
 # 1.33.0

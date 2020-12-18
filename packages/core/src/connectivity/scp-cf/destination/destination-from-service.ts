@@ -239,45 +239,64 @@ class DestinationFromServiceRetriever {
       this.options
     );
   }
-
-  private async addOAuth2UserTokenExchange(
+  private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
-  ): Promise<Destination> {
+  ): Promise<AuthAndExchangeTokens> {
     if (!this.options.userJwt) {
       throw Error(
         'No user token (JWT) has been provided! This is strictly necessary for OAuth2UserTokenExchange.'
       );
     }
-    // This covers the three OAuth2UserTokenExchange cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html
 
     // Case 1 Destination in provider and jwt issued for provider account
     if (this.isProviderAndSubscriberSameTenant()) {
-      const authHeaderJwt = await userApprovedServiceToken(
-        this.options.userJwt,
-        getDestinationService(),
-        this.options
+      logger.debug(
+        `OAuth2UserTokenExchange flow started without user exchange token for destination ${this.name} of the provider account.`
       );
-      return this.fetchDestinationByToken({ authHeaderJwt });
+      return {
+        authHeaderJwt: await userApprovedServiceToken(
+          this.options.userJwt,
+          getDestinationService(),
+          this.options
+        )
+      };
     }
-
     // Case 2 Destination in provider and jwt issued for subscriber account
     if (destinationOrigin === 'provider') {
-      return this.fetchDestinationByToken({
+      logger.debug(
+        `OAuth2UserTokenExchange flow started for destination ${this.name} of the provider account.`
+      );
+      return {
         authHeaderJwt: this.providerClientCredentialsToken,
         exchangeHeaderJwt: this.options.userJwt
-      });
+      };
     }
 
     // Case 3 Destination in subscriber and jwt issued for subscriber account
     if (destinationOrigin === 'subscriber') {
-      return this.fetchDestinationByToken({
+      logger.debug(
+        `OAuth2UserTokenExchange flow started for destination ${this.name} of the subscriber account.`
+      );
+      return {
         authHeaderJwt: await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
           this.options
         ),
         exchangeHeaderJwt: this.options.userJwt
-      });
+      };
     }
-    throw Error('');
+    throw new Error(
+      'Not possible to build tokens for OAuth2UserTokenExchange flow.'
+    );
+  }
+
+  private async addOAuth2UserTokenExchange(
+    destinationOrigin: DestinationOrigin
+  ): Promise<Destination> {
+    // This covers the three OAuth2UserTokenExchange cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html
+    const token = await this.getAuthTokenForOAuth2UserTokenExchange(
+      destinationOrigin
+    );
+    return this.fetchDestinationByToken(token);
   }
 
   private async addOAuthSamlAuth(

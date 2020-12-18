@@ -1,7 +1,7 @@
 ## SAP Cloud SDK OpenAPI Client Generator (Beta)
 
-Generate custom JavaScript/TypeScript clients for OpenAPI services.
-This generator is based on the official [OpenAPI generator](https://openapi-generator.tech/) and adds some additional code for convenience to better integrate with the SAP Cloud SDK.
+Generate custom JavaScript/TypeScript clients for services with OpenAPI specifications.
+This generator is based on the [OpenAPI Tools generator](https://openapi-generator.tech/) for OpenAPI and adds some additional code for convenience to better integrate with the SAP Cloud SDK.
 
 ## Prerequisites
 

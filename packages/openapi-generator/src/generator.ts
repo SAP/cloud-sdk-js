@@ -116,7 +116,9 @@ async function generateOpenApiService(
   logger.debug(`OpenAPI generator CLI arguments: ${generationArguments}`);
 
   try {
-    const response = await execa('npx', generationArguments);
+    const response = await execa('npx', generationArguments, {
+      cwd: resolve(__dirname, '..')
+    });
     if (response.stderr) {
       throw new Error(response.stderr);
     }

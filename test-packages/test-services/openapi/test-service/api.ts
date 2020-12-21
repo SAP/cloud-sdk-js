@@ -30,32 +30,32 @@ export const TestServiceApi = {
     args?.enumBooleanParameter
   ),
   updateEntityWithPut: (args?: {
-    arrayTestEntity?: Array<TestEntity>
+    body?: TestEntity[]
   }) => new OpenApiRequestBuilder<DefaultApi, 'updateEntityWithPut'>(
     DefaultApi,
     'updateEntityWithPut',
-    args?.arrayTestEntity
+    args?.body
   ),
   createEntity: (args?: {
-    testEntity?: TestEntity
+    body?: TestEntity
   }) => new OpenApiRequestBuilder<DefaultApi, 'createEntity'>(
     DefaultApi,
     'createEntity',
-    args?.testEntity
+    args?.body
   ),
   updateEntity: (args?: {
-    object?: object
+    body?: Record<string, any>
   }) => new OpenApiRequestBuilder<DefaultApi, 'updateEntity'>(
     DefaultApi,
     'updateEntity',
-    args?.object
+    args?.body
   ),
   deleteEntity: (args?: {
-    arrayString?: Array<string>
+    body?: string[]
   }) => new OpenApiRequestBuilder<DefaultApi, 'deleteEntity'>(
     DefaultApi,
     'deleteEntity',
-    args?.arrayString
+    args?.body
   ),
   getEntityByKey: (args: {
     entityId: string
@@ -74,7 +74,7 @@ export const TestServiceApi = {
     requiredQueryParam: string,
     optionalQueryParam?: string,
     optionalPathItemQueryParam?: string,
-    simpleTestEntity?: SimpleTestEntity
+    body?: SimpleTestEntity
   }) => new OpenApiRequestBuilder<DefaultApi, 'testCaseGetRequiredParameters'>(
     DefaultApi,
     'testCaseGetRequiredParameters',
@@ -83,13 +83,13 @@ export const TestServiceApi = {
     args.requiredQueryParam,
     args.optionalQueryParam,
     args.optionalPathItemQueryParam,
-    args.simpleTestEntity
+    args.body
   ),
   testCasePostRequiredParameters: (args: {
     requiredPathItemQueryParam: string,
     requiredPathItemPathParam: string,
     requiredQueryParam: string,
-    simpleTestEntity: SimpleTestEntity,
+    body: SimpleTestEntity,
     optionalPathItemQueryParam?: string,
     optionalQueryParam?: string
   }) => new OpenApiRequestBuilder<DefaultApi, 'testCasePostRequiredParameters'>(
@@ -98,7 +98,7 @@ export const TestServiceApi = {
     args.requiredPathItemQueryParam,
     args.requiredPathItemPathParam,
     args.requiredQueryParam,
-    args.simpleTestEntity,
+    args.body,
     args.optionalPathItemQueryParam,
     args.optionalQueryParam
   ),

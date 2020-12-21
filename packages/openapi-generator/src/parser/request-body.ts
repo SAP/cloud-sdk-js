@@ -40,27 +40,9 @@ function parseRequestBodyType(
   if (requestBody) {
     const mediaType = getMediaType(requestBody, 'application/json');
     const schema = mediaType?.schema;
-    // return parseType(schema);
     return parseSchemaMetadata(schema);
   }
 }
-
-// export function parseType(
-//   schema?:
-//     | OpenAPIV3.ReferenceObject
-//     | OpenAPIV3.ArraySchemaObject
-//     | OpenAPIV3.NonArraySchemaObject
-// ): string | undefined {
-//   if (isReferenceObject(schema)) {
-//     return parseTypeName(schema);
-//   }
-//   if (isArraySchemaObject(schema)) {
-//     return `Array<${parseGenericTypeFromArray(schema)}>`;
-//   }
-//   if (schema !== undefined) {
-//     return getType(schema.type);
-//   }
-// }
 
 export function parseSchemaMetadata(
   schema?:
@@ -117,12 +99,6 @@ function parseArrayObject(
       }
     : undefined;
 }
-
-// function parseGenericTypeFromArray(
-//   arrayObject: OpenAPIV3.ArraySchemaObject
-// ): string | undefined {
-//   return parseType(arrayObject.items);
-// }
 
 /**
  * Get the media type for a specific content type from a request body object.

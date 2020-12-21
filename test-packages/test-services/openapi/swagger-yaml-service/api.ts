@@ -19,11 +19,11 @@ export const SwaggerYamlServiceApi = {
   ),
   patchEntity: (args: {
     pathParam: string,
-    testEntity?: TestEntity
+    body?: TestEntity
   }) => new OpenApiRequestBuilder<DefaultApi, 'patchEntity'>(
     DefaultApi,
     'patchEntity',
     args.pathParam,
-    args.testEntity
+    args.body
   )
 };

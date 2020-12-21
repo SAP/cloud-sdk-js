@@ -1784,13 +1784,13 @@
     sax "^1.2.4"
 
 "@sap/cds-dk@^3.0.0":
-  version "3.3.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.3.2.tgz#296e19285cd2bc979b560ed58916e688051cb36d"
-  integrity sha512-f9nMIvR14pw5N1k1MxsLJgl6yapeZmqR5849VV8cP3x0IRkgCWyi2rccC4DDEFaRUSBmHc57Pl9FzIROjat+BQ==
+  version "3.3.3"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.3.3.tgz#b038acfafb7cea38aa069cc913f6a1e19900051b"
+  integrity sha512-QYl6BeUh5slb9T4JCyJ6P3pxdAYKtAf3904ODLIcbrn9EHjAZ2CtpatCpQ28xP3b0V0hYdhL/ddXEi7/hwoBBA==
   dependencies:
     "@sap/cds" "^4.2.2"
     "@sap/cds-foss" "^2"
-    "@sap/cds-sidecar-client" "^1.1.6"
+    "@sap/cds-sidecar-client" "^1.1.12"
     "@sap/edm-converters" "^1.0.27"
     axios "^0.20.0"
     express "^4.17.1"
@@ -1827,10 +1827,10 @@
     "@sap/cds-foss" "^2"
     "@sap/odata-server" "^1.6.1"
 
-"@sap/cds-sidecar-client@^1.1.6":
-  version "1.1.9"
-  resolved "https://registry.npmjs.org/@sap/cds-sidecar-client/-/cds-sidecar-client-1.1.9.tgz#4f8bcba0bfd45f7312562bcd471ddd75940ec039"
-  integrity sha512-O+PLvinoe1VTZdWtofdJsYRioUmbps0jwpHw4FTg99Vs1HXcpEQvBfkLGf2umOAshGa2yQG3nw9fKV8dyTcLow==
+"@sap/cds-sidecar-client@^1.1.12":
+  version "1.1.12"
+  resolved "https://registry.npmjs.org/@sap/cds-sidecar-client/-/cds-sidecar-client-1.1.12.tgz#2c2df254e95c09f83c578e4d6d5ec0f87db5b308"
+  integrity sha512-0pz2SzcFffaJtuutW0ANFGcnPEisZk63ubSyGHyy641cRp7N8RbqIzAKgDjUO5yTioyGUzQwB/qNfouhskW/Jg==
   dependencies:
     fs-extra "9.0.1"
     got "10.7.0"

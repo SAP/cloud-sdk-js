@@ -76,7 +76,7 @@ describe('getRequestBody', () => {
     });
   });
 
-  it('returns string array type from in line schema', async () => {
+  it('returns string array type from inline schema', async () => {
     const requestBody: OpenAPIV3.RequestBodyObject = {
       content: {
         'application/json': {
@@ -97,7 +97,7 @@ describe('getRequestBody', () => {
     });
   });
 
-  it('returns nested array type from in line schema', async () => {
+  it('returns nested array type from inline schema', async () => {
     const requestBody: OpenAPIV3.RequestBodyObject = {
       content: {
         'application/json': {

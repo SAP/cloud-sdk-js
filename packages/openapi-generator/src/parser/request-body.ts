@@ -58,7 +58,7 @@ function parseType(
   if (isArraySchemaObject(schema)) {
     return `Array<${parseGenericTypeFromArray(schema)}>`;
   }
-  if (isNonArraySchemaObject(schema)) {
+  if (schema !== undefined) {
     return getType(schema.type);
   }
 }

@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { createRefs } from '../../test/test-util';
-import { parseRequestBody } from './request-body';
+import { parseRequestBody, parseType } from './request-body';
 
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
@@ -59,65 +59,33 @@ describe('getRequestBody', () => {
   });
 
   it('returns object type from in line schema', async () => {
-    const requestBody: OpenAPIV3.RequestBodyObject = {
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object'
-          }
-        }
-      }
-    };
+    const schema: OpenAPIV3.NonArraySchemaObject = { type: 'object' };
 
-    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
-      ...requestBody,
-      parameterName: 'object',
-      parameterType: 'object'
-    });
+    expect(parseType(schema)).toEqual('object');
   });
 
   it('returns string array type from inline schema', async () => {
-    const requestBody: OpenAPIV3.RequestBodyObject = {
-      content: {
-        'application/json': {
-          schema: {
-            type: 'array',
-            items: {
-              type: 'string'
-            }
-          }
-        }
+    const schema: OpenAPIV3.ArraySchemaObject = {
+      type: 'array',
+      items: {
+        type: 'string'
       }
     };
 
-    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
-      ...requestBody,
-      parameterName: 'arrayString',
-      parameterType: 'Array<string>'
-    });
+    expect(parseType(schema)).toEqual('Array<string>');
   });
 
   it('returns nested array type from inline schema', async () => {
-    const requestBody: OpenAPIV3.RequestBodyObject = {
-      content: {
-        'application/json': {
-          schema: {
-            type: 'array',
-            items: {
-              type: 'array',
-              items: {
-                type: 'string'
-              }
-            }
-          }
+    const schema: OpenAPIV3.ArraySchemaObject = {
+      type: 'array',
+      items: {
+        type: 'array',
+        items: {
+          type: 'string'
         }
       }
     };
 
-    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
-      ...requestBody,
-      parameterName: 'arrayArrayString',
-      parameterType: 'Array<Array<string>>'
-    });
+    expect(parseType(schema)).toEqual('Array<Array<string>>');
   });
 });

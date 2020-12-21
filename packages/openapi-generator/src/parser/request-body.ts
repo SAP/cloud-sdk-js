@@ -1,10 +1,9 @@
-import { camelCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenApiRequestBody } from '../openapi-types';
 import { isReferenceObject, parseTypeName, resolveObject } from './refs';
 import { getType } from './type-mapping';
-import { isArraySchemaObject, isNonArraySchemaObject } from './schema';
+import { isArraySchemaObject } from './schema';
 
 /**
  * Parse the request body.
@@ -20,13 +19,12 @@ export function parseRequestBody(
   refs: $Refs
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
-  const requestBodyType = parseRequestBodyType(resolvedRequestBody);
-  if (requestBodyType && resolvedRequestBody) {
+  const parameterType = parseRequestBodyType(resolvedRequestBody);
+  if (parameterType && resolvedRequestBody) {
     return {
       ...resolvedRequestBody,
-      // TODO: discuss naming. How about use "body" or "requestBody" or "payload"?
-      parameterName: camelCase(requestBodyType),
-      parameterType: requestBodyType
+      parameterName: 'body',
+      parameterType
     };
   }
 }
@@ -46,7 +44,7 @@ function parseRequestBodyType(
   }
 }
 
-function parseType(
+export function parseType(
   schema?:
     | OpenAPIV3.ReferenceObject
     | OpenAPIV3.ArraySchemaObject

@@ -1,4 +1,4 @@
-import { isArraySchemaObject, isNonArraySchemaObject } from './schema';
+import { isArraySchemaObject } from './schema';
 
 describe('isArraySchemaObject', () => {
   it('returns true when detecting an array schema', () => {
@@ -23,5 +23,9 @@ describe('isArraySchemaObject', () => {
         $ref: '#/components/schemas/typeName'
       })
     ).toEqual(false);
+  });
+
+  it('returns false for undefined', () => {
+    expect(isArraySchemaObject(undefined)).toEqual(false);
   });
 });

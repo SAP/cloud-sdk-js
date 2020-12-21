@@ -68,7 +68,6 @@ export interface OpenApiRequestBody extends OpenAPIV3.RequestBodyObject {
  * Representation of the schema of the request body.
  */
 export interface SchemaMetadata {
-  isReferenceType: boolean;
   isArrayType: boolean;
   innerType: string;
   isInnerTypeReferenceType: boolean;

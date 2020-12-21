@@ -65,7 +65,6 @@ function parseReferenceObject(
   schema: OpenAPIV3.ReferenceObject
 ): SchemaMetadata {
   return {
-    isReferenceType: true,
     isArrayType: false,
     innerType: parseTypeName(schema),
     isInnerTypeReferenceType: true
@@ -76,7 +75,6 @@ function parseNonArrayObject(
   schema: OpenAPIV3.NonArraySchemaObject
 ): SchemaMetadata {
   return {
-    isReferenceType: false,
     isArrayType: false,
     innerType: getType(schema.type),
     isInnerTypeReferenceType: false
@@ -89,7 +87,6 @@ function parseArrayObject(
   const internalSchema = parseSchemaMetadata(schema.items);
   return internalSchema
     ? {
-        isReferenceType: false,
         isArrayType: true,
         innerType: internalSchema.innerType,
         isInnerTypeReferenceType: internalSchema.isInnerTypeReferenceType,

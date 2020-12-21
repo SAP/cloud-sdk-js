@@ -53,7 +53,6 @@ describe('api-file', () => {
           requestBody: {
             parameterName: 'body',
             parameterType: {
-              isReferenceType: true,
               isArrayType: false,
               innerType: 'TestEntity',
               isInnerTypeReferenceType: true
@@ -76,7 +75,6 @@ describe('api-file', () => {
           requestBody: {
             parameterName: 'body',
             parameterType: {
-              isReferenceType: false,
               isArrayType: true,
               innerType: 'string',
               isInnerTypeReferenceType: false,
@@ -135,7 +133,6 @@ describe('api-file', () => {
           requestBody: {
             parameterName: 'body',
             parameterType: {
-              isReferenceType: true,
               isArrayType: true,
               innerType: 'TestEntity',
               isInnerTypeReferenceType: true,

@@ -122,29 +122,11 @@ function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
 
 function getParameterTypeString(schemaMetadata: SchemaMetadata): string {
   return schemaMetadata.isArrayType
-    ? getParameterTypeForArrayType(schemaMetadata)
-    : schemaMetadata.innerType;
-}
-
-function getParameterTypeForArrayType(schemaMetadata: SchemaMetadata): string {
-  return schemaMetadata.isReferenceType
-    ? toArrayTypeWithGenericFormat(
+    ? toArrayTypeWithArrayFormat(
         schemaMetadata.innerType,
         schemaMetadata.arrayLevel!
       )
-    : toArrayTypeWithArrayFormat(
-        schemaMetadata.innerType,
-        schemaMetadata.arrayLevel!
-      );
-}
-
-function toArrayTypeWithGenericFormat(
-  innerType: string,
-  arrayLevel: number
-): string {
-  return arrayLevel === 0
-    ? innerType
-    : `Array<${toArrayTypeWithGenericFormat(innerType, arrayLevel - 1)}>`;
+    : schemaMetadata.innerType;
 }
 
 function toArrayTypeWithArrayFormat(

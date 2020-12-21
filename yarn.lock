@@ -1818,14 +1818,14 @@
   resolved "https://registry.npmjs.org/@sap/cds-reflect/-/cds-reflect-2.13.3.tgz#b6609e787890b4efa960dd9218615c515f97edd3"
   integrity sha512-nujcvXYVE+4+bb/EZKM8W8JIKEWyopOoBIfGtzftCVEHwBX11x7Lav/6blXMJ2VKeKhCgFZ867mgAaxGrzx52w==
 
-"@sap/cds-runtime@^2.5.0":
-  version "2.5.6"
-  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-2.5.6.tgz#14b4546120c9ae8f082bf35b8d0aed2010c7ec6f"
-  integrity sha512-Ww6zt8jHysDtImuAv2wcfY/iULAgevZ5NEFh8He1IyeQXT82PLByyLDbJBVwG9P7A4jJG11GqLXOvhWDln38rA==
+"@sap/cds-runtime@~2.7.0":
+  version "2.7.8"
+  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-2.7.8.tgz#bd83da3448b695ac5a9b221d9960d986ef2efcad"
+  integrity sha512-MNioDOg/Gfjg8j3/5IatlihSCnODwHr1+byWWwqaevnBju1Kt6Wh4Upu6LkasPURp+0F9joW03LBeXgWFRsLIg==
   dependencies:
     "@sap-cloud-sdk/core" "^1.18.1"
+    "@sap-cloud-sdk/util" "^1.18.1"
     "@sap/cds-foss" "^2"
-    "@sap/odata-server" "^1.6.1"
 
 "@sap/cds-sidecar-client@^1.1.12":
   version "1.1.12"
@@ -1836,14 +1836,14 @@
     got "10.7.0"
 
 "@sap/cds@^4.1.9", "@sap/cds@^4.2.2":
-  version "4.3.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.3.1.tgz#561cb74c7250c6a220c8270ba49a42a9b11386d6"
-  integrity sha512-LxsMCSunDn6AVV54duAbnAmerNo0BhRHxYUH4v34VeQl3ManNnrh53eeE+/NVF/ykhn21KT7KkTXh/ymM3L8Jw==
+  version "4.4.7"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.4.7.tgz#f492721c8ec98e16a27ab6f87f4fe09ff1447bef"
+  integrity sha512-oxWSx5uEJz3gt2OdEbfBoHgSvVlcfr35alMB+Za/eX+C/W+0eEJb/P3BwOsY6824MMkUsq0tANDyeFg14F0CxA==
   dependencies:
     "@sap/cds-compiler" "^1.43.1"
     "@sap/cds-foss" "^2"
     "@sap/cds-reflect" "^2.13.0"
-    "@sap/cds-runtime" "^2.5.0"
+    "@sap/cds-runtime" "~2.7.0"
 
 "@sap/edm-converters@^1.0.21", "@sap/edm-converters@^1.0.27":
   version "1.0.39"
@@ -1854,21 +1854,6 @@
     multimap "1.1.0"
     request "=2.88.0"
     xml-js "=1.6.8"
-
-"@sap/odata-commons@=2.4.1":
-  version "2.4.1"
-  resolved "https://registry.npmjs.org/@sap/odata-commons/-/odata-commons-2.4.1.tgz#5ce779dccacffc21db901d7fe926c0c6d099de45"
-  integrity sha512-6G8zHwmRvVMFR5q0LRkszdfG0mNwd1s9xIKSQo78H5cJn+cwbKdY1+8UEhjZ0XssaaPRgus5cCLlrHMfkbADXQ==
-  dependencies:
-    big.js "=5.2.2"
-
-"@sap/odata-server@^1.6.1":
-  version "1.8.3"
-  resolved "https://registry.npmjs.org/@sap/odata-server/-/odata-server-1.8.3.tgz#701bea2eee2adbc102712ba43c17eda4821ce1e1"
-  integrity sha512-RPdHGWmOyexIkIn5dEzIFoQJAXd6i9GI6AhD3rhIIX5ku/Z9k9ZuNs40q5ySsNT4n0JA1yejTyOhh+zwmjVDrw==
-  dependencies:
-    "@sap/odata-commons" "=2.4.1"
-    xmlbuilder "=13.0.2"
 
 "@sap/xsenv@^3.0.0":
   version "3.1.0"
@@ -2750,11 +2735,6 @@ before-after-hook@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/before-after-hook/-/before-after-hook-2.1.0.tgz#b6c03487f44e24200dd30ca5e6a1979c5d2fb635"
   integrity sha512-IWIbu7pMqyw3EAJHzzHbWa85b6oud/yfKYg5rqB5hNE8CeMi3nX+2C2sj0HswfblST86hpVEOAb9x34NZd6P7A==
-
-big.js@=5.2.2:
-  version "5.2.2"
-  resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
-  integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
 bignumber.js@^9.0.0, bignumber.js@^9.0.1:
   version "9.0.1"
@@ -11818,11 +11798,6 @@ xml@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
   integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
-
-xmlbuilder@=13.0.2:
-  version "13.0.2"
-  resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-13.0.2.tgz#02ae33614b6a047d1c32b5389c1fdacb2bce47a7"
-  integrity sha512-Eux0i2QdDYKbdbA6AM6xE4m6ZTZr4G4xF9kahI2ukSEMCzwce2eX9WlTI5J3s+NU7hpasFsr8hWIONae7LluAQ==
 
 xmlbuilder@~11.0.0:
   version "11.0.1"

@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { createRefs } from '../../test/test-util';
-import { parseRequestBody, parseType } from './request-body';
+import { parseRequestBody, parseSchemaMetadata } from './request-body';
 
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
@@ -61,7 +61,11 @@ describe('getRequestBody', () => {
   it('returns Record<string, any> type from in line schema', async () => {
     const schema: OpenAPIV3.NonArraySchemaObject = { type: 'object' };
 
-    expect(parseType(schema)).toEqual('Record<string, any>');
+    expect(parseSchemaMetadata(schema)).toEqual({
+      isArrayType: false,
+      isReferenceType: false,
+      nonArrayType: 'Record<string, any>'
+    });
   });
 
   it('returns string array type from inline schema', async () => {
@@ -72,7 +76,15 @@ describe('getRequestBody', () => {
       }
     };
 
-    expect(parseType(schema)).toEqual('Array<string>');
+    expect(parseSchemaMetadata(schema)).toEqual({
+      isArrayType: true,
+      isReferenceType: false,
+      arrayInnerType: {
+        isArrayType: false,
+        isReferenceType: false,
+        nonArrayType: 'string'
+      }
+    });
   });
 
   it('returns nested array type from inline schema', async () => {
@@ -86,6 +98,18 @@ describe('getRequestBody', () => {
       }
     };
 
-    expect(parseType(schema)).toEqual('Array<Array<string>>');
+    expect(parseSchemaMetadata(schema)).toEqual({
+      isArrayType: true,
+      isReferenceType: false,
+      arrayInnerType: {
+        isArrayType: true,
+        isReferenceType: false,
+        arrayInnerType: {
+          isArrayType: false,
+          isReferenceType: false,
+          nonArrayType: 'string'
+        }
+      }
+    });
   });
 });

@@ -4,7 +4,7 @@ import {
   partition,
   unique
 } from '@sap-cloud-sdk/util';
-import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
+import { OpenApiDocument, OpenApiOperation, SchemaMetadata } from '../openapi-types';
 const logger = createLogger('openapi-generator');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -130,9 +130,35 @@ function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
     ? [
         {
           name: operation.requestBody.parameterName,
-          type: operation.requestBody.parameterType,
+          type: getParameterTypeString(operation.requestBody.parameterType),
           required: operation.requestBody.required
         }
       ]
     : [];
+}
+
+function getParameterTypeString(schemaMetadata: SchemaMetadata): string {
+  return getType(schemaMetadata, isReferenceTypeUsed(schemaMetadata));
+}
+
+function isReferenceTypeUsed(schemaMetadata: SchemaMetadata): boolean {
+  return schemaMetadata.isArrayType
+    ? isReferenceTypeUsed(schemaMetadata.arrayInnerType!)
+    : schemaMetadata.isReferenceType;
+}
+
+function getType(
+  schemaMetadata: SchemaMetadata,
+  referenceTypeUsed: boolean
+): string {
+  return schemaMetadata.isArrayType
+    ? toArrayType(
+        getType(schemaMetadata.arrayInnerType!, referenceTypeUsed),
+        referenceTypeUsed
+      )
+    : schemaMetadata.nonArrayType!;
+}
+
+function toArrayType(innerType: string, referenceTypeUsed: boolean): string {
+  return referenceTypeUsed ? `Array<${innerType}>` : `${innerType}[]`;
 }

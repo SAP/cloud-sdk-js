@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
-import { OpenApiRequestBody } from '../openapi-types';
+import { OpenApiRequestBody, SchemaMetadata } from '../openapi-types';
 import { isReferenceObject, parseTypeName, resolveObject } from './refs';
 import { getType } from './type-mapping';
 import { isArraySchemaObject } from './schema';
@@ -36,36 +36,87 @@ export function parseRequestBody(
  */
 function parseRequestBodyType(
   requestBody: OpenAPIV3.RequestBodyObject | undefined
-): string | undefined {
+): SchemaMetadata | undefined {
   if (requestBody) {
     const mediaType = getMediaType(requestBody, 'application/json');
     const schema = mediaType?.schema;
-    return parseType(schema);
+    // return parseType(schema);
+    return parseSchemaMetadata(schema);
   }
 }
 
-export function parseType(
+// export function parseType(
+//   schema?:
+//     | OpenAPIV3.ReferenceObject
+//     | OpenAPIV3.ArraySchemaObject
+//     | OpenAPIV3.NonArraySchemaObject
+// ): string | undefined {
+//   if (isReferenceObject(schema)) {
+//     return parseTypeName(schema);
+//   }
+//   if (isArraySchemaObject(schema)) {
+//     return `Array<${parseGenericTypeFromArray(schema)}>`;
+//   }
+//   if (schema !== undefined) {
+//     return getType(schema.type);
+//   }
+// }
+
+export function parseSchemaMetadata(
   schema?:
     | OpenAPIV3.ReferenceObject
     | OpenAPIV3.ArraySchemaObject
     | OpenAPIV3.NonArraySchemaObject
-): string | undefined {
+): SchemaMetadata | undefined {
   if (isReferenceObject(schema)) {
-    return parseTypeName(schema);
+    return parseReferenceObject(schema);
   }
   if (isArraySchemaObject(schema)) {
-    return `Array<${parseGenericTypeFromArray(schema)}>`;
+    return parseArrayObject(schema);
   }
   if (schema !== undefined) {
-    return getType(schema.type);
+    return parseNonArrayObject(schema);
   }
 }
 
-function parseGenericTypeFromArray(
-  arrayObject: OpenAPIV3.ArraySchemaObject
-): string | undefined {
-  return parseType(arrayObject.items);
+function parseReferenceObject(
+  schema: OpenAPIV3.ReferenceObject
+): SchemaMetadata {
+  return {
+    isReferenceType: true,
+    isArrayType: false,
+    nonArrayType: parseTypeName(schema)
+  };
 }
+
+function parseNonArrayObject(
+  schema: OpenAPIV3.NonArraySchemaObject
+): SchemaMetadata {
+  return {
+    isReferenceType: false,
+    isArrayType: false,
+    nonArrayType: getType(schema.type)
+  };
+}
+
+function parseArrayObject(
+  schema: OpenAPIV3.ArraySchemaObject
+): SchemaMetadata | undefined {
+  const internalSchema = parseSchemaMetadata(schema.items);
+  return internalSchema
+    ? {
+        isReferenceType: false,
+        isArrayType: true,
+        arrayInnerType: internalSchema
+      }
+    : undefined;
+}
+
+// function parseGenericTypeFromArray(
+//   arrayObject: OpenAPIV3.ArraySchemaObject
+// ): string | undefined {
+//   return parseType(arrayObject.items);
+// }
 
 /**
  * Get the media type for a specific content type from a request body object.

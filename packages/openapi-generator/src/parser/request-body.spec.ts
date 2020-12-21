@@ -58,10 +58,10 @@ describe('getRequestBody', () => {
     });
   });
 
-  it('returns object type from in line schema', async () => {
+  it('returns Record<string, any> type from in line schema', async () => {
     const schema: OpenAPIV3.NonArraySchemaObject = { type: 'object' };
 
-    expect(parseType(schema)).toEqual('object');
+    expect(parseType(schema)).toEqual('Record<string, any>');
   });
 
   it('returns string array type from inline schema', async () => {

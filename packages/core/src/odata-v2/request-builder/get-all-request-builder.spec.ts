@@ -9,7 +9,10 @@ import {
   createOriginalTestEntityData2,
   createTestEntityV2
 } from '../../../test/test-util/test-data';
-import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
+import {
+  TestEntity,
+  TestEntitySingleLink
+} from '../../../test/test-util/test-services/v2/test-service';
 import { GetAllRequestBuilderV2 } from './get-all-request-builder';
 
 describe('GetAllRequestBuilderV2', () => {
@@ -39,6 +42,17 @@ describe('GetAllRequestBuilderV2', () => {
         .url(defaultDestination);
       expect(actual).toBe(expected);
     });
+
+
+    it('is built correctly select in expand', async () => {
+      const expected =
+        "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink;
+      const actual = await requestBuilder.select(TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY))
+        .url(defaultDestination);
+      expect(actual).toBe(expected);
+    });
+
+
   });
 
   describe('execute', () => {

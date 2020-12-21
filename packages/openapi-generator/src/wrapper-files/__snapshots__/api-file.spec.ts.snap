@@ -63,7 +63,7 @@ export const TestApi = {
   createFn: (args: {
     requiredQueryParam: number,
     requiredPathParam: number,
-    body: Array<Array<TestEntity>>,
+    body: TestEntity[][],
     optionalQueryParam?: number
   }) => new OpenApiRequestBuilder<DefaultApi, 'createFn'>(
     DefaultApi,

@@ -27,7 +27,6 @@ describe('getRequestBody', () => {
       parameterName: 'body',
       parameterType: {
         isArrayType: false,
-        isReferenceType: true,
         innerType: 'TestEntity',
         isInnerTypeReferenceType: true
       }
@@ -61,7 +60,6 @@ describe('getRequestBody', () => {
       parameterName: 'body',
       parameterType: {
         isArrayType: false,
-        isReferenceType: true,
         innerType: 'TestEntity',
         isInnerTypeReferenceType: true
       }
@@ -73,7 +71,6 @@ describe('getRequestBody', () => {
 
     expect(parseSchemaMetadata(schema)).toEqual({
       isArrayType: false,
-      isReferenceType: false,
       innerType: 'Record<string, any>',
       isInnerTypeReferenceType: false
     });
@@ -89,7 +86,6 @@ describe('getRequestBody', () => {
 
     expect(parseSchemaMetadata(schema)).toEqual({
       isArrayType: true,
-      isReferenceType: false,
       innerType: 'string',
       isInnerTypeReferenceType: false,
       arrayLevel: 1
@@ -109,7 +105,6 @@ describe('getRequestBody', () => {
 
     expect(parseSchemaMetadata(schema)).toEqual({
       isArrayType: true,
-      isReferenceType: false,
       innerType: 'string',
       isInnerTypeReferenceType: false,
       arrayLevel: 2

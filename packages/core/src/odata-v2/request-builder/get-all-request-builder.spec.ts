@@ -43,16 +43,18 @@ describe('GetAllRequestBuilderV2', () => {
       expect(actual).toBe(expected);
     });
 
-
     it('is built correctly select in expand', async () => {
       const expected =
-        "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink;
-      const actual = await requestBuilder.select(TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY))
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink;';
+      const actual = await requestBuilder
+        .select(
+          TestEntity.TO_SINGLE_LINK.select(
+            TestEntitySingleLink.BOOLEAN_PROPERTY
+          )
+        )
         .url(defaultDestination);
       expect(actual).toBe(expected);
     });
-
-
   });
 
   describe('execute', () => {

@@ -4,7 +4,11 @@ import {
   partition,
   unique
 } from '@sap-cloud-sdk/util';
-import { OpenApiDocument, OpenApiOperation, SchemaMetadata } from '../openapi-types';
+import {
+  OpenApiDocument,
+  OpenApiOperation,
+  SchemaMetadata
+} from '../openapi-types';
 const logger = createLogger('openapi-generator');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -40,31 +44,10 @@ function getRequestBodyReferenceTypes(
   const bodyTypes = openApiDocument.operations
     .map(operation => operation.requestBody?.parameterType)
     .filter(requestBody => typeof requestBody !== 'undefined')
-    .map(requestBody => getGenericTypeFromArray(requestBody!))
-    .filter(requestBody => !isKnownTSType(requestBody!)) as string[];
+    .filter(requestBody => requestBody?.isInnerTypeReferenceType)
+    .map(requestBody => requestBody?.innerType) as string[];
 
   return unique(bodyTypes).join(', ');
-}
-
-/**
- * Recursively get the deepest generic type of an array type.
- * @param type The given type.
- * @returns The deepest generic type.
- */
-export function getGenericTypeFromArray(type: string): string {
-  const match = /^Array<(.*?)>$/.exec(type);
-  return !!match ? getGenericTypeFromArray(match[1]) : type;
-}
-
-const knownTSTypes = ['number', 'string', 'boolean', 'object', 'any'];
-
-/**
- * Check whether a given type is a built-in TS type.
- * @param type The type to be checked
- * @returns True if the type is a built-in TS type, false otherwise.
- */
-function isKnownTSType(type: string): boolean {
-  return knownTSTypes.includes(type);
 }
 
 /**
@@ -138,27 +121,37 @@ function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
 }
 
 function getParameterTypeString(schemaMetadata: SchemaMetadata): string {
-  return getType(schemaMetadata, isReferenceTypeUsed(schemaMetadata));
+  return schemaMetadata.isArrayType
+    ? getParameterTypeForArrayType(schemaMetadata)
+    : schemaMetadata.innerType;
 }
 
-function isReferenceTypeUsed(schemaMetadata: SchemaMetadata): boolean {
-  return schemaMetadata.isArrayType
-    ? isReferenceTypeUsed(schemaMetadata.arrayInnerType!)
-    : schemaMetadata.isReferenceType;
-}
-
-function getType(
-  schemaMetadata: SchemaMetadata,
-  referenceTypeUsed: boolean
-): string {
-  return schemaMetadata.isArrayType
-    ? toArrayType(
-        getType(schemaMetadata.arrayInnerType!, referenceTypeUsed),
-        referenceTypeUsed
+function getParameterTypeForArrayType(schemaMetadata: SchemaMetadata): string {
+  return schemaMetadata.isReferenceType
+    ? toArrayTypeWithGenericFormat(
+        schemaMetadata.innerType,
+        schemaMetadata.arrayLevel!
       )
-    : schemaMetadata.nonArrayType!;
+    : toArrayTypeWithArrayFormat(
+        schemaMetadata.innerType,
+        schemaMetadata.arrayLevel!
+      );
 }
 
-function toArrayType(innerType: string, referenceTypeUsed: boolean): string {
-  return referenceTypeUsed ? `Array<${innerType}>` : `${innerType}[]`;
+function toArrayTypeWithGenericFormat(
+  innerType: string,
+  arrayLevel: number
+): string {
+  return arrayLevel === 0
+    ? innerType
+    : `Array<${toArrayTypeWithGenericFormat(innerType, arrayLevel - 1)}>`;
+}
+
+function toArrayTypeWithArrayFormat(
+  innerType: string,
+  arrayLevel: number
+): string {
+  return arrayLevel === 0
+    ? innerType
+    : `${toArrayTypeWithArrayFormat(innerType, arrayLevel - 1)}[]`;
 }

@@ -1,5 +1,5 @@
 import { OpenApiDocument, OpenApiRequestBody } from '../openapi-types';
-import { apiFile, getGenericTypeFromArray } from './api-file';
+import { apiFile } from './api-file';
 
 describe('api-file', () => {
   it('creates api file content for operations with parameters and no request bodies', () => {
@@ -52,7 +52,12 @@ describe('api-file', () => {
           parameters: [],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body',
+            parameterType: {
+              isReferenceType: true,
+              isArrayType: false,
+              innerType: 'TestEntity',
+              isInnerTypeReferenceType: true
+            },
             required: true
           } as OpenApiRequestBody,
           pattern: 'test'
@@ -70,7 +75,13 @@ describe('api-file', () => {
           ],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Array<Body>',
+            parameterType: {
+              isReferenceType: false,
+              isArrayType: true,
+              innerType: 'string',
+              isInnerTypeReferenceType: false,
+              arrayLevel: 1
+            },
             required: true
           } as OpenApiRequestBody,
           pattern: 'test/{id}'
@@ -123,7 +134,13 @@ describe('api-file', () => {
           ],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body',
+            parameterType: {
+              isReferenceType: true,
+              isArrayType: true,
+              innerType: 'TestEntity',
+              isInnerTypeReferenceType: true,
+              arrayLevel: 2
+            },
             required: true
           } as OpenApiRequestBody,
           pattern: 'test'
@@ -152,17 +169,5 @@ describe('api-file', () => {
       ]
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
-  });
-});
-
-describe('getGenericTypeFromArray', () => {
-  it('should unwrap generic type from array', () => {
-    expect(getGenericTypeFromArray('Array<string>')).toEqual('string');
-  });
-  it('should unwrap generic type from nested array', () => {
-    expect(getGenericTypeFromArray('Array<Array<number>>')).toEqual('number');
-  });
-  it('should return original type for non-array type', () => {
-    expect(getGenericTypeFromArray('string')).toEqual('string');
   });
 });

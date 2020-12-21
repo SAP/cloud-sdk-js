@@ -24,8 +24,13 @@ describe('getRequestBody', () => {
 
     expect(parseRequestBody(requestBody, await createRefs())).toEqual({
       ...requestBody,
-      parameterName: 'testEntity',
-      parameterType: 'TestEntity'
+      parameterName: 'body',
+      parameterType: {
+        isArrayType: false,
+        isReferenceType: true,
+        innerType: 'TestEntity',
+        isInnerTypeReferenceType: true
+      }
     });
   });
 
@@ -53,8 +58,13 @@ describe('getRequestBody', () => {
       )
     ).toEqual({
       ...requestBody,
-      parameterName: 'testEntity',
-      parameterType: 'TestEntity'
+      parameterName: 'body',
+      parameterType: {
+        isArrayType: false,
+        isReferenceType: true,
+        innerType: 'TestEntity',
+        isInnerTypeReferenceType: true
+      }
     });
   });
 
@@ -64,7 +74,8 @@ describe('getRequestBody', () => {
     expect(parseSchemaMetadata(schema)).toEqual({
       isArrayType: false,
       isReferenceType: false,
-      nonArrayType: 'Record<string, any>'
+      innerType: 'Record<string, any>',
+      isInnerTypeReferenceType: false
     });
   });
 
@@ -79,11 +90,9 @@ describe('getRequestBody', () => {
     expect(parseSchemaMetadata(schema)).toEqual({
       isArrayType: true,
       isReferenceType: false,
-      arrayInnerType: {
-        isArrayType: false,
-        isReferenceType: false,
-        nonArrayType: 'string'
-      }
+      innerType: 'string',
+      isInnerTypeReferenceType: false,
+      arrayLevel: 1
     });
   });
 
@@ -101,15 +110,9 @@ describe('getRequestBody', () => {
     expect(parseSchemaMetadata(schema)).toEqual({
       isArrayType: true,
       isReferenceType: false,
-      arrayInnerType: {
-        isArrayType: true,
-        isReferenceType: false,
-        arrayInnerType: {
-          isArrayType: false,
-          isReferenceType: false,
-          nonArrayType: 'string'
-        }
-      }
+      innerType: 'string',
+      isInnerTypeReferenceType: false,
+      arrayLevel: 2
     });
   });
 });

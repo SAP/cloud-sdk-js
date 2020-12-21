@@ -85,7 +85,8 @@ function parseReferenceObject(
   return {
     isReferenceType: true,
     isArrayType: false,
-    nonArrayType: parseTypeName(schema)
+    innerType: parseTypeName(schema),
+    isInnerTypeReferenceType: true
   };
 }
 
@@ -95,7 +96,8 @@ function parseNonArrayObject(
   return {
     isReferenceType: false,
     isArrayType: false,
-    nonArrayType: getType(schema.type)
+    innerType: getType(schema.type),
+    isInnerTypeReferenceType: false
   };
 }
 
@@ -107,7 +109,11 @@ function parseArrayObject(
     ? {
         isReferenceType: false,
         isArrayType: true,
-        arrayInnerType: internalSchema
+        innerType: internalSchema.innerType,
+        isInnerTypeReferenceType: internalSchema.isInnerTypeReferenceType,
+        arrayLevel: internalSchema.arrayLevel
+          ? internalSchema.arrayLevel + 1
+          : 1
       }
     : undefined;
 }

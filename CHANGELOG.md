@@ -22,7 +22,7 @@ In the past the suffix was also appended for `string` inputs.
 
 ## New Functionality
 
-- [Generator] Added experimental support for OpenAPI Specifications. All functionality related to OpenAPI generator is subject to change.
+- [Generator] Added experimental support for OpenAPI Specifications. All functionality related to the OpenAPI generator is subject to change.
 - Introduce `ErrorWithCause` for better analysis of errors, their causes and their root causes. All errors that have been caused by other errors through the SDK are based on this class.
 
 ## Improvements

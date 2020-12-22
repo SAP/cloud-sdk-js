@@ -1,6 +1,6 @@
 import type { EntityV4 } from '../entity';
 import {
-  CustomFieldBase,
+  CustomField,
   DateField,
   DurationField,
   TimeField
@@ -8,7 +8,7 @@ import {
 
 export class CustomFieldV4<
   EntityT extends EntityV4
-> extends CustomFieldBase<EntityT> {
+> extends CustomField<EntityT> {
   edmDate(): DateField<EntityT> {
     return new DateField<EntityT>(
       this._fieldName,

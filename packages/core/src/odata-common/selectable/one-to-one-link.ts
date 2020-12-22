@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { Filterable, FilterLink } from '../filter';
 import { Order, Orderable, OrderLink } from '../order';
 import { Link } from './link';
@@ -10,8 +10,8 @@ import { Link } from './link';
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
 export class OneToOneLink<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
 > extends Link<EntityT, LinkedEntityT> {
   /**
    * @deprecated Since v1.21.0. Use [[clone]] instead.
@@ -22,7 +22,7 @@ export class OneToOneLink<
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT1 extends EntityBase, LinkedEntityT1 extends EntityBase>(
+  static clone<EntityT1 extends Entity, LinkedEntityT1 extends Entity>(
     link: OneToOneLink<EntityT1, LinkedEntityT1>
   ): OneToOneLink<EntityT1, LinkedEntityT1> {
     const clonedLink = link.clone() as OneToOneLink<EntityT1, LinkedEntityT1>;

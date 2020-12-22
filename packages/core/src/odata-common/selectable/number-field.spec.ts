@@ -2,13 +2,13 @@ import {
   TestComplexTypeField,
   TestEntity
 } from '../../../test/test-util/test-services/v2/test-service';
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { Filter } from '../filter';
 import { ComplexTypeNumberPropertyField, NumberField } from './number-field';
 import { FieldType } from './field';
 
 export function checkFilter<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   FieldT extends FieldType
 >(
   filter: Filter<EntityT, FieldT>,

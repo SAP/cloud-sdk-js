@@ -2,7 +2,7 @@
 
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { Entity, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import {
   ComplexTypeField,
@@ -17,7 +17,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DateFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+export class DateFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   moment.Moment
 > {
@@ -67,7 +67,7 @@ export class DateFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DateField<EntityT extends EntityBase>
+export class DateField<EntityT extends Entity>
   extends DateFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -79,7 +79,7 @@ export class DateField<EntityT extends EntityBase>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeDatePropertyField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends DateFieldBase<EntityT> {
   /**

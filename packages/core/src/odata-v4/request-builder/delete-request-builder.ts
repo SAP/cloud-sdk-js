@@ -1,6 +1,6 @@
 import {
   Constructable,
-  DeleteRequestBuilderBase,
+  DeleteRequestBuilder,
   EntityIdentifiable,
   FieldType
 } from '../../odata-common';
@@ -12,7 +12,7 @@ import { oDataUriV4 } from '../uri-conversion';
  * @typeparam EntityT - Type of the entity to be deleted
  */
 export class DeleteRequestBuilderV4<EntityT extends EntityV4>
-  extends DeleteRequestBuilderBase<EntityT>
+  extends DeleteRequestBuilder<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;

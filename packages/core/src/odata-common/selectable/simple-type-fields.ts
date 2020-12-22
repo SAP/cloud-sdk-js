@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { BigNumberField } from './big-number-field';
 import { BinaryField } from './binary-field';
 import { BooleanField } from './boolean-field';
@@ -11,7 +11,7 @@ import { AnyField } from './any-field';
 /**
  * @hidden
  */
-export type SimpleTypeFields<EntityT extends EntityBase> =
+export type SimpleTypeFields<EntityT extends Entity> =
   | BigNumberField<EntityT>
   | BinaryField<EntityT>
   | BooleanField<EntityT>

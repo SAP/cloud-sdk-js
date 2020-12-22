@@ -1,7 +1,7 @@
 import {
   FilterLambdaExpression,
   OneToManyLink,
-  EntityBase,
+  Entity,
   FieldType,
   and,
   Filterable,
@@ -14,8 +14,8 @@ import {
  * @returns The lambda filter function to be considered in the query
  */
 export function any<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
@@ -29,8 +29,8 @@ export function any<
  * @returns The lambda filter function to be considered in the query
  */
 export function all<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {

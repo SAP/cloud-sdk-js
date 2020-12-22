@@ -1,8 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { MethodRequestBuilderBase } from '../request-builder-base';
+import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
-import { Constructable, EntityBase } from '../../entity';
+import { Constructable, Entity } from '../../entity';
 import {
   Destination,
   DestinationNameAndJwt,
@@ -17,8 +17,8 @@ import { serializeBatchRequest } from './batch-request-serializer';
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
  * The retrieve and change sets will be excuted in order, while the order within a change set can vary.
  */
-export class BatchRequestBuilder extends MethodRequestBuilderBase<ODataBatchRequestConfig> {
-  // FIXME: MethodRequestBuilderBase is too broad here. Should be getAll and getByKey
+export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestConfig> {
+  // FIXME: MethodRequestBuilder is too broad here. Should be getAll and getByKey
   /**
    * Creates an instance of ODataBatchRequestBuilder.
    *
@@ -28,8 +28,8 @@ export class BatchRequestBuilder extends MethodRequestBuilderBase<ODataBatchRequ
    */
   constructor(
     readonly defaultServicePath: string,
-    readonly requests: (BatchChangeSet | MethodRequestBuilderBase)[],
-    readonly entityToConstructorMap: Record<string, Constructable<EntityBase>>
+    readonly requests: (BatchChangeSet | MethodRequestBuilder)[],
+    readonly entityToConstructorMap: Record<string, Constructable<Entity>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
   }

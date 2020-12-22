@@ -1,5 +1,5 @@
 import {
-  EntityBase,
+  Entity,
   Constructable,
   ODataDeleteRequestConfig as Base
 } from '../../odata-common';
@@ -12,7 +12,7 @@ import { oDataUriV2 } from '../uri-conversion';
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 class ODataDeleteRequestConfig<
-  EntityT extends EntityBase
+  EntityT extends Entity
 > extends Base<EntityT> {
   /**
    * Creates an instance of ODataRequest.

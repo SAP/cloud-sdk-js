@@ -21,7 +21,7 @@ export function batchFunction(
           params: [
             {
               name: 'requests',
-              type: 'MethodRequestBuilderBase<ODataRequestConfig>[]',
+              type: 'MethodRequestBuilder<ODataRequestConfig>[]',
               description: 'The requests of the batch'
             }
           ],

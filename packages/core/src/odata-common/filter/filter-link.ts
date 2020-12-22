@@ -1,4 +1,4 @@
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { Link } from '../selectable';
 import type { Filterable } from './filterable';
 
@@ -16,8 +16,8 @@ import type { Filterable } from './filterable';
  * @typeparam LinkedEntityT - Type of the linked entity which is used in the filter
  */
 export class FilterLink<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase = any
+  EntityT extends Entity,
+  LinkedEntityT extends Entity = any
 > implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
@@ -46,8 +46,8 @@ export class FilterLink<
 }
 
 export function isFilterLink<
-  EntityT extends EntityBase,
-  LinkedT extends EntityBase
+  EntityT extends Entity,
+  LinkedT extends Entity
 >(filterable: Filterable<EntityT>): filterable is FilterLink<EntityT, LinkedT> {
   return (
     typeof filterable['link'] !== 'undefined' &&

@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf } from '../entity';
+import { Entity, ODataVersionOf } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,
@@ -15,7 +15,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class AnyFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+class AnyFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   any
 > {}
@@ -25,7 +25,7 @@ class AnyFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class AnyField<EntityT extends EntityBase>
+export class AnyField<EntityT extends Entity>
   extends AnyFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -37,7 +37,7 @@ export class AnyField<EntityT extends EntityBase>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeAnyPropertyField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends AnyFieldBase<EntityT> {
   /**

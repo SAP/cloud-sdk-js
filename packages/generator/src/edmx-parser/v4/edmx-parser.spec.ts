@@ -38,7 +38,7 @@ describe('edmx-edmx-parser', () => {
     });
 
     const baseType = parseEntityType(metadataEdmx.root).find(
-      e => e.Name === 'A_TestEntityBaseType'
+      e => e.Name === 'A_TestEntityType'
     );
     const entityWithBaseType = parseEntityType(metadataEdmx.root).find(
       e => e.BaseType && e.BaseType.endsWith(baseType!.Name)

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {
-  EntityBase,
+  Entity,
   FilterFunctionParameterType,
   OrderableFilterFunction
 } from '../../odata-common';
@@ -9,7 +9,7 @@ import {
  * Representation of a filter function, that returns a value of type date. This supports DateTimeOffset values.
  */
 export class DateFilterFunction<
-  EntityT extends EntityBase
+  EntityT extends Entity
 > extends OrderableFilterFunction<EntityT, moment.Moment> {
   /**
    * Creates an instance of DateFilterFunction.

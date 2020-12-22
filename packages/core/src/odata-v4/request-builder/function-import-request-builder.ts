@@ -1,6 +1,6 @@
 import { oDataUriV4 } from '../uri-conversion';
 import {
-  ActionFunctionImportRequestBuilderBase,
+  ActionFunctionImportRequestBuilder,
   FunctionImportParameters
 } from '../../odata-common';
 import { ODataFunctionImportRequestConfigV4 } from '../request';
@@ -14,7 +14,7 @@ import { ODataFunctionImportRequestConfigV4 } from '../request';
 export class FunctionImportRequestBuilderV4<
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
+> extends ActionFunctionImportRequestBuilder<ParametersT, ReturnT> {
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param defaultServicePath - Default path for the service the function belongs to

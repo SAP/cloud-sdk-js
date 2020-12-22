@@ -1,4 +1,4 @@
-import { EntityBase, FieldType, Constructable } from '../../odata-common';
+import { Entity, FieldType, Constructable } from '../../odata-common';
 import { oDataUriV2 } from './odata-uri';
 
 /**
@@ -11,7 +11,7 @@ import { oDataUriV2 } from './odata-uri';
  * @param uriConverter - OData version specific converter for strings in URIs
  * @returns The path to the resource
  */
-export function getResourcePathForKeys<EntityT extends EntityBase>(
+export function getResourcePathForKeys<EntityT extends Entity>(
   keys: Record<string, FieldType> = {},
   entityConstructor: Constructable<EntityT>
 ): string {

@@ -42,7 +42,7 @@ const logger = createLogger({
   messageContext: 'entity'
 });
 
-export function transformEntityBase(
+export function transformEntity(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   classNames: Record<string, any>,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],

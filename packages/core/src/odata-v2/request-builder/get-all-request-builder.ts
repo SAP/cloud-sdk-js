@@ -3,7 +3,7 @@ import {
   Constructable,
   EntityIdentifiable,
   Filterable,
-  GetAllRequestBuilderBase,
+  GetAllRequestBuilder,
   and,
   ODataGetAllRequestConfig
 } from '../../odata-common';
@@ -12,7 +12,7 @@ import { entityDeserializerV2 } from '../entity-deserializer';
 import { oDataUriV2 } from '../uri-conversion';
 import { responseDataAccessorV2 } from './response-data-accessor';
 export class GetAllRequestBuilderV2<EntityT extends EntityV2>
-  extends GetAllRequestBuilderBase<EntityT>
+  extends GetAllRequestBuilder<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of GetAllRequestBuilder.

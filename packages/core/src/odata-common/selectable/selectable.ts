@@ -1,8 +1,8 @@
-import { EntityBase, ODataVersionOf } from '../entity';
+import { Entity, ODataVersionOf } from '../entity';
 import type { CollectionField } from './collection-field';
 import type { AllFields } from './all-fields';
 import type { ComplexTypeField } from './complex-type-field';
-import type { CustomFieldBase } from './custom-field';
+import type { CustomField } from './custom-field';
 import type { Link } from './link';
 import type { SimpleTypeFields } from './simple-type-fields';
 
@@ -13,20 +13,20 @@ import type { SimpleTypeFields } from './simple-type-fields';
  */
 
 export type Selectable<
-  EntityT extends EntityBase
+  EntityT extends Entity
 > = ODataVersionOf<EntityT> extends 'v2'
   ?
       | SimpleTypeFields<EntityT>
       | Link<EntityT>
       | ComplexTypeField<EntityT>
-      | CustomFieldBase<EntityT>
+      | CustomField<EntityT>
       | CollectionField<EntityT>
       | AllFields<EntityT>
   : ODataVersionOf<EntityT> extends 'v4'
   ?
       | SimpleTypeFields<EntityT>
       | ComplexTypeField<EntityT>
-      | CustomFieldBase<EntityT>
+      | CustomField<EntityT>
       | CollectionField<EntityT>
       | AllFields<EntityT>
   : never;

@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { Filterable, FilterLink, toFilterableList } from '../filter';
 import { Orderable } from '../order';
 import { Link } from './link';
@@ -10,8 +10,8 @@ import { Link } from './link';
  * See also [[Link]] for more informations.
  */
 export class OneToManyLink<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
 > extends Link<EntityT, LinkedEntityT> {
   _filters: FilterLink<EntityT, LinkedEntityT>;
   _orderBy: Orderable<LinkedEntityT>[] = [];

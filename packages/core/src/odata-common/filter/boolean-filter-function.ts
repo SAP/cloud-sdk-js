@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import {
   FilterFunction,
   FilterFunctionParameterType
@@ -8,7 +8,7 @@ import {
  * Representation of a filter function, that returns a value of type boolean.
  */
 export class BooleanFilterFunction<
-  EntityT extends EntityBase
+  EntityT extends Entity
 > extends FilterFunction<EntityT, boolean> {
   /**
    * Creates an instance of BooleanFilterFunction.

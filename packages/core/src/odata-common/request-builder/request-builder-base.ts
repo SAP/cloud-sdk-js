@@ -14,11 +14,11 @@ import { ODataRequestConfig } from '../request/odata-request-config';
  *
  * @typeparam EntityT - Type of the entity to create a request for
  */
-export abstract class MethodRequestBuilderBase<
+export abstract class MethodRequestBuilder<
   RequestConfigT extends ODataRequestConfig = any
 > {
   /**
-   * Creates an instance of MethodRequestBuilderBase.
+   * Creates an instance of MethodRequestBuilder.
    *
    * @param requestConfig - Request configuration to initialize with
    */

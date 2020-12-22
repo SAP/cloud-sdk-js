@@ -2,7 +2,7 @@ import { oDataUriV2 } from '../uri-conversion';
 import {
   FunctionImportParameters,
   RequestMethodType,
-  ActionFunctionImportRequestBuilderBase
+  ActionFunctionImportRequestBuilder
 } from '../../odata-common';
 import { ODataFunctionImportRequestConfigV2 } from '../request';
 
@@ -15,7 +15,7 @@ export class FunctionImportRequestBuilderV2<
   // reuse
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
+> extends ActionFunctionImportRequestBuilder<ParametersT, ReturnT> {
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param method - HTTP method to be used for the request

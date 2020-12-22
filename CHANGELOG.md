@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.34.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.34.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` now accept a `string` or `XsuaaServiceCredentials` as first argument.
 In case it is a `string` it is treated as the URL to fetch the access token from.
 In case it is an object of type `XsuaaServiceCredentials`, the the URL is built by appending `oauth/token` to the `.url` of the given object.
@@ -32,7 +55,6 @@ In the past this suffix was also appended to inputs of type `string`.
 
 - Stop appending `oauth/token` if the service token URL is given to `clientCredentialsGrant()`.
 See related compatibility note above.
-
 
 # 1.33.0
 

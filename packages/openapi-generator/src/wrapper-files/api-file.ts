@@ -1,6 +1,15 @@
-import { codeBlock, partition, unique } from '@sap-cloud-sdk/util';
-import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
-
+import {
+  codeBlock,
+  createLogger,
+  partition,
+  unique
+} from '@sap-cloud-sdk/util';
+import {
+  OpenApiDocument,
+  OpenApiOperation,
+  SchemaMetadata
+} from '../openapi-types';
+const logger = createLogger('openapi-generator');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Get the content of the SAP Cloud SDK API wrapper.
@@ -8,7 +17,7 @@ import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
  * @returns The generated code for the SDK API wrapper.
  */
 export function apiFile(openApiDocument: OpenApiDocument): string {
-  const requestBodyTypes = getRequestBodyTypes(openApiDocument);
+  const requestBodyTypes = getRequestBodyReferenceTypes(openApiDocument);
   return codeBlock`
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
@@ -25,14 +34,18 @@ export const ${openApiDocument.apiName} = {
 }
 
 /**
- * Get the types for all request body types in the given service.
+ * Get the reference types for all request body types in the given service.
  * @param openApiDocument Parsed service metadata.
  * @returns The list of body types as a string.
  */
-function getRequestBodyTypes(openApiDocument: OpenApiDocument): string {
+function getRequestBodyReferenceTypes(
+  openApiDocument: OpenApiDocument
+): string {
   const bodyTypes = openApiDocument.operations
     .map(operation => operation.requestBody?.parameterType)
-    .filter(requestBody => typeof requestBody !== 'undefined') as string[];
+    .filter(requestBody => typeof requestBody !== 'undefined')
+    .filter(requestBody => requestBody?.isInnerTypeReferenceType)
+    .map(requestBody => requestBody?.innerType) as string[];
 
   return unique(bodyTypes).join(', ');
 }
@@ -100,9 +113,27 @@ function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
     ? [
         {
           name: operation.requestBody.parameterName,
-          type: operation.requestBody.parameterType,
+          type: getParameterTypeString(operation.requestBody.parameterType),
           required: operation.requestBody.required
         }
       ]
     : [];
+}
+
+function getParameterTypeString(schemaMetadata: SchemaMetadata): string {
+  return schemaMetadata.isArrayType
+    ? toArrayTypeWithArrayFormat(
+        schemaMetadata.innerType,
+        schemaMetadata.arrayLevel!
+      )
+    : schemaMetadata.innerType;
+}
+
+function toArrayTypeWithArrayFormat(
+  innerType: string,
+  arrayLevel: number
+): string {
+  return arrayLevel === 0
+    ? innerType
+    : `${toArrayTypeWithArrayFormat(innerType, arrayLevel - 1)}[]`;
 }

@@ -11,9 +11,7 @@ import { oDataUriV2 } from '../uri-conversion';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-class ODataDeleteRequestConfig<
-  EntityT extends Entity
-> extends Base<EntityT> {
+class ODataDeleteRequestConfig<EntityT extends Entity> extends Base<EntityT> {
   /**
    * Creates an instance of ODataRequest.
    * @param _entityConstructor - Constructor type of the entity to create a configuration for

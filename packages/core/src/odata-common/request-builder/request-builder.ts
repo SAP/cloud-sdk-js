@@ -1,8 +1,8 @@
 import { Entity, EntityIdentifiable, Constructable } from '../entity';
 
-type EntitydRequestBuilder<
-  EntityCT extends Constructable<Entity>
-> = ReturnType<EntityCT['requestBuilder']>;
+type EntitydRequestBuilder<EntityCT extends Constructable<Entity>> = ReturnType<
+  EntityCT['requestBuilder']
+>;
 
 /**
  * @hidden

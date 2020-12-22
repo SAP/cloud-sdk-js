@@ -67,9 +67,7 @@ export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class TimeField<
-  EntityT extends Entity
-> extends TimeFieldBase<EntityT> {
+export class TimeField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
   readonly selectable: true;
 }
 

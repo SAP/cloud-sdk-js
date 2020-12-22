@@ -45,10 +45,9 @@ export class FilterLink<
   ) {}
 }
 
-export function isFilterLink<
-  EntityT extends Entity,
-  LinkedT extends Entity
->(filterable: Filterable<EntityT>): filterable is FilterLink<EntityT, LinkedT> {
+export function isFilterLink<EntityT extends Entity, LinkedT extends Entity>(
+  filterable: Filterable<EntityT>
+): filterable is FilterLink<EntityT, LinkedT> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

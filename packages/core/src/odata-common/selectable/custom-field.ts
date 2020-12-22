@@ -6,9 +6,7 @@ import { Field } from './field';
 import { NumberField } from './number-field';
 import { StringField } from './string-field';
 
-export class CustomField<
-  EntityT extends Entity
-> extends Field<EntityT> {
+export class CustomField<EntityT extends Entity> extends Field<EntityT> {
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>

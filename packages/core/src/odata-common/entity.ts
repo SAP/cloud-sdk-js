@@ -12,10 +12,7 @@ export type ODataVersionOf<T extends Entity> = T['_oDataVersion'];
 /**
  * @hidden
  */
-export interface Constructable<
-  EntityT extends Entity,
-  EntityTypeT = unknown
-> {
+export interface Constructable<EntityT extends Entity, EntityTypeT = unknown> {
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
@@ -278,10 +275,7 @@ export abstract class Entity {
     return isVisited;
   }
 
-  protected getCurrentStateForKey(
-    key: string,
-    visitedEntities: Entity[] = []
-  ) {
+  protected getCurrentStateForKey(key: string, visitedEntities: Entity[] = []) {
     if (isNavigationProperty(key, this.constructor)) {
       if (isNullish(this[key])) {
         return this[key];

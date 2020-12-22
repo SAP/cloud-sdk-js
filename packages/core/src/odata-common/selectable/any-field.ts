@@ -15,10 +15,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class AnyFieldBase<EntityT extends Entity> extends EdmTypeField<
-  EntityT,
-  any
-> {}
+class AnyFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, any> {}
 
 /**
  * Represents a selectable property with with an unknown or currently unsupported edm type like Edm.Geography.

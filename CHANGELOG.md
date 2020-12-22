@@ -16,7 +16,7 @@
 
 - The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` accept now a `string` or `XsuaaServiceCredentials` as first argument.
 This argument represents the `URL` used to fetch the access token from and represent two cases.
-A `string` value denotes the URL of the token service where it should not be changed.
+A `string` value denotes the URL of the token service where it is not changed.
 A `XsuaaServiceCredentials` denotes that the XSUAA service is used to receive the token and a suffix `oauth/token` is appended to the URL property within `XsuaaServiceCredentials`.
 In the past the suffix was also appended for `string` inputs.
 

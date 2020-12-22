@@ -14,15 +14,14 @@
 
 ## Compatibility Notes
 
-- The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` accept now a `string` or `XsuaaServiceCredentials` as first argument.
-This argument represents the `URL` used to fetch the access token from and represent two cases.
+- The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` now accept a `string` or `XsuaaServiceCredentials` as first argument.
 A `string` value denotes the URL of the token service where it is not changed.
 A `XsuaaServiceCredentials` denotes that the XSUAA service is used to receive the token and a suffix `oauth/token` is appended to the URL property within `XsuaaServiceCredentials`.
-In the past the suffix was also appended for `string` inputs.
+In the past this suffix was also appended to inputs of type `string`.
 
 ## New Functionality
 
-- [Generator] Added experimental support for OpenAPI Specifications. All functionality related to the OpenAPI generator is subject to change.
+- Add experimental support for client generation of OpenAPI services. All functionality related to the OpenAPI generator is subject to change.
 - Introduce `ErrorWithCause` for better analysis of errors, their causes and their root causes. All errors that have been caused by other errors through the SDK are based on this class.
 
 ## Improvements

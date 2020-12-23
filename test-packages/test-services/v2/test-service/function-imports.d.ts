@@ -1,4 +1,4 @@
-import { FunctionImportRequestBuilderV2 } from '@sap-cloud-sdk/core';
+import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 /**
@@ -12,7 +12,7 @@ export interface TestFunctionImportNoReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportNoReturnType(parameters: TestFunctionImportNoReturnTypeParameters): FunctionImportRequestBuilderV2<TestFunctionImportNoReturnTypeParameters, undefined>;
+export declare function testFunctionImportNoReturnType(parameters: TestFunctionImportNoReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportNoReturnTypeParameters, undefined>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */
@@ -24,7 +24,7 @@ export interface TestFunctionImportEdmReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportEdmReturnType(parameters: TestFunctionImportEdmReturnTypeParameters): FunctionImportRequestBuilderV2<TestFunctionImportEdmReturnTypeParameters, boolean>;
+export declare function testFunctionImportEdmReturnType(parameters: TestFunctionImportEdmReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeParameters, boolean>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]].
  */
@@ -36,7 +36,7 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportEdmReturnTypeCollection(parameters: TestFunctionImportEdmReturnTypeCollectionParameters): FunctionImportRequestBuilderV2<TestFunctionImportEdmReturnTypeCollectionParameters, string[]>;
+export declare function testFunctionImportEdmReturnTypeCollection(parameters: TestFunctionImportEdmReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeCollectionParameters, string[]>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
  */
@@ -48,7 +48,7 @@ export interface TestFunctionImportEntityReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportEntityReturnType(parameters: TestFunctionImportEntityReturnTypeParameters): FunctionImportRequestBuilderV2<TestFunctionImportEntityReturnTypeParameters, TestEntity>;
+export declare function testFunctionImportEntityReturnType(parameters: TestFunctionImportEntityReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeParameters, TestEntity>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
  */
@@ -60,7 +60,7 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportEntityReturnTypeCollection(parameters: TestFunctionImportEntityReturnTypeCollectionParameters): FunctionImportRequestBuilderV2<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>;
+export declare function testFunctionImportEntityReturnTypeCollection(parameters: TestFunctionImportEntityReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
  */
@@ -72,7 +72,7 @@ export interface TestFunctionImportComplexReturnTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportComplexReturnType(parameters: TestFunctionImportComplexReturnTypeParameters): FunctionImportRequestBuilderV2<TestFunctionImportComplexReturnTypeParameters, TestComplexType>;
+export declare function testFunctionImportComplexReturnType(parameters: TestFunctionImportComplexReturnTypeParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeParameters, TestComplexType>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportUnsupportedEdmTypes]].
  */
@@ -88,7 +88,7 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportUnsupportedEdmTypes(parameters: TestFunctionImportUnsupportedEdmTypesParameters): FunctionImportRequestBuilderV2<TestFunctionImportUnsupportedEdmTypesParameters, any>;
+export declare function testFunctionImportUnsupportedEdmTypes(parameters: TestFunctionImportUnsupportedEdmTypesParameters): FunctionImportRequestBuilder<TestFunctionImportUnsupportedEdmTypesParameters, any>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
  */
@@ -100,7 +100,7 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportComplexReturnTypeCollection(parameters: TestFunctionImportComplexReturnTypeCollectionParameters): FunctionImportRequestBuilderV2<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>;
+export declare function testFunctionImportComplexReturnTypeCollection(parameters: TestFunctionImportComplexReturnTypeCollectionParameters): FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportGet]].
  */
@@ -116,7 +116,7 @@ export interface TestFunctionImportGetParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportGet(parameters: TestFunctionImportGetParameters): FunctionImportRequestBuilderV2<TestFunctionImportGetParameters, boolean>;
+export declare function testFunctionImportGet(parameters: TestFunctionImportGetParameters): FunctionImportRequestBuilder<TestFunctionImportGetParameters, boolean>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportPost]].
  */
@@ -132,7 +132,7 @@ export interface TestFunctionImportPostParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportPost(parameters: TestFunctionImportPostParameters): FunctionImportRequestBuilderV2<TestFunctionImportPostParameters, boolean>;
+export declare function testFunctionImportPost(parameters: TestFunctionImportPostParameters): FunctionImportRequestBuilder<TestFunctionImportPostParameters, boolean>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
  */
@@ -152,7 +152,7 @@ export interface TestFunctionImportMultipleParamsParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportMultipleParams(parameters: TestFunctionImportMultipleParamsParameters): FunctionImportRequestBuilderV2<TestFunctionImportMultipleParamsParameters, boolean>;
+export declare function testFunctionImportMultipleParams(parameters: TestFunctionImportMultipleParamsParameters): FunctionImportRequestBuilder<TestFunctionImportMultipleParamsParameters, boolean>;
 /**
  * Type of the parameters to be passed to [[createTestComplexType]].
  */
@@ -164,7 +164,7 @@ export interface CreateTestComplexTypeParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function createTestComplexType(parameters: CreateTestComplexTypeParameters): FunctionImportRequestBuilderV2<CreateTestComplexTypeParameters, TestComplexType>;
+export declare function createTestComplexType(parameters: CreateTestComplexTypeParameters): FunctionImportRequestBuilder<CreateTestComplexTypeParameters, TestComplexType>;
 /**
  * Type of the parameters to be passed to [[fContinue]].
  */
@@ -176,7 +176,7 @@ export interface FContinueParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function fContinue(parameters: FContinueParameters): FunctionImportRequestBuilderV2<FContinueParameters, boolean>;
+export declare function fContinue(parameters: FContinueParameters): FunctionImportRequestBuilder<FContinueParameters, boolean>;
 export declare const functionImports: {
     testFunctionImportNoReturnType: typeof testFunctionImportNoReturnType;
     testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;

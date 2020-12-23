@@ -25,7 +25,7 @@ const filter = filterFunctions
   .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
   .equals('test');
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 TestEntity.requestBuilder().getAll().filter(filter);
 
 // $ExpectError

@@ -10,17 +10,17 @@ import {
   createTestEntity
 } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
-import { GetAllRequestBuilderV2 } from './get-all-request-builder';
+import { GetAllRequestBuilder } from './get-all-request-builder';
 
-describe('GetAllRequestBuilderV2', () => {
-  let requestBuilder: GetAllRequestBuilderV2<TestEntity>;
+describe('GetAllRequestBuilder', () => {
+  let requestBuilder: GetAllRequestBuilder<TestEntity>;
 
   afterEach(() => {
     unmockDestinationsEnv();
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilderV2(TestEntity);
+    requestBuilder = new GetAllRequestBuilder(TestEntity);
   });
 
   describe('url', () => {

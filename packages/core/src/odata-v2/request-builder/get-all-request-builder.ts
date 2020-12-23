@@ -10,8 +10,8 @@ import {
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
 import { oDataUri } from '../uri-conversion';
-import { responseDataAccessorV2 } from './response-data-accessor';
-export class GetAllRequestBuilderV2<EntityT extends Entity>
+import { responseDataAccessor } from './response-data-accessor';
+export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
@@ -24,7 +24,7 @@ export class GetAllRequestBuilderV2<EntityT extends Entity>
       entityConstructor,
       new ODataGetAllRequestConfig(entityConstructor, oDataUri),
       entityDeserializer,
-      responseDataAccessorV2
+      responseDataAccessor
     );
   }
 
@@ -45,4 +45,4 @@ export class GetAllRequestBuilderV2<EntityT extends Entity>
   }
 }
 
-export { GetAllRequestBuilderV2 as GetAllRequestBuilder };
+export { GetAllRequestBuilder as GetAllRequestBuilderV2 };

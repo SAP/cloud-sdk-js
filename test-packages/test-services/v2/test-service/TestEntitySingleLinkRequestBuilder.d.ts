@@ -1,4 +1,4 @@
-import { RequestBuilder, GetAllRequestBuilderV2, GetByKeyRequestBuilderV2, CreateRequestBuilderV2, UpdateRequestBuilderV2, DeleteRequestBuilderV2 } from '@sap-cloud-sdk/core';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntitySingleLink } from './TestEntitySingleLink';
 /**
  * Request builder class for operations supported on the [[TestEntitySingleLink]] entity.
@@ -9,35 +9,35 @@ export declare class TestEntitySingleLinkRequestBuilder extends RequestBuilder<T
      * @param keyProperty Key property. See [[TestEntitySingleLink.keyProperty]].
      * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
      */
-    getByKey(keyProperty: string): GetByKeyRequestBuilderV2<TestEntitySingleLink>;
+    getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntitySingleLink>;
     /**
      * Returns a request builder for querying all `TestEntitySingleLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
      */
-    getAll(): GetAllRequestBuilderV2<TestEntitySingleLink>;
+    getAll(): GetAllRequestBuilder<TestEntitySingleLink>;
     /**
      * Returns a request builder for creating a `TestEntitySingleLink` entity.
      * @param entity The entity to be created
      * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
      */
-    create(entity: TestEntitySingleLink): CreateRequestBuilderV2<TestEntitySingleLink>;
+    create(entity: TestEntitySingleLink): CreateRequestBuilder<TestEntitySingleLink>;
     /**
      * Returns a request builder for updating an entity of type `TestEntitySingleLink`.
      * @param entity The entity to be updated
      * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
      */
-    update(entity: TestEntitySingleLink): UpdateRequestBuilderV2<TestEntitySingleLink>;
+    update(entity: TestEntitySingleLink): UpdateRequestBuilder<TestEntitySingleLink>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntitySingleLink`.
      * @param keyProperty Key property. See [[TestEntitySingleLink.keyProperty]].
      * @returns A request builder for creating requests that delete an entity of type `TestEntitySingleLink`.
      */
-    delete(keyProperty: string): DeleteRequestBuilderV2<TestEntitySingleLink>;
+    delete(keyProperty: string): DeleteRequestBuilder<TestEntitySingleLink>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntitySingleLink`.
      * @param entity Pass the entity to be deleted.
      * @returns A request builder for creating requests that delete an entity of type `TestEntitySingleLink` by taking the entity as a parameter.
      */
-    delete(entity: TestEntitySingleLink): DeleteRequestBuilderV2<TestEntitySingleLink>;
+    delete(entity: TestEntitySingleLink): DeleteRequestBuilder<TestEntitySingleLink>;
 }
 //# sourceMappingURL=TestEntitySingleLinkRequestBuilder.d.ts.map

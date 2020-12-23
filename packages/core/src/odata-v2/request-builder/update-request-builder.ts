@@ -27,7 +27,7 @@ const logger = createLogger({
  *
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilderV2<EntityT extends Entity>
+export class UpdateRequestBuilder<EntityT extends Entity>
   extends UpdateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
@@ -103,4 +103,4 @@ function removeNavPropsAndComplexTypes(
   );
 }
 
-export { UpdateRequestBuilderV2 as UpdateRequestBuilder };
+export { UpdateRequestBuilder as UpdateRequestBuilderV2 };

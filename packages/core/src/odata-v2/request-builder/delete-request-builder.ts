@@ -10,7 +10,7 @@ import { oDataUri } from '../uri-conversion';
  *
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export class DeleteRequestBuilderV2<
+export class DeleteRequestBuilder<
   EntityT extends Entity
 > extends DeleteRequestBuilderBase<EntityT> {
   /**
@@ -38,4 +38,4 @@ export class DeleteRequestBuilderV2<
   }
 }
 
-export { DeleteRequestBuilderV2 as DeleteRequestBuilder };
+export { DeleteRequestBuilder as DeleteRequestBuilderV2 };

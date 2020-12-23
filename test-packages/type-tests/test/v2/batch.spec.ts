@@ -35,10 +35,10 @@ const changeSetOtherServiceTestEntity = otherServiceChangeset(
 // // $ExpectError
 // TestEntityChangeset(createTestEntity, createTestEntityFromOtherService);
 
-// $ExpectType ODataBatchRequestBuilderV2
+// $ExpectType ODataBatchRequestBuilder
 batch(changeSetTestEntity, changeSetTestEntity);
 
-// $ExpectType ODataBatchRequestBuilderV2
+// $ExpectType ODataBatchRequestBuilder
 batch([changeSetTestEntity, changeSetTestEntity]);
 
 // // $ExpectError

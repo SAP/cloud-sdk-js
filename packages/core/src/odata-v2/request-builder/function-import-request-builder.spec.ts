@@ -25,7 +25,7 @@ const mockedBuildHeaderResponse = {
   'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
 };
 
-describe('FunctionImportRequestBuilderV2', () => {
+describe('FunctionImportRequestBuilder', () => {
   beforeEach(() => {
     nock(defaultHost)
       .get(serviceUrl)

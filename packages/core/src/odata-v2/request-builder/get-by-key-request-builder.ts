@@ -7,15 +7,15 @@ import {
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
 import { oDataUri } from '../uri-conversion';
-import { responseDataAccessorV2 } from './response-data-accessor';
+import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.
- * The properties available in the response can be restricted by creating a [[GetAllRequestBuilderV2.select selection]], where no selection is equal to selecting all fields.
+ * The properties available in the response can be restricted by creating a [[GetAllRequestBuilder.select selection]], where no selection is equal to selecting all fields.
  * Note that navigational properties are automatically expanded if they included in a  select.
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilderV2<EntityT extends Entity>
+export class GetByKeyRequestBuilder<EntityT extends Entity>
   extends GetByKeyRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
@@ -35,9 +35,9 @@ export class GetByKeyRequestBuilderV2<EntityT extends Entity>
       keys,
       oDataUri,
       entityDeserializer,
-      responseDataAccessorV2
+      responseDataAccessor
     );
   }
 }
 
-export { GetByKeyRequestBuilderV2 as GetByKeyRequestBuilder };
+export { GetByKeyRequestBuilder as GetByKeyRequestBuilderV2 };

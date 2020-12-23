@@ -14,7 +14,7 @@ function batch(first) {
     for (var _i = 1; _i < arguments.length; _i++) {
         rest[_i - 1] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilderV2(exports.defaultMultipleSchemasServicePath, util_1.variadicArgumentToArray(first, rest), map);
+    return new core_1.ODataBatchRequestBuilder(exports.defaultMultipleSchemasServicePath, util_1.variadicArgumentToArray(first, rest), map);
 }
 exports.batch = batch;
 function changeset(first) {

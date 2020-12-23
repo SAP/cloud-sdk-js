@@ -12,10 +12,10 @@ describe('imports', () => {
         namedImports: [
           'Time',
           'RequestBuilder',
-          'GetAllRequestBuilderV2',
-          'GetByKeyRequestBuilderV2',
-          'CreateRequestBuilderV2',
-          'UpdateRequestBuilderV2'
+          'GetAllRequestBuilder',
+          'GetByKeyRequestBuilder',
+          'CreateRequestBuilder',
+          'UpdateRequestBuilder'
         ]
       },
       {

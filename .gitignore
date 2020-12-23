@@ -25,3 +25,7 @@ packages/**/*.jar
 local-docs/_site
 
 sqlite.db
+
+test-packages/integration-tests/test/oauth-flows/vcap-services.json
+test-packages/integration-tests/test/oauth-flows/user-access-token.ts
+test-packages/integration-tests/test/oauth-flows/systems.ts

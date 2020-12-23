@@ -48,3 +48,5 @@ export abstract class GetRequestBuilder<
     return this;
   }
 }
+
+export { GetRequestBuilder as GetRequestBuilderBase };

@@ -1,6 +1,6 @@
 import {
   Constructable,
-  DeleteRequestBuilder,
+  DeleteRequestBuilder as DeleteRequestBuilderBase,
   FieldType
 } from '../../odata-common';
 import { EntityV2 } from '../entity';
@@ -12,7 +12,7 @@ import { oDataUriV2 } from '../uri-conversion';
  */
 export class DeleteRequestBuilderV2<
   EntityT extends EntityV2
-> extends DeleteRequestBuilder<EntityT> {
+> extends DeleteRequestBuilderBase<EntityT> {
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
    *

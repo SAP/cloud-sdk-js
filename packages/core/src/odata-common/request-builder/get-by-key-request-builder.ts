@@ -82,3 +82,5 @@ export abstract class GetByKeyRequestBuilder<
       });
   }
 }
+
+export { GetByKeyRequestBuilder as GetByKeyRequestBuilderBase };

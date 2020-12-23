@@ -1,6 +1,6 @@
 import {
-  ODataGetAllRequestConfig as Base,
-  Entity,
+  ODataGetAllRequestConfig as ODataGetAllRequestConfigBase,
+  Entity as EntityBase,
   Constructable
 } from '../../odata-common';
 import { oDataUriV2 } from '../uri-conversion';
@@ -11,7 +11,9 @@ import { oDataUriV2 } from '../uri-conversion';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-class ODataGetAllRequestConfig<EntityT extends Entity> extends Base<EntityT> {
+class ODataGetAllRequestConfig<
+  EntityT extends EntityBase
+> extends ODataGetAllRequestConfigBase<EntityT> {
   /**
    * Creates an instance of ODataGetAllRequestConfig.
    *

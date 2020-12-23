@@ -102,3 +102,5 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
       });
   }
 }
+
+export { CreateRequestBuilder as CreateRequestBuilderBase };

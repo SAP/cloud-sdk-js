@@ -1,11 +1,11 @@
-import { Entity, Constructable } from '../odata-common';
+import { Entity as EntityBase, Constructable } from '../odata-common';
 import { CustomFieldV2 } from './selectable/custom-field';
 
 /**
  * Super class for all representations of OData v2 entity types.
  */
-export class EntityV2 extends Entity {
-  protected static customFieldSelector<EntityT extends Entity>(
+export class EntityV2 extends EntityBase {
+  protected static customFieldSelector<EntityT extends EntityBase>(
     fieldName: string,
     entityConstructor: Constructable<EntityT>
   ): CustomFieldV2<EntityT> {

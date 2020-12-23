@@ -4,7 +4,7 @@ import {
   EntityIdentifiable,
   ODataRequest,
   ODataUpdateRequestConfig,
-  UpdateRequestBuilder,
+  UpdateRequestBuilder as UpdateRequestBuilderBase,
   isNavigationProperty,
   removePropertyOnCondition
 } from '../../odata-common';
@@ -28,7 +28,7 @@ const logger = createLogger({
  * @typeparam EntityT - Type of the entity to be updated
  */
 export class UpdateRequestBuilderV2<EntityT extends EntityV2>
-  extends UpdateRequestBuilder<EntityT>
+  extends UpdateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of UpdateRequestBuilder.

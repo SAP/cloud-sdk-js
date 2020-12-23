@@ -2,7 +2,7 @@ import {
   Constructable,
   EntityIdentifiable,
   FieldType,
-  GetByKeyRequestBuilder
+  GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
 } from '../../odata-common';
 import { EntityV2 } from '../entity';
 import { entityDeserializerV2 } from '../entity-deserializer';
@@ -16,7 +16,7 @@ import { responseDataAccessorV2 } from './response-data-accessor';
  * @typeparam EntityT - Type of the entity to be requested
  */
 export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
-  extends GetByKeyRequestBuilder<EntityT>
+  extends GetByKeyRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
 

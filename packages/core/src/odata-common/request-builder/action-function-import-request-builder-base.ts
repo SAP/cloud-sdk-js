@@ -48,3 +48,5 @@ export abstract class ActionFunctionImportRequestBuilder<
       .then(({ data }) => this.responseTransformer(data));
   }
 }
+
+export { ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase };

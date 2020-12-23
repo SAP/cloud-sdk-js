@@ -124,3 +124,5 @@ export abstract class GetAllRequestBuilder<
       );
   }
 }
+
+export { GetAllRequestBuilder as GetAllRequestBuilderBase };

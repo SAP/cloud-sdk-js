@@ -342,3 +342,5 @@ export function isExpandedProperty<
     !json[link._fieldName].hasOwnProperty('__deferred')
   );
 }
+
+export { Entity as EntityBase };

@@ -79,3 +79,5 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
 
   abstract setVersionIdentifier(eTag: string): this;
 }
+
+export { DeleteRequestBuilder as DeleteRequestBuilderBase };

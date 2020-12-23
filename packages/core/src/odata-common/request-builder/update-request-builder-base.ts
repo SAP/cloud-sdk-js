@@ -315,3 +315,5 @@ export function removePropertyOnCondition(
     return { ...resultBody, [key]: val };
   }, {});
 }
+
+export { UpdateRequestBuilder as UpdateRequestBuilderBase };

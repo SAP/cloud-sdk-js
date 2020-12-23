@@ -1,4 +1,4 @@
-import { EntityV2 } from '../entity';
+import { Entity } from '../entity';
 import { Selectable, Link } from '../../odata-common';
 
 /**
@@ -9,7 +9,7 @@ import { Selectable, Link } from '../../odata-common';
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getSelectV2<EntityT extends EntityV2>(
+export function getSelectV2<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ select: string }> {
   const select = getSelectsAsStrings(selects);
@@ -32,7 +32,7 @@ function filterSelects(selects: string[]): string[] {
   ];
 }
 
-function getSelectsAsStrings<EntityT extends EntityV2>(
+function getSelectsAsStrings<EntityT extends Entity>(
   selectables: Selectable<EntityT>[],
   initialSelect: string[] = [],
   parent = ''

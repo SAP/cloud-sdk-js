@@ -1,9 +1,9 @@
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, EntityBuilderType, Entity, Field, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export declare class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEntityType {
+export declare class MultiSchemaTestEntity extends Entity implements MultiSchemaTestEntityType {
     /**
      * Technical entity name for MultiSchemaTestEntity.
      */
@@ -31,7 +31,7 @@ export declare class MultiSchemaTestEntity extends EntityV2 implements MultiSche
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
      */
-    static customField(fieldName: string): CustomFieldV2<MultiSchemaTestEntity>;
+    static customField(fieldName: string): CustomField<MultiSchemaTestEntity>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

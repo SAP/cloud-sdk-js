@@ -1,5 +1,5 @@
-import { EntityV2 } from '../entity';
-import { deserializeEntityV2 } from '../entity-deserializer';
+import { Entity } from '../entity';
+import { deserializeEntity } from '../entity-deserializer';
 import { Constructable } from '../../odata-common';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 
@@ -19,27 +19,27 @@ export { transformReturnValueForUndefinedV2 as transformReturnValueForUndefined 
 /**
  * @hidden
  */
-export function transformReturnValueForEntityV2<ReturnT extends EntityV2>(
+export function transformReturnValueForEntity<ReturnT extends Entity>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT {
-  return deserializeEntityV2(
+  return deserializeEntity(
     getSingleResult(data),
     entityConstructor
   ).setOrInitializeRemoteState() as ReturnT;
 }
-export { transformReturnValueForEntityV2 as transformReturnValueForEntity };
+export { transformReturnValueForEntity as transformReturnValueForEntity };
 
 /**
  * @hidden
  */
-export function transformReturnValueForEntityListV2<ReturnT extends EntityV2>(
+export function transformReturnValueForEntityListV2<ReturnT extends Entity>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT[] {
   return getCollectionResult(data).map(
     entityJson =>
-      deserializeEntityV2(
+      deserializeEntity(
         entityJson,
         entityConstructor
       ).setOrInitializeRemoteState() as ReturnT

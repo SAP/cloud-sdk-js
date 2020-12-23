@@ -8,8 +8,8 @@ import {
   isNavigationProperty,
   removePropertyOnCondition
 } from '../../odata-common';
-import { EntityV2 } from '../entity';
-import { entitySerializerV2 } from '../entity-serializer';
+import { Entity } from '../entity';
+import { entitySerializer } from '../entity-serializer';
 import {
   Destination,
   DestinationNameAndJwt,
@@ -27,7 +27,7 @@ const logger = createLogger({
  *
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilderV2<EntityT extends EntityV2>
+export class UpdateRequestBuilderV2<EntityT extends Entity>
   extends UpdateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
@@ -44,7 +44,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
       _entityConstructor,
       _entity,
       oDataUriV2,
-      entitySerializerV2,
+      entitySerializer,
       extractODataEtagV2,
       removeNavPropsAndComplexTypes
     );
@@ -75,7 +75,7 @@ export class UpdateRequestBuilderV2<EntityT extends EntityV2>
 /*
  * In case the entity contains a navigation to a different entity a warning is printed.
  */
-function warnIfNavigation<EntityT extends EntityV2>(
+function warnIfNavigation<EntityT extends Entity>(
   request: ODataRequest<ODataUpdateRequestConfig<EntityT>>,
   entity: EntityT,
   entityConstructor: Constructable<EntityT>

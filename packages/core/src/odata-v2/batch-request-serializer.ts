@@ -5,7 +5,7 @@ import {
   serializeRequest
 } from '../odata-common/request-builder/batch/batch-request-serializer';
 import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
-import { EntityV2 } from './entity';
+import { Entity } from './entity';
 import {
   CreateRequestBuilderV2,
   DeleteRequestBuilderV2,
@@ -30,7 +30,7 @@ import {
  * @returns The request body.
  */
 export function toBatchRetrieveBodyV2(
-  request: GetAllRequestBuilderV2<EntityV2> | GetByKeyRequestBuilderV2<EntityV2>
+  request: GetAllRequestBuilderV2<Entity> | GetByKeyRequestBuilderV2<Entity>
 ): string {
   return serializeRequest(request);
 }
@@ -43,9 +43,9 @@ export function toBatchRetrieveBodyV2(
  */
 export function toBatchChangeSetV2<
   T extends
-    | CreateRequestBuilderV2<EntityV2>
-    | UpdateRequestBuilderV2<EntityV2>
-    | DeleteRequestBuilderV2<EntityV2>
+    | CreateRequestBuilderV2<Entity>
+    | UpdateRequestBuilderV2<Entity>
+    | DeleteRequestBuilderV2<Entity>
 >(changeSet: BatchChangeSet<T>): string | undefined {
   return serializeChangeSet(changeSet);
 }

@@ -3,7 +3,7 @@ import {
   DeleteRequestBuilder as DeleteRequestBuilderBase,
   FieldType
 } from '../../odata-common';
-import { EntityV2 } from '../entity';
+import { Entity } from '../entity';
 import { oDataUriV2 } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.
@@ -11,7 +11,7 @@ import { oDataUriV2 } from '../uri-conversion';
  * @typeparam EntityT - Type of the entity to be deleted
  */
 export class DeleteRequestBuilderV2<
-  EntityT extends EntityV2
+  EntityT extends Entity
 > extends DeleteRequestBuilderBase<EntityT> {
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
@@ -21,7 +21,7 @@ export class DeleteRequestBuilderV2<
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    keysOrEntity: Record<string, FieldType> | EntityV2
+    keysOrEntity: Record<string, FieldType> | Entity
   ) {
     super(entityConstructor, oDataUriV2, keysOrEntity);
   }

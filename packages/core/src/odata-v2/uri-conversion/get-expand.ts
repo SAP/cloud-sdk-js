@@ -1,4 +1,4 @@
-import { EntityV2 } from '../entity';
+import { Entity } from '../entity';
 import { Selectable, Link } from '../../odata-common';
 
 /**
@@ -10,14 +10,14 @@ import { Selectable, Link } from '../../odata-common';
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
  */
-export function getExpandV2<EntityT extends EntityV2>(
+export function getExpandV2<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ expand: string }> {
   const expand = getExpandsAsString(selects);
   return expand.length ? { expand: expand.join(',') } : {};
 }
 
-function getExpandsAsString<EntityT extends EntityV2>(
+function getExpandsAsString<EntityT extends Entity>(
   selectables: Selectable<EntityT>[],
   initialExpand: string[] = [],
   parent = ''

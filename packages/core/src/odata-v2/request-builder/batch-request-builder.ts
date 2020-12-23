@@ -12,7 +12,7 @@ import {
   BatchResponse,
   parseBatchResponse
 } from '../../odata-common';
-import { entityDeserializerV2 } from '../entity-deserializer';
+import { entityDeserializer } from '../entity-deserializer';
 import { responseDataAccessorV2 } from './response-data-accessor';
 
 /**
@@ -39,7 +39,7 @@ export class ODataBatchRequestBuilderV2 extends BatchRequestBuilder {
           parsedResponse,
           this.entityToConstructorMap,
           responseDataAccessorV2,
-          entityDeserializerV2
+          entityDeserializer
         )
       )
       .catch(error => {

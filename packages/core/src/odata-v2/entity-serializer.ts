@@ -1,6 +1,6 @@
 import {
   EntitySerializer,
-  entitySerializer
+  entitySerializer as entitySerializerBase
 } from '../odata-common/entity-serializer';
 import { tsToEdmV2 } from './payload-value-converter';
 
@@ -8,13 +8,18 @@ import { tsToEdmV2 } from './payload-value-converter';
  * Entity serializer instance for v2 entities.
  * See [[EntitySerializer]] for the provided methods.
  */
-export const entitySerializerV2: EntitySerializer = entitySerializer(tsToEdmV2);
+export const entitySerializer: EntitySerializer = entitySerializerBase(
+  tsToEdmV2
+);
 
-export const serializeEntityV2 = entitySerializerV2.serializeEntity;
-export const serializeComplexTypeV2 = entitySerializerV2.serializeComplexType;
-export const serializeEntityNonCustomFieldsV2 =
-  entitySerializerV2.serializeEntityNonCustomFields;
+export const serializeEntity = entitySerializer.serializeEntity;
+export const serializeComplexType = entitySerializer.serializeComplexType;
+export const serializeEntityNonCustomFields =
+  entitySerializer.serializeEntityNonCustomFields;
 
-export { serializeEntityV2 as serializeEntity };
-export { serializeComplexTypeV2 as serializeComplexType };
-export { serializeEntityNonCustomFieldsV2 as serializeEntityNonCustomFields };
+export {
+  entitySerializer as entitySerializerV2,
+  serializeEntity as serializeEntityV2,
+  serializeEntity as serializeComplexTypeV2,
+  serializeEntityNonCustomFields as serializeEntityNonCustomFieldsV2
+};

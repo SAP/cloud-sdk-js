@@ -14,7 +14,7 @@ import {
 // $ExpectType StringFilterFunction<Entity>
 substring('str', 1);
 
-// $ExpectType BooleanFilterFunction<EntityV2>
+// $ExpectType BooleanFilterFunction<Entity>
 substringOf('str', 'str');
 
 // $ExpectType NumberFilterFunction<Entity>

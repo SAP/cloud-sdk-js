@@ -4,8 +4,8 @@ import {
   FieldType,
   GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
 } from '../../odata-common';
-import { EntityV2 } from '../entity';
-import { entityDeserializerV2 } from '../entity-deserializer';
+import { Entity } from '../entity';
+import { entityDeserializer } from '../entity-deserializer';
 import { oDataUriV2 } from '../uri-conversion';
 import { responseDataAccessorV2 } from './response-data-accessor';
 /**
@@ -15,7 +15,7 @@ import { responseDataAccessorV2 } from './response-data-accessor';
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
+export class GetByKeyRequestBuilderV2<EntityT extends Entity>
   extends GetByKeyRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
@@ -34,7 +34,7 @@ export class GetByKeyRequestBuilderV2<EntityT extends EntityV2>
       _entityConstructor,
       keys,
       oDataUriV2,
-      entityDeserializerV2,
+      entityDeserializer,
       responseDataAccessorV2
     );
   }

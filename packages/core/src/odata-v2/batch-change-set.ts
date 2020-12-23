@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
-import { EntityV2 } from './entity';
+import { Entity } from './entity';
 import {
   CreateRequestBuilderV2,
   DeleteRequestBuilderV2,
@@ -14,9 +14,9 @@ import {
  */
 export class ODataBatchChangeSetV2<
   RequestT extends
-    | CreateRequestBuilderV2<EntityV2>
-    | UpdateRequestBuilderV2<EntityV2>
-    | DeleteRequestBuilderV2<EntityV2>
+    | CreateRequestBuilderV2<Entity>
+    | UpdateRequestBuilderV2<Entity>
+    | DeleteRequestBuilderV2<Entity>
 > implements BatchChangeSet<RequestT> {
   /**
    * @deprecated Since v1.30.0. Use [[boundary]] instead.

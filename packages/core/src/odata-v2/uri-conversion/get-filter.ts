@@ -1,4 +1,4 @@
-import { EntityV2 } from '../entity';
+import { Entity } from '../entity';
 import { Constructable, Filterable } from '../../odata-common';
 import { oDataUriV2 } from './odata-uri';
 
@@ -11,7 +11,7 @@ import { oDataUriV2 } from './odata-uri';
  * @param entityConstructor - Constructor type of the entity to filter on
  * @returns An object containing the query parameter or an empty object
  */
-export function getQueryParametersForFilter<EntityT extends EntityV2>(
+export function getQueryParametersForFilter<EntityT extends Entity>(
   filter: Filterable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): Partial<{ filter: string }> {

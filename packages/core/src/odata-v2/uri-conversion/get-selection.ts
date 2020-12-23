@@ -1,4 +1,4 @@
-import { EntityV2 } from '../entity';
+import { Entity } from '../entity';
 import { Selectable } from '../../odata-common';
 import { getSelectV2 } from './get-select';
 import { getExpandV2 } from './get-expand';
@@ -13,7 +13,7 @@ import { getExpandV2 } from './get-expand';
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getQueryParametersForSelection<EntityT extends EntityV2>(
+export function getQueryParametersForSelection<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ select: string; expand: string }> {
   return {

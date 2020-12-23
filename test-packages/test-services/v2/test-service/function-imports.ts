@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefinedV2, transformReturnValueForEdmTypeV2, transformReturnValueForEdmTypeListV2, transformReturnValueForEntityV2, transformReturnValueForEntityListV2, transformReturnValueForComplexTypeV2, transformReturnValueForComplexTypeListV2, edmToTsV2, deserializeComplexTypeV2, FunctionImportRequestBuilderV2, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForUndefinedV2, transformReturnValueForEdmTypeV2, transformReturnValueForEdmTypeListV2, transformReturnValueForEntity, transformReturnValueForEntityListV2, transformReturnValueForComplexTypeV2, transformReturnValueForComplexTypeListV2, edmToTsV2, deserializeComplexType, FunctionImportRequestBuilderV2, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 
@@ -84,7 +84,7 @@ export function testFunctionImportEntityReturnType(parameters: TestFunctionImpor
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntityV2(data, TestEntity), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntity(data, TestEntity), params);
 }
 
 /**
@@ -124,7 +124,7 @@ export function testFunctionImportComplexReturnType(parameters: TestFunctionImpo
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', (data) => transformReturnValueForComplexTypeV2(data, (data) => deserializeComplexTypeV2(data, TestComplexType)), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', (data) => transformReturnValueForComplexTypeV2(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 /**
@@ -168,7 +168,7 @@ export function testFunctionImportComplexReturnTypeCollection(parameters: TestFu
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeListV2(data, (data) => deserializeComplexTypeV2(data, TestComplexType)), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeListV2(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 /**
@@ -265,7 +265,7 @@ export function createTestComplexType(parameters: CreateTestComplexTypeParameter
 
   }
 
-  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', (data) => transformReturnValueForComplexTypeV2(data, (data) => deserializeComplexTypeV2(data, TestComplexType)), params);
+  return new FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', (data) => transformReturnValueForComplexTypeV2(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 /**

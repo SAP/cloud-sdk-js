@@ -45,7 +45,7 @@ export function createOriginalTestEntityDataWithLinks() {
   };
 }
 
-export function createTestEntityV2(originalData): TestEntity {
+export function createTestEntity(originalData): TestEntity {
   return TestEntity.builder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)

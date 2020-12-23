@@ -50,7 +50,7 @@ exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnT
  */
 function testFunctionImportEntityReturnType(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', function (data) { return core_1.transformReturnValueForEntityV2(data, TestEntity_1.TestEntity); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', function (data) { return core_1.transformReturnValueForEntity(data, TestEntity_1.TestEntity); }, params);
 }
 exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
 /**
@@ -72,7 +72,7 @@ exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityR
  */
 function testFunctionImportComplexReturnType(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', function (data) { return core_1.transformReturnValueForComplexTypeV2(data, function (data) { return core_1.deserializeComplexTypeV2(data, TestComplexType_1.TestComplexType); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', function (data) { return core_1.transformReturnValueForComplexTypeV2(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
 /**
@@ -96,7 +96,7 @@ exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdm
  */
 function testFunctionImportComplexReturnTypeCollection(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', function (data) { return core_1.transformReturnValueForComplexTypeListV2(data, function (data) { return core_1.deserializeComplexTypeV2(data, TestComplexType_1.TestComplexType); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', function (data) { return core_1.transformReturnValueForComplexTypeListV2(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
 /**
@@ -147,7 +147,7 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
  */
 function createTestComplexType(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', function (data) { return core_1.transformReturnValueForComplexTypeV2(data, function (data) { return core_1.deserializeComplexTypeV2(data, TestComplexType_1.TestComplexType); }); }, params);
+    return new core_1.FunctionImportRequestBuilderV2('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', function (data) { return core_1.transformReturnValueForComplexTypeV2(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType_1.TestComplexType); }); }, params);
 }
 exports.createTestComplexType = createTestComplexType;
 /**

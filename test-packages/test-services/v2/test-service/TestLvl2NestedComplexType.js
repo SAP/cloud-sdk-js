@@ -63,10 +63,10 @@ var TestLvl2NestedComplexType;
             isCollection: false
         }];
     /**
-     * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexType` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return core_1.deserializeComplexTypeV2(json, TestLvl2NestedComplexType);
+        return core_1.deserializeComplexType(json, TestLvl2NestedComplexType);
     }
     TestLvl2NestedComplexType.build = build;
 })(TestLvl2NestedComplexType = exports.TestLvl2NestedComplexType || (exports.TestLvl2NestedComplexType = {}));

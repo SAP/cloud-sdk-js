@@ -19,7 +19,7 @@ const returnTypeComplexType = {
 describe('response-transformer-function', () => {
   it('responseTransformerFunctionName of entity', () => {
     expect(responseTransformerFunctionName(returnTypeEntity, 'v2')).toEqual(
-      'transformReturnValueForEntityV2'
+      'transformReturnValueForEntity'
     );
   });
 

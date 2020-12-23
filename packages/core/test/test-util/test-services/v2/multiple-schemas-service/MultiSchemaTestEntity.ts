@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '../../../../../src';
+import { AllFields, CustomField, EntityBuilderType, Entity, Field, StringField } from '../../../../../src';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEntityType {
+export class MultiSchemaTestEntity extends Entity implements MultiSchemaTestEntityType {
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */
@@ -28,7 +28,7 @@ export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEn
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
   static builder(): EntityBuilderType<MultiSchemaTestEntity, MultiSchemaTestEntityType> {
-    return EntityV2.entityBuilder(MultiSchemaTestEntity);
+    return Entity.entityBuilder(MultiSchemaTestEntity);
   }
 
   /**
@@ -44,8 +44,8 @@ export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEn
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
-  static customField(fieldName: string): CustomFieldV2<MultiSchemaTestEntity> {
-    return EntityV2.customFieldSelector(fieldName, MultiSchemaTestEntity);
+  static customField(fieldName: string): CustomField<MultiSchemaTestEntity> {
+    return Entity.customFieldSelector(fieldName, MultiSchemaTestEntity);
   }
 
   /**

@@ -6,7 +6,7 @@ import {
 } from '../../../test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
-  createTestEntityV2,
+  createTestEntity,
   testEntityResourcePath
 } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
@@ -16,7 +16,7 @@ describe('GetByKeyRequestBuilderV2', () => {
   describe('execute', () => {
     it('returns entity by key', async () => {
       const entityData = createOriginalTestEntityData1();
-      const expected = createTestEntityV2(entityData);
+      const expected = createTestEntity(entityData);
 
       mockGetRequest({
         path: testEntityResourcePath(
@@ -38,7 +38,7 @@ describe('GetByKeyRequestBuilderV2', () => {
       const entityData = createOriginalTestEntityData1();
       const versionIdentifier = 'etagInMetadata';
       entityData['__metadata'] = { etag: versionIdentifier };
-      const expected = createTestEntityV2(entityData);
+      const expected = createTestEntity(entityData);
 
       mockGetRequest({
         path: testEntityResourcePath(
@@ -58,7 +58,7 @@ describe('GetByKeyRequestBuilderV2', () => {
 
     it('etag should be pulled from response header when __metadata has no etag property', async () => {
       const entityData = createOriginalTestEntityData1();
-      const expected = createTestEntityV2(entityData);
+      const expected = createTestEntity(entityData);
       const versionIdentifier = 'etagInHeader';
       expected.setVersionIdentifier(versionIdentifier);
 
@@ -80,7 +80,7 @@ describe('GetByKeyRequestBuilderV2', () => {
 
     it('can handle the C4C response format', async () => {
       const entityData = createOriginalTestEntityData1();
-      const expected = createTestEntityV2(entityData);
+      const expected = createTestEntity(entityData);
 
       mockGetRequest({
         path: testEntityResourcePath(

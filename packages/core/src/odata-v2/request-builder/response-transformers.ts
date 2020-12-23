@@ -72,13 +72,13 @@ export { transformReturnValueForComplexTypeListV2 as transformReturnValueForComp
 /**
  * @hidden
  */
-export function transformReturnValueForEdmTypeV2<ReturnT>(
+export function transformReturnValueForEdmType<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT {
   return builderFn(getSingleResult(data));
 }
-export { transformReturnValueForEdmTypeV2 as transformReturnValueForEdmType };
+export { transformReturnValueForEdmType as transformReturnValueForEdmType };
 
 /**
  * @hidden

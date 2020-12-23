@@ -6,9 +6,9 @@ import {
   UriConverter,
   uriConvertersCommon
 } from '../../odata-common';
-import { EdmTypeV2 } from '../edm-types';
+import { EdmType } from '../edm-types';
 
-type UriConverterMapping = { [key in EdmTypeV2]: (value: any) => string };
+type UriConverterMapping = { [key in EdmType]: (value: any) => string };
 /**
  * @hidden
  */

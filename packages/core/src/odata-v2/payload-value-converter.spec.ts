@@ -7,7 +7,7 @@ import {
   momentToEdmDateTime,
   tsToEdmV2
 } from './payload-value-converter';
-import { EdmTypeV2 } from './edm-types';
+import { EdmType } from './edm-types';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {
@@ -450,19 +450,19 @@ describe('edm to moment and back', () => {
   });
 });
 
-function checkInfinityCasesToEdm(edmType: EdmTypeV2) {
+function checkInfinityCasesToEdm(edmType: EdmType) {
   expect(tsToEdmV2(Number.POSITIVE_INFINITY, edmType)).toBe('INF');
   expect(tsToEdmV2(Number.NEGATIVE_INFINITY, edmType)).toBe('-INF');
   expect(tsToEdmV2(Number.NaN, edmType)).toBe('NaN');
 }
 
-function checkInfinityCasesToTs(edmType: EdmTypeV2) {
+function checkInfinityCasesToTs(edmType: EdmType) {
   expect(edmToTsV2('INF', edmType)).toBe(Number.POSITIVE_INFINITY);
   expect(edmToTsV2('-INF', edmType)).toBe(Number.NEGATIVE_INFINITY);
   expect(edmToTsV2('NaN', edmType)).toBe(Number.NaN);
 }
 
-function checkInfinityCasesRoundTrip(edmType: EdmTypeV2) {
+function checkInfinityCasesRoundTrip(edmType: EdmType) {
   ['INF', '-INF', 'NaN'].forEach(s =>
     expect(tsToEdmV2(edmToTsV2(s, edmType), edmType)).toBe(s)
   );

@@ -11,13 +11,13 @@ import {
 
 /* Backwards compatibility */
 
-// $ExpectType StringFilterFunction<EntityBase>
+// $ExpectType StringFilterFunction<Entity>
 substring('str', 1);
 
 // $ExpectType BooleanFilterFunction<EntityV2>
 substringOf('str', 'str');
 
-// $ExpectType NumberFilterFunction<EntityBase>
+// $ExpectType NumberFilterFunction<Entity>
 length('str');
 
 // $ExpectType Filter<TestEntity, string>

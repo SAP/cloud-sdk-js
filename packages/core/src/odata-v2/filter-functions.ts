@@ -53,10 +53,10 @@ export const substring = filterFunctionsCommon.substring;
 /**
  * OData v2 specific filter functions
  */
-export const filterFunctionsV2 = {
+export const filterFunctions = {
   ...filterFunctionsCommon,
   substringOf,
   replace
 };
 
-export { filterFunctionsV2 as filterFunctions };
+export { filterFunctions as filterFunctionsV2 };

@@ -5,7 +5,7 @@ import {
   Destination,
   GetAllRequestBuilderV2,
   GetAllRequestBuilderV4,
-  oDataUriV2
+  oDataUri
 } from '../../src';
 import {
   ODataCreateRequestConfig,
@@ -75,7 +75,7 @@ export function mockCreateRequest(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    oDataUriV2
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -107,7 +107,7 @@ export function mockDeleteRequest(
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
     entityConstructor,
-    oDataUriV2
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -122,7 +122,7 @@ export function mockUpdateRequest(
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
     entityConstructor,
-    oDataUriV2
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -137,7 +137,7 @@ export function mockGetRequest(
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
     entityConstructor,
-    oDataUriV2
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,

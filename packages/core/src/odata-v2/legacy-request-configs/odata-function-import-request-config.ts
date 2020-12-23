@@ -1,4 +1,4 @@
-import { oDataUriV2 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import {
   RequestMethodType,
   FunctionImportParameters
@@ -28,13 +28,7 @@ class ODataFunctionImportRequestConfig<
     functionImportName: string,
     parameters: FunctionImportParameters<ParametersT>
   ) {
-    super(
-      method,
-      defaultServicePath,
-      functionImportName,
-      parameters,
-      oDataUriV2
-    );
+    super(method, defaultServicePath, functionImportName, parameters, oDataUri);
   }
 }
 

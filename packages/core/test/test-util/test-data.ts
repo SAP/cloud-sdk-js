@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { uriConverterV2 } from '../../src/odata-v2';
+import { uriConverter } from '../../src/odata-v2';
 import { TestEntity } from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
@@ -7,7 +7,7 @@ import {
   TestEntitySingleLink
 } from './test-services/v4/test-service';
 
-const { convertToUriFormat } = uriConverterV2;
+const { convertToUriFormat } = uriConverter;
 
 export function createOriginalTestEntityData1() {
   return {

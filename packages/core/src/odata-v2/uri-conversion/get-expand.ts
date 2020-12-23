@@ -10,7 +10,7 @@ import { Selectable, Link } from '../../odata-common';
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
  */
-export function getExpandV2<EntityT extends Entity>(
+export function getExpand<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ expand: string }> {
   const expand = getExpandsAsString(selects);
@@ -45,4 +45,4 @@ function getPath(parent: string, fieldName: string): string {
   return fieldName;
 }
 
-export { getExpandV2 as getExpand };
+export { getExpand as getExpandV2 };

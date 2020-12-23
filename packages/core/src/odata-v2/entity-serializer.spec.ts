@@ -6,7 +6,7 @@ import {
   TestEntitySingleLink
 } from '../../test/test-util/test-services/v2/test-service';
 import { serializeEntity } from './entity-serializer';
-import { tsToEdmV2 } from './payload-value-converter';
+import { tsToEdm } from './payload-value-converter';
 describe('entity-serializer', () => {
   it('should serialize simple entity', () => {
     const testEntity = TestEntity.builder()
@@ -93,8 +93,8 @@ describe('entity-serializer', () => {
 
     expect(serializeEntity(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
-      Int32Property: tsToEdmV2(testEntity.int32Property, 'Edm.Int32'),
-      TimeProperty: tsToEdmV2(testEntity.timeProperty, 'Edm.Time'),
+      Int32Property: tsToEdm(testEntity.int32Property, 'Edm.Int32'),
+      TimeProperty: tsToEdm(testEntity.timeProperty, 'Edm.Time'),
       to_MultiLink: [
         {
           StringProperty: multiLinkEntity.stringProperty,
@@ -145,7 +145,7 @@ describe('entity-serializer', () => {
 
     expect(serializeEntity(testEntity, TestEntity)).toEqual({
       StringProperty: testEntity.stringProperty,
-      SingleProperty: tsToEdmV2(testEntity.singleProperty, 'Edm.Single'),
+      SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',
       CustomField2: 1234
     });

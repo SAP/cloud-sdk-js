@@ -12,7 +12,7 @@ import { EdmType } from './edm-types';
 /**
  * @hidden
  */
-export function edmToTsV2<T extends EdmType>(
+export function edmToTs<T extends EdmType>(
   value: any,
   edmType: EdmTypeShared<'v2'>
 ): EdmToPrimitiveV2<T> {
@@ -28,7 +28,7 @@ export function edmToTsV2<T extends EdmType>(
 /**
  * @hidden
  */
-export function tsToEdmV2(value: any, edmType: EdmTypeShared<'v2'>): any {
+export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
   if (value === null) {
     return 'null';
   }
@@ -146,4 +146,5 @@ const serializers: EdmTypeMapping = {
 };
 
 export { EdmToPrimitiveV2 as EdmToPrimitive };
-export { edmToTsV2 as edmToTs };
+export { edmToTs as edmToTsV2 };
+export { tsToEdm as tsToEdmV2 };

@@ -2,15 +2,13 @@ import {
   EntitySerializer,
   entitySerializer as entitySerializerBase
 } from '../odata-common/entity-serializer';
-import { tsToEdmV2 } from './payload-value-converter';
+import { tsToEdm } from './payload-value-converter';
 
 /**
  * Entity serializer instance for v2 entities.
  * See [[EntitySerializer]] for the provided methods.
  */
-export const entitySerializer: EntitySerializer = entitySerializerBase(
-  tsToEdmV2
-);
+export const entitySerializer: EntitySerializer = entitySerializerBase(tsToEdm);
 
 export const serializeEntity = entitySerializer.serializeEntity;
 export const serializeComplexType = entitySerializer.serializeComplexType;

@@ -1,5 +1,5 @@
 import { FunctionImportParameter } from '../../odata-common/request';
-import { oDataUriV2 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import { ODataFunctionImportRequestConfigV2 } from './odata-function-import-request-config';
 
 interface TestParameterType {
@@ -33,7 +33,7 @@ describe('ODataFunctionImportRequestConfig', () => {
       'somePath',
       'Config',
       mappedParameters,
-      oDataUriV2
+      oDataUri
     );
   });
 

@@ -15,8 +15,8 @@ import {
   DestinationNameAndJwt,
   DestinationOptions
 } from '../../connectivity/scp-cf';
-import { oDataUriV2 } from '../uri-conversion';
-import { extractODataEtagV2 } from '../extract-odata-etag';
+import { oDataUri } from '../uri-conversion';
+import { extractODataEtag } from '../extract-odata-etag';
 
 const logger = createLogger({
   package: 'core',
@@ -43,9 +43,9 @@ export class UpdateRequestBuilderV2<EntityT extends Entity>
     super(
       _entityConstructor,
       _entity,
-      oDataUriV2,
+      oDataUri,
       entitySerializer,
-      extractODataEtagV2,
+      extractODataEtag,
       removeNavPropsAndComplexTypes
     );
   }

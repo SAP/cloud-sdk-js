@@ -1,7 +1,7 @@
 import {
   substring,
   length,
-  filterFunctionsV2,
+  filterFunctions,
   substringOf
 } from '@sap-cloud-sdk/core';
 import {
@@ -21,7 +21,7 @@ substringOf('str', 'str');
 length('str');
 
 // $ExpectType Filter<TestEntity, string>
-const filter = filterFunctionsV2
+const filter = filterFunctions
   .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
   .equals('test');
 
@@ -31,16 +31,16 @@ TestEntity.requestBuilder().getAll().filter(filter);
 // $ExpectError
 TestEntitySingleLink.requestBuilder().getAll().filter(filter);
 
-filterFunctionsV2.substring(
+filterFunctions.substring(
   TestEntitySingleLink.STRING_PROPERTY,
   TestEntity.STRING_PROPERTY // $ExpectError
 );
 
 // $ExpectType Filter<TestEntity, number>
-filterFunctionsV2.length(TestEntity.STRING_PROPERTY).greaterThan(1);
+filterFunctions.length(TestEntity.STRING_PROPERTY).greaterThan(1);
 
 // $ExpectType Filter<TestEntity, number>
-filterFunctionsV2.round(TestEntity.STRING_PROPERTY).greaterThan(1);
+filterFunctions.round(TestEntity.STRING_PROPERTY).greaterThan(1);
 
 // $ExpectType NumberFilterFunction<TestEntity>
-filterFunctionsV2.day(TestEntity.STRING_PROPERTY);
+filterFunctions.day(TestEntity.STRING_PROPERTY);

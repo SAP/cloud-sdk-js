@@ -9,7 +9,7 @@ import {
 } from '../../odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUriV2 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import { responseDataAccessorV2 } from './response-data-accessor';
 export class GetAllRequestBuilderV2<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
@@ -22,7 +22,7 @@ export class GetAllRequestBuilderV2<EntityT extends Entity>
   constructor(entityConstructor: Constructable<EntityT>) {
     super(
       entityConstructor,
-      new ODataGetAllRequestConfig(entityConstructor, oDataUriV2),
+      new ODataGetAllRequestConfig(entityConstructor, oDataUri),
       entityDeserializer,
       responseDataAccessorV2
     );

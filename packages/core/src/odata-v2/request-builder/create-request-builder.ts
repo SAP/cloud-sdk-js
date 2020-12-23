@@ -6,7 +6,7 @@ import {
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
 import { entitySerializer } from '../entity-serializer';
-import { oDataUriV2 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import { responseDataAccessorV2 } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
@@ -29,7 +29,7 @@ export class CreateRequestBuilderV2<EntityT extends Entity>
     super(
       _entityConstructor,
       _entity,
-      oDataUriV2,
+      oDataUri,
       entitySerializer,
       entityDeserializer,
       responseDataAccessorV2

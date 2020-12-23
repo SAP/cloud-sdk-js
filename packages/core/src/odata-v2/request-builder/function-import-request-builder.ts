@@ -1,4 +1,4 @@
-import { oDataUriV2 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import {
   FunctionImportParameters,
   RequestMethodType,
@@ -38,7 +38,7 @@ export class FunctionImportRequestBuilderV2<
         defaultServicePath,
         functionImportName,
         parameters,
-        oDataUriV2
+        oDataUri
       )
     );
   }

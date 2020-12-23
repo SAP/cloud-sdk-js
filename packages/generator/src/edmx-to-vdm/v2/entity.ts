@@ -2,7 +2,7 @@ import {
   createEntityClassNames,
   joinEntityMetadata,
   navigationPropertyBase,
-  transformEntity
+  transformEntityBase
 } from '../common';
 import {
   VdmComplexType,
@@ -48,7 +48,13 @@ export function generateEntitiesV2(
   );
 
   return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntity(entityMetadata, classNames, complexTypes, [], formatter),
+    ...transformEntityBase(
+      entityMetadata,
+      classNames,
+      complexTypes,
+      [],
+      formatter
+    ),
     navigationProperties: navigationProperties(
       entityMetadata,
       associations,

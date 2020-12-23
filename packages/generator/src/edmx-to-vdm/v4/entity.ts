@@ -2,7 +2,7 @@ import {
   createEntityClassNames,
   joinEntityMetadata,
   navigationPropertyBase,
-  transformEntity
+  transformEntityBase
 } from '../common';
 import {
   VdmComplexType,
@@ -55,7 +55,7 @@ export function generateEntitiesV4(
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
   return entitiesMetadata.map(entityMetadata => ({
-    ...transformEntity(
+    ...transformEntityBase(
       entityMetadata,
       classNames,
       complexTypes,

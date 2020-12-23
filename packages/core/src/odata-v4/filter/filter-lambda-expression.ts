@@ -1,7 +1,7 @@
 import {
   FilterLambdaExpression,
   OneToManyLink,
-  Entity,
+  Entity as EntityBase,
   FieldType,
   and,
   Filterable,
@@ -13,7 +13,10 @@ import {
  * @param filters - A filter condition like MyEntity.someMultiLink.someProperty.eq('value')
  * @returns The lambda filter function to be considered in the query
  */
-export function any<EntityT extends Entity, LinkedEntityT extends Entity>(
+export function any<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
+>(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'any');
@@ -25,7 +28,10 @@ export function any<EntityT extends Entity, LinkedEntityT extends Entity>(
  * @param filters - A filter condition like MyEntity.someMultiLink.someProperty.eq('value')
  * @returns The lambda filter function to be considered in the query
  */
-export function all<EntityT extends Entity, LinkedEntityT extends Entity>(
+export function all<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
+>(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): FilterLambdaExpression<EntityT, FieldType> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'all');

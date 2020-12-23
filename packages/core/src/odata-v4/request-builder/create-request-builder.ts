@@ -1,6 +1,6 @@
 import {
   Constructable,
-  CreateRequestBuilder,
+  CreateRequestBuilder as CreateRequestBuilderBase,
   EntityIdentifiable
 } from '../../odata-common';
 import { EntityV4 } from '../entity';
@@ -14,7 +14,7 @@ import { responseDataAccessorV4 } from './response-data-accessor';
  * @typeparam EntityT - Type of the entity to be created
  */
 export class CreateRequestBuilderV4<EntityT extends EntityV4>
-  extends CreateRequestBuilder<EntityT>
+  extends CreateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of CreateRequestBuilder.

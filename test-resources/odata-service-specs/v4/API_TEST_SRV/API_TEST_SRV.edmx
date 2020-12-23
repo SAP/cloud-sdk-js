@@ -41,14 +41,14 @@
         <NavigationProperty Name="to_SingleLink" Type="API_TEST_SRV.A_TestEntitySingleLinkType"/>
       </EntityType>
 
-      <EntityType Name="A_TestEntityType">
+      <EntityType Name="A_TestEntityBaseType">
         <Key>
           <PropertyRef Name="KeyProperty"/>
         </Key>
         <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
       </EntityType>
 
-      <EntityType Name="A_TestEntityMultiLinkType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="A_TestEntityMultiLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
         <Property Name="GuidProperty" Type="Edm.Guid"/>
@@ -58,7 +58,7 @@
         <NavigationProperty Name="to_SingleLink" Type="API_TEST_SRV.A_TestEntityLvl2SingleLinkType"/>
       </EntityType>
 
-      <EntityType Name="A_TestEntityLvl2MultiLinkType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="A_TestEntityLvl2MultiLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
         <Property Name="GuidProperty" Type="Edm.Guid"/>
@@ -66,15 +66,15 @@
         <NavigationProperty Name="to_MultiLink2" Type="Collection(API_TEST_SRV.A_TestEntityLvl3MultiLinkType)"/>
       </EntityType>
 
-    <EntityType Name="A_TestEntityLvl3MultiLinkType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+    <EntityType Name="A_TestEntityLvl3MultiLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
       <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
       <Property Name="GuidProperty" Type="Edm.Guid"/>
     </EntityType>
 
-      <EntityType Name="A_TestEntityOtherMultiLinkType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="A_TestEntityOtherMultiLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
       </EntityType>
 
-      <EntityType Name="A_TestEntitySingleLinkType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="A_TestEntitySingleLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
         <Property Name="GuidProperty" Type="Edm.Guid"/>
@@ -84,7 +84,7 @@
         <NavigationProperty Name="to_SingleLink" Type="API_TEST_SRV.A_TestEntityLvl2SingleLinkType"/>
       </EntityType>
 
-      <EntityType Name="A_TestEntityLvl2SingleLinkType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="A_TestEntityLvl2SingleLinkType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
         <Property Name="GuidProperty" Type="Edm.Guid"/>
@@ -92,24 +92,24 @@
       </EntityType>
 
       <!-- circular_links -->
-      <EntityType Name="A_TestEntityCircularLinkParentType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="A_TestEntityCircularLinkParentType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
         <NavigationProperty Name="to_FirstChild" Type="API_TEST_SRV.A_TestEntityCircularLinkChildType"/>
         <NavigationProperty Name="to_Children" Type="Collection(API_TEST_SRV.A_TestEntityCircularLinkChildType)"/>
       </EntityType>
 
       <!-- circular_links -->
-      <EntityType Name="A_TestEntityCircularLinkChildType" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="A_TestEntityCircularLinkChildType" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
         <NavigationProperty Name="to_Parent" Type="API_TEST_SRV.A_TestEntityCircularLinkParentType"/>
       </EntityType>
 
       <!-- collection_suffix -->
-      <EntityType Name="Unrelated" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="Unrelated" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
       </EntityType>
 
       <!-- unused
         Should be ignored when parsing the service, because it is not used in any entity set.
       -->
-      <EntityType Name="Unused" BaseType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+      <EntityType Name="Unused" BaseType="API_TEST_SRV.A_TestEntityBaseType" sap:content-version="1">
       </EntityType>
 
       <ComplexType Name="A_TestComplexBaseType">

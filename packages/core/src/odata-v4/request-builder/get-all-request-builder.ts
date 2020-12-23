@@ -8,14 +8,14 @@ import {
   and,
   ODataGetAllRequestConfig,
   Expandable,
-  GetAllRequestBuilder,
+  GetAllRequestBuilder as GetAllRequestBuilderBase,
   toFilterableList,
   OneToManyLink
 } from '../../odata-common';
 import { oDataUriV4 } from '../uri-conversion';
 import { responseDataAccessorV4 } from './response-data-accessor';
 export class GetAllRequestBuilderV4<EntityT extends EntityV4>
-  extends GetAllRequestBuilder<EntityT>
+  extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
 

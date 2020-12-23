@@ -2,7 +2,7 @@ import {
   ActionImportParameters,
   ODataActionImportRequestConfig
 } from '../request';
-import { ActionFunctionImportRequestBuilder } from '../../odata-common';
+import { ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase } from '../../odata-common';
 
 /**
  * Create an OData request to execute an action import.
@@ -12,7 +12,7 @@ import { ActionFunctionImportRequestBuilder } from '../../odata-common';
 export class ActionImportRequestBuilder<
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilder<ParametersT, ReturnT> {
+> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
   /**
    * Creates an instance of ActionImportRequestBuilder.
    * @param defaultServicePath - Default path for the service the action belongs to

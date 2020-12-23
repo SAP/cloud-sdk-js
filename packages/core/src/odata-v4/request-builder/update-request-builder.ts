@@ -1,5 +1,8 @@
 import { identity } from '@sap-cloud-sdk/util';
-import { Constructable, UpdateRequestBuilder } from '../../odata-common';
+import {
+  Constructable,
+  UpdateRequestBuilder as UpdateRequestBuilderBase
+} from '../../odata-common';
 import { EntityV4 } from '../entity';
 import { entitySerializerV4 } from '../entity-serializer';
 import {
@@ -17,7 +20,7 @@ import { extractODataEtagV4 } from '../extract-odata-etag';
  */
 export class UpdateRequestBuilderV4<
   EntityT extends EntityV4
-> extends UpdateRequestBuilder<EntityT> {
+> extends UpdateRequestBuilderBase<EntityT> {
   /**
    * Creates an instance of UpdateRequestBuilder.
    *

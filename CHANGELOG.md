@@ -14,15 +14,38 @@
 
 ## Compatibility Notes
 
-- The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` accept now a `string` or `XsuaaServiceCredentials` as first argument.
-This argument represents the `URL` used to fetch the access token from and represent two cases.
-A `string` values denotes the URL of the token service and it is not changed.
-A  `XsuaaServiceCredentials` denotes that the XSUAA is used to receive the token and a suffix `oauth/token` is appended to the URL property within `XsuaaServiceCredentials`.
-In the past the suffix was also appended for `string` inputs.
+-
 
 ## New Functionality
 
-- Introduce `ErrorWithCause` for better analysis of errors, their causes and their root causes. All errors that have been caused by other errors throught the SDK are based on this class.
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.34.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.34.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` now accept a `string` or `XsuaaServiceCredentials` as first argument.
+In case it is a `string` it is treated as the URL to fetch the access token from.
+In case it is an object of type `XsuaaServiceCredentials`, the the URL is built by appending `oauth/token` to the `.url` of the given object.
+In the past this suffix was also appended to inputs of type `string`.
+
+## New Functionality
+
+- Add experimental support for client generation of OpenAPI services. All functionality related to the OpenAPI generator is subject to change.
+- Introduce `ErrorWithCause` for better analysis of errors, their causes and their root causes. All errors that have been caused by other errors through the SDK are based on this class.
 
 ## Improvements
 
@@ -32,7 +55,6 @@ In the past the suffix was also appended for `string` inputs.
 
 - Stop appending `oauth/token` if the service token URL is given to `clientCredentialsGrant()`.
 See related compatibility note above.
-
 
 # 1.33.0
 

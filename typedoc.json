@@ -1,6 +1,6 @@
 {
   "mode": "modules",
-  "out": "docs/api/1.33.0",
+  "out": "docs/api/1.34.0",
   "exclude": [
     "**/index.ts",
     "scripts/*.ts",
@@ -10,7 +10,8 @@
     "**/node_modules/**/*",
     "**/dist/**/*",
     "**/test/**/*",
-    "test-packages/**/*"
+    "test-packages/**/*",
+    "knowledge-base/**/*"
   ],
   "name": "SAP Cloud SDK for JavaScript / TypeScript",
   "readme": "DOCUMENTATION.md",

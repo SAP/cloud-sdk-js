@@ -20,7 +20,7 @@ const typeMapping = {
   short: 'number',
   char: 'string',
   double: 'number',
-  object: 'object',
+  object: 'Record<string, any>',
   integer: 'number',
   Map: 'any',
   map: 'any',

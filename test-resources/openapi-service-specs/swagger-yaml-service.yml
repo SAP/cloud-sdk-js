@@ -30,6 +30,18 @@ paths:
             minItems: 0
             items:
               $ref: '#/definitions/TestEntity'
+    patch:
+      summary: Test PATCH
+      operationId: patchEntity
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/TestEntity'
+      responses:
+        '200':
+          description: Success
+          type: string
 definitions:
   TestEntity:
     type: object

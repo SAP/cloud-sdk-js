@@ -89,7 +89,7 @@
           {
             "name": "enumInt32Parameter",
             "in": "query",
-            "description": "A parameter of type string with enum",
+            "description": "A parameter of type enum with int 32",
             "required": false,
             "schema": {
               "type": "integer",
@@ -173,6 +173,72 @@
           },
           "409": {
             "description": "entity already exists"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "default"
+        ],
+        "operationId": "updateEntity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "entity updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "default"
+        ],
+        "operationId": "deleteEntity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "entity deleted"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "default"
+        ],
+        "operationId": "updateEntityWithPut",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TestEntity"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "entity updated"
           }
         }
       }

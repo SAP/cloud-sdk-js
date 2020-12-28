@@ -138,7 +138,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   ): string[] {
     return entity
       ? diff
-        ? Object.keys(entity.getUpdatedProperties())
+        ? entity.getUpdatedPropertyNames()
         : Object.keys(entity)
       : [];
   }

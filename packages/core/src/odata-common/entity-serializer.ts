@@ -78,11 +78,11 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
       return tsToEdm(fieldValue, field.edmType);
     }
     if (field instanceof OneToOneLink) {
-      return serializeEntityNonCustomFields(fieldValue, field._linkedEntity);
+      return serializeEntity(fieldValue, field._linkedEntity);
     }
     if (field instanceof Link) {
       return fieldValue.map(linkedEntity =>
-        serializeEntityNonCustomFields(linkedEntity, field._linkedEntity)
+        serializeEntity(linkedEntity, field._linkedEntity)
       );
     }
     if (field instanceof ComplexTypeField) {

@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- Fix serialization of linked entities with custom fields.
 
 
 # 1.34.0
@@ -46,6 +46,7 @@ In the past this suffix was also appended to inputs of type `string`.
 
 - Add experimental support for client generation of OpenAPI services. All functionality related to the OpenAPI generator is subject to change.
 - Introduce `ErrorWithCause` for better analysis of errors, their causes and their root causes. All errors that have been caused by other errors through the SDK are based on this class.
+- Support `Destination`s with authentication type [`OAuth2UserTokenExchange`](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html).
 
 ## Improvements
 
@@ -75,7 +76,6 @@ Blog: TBD<br>
 
 - [Generator] Support parsing of multiple schemas in the edmx service specification.
 - [Util] Add string formatting functions.
-- [Core] Support `Destination` with authentication type [`OAuth2UserTokenExchange`](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html).
 
 ## Improvements
 

@@ -47,6 +47,8 @@ describe('CreateRequestBuilderV4', () => {
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
 
+  // TODO: This test is quite useless and wrong. It does not fail even if we remove the multilink.
+  // It would be more relevant as a test for the entity deserializer
   it('create an entity with multi link property (deep create)', async () => {
     const keyProp = uuid();
     const stringProp = 'testStr';

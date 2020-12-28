@@ -29,7 +29,8 @@ export interface EntitySerializer<
 > {
   serializeEntity: (
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>
+    entityConstructor: Constructable<EntityT>,
+    diff?: boolean
   ) => Record<string, any>;
   serializeComplexType: (
     fieldValue: any,
@@ -58,19 +59,21 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    *
    * @param entity - An instance of an entity.
    * @param entityConstructor - The constructor function of that entity.
+   * @param diff - Serialize changed properties only.
    * @returns JSON.
    */
   function serializeEntity<EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>
+    entityConstructor: Constructable<EntityT>,
+    diff = false
   ): Record<string, any> {
     return {
-      ...serializeEntityNonCustomFields(entity, entityConstructor),
-      ...entity.getCustomFields()
+      ...serializeEntityNonCustomFields(entity, entityConstructor, diff),
+      ...(diff ? entity.getUpdatedCustomFields() : entity.getCustomFields())
     };
   }
 
-  function serializeField(field: any, fieldValue: any): any {
+  function serializeField(field: any, fieldValue: any, diff = false): any {
     if (fieldValue === null || fieldValue === undefined) {
       return null;
     }
@@ -78,11 +81,11 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
       return tsToEdm(fieldValue, field.edmType);
     }
     if (field instanceof OneToOneLink) {
-      return serializeEntity(fieldValue, field._linkedEntity);
+      return serializeEntity(fieldValue, field._linkedEntity, diff);
     }
     if (field instanceof Link) {
       return fieldValue.map(linkedEntity =>
-        serializeEntity(linkedEntity, field._linkedEntity)
+        serializeEntity(linkedEntity, field._linkedEntity, diff)
       );
     }
     if (field instanceof ComplexTypeField) {
@@ -101,20 +104,22 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    *
    * @param entity - An instance of an entity.
    * @param entityConstructor - The constructor function of that entity.
-   * @returns JSON.
+   * @param diff - Serialize changed properties only.
+   * @returns A JSON Representation of the non custom fields
    */
   function serializeEntityNonCustomFields<EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>
+    entityConstructor: Constructable<EntityT>,
+    diff = false
   ): Record<string, any> {
     if (!entity) {
       return {};
     }
-    return Object.keys(entity).reduce((serialized, key) => {
+    return getFieldNames(entity, diff).reduce((serialized, key) => {
       const field = entityConstructor[toStaticPropertyFormat(key)];
       const fieldValue = entity[key];
 
-      const serializedValue = serializeField(field, fieldValue);
+      const serializedValue = serializeField(field, fieldValue, diff);
 
       if (typeof serializedValue === 'undefined') {
         logger.warn(
@@ -125,6 +130,17 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
 
       return { ...serialized, [field._fieldName]: serializedValue };
     }, {});
+  }
+
+  function getFieldNames<EntityT extends EntityBase>(
+    entity: EntityT,
+    diff = false
+  ): string[] {
+    return entity
+      ? diff
+        ? Object.keys(entity.getUpdatedProperties())
+        : Object.keys(entity)
+      : [];
   }
 
   // TODO: get rid of this function in v2.0

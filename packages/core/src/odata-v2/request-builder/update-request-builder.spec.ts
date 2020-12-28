@@ -291,12 +291,11 @@ describe('UpdateRequestBuilderV2', () => {
     expect(actual['remoteState']).toEqual(entity);
   });
 
-  it('warns if navigaton properties are sent', async () => {
+  it.only('warns if navigaton properties are sent', async () => {
     const entity = createTestEntity();
     entity.toMultiLink = [
       TestEntityMultiLink.builder().keyProperty('someKey').build()
     ];
-    const requestBody = { Int32Property: entity.int32Property };
     const logger = createLogger('update-request-builder-v2');
     const warnSpy = jest.spyOn(logger, 'warn');
 

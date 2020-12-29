@@ -59,7 +59,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    *
    * @param entity - An instance of an entity.
    * @param entityConstructor - The constructor function of that entity.
-   * @param diff - Serialize changed properties only.
+   * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns JSON.
    */
   function serializeEntity<EntityT extends EntityBase>(
@@ -73,7 +73,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     };
   }
 
-  function serializeField(field: any, fieldValue: any, diff = false): any {
+  function serializeField(field: any, fieldValue: any): any {
     if (fieldValue === null || fieldValue === undefined) {
       return null;
     }
@@ -81,11 +81,11 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
       return tsToEdm(fieldValue, field.edmType);
     }
     if (field instanceof OneToOneLink) {
-      return serializeEntity(fieldValue, field._linkedEntity, diff);
+      return serializeEntity(fieldValue, field._linkedEntity);
     }
     if (field instanceof Link) {
       return fieldValue.map(linkedEntity =>
-        serializeEntity(linkedEntity, field._linkedEntity, diff)
+        serializeEntity(linkedEntity, field._linkedEntity)
       );
     }
     if (field instanceof ComplexTypeField) {
@@ -104,7 +104,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    *
    * @param entity - An instance of an entity.
    * @param entityConstructor - The constructor function of that entity.
-   * @param diff - Serialize changed properties only.
+   * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns A JSON Representation of the non custom fields
    */
   function serializeEntityNonCustomFields<EntityT extends EntityBase>(
@@ -112,14 +112,11 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     entityConstructor: Constructable<EntityT>,
     diff = false
   ): Record<string, any> {
-    if (!entity) {
-      return {};
-    }
     return getFieldNames(entity, diff).reduce((serialized, key) => {
       const field = entityConstructor[toStaticPropertyFormat(key)];
       const fieldValue = entity[key];
 
-      const serializedValue = serializeField(field, fieldValue, diff);
+      const serializedValue = serializeField(field, fieldValue);
 
       if (typeof serializedValue === 'undefined') {
         logger.warn(

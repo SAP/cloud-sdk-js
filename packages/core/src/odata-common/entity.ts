@@ -308,7 +308,7 @@ export abstract class Entity {
    * @param visitedEntities List of entities to check in case of circular dependencies.
    * @returns Entity as an object with all defined entity fields
    */
-  protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
+  protected asObject(visitedEntities: Entity[] = []): Record<string, any> {
     visitedEntities.push(this);
     return Object.keys(this)
       .filter(

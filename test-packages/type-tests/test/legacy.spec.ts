@@ -1,6 +1,6 @@
 import { TestEntity } from '@sap-cloud-sdk/test-services/test-service-legacy';
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 TestEntity.requestBuilder()
   .getAll()
   .select(

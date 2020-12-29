@@ -5,13 +5,13 @@ import {
   serializeRequest
 } from '../odata-common/request-builder/batch/batch-request-serializer';
 import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
-import { EntityV2 } from './entity';
+import { Entity } from './entity';
 import {
-  CreateRequestBuilderV2,
-  DeleteRequestBuilderV2,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  UpdateRequestBuilderV2
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  UpdateRequestBuilder
 } from './request-builder';
 
 /**
@@ -29,8 +29,8 @@ import {
  * @param request - The request builder of the retrieve request.
  * @returns The request body.
  */
-export function toBatchRetrieveBodyV2(
-  request: GetAllRequestBuilderV2<EntityV2> | GetByKeyRequestBuilderV2<EntityV2>
+export function toBatchRetrieveBody(
+  request: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>
 ): string {
   return serializeRequest(request);
 }
@@ -41,14 +41,14 @@ export function toBatchRetrieveBodyV2(
  * @param changeSet - Change set containing a collection of write operations.
  * @returns The serialized string representation of a change set.
  */
-export function toBatchChangeSetV2<
+export function toBatchChangeSet<
   T extends
-    | CreateRequestBuilderV2<EntityV2>
-    | UpdateRequestBuilderV2<EntityV2>
-    | DeleteRequestBuilderV2<EntityV2>
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
 >(changeSet: BatchChangeSet<T>): string | undefined {
   return serializeChangeSet(changeSet);
 }
 
-export { toBatchChangeSetV2 as toBatchChangeSet };
-export { toBatchRetrieveBodyV2 as toBatchRetrieveBody };
+export { toBatchChangeSet as toBatchChangeSetV2 };
+export { toBatchRetrieveBody as toBatchRetrieveBodyV2 };

@@ -7,11 +7,11 @@ import {
   and,
   ODataGetAllRequestConfig
 } from '../../odata-common';
-import { EntityV2 } from '../entity';
-import { entityDeserializerV2 } from '../entity-deserializer';
-import { oDataUriV2 } from '../uri-conversion';
-import { responseDataAccessorV2 } from './response-data-accessor';
-export class GetAllRequestBuilderV2<EntityT extends EntityV2>
+import { Entity } from '../entity';
+import { entityDeserializer } from '../entity-deserializer';
+import { oDataUri } from '../uri-conversion';
+import { responseDataAccessor } from './response-data-accessor';
+export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
@@ -22,9 +22,9 @@ export class GetAllRequestBuilderV2<EntityT extends EntityV2>
   constructor(entityConstructor: Constructable<EntityT>) {
     super(
       entityConstructor,
-      new ODataGetAllRequestConfig(entityConstructor, oDataUriV2),
-      entityDeserializerV2,
-      responseDataAccessorV2
+      new ODataGetAllRequestConfig(entityConstructor, oDataUri),
+      entityDeserializer,
+      responseDataAccessor
     );
   }
 
@@ -45,4 +45,4 @@ export class GetAllRequestBuilderV2<EntityT extends EntityV2>
   }
 }
 
-export { GetAllRequestBuilderV2 as GetAllRequestBuilder };
+export { GetAllRequestBuilder as GetAllRequestBuilderV2 };

@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { testEntityResourcePath } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
-import { oDataUriV2 } from '../../odata-v2/uri-conversion';
+import { oDataUri as oDataUriV2 } from '../../odata-v2/uri-conversion';
 import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
 
 describe('ODataGetByKeyRequestConfig', () => {

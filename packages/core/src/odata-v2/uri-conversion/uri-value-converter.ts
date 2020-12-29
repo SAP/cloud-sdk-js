@@ -1,25 +1,25 @@
 /* eslint-disable valid-jsdoc */
 
-import { edmToTsV2, tsToEdmV2 } from '../payload-value-converter';
+import { edmToTs, tsToEdm } from '../payload-value-converter';
 import {
   EdmTypeShared,
   UriConverter,
   uriConvertersCommon
 } from '../../odata-common';
-import { EdmTypeV2 } from '../edm-types';
+import { EdmType } from '../edm-types';
 
-type UriConverterMapping = { [key in EdmTypeV2]: (value: any) => string };
+type UriConverterMapping = { [key in EdmType]: (value: any) => string };
 /**
  * @hidden
  */
-export const uriConvertersV2: UriConverterMapping = {
+export const uriConverters: UriConverterMapping = {
   ...uriConvertersCommon,
   'Edm.DateTime': value =>
-    `datetime'${edmToTsV2(value, 'Edm.DateTime')
+    `datetime'${edmToTs(value, 'Edm.DateTime')
       .toISOString()
       .replace(/Z$/, '')}'`,
   'Edm.DateTimeOffset': value =>
-    `datetimeoffset'${edmToTsV2(value, 'Edm.DateTimeOffset').toISOString()}'`,
+    `datetimeoffset'${edmToTs(value, 'Edm.DateTimeOffset').toISOString()}'`,
   'Edm.Decimal': value => `${value}M`,
   'Edm.Time': value => `time'${value}'`,
   'Edm.Guid': value => `guid'${value}'`
@@ -27,13 +27,15 @@ export const uriConvertersV2: UriConverterMapping = {
 /**
  * @hidden
  */
-export const uriConverterV2: UriConverter = {
+export const uriConverter: UriConverter = {
   convertToUriFormat(value: any, edmType: EdmTypeShared<'v2'>): string {
-    const converted = tsToEdmV2(value, edmType);
-    const uriConverterFunc = uriConvertersV2[edmType];
+    const converted = tsToEdm(value, edmType);
+    const uriConverterFunc = uriConverters[edmType];
     if (uriConverterFunc) {
       return uriConverterFunc(converted);
     }
     return converted;
   }
 };
+
+export { uriConverter as uriConverterV2, uriConverters as uriConvertersV2 };

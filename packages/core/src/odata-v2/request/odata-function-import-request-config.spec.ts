@@ -1,6 +1,6 @@
 import { FunctionImportParameter } from '../../odata-common/request';
-import { oDataUriV2 } from '../uri-conversion';
-import { ODataFunctionImportRequestConfigV2 } from './odata-function-import-request-config';
+import { oDataUri } from '../uri-conversion';
+import { ODataFunctionImportRequestConfig } from './odata-function-import-request-config';
 
 interface TestParameterType {
   test1: string;
@@ -9,7 +9,7 @@ interface TestParameterType {
 }
 
 describe('ODataFunctionImportRequestConfig', () => {
-  let config: ODataFunctionImportRequestConfigV2<TestParameterType>;
+  let config: ODataFunctionImportRequestConfig<TestParameterType>;
 
   const parameters = {
     test1: 'test',
@@ -28,12 +28,12 @@ describe('ODataFunctionImportRequestConfig', () => {
   };
 
   beforeEach(() => {
-    config = new ODataFunctionImportRequestConfigV2(
+    config = new ODataFunctionImportRequestConfig(
       'get',
       'somePath',
       'Config',
       mappedParameters,
-      oDataUriV2
+      oDataUri
     );
   });
 

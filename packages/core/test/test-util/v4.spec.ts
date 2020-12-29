@@ -6,7 +6,7 @@ import {
   TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink
 } from './test-services/v4/test-service';
-// import { TestEntity as TestEntityV2 } from './test-services/v2/test-service';
+// import { TestEntity as TestEntity } from './test-services/v2/test-service';
 
 // TODO: This file is for intermediate testing purposes only. It does not contain any actual tests and should be removed once our v4 support is not experimental anymore.
 describe('v4', () => {
@@ -139,6 +139,6 @@ describe('v4', () => {
   });
 
   it('v2', () => {
-    // TestEntity.requestBuilder().getAll().select(TestEntityV2.FLOAT_PROPERTY);
+    // TestEntity.requestBuilder().getAll().select(TestEntity.FLOAT_PROPERTY);
   });
 });

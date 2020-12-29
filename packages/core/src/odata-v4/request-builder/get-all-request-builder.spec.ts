@@ -15,17 +15,17 @@ import {
   createTestEntity
 } from '../../../test/test-util/test-data';
 import { any } from '..';
-import { GetAllRequestBuilderV4 } from './get-all-request-builder';
+import { GetAllRequestBuilder } from './get-all-request-builder';
 
-describe('GetAllRequestBuilderV4', () => {
-  let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
+describe('GetAllRequestBuilder', () => {
+  let requestBuilder: GetAllRequestBuilder<TestEntity>;
 
   afterEach(() => {
     unmockDestinationsEnv();
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilderV4(TestEntity);
+    requestBuilder = new GetAllRequestBuilder(TestEntity);
   });
 
   describe('url', () => {
@@ -64,7 +64,7 @@ describe('GetAllRequestBuilderV4', () => {
         TestEntity
       );
 
-      const actual = await new GetAllRequestBuilderV4(TestEntity).execute(
+      const actual = await new GetAllRequestBuilder(TestEntity).execute(
         defaultDestination
       );
       expect(actual).toEqual([

@@ -1,8 +1,8 @@
-import { EdmTypeCommon, ExclusiveEdmType } from '../odata-common';
+import { EdmTypeCommon, ExclusiveEdmTypeV4 } from '../odata-common';
 
 /**
  * Allowed Edm types for OData v4.
  */
-export type EdmType = EdmTypeCommon | ExclusiveEdmType;
+export type EdmType = EdmTypeCommon | ExclusiveEdmTypeV4;
 
 export { EdmType as EdmTypeV4 };

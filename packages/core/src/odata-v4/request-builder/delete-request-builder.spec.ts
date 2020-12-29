@@ -7,11 +7,11 @@ import {
 import { testEntityResourcePath } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
 import { uriConverter } from '../uri-conversion';
-import { DeleteRequestBuilderV4 } from './delete-request-builder';
+import { DeleteRequestBuilder } from './delete-request-builder';
 
 const { convertToUriFormat } = uriConverter;
 
-describe('DeleteRequestBuilderV4', () => {
+describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
 
@@ -28,7 +28,7 @@ describe('DeleteRequestBuilderV4', () => {
       )
     });
 
-    const deleteRequest = new DeleteRequestBuilderV4(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     }).execute(defaultDestination);
@@ -55,10 +55,9 @@ describe('DeleteRequestBuilderV4', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilderV4(
-      TestEntity,
-      entity
-    ).execute(defaultDestination);
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });

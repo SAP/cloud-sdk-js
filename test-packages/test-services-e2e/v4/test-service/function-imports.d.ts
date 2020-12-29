@@ -1,4 +1,4 @@
-import { FunctionImportRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 /**
  * Type of the parameters to be passed to [[getByKey]].
@@ -15,7 +15,7 @@ export interface GetByKeyParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function getByKey(parameters: GetByKeyParameters): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity>;
+export declare function getByKey(parameters: GetByKeyParameters): FunctionImportRequestBuilder<GetByKeyParameters, TestEntity>;
 /**
  * Type of the parameters to be passed to [[returnInt]].
  */
@@ -31,7 +31,7 @@ export interface ReturnIntParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function returnInt(parameters: ReturnIntParameters): FunctionImportRequestBuilderV4<ReturnIntParameters, number>;
+export declare function returnInt(parameters: ReturnIntParameters): FunctionImportRequestBuilder<ReturnIntParameters, number>;
 /**
  * Type of the parameters to be passed to [[returnSapCloudSdk]].
  */
@@ -43,7 +43,7 @@ export interface ReturnSapCloudSdkParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string>;
+export declare function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): FunctionImportRequestBuilder<ReturnSapCloudSdkParameters, string>;
 /**
  * Type of the parameters to be passed to [[concatStrings]].
  */
@@ -63,7 +63,7 @@ export interface ConcatStringsParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function concatStrings(parameters: ConcatStringsParameters): FunctionImportRequestBuilderV4<ConcatStringsParameters, string>;
+export declare function concatStrings(parameters: ConcatStringsParameters): FunctionImportRequestBuilder<ConcatStringsParameters, string>;
 export declare const functionImports: {
     getByKey: typeof getByKey;
     returnInt: typeof returnInt;

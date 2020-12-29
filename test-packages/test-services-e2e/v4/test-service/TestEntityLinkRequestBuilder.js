@@ -36,7 +36,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
      */
     TestEntityLinkRequestBuilder.prototype.getByKey = function (keyTestEntityLink, keyToTestEntity) {
-        return new core_1.GetByKeyRequestBuilderV4(TestEntityLink_1.TestEntityLink, {
+        return new core_1.GetByKeyRequestBuilder(TestEntityLink_1.TestEntityLink, {
             KeyTestEntityLink: keyTestEntityLink,
             KeyToTestEntity: keyToTestEntity
         });
@@ -46,7 +46,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve all `TestEntityLink` entities.
      */
     TestEntityLinkRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilderV4(TestEntityLink_1.TestEntityLink);
+        return new core_1.GetAllRequestBuilder(TestEntityLink_1.TestEntityLink);
     };
     /**
      * Returns a request builder for creating a `TestEntityLink` entity.
@@ -54,7 +54,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntityLink`.
      */
     TestEntityLinkRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilderV4(TestEntityLink_1.TestEntityLink, entity);
+        return new core_1.CreateRequestBuilder(TestEntityLink_1.TestEntityLink, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityLink`.
@@ -62,10 +62,10 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntityLink`.
      */
     TestEntityLinkRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilderV4(TestEntityLink_1.TestEntityLink, entity);
+        return new core_1.UpdateRequestBuilder(TestEntityLink_1.TestEntityLink, entity);
     };
     TestEntityLinkRequestBuilder.prototype.delete = function (keyTestEntityLinkOrEntity, keyToTestEntity) {
-        return new core_1.DeleteRequestBuilderV4(TestEntityLink_1.TestEntityLink, keyTestEntityLinkOrEntity instanceof TestEntityLink_1.TestEntityLink ? keyTestEntityLinkOrEntity : {
+        return new core_1.DeleteRequestBuilder(TestEntityLink_1.TestEntityLink, keyTestEntityLinkOrEntity instanceof TestEntityLink_1.TestEntityLink ? keyTestEntityLinkOrEntity : {
             KeyTestEntityLink: keyTestEntityLinkOrEntity,
             KeyToTestEntity: keyToTestEntity
         });

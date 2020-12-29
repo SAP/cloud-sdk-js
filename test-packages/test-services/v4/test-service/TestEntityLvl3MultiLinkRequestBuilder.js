@@ -35,14 +35,14 @@ var TestEntityLvl3MultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntityLvl3MultiLink` entity based on its keys.
      */
     TestEntityLvl3MultiLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new core_1.GetByKeyRequestBuilderV4(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilder(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityLvl3MultiLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityLvl3MultiLink` entities.
      */
     TestEntityLvl3MultiLinkRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilderV4(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink);
+        return new core_1.GetAllRequestBuilder(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink);
     };
     /**
      * Returns a request builder for creating a `TestEntityLvl3MultiLink` entity.
@@ -50,7 +50,7 @@ var TestEntityLvl3MultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntityLvl3MultiLink`.
      */
     TestEntityLvl3MultiLinkRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilderV4(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, entity);
+        return new core_1.CreateRequestBuilder(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityLvl3MultiLink`.
@@ -58,10 +58,10 @@ var TestEntityLvl3MultiLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntityLvl3MultiLink`.
      */
     TestEntityLvl3MultiLinkRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilderV4(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, entity);
+        return new core_1.UpdateRequestBuilder(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, entity);
     };
     TestEntityLvl3MultiLinkRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new core_1.DeleteRequestBuilderV4(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, keyPropertyOrEntity instanceof TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink, keyPropertyOrEntity instanceof TestEntityLvl3MultiLink_1.TestEntityLvl3MultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityLvl3MultiLinkRequestBuilder;
 }(core_1.RequestBuilder));

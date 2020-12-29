@@ -7,11 +7,11 @@ import {
 } from '../odata-common';
 import { Entity } from './entity';
 import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  UpdateRequestBuilderV4
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  UpdateRequestBuilder
 } from './request-builder';
 
 /**
@@ -30,7 +30,7 @@ import {
  * @returns The request body.
  */
 export function toBatchRetrieveBody(
-  request: GetAllRequestBuilderV4<Entity> | GetByKeyRequestBuilderV4<Entity>
+  request: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>
 ): string {
   return serializeRequest(request);
 }
@@ -43,9 +43,9 @@ export function toBatchRetrieveBody(
  */
 export function toBatchChangeSet<
   T extends
-    | CreateRequestBuilderV4<Entity>
-    | UpdateRequestBuilderV4<Entity>
-    | DeleteRequestBuilderV4<Entity>
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
 >(changeSet: BatchChangeSet<T>): string | undefined {
   return serializeChangeSet(changeSet);
 }

@@ -35,14 +35,14 @@ var PeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
      */
     PeopleRequestBuilder.prototype.getByKey = function (userName) {
-        return new core_1.GetByKeyRequestBuilderV4(People_1.People, { UserName: userName });
+        return new core_1.GetByKeyRequestBuilder(People_1.People, { UserName: userName });
     };
     /**
      * Returns a request builder for querying all `People` entities.
      * @returns A request builder for creating requests to retrieve all `People` entities.
      */
     PeopleRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilderV4(People_1.People);
+        return new core_1.GetAllRequestBuilder(People_1.People);
     };
     /**
      * Returns a request builder for creating a `People` entity.
@@ -50,7 +50,7 @@ var PeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `People`.
      */
     PeopleRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilderV4(People_1.People, entity);
+        return new core_1.CreateRequestBuilder(People_1.People, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `People`.
@@ -58,10 +58,10 @@ var PeopleRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `People`.
      */
     PeopleRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilderV4(People_1.People, entity);
+        return new core_1.UpdateRequestBuilder(People_1.People, entity);
     };
     PeopleRequestBuilder.prototype.delete = function (userNameOrEntity) {
-        return new core_1.DeleteRequestBuilderV4(People_1.People, userNameOrEntity instanceof People_1.People ? userNameOrEntity : { UserName: userNameOrEntity });
+        return new core_1.DeleteRequestBuilder(People_1.People, userNameOrEntity instanceof People_1.People ? userNameOrEntity : { UserName: userNameOrEntity });
     };
     return PeopleRequestBuilder;
 }(core_1.RequestBuilder));

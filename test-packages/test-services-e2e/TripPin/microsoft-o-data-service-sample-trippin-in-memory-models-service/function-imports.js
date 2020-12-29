@@ -19,7 +19,7 @@ function getNearestAirport(parameters) {
         lat: new core_1.FunctionImportParameter('lat', 'Edm.Double', parameters.lat),
         lon: new core_1.FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
     };
-    return new core_1.FunctionImportRequestBuilderV4('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', function (data) { return core_1.transformReturnValueForEntity(data, Airports_1.Airports); }, params);
+    return new core_1.FunctionImportRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', function (data) { return core_1.transformReturnValueForEntity(data, Airports_1.Airports); }, params);
 }
 exports.getNearestAirport = getNearestAirport;
 exports.functionImports = {

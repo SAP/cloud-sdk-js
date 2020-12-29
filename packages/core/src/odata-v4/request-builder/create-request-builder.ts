@@ -7,13 +7,13 @@ import { Entity } from '../entity';
 import { oDataUri } from '../uri-conversion';
 import { entitySerializer } from '../entity-serializer';
 import { entityDeserializer } from '../entity-deserializer';
-import { responseDataAccessorV4 } from './response-data-accessor';
+import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  *
  * @typeparam EntityT - Type of the entity to be created
  */
-export class CreateRequestBuilderV4<EntityT extends Entity>
+export class CreateRequestBuilder<EntityT extends Entity>
   extends CreateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
@@ -32,7 +32,9 @@ export class CreateRequestBuilderV4<EntityT extends Entity>
       oDataUri,
       entitySerializer,
       entityDeserializer,
-      responseDataAccessorV4
+      responseDataAccessor
     );
   }
 }
+
+export { CreateRequestBuilder as CreateRequestBuilderV4 };

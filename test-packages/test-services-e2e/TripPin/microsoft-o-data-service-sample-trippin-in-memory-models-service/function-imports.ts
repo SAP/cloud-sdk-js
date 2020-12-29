@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEntity, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEntity, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { Airports } from './Airports';
 
 /**
@@ -26,13 +26,13 @@ export interface GetNearestAirportParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function getNearestAirport(parameters: GetNearestAirportParameters): FunctionImportRequestBuilderV4<GetNearestAirportParameters, Airports> {
+export function getNearestAirport(parameters: GetNearestAirportParameters): FunctionImportRequestBuilder<GetNearestAirportParameters, Airports> {
   const params = {
     lat: new FunctionImportParameter('lat', 'Edm.Double', parameters.lat),
     lon: new FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
   }
 
-  return new FunctionImportRequestBuilderV4('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', (data) => transformReturnValueForEntity(data, Airports), params);
+  return new FunctionImportRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', (data) => transformReturnValueForEntity(data, Airports), params);
 }
 
 export const functionImports = {

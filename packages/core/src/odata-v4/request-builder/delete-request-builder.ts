@@ -11,7 +11,7 @@ import { oDataUri } from '../uri-conversion';
  *
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export class DeleteRequestBuilderV4<EntityT extends Entity>
+export class DeleteRequestBuilder<EntityT extends Entity>
   extends DeleteRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
@@ -43,3 +43,5 @@ export class DeleteRequestBuilderV4<EntityT extends Entity>
     return this;
   }
 }
+
+export { DeleteRequestBuilder as DeleteRequestBuilderV4 };

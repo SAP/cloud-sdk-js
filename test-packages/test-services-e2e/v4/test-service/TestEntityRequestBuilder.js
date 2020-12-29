@@ -35,14 +35,14 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
      */
     TestEntityRequestBuilder.prototype.getByKey = function (keyTestEntity) {
-        return new core_1.GetByKeyRequestBuilderV4(TestEntity_1.TestEntity, { KeyTestEntity: keyTestEntity });
+        return new core_1.GetByKeyRequestBuilder(TestEntity_1.TestEntity, { KeyTestEntity: keyTestEntity });
     };
     /**
      * Returns a request builder for querying all `TestEntity` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
      */
     TestEntityRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilderV4(TestEntity_1.TestEntity);
+        return new core_1.GetAllRequestBuilder(TestEntity_1.TestEntity);
     };
     /**
      * Returns a request builder for creating a `TestEntity` entity.
@@ -50,7 +50,7 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntity`.
      */
     TestEntityRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilderV4(TestEntity_1.TestEntity, entity);
+        return new core_1.CreateRequestBuilder(TestEntity_1.TestEntity, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntity`.
@@ -58,10 +58,10 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntity`.
      */
     TestEntityRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilderV4(TestEntity_1.TestEntity, entity);
+        return new core_1.UpdateRequestBuilder(TestEntity_1.TestEntity, entity);
     };
     TestEntityRequestBuilder.prototype.delete = function (keyTestEntityOrEntity) {
-        return new core_1.DeleteRequestBuilderV4(TestEntity_1.TestEntity, keyTestEntityOrEntity instanceof TestEntity_1.TestEntity ? keyTestEntityOrEntity : { KeyTestEntity: keyTestEntityOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntity_1.TestEntity, keyTestEntityOrEntity instanceof TestEntity_1.TestEntity ? keyTestEntityOrEntity : { KeyTestEntity: keyTestEntityOrEntity });
     };
     return TestEntityRequestBuilder;
 }(core_1.RequestBuilder));

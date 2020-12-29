@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilder } from '@sap-cloud-sdk/core';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity, TestEntityLink } from './index';
 
@@ -31,5 +31,5 @@ export function changeset(first: undefined | WriteTestServiceRequestBuilder | Ar
 
 export const defaultTestServicePath = '/odata/test-service';
 const map = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink };
-export type ReadTestServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink>;
-export type WriteTestServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink>;
+export type ReadTestServiceRequestBuilder = GetAllRequestBuilder<TestEntity> | GetAllRequestBuilder<TestEntityLink> | GetByKeyRequestBuilder<TestEntity> | GetByKeyRequestBuilder<TestEntityLink>;
+export type WriteTestServiceRequestBuilder = CreateRequestBuilder<TestEntity> | UpdateRequestBuilder<TestEntity> | DeleteRequestBuilder<TestEntity> | CreateRequestBuilder<TestEntityLink> | UpdateRequestBuilder<TestEntityLink> | DeleteRequestBuilder<TestEntityLink>;

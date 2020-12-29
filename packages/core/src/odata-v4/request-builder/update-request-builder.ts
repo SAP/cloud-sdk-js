@@ -18,7 +18,7 @@ import { extractODataEtag } from '../extract-odata-etag';
  *
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilderV4<
+export class UpdateRequestBuilder<
   EntityT extends Entity
 > extends UpdateRequestBuilderBase<EntityT> {
   /**
@@ -60,3 +60,5 @@ export class UpdateRequestBuilderV4<
     return super.executeRequest(request);
   }
 }
+
+export { UpdateRequestBuilder as UpdateRequestBuilderV4 };

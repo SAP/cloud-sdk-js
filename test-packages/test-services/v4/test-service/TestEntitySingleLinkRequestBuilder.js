@@ -35,14 +35,14 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
      */
     TestEntitySingleLinkRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new core_1.GetByKeyRequestBuilderV4(TestEntitySingleLink_1.TestEntitySingleLink, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilder(TestEntitySingleLink_1.TestEntitySingleLink, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntitySingleLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
      */
     TestEntitySingleLinkRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilderV4(TestEntitySingleLink_1.TestEntitySingleLink);
+        return new core_1.GetAllRequestBuilder(TestEntitySingleLink_1.TestEntitySingleLink);
     };
     /**
      * Returns a request builder for creating a `TestEntitySingleLink` entity.
@@ -50,7 +50,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
      */
     TestEntitySingleLinkRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilderV4(TestEntitySingleLink_1.TestEntitySingleLink, entity);
+        return new core_1.CreateRequestBuilder(TestEntitySingleLink_1.TestEntitySingleLink, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntitySingleLink`.
@@ -58,10 +58,10 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
      */
     TestEntitySingleLinkRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilderV4(TestEntitySingleLink_1.TestEntitySingleLink, entity);
+        return new core_1.UpdateRequestBuilder(TestEntitySingleLink_1.TestEntitySingleLink, entity);
     };
     TestEntitySingleLinkRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new core_1.DeleteRequestBuilderV4(TestEntitySingleLink_1.TestEntitySingleLink, keyPropertyOrEntity instanceof TestEntitySingleLink_1.TestEntitySingleLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntitySingleLink_1.TestEntitySingleLink, keyPropertyOrEntity instanceof TestEntitySingleLink_1.TestEntitySingleLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntitySingleLinkRequestBuilder;
 }(core_1.RequestBuilder));

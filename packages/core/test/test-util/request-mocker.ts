@@ -14,7 +14,7 @@ import {
   ODataRequest,
   ODataUpdateRequestConfig
 } from '../../src/odata-common';
-import { oDataUri } from '../../src/odata-v4';
+import { oDataUriV4 } from '../../src/odata-v4';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';
 import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
 
@@ -91,7 +91,7 @@ export function mockCreateRequestV4(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    oDataUri
+    oDataUriV4
   );
   return mockRequest(requestConfig, {
     ...params,

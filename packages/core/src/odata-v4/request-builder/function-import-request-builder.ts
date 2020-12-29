@@ -3,7 +3,7 @@ import {
   ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase,
   FunctionImportParameters
 } from '../../odata-common';
-import { ODataFunctionImportRequestConfigV4 } from '../request';
+import { ODataFunctionImportRequestConfig } from '../request';
 
 /**
  * Create OData request to execute a function import.
@@ -11,7 +11,7 @@ import { ODataFunctionImportRequestConfigV4 } from '../request';
  * @typeparam ParametersT - Type of the function import parameters
  * @typeparam ReturnT - Type of the function import return value
  */
-export class FunctionImportRequestBuilderV4<
+export class FunctionImportRequestBuilder<
   ParametersT,
   ReturnT
 > extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT> {
@@ -30,7 +30,7 @@ export class FunctionImportRequestBuilderV4<
   ) {
     super(
       responseTransformer,
-      new ODataFunctionImportRequestConfigV4(
+      new ODataFunctionImportRequestConfig(
         'get',
         defaultServicePath,
         functionImportName,
@@ -40,3 +40,5 @@ export class FunctionImportRequestBuilderV4<
     );
   }
 }
+
+export { FunctionImportRequestBuilder as FunctionImportRequestBuilderV4 };

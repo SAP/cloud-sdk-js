@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEntity, FunctionImportRequestBuilderV4, FunctionImportParameter } from '../../../../../src';
+import { transformReturnValueForEntity, FunctionImportRequestBuilder, FunctionImportParameter } from '../../../../../src';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity2 } from './TestEntity2';
 
@@ -19,12 +19,12 @@ export interface TestFunctionImportEntityReturnType1Parameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportEntityReturnType1(parameters: TestFunctionImportEntityReturnType1Parameters): FunctionImportRequestBuilderV4<TestFunctionImportEntityReturnType1Parameters, TestEntity1> {
+export function testFunctionImportEntityReturnType1(parameters: TestFunctionImportEntityReturnType1Parameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnType1Parameters, TestEntity1> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntity(data, TestEntity1), params);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntity(data, TestEntity1), params);
 }
 
 /**
@@ -39,12 +39,12 @@ export interface TestFunctionImportEntityReturnType2Parameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function testFunctionImportEntityReturnType2(parameters: TestFunctionImportEntityReturnType2Parameters): FunctionImportRequestBuilderV4<TestFunctionImportEntityReturnType2Parameters, TestEntity2> {
+export function testFunctionImportEntityReturnType2(parameters: TestFunctionImportEntityReturnType2Parameters): FunctionImportRequestBuilder<TestFunctionImportEntityReturnType2Parameters, TestEntity2> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntity(data, TestEntity2), params);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntity(data, TestEntity2), params);
 }
 
 export const functionImports = {

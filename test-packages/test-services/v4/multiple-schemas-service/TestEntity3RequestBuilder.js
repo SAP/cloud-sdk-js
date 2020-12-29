@@ -35,14 +35,14 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
      */
     TestEntity3RequestBuilder.prototype.getByKey = function (keyPropertyString) {
-        return new core_1.GetByKeyRequestBuilderV4(TestEntity3_1.TestEntity3, { KeyPropertyString: keyPropertyString });
+        return new core_1.GetByKeyRequestBuilder(TestEntity3_1.TestEntity3, { KeyPropertyString: keyPropertyString });
     };
     /**
      * Returns a request builder for querying all `TestEntity3` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntity3` entities.
      */
     TestEntity3RequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilderV4(TestEntity3_1.TestEntity3);
+        return new core_1.GetAllRequestBuilder(TestEntity3_1.TestEntity3);
     };
     /**
      * Returns a request builder for creating a `TestEntity3` entity.
@@ -50,7 +50,7 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `TestEntity3`.
      */
     TestEntity3RequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilderV4(TestEntity3_1.TestEntity3, entity);
+        return new core_1.CreateRequestBuilder(TestEntity3_1.TestEntity3, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntity3`.
@@ -58,10 +58,10 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `TestEntity3`.
      */
     TestEntity3RequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilderV4(TestEntity3_1.TestEntity3, entity);
+        return new core_1.UpdateRequestBuilder(TestEntity3_1.TestEntity3, entity);
     };
     TestEntity3RequestBuilder.prototype.delete = function (keyPropertyStringOrEntity) {
-        return new core_1.DeleteRequestBuilderV4(TestEntity3_1.TestEntity3, keyPropertyStringOrEntity instanceof TestEntity3_1.TestEntity3 ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity });
+        return new core_1.DeleteRequestBuilder(TestEntity3_1.TestEntity3, keyPropertyStringOrEntity instanceof TestEntity3_1.TestEntity3 ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity });
     };
     return TestEntity3RequestBuilder;
 }(core_1.RequestBuilder));

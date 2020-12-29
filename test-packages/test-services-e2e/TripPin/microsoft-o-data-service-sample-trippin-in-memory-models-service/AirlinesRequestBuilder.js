@@ -35,14 +35,14 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
      */
     AirlinesRequestBuilder.prototype.getByKey = function (airlineCode) {
-        return new core_1.GetByKeyRequestBuilderV4(Airlines_1.Airlines, { AirlineCode: airlineCode });
+        return new core_1.GetByKeyRequestBuilder(Airlines_1.Airlines, { AirlineCode: airlineCode });
     };
     /**
      * Returns a request builder for querying all `Airlines` entities.
      * @returns A request builder for creating requests to retrieve all `Airlines` entities.
      */
     AirlinesRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilderV4(Airlines_1.Airlines);
+        return new core_1.GetAllRequestBuilder(Airlines_1.Airlines);
     };
     /**
      * Returns a request builder for creating a `Airlines` entity.
@@ -50,7 +50,7 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `Airlines`.
      */
     AirlinesRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilderV4(Airlines_1.Airlines, entity);
+        return new core_1.CreateRequestBuilder(Airlines_1.Airlines, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `Airlines`.
@@ -58,10 +58,10 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `Airlines`.
      */
     AirlinesRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilderV4(Airlines_1.Airlines, entity);
+        return new core_1.UpdateRequestBuilder(Airlines_1.Airlines, entity);
     };
     AirlinesRequestBuilder.prototype.delete = function (airlineCodeOrEntity) {
-        return new core_1.DeleteRequestBuilderV4(Airlines_1.Airlines, airlineCodeOrEntity instanceof Airlines_1.Airlines ? airlineCodeOrEntity : { AirlineCode: airlineCodeOrEntity });
+        return new core_1.DeleteRequestBuilder(Airlines_1.Airlines, airlineCodeOrEntity instanceof Airlines_1.Airlines ? airlineCodeOrEntity : { AirlineCode: airlineCodeOrEntity });
     };
     return AirlinesRequestBuilder;
 }(core_1.RequestBuilder));

@@ -14,7 +14,7 @@ import { ResponseDataAccessor } from '../response-data-accessor';
 import { GetRequestBuilder } from './get-request-builder-base';
 
 /**
- * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
+ * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilder]]
  *
  * @typeparam EntityT - Type of the entity to be requested
  */

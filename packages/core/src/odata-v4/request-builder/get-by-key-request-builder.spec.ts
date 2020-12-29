@@ -9,11 +9,11 @@ import {
 } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
 import { uriConverter } from '../uri-conversion';
-import { GetByKeyRequestBuilderV4 } from './get-by-key-request-builder';
+import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 const { convertToUriFormat } = uriConverter;
 
-describe('GetByKeyRequestBuilderV4', () => {
+describe('GetByKeyRequestBuilder', () => {
   describe('execute', () => {
     it('returns entity by key', async () => {
       const entityData = createOriginalTestEntityData1();
@@ -31,7 +31,7 @@ describe('GetByKeyRequestBuilderV4', () => {
         TestEntity
       );
 
-      const actual = await new GetByKeyRequestBuilderV4(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -71,7 +71,7 @@ describe('GetByKeyRequestBuilderV4', () => {
       responseBody: entityData
     });
 
-    const actual = await new GetByKeyRequestBuilderV4(TestEntity, {
+    const actual = await new GetByKeyRequestBuilder(TestEntity, {
       KeyPropertyGuid: expected.keyPropertyGuid,
       KeyPropertyString: expected.keyPropertyString
     }).execute(defaultDestination);
@@ -95,7 +95,7 @@ describe('GetByKeyRequestBuilderV4', () => {
       responseHeaders: { Etag: versionIdentifier }
     });
 
-    const actual = await new GetByKeyRequestBuilderV4(TestEntity, {
+    const actual = await new GetByKeyRequestBuilder(TestEntity, {
       KeyPropertyGuid: expected.keyPropertyGuid,
       KeyPropertyString: expected.keyPropertyString
     }).execute(defaultDestination);

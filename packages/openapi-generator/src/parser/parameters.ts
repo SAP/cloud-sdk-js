@@ -34,7 +34,7 @@ export function parseParameters(
   }));
 }
 
-function parseType(param: OpenAPIV3.ParameterObject, refs: $Refs) {
+function parseType(param: OpenAPIV3.ParameterObject, refs: $Refs): string {
   const originalType = resolveObject(param.schema, refs)?.type?.toString();
   const tsType = getType(originalType);
   const enumValue = resolveObject(param.schema, refs)?.enum;

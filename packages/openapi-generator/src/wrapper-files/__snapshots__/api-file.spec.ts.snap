@@ -32,11 +32,11 @@ export const TestApi = {
 exports[`api-file creates api file content for operation with request body 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
-import { Body } from './openapi/model';
+import { TestEntity } from './openapi/model';
 
 export const TestApi = {
   createFn: (args: {
-    body: Body
+    body: TestEntity
   }) => new OpenApiRequestBuilder<DefaultApi, 'createFn'>(
     DefaultApi,
     'createFn',
@@ -44,7 +44,7 @@ export const TestApi = {
   ),
   updateFn: (args: {
     id: string,
-    body: Body
+    body: string[]
   }) => new OpenApiRequestBuilder<DefaultApi, 'updateFn'>(
     DefaultApi,
     'updateFn',
@@ -57,13 +57,13 @@ export const TestApi = {
 exports[`api-file creates api file content for operation with required parameters defined after optional parameters 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
-import { Body } from './openapi/model';
+import { TestEntity } from './openapi/model';
 
 export const TestApi = {
   createFn: (args: {
     requiredQueryParam: number,
     requiredPathParam: number,
-    body: Body,
+    body: TestEntity[][],
     optionalQueryParam?: number
   }) => new OpenApiRequestBuilder<DefaultApi, 'createFn'>(
     DefaultApi,

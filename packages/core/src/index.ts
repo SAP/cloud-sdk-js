@@ -11,10 +11,10 @@ export {
   Entity,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  UpdateRequestBuilder,
   ODataFunctionImportRequestConfig,
   entityDeserializer,
   filterFunctions
+  UpdateRequestBuilder
 } from './odata-v2';
 export * from './odata-v4';
 export * from './openapi';

@@ -1,15 +1,14 @@
-import { camelCase, createLogger, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
-import { OpenApiRequestBody } from '../openapi-types';
+import { OpenApiRequestBody, SchemaMetadata } from '../openapi-types';
 import { isReferenceObject, parseTypeName, resolveObject } from './refs';
-
-const logger = createLogger('openapi-generator');
+import { getType } from './type-mapping';
+import { isArraySchemaObject } from './schema';
 
 /**
  * Parse the request body.
  * @param requestBody Original request body to parse.
- * @param refs List of crossreferences that can occur in the document.
+ * @param refs List of cross references that can occur in the document.
  * @returns The parsed request body.
  */
 export function parseRequestBody(
@@ -20,12 +19,12 @@ export function parseRequestBody(
   refs: $Refs
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
-  const requestBodyType = parseRequestBodyType(resolvedRequestBody);
-  if (requestBodyType && resolvedRequestBody) {
+  const parameterType = parseRequestBodyType(resolvedRequestBody);
+  if (parameterType && resolvedRequestBody) {
     return {
       ...resolvedRequestBody,
-      parameterName: camelCase(requestBodyType),
-      parameterType: pascalCase(requestBodyType)
+      parameterName: 'body',
+      parameterType
     };
   }
 }
@@ -37,25 +36,72 @@ export function parseRequestBody(
  */
 function parseRequestBodyType(
   requestBody: OpenAPIV3.RequestBodyObject | undefined
-): string | undefined {
+): SchemaMetadata | undefined {
   if (requestBody) {
     const mediaType = getMediaType(requestBody, 'application/json');
     const schema = mediaType?.schema;
-    // TODO: What about inline schemas?
-    if (isReferenceObject(schema)) {
-      return parseTypeName(schema);
-    }
-    logger.warn(
-      'The SAP Cloud SDK OpenApi generator currently does not support inline schemas. This will likely cause issues when using this client.'
-    );
+    return parseSchemaMetadata(schema);
   }
+}
+
+export function parseSchemaMetadata(
+  schema?:
+    | OpenAPIV3.ReferenceObject
+    | OpenAPIV3.ArraySchemaObject
+    | OpenAPIV3.NonArraySchemaObject
+): SchemaMetadata | undefined {
+  if (isReferenceObject(schema)) {
+    return parseReferenceObject(schema);
+  }
+  if (isArraySchemaObject(schema)) {
+    return parseArrayObject(schema);
+  }
+  if (schema !== undefined) {
+    return parseNonArrayObject(schema);
+  }
+}
+
+function parseReferenceObject(
+  schema: OpenAPIV3.ReferenceObject
+): SchemaMetadata {
+  return {
+    isArrayType: false,
+    innerType: parseTypeName(schema),
+    isInnerTypeReferenceType: true
+  };
+}
+
+function parseNonArrayObject(
+  schema: OpenAPIV3.NonArraySchemaObject
+): SchemaMetadata {
+  return {
+    isArrayType: false,
+    innerType: getType(schema.type),
+    isInnerTypeReferenceType: false
+  };
+}
+
+function parseArrayObject(
+  schema: OpenAPIV3.ArraySchemaObject
+): SchemaMetadata | undefined {
+  const internalSchema = parseSchemaMetadata(schema.items);
+  return internalSchema
+    ? {
+        isArrayType: true,
+        innerType: internalSchema.innerType,
+        isInnerTypeReferenceType: internalSchema.isInnerTypeReferenceType,
+        arrayLevel: internalSchema.arrayLevel
+          ? internalSchema.arrayLevel + 1
+          : 1
+      }
+    : undefined;
 }
 
 /**
  * Get the media type for a specific content type from a request body object.
  * @param requestBody Request body to get the media type from.
  * @param contentType Content type to retrieve the media type by.
- * @returns The mediatype for the given content type if available.
+ * @returns The media type for the given content type if available.
  */
 function getMediaType(
   requestBody: OpenAPIV3.RequestBodyObject | undefined,

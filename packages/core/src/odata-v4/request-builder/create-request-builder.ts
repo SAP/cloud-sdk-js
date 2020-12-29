@@ -4,7 +4,7 @@ import {
   EntityIdentifiable
 } from '../../odata-common';
 import { Entity } from '../entity';
-import { oDataUriV4 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import { entitySerializer } from '../entity-serializer';
 import { entityDeserializer } from '../entity-deserializer';
 import { responseDataAccessorV4 } from './response-data-accessor';
@@ -29,7 +29,7 @@ export class CreateRequestBuilderV4<EntityT extends Entity>
     super(
       _entityConstructor,
       _entity,
-      oDataUriV4,
+      oDataUri,
       entitySerializer,
       entityDeserializer,
       responseDataAccessorV4

@@ -5,7 +5,7 @@ import {
   FieldType
 } from '../../odata-common';
 import { Entity } from '../entity';
-import { oDataUriV4 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.
  *
@@ -27,7 +27,7 @@ export class DeleteRequestBuilderV4<EntityT extends Entity>
     entityConstructor: Constructable<EntityT>,
     keysOrEntity: Record<string, FieldType> | Entity
   ) {
-    super(entityConstructor, oDataUriV4, keysOrEntity);
+    super(entityConstructor, oDataUri, keysOrEntity);
   }
 
   /**

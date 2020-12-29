@@ -6,10 +6,10 @@ import {
 } from '../../../test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
-import { uriConverterV4 } from '../uri-conversion';
+import { uriConverter } from '../uri-conversion';
 import { UpdateRequestBuilderV4 } from './update-request-builder';
 
-const { convertToUriFormat } = uriConverterV4;
+const { convertToUriFormat } = uriConverter;
 
 function createTestEntity() {
   const keyPropGuid = uuid();

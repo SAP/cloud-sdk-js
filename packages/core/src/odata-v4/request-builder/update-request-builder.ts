@@ -10,7 +10,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
-import { oDataUriV4 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
 
 /**
@@ -34,7 +34,7 @@ export class UpdateRequestBuilderV4<
     super(
       _entityConstructor,
       _entity,
-      oDataUriV4,
+      oDataUri,
       entitySerializer,
       extractODataEtag,
       identity

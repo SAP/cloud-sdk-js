@@ -8,10 +8,10 @@ import {
   testEntityResourcePath
 } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
-import { uriConverterV4 } from '../uri-conversion';
+import { uriConverter } from '../uri-conversion';
 import { GetByKeyRequestBuilderV4 } from './get-by-key-request-builder';
 
-const { convertToUriFormat } = uriConverterV4;
+const { convertToUriFormat } = uriConverter;
 
 describe('GetByKeyRequestBuilderV4', () => {
   describe('execute', () => {

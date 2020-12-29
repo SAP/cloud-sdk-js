@@ -9,7 +9,7 @@ import { Selectable } from '../../odata-common';
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getSelectV4<EntityT extends Entity>(
+export function getSelect<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ select: string }> {
   const selection = selects.map(select => select._fieldName);
@@ -22,3 +22,5 @@ export function getSelectV4<EntityT extends Entity>(
 
   return {};
 }
+
+export { getSelect as getSelectV4 };

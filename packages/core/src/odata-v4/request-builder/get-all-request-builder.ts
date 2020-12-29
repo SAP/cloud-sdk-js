@@ -12,7 +12,7 @@ import {
   toFilterableList,
   OneToManyLink
 } from '../../odata-common';
-import { oDataUriV4 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import { responseDataAccessorV4 } from './response-data-accessor';
 export class GetAllRequestBuilderV4<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
@@ -27,7 +27,7 @@ export class GetAllRequestBuilderV4<EntityT extends Entity>
   constructor(entityConstructor: Constructable<EntityT>) {
     super(
       entityConstructor,
-      new ODataGetAllRequestConfig(entityConstructor, oDataUriV4),
+      new ODataGetAllRequestConfig(entityConstructor, oDataUri),
       entityDeserializer,
       responseDataAccessorV4
     );

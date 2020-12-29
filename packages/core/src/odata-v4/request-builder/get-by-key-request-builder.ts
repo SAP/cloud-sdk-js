@@ -8,7 +8,7 @@ import {
 } from '../../odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUriV4 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import { responseDataAccessorV4 } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.
@@ -36,7 +36,7 @@ export class GetByKeyRequestBuilderV4<EntityT extends Entity>
     super(
       _entityConstructor,
       keys,
-      oDataUriV4,
+      oDataUri,
       entityDeserializer,
       responseDataAccessorV4
     );

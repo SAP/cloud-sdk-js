@@ -1,4 +1,4 @@
-import { oDataUriV4 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import {
   ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase,
   FunctionImportParameters
@@ -35,7 +35,7 @@ export class FunctionImportRequestBuilderV4<
         defaultServicePath,
         functionImportName,
         parameters,
-        oDataUriV4
+        oDataUri
       )
     );
   }

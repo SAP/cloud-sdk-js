@@ -8,9 +8,9 @@ import {
   and,
   createGetFilter
 } from '../../odata-common';
-import { getSelectV4 } from './get-select';
-import { uriConverterV4 } from './uri-value-converter';
-import { oDataUriV4 } from './odata-uri';
+import { getSelect } from './get-select';
+import { uriConverter } from './uri-value-converter';
+import { oDataUri } from './odata-uri';
 
 function prependDollar(param: string): string {
   return `$${param}`;
@@ -24,7 +24,7 @@ function prependDollar(param: string): string {
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
  */
-export function getExpandV4<EntityT extends Entity>(
+export function getExpand<EntityT extends Entity>(
   expands: Expandable<EntityT>[] = [],
   entityConstructor: Constructable<EntityT>
 ): Partial<{ expand: string }> {
@@ -50,20 +50,20 @@ function getExpandAsString<EntityT extends Entity>(
   if (expand instanceof Link) {
     params = {
       ...params,
-      ...getSelectV4(expand._selects),
-      ...getExpandV4(expand._expand, expand._linkedEntity)
+      ...getSelect(expand._selects),
+      ...getExpand(expand._expand, expand._linkedEntity)
     };
 
     if (expand instanceof OneToManyLink) {
       params = {
         ...params,
-        ...createGetFilter(uriConverterV4).getFilter(
+        ...createGetFilter(uriConverter).getFilter(
           and(...expand._filters?.filters),
           entityConstructor
         ),
         ...(expand._skip && { skip: expand._skip }),
         ...(expand._top && { top: expand._top }),
-        ...(expand._orderBy && oDataUriV4.getOrderBy(expand._orderBy))
+        ...(expand._orderBy && oDataUri.getOrderBy(expand._orderBy))
       };
     }
     const subQuery = Object.entries(params)
@@ -76,3 +76,5 @@ function getExpandAsString<EntityT extends Entity>(
 
   return '';
 }
+
+export { getExpand as getExpandV4 };

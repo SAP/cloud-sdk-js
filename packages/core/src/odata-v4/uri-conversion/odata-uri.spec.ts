@@ -11,9 +11,9 @@ import {
 import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
-import { oDataUriV4 } from './odata-uri';
+import { oDataUri } from './odata-uri';
 
-const { getFilter } = oDataUriV4;
+const { getFilter } = oDataUri;
 
 describe('getFilter', () => {
   it('for simple filters', () => {
@@ -66,7 +66,7 @@ describe('getFilter', () => {
 
   it('for hasSubset filter function with collection', () => {
     expect(
-      oDataUriV4.getFilter(
+      oDataUri.getFilter(
         filterFunctions
           .hasSubset(['1', '2'], TestEntity.COLLECTION_PROPERTY)
           .equals(true),
@@ -77,7 +77,7 @@ describe('getFilter', () => {
 
   it('for int collection filter function', () => {
     expect(
-      oDataUriV4.getFilter(
+      oDataUri.getFilter(
         filterFunction('fn', 'int[]').equals([1, 2, 3]),
         TestEntity
       ).filter

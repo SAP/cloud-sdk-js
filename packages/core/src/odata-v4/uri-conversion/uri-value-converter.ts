@@ -14,7 +14,7 @@ type UriConverterMapping = { [key in EdmType]: (value: any) => string };
 /**
  * @hidden
  */
-export const uriConvertersV4: UriConverterMapping = {
+export const uriConverters: UriConverterMapping = {
   ...uriConvertersCommon,
   'Edm.Date': identity,
   'Edm.DateTimeOffset': identity,
@@ -27,13 +27,15 @@ export const uriConvertersV4: UriConverterMapping = {
 /**
  * @hidden
  */
-export const uriConverterV4: UriConverter = {
+export const uriConverter: UriConverter = {
   convertToUriFormat(value: any, edmType: EdmTypeShared<'v4'>): string {
     const converted = tsToEdm(value, edmType);
-    const uriConverterFunc = uriConvertersV4[edmType];
+    const uriConverterFunc = uriConverters[edmType];
     if (uriConverterFunc) {
       return uriConverterFunc(converted);
     }
     return converted;
   }
 };
+
+export { uriConverters as uriConvertersV4, uriConverter as uriConverterV4 };

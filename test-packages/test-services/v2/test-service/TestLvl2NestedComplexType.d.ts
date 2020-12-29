@@ -1,4 +1,4 @@
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV2, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core';
 /**
  * TestLvl2NestedComplexType
  */
@@ -17,7 +17,7 @@ export declare function createTestLvl2NestedComplexType(json: any): TestLvl2Nest
  * TestLvl2NestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export declare class TestLvl2NestedComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, TestLvl2NestedComplexType> {
+export declare class TestLvl2NestedComplexTypeField<EntityT extends EntityV2> extends ComplexTypeField<EntityT, TestLvl2NestedComplexType> {
     /**
      * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

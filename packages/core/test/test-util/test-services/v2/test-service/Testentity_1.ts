@@ -7,12 +7,12 @@ import { Testentity_1RequestBuilder } from './Testentity_1RequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { AllFields, AnyField, BigNumberField, BooleanField, CustomField, DateField, EntityBuilderType, Entity, Field, Link, NumberField, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
+import { AllFields, AnyField, BigNumberField, BooleanField, CustomFieldV2, DateField, EntityBuilderType, EntityV2, Field, Link, NumberField, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_Testentity" of service "API_TEST_SRV".
  */
-export class Testentity_1 extends Entity implements Testentity_1Type {
+export class Testentity_1 extends EntityV2 implements Testentity_1Type {
   /**
    * Technical entity name for Testentity_1.
    */
@@ -133,7 +133,7 @@ export class Testentity_1 extends Entity implements Testentity_1Type {
    * @returns A builder that constructs instances of entity type `Testentity_1`.
    */
   static builder(): EntityBuilderType<Testentity_1, Testentity_1Type> {
-    return Entity.entityBuilder(Testentity_1);
+    return EntityV2.entityBuilder(Testentity_1);
   }
 
   /**
@@ -149,8 +149,8 @@ export class Testentity_1 extends Entity implements Testentity_1Type {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Testentity_1`.
    */
-  static customField(fieldName: string): CustomField<Testentity_1> {
-    return Entity.customFieldSelector(fieldName, Testentity_1);
+  static customField(fieldName: string): CustomFieldV2<Testentity_1> {
+    return EntityV2.customFieldSelector(fieldName, Testentity_1);
   }
 
   /**

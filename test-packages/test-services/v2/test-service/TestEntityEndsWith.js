@@ -45,7 +45,7 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
      */
     TestEntityEndsWith.builder = function () {
-        return core_1.Entity.entityBuilder(TestEntityEndsWith);
+        return core_1.EntityV2.entityBuilder(TestEntityEndsWith);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityEndsWith` entity type.
@@ -60,7 +60,7 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
      */
     TestEntityEndsWith.customField = function (fieldName) {
-        return core_1.Entity.customFieldSelector(fieldName, TestEntityEndsWith);
+        return core_1.EntityV2.customFieldSelector(fieldName, TestEntityEndsWith);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -78,7 +78,7 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
      */
     TestEntityEndsWith._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityEndsWith;
-}(core_1.Entity));
+}(core_1.EntityV2));
 exports.TestEntityEndsWith = TestEntityEndsWith;
 (function (TestEntityEndsWith) {
     /**

@@ -222,7 +222,7 @@ var TestComplexType;
      * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return core_1.deserializeComplexType(json, TestComplexType);
+        return core_1.deserializeComplexTypeV2(json, TestComplexType);
     }
     TestComplexType.build = build;
 })(TestComplexType = exports.TestComplexType || (exports.TestComplexType = {}));

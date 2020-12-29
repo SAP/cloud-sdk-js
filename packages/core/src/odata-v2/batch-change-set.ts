@@ -12,7 +12,7 @@ import {
  * @deprecated Since v1.30.0. Use [[BatchChangeSet]] directly
  * Representation of a batch change set, which holds a collection of write operations.
  */
-export class ODataBatchChangeSetV2<
+export class ODataBatchChangeSet<
   RequestT extends
     | CreateRequestBuilder<Entity>
     | UpdateRequestBuilder<Entity>
@@ -26,7 +26,7 @@ export class ODataBatchChangeSetV2<
   }
 
   /**
-   * Create an instance of ODataBatchChangeSetV2.
+   * Create an instance of ODataBatchChangeSet.
    * @param requests Requests to combine to one change set.
    * @param boundary Boundary used in the multipart request.
    */
@@ -36,4 +36,4 @@ export class ODataBatchChangeSetV2<
   ) {}
 }
 
-export { ODataBatchChangeSetV2 as ODataBatchChangeSet };
+export { ODataBatchChangeSet as ODataBatchChangeSetV2 };

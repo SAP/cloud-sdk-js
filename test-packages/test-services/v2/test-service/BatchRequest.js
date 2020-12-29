@@ -22,7 +22,7 @@ function changeset(first) {
     for (var _i = 1; _i < arguments.length; _i++) {
         rest[_i - 1] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSetV2(util_1.variadicArgumentToArray(first, rest));
+    return new core_1.ODataBatchChangeSet(util_1.variadicArgumentToArray(first, rest));
 }
 exports.changeset = changeset;
 exports.defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

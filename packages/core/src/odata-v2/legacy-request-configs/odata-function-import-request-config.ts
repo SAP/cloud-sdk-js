@@ -1,9 +1,9 @@
-import { oDataUriV2 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 import {
   RequestMethodType,
   FunctionImportParameters
 } from '../../odata-common';
-import { ODataFunctionImportRequestConfigV2 } from '../request';
+import { ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase } from '../request';
 
 /**
  * @deprecated Since v1.21.0. Use superclass instead.
@@ -13,7 +13,7 @@ import { ODataFunctionImportRequestConfigV2 } from '../request';
  */
 class ODataFunctionImportRequestConfig<
   ParametersT
-> extends ODataFunctionImportRequestConfigV2<ParametersT> {
+> extends ODataFunctionImportRequestConfigBase<ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    *
@@ -28,13 +28,7 @@ class ODataFunctionImportRequestConfig<
     functionImportName: string,
     parameters: FunctionImportParameters<ParametersT>
   ) {
-    super(
-      method,
-      defaultServicePath,
-      functionImportName,
-      parameters,
-      oDataUriV2
-    );
+    super(method, defaultServicePath, functionImportName, parameters, oDataUri);
   }
 }
 

@@ -4,14 +4,14 @@ import {
   TestEntitySingleLink
 } from '../../test/test-util/test-services/v4/test-service';
 import { TestEnumType } from '../../test/test-util/test-services/v4/test-service/TestEnumType';
-import { serializeComplexTypeV4, serializeEntityV4 } from './entity-serializer';
+import { serializeComplexType, serializeEntity } from './entity-serializer';
 
 describe('entity-serializer', () => {
   it('should serialize entity with enum field', () => {
     const enumProperty = TestEnumType.Member2;
     const testEntity = TestEntity.builder().enumProperty(enumProperty).build();
 
-    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
       EnumProperty: 'Member2'
     });
   });
@@ -26,7 +26,7 @@ describe('entity-serializer', () => {
       .complexTypeProperty(complexType1)
       .build();
 
-    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProp1,
         EnumProperty: 'Member1'
@@ -40,7 +40,7 @@ describe('entity-serializer', () => {
       .collectionProperty(collectionProperty)
       .build();
 
-    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
       CollectionProperty: collectionProperty
     });
   });
@@ -56,7 +56,7 @@ describe('entity-serializer', () => {
       .complexTypeCollectionProperty(collectionPropWithComplexType)
       .build();
 
-    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProp1
       },
@@ -79,7 +79,7 @@ describe('entity-serializer', () => {
     };
 
     expect(
-      serializeComplexTypeV4(
+      serializeComplexType(
         {
           collectionStringProperty
         },
@@ -90,7 +90,7 @@ describe('entity-serializer', () => {
 
   it('should serialize complex type with complex type collection field', () => {
     expect(
-      serializeComplexTypeV4(
+      serializeComplexType(
         {
           collectionComplexTypeProperty: [{ stringProperty: 'abc' }]
         },
@@ -106,7 +106,7 @@ describe('entity-serializer', () => {
       .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
       .build();
 
-    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
       TimeOfDayProperty: '01:02:03'
     });
 
@@ -114,7 +114,7 @@ describe('entity-serializer', () => {
       .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3.456 })
       .build();
 
-    expect(serializeEntityV4(testEntityFractional, TestEntity)).toEqual({
+    expect(serializeEntity(testEntityFractional, TestEntity)).toEqual({
       TimeOfDayProperty: '01:02:03.456'
     });
   });
@@ -127,7 +127,7 @@ describe('entity-serializer', () => {
           .build()
       )
       .build();
-    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
       to_SingleLink: {
         custom: 'custom'
       }
@@ -145,7 +145,7 @@ describe('entity-serializer', () => {
       .setOrInitializeRemoteState();
     testEntity.setCustomField('custom', 'newCustom');
     testEntity.toSingleLink.booleanProperty = false;
-    expect(serializeEntityV4(testEntity, TestEntity, true)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity, true)).toEqual({
       custom: 'newCustom',
       to_SingleLink: {
         StringProperty: 'linkedEntity',

@@ -10,7 +10,7 @@ import {
   TestEntity,
   TestEntityMultiLink
 } from '../../../test/test-util/test-services/v2/test-service';
-import { UpdateRequestBuilderV2 } from './update-request-builder';
+import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {
   const keyPropGuid = uuid();
@@ -28,7 +28,7 @@ function createTestEntity() {
     .build();
 }
 
-describe('UpdateRequestBuilderV2', () => {
+describe('UpdateRequestBuilder', () => {
   afterEach(() => {
     nock.cleanAll();
   });
@@ -36,7 +36,7 @@ describe('UpdateRequestBuilderV2', () => {
   it('no request is executed when there is no difference between current and remote state', async () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
     const scope = nock(/.*/).get(/.*/).reply(500);
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity);
@@ -48,7 +48,7 @@ describe('UpdateRequestBuilderV2', () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
     entity.keyPropertyGuid = uuid();
     entity.keyPropertyString = 'UPDATED!';
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity);
@@ -71,7 +71,7 @@ describe('UpdateRequestBuilderV2', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
@@ -95,7 +95,7 @@ describe('UpdateRequestBuilderV2', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
@@ -119,7 +119,7 @@ describe('UpdateRequestBuilderV2', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
@@ -145,7 +145,7 @@ describe('UpdateRequestBuilderV2', () => {
       method: 'put'
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
       .replaceWholeEntityWithPut()
       .execute(defaultDestination);
 
@@ -164,7 +164,7 @@ describe('UpdateRequestBuilderV2', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
       .setRequiredFields(TestEntity.KEY_PROPERTY_GUID)
       .execute(defaultDestination);
 
@@ -177,7 +177,7 @@ describe('UpdateRequestBuilderV2', () => {
 
     const scope = nock(/.*/).patch(/.*/).reply(500);
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
       .setIgnoredFields(TestEntity.INT_32_PROPERTY)
       .execute(defaultDestination);
 
@@ -198,7 +198,7 @@ describe('UpdateRequestBuilderV2', () => {
       additionalHeaders: { 'if-match': 'not-a-star' }
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
@@ -218,7 +218,7 @@ describe('UpdateRequestBuilderV2', () => {
       additionalHeaders: { 'if-match': customVersionIdentifier }
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
       .setVersionIdentifier(customVersionIdentifier)
       .execute(defaultDestination);
 
@@ -239,7 +239,7 @@ describe('UpdateRequestBuilderV2', () => {
       additionalHeaders: { 'if-match': '*' }
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(TestEntity, entity)
       .ignoreVersionIdentifier()
       .execute(defaultDestination);
 
@@ -258,10 +258,9 @@ describe('UpdateRequestBuilderV2', () => {
       statusCode: 500
     });
 
-    const updateRequest = new UpdateRequestBuilderV2(
-      TestEntity,
-      entity
-    ).execute(defaultDestination);
+    const updateRequest = new UpdateRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -283,7 +282,7 @@ describe('UpdateRequestBuilderV2', () => {
       responseHeaders: { Etag: eTag }
     });
 
-    const actual = await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -307,7 +306,7 @@ describe('UpdateRequestBuilderV2', () => {
       statusCode: 201
     });
 
-    await new UpdateRequestBuilderV2(TestEntity, entity).execute(
+    await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 

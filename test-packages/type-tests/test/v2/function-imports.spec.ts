@@ -7,7 +7,7 @@ import {
   testFunctionImportEntityReturnTypeCollection
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-// $ExpectType FunctionImportRequestBuilderV2<TestFunctionImportEdmReturnTypeParameters, boolean>
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeParameters, boolean>
 const edmReturnTypeRequestBuilder = testFunctionImportEdmReturnType({});
 
 // $ExpectType Promise<boolean>
@@ -15,7 +15,7 @@ edmReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilderV2<TestFunctionImportEdmReturnTypeCollectionParameters, string[]>
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeCollectionParameters, string[]>
 const edmCollectionReturnTypeRequestBuilder = testFunctionImportEdmReturnTypeCollection(
   {}
 );
@@ -25,7 +25,7 @@ edmCollectionReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilderV2<TestFunctionImportComplexReturnTypeParameters, TestComplexType>
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeParameters, TestComplexType>
 const ctReturnTypeRequestBuilder = testFunctionImportComplexReturnType({});
 
 // $ExpectType Promise<TestComplexType>
@@ -33,7 +33,7 @@ ctReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilderV2<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>
 const ctCollectionReturnTypeRequestBuilder = testFunctionImportComplexReturnTypeCollection(
   {}
 );
@@ -43,7 +43,7 @@ ctCollectionReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilderV2<TestFunctionImportEntityReturnTypeParameters, TestEntity>
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeParameters, TestEntity>
 const entityReturnTypeRequestBuilder = testFunctionImportEntityReturnType({});
 
 // $ExpectType Promise<TestEntity>
@@ -51,7 +51,7 @@ entityReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilderV2<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>
 const entityCollectionReturnTypeRequestBuilder = testFunctionImportEntityReturnTypeCollection(
   {}
 );

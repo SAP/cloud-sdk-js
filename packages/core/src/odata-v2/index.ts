@@ -12,4 +12,4 @@ export * from './selectable/custom-field';
 export * from './uri-conversion';
 export * from './legacy-request-configs';
 export * from './extract-odata-etag';
-export { substringOf, filterFunctionsV2 } from './filter-functions';
+export { substringOf, filterFunctions } from './filter-functions';

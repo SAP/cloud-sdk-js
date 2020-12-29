@@ -4,7 +4,7 @@ import {
   TestEntitySingleLink
 } from '../../test/test-util/test-services/v2/test-service';
 import { extractCustomFields } from '../odata-common';
-import { deserializeEntityV2 } from './entity-deserializer';
+import { deserializeEntity } from './entity-deserializer';
 
 describe('entity-deserializer', () => {
   it('should build an entity with properties', () => {
@@ -14,7 +14,7 @@ describe('entity-deserializer', () => {
 
     const response = { StringProperty: prop };
 
-    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
+    expect(deserializeEntity(response, TestEntity)).toEqual(testEntity);
   });
 
   it('should build an entity with multi link from response with results object (S/4)', () => {
@@ -29,7 +29,7 @@ describe('entity-deserializer', () => {
         results: [{ StringProperty: prop }]
       }
     };
-    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
+    expect(deserializeEntity(response, TestEntity)).toEqual(testEntity);
   });
 
   it('should build an entity with multi link from response without results object (C4C)', () => {
@@ -42,7 +42,7 @@ describe('entity-deserializer', () => {
     const response = {
       to_MultiLink: [{ StringProperty: prop }]
     };
-    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
+    expect(deserializeEntity(response, TestEntity)).toEqual(testEntity);
   });
 
   it('should build an entity with one to one link', () => {
@@ -60,7 +60,7 @@ describe('entity-deserializer', () => {
       }
     };
 
-    expect(deserializeEntityV2(response, TestEntity)).toEqual(testEntity);
+    expect(deserializeEntity(response, TestEntity)).toEqual(testEntity);
   });
 
   it('should build an entity with custom fields', () => {
@@ -97,7 +97,7 @@ describe('entity-deserializer', () => {
     expected.stringProperty = 'test';
 
     it('should deserialize', () => {
-      const actual = deserializeEntityV2(
+      const actual = deserializeEntity(
         {
           ComplexTypeProperty: {
             StringProperty: stringProperty,
@@ -116,7 +116,7 @@ describe('entity-deserializer', () => {
     });
 
     it('should deserialize with unknown keys', () => {
-      const actual = deserializeEntityV2(
+      const actual = deserializeEntity(
         {
           ComplexTypeProperty: {
             StringProperty: stringProperty,

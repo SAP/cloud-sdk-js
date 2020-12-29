@@ -6,9 +6,9 @@ import {
 } from '../../../test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
-import { DeleteRequestBuilderV2 } from './delete-request-builder';
+import { DeleteRequestBuilder } from './delete-request-builder';
 
-describe('DeleteRequestBuilderV2', () => {
+describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
 
@@ -21,7 +21,7 @@ describe('DeleteRequestBuilderV2', () => {
       path: testEntityResourcePath(keyPropGuid, keyPropString)
     });
 
-    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     }).execute(defaultDestination);
@@ -44,10 +44,9 @@ describe('DeleteRequestBuilderV2', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilderV2(
-      TestEntity,
-      entity
-    ).execute(defaultDestination);
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(
+      defaultDestination
+    );
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });
@@ -62,7 +61,7 @@ describe('DeleteRequestBuilderV2', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -77,7 +76,7 @@ describe('DeleteRequestBuilderV2', () => {
       path: testEntityResourcePath(keyPropGuid, keyPropString)
     });
 
-    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -95,7 +94,7 @@ describe('DeleteRequestBuilderV2', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -111,7 +110,7 @@ describe('DeleteRequestBuilderV2', () => {
       statusCode: 500
     });
 
-    const deleteRequest = new DeleteRequestBuilderV2(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropGuid
     }).execute(defaultDestination);
 

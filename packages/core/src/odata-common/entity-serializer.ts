@@ -129,7 +129,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     }, {});
   }
 
-  function getFieldNames<EntityT extends EntityBase>(
+  function getFieldNames<EntityT extends Entity>(
     entity: EntityT,
     diff = false
   ): string[] {

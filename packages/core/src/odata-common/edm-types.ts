@@ -21,7 +21,7 @@ export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 
 // Exclusive types for ODataVersions
 export type ExclusiveEdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
-export type ExclusiveEdmTypeV4 =
+export type ExclusiveEdmType =
   | 'Edm.Date'
   | 'Edm.Duration'
   | 'Edm.TimeOfDay'
@@ -31,7 +31,7 @@ export type ExclusiveEdmTypeV4 =
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   | EdmTypeCommon
   | ExclusiveEdmTypeV2
-  | ExclusiveEdmTypeV4;
+  | ExclusiveEdmType;
 
 export type EdmTypeSameConvertersUri = Exclude<
   EdmTypeSameConverters,

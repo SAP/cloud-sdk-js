@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
-import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, EntityBuilderType, Entity, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity4 extends EntityV4 implements TestEntity4Type {
+export class TestEntity4 extends Entity implements TestEntity4Type {
   /**
    * Technical entity name for TestEntity4.
    */
@@ -33,7 +33,7 @@ export class TestEntity4 extends EntityV4 implements TestEntity4Type {
    * @returns A builder that constructs instances of entity type `TestEntity4`.
    */
   static builder(): EntityBuilderType<TestEntity4, TestEntity4Type> {
-    return EntityV4.entityBuilder(TestEntity4);
+    return Entity.entityBuilder(TestEntity4);
   }
 
   /**
@@ -49,8 +49,8 @@ export class TestEntity4 extends EntityV4 implements TestEntity4Type {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity4`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity4> {
-    return EntityV4.customFieldSelector(fieldName, TestEntity4);
+  static customField(fieldName: string): CustomField<TestEntity4> {
+    return Entity.customFieldSelector(fieldName, TestEntity4);
   }
 
   /**

@@ -18,7 +18,7 @@ function createTestEntity(parameters) {
     var params = {
         id: new core_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
     };
-    return new core_1.ActionImportRequestBuilder('/odata/test-service', 'createTestEntity', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity_1.TestEntity); }, params);
+    return new core_1.ActionImportRequestBuilder('/odata/test-service', 'createTestEntity', function (data) { return core_1.transformReturnValueForEntity(data, TestEntity_1.TestEntity); }, params);
 }
 exports.createTestEntity = createTestEntity;
 /**
@@ -31,7 +31,7 @@ function createTestEntityReturnId(parameters) {
     var params = {
         id: new core_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
     };
-    return new core_1.ActionImportRequestBuilder('/odata/test-service', 'createTestEntityReturnId', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.Int32'); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/odata/test-service', 'createTestEntityReturnId', function (data) { return core_1.transformReturnValueForEdmType(data, function (val) { return core_1.edmToTs(val.value, 'Edm.Int32'); }); }, params);
 }
 exports.createTestEntityReturnId = createTestEntityReturnId;
 exports.actionImports = {

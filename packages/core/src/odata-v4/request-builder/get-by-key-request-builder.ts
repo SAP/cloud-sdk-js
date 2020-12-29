@@ -6,7 +6,7 @@ import {
   Expandable,
   GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
 } from '../../odata-common';
-import { EntityV4 } from '../entity';
+import { Entity } from '../entity';
 import { entityDeserializerV4 } from '../entity-deserializer';
 import { oDataUriV4 } from '../uri-conversion';
 import { responseDataAccessorV4 } from './response-data-accessor';
@@ -18,7 +18,7 @@ import { responseDataAccessorV4 } from './response-data-accessor';
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilderV4<EntityT extends EntityV4>
+export class GetByKeyRequestBuilderV4<EntityT extends Entity>
   extends GetByKeyRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;

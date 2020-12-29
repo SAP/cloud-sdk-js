@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, EntityBuilderType, Entity, Field, NumberField, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
  */
-export class TestEntitySingleLink extends EntityV4 implements TestEntitySingleLinkType {
+export class TestEntitySingleLink extends Entity implements TestEntitySingleLinkType {
   /**
    * Technical entity name for TestEntitySingleLink.
    */
@@ -58,7 +58,7 @@ export class TestEntitySingleLink extends EntityV4 implements TestEntitySingleLi
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
   static builder(): EntityBuilderType<TestEntitySingleLink, TestEntitySingleLinkType> {
-    return EntityV4.entityBuilder(TestEntitySingleLink);
+    return Entity.entityBuilder(TestEntitySingleLink);
   }
 
   /**
@@ -74,8 +74,8 @@ export class TestEntitySingleLink extends EntityV4 implements TestEntitySingleLi
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntitySingleLink> {
-    return EntityV4.customFieldSelector(fieldName, TestEntitySingleLink);
+  static customField(fieldName: string): CustomField<TestEntitySingleLink> {
+    return Entity.customFieldSelector(fieldName, TestEntitySingleLink);
   }
 
   /**

@@ -5,12 +5,12 @@
  */
 import { AirportsRequestBuilder } from './AirportsRequestBuilder';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
-import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, EntityBuilderType, Entity, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class Airports extends EntityV4 implements AirportsType {
+export class Airports extends Entity implements AirportsType {
   /**
    * Technical entity name for Airports.
    */
@@ -41,7 +41,7 @@ export class Airports extends EntityV4 implements AirportsType {
    * @returns A builder that constructs instances of entity type `Airports`.
    */
   static builder(): EntityBuilderType<Airports, AirportsType> {
-    return EntityV4.entityBuilder(Airports);
+    return Entity.entityBuilder(Airports);
   }
 
   /**
@@ -57,8 +57,8 @@ export class Airports extends EntityV4 implements AirportsType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Airports`.
    */
-  static customField(fieldName: string): CustomFieldV4<Airports> {
-    return EntityV4.customFieldSelector(fieldName, Airports);
+  static customField(fieldName: string): CustomField<Airports> {
+    return Entity.customFieldSelector(fieldName, Airports);
   }
 
   /**

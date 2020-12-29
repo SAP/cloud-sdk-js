@@ -17,7 +17,7 @@ var TestEntity2_1 = require("./TestEntity2");
  */
 function testFunctionImportEntityReturnType1(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity1_1.TestEntity1); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', function (data) { return core_1.transformReturnValueForEntity(data, TestEntity1_1.TestEntity1); }, params);
 }
 exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType1;
 /**
@@ -28,7 +28,7 @@ exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType
  */
 function testFunctionImportEntityReturnType2(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity2_1.TestEntity2); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', function (data) { return core_1.transformReturnValueForEntity(data, TestEntity2_1.TestEntity2); }, params);
 }
 exports.testFunctionImportEntityReturnType2 = testFunctionImportEntityReturnType2;
 exports.functionImports = {

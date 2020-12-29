@@ -1,4 +1,4 @@
-import { EntityV4 } from '../entity';
+import { Entity } from '../entity';
 import {
   Expandable,
   OneToManyLink,
@@ -24,7 +24,7 @@ function prependDollar(param: string): string {
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
  */
-export function getExpandV4<EntityT extends EntityV4>(
+export function getExpandV4<EntityT extends Entity>(
   expands: Expandable<EntityT>[] = [],
   entityConstructor: Constructable<EntityT>
 ): Partial<{ expand: string }> {
@@ -37,7 +37,7 @@ export function getExpandV4<EntityT extends EntityV4>(
     : {};
 }
 
-function getExpandAsString<EntityT extends EntityV4>(
+function getExpandAsString<EntityT extends Entity>(
   expand: Expandable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ): string {

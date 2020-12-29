@@ -6,57 +6,57 @@ import {
   StringFilterFunction
 } from '../odata-common/filter';
 import {
-  FilterFunctionReturnType,
+  FilterFunctionReturnType as FilterFunctionReturnTypeBase,
   createFilterFunction,
   numberReturnTypeMapping
 } from '../odata-common/filter/filter-function';
 import { CollectionFilterFunction } from '../odata-common/filter/collection-filter-function';
-import { EntityV4 } from './entity';
+import { Entity } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'string',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): StringFilterFunction<EntityT>;
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): DateFilterFunction<EntityT>;
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, boolean>;
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'string[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, string>;
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int[]' | 'double[]' | 'decimal[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, number>;
 
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
@@ -69,9 +69,9 @@ export function filterFunctionV4<EntityT extends EntityV4>(
  * @param parameters - the parameter(s) used in the function
  * @returns An instance of filter function suited for the given return type
  */
-export function filterFunctionV4<EntityT extends EntityV4>(
+export function filterFunction<EntityT extends Entity>(
   functionName: string,
-  returnType: FilterFunctionReturnTypeV4,
+  returnType: FilterFunctionReturnType,
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ):
   | BooleanFilterFunction<EntityT>
@@ -95,7 +95,7 @@ export function filterFunctionV4<EntityT extends EntityV4>(
 }
 
 function isCollectionReturnType(
-  returnType: FilterFunctionReturnTypeV4
+  returnType: FilterFunctionReturnType
 ): returnType is CollectionReturnType {
   return returnType.endsWith('[]');
 }
@@ -108,8 +108,8 @@ type CollectionReturnType =
   | 'decimal[]'
   | 'string[]';
 
-type FilterFunctionReturnTypeV4 =
-  | FilterFunctionReturnType
+type FilterFunctionReturnType =
+  | FilterFunctionReturnTypeBase
   | CollectionReturnType
   | 'datetimeoffset';
 
@@ -119,3 +119,5 @@ const returnTypeMapping = {
   string: 'Edm.String',
   ...numberReturnTypeMapping
 };
+
+export { FilterFunctionReturnType as FilterFunctionReturnTypeV4 };

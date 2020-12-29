@@ -1,5 +1,5 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { EntityV4 } from '../entity';
+import { Entity } from '../entity';
 import { entityDeserializerV4 } from '../entity-deserializer';
 import {
   EntityIdentifiable,
@@ -14,7 +14,7 @@ import {
 } from '../../odata-common';
 import { oDataUriV4 } from '../uri-conversion';
 import { responseDataAccessorV4 } from './response-data-accessor';
-export class GetAllRequestBuilderV4<EntityT extends EntityV4>
+export class GetAllRequestBuilderV4<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;

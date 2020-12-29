@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefinedV4, transformReturnValueForComplexTypeV4, transformReturnValueForEdmTypeV4, transformReturnValueForEntityV4, edmToTsV4, deserializeComplexTypeV4, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
+import { transformReturnValueForUndefinedV4, transformReturnValueForComplexTypeV4, transformReturnValueForEdmType, transformReturnValueForEntity, edmToTs, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 
@@ -63,7 +63,7 @@ export function testActionImportMultipleParameterComplexReturnType(parameters: T
     nullableGeographyPointParam: new ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType)), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 /**
@@ -87,7 +87,7 @@ export function testActionImportUnsupportedEdmTypes(parameters: TestActionImport
     simpleParam: new ActionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Any')), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.Any')), params);
 }
 
 /**
@@ -107,7 +107,7 @@ export function testActionImportNoParameterEntityReturnType(parameters: TestActi
 
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', (data) => transformReturnValueForEntity(data, TestEntity), params);
 }
 
 export const actionImports = {

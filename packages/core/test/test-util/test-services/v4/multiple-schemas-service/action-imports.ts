@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForComplexTypeV4, deserializeComplexTypeV4, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
+import { transformReturnValueForComplexTypeV4, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
 
@@ -24,7 +24,7 @@ export function testActionImportNoParameterComplexReturnType1(parameters: TestAc
 
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType1', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType1)), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType1', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexType(data, TestComplexType1)), params);
 }
 
 /**
@@ -44,7 +44,7 @@ export function testActionImportNoParameterComplexReturnType2(parameters: TestAc
 
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType2)), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexType(data, TestComplexType2)), params);
 }
 
 export const actionImports = {

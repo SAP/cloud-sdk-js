@@ -1,9 +1,9 @@
 import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
-import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, EntityBuilderType, Entity, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "TestEntityLink" of service "AdminService".
  */
-export declare class TestEntityLink extends EntityV4 implements TestEntityLinkType {
+export declare class TestEntityLink extends Entity implements TestEntityLinkType {
     /**
      * Technical entity name for TestEntityLink.
      */
@@ -41,7 +41,7 @@ export declare class TestEntityLink extends EntityV4 implements TestEntityLinkTy
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityLink`.
      */
-    static customField(fieldName: string): CustomFieldV4<TestEntityLink>;
+    static customField(fieldName: string): CustomField<TestEntityLink>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

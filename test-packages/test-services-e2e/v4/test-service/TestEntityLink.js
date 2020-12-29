@@ -45,7 +45,7 @@ var TestEntityLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityLink`.
      */
     TestEntityLink.builder = function () {
-        return core_1.EntityV4.entityBuilder(TestEntityLink);
+        return core_1.Entity.entityBuilder(TestEntityLink);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityLink` entity type.
@@ -60,7 +60,7 @@ var TestEntityLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityLink`.
      */
     TestEntityLink.customField = function (fieldName) {
-        return core_1.EntityV4.customFieldSelector(fieldName, TestEntityLink);
+        return core_1.Entity.customFieldSelector(fieldName, TestEntityLink);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -78,7 +78,7 @@ var TestEntityLink = /** @class */ (function (_super) {
      */
     TestEntityLink._defaultServicePath = '/odata/test-service';
     return TestEntityLink;
-}(core_1.EntityV4));
+}(core_1.Entity));
 exports.TestEntityLink = TestEntityLink;
 (function (TestEntityLink) {
     /**

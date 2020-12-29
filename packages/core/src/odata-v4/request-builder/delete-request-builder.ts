@@ -4,14 +4,14 @@ import {
   EntityIdentifiable,
   FieldType
 } from '../../odata-common';
-import { EntityV4 } from '../entity';
+import { Entity } from '../entity';
 import { oDataUriV4 } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.
  *
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export class DeleteRequestBuilderV4<EntityT extends EntityV4>
+export class DeleteRequestBuilderV4<EntityT extends Entity>
   extends DeleteRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
@@ -25,7 +25,7 @@ export class DeleteRequestBuilderV4<EntityT extends EntityV4>
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    keysOrEntity: Record<string, FieldType> | EntityV4
+    keysOrEntity: Record<string, FieldType> | Entity
   ) {
     super(entityConstructor, oDataUriV4, keysOrEntity);
   }

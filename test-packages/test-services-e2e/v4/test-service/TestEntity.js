@@ -45,7 +45,7 @@ var TestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     TestEntity.builder = function () {
-        return core_1.EntityV4.entityBuilder(TestEntity);
+        return core_1.Entity.entityBuilder(TestEntity);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
@@ -60,7 +60,7 @@ var TestEntity = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity`.
      */
     TestEntity.customField = function (fieldName) {
-        return core_1.EntityV4.customFieldSelector(fieldName, TestEntity);
+        return core_1.Entity.customFieldSelector(fieldName, TestEntity);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -78,7 +78,7 @@ var TestEntity = /** @class */ (function (_super) {
      */
     TestEntity._defaultServicePath = '/odata/test-service';
     return TestEntity;
-}(core_1.EntityV4));
+}(core_1.Entity));
 exports.TestEntity = TestEntity;
 var TestEntityLink_1 = require("./TestEntityLink");
 (function (TestEntity) {

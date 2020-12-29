@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEntityV4, transformReturnValueForEdmTypeV4, edmToTsV4, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEntity, transformReturnValueForEdmType, edmToTs, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -27,7 +27,7 @@ export function createTestEntity(parameters: CreateTestEntityParameters): Action
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   }
 
-  return new ActionImportRequestBuilder('/odata/test-service', 'createTestEntity', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
+  return new ActionImportRequestBuilder('/odata/test-service', 'createTestEntity', (data) => transformReturnValueForEntity(data, TestEntity), params);
 }
 
 /**
@@ -51,7 +51,7 @@ export function createTestEntityReturnId(parameters: CreateTestEntityReturnIdPar
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   }
 
-  return new ActionImportRequestBuilder('/odata/test-service', 'createTestEntityReturnId', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
+  return new ActionImportRequestBuilder('/odata/test-service', 'createTestEntityReturnId', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.Int32')), params);
 }
 
 export const actionImports = {

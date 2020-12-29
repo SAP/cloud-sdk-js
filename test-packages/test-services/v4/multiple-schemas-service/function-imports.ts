@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEntityV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEntity, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity2 } from './TestEntity2';
 
@@ -24,7 +24,7 @@ export function testFunctionImportEntityReturnType1(parameters: TestFunctionImpo
 
   }
 
-  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntityV4(data, TestEntity1), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntity(data, TestEntity1), params);
 }
 
 /**
@@ -44,7 +44,7 @@ export function testFunctionImportEntityReturnType2(parameters: TestFunctionImpo
 
   }
 
-  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntityV4(data, TestEntity2), params);
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntity(data, TestEntity2), params);
 }
 
 export const functionImports = {

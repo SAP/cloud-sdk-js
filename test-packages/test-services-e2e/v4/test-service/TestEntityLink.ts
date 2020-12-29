@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
-import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomField, EntityBuilderType, Entity, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "TestEntityLink" of service "AdminService".
  */
-export class TestEntityLink extends EntityV4 implements TestEntityLinkType {
+export class TestEntityLink extends Entity implements TestEntityLinkType {
   /**
    * Technical entity name for TestEntityLink.
    */
@@ -38,7 +38,7 @@ export class TestEntityLink extends EntityV4 implements TestEntityLinkType {
    * @returns A builder that constructs instances of entity type `TestEntityLink`.
    */
   static builder(): EntityBuilderType<TestEntityLink, TestEntityLinkType> {
-    return EntityV4.entityBuilder(TestEntityLink);
+    return Entity.entityBuilder(TestEntityLink);
   }
 
   /**
@@ -54,8 +54,8 @@ export class TestEntityLink extends EntityV4 implements TestEntityLinkType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityLink`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntityLink> {
-    return EntityV4.customFieldSelector(fieldName, TestEntityLink);
+  static customField(fieldName: string): CustomField<TestEntityLink> {
+    return Entity.customFieldSelector(fieldName, TestEntityLink);
   }
 
   /**

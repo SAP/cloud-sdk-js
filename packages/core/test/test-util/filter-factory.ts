@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { or } from '../../src';
-import { all, any, filterFunctionsV4 } from '../../src/odata-v4';
+import { all, any, filterFunctions } from '../../src/odata-v4';
 import {
   TestEntity,
   TestEntitySingleLink
@@ -97,7 +97,7 @@ export const testNestedFilterLambdaExpressionOnLink = {
 export const testFilterLambdaExpressionFilterFunctionOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
     any(
-      filterFunctionsV4
+      filterFunctions
         .substring(TestEntityMultiLinkV4.STRING_PROPERTY, 1)
         .equals('test')
     )

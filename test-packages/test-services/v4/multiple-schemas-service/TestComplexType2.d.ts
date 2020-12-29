@@ -1,4 +1,4 @@
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata } from '@sap-cloud-sdk/core';
 /**
  * TestComplexType2
  */
@@ -16,7 +16,7 @@ export declare function createTestComplexType2(json: any): TestComplexType2;
  * TestComplexType2Field
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export declare class TestComplexType2Field<EntityT extends EntityV4> extends ComplexTypeField<EntityT, TestComplexType2> {
+export declare class TestComplexType2Field<EntityT extends Entity> extends ComplexTypeField<EntityT, TestComplexType2> {
     /**
      * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -36,7 +36,7 @@ export declare namespace TestComplexType2 {
      */
     const _propertyMetadata: PropertyMetadata<TestComplexType2>[];
     /**
-     * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+     * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json: {
         [keys: string]: FieldType;

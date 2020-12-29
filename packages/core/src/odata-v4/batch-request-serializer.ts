@@ -5,7 +5,7 @@ import {
   serializeChangeSet,
   serializeRequest
 } from '../odata-common';
-import { EntityV4 } from './entity';
+import { Entity } from './entity';
 import {
   CreateRequestBuilderV4,
   DeleteRequestBuilderV4,
@@ -30,7 +30,7 @@ import {
  * @returns The request body.
  */
 export function toBatchRetrieveBodyV4(
-  request: GetAllRequestBuilderV4<EntityV4> | GetByKeyRequestBuilderV4<EntityV4>
+  request: GetAllRequestBuilderV4<Entity> | GetByKeyRequestBuilderV4<Entity>
 ): string {
   return serializeRequest(request);
 }
@@ -43,9 +43,9 @@ export function toBatchRetrieveBodyV4(
  */
 export function toBatchChangeSetV4<
   T extends
-    | CreateRequestBuilderV4<EntityV4>
-    | UpdateRequestBuilderV4<EntityV4>
-    | DeleteRequestBuilderV4<EntityV4>
+    | CreateRequestBuilderV4<Entity>
+    | UpdateRequestBuilderV4<Entity>
+    | DeleteRequestBuilderV4<Entity>
 >(changeSet: BatchChangeSet<T>): string | undefined {
   return serializeChangeSet(changeSet);
 }

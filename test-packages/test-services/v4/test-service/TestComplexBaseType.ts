@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexBaseType
@@ -27,7 +27,7 @@ export function createTestComplexBaseType(json: any): TestComplexBaseType {
  * TestComplexBaseTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexBaseTypeField<EntityT extends EntityV4> extends ComplexTypeField<EntityT, TestComplexBaseType> {
+export class TestComplexBaseTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT, TestComplexBaseType> {
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -57,9 +57,9 @@ export namespace TestComplexBaseType {
   }];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType }): TestComplexBaseType {
-    return deserializeComplexTypeV4(json, TestComplexBaseType);
+    return deserializeComplexType(json, TestComplexBaseType);
   }
 }

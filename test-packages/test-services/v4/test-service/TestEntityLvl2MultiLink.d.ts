@@ -1,9 +1,9 @@
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
-import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BooleanField, CustomField, EntityBuilderType, Entity, Field, NumberField, OneToManyLink, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
  */
-export declare class TestEntityLvl2MultiLink extends EntityV4 implements TestEntityLvl2MultiLinkType {
+export declare class TestEntityLvl2MultiLink extends Entity implements TestEntityLvl2MultiLinkType {
     /**
      * Technical entity name for TestEntityLvl2MultiLink.
      */
@@ -57,7 +57,7 @@ export declare class TestEntityLvl2MultiLink extends EntityV4 implements TestEnt
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
      */
-    static customField(fieldName: string): CustomFieldV4<TestEntityLvl2MultiLink>;
+    static customField(fieldName: string): CustomField<TestEntityLvl2MultiLink>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

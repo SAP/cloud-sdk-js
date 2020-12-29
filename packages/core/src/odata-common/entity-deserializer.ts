@@ -20,7 +20,7 @@ import {
   EdmToPrimitive as EdmToPrimitiveV2,
   EdmType as EdmTypeV2
 } from '../odata-v2';
-import { EdmToPrimitiveV4, EdmTypeV4 } from '../odata-v4';
+import { EdmToPrimitive, EdmType } from '../odata-v4';
 import { toPropertyFormat } from './name-converter';
 
 const logger = createLogger({
@@ -47,10 +47,10 @@ type EdmToTsTypeV2<EdmT extends EdmTypeV2 = any> = (
   value: any,
   edmType: EdmTypeShared<'v2'>
 ) => EdmToPrimitiveV2<EdmT>;
-type EdmToTsTypeV4<EdmT extends EdmTypeV4 = any> = (
+type EdmToTsTypeV4<EdmT extends EdmType = any> = (
   value: any,
   edmType: EdmTypeShared<'v4'>
-) => EdmToPrimitiveV4<EdmT>;
+) => EdmToPrimitive<EdmT>;
 type ExtractODataETagType = (json: Record<string, any>) => string | undefined;
 type ExtractDataFromOneToManyLinkType = (data: any) => any[];
 

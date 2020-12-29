@@ -4,13 +4,13 @@ import {
   mockCountRequest
 } from '../../../test/test-util/request-mocker';
 import { TestEntity as TestEntityV2 } from '../../../test/test-util/test-services/v2/test-service';
-import { TestEntity as TestEntityV4 } from '../../../test/test-util/test-services/v4/test-service';
+import { TestEntity as TestEntity } from '../../../test/test-util/test-services/v4/test-service';
 import { Filter } from '../filter';
 
 describe('CountRequestBuilderV2', () => {
   const requestBuilders = [
     TestEntityV2.requestBuilder(),
-    TestEntityV4.requestBuilder()
+    TestEntity.requestBuilder()
   ];
 
   describe('url', () => {
@@ -63,7 +63,7 @@ describe('CountRequestBuilderV2', () => {
         messageContext: 'count-request-config'
       });
       const warnSpy = jest.spyOn(logger, 'warn');
-      const actual = await TestEntityV4.requestBuilder()
+      const actual = await TestEntity.requestBuilder()
         .getAll()
         .top(1)
         .count()
@@ -82,7 +82,7 @@ describe('CountRequestBuilderV2', () => {
           mockCountRequest(
             defaultDestination,
             4711,
-            TestEntityV4.requestBuilder().getAll()
+            TestEntity.requestBuilder().getAll()
           );
           const count = await requestBuilder
             .getAll()

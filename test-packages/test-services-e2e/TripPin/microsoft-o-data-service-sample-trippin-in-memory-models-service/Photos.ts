@@ -5,12 +5,12 @@
  */
 import { PhotosRequestBuilder } from './PhotosRequestBuilder';
 import { BigNumber } from 'bignumber.js';
-import { AllFields, BigNumberField, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, BigNumberField, CustomField, EntityBuilderType, Entity, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class Photos extends EntityV4 implements PhotosType {
+export class Photos extends Entity implements PhotosType {
   /**
    * Technical entity name for Photos.
    */
@@ -34,7 +34,7 @@ export class Photos extends EntityV4 implements PhotosType {
    * @returns A builder that constructs instances of entity type `Photos`.
    */
   static builder(): EntityBuilderType<Photos, PhotosType> {
-    return EntityV4.entityBuilder(Photos);
+    return Entity.entityBuilder(Photos);
   }
 
   /**
@@ -50,8 +50,8 @@ export class Photos extends EntityV4 implements PhotosType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Photos`.
    */
-  static customField(fieldName: string): CustomFieldV4<Photos> {
-    return EntityV4.customFieldSelector(fieldName, Photos);
+  static customField(fieldName: string): CustomField<Photos> {
+    return Entity.customFieldSelector(fieldName, Photos);
   }
 
   /**

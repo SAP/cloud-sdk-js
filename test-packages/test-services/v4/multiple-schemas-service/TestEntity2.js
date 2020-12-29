@@ -45,7 +45,7 @@ var TestEntity2 = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity2`.
      */
     TestEntity2.builder = function () {
-        return core_1.EntityV4.entityBuilder(TestEntity2);
+        return core_1.Entity.entityBuilder(TestEntity2);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntity2` entity type.
@@ -60,7 +60,7 @@ var TestEntity2 = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntity2`.
      */
     TestEntity2.customField = function (fieldName) {
-        return core_1.EntityV4.customFieldSelector(fieldName, TestEntity2);
+        return core_1.Entity.customFieldSelector(fieldName, TestEntity2);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -78,7 +78,7 @@ var TestEntity2 = /** @class */ (function (_super) {
      */
     TestEntity2._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntity2;
-}(core_1.EntityV4));
+}(core_1.Entity));
 exports.TestEntity2 = TestEntity2;
 (function (TestEntity2) {
     /**

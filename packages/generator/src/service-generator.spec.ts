@@ -297,7 +297,7 @@ describe('service-generator', () => {
           returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
           returnType: 'TestComplexType',
           builderFunction:
-            '(data) => deserializeComplexType(data, TestComplexType)',
+            '(data) => deserializeComplexTypeV2(data, TestComplexType)',
           isCollection: false,
           isMulti: false
         };

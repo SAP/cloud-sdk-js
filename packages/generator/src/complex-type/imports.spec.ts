@@ -18,10 +18,10 @@ describe('complex type imports', () => {
           'ComplexTypeNumberPropertyField',
           'ComplexTypeStringPropertyField',
           'ConstructorOrField',
-          'Entity',
+          'EntityV2',
           'FieldType',
           'PropertyMetadata',
-          'deserializeComplexType'
+          'deserializeComplexTypeV2'
         ]
       }
     ]);
@@ -42,10 +42,10 @@ describe('complex type imports', () => {
           'ComplexTypeField',
           'ComplexTypeNumberPropertyField',
           'ConstructorOrField',
-          'Entity',
+          'EntityV2',
           'FieldType',
           'PropertyMetadata',
-          'deserializeComplexType'
+          'deserializeComplexTypeV2'
         ]
       }
     ]);
@@ -74,10 +74,10 @@ describe('complex type imports', () => {
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
-          'Entity',
+          'EntityV2',
           'FieldType',
           'PropertyMetadata',
-          'deserializeComplexType'
+          'deserializeComplexTypeV2'
         ]
       }
     ]);

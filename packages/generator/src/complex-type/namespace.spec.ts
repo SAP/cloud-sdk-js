@@ -48,10 +48,10 @@ describe('namespace', () => {
               type: '{ [keys: string]: FieldType }'
             }
           ],
-          statements: 'return deserializeComplexType(json, ComplexMealType);',
+          statements: 'return deserializeComplexTypeV2(json, ComplexMealType);',
           isExported: true,
           docs: [
-            '\n@deprecated Since v1.25.0. Use `deserializeComplexType` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
+            '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
           ]
         }
       ]

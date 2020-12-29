@@ -11,7 +11,7 @@ describe('field-type-class', () => {
 
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealField<EntityT extends Entity>',
+      name: 'ComplexMealField<EntityT extends EntityV2>',
       extends: 'ComplexTypeField<EntityT, ComplexMealType>',
       isExported: true,
       properties: [

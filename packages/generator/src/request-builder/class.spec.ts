@@ -16,9 +16,9 @@ describe('request builder class', () => {
     }));
     const getByKey = {
       name: 'getByKey',
-      returnType: 'GetByKeyRequestBuilder<Breakfast>',
+      returnType: 'GetByKeyRequestBuilderV2<Breakfast>',
       statements:
-        'return new GetByKeyRequestBuilder(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime});',
+        'return new GetByKeyRequestBuilderV2(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime});',
       parameters: [
         { name: 'entityName', type: 'string' },
         { name: 'breakfastTime', type: 'Time' }
@@ -26,20 +26,20 @@ describe('request builder class', () => {
     };
     const getAll = {
       name: 'getAll',
-      returnType: 'GetAllRequestBuilder<Breakfast>',
-      statements: 'return new GetAllRequestBuilder(Breakfast);',
+      returnType: 'GetAllRequestBuilderV2<Breakfast>',
+      statements: 'return new GetAllRequestBuilderV2(Breakfast);',
       parameters: undefined
     };
     const create = {
       name: 'create',
-      returnType: 'CreateRequestBuilder<Breakfast>',
-      statements: 'return new CreateRequestBuilder(Breakfast, entity);',
+      returnType: 'CreateRequestBuilderV2<Breakfast>',
+      statements: 'return new CreateRequestBuilderV2(Breakfast, entity);',
       parameters: [{ name: 'entity', type: 'Breakfast' }]
     };
     const update = {
       name: 'update',
-      returnType: 'UpdateRequestBuilder<Breakfast>',
-      statements: 'return new UpdateRequestBuilder(Breakfast, entity);',
+      returnType: 'UpdateRequestBuilderV2<Breakfast>',
+      statements: 'return new UpdateRequestBuilderV2(Breakfast, entity);',
       parameters: [{ name: 'entity', type: 'Breakfast' }]
     };
     expect(methods).toEqual([getByKey, getAll, create, update]);

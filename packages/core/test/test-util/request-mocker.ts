@@ -3,7 +3,7 @@ import {
   basicHeader,
   Constructable,
   Destination,
-  GetAllRequestBuilder,
+  GetAllRequestBuilderV2,
   GetAllRequestBuilderV4,
   oDataUri
 } from '../../src';
@@ -151,7 +151,7 @@ export function mockCountRequest(
   destination: Destination,
   count: number,
   getAllRequest:
-    | GetAllRequestBuilder<any>
+    | GetAllRequestBuilderV2<any>
     | GetAllRequestBuilderV4<any> = TestEntity.requestBuilder().getAll()
 ) {
   const servicePath = getAllRequest._entityConstructor._defaultServicePath;

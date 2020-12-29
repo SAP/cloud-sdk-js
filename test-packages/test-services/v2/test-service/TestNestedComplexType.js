@@ -77,7 +77,7 @@ var TestNestedComplexType;
      * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return core_1.deserializeComplexType(json, TestNestedComplexType);
+        return core_1.deserializeComplexTypeV2(json, TestNestedComplexType);
     }
     TestNestedComplexType.build = build;
 })(TestNestedComplexType = exports.TestNestedComplexType || (exports.TestNestedComplexType = {}));

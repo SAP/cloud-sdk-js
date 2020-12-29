@@ -35,14 +35,14 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (_super)
      * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.getByKey = function (keyProperty) {
-        return new core_1.GetByKeyRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, { KeyProperty: keyProperty });
+        return new core_1.GetByKeyRequestBuilderV2(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, { KeyProperty: keyProperty });
     };
     /**
      * Returns a request builder for querying all `TestEntityCircularLinkChild` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkChild` entities.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
+        return new core_1.GetAllRequestBuilderV2(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild);
     };
     /**
      * Returns a request builder for creating a `TestEntityCircularLinkChild` entity.
@@ -50,7 +50,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (_super)
      * @returns A request builder for creating requests that create an entity of type `TestEntityCircularLinkChild`.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
+        return new core_1.CreateRequestBuilderV2(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `TestEntityCircularLinkChild`.
@@ -58,10 +58,10 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (_super)
      * @returns A request builder for creating requests that update an entity of type `TestEntityCircularLinkChild`.
      */
     TestEntityCircularLinkChildRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
+        return new core_1.UpdateRequestBuilderV2(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, entity);
     };
     TestEntityCircularLinkChildRequestBuilder.prototype.delete = function (keyPropertyOrEntity) {
-        return new core_1.DeleteRequestBuilder(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, keyPropertyOrEntity instanceof TestEntityCircularLinkChild_1.TestEntityCircularLinkChild ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
+        return new core_1.DeleteRequestBuilderV2(TestEntityCircularLinkChild_1.TestEntityCircularLinkChild, keyPropertyOrEntity instanceof TestEntityCircularLinkChild_1.TestEntityCircularLinkChild ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity });
     };
     return TestEntityCircularLinkChildRequestBuilder;
 }(core_1.RequestBuilder));

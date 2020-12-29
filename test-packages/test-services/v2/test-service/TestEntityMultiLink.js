@@ -45,7 +45,7 @@ var TestEntityMultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
      */
     TestEntityMultiLink.builder = function () {
-        return core_1.Entity.entityBuilder(TestEntityMultiLink);
+        return core_1.EntityV2.entityBuilder(TestEntityMultiLink);
     };
     /**
      * Returns a request builder to construct requests for operations on the `TestEntityMultiLink` entity type.
@@ -60,7 +60,7 @@ var TestEntityMultiLink = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
      */
     TestEntityMultiLink.customField = function (fieldName) {
-        return core_1.Entity.customFieldSelector(fieldName, TestEntityMultiLink);
+        return core_1.EntityV2.customFieldSelector(fieldName, TestEntityMultiLink);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -78,7 +78,7 @@ var TestEntityMultiLink = /** @class */ (function (_super) {
      */
     TestEntityMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
     return TestEntityMultiLink;
-}(core_1.Entity));
+}(core_1.EntityV2));
 exports.TestEntityMultiLink = TestEntityMultiLink;
 var TestEntityLvl2MultiLink_1 = require("./TestEntityLvl2MultiLink");
 var TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");

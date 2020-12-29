@@ -1,9 +1,9 @@
 import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
-import { AllFields, CustomField, EntityBuilderType, Entity, Field, StringField } from '@sap-cloud-sdk/core';
+import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
-export declare class TestEntityEndsWith extends Entity implements TestEntityEndsWithType {
+export declare class TestEntityEndsWith extends EntityV2 implements TestEntityEndsWithType {
     /**
      * Technical entity name for TestEntityEndsWith.
      */
@@ -31,7 +31,7 @@ export declare class TestEntityEndsWith extends Entity implements TestEntityEnds
      * @param fieldName Name of the custom field to select
      * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
      */
-    static customField(fieldName: string): CustomField<TestEntityEndsWith>;
+    static customField(fieldName: string): CustomFieldV2<TestEntityEndsWith>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.

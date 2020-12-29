@@ -38,9 +38,9 @@ const expectedEntityImports = [
     namedImports: [
       'AllFields',
       'BigNumberField',
-      'CustomField',
+      'CustomFieldV2',
       'EntityBuilderType',
-      'Entity',
+      'EntityV2',
       'Field',
       'OneToOneLink',
       'StringField',

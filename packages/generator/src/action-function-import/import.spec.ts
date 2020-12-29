@@ -16,7 +16,7 @@ describe('function-import generation', () => {
         namedImports: [
           'transformReturnValueForEdmTypeV2',
           'edmToTsV2',
-          'FunctionImportRequestBuilder',
+          'FunctionImportRequestBuilderV2',
           'FunctionImportParameter'
         ]
       }

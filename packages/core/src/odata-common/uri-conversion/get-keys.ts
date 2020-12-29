@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 import { Field } from '../selectable';
 import { toPropertyFormat } from '../name-converter';
 
@@ -9,7 +9,7 @@ import { toPropertyFormat } from '../name-converter';
  * @param entityConstructor - The constructor of the entity
  * @returns object that includes all keys that represent given entity
  */
-export function getEntityKeys<EntityT extends EntityBase>(
+export function getEntityKeys<EntityT extends Entity>(
   entity: EntityT,
   entityConstructor: Constructable<EntityT>
 ): Record<string, any> {

@@ -1,4 +1,4 @@
-import { Constructable, EntityBase } from './entity';
+import { Constructable, Entity } from './entity';
 
 export type BatchResponse = ReadResponse | WriteResponses | ErrorResponse;
 
@@ -16,14 +16,14 @@ export interface ErrorResponse {
 export interface ReadResponse {
   httpCode: number;
   body: Record<string, any>;
-  type: Constructable<EntityBase>;
-  as: <T extends EntityBase>(constructor: Constructable<T>) => T[];
+  type: Constructable<Entity>;
+  as: <T extends Entity>(constructor: Constructable<T>) => T[];
   isSuccess: () => boolean;
 }
 
 export interface WriteResponse {
   httpCode: number;
   body?: Record<string, any>;
-  type?: Constructable<EntityBase>;
-  as?: <T extends EntityBase>(constructor: Constructable<T>) => T;
+  type?: Constructable<Entity>;
+  as?: <T extends Entity>(constructor: Constructable<T>) => T;
 }

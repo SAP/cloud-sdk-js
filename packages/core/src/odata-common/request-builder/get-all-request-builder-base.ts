@@ -1,5 +1,5 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { Constructable, EntityBase } from '../entity';
+import { Constructable, Entity } from '../entity';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
@@ -11,16 +11,16 @@ import {
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { GetRequestBuilderBase } from './get-request-builder-base';
+import { GetRequestBuilder } from './get-request-builder-base';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export abstract class GetAllRequestBuilderBase<
-  EntityT extends EntityBase
-> extends GetRequestBuilderBase<EntityT, ODataGetAllRequestConfig<EntityT>> {
+export abstract class GetAllRequestBuilder<
+  EntityT extends Entity
+> extends GetRequestBuilder<EntityT, ODataGetAllRequestConfig<EntityT>> {
   /**
    * Creates an instance of GetAllRequestBuilder.
    *
@@ -124,3 +124,5 @@ export abstract class GetAllRequestBuilderBase<
       );
   }
 }
+
+export { GetAllRequestBuilder as GetAllRequestBuilderBase };

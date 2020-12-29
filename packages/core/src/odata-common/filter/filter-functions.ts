@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
@@ -14,7 +14,7 @@ import { NumberFilterFunction } from './number-filter-function';
  *
  * @returns The newly created filter function
  */
-export function endsWith<EntityT extends EntityBase>(
+export function endsWith<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   suffix: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
@@ -28,7 +28,7 @@ export function endsWith<EntityT extends EntityBase>(
  *
  * @returns The newly created filter function
  */
-export function startsWith<EntityT extends EntityBase>(
+export function startsWith<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   prefix: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
@@ -40,7 +40,7 @@ export function startsWith<EntityT extends EntityBase>(
  * @param str - The string to compute the length for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function length<EntityT extends EntityBase>(
+export function length<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('length', 'int', str);
@@ -53,7 +53,7 @@ export function length<EntityT extends EntityBase>(
  *
  * @returns The newly created filter function
  */
-export function indexOf<EntityT extends EntityBase>(
+export function indexOf<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): NumberFilterFunction<EntityT> {
@@ -67,7 +67,7 @@ export function indexOf<EntityT extends EntityBase>(
  * @param len - The length of the substring. This can be either a number, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function substring<EntityT extends EntityBase>(
+export function substring<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   pos: number | Field<EntityT> | NumberFilterFunction<EntityT>,
   len?: number | Field<EntityT> | NumberFilterFunction<EntityT>
@@ -82,7 +82,7 @@ export function substring<EntityT extends EntityBase>(
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function toLower<EntityT extends EntityBase>(
+export function toLower<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('tolower', 'string', str);
@@ -93,7 +93,7 @@ export function toLower<EntityT extends EntityBase>(
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function toUpper<EntityT extends EntityBase>(
+export function toUpper<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('toupper', 'string', str);
@@ -104,7 +104,7 @@ export function toUpper<EntityT extends EntityBase>(
  * @param str - The string to trim whitespace from. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function trim<EntityT extends EntityBase>(
+export function trim<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('trim', 'string', str);
@@ -116,7 +116,7 @@ export function trim<EntityT extends EntityBase>(
  * @param str2 - The second string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function concat<EntityT extends EntityBase>(
+export function concat<EntityT extends Entity>(
   str1: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str2: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
@@ -130,7 +130,7 @@ export function concat<EntityT extends EntityBase>(
  * @param returnType - The return type to use.
  * @returns The newly created filter function
  */
-export function round<EntityT extends EntityBase>(
+export function round<EntityT extends Entity>(
   num: number | Field<EntityT> | NumberFilterFunction<EntityT>,
   returnType: 'double' | 'decimal' = 'double'
 ): NumberFilterFunction<EntityT> {
@@ -143,7 +143,7 @@ export function round<EntityT extends EntityBase>(
  * @param returnType - The return type to use.
  * @returns The newly created filter function
  */
-export function floor<EntityT extends EntityBase>(
+export function floor<EntityT extends Entity>(
   num: number | Field<EntityT> | NumberFilterFunction<EntityT>,
   returnType: 'double' | 'decimal' = 'double'
 ): NumberFilterFunction<EntityT> {
@@ -156,7 +156,7 @@ export function floor<EntityT extends EntityBase>(
  * @param returnType - The return type to use.
  * @returns The newly created filter function
  */
-export function ceiling<EntityT extends EntityBase>(
+export function ceiling<EntityT extends Entity>(
   num: number | Field<EntityT> | NumberFilterFunction<EntityT>,
   returnType: 'double' | 'decimal' = 'double'
 ): NumberFilterFunction<EntityT> {
@@ -169,7 +169,7 @@ export function ceiling<EntityT extends EntityBase>(
  * @param date - The date to get the day for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function day<EntityT extends EntityBase>(
+export function day<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('day', 'int', date);
@@ -180,7 +180,7 @@ export function day<EntityT extends EntityBase>(
  * @param date - The date to get the hour for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function hour<EntityT extends EntityBase>(
+export function hour<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('hour', 'int', date);
@@ -191,7 +191,7 @@ export function hour<EntityT extends EntityBase>(
  * @param date - The date to get the minute for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function minute<EntityT extends EntityBase>(
+export function minute<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('minute', 'int', date);
@@ -202,7 +202,7 @@ export function minute<EntityT extends EntityBase>(
  * @param date - The date to get the month for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function month<EntityT extends EntityBase>(
+export function month<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('month', 'int', date);
@@ -213,7 +213,7 @@ export function month<EntityT extends EntityBase>(
  * @param date - The date to get the second for. This can either be a date (moment.Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function second<EntityT extends EntityBase>(
+export function second<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('second', 'int', date);
@@ -224,7 +224,7 @@ export function second<EntityT extends EntityBase>(
  * @param date - The date to get the year for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function year<EntityT extends EntityBase>(
+export function year<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('year', 'int', date);
@@ -237,7 +237,7 @@ export function year<EntityT extends EntityBase>(
  *
  * @returns The newly created filter function
  */
-export function isOf<EntityT extends EntityBase>(
+export function isOf<EntityT extends Entity>(
   type: string
 ): BooleanFilterFunction<EntityT>;
 /**
@@ -247,12 +247,12 @@ export function isOf<EntityT extends EntityBase>(
  *
  * @returns The newly created filter function
  */
-export function isOf<EntityT extends EntityBase>(
+export function isOf<EntityT extends Entity>(
   expression: Field<EntityT>,
   type: string
 ): BooleanFilterFunction<EntityT>;
 
-export function isOf<EntityT extends EntityBase>(
+export function isOf<EntityT extends Entity>(
   expressionOrType: Field<EntityT> | string,
   type?: string
 ): BooleanFilterFunction<EntityT> {

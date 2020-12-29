@@ -1,4 +1,4 @@
-import { Constructable, EntityBase } from '../entity';
+import { Constructable, Entity } from '../entity';
 import { Link } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
@@ -9,7 +9,7 @@ import { ODataRequestConfig } from './odata-request-config';
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataCreateRequestConfig<
-  EntityT extends EntityBase
+  EntityT extends Entity
 > extends ODataRequestConfig {
   /**
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
@@ -19,7 +19,7 @@ export class ODataCreateRequestConfig<
   /**
    * Field that links the parent entity class to the child entity class.
    */
-  childField: Link<EntityBase, EntityT>;
+  childField: Link<Entity, EntityT>;
 
   /**
    * Creates an instance of ODataRequest.

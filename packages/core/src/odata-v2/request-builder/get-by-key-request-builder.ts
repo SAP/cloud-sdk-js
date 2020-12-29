@@ -2,7 +2,7 @@ import {
   Constructable,
   EntityIdentifiable,
   FieldType,
-  GetByKeyRequestBuilderBase
+  GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
 } from '../../odata-common';
 import { EntityV2 } from '../entity';
 import { entityDeserializerV2 } from '../entity-deserializer';

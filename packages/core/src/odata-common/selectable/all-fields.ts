@@ -1,6 +1,6 @@
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 
-export class AllFields<EntityT extends EntityBase> {
+export class AllFields<EntityT extends Entity> {
   readonly selectable: true;
 
   constructor(

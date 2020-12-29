@@ -2,19 +2,16 @@
 
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
-import { Link, Field, Selectable, CustomFieldBase } from './selectable';
+import { Link, Field, Selectable, CustomField } from './selectable';
 import { RequestBuilder } from './request-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
 
-export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
+export type ODataVersionOf<T extends Entity> = T['_oDataVersion'];
 
 /**
  * @hidden
  */
-export interface Constructable<
-  EntityT extends EntityBase,
-  EntityTypeT = unknown
-> {
+export interface Constructable<EntityT extends Entity, EntityTypeT = unknown> {
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
@@ -24,10 +21,10 @@ export interface Constructable<
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;
   builder(): EntityBuilderType<EntityT, EntityTypeT>;
-  customField(fieldName: string): CustomFieldBase<EntityT>;
+  customField(fieldName: string): CustomField<EntityT>;
 }
 
-export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
+export type EntityBuilderType<EntityT extends Entity, EntityTypeT> = {
   [property in keyof Required<EntityTypeT>]: (
     value: EntityTypeT[property]
   ) => EntityBuilderType<EntityT, EntityTypeT>;
@@ -37,12 +34,12 @@ export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
 /**
  * Super class for all representations of OData entity types.
  */
-export abstract class EntityBase {
+export abstract class Entity {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
 
-  protected static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
+  protected static entityBuilder<EntityT extends Entity, EntityTypeT>(
     entityConstructor: Constructable<EntityT, EntityTypeT>
   ): EntityBuilderType<EntityT, EntityTypeT> {
     const builder = new EntityBuilder<EntityT, EntityTypeT>(entityConstructor);
@@ -267,23 +264,20 @@ export abstract class EntityBase {
    * @param visitedEntities List of entities to check in case of circular dependencies.
    * @returns Entity with all defined entity fields
    */
-  protected getCurrentMapKeys(visitedEntities: EntityBase[] = []): this {
+  protected getCurrentMapKeys(visitedEntities: Entity[] = []): this {
     return this.asObject(visitedEntities) as this;
   }
 
-  protected isVisitedEntity<EntityT extends EntityBase>(
+  protected isVisitedEntity<EntityT extends Entity>(
     entity: EntityT,
-    visitedEntities: EntityBase[] = []
+    visitedEntities: Entity[] = []
   ): boolean {
     return Array.isArray(entity)
       ? entity.some(multiLinkChild => visitedEntities.includes(multiLinkChild))
       : visitedEntities.includes(entity);
   }
 
-  protected getCurrentStateForKey(
-    key: string,
-    visitedEntities: EntityBase[] = []
-  ) {
+  protected getCurrentStateForKey(key: string, visitedEntities: Entity[] = []) {
     if (isNavigationProperty(key, this.constructor)) {
       if (isNullish(this[key])) {
         return this[key];
@@ -336,7 +330,7 @@ export abstract class EntityBase {
 /**
  * @hidden
  */
-export interface EntityIdentifiable<T extends EntityBase> {
+export interface EntityIdentifiable<T extends Entity> {
   readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;
 }
@@ -346,7 +340,7 @@ export interface EntityIdentifiable<T extends EntityBase> {
 /**
  * @hidden
  */
-export function isSelectedProperty<EntityT extends EntityBase>(
+export function isSelectedProperty<EntityT extends Entity>(
   json,
   field: Field<EntityT> | Link<EntityT>
 ) {
@@ -357,8 +351,8 @@ export function isSelectedProperty<EntityT extends EntityBase>(
  * @hidden
  */
 export function isExistentProperty<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
 >(json, link: Link<EntityT, LinkedEntityT>) {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
@@ -367,11 +361,13 @@ export function isExistentProperty<
  * @hidden
  */
 export function isExpandedProperty<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
 >(json, link: Link<EntityT, LinkedEntityT>) {
   return (
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')
   );
 }
+
+export { Entity as EntityBase };

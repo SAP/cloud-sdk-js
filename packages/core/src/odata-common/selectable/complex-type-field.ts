@@ -1,6 +1,6 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { EdmTypeShared, isEdmType } from '../edm-types';
-import { Constructable, EntityBase } from '../entity';
+import { Constructable, Entity } from '../entity';
 import { Field } from './field';
 import {
   isComplexTypeNameSpace,
@@ -23,7 +23,7 @@ import type { ConstructorOrField } from './constructor-or-field';
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export abstract class ComplexTypeField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends Field<EntityT> {
   /**
@@ -103,7 +103,7 @@ export abstract class ComplexTypeField<
  * @param fieldOf - Either an entity constructor or another complex type field.
  * @returns The constructor of the transitive parent entity;
  */
-export function getEntityConstructor<EntityT extends EntityBase, ComplexT>(
+export function getEntityConstructor<EntityT extends Entity, ComplexT>(
   fieldOf: ConstructorOrField<EntityT, ComplexT>
 ): Constructable<EntityT> {
   return fieldOf instanceof ComplexTypeField

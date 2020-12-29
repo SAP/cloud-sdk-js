@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { Field } from './field';
@@ -14,7 +14,7 @@ import { ConstructorOrField } from './constructor-or-field';
  * @typeparam FieldT - Type of the entries of the collection in the field
  */
 export class CollectionField<
-    EntityT extends EntityBase,
+    EntityT extends Entity,
     FieldT extends EdmTypeShared<'any'> | Record<string, any> = any
   >
   extends Field<EntityT>

@@ -4,7 +4,7 @@ import {
   EntityIdentifiable,
   ODataRequest,
   ODataUpdateRequestConfig,
-  UpdateRequestBuilderBase,
+  UpdateRequestBuilder as UpdateRequestBuilderBase,
   isNavigationProperty,
   removePropertyOnCondition
 } from '../../odata-common';

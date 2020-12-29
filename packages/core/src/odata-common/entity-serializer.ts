@@ -6,7 +6,7 @@ import {
   Link,
   ComplexTypeField,
   CollectionField,
-  EntityBase,
+  Entity,
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
   EdmTypeShared,
@@ -24,7 +24,7 @@ const logger = createLogger({
  * Interface representing the return type of the builder function [[entitySerializer]].
  */
 export interface EntitySerializer<
-  EntityT extends EntityBase = any,
+  EntityT extends Entity = any,
   ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
 > {
   serializeEntity: (
@@ -62,7 +62,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns JSON.
    */
-  function serializeEntity<EntityT extends EntityBase>(
+  function serializeEntity<EntityT extends Entity>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>,
     diff = false
@@ -107,7 +107,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns A JSON Representation of the non custom fields
    */
-  function serializeEntityNonCustomFields<EntityT extends EntityBase>(
+  function serializeEntityNonCustomFields<EntityT extends Entity>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>,
     diff = false
@@ -141,7 +141,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase>(
+  function serializeComplexTypeFieldLegacy<EntityT extends Entity>(
     complexTypeField: ComplexTypeField<EntityT>,
     fieldValue: any
   ): any {

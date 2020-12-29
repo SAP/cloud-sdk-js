@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { FieldType } from '../selectable';
 import { EdmTypeShared } from '../edm-types';
 import {
@@ -10,7 +10,7 @@ import {
  * Representation of a filter function, that returns a collection of values.
  */
 export class CollectionFilterFunction<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   FieldT extends FieldType
 > extends FilterFunction<EntityT, FieldT[]> {
   /**

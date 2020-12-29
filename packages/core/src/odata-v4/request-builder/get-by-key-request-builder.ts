@@ -4,7 +4,7 @@ import {
   EntityIdentifiable,
   FieldType,
   Expandable,
-  GetByKeyRequestBuilderBase
+  GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
 } from '../../odata-common';
 import { EntityV4 } from '../entity';
 import { entityDeserializerV4 } from '../entity-deserializer';

@@ -1,5 +1,5 @@
 import { AllFields, OneToOneLink } from './selectable';
-import { EntityBase, ODataVersionOf } from './entity';
+import { Entity, ODataVersionOf } from './entity';
 import { OneToManyLink } from './selectable/one-to-many-link';
 
 /**
@@ -8,7 +8,7 @@ import { OneToManyLink } from './selectable/one-to-many-link';
  * @typeparam EntityT - Type of the entity to be selected on
  */
 export type Expandable<
-  EntityT extends EntityBase
+  EntityT extends Entity
 > = ODataVersionOf<EntityT> extends 'v2'
   ? never
   :

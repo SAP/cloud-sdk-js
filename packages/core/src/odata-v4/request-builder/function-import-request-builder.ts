@@ -1,6 +1,6 @@
 import { oDataUriV4 } from '../uri-conversion';
 import {
-  ActionFunctionImportRequestBuilderBase,
+  ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase,
   FunctionImportParameters
 } from '../../odata-common';
 import { ODataFunctionImportRequestConfigV4 } from '../request';

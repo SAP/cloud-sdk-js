@@ -1,5 +1,8 @@
 import { identity } from '@sap-cloud-sdk/util';
-import { Constructable, UpdateRequestBuilderBase } from '../../odata-common';
+import {
+  Constructable,
+  UpdateRequestBuilder as UpdateRequestBuilderBase
+} from '../../odata-common';
 import { EntityV4 } from '../entity';
 import { entitySerializerV4 } from '../entity-serializer';
 import {

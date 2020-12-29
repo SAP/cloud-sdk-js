@@ -1,6 +1,6 @@
 import {
   Constructable,
-  DeleteRequestBuilderBase,
+  DeleteRequestBuilder as DeleteRequestBuilderBase,
   EntityIdentifiable,
   FieldType
 } from '../../odata-common';

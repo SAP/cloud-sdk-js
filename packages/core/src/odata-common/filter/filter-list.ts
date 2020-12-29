@@ -1,4 +1,4 @@
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import type { Filterable } from './filterable';
 
 /**
@@ -6,7 +6,7 @@ import type { Filterable } from './filterable';
  *
  * @typeparam EntityT -
  */
-export class FilterList<EntityT extends EntityBase>
+export class FilterList<EntityT extends Entity>
   implements EntityIdentifiable<EntityT> {
   /**
    * Constructor type of the entity to be filtered.
@@ -73,7 +73,7 @@ export class FilterList<EntityT extends EntityBase>
   }
 }
 
-export function isFilterList<T extends EntityBase>(
+export function isFilterList<T extends Entity>(
   filterable: Filterable<T>
 ): filterable is FilterList<T> {
   return (

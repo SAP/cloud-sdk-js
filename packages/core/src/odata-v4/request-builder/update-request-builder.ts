@@ -11,7 +11,7 @@ import {
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
 import { oDataUriV4 } from '../uri-conversion';
-import { extractODataEtagV4 } from '../extract-odata-etag';
+import { extractODataEtag } from '../extract-odata-etag';
 
 /**
  * Create OData query to update an entity.
@@ -36,7 +36,7 @@ export class UpdateRequestBuilderV4<
       _entity,
       oDataUriV4,
       entitySerializer,
-      extractODataEtagV4,
+      extractODataEtag,
       identity
     );
   }

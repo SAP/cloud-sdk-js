@@ -11,7 +11,7 @@ import { parseBatchResponse } from '../odata-common/request-builder/batch/batch-
 import { BatchRequestBuilder } from '../odata-common/request-builder/batch/batch-request-builder';
 import { deserializeBatchResponse } from '../odata-common/request-builder/batch/batch-response-deserializer';
 import { responseDataAccessorV4 } from './request-builder/response-data-accessor';
-import { entityDeserializerV4 } from './entity-deserializer';
+import { entityDeserializer } from './entity-deserializer';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
@@ -37,7 +37,7 @@ export class ODataBatchRequestBuilderV4 extends BatchRequestBuilder {
           parsedResponse,
           this.entityToConstructorMap,
           responseDataAccessorV4,
-          entityDeserializerV4
+          entityDeserializer
         )
       )
       .catch(error => {

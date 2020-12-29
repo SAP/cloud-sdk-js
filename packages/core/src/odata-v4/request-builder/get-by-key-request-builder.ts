@@ -7,7 +7,7 @@ import {
   GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
 } from '../../odata-common';
 import { Entity } from '../entity';
-import { entityDeserializerV4 } from '../entity-deserializer';
+import { entityDeserializer } from '../entity-deserializer';
 import { oDataUriV4 } from '../uri-conversion';
 import { responseDataAccessorV4 } from './response-data-accessor';
 /**
@@ -37,7 +37,7 @@ export class GetByKeyRequestBuilderV4<EntityT extends Entity>
       _entityConstructor,
       keys,
       oDataUriV4,
-      entityDeserializerV4,
+      entityDeserializer,
       responseDataAccessorV4
     );
   }

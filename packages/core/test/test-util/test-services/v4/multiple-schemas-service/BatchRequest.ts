@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilder } from '../../../../../src';
+import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilderV4, UpdateRequestBuilder } from '../../../../../src';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
 
@@ -12,9 +12,9 @@ import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(...requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
-export function batch(requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
-export function batch(first: undefined | ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder> | Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>>, ...rest: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
+export function batch(...requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
+export function batch(requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
+export function batch(first: undefined | ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> | Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>, ...rest: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
   return new ODataBatchRequestBuilderV4(defaultMultipleSchemasServicePath, variadicArgumentToArray(first, rest), map);
 }
 
@@ -23,10 +23,10 @@ export function batch(first: undefined | ReadMultipleSchemasServiceRequestBuilde
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(...requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>;
-export function changeset(requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>;
-export function changeset(first: undefined | WriteMultipleSchemasServiceRequestBuilder | Array<WriteMultipleSchemasServiceRequestBuilder>, ...rest: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
+export function changeset(...requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+export function changeset(requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+export function changeset(first: undefined | WriteMultipleSchemasServiceRequestBuilder | Array<WriteMultipleSchemasServiceRequestBuilder>, ...rest: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> {
+  return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/API_TEST_SRV';

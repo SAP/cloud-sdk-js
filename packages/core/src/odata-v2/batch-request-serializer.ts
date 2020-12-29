@@ -29,7 +29,7 @@ import {
  * @param request - The request builder of the retrieve request.
  * @returns The request body.
  */
-export function toBatchRetrieveBodyV2(
+export function toBatchRetrieveBody(
   request: GetAllRequestBuilder<Entity> | GetByKeyRequestBuilder<Entity>
 ): string {
   return serializeRequest(request);
@@ -41,7 +41,7 @@ export function toBatchRetrieveBodyV2(
  * @param changeSet - Change set containing a collection of write operations.
  * @returns The serialized string representation of a change set.
  */
-export function toBatchChangeSetV2<
+export function toBatchChangeSet<
   T extends
     | CreateRequestBuilder<Entity>
     | UpdateRequestBuilder<Entity>
@@ -50,5 +50,5 @@ export function toBatchChangeSetV2<
   return serializeChangeSet(changeSet);
 }
 
-export { toBatchChangeSetV2 as toBatchChangeSet };
-export { toBatchRetrieveBodyV2 as toBatchRetrieveBody };
+export { toBatchChangeSet as toBatchChangeSetV2 };
+export { toBatchRetrieveBody as toBatchRetrieveBodyV2 };

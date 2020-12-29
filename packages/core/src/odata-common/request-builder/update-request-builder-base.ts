@@ -3,13 +3,13 @@ import {
   ErrorWithCause,
   variadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataRequest, ODataUpdateRequestConfig } from '../request';
 import { ODataUri } from '../uri-conversion';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
-import { MethodRequestBuilderBase } from './request-builder-base';
+import { MethodRequestBuilder } from './request-builder-base';
 
 const logger = createLogger({
   package: 'core',
@@ -20,8 +20,8 @@ const logger = createLogger({
  *
  * @typeparam EntityT - Type of the entity to be updated
  */
-export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
+export abstract class UpdateRequestBuilder<EntityT extends Entity>
+  extends MethodRequestBuilder<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   private ignored: Set<string>;
   private required: Set<string>;
@@ -315,3 +315,5 @@ export function removePropertyOnCondition(
     return { ...resultBody, [key]: val };
   }, {});
 }
+
+export { UpdateRequestBuilder as UpdateRequestBuilderBase };

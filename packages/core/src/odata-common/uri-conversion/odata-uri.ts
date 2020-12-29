@@ -1,6 +1,6 @@
 import { Selectable, FieldType } from '../selectable';
 import { Expandable } from '../expandable';
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 import { Filterable } from '../filter';
 import { Orderable } from '../order';
 import { EdmTypeShared } from '../edm-types';
@@ -10,27 +10,27 @@ import { EdmTypeShared } from '../edm-types';
  * In v2/uri-conversion/odata-uri.ts and v4/uri-conversion/odata-uri.ts the instance for v2 and v4 are created.
  */
 export interface ODataUri {
-  getExpand<EntityT extends EntityBase>(
+  getExpand<EntityT extends Entity>(
     selects: Selectable<EntityT>[],
     expands: Expandable<EntityT>[],
     entityConstructor: Constructable<EntityT>
   ): Partial<{ expand: string }>;
-  getFilter<EntityT extends EntityBase>(
+  getFilter<EntityT extends Entity>(
     filter: Filterable<EntityT>,
     entityConstructor: Constructable<EntityT>
   ): Partial<{ filter: string }>;
-  getEntityKeys<EntityT extends EntityBase>(
+  getEntityKeys<EntityT extends Entity>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>
   ): Record<string, any>;
-  getOrderBy<EntityT extends EntityBase>(
+  getOrderBy<EntityT extends Entity>(
     orderBy: Orderable<EntityT>[]
   ): Partial<{ orderby: string }>;
-  getResourcePathForKeys<EntityT extends EntityBase>(
+  getResourcePathForKeys<EntityT extends Entity>(
     keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): string;
-  getSelect<EntityT extends EntityBase>(
+  getSelect<EntityT extends Entity>(
     selects: Selectable<EntityT>[]
   ): Partial<{ select: string }>;
   convertToUriFormat(

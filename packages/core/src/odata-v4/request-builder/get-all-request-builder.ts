@@ -8,7 +8,7 @@ import {
   and,
   ODataGetAllRequestConfig,
   Expandable,
-  GetAllRequestBuilderBase,
+  GetAllRequestBuilder as GetAllRequestBuilderBase,
   toFilterableList,
   OneToManyLink
 } from '../../odata-common';

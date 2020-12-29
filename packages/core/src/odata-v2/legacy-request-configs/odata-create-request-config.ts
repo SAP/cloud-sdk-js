@@ -1,7 +1,7 @@
 import {
-  EntityBase,
+  Entity as EntityBase,
   Constructable,
-  ODataCreateRequestConfig as Base
+  ODataCreateRequestConfig as ODataCreateRequestConfigBase
 } from '../../odata-common';
 import { oDataUriV2 } from '../uri-conversion';
 
@@ -13,7 +13,7 @@ import { oDataUriV2 } from '../uri-conversion';
  */
 class ODataCreateRequestConfig<
   EntityT extends EntityBase
-> extends Base<EntityT> {
+> extends ODataCreateRequestConfigBase<EntityT> {
   /**
    * Creates an instance of ODataRequest.
    * @param _entityConstructor - Constructor type of the entity to create a configuration for

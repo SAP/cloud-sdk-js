@@ -1,4 +1,4 @@
-import { EntityBase } from './entity';
+import { Entity } from './entity';
 import { toStaticPropertyFormat } from './name-converter';
 
 export const nonEnumerable = (target: any, propertyKey: string) => {
@@ -16,7 +16,7 @@ export const nonEnumerable = (target: any, propertyKey: string) => {
  * @param entityConstructor Constructor of the entity.
  * @returns A boolean denoting whether an entity is a navigation property or not.
  */
-export function isNavigationProperty<EntityT extends EntityBase>(
+export function isNavigationProperty<EntityT extends Entity>(
   key: string,
   entityConstructor: any
 ): boolean {

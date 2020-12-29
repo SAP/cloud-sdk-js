@@ -1,12 +1,12 @@
-import { EntityBase } from '../entity';
-import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
+import { Entity } from '../entity';
+import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
-import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
+import type { GetAllRequestBuilder } from './get-all-request-builder-base';
 
 /**
  * Create an OData request to count entities based on the configuration of the request.
@@ -16,14 +16,14 @@ import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
  * @typeparam EntityT - Type of the entity to be requested
  */
 export class CountRequestBuilder<
-  EntityT extends EntityBase
-> extends MethodRequestBuilderBase<ODataCountRequestConfig<EntityT>> {
+  EntityT extends Entity
+> extends MethodRequestBuilder<ODataCountRequestConfig<EntityT>> {
   /**
    * Creates an instance of CountRequestBuilder.
    *
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
-  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityT>) {
+  constructor(readonly getAllRequest: GetAllRequestBuilder<EntityT>) {
     super(new ODataCountRequestConfig(getAllRequest));
   }
   /**

@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
@@ -10,7 +10,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class EnumFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+class EnumFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   /* TODO FieldType is designed to be a union type of a list of static known type.
    For enum type, one can only use any. Use string here since it's better than any.
@@ -24,7 +24,7 @@ class EnumFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class EnumField<EntityT extends EntityBase>
+export class EnumField<EntityT extends Entity>
   extends EnumFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -40,7 +40,7 @@ export class EnumField<EntityT extends EntityBase>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeEnumPropertyField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends EnumFieldBase<EntityT> {
   /**

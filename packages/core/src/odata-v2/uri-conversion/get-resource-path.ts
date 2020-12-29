@@ -1,4 +1,8 @@
-import { EntityBase, FieldType, Constructable } from '../../odata-common';
+import {
+  Entity as EntityBase,
+  FieldType,
+  Constructable
+} from '../../odata-common';
 import { oDataUriV2 } from './odata-uri';
 
 /**

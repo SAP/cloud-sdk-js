@@ -1,7 +1,7 @@
 import { EdmTypeShared } from '../edm-types';
 import {
   Constructable,
-  EntityBase,
+  Entity,
   EntityIdentifiable,
   ODataVersionOf
 } from '../entity';
@@ -36,7 +36,7 @@ export type FilterOperatorByType<
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
 export class Filter<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   FieldT extends FieldType | FieldType[]
 > implements EntityIdentifiable<EntityT> {
   /**
@@ -75,7 +75,7 @@ export class Filter<
   }
 }
 
-export function isFilter<T extends EntityBase, FieldT extends FieldType>(
+export function isFilter<T extends Entity, FieldT extends FieldType>(
   filterable: Filterable<T>
 ): filterable is Filter<T, FieldT> {
   return (

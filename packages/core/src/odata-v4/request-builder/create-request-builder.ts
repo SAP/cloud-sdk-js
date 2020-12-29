@@ -1,6 +1,6 @@
 import {
   Constructable,
-  CreateRequestBuilderBase,
+  CreateRequestBuilder as CreateRequestBuilderBase,
   EntityIdentifiable
 } from '../../odata-common';
 import { EntityV4 } from '../entity';

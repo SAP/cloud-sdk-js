@@ -6,20 +6,20 @@ import {
 } from '../../connectivity/scp-cf';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion/odata-uri';
-import type { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import type { Constructable, Entity, EntityIdentifiable } from '../entity';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import type { Link } from '../selectable';
-import { MethodRequestBuilderBase } from './request-builder-base';
+import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
  *
  * @typeparam EntityT - Type of the entity to be created
  */
-export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilderBase<ODataCreateRequestConfig<EntityT>>
+export abstract class CreateRequestBuilder<EntityT extends Entity>
+  extends MethodRequestBuilder<ODataCreateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   /**
    * Creates an instance of CreateRequestBuilder.
@@ -65,7 +65,7 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
    * @param linkField - Static representation of the navigation property that navigates from the parent entity to the child entity
    * @returns The entity itself, to facilitate method chaining
    */
-  asChildOf<ParentEntityT extends EntityBase>(
+  asChildOf<ParentEntityT extends Entity>(
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, EntityT>
   ): this {
@@ -102,3 +102,5 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
       });
   }
 }
+
+export { CreateRequestBuilder as CreateRequestBuilderBase };

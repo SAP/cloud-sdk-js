@@ -1,7 +1,7 @@
 import {
   Constructable,
   EntityIdentifiable,
-  CreateRequestBuilderBase
+  CreateRequestBuilder as CreateRequestBuilderBase
 } from '../../odata-common';
 import { EntityV2 } from '../entity';
 import { entityDeserializerV2 } from '../entity-deserializer';

@@ -2,7 +2,7 @@ import { oDataUriV2 } from '../uri-conversion';
 import {
   FunctionImportParameters,
   RequestMethodType,
-  ActionFunctionImportRequestBuilderBase
+  ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase
 } from '../../odata-common';
 import { ODataFunctionImportRequestConfigV2 } from '../request';
 

@@ -5,7 +5,7 @@ import {
   WriteResponse,
   WriteResponses
 } from '../../batch-response';
-import { Constructable, EntityBase } from '../../entity';
+import { Constructable, Entity } from '../../entity';
 import { EntityDeserializer } from '../../entity-deserializer';
 import { ResponseDataAccessor } from '../../response-data-accessor';
 import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
@@ -28,7 +28,7 @@ export class BatchResponseDeserializer {
   constructor(
     private readonly entityToConstructorMap: Record<
       string,
-      Constructable<EntityBase>
+      Constructable<Entity>
     >,
     private readonly responseDataAccessor: ResponseDataAccessor,
     private readonly deserializer: EntityDeserializer
@@ -101,7 +101,7 @@ export class BatchResponseDeserializer {
    */
   private getConstructor(
     responseBody: Record<string, any>
-  ): Constructable<EntityBase> | undefined {
+  ): Constructable<Entity> | undefined {
     const entityJson = this.responseDataAccessor.isCollectionResult(
       responseBody
     )
@@ -129,7 +129,7 @@ export class BatchResponseDeserializer {
  */
 export function deserializeBatchResponse(
   parsedBatchResponse: (ResponseData[] | ResponseData)[],
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  entityToConstructorMap: Record<string, Constructable<Entity>>,
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ): (ErrorResponse | ReadResponse | WriteResponses)[] {
@@ -152,7 +152,7 @@ function asReadResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends EntityBase>(
+  return <EntityT extends Entity>(
     constructor: Constructable<EntityT>
   ): EntityT[] => {
     if (body.error) {
@@ -184,7 +184,7 @@ function asWriteResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends EntityBase>(constructor: Constructable<EntityT>) =>
+  return <EntityT extends Entity>(constructor: Constructable<EntityT>) =>
     deserializer.deserializeEntity(
       responseDataAccessor.getSingleResult(body),
       constructor

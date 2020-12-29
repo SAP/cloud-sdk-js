@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 import { FieldType } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
@@ -9,7 +9,7 @@ import { WithKeys, WithETag } from './odata-request-traits';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataUpdateRequestConfig<EntityT extends EntityBase>
+export class ODataUpdateRequestConfig<EntityT extends Entity>
   extends ODataRequestConfig
   implements WithKeys, WithETag {
   keys: Record<string, FieldType>;

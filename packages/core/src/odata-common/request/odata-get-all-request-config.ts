@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 import { Filterable } from '../filter';
 import { Orderable } from '../order';
 import { Selectable } from '../selectable';
@@ -12,7 +12,7 @@ import { WithGetAllRestrictions } from './odata-request-traits';
  *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataGetAllRequestConfig<EntityT extends EntityBase>
+export class ODataGetAllRequestConfig<EntityT extends Entity>
   extends ODataRequestConfig
   implements WithGetAllRestrictions<EntityT> {
   top: number;

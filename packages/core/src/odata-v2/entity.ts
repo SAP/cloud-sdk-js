@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../odata-common';
+import { Entity as EntityBase, Constructable } from '../odata-common';
 import { CustomFieldV2 } from './selectable/custom-field';
 
 /**

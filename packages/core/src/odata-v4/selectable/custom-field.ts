@@ -1,6 +1,6 @@
 import type { EntityV4 } from '../entity';
 import {
-  CustomFieldBase,
+  CustomField as CustomFieldBase,
   DateField,
   DurationField,
   TimeField

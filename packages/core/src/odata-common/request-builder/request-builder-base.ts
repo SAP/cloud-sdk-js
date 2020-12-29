@@ -14,11 +14,11 @@ import { ODataRequestConfig } from '../request/odata-request-config';
  *
  * @typeparam EntityT - Type of the entity to create a request for
  */
-export abstract class MethodRequestBuilderBase<
+export abstract class MethodRequestBuilder<
   RequestConfigT extends ODataRequestConfig = any
 > {
   /**
-   * Creates an instance of MethodRequestBuilderBase.
+   * Creates an instance of MethodRequestBuilder.
    *
    * @param requestConfig - Request configuration to initialize with
    */
@@ -162,3 +162,5 @@ function noDestinationErrorMessage(
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
+
+export { MethodRequestBuilder as MethodRequestBuilderBase };

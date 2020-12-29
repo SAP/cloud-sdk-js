@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {
-  EntityBase,
+  Entity as EntityBase,
   FilterFunctionParameterType,
   OrderableFilterFunction
 } from '../../odata-common';

@@ -1,7 +1,7 @@
 import {
-  EntityBase,
+  Entity as EntityBase,
   Constructable,
-  ODataUpdateRequestConfig as Base
+  ODataUpdateRequestConfig as ODataUpdateRequestConfigBase
 } from '../../odata-common';
 import { oDataUriV2 } from '../uri-conversion';
 
@@ -13,7 +13,7 @@ import { oDataUriV2 } from '../uri-conversion';
  */
 class ODataUpdateRequestConfig<
   EntityT extends EntityBase
-> extends Base<EntityT> {
+> extends ODataUpdateRequestConfigBase<EntityT> {
   /**
    * Creates an instance of ODataUpdateRequestConfig.
    *

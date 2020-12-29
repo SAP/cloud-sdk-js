@@ -3,7 +3,7 @@ import {
   Constructable,
   EntityIdentifiable,
   Filterable,
-  GetAllRequestBuilderBase,
+  GetAllRequestBuilder as GetAllRequestBuilderBase,
   and,
   ODataGetAllRequestConfig
 } from '../../odata-common';

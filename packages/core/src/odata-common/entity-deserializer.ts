@@ -16,7 +16,10 @@ import {
   isEdmType,
   PropertyMetadata
 } from '../odata-common';
-import { EdmToPrimitiveV2, EdmType as EdmTypeV2 } from '../odata-v2';
+import {
+  EdmToPrimitive as EdmToPrimitiveV2,
+  EdmType as EdmTypeV2
+} from '../odata-v2';
 import { EdmToPrimitiveV4, EdmTypeV4 } from '../odata-v4';
 import { toPropertyFormat } from './name-converter';
 

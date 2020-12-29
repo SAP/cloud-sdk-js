@@ -15,7 +15,7 @@ import { EdmType } from './edm-types';
 export function edmToTs<T extends EdmType>(
   value: any,
   edmType: EdmTypeShared<'v2'>
-): EdmToPrimitiveV2<T> {
+): EdmToPrimitive<T> {
   if (value === null || typeof value === 'undefined') {
     return value;
   }
@@ -110,7 +110,7 @@ function leftpad(value: any, targetLength: number): string {
   return '0'.repeat(targetLength - str.length) + str;
 }
 
-export type EdmToPrimitiveV2<T extends EdmType> = T extends
+export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Single'
@@ -145,6 +145,8 @@ const serializers: EdmTypeMapping = {
   'Edm.Time': fromTime
 };
 
-export { EdmToPrimitiveV2 as EdmToPrimitive };
-export { edmToTs as edmToTsV2 };
-export { tsToEdm as tsToEdmV2 };
+export {
+  EdmToPrimitive as EdmToPrimitiveV2,
+  edmToTs as edmToTsV2,
+  tsToEdm as tsToEdmV2
+};

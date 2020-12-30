@@ -12,7 +12,7 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks,
-  createTestEntityV4V4
+  createTestEntityV4
 } from '../../../test/test-util/test-data';
 import { any } from '..';
 import { GetAllRequestBuilder } from './get-all-request-builder';
@@ -68,8 +68,8 @@ describe('GetAllRequestBuilder', () => {
         defaultDestination
       );
       expect(actual).toEqual([
-        createTestEntityV4V4(testEntity1),
-        createTestEntityV4V4(testEntity2)
+        createTestEntityV4(testEntity1),
+        createTestEntityV4(testEntity2)
       ]);
     });
 

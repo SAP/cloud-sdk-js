@@ -17,7 +17,7 @@ import { entityDeserializer } from './entity-deserializer';
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
  * The retrieve and change sets will be excuted in order, while the order within a change set can vary.
  */
-export class ODataBatchRequestBuilderV4 extends BatchRequestBuilder {
+export class ODataBatchRequestBuilder extends BatchRequestBuilder {
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
    *
@@ -45,3 +45,5 @@ export class ODataBatchRequestBuilderV4 extends BatchRequestBuilder {
       });
   }
 }
+
+export { ODataBatchRequestBuilder as ODataBatchRequestBuilderV4 };

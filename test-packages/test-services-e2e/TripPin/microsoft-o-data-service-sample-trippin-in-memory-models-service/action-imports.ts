@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefinedV4, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForUndefined, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
 
 /**
  * Type of the parameters to be passed to [[resetDataSource]].
@@ -22,7 +22,7 @@ export function resetDataSource(parameters: ResetDataSourceParameters): ActionIm
 
   }
 
-  return new ActionImportRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'ResetDataSource', (data) => transformReturnValueForUndefinedV4(data, (val) => undefined), params);
+  return new ActionImportRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'ResetDataSource', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
 }
 
 export const actionImports = {

@@ -7,12 +7,14 @@ import { getSingleResult, getCollectionResult } from './response-data-accessor';
 /**
  * @hidden
  */
-export function transformReturnValueForUndefinedV4<ReturnT>(
+export function transformReturnValueForUndefined<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ) {
   return builderFn(data);
 }
+
+export { transformReturnValueForUndefined as transformReturnValueForUndefinedV4 };
 
 /**
  * @hidden
@@ -30,7 +32,7 @@ export function transformReturnValueForEntity<ReturnT extends Entity>(
 /**
  * @hidden
  */
-export function transformReturnValueForEntityListV4<ReturnT extends Entity>(
+export function transformReturnValueForEntityList<ReturnT extends Entity>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT[] {
@@ -43,25 +45,31 @@ export function transformReturnValueForEntityListV4<ReturnT extends Entity>(
   );
 }
 
+export { transformReturnValueForEntityList as transformReturnValueForEntityListV4 };
+
 /**
  * @hidden
  */
-export function transformReturnValueForComplexTypeV4<ReturnT>(
+export function transformReturnValueForComplexType<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT {
   return builderFn(getSingleResult(data)) as ReturnT;
 }
 
+export { transformReturnValueForComplexType as transformReturnValueForComplexTypeV4 };
+
 /**
  * @hidden
  */
-export function transformReturnValueForComplexTypeListV4<ReturnT>(
+export function transformReturnValueForComplexTypeList<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT[] {
   return getCollectionResult(data).map(json => builderFn(json));
 }
+
+export { transformReturnValueForComplexTypeList as transformReturnValueForComplexTypeListV4 };
 
 /**
  * @hidden
@@ -76,9 +84,11 @@ export function transformReturnValueForEdmType<ReturnT>(
 /**
  * @hidden
  */
-export function transformReturnValueForEdmTypeListV4<ReturnT>(
+export function transformReturnValueForEdmTypeList<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT[] {
   return getCollectionResult(data).map(builderFn);
 }
+
+export { transformReturnValueForEdmTypeList as transformReturnValueForEdmTypeListV4 };

@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEdmType, transformReturnValueForEdmTypeListV4, transformReturnValueForEntity, transformReturnValueForEntityListV4, transformReturnValueForComplexTypeV4, transformReturnValueForComplexTypeListV4, transformReturnValueForUndefinedV4, edmToTs, deserializeComplexType, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEdmType, transformReturnValueForEdmTypeList, transformReturnValueForEntity, transformReturnValueForEntityList, transformReturnValueForComplexType, transformReturnValueForComplexTypeList, transformReturnValueForUndefined, edmToTs, deserializeComplexType, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 
@@ -44,7 +44,7 @@ export function testFunctionImportEdmReturnTypeCollection(parameters: TestFuncti
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeListV4(data, (val) => edmToTs(val, 'Edm.String')), params);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', (data) => transformReturnValueForEdmTypeList(data, (val) => edmToTs(val, 'Edm.String')), params);
 }
 
 /**
@@ -84,7 +84,7 @@ export function testFunctionImportEntityReturnTypeCollection(parameters: TestFun
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityListV4(data, TestEntity), params);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityList(data, TestEntity), params);
 }
 
 /**
@@ -104,7 +104,7 @@ export function testFunctionImportComplexReturnType(parameters: TestFunctionImpo
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexType(data, TestComplexType)), params);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 /**
@@ -124,7 +124,7 @@ export function testFunctionImportComplexReturnTypeCollection(parameters: TestFu
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeListV4(data, (data) => deserializeComplexType(data, TestComplexType)), params);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeList(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 /**
@@ -183,7 +183,7 @@ export function testFunctionImportWithDifferentName(parameters: TestFunctionImpo
 
   }
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', (data) => transformReturnValueForUndefinedV4(data, (val) => undefined), params);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
 }
 
 export const functionImports = {

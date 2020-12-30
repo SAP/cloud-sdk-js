@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefinedV4, transformReturnValueForComplexTypeV4, transformReturnValueForEdmType, transformReturnValueForEntity, edmToTs, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
+import { transformReturnValueForUndefined, transformReturnValueForComplexType, transformReturnValueForEdmType, transformReturnValueForEntity, edmToTs, deserializeComplexType, ActionImportRequestBuilder, ActionImportParameter } from '../../../../../src';
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 
@@ -24,7 +24,7 @@ export function testActionImportNoParameterNoReturnType(parameters: TestActionIm
 
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', (data) => transformReturnValueForUndefinedV4(data, (val) => undefined), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', (data) => transformReturnValueForUndefined(data, (val) => undefined), params);
 }
 
 /**
@@ -63,7 +63,7 @@ export function testActionImportMultipleParameterComplexReturnType(parameters: T
     nullableGeographyPointParam: new ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexTypeV4(data, (data) => deserializeComplexType(data, TestComplexType)), params);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', (data) => transformReturnValueForComplexType(data, (data) => deserializeComplexType(data, TestComplexType)), params);
 }
 
 /**

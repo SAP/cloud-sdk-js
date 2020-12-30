@@ -1,12 +1,12 @@
-import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilderV4, UpdateRequestBuilder } from '@sap-cloud-sdk/core';
+import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntity, TestEntityLink } from './index';
 /**
  * Batch builder for operations supported on the Test Service.
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export declare function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
-export declare function batch(requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
+export declare function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilder;
+export declare function batch(requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilder;
 /**
  * Change set constructor consists of write operations supported on the Test Service.
  * @param requests The requests of the change set

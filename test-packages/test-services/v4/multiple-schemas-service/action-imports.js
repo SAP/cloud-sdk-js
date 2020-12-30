@@ -17,7 +17,7 @@ var TestComplexType2_1 = require("./TestComplexType2");
  */
 function testActionImportNoParameterComplexReturnType1(parameters) {
     var params = {};
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType1', function (data) { return core_1.transformReturnValueForComplexTypeV4(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType1_1.TestComplexType1); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType1', function (data) { return core_1.transformReturnValueForComplexType(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType1_1.TestComplexType1); }); }, params);
 }
 exports.testActionImportNoParameterComplexReturnType1 = testActionImportNoParameterComplexReturnType1;
 /**
@@ -28,7 +28,7 @@ exports.testActionImportNoParameterComplexReturnType1 = testActionImportNoParame
  */
 function testActionImportNoParameterComplexReturnType2(parameters) {
     var params = {};
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', function (data) { return core_1.transformReturnValueForComplexTypeV4(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType2_1.TestComplexType2); }); }, params);
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', function (data) { return core_1.transformReturnValueForComplexType(data, function (data) { return core_1.deserializeComplexType(data, TestComplexType2_1.TestComplexType2); }); }, params);
 }
 exports.testActionImportNoParameterComplexReturnType2 = testActionImportNoParameterComplexReturnType2;
 exports.actionImports = {

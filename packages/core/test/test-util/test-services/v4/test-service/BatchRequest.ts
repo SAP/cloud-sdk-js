@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilderV4, UpdateRequestBuilder } from '../../../../../src';
+import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '../../../../../src';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLvl2MultiLink, TestEntityLvl3MultiLink, TestEntitySingleLink, TestEntityLvl2SingleLink, TestEntityCircularLinkParent, TestEntityCircularLinkChild, TestEntityEndsWith, TestEntityEndsWithSomethingElse } from './index';
 
@@ -12,10 +12,10 @@ import { TestEntity, TestEntityMultiLink, TestEntityOtherMultiLink, TestEntityLv
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
-export function batch(requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV4;
-export function batch(first: undefined | ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder> | Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>, ...rest: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(defaultTestServicePath, variadicArgumentToArray(first, rest), map);
+export function batch(...requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilder;
+export function batch(requests: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilder;
+export function batch(first: undefined | ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder> | Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>, ...rest: Array<ReadTestServiceRequestBuilder | ODataBatchChangeSet<WriteTestServiceRequestBuilder>>): ODataBatchRequestBuilder {
+  return new ODataBatchRequestBuilder(defaultTestServicePath, variadicArgumentToArray(first, rest), map);
 }
 
 /**

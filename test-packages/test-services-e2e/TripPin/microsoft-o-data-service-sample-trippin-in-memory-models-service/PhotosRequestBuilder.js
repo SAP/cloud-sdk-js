@@ -30,14 +30,14 @@ var PhotosRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
      */
     PhotosRequestBuilder.prototype.getByKey = function (id) {
-        return new core_1.GetByKeyRequestBuilder(Photos_1.Photos, { Id: id });
+        return new core_1.GetByKeyRequestBuilderV4(Photos_1.Photos, { Id: id });
     };
     /**
      * Returns a request builder for querying all `Photos` entities.
      * @returns A request builder for creating requests to retrieve all `Photos` entities.
      */
     PhotosRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilder(Photos_1.Photos);
+        return new core_1.GetAllRequestBuilderV4(Photos_1.Photos);
     };
     /**
      * Returns a request builder for creating a `Photos` entity.
@@ -45,7 +45,7 @@ var PhotosRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `Photos`.
      */
     PhotosRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilder(Photos_1.Photos, entity);
+        return new core_1.CreateRequestBuilderV4(Photos_1.Photos, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `Photos`.
@@ -53,10 +53,10 @@ var PhotosRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `Photos`.
      */
     PhotosRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilder(Photos_1.Photos, entity);
+        return new core_1.UpdateRequestBuilderV4(Photos_1.Photos, entity);
     };
     PhotosRequestBuilder.prototype.delete = function (idOrEntity) {
-        return new core_1.DeleteRequestBuilder(Photos_1.Photos, idOrEntity instanceof Photos_1.Photos ? idOrEntity : { Id: idOrEntity });
+        return new core_1.DeleteRequestBuilderV4(Photos_1.Photos, idOrEntity instanceof Photos_1.Photos ? idOrEntity : { Id: idOrEntity });
     };
     return PhotosRequestBuilder;
 }(core_1.RequestBuilder));

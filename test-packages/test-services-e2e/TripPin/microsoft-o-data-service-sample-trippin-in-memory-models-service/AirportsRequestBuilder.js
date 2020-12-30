@@ -35,14 +35,14 @@ var AirportsRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
      */
     AirportsRequestBuilder.prototype.getByKey = function (icaoCode) {
-        return new core_1.GetByKeyRequestBuilder(Airports_1.Airports, { IcaoCode: icaoCode });
+        return new core_1.GetByKeyRequestBuilderV4(Airports_1.Airports, { IcaoCode: icaoCode });
     };
     /**
      * Returns a request builder for querying all `Airports` entities.
      * @returns A request builder for creating requests to retrieve all `Airports` entities.
      */
     AirportsRequestBuilder.prototype.getAll = function () {
-        return new core_1.GetAllRequestBuilder(Airports_1.Airports);
+        return new core_1.GetAllRequestBuilderV4(Airports_1.Airports);
     };
     /**
      * Returns a request builder for creating a `Airports` entity.
@@ -50,7 +50,7 @@ var AirportsRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that create an entity of type `Airports`.
      */
     AirportsRequestBuilder.prototype.create = function (entity) {
-        return new core_1.CreateRequestBuilder(Airports_1.Airports, entity);
+        return new core_1.CreateRequestBuilderV4(Airports_1.Airports, entity);
     };
     /**
      * Returns a request builder for updating an entity of type `Airports`.
@@ -58,10 +58,10 @@ var AirportsRequestBuilder = /** @class */ (function (_super) {
      * @returns A request builder for creating requests that update an entity of type `Airports`.
      */
     AirportsRequestBuilder.prototype.update = function (entity) {
-        return new core_1.UpdateRequestBuilder(Airports_1.Airports, entity);
+        return new core_1.UpdateRequestBuilderV4(Airports_1.Airports, entity);
     };
     AirportsRequestBuilder.prototype.delete = function (icaoCodeOrEntity) {
-        return new core_1.DeleteRequestBuilder(Airports_1.Airports, icaoCodeOrEntity instanceof Airports_1.Airports ? icaoCodeOrEntity : { IcaoCode: icaoCodeOrEntity });
+        return new core_1.DeleteRequestBuilderV4(Airports_1.Airports, icaoCodeOrEntity instanceof Airports_1.Airports ? icaoCodeOrEntity : { IcaoCode: icaoCodeOrEntity });
     };
     return AirportsRequestBuilder;
 }(core_1.RequestBuilder));

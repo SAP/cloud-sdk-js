@@ -86,7 +86,7 @@ var City;
      * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return core_1.deserializeComplexType(json, City);
+        return core_1.deserializeComplexTypeV4(json, City);
     }
     City.build = build;
 })(City = exports.City || (exports.City = {}));

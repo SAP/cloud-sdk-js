@@ -6,12 +6,12 @@
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { AllFields, BigNumberField, BooleanField, CustomField, DateField, EntityBuilderType, Entity, Field, NumberField, OneToManyLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
+import { AllFields, BigNumberField, BooleanField, CustomFieldV4, DateField, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "TestEntity" of service "AdminService".
  */
-export class TestEntity extends Entity implements TestEntityType {
+export class TestEntity extends EntityV4 implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -85,7 +85,7 @@ export class TestEntity extends Entity implements TestEntityType {
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   static builder(): EntityBuilderType<TestEntity, TestEntityType> {
-    return Entity.entityBuilder(TestEntity);
+    return EntityV4.entityBuilder(TestEntity);
   }
 
   /**
@@ -101,8 +101,8 @@ export class TestEntity extends Entity implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomField<TestEntity> {
-    return Entity.customFieldSelector(fieldName, TestEntity);
+  static customField(fieldName: string): CustomFieldV4<TestEntity> {
+    return EntityV4.customFieldSelector(fieldName, TestEntity);
   }
 
   /**

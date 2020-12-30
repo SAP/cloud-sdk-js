@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
-import { AllFields, CustomField, EntityBuilderType, Entity, Field, StringField } from '../../../../../src';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherMultiLinkType {
+export class TestEntityOtherMultiLink extends EntityV4 implements TestEntityOtherMultiLinkType {
   /**
    * Technical entity name for TestEntityOtherMultiLink.
    */
@@ -29,7 +29,7 @@ export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherM
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
   static builder(): EntityBuilderType<TestEntityOtherMultiLink, TestEntityOtherMultiLinkType> {
-    return Entity.entityBuilder(TestEntityOtherMultiLink);
+    return EntityV4.entityBuilder(TestEntityOtherMultiLink);
   }
 
   /**
@@ -45,8 +45,8 @@ export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherM
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
-  static customField(fieldName: string): CustomField<TestEntityOtherMultiLink> {
-    return Entity.customFieldSelector(fieldName, TestEntityOtherMultiLink);
+  static customField(fieldName: string): CustomFieldV4<TestEntityOtherMultiLink> {
+    return EntityV4.customFieldSelector(fieldName, TestEntityOtherMultiLink);
   }
 
   /**

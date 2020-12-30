@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexType2
@@ -26,7 +26,7 @@ export function createTestComplexType2(json: any): TestComplexType2 {
  * TestComplexType2Field
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexType2Field<EntityT extends Entity> extends ComplexTypeField<EntityT, TestComplexType2> {
+export class TestComplexType2Field<EntityT extends EntityV4> extends ComplexTypeField<EntityT, TestComplexType2> {
   /**
    * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -59,6 +59,6 @@ export namespace TestComplexType2 {
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType }): TestComplexType2 {
-    return deserializeComplexType(json, TestComplexType2);
+    return deserializeComplexTypeV4(json, TestComplexType2);
   }
 }

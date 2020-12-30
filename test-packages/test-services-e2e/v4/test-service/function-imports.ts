@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEntity, transformReturnValueForEdmType, edmToTs, FunctionImportRequestBuilder, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEntityV4, transformReturnValueForEdmTypeV4, edmToTsV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -22,12 +22,12 @@ export interface GetByKeyParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function getByKey(parameters: GetByKeyParameters): FunctionImportRequestBuilder<GetByKeyParameters, TestEntity> {
+export function getByKey(parameters: GetByKeyParameters): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   }
 
-  return new FunctionImportRequestBuilder('/odata/test-service', 'getByKey', (data) => transformReturnValueForEntity(data, TestEntity), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'getByKey', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
 }
 
 /**
@@ -46,12 +46,12 @@ export interface ReturnIntParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function returnInt(parameters: ReturnIntParameters): FunctionImportRequestBuilder<ReturnIntParameters, number> {
+export function returnInt(parameters: ReturnIntParameters): FunctionImportRequestBuilderV4<ReturnIntParameters, number> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   }
 
-  return new FunctionImportRequestBuilder('/odata/test-service', 'returnInt', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.Int32')), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'returnInt', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
 }
 
 /**
@@ -66,12 +66,12 @@ export interface ReturnSapCloudSdkParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): FunctionImportRequestBuilder<ReturnSapCloudSdkParameters, string> {
+export function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string> {
   const params = {
 
   }
 
-  return new FunctionImportRequestBuilder('/odata/test-service', 'returnSapCloudSdk', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'returnSapCloudSdk', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
 /**
@@ -94,13 +94,13 @@ export interface ConcatStringsParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export function concatStrings(parameters: ConcatStringsParameters): FunctionImportRequestBuilder<ConcatStringsParameters, string> {
+export function concatStrings(parameters: ConcatStringsParameters): FunctionImportRequestBuilderV4<ConcatStringsParameters, string> {
   const params = {
     str1: new FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
     str2: new FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
   }
 
-  return new FunctionImportRequestBuilder('/odata/test-service', 'concatStrings', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'concatStrings', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
 export const functionImports = {

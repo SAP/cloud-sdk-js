@@ -87,7 +87,7 @@ var EventLocation;
      * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
      */
     function build(json) {
-        return core_1.deserializeComplexType(json, EventLocation);
+        return core_1.deserializeComplexTypeV4(json, EventLocation);
     }
     EventLocation.build = build;
 })(EventLocation = exports.EventLocation || (exports.EventLocation = {}));

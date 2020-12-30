@@ -14,7 +14,7 @@ function batch(first) {
     for (var _i = 1; _i < arguments.length; _i++) {
         rest[_i - 1] = arguments[_i];
     }
-    return new core_1.ODataBatchRequestBuilder(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, util_1.variadicArgumentToArray(first, rest), map);
+    return new core_1.ODataBatchRequestBuilderV4(exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath, util_1.variadicArgumentToArray(first, rest), map);
 }
 exports.batch = batch;
 function changeset(first) {
@@ -22,7 +22,7 @@ function changeset(first) {
     for (var _i = 1; _i < arguments.length; _i++) {
         rest[_i - 1] = arguments[_i];
     }
-    return new core_1.ODataBatchChangeSet(util_1.variadicArgumentToArray(first, rest));
+    return new core_1.ODataBatchChangeSetV4(util_1.variadicArgumentToArray(first, rest));
 }
 exports.changeset = changeset;
 exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';

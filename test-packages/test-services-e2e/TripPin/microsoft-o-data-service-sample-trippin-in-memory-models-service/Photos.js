@@ -45,7 +45,7 @@ var Photos = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `Photos`.
      */
     Photos.builder = function () {
-        return core_1.Entity.entityBuilder(Photos);
+        return core_1.EntityV4.entityBuilder(Photos);
     };
     /**
      * Returns a request builder to construct requests for operations on the `Photos` entity type.
@@ -60,7 +60,7 @@ var Photos = /** @class */ (function (_super) {
      * @returns A builder that constructs instances of entity type `Photos`.
      */
     Photos.customField = function (fieldName) {
-        return core_1.Entity.customFieldSelector(fieldName, Photos);
+        return core_1.EntityV4.customFieldSelector(fieldName, Photos);
     };
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -78,7 +78,7 @@ var Photos = /** @class */ (function (_super) {
      */
     Photos._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
     return Photos;
-}(core_1.Entity));
+}(core_1.EntityV4));
 exports.Photos = Photos;
 (function (Photos) {
     /**

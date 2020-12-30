@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, Entity, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
 
 /**
  * Location
@@ -31,7 +31,7 @@ export function createLocation(json: any): Location {
  * LocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class LocationField<EntityT extends Entity> extends ComplexTypeField<EntityT, Location> {
+export class LocationField<EntityT extends EntityV4> extends ComplexTypeField<EntityT, Location> {
   /**
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -74,6 +74,6 @@ export namespace Location {
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | City }): Location {
-    return deserializeComplexType(json, Location);
+    return deserializeComplexTypeV4(json, Location);
   }
 }

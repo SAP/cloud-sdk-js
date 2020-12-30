@@ -12,7 +12,7 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks,
-  createTestEntity
+  createTestEntityV4V4
 } from '../../../test/test-util/test-data';
 import { any } from '..';
 import { GetAllRequestBuilder } from './get-all-request-builder';
@@ -68,8 +68,8 @@ describe('GetAllRequestBuilder', () => {
         defaultDestination
       );
       expect(actual).toEqual([
-        createTestEntity(testEntity1),
-        createTestEntity(testEntity2)
+        createTestEntityV4V4(testEntity1),
+        createTestEntityV4V4(testEntity2)
       ]);
     });
 
@@ -84,7 +84,7 @@ describe('GetAllRequestBuilder', () => {
       );
 
       const actual = await requestBuilder.top(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(testEntity1)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity1)]);
     });
 
     it('skip(1) skips the first entity', async () => {
@@ -97,7 +97,7 @@ describe('GetAllRequestBuilder', () => {
         TestEntity
       );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(testEntity2)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity2)]);
     });
 
     it('should resolve when ALL_FIELDS is selected and links are expanded', async () => {
@@ -116,7 +116,7 @@ describe('GetAllRequestBuilder', () => {
         .select(TestEntity.ALL_FIELDS)
         .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
         .execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(testEntity)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity)]);
     });
 
     it('should resolve when multi-link is expanded with lambda expression filter', async () => {
@@ -141,7 +141,7 @@ describe('GetAllRequestBuilder', () => {
           )
         )
         .execute(defaultDestination);
-      expect(actual).toEqual([createTestEntity(testEntity)]);
+      expect(actual).toEqual([createTestEntityV4(testEntity)]);
     });
   });
 });

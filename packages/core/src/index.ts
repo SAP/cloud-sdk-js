@@ -38,7 +38,13 @@ export {
   transformReturnValueForEntity,
   transformReturnValueForEdmType,
   FunctionImportRequestBuilder,
-  ODataBatchChangeSet
+  ODataBatchChangeSet,
+  ODataBatchRequestBuilder,
+  transformReturnValueForComplexType,
+  transformReturnValueForComplexTypeList,
+  transformReturnValueForEdmTypeList,
+  transformReturnValueForEntityList,
+  transformReturnValueForUndefined
 } from './odata-v2';
 export * from './odata-v4';
 export * from './openapi';

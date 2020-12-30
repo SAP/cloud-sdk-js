@@ -1491,14 +1491,14 @@
     chalk "^2.4.2"
     tslib "^1.9.3"
 
-"@oclif/plugin-autocomplete@^0.2.0":
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/@oclif/plugin-autocomplete/-/plugin-autocomplete-0.2.1.tgz#169cd9a88c0c60d8ecf59887ca9bfdd3b1a755ac"
-  integrity sha512-EOcoh1x3auFg1a7NNVTT+hJ1PPih7Kg1it7WtG8oBgYKe+YD/bvHnX2QlXqi9S7H0XsQQMUb8hxbLP+XwQY/8Q==
+"@oclif/plugin-autocomplete@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/@oclif/plugin-autocomplete/-/plugin-autocomplete-0.3.0.tgz#eec788596a88a4ca5170a9103b6c2835119a8fbd"
+  integrity sha512-gCuIUCswvoU1BxDDvHSUGxW8rFagiacle8jHqE49+WnuniXD/N8NmJvnzmlNyc8qLE192CnKK+qYyAF+vaFQBg==
   dependencies:
     "@oclif/command" "^1.5.13"
     "@oclif/config" "^1.13.0"
-    chalk "^2.4.1"
+    chalk "^4.1.0"
     cli-ux "^5.2.1"
     debug "^4.0.0"
     fs-extra "^9.0.1"
@@ -11308,9 +11308,9 @@ typedoc-plugin-lerna-packages@0.3.0:
   integrity sha512-Ek6yaJczfSIxfUkHNx7yL+JoJ86KifHecrmbFxtkSlYxGwDrQTqlTQncChslJO2EmQyOn9PUQVyBDnYyrOBB2w==
 
 typedoc@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.20.0.tgz#4fd4ca59c69e6ba09667124ed012d78bc271d969"
-  integrity sha512-HIJ0MTyyKgTQ/MuCXBULxBNvoZV0nozG0I0/GOSEcdmSPTwnA1tP0yhHCFsuabYmf8Dvzx/vMxw0hbfTvZJj6Q==
+  version "0.20.4"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.20.4.tgz#e91dd3a802a845a7119d9162c8fefdd72e7a9b2a"
+  integrity sha512-C5ogtMwNKTAg7GctTPzd4ndSVz24WhBYfxf4UMYnnQImgIARllmeHE/+NuYLNmXVJjOnnWpRcErga9sN4ynZdg==
   dependencies:
     colors "^1.4.0"
     fs-extra "^9.0.1"

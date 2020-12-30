@@ -11308,9 +11308,9 @@ typedoc-plugin-lerna-packages@0.3.0:
   integrity sha512-Ek6yaJczfSIxfUkHNx7yL+JoJ86KifHecrmbFxtkSlYxGwDrQTqlTQncChslJO2EmQyOn9PUQVyBDnYyrOBB2w==
 
 typedoc@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.20.0.tgz#4fd4ca59c69e6ba09667124ed012d78bc271d969"
-  integrity sha512-HIJ0MTyyKgTQ/MuCXBULxBNvoZV0nozG0I0/GOSEcdmSPTwnA1tP0yhHCFsuabYmf8Dvzx/vMxw0hbfTvZJj6Q==
+  version "0.20.4"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.20.4.tgz#e91dd3a802a845a7119d9162c8fefdd72e7a9b2a"
+  integrity sha512-C5ogtMwNKTAg7GctTPzd4ndSVz24WhBYfxf4UMYnnQImgIARllmeHE/+NuYLNmXVJjOnnWpRcErga9sN4ynZdg==
   dependencies:
     colors "^1.4.0"
     fs-extra "^9.0.1"

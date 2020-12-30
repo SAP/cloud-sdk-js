@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '../../../../../src';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexType } from '../../../../../src';
 
 /**
  * TestLvl2NestedComplexType
@@ -60,6 +60,6 @@ export namespace TestLvl2NestedComplexType {
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType }): TestLvl2NestedComplexType {
-    return deserializeComplexTypeV4(json, TestLvl2NestedComplexType);
+    return deserializeComplexType(json, TestLvl2NestedComplexType);
   }
 }

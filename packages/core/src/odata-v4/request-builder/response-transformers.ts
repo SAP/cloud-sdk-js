@@ -29,6 +29,8 @@ export function transformReturnValueForEntity<ReturnT extends Entity>(
   ).setOrInitializeRemoteState() as ReturnT;
 }
 
+export { transformReturnValueForEntity as transformReturnValueForEntityV4 };
+
 /**
  * @hidden
  */
@@ -80,6 +82,8 @@ export function transformReturnValueForEdmType<ReturnT>(
 ): ReturnT {
   return builderFn(getSingleResult(data));
 }
+
+export { transformReturnValueForEdmType as transformReturnValueForEdmTypeV4 };
 
 /**
  * @hidden

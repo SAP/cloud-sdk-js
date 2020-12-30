@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
-import { ComplexTypeAnyPropertyField, ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
+import { ComplexTypeAnyPropertyField, ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core';
 
 /**
  * AirportLocation
@@ -88,6 +88,6 @@ export namespace AirportLocation {
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | City }): AirportLocation {
-    return deserializeComplexTypeV4(json, AirportLocation);
+    return deserializeComplexType(json, AirportLocation);
   }
 }

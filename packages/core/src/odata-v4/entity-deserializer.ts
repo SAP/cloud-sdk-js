@@ -16,7 +16,11 @@ export const entityDeserializer: EntityDeserializer = entityDeserializerBase(
   getLinkedCollectionResult
 );
 
-export { entityDeserializer as entityDeserializerV4 };
-
 export const deserializeEntity = entityDeserializer.deserializeEntity;
 export const deserializeComplexType = entityDeserializer.deserializeComplexType;
+
+export {
+  entityDeserializer as entityDeserializerV4,
+  deserializeEntity as deserializeEntityV4,
+  deserializeComplexType as deserializeComplexTypeV4
+};

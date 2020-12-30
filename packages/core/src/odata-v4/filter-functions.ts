@@ -10,8 +10,8 @@ import {
 } from '../odata-common';
 import { CollectionFilterFunction } from '../odata-common/filter/collection-filter-function';
 import { filterFunctions as filterFunctionsCommon } from '../odata-common/filter/filter-functions';
-import { EntityV4 } from './entity';
-import { filterFunctionV4 } from './filter-function';
+import { Entity } from './entity';
+import { filterFunction } from './filter-function';
 
 /* String Functions */
 /**
@@ -21,11 +21,11 @@ import { filterFunctionV4 } from './filter-function';
  *
  * @returns The newly created filter function
  */
-export function contains<EntityT extends EntityV4>(
+export function contains<EntityT extends Entity>(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunctionV4('contains', 'boolean', substr, str);
+  return filterFunction('contains', 'boolean', substr, str);
 }
 
 /**
@@ -34,11 +34,11 @@ export function contains<EntityT extends EntityV4>(
  * @param regex - The pattern to test against. This should be a regular expression as a string.
  * @returns The newly created filter function
  */
-export function matchesPattern<EntityT extends EntityV4>(
+export function matchesPattern<EntityT extends Entity>(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   regex: string
 ): BooleanFilterFunction<EntityT> {
-  return filterFunctionV4('matchesPattern', 'boolean', str, regex);
+  return filterFunction('matchesPattern', 'boolean', str, regex);
 }
 
 /* Date Functions */
@@ -47,10 +47,10 @@ export function matchesPattern<EntityT extends EntityV4>(
  * @param date - The date to get the fractional seconds for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function fractionalSeconds<EntityT extends EntityV4>(
+export function fractionalSeconds<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
-  return filterFunctionV4('fractionalseconds', 'decimal', date);
+  return filterFunction('fractionalseconds', 'decimal', date);
 }
 
 /**
@@ -58,10 +58,10 @@ export function fractionalSeconds<EntityT extends EntityV4>(
  * @param date - The date to get the offset minutes for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function totalOffsetMinutes<EntityT extends EntityV4>(
+export function totalOffsetMinutes<EntityT extends Entity>(
   date: moment.Moment | Field<EntityT>
 ): NumberFilterFunction<EntityT> {
-  return filterFunctionV4('totaloffsetminutes', 'decimal', date);
+  return filterFunction('totaloffsetminutes', 'decimal', date);
 }
 
 /**
@@ -69,9 +69,9 @@ export function totalOffsetMinutes<EntityT extends EntityV4>(
  * @returns The newly created filter function
  */
 export function maxDateTime<
-  EntityT extends EntityV4
+  EntityT extends Entity
 >(): NumberFilterFunction<EntityT> {
-  return filterFunctionV4('maxdatetime', 'decimal');
+  return filterFunction('maxdatetime', 'decimal');
 }
 
 /**
@@ -79,17 +79,17 @@ export function maxDateTime<
  * @returns The newly created filter function
  */
 export function minDateTime<
-  EntityT extends EntityV4
+  EntityT extends Entity
 >(): NumberFilterFunction<EntityT> {
-  return filterFunctionV4('mindatetime', 'decimal');
+  return filterFunction('mindatetime', 'decimal');
 }
 
 /**
  * Build a filter function to get the current point in time. Evaluates to DateTimeOffset.
  * @returns The newly created filter function
  */
-export function now<EntityT extends EntityV4>(): NumberFilterFunction<EntityT> {
-  return filterFunctionV4('now', 'decimal');
+export function now<EntityT extends Entity>(): NumberFilterFunction<EntityT> {
+  return filterFunction('now', 'decimal');
 }
 
 /* Collection functions */
@@ -101,7 +101,7 @@ export function now<EntityT extends EntityV4>(): NumberFilterFunction<EntityT> {
  * @returns The newly created filter function
  */
 export function hasSubset<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
   ParamT extends FilterFunctionPrimitiveParameterType,
   ReturnT extends FieldType
 >(
@@ -114,7 +114,7 @@ export function hasSubset<
     | CollectionField<EntityT, any>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunctionV4('hassubset', 'boolean', subset, set);
+  return filterFunction('hassubset', 'boolean', subset, set);
 }
 
 /**
@@ -125,7 +125,7 @@ export function hasSubset<
  * @returns The newly created filter function
  */
 export function hasSubsequence<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
   ParamT extends FilterFunctionPrimitiveParameterType,
   ReturnT extends FieldType
 >(
@@ -138,7 +138,7 @@ export function hasSubsequence<
     | Field<EntityT>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
-  return filterFunctionV4('hassubsequence', 'boolean', subsequence, sequence);
+  return filterFunction('hassubsequence', 'boolean', subsequence, sequence);
 }
 /**
  * TODO: totalseconds, time
@@ -147,7 +147,7 @@ export function hasSubsequence<
 /**
  * OData v4 specific filter functions
  */
-export const filterFunctionsV4 = {
+export const filterFunctions = {
   ...filterFunctionsCommon,
   contains,
   matchesPattern,
@@ -159,3 +159,5 @@ export const filterFunctionsV4 = {
   hasSubset,
   hasSubsequence
 };
+
+export { filterFunctions as filterFunctionsV4 };

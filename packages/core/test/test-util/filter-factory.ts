@@ -1,6 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { or } from '../../src';
-import { all, any, filterFunctionsV4 } from '../../src/odata-v4';
+import {
+  all,
+  any,
+  filterFunctions as filterFunctionsV4
+} from '../../src/odata-v4';
 import {
   TestEntity,
   TestEntitySingleLink

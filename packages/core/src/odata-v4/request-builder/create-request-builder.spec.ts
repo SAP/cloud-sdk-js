@@ -12,9 +12,9 @@ import {
   TestEntitySingleLink
 } from '../../../test/test-util/test-services/v4/test-service';
 import { testPostRequestOutcome } from '../../../test/test-util/testPostRequestOutcome';
-import { CreateRequestBuilderV4 } from './create-request-builder';
+import { CreateRequestBuilder } from './create-request-builder';
 
-describe('CreateRequestBuilderV4', () => {
+describe('CreateRequestBuilder', () => {
   afterAll(() => {
     nock.cleanAll();
   });
@@ -40,7 +40,7 @@ describe('CreateRequestBuilderV4', () => {
       .dateProperty(moment.utc('1996-11-23', 'YYYY-MM-DD', true))
       .build();
 
-    const actual = await new CreateRequestBuilderV4(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -71,7 +71,7 @@ describe('CreateRequestBuilderV4', () => {
       .toMultiLink(links)
       .build();
 
-    const actual = await new CreateRequestBuilderV4(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -96,7 +96,7 @@ describe('CreateRequestBuilderV4', () => {
       )
       .build();
 
-    const actual = await new CreateRequestBuilderV4(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 

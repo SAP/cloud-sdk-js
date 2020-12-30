@@ -1,6 +1,6 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { EntityV4 } from '../entity';
-import { entityDeserializerV4 } from '../entity-deserializer';
+import { Entity } from '../entity';
+import { entityDeserializer } from '../entity-deserializer';
 import {
   EntityIdentifiable,
   Constructable,
@@ -12,9 +12,9 @@ import {
   toFilterableList,
   OneToManyLink
 } from '../../odata-common';
-import { oDataUriV4 } from '../uri-conversion';
-import { responseDataAccessorV4 } from './response-data-accessor';
-export class GetAllRequestBuilderV4<EntityT extends EntityV4>
+import { oDataUri } from '../uri-conversion';
+import { responseDataAccessor } from './response-data-accessor';
+export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
@@ -27,9 +27,9 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
   constructor(entityConstructor: Constructable<EntityT>) {
     super(
       entityConstructor,
-      new ODataGetAllRequestConfig(entityConstructor, oDataUriV4),
-      entityDeserializerV4,
-      responseDataAccessorV4
+      new ODataGetAllRequestConfig(entityConstructor, oDataUri),
+      entityDeserializer,
+      responseDataAccessor
     );
   }
 
@@ -57,3 +57,5 @@ export class GetAllRequestBuilderV4<EntityT extends EntityV4>
     return this;
   }
 }
+
+export { GetAllRequestBuilder as GetAllRequestBuilderV4 };

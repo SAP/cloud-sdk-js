@@ -3,23 +3,23 @@ import {
   Constructable,
   UpdateRequestBuilder as UpdateRequestBuilderBase
 } from '../../odata-common';
-import { EntityV4 } from '../entity';
-import { entitySerializerV4 } from '../entity-serializer';
+import { Entity } from '../entity';
+import { entitySerializer } from '../entity-serializer';
 import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
-import { oDataUriV4 } from '../uri-conversion';
-import { extractODataEtagV4 } from '../extract-odata-etag';
+import { oDataUri } from '../uri-conversion';
+import { extractODataEtag } from '../extract-odata-etag';
 
 /**
  * Create OData query to update an entity.
  *
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilderV4<
-  EntityT extends EntityV4
+export class UpdateRequestBuilder<
+  EntityT extends Entity
 > extends UpdateRequestBuilderBase<EntityT> {
   /**
    * Creates an instance of UpdateRequestBuilder.
@@ -34,9 +34,9 @@ export class UpdateRequestBuilderV4<
     super(
       _entityConstructor,
       _entity,
-      oDataUriV4,
-      entitySerializerV4,
-      extractODataEtagV4,
+      oDataUri,
+      entitySerializer,
+      extractODataEtag,
       identity
     );
   }
@@ -60,3 +60,5 @@ export class UpdateRequestBuilderV4<
     return super.executeRequest(request);
   }
 }
+
+export { UpdateRequestBuilder as UpdateRequestBuilderV4 };

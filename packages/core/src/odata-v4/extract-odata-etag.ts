@@ -3,8 +3,10 @@
  * @param json - Reponse data from which the etag is extracted
  * @returns The etag
  */
-export function extractODataEtagV4(
+export function extractODataEtag(
   json: Record<string, any>
 ): string | undefined {
   return json?.['@odata.etag'];
 }
+
+export { extractODataEtag as extractODataEtagV4 };

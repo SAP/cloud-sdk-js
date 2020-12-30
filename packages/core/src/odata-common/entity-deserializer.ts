@@ -20,7 +20,10 @@ import {
   EdmToPrimitive as EdmToPrimitiveV2,
   EdmType as EdmTypeV2
 } from '../odata-v2';
-import { EdmToPrimitiveV4, EdmTypeV4 } from '../odata-v4';
+import {
+  EdmToPrimitive as EdmToPrimitiveV4,
+  EdmType as EdmTypeV4
+} from '../odata-v4';
 import { toPropertyFormat } from './name-converter';
 
 const logger = createLogger({

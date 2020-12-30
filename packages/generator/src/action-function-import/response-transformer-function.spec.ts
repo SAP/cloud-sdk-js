@@ -26,7 +26,7 @@ describe('response-transformer-function', () => {
   it('responseTransformerFunctionName of complex type and list', () => {
     expect(
       responseTransformerFunctionName(returnTypeComplexType, 'v4')
-    ).toEqual('transformReturnValueForComplexTypeList');
+    ).toEqual('transformReturnValueForComplexTypeListV4');
   });
 
   it('responseTransformerFunctionName of edmType', () => {

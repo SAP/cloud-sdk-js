@@ -101,7 +101,7 @@ describe('namespace', () => {
             }
           ],
           statements:
-            'return deserializeComplexType(json, ComplexMealWithDesertType);',
+            'return deserializeComplexTypeV4(json, ComplexMealWithDesertType);',
           isExported: true,
           docs: [
             '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'

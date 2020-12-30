@@ -1,6 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { OpenAPIV3 } from 'openapi-types';
 import { createRefs } from '../../test/test-util';
-import { parseRequestBody } from './request-body';
+import { parseRequestBody, parseSchemaMetadata } from './request-body';
 
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
@@ -23,8 +24,12 @@ describe('getRequestBody', () => {
 
     expect(parseRequestBody(requestBody, await createRefs())).toEqual({
       ...requestBody,
-      parameterName: 'testEntity',
-      parameterType: 'TestEntity'
+      parameterName: 'body',
+      parameterType: {
+        isArrayType: false,
+        innerType: 'TestEntity',
+        isInnerTypeReferenceType: true
+      }
     });
   });
 
@@ -52,30 +57,57 @@ describe('getRequestBody', () => {
       )
     ).toEqual({
       ...requestBody,
-      parameterName: 'testEntity',
-      parameterType: 'TestEntity'
+      parameterName: 'body',
+      parameterType: {
+        isArrayType: false,
+        innerType: 'TestEntity',
+        isInnerTypeReferenceType: true
+      }
     });
   });
 
-  it('logs warning for inline schema', async () => {
-    const logger = createLogger('openapi-generator');
-    spyOn(logger, 'warn');
+  it('returns Record<string, any> type from in line schema', async () => {
+    const schema: OpenAPIV3.NonArraySchemaObject = { type: 'object' };
 
-    expect(
-      parseRequestBody(
-        {
-          content: {
-            'application/json': {
-              schema: {}
-            }
-          }
-        },
-        await createRefs()
-      )
-    ).toBeUndefined();
+    expect(parseSchemaMetadata(schema)).toEqual({
+      isArrayType: false,
+      innerType: 'Record<string, any>',
+      isInnerTypeReferenceType: false
+    });
+  });
 
-    expect(logger.warn).toHaveBeenCalledWith(
-      'The SAP Cloud SDK OpenApi generator currently does not support inline schemas. This will likely cause issues when using this client.'
-    );
+  it('returns string array type from inline schema', async () => {
+    const schema: OpenAPIV3.ArraySchemaObject = {
+      type: 'array',
+      items: {
+        type: 'string'
+      }
+    };
+
+    expect(parseSchemaMetadata(schema)).toEqual({
+      isArrayType: true,
+      innerType: 'string',
+      isInnerTypeReferenceType: false,
+      arrayLevel: 1
+    });
+  });
+
+  it('returns nested array type from inline schema', async () => {
+    const schema: OpenAPIV3.ArraySchemaObject = {
+      type: 'array',
+      items: {
+        type: 'array',
+        items: {
+          type: 'string'
+        }
+      }
+    };
+
+    expect(parseSchemaMetadata(schema)).toEqual({
+      isArrayType: true,
+      innerType: 'string',
+      isInnerTypeReferenceType: false,
+      arrayLevel: 2
+    });
   });
 });

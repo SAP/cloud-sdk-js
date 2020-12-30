@@ -239,11 +239,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       url: this.relativeUrl(),
       method: this.config.method,
       data: this.config.payload
-    }).catch(error =>
-      Promise.reject(
-        constructError(error, this.config.method, this.serviceUrl())
-      )
-    );
+    }).catch(error => {
+      throw constructError(error, this.config.method, this.serviceUrl());
+    });
   }
 
   private async getCsrfHeaders(

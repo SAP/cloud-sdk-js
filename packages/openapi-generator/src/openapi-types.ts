@@ -48,7 +48,7 @@ export function methods(): Method[] {
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Represenatiation of a parameter for both queries and path parameters.
+ * Representation of a parameter for both queries and path parameters.
  */
 export interface OpenApiParameter extends OpenAPIV3.ParameterObject {
   type: string;
@@ -56,9 +56,20 @@ export interface OpenApiParameter extends OpenAPIV3.ParameterObject {
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Represenation of the request body.
+ * Representation of the request body.
  */
 export interface OpenApiRequestBody extends OpenAPIV3.RequestBodyObject {
   parameterName: string;
-  parameterType: string;
+  parameterType: SchemaMetadata;
+}
+
+/**
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ * Representation of the schema of the request body.
+ */
+export interface SchemaMetadata {
+  isArrayType: boolean;
+  innerType: string;
+  isInnerTypeReferenceType: boolean;
+  arrayLevel?: number;
 }

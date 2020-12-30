@@ -1,28 +1,28 @@
-import { filterFunctions, filterFunction } from '@sap-cloud-sdk/core';
+import { filterFunctionsV4, filterFunctionV4 } from '@sap-cloud-sdk/core';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 
 // $ExpectType Filter<TestEntity, string>
-filterFunctions
+filterFunctionsV4
   .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
   .equals('test');
 
 // $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctions.contains(TestEntity.STRING_PROPERTY, 'test');
+filterFunctionsV4.contains(TestEntity.STRING_PROPERTY, 'test');
 
 // $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctions.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
+filterFunctionsV4.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
 
 // $ExpectError
-filterFunctions.hasSubset(['1'], [1]);
+filterFunctionsV4.hasSubset(['1'], [1]);
 
 // $ExpectType BooleanFilterFunction<Entity>
-filterFunction('fn', 'boolean');
+filterFunctionV4('fn', 'boolean');
 
 // $ExpectType DateFilterFunction<Entity>
-filterFunction('fn', 'datetimeoffset');
+filterFunctionV4('fn', 'datetimeoffset');
 
 // $ExpectType CollectionFilterFunction<Entity, number>
-filterFunction('fn', 'int[]');
+filterFunctionV4('fn', 'int[]');
 
 // $ExpectError
-filterFunction('fn', 'int[]').equals(['test']);
+filterFunctionV4('fn', 'int[]').equals(['test']);

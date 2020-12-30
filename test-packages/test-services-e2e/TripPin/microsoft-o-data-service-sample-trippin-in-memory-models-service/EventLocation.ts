@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexType } from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
 
 /**
  * EventLocation
@@ -89,6 +89,6 @@ export namespace EventLocation {
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexType` of the `@sap-cloud-sdk/core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | City }): EventLocation {
-    return deserializeComplexType(json, EventLocation);
+    return deserializeComplexTypeV4(json, EventLocation);
   }
 }

@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEntity, transformReturnValueForEdmType, edmToTsV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEntityV4, transformReturnValueForEdmTypeV4, edmToTsV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -27,7 +27,7 @@ export function getByKey(parameters: GetByKeyParameters): FunctionImportRequestB
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   }
 
-  return new FunctionImportRequestBuilderV4('/odata/test-service', 'getByKey', (data) => transformReturnValueForEntity(data, TestEntity), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'getByKey', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
 }
 
 /**
@@ -51,7 +51,7 @@ export function returnInt(parameters: ReturnIntParameters): FunctionImportReques
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   }
 
-  return new FunctionImportRequestBuilderV4('/odata/test-service', 'returnInt', (data) => transformReturnValueForEdmType(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'returnInt', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
 }
 
 /**
@@ -71,7 +71,7 @@ export function returnSapCloudSdk(parameters: ReturnSapCloudSdkParameters): Func
 
   }
 
-  return new FunctionImportRequestBuilderV4('/odata/test-service', 'returnSapCloudSdk', (data) => transformReturnValueForEdmType(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'returnSapCloudSdk', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
 /**
@@ -100,7 +100,7 @@ export function concatStrings(parameters: ConcatStringsParameters): FunctionImpo
     str2: new FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
   }
 
-  return new FunctionImportRequestBuilderV4('/odata/test-service', 'concatStrings', (data) => transformReturnValueForEdmType(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
+  return new FunctionImportRequestBuilderV4('/odata/test-service', 'concatStrings', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.String')), params);
 }
 
 export const functionImports = {

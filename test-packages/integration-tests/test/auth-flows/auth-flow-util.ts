@@ -13,6 +13,18 @@ export function loadLocalVcap(fileName = 'vcap-services.json') {
   logger.info(`VCAP_SERVICES: ${process.env.VCAP_SERVICES}`);
 }
 
+export function readUserAccessToken(
+  fileName = 'user-access-token.json'
+): UserAccessTokens {
+  const fileContent = readFile(fileName);
+  return JSON.parse(fileContent);
+}
+
+export function readSysmtes(fileName = 'systems.json'): Systems {
+  const fileContent = readFile(fileName);
+  return JSON.parse(fileContent);
+}
+
 function readFile(fileName: string): string {
   const path = resolve(__dirname, fileName);
   if (existsSync(path)) {
@@ -30,10 +42,14 @@ export interface UserAccessTokens {
 export interface Systems {
   s4: {
     providerBasic: string;
+    providerOAuth: string;
     subscriberBasic: string;
   };
   workflow: {
     providerClientCert: string;
+  };
+  destination: {
     providerUserExchange: string;
+    subscriberUserExchange: string;
   };
 }

@@ -26,6 +26,6 @@ local-docs/_site
 
 sqlite.db
 
-test-packages/integration-tests/test/oauth-flows/vcap-services.json
-test-packages/integration-tests/test/oauth-flows/user-access-token.ts
-test-packages/integration-tests/test/oauth-flows/systems.ts
+test-packages/integration-tests/test/auth-flows/vcap-services.json
+test-packages/integration-tests/test/auth-flows/user-access-token.json
+test-packages/integration-tests/test/auth-flows/systems.json

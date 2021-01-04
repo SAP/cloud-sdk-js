@@ -8,26 +8,33 @@ import {
   wrapJwtInHeader
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
-import { loadLocalVcap } from './oauth-util';
-import { accessToken } from './user-access-token';
-import { systems } from './systems';
+import {
+  loadLocalVcap,
+  readSysmtes,
+  readUserAccessToken,
+  Systems,
+  UserAccessTokens
+} from './auth-flow-util';
 
 /*
-Consider the README.md to understand how to execute these tests.
+Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests.
  */
 
 describe('OAuth flows', () => {
   let destinationService;
+  let accessToken: UserAccessTokens;
+  let systems: Systems;
 
   beforeAll(() => {
+    accessToken = readUserAccessToken();
+    systems = readSysmtes();
     loadLocalVcap();
     destinationService = getService('destination');
   });
 
-  it('OAuth2SAMLBearerAssertion Provider Destination & Provider Token', async () => {
-    const destinationName = 'CC8-HTTP-OAUTH';
+  it('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
     const highLevelFlow = await getDestinationFromDestinationService(
-      destinationName,
+      systems.s4.providerOAuth,
       { userJwt: accessToken.provider }
     );
 
@@ -39,9 +46,9 @@ describe('OAuth flows', () => {
     const destination = await fetchDestination(
       destinationService!.credentials.uri,
       userGrant,
-      destinationName
+      systems.s4.providerOAuth
     );
-    expect(destination.authTokens![0].error).toBeUndefined();
+    expect(destination.authTokens![0].error).toBeNull();
 
     const result = await BusinessPartner.requestBuilder()
       .getAll()
@@ -50,7 +57,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('Basic Provider Destination & Provider Token', async () => {
+  it('BasicAuth: Provider Destination & Provider Token', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });
@@ -68,7 +75,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('Basic Subscriber Destination & Subscriber Token', async () => {
+  it('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.subscriber
     });
@@ -86,7 +93,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('OAuth2ClientCredentials Provider Destination & Provider Token', async () => {
+  it('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });
@@ -104,26 +111,7 @@ describe('OAuth flows', () => {
     expect(response.status).toBe(200);
   }, 60000);
 
-  it('OAuth2UserTokenExchange Provider Destination & Provider Token', async () => {
-    const userGrant = await userApprovedServiceToken(
-      accessToken.provider,
-      destinationService
-    );
-
-    const destination = await fetchDestination(
-      destinationService!.credentials.uri,
-      userGrant,
-      systems.workflow.providerUserExchange
-    );
-    expect(destination.authTokens![0].error).toBeNull();
-
-    destination.url = destination.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination, { method: 'get' });
-
-    expect(response.status).toBe(200);
-  }, 60000);
-
-  it('OAuth2UserTokenExchange Provider Destination & Subscriber Token', async () => {
+  it('OAuth2UserTokenExchange: Provider destination and Subscriber Jwt', async () => {
     const providerDestToken = await serviceToken('destination', {});
 
     const destination = await fetchDestination(
@@ -132,33 +120,49 @@ describe('OAuth flows', () => {
         authHeaderJwt: providerDestToken,
         exchangeHeaderJwt: accessToken.subscriber
       },
-      systems.workflow.providerUserExchange
+      systems.destination.providerUserExchange
     );
-    expect(destination.authTokens![0].error).toBeNull();
 
-    destination.url = destination.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination, { method: 'get' });
+    expect(destination!.authTokens![0].error).toBeNull();
+
+    const response = await executeHttpRequest(
+      {
+        url:
+          'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
+      },
+      {
+        method: 'get',
+        headers: wrapJwtInHeader(destination!.authTokens![0].value).headers
+      }
+    );
 
     expect(response.status).toBe(200);
   }, 60000);
 
-  it('Direct access token for Workflow, Provider', async () => {
-    const workflowService = getService('workflow')!;
-
-
-    // For some reason credentials under UUA - WHY?
-     workflowService.credentials.clientid = workflowService.credentials.uaa.clientid
-     workflowService.credentials.clientsecret =workflowService.credentials.uaa.clientsecret
-    const token = await serviceToken(workflowService, {
-      userJwt: accessToken.provider
+  it('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
+    const subscriberDestToken = await serviceToken('destination', {
+      userJwt: accessToken.subscriber
     });
 
-    const url =
-      workflowService!.credentials.endpoints.workflow_rest_url +
-      '/v1/workflow-definitions';
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      {
+        authHeaderJwt: subscriberDestToken,
+        exchangeHeaderJwt: accessToken.subscriber
+      },
+      systems.destination.subscriberUserExchange
+    );
+    expect(destination.authTokens![0].error).toBeNull();
+
     const response = await executeHttpRequest(
-      { url },
-      { method: 'get', headers: wrapJwtInHeader(token).headers }
+      {
+        url:
+          'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
+      },
+      {
+        method: 'get',
+        headers: wrapJwtInHeader(destination.authTokens![0].value).headers
+      }
     );
 
     expect(response.status).toBe(200);

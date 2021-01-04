@@ -20,7 +20,7 @@ import {
 Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests.
  */
 
-describe('OAuth flows', () => {
+xdescribe('OAuth flows', () => {
   let destinationService;
   let accessToken: UserAccessTokens;
   let systems: Systems;

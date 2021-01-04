@@ -3,7 +3,7 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
-import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
+import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 import { ODataActionImportRequestConfig } from '../../odata-v4';
 
@@ -12,10 +12,10 @@ import { ODataActionImportRequestConfig } from '../../odata-v4';
  * @typeparam ParametersT - Type of the function import parameters
  * @typeparam ReturnT - Type of the function import return value
  */
-export abstract class ActionFunctionImportRequestBuilderBase<
+export abstract class ActionFunctionImportRequestBuilder<
   ParametersT,
   ReturnT
-> extends MethodRequestBuilderBase<
+> extends MethodRequestBuilder<
   | ODataFunctionImportRequestConfig<ParametersT>
   | ODataActionImportRequestConfig<ParametersT>
 > {
@@ -48,3 +48,5 @@ export abstract class ActionFunctionImportRequestBuilderBase<
       .then(({ data }) => this.responseTransformer(data));
   }
 }
+
+export { ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase };

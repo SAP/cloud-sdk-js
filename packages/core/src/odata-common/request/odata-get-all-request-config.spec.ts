@@ -1,6 +1,6 @@
 import { testFilterString } from '../../../test/test-util/filter-factory';
 import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
-import { oDataUriV2 } from '../../odata-v2/uri-conversion';
+import { oDataUri as oDataUriV2 } from '../../odata-v2/uri-conversion';
 import { asc } from '../order';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 

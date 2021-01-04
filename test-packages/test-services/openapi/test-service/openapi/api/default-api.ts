@@ -106,6 +106,46 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * 
+         * @param {Array<string>} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntity: async (requestBody?: Array<string>, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/entities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof requestBody !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(requestBody !== undefined ? requestBody : {}) : (requestBody || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get all entities
          * @summary Get entities
          * @param {string} [stringParameter] A parameter of type string
@@ -113,7 +153,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [$dollarParameter] A parameter that contains $
          * @param {string} [dotParameter] A parameter that contains . in the middle
          * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-         * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
+         * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
          * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
          * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
@@ -425,6 +465,86 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntity: async (body?: object, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/entities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Array<TestEntity>} [testEntity] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityWithPut: async (testEntity?: Array<TestEntity>, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/entities`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof testEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(testEntity !== undefined ? testEntity : {}) : (testEntity || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -462,6 +582,19 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * 
+         * @param {Array<string>} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEntity(requestBody?: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).deleteEntity(requestBody, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Get all entities
          * @summary Get entities
          * @param {string} [stringParameter] A parameter of type string
@@ -469,7 +602,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [$dollarParameter] A parameter that contains $
          * @param {string} [dotParameter] A parameter that contains . in the middle
          * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-         * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
+         * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
          * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
          * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
@@ -546,6 +679,32 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntity(body?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).updateEntity(body, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Array<TestEntity>} [testEntity] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEntityWithPut(testEntity?: Array<TestEntity>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).updateEntityWithPut(testEntity, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -575,6 +734,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return DefaultApiFp(configuration).createEntity(testEntity, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @param {Array<string>} [requestBody] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntity(requestBody?: Array<string>, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).deleteEntity(requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get all entities
          * @summary Get entities
          * @param {string} [stringParameter] A parameter of type string
@@ -582,7 +750,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [$dollarParameter] A parameter that contains $
          * @param {string} [dotParameter] A parameter that contains . in the middle
          * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-         * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
+         * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
          * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
          * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
          * @param {*} [options] Override http request option.
@@ -639,6 +807,24 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         testCasePostRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string, options?: any): AxiosPromise<void> {
             return DefaultApiFp(configuration).testCasePostRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, simpleTestEntity, optionalPathItemQueryParam, optionalQueryParam, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntity(body?: object, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).updateEntity(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<TestEntity>} [testEntity] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityWithPut(testEntity?: Array<TestEntity>, options?: any): AxiosPromise<void> {
+            return DefaultApiFp(configuration).updateEntityWithPut(testEntity, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -673,6 +859,17 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
+     * 
+     * @param {Array<string>} [requestBody] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteEntity(requestBody?: Array<string>, options?: any) {
+        return DefaultApiFp(this.configuration).deleteEntity(requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Get all entities
      * @summary Get entities
      * @param {string} [stringParameter] A parameter of type string
@@ -680,7 +877,7 @@ export class DefaultApi extends BaseAPI {
      * @param {string} [$dollarParameter] A parameter that contains $
      * @param {string} [dotParameter] A parameter that contains . in the middle
      * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-     * @param {1 | 2} [enumInt32Parameter] A parameter of type string with enum
+     * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
      * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
      * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
      * @param {*} [options] Override http request option.
@@ -745,5 +942,27 @@ export class DefaultApi extends BaseAPI {
      */
     public testCasePostRequiredParameters(requiredPathItemQueryParam: string, requiredPathItemPathParam: string, requiredQueryParam: string, simpleTestEntity: SimpleTestEntity, optionalPathItemQueryParam?: string, optionalQueryParam?: string, options?: any) {
         return DefaultApiFp(this.configuration).testCasePostRequiredParameters(requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, simpleTestEntity, optionalPathItemQueryParam, optionalQueryParam, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateEntity(body?: object, options?: any) {
+        return DefaultApiFp(this.configuration).updateEntity(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<TestEntity>} [testEntity] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateEntityWithPut(testEntity?: Array<TestEntity>, options?: any) {
+        return DefaultApiFp(this.configuration).updateEntityWithPut(testEntity, options).then((request) => request(this.axios, this.basePath));
     }
 }

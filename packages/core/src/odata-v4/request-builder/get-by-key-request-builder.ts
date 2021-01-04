@@ -4,21 +4,21 @@ import {
   EntityIdentifiable,
   FieldType,
   Expandable,
-  GetByKeyRequestBuilderBase
+  GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
 } from '../../odata-common';
-import { EntityV4 } from '../entity';
-import { entityDeserializerV4 } from '../entity-deserializer';
-import { oDataUriV4 } from '../uri-conversion';
-import { responseDataAccessorV4 } from './response-data-accessor';
+import { Entity } from '../entity';
+import { entityDeserializer } from '../entity-deserializer';
+import { oDataUri } from '../uri-conversion';
+import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.
- * The properties available in the response can be restricted by creating a [[GetByKeyRequestBuilderV4.select selection]], where no selection is equal to selecting all fields of the entity.
- * Navigational properties need to expanded explicitly by [[GetAllRequestBuilderV4.expand]].
+ * The properties available in the response can be restricted by creating a [[GetByKeyRequestBuilder.select selection]], where no selection is equal to selecting all fields of the entity.
+ * Navigational properties need to expanded explicitly by [[GetAllRequestBuilder.expand]].
  * where no selection is equal to selecting all fields.
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilderV4<EntityT extends EntityV4>
+export class GetByKeyRequestBuilder<EntityT extends Entity>
   extends GetByKeyRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
@@ -36,9 +36,9 @@ export class GetByKeyRequestBuilderV4<EntityT extends EntityV4>
     super(
       _entityConstructor,
       keys,
-      oDataUriV4,
-      entityDeserializerV4,
-      responseDataAccessorV4
+      oDataUri,
+      entityDeserializer,
+      responseDataAccessor
     );
   }
 
@@ -52,3 +52,5 @@ export class GetByKeyRequestBuilderV4<EntityT extends EntityV4>
     return this;
   }
 }
+
+export { GetByKeyRequestBuilder as GetByKeyRequestBuilderV4 };

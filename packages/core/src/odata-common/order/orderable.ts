@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { Link, SimpleTypeFields } from '../selectable';
 import { ComplexTypePropertyFields } from '../selectable/complex-type-property-fields';
 import { Order } from './order';
@@ -9,18 +9,18 @@ import { OrderLink } from './order-link';
  *
  * @typeparam EntityT - Type of the entity to be ordered
  */
-export type Orderable<EntityT extends EntityBase> =
+export type Orderable<EntityT extends Entity> =
   | Order<EntityT>
-  | OrderLink<EntityT, EntityBase>;
+  | OrderLink<EntityT, Entity>;
 
 /**
  * A union of all types that can be used as input for ordering.
  *
  * @typeparam EntityT - Type of the entity to be ordered
  */
-export type OrderableInput<EntityT extends EntityBase> =
+export type OrderableInput<EntityT extends Entity> =
   | SimpleTypeFields<EntityT>
-  | Link<EntityT, EntityBase>
+  | Link<EntityT, Entity>
   | ComplexTypePropertyFields<EntityT, any>;
 
 /**
@@ -30,7 +30,7 @@ export type OrderableInput<EntityT extends EntityBase> =
  * @param orderBy - Field or link to be ordered by
  * @returns New order
  */
-export function asc<EntityT extends EntityBase>(
+export function asc<EntityT extends Entity>(
   orderBy: OrderableInput<EntityT>
 ): Order<EntityT> {
   if (orderBy instanceof Link) {
@@ -46,7 +46,7 @@ export function asc<EntityT extends EntityBase>(
  * @param orderBy - Field or link to be ordered by
  * @returns New order
  */
-export function desc<EntityT extends EntityBase>(
+export function desc<EntityT extends Entity>(
   orderBy: OrderableInput<EntityT>
 ): Order<EntityT> {
   if (orderBy instanceof Link) {

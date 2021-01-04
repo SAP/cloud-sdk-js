@@ -13,20 +13,20 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks,
-  createTestEntityV4
+  createTestEntityV4 as createTestEntity
 } from '../../../test/test-util/test-data';
 import { any } from '..';
-import { GetAllRequestBuilderV4 } from './get-all-request-builder';
+import { GetAllRequestBuilder } from './get-all-request-builder';
 
-describe('GetAllRequestBuilderV4', () => {
-  let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
+describe('GetAllRequestBuilder', () => {
+  let requestBuilder: GetAllRequestBuilder<TestEntity>;
 
   afterEach(() => {
     unmockDestinationsEnv();
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilderV4(TestEntity);
+    requestBuilder = new GetAllRequestBuilder(TestEntity);
   });
 
   describe('url', () => {
@@ -76,12 +76,12 @@ describe('GetAllRequestBuilderV4', () => {
         TestEntity
       );
 
-      const actual = await new GetAllRequestBuilderV4(TestEntity).execute(
+      const actual = await new GetAllRequestBuilder(TestEntity).execute(
         defaultDestination
       );
       expect(actual).toEqual([
-        createTestEntityV4(testEntity1),
-        createTestEntityV4(testEntity2)
+        createTestEntity(testEntity1),
+        createTestEntity(testEntity2)
       ]);
     });
 
@@ -96,7 +96,7 @@ describe('GetAllRequestBuilderV4', () => {
       );
 
       const actual = await requestBuilder.top(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntityV4(testEntity1)]);
+      expect(actual).toEqual([createTestEntity(testEntity1)]);
     });
 
     it('skip(1) skips the first entity', async () => {
@@ -109,7 +109,7 @@ describe('GetAllRequestBuilderV4', () => {
         TestEntity
       );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
-      expect(actual).toEqual([createTestEntityV4(testEntity2)]);
+      expect(actual).toEqual([createTestEntity(testEntity2)]);
     });
 
     it('should resolve when ALL_FIELDS is selected and links are expanded', async () => {
@@ -128,7 +128,7 @@ describe('GetAllRequestBuilderV4', () => {
         .select(TestEntity.ALL_FIELDS)
         .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
         .execute(defaultDestination);
-      expect(actual).toEqual([createTestEntityV4(testEntity)]);
+      expect(actual).toEqual([createTestEntity(testEntity)]);
     });
 
     it('should resolve when multi-link is expanded with lambda expression filter', async () => {
@@ -153,7 +153,7 @@ describe('GetAllRequestBuilderV4', () => {
           )
         )
         .execute(defaultDestination);
-      expect(actual).toEqual([createTestEntityV4(testEntity)]);
+      expect(actual).toEqual([createTestEntity(testEntity)]);
     });
   });
 });

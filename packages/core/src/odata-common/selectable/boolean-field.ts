@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { Entity, ODataVersionOf, Constructable } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,
@@ -15,7 +15,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   boolean
 > {}
@@ -25,7 +25,7 @@ export class BooleanFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanField<EntityT extends EntityBase>
+export class BooleanField<EntityT extends Entity>
   extends BooleanFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -37,7 +37,7 @@ export class BooleanField<EntityT extends EntityBase>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeBooleanPropertyField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends BooleanFieldBase<EntityT> {
   /**

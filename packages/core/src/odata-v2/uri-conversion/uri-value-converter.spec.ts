@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import moment = require('moment');
-import { edmToTsV2 } from '../payload-value-converter';
-import { uriConverterV2 } from './uri-value-converter';
+import { edmToTs } from '../payload-value-converter';
+import { uriConverter } from './uri-value-converter';
 
-const { convertToUriFormat } = uriConverterV2;
+const { convertToUriFormat } = uriConverter;
 
 describe('convertToUriFormat', () => {
   it('Edm.Binary', () => {
@@ -72,7 +72,7 @@ describe('convertToUriFormat', () => {
     ).toBe("datetime'2019-03-11T11:39:42.000'");
     expect(
       convertToUriFormat(
-        edmToTsV2('/Date(1552304382000)/', 'Edm.DateTime'),
+        edmToTs('/Date(1552304382000)/', 'Edm.DateTime'),
         'Edm.DateTime'
       )
     ).toBe("datetime'2019-03-11T11:39:42.000'");
@@ -84,7 +84,7 @@ describe('convertToUriFormat', () => {
     ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
     expect(
       convertToUriFormat(
-        edmToTsV2('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'),
+        edmToTs('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'),
         'Edm.DateTimeOffset'
       )
     ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");

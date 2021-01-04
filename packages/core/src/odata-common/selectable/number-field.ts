@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { Entity, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import {
   ComplexTypeField,
@@ -16,7 +16,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class NumberFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+export class NumberFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   number
 > {
@@ -66,7 +66,7 @@ export class NumberFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class NumberField<EntityT extends EntityBase>
+export class NumberField<EntityT extends Entity>
   extends NumberFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -78,7 +78,7 @@ export class NumberField<EntityT extends EntityBase>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeNumberPropertyField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends NumberFieldBase<EntityT> {
   /**

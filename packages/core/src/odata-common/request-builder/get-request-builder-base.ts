@@ -1,8 +1,8 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { Constructable, EntityIdentifiable, EntityBase } from '../entity';
+import { Constructable, EntityIdentifiable, Entity } from '../entity';
 import { Selectable } from '../selectable/selectable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
-import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
+import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../request';
 
 /**
@@ -10,13 +10,13 @@ import { ODataGetByKeyRequestConfig } from '../request';
  *
  * @typeparam EntityT - Type of the entity to be requested.
  */
-export abstract class GetRequestBuilderBase<
-    EntityT extends EntityBase,
+export abstract class GetRequestBuilder<
+    EntityT extends Entity,
     RequestConfigT extends
       | ODataGetAllRequestConfig<EntityT>
       | ODataGetByKeyRequestConfig<EntityT>
   >
-  extends MethodRequestBuilderBase<RequestConfigT>
+  extends MethodRequestBuilder<RequestConfigT>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
 
@@ -48,3 +48,5 @@ export abstract class GetRequestBuilderBase<
     return this;
   }
 }
+
+export { GetRequestBuilder as GetRequestBuilderBase };

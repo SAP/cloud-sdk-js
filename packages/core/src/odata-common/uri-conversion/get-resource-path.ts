@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 import { FieldType, Field } from '../selectable';
 import { UriConverter } from '../uri-conversion';
 import { toStaticPropertyFormat } from '../name-converter';
@@ -9,12 +9,12 @@ const logger = createLogger({
   messageContext: 'get-resource-path'
 });
 
-type GetResourcePathForKeysType<EntityT extends EntityBase> = (
+type GetResourcePathForKeysType<EntityT extends Entity> = (
   keys: Record<string, FieldType>,
   entityConstructor: Constructable<EntityT>
 ) => string;
 
-interface GetResourcePathForKeys<EntityT extends EntityBase = any> {
+interface GetResourcePathForKeys<EntityT extends Entity = any> {
   getResourcePathForKeys: GetResourcePathForKeysType<EntityT>;
 }
 
@@ -37,7 +37,7 @@ export function createGetResourcePathForKeys(
    * @param uriConverter - OData version specific converter for strings in URIs
    * @returns The path to the resource
    */
-  function getResourcePathForKeys<EntityT extends EntityBase>(
+  function getResourcePathForKeys<EntityT extends Entity>(
     keys: Record<string, FieldType> = {},
     entityConstructor: Constructable<EntityT>
   ): string {
@@ -54,7 +54,7 @@ export function createGetResourcePathForKeys(
     return entityConstructor._entityName;
   }
 
-  function getMissingKeys<EntityT extends EntityBase>(
+  function getMissingKeys<EntityT extends Entity>(
     keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
@@ -64,7 +64,7 @@ export function createGetResourcePathForKeys(
       .filter(fieldName => !givenKeys.includes(fieldName));
   }
 
-  function getInvalidKeys<EntityT extends EntityBase>(
+  function getInvalidKeys<EntityT extends Entity>(
     keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
@@ -81,7 +81,7 @@ export function createGetResourcePathForKeys(
       .map(([key]) => key);
   }
 
-  function filterNonKeyProperties<EntityT extends EntityBase>(
+  function filterNonKeyProperties<EntityT extends Entity>(
     keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): Record<string, FieldType> {
@@ -103,7 +103,7 @@ export function createGetResourcePathForKeys(
     return keys;
   }
 
-  function keyToOData<EntityT extends EntityBase>(
+  function keyToOData<EntityT extends Entity>(
     key: string,
     value: any,
     entityConstructor: Constructable<EntityT>
@@ -112,7 +112,7 @@ export function createGetResourcePathForKeys(
     return `${key}=${uriConverter.convertToUriFormat(value, edmType)}`;
   }
 
-  function validateKeys<EntityT extends EntityBase>(
+  function validateKeys<EntityT extends Entity>(
     keys: Record<string, FieldType>,
     entityConstructor: Constructable<EntityT>
   ): void {

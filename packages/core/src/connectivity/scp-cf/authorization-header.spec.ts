@@ -4,7 +4,7 @@ import {
   ODataRequest
 } from '../../odata-common/request';
 import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
-import { oDataUriV2 } from '../../odata-v2/uri-conversion';
+import { oDataUri as oDataUriV2 } from '../../odata-v2/uri-conversion';
 import {
   defaultBasicCredentials,
   defaultDestination

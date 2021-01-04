@@ -52,7 +52,11 @@ describe('api-file', () => {
           parameters: [],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body',
+            parameterType: {
+              isArrayType: false,
+              innerType: 'TestEntity',
+              isInnerTypeReferenceType: true
+            },
             required: true
           } as OpenApiRequestBody,
           pattern: 'test'
@@ -70,7 +74,12 @@ describe('api-file', () => {
           ],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body',
+            parameterType: {
+              isArrayType: true,
+              innerType: 'string',
+              isInnerTypeReferenceType: false,
+              arrayLevel: 1
+            },
             required: true
           } as OpenApiRequestBody,
           pattern: 'test/{id}'
@@ -123,7 +132,12 @@ describe('api-file', () => {
           ],
           requestBody: {
             parameterName: 'body',
-            parameterType: 'Body',
+            parameterType: {
+              isArrayType: true,
+              innerType: 'TestEntity',
+              isInnerTypeReferenceType: true,
+              arrayLevel: 2
+            },
             required: true
           } as OpenApiRequestBody,
           pattern: 'test'

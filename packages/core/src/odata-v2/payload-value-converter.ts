@@ -7,15 +7,15 @@ import {
   deserializersCommon,
   serializersCommom
 } from '../odata-common/payload-value-converter';
-import { EdmTypeV2 } from './edm-types';
+import { EdmType } from './edm-types';
 
 /**
  * @hidden
  */
-export function edmToTsV2<T extends EdmTypeV2>(
+export function edmToTs<T extends EdmType>(
   value: any,
   edmType: EdmTypeShared<'v2'>
-): EdmToPrimitiveV2<T> {
+): EdmToPrimitive<T> {
   if (value === null || typeof value === 'undefined') {
     return value;
   }
@@ -28,7 +28,7 @@ export function edmToTsV2<T extends EdmTypeV2>(
 /**
  * @hidden
  */
-export function tsToEdmV2(value: any, edmType: EdmTypeShared<'v2'>): any {
+export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
   if (value === null) {
     return 'null';
   }
@@ -38,7 +38,7 @@ export function tsToEdmV2(value: any, edmType: EdmTypeShared<'v2'>): any {
   return value;
 }
 
-type EdmTypeMapping = { [key in EdmTypeV2]: (value: any) => any };
+type EdmTypeMapping = { [key in EdmType]: (value: any) => any };
 
 const toTime = (value: string): Time => {
   const timeComponents = /PT(\d{1,2})H(\d{1,2})M(\d{1,2})S/.exec(value);
@@ -110,7 +110,7 @@ function leftpad(value: any, targetLength: number): string {
   return '0'.repeat(targetLength - str.length) + str;
 }
 
-export type EdmToPrimitiveV2<T extends EdmTypeV2> = T extends
+export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Single'
@@ -145,5 +145,8 @@ const serializers: EdmTypeMapping = {
   'Edm.Time': fromTime
 };
 
-export { EdmToPrimitiveV2 as EdmToPrimitive };
-export { edmToTsV2 as edmToTs };
+export {
+  EdmToPrimitive as EdmToPrimitiveV2,
+  edmToTs as edmToTsV2,
+  tsToEdm as tsToEdmV2
+};

@@ -1,7 +1,7 @@
 import {
   FilterLambdaExpression,
   OneToManyLink,
-  EntityBase,
+  Entity as EntityBase,
   FieldType,
   and,
   Filterable,

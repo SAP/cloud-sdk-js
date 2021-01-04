@@ -1,4 +1,4 @@
-import { EntityV4 } from '../entity';
+import { Entity } from '../entity';
 import { Selectable } from '../../odata-common';
 
 /**
@@ -9,7 +9,7 @@ import { Selectable } from '../../odata-common';
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
  */
-export function getSelectV4<EntityT extends EntityV4>(
+export function getSelect<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
 ): Partial<{ select: string }> {
   const selection = selects.map(select => select._fieldName);
@@ -22,3 +22,5 @@ export function getSelectV4<EntityT extends EntityV4>(
 
   return {};
 }
+
+export { getSelect as getSelectV4 };

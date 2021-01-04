@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Constructable, EntityBase } from '../entity';
+import { Constructable, Entity } from '../entity';
 import {
   Filterable,
   isFilterList,
@@ -14,7 +14,7 @@ import { UriConverter } from '../uri-conversion';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { toStaticPropertyFormat } from '../name-converter';
 
-type GetFilterType<EntityT extends EntityBase> = (
+type GetFilterType<EntityT extends Entity> = (
   filter: Filterable<EntityT>,
   entityConstructor: Constructable<EntityT>
 ) => Partial<{ filter: string }>;
@@ -22,7 +22,7 @@ type GetFilterType<EntityT extends EntityBase> = (
 /**
  * Interface representing the return of the getFilter creator [[createGetFilter]].
  */
-export interface GetFilter<EntityT extends EntityBase = any> {
+export interface GetFilter<EntityT extends Entity = any> {
   getFilter: GetFilterType<EntityT>;
 }
 
@@ -42,7 +42,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
    * @param entityConstructor - Constructor type of the entity to filter on
    * @returns An object containing the query parameter or an empty object
    */
-  function getFilter<EntityT extends EntityBase>(
+  function getFilter<EntityT extends Entity>(
     filter: Filterable<EntityT>,
     entityConstructor: Constructable<EntityT>
   ): Partial<{ filter: string }> {
@@ -61,7 +61,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     return {};
   }
 
-  function getODataFilterExpression<FilterEntityT extends EntityBase>(
+  function getODataFilterExpression<FilterEntityT extends Entity>(
     filter: Filterable<FilterEntityT>,
     parentFieldNames: string[] = [],
     targetEntityConstructor: Constructable<any>,
@@ -160,7 +160,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     );
   }
 
-  function retrieveField<FilterEntityT extends EntityBase>(
+  function retrieveField<FilterEntityT extends Entity>(
     filterField: string,
     targetEntityConstructor: Constructable<any>,
     filterEdmType?: EdmTypeShared<'v2'>
@@ -179,7 +179,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   }
 
   function filterFunctionToString<
-    EntityT extends EntityBase,
+    EntityT extends Entity,
     FieldT extends FieldType
   >(
     filterFunction: FilterFunction<EntityT, FieldT>,
@@ -191,7 +191,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     return `${filterFunction.functionName}(${params})`;
   }
 
-  function filterFunctionParameterToString<EntityT extends EntityBase>(
+  function filterFunctionParameterToString<EntityT extends Entity>(
     param: FilterFunctionParameterType<EntityT>,
     parentFieldNames: string[]
   ): string {

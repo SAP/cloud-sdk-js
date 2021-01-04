@@ -4,21 +4,21 @@ import {
   DestinationNameAndJwt,
   DestinationOptions
 } from '../../connectivity/scp-cf';
-import { Constructable, EntityBase } from '../entity';
+import { Constructable, Entity } from '../entity';
 import { ODataGetByKeyRequestConfig } from '../request';
 import { ODataUri } from '../uri-conversion';
 import { FieldType, Selectable } from '../selectable';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { GetRequestBuilderBase } from './get-request-builder-base';
+import { GetRequestBuilder } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  *
  * @typeparam EntityT - Type of the entity to be requested
  */
-export abstract class GetByKeyRequestBuilderBase<
-  EntityT extends EntityBase
-> extends GetRequestBuilderBase<EntityT, ODataGetByKeyRequestConfig<EntityT>> {
+export abstract class GetByKeyRequestBuilder<
+  EntityT extends Entity
+> extends GetRequestBuilder<EntityT, ODataGetByKeyRequestConfig<EntityT>> {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    *
@@ -82,3 +82,5 @@ export abstract class GetByKeyRequestBuilderBase<
       });
   }
 }
+
+export { GetByKeyRequestBuilder as GetByKeyRequestBuilderBase };

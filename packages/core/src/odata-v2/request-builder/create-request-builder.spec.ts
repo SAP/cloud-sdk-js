@@ -11,9 +11,9 @@ import {
   TestEntitySingleLink
 } from '../../../test/test-util/test-services/v2/test-service';
 import { testPostRequestOutcome } from '../../../test/test-util/testPostRequestOutcome';
-import { CreateRequestBuilderV2 } from './create-request-builder';
+import { CreateRequestBuilder } from './create-request-builder';
 
-describe('CreateRequestBuilderV2', () => {
+describe('CreateRequestBuilder', () => {
   afterAll(() => {
     nock.cleanAll();
   });
@@ -32,7 +32,7 @@ describe('CreateRequestBuilderV2', () => {
       .stringProperty(stringProp)
       .build();
 
-    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -56,7 +56,7 @@ describe('CreateRequestBuilderV2', () => {
     });
 
     const entity = TestEntity.builder().stringProperty(stringProp).build();
-    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -78,7 +78,7 @@ describe('CreateRequestBuilderV2', () => {
       )
       .build();
 
-    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -107,7 +107,7 @@ describe('CreateRequestBuilderV2', () => {
       ])
       .build();
 
-    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -140,7 +140,7 @@ describe('CreateRequestBuilderV2', () => {
       .withCustomFields(customFields)
       .build();
 
-    const actual = await new CreateRequestBuilderV2(TestEntity, entity).execute(
+    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
 
@@ -175,7 +175,7 @@ describe('CreateRequestBuilderV2', () => {
       path: toChildPath
     });
 
-    const actual = await new CreateRequestBuilderV2(
+    const actual = await new CreateRequestBuilder(
       TestEntityMultiLink,
       childEntity
     )
@@ -193,7 +193,7 @@ describe('CreateRequestBuilderV2', () => {
 
     const someEntity = TestEntity.builder().stringProperty('').build();
 
-    const createRequest = new CreateRequestBuilderV2(
+    const createRequest = new CreateRequestBuilder(
       TestEntity,
       someEntity
     ).execute(defaultDestination);

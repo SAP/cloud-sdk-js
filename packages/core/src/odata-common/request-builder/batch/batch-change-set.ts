@@ -1,13 +1,13 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { v4 as uuid } from 'uuid';
-import { MethodRequestBuilderBase } from '../request-builder-base';
+import { MethodRequestBuilder } from '../request-builder-base';
 
-// FIXME: MethodRequestBuilderBase is too broad here. Should be create, update and delete
+// FIXME: MethodRequestBuilder is too broad here. Should be create, update and delete
 /**
  * Representation of a batch change set, which holds a collection of write operations.
  */
-export class BatchChangeSet<RequestT extends MethodRequestBuilderBase = any> {
+export class BatchChangeSet<RequestT extends MethodRequestBuilder = any> {
   /**
    * Create an instance of BatchChangeSet.
    * @param requests Requests to combine to one change set.

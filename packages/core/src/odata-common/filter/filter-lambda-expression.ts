@@ -1,5 +1,5 @@
 import { FieldType } from '../selectable';
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
@@ -14,7 +14,7 @@ export type FilterLambdaOperator = 'any' | 'all';
  * hidden
  */
 export class FilterLambdaExpression<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   FieldT extends FieldType
 > {
   constructor(
@@ -27,7 +27,7 @@ export class FilterLambdaExpression<
  * hidden
  */
 export function isFilterLambdaExpression<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   FieldT extends FieldType
 >(
   filterable: Filterable<EntityT>

@@ -1,9 +1,9 @@
 import {
-  EntityBase,
+  Entity as EntityBase,
   Constructable,
-  ODataDeleteRequestConfig as Base
+  ODataDeleteRequestConfig as ODataDeleteRequestConfigBase
 } from '../../odata-common';
-import { oDataUriV2 } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion';
 
 /**
  * @deprecated Since v1.21.0. Use superclass instead.
@@ -13,13 +13,13 @@ import { oDataUriV2 } from '../uri-conversion';
  */
 class ODataDeleteRequestConfig<
   EntityT extends EntityBase
-> extends Base<EntityT> {
+> extends ODataDeleteRequestConfigBase<EntityT> {
   /**
    * Creates an instance of ODataRequest.
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(_entityConstructor: Constructable<EntityT>) {
-    super(_entityConstructor, oDataUriV2);
+    super(_entityConstructor, oDataUri);
   }
 }
 

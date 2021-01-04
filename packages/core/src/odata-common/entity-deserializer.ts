@@ -8,7 +8,7 @@ import {
   CollectionField,
   OneToOneLink,
   isExpandedProperty,
-  EntityBase,
+  Entity,
   Constructable,
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
@@ -16,8 +16,14 @@ import {
   isEdmType,
   PropertyMetadata
 } from '../odata-common';
-import { EdmToPrimitiveV2, EdmTypeV2 } from '../odata-v2';
-import { EdmToPrimitiveV4, EdmTypeV4 } from '../odata-v4';
+import {
+  EdmToPrimitive as EdmToPrimitiveV2,
+  EdmType as EdmTypeV2
+} from '../odata-v2';
+import {
+  EdmToPrimitive as EdmToPrimitiveV4,
+  EdmType as EdmTypeV4
+} from '../odata-v4';
 import { toPropertyFormat } from './name-converter';
 
 const logger = createLogger({
@@ -28,7 +34,7 @@ const logger = createLogger({
 /**
  * Interface representing the return type of the builder function [[entityDeserializer]]
  */
-export interface EntityDeserializer<EntityT extends EntityBase = any> {
+export interface EntityDeserializer<EntityT extends Entity = any> {
   deserializeEntity: (
     json: any,
     entityConstructor: Constructable<EntityT>,
@@ -74,7 +80,7 @@ export function entityDeserializer(
    * @param requestHeader - Optional parameter which may be used to add a version identifier (etag) to the entity
    * @returns An instance of the entity class.
    */
-  function deserializeEntity<EntityT extends EntityBase, JsonT>(
+  function deserializeEntity<EntityT extends Entity, JsonT>(
     json: Partial<JsonT>,
     entityConstructor: Constructable<EntityT>,
     requestHeader?: any
@@ -94,7 +100,7 @@ export function entityDeserializer(
       .setOrInitializeRemoteState();
   }
 
-  function getFieldValue<EntityT extends EntityBase, JsonT>(
+  function getFieldValue<EntityT extends Entity, JsonT>(
     json: Partial<JsonT>,
     field: Field<EntityT> | Link<EntityT>
   ) {
@@ -121,8 +127,8 @@ export function entityDeserializer(
   }
 
   function getLinkFromJson<
-    EntityT extends EntityBase,
-    LinkedEntityT extends EntityBase,
+    EntityT extends Entity,
+    LinkedEntityT extends Entity,
     JsonT
   >(json: Partial<JsonT>, link: Link<EntityT, LinkedEntityT>) {
     return link instanceof OneToOneLink
@@ -133,8 +139,8 @@ export function entityDeserializer(
   // Be careful: if the return type is changed to `LinkedEntityT | undefined`, the test 'navigation properties should never be undefined' of the 'business-partner.spec.ts' will fail.
   // Not sure the purpose of the usage of null.
   function getSingleLinkFromJson<
-    EntityT extends EntityBase,
-    LinkedEntityT extends EntityBase,
+    EntityT extends Entity,
+    LinkedEntityT extends Entity,
     JsonT
   >(
     json: Partial<JsonT>,
@@ -147,8 +153,8 @@ export function entityDeserializer(
   }
 
   function getMultiLinkFromJson<
-    EntityT extends EntityBase,
-    LinkedEntityT extends EntityBase,
+    EntityT extends Entity,
+    LinkedEntityT extends Entity,
     JsonT
   >(
     json: Partial<JsonT>,
@@ -163,7 +169,7 @@ export function entityDeserializer(
   }
 
   // TODO: get rid of this function in v2.0
-  function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
+  function deserializeComplexTypeLegacy<EntityT extends Entity>(
     json: Record<string, any>,
     complexTypeField: ComplexTypeField<EntityT>
   ): Record<string, any> | null {
@@ -259,7 +265,7 @@ export function extractEtagFromHeader(headers: any): string | undefined {
  * @param entityConstructor - The constructor function of the entity class.
  * @returns An object containing the custom fields as key-value pairs.
  */
-export function extractCustomFields<EntityT extends EntityBase, JsonT>(
+export function extractCustomFields<EntityT extends Entity, JsonT>(
   json: Partial<JsonT>,
   entityConstructor: Constructable<EntityT>
 ): Record<string, any> {

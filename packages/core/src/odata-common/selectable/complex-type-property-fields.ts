@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { ComplexTypeBigNumberPropertyField } from './big-number-field';
 import { ComplexTypeBinaryPropertyField } from './binary-field';
 import { ComplexTypeBooleanPropertyField } from './boolean-field';
@@ -10,7 +10,7 @@ import { ComplexTypeTimePropertyField } from './time-field';
 /**
  * @hidden
  */
-export type ComplexTypePropertyFields<EntityT extends EntityBase, ComplexT> =
+export type ComplexTypePropertyFields<EntityT extends Entity, ComplexT> =
   | ComplexTypeBigNumberPropertyField<EntityT, ComplexT>
   | ComplexTypeBinaryPropertyField<EntityT, ComplexT>
   | ComplexTypeBooleanPropertyField<EntityT, ComplexT>

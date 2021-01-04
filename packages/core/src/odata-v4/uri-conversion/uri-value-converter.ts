@@ -1,20 +1,20 @@
 /* eslint-disable valid-jsdoc */
 
 import { identity } from '@sap-cloud-sdk/util';
-import { tsToEdmV4 } from '../payload-value-converter';
+import { tsToEdm } from '../payload-value-converter';
 import {
   convertToUriForEdmString,
   uriConvertersCommon,
   EdmTypeShared,
   UriConverter
 } from '../../odata-common';
-import { EdmTypeV4 } from '../edm-types';
+import { EdmType } from '../edm-types';
 
-type UriConverterMapping = { [key in EdmTypeV4]: (value: any) => string };
+type UriConverterMapping = { [key in EdmType]: (value: any) => string };
 /**
  * @hidden
  */
-export const uriConvertersV4: UriConverterMapping = {
+export const uriConverters: UriConverterMapping = {
   ...uriConvertersCommon,
   'Edm.Date': identity,
   'Edm.DateTimeOffset': identity,
@@ -27,13 +27,15 @@ export const uriConvertersV4: UriConverterMapping = {
 /**
  * @hidden
  */
-export const uriConverterV4: UriConverter = {
+export const uriConverter: UriConverter = {
   convertToUriFormat(value: any, edmType: EdmTypeShared<'v4'>): string {
-    const converted = tsToEdmV4(value, edmType);
-    const uriConverterFunc = uriConvertersV4[edmType];
+    const converted = tsToEdm(value, edmType);
+    const uriConverterFunc = uriConverters[edmType];
     if (uriConverterFunc) {
       return uriConverterFunc(converted);
     }
     return converted;
   }
 };
+
+export { uriConverters as uriConvertersV4, uriConverter as uriConverterV4 };

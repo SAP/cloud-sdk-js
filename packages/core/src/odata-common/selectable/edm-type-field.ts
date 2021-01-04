@@ -1,5 +1,5 @@
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { Entity, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import { Field, FieldType } from './field';
 
@@ -18,7 +18,7 @@ import { Field, FieldType } from './field';
  * @typeparam FieldT - Type of the field
  */
 export abstract class EdmTypeField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   FieldT extends FieldType
 > extends Field<EntityT> {
   /**

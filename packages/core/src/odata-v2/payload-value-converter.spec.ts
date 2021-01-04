@@ -3,107 +3,104 @@ import moment from 'moment';
 import { fromEdmToNumber, fromNumberToEdm } from '../odata-common';
 import {
   edmDateTimeToMoment,
-  edmToTsV2,
+  edmToTs,
   momentToEdmDateTime,
-  tsToEdmV2
+  tsToEdm
 } from './payload-value-converter';
-import { EdmTypeV2 } from './edm-types';
+import { EdmType } from './edm-types';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {
     const expected = 'testitest';
-    const actual = edmToTsV2(expected, 'Edm.String');
+    const actual = edmToTs(expected, 'Edm.String');
     expect(actual).toBe(expected);
   });
 
   it('should parse Edm.Boolean to boolean', () => {
     const expected = true;
-    const actual = edmToTsV2(expected, 'Edm.Boolean');
+    const actual = edmToTs(expected, 'Edm.Boolean');
     expect(actual).toBe(expected);
   });
 
   it('should parse S/4HANA Edm.Guid to string', () => {
     const expected = '005056ba-23b6-1ed4-b0ca-a49649d05e98';
-    const actual = edmToTsV2(expected, 'Edm.Guid');
+    const actual = edmToTs(expected, 'Edm.Guid');
     expect(actual).toBe(expected);
   });
 
   it('should parse Edm.Guid to string', () => {
     const expected = '005056ba-23b6-1ed4-b0ca-a49649d05e98';
-    const actual = edmToTsV2(`guid'${expected}`, 'Edm.Guid');
+    const actual = edmToTs(`guid'${expected}`, 'Edm.Guid');
     expect(actual).toBe(expected);
   });
 
   it('should parse Edm.Decimal to BigNumber', () => {
     const expected = new BigNumber('1.23');
-    const actual = edmToTsV2('1.23', 'Edm.Decimal');
+    const actual = edmToTs('1.23', 'Edm.Decimal');
     expect(actual).toEqual(expected);
   });
 
   it('should parse Edm.Int16 to number', () => {
     const expected = 16;
-    const actual = edmToTsV2('16', 'Edm.Int16');
+    const actual = edmToTs('16', 'Edm.Int16');
     expect(actual).toBe(expected);
   });
 
   it('should parse Edm.Int32 to number', () => {
     const expected = 16;
-    const actual = edmToTsV2('16', 'Edm.Int32');
+    const actual = edmToTs('16', 'Edm.Int32');
     expect(actual).toBe(expected);
   });
 
   it('should parse Edm.Int64 to number', () => {
     const expected = new BigNumber(16);
-    const actual = edmToTsV2('16', 'Edm.Int64');
+    const actual = edmToTs('16', 'Edm.Int64');
     expect(actual).toEqual(expected);
   });
 
   it('should parse Edm.Single to number', () => {
     const expected = 16;
-    const actual = edmToTsV2('16', 'Edm.Single');
+    const actual = edmToTs('16', 'Edm.Single');
     expect(actual).toBe(expected);
     checkInfinityCasesToTs('Edm.Single');
   });
 
   it('should parse Edm.Double to number', () => {
     const expected = 16.1616;
-    const actual = edmToTsV2('16.1616', 'Edm.Double');
+    const actual = edmToTs('16.1616', 'Edm.Double');
     expect(actual).toBe(expected);
     checkInfinityCasesToTs('Edm.Double');
   });
 
   it('should parse Edm.Float to number', () => {
     const expected = 16.1616;
-    const actual = edmToTsV2('16.1616', 'Edm.Float');
+    const actual = edmToTs('16.1616', 'Edm.Float');
     expect(actual).toBe(expected);
     checkInfinityCasesToTs('Edm.Float');
   });
 
   it('should parse Edm.Byte to number', () => {
     const expected = 255;
-    const actual = edmToTsV2('255', 'Edm.Byte');
+    const actual = edmToTs('255', 'Edm.Byte');
     expect(actual).toBe(expected);
   });
 
   // This is not even used anywhere in S/4...
   it('should parse Edm.SByte to number', () => {
     const expected = -8;
-    const actual = edmToTsV2('-8', 'Edm.SByte');
+    const actual = edmToTs('-8', 'Edm.SByte');
     expect(actual).toBe(expected);
   });
 
   it('should parse Edm.DateTime to Moment', () => {
     const expected = moment(1425427200000);
-    const actual = edmToTsV2('/Date(1425427200000)/', 'Edm.DateTime');
+    const actual = edmToTs('/Date(1425427200000)/', 'Edm.DateTime');
     expect(actual).toEqual(expected);
   });
 
   it('should parse Edm.DateTimeOffset to Moment', () => {
     const expected = moment(1425427200000).utc().utcOffset(0);
-    const actual = edmToTsV2(
-      '/Date(1425427200000+0000)/',
-      'Edm.DateTimeOffset'
-    );
+    const actual = edmToTs('/Date(1425427200000+0000)/', 'Edm.DateTimeOffset');
     expect(actual).toEqual(expected);
   });
 
@@ -113,13 +110,13 @@ describe('edmToTs()', () => {
       minutes: 20,
       seconds: 0
     };
-    const actual = edmToTsV2('PT13H20M00S', 'Edm.Time');
+    const actual = edmToTs('PT13H20M00S', 'Edm.Time');
     expect(actual).toEqual(expected);
   });
 
   it('should parse Edm.Binary to base64 string', () => {
     const expected = '23A0';
-    const actual = edmToTsV2('23A0', 'Edm.Binary');
+    const actual = edmToTs('23A0', 'Edm.Binary');
     expect(actual).toEqual(expected);
   });
 });
@@ -127,92 +124,89 @@ describe('edmToTs()', () => {
 describe('tsToEdm()', () => {
   it('should parse string to Edm.String', () => {
     const expected = 'testitest';
-    const actual = tsToEdmV2(expected, 'Edm.String');
+    const actual = tsToEdm(expected, 'Edm.String');
     expect(actual).toBe(expected);
   });
 
   it('should parse boolean to Edm.Boolean', () => {
     const expected = true;
-    const actual = tsToEdmV2(true, 'Edm.Boolean');
+    const actual = tsToEdm(true, 'Edm.Boolean');
     expect(actual).toBe(expected);
   });
 
   it('should parse string to Edm.Guid', () => {
     const expected = '005056ba-23b6-1ed4-b0ca-a49649d05e98';
-    const actual = tsToEdmV2(
-      '005056ba-23b6-1ed4-b0ca-a49649d05e98',
-      'Edm.Guid'
-    );
+    const actual = tsToEdm('005056ba-23b6-1ed4-b0ca-a49649d05e98', 'Edm.Guid');
     expect(actual).toBe(expected);
   });
 
   it('should parse BigNumber to Edm.Decimal', () => {
     const expected = '1.23';
-    const actual = tsToEdmV2(new BigNumber('1.23'), 'Edm.Decimal');
+    const actual = tsToEdm(new BigNumber('1.23'), 'Edm.Decimal');
     expect(actual).toBe(expected);
   });
 
   it('should parse number to Edm.Int16', () => {
     const expected = 16;
-    const actual = tsToEdmV2(16, 'Edm.Int16');
+    const actual = tsToEdm(16, 'Edm.Int16');
     expect(actual).toBe(expected);
   });
 
   it('should parse number to Edm.Int32', () => {
     const expected = 16;
-    const actual = tsToEdmV2(16, 'Edm.Int32');
+    const actual = tsToEdm(16, 'Edm.Int32');
     expect(actual).toBe(expected);
   });
 
   it('should parse BigNumber to Edm.Int64', () => {
     const expected = '16';
-    const actual = tsToEdmV2(new BigNumber('16'), 'Edm.Int64');
+    const actual = tsToEdm(new BigNumber('16'), 'Edm.Int64');
     expect(actual).toStrictEqual(expected);
   });
 
   it('should parse number to Edm.Single', () => {
     const expected = 16;
-    const actual = tsToEdmV2(16, 'Edm.Single');
+    const actual = tsToEdm(16, 'Edm.Single');
     expect(actual).toBe(expected);
     checkInfinityCasesToEdm('Edm.Single');
   });
 
   it('should parse number to Edm.Double', () => {
     const expected = 16.1616;
-    const actual = tsToEdmV2(16.1616, 'Edm.Double');
+    const actual = tsToEdm(16.1616, 'Edm.Double');
     expect(actual).toBe(expected);
     checkInfinityCasesToEdm('Edm.Double');
   });
 
   it('should parse number to Edm.Float', () => {
     const expected = 16.1616;
-    const actual = tsToEdmV2(16.1616, 'Edm.Float');
+    const actual = tsToEdm(16.1616, 'Edm.Float');
     expect(actual).toBe(expected);
     checkInfinityCasesToEdm('Edm.Float');
   });
 
   it('should parse number to Edm.Byte', () => {
     const expected = 255;
-    const actual = tsToEdmV2(255, 'Edm.Byte');
+    const actual = tsToEdm(255, 'Edm.Byte');
     expect(actual).toBe(expected);
   });
 
   // This is not even used anywhere in S/4...
   it('should parse number to Edm.SByte', () => {
     const expected = -8;
-    const actual = tsToEdmV2(-8, 'Edm.SByte');
+    const actual = tsToEdm(-8, 'Edm.SByte');
     expect(actual).toBe(expected);
   });
 
   it('should parse Moment to Edm.DateTime', () => {
     const expected = '/Date(1425427200000)/';
-    const actual = tsToEdmV2(moment(1425427200000), 'Edm.DateTime');
+    const actual = tsToEdm(moment(1425427200000), 'Edm.DateTime');
     expect(actual).toEqual(expected);
   });
 
   it('should parse Moment to Edm.DateTimeOffset', () => {
     const expected = '/Date(1425427200000+0000)/';
-    const actual = tsToEdmV2(
+    const actual = tsToEdm(
       moment(1425427200000).utc().utcOffset(0),
       'Edm.DateTimeOffset'
     );
@@ -221,7 +215,7 @@ describe('tsToEdm()', () => {
 
   it('should parse Time to Edm.Time', () => {
     const expected = 'PT13H20M00S';
-    const actual = tsToEdmV2(
+    const actual = tsToEdm(
       {
         hours: 13,
         minutes: 20,
@@ -234,7 +228,7 @@ describe('tsToEdm()', () => {
 
   it('should parse UInt8Array to Edm.Binary', () => {
     const expected = '23A0';
-    const actual = tsToEdmV2('23A0', 'Edm.Binary');
+    const actual = tsToEdm('23A0', 'Edm.Binary');
     expect(actual).toEqual(expected);
   });
 });
@@ -242,35 +236,33 @@ describe('tsToEdm()', () => {
 describe('edm to ts to edm does not lead to information loss', () => {
   it('Edm.String', () => {
     const expected = 'teststring';
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.String'), 'Edm.String')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.String'), 'Edm.String')).toBe(
       expected
     );
   });
 
   it('Edm.Boolean', () => {
     const expected = true;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Boolean'), 'Edm.Boolean')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.Boolean'), 'Edm.Boolean')).toBe(
       expected
     );
   });
 
   it('Edm.Guid', () => {
     const expected = '005056ba-23b6-1ed4-b0ca-a49649d05e98';
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Guid'), 'Edm.Guid')).toBe(
-      expected
-    );
+    expect(tsToEdm(edmToTs(expected, 'Edm.Guid'), 'Edm.Guid')).toBe(expected);
   });
 
   it('Edm.Decimal', () => {
     const expected = '123456.789';
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Decimal'), 'Edm.Decimal')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.Decimal'), 'Edm.Decimal')).toBe(
       expected
     );
   });
 
   it('Edm.Double', () => {
     const expected = 1234.56;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Double'), 'Edm.Double')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.Double'), 'Edm.Double')).toBe(
       expected
     );
     checkInfinityCasesRoundTrip('Edm.Double');
@@ -278,7 +270,7 @@ describe('edm to ts to edm does not lead to information loss', () => {
 
   it('Edm.Single', () => {
     const expected = 1234;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Single'), 'Edm.Single')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.Single'), 'Edm.Single')).toBe(
       expected
     );
     checkInfinityCasesRoundTrip('Edm.Single');
@@ -286,43 +278,35 @@ describe('edm to ts to edm does not lead to information loss', () => {
 
   it('Edm.Float', () => {
     const expected = 1234;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Float'), 'Edm.Float')).toBe(
-      expected
-    );
+    expect(tsToEdm(edmToTs(expected, 'Edm.Float'), 'Edm.Float')).toBe(expected);
     checkInfinityCasesRoundTrip('Edm.Float');
   });
 
   it('Edm.Int16', () => {
     const expected = 16;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Int16'), 'Edm.Int16')).toBe(
-      expected
-    );
+    expect(tsToEdm(edmToTs(expected, 'Edm.Int16'), 'Edm.Int16')).toBe(expected);
   });
 
   it('Edm.Int32', () => {
     const expected = 32;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Int32'), 'Edm.Int32')).toBe(
-      expected
-    );
+    expect(tsToEdm(edmToTs(expected, 'Edm.Int32'), 'Edm.Int32')).toBe(expected);
   });
 
   it('Edm.Int64', () => {
     const expected = '64';
-    expect(
-      tsToEdmV2(edmToTsV2(expected, 'Edm.Int64'), 'Edm.Int64')
-    ).toStrictEqual(expected);
-  });
-
-  it('Edm.SByte', () => {
-    const expected = -8;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.SByte'), 'Edm.SByte')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.Int64'), 'Edm.Int64')).toStrictEqual(
       expected
     );
   });
 
+  it('Edm.SByte', () => {
+    const expected = -8;
+    expect(tsToEdm(edmToTs(expected, 'Edm.SByte'), 'Edm.SByte')).toBe(expected);
+  });
+
   it('Edm.DateTime', () => {
     const expected = '/Date(1425427200000)/';
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.DateTime'), 'Edm.DateTime')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.DateTime'), 'Edm.DateTime')).toBe(
       expected
     );
   });
@@ -330,29 +314,25 @@ describe('edm to ts to edm does not lead to information loss', () => {
   it('Edm.DateTimeOffset', () => {
     const expected = '/Date(1425427200000+1000)/';
     expect(
-      tsToEdmV2(edmToTsV2(expected, 'Edm.DateTimeOffset'), 'Edm.DateTimeOffset')
+      tsToEdm(edmToTs(expected, 'Edm.DateTimeOffset'), 'Edm.DateTimeOffset')
     ).toBe(expected);
   });
 
   it('Edm.Time', () => {
     const expected = 'PT13H20M00S';
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Time'), 'Edm.Time')).toBe(
-      expected
-    );
+    expect(tsToEdm(edmToTs(expected, 'Edm.Time'), 'Edm.Time')).toBe(expected);
   });
 
   it('Edm.Binary', () => {
     const expected = 'BASE64==';
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Binary'), 'Edm.Binary')).toBe(
+    expect(tsToEdm(edmToTs(expected, 'Edm.Binary'), 'Edm.Binary')).toBe(
       expected
     );
   });
 
   it('Edm.Byte', () => {
     const expected = 8;
-    expect(tsToEdmV2(edmToTsV2(expected, 'Edm.Byte'), 'Edm.Byte')).toBe(
-      expected
-    );
+    expect(tsToEdm(edmToTs(expected, 'Edm.Byte'), 'Edm.Byte')).toBe(expected);
   });
 });
 
@@ -450,20 +430,20 @@ describe('edm to moment and back', () => {
   });
 });
 
-function checkInfinityCasesToEdm(edmType: EdmTypeV2) {
-  expect(tsToEdmV2(Number.POSITIVE_INFINITY, edmType)).toBe('INF');
-  expect(tsToEdmV2(Number.NEGATIVE_INFINITY, edmType)).toBe('-INF');
-  expect(tsToEdmV2(Number.NaN, edmType)).toBe('NaN');
+function checkInfinityCasesToEdm(edmType: EdmType) {
+  expect(tsToEdm(Number.POSITIVE_INFINITY, edmType)).toBe('INF');
+  expect(tsToEdm(Number.NEGATIVE_INFINITY, edmType)).toBe('-INF');
+  expect(tsToEdm(Number.NaN, edmType)).toBe('NaN');
 }
 
-function checkInfinityCasesToTs(edmType: EdmTypeV2) {
-  expect(edmToTsV2('INF', edmType)).toBe(Number.POSITIVE_INFINITY);
-  expect(edmToTsV2('-INF', edmType)).toBe(Number.NEGATIVE_INFINITY);
-  expect(edmToTsV2('NaN', edmType)).toBe(Number.NaN);
+function checkInfinityCasesToTs(edmType: EdmType) {
+  expect(edmToTs('INF', edmType)).toBe(Number.POSITIVE_INFINITY);
+  expect(edmToTs('-INF', edmType)).toBe(Number.NEGATIVE_INFINITY);
+  expect(edmToTs('NaN', edmType)).toBe(Number.NaN);
 }
 
-function checkInfinityCasesRoundTrip(edmType: EdmTypeV2) {
+function checkInfinityCasesRoundTrip(edmType: EdmType) {
   ['INF', '-INF', 'NaN'].forEach(s =>
-    expect(tsToEdmV2(edmToTsV2(s, edmType), edmType)).toBe(s)
+    expect(tsToEdm(edmToTs(s, edmType), edmType)).toBe(s)
   );
 }

@@ -1,7 +1,7 @@
 import { fail } from 'assert';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { edmToTsV2 } from '../../odata-v2';
+import { edmToTs as edmToTsV2 } from '../../odata-v2';
 import { Time } from '../time';
 import { createComplexType } from './create-complex-type';
 

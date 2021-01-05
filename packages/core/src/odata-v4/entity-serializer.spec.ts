@@ -1,6 +1,7 @@
 import {
   TestEntity,
-  TestComplexType
+  TestComplexType,
+  TestEntitySingleLink
 } from '../../test/test-util/test-services/v4/test-service';
 import { TestEnumType } from '../../test/test-util/test-services/v4/test-service/TestEnumType';
 import { serializeComplexType, serializeEntity } from './entity-serializer';
@@ -115,6 +116,41 @@ describe('entity-serializer', () => {
 
     expect(serializeEntity(testEntityFractional, TestEntity)).toEqual({
       TimeOfDayProperty: '01:02:03.456'
+    });
+  });
+
+  it('should include custom fields on navigation properties', () => {
+    const testEntity = TestEntity.builder()
+      .toSingleLink(
+        TestEntitySingleLink.builder()
+          .withCustomFields({ custom: 'custom' })
+          .build()
+      )
+      .build();
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+      to_SingleLink: {
+        custom: 'custom'
+      }
+    });
+  });
+
+  it('should consider only changed items when diff is true', () => {
+    const testEntity = TestEntity.builder()
+      .stringProperty('entity')
+      .withCustomFields({ custom: 'custom' })
+      .toSingleLink(
+        TestEntitySingleLink.builder().stringProperty('linkedEntity').build()
+      )
+      .build()
+      .setOrInitializeRemoteState();
+    testEntity.setCustomField('custom', 'newCustom');
+    testEntity.toSingleLink.booleanProperty = false;
+    expect(serializeEntity(testEntity, TestEntity, true)).toEqual({
+      custom: 'newCustom',
+      to_SingleLink: {
+        StringProperty: 'linkedEntity',
+        BooleanProperty: false
+      }
     });
   });
 });

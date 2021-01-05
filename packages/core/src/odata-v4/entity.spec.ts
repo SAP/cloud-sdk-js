@@ -7,7 +7,7 @@ import {
   TestEntitySingleLink
 } from '../../test/test-util/test-services/v4/test-service';
 
-describe('entity v4', () => {
+describe('entity', () => {
   let entity;
 
   const state = {
@@ -24,8 +24,7 @@ describe('entity v4', () => {
         booleanProperty: false,
         customField: 3
       }
-    ],
-    customField: 1
+    ]
   };
 
   beforeEach(() => {
@@ -55,10 +54,11 @@ describe('entity v4', () => {
       })
       .build();
   });
-  it('getCurrentMapKeys', () => {
-    const currentState = entity.getCurrentMapKeys();
 
-    expect(currentState).toEqual(state);
+  it('asObject', () => {
+    const currentState = entity.asObject();
+
+    expect(currentState).toEqual({ ...state, customField: 1 });
     expect(currentState.collectionProperty).not.toBe(entity.collectionProperty);
   });
 
@@ -70,7 +70,7 @@ describe('entity v4', () => {
     expect(entity.getUpdatedProperties()).toEqual({});
   });
 
-  it('getCurrentMapKeys does not run endlessly', () => {
+  it('asObject() does not run endlessly', () => {
     const parent = TestEntityCircularLinkParent.builder()
       .keyProperty('parent')
       .build();
@@ -86,7 +86,7 @@ describe('entity v4', () => {
     parent.toFirstChild = child1;
     parent.toChildren = [child1, child2];
 
-    expect(parent['getCurrentMapKeys']()).toEqual({
+    expect(parent['asObject']()).toEqual({
       keyProperty: 'parent',
       toFirstChild: {
         keyProperty: 'child1'
@@ -94,7 +94,7 @@ describe('entity v4', () => {
       toChildren: [{ keyProperty: 'child1' }, { keyProperty: 'child2' }]
     });
 
-    expect(child1['getCurrentMapKeys']()).toEqual({
+    expect(child1['asObject']()).toEqual({
       keyProperty: 'child1',
       toParent: {
         keyProperty: 'parent'

@@ -55,6 +55,7 @@ describe('entity', () => {
       })
       .build();
   });
+
   it('asObject', () => {
     const currentState = entity.asObject();
 

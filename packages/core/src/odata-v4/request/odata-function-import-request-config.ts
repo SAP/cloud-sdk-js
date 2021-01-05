@@ -2,13 +2,13 @@ import {
   ODataUri,
   FunctionImportParameter,
   FunctionImportParameters,
-  ODataFunctionImportRequestConfig,
+  ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase,
   RequestMethodType
 } from '../../odata-common';
 
-export class ODataFunctionImportRequestConfigV4<
+export class ODataFunctionImportRequestConfig<
   ParametersT
-> extends ODataFunctionImportRequestConfig<ParametersT> {
+> extends ODataFunctionImportRequestConfigBase<ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    *
@@ -46,3 +46,5 @@ export class ODataFunctionImportRequestConfigV4<
     });
   }
 }
+
+export { ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigV4 };

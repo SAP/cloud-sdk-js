@@ -2,19 +2,47 @@ export * from './connectivity';
 export * from './header-util';
 export * from './http-client';
 export * from './odata-common';
-export { entityDeserializer } from './odata-common';
 export * from './odata-v2';
-// The explicit export is needed to guarantee backwards compatibility, it overrides the same named functions in odata-common and odata-v4.
+// The explicit exports are needed to guarantee backwards compatibility, they override the named exports of the other odata modules.
+export { entityDeserializer, filterFunction } from './odata-common';
 export {
   CreateRequestBuilder,
+  CustomField,
   DeleteRequestBuilder,
-  UpdateRequestBuilder,
+  deserializeEntity,
+  deserializeComplexType,
+  Entity,
+  edmToTs,
+  EdmType,
+  EdmToPrimitive,
+  entitySerializer,
+  extractODataEtag,
+  filterFunctions,
+  FunctionImportRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
+  getExpand,
+  getSelect,
+  ODataBatchChangeSet,
+  ODataBatchRequestBuilder,
   ODataFunctionImportRequestConfig,
-  Entity,
-  CustomField,
-  filterFunctions
+  oDataUri,
+  serializeComplexType,
+  serializeEntity,
+  serializeEntityNonCustomFields,
+  toBatchChangeSet,
+  toBatchRetrieveBody,
+  transformReturnValueForEntity,
+  transformReturnValueForEdmType,
+  transformReturnValueForComplexType,
+  transformReturnValueForComplexTypeList,
+  transformReturnValueForEdmTypeList,
+  transformReturnValueForEntityList,
+  transformReturnValueForUndefined,
+  tsToEdm,
+  UpdateRequestBuilder,
+  uriConverter,
+  uriConverters
 } from './odata-v2';
 export * from './odata-v4';
 export * from './openapi';

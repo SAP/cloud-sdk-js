@@ -38,7 +38,7 @@
     ]
   },
   "scripts": {
-    "compile": "yarn tsc -b && oclif-dev readme",
+    "compile": "yarn tsc -b && oclif-dev readme && cp -r -f src/templates dist",
     "prepare": "yarn compile",
     "test": "yarn jest --coverage ",
     "test:local": "yarn jest",
@@ -51,7 +51,7 @@
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.14.0",
     "@oclif/parser": "^3.8.4",
-    "@oclif/plugin-autocomplete": "^0.2.0",
+    "@oclif/plugin-autocomplete": "^0.3.0",
     "@oclif/plugin-help": "^3.1.0",
     "@oclif/plugin-not-found": "^1.2.3",
     "@oclif/plugin-warn-if-update-available": "^1.7.0",

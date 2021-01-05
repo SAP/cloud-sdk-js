@@ -1,8 +1,8 @@
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
-import { uriConverterV4 } from './uri-value-converter';
+import { uriConverter } from './uri-value-converter';
 
-const { convertToUriFormat } = uriConverterV4;
+const { convertToUriFormat } = uriConverter;
 
 describe('convertToUriFormat', () => {
   it('should convert guid', () => {

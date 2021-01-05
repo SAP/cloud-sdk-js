@@ -5,24 +5,26 @@ import {
   getOrderBy,
   ODataUri
 } from '../../odata-common';
-import { getExpandV4 } from './get-expand';
-import { getSelectV4 } from './get-select';
-import { uriConverterV4 } from './uri-value-converter';
+import { getExpand } from './get-expand';
+import { getSelect } from './get-select';
+import { uriConverter } from './uri-value-converter';
 
-const { getFilter } = createGetFilter(uriConverterV4);
-const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverterV4);
-const { convertToUriFormat } = uriConverterV4;
+const { getFilter } = createGetFilter(uriConverter);
+const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
+const { convertToUriFormat } = uriConverter;
 
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v4.
  */
-export const oDataUriV4: ODataUri = {
+export const oDataUri: ODataUri = {
   getExpand: (_, expands, entityConstructor) =>
-    getExpandV4(expands, entityConstructor),
+    getExpand(expands, entityConstructor),
   getFilter,
   getEntityKeys,
   getOrderBy,
   getResourcePathForKeys,
-  getSelect: getSelectV4,
+  getSelect,
   convertToUriFormat
 };
+
+export { oDataUri as oDataUriV4 };

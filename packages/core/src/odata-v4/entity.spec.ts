@@ -58,7 +58,7 @@ describe('entity', () => {
   it('asObject', () => {
     const currentState = entity.asObject();
 
-    expect(currentState).toEqual(state);
+    expect(currentState).toEqual({ ...state, customField: 1 });
     expect(currentState.collectionProperty).not.toBe(entity.collectionProperty);
   });
 

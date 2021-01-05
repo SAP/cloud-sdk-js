@@ -1,0 +1,29 @@
+name: bump
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump to be used. Can either be 'patch' or 'minor'.
+        required: false
+        default: 'patch'
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: yarn install --frozen-lockfile
+      - name: Setup git
+        run: |
+          git config --global user.email "cloud-sdk-js@github.com"
+          git config --global user.name "cloud-sdk-js"
+      - name: Bump minor version
+        if: github.event.inputs.bump == 'minor'
+        run: yarn lerna version minor --force-publish -y
+      - name: Bump patch version
+        if: github.event.inputs.bump == 'patch'
+        run: yarn lerna version patch --force-publish -y

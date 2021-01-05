@@ -127,7 +127,7 @@ describe('entity-serializer', () => {
           .build()
       )
       .build();
-    expect(serializeEntityV4(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
       to_SingleLink: {
         custom: 'custom'
       }
@@ -145,7 +145,7 @@ describe('entity-serializer', () => {
       .setOrInitializeRemoteState();
     testEntity.setCustomField('custom', 'newCustom');
     testEntity.toSingleLink.booleanProperty = false;
-    expect(serializeEntityV4(testEntity, TestEntity, true)).toEqual({
+    expect(serializeEntity(testEntity, TestEntity, true)).toEqual({
       custom: 'newCustom',
       to_SingleLink: {
         StringProperty: 'linkedEntity',

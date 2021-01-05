@@ -246,16 +246,13 @@ export abstract class Entity {
    * @returns Entity with all properties that changed
    */
   public getUpdatedPropertyNames(): string[] {
-    const current = this.asObject();
-    if (!this.remoteState) {
-      return Object.keys(current);
-    }
-    return Object.keys(current).filter(
-      key =>
-        this.propertyIsEnumerable(key) &&
-        !this.hasCustomField(key) &&
-        !equal(this.remoteState[key], current[key])
+    const currentState = this.asObject();
+    const names = Object.keys(currentState).filter(
+      key => this.propertyIsEnumerable(key) && !this.hasCustomField(key)
     );
+    return !this.remoteState
+      ? names
+      : names.filter(key => !equal(this.remoteState[key], currentState[key]));
   }
 
   /**

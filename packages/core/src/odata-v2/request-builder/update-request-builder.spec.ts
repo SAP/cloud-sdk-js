@@ -266,7 +266,6 @@ describe('UpdateRequestBuilder', () => {
   });
 
   it('should set the remote state and etag', async () => {
-    const stringProp = 'etagTest';
     const eTag = 'someEtag';
 
     const entity = createTestEntity().setVersionIdentifier('not-a-star');

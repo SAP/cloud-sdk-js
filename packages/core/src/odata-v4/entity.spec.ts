@@ -24,8 +24,7 @@ describe('entity', () => {
         booleanProperty: false,
         customField: 3
       }
-    ],
-    customField: 1
+    ]
   };
 
   beforeEach(() => {

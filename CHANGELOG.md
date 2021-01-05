@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- The return type of `Entity.getUpdatedProperties` was incorrected and was corrected to `Record<string, any>`.
+- The return type of `Entity.getUpdatedProperties` was incorrect and was corrected to `Record<string, any>`.
 
 ## New Functionality
 

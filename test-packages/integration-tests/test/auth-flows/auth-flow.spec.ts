@@ -1,7 +1,6 @@
 import {
   executeHttpRequest,
   fetchDestination,
-  getDestinationFromDestinationService,
   getService,
   serviceToken,
   userApprovedServiceToken,
@@ -20,7 +19,7 @@ import {
 Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests.
  */
 
-xdescribe('OAuth flows', () => {
+describe('OAuth flows', () => {
   let destinationService;
   let accessToken: UserAccessTokens;
   let systems: Systems;
@@ -33,11 +32,6 @@ xdescribe('OAuth flows', () => {
   });
 
   it('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
-    const highLevelFlow = await getDestinationFromDestinationService(
-      systems.s4.providerOAuth,
-      { userJwt: accessToken.provider }
-    );
-
     const userGrant = await userApprovedServiceToken(
       accessToken.provider,
       destinationService
@@ -46,7 +40,7 @@ xdescribe('OAuth flows', () => {
     const destination = await fetchDestination(
       destinationService!.credentials.uri,
       userGrant,
-      systems.s4.providerOAuth
+      systems.s4.providerOAuth2SAMLBearerAssertion
     );
     expect(destination.authTokens![0].error).toBeNull();
 
@@ -101,7 +95,7 @@ xdescribe('OAuth flows', () => {
     const destination = await fetchDestination(
       destinationService!.credentials.uri,
       clientGrant,
-      systems.workflow.providerClientCert
+      systems.workflow.providerOAuth2ClientCredentials
     );
     expect(destination.authTokens![0].error).toBeNull();
 
@@ -120,21 +114,13 @@ xdescribe('OAuth flows', () => {
         authHeaderJwt: providerDestToken,
         exchangeHeaderJwt: accessToken.subscriber
       },
-      systems.destination.providerUserExchange
+      systems.workflow.providerOAuth2UserTokenExchange
     );
 
     expect(destination!.authTokens![0].error).toBeNull();
 
-    const response = await executeHttpRequest(
-      {
-        url:
-          'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
-      },
-      {
-        method: 'get',
-        headers: wrapJwtInHeader(destination!.authTokens![0].value).headers
-      }
-    );
+    destination.url = destination.url + '/v1/workflow-definitions';
+    const response = await executeHttpRequest(destination, { method: 'get' });
 
     expect(response.status).toBe(200);
   }, 60000);
@@ -150,7 +136,7 @@ xdescribe('OAuth flows', () => {
         authHeaderJwt: subscriberDestToken,
         exchangeHeaderJwt: accessToken.subscriber
       },
-      systems.destination.subscriberUserExchange
+      systems.destination.subscriberOAuth2UserTokenExchange
     );
     expect(destination.authTokens![0].error).toBeNull();
 

@@ -42,14 +42,14 @@ export interface UserAccessTokens {
 export interface Systems {
   s4: {
     providerBasic: string;
-    providerOAuth: string;
+    providerOAuth2SAMLBearerAssertion: string;
     subscriberBasic: string;
   };
   workflow: {
-    providerClientCert: string;
+    providerOAuth2ClientCredentials: string;
+    providerOAuth2UserTokenExchange: string;
   };
   destination: {
-    providerUserExchange: string;
-    subscriberUserExchange: string;
+    subscriberOAuth2UserTokenExchange: string;
   };
 }

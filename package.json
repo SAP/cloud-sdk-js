@@ -78,7 +78,7 @@
     "jest-junit": "^12.0.0",
     "lerna": "^3.22.1",
     "license-checker": "^25.0.1",
-    "madge": "^3.9.2",
+    "madge": "^4.0.0",
     "prettier": "^2.0.2",
     "ts-jest": "^26.4.1",
     "ts-node": "^9.0.0",

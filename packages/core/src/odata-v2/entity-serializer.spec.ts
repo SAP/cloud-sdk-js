@@ -44,12 +44,30 @@ describe('entity-serializer', () => {
     });
   });
 
-  it('should serialize an empty entity', () => {
+  it('should serialize entity with custom fields', () => {
+    const testEntity = TestEntity.builder()
+      .stringProperty('Peter')
+      .singleProperty(14.5)
+      .withCustomFields({
+        CustomField1: 'abcd',
+        CustomField2: 1234
+      })
+      .build();
+
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+      StringProperty: testEntity.stringProperty,
+      SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
+      CustomField1: 'abcd',
+      CustomField2: 1234
+    });
+  });
+
+  it('should serialize empty entities', () => {
     const emptyEntity = TestEntity.builder().build();
     expect(serializeEntity(emptyEntity, TestEntity)).toEqual({});
   });
 
-  it('should serialize a one to one linked entity', () => {
+  it('should serialize one to one linked entities', () => {
     const singleLinkEntity = TestEntitySingleLink.builder()
       .stringProperty('prop')
       .build();
@@ -69,7 +87,7 @@ describe('entity-serializer', () => {
     });
   });
 
-  it('should serialize multi linked entity with nested links', () => {
+  it('should serialize multi linked entities with nested links', () => {
     const lvl2MultiLinkEntity = TestEntityLvl2MultiLink.builder()
       .booleanProperty(false)
       .build();
@@ -111,43 +129,23 @@ describe('entity-serializer', () => {
     });
   });
 
-  it('should serialize an entity with complex type', () => {
-    const complexTypeProp = {
-      stringProperty: 'prop',
-      booleanProperty: false,
-      int16Property: 234
-    };
-    const stringProperty = 'code';
-
-    const entity = TestEntity.builder()
-      .complexTypeProperty(complexTypeProp)
-      .stringProperty(stringProperty)
-      .build();
-
-    expect(serializeEntity(entity, TestEntity)).toEqual({
-      ComplexTypeProperty: {
-        StringProperty: complexTypeProp.stringProperty,
-        BooleanProperty: complexTypeProp.booleanProperty,
-        Int16Property: complexTypeProp.int16Property
-      },
-      StringProperty: stringProperty
-    });
-  });
-
-  it('should serialize an entity with custom field', () => {
+  it('should serialize linked entities with custom fields', () => {
     const testEntity = TestEntity.builder()
-      .stringProperty('Peter')
-      .singleProperty(14.5)
+      .toSingleLink(
+        TestEntitySingleLink.builder()
+          .withCustomFields({ custom: 'custom' })
+          .build()
+      )
+      .toMultiLink([
+        TestEntityMultiLink.builder()
+          .withCustomFields({ custom: 'custom' })
+          .build()
+      ])
       .build();
-
-    testEntity.setCustomField('CustomField1', 'abcd');
-    testEntity.setCustomField('CustomField2', 1234);
 
     expect(serializeEntity(testEntity, TestEntity)).toEqual({
-      StringProperty: testEntity.stringProperty,
-      SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
-      CustomField1: 'abcd',
-      CustomField2: 1234
+      to_SingleLink: { custom: 'custom' },
+      to_MultiLink: [{ custom: 'custom' }]
     });
   });
 });

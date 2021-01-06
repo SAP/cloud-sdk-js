@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- The return type of `Entity.getUpdatedProperties` was incorrect and was corrected to `Record<string, any>`.
 
 ## New Functionality
 
@@ -26,7 +26,10 @@
 
 ## Fixed Issues
 
--
+- Fix serialization of linked entities with custom fields.
+- Fix setting of remote state on entities to replace old state instead of merging with old state. This also fixes how custom fields are handled in the remote state.
+- Fix return type of `Entity.getUpdatedProperties` to `Record<string, any>`.
+- Ship templates files that are used in the OpenAPI generator.
 
 
 # 1.34.0
@@ -39,13 +42,14 @@ Blog: TBD<br>
 
 - The methods `refreshTokenGrant`,`userTokenGrant` and `clientCredentialsGrant` of the `xsuaa-service` now accept a `string` or `XsuaaServiceCredentials` as first argument.
 In case it is a `string` it is treated as the URL to fetch the access token from.
-In case it is an object of type `XsuaaServiceCredentials`, the the URL is built by appending `oauth/token` to the `.url` of the given object.
+In case it is an object of type `XsuaaServiceCredentials`, the URL is built by appending `oauth/token` to the `.url` of the given object.
 In the past this suffix was also appended to inputs of type `string`.
 
 ## New Functionality
 
 - Add experimental support for client generation of OpenAPI services. All functionality related to the OpenAPI generator is subject to change.
 - Introduce `ErrorWithCause` for better analysis of errors, their causes and their root causes. All errors that have been caused by other errors through the SDK are based on this class.
+- Support `Destination`s with authentication type [`OAuth2UserTokenExchange`](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html).
 
 ## Improvements
 
@@ -75,7 +79,6 @@ Blog: TBD<br>
 
 - [Generator] Support parsing of multiple schemas in the edmx service specification.
 - [Util] Add string formatting functions.
-- [Core] Support `Destination` with authentication type [`OAuth2UserTokenExchange`](https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html).
 
 ## Improvements
 

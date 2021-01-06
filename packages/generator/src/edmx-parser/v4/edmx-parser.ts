@@ -30,11 +30,11 @@ export function joinComplexTypes<T extends EdmxComplexType>(
   };
 }
 
-export function parseComplexTypes(root): EdmxComplexType[] {
+export function parseComplexTypes(root: any): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);
 }
 
-export function parseEnumTypes(root): EdmxEnumType[] {
+export function parseEnumTypes(root: any): EdmxEnumType[] {
   return getMergedPropertyWithNamespace(root, 'EnumType').map(edmxEnumType => ({
     Name: edmxEnumType.Name,
     Member: forceArray(edmxEnumType.Member),
@@ -42,12 +42,12 @@ export function parseEnumTypes(root): EdmxEnumType[] {
   }));
 }
 
-export function parseEntityType(root): EdmxEntityType[] {
+export function parseEntityType(root: any): EdmxEntityType[] {
   const entityTypes = parseEntityTypesBase(root);
   return joinTypesWithBaseTypes(entityTypes, joinEntityTypes);
 }
 
-export function parseEntitySets(root): EdmxEntitySet[] {
+export function parseEntitySets(root: any): EdmxEntitySet[] {
   return parseEntitySetsBase(root).map(entitySet => ({
     ...entitySet,
     NavigationPropertyBinding: parseNavigationPropertyBinding(entitySet)
@@ -60,11 +60,11 @@ function parseNavigationPropertyBinding(
   return forceArray(entitySet.NavigationPropertyBinding);
 }
 
-export function parseFunctionImports(root): EdmxFunctionImport[] {
+export function parseFunctionImports(root: any): EdmxFunctionImport[] {
   return getPropertyFromEntityContainer(root, 'FunctionImport');
 }
 
-export function parseActionImport(root): EdmxActionImport[] {
+export function parseActionImport(root: any): EdmxActionImport[] {
   return getPropertyFromEntityContainer(root, 'ActionImport');
 }
 
@@ -78,10 +78,10 @@ function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {
   );
 }
 
-export function parseFunctions(root): EdmxFunction[] {
+export function parseFunctions(root: any): EdmxFunction[] {
   return parseActionsFunctions(root, 'Function');
 }
 
-export function parseActions(root): EdmxAction[] {
+export function parseActions(root: any): EdmxAction[] {
   return parseActionsFunctions(root, 'Action');
 }

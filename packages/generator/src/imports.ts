@@ -95,7 +95,7 @@ export function enumTypeImportDeclarations(
 // Only supports named imports
 export function mergeImportDeclarations(
   importDeclarations: ImportDeclarationStructure[]
-) {
+): ImportDeclarationStructure[] {
   return importDeclarations
     .reduce(
       (mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {

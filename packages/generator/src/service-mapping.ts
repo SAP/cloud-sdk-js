@@ -80,6 +80,6 @@ function servicePathFromSelfLink(
     return selfLink
       .replace(/^https?:\/\//, '')
       .replace(/\/\$metadata$/, '')
-      .replace(/^[^\/]+/, '');
+      .replace(/^[^/]+/, '');
   }
 }

@@ -142,7 +142,7 @@ export function parseService(
     .generateService(serviceDefinitionPaths);
 }
 
-export function getServiceName(service: VdmServiceMetadata) {
+export function getServiceName(service: VdmServiceMetadata): string {
   return service.namespaces.length === 1
     ? service.namespaces[0]
     : service.originalFileName;

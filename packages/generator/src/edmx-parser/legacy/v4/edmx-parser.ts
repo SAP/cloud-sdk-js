@@ -95,7 +95,9 @@ function filterEnumProperties(
 /**
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
-export function parseEdmxV4(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
+export function parseEdmxV4(
+  root: any
+): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
   const enumTypes = forceArray(root.EnumType);
   return {
     entityTypes: joinTypesWithBaseTypes(

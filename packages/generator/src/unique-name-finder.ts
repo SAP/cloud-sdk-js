@@ -41,7 +41,7 @@ export class UniqueNameFinder {
    * @param names Names to be added
    * @returns The instance of the finder.
    */
-  public addToUsedNames(...names: string[]) {
+  public addToUsedNames(...names: string[]): this {
     this.usedNames.push(...names);
     return this;
   }

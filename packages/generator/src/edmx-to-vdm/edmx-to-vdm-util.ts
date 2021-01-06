@@ -89,7 +89,7 @@ export function isEnumType(name: string, enumTypes: VdmEnumType[]): boolean {
     : false;
 }
 
-export function checkCollectionKind(property: EdmxProperty) {
+export function checkCollectionKind(property: EdmxProperty): void {
   if (property.hasOwnProperty('CollectionKind')) {
     logger.warn(
       `"CollectionKind" attribute found in the "${property.Name}" property. Currently, handling collection of properties is not supported by the generator.`
@@ -97,7 +97,7 @@ export function checkCollectionKind(property: EdmxProperty) {
   }
 }
 
-export function complexTypeFieldType(typeName: string) {
+export function complexTypeFieldType(typeName: string): string {
   return typeName + 'Field';
 }
 

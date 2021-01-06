@@ -11,7 +11,9 @@ import { EdmxMetadata, EdmxFunctionImport } from './parser-types';
 /**
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
-export function parseEdmxV2(root): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
+export function parseEdmxV2(
+  root: any
+): Omit<EdmxMetadata, keyof EdmxMetadataBase> {
   return {
     entityTypes: parseEntityTypes(root),
     entitySets: forceArray(root.EntityContainer.EntitySet),

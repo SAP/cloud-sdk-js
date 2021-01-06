@@ -8,12 +8,12 @@ import {
   deserializersCommon,
   serializersCommom
 } from '../odata-common/payload-value-converter';
-import { EdmTypeV4 } from './edm-types';
+import { EdmType } from './edm-types';
 
 /**
  * @hidden
  */
-export function edmToTs<T extends EdmTypeV4>(
+export function edmToTs<T extends EdmType>(
   value: any,
   edmType: EdmTypeShared<'v4'>
 ): EdmToPrimitive<T> {
@@ -40,7 +40,7 @@ export function tsToEdm(value: any, edmType: EdmTypeShared<'v4'>): any {
 }
 
 type EdmTypeMapping = {
-  [key in EdmTypeV4]: (value: any) => any;
+  [key in EdmType]: (value: any) => any;
 };
 
 function edmDateToMoment(date: string): moment.Moment {
@@ -117,7 +117,7 @@ function padTimeComponent(timeComponent: number): string {
     ? [wholeNumber.padStart(2, '0'), fractionalNumber].join('.')
     : wholeNumber.padStart(2, '0');
 }
-export type EdmToPrimitive<T extends EdmTypeV4> = T extends
+export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Single'

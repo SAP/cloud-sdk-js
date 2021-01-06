@@ -62,9 +62,8 @@ describe('generic http client', () => {
         headers: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001',
-          'Proxy-Authorization': proxyDestination.proxyConfiguration?.headers![
-            'Proxy-Authorization'
-          ]
+          'Proxy-Authorization':
+            proxyDestination.proxyConfiguration.headers['Proxy-Authorization']
         }
       };
 

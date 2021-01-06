@@ -9,7 +9,7 @@ import { ODataUri } from '../uri-conversion';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
-import { MethodRequestBuilderBase } from './request-builder-base';
+import { MethodRequestBuilder } from './request-builder-base';
 
 const logger = createLogger({
   package: 'core',
@@ -21,7 +21,7 @@ const logger = createLogger({
  * @typeparam EntityT - Type of the entity to be updated
  */
 export abstract class UpdateRequestBuilder<EntityT extends Entity>
-  extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
+  extends MethodRequestBuilder<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   private ignored: Set<string>;
   private required: Set<string>;

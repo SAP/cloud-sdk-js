@@ -25,8 +25,8 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   }
 
   // TODO: should be recursive
-  const inputFilePaths = (await readdir(options.inputDir)).map(fileName =>
-    resolve(options.inputDir, fileName)
+  const inputFilePaths = (await readdir(options.input)).map(fileName =>
+    resolve(options.input, fileName)
   );
 
   inputFilePaths.forEach(async filePath => {

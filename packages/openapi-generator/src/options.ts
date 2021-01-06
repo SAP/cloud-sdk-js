@@ -1,5 +1,5 @@
 export interface GeneratorOptions {
-  inputDir: string;
+  input: string;
   outputDir: string;
   clearOutputDir?: boolean;
 }

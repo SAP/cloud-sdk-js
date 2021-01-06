@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid';
 import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
 import { Entity } from './entity';
 import {
-  CreateRequestBuilder,
-  DeleteRequestBuilder,
-  UpdateRequestBuilder
+  CreateRequestBuilderV4,
+  DeleteRequestBuilderV4,
+  UpdateRequestBuilderV4
 } from './request-builder';
 
 /**
@@ -14,14 +14,14 @@ import {
  */
 export class ODataBatchChangeSet<
   RequestT extends
-    | CreateRequestBuilder<Entity>
-    | UpdateRequestBuilder<Entity>
-    | DeleteRequestBuilder<Entity>
+    | CreateRequestBuilderV4<Entity>
+    | UpdateRequestBuilderV4<Entity>
+    | DeleteRequestBuilderV4<Entity>
 > implements BatchChangeSet<RequestT> {
   /**
    * @deprecated Since v1.30.0. Use [[boundary]] instead.
    */
-  get changeSetId() {
+  get changeSetId(): string {
     return this.boundary;
   }
 

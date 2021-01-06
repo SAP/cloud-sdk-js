@@ -1,5 +1,5 @@
-import { Entity } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
+import { EntityV4 } from '../entity';
+import { deserializeEntityV4 } from '../entity-deserializer';
 import { Constructable } from '../../odata-common';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 /* eslint-disable valid-jsdoc */
@@ -10,7 +10,7 @@ import { getSingleResult, getCollectionResult } from './response-data-accessor';
 export function transformReturnValueForUndefined<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
-) {
+): ReturnT {
   return builderFn(data);
 }
 
@@ -19,11 +19,11 @@ export { transformReturnValueForUndefined as transformReturnValueForUndefinedV4 
 /**
  * @hidden
  */
-export function transformReturnValueForEntity<ReturnT extends Entity>(
+export function transformReturnValueForEntity<ReturnT extends EntityV4>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT {
-  return deserializeEntity(
+  return deserializeEntityV4(
     getSingleResult(data),
     entityConstructor
   ).setOrInitializeRemoteState() as ReturnT;
@@ -34,13 +34,13 @@ export { transformReturnValueForEntity as transformReturnValueForEntityV4 };
 /**
  * @hidden
  */
-export function transformReturnValueForEntityList<ReturnT extends Entity>(
+export function transformReturnValueForEntityList<ReturnT extends EntityV4>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT[] {
   return getCollectionResult(data).map(
     entityJson =>
-      deserializeEntity(
+      deserializeEntityV4(
         entityJson,
         entityConstructor
       ).setOrInitializeRemoteState() as ReturnT

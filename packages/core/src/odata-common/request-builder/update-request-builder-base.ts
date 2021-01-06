@@ -9,7 +9,7 @@ import { ODataUri } from '../uri-conversion';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
-import { MethodRequestBuilder } from './request-builder-base';
+import { MethodRequestBuilderBase } from './request-builder-base';
 
 const logger = createLogger({
   package: 'core',
@@ -21,7 +21,7 @@ const logger = createLogger({
  * @typeparam EntityT - Type of the entity to be updated
  */
 export abstract class UpdateRequestBuilder<EntityT extends Entity>
-  extends MethodRequestBuilder<ODataUpdateRequestConfig<EntityT>>
+  extends MethodRequestBuilderBase<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   private ignored: Set<string>;
   private required: Set<string>;
@@ -279,24 +279,20 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
     return {
       ...this.entitySerializer.serializeEntity(
         this._entity,
-        this._entityConstructor,
-        true
+        this._entityConstructor
       )
     };
   }
 
   private removeKeyFields(body: Record<string, any>): Record<string, any> {
     return removePropertyOnCondition(
-      ([key, val]) => this.getKeyFieldNames().includes(key),
+      ([key]) => this.getKeyFieldNames().includes(key),
       body
     );
   }
 
   private removeIgnoredFields(body: Record<string, any>): Record<string, any> {
-    return removePropertyOnCondition(
-      ([key, val]) => this.ignored.has(key),
-      body
-    );
+    return removePropertyOnCondition(([key]) => this.ignored.has(key), body);
   }
 }
 

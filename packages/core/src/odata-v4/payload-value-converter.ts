@@ -8,12 +8,12 @@ import {
   deserializersCommon,
   serializersCommom
 } from '../odata-common/payload-value-converter';
-import { EdmType } from './edm-types';
+import { EdmTypeV4 } from './edm-types';
 
 /**
  * @hidden
  */
-export function edmToTs<T extends EdmType>(
+export function edmToTs<T extends EdmTypeV4>(
   value: any,
   edmType: EdmTypeShared<'v4'>
 ): EdmToPrimitive<T> {
@@ -40,7 +40,7 @@ export function tsToEdm(value: any, edmType: EdmTypeShared<'v4'>): any {
 }
 
 type EdmTypeMapping = {
-  [key in EdmType]: (value: any) => any;
+  [key in EdmTypeV4]: (value: any) => any;
 };
 
 function edmDateToMoment(date: string): moment.Moment {
@@ -67,7 +67,7 @@ function edmDateTimeOffsetToMoment(dateTime: string): moment.Moment {
 }
 
 function edmDurationToMoment(value: string): moment.Duration {
-  const durationPattern = /([\+,\-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
+  const durationPattern = /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
   const captured = durationPattern.exec(value);
   if (!captured || captured[0] !== value) {
     throw new Error(
@@ -117,7 +117,7 @@ function padTimeComponent(timeComponent: number): string {
     ? [wholeNumber.padStart(2, '0'), fractionalNumber].join('.')
     : wholeNumber.padStart(2, '0');
 }
-export type EdmToPrimitive<T extends EdmType> = T extends
+export type EdmToPrimitive<T extends EdmTypeV4> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
   | 'Edm.Single'

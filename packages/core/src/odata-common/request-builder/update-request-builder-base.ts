@@ -1,8 +1,4 @@
-import {
-  createLogger,
-  ErrorWithCause,
-  variadicArgumentToArray
-} from '@sap-cloud-sdk/util';
+import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataRequest, ODataUpdateRequestConfig } from '../request';
 import { ODataUri } from '../uri-conversion';
@@ -11,10 +7,11 @@ import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
 import { MethodRequestBuilder } from './request-builder-base';
 
-const logger = createLogger({
-  package: 'core',
-  messageContext: 'update-request-builder-v2'
-});
+// const logger = createLogger({
+//   package: 'core',
+//   messageContext: 'update-request-builder-v2'
+// });
+
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
  *

@@ -97,10 +97,7 @@ function warnIfNavigation<EntityT extends Entity>(
 function removeNavPropsAndComplexTypes(
   body: Record<string, any>
 ): Record<string, any> {
-  return removePropertyOnCondition(
-    ([key, val]) => typeof val === 'object',
-    body
-  );
+  return removePropertyOnCondition(([, val]) => typeof val === 'object', body);
 }
 
 export { UpdateRequestBuilder as UpdateRequestBuilderV2 };

@@ -36,7 +36,7 @@ function parseSubdomain(stringUrl: string): string {
 
 function isValidURL(url: string): boolean {
   try {
-    const valid = new URL(url);
+    new URL(url);
     return true;
   } catch (_) {
     return false;

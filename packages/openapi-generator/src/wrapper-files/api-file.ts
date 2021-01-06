@@ -1,15 +1,12 @@
-import {
-  codeBlock,
-  createLogger,
-  partition,
-  unique
-} from '@sap-cloud-sdk/util';
+import { codeBlock, partition, unique } from '@sap-cloud-sdk/util';
 import {
   OpenApiDocument,
   OpenApiOperation,
   SchemaMetadata
 } from '../openapi-types';
-const logger = createLogger('openapi-generator');
+
+// const logger = createLogger('openapi-generator');
+
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Get the content of the SAP Cloud SDK API wrapper.

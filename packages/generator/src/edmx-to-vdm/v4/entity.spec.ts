@@ -271,7 +271,7 @@ export function createEntityType(
     'sap:content-version': '',
     Key: {
       PropertyRef: properties
-        .filter(([propName, type, isKey]) => isKey)
+        .filter(([, , isKey]) => isKey)
         .map(([propName]) => ({ Name: propName }))
     },
     Name: name,

@@ -10,10 +10,10 @@ export class GlobalNameFormatter {
   constructor(vdmMapping: VdmMapping | undefined) {
     this.vdmMapping = vdmMapping || {};
     this.directoryNameFinder.addToUsedNames(
-      ...Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName)
+      ...Object.entries(this.vdmMapping).map(([, v]) => v.directoryName)
     );
     this.npmPackageNameFinder.addToUsedNames(
-      ...Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName)
+      ...Object.entries(this.vdmMapping).map(([, v]) => v.npmPackageName)
     );
   }
 

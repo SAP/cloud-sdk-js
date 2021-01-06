@@ -160,7 +160,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     );
   }
 
-  function retrieveField<FilterEntityT extends Entity>(
+  function retrieveField(
     filterField: string,
     targetEntityConstructor: Constructable<any>,
     filterEdmType?: EdmTypeShared<'v2'>

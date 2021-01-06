@@ -1,5 +1,4 @@
 import { toTypeNameFormat } from '@sap-cloud-sdk/core';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmActionImportBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser/swagger-types';
@@ -8,10 +7,10 @@ import { EdmxParameter } from '../../edmx-parser/common';
 import { EdmxActionImport } from '../../edmx-parser/v4';
 import { getActionImportParameters } from './action-function-parameters';
 
-const logger = createLogger({
-  package: 'generator',
-  messageContext: 'function-import'
-});
+// const logger = createLogger({
+//   package: 'generator',
+//   messageContext: 'function-import'
+// });
 
 export function transformActionImportBase(
   edmxActionImport: EdmxActionImport,

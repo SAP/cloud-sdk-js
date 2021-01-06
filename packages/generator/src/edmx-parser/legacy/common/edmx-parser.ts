@@ -19,7 +19,7 @@ const logger = createLogger({
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
 export function parseBaseMetadata(
-  root,
+  root: any,
   oDataVersion: ODataVersion,
   edmxPath: PathLike
 ): EdmxMetadataBase {

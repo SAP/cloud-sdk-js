@@ -125,7 +125,7 @@ function methods(
     builder(entity, oDataVersion),
     requestBuilder(entity),
     customField(entity, oDataVersion),
-    toJSON(entity)
+    toJSON()
   ];
 }
 
@@ -221,7 +221,7 @@ function customField(
   };
 }
 
-function toJSON(entity: VdmEntity): MethodDeclarationStructure {
+function toJSON(/* entity: VdmEntity */): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'toJSON',

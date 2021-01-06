@@ -199,7 +199,7 @@ const addHost = (groups: any) => (
 export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
-  const regex = /(?<protocolWithDelimiter>(?<protocol>^.+)\:\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
+  const regex = /(?<protocolWithDelimiter>(?<protocol>^.+):\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
   const parsed = regex.exec(proxyEnvValue);
 
   if (parsed?.groups) {

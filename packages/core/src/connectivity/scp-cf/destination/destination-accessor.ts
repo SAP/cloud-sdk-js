@@ -1,4 +1,3 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import { VerifyJwtOptions } from '../jwt';
 import { sanitizeDestination } from './destination';
 import {
@@ -12,10 +11,10 @@ import { searchServiceBindingForDestination } from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { DestinationAccessorOptions } from './destination-accessor-types';
 
-const logger = createLogger({
-  package: 'core',
-  messageContext: 'destination-accessor'
-});
+// const logger = createLogger({
+//   package: 'core',
+//   messageContext: 'destination-accessor'
+// });
 
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination

@@ -148,6 +148,7 @@ module.exports = {
     'no-multiple-empty-lines': ['error', { max: 1 }],
     'no-new-func': 'error',
     'no-new-wrappers': 'error',
+    'no-prototype-builtins': 'off',
     'no-restricted-imports': [
       'error',
       {
@@ -174,7 +175,6 @@ module.exports = {
     ],
     'prefer-const': 'error',
     'prefer-object-spread': 'error',
-    radix: ['error', 'as-needed'],
     'space-in-parens': ['error', 'never'],
     'spaced-comment': 'error',
     'valid-jsdoc': [

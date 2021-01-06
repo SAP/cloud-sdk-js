@@ -39,11 +39,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': [
       'error',
       {
-        allowArgumentsExplicitlyTypedAsAny: true,
-        allowDirectConstAssertionInArrowFunctions: true,
-        allowedNames: [],
-        allowHigherOrderFunctions: true,
-        allowTypedFunctionExpressions: true
+        allowArgumentsExplicitlyTypedAsAny: true
       }
     ],
     '@typescript-eslint/member-delimiter-style': [

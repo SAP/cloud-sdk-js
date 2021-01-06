@@ -34,7 +34,7 @@ export async function parseFileAsJson(
     return JSON.parse(fileContent);
   }
   if (['.yaml', '.yml'].includes(extension)) {
-    return safeLoad(fileContent) as Record<string, any>;
+    return load(fileContent) as Record<string, any>;
   }
 
   throw new Error(

@@ -57,7 +57,7 @@
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "@openapitools/openapi-generator-cli": "^2.1.4",
     "@sap-cloud-sdk/util": "^1.34.0",
-    "@types/js-yaml": "^3.12.5",
+    "@types/js-yaml": "^4.0.0",
     "cli-ux": "^5.4.5",
     "execa": "^5.0.0",
     "js-yaml": "^3.14.1",

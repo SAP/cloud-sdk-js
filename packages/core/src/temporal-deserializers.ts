@@ -1,9 +1,7 @@
 import { Temporal } from 'proposal-temporal';
-import moment, { Moment } from 'moment';
+import { EdmTypeMappingAll } from './odata-common';
 import Duration = Temporal.Duration;
 import PlainDate = Temporal.PlainDate;
-import { EdmTypeMappingV4 } from './odata-v4';
-import { EdmTypeMappingAll } from './odata-common';
 
 export namespace temporalDeserializersNs {
   export const date = d => Temporal.PlainDate.from(d);

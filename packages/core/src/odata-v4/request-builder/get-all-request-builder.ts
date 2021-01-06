@@ -13,7 +13,6 @@ import {
   OneToManyLink
 } from '../../odata-common';
 import { oDataUriV4 } from '../uri-conversion';
-import { EdmTypeMappingV4 } from '../../odata-v4/payload-value-converter';
 import { DateTimeDefault, DateTime } from '../../temporal-deserializers';
 import { responseDataAccessorV4 } from './response-data-accessor';
 export class GetAllRequestBuilderV4<

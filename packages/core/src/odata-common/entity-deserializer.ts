@@ -14,13 +14,12 @@ import {
   isComplexTypeNameSpace,
   EdmTypeShared,
   isEdmType,
-  PropertyMetadata, EdmTypeMappingAll
+  PropertyMetadata,
+  EdmTypeMappingAll
 } from '../odata-common';
 import { EdmToPrimitiveV2, EdmTypeV2 } from '../odata-v2';
-import { EdmToPrimitiveV4, EdmTypeV4 } from '../odata-v4';
+import { EdmToPrimitiveV4, EdmTypeV4, EdmTypeMappingV4 } from '../odata-v4';
 import { toPropertyFormat } from './name-converter';
-import { EdmTypeMappingV2} from '../odata-v2';
-import { EdmTypeMappingV4} from '../odata-v4';
 
 const logger = createLogger({
   package: 'core',

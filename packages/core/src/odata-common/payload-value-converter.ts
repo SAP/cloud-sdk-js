@@ -6,7 +6,9 @@ import { EdmTypeSameConverters, EdmTypeShared } from '../odata-common';
 
 type EdmTypeMapping = { [key in EdmTypeSameConverters]: (value: any) => any };
 
-export type EdmTypeMappingAll = { [key in EdmTypeShared<'any'>]: (value: any) => any };
+export type EdmTypeMappingAll = {
+  [key in EdmTypeShared<'any'>]: (value: any) => any;
+};
 
 const toNumber = (value: any): number => Number(value);
 const toBigNumber = (value: any): BigNumber => new BigNumber(value);

@@ -1,6 +1,6 @@
 import { EntityBase, Constructable } from '../odata-common';
-import { CustomFieldV4 } from './selectable/custom-field';
 import { DateTime, DateTimeDefault } from '../temporal-deserializers';
+import { CustomFieldV4 } from './selectable/custom-field';
 
 /**
  * Super class for all representations of OData v4 entity types.

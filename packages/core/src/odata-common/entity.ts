@@ -1,12 +1,12 @@
 /* eslint-disable max-classes-per-file */
 
 import { equal, isNullish } from '@sap-cloud-sdk/util';
+import { DateTimeDefault, DateTime } from '../temporal-deserializers';
 import { EntityBuilder } from './entity-builder';
 import { Link, Field, Selectable, CustomFieldBase } from './selectable';
 import { RequestBuilder } from './request-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
 import { toPropertyFormat } from './name-converter';
-import { DateTimeDefault, DateTime } from '../temporal-deserializers';
 
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 

@@ -46,7 +46,7 @@ export class TestEntity<T extends DateTime = DateTimeDefault> extends EntityV4<T
    * Returns an entity builder to construct instances of `TestEntity`.
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static builder<T extends DateTime = DateTimeDefault>(): EntityBuilderType<TestEntity<T>, TestEntityType<T>> {
+  static builder<T extends DateTime = DateTimeDefault>(dateTimeMiddleware?: T): EntityBuilderType<TestEntity<T>, TestEntityType<T>> {
     return EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<T>, TestEntityType<T>>;
   }
 
@@ -79,7 +79,7 @@ export class TestEntity<T extends DateTime = DateTimeDefault> extends EntityV4<T
 export interface TestEntityType<T extends DateTime> {
   keyPropertyGuid: string;
   keyPropertyString: string;
-  dateProperty?: PlainDate | null;
+  dateProperty?: T["Edm.Date"] | null;
   durationProperty?: T["Edm.Duration"] | null;
 }
 

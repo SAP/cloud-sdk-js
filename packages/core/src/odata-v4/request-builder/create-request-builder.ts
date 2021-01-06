@@ -7,8 +7,8 @@ import { EntityV4 } from '../entity';
 import { oDataUriV4 } from '../uri-conversion';
 import { entitySerializerV4 } from '../entity-serializer';
 import { entityDeserializerV4 } from '../entity-deserializer';
-import { responseDataAccessorV4 } from './response-data-accessor';
 import { DateTimeDefault, DateTime } from '../../temporal-deserializers';
+import { responseDataAccessorV4 } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  *

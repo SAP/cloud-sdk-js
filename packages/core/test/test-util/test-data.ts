@@ -1,5 +1,7 @@
 import { v4 as uuid } from 'uuid';
+import { Temporal } from 'proposal-temporal';
 import { uriConverterV2 } from '../../src/odata-v2';
+import { dataTimeTemporal, DateTimeTemporal } from '../../src';
 import { TestEntity } from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
@@ -7,8 +9,6 @@ import {
   TestEntitySingleLink
 } from './test-services/v4/test-service';
 import { TestEntity as TestEntityTemporal } from './test-services/v4/test-service-temporal';
-import { Temporal } from 'proposal-temporal';
-import { DateTimeTemporal } from '../../src';
 
 const { convertToUriFormat } = uriConverterV2;
 
@@ -93,13 +93,13 @@ export function createTestEntityV4(originalData): TestEntityV4 {
 export function createTestEntityTemporal(
   originalData
 ): TestEntityTemporal<DateTimeTemporal> {
-  const entity = TestEntityTemporal.builder()
+  const entity = TestEntityTemporal.builder(dataTimeTemporal)
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)
     .dateProperty(Temporal.PlainDate.from(originalData.DateProperty))
     .build()
     .setOrInitializeRemoteState();
-  return entity as unknown as TestEntityTemporal<DateTimeTemporal>;
+  return entity;
 }
 
 export function testEntityResourcePath(

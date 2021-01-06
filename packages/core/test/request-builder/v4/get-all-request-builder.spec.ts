@@ -1,4 +1,4 @@
-import { any, GetAllRequestBuilderV4 } from '../../../src/odata-v4';
+import { GetAllRequestBuilderV4 } from '../../../src/odata-v4';
 import {
   defaultDestination,
   mockGetRequest,
@@ -13,7 +13,9 @@ import { TestEntity as TestEntityTemporal } from '../../test-util/test-services/
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
-  createOriginalTestEntityDataWithLinks, createOriginalTestEntityTemporalData1, createTestEntityTemporal,
+  createOriginalTestEntityDataWithLinks,
+  createOriginalTestEntityTemporalData1,
+  createTestEntityTemporal,
   createTestEntityV4
 } from '../../test-util/test-data';
 import { dataTimeTemporal } from '../../../src';
@@ -99,9 +101,7 @@ describe('GetAllRequestBuilderV4', () => {
         .executeV4(defaultDestination);
       const d4 = actual4[0].durationProperty;
 
-      expect(actual4).toEqual([
-        createTestEntityTemporal(testEntity1)
-      ]);
+      expect(actual4).toEqual([createTestEntityTemporal(testEntity1)]);
     });
 
     it('top(1) returns the first entity', async () => {

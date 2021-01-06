@@ -13,7 +13,7 @@ import { MethodRequestBuilderBase } from '../request-builder/request-builder-bas
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { EdmTypeMappingAll } from '../payload-value-converter';
-import { DataTimeDefault, DateTime } from '../../temporal-deserializers';
+import { DateTimeDefault, DateTime } from '../../temporal-deserializers';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
@@ -22,7 +22,7 @@ import { DataTimeDefault, DateTime } from '../../temporal-deserializers';
  */
 export abstract class GetAllRequestBuilderBase<
     EntityT extends EntityBase,
-    DateTimeT extends DateTime = DataTimeDefault
+    DateTimeT extends DateTime = DateTimeDefault
   >
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
@@ -118,7 +118,8 @@ export abstract class GetAllRequestBuilderBase<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT[]> {
-    this.entityDeserializer.customDeserializer = this.customDeserializer;
+    // this.entityDeserializer.customDeserializer = this.customDeserializer;
+    this.entityDeserializer.customDeserializer = this.dateTimeMiddleware.deserializers;
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>

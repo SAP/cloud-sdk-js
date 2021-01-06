@@ -6,7 +6,7 @@ import { Link, Field, Selectable, CustomFieldBase } from './selectable';
 import { RequestBuilder } from './request-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
 import { toPropertyFormat } from './name-converter';
-import { DataTimeDefault, DateTime } from '../temporal-deserializers';
+import { DateTimeDefault, DateTime } from '../temporal-deserializers';
 
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
@@ -39,7 +39,7 @@ export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
 /**
  * Super class for all representations of OData entity types.
  */
-export abstract class EntityBase<DateTimeT extends DateTime = DataTimeDefault> {
+export abstract class EntityBase<DateTimeT extends DateTime = DateTimeDefault> {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;

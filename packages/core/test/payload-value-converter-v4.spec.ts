@@ -11,7 +11,7 @@ describe('edmToTsV4()', () => {
     const actual = edmToTsV4(date, 'Edm.Date') as moment.Moment;
     expect(actual.format('YYYY-MM-DD')).toBe(date);
   });
-
+  // TODO
   it('should parse Edm.Date to Temporal.PlainDate', () => {
     const date = '2020-05-13';
     const customizeDeserializer = { 'Edm.Date': temporalDeserializersNs.date };
@@ -94,7 +94,7 @@ describe('edmToTsV4()', () => {
     actual = edmToTsV4(durationOnlyDays, 'Edm.Duration') as moment.Duration;
     expect(actual.asMilliseconds()).toBe(expected);
   });
-
+  // TODO
   it('should parse Edm.Duration to Temporal.Duration', () => {
     const customizeDeserializer = {
       'Edm.Duration': temporalDeserializersNs.duration

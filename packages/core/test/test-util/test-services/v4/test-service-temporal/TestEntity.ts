@@ -10,12 +10,12 @@ import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, Cus
 import { Temporal } from 'proposal-temporal';
 import PlainDate = Temporal.PlainDate;
 import Duration = Temporal.Duration;
-import { DataTimeDefault, DateTime } from '../../../../../src/temporal-deserializers';
+import { DateTimeDefault, DateTime } from '../../../../../src/temporal-deserializers';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity<T extends DateTime = DataTimeDefault> extends EntityV4<T> implements TestEntityType<T> {
+export class TestEntity<T extends DateTime = DateTimeDefault> extends EntityV4<T> implements TestEntityType<T> {
   /**
    * Technical entity name for TestEntity.
    */
@@ -42,13 +42,11 @@ export class TestEntity<T extends DateTime = DataTimeDefault> extends EntityV4<T
    * @nullable
    */
   durationProperty?: T["Edm.Duration"];
-  // durationProperty?: Duration;
-
   /**
    * Returns an entity builder to construct instances of `TestEntity`.
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static builder<T extends DateTime = DataTimeDefault>(): EntityBuilderType<TestEntity<T>, TestEntityType<T>> {
+  static builder<T extends DateTime = DateTimeDefault>(): EntityBuilderType<TestEntity<T>, TestEntityType<T>> {
     return EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<T>, TestEntityType<T>>;
   }
 

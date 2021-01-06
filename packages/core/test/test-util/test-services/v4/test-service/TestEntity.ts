@@ -9,12 +9,32 @@ import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
-import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
+import {
+  AllFields,
+  AnyField,
+  BigNumberField,
+  BooleanField,
+  CollectionField,
+  CustomFieldV4, DateTimeDefault,
+  DateField,
+  DateTime,
+  DurationField,
+  EntityBuilderType,
+  EntityV4,
+  EnumField,
+  Field,
+  NumberField,
+  OneToManyLink,
+  OneToOneLink,
+  StringField,
+  Time,
+  TimeField
+} from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity extends EntityV4 implements TestEntityType {
+export class TestEntity<DateTimeT extends DateTime = DateTimeDefault> extends EntityV4<DateTimeT> implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */

@@ -10,7 +10,7 @@ import {
 } from '../odata-common';
 import { CollectionFilterFunction } from '../odata-common/filter/collection-filter-function';
 import { filterFunctions as filterFunctionsCommon } from '../odata-common/filter/filter-functions';
-import { DataTimeDefault, DateTime } from '../temporal-deserializers';
+import { DateTimeDefault, DateTime } from '../temporal-deserializers';
 import { EntityV4 } from './entity';
 import { filterFunctionV4 } from './filter-function';
 
@@ -24,7 +24,7 @@ import { filterFunctionV4 } from './filter-function';
  */
 export function contains<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(
   substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
   str: string | Field<EntityT> | StringFilterFunction<EntityT>
@@ -40,7 +40,7 @@ export function contains<
  */
 export function matchesPattern<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(
   str: string | Field<EntityT> | StringFilterFunction<EntityT>,
   regex: string
@@ -56,7 +56,7 @@ export function matchesPattern<
  */
 export function fractionalSeconds<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(date: moment.Moment | Field<EntityT>): NumberFilterFunction<EntityT> {
   return filterFunctionV4('fractionalseconds', 'decimal', date);
 }
@@ -68,7 +68,7 @@ export function fractionalSeconds<
  */
 export function totalOffsetMinutes<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(date: moment.Moment | Field<EntityT>): NumberFilterFunction<EntityT> {
   return filterFunctionV4('totaloffsetminutes', 'decimal', date);
 }
@@ -79,7 +79,7 @@ export function totalOffsetMinutes<
  */
 export function maxDateTime<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('maxdatetime', 'decimal');
 }
@@ -90,7 +90,7 @@ export function maxDateTime<
  */
 export function minDateTime<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('mindatetime', 'decimal');
 }
@@ -101,7 +101,7 @@ export function minDateTime<
  */
 export function now<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(): NumberFilterFunction<EntityT> {
   return filterFunctionV4('now', 'decimal');
 }
@@ -118,7 +118,7 @@ export function hasSubset<
   EntityT extends EntityV4<DateTimeT>,
   ParamT extends FilterFunctionPrimitiveParameterType,
   ReturnT extends FieldType,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(
   subset:
     | ParamT[]
@@ -143,7 +143,7 @@ export function hasSubsequence<
   EntityT extends EntityV4<DateTimeT>,
   ParamT extends FilterFunctionPrimitiveParameterType,
   ReturnT extends FieldType,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 >(
   subsequence:
     | ParamT[]

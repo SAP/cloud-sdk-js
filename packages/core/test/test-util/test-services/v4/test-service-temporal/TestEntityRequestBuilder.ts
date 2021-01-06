@@ -40,6 +40,7 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
     return new GetAllRequestBuilderV4(TestEntity);
   }
 
+  // A new class is needed to solve the nested generic type
   getAllV2(): TestEntityGetAllRequestBuilder<TestEntity<DateTime>, DateTime> {
     return new TestEntityGetAllRequestBuilder(TestEntity);
   }

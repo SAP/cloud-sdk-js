@@ -5,11 +5,11 @@ import {
   DurationField,
   TimeField
 } from '../../odata-common';
-import { DataTimeDefault, DateTime } from '../../temporal-deserializers';
+import { DateTimeDefault, DateTime } from '../../temporal-deserializers';
 
 export class CustomFieldV4<
   EntityT extends EntityV4<DateTimeT>,
-  DateTimeT extends DateTime = DataTimeDefault
+  DateTimeT extends DateTime = DateTimeDefault
 > extends CustomFieldBase<EntityT> {
   edmDate(): DateField<EntityT> {
     return new DateField<EntityT>(

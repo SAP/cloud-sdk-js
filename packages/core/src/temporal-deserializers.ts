@@ -1,4 +1,5 @@
 import { Temporal } from 'proposal-temporal';
+import moment, { Moment } from 'moment';
 import Duration = Temporal.Duration;
 import PlainDate = Temporal.PlainDate;
 import { EdmTypeMappingV4 } from './odata-v4';
@@ -25,20 +26,20 @@ export interface DateTime {
   deserializers?: Partial<EdmTypeMappingAll>;
 }
 
-export class DataTimeDefault implements DateTime {
-  // e.g. moment
-  'Edm.Duration' = '';
-  'Edm.Date' = '';
+export class DateTimeDefault implements DateTime {
+  // TODO
+  'Edm.Date' = '';//Moment;
+  'Edm.Duration' = '';//moment.Duration;
   deserializers = {};
 }
 
-export class DataTimeTemporal implements DateTime {
-  'Edm.Duration' = Duration;
+export class DateTimeTemporal implements DateTime {
   'Edm.Date' = PlainDate;
+  'Edm.Duration' = Duration;
   deserializers = {
     'Edm.Date': d => Temporal.PlainDate.from(d),
     'Edm.Duration': d => Temporal.Duration.from(d)
   };
 }
 
-export const dataTimeTemporal: DataTimeTemporal = new DataTimeTemporal();
+export const dataTimeTemporal: DateTimeTemporal = new DateTimeTemporal();

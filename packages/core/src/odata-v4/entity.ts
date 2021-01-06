@@ -1,10 +1,13 @@
 import { EntityBase, Constructable } from '../odata-common';
 import { CustomFieldV4 } from './selectable/custom-field';
+import { DateTime, DateTimeDefault } from '../temporal-deserializers';
 
 /**
  * Super class for all representations of OData v4 entity types.
  */
-export abstract class EntityV4<DateTimeT> extends EntityBase<DateTimeT> {
+export abstract class EntityV4<
+  DateTimeT extends DateTime = DateTimeDefault
+> extends EntityBase<DateTimeT> {
   protected static customFieldSelector<EntityT extends EntityBase>(
     fieldName: string,
     entityConstructor: Constructable<EntityT>

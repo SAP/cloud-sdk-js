@@ -116,7 +116,7 @@ export function getService(service: string): Service | undefined {
  * @returns Destination service
  * @throws Error in case no destination service is found in the VCAP variables
  */
-export function getDestinationService() {
+export function getDestinationService(): Service {
   const destinationService = getService('destination');
 
   if (!destinationService) {

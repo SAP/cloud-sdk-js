@@ -77,7 +77,7 @@ export function createGetResourcePathForKeys(
 
   function getNullishKeys(keys: Record<string, FieldType>): string[] {
     return Object.entries(keys)
-      .filter(([_, value]) => typeof value === 'undefined' || value === null)
+      .filter(([, value]) => typeof value === 'undefined' || value === null)
       .map(([key]) => key);
   }
 

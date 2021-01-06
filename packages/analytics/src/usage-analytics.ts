@@ -42,7 +42,7 @@ const defaultOptions = {
 export async function performUsageAnalytics(
   callerPath: string,
   options: UsageAnalyticsOptions = {}
-) {
+): Promise<void> {
   try {
     if (calledFromCentralDependency(callerPath)) {
       const configPath = findConfigPath();

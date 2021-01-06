@@ -1,7 +1,7 @@
 import { Entity } from './entity';
 import { toStaticPropertyFormat } from './name-converter';
 
-export const nonEnumerable = (target: any, propertyKey: string) => {
+export const nonEnumerable = (target: any, propertyKey: string): void => {
   const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
   if (descriptor.enumerable !== false) {
     descriptor.enumerable = false;

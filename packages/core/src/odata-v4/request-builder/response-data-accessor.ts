@@ -16,7 +16,7 @@ const logger = createLogger({
  * @param data - Response of the OData v4 service
  * @returns any[] - Collection extracted from the response
  */
-export function getCollectionResult(data): any[] {
+export function getCollectionResult(data: any): any[] {
   validateCollectionResult(data);
   return isCollectionResult(data) ? data.value : [];
 }
@@ -26,7 +26,7 @@ export function getCollectionResult(data): any[] {
  * @param data - Response of the OData v4 service
  * @returns boolean - true if the data is a collection result
  */
-export function isCollectionResult(data): boolean {
+export function isCollectionResult(data: any): boolean {
   return Array.isArray(data.value);
 }
 
@@ -44,7 +44,7 @@ function validateCollectionResult(data): void {
  * @param data - Response of the one to many link
  * @returns any[] - Collection extracted from the response
  */
-export function getLinkedCollectionResult(data): any[] {
+export function getLinkedCollectionResult(data: any): any[] {
   return Array.isArray(data) ? data : [];
 }
 
@@ -54,7 +54,7 @@ export function getLinkedCollectionResult(data): any[] {
  * @param data - Response of the OData v4 service
  * @returns Record<string, any> - single object extracted from the response
  */
-export function getSingleResult(data): Record<string, any> {
+export function getSingleResult(data: any): Record<string, any> {
   validateSingleResult(data);
   return isSingleResult(data) ? data : {};
 }

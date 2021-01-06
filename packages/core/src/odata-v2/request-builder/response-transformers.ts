@@ -11,7 +11,7 @@ import { getSingleResult, getCollectionResult } from './response-data-accessor';
 export function transformReturnValueForUndefined<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
-) {
+): ReturnT {
   return builderFn(data);
 }
 export { transformReturnValueForUndefined as transformReturnValueForUndefinedV2 };

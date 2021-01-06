@@ -21,7 +21,7 @@ export class ODataBatchChangeSet<
   /**
    * @deprecated Since v1.30.0. Use [[boundary]] instead.
    */
-  get changeSetId() {
+  get changeSetId(): string {
     return this.boundary;
   }
 

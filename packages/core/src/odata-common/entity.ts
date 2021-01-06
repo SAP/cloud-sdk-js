@@ -274,7 +274,10 @@ export abstract class Entity {
       : visitedEntities.includes(entity);
   }
 
-  protected getCurrentStateForKey(key: string, visitedEntities: Entity[] = []) {
+  protected getCurrentStateForKey(
+    key: string,
+    visitedEntities: Entity[] = []
+  ): any {
     if (isNavigationProperty(key, this.constructor)) {
       if (isNullish(this[key])) {
         return this[key];
@@ -338,9 +341,9 @@ export interface EntityIdentifiable<T extends Entity> {
  * @hidden
  */
 export function isSelectedProperty<EntityT extends Entity>(
-  json,
+  json: any,
   field: Field<EntityT> | Link<EntityT>
-) {
+): boolean {
   return json.hasOwnProperty(field._fieldName);
 }
 
@@ -350,7 +353,7 @@ export function isSelectedProperty<EntityT extends Entity>(
 export function isExistentProperty<
   EntityT extends Entity,
   LinkedEntityT extends Entity
->(json, link: Link<EntityT, LinkedEntityT>) {
+>(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
 
@@ -360,7 +363,7 @@ export function isExistentProperty<
 export function isExpandedProperty<
   EntityT extends Entity,
   LinkedEntityT extends Entity
->(json, link: Link<EntityT, LinkedEntityT>) {
+>(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
   return (
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')

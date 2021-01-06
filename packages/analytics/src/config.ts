@@ -21,7 +21,7 @@ export const configFileName = 'sap-cloud-sdk-analytics.json';
 export function writeConfig(
   config: UsageAnalyticsProjectConfig,
   path?: string
-) {
+): void {
   // WriteConfig is only called from generateConfig (where a path is provided)
   // Or when the salt is missing and the config needs to be updated, so we can assume findConfigPath to find something
   const configPath = path ? resolve(path, configFileName) : findConfigPath()!;

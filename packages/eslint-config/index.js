@@ -174,7 +174,7 @@ module.exports = {
     ],
     'prefer-const': 'error',
     'prefer-object-spread': 'error',
-    radix: ['error', 'as-needed'],
+    radix: 'off',
     'space-in-parens': ['error', 'never'],
     'spaced-comment': 'error',
     'valid-jsdoc': [

@@ -19,7 +19,7 @@ import {
 Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests.
  */
 
-xdescribe('OAuth flows', () => {
+describe('OAuth flows', () => {
   let destinationService;
   let accessToken: UserAccessTokens;
   let systems: Systems;
@@ -31,7 +31,7 @@ xdescribe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
-  it('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
+  xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
     const userGrant = await userApprovedServiceToken(
       accessToken.provider,
       destinationService
@@ -51,7 +51,7 @@ xdescribe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('BasicAuth: Provider Destination & Provider Token', async () => {
+  xit('BasicAuth: Provider Destination & Provider Token', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });
@@ -69,7 +69,7 @@ xdescribe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
+  xit('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.subscriber
     });
@@ -87,7 +87,7 @@ xdescribe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
+  xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });
@@ -105,7 +105,7 @@ xdescribe('OAuth flows', () => {
     expect(response.status).toBe(200);
   }, 60000);
 
-  it('OAuth2UserTokenExchange: Provider destination and Subscriber Jwt', async () => {
+  xit('OAuth2UserTokenExchange: Provider destination and Subscriber Jwt', async () => {
     const providerDestToken = await serviceToken('destination', {});
 
     const destination = await fetchDestination(
@@ -125,7 +125,7 @@ xdescribe('OAuth flows', () => {
     expect(response.status).toBe(200);
   }, 60000);
 
-  it('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
+  xit('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
     const subscriberDestToken = await serviceToken('destination', {
       userJwt: accessToken.subscriber
     });

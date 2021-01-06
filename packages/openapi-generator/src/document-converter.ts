@@ -2,7 +2,7 @@ import { promises } from 'fs';
 import { parse } from 'path';
 import { OpenAPIV3 } from 'openapi-types';
 import { convert } from 'swagger2openapi';
-import { safeLoad } from 'js-yaml';
+import { load } from 'js-yaml';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 const { readFile } = promises;
 

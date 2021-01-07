@@ -53,4 +53,4 @@ Internal developers can use the existing destinations of the E2E test landscape.
 
 ## Running the Tests
 
-Once the relevant data is given you can run the tests to execute auth flows locally.
+Once you created the relevant files, you can run the tests to execute auth flows locally.

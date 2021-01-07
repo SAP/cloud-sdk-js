@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises } from 'fs';
-import { resolve, parse } from 'path';
+import { resolve, parse, dirname } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
@@ -37,7 +37,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       serviceDir = resolve(
         options.outputDir,
         // TODO: add the filepath directory.name to the servicename
-        'test-this-case' + '-' + serviceName
+        dirname(filePath) + '-' + serviceName
       );
     } else {
       serviceDir = resolve(options.outputDir, serviceName);
@@ -156,7 +156,7 @@ function parseServiceName(filePath: string): string {
  * Check if a directory already exists in the output directory.
  * @param serviceName The name of the service to be searched.
  * @param outputDir Path to the output direcotry.
- * @returns true if the service is already in the output directory.
+ * @returns 'true' if a simliar named service is already in the output directory.
  */
 async function isInOutputDir(
   serviceName: string,

@@ -29,7 +29,9 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     generateFromFile(inputFilePath, options);
   } else {
     const inputFilePaths = await recursiveInputPathSearch(options.input);
-    inputFilePaths.map(filePath => generateFromFile(filePath, options));
+    for (const filePath of inputFilePaths) {
+      await generateFromFile(filePath, options);
+    }
   }
 }
 

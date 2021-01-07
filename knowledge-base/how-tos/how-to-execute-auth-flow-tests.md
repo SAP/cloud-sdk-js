@@ -45,7 +45,7 @@ Once you press the `Get new Access Token` you will be redirected to the login pa
 Postman will show you the token after successful login flow.
 For details on token retrieval have a look [here](https://sap.github.io/cloud-sdk/docs/java/guides/cloud-foundry-xsuaa-service/#scp-cf-xsuaa-key-use-cases).
 
-### VCAP varialbes
+### VCAP variables
 
 You need to create a file `vcap-services.json` containing the VCAP variables of an application with services bindings to the `destination` and `workflow` service.
 

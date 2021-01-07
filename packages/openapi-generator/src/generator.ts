@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises } from 'fs';
+import { promises, statSync } from 'fs';
 import { resolve, parse, basename, dirname } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
@@ -25,22 +25,15 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   }
 
   // TODO: should be recursive
-  /*
-  let inputFilePaths: string | string[];
   if (statSync(options.input).isFile()) {
-    inputFilePaths = options.input;
+    const inputFilePath = options.input;
+    generateFromFile(inputFilePath, options);
   } else {
-    inputFilePaths = (await readdir(options.input)).map(fileName =>
+    const inputFilePaths = (await readdir(options.input)).map(fileName =>
       resolve(options.input, fileName)
     );
+    inputFilePaths.forEach(filePath => generateFromFile(filePath, options));
   }
-  */
-
-  const inputFilePaths = (await readdir(options.input)).map(fileName =>
-    resolve(options.input, fileName)
-  );
-
-  inputFilePaths.forEach(filePath => generateFromFile(filePath, options));
 }
 
 /**
@@ -138,6 +131,11 @@ async function duplicateServiceExists(
   return false;
 }
 
+/**
+ * Generates an OpenAPI Service from a file.
+ * @param filePath The filepath where the service to generate is located.
+ * @param options  Options to configure generation.
+ */
 async function generateFromFile(
   filePath: string,
   options: GeneratorOptions

@@ -29,7 +29,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     generateFromFile(inputFilePath, options);
   } else {
     const inputFilePaths = await recursiveInputPathSearch(options.input);
-    inputFilePaths.forEach(filePath => generateFromFile(filePath, options));
+    inputFilePaths.map(filePath => generateFromFile(filePath, options));
   }
 }
 

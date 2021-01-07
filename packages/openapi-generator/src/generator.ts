@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises } from 'fs';
-import { resolve, parse, dirname } from 'path';
+import { resolve, parse, basename, dirname } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
@@ -33,11 +33,12 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const serviceName = parseServiceName(filePath);
 
     let serviceDir: string;
-    if (isInOutputDir(serviceName, options.outputDir)) {
+    if (await isInOutputDir(serviceName, options.outputDir)) {
       serviceDir = resolve(
         options.outputDir,
         // TODO: add the filepath directory.name to the servicename
-        dirname(filePath) + '-' + serviceName
+        // dirname(filePath) + '-' + serviceName
+        basename(dirname(filePath)) + '-' + serviceName
       );
     } else {
       serviceDir = resolve(options.outputDir, serviceName);

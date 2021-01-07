@@ -188,15 +188,25 @@ async function generateFromFile(
 async function recursiveInputPathSearch(input: string): Promise<string[]> {
   const recursiveInputPath: string[] = [];
   const directoryContents = await readdir(input, { withFileTypes: true });
-  directoryContents.forEach(async content => {
-    if (content.isDirectory()) {
-      recursiveInputPath.concat(
-        await recursiveInputPathSearch(resolve(input, content.name))
-      );
-    } else {
-      recursiveInputPath.push(resolve(input, content.name));
-    }
-  });
+  await Promise.all(
+    directoryContents.map(async content => {
+      if (content.isDirectory()) {
+        console.log('----------------------------');
+        console.log('now we enter the recursion');
+        console.log('----------------------------');
+
+        const recursionResult = await recursiveInputPathSearch(
+          resolve(input, content.name)
+        );
+        recursiveInputPath.concat(recursionResult);
+
+        console.log(recursiveInputPath);
+        console.log('now we leave');
+      } else {
+        recursiveInputPath.push(resolve(input, content.name));
+      }
+    })
+  );
   console.log('----------------------------');
   console.log(recursiveInputPath);
   console.log('----------------------------');

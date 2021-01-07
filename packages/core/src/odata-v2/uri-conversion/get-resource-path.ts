@@ -6,7 +6,7 @@ import {
 import { oDataUri } from './odata-uri';
 
 /**
- * @deprecated Since v1.21.0. Use [[oDataUri.getResourcePathForKeys]] instead.
+ * @deprecated Since v1.21.0. Use [[ODataUri.getResourcePathForKeys]] instead.
  * Get the resource path of an entity specified by key-value pairs.
  *
  * @typeparam EntityT - Type of the entity to get the resource path for

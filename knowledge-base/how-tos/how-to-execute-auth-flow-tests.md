@@ -49,7 +49,7 @@ You need to create a file `vcap-services.json` containing the VCAP variables of 
 
 You need to create a files `systems.json` containing the destination names in the provider and subscriber account.
 The format of this JSON is given by the `Systems` type defined in [oatuh-flow-util.ts](../../test-packages/integration-tests/test/auth-flows/auth-flow-util.ts)
-Internal developers can use the existing destinations of E2E test landscape.
+Internal developers can use the existing destinations of the E2E test landscape.
 
 ## Running the Tests
 

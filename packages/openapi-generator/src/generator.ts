@@ -29,6 +29,21 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const inputFilePath = options.input;
     generateFromFile(inputFilePath, options);
   } else {
+    /*
+    function recursiveInputPathSearch(input: string):string[]{
+      let recursiveInputPath: string[];
+      for(file in files){
+        if (file == file ){
+          recursiveInputPath.append(resolve(input, file));
+        }
+        else {
+          recursiveInputPath.append(recursiveInputPathSearch(file));
+        }
+      }
+      return recursiveInputPath;
+    }
+    const inputFilePaths = recursiveInputPath(options.input);
+    */
     const inputFilePaths = (await readdir(options.input)).map(fileName =>
       resolve(options.input, fileName)
     );
@@ -182,4 +197,17 @@ async function generateFromFile(
 
   await generateOpenApiService(convertedInputFilePath, serviceDir);
   await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
+}
+
+async function recursiveInputPathSearch(input: string): Promise<string[]> {
+  const recursiveInputPath: string[] = [];
+  const directoryContents = await readdir(input, { withFileTypes: true });
+  directoryContents.forEach(async content => {
+    if (content.isDirectory()) {
+      recursiveInputPath.concat(await recursiveInputPathSearch(content.name));
+    } else {
+      recursiveInputPath.push(resolve(input, content.name));
+    }
+  });
+  return recursiveInputPath;
 }

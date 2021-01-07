@@ -4,7 +4,7 @@ The E2E tests in [auth-flows](../../test-packages/integration-tests/test/auth-fl
 The tests are not included in the pipeline and are commented out per default.
 The purpose of these tests is the convenience to debug auth flows locally within the code repo.
 
-Our nightly E2E tests cover auth flows as well, but to execute flows quickly and locally is a advantage.
+Our nightly E2E tests cover auth flows as well, but to execute flows quickly and locally is an advantage.
 You need to maintain some data explained in the next chapter to make the tests runs.  
 
 ## Application

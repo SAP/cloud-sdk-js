@@ -43,7 +43,7 @@ describe('GetAllRequestBuilder', () => {
       expect(actual).toBe(expected);
     });
 
-    it('is built correctly select in expand', async () => {
+    it('adds expand for nested selects', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
       const actual = await requestBuilder

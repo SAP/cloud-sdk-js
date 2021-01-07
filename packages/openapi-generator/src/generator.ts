@@ -31,8 +31,18 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 
   inputFilePaths.forEach(async filePath => {
     const serviceName = parseServiceName(filePath);
-    // TODO: get kebapcase unique directory name
-    const serviceDir = resolve(options.outputDir, serviceName);
+
+    let serviceDir: string;
+    if (isInOutputDir(serviceName, options.outputDir)) {
+      serviceDir = resolve(
+        options.outputDir,
+        // TODO: add the filepath directory.name to the servicename
+        'test-this-case' + '-' + serviceName
+      );
+    } else {
+      serviceDir = resolve(options.outputDir, serviceName);
+    }
+
     let openApiDocument;
     try {
       openApiDocument = await convertOpenApiSpec(filePath);
@@ -140,4 +150,23 @@ async function generateOpenApiService(
  */
 function parseServiceName(filePath: string): string {
   return parse(filePath).name.replace(/-openapi$/, '');
+}
+
+/**
+ * Check if a directory already exists in the output directory.
+ * @param serviceName The name of the service to be searched.
+ * @param outputDir Path to the output direcotry.
+ * @returns true if the service is already in the output directory.
+ */
+async function isInOutputDir(
+  serviceName: string,
+  outputDir: string
+): Promise<boolean> {
+  const currentOutput: string[] = await readdir(outputDir);
+  currentOutput.forEach(fileName => {
+    if (serviceName === fileName) {
+      return true;
+    }
+  });
+  return false;
 }

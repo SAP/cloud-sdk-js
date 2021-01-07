@@ -20,7 +20,7 @@ export function readUserAccessToken(
   return JSON.parse(fileContent);
 }
 
-export function readSysmtes(fileName = 'systems.json'): Systems {
+export function readSystems(fileName = 'systems.json'): Systems {
   const fileContent = readFile(fileName);
   return JSON.parse(fileContent);
 }

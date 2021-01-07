@@ -21,13 +21,13 @@ export {
   mappingTenantFields,
   Tenant,
   tenantFromJwt,
-  RegisteredJWTClaimsTenant
+  RegisteredJWTClaimsTenant,
+  isIdenticalTenant
 } from './tenant';
 export {
   RegisteredJWTClaimsUser,
   Scope,
   mappingUserFields,
-  userFromJwt
+  userFromJwt,
+  customAttributes
 } from './user';
-export { customAttributes } from './user';
-export { isIdenticalTenant } from './tenant';

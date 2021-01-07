@@ -29,24 +29,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const inputFilePath = options.input;
     generateFromFile(inputFilePath, options);
   } else {
-    /*
-    function recursiveInputPathSearch(input: string):string[]{
-      let recursiveInputPath: string[];
-      for(file in files){
-        if (file == file ){
-          recursiveInputPath.append(resolve(input, file));
-        }
-        else {
-          recursiveInputPath.append(recursiveInputPathSearch(file));
-        }
-      }
-      return recursiveInputPath;
-    }
-    const inputFilePaths = recursiveInputPath(options.input);
-    */
-    const inputFilePaths = (await readdir(options.input)).map(fileName =>
-      resolve(options.input, fileName)
-    );
+    const inputFilePaths = await recursiveInputPathSearch(options.input);
     inputFilePaths.forEach(filePath => generateFromFile(filePath, options));
   }
 }
@@ -199,6 +182,11 @@ async function generateFromFile(
   await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
 }
 
+/**
+ * Recursively searches through a given input path and returns all file paths as a string array.
+ * @param input the path to the input directory.
+ * @returns all file paths as a string array.
+ */
 async function recursiveInputPathSearch(input: string): Promise<string[]> {
   const recursiveInputPath: string[] = [];
   const directoryContents = await readdir(input, { withFileTypes: true });

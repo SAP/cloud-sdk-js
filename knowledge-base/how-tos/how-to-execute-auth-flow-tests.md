@@ -49,7 +49,7 @@ For details on token retrieval have a look [here](https://sap.github.io/cloud-sd
 
 You need to create a file `vcap-services.json` containing the VCAP variables of an application with services bindings to the `destination` and `workflow` service.
 
-###  Systems
+### Systems
 
 You need to create a files `systems.json` containing the destination names in the provider and subscriber account.
 The format of this JSON is given by the `Systems` type defined in [oatuh-flow-util.ts](../../test-packages/integration-tests/test/auth-flows/auth-flow-util.ts)

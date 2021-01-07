@@ -23,7 +23,7 @@ Create all the files next to the [auth-flow.spec.ts](../../test-packages/integra
 
 ### UserAccessTokens
 
-You need to create a file `user-access-token.json` containing  JWTs issued for the subscriber and provider account.
+Create a file `user-access-token.json` containing JWTs issued for the subscriber and provider account.
 The format of the JSON is given by the `UserAccessTokens` type defined in [auth-flow-util.ts](../../test-packages/integration-tests/test/auth-flows/auth-flow-util.ts).
 
 An easy way to get the tokens is to use postman with the following input:

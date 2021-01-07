@@ -14,7 +14,7 @@ The application should be protected by an `XSUAA`.
 The account where this is application runs is the `provider` account and you will need the subdomain of this account.
 
 If you want to test the multi tenancy tests, the app must be available via the service broker in other accounts.
-You need a second account called `subscriber` account in which you subscribed the application mentioned above.
+You need a `subscriber` account in which you subscribed to the application mentioned above.
 Internal developers you may leverage the accounts used in our nightly E2E tests. 
 
 ## Overview Files

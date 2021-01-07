@@ -30,7 +30,7 @@ To use the SDK in your project, we recommend using our [commandline interface](#
 The core is the heart of the SAP Cloud SDK and contains the functionality that is essential to every project powered by the SDK. Any OData client built by the SAP Cloud SDK, be it the VDM or clients built by the generator are using the core. We recommend to install this in addition to your clients.
 
 To install the SAP Cloud SDK core in your project, run:
-```sh-session
+```bash
 $ npm install @sap-cloud-sdk/core
 ```
 
@@ -38,7 +38,7 @@ $ npm install @sap-cloud-sdk/core
 The SAP Cloud SDK generator is a command line interface (CLI) that allows you to create clients for your own OData services or other SAP systems besides SAP S/4HANA based on their service specifications.
 
 To install the SAP Cloud SDK generator in your project, run:
-```sh-session
+```bash
 $ npm install @sap-cloud-sdk/generator
 ```
 
@@ -46,7 +46,7 @@ $ npm install @sap-cloud-sdk/generator
 The test-util package makes writing tests for your SAP Cloud Platform application more convenient.
 
 To install the SAP Cloud SDK test-util as development dependencies in your project, run:
-```sh-session
+```bash
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
@@ -64,7 +64,7 @@ In addition to the Open Source parts of this project, we also publish the SAP Cl
 
 To install an OData client for an SAP S/4HANA service run:
 
-```sh-session
+```bash
 $ npm install @sap/cloud-sdk-vdm-<service name>-service
 ```
 In the example above, `service name` is the name of the service you want to use, e. g. for the business partner service, run: `npm install @sap/cloud-sdk-vdm-business-partner-service`.

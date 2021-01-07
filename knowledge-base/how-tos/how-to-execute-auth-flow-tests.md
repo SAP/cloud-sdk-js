@@ -7,7 +7,7 @@ The purpose of these tests is the convenience to debug auth flows locally within
 Our nightly E2E tests cover auth flows as well, but to execute flows quickly and locally is a advantage.
 You need to maintain some data explained in the next chapter to make the tests runs.  
 
-## Applicaiton
+## Application
 
 You need an application with service bindings to the `destination` and `workflow` service.
 The application should be protected by an `XSUAA`.

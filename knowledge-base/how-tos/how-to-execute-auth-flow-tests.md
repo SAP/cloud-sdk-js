@@ -7,13 +7,17 @@ The purpose of these tests is the convenience to debug auth flows locally within
 Our nightly E2E tests cover auth flows as well, but to execute flows quickly and locally is an advantage.
 You need to maintain some data explained in the next chapter to make the tests runs.  
 
+There is a recoding availible where the steps to get all information is explained:
+
+https://web.microsoftstream.com/video/c55e627b-16e9-463d-8c5f-3014db69596f
+
 ## Application
 
 You need an application with service bindings to the `destination` and `workflow` service.
 The application should be protected by an `XSUAA`.
 The account where this is application runs is the `provider` account and you will need the subdomain of this account.
 
-If you want to test the multi tenancy tests, the app must be available via the service broker in other accounts.
+If you want to test the multi tenancy destination lookup, the app must be available via the service broker in other accounts.
 You need a `subscriber` account in which you subscribed to the application mentioned above.
 Internal developers may use the accounts used in our nightly E2E tests. 
 

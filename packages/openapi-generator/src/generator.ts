@@ -40,50 +40,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     resolve(options.input, fileName)
   );
 
-  inputFilePaths.forEach(async filePath => {
-    const serviceName = parseServiceName(filePath);
-
-    let serviceDir: string;
-    if (await duplicateServiceExists(serviceName, options.outputDir)) {
-      serviceDir = resolve(
-        options.outputDir,
-        basename(dirname(filePath)) + '-' + serviceName
-      );
-    } else {
-      serviceDir = resolve(options.outputDir, serviceName);
-    }
-
-    let openApiDocument;
-    try {
-      openApiDocument = await convertOpenApiSpec(filePath);
-    } catch (err) {
-      logger.error(
-        `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
-      );
-      return;
-    }
-    const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
-    const parsedOpenApiDocument = await parseOpenApiDocument(
-      openApiDocument,
-      serviceName
-    );
-
-    if (!parsedOpenApiDocument.operations.length) {
-      logger.warn(
-        `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
-      );
-      return;
-    }
-
-    await mkdir(serviceDir, { recursive: true });
-    await writeFile(
-      convertedInputFilePath,
-      JSON.stringify(openApiDocument, null, 2)
-    );
-
-    await generateOpenApiService(convertedInputFilePath, serviceDir);
-    await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
-  });
+  inputFilePaths.forEach(filePath => generateFromFile(filePath, options));
 }
 
 /**
@@ -181,6 +138,50 @@ async function duplicateServiceExists(
   return false;
 }
 
-async function generateFromFile(filePath: string){
-  
+async function generateFromFile(
+  filePath: string,
+  options: GeneratorOptions
+): Promise<void> {
+  const serviceName = parseServiceName(filePath);
+
+  let serviceDir: string;
+  if (await duplicateServiceExists(serviceName, options.outputDir)) {
+    serviceDir = resolve(
+      options.outputDir,
+      basename(dirname(filePath)) + '-' + serviceName
+    );
+  } else {
+    serviceDir = resolve(options.outputDir, serviceName);
+  }
+
+  let openApiDocument;
+  try {
+    openApiDocument = await convertOpenApiSpec(filePath);
+  } catch (err) {
+    logger.error(
+      `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
+    );
+    return;
+  }
+  const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
+  const parsedOpenApiDocument = await parseOpenApiDocument(
+    openApiDocument,
+    serviceName
+  );
+
+  if (!parsedOpenApiDocument.operations.length) {
+    logger.warn(
+      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
+    );
+    return;
+  }
+
+  await mkdir(serviceDir, { recursive: true });
+  await writeFile(
+    convertedInputFilePath,
+    JSON.stringify(openApiDocument, null, 2)
+  );
+
+  await generateOpenApiService(convertedInputFilePath, serviceDir);
+  await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
 }

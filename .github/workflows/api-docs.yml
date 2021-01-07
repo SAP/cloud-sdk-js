@@ -28,6 +28,8 @@ jobs:
         env:
           USE_SSH: true
           GIT_USER: cloud-sdk-js
+        with:
+          token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
         run: |
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"

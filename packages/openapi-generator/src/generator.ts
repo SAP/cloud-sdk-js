@@ -25,6 +25,17 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   }
 
   // TODO: should be recursive
+  /*
+  let inputFilePaths: string | string[];
+  if (statSync(options.input).isFile()) {
+    inputFilePaths = options.input;
+  } else {
+    inputFilePaths = (await readdir(options.input)).map(fileName =>
+      resolve(options.input, fileName)
+    );
+  }
+  */
+
   const inputFilePaths = (await readdir(options.input)).map(fileName =>
     resolve(options.input, fileName)
   );
@@ -33,11 +44,9 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const serviceName = parseServiceName(filePath);
 
     let serviceDir: string;
-    if (await isInOutputDir(serviceName, options.outputDir)) {
+    if (await duplicateServiceExists(serviceName, options.outputDir)) {
       serviceDir = resolve(
         options.outputDir,
-        // TODO: add the filepath directory.name to the servicename
-        // dirname(filePath) + '-' + serviceName
         basename(dirname(filePath)) + '-' + serviceName
       );
     } else {
@@ -154,12 +163,12 @@ function parseServiceName(filePath: string): string {
 }
 
 /**
- * Check if a directory already exists in the output directory.
+ * Checks if a service already exists in the output directory.
  * @param serviceName The name of the service to be searched.
- * @param outputDir Path to the output direcotry.
- * @returns 'true' if a simliar named service is already in the output directory.
+ * @param outputDir Path to the output directory.
+ * @returns 'true' if a duplicate service is already in the output directory.
  */
-async function isInOutputDir(
+async function duplicateServiceExists(
   serviceName: string,
   outputDir: string
 ): Promise<boolean> {
@@ -170,4 +179,8 @@ async function isInOutputDir(
     }
   });
   return false;
+}
+
+async function generateFromFile(filePath: string){
+  
 }

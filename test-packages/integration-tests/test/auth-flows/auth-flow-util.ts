@@ -5,31 +5,27 @@ import { createLogger } from '@sap-cloud-sdk/util';
 const logger = createLogger('oauth-util');
 
 export function loadLocalVcap(fileName = 'vcap-services.json') {
-  const fileContent = readFile(fileName);
+  const json = readJson(fileName);
 
-  process.env.VCAP_SERVICES = JSON.stringify(
-    JSON.parse(fileContent).VCAP_SERVICES
-  );
+  process.env.VCAP_SERVICES = JSON.stringify(json.VCAP_SERVICES);
   logger.info(`VCAP_SERVICES: ${process.env.VCAP_SERVICES}`);
 }
 
 export function readUserAccessToken(
   fileName = 'user-access-token.json'
 ): UserAccessTokens {
-  const fileContent = readFile(fileName);
-  return JSON.parse(fileContent);
+  return readJson(fileName);
 }
 
 export function readSystems(fileName = 'systems.json'): Systems {
-  const fileContent = readFile(fileName);
-  return JSON.parse(fileContent);
+  return readJson(fileName);
 }
 
-function readFile(fileName: string): string {
+function readJson(fileName: string) {
   const path = resolve(__dirname, fileName);
   if (existsSync(path)) {
     const fileContent = readFileSync(path, { encoding: 'utf8' });
-    return fileContent;
+    return JSON.parse(fileContent);
   }
   throw Error(`${path} not found`);
 }

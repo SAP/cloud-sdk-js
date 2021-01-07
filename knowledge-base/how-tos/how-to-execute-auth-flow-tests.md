@@ -21,9 +21,9 @@ If you want to test the multi tenancy destination lookup, the app must be availa
 You need a `subscriber` account in which you subscribed to the application mentioned above.
 Internal developers may use the accounts used in our nightly E2E tests. 
 
-## Overview Files
+## Files to Create
 
-Create all the files next to the [auth-flow.spec.ts](../../test-packages/integration-tests/test/auth-flows/auth-flow.spec.ts)
+Create all the files listed below next to the [auth-flow.spec.ts](../../test-packages/integration-tests/test/auth-flows/auth-flow.spec.ts)
 
 ### UserAccessTokens
 
@@ -47,7 +47,7 @@ For details on token retrieval have a look [here](https://sap.github.io/cloud-sd
 
 ### VCAP variables
 
-You need to create a file `vcap-services.json` containing the VCAP variables of an application with services bindings to the `destination` and `workflow` service.
+Create a file `vcap-services.json` containing the VCAP variables of an application with services bindings to the `destination` and `workflow` service.
 
 ### Systems
 

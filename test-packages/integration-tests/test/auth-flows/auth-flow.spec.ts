@@ -9,7 +9,7 @@ import {
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
   loadLocalVcap,
-  readSysmtes,
+  readSystems,
   readUserAccessToken,
   Systems,
   UserAccessTokens
@@ -26,7 +26,7 @@ describe('OAuth flows', () => {
 
   beforeAll(() => {
     accessToken = readUserAccessToken();
-    systems = readSysmtes();
+    systems = readSystems();
     loadLocalVcap();
     destinationService = getService('destination');
   });
@@ -87,7 +87,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
+  xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });

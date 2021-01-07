@@ -24,7 +24,6 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     await rmdir(options.outputDir, { recursive: true });
   }
 
-  // TODO: should be recursive
   if (statSync(options.input).isFile()) {
     const inputFilePath = options.input;
     generateFromFile(inputFilePath, options);
@@ -121,12 +120,11 @@ async function duplicateServiceExists(
   outputDir: string
 ): Promise<boolean> {
   const currentOutput: string[] = await readdir(outputDir);
-  currentOutput.forEach(fileName => {
+  return currentOutput.some(fileName => {
     if (serviceName === fileName) {
       return true;
     }
   });
-  return false;
 }
 
 /**
@@ -190,7 +188,7 @@ async function generateFromFile(
 async function recursiveInputPathSearch(input: string): Promise<string[]> {
   const recursiveInputPath: string[] = [];
   const directoryContents = await readdir(input, { withFileTypes: true });
-  await directoryContents.forEach(async content => {
+  directoryContents.forEach(async content => {
     if (content.isDirectory()) {
       recursiveInputPath.concat(
         await recursiveInputPathSearch(resolve(input, content.name))

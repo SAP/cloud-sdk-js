@@ -29,3 +29,5 @@ export {
   mappingUserFields,
   userFromJwt
 } from './user';
+export { customAttributes } from './user';
+export { isIdenticalTenant } from './tenant';

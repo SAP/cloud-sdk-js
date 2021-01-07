@@ -57,6 +57,8 @@ jobs:
         name: Test Service Version Check
       - run: yarn check:dependencies
         name: Undeclared dependency check
+      - run: yarn check:circular
+        name: Circular dependency check
       - run: yarn check:vulnerability
         name: Dependency Vulnerability Check
       - run: yarn check:license

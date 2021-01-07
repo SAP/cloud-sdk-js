@@ -190,12 +190,17 @@ async function generateFromFile(
 async function recursiveInputPathSearch(input: string): Promise<string[]> {
   const recursiveInputPath: string[] = [];
   const directoryContents = await readdir(input, { withFileTypes: true });
-  directoryContents.forEach(async content => {
+  await directoryContents.forEach(async content => {
     if (content.isDirectory()) {
-      recursiveInputPath.concat(await recursiveInputPathSearch(content.name));
+      recursiveInputPath.concat(
+        await recursiveInputPathSearch(resolve(input, content.name))
+      );
     } else {
       recursiveInputPath.push(resolve(input, content.name));
     }
   });
+  console.log('----------------------------');
+  console.log(recursiveInputPath);
+  console.log('----------------------------');
   return recursiveInputPath;
 }

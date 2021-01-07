@@ -139,7 +139,7 @@ function validateLogs(generationLogs) {
 }
 
 function generateDocs() {
-  const generationLogs = execSync('npx typedoc .', {
+  const generationLogs = execSync('typedoc --tsconfig tsconfig.typedoc.json', {
     cwd: path.resolve(),
     encoding: 'utf8'
   });

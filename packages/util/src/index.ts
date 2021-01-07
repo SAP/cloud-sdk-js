@@ -1,3 +1,9 @@
+/**
+ * [[include:util/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/util
+ */
+
 export * from './array';
 export * from './code-block';
 export * from './constants';

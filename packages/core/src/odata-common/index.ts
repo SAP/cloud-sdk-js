@@ -12,6 +12,7 @@ export * from './time';
 export * from './uri-conversion';
 export * from './expandable';
 export * from './entity-deserializer';
+export * from './entity-serializer';
 export * from './payload-value-converter';
 export * from './name-converter';
 export * from './properties-util';

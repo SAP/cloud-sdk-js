@@ -1,6 +1,6 @@
 # SAP Cloud SDK style guide <!-- omit in toc -->
 
-This styleguide includes some basic rules to be applied when writing code in the SAP Cloud SDK.
+This style guide includes some basic rules to be applied when writing code in the SAP Cloud SDK.
 Most of the rules are being checked by lint, but not all of them can be checked.
 Those that are checked by lint are marked by the following symbol: ✓.
 

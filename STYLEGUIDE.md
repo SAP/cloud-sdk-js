@@ -155,6 +155,22 @@ enum SomeEnum {
   BarFoo
 }
 ```
+
+### Use camel case for acronyms
+In case you want to use an acronym in a variable name, class, interface, enum, function or other names use camel case.
+
+❌ Examples of **incorrect** code:
+```ts
+/* Don't use upper case */
+function parseJSON() { ... }
+```
+
+✅ Examples of **correct** code:
+```ts
+/* Use camel case */
+function parseJson() { ... }
+```
+
 ### Use verbs in function names
 Every function should do something and that action should be described with a verb.
 The verb should fit the return type and value.
@@ -355,10 +371,10 @@ function foo(obj: SomeType | null | undefined) {
 ```
 
 ### Use truthy/falsy checks where possible
-In most cases it is possible to check for truthyness/falsyness instead of explicitly comparing values.
+In most cases it is possible to check for truthiness/falsiness instead of explicitly comparing values.
 This should be used when possible, but carefully considered in cases where falsy values are valid and therefore semantically truthy values, e. g. 0, ''.
 Therefore, when checking for existence of primitives, don't use truthy/falsy checks.
-Of course more fine granular checks should be applied if semantically needed.
+Of course, more fine granular checks should be applied if semantically needed.
 
 ❌ Examples of **incorrect** code:
 ```ts

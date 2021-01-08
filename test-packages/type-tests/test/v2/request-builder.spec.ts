@@ -13,16 +13,16 @@ TestEntity.requestBuilder();
 /**
  * METHOD REQUEST BUILDERS
  */
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 const testEntityGetAllRequest = TestEntity.requestBuilder().getAll();
 
-// $ExpectType GetByKeyRequestBuilderV2<TestEntity>
+// $ExpectType GetByKeyRequestBuilder<TestEntity>
 TestEntity.requestBuilder().getByKey('uuid', 'test');
 
-// $ExpectType CreateRequestBuilderV2<TestEntity>
+// $ExpectType CreateRequestBuilder<TestEntity>
 TestEntity.requestBuilder().create(new TestEntity());
 
-// $ExpectType UpdateRequestBuilderV2<TestEntity>
+// $ExpectType UpdateRequestBuilder<TestEntity>
 TestEntity.requestBuilder().update(new TestEntity());
 
 // $ExpectError
@@ -34,7 +34,7 @@ TestEntity.requestBuilder().update(new TestEntityMultiLink());
 /**
  * AsChildOf
  */
-// $ExpectType CreateRequestBuilderV2<TestEntityMultiLink>
+// $ExpectType CreateRequestBuilder<TestEntityMultiLink>
 TestEntityMultiLink.requestBuilder()
   .create(new TestEntityMultiLink())
   .asChildOf(new TestEntity(), TestEntity.TO_MULTI_LINK);
@@ -50,13 +50,13 @@ TestEntityMultiLink.requestBuilder()
 /**
  * SELECTION
  */
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.select(TestEntity.STRING_PROPERTY);
 
 // $ExpectError
 testEntityGetAllRequest.select(TestEntityMultiLink.STRING_PROPERTY);
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.select(TestEntity.customField('CustomField'));
 
 // $ExpectError
@@ -65,12 +65,12 @@ testEntityGetAllRequest.select(TestEntityMultiLink.customField('CustomField'));
 /**
  * SELECTION & EXPANSION
  */
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.select(
   TestEntity.TO_MULTI_LINK.select(TestEntityMultiLink.STRING_PROPERTY)
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.select(
   TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY)
 );
@@ -84,16 +84,16 @@ testEntityGetAllRequest.select(
 /**
  * FILTER
  */
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(TestEntity.STRING_PROPERTY.equals('test'));
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
   TestEntity.STRING_PROPERTY.equals('test'),
   TestEntity.BOOLEAN_PROPERTY.notEquals(false)
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
   and(
     TestEntity.STRING_PROPERTY.equals('test'),
@@ -101,7 +101,7 @@ testEntityGetAllRequest.filter(
   )
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
   or(
     TestEntity.STRING_PROPERTY.equals('test'),
@@ -121,17 +121,17 @@ testEntityGetAllRequest.filter(
   or(TestEntityMultiLink.STRING_PROPERTY.equals('test')) // $ExpectError
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
   TestEntity.customField('SomeCustomField').edmString().equals('test')
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
   TestEntity.customField('SomeCustomField').edmDouble().equals(1234)
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.filter(
   TestEntity.customField('SomeCustomField')
     .edmTime()
@@ -145,13 +145,13 @@ TestEntity.customField('SomeCustomField').edmDouble().equals('aString'); // $Exp
 /**
  * ORDER BY
  */
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.orderBy(asc(TestEntity.STRING_PROPERTY));
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.orderBy(desc(TestEntity.STRING_PROPERTY));
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 testEntityGetAllRequest.orderBy(
   asc(TestEntity.STRING_PROPERTY),
   desc(TestEntity.STRING_PROPERTY)

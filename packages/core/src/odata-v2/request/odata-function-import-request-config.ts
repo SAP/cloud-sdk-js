@@ -3,12 +3,12 @@ import {
   FunctionImportParameter,
   FunctionImportParameters,
   RequestMethodType,
-  ODataFunctionImportRequestConfig
+  ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase
 } from '../../odata-common';
 
-export class ODataFunctionImportRequestConfigV2<
+export class ODataFunctionImportRequestConfig<
   ParametersT
-> extends ODataFunctionImportRequestConfig<ParametersT> {
+> extends ODataFunctionImportRequestConfigBase<ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    *
@@ -60,3 +60,5 @@ export class ODataFunctionImportRequestConfigV2<
     };
   }
 }
+
+export { ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigV2 };

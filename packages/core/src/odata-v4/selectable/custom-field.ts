@@ -1,13 +1,13 @@
-import type { EntityV4 } from '../entity';
+import type { Entity } from '../entity';
 import {
-  CustomFieldBase,
+  CustomField as CustomFieldBase,
   DateField,
   DurationField,
   TimeField
 } from '../../odata-common';
 
-export class CustomFieldV4<
-  EntityT extends EntityV4
+export class CustomField<
+  EntityT extends Entity
 > extends CustomFieldBase<EntityT> {
   edmDate(): DateField<EntityT> {
     return new DateField<EntityT>(
@@ -31,3 +31,5 @@ export class CustomFieldV4<
     );
   }
 }
+
+export { CustomField as CustomFieldV4 };

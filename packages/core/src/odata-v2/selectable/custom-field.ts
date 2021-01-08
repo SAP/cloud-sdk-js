@@ -1,8 +1,12 @@
-import type { EntityV2 } from '../entity';
-import { CustomFieldBase, DateField, TimeField } from '../../odata-common';
+import type { Entity } from '../entity';
+import {
+  CustomField as CustomFieldBase,
+  DateField,
+  TimeField
+} from '../../odata-common';
 
-export class CustomFieldV2<
-  EntityT extends EntityV2
+export class CustomField<
+  EntityT extends Entity
 > extends CustomFieldBase<EntityT> {
   edmDateTime(): DateField<EntityT> {
     return new DateField<EntityT>(
@@ -20,4 +24,4 @@ export class CustomFieldV2<
   }
 }
 
-export { CustomFieldV2 as CustomField };
+export { CustomField as CustomFieldV2 };

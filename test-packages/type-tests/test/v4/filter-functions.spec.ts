@@ -15,13 +15,13 @@ filterFunctionsV4.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
 // $ExpectError
 filterFunctionsV4.hasSubset(['1'], [1]);
 
-// $ExpectType BooleanFilterFunction<EntityV4>
+// $ExpectType BooleanFilterFunction<Entity>
 filterFunctionV4('fn', 'boolean');
 
-// $ExpectType DateFilterFunction<EntityV4>
+// $ExpectType DateFilterFunction<Entity>
 filterFunctionV4('fn', 'datetimeoffset');
 
-// $ExpectType CollectionFilterFunction<EntityV4, number>
+// $ExpectType CollectionFilterFunction<Entity, number>
 filterFunctionV4('fn', 'int[]');
 
 // $ExpectError

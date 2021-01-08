@@ -1,4 +1,4 @@
-import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
+import { Entity, EntityIdentifiable, Constructable } from '../entity';
 
 type OrderType = 'asc' | 'desc';
 
@@ -7,7 +7,7 @@ type OrderType = 'asc' | 'desc';
  *
  * @typeparam EntityT -
  */
-export class Order<EntityT extends EntityBase>
+export class Order<EntityT extends Entity>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;

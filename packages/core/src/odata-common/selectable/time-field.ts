@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { Entity, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import { Time } from '../time';
 import {
@@ -17,7 +17,7 @@ import { EdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class TimeFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   Time
 > {
@@ -67,9 +67,7 @@ export class TimeFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class TimeField<
-  EntityT extends EntityBase
-> extends TimeFieldBase<EntityT> {
+export class TimeField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
   readonly selectable: true;
 }
 
@@ -79,7 +77,7 @@ export class TimeField<
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeTimePropertyField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends TimeFieldBase<EntityT> {
   /**

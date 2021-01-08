@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity';
+import { Entity, Constructable } from '../entity';
 import { BigNumberField } from './big-number-field';
 import { BooleanField } from './boolean-field';
 import { DateField } from './date-field';
@@ -6,9 +6,7 @@ import { Field } from './field';
 import { NumberField } from './number-field';
 import { StringField } from './string-field';
 
-export class CustomFieldBase<
-  EntityT extends EntityBase
-> extends Field<EntityT> {
+export class CustomField<EntityT extends Entity> extends Field<EntityT> {
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>

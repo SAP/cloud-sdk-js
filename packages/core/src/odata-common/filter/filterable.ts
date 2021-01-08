@@ -1,5 +1,5 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import { FieldType, OneToManyLink } from '../selectable';
 import { Filter } from './filter';
 import { FilterLink } from './filter-link';
@@ -11,7 +11,7 @@ import { FilterLambdaExpression } from './filter-lambda-expression';
  *
  * @typeparam EntityT - Type of the entity to be filtered on
  */
-export type Filterable<EntityT extends EntityBase> =
+export type Filterable<EntityT extends Entity> =
   | Filter<EntityT, FieldType | FieldType[]>
   | FilterLink<EntityT>
   | FilterList<EntityT>
@@ -27,7 +27,7 @@ export type Filterable<EntityT extends EntityBase> =
  *  .filter(and(filterExp1, filterExp2));
  * ```
  *
- * Note that the [[GetAllRequestBuilderV2.filter]]  and [[GetAllRequestBuilderV4.filter]] method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
+ * Note that the [[GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter]]  and [[GetAllRequestBuilderV4.filter]] method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
  * ```ts
  * Entity.requestBuilder()
  *  .getAll()
@@ -38,13 +38,13 @@ export type Filterable<EntityT extends EntityBase> =
  * @param expressions - Filterables to be combined with logical `and`
  * @returns The newly created FilterList
  */
-export function and<EntityT extends EntityBase>(
+export function and<EntityT extends Entity>(
   expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function and<EntityT extends EntityBase>(
+export function and<EntityT extends Entity>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function and<EntityT extends EntityBase>(
+export function and<EntityT extends Entity>(
   first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
@@ -65,13 +65,13 @@ export function and<EntityT extends EntityBase>(
  * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
  */
-export function or<EntityT extends EntityBase>(
+export function or<EntityT extends Entity>(
   expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function or<EntityT extends EntityBase>(
+export function or<EntityT extends Entity>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function or<EntityT extends EntityBase>(
+export function or<EntityT extends Entity>(
   first: Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
@@ -82,8 +82,8 @@ export function or<EntityT extends EntityBase>(
   hidden
  */
 export function toFilterableList<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
 >(
   filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
 ): Filterable<EntityT>[] {

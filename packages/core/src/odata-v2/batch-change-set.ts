@@ -1,22 +1,22 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
-import { EntityV2 } from './entity';
+import { Entity } from './entity';
 import {
-  CreateRequestBuilderV2,
-  DeleteRequestBuilderV2,
-  UpdateRequestBuilderV2
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  UpdateRequestBuilder
 } from './request-builder';
 
 /**
  * @deprecated Since v1.30.0. Use [[BatchChangeSet]] directly
  * Representation of a batch change set, which holds a collection of write operations.
  */
-export class ODataBatchChangeSetV2<
+export class ODataBatchChangeSet<
   RequestT extends
-    | CreateRequestBuilderV2<EntityV2>
-    | UpdateRequestBuilderV2<EntityV2>
-    | DeleteRequestBuilderV2<EntityV2>
+    | CreateRequestBuilder<Entity>
+    | UpdateRequestBuilder<Entity>
+    | DeleteRequestBuilder<Entity>
 > implements BatchChangeSet<RequestT> {
   /**
    * @deprecated Since v1.30.0. Use [[boundary]] instead.
@@ -26,7 +26,7 @@ export class ODataBatchChangeSetV2<
   }
 
   /**
-   * Create an instance of ODataBatchChangeSetV2.
+   * Create an instance of ODataBatchChangeSet.
    * @param requests Requests to combine to one change set.
    * @param boundary Boundary used in the multipart request.
    */
@@ -36,4 +36,4 @@ export class ODataBatchChangeSetV2<
   ) {}
 }
 
-export { ODataBatchChangeSetV2 as ODataBatchChangeSet };
+export { ODataBatchChangeSet as ODataBatchChangeSetV2 };

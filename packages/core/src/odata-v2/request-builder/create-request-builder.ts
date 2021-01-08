@@ -1,19 +1,19 @@
 import {
   Constructable,
   EntityIdentifiable,
-  CreateRequestBuilderBase
+  CreateRequestBuilder as CreateRequestBuilderBase
 } from '../../odata-common';
-import { EntityV2 } from '../entity';
-import { entityDeserializerV2 } from '../entity-deserializer';
-import { entitySerializerV2 } from '../entity-serializer';
-import { oDataUriV2 } from '../uri-conversion';
-import { responseDataAccessorV2 } from './response-data-accessor';
+import { Entity } from '../entity';
+import { entityDeserializer } from '../entity-deserializer';
+import { entitySerializer } from '../entity-serializer';
+import { oDataUri } from '../uri-conversion';
+import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  *
  * @typeparam EntityT - Type of the entity to be created
  */
-export class CreateRequestBuilderV2<EntityT extends EntityV2>
+export class CreateRequestBuilder<EntityT extends Entity>
   extends CreateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**
@@ -29,12 +29,12 @@ export class CreateRequestBuilderV2<EntityT extends EntityV2>
     super(
       _entityConstructor,
       _entity,
-      oDataUriV2,
-      entitySerializerV2,
-      entityDeserializerV2,
-      responseDataAccessorV2
+      oDataUri,
+      entitySerializer,
+      entityDeserializer,
+      responseDataAccessor
     );
   }
 }
 
-export { CreateRequestBuilderV2 as CreateRequestBuilder };
+export { CreateRequestBuilder as CreateRequestBuilderV2 };

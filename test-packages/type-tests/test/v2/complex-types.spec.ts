@@ -13,27 +13,27 @@ TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty;
 // $ExpectType TestComplexType
 TestComplexType.build({ StringProperty: 'test-1', BooleanProperty: false });
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 const getAllTSE = TestEntity.requestBuilder().getAll();
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.select(TestEntity.COMPLEX_TYPE_PROPERTY);
 
 // $ExpectError
 getAllTSE.select(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty);
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.filter(
   TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test')
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.filter(
   TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
   TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.filter(
   and(
     TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
@@ -41,7 +41,7 @@ getAllTSE.filter(
   )
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.filter(
   or(
     TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
@@ -49,13 +49,13 @@ getAllTSE.filter(
   )
 );
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.orderBy(asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty));
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.orderBy(desc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty));
 
-// $ExpectType GetAllRequestBuilderV2<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.orderBy(
   asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty),
   desc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty)

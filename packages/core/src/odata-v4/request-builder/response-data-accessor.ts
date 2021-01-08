@@ -71,9 +71,11 @@ function validateSingleResult(data): void {
   }
 }
 
-export const responseDataAccessorV4: ResponseDataAccessor = {
+export const responseDataAccessor: ResponseDataAccessor = {
   getCollectionResult,
   getLinkedCollectionResult,
   getSingleResult,
   isCollectionResult
 };
+
+export { responseDataAccessor as responseDataAccessorV4 };

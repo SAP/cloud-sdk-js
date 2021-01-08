@@ -1,5 +1,5 @@
-import { EntityV2 } from '../entity';
-import { deserializeEntityV2 } from '../entity-deserializer';
+import { Entity } from '../entity';
+import { deserializeEntity } from '../entity-deserializer';
 import { Constructable } from '../../odata-common';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 
@@ -8,85 +8,85 @@ import { getSingleResult, getCollectionResult } from './response-data-accessor';
 /**
  * @hidden
  */
-export function transformReturnValueForUndefinedV2<ReturnT>(
+export function transformReturnValueForUndefined<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ) {
   return builderFn(data);
 }
-export { transformReturnValueForUndefinedV2 as transformReturnValueForUndefined };
+export { transformReturnValueForUndefined as transformReturnValueForUndefinedV2 };
 
 /**
  * @hidden
  */
-export function transformReturnValueForEntityV2<ReturnT extends EntityV2>(
+export function transformReturnValueForEntity<ReturnT extends Entity>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT {
-  return deserializeEntityV2(
+  return deserializeEntity(
     getSingleResult(data),
     entityConstructor
   ).setOrInitializeRemoteState() as ReturnT;
 }
-export { transformReturnValueForEntityV2 as transformReturnValueForEntity };
+export { transformReturnValueForEntity as transformReturnValueForEntityV2 };
 
 /**
  * @hidden
  */
-export function transformReturnValueForEntityListV2<ReturnT extends EntityV2>(
+export function transformReturnValueForEntityList<ReturnT extends Entity>(
   data: any,
   entityConstructor: Constructable<ReturnT>
 ): ReturnT[] {
   return getCollectionResult(data).map(
     entityJson =>
-      deserializeEntityV2(
+      deserializeEntity(
         entityJson,
         entityConstructor
       ).setOrInitializeRemoteState() as ReturnT
   );
 }
-export { transformReturnValueForEntityListV2 as transformReturnValueForEntityList };
+export { transformReturnValueForEntityList as transformReturnValueForEntityListV2 };
 
 /**
  * @hidden
  */
-export function transformReturnValueForComplexTypeV2<ReturnT>(
+export function transformReturnValueForComplexType<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT {
   return builderFn(getSingleResult(data)) as ReturnT;
 }
-export { transformReturnValueForComplexTypeV2 as transformReturnValueForComplexType };
+export { transformReturnValueForComplexType as transformReturnValueForComplexTypeV2 };
 
 /**
  * @hidden
  */
-export function transformReturnValueForComplexTypeListV2<ReturnT>(
+export function transformReturnValueForComplexTypeList<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT[] {
   return getCollectionResult(data).map(json => builderFn(json));
 }
-export { transformReturnValueForComplexTypeListV2 as transformReturnValueForComplexTypeList };
+export { transformReturnValueForComplexTypeList as transformReturnValueForComplexTypeListV2 };
 
 /**
  * @hidden
  */
-export function transformReturnValueForEdmTypeV2<ReturnT>(
+export function transformReturnValueForEdmType<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT {
   return builderFn(getSingleResult(data));
 }
-export { transformReturnValueForEdmTypeV2 as transformReturnValueForEdmType };
+export { transformReturnValueForEdmType as transformReturnValueForEdmTypeV2 };
 
 /**
  * @hidden
  */
-export function transformReturnValueForEdmTypeListV2<ReturnT>(
+export function transformReturnValueForEdmTypeList<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT
 ): ReturnT[] {
   return getCollectionResult(data).map(builderFn);
 }
-export { transformReturnValueForEdmTypeListV2 as transformReturnValueForEdmTypeList };
+export { transformReturnValueForEdmTypeList as transformReturnValueForEdmTypeListV2 };

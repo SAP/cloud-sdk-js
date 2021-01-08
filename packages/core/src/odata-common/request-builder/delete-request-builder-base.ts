@@ -4,18 +4,18 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity';
+import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
 import type { ODataUri } from '../uri-conversion';
 import type { FieldType } from '../selectable';
-import { MethodRequestBuilderBase } from './request-builder-base';
+import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  *
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilderBase<ODataDeleteRequestConfig<EntityT>>
+export abstract class DeleteRequestBuilder<EntityT extends Entity>
+  extends MethodRequestBuilder<ODataDeleteRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
@@ -30,11 +30,11 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
   constructor(
     entityConstructor: Constructable<EntityT>,
     oDataUri: ODataUri,
-    keysOrEntity: Record<string, FieldType> | EntityBase
+    keysOrEntity: Record<string, FieldType> | Entity
   ) {
     super(new ODataDeleteRequestConfig(entityConstructor, oDataUri));
     this._entityConstructor = entityConstructor;
-    if (keysOrEntity instanceof EntityBase) {
+    if (keysOrEntity instanceof Entity) {
       this.requestConfig.keys = oDataUri.getEntityKeys(
         keysOrEntity,
         entityConstructor
@@ -79,3 +79,5 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
 
   abstract setVersionIdentifier(eTag: string): this;
 }
+
+export { DeleteRequestBuilder as DeleteRequestBuilderBase };

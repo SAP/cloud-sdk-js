@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity';
+import { Entity } from '../entity';
 import {
   FilterFunction,
   FilterFunctionParameterType
@@ -8,7 +8,7 @@ import {
  * Representation of a filter function, that returns a value of type string.
  */
 export class StringFilterFunction<
-  EntityT extends EntityBase
+  EntityT extends Entity
 > extends FilterFunction<EntityT, string> {
   /**
    * Creates an instance of StringFilterFunction.

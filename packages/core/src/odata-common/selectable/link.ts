@@ -1,4 +1,4 @@
-import { EntityBase, EntityIdentifiable, Constructable } from '../entity';
+import { Entity, EntityIdentifiable, Constructable } from '../entity';
 import type { Expandable } from '../expandable';
 import type { Selectable } from './selectable';
 
@@ -20,10 +20,8 @@ import type { Selectable } from './selectable';
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
-export class Link<
-  EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase = any
-> implements EntityIdentifiable<EntityT> {
+export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
+  implements EntityIdentifiable<EntityT> {
   /**
    * @deprecated Since v1.21.0. Use [[clone]] instead.
    * Create a new link based on a given link.
@@ -33,7 +31,7 @@ export class Link<
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT1 extends EntityBase, LinkedEntityT1 extends EntityBase>(
+  static clone<EntityT1 extends Entity, LinkedEntityT1 extends Entity>(
     link: Link<EntityT1, LinkedEntityT1>
   ): Link<EntityT1, LinkedEntityT1> {
     const clonedLink = new Link<EntityT1, LinkedEntityT1>(
@@ -75,7 +73,7 @@ export class Link<
   ) {}
 
   /**
-   * Creates a selection on a linked entity. Has the same behavior as [[GetAllRequestBuilderV2.select]] and [[GetByKeyRequestBuilderV4.select]] but for linked entities.
+   * Creates a selection on a linked entity. Has the same behavior as [[GetAllRequestBuilder.select | GetAllRequestBuilderV2.select]] and [[GetByKeyRequestBuilderV4.select]] but for linked entities.
    *
    * See also, [[Selectable]]
    *

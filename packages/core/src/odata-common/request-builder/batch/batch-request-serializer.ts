@@ -3,7 +3,7 @@
 import voca from 'voca';
 import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';
-import { MethodRequestBuilderBase } from '../request-builder-base';
+import { MethodRequestBuilder } from '../request-builder-base';
 import { BatchChangeSet } from './batch-change-set';
 import type { BatchRequestBuilder } from './batch-request-builder';
 import {
@@ -40,7 +40,7 @@ export function serializeChangeSet(
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  */
 export function serializeRequest(
-  request: MethodRequestBuilderBase,
+  request: MethodRequestBuilder,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -84,7 +84,7 @@ function getUrl<ConfigT extends ODataRequestConfig>(
   }
 }
 
-function getPayload(request: MethodRequestBuilderBase): string[] {
+function getPayload(request: MethodRequestBuilder): string[] {
   return request.requestConfig.method !== 'get'
     ? [JSON.stringify(request.requestConfig.payload)]
     : [];
@@ -112,7 +112,7 @@ export function serializeBatchRequest(
   validateOptions(options);
   const serializedSubRequests = request.requests
     .map(subRequest =>
-      subRequest instanceof MethodRequestBuilderBase
+      subRequest instanceof MethodRequestBuilder
         ? serializeRequest(subRequest, options)
         : serializeChangeSet(subRequest, options)
     )
@@ -140,6 +140,6 @@ export function serializeBatchRequest(
  * @param request One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
  * @returns The seralized request as <HTTP method> <url> <HTTP version>.
  */
-export function getLine(request: MethodRequestBuilderBase): string {
+export function getLine(request: MethodRequestBuilder): string {
   return `${request.requestConfig.method.toUpperCase()} /${request.relativeUrl()} HTTP/1.1`;
 }

@@ -6,10 +6,10 @@ import {
 } from '../../../test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../test/test-util/test-data';
 import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
-import { uriConverterV4 } from '../uri-conversion';
-import { UpdateRequestBuilderV4 } from './update-request-builder';
+import { uriConverter } from '../uri-conversion';
+import { UpdateRequestBuilder } from './update-request-builder';
 
-const { convertToUriFormat } = uriConverterV4;
+const { convertToUriFormat } = uriConverter;
 
 function createTestEntity() {
   const keyPropGuid = uuid();
@@ -23,7 +23,7 @@ function createTestEntity() {
     .build();
 }
 
-describe('UpdateRequestBuilderV4', () => {
+describe('UpdateRequestBuilder', () => {
   afterEach(() => {
     nock.cleanAll();
   });
@@ -48,7 +48,7 @@ describe('UpdateRequestBuilderV4', () => {
       TestEntity
     );
 
-    const actual = await new UpdateRequestBuilderV4(TestEntity, entity).execute(
+    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
       defaultDestination
     );
     expect(actual).toEqual(entity.setOrInitializeRemoteState());

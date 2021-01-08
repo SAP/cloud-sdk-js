@@ -2,7 +2,7 @@
 
 import { BigNumber } from 'bignumber.js';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, ODataVersionOf, Constructable } from '../entity';
+import { Entity, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import {
   ComplexTypeField,
@@ -17,7 +17,7 @@ import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class BigNumberFieldBase<EntityT extends EntityBase> extends EdmTypeField<
+class BigNumberFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   BigNumber
 > {
@@ -67,7 +67,7 @@ class BigNumberFieldBase<EntityT extends EntityBase> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BigNumberField<EntityT extends EntityBase>
+export class BigNumberField<EntityT extends Entity>
   extends BigNumberFieldBase<EntityT>
   implements SelectableEdmTypeField {
   readonly selectable: true;
@@ -79,7 +79,7 @@ export class BigNumberField<EntityT extends EntityBase>
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeBigNumberPropertyField<
-  EntityT extends EntityBase,
+  EntityT extends Entity,
   ComplexT = any
 > extends BigNumberFieldBase<EntityT> {
   /**

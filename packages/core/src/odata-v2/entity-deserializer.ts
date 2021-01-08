@@ -1,24 +1,26 @@
 import {
-  entityDeserializer,
+  entityDeserializer as entityDeserializerBase,
   EntityDeserializer
 } from '../odata-common/entity-deserializer';
-import { edmToTsV2 } from './payload-value-converter';
-import { extractODataEtagV2 } from './extract-odata-etag';
+import { edmToTs } from './payload-value-converter';
+import { extractODataEtag } from './extract-odata-etag';
 import { getLinkedCollectionResult } from './request-builder/response-data-accessor';
 
 /**
  * Entity deserializer instance for v2 entities.
  * See [[EntityDeserializer]] for the provided methods.
  */
-export const entityDeserializerV2: EntityDeserializer = entityDeserializer(
-  edmToTsV2,
-  extractODataEtagV2,
+export const entityDeserializer: EntityDeserializer = entityDeserializerBase(
+  edmToTs,
+  extractODataEtag,
   getLinkedCollectionResult
 );
 
-export const deserializeEntityV2 = entityDeserializerV2.deserializeEntity;
-export const deserializeComplexTypeV2 =
-  entityDeserializerV2.deserializeComplexType;
+export const deserializeEntity = entityDeserializer.deserializeEntity;
+export const deserializeComplexType = entityDeserializer.deserializeComplexType;
 
-export { deserializeEntityV2 as deserializeEntity };
-export { deserializeComplexTypeV2 as deserializeComplexType };
+export {
+  deserializeEntity as deserializeEntityV2,
+  deserializeComplexType as deserializeComplexTypeV2,
+  entityDeserializer as entityDeserializerV2
+};

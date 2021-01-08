@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- The return type of `Entity.getUpdatedProperties` was incorrect and was corrected to `Record<string, any>`.
+-
 
 ## New Functionality
 
@@ -26,11 +26,25 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.35.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.35.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- The return type of `Entity.getUpdatedProperties` was incorrect and was corrected to `Record<string, any>`.
+
+## Fixed Issues
+
 - Fix serialization of linked entities with custom fields.
 - Fix setting of remote state on entities to replace old state instead of merging with old state. This also fixes how custom fields are handled in the remote state.
 - Fix return type of `Entity.getUpdatedProperties` to `Record<string, any>`.
 - Ship templates files that are used in the OpenAPI generator.
-
 
 # 1.34.0
 

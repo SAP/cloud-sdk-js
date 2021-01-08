@@ -469,7 +469,7 @@ There should be no empty lines in between, except if it is part of the descripti
 
 ### Use `@deprecated` tag for deprecation
 When deprecating public API, this is done through the TypeDoc comments.
-The first line of the comment should start with `@deprecated` followed by a note since which version this is deprecated (e. g. `Since v1.0.0.`) and a note what to use instead (or alternatively that it won't be replaced).
+The first line of the comment should start with `@deprecated` followed by a note mentioning since which version this is deprecated (e. g. `Since v1.0.0.`) and a note of what to use instead (or alternatively that it won't be replaced).
 
 ❌ Examples of **incorrect** code:
 ```ts

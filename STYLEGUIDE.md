@@ -493,10 +493,10 @@ The first line of the comment should start with `@deprecated` followed by a note
 ```
 
 ### Don't reference types in parameters an type parameters
-In JSDoc it is common to specify the types of parameters and type parameters as JavaScript has not types.
+In JSDoc it is common to specify the types of parameters and type parameters as JavaScript has no types.
 In TypeDoc this is not necessary, because TypeScript inherently has types and those should not differ between the implementation and documentation.
-A parameter or type parameter line should start with `@param` or `@typeparam`, followed by the (type) parameter name, a dash and the description.
-The description should end with a fullstop.
+A parameter or type parameter line should start with `@param` or `@typeparam`, followed by the (type) parameter name, a dash, and the description.
+The description should end with a full stop.
 
 ❌ Examples of **incorrect** code:
 ```ts
@@ -526,10 +526,10 @@ The description should end with a fullstop.
 
 ### Use @returns if a function has a return value ✓
 Functions that return something should have an `@returns` statement in the documentation, followed by a description of the return value.
-The description should end with a fullstop.
+The description should end with a full stop.
 Similar to parameters, return types should not be referenced in the documentation.
 For consistency, `@return` should not be used.
-The only exception are asynchronous functions that return `Promise<void>`.
+The only exceptions are asynchronous functions that return `Promise<void>`.
 They technically return a promise, which does not need an extra description.
 
 ❌ Examples of **incorrect** code:
@@ -624,7 +624,7 @@ src/
 
 ### Use `async`/`await` rather than `.then`
 In most cases the more modern `async`/`await` notation, makes code a bit easier to read, therefore this is the preferred way.
-However, there are some cases where `.then` is equally as good and potentially even less error prone - in those cases both options are fine.
+However, there are some cases where `.then` is equally as good and potentially even less error-prone - in those cases both options are fine.
 This is especially the case if you have multiple asynchronous calls, that have common error handling (check the correct code examples).
 
 ❌ Examples of **incorrect** code:
@@ -682,11 +682,11 @@ arr.forEach(item => {
 });
 ```
 ### Use function declarations to reference functions by name
-Arrow functions require less boiler plate code than function declarations, especially if the function returns something directly, e. g. in one-liners.
+Arrow functions require less boilerplate code than function declarations, especially if the function returns something directly, e. g. in one-liners.
 For more complex functions, there is no significant difference.
 Arrow functions cannot be named and therefore have to be assigned to variables - much like function expressions.
-Function declarations are visually easier to differentiate from other variables than functions assigned to varibles.
-This becomes especially relevant, when exposing an API, as many IDEs visualize variables differently than functions, which in turn can improve the quality of autocompletion, when used correctly.
+Function declarations are visually easier to differentiate from other variables than functions assigned to variables.
+This becomes especially relevant when exposing an API, as many IDEs visualize variables differently than functions, which in turn can improve the quality of autocompletion when used correctly.
 
 An exception to this rule might be simple arrow functions that are only defined within the scope of another function.
 

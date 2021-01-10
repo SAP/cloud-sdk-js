@@ -1,14 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises } from 'fs';
+import { promises, readFileSync } from 'fs';
 import { resolve, parse } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
-import { apiFile, indexFile, createFile } from './wrapper-files';
+import {
+  apiFile,
+  indexFile,
+  createFile,
+  packageJson,
+  genericDescription
+} from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
+import { readServiceMapping } from './service-mapping';
 
 const { readdir, writeFile, rmdir, mkdir } = promises;
 const logger = createLogger('openapi-generator');
@@ -20,6 +27,10 @@ const logger = createLogger('openapi-generator');
  * @param options Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
+  options.serviceMapping =
+    options.serviceMapping ||
+    resolve(options.inputDir.toString(), 'service-mapping.json');
+
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
@@ -28,6 +39,8 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   const inputFilePaths = (await readdir(options.inputDir)).map(fileName =>
     resolve(options.inputDir, fileName)
   );
+
+  const vdmMapping = readServiceMapping(options);
 
   inputFilePaths.forEach(async filePath => {
     const serviceName = parseServiceName(filePath);
@@ -45,7 +58,9 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
     const parsedOpenApiDocument = await parseOpenApiDocument(
       openApiDocument,
-      serviceName
+      serviceName,
+      filePath,
+      vdmMapping
     );
 
     if (!parsedOpenApiDocument.operations.length) {
@@ -81,6 +96,19 @@ async function generateSDKSources(
   // TODO: what about overwrite?
   await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
   await createFile(serviceDir, 'index.ts', indexFile(), true);
+  if (options.generatePackageJson) {
+    await createFile(
+      serviceDir,
+      'package.json',
+      packageJson(
+        openApiDocument.npmPackageName,
+        genericDescription(openApiDocument.directoryName),
+        getSDKVersion(),
+        options.versionInPackageJson
+      ),
+      true
+    );
+  }
 }
 
 /**
@@ -123,7 +151,7 @@ async function generateOpenApiService(
       throw new Error(response.stderr);
     }
     logger.info(
-      `Sucessfully generated a client using the OpenApi generator CLI ${response.stdout}`
+      `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
     throw new ErrorWithCause(
@@ -140,4 +168,13 @@ async function generateOpenApiService(
  */
 function parseServiceName(filePath: string): string {
   return parse(filePath).name.replace(/-openapi$/, '');
+}
+
+/**
+ * Get the current SDK version from the package json.
+ * @returns The SDK version.
+ */
+function getSDKVersion(): string {
+  return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8'))
+    .version;
 }

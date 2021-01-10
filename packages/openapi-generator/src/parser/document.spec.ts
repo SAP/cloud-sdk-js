@@ -16,7 +16,17 @@ describe('parseOpenApiDocument', () => {
     };
 
     const clonedInput = JSON.parse(JSON.stringify(input));
-    const parsedDocument = parseOpenApiDocument(input, 'TestService');
+    const parsedDocument = parseOpenApiDocument(
+      input,
+      'TestService',
+      'openapi/test-service.json',
+      {
+        'test-service': {
+          npmPackageName: '@sap/cloud-sdk-openapi-vdm-test-service',
+          directoryName: 'test-service'
+        }
+      }
+    );
 
     expect(input).toStrictEqual(clonedInput);
     expect(parsedDocument).not.toBe(input);

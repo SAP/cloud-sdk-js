@@ -10,7 +10,6 @@ const { readFile } = promises;
  * Convert an OpenAPI document to ensure smooth parsing and generation thereafter.
  * Documents are expected to be formatted as JSON, OpenAPI version 3 and only have one "default" tag.
  * @param filePath File content of the original spec.
- * @param ouputFilePath Path to write the altered spec to.
  */
 export async function convertOpenApiSpec(
   filePath: string

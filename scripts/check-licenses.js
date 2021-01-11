@@ -20,7 +20,7 @@ async function getLicenses() {
     licenseChecker.init(
       {
         start: path.resolve(__dirname, '..'),
-        direct: true,
+        direct: false,
         summary: true,
         json: true
       },
@@ -41,6 +41,9 @@ function isAllowedLicense(licenses) {
 }
 
 function isSapDependency(dependency) {
+  if(dependency.startsWith("sap-cloud-sdk")){
+    return true
+  }
   const [scope] = dependency.split('/');
   return scope === '@sap' || scope === '@sap-cloud-sdk';
 }
@@ -52,10 +55,11 @@ async function checkLicenses() {
     .filter(([package, licenseInfo]) => !isSapDependency(package));
 
   if (notAllowed.length) {
-    throw new Error(
+    console.error(
       `Not allowed licenses found: ${JSON.stringify(notAllowed, '', 2)}`
     );
+    process.exit(1)
   }
 }
 
-checkLicenses();
+checkLicenses()//.catch(err=>Promise.reject(err));

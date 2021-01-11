@@ -2041,6 +2041,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/license-checker@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@types/license-checker/-/license-checker-25.0.1.tgz#71fa3795eb73f0a47ca3b252beb7975fc77a5890"
+  integrity sha512-M6bhv9CmxG/BAX7fH24lhKjK7oBG/fHDkGf2HYEnIA906mtYA4Oa4Hb3Vgz7Ijni5sdz2sbWuTY5x8JeTxuK6w==
+
 "@types/minimatch@*", "@types/minimatch@^3.0.3":
   version "3.0.3"
   resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"

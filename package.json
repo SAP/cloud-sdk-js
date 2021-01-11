@@ -46,7 +46,7 @@
     "lint:fix-cached": "yarn lint:fix --cache",
     "check:circular": "yarn madge --circular ./packages/core",
     "check:dependencies": "yarn workspaces run check:dependencies",
-    "check:license": "node scripts/check-licenses.js",
+    "check:license": "ts-node scripts/check-licenses.ts",
     "check:vulnerability": "yarn audit-ci -h",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
     "analytics": "yarn workspace @sap-cloud-sdk/analytics",
@@ -60,6 +60,7 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
+    "@types/license-checker" : "^25.0.1",
     "@types/jest": "^26.0.7",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/uuid": "^8.0.0",

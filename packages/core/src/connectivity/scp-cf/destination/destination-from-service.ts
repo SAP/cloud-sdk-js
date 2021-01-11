@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { DecodedJWT, decodeJwt, isIdenticalTenant, verifyJwt } from '../jwt';
+import { DecodedJWT, decodeJwt, verifyJwt } from '../jwt';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -12,6 +12,7 @@ import {
   getDestinationService,
   getDestinationServiceCredentialsList
 } from '../environment-accessor';
+import { isIdenticalTenant } from '../tenant';
 import type { DestinationOptions } from './destination-accessor';
 import { Destination } from './destination-service-types';
 import {

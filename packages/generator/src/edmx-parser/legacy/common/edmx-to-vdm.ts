@@ -1,4 +1,9 @@
-import { pascalCase, createLogger, last, titleFormat } from '@sap-cloud-sdk/util';
+import {
+  pascalCase,
+  createLogger,
+  last,
+  titleFormat
+} from '@sap-cloud-sdk/util';
 import {
   VdmComplexType,
   VdmEntity,

@@ -24,7 +24,6 @@
     // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
     "incremental": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
 
     /* Strict Type-Checking Options */
     // "strict": true,                        /* Enable all strict type-checking options. */

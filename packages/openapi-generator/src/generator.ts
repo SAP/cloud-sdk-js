@@ -1,12 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises } from 'fs';
+import { promises, readFileSync } from 'fs';
 import { resolve, parse } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
-// @ts-ignore
-// eslint-disable-next-line import/no-relative-parent-imports
-import packageJsonFile from '../package.json';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
@@ -106,7 +103,7 @@ async function generateSDKSources(
       packageJson(
         openApiDocument.npmPackageName,
         genericDescription(openApiDocument.directoryName),
-        packageJsonFile.version,
+        getSDKVersion(),
         options.versionInPackageJson
       ),
       true
@@ -171,4 +168,13 @@ async function generateOpenApiService(
  */
 function parseServiceName(filePath: string): string {
   return parse(filePath).name.replace(/-openapi$/, '');
+}
+
+/**
+ * Get the current SDK version from the package json.
+ * @returns The SDK version.
+ */
+export function getSDKVersion(): string {
+  return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8'))
+    .version;
 }

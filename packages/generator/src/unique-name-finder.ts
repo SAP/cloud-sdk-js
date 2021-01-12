@@ -1,19 +1,8 @@
-import {
-  reservedObjectPrototypeKeywords,
-  reservedVdmKeywords
-} from './name-formatting-reserved-key-words';
-
-type Separator = '-' | '_';
-
 /**
  * Holds state on already used names and provides new names if there are naming conflicts.
  */
 export class UniqueNameFinder {
   private static readonly MAXIMUM_NUMBER_OF_SUFFIX = 1000;
-
-  private static removeSuffixIfPresent(name: string): string {
-    return name.replace(new RegExp('_\\d+$'), '');
-  }
 
   private static getNameForComparison(
     name: string,
@@ -26,12 +15,12 @@ export class UniqueNameFinder {
 
   /**
    * Creates an instance of UniqueNameFinder.
-   * @param separator The separator to be used
-   * @param usedNames Sets the already used names considered in the finding process. Reserved TS keywords are always checked.
+   * @param separator The separator to be used when adding suffixes.
+   * @param usedNames Sets the already used names considered in the finding process.
    */
   public constructor(
-    private separator: Separator = '_',
-    usedNames: string[] = []
+    private separator = '_',
+    usedNames: readonly string[] = []
   ) {
     this.addToUsedNames(...usedNames);
   }
@@ -39,15 +28,14 @@ export class UniqueNameFinder {
   /**
    * Adds the name(s) to the already used names.
    * @param names Names to be added
-   * @returns The instance of the finder.
    */
   public addToUsedNames(...names: string[]) {
     this.usedNames.push(...names);
-    return this;
   }
 
   /**
-   * Find a unique name by appending a suffix of the form this.separator\d+ if necessary. If the name is already unique nothing is appended.
+   * Find a unique name by appending a number suffix seperated by the [[separator]] if necessary, e. g. if `MyName` is already taken `MyName_1` will be found by default.
+   * If the name is already unique nothing is appended.
    * @param name The name to get a unique name from.
    * @param caseSensitive Whether to check the already used names in a case sensitive manner.
    * @returns A unique name
@@ -57,11 +45,15 @@ export class UniqueNameFinder {
   }
 
   /**
-   * Find a unique name by appending a suffix of the form this.separator\d+ if necessary. If the name is already unique nothing is appended.
-   * The suffixes are a list of strings appended to the name and these build names are also checked for uniqueness.
+   * Find a unique name by appending a number suffix seperated by the [[separator]] if necessary, while respecting the given suffixes.
+   * If the name is already unique nothing is appended.
+   * Each given suffix is appended to the unique name in the result.
+   * The resulting names are also checked for uniqueness.
+   * All names in the result have the same number suffix.
+   * Example: if `MyName` and `MyName_1MySuffix` is already taken, `[MyName_2, MyName_2MySuffix]` will be found by default.
    *
    * @param name The name to get a unique name from
-   * @param suffixes Additional name suffixed to be considered
+   * @param suffixes Additional name of suffixes to be considered for the finding process, as well as the output.
    * @param caseSensitive Whether to check the already used names in a case sensitive manner.
    * @returns A list of unique names. The length of this array is one plus the number of suffixes provided. The first entry corresponds to the given name.
    */
@@ -103,17 +95,12 @@ export class UniqueNameFinder {
     usedNames: string[],
     caseSensitive: boolean
   ): boolean {
-    return names.some(
-      name =>
-        usedNames
-          .map(usedName =>
-            UniqueNameFinder.getNameForComparison(usedName, caseSensitive)
-          )
-          .includes(
-            UniqueNameFinder.getNameForComparison(name, caseSensitive)
-          ) ||
-        reservedVdmKeywords.has(name) ||
-        reservedObjectPrototypeKeywords.has(name)
+    return names.some(name =>
+      usedNames
+        .map(usedName =>
+          UniqueNameFinder.getNameForComparison(usedName, caseSensitive)
+        )
+        .includes(UniqueNameFinder.getNameForComparison(name, caseSensitive))
     );
   }
 
@@ -122,7 +109,7 @@ export class UniqueNameFinder {
     suffix: number,
     nameSuffixes: string[]
   ): string[] {
-    const nameWithoutSuffix = UniqueNameFinder.removeSuffixIfPresent(name);
+    const nameWithoutSuffix = this.getNameWithoutSuffix(name);
     const numberSuffix = `${nameWithoutSuffix}${this.separator}${suffix}`;
     return this.getAllNames(numberSuffix, nameSuffixes);
   }
@@ -135,7 +122,7 @@ export class UniqueNameFinder {
     name: string,
     caseSensitive: boolean
   ): string[] {
-    const modifiedName = UniqueNameFinder.removeSuffixIfPresent(name);
+    const modifiedName = this.getNameWithoutSuffix(name);
     return this.getUsedNamesForComparison(caseSensitive).filter(used =>
       used.startsWith(
         UniqueNameFinder.getNameForComparison(modifiedName, caseSensitive)
@@ -163,5 +150,9 @@ export class UniqueNameFinder {
     throw new Error(
       `Unable to find a unique name for ${name} within the range of ${UniqueNameFinder.MAXIMUM_NUMBER_OF_SUFFIX} suffixes.`
     );
+  }
+
+  private getNameWithoutSuffix(name: string): string {
+    return name.replace(new RegExp(`${this.separator}\\d+$`), '');
   }
 }

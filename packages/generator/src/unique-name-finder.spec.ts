@@ -1,14 +1,6 @@
-import { applyPrefixOnJsConfictParam } from './name-formatting-strategies';
 import { UniqueNameFinder } from './unique-name-finder';
 
 describe('Unique name finder', () => {
-  it('should add prefix if a conflict with js reserved keyword occurs', () => {
-    const actual1 = applyPrefixOnJsConfictParam('case');
-    const actual2 = applyPrefixOnJsConfictParam('any');
-    expect(actual1).toBe('pCase');
-    expect(actual2).toBe('any');
-  });
-
   it('should add a suffix if a name already exists', () => {
     const finder = new UniqueNameFinder('_', ['SomeEntity']);
     expect(finder.findUniqueName('SomeEntity')).toBe('SomeEntity_1');
@@ -19,30 +11,33 @@ describe('Unique name finder', () => {
     expect(finder.findUniqueName('Someentity', false)).toBe('Someentity_1');
   });
 
-  it('should handle names ending with _1 correctly.', () => {
-    let finder = new UniqueNameFinder('_', ['MyClass']);
-    expect(finder.findUniqueName('MyClass')).toBe('MyClass_1');
-
-    finder = new UniqueNameFinder('_', ['MyClass_1']);
+  it('should add _2 if _1 is already used', () => {
+    const finder = new UniqueNameFinder('_', ['MyClass_1']);
     expect(finder.findUniqueName('MyClass_1')).toBe('MyClass_2');
-
-    finder = new UniqueNameFinder('_', ['MyClass_1', 'MyClass_2Type']);
-    expect(finder.findUniqueNameWithSuffixes('MyClass_1', ['Type'])).toEqual([
-      'MyClass_3',
-      'MyClass_3Type'
-    ]);
   });
 
-  it('should handle names containing with _1 somewhere in the middle.', () => {
+  it('should add -2 if -1 is already used', () => {
+    const finder = new UniqueNameFinder('-', ['MyClass-1']);
+    expect(finder.findUniqueName('MyClass-1')).toBe('MyClass-2');
+  });
+
+  it('should add 2 if 1 is already used', () => {
+    const finder = new UniqueNameFinder('', ['MyClass1']);
+    expect(finder.findUniqueName('MyClass1')).toBe('MyClass2');
+  });
+
+  it('should not change names containing _1 in the middle', () => {
     const finder = new UniqueNameFinder('_', ['MyClass_1']);
     expect(finder.findUniqueName('MyClass_1ABC')).toBe('MyClass_1ABC');
   });
 
-  it('should handle mixed suffixes - and _ correctly.', () => {
-    let finder = new UniqueNameFinder('_', ['MyClass', 'MyClass-1']);
+  it('should ignore other seperators', () => {
+    const finder = new UniqueNameFinder('_', ['MyClass', 'MyClass-1']);
     expect(finder.findUniqueName('MyClass')).toBe('MyClass_1');
+  });
 
-    finder = new UniqueNameFinder('_', [
+  it('should ignore other seperators when suffixes are used', () => {
+    const finder = new UniqueNameFinder('_', [
       'MyClassType',
       'MyClass_1Type',
       'MyClass-2Type'
@@ -52,7 +47,7 @@ describe('Unique name finder', () => {
     );
   });
 
-  it('does not add a suffix altough names with suffix already exist', () => {
+  it('does not add a suffix although names with suffix already exist', () => {
     const finder = new UniqueNameFinder('_', ['SomeEntity_1', 'SomeEntity_2']);
     expect(finder.findUniqueName('SomeEntity')).toBe('SomeEntity');
   });
@@ -67,7 +62,7 @@ describe('Unique name finder', () => {
     expect(finder.findUniqueName('SomeEntity')).toBe('SomeEntity_2');
   });
 
-  it('changes suffix if name with type suffix already exists', () => {
+  it('should find names respecting their suffixes', () => {
     const finder = new UniqueNameFinder('_', [
       'SomeEntityType',
       'SomeEntity_1',

@@ -3,7 +3,10 @@ import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
 import { applyPrefixOnJsConflictFunctionImports } from './name-formatting-strategies';
 import { UniqueNameFinder } from './unique-name-finder';
-import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
+import {
+  defaultReservedWords,
+  reservedServiceKeywords
+} from './reserved-words';
 
 export class ServiceNameFormatter {
   static originalToServiceName(name: string): string {
@@ -20,10 +23,10 @@ export class ServiceNameFormatter {
     return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 
-  private finderServiceWide = new UniqueNameFinder(
-    '_',
-    reservedServiceKeywords
-  );
+  private finderServiceWide = new UniqueNameFinder('_', [
+    ...defaultReservedWords,
+    ...reservedServiceKeywords
+  ]);
 
   private parameterNamesFinder: {
     [functionImportName: string]: UniqueNameFinder;
@@ -60,16 +63,19 @@ export class ServiceNameFormatter {
       entitySetOrComplexTypeName => {
         this.staticPropertyNamesFinder[
           entitySetOrComplexTypeName
-        ] = new UniqueNameFinder();
+        ] = new UniqueNameFinder('_', defaultReservedWords);
         this.instancePropertyNamesFinder[
           entitySetOrComplexTypeName
-        ] = new UniqueNameFinder();
+        ] = new UniqueNameFinder('_', defaultReservedWords);
       }
     );
 
     if (functionImportNames) {
       functionImportNames.forEach(functionImportName => {
-        this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
+        this.parameterNamesFinder[functionImportName] = new UniqueNameFinder(
+          '_',
+          defaultReservedWords
+        );
       });
     }
   }
@@ -212,7 +218,10 @@ export class ServiceNameFormatter {
     if (this.staticPropertyNamesFinder[name]) {
       return this.staticPropertyNamesFinder[name];
     }
-    this.staticPropertyNamesFinder[name] = new UniqueNameFinder();
+    this.staticPropertyNamesFinder[name] = new UniqueNameFinder(
+      '_',
+      defaultReservedWords
+    );
     return this.staticPropertyNamesFinder[name];
   }
 
@@ -220,7 +229,10 @@ export class ServiceNameFormatter {
     if (this.instancePropertyNamesFinder[name]) {
       return this.instancePropertyNamesFinder[name];
     }
-    this.instancePropertyNamesFinder[name] = new UniqueNameFinder();
+    this.instancePropertyNamesFinder[name] = new UniqueNameFinder(
+      '_',
+      defaultReservedWords
+    );
     return this.instancePropertyNamesFinder[name];
   }
 
@@ -228,7 +240,10 @@ export class ServiceNameFormatter {
     if (this.parameterNamesFinder[name]) {
       return this.parameterNamesFinder[name];
     }
-    this.parameterNamesFinder[name] = new UniqueNameFinder();
+    this.parameterNamesFinder[name] = new UniqueNameFinder(
+      '_',
+      defaultReservedWords
+    );
     return this.parameterNamesFinder[name];
   }
 }

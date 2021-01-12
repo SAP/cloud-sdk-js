@@ -1,10 +1,4 @@
-export const reservedVdmKeywords: Set<string> = new Set<string>([
-  'builder',
-  'entityBuilder',
-  'requestBuilder'
-]);
-
-export const reservedJSKeywords: Set<string> = new Set<string>([
+export const reservedJsKeywords: readonly string[] = [
   'break',
   'case',
   'catch',
@@ -46,13 +40,9 @@ export const reservedJSKeywords: Set<string> = new Set<string>([
   'while',
   'with',
   'yield'
-]);
+] as const;
 
-export const reservedObjectPrototypeKeywords: Set<string> = new Set<string>(
-  Object.getOwnPropertyNames(Object.prototype)
-);
-
-export const reservedServiceKeywords: string[] = [
+export const reservedServiceKeywords = [
   'BinaryField',
   'NumberField',
   'Moment',
@@ -71,4 +61,15 @@ export const reservedServiceKeywords: string[] = [
   'Link',
   'Time',
   'TimeField'
-];
+] as const;
+
+export const reservedVdmKeywords = [
+  'builder',
+  'entityBuilder',
+  'requestBuilder'
+] as const;
+
+export const defaultReservedWords = [
+  ...Object.getOwnPropertyNames(Object.prototype),
+  ...reservedVdmKeywords
+] as const;

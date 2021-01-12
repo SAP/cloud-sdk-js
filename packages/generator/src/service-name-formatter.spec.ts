@@ -225,8 +225,10 @@ describe('name-formatter', () => {
       const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
       formatter.originalToParameterName('FunctionImport', 'SomeParam');
       expect(
-        formatter['parameterNamesFinder']['FunctionImport']['usedNames']
-      ).toEqual(['someParam']);
+        formatter['parameterNamesFinder']['FunctionImport'][
+          'usedNames'
+        ].includes('someParam')
+      ).toBe(true);
     });
 
     it('should add the navigational parameter to the instance property names cache.', () => {
@@ -238,8 +240,10 @@ describe('name-formatter', () => {
         )
       ).toBe('toSomeEntity');
       expect(
-        formatter['instancePropertyNamesFinder']['A_SomeEntity']['usedNames']
-      ).toEqual(['toSomeEntity']);
+        formatter['instancePropertyNamesFinder']['A_SomeEntity'][
+          'usedNames'
+        ].includes('toSomeEntity')
+      ).toBe(true);
     });
 
     it('should add the complex type parameter to the service wide cache', () => {
@@ -262,16 +266,20 @@ describe('name-formatter', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToInstancePropertyName('A_SomeEntity', 'MyProperty');
       expect(
-        formatter['instancePropertyNamesFinder']['A_SomeEntity']['usedNames']
-      ).toEqual(['myProperty']);
+        formatter['instancePropertyNamesFinder']['A_SomeEntity'][
+          'usedNames'
+        ].includes('myProperty')
+      ).toBe(true);
     });
 
     it('should add the static property parameter to the static property cache.', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToStaticPropertyName('A_SomeEntity', 'MyProperty');
       expect(
-        formatter['staticPropertyNamesFinder']['A_SomeEntity']['usedNames']
-      ).toEqual(['MY_PROPERTY']);
+        formatter['staticPropertyNamesFinder']['A_SomeEntity'][
+          'usedNames'
+        ].includes('MY_PROPERTY')
+      ).toBe(true);
     });
   });
 });

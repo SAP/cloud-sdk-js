@@ -1,4 +1,4 @@
-import { pascalCase, createLogger, last } from '@sap-cloud-sdk/util';
+import { pascalCase, createLogger, last, titleFormat } from '@sap-cloud-sdk/util';
 import {
   VdmComplexType,
   VdmEntity,
@@ -242,7 +242,7 @@ function entityDescription(
   }
   return entity.swaggerDefinition && entity.swaggerDefinition.title
     ? entity.swaggerDefinition.title
-    : toTitleFormat(className);
+    : titleFormat(className);
 }
 
 function longDescription(
@@ -274,7 +274,7 @@ function parameterDescription(
   parameter: EdmxParameter,
   swaggerParameter?: SwaggerPathParameter
 ): string {
-  const short = endWithDot(toTitleFormat(parameter.Name));
+  const short = endWithDot(titleFormat(parameter.Name));
   const long = longDescription(parameter, swaggerParameter);
   return endWithDot((long || short).trim());
 }
@@ -521,5 +521,5 @@ function functionImportDescription(
   if (swaggerDefinition && swaggerDefinition.summary) {
     return endWithDot(swaggerDefinition.summary);
   }
-  return endWithDot(toTitleFormat(originalName));
+  return endWithDot(titleFormat(originalName));
 }

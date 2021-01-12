@@ -18,3 +18,4 @@ export * from './pipe';
 export * from './string';
 export * from './string-formatter';
 export * from './types';
+export * from './unique-name-finder';

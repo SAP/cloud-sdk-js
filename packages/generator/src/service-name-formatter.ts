@@ -1,8 +1,11 @@
-import { toPropertyFormat, toStaticPropertyFormat } from '@sap-cloud-sdk/core';
 import voca from 'voca';
+import {
+  UniqueNameFinder,
+  upperCaseSnakeCase,
+  camelCase
+} from '@sap-cloud-sdk/util';
 import { stripPrefix } from './internal-prefix';
 import { applyPrefixOnJsConflictFunctionImports } from './name-formatting-strategies';
-import { UniqueNameFinder } from './unique-name-finder';
 import {
   defaultReservedWords,
   reservedServiceKeywords
@@ -84,7 +87,7 @@ export class ServiceNameFormatter {
     originalContainerTypeName: string,
     originalPropertyName: string
   ): string {
-    const transformedName = toStaticPropertyFormat(
+    const transformedName = upperCaseSnakeCase(
       stripPrefix(originalPropertyName)
     );
     const finder = this.getOrInitStaticPropertyNameFinder(
@@ -100,7 +103,7 @@ export class ServiceNameFormatter {
     originalContainerTypeName: string,
     originalPropertyName: string
   ): string {
-    const transformedName = toPropertyFormat(stripPrefix(originalPropertyName));
+    const transformedName = camelCase(stripPrefix(originalPropertyName));
 
     const finder = this.getOrInitInstancePropertyNameFinder(
       originalContainerTypeName

@@ -1,6 +1,5 @@
-import { propertyExists } from '@sap-cloud-sdk/util';
+import { propertyExists, UniqueNameFinder } from '@sap-cloud-sdk/util';
 import { ServiceMapping, VdmMapping } from './service-mapping';
-import { UniqueNameFinder } from './unique-name-finder';
 
 export class GlobalNameFormatter {
   private directoryNameFinder: UniqueNameFinder = new UniqueNameFinder('-');

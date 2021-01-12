@@ -1,5 +1,4 @@
-import { toTitleFormat, toTypeNameFormat } from '@sap-cloud-sdk/core';
-import { createLogger, last } from '@sap-cloud-sdk/util';
+import { pascalCase, createLogger, last } from '@sap-cloud-sdk/util';
 import {
   VdmComplexType,
   VdmEntity,
@@ -460,7 +459,7 @@ export function transformFunctionImportBase(
   const functionImport = {
     originalName: edmxFunctionImport.Name,
     name: functionName,
-    parametersTypeName: toTypeNameFormat(`${functionName}Parameters`)
+    parametersTypeName: pascalCase(`${functionName}Parameters`)
   };
 
   const parameters = edmxParameters.filter(filterUnknownEdmTypes).map(p => {

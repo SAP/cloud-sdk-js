@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './options';
 export interface VdmMapping {
@@ -15,9 +16,8 @@ export interface ServiceMapping {
  * @returns The parsed service mapping object.
  */
 export function readServiceMapping(options: GeneratorOptions): VdmMapping {
-  return (
-    (options.serviceMapping &&
-      (readJSON(options.serviceMapping) as VdmMapping)) ||
-    {}
-  );
+  const serviceMappingPath =
+    options.serviceMapping ||
+    resolve(options.inputDir.toString(), 'service-mapping.json');
+  return readJSON(serviceMappingPath) as VdmMapping;
 }

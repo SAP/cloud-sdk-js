@@ -62,7 +62,7 @@ export = class GenerateOpenApiClient extends Command {
     serviceMapping: flags.string({
       name: 'serviceMapping',
       description:
-        'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
+        'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. By default it will be read from the input directory as "service-mapping.json".',
       parse: input => resolve(input),
       required: false
     })

@@ -61,6 +61,10 @@ some_dir/some_class.ts
 ```ts
 /* Use kebap case */
 some-dir/some-class.ts
+
+/* Exceptions apply for generated files and some markdown files */
+README.md
+node_modules/dependency/index.js
 ```
 
 ### Use camel case for variable names ✓
@@ -78,6 +82,7 @@ const foo_bar = 'foo';
 /* Don't use different case for static variables */
 class FooBar {
   static FOO_BAR;
+  readonly READ_ONLY;
 }
 ```
 
@@ -106,6 +111,7 @@ class FooBar {
 ### Use pascal case for interface names and don't prefix them
 Pascal case is common in most JavaScript/TypeScript projects for interfaces.
 Don't prefix interfaces with the hungarian notation 'I' (or other prefixes).
+If you have a class with the same name as an interface, consider a more general name for the interface or a more specific name for the class - if they are different things it should be possible to name them differently.
 
 ❌ Examples of **incorrect** code:
 ```ts
@@ -161,17 +167,12 @@ function toFoo(): Foo {
   ...
 }
 
-/* Don't use functions with misleading verbs */
+/* Avoid verbs that imply a different return type or behavior */
 function isFoo(): void {
   ...
   throw Error(...);
 }
 
-/* Don't use camel case for enums and enum properties */
-enum SomeEnum {
-  fooBar,
-  barFoo
-}
 ```
 
 ✅ Examples of **correct** code:
@@ -208,7 +209,7 @@ class FooBar {
 
 ### Use single quotes ✓
 
-Use single quotes, unless not possible otherwise, e. g. when your string
+Use single quotes, unless not possible otherwise, e. g. when your string contains single quotes.
 
 ❌ Examples of **incorrect** code:
 ```ts
@@ -223,8 +224,9 @@ const foo = 'foo';
 
 /* Use double quotes if the quoted string contains single quotes. */
 const foo = "'foo'";
-```
 
+/* Use template string if the quoted string contains double and single quotes. */
+const foo = `They know when to use 'single quotes' and "double quotes"`;
 ### String concatenation
 When possible use template literals, this makes the code more readable in most cases.
 Feel free to concatenate strings with `+` in case it makes to code better readable.
@@ -234,7 +236,7 @@ Feel free to concatenate strings with `+` in case it makes to code better readab
 /* Don't concatenate strings with `+` */
 const foo = 'foo ' + bar + ' bar';
 
-/* Grey area: If template literals become too complex, don't use them. */
+/* Gray area: If template literals become too complex, don't use them. */
 const foo = `foo ${fn(`${bar}bar`)}`;
 ```
 
@@ -243,8 +245,8 @@ const foo = `foo ${fn(`${bar}bar`)}`;
 /* Concatenate strings using template literals */
 const foo = `foo ${bar} bar`;
 
-/* Grey area: If template literals become too complex, feel free to concatenate with +. */
-const foo = `foo ${fn(bar +'bar')}`;
+/* Gray area: If template literals become too complex, feel free to concatenate with +. */
+const foo = `foo ${fn(bar + 'bar')}`;
 ```
 
 ## Arrays
@@ -355,12 +357,18 @@ function foo(obj: SomeType | null | undefined) {
 ### Use truthy/falsy checks where possible
 In most cases it is possible to check for truthyness/falsyness instead of explicitly comparing values.
 This should be used when possible, but carefully considered in cases where falsy values are valid and therefore semantically truthy values, e. g. 0, ''.
+Therefore, when checking for existence of primitives, don't use truthy/falsy checks.
 Of course more fine granular checks should be applied if semantically needed.
 
 ❌ Examples of **incorrect** code:
 ```ts
 /* Don't use explicit comparison with undefined for objects */
 if(obj !== undefined) { ... }
+
+/* Don't use truthy/falsy checks for existence of primitives */
+function checkIfExist(obj: string | number) {
+  if(obj) { ... }
+}
 
 /* Don't use explicit comparison for array length (or other numbers)*/
 if(arr.length !== 0) { ... }
@@ -492,7 +500,7 @@ The first line of the comment should start with `@deprecated` followed by a note
  */
 ```
 
-### Don't reference types in parameters an type parameters
+### Don't reference types in parameters and type parameters
 In JSDoc it is common to specify the types of parameters and type parameters as JavaScript has no types.
 In TypeDoc this is not necessary, because TypeScript inherently has types and those should not differ between the implementation and documentation.
 A parameter or type parameter line should start with `@param` or `@typeparam`, followed by the (type) parameter name, a dash, and the description.
@@ -642,7 +650,7 @@ async function getBar() {
   return (await asyncWait()).bar;
 }
 
-/* Grey area: Feel free to use both variants when you have common error handling for multiple asynchronous calls */
+/* Gray area: Feel free to use both variants when you have common error handling for multiple asynchronous calls */
 async function foo() {
   try {
     await asyncWait1();
@@ -652,7 +660,7 @@ async function foo() {
   }
 }
 
-/* Grey area: Feel free to use both variants when you have common error handling for multiple asynchronous calls */
+/* Gray area: Feel free to use both variants when you have common error handling for multiple asynchronous calls */
 async function foo() {
   return asyncWait1()
     .then(() => asyncWait2())

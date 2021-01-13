@@ -6,6 +6,9 @@ import type { OpenAPIV3 } from 'openapi-types';
  */
 export interface OpenApiDocument {
   apiName: string;
+  npmPackageName: string;
+  directoryName: string;
+  originalFileName: string;
   operations: OpenApiOperation[];
 }
 

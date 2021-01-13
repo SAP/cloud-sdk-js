@@ -1,6 +1,12 @@
 import { OpenApiDocument, OpenApiRequestBody } from '../openapi-types';
 import { apiFile } from './api-file';
 
+const openApiDocumentBase = {
+  npmPackageName: 'package',
+  directoryName: 'dir',
+  originalFileName: 'file'
+};
+
 describe('api-file', () => {
   it('creates api file content for operations with parameters and no request bodies', () => {
     const openApiDocument: OpenApiDocument = {
@@ -37,7 +43,8 @@ describe('api-file', () => {
           ],
           pattern: 'test/{id}'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -84,7 +91,8 @@ describe('api-file', () => {
           } as OpenApiRequestBody,
           pattern: 'test/{id}'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -99,7 +107,8 @@ describe('api-file', () => {
           parameters: [],
           pattern: 'test'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -142,7 +151,8 @@ describe('api-file', () => {
           } as OpenApiRequestBody,
           pattern: 'test'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -163,7 +173,8 @@ describe('api-file', () => {
           ],
           pattern: 'test'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });

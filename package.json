@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "1.35.0",
+  "version": "1.36.0",
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
@@ -60,7 +60,7 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@types/license-checker" : "^25.0.1",
+    "@types/license-checker": "^25.0.1",
     "@types/jest": "^26.0.7",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/uuid": "^8.0.0",

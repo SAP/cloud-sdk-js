@@ -1784,15 +1784,15 @@
     sax "^1.2.4"
 
 "@sap/cds-dk@^3.3.3":
-  version "3.3.3"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.3.3.tgz#b038acfafb7cea38aa069cc913f6a1e19900051b"
-  integrity sha512-QYl6BeUh5slb9T4JCyJ6P3pxdAYKtAf3904ODLIcbrn9EHjAZ2CtpatCpQ28xP3b0V0hYdhL/ddXEi7/hwoBBA==
+  version "3.3.4"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.3.4.tgz#bcd6b4de462b13604ce115ee5e61c4b167b671ca"
+  integrity sha512-/mlTc5bK7003oUYCDFJepej0lt1amx6IeR1+SaYP8f3aGBlUfu2DMCKPx4EL0OM2f66gyZPl1SwoPn40455vfg==
   dependencies:
-    "@sap/cds" "^4.2.2"
+    "@sap/cds" "^4.4.9"
     "@sap/cds-foss" "^2"
     "@sap/cds-sidecar-client" "^1.1.12"
     "@sap/edm-converters" "^1.0.27"
-    axios "^0.20.0"
+    axios "^0.21.1"
     express "^4.17.1"
     htmlparser2 "5.0.1"
     mustache "^4.0.1"
@@ -1837,7 +1837,7 @@
     fs-extra "9.0.1"
     got "10.7.0"
 
-"@sap/cds@^4.2.2", "@sap/cds@^4.4.7":
+"@sap/cds@^4.4.7", "@sap/cds@^4.4.9":
   version "4.4.9"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.4.9.tgz#4243c0752d951b7c4f910dda5feac7c643517be1"
   integrity sha512-5lEJM435KbJjDejLuptoWUbC+CSUmXDphlfUH7zF5tGIAYO4QXSmFAP4FVRti0FC3ravEk80w20mBjJ21sVLkA==
@@ -2617,7 +2617,7 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.10.1.tgz#e1e82e4f3e999e2cfd61b161280d16a111f86428"
   integrity sha512-zg7Hz2k5lI8kb7U32998pRRFin7zJlkfezGJjUc2heaD4Pw2wObakCDVzkKztTm/Ln7eiVvYsjqak0Ed4LkMDA==
 
-axios@0.21.1, axios@^0.19.0, axios@^0.20.0, axios@^0.21.1:
+axios@0.21.1, axios@^0.19.0, axios@^0.21.1:
   version "0.21.1"
   resolved "https://registry.npmjs.org/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
   integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==

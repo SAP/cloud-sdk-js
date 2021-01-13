@@ -137,7 +137,7 @@ if (arg === 'e2e' || arg === 'all') {
 
 if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
   generateOpenApi({
-    inputDir: path.resolve('test-resources', 'openapi-service-specs'),
+    input: path.resolve('test-resources', 'openapi-service-specs'),
     outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
     clearOutputDir: true
   });

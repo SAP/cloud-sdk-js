@@ -1,6 +1,6 @@
 import { existsSync, PathLike, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import { createLogger } from '../dist/logger';
+import { createLogger } from './logger';
 
 const logger = createLogger({
   package: 'util',

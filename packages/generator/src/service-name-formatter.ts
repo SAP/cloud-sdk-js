@@ -1,9 +1,15 @@
-import { toPropertyFormat, toStaticPropertyFormat } from '@sap-cloud-sdk/core';
 import voca from 'voca';
+import {
+  UniqueNameGenerator,
+  upperCaseSnakeCase,
+  camelCase
+} from '@sap-cloud-sdk/util';
 import { stripPrefix } from './internal-prefix';
 import { applyPrefixOnJsConflictFunctionImports } from './name-formatting-strategies';
-import { UniqueNameFinder } from './unique-name-finder';
-import { reservedServiceKeywords } from './name-formatting-reserved-key-words';
+import {
+  defaultReservedWords,
+  reservedServiceKeywords
+} from './reserved-words';
 
 export class ServiceNameFormatter {
   static originalToServiceName(name: string): string {
@@ -20,21 +26,21 @@ export class ServiceNameFormatter {
     return voca.titleCase(packageName.replace(/-/g, ' '));
   }
 
-  private finderServiceWide = new UniqueNameFinder(
-    '_',
-    reservedServiceKeywords
-  );
+  private serviceWideNameGenerator = new UniqueNameGenerator('_', [
+    ...defaultReservedWords,
+    ...reservedServiceKeywords
+  ]);
 
-  private parameterNamesFinder: {
-    [functionImportName: string]: UniqueNameFinder;
+  private parameterNameGenerators: {
+    [functionImportName: string]: UniqueNameGenerator;
   } = {};
 
-  private staticPropertyNamesFinder: {
-    [entitySetOrComplexTypeName: string]: UniqueNameFinder;
+  private staticPropertyNameGenerators: {
+    [entitySetOrComplexTypeName: string]: UniqueNameGenerator;
   } = {};
 
-  private instancePropertyNamesFinder: {
-    [entitySetOrComplexTypeName: string]: UniqueNameFinder;
+  private instancePropertyNameGenerators: {
+    [entitySetOrComplexTypeName: string]: UniqueNameGenerator;
   } = {};
 
   constructor();
@@ -58,18 +64,20 @@ export class ServiceNameFormatter {
     // Here we assume that entitysets and complextypes cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
-        this.staticPropertyNamesFinder[
+        this.staticPropertyNameGenerators[
           entitySetOrComplexTypeName
-        ] = new UniqueNameFinder();
-        this.instancePropertyNamesFinder[
+        ] = new UniqueNameGenerator('_', defaultReservedWords);
+        this.instancePropertyNameGenerators[
           entitySetOrComplexTypeName
-        ] = new UniqueNameFinder();
+        ] = new UniqueNameGenerator('_', defaultReservedWords);
       }
     );
 
     if (functionImportNames) {
       functionImportNames.forEach(functionImportName => {
-        this.parameterNamesFinder[functionImportName] = new UniqueNameFinder();
+        this.parameterNameGenerators[
+          functionImportName
+        ] = new UniqueNameGenerator('_', defaultReservedWords);
       });
     }
   }
@@ -78,38 +86,37 @@ export class ServiceNameFormatter {
     originalContainerTypeName: string,
     originalPropertyName: string
   ): string {
-    const transformedName = toStaticPropertyFormat(
+    const transformedName = upperCaseSnakeCase(
       stripPrefix(originalPropertyName)
     );
-    const finder = this.getOrInitStaticPropertyNameFinder(
+    const generator = this.getOrInitGenerator(
+      this.staticPropertyNameGenerators,
       originalContainerTypeName
     );
-    const newName = finder.findUniqueName(transformedName);
 
-    finder.addToUsedNames(newName);
-    return newName;
+    return generator.generateAndSaveUniqueName(transformedName);
   }
 
   originalToInstancePropertyName(
     originalContainerTypeName: string,
     originalPropertyName: string
   ): string {
-    const transformedName = toPropertyFormat(stripPrefix(originalPropertyName));
+    const transformedName = camelCase(stripPrefix(originalPropertyName));
 
-    const finder = this.getOrInitInstancePropertyNameFinder(
+    const generator = this.getOrInitGenerator(
+      this.instancePropertyNameGenerators,
       originalContainerTypeName
     );
-    const newName = finder.findUniqueName(transformedName);
 
-    finder.addToUsedNames(newName);
-    return newName;
+    return generator.generateAndSaveUniqueName(transformedName);
   }
 
   originalToFunctionImportName(str: string): string {
     const transformedName = voca.camelCase(str);
-    const newName = this.finderServiceWide.findUniqueName(transformedName);
+    const newName = this.serviceWideNameGenerator.generateAndSaveUniqueName(
+      transformedName
+    );
 
-    this.finderServiceWide.addToUsedNames(newName);
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
 
@@ -123,13 +130,10 @@ export class ServiceNameFormatter {
       ''
     );
 
-    const newName = this.finderServiceWide.findUniqueName(
+    return this.serviceWideNameGenerator.generateAndSaveUniqueName(
       transformedName,
       false
     );
-
-    this.finderServiceWide.addToUsedNames(newName);
-    return newName;
   }
 
   originalToEnumTypeName(str: string): string {
@@ -153,10 +157,7 @@ export class ServiceNameFormatter {
         index += 1;
       }
     }
-    const newName = this.finderServiceWide.findUniqueName(factoryName);
-
-    this.finderServiceWide.addToUsedNames(newName);
-    return newName;
+    return this.serviceWideNameGenerator.generateAndSaveUniqueName(factoryName);
   }
 
   originalToNavigationPropertyName(
@@ -165,11 +166,11 @@ export class ServiceNameFormatter {
   ): string {
     const transformedName = voca.camelCase(originalPropertyName);
 
-    const finder = this.getOrInitInstancePropertyNameFinder(entitySetName);
-    const newName = finder.findUniqueName(transformedName);
-
-    finder.addToUsedNames(newName);
-    return newName;
+    const generator = this.getOrInitGenerator(
+      this.instancePropertyNameGenerators,
+      entitySetName
+    );
+    return generator.generateAndSaveUniqueName(transformedName);
   }
 
   originalToParameterName(
@@ -178,13 +179,12 @@ export class ServiceNameFormatter {
   ): string {
     const transformedName = voca.camelCase(originalParameterName);
 
-    const finder = this.getOrInitParameterNameFinder(
+    const generator = this.getOrInitGenerator(
+      this.parameterNameGenerators,
       originalFunctionImportName
     );
-    const newName = finder.findUniqueName(transformedName);
 
-    finder.addToUsedNames(newName);
-    return newName;
+    return generator.generateAndSaveUniqueName(transformedName);
   }
 
   originalToEntityClassName(entitySetName: string): string {
@@ -195,41 +195,23 @@ export class ServiceNameFormatter {
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
 
-    const newNames = this.finderServiceWide.findUniqueNameWithSuffixes(
+    const newNames = this.serviceWideNameGenerator.generateAndSaveUniqueNamesWithSuffixes(
       transformedName,
       getInterfaceNamesSuffixes(),
       false
     );
 
-    newNames.forEach(name => {
-      this.finderServiceWide.addToUsedNames(name);
-    });
-
     return newNames[0];
   }
 
-  private getOrInitStaticPropertyNameFinder(name: string): UniqueNameFinder {
-    if (this.staticPropertyNamesFinder[name]) {
-      return this.staticPropertyNamesFinder[name];
+  private getOrInitGenerator(
+    generators: Record<string, UniqueNameGenerator>,
+    name: string
+  ): UniqueNameGenerator {
+    if (!generators[name]) {
+      generators[name] = new UniqueNameGenerator('_', defaultReservedWords);
     }
-    this.staticPropertyNamesFinder[name] = new UniqueNameFinder();
-    return this.staticPropertyNamesFinder[name];
-  }
-
-  private getOrInitInstancePropertyNameFinder(name: string): UniqueNameFinder {
-    if (this.instancePropertyNamesFinder[name]) {
-      return this.instancePropertyNamesFinder[name];
-    }
-    this.instancePropertyNamesFinder[name] = new UniqueNameFinder();
-    return this.instancePropertyNamesFinder[name];
-  }
-
-  private getOrInitParameterNameFinder(name: string): UniqueNameFinder {
-    if (this.parameterNamesFinder[name]) {
-      return this.parameterNamesFinder[name];
-    }
-    this.parameterNamesFinder[name] = new UniqueNameFinder();
-    return this.parameterNamesFinder[name];
+    return generators[name];
   }
 }
 

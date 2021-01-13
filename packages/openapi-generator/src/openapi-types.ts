@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.

@@ -5,6 +5,13 @@ import {
   titleFormat
 } from '@sap-cloud-sdk/util';
 
+/**
+ * @deprecated Since v1.32.2. Use functions from @sap-cloud-sdk/util instead.
+ * Converts a string to the format used by static properties. Use this for serialization.
+ *
+ * @param str - The string to be transformed.
+ * @returns The transformed string.
+ */
 export function toStaticPropertyFormat(str: string): string {
   return upperCaseSnakeCase(str);
 }

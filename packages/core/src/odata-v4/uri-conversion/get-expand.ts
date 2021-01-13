@@ -6,11 +6,11 @@ import {
   AllFields,
   Link,
   and,
-  createGetFilter
+  createGetFilter,
+  getOrderBy
 } from '../../odata-common';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
-import { oDataUri } from './odata-uri';
 
 function prependDollar(param: string): string {
   return `$${param}`;
@@ -63,7 +63,7 @@ function getExpandAsString<EntityT extends Entity>(
         ),
         ...(expand._skip && { skip: expand._skip }),
         ...(expand._top && { top: expand._top }),
-        ...(expand._orderBy && oDataUri.getOrderBy(expand._orderBy))
+        ...(expand._orderBy && getOrderBy(expand._orderBy))
       };
     }
     const subQuery = Object.entries(params)

@@ -19,6 +19,7 @@
 ## New Functionality
 
 - [openapi-generator] Support `package.json` generation and the service mapping configuration as CLI options.
+- [util] Expose `UniqueNameGenerator` class that stores used names and generates a unique name for each given string.
 
 ## Improvements
 

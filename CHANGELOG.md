@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [openapi-generator] Support `package.json` generation and the service mapping configuration.
+- [openapi-generator] Support `package.json` generation and the service mapping configuration as CLI options.
 
 ## Improvements
 

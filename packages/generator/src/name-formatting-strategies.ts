@@ -24,12 +24,12 @@ const applyPrefixOnJSReservedWords = (prefix: string) => (
   reservedJsKeywords.includes(param) ? prefix + voca.capitalize(param) : param;
 
 /**
- * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameFinder]] instead.
+ * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameGenerator]] instead.
  */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
 
 /**
- * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameFinder]] instead.
+ * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameGenerator]] instead.
  */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
 

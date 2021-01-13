@@ -14,7 +14,7 @@ export class UniqueNameGenerator {
   private usedNames: string[] = [];
 
   /**
-   * Creates an instance of UniqueNameFinder.
+   * Creates an instance of UniqueNameGenerator.
    * @param indexSeparator The separator to be used when adding an index.
    * @param usedNames Sets the already used names considered in the finding process.
    */

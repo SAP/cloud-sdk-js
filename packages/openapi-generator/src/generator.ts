@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises, statSync } from 'fs';
+import { promises } from 'fs';
 import { resolve, parse, basename, dirname } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
@@ -10,7 +10,7 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 
-const { readdir, writeFile, rmdir, mkdir } = promises;
+const { readdir, writeFile, rmdir, mkdir, lstat } = promises;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -24,11 +24,11 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     await rmdir(options.outputDir, { recursive: true });
   }
 
-  if (statSync(options.input).isFile()) {
+  if ((await lstat(options.input)).isFile()) {
     const inputFilePath = options.input;
     generateFromFile(inputFilePath, options);
   } else {
-    const inputFilePaths = await recursiveInputPathSearch(options.input);
+    const inputFilePaths = await getInputFilePaths(options.input);
     for (const filePath of inputFilePaths) {
       await generateFromFile(filePath, options);
     }
@@ -187,19 +187,19 @@ async function generateFromFile(
  * @param input the path to the input directory.
  * @returns all file paths as a string array.
  */
-async function recursiveInputPathSearch(input: string): Promise<string[]> {
-  let recursiveInputPath: string[] = [];
+async function getInputFilePaths(input: string): Promise<string[]> {
+  let inputFilePaths: string[] = [];
   const directoryContents = await readdir(input, { withFileTypes: true });
   await Promise.all(
     directoryContents.map(async content => {
       if (content.isDirectory()) {
-        recursiveInputPath = recursiveInputPath.concat(
-          await recursiveInputPathSearch(resolve(input, content.name))
+        inputFilePaths = inputFilePaths.concat(
+          await getInputFilePaths(resolve(input, content.name))
         );
       } else {
-        recursiveInputPath.push(resolve(input, content.name));
+        inputFilePaths.push(resolve(input, content.name));
       }
     })
   );
-  return recursiveInputPath;
+  return inputFilePaths;
 }

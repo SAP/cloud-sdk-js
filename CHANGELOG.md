@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [util] Expose `UniqueNameGenerator` class that stores used names and generates a unique name for each given string.
 
 ## Improvements
 

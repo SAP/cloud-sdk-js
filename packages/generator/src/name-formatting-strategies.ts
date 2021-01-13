@@ -1,10 +1,6 @@
 import { last } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import {
-  reservedJSKeywords,
-  reservedObjectPrototypeKeywords,
-  reservedVdmKeywords
-} from './name-formatting-reserved-key-words';
+import { defaultReservedWords, reservedJsKeywords } from './reserved-words';
 
 // FIXME: this function has a side effect and it is not obvious that the cache is updated
 const applySuffixOnConflict = (separator: string) => (
@@ -12,11 +8,7 @@ const applySuffixOnConflict = (separator: string) => (
   previouslyGeneratedNames: string[]
 ): string => {
   let newName = name;
-  if (
-    previouslyGeneratedNames.includes(name) ||
-    reservedVdmKeywords.has(name) ||
-    reservedObjectPrototypeKeywords.has(name)
-  ) {
+  if ([...previouslyGeneratedNames, ...defaultReservedWords].includes(name)) {
     newName = `${name}${separator}${nextSuffix(
       name,
       previouslyGeneratedNames
@@ -29,15 +21,15 @@ const applySuffixOnConflict = (separator: string) => (
 const applyPrefixOnJSReservedWords = (prefix: string) => (
   param: string
 ): string =>
-  reservedJSKeywords.has(param) ? prefix + voca.capitalize(param) : param;
+  reservedJsKeywords.includes(param) ? prefix + voca.capitalize(param) : param;
 
 /**
- * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameFinder]] instead.
+ * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameGenerator]] instead.
  */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
 
 /**
- * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameFinder]] instead.
+ * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameGenerator]] instead.
  */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
 

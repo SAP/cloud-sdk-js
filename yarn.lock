@@ -1838,9 +1838,9 @@
     got "10.7.0"
 
 "@sap/cds@^4.2.2", "@sap/cds@^4.4.7":
-  version "4.4.7"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.4.7.tgz#f492721c8ec98e16a27ab6f87f4fe09ff1447bef"
-  integrity sha512-oxWSx5uEJz3gt2OdEbfBoHgSvVlcfr35alMB+Za/eX+C/W+0eEJb/P3BwOsY6824MMkUsq0tANDyeFg14F0CxA==
+  version "4.4.9"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.4.9.tgz#4243c0752d951b7c4f910dda5feac7c643517be1"
+  integrity sha512-5lEJM435KbJjDejLuptoWUbC+CSUmXDphlfUH7zF5tGIAYO4QXSmFAP4FVRti0FC3ravEk80w20mBjJ21sVLkA==
   dependencies:
     "@sap/cds-compiler" "^1.43.1"
     "@sap/cds-foss" "^2"
@@ -2057,9 +2057,9 @@
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
 "@types/node@*", "@types/node@>= 8", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.19.12"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.12.tgz#04793c2afa4ce833a9972e4c476432e30f9df47b"
-  integrity sha512-UwfL2uIU9arX/+/PRcIkT08/iBadGN2z6ExOROA2Dh5mAuWTBj6iJbQX4nekiV5H8cTrEG569LeX+HRco9Cbxw==
+  version "12.19.13"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.13.tgz#888e2b34159fb91496589484ec169618212b51b7"
+  integrity sha512-qdixo2f0U7z6m0UJUugTJqVF94GNDkdgQhfBtMs8t5898JE7G/D2kJYw4rc1nzjIPLVAsDkY2MdABnLAP5lM1w==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"

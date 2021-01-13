@@ -1,4 +1,3 @@
-import nock from 'nock';
 import {
   ODataGetAllRequestConfig,
   ODataRequest
@@ -12,7 +11,6 @@ import {
 import { Destination } from './destination';
 import {
   addAuthorizationHeader,
-  basicHeader,
   buildAndAddAuthorizationHeader,
   buildAuthorizationHeaders
 } from './authorization-header';
@@ -113,91 +111,57 @@ describe('buildAuthorizationHeaders', () => {
     });
   });
 
+  describe('OAuth2SAMLBearerAssertion', () => {
+    it('should add the auth token from the destination', async () => {
+      const destination: Destination = {
+        ...defaultDestination,
+        authentication: 'OAuth2SAMLBearerAssertion',
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'some.token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
+          }
+        ]
+      };
+
+      const actual = await buildAuthorizationHeaders(destination);
+
+      expect(actual).toEqual({
+        authorization: 'Bearer some.token'
+      });
+    });
+  });
+
   describe('OAuth2ClientCredentials', () => {
-    const destination: Destination = {
-      ...defaultDestination,
-      authentication: 'OAuth2ClientCredentials',
-      tokenServiceUrl: 'https://token.example.com/oauth/token',
-      clientId: 'TokenClientId',
-      clientSecret: 'TokenClientSecret'
-    };
-
-    const requestBody =
-      'grant_type=client_credentials&client_id=TokenClientId&client_secret=TokenClientSecret';
-    const fakeToken = 'FakeOAuth2ClientCredentialsToken';
-
-    it('should add access token to the request header for "OAuth2ClientCredentials" authentication', async () => {
-      nock('https://token.example.com', {
-        reqheaders: {
-          'content-type': 'application/x-www-form-urlencoded',
-          authorization: basicHeader(
-            destination.clientId!,
-            destination.clientSecret!
-          )
-        }
-      })
-        .post('/oauth/token', requestBody)
-        .once()
-        .reply(200, { access_token: fakeToken, expires_in: 0, scope: '' });
+    it('should add the auth token from the destination', async () => {
+      const destination: Destination = {
+        ...defaultDestination,
+        authentication: 'OAuth2ClientCredentials',
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'some.token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
+          }
+        ]
+      };
 
       const actual = await buildAuthorizationHeaders(destination);
 
       expect(actual).toEqual({
-        authorization: 'Bearer ' + fakeToken
+        authorization: 'Bearer some.token'
       });
-    });
-
-    it('should use tokenServiceUser and tokenServicePassword in header authorization when specified', async () => {
-      destination.tokenServiceUser = 'TokenServiceUser';
-      destination.tokenServicePassword = 'TokenServicePassword';
-      nock('https://token.example.com', {
-        reqheaders: {
-          'content-type': 'application/x-www-form-urlencoded',
-          authorization: basicHeader(
-            destination.tokenServiceUser,
-            destination.tokenServicePassword
-          )
-        }
-      })
-        .post('/oauth/token', requestBody)
-        .once()
-        .reply(200, { access_token: fakeToken, expires_in: 0, scope: '' });
-
-      const actual = await buildAuthorizationHeaders(destination);
-
-      expect(actual).toEqual({
-        authorization: 'Bearer ' + fakeToken
-      });
-    });
-
-    it('should throw an error if tokenServiceUrl, client_id or client_secret are not set', async () => {
-      delete destination.tokenServiceUrl;
-
-      await expect(
-        buildAuthorizationHeaders(destination)
-      ).rejects.toThrowErrorMatchingSnapshot();
-    });
-
-    it('should throw an error when the access token to the request header for "OAuth2ClientCredentials" is rejected', async () => {
-      nock('https://token.example.com', {
-        reqheaders: {
-          'content-type': 'application/x-www-form-urlencoded',
-          authorization: basicHeader(
-            destination.clientId!,
-            destination.clientSecret!
-          )
-        }
-      })
-        .post('/oauth/token', requestBody)
-        .once()
-        .reply(401, {
-          error: 'unauthorized',
-          error_description: 'Bad credentials'
-        });
-
-      await expect(
-        buildAuthorizationHeaders(destination)
-      ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 

@@ -1,8 +1,12 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises } from 'fs';
-import { resolve, parse, basename, dirname } from 'path';
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { resolve, parse } from 'path';
+import {
+  createLogger,
+  ErrorWithCause,
+  UniqueNameGenerator
+} from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
 import {
@@ -37,13 +41,20 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 
   const vdmMapping = readServiceMapping(options);
 
+  const uniqueNameGenerator = new UniqueNameGenerator('-');
+
   if ((await lstat(options.input)).isFile()) {
     const inputFilePath = options.input;
-    generateFromFile(inputFilePath, options, vdmMapping);
+    generateFromFile(inputFilePath, options, vdmMapping, uniqueNameGenerator);
   } else {
     const inputFilePaths = await getInputFilePaths(options.input);
     for (const filePath of inputFilePaths) {
-      await generateFromFile(filePath, options, vdmMapping);
+      await generateFromFile(
+        filePath,
+        options,
+        vdmMapping,
+        uniqueNameGenerator
+      );
     }
   }
 }
@@ -138,45 +149,22 @@ function parseServiceName(filePath: string): string {
 }
 
 /**
- * Checks if a service already exists in the output directory.
- * @param serviceName The name of the service to be searched.
- * @param outputDir Path to the output directory.
- * @returns 'true' if a duplicate service is already in the output directory.
- */
-async function duplicateServiceExists(
-  serviceName: string,
-  outputDir: string
-): Promise<boolean> {
-  const currentOutput: string[] = await readdir(outputDir);
-  return currentOutput.some(fileName => {
-    if (serviceName === fileName) {
-      return true;
-    }
-  });
-}
-
-/**
  * Generates an OpenAPI Service from a file.
  * @param filePath The filepath where the service to generate is located.
  * @param options  Options to configure generation.
  * @param vdmMapping The vdmMapping for the OpenAPI generation.
+ * @param uniqueNameGenerator The uniqueNameGenerator with a kebab seperator.
  */
 async function generateFromFile(
   filePath: string,
   options: GeneratorOptions,
-  vdmMapping: VdmMapping
+  vdmMapping: VdmMapping,
+  uniqueNameGenerator: UniqueNameGenerator
 ): Promise<void> {
-  const serviceName = parseServiceName(filePath);
-
-  let serviceDir: string;
-  if (await duplicateServiceExists(serviceName, options.outputDir)) {
-    serviceDir = resolve(
-      options.outputDir,
-      basename(dirname(filePath)) + '-' + serviceName
-    );
-  } else {
-    serviceDir = resolve(options.outputDir, serviceName);
-  }
+  const serviceName = uniqueNameGenerator.generateAndSaveUniqueName(
+    parseServiceName(filePath)
+  );
+  const serviceDir = resolve(options.outputDir, serviceName);
 
   let openApiDocument;
   try {

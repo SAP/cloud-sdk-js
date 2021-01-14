@@ -230,7 +230,8 @@ async function getInputFilePaths(input: string): Promise<string[]> {
   );
   return inputFilePaths;
 }
-/*
+
+/**
  * Get the current SDK version from the package json.
  * @returns The SDK version.
  */

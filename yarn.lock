@@ -8458,9 +8458,9 @@ ono@^4.0.11:
     format-util "^1.0.3"
 
 openapi-backend@^3.6.3:
-  version "3.6.3"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.6.3.tgz#06e764e547a0d29f74ae51bc2747f8f18e36c71c"
-  integrity sha512-o2/qroZKAC1t5CSiSUDHlFicBibQiP4Z2unkqn+OoE68B0H3WpYdykhb7hJQTROWYR72gQrJDcPdBFKiI9TqRg==
+  version "3.7.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.7.0.tgz#a908573c6f286d7652da1849317e594a91d86c12"
+  integrity sha512-qo+oTlPlpzBvCycT1AsHyOw+2wKhHuY8zDe6j/xx5F+9ZvHoeGiszFXd9tlI/5VExqRi0bxheoQY/Sgdl8pY0g==
   dependencies:
     ajv "^6.10.0"
     bath-es5 "^3.0.3"

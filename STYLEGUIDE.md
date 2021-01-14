@@ -272,10 +272,14 @@ const foo = `foo ${fn(bar + 'bar')}`;
 
 ## Arrays
 
-### Use `.forEach` rather than `for`
+### Use `.forEach` and other array functions rather than `for`
 Use the functional language concepts of JavaScript in favor of the imperative ones, when possible.
-Use the correct function for your use case.
-In rare cases, when performance is of the essence, it makes sense to resort to the imperative `for` instead.
+Use the correct function for your use case (e. g. `.map`, `.reduce`, `.filter`, `.find`, `.some`, `.every`).
+In some cases it makes sense to resort to the imperative `for`, for example, when performance is of the essence, if you have to iterate over every n-th element or if you want to execute asynchronous actions sequentially.
+Be aware of the effects of asynchronicity.
+The callback passed to `.forEach` is invoked for every item of a list sequentially.
+If the callback is asynchronous it will still be invoked sequentially, but its asynchronous action will not be awaited before the next invokation, which can lead to unexpected results.
+Do not use `.forEach` if you need sequential invocation or move the parts that have to be executed sequentially up before any asynchronous actions are executed.
 
 ❌ Examples of **incorrect** code:
 ```ts
@@ -301,7 +305,6 @@ array.forEach(item => {
 /* Use .map, if appropriate */
 const result = array.map(item => item.property);
 ```
-
 
 ## `null` and `undefined`
 

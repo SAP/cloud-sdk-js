@@ -42,14 +42,17 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   const vdmMapping = readServiceMapping(options);
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
-  const inputFilePathsObjects = inputFilePaths.map(inputFilePath => ({
-    filePath: inputFilePath,
-    uniqueServiceName: uniqueNameGenerator.generateAndSaveUniqueName(
+  inputFilePaths.forEach(async inputFilePath => {
+    const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
       parseServiceName(inputFilePath)
-    )
-  }));
-  inputFilePathsObjects.forEach(async inputFilePathsObject => {
-    await generateFromFile(inputFilePathsObject, options, vdmMapping);
+    );
+
+    await generateFromFile(
+      inputFilePath,
+      options,
+      vdmMapping,
+      uniqueServiceName
+    );
   });
 }
 
@@ -144,25 +147,26 @@ function parseServiceName(filePath: string): string {
 
 /**
  * Generates an OpenAPI Service from a file.
- * @param filePathObject The object that contains both the filepath and the unique serviceName.
+ * @param filePath The filepath where the service to generate is located.
  * @param options  Options to configure generation.
  * @param vdmMapping The vdmMapping for the OpenAPI generation.
- * @param uniqueNameGenerator The uniqueNameGenerator with a kebab seperator.
+ * @param uniqueServiceName The uniqueServiceName to be used.
  */
 async function generateFromFile(
-  filePathObject: { filePath: string; uniqueServiceName: string },
+  filePath: string,
   options: GeneratorOptions,
-  vdmMapping: VdmMapping
+  vdmMapping: VdmMapping,
+  uniqueServiceName: string
 ): Promise<void> {
-  const serviceName = filePathObject.uniqueServiceName;
+  const serviceName = uniqueServiceName;
   const serviceDir = resolve(options.outputDir, serviceName);
 
   let openApiDocument;
   try {
-    openApiDocument = await convertOpenApiSpec(filePathObject.filePath);
+    openApiDocument = await convertOpenApiSpec(filePath);
   } catch (err) {
     logger.error(
-      `Could not convert document at ${filePathObject.filePath} to the format needed for parsing and generation. Skipping service generation.`
+      `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
     );
     return;
   }
@@ -170,13 +174,13 @@ async function generateFromFile(
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
-    filePathObject.filePath,
+    filePath,
     vdmMapping
   );
 
   if (!parsedOpenApiDocument.operations.length) {
     logger.warn(
-      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePathObject.filePath}`
+      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
     );
     return;
   }

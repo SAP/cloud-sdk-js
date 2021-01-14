@@ -1,4 +1,4 @@
-# SAP Cloud SDK style guide <!-- omit in toc -->
+# Style Guide <!-- omit in toc -->
 
 This style guide includes some basic rules to be applied when writing code in the SAP Cloud SDK.
 Most of the rules are being checked by lint, but not all of them can be checked.

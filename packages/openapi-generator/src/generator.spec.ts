@@ -1,7 +1,7 @@
 import { getSDKVersion } from './generator';
 
 describe('generator', () => {
-  it('getSDKVersion returns a valid stable version', () => {
-    expect(getSDKVersion().split('.').length).toBe(3);
+  it('getSDKVersion returns a valid stable version', async () => {
+    expect((await getSDKVersion()).split('.').length).toBe(3);
   });
 });

@@ -32,6 +32,8 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
+    "ts-morph": "^9.1.0",
+    "execa": "^5.0.0",
     "chalk": "^4.1.0",
     "logform": "^2.2.0",
     "voca": "^1.4.0",

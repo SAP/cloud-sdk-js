@@ -1,6 +1,10 @@
 import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
-import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  splitInChunks,
+  transpileDirectory
+} from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
@@ -83,18 +87,6 @@ export function transpileDirectories(
   return Promise.all(
     directories.map(directory => transpileDirectory(directory))
   );
-}
-
-export function transpileDirectory(dir: Directory): Promise<void> {
-  logger.info(`Transpiling files in the directory: ${dir.getPath()} started.`);
-  return execa('tsc', { cwd: dir.getPath() })
-    .then(() => {
-      logger.info(`Transpiling files in directory: ${dir.getPath()} finished.`);
-    })
-    .catch(err => {
-      logger.error(`Error: Failed to generate js files: ${err}`);
-      process.exit(1);
-    });
 }
 
 export async function generateProject(

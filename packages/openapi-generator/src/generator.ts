@@ -2,7 +2,11 @@
 
 import { promises, readFileSync } from 'fs';
 import { resolve, parse } from 'path';
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  ErrorWithCause,
+  transpileDirectory
+} from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
 import {
@@ -16,6 +20,7 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping } from './service-mapping';
+import { tsconfigJson } from './wrapper-files/tsconfig-json';
 
 const { readdir, writeFile, rmdir, mkdir } = promises;
 const logger = createLogger('openapi-generator');
@@ -26,7 +31,7 @@ const logger = createLogger('openapi-generator');
  * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
  * @param options Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void> {
+export async function generate(options: GeneratorOptions): Promise<void[]> {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.inputDir.toString(), 'service-mapping.json');
@@ -41,8 +46,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   );
 
   const vdmMapping = readServiceMapping(options);
-
-  inputFilePaths.forEach(async filePath => {
+  const promies = inputFilePaths.map(async filePath => {
     const serviceName = parseServiceName(filePath);
     // TODO: get kebapcase unique directory name
     const serviceDir = resolve(options.outputDir, serviceName);
@@ -79,6 +83,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     await generateOpenApiService(convertedInputFilePath, serviceDir);
     await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
   });
+  return Promise.all(promies);
 }
 
 /**
@@ -108,6 +113,10 @@ async function generateSDKSources(
       ),
       true
     );
+  }
+  if (options.generateJs) {
+    await createFile(serviceDir, 'tsconfig.json', tsconfigJson(options), true);
+    await transpileDirectory(serviceDir);
   }
 }
 

@@ -17,10 +17,15 @@ export async function createFile(
   content: string,
   overwrite: boolean
 ): Promise<void> {
-  return writeFile(join(directoryPath, fileName), wrapContent(content), {
-    encoding: 'utf8',
-    flag: overwrite ? 'w' : 'wx'
-  });
+  const addHeader = !fileName.endsWith('.json');
+  return writeFile(
+    join(directoryPath, fileName),
+    addHeader ? wrapContent(content) : content,
+    {
+      encoding: 'utf8',
+      flag: overwrite ? 'w' : 'wx'
+    }
+  );
 }
 
 function wrapContent(content: string): string {

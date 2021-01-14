@@ -330,12 +330,17 @@ function foo(options: Options = {}) {
 ```
 
 ### Use `undefined` for explicit absence of values
-If a value semantically is not optional prefer using `undefined` for values that do not exist or are not defined.
+If a value semantically is not optional prefer using `undefined` for values that do not exist or are not defined instead of `null`.
 
 ❌ Examples of **incorrect** code:
 ```ts
 /* Don't use null for non-existent values */
 function foo(obj: SomeType | null) {
+  ...
+}
+
+/* Don't use optional parameters for non-existent, but not optional values */
+function foo(obj?: SomeType) {
   ...
 }
 ```

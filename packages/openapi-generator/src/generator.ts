@@ -188,18 +188,15 @@ async function generateFromFile(
  * @returns all file paths as a string array.
  */
 async function getInputFilePaths(input: string): Promise<string[]> {
-  let inputFilePaths: string[] = [];
   const directoryContents = await readdir(input, { withFileTypes: true });
-  await Promise.all(
-    directoryContents.map(async content => {
-      if (content.isDirectory()) {
-        inputFilePaths = inputFilePaths.concat(
-          await getInputFilePaths(resolve(input, content.name))
-        );
-      } else {
-        inputFilePaths.push(resolve(input, content.name));
-      }
-    })
+  const inputFilePaths = directoryContents.reduce(
+    async (paths: Promise<string[]>, directoryContent) => [
+      ...(await paths),
+      ...(directoryContent.isDirectory()
+        ? await getInputFilePaths(resolve(input, directoryContent.name))
+        : [resolve(input, directoryContent.name)])
+    ],
+    Promise.resolve([])
   );
   return inputFilePaths;
 }

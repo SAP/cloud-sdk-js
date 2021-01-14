@@ -48,14 +48,14 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     generateFromFile(inputFilePath, options, vdmMapping, uniqueNameGenerator);
   } else {
     const inputFilePaths = await getInputFilePaths(options.input);
-    for (const filePath of inputFilePaths) {
+    inputFilePaths.forEach(async filePath => {
       await generateFromFile(
         filePath,
         options,
         vdmMapping,
         uniqueNameGenerator
       );
-    }
+    });
   }
 }
 

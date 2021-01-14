@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [openapi-generator] Fix the error `TypeError: Class constructor Command cannot be invoked without 'new'` due to the incompatibility of ES5 and oclif.
 
 
 # 1.36.0

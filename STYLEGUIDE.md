@@ -127,6 +127,11 @@ interface IFooBar {
 interface FooBar {
   ...
 }
+
+/* Use speaking names for classes and interfaces */
+interface Foo extends FooType {
+  ...
+}
 ```
 
 ### Use pascal case for enums and enum properties
@@ -666,17 +671,17 @@ async function getBar() {
   return (await asyncWait()).bar;
 }
 
-/* Gray area: Feel free to use both variants when you have common error handling for multiple asynchronous calls */
+/* Gray area: Use async/await when you have common error handling for multiple asynchronous calls */
 async function foo() {
   try {
     await asyncWait1();
-    return await asyncWait2(); // If you want to handle the error here, this await is necessary!
+    return await asyncWait2(); // If you want to handle the error in foo, this await is necessary!
   } catch(err) {
     handleError(err);
   }
 }
 
-/* Gray area: Feel free to use both variants when you have common error handling for multiple asynchronous calls */
+/* Gray area: Use .then when you have common error handling for multiple asynchronous calls */
 async function foo() {
   return asyncWait1()
     .then(() => asyncWait2())
@@ -684,6 +689,40 @@ async function foo() {
 }
 ```
 
+### Use `try ... catch` and `.catch` with `async`/`await`
+
+When handling errors using `async`/`await`, be aware of the context of your `catch` block/invocation.
+Invoke `.catch` when handling an error of one asynchronous call, use `try ... catch` for multiple asynchronous calls.
+
+❌ Examples of **incorrect** code:
+```ts
+/* Avoid try ... catch for one asynchrounous call */
+function foo() {
+  try {
+    return await asyncWait();
+  } catch(err) {
+    handleError(err);
+  }
+}
+```
+
+✅ Examples of **correct** code:
+```ts
+/* Use .catch for one asynchrounous call */
+function foo() {
+  return asyncWait().catch(err => handleError(err))
+}
+
+/* Use try ... catch for multiple asynchrounous calls */
+async function foo() {
+  try {
+    await asyncWait1();
+    return await asyncWait2(); // If you want to handle the error in foo, this await is necessary!
+  } catch(err) {
+    handleError(err);
+  }
+}
+```
 ## Functions
 
 ### Use arrow functions for callbacks

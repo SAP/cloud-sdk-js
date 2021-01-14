@@ -81,7 +81,7 @@ async function generateSDKSources(
       packageJson(
         openApiDocument.npmPackageName,
         genericDescription(openApiDocument.directoryName),
-        await getSDKVersion(),
+        await getSdkVersion(),
         options.versionInPackageJson
       ),
       true
@@ -224,7 +224,7 @@ async function getInputFilePaths(input: string): Promise<string[]> {
  * Get the current SDK version from the package json.
  * @returns The SDK version.
  */
-export async function getSDKVersion(): Promise<string> {
+export async function getSdkVersion(): Promise<string> {
   return JSON.parse(
     await readFile(resolve(__dirname, '../package.json'), 'utf8')
   ).version;

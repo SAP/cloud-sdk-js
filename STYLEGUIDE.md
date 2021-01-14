@@ -331,6 +331,7 @@ function foo(options: Options = {}) {
 
 ### Use `undefined` for explicit absence of values
 If a value semantically is not optional prefer using `undefined` for values that do not exist or are not defined instead of `null`.
+Do not use optional parameters in those cases either, because the function should not be callable without this parameter.
 
 ❌ Examples of **incorrect** code:
 ```ts

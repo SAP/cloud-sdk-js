@@ -40,23 +40,17 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   }
 
   const vdmMapping = readServiceMapping(options);
-
   const uniqueNameGenerator = new UniqueNameGenerator('-');
-
-  if ((await lstat(options.input)).isFile()) {
-    const inputFilePath = options.input;
-    generateFromFile(inputFilePath, options, vdmMapping, uniqueNameGenerator);
-  } else {
-    const inputFilePaths = await getInputFilePaths(options.input);
-    inputFilePaths.forEach(async filePath => {
-      await generateFromFile(
-        filePath,
-        options,
-        vdmMapping,
-        uniqueNameGenerator
-      );
-    });
-  }
+  const inputFilePaths = await getInputFilePaths(options.input);
+  const inputFilePathsObjects = inputFilePaths.map(inputFilePath => ({
+    filePath: inputFilePath,
+    uniqueServiceName: uniqueNameGenerator.generateAndSaveUniqueName(
+      parseServiceName(inputFilePath)
+    )
+  }));
+  inputFilePathsObjects.forEach(async inputFilePathsObject => {
+    await generateFromFile(inputFilePathsObject, options, vdmMapping);
+  });
 }
 
 /**
@@ -150,28 +144,25 @@ function parseServiceName(filePath: string): string {
 
 /**
  * Generates an OpenAPI Service from a file.
- * @param filePath The filepath where the service to generate is located.
+ * @param filePathObject The object that contains both the filepath and the unique serviceName.
  * @param options  Options to configure generation.
  * @param vdmMapping The vdmMapping for the OpenAPI generation.
  * @param uniqueNameGenerator The uniqueNameGenerator with a kebab seperator.
  */
 async function generateFromFile(
-  filePath: string,
+  filePathObject: { filePath: string; uniqueServiceName: string },
   options: GeneratorOptions,
-  vdmMapping: VdmMapping,
-  uniqueNameGenerator: UniqueNameGenerator
+  vdmMapping: VdmMapping
 ): Promise<void> {
-  const serviceName = uniqueNameGenerator.generateAndSaveUniqueName(
-    parseServiceName(filePath)
-  );
+  const serviceName = filePathObject.uniqueServiceName;
   const serviceDir = resolve(options.outputDir, serviceName);
 
   let openApiDocument;
   try {
-    openApiDocument = await convertOpenApiSpec(filePath);
+    openApiDocument = await convertOpenApiSpec(filePathObject.filePath);
   } catch (err) {
     logger.error(
-      `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
+      `Could not convert document at ${filePathObject.filePath} to the format needed for parsing and generation. Skipping service generation.`
     );
     return;
   }
@@ -179,13 +170,13 @@ async function generateFromFile(
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
-    filePath,
+    filePathObject.filePath,
     vdmMapping
   );
 
   if (!parsedOpenApiDocument.operations.length) {
     logger.warn(
-      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
+      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePathObject.filePath}`
     );
     return;
   }
@@ -206,15 +197,16 @@ async function generateFromFile(
  * @returns all file paths as a string array.
  */
 async function getInputFilePaths(input: string): Promise<string[]> {
+  if ((await lstat(input)).isFile()) {
+    return [input];
+  }
+
   const directoryContents = await readdir(input, { withFileTypes: true });
   const inputFilePaths = directoryContents.reduce(
-    async (paths: Promise<string[]>, directoryContent) => {
-      const contentPath = resolve(input, directoryContent.name);
-      const newInputFilePaths = directoryContent.isDirectory()
-        ? await getInputFilePaths(contentPath)
-        : [contentPath];
-      return [...(await paths), ...newInputFilePaths];
-    },
+    async (paths: Promise<string[]>, directoryContent) => [
+      ...(await paths),
+      ...(await getInputFilePaths(resolve(input, directoryContent.name)))
+    ],
     Promise.resolve([])
   );
   return inputFilePaths;

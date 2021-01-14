@@ -266,7 +266,6 @@ describe('UpdateRequestBuilder', () => {
   });
 
   it('should set the remote state and etag', async () => {
-    const stringProp = 'etagTest';
     const eTag = 'someEtag';
 
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
@@ -295,7 +294,6 @@ describe('UpdateRequestBuilder', () => {
     entity.toMultiLink = [
       TestEntityMultiLink.builder().keyProperty('someKey').build()
     ];
-    const requestBody = { Int32Property: entity.int32Property };
     const logger = createLogger('update-request-builder-v2');
     const warnSpy = jest.spyOn(logger, 'warn');
 

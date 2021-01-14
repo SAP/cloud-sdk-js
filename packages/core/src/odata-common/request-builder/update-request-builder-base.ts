@@ -83,7 +83,6 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Explicitly configure 'PUT' as the method of the update request. By default, only the properties that have changed compared to the last known remote state are sent using 'PATCH', while with 'PUT', the whole entity is sent.
-   *
    * @returns The entity itself, to facilitate method chaining
    */
   replaceWholeEntityWithPut(): this {
@@ -278,11 +277,11 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   private serializedDiff(): Record<string, any> {
     return {
-      ...this.entitySerializer.serializeEntityNonCustomFields(
-        this._entity.getUpdatedProperties(),
-        this._entityConstructor
-      ),
-      ...this._entity.getUpdatedCustomFields()
+      ...this.entitySerializer.serializeEntity(
+        this._entity,
+        this._entityConstructor,
+        true
+      )
     };
   }
 

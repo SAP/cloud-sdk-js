@@ -1,5 +1,6 @@
 {
   "name": "sap-cloud-sdk",
+  "version": "1.36.0",
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
@@ -43,13 +44,11 @@
     "lint": "yarn eslint --ext .ts .",
     "lint:fix": "yarn lint --fix",
     "lint:fix-cached": "yarn lint:fix --cache",
-    "check:circular": "yarn madge --circular ./packages/core",
+    "check:circular": "yarn madge --extensions ts --circular ./packages --exclude 'test-services|environment-accessor|\\.d\\.ts'",
     "check:dependencies": "yarn workspaces run check:dependencies",
-    "check:license": "node scripts/check-licenses.js",
+    "check:license": "ts-node scripts/check-licenses.ts",
     "check:vulnerability": "yarn audit-ci -h",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
-    "bump:patch": "yarn lerna version patch --force-publish -y",
-    "bump:minor": "yarn lerna version minor --force-publish -y",
     "analytics": "yarn workspace @sap-cloud-sdk/analytics",
     "core": "yarn workspace @sap-cloud-sdk/core",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
@@ -61,6 +60,7 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
+    "@types/license-checker": "^25.0.1",
     "@types/jest": "^26.0.7",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/uuid": "^8.0.0",
@@ -80,18 +80,18 @@
     "jest-junit": "^12.0.0",
     "lerna": "^3.22.1",
     "license-checker": "^25.0.1",
-    "madge": "^3.9.2",
+    "madge": "^4.0.0",
     "prettier": "^2.0.2",
     "ts-jest": "^26.4.1",
     "ts-node": "^9.0.0",
-    "typedoc": "^0.20.0",
-    "typedoc-plugin-lerna-packages": "0.3.0",
+    "typedoc": "^0.20.13",
     "typescript": "~4.1.2"
   },
   "dependencies": {},
   "resolutions": {
     "agent-base": "^6.0.2",
     "@types/node": "^12.0.0",
-    "dot-prop": "^5.1.1"
+    "dot-prop": "^5.1.1",
+    "axios": "^0.21.1"
   }
 }

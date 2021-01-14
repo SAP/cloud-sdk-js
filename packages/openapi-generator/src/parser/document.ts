@@ -1,20 +1,32 @@
+import { basename } from 'path';
 import { parse, resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, OpenApiDocument, methods } from '../openapi-types';
+import { VdmMapping } from '../service-mapping';
 import { parseOperation } from './operation';
 
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
-  serviceName: string
+  serviceName: string,
+  filePath: string,
+  vdmMapping: VdmMapping
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
   const operations = parseAllOperations(document, refs);
+  const originalFileName = basename(filePath).split('.')[0];
   return {
     operations,
-    apiName: pascalCase(serviceName) + 'Api'
+    apiName: pascalCase(serviceName) + 'Api',
+    npmPackageName: vdmMapping[originalFileName]
+      ? vdmMapping[originalFileName].npmPackageName
+      : originalFileName,
+    directoryName: vdmMapping[originalFileName]
+      ? vdmMapping[originalFileName].directoryName
+      : originalFileName,
+    originalFileName
   };
 }
 

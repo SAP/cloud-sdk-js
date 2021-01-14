@@ -5,12 +5,19 @@ import { resolve, parse, basename, dirname } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
-import { apiFile, indexFile, createFile } from './wrapper-files';
+import {
+  apiFile,
+  indexFile,
+  createFile,
+  packageJson,
+  genericDescription
+} from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
+import { readServiceMapping, VdmMapping } from './service-mapping';
 
-const { readdir, writeFile, rmdir, mkdir, lstat } = promises;
+const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promises;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -20,17 +27,23 @@ const logger = createLogger('openapi-generator');
  * @param options Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
+  options.serviceMapping =
+    options.serviceMapping ||
+    resolve(options.input.toString(), 'service-mapping.json');
+
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
 
+  const vdmMapping = readServiceMapping(options);
+
   if ((await lstat(options.input)).isFile()) {
     const inputFilePath = options.input;
-    generateFromFile(inputFilePath, options);
+    generateFromFile(inputFilePath, options, vdmMapping);
   } else {
     const inputFilePaths = await getInputFilePaths(options.input);
     for (const filePath of inputFilePaths) {
-      await generateFromFile(filePath, options);
+      await generateFromFile(filePath, options, vdmMapping);
     }
   }
 }
@@ -50,6 +63,19 @@ async function generateSDKSources(
   // TODO: what about overwrite?
   await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
   await createFile(serviceDir, 'index.ts', indexFile(), true);
+  if (options.generatePackageJson) {
+    await createFile(
+      serviceDir,
+      'package.json',
+      packageJson(
+        openApiDocument.npmPackageName,
+        genericDescription(openApiDocument.directoryName),
+        await getSDKVersion(),
+        options.versionInPackageJson
+      ),
+      true
+    );
+  }
 }
 
 /**
@@ -92,7 +118,7 @@ async function generateOpenApiService(
       throw new Error(response.stderr);
     }
     logger.info(
-      `Sucessfully generated a client using the OpenApi generator CLI ${response.stdout}`
+      `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
     throw new ErrorWithCause(
@@ -133,10 +159,12 @@ async function duplicateServiceExists(
  * Generates an OpenAPI Service from a file.
  * @param filePath The filepath where the service to generate is located.
  * @param options  Options to configure generation.
+ * @param vdmMapping The vdmMapping for the OpenAPI generation.
  */
 async function generateFromFile(
   filePath: string,
-  options: GeneratorOptions
+  options: GeneratorOptions,
+  vdmMapping: VdmMapping
 ): Promise<void> {
   const serviceName = parseServiceName(filePath);
 
@@ -162,7 +190,9 @@ async function generateFromFile(
   const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
-    serviceName
+    serviceName,
+    filePath,
+    vdmMapping
   );
 
   if (!parsedOpenApiDocument.operations.length) {
@@ -199,4 +229,13 @@ async function getInputFilePaths(input: string): Promise<string[]> {
     Promise.resolve([])
   );
   return inputFilePaths;
+}
+/*
+ * Get the current SDK version from the package json.
+ * @returns The SDK version.
+ */
+export async function getSDKVersion(): Promise<string> {
+  return JSON.parse(
+    await readFile(resolve(__dirname, '../package.json'), 'utf8')
+  ).version;
 }

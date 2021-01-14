@@ -67,3 +67,19 @@ export function tenantFromJwt(decodedJWT: DecodedJWT): Tenant {
     name: tenantName(decodedJWT)
   };
 }
+
+/**
+ * Compare two decoded JWTs based on their tenantIds.
+ * @param decodedUserToken - User JWT
+ * @param decodedProviderToken - Provider JWT
+ * @returns Whether the tenant is identical.
+ */
+export function isIdenticalTenant(
+  decodedUserToken: DecodedJWT,
+  decodedProviderToken: DecodedJWT
+): boolean {
+  return (
+    readPropertyWithWarn(decodedUserToken, mappingTenantFields.id.keyInJwt) ===
+    readPropertyWithWarn(decodedProviderToken, mappingTenantFields.id.keyInJwt)
+  );
+}

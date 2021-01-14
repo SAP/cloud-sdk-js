@@ -2,7 +2,7 @@ import { promises } from 'fs';
 import { parse } from 'path';
 import { OpenAPIV3 } from 'openapi-types';
 import { convert } from 'swagger2openapi';
-import { safeLoad } from 'js-yaml';
+import { load } from 'js-yaml';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 const { readFile } = promises;
 
@@ -10,7 +10,6 @@ const { readFile } = promises;
  * Convert an OpenAPI document to ensure smooth parsing and generation thereafter.
  * Documents are expected to be formatted as JSON, OpenAPI version 3 and only have one "default" tag.
  * @param filePath File content of the original spec.
- * @param ouputFilePath Path to write the altered spec to.
  */
 export async function convertOpenApiSpec(
   filePath: string
@@ -34,7 +33,7 @@ export async function parseFileAsJson(
     return JSON.parse(fileContent);
   }
   if (['.yaml', '.yml'].includes(extension)) {
-    return safeLoad(fileContent) as Record<string, any>;
+    return load(fileContent) as Record<string, any>;
   }
 
   throw new Error(

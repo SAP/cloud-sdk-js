@@ -1,10 +1,10 @@
 import { resolve } from 'path';
 import { existsSync } from 'fs';
 import { deleteDirectory } from '@sap-cloud-sdk/util';
-import { generate, getSDKVersion } from './generator';
+import { generate, getSdkVersion } from './generator';
 
 describe('generator', () => {
-  const inputDir = resolve(
+  const input = resolve(
     __dirname,
     '../../../test-resources/openapi-service-specs/'
   );
@@ -12,7 +12,7 @@ describe('generator', () => {
 
   beforeAll(async () => {
     await generate({
-      inputDir,
+      input,
       outputDir,
       generateJs: true,
       clearOutputDir: true,
@@ -24,7 +24,7 @@ describe('generator', () => {
     await deleteDirectory(outputDir);
   });
 
-  it('getSDKVersion returns a valid stable version', async() => {
+  it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);
   });
 

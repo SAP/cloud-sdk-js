@@ -5,6 +5,7 @@ import { resolve, parse } from 'path';
 import {
   createLogger,
   ErrorWithCause,
+  transpileDirectory,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
@@ -20,6 +21,7 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
+import { tsconfigJson } from './wrapper-files/tsconfig-json';
 
 const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promises;
 const logger = createLogger('openapi-generator');
@@ -30,7 +32,7 @@ const logger = createLogger('openapi-generator');
  * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
  * @param options Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void[]> {
+export async function generate(options: GeneratorOptions): Promise<void> {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.input.toString(), 'service-mapping.json');
@@ -224,7 +226,8 @@ async function getInputFilePaths(input: string): Promise<string[]> {
  * Get the current SDK version from the package json.
  * @returns The SDK version.
  */
-export function getSDKVersion(): string {
-  return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8'))
-    .version;
+export async function getSdkVersion(): Promise<string> {
+  return JSON.parse(
+    await readFile(resolve(__dirname, '../package.json'), 'utf8')
+  ).version;
 }

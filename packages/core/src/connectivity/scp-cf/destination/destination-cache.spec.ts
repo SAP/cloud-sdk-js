@@ -1,4 +1,3 @@
-import { install } from '@sinonjs/fake-timers';
 import nock from 'nock';
 import { IsolationStrategy } from '../cache';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
@@ -547,7 +546,7 @@ describe('caching destination unit tests', () => {
   });
 
   it('should return undefined when the destination is not valid', () => {
-    const clock = install();
+    jest.useFakeTimers('modern');
     const dummyJwt = { user_id: 'user', zid: 'tenant' };
     destinationCache.cacheRetrievedDestination(
       dummyJwt,
@@ -555,7 +554,7 @@ describe('caching destination unit tests', () => {
       IsolationStrategy.User
     );
     const minutesToExpire = 6;
-    clock.tick(60000 * minutesToExpire);
+    jest.advanceTimersByTime(60000 * minutesToExpire);
 
     const actual = destinationCache.retrieveDestinationFromCache(
       dummyJwt,
@@ -564,6 +563,5 @@ describe('caching destination unit tests', () => {
     );
 
     expect(actual).toBeUndefined();
-    clock.uninstall();
   });
 });

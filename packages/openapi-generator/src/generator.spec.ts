@@ -18,6 +18,8 @@ describe('generator', () => {
       clearOutputDir: true,
       generatePackageJson: true
     });
+    console.log('BEFORE ALL: OpenApi client generated.')
+    console.log(existsSync(outputDir))
   }, 60000);
 
   afterAll(async () => {

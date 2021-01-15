@@ -132,15 +132,16 @@ async function generateOpenApiService(
     const response = await execa('npx', generationArguments, {
       cwd: resolve(__dirname, '..')
     });
+    throw new Error('Error test FRANK.');
     if (response.stderr) {
-      console.error('Error in API generation of OPenApi lib stderr'+response.stderr)
+      // console.error('Error in API generation of OPenApi lib stderr'+response.stderr)
       throw new Error(response.stderr);
     }
     logger.info(
       `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
-    console.error('Error in API generation of OPenApi lib'+JSON.stringify(err))
+    // console.error('Error in API generation of OPenApi lib'+JSON.stringify(err))
     throw new ErrorWithCause(
       'Could not generate the OpenApi client using the OpenApi generator CLI.',
       err
@@ -198,13 +199,13 @@ async function generateFromFile(
   }
 
   await mkdir(serviceDir, { recursive: true });
-  console.warn('Try to write converted file to paht: '+convertedInputFilePath)
   await writeFile(
     convertedInputFilePath,
     JSON.stringify(openApiDocument, null, 2)
-  ).then(()=>console.info('File written to location'+convertedInputFilePath)).catch(err=>{console.error('Error in writing file.');throw new Error(err)});
-  await generateOpenApiService(convertedInputFilePath, serviceDir).catch(err=>{console.error('Error in generation of client'+JSON.stringify(err));throw new Error(err)});
-  await generateSDKSources(serviceDir, parsedOpenApiDocument, options).catch(err=>{console.error('Error in transpilation'+JSON.stringify(err));throw new Error(err)});
+  ); // .then(() => console.info('File written to location' + convertedInputFilePath)
+  // .catch(err=>{console.error('Error in writing file.');throw new Error(err)});
+  await generateOpenApiService(convertedInputFilePath, serviceDir); // .catch(err=>{console.error('Error in generation of client'+JSON.stringify(err));throw new Error(err)});
+  await generateSDKSources(serviceDir, parsedOpenApiDocument, options); // .catch(err=>{console.error('Error in transpilation'+JSON.stringify(err));throw new Error(err)});
 }
 
 /**

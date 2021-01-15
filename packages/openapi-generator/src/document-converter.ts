@@ -54,7 +54,7 @@ export async function convertDocToOpenApiV3(
   try {
     return (await convert(openApiDocument, {})).openapi;
   } catch (err) {
-    console.error('Error in java document conversion'+JSON.stringify(err))
+    // console.error('Error in java document conversion'+JSON.stringify(err))
     throw new ErrorWithCause(
       'Could not convert OpenAPI specification to OpenAPI version 3.',
       err

@@ -1,4 +1,4 @@
-import { existsSync, PathLike, readdirSync, readFileSync, rmdir } from 'fs';
+import { existsSync, PathLike, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { Directory } from 'ts-morph';
 import execa from 'execa';
@@ -53,7 +53,7 @@ export function transpileDirectory(
       logger.info(`Transpiling files in directory: ${path} finished.`);
     })
     .catch(err => {
-      console.error('Error in transpiling catched' + JSON.stringify(err))
+      // console.error('Error in transpiling catched' + JSON.stringify(err))
       logger.error(`Error: Failed to generate js files: ${err}`);
       process.exit(1);
     });

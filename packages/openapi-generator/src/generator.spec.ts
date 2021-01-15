@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { existsSync,promises } from 'fs';
+import { existsSync, promises } from 'fs';
 import { generate, getSdkVersion } from './generator';
 
 describe('generator', () => {
@@ -8,6 +8,7 @@ describe('generator', () => {
     '../../../test-resources/openapi-service-specs/'
   );
   const outputDir = resolve(__dirname, '../generation-test');
+  const outputDir2 = resolve(__dirname, '../generation-test-2');
 
   beforeAll(
     () =>
@@ -21,7 +22,13 @@ describe('generator', () => {
     60000
   );
 
-  afterAll(() => promises.rmdir(outputDir), 60000);
+  afterAll(
+    () =>
+      promises
+        .rmdir(outputDir, { recursive: true })
+        .then(() => promises.rmdir(outputDir2, { recursive: true })),
+    60000
+  );
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);
@@ -54,4 +61,19 @@ describe('generator', () => {
     );
     expect(existsSync(tsconfig)).toBe(true);
   });
+
+  it('fails on compilation due to a bad tsconfig.', async () => {
+    // try {
+    //   await expect(generate({
+    //     input,
+    //     outputDir: outputDir2,
+    //     generateJs: true,
+    //     clearOutputDir: true,
+    //     generatePackageJson: true,
+    //     tsConfig: resolve(input, 'failing-tsconfig.json')
+    //   }))
+    // }catch (err) {
+    //   console.error(err)
+    // }
+  }, 60000);
 });

@@ -8,6 +8,8 @@ This project containes multiple packages, that are managed using [lerna](https:/
 All dependencies that are used in more than one of the packages are hoisted into the root project. Dependencies, that occur only once and binaries will be placed in the node_modules of that specific package. Some of the packages are interdependent, therefore `yarn install` won't work from within those packages. Run `yarn install` in the root directory instead.
 
 ## Testing
+All (new) functionality shall be covered by tests.
+
 In order to run all tests, execute:
 ```bash
 $ yarn test

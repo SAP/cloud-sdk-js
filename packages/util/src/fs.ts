@@ -53,7 +53,7 @@ export function transpileDirectory(
       logger.info(`Transpiling files in directory: ${path} finished.`);
     })
     .catch(err => {
-      console.error('Error in generation catched' + JSON.stringify(err))
+      console.error('Error in transpiling catched' + JSON.stringify(err))
       logger.error(`Error: Failed to generate js files: ${err}`);
       process.exit(1);
     });

@@ -16,7 +16,7 @@ describe('generator', () => {
       generateJs: true,
       clearOutputDir: true,
       generatePackageJson: true
-    }).then(()=>console.log('Finished generation')).catch(err=>console.log('Error generation'+err.message))
+    }).then(()=>console.log('Finished generation')).catch(err=>console.log('Error generation: '+JSON.stringify(err)))
   , 120000);
 
   afterAll(() =>  deleteDirectory(outputDir),120000);

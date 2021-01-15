@@ -18,7 +18,7 @@ describe('generator', () => {
         generateJs: true,
         clearOutputDir: true,
         generatePackageJson: true
-      }),
+      }).catch(err=>console.error('Generation Error'+JSON.stringify(err))),
     60000
   );
 

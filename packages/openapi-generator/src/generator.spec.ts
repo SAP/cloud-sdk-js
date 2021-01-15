@@ -17,9 +17,9 @@ describe('generator', () => {
       clearOutputDir: true,
       generatePackageJson: true
     })
-  , 60000);
+  , 120000);
 
-  afterAll(() =>  deleteDirectory(outputDir));
+  afterAll(() =>  deleteDirectory(outputDir),120000);
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);

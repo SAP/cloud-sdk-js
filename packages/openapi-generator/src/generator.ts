@@ -132,7 +132,7 @@ async function generateOpenApiService(
     const response = await execa('npx', generationArguments, {
       cwd: resolve(__dirname, '..')
     });
-    // throw new Error('Error test FRANK.');
+    throw new Error('Error test FRANK.');
     if (response.stderr) {
       // console.error('Error in API generation of OPenApi lib stderr'+response.stderr)
       throw new Error(response.stderr);

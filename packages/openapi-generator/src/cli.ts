@@ -107,6 +107,7 @@ async function validateJavaRuntime(): Promise<void> {
   try {
     response = await execa('java', ['-version']);
   } catch (err) {
+    console.error('Error in java check'+JSON.stringify(err))
     throw new ErrorWithCause(
       'Could not invoke `java` command. Probably no Java runtime is installed.',
       err

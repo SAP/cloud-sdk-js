@@ -10,22 +10,16 @@ describe('generator', () => {
   );
   const outputDir = resolve(__dirname, '../generation-test');
 
-  beforeAll(async () => {
-    console.log('BEFORE ALL: Before generation')
-    await generate({
+  beforeAll( () => generate({
       input,
       outputDir,
       generateJs: true,
       clearOutputDir: true,
       generatePackageJson: true
-    });
-    console.log('BEFORE ALL: OpenApi client generated.')
-    console.log(existsSync(outputDir))
-  }, 60000);
+    })
+  , 60000);
 
-  afterAll(async () => {
-    await deleteDirectory(outputDir);
-  });
+  afterAll(() =>  deleteDirectory(outputDir));
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);

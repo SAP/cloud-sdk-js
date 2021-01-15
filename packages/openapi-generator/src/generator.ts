@@ -197,10 +197,11 @@ async function generateFromFile(
   }
 
   await mkdir(serviceDir, { recursive: true });
+  console.warn('Try to write converted file to paht: '+convertedInputFilePath)
   await writeFile(
     convertedInputFilePath,
     JSON.stringify(openApiDocument, null, 2)
-  );
+  ).then(()=>console.info('File written to location'+convertedInputFilePath)).catch(err=>'Error in writing file.');
   await generateOpenApiService(convertedInputFilePath, serviceDir).catch(err=>{console.error('Error in generation of client'+JSON.stringify(err));throw new Error(err)});
   await generateSDKSources(serviceDir, parsedOpenApiDocument, options).catch(err=>{console.error('Error in transpilation'+JSON.stringify(err));throw new Error(err)});
 }

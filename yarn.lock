@@ -1661,9 +1661,9 @@
     "@types/node" ">= 8"
 
 "@openapitools/openapi-generator-cli@^2.1.4":
-  version "2.1.16"
-  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.16.tgz#72756fa5d2f4f752732ce8304ef2a50b0925283d"
-  integrity sha512-szYtAj9lrlSwpTFddvp3d4OhtkswpSd29fcJBy5eJU1j/Zq+EjDPRjgB2o7jQ98VK+mV6oFaMHMhFLH06gXKeg==
+  version "2.1.17"
+  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.17.tgz#01db731b5d9ea088ef874cc52e81ada212800338"
+  integrity sha512-y6UhhYsvJ/Y8z60i5BlCXXtLaz342O3nf25f1VARZvmdjMWIzAI2rimyT5VuIm2GO73hahUrNv6mGt8MGH3oVA==
   dependencies:
     "@nestjs/common" "7.6.5"
     "@nestjs/core" "7.6.5"
@@ -2057,9 +2057,9 @@
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
 "@types/node@*", "@types/node@>= 8", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.19.13"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.13.tgz#888e2b34159fb91496589484ec169618212b51b7"
-  integrity sha512-qdixo2f0U7z6m0UJUugTJqVF94GNDkdgQhfBtMs8t5898JE7G/D2kJYw4rc1nzjIPLVAsDkY2MdABnLAP5lM1w==
+  version "12.19.14"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.14.tgz#59e5029a3c2aea34f68b717955381692fd47cafb"
+  integrity sha512-2U9uLN46+7dv9PiS8VQJcHhuoOjiDPZOLAt0WuA1EanEknIMae+2QbMhayF7cgGqjvRVIfNpt+6jLPczJZFiRw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -8458,9 +8458,9 @@ ono@^4.0.11:
     format-util "^1.0.3"
 
 openapi-backend@^3.6.3:
-  version "3.6.3"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.6.3.tgz#06e764e547a0d29f74ae51bc2747f8f18e36c71c"
-  integrity sha512-o2/qroZKAC1t5CSiSUDHlFicBibQiP4Z2unkqn+OoE68B0H3WpYdykhb7hJQTROWYR72gQrJDcPdBFKiI9TqRg==
+  version "3.7.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.7.0.tgz#a908573c6f286d7652da1849317e594a91d86c12"
+  integrity sha512-qo+oTlPlpzBvCycT1AsHyOw+2wKhHuY8zDe6j/xx5F+9ZvHoeGiszFXd9tlI/5VExqRi0bxheoQY/Sgdl8pY0g==
   dependencies:
     ajv "^6.10.0"
     bath-es5 "^3.0.3"

@@ -4,8 +4,8 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "composite": true,
-    "target": "es2017"
+    "target": "es2017",
+    "composite": true
   },
   "include": [
     "src/**/*.ts"

@@ -18,6 +18,6 @@ export interface ServiceMapping {
 export function readServiceMapping(options: GeneratorOptions): VdmMapping {
   const serviceMappingPath =
     options.serviceMapping ||
-    resolve(options.inputDir.toString(), 'service-mapping.json');
+    resolve(options.input.toString(), 'service-mapping.json');
   return readJSON(serviceMappingPath) as VdmMapping;
 }

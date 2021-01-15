@@ -141,7 +141,7 @@ async function generateOpenApiService(
       `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
-    // console.error('Error in API generation of OPenApi lib'+JSON.stringify(err))
+    console.error('Error in API generation of OPenApi lib in Catch'+JSON.stringify(err))
     throw new ErrorWithCause(
       'Could not generate the OpenApi client using the OpenApi generator CLI.',
       err

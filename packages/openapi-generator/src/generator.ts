@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises as promisesFs,existsSync } from 'fs';
+import { promises as promisesFs, existsSync } from 'fs';
 import { resolve, parse } from 'path';
 import {
   createLogger,
@@ -38,7 +38,7 @@ export async function generate(options: GeneratorOptions): Promise<void[]> {
     resolve(options.input.toString(), 'service-mapping.json');
 
   if (options.clearOutputDir) {
-    if(existsSync(options.outputDir)) {
+    if (existsSync(options.outputDir)) {
       await rmdir(options.outputDir, { recursive: true });
     }
   }
@@ -46,8 +46,6 @@ export async function generate(options: GeneratorOptions): Promise<void[]> {
   const vdmMapping = readServiceMapping(options);
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
-
-  console.log('Generation for the following file paths:' + JSON.stringify(inputFilePaths))
 
   const promises = inputFilePaths.map(async inputFilePath => {
     const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
@@ -203,11 +201,8 @@ async function generateFromFile(
     JSON.stringify(openApiDocument, null, 2)
   );
 
-  console.log('Dummy part of  generation finished for' + serviceName)
   await generateOpenApiService(convertedInputFilePath, serviceDir);
-  console.log('TS client part of generation finished for' + serviceName)
   await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
-  console.log('JS client part of generation finished for' + serviceName)
 }
 
 /**

@@ -10,16 +10,19 @@ describe('generator', () => {
   );
   const outputDir = resolve(__dirname, '../generation-test');
 
-  beforeAll( () => generate({
-      input,
-      outputDir,
-      generateJs: true,
-      clearOutputDir: true,
-      generatePackageJson: true
-    }).then(()=>console.log('Finished generation')).catch(err=>console.log('Error generation: '+JSON.stringify(err)))
-  , 120000);
+  beforeAll(
+    () =>
+      generate({
+        input,
+        outputDir,
+        generateJs: true,
+        clearOutputDir: true,
+        generatePackageJson: true
+      }),
+    60000
+  );
 
-  afterAll(() =>  deleteDirectory(outputDir),120000);
+  afterAll(() => deleteDirectory(outputDir), 60000);
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);

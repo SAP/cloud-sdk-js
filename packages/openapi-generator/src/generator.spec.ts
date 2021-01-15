@@ -1,6 +1,5 @@
 import { resolve } from 'path';
-import { existsSync } from 'fs';
-import { deleteDirectory } from '@sap-cloud-sdk/util';
+import { existsSync,promises } from 'fs';
 import { generate, getSdkVersion } from './generator';
 
 describe('generator', () => {
@@ -22,7 +21,7 @@ describe('generator', () => {
     60000
   );
 
-  afterAll(() => deleteDirectory(outputDir), 60000);
+  afterAll(() => promises.rmdir(outputDir), 60000);
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);

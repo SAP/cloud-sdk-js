@@ -58,21 +58,3 @@ export function transpileDirectory(
       process.exit(1);
     });
 }
-
-export function deleteDirectory(path: string): Promise<void> {
-  function callBackk(
-    err: Error | null,
-    res: () => void,
-    rej: (reason: any) => void
-  ) {
-    if (err) {
-      rej(`Error in deleting: ${path} with ${err.message}`);
-    } else {
-      res();
-    }
-  }
-
-  return new Promise<void>((res, rej) => {
-    rmdir(path, { recursive: true }, err => callBackk(err, res, rej));
-  });
-}

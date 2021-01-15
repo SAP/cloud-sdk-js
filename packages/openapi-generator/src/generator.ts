@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises } from 'fs';
+import { promises as promisesFs } from 'fs';
 import { resolve, parse } from 'path';
 import {
   createLogger,
@@ -23,7 +23,7 @@ import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
 import { tsconfigJson } from './wrapper-files/tsconfig-json';
 
-const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promises;
+const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -32,7 +32,7 @@ const logger = createLogger('openapi-generator');
  * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
  * @param options Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void> {
+export async function generate(options: GeneratorOptions): Promise<void[]> {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.input.toString(), 'service-mapping.json');
@@ -44,18 +44,19 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   const vdmMapping = readServiceMapping(options);
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
-  inputFilePaths.forEach(async inputFilePath => {
+  const promises = inputFilePaths.map(async inputFilePath => {
     const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
       parseServiceName(inputFilePath)
     );
 
-    await generateFromFile(
+    return generateFromFile(
       inputFilePath,
       options,
       vdmMapping,
       uniqueServiceName
     );
   });
+  return Promise.all(promises);
 }
 
 /**

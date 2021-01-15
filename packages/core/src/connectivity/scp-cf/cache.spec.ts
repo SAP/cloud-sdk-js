@@ -1,4 +1,3 @@
-import { install } from '@sinonjs/fake-timers';
 import {
   AuthenticationType,
   Destination,
@@ -47,14 +46,13 @@ describe('Cache', () => {
   });
 
   it('retrieving expired item should return undefined', () => {
-    const clock = install();
+    jest.useFakeTimers('modern');
     cacheOne.set('one', destinationOne);
 
     const minutesToExpire = 6;
     // Shift time to expire the set item
-    clock.tick(60000 * minutesToExpire);
+    jest.advanceTimersByTime(60000 * minutesToExpire);
     expect(cacheOne.get('one')).toBeUndefined();
-    clock.uninstall();
   });
 
   it('clear() should remove all entries in cache', () => {

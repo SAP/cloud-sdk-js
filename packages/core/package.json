@@ -52,8 +52,6 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-util": "^1.36.1",
-    "@sinonjs/fake-timers": "^7.0.1",
-    "@types/sinonjs__fake-timers": "^6.0.0",
     "nock": "^13.0.3"
   }
 }

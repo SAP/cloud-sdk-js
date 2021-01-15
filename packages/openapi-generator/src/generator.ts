@@ -200,9 +200,11 @@ async function generateFromFile(
     convertedInputFilePath,
     JSON.stringify(openApiDocument, null, 2)
   );
-
-  await generateOpenApiService(convertedInputFilePath, serviceDir);
-  await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
+  console.log('Step 1')
+  await generateOpenApiService(convertedInputFilePath, serviceDir).catch(err=>console.error('Error in generation of client'+JSON.stringify(err)));
+  console.log('Step 2')
+  await generateSDKSources(serviceDir, parsedOpenApiDocument, options).catch(err=>console.error('Error in transpilation'+JSON.stringify(err)));
+  console.log('Step 3')
 }
 
 /**

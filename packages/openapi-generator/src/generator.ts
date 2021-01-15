@@ -1,11 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises, readFileSync } from 'fs';
+import { promises } from 'fs';
 import { resolve, parse } from 'path';
 import {
   createLogger,
   ErrorWithCause,
-  transpileDirectory
+  UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
 import { GeneratorOptions } from './options';
@@ -19,10 +19,9 @@ import {
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { readServiceMapping } from './service-mapping';
-import { tsconfigJson } from './wrapper-files/tsconfig-json';
+import { readServiceMapping, VdmMapping } from './service-mapping';
 
-const { readdir, writeFile, rmdir, mkdir } = promises;
+const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promises;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -34,56 +33,27 @@ const logger = createLogger('openapi-generator');
 export async function generate(options: GeneratorOptions): Promise<void[]> {
   options.serviceMapping =
     options.serviceMapping ||
-    resolve(options.inputDir.toString(), 'service-mapping.json');
+    resolve(options.input.toString(), 'service-mapping.json');
 
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
 
-  // TODO: should be recursive
-  const inputFilePaths = (await readdir(options.inputDir)).map(fileName =>
-    resolve(options.inputDir, fileName)
-  );
-
   const vdmMapping = readServiceMapping(options);
-  const promies = inputFilePaths.map(async filePath => {
-    const serviceName = parseServiceName(filePath);
-    // TODO: get kebapcase unique directory name
-    const serviceDir = resolve(options.outputDir, serviceName);
-    let openApiDocument;
-    try {
-      openApiDocument = await convertOpenApiSpec(filePath);
-    } catch (err) {
-      logger.error(
-        `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
-      );
-      return;
-    }
-    const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
-    const parsedOpenApiDocument = await parseOpenApiDocument(
-      openApiDocument,
-      serviceName,
-      filePath,
-      vdmMapping
+  const uniqueNameGenerator = new UniqueNameGenerator('-');
+  const inputFilePaths = await getInputFilePaths(options.input);
+  inputFilePaths.forEach(async inputFilePath => {
+    const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
+      parseServiceName(inputFilePath)
     );
 
-    if (!parsedOpenApiDocument.operations.length) {
-      logger.warn(
-        `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
-      );
-      return;
-    }
-
-    await mkdir(serviceDir, { recursive: true });
-    await writeFile(
-      convertedInputFilePath,
-      JSON.stringify(openApiDocument, null, 2)
+    await generateFromFile(
+      inputFilePath,
+      options,
+      vdmMapping,
+      uniqueServiceName
     );
-
-    await generateOpenApiService(convertedInputFilePath, serviceDir);
-    await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
   });
-  return Promise.all(promies);
 }
 
 /**
@@ -108,7 +78,7 @@ async function generateSDKSources(
       packageJson(
         openApiDocument.npmPackageName,
         genericDescription(openApiDocument.directoryName),
-        getSDKVersion(),
+        await getSdkVersion(),
         options.versionInPackageJson
       ),
       true
@@ -177,6 +147,77 @@ async function generateOpenApiService(
  */
 function parseServiceName(filePath: string): string {
   return parse(filePath).name.replace(/-openapi$/, '');
+}
+
+/**
+ * Generates an OpenAPI Service from a file.
+ * @param filePath The filepath where the service to generate is located.
+ * @param options  Options to configure generation.
+ * @param vdmMapping The vdmMapping for the OpenAPI generation.
+ * @param uniqueServiceName The uniqueServiceName to be used.
+ */
+async function generateFromFile(
+  filePath: string,
+  options: GeneratorOptions,
+  vdmMapping: VdmMapping,
+  uniqueServiceName: string
+): Promise<void> {
+  const serviceName = uniqueServiceName;
+  const serviceDir = resolve(options.outputDir, serviceName);
+
+  let openApiDocument;
+  try {
+    openApiDocument = await convertOpenApiSpec(filePath);
+  } catch (err) {
+    logger.error(
+      `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
+    );
+    return;
+  }
+  const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
+  const parsedOpenApiDocument = await parseOpenApiDocument(
+    openApiDocument,
+    serviceName,
+    filePath,
+    vdmMapping
+  );
+
+  if (!parsedOpenApiDocument.operations.length) {
+    logger.warn(
+      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
+    );
+    return;
+  }
+
+  await mkdir(serviceDir, { recursive: true });
+  await writeFile(
+    convertedInputFilePath,
+    JSON.stringify(openApiDocument, null, 2)
+  );
+
+  await generateOpenApiService(convertedInputFilePath, serviceDir);
+  await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
+}
+
+/**
+ * Recursively searches through a given input path and returns all file paths as a string array.
+ * @param input the path to the input directory.
+ * @returns all file paths as a string array.
+ */
+async function getInputFilePaths(input: string): Promise<string[]> {
+  if ((await lstat(input)).isFile()) {
+    return [input];
+  }
+
+  const directoryContents = await readdir(input, { withFileTypes: true });
+  const inputFilePaths = directoryContents.reduce(
+    async (paths: Promise<string[]>, directoryContent) => [
+      ...(await paths),
+      ...(await getInputFilePaths(resolve(input, directoryContent.name)))
+    ],
+    Promise.resolve([])
+  );
+  return inputFilePaths;
 }
 
 /**

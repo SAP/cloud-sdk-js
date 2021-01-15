@@ -24,8 +24,8 @@ describe('generator', () => {
     await deleteDirectory(outputDir);
   });
 
-  it('getSDKVersion returns a valid stable version', () => {
-    expect(getSDKVersion().split('.').length).toBe(3);
+  it('getSDKVersion returns a valid stable version', async() => {
+    expect((await getSdkVersion()).split('.').length).toBe(3);
   });
 
   it('should transpile the generated sourcs', () => {

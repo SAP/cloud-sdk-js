@@ -25,10 +25,11 @@ export = class GenerateOpenApiClient extends Command {
   ).version;
 
   static flags = {
-    inputDir: flags.string({
-      name: 'inputDir',
+    input: flags.string({
+      name: 'input',
       char: 'i',
-      description: 'Input directory for the OpenApi service definitions.',
+      description:
+        'Input directory or file for the OpenApi service definitions.',
       parse: input => resolve(input),
       required: true
     }),

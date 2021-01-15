@@ -11,6 +11,7 @@ describe('generator', () => {
   const outputDir = resolve(__dirname, '../generation-test');
 
   beforeAll(async () => {
+    console.log('BEFORE ALL: Before generation')
     await generate({
       input,
       outputDir,

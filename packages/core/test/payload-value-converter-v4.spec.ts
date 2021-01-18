@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { Temporal } from 'proposal-temporal';
 import { edmToTsV4, tsToEdmV4 } from '../src';
-import { temporalDeserializersNs } from '../src/temporal-deserializers';
 import PlainDate = Temporal.PlainDate;
 import Duration = Temporal.Duration;
 
@@ -11,10 +10,12 @@ describe('edmToTsV4()', () => {
     const actual = edmToTsV4(date, 'Edm.Date') as moment.Moment;
     expect(actual.format('YYYY-MM-DD')).toBe(date);
   });
-  // TODO
+
   it('should parse Edm.Date to Temporal.PlainDate', () => {
     const date = '2020-05-13';
-    const customizeDeserializer = { 'Edm.Date': temporalDeserializersNs.date };
+    const customizeDeserializer = {
+      'Edm.Date': (str: string) => Temporal.PlainDate.from(str)
+    };
     const actual = edmToTsV4(
       date,
       'Edm.Date',
@@ -94,10 +95,10 @@ describe('edmToTsV4()', () => {
     actual = edmToTsV4(durationOnlyDays, 'Edm.Duration') as moment.Duration;
     expect(actual.asMilliseconds()).toBe(expected);
   });
-  // TODO
+
   it('should parse Edm.Duration to Temporal.Duration', () => {
     const customizeDeserializer = {
-      'Edm.Duration': temporalDeserializersNs.duration
+      'Edm.Duration': (str: string) => Temporal.Duration.from(str)
     };
     const durationAll = '-P3DT6H32M49.987S';
     let expected =

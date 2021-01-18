@@ -6,16 +6,12 @@ import {
 } from '../../odata-common';
 import { EntityV4 } from '../entity';
 import { oDataUriV4 } from '../uri-conversion';
-import { DateTimeDefault, DateTime } from '../../temporal-deserializers';
 /**
  * Create OData query to delete an entity.
  *
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export class DeleteRequestBuilderV4<
-    EntityT extends EntityV4<DateTimeT>,
-    DateTimeT extends DateTime = DateTimeDefault
-  >
+export class DeleteRequestBuilderV4<EntityT extends EntityV4>
   extends DeleteRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   readonly _entityConstructor: Constructable<EntityT>;

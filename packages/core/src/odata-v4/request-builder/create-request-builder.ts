@@ -7,17 +7,13 @@ import { EntityV4 } from '../entity';
 import { oDataUriV4 } from '../uri-conversion';
 import { entitySerializerV4 } from '../entity-serializer';
 import { entityDeserializerV4 } from '../entity-deserializer';
-import { DateTimeDefault, DateTime } from '../../temporal-deserializers';
 import { responseDataAccessorV4 } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  *
  * @typeparam EntityT - Type of the entity to be created
  */
-export class CreateRequestBuilderV4<
-    EntityT extends EntityV4<DateTimeT>,
-    DateTimeT extends DateTime = DateTimeDefault
-  >
+export class CreateRequestBuilderV4<EntityT extends EntityV4>
   extends CreateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT> {
   /**

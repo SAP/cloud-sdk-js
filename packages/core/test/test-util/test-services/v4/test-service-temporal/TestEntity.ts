@@ -4,18 +4,33 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { Moment } from 'moment';
+import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
-import { Temporal } from 'proposal-temporal';
-import PlainDate = Temporal.PlainDate;
-import Duration = Temporal.Duration;
-import { DateTimeDefault, DateTime } from '../../../../../src/temporal-deserializers';
+import {
+  AllFields,
+  AnyField,
+  BigNumberField,
+  BooleanField,
+  CollectionField,
+  CustomFieldV4,
+  DateField,
+  DurationField,
+  EntityBuilderType,
+  EntityV4,
+  EnumField,
+  Field,
+  NumberField,
+  OneToManyLink,
+  OneToOneLink,
+  StringField,
+  Time,
+  TimeField
+} from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity<T extends DateTime = DateTimeDefault> extends EntityV4<T> implements TestEntityType<T> {
+export class TestEntity<T1 = string, T2 = number> extends EntityV4<T1, T2> implements TestEntityType<T1, T2> {
   /**
    * Technical entity name for TestEntity.
    */
@@ -32,22 +47,14 @@ export class TestEntity<T extends DateTime = DateTimeDefault> extends EntityV4<T
    * Key Property String.
    */
   keyPropertyString!: string;
-  /**
-   * Date Property.
-   * @nullable
-   */
-  dateProperty?: T["Edm.Date"];
-  /**
-   * Duration Property.
-   * @nullable
-   */
-  durationProperty?: T["Edm.Duration"];
+  stringProperty?: T1;
+  int32Property?: T2;
   /**
    * Returns an entity builder to construct instances of `TestEntity`.
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static builder<T extends DateTime = DateTimeDefault>(dateTimeMiddleware?: T): EntityBuilderType<TestEntity<T>, TestEntityType<T>> {
-    return EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<T>, TestEntityType<T>>;
+  static builder<T1, T2>(): EntityBuilderType<TestEntity<T1, T2>, TestEntityType<T1, T2>> {
+    return EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<T1, T2>, TestEntityType<T1, T2>>;
   }
 
   /**
@@ -63,8 +70,8 @@ export class TestEntity<T extends DateTime = DateTimeDefault> extends EntityV4<T
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField<T extends DateTime>(fieldName: string): CustomFieldV4<TestEntity<T>> {
-    return EntityV4.customFieldSelector(fieldName, TestEntity) as CustomFieldV4<TestEntity<T>>;
+  static customField<T1, T2>(fieldName: string): CustomFieldV4<TestEntity<T1, T2>> {
+    return EntityV4.customFieldSelector(fieldName, TestEntity) as CustomFieldV4<TestEntity<T1, T2>>;
   }
 
   /**
@@ -76,11 +83,11 @@ export class TestEntity<T extends DateTime = DateTimeDefault> extends EntityV4<T
   }
 }
 
-export interface TestEntityType<T extends DateTime> {
+export interface TestEntityType<T1, T2> {
   keyPropertyGuid: string;
   keyPropertyString: string;
-  dateProperty?: T["Edm.Date"] | null;
-  durationProperty?: T["Edm.Duration"] | null;
+  stringProperty?: T1 | null;
+  int32Property?: T2 | null;
 }
 
 export namespace TestEntity {
@@ -88,43 +95,35 @@ export namespace TestEntity {
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_GUID: StringField<TestEntity<DateTime>> = new StringField('KeyPropertyGuid', TestEntity, 'Edm.Guid');
+  export const KEY_PROPERTY_GUID: StringField<TestEntity<any, any>> = new StringField('KeyPropertyGuid', TestEntity, 'Edm.Guid');
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity<DateTime>> = new StringField('KeyPropertyString', TestEntity, 'Edm.String');
-  /**
-   * Static representation of the [[dateProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const DATE_PROPERTY: DateField<TestEntity<DateTime>> = new DateField('DateProperty', TestEntity, 'Edm.Date');
-  /**
-   * Static representation of the [[durationProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const DURATION_PROPERTY: DurationField<TestEntity<DateTime>> = new DurationField('DurationProperty', TestEntity, 'Edm.Duration');
+  export const KEY_PROPERTY_STRING: StringField<TestEntity<any, any>> = new StringField('KeyPropertyString', TestEntity, 'Edm.String');
+  export const STRING_PROPERTY: StringField<TestEntity<any, any>> = new StringField('StringProperty', TestEntity, 'Edm.String');
+  export const INT_32_PROPERTY: NumberField<TestEntity<any, any>> = new NumberField('Int32Property', TestEntity, 'Edm.Int32');
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<StringField<TestEntity<DateTime>> | TimeField<TestEntity<DateTime>> | DateField<TestEntity<DateTime>> | DurationField<TestEntity<DateTime>> > = [
+  export const _allFields: Array< StringField<TestEntity> | NumberField<TestEntity> > = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
-    TestEntity.DATE_PROPERTY,
-    TestEntity.DURATION_PROPERTY,
+    TestEntity.STRING_PROPERTY,
+    TestEntity.INT_32_PROPERTY,
   ];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity> = new AllFields('*', TestEntity);
+  export const ALL_FIELDS: AllFields<TestEntity<any, any>> = new AllFields('*', TestEntity);
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Field<TestEntity<DateTime>>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntity<any, any>>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: { [keys: string]: Field<TestEntity<DateTime>> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Field<TestEntity<DateTime>> }, field: Field<TestEntity<DateTime>>) => {
+  export const _keys: { [keys: string]: Field<TestEntity<any, any>> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Field<TestEntity<any, any>> }, field: Field<TestEntity<any, any>>) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});

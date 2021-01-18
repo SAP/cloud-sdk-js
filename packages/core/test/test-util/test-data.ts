@@ -1,7 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { Temporal } from 'proposal-temporal';
 import { uriConverterV2 } from '../../src/odata-v2';
-import { dataTimeTemporal, DateTimeTemporal } from '../../src';
 import { TestEntity } from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
@@ -16,7 +14,8 @@ export function createOriginalTestEntityTemporalData1() {
   return {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'ABCDE',
-    DateProperty: '2020-05-13'
+    StringProperty: 'FGHIJ',
+    Int32Property: 13
   };
 }
 
@@ -90,16 +89,15 @@ export function createTestEntityV4(originalData): TestEntityV4 {
   return entity;
 }
 
-export function createTestEntityTemporal(
-  originalData
-): TestEntityTemporal<DateTimeTemporal> {
-  const entity = TestEntityTemporal.builder(dataTimeTemporal)
+export function createTestEntityTemporal(originalData): TestEntityTemporal {
+  const entity = TestEntityTemporal.builder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)
-    .dateProperty(Temporal.PlainDate.from(originalData.DateProperty))
+    .stringProperty(originalData.StringProperty)
+    .int32Property(originalData.Int32Property)
     .build()
     .setOrInitializeRemoteState();
-  return entity;
+  return entity as any;
 }
 
 export function testEntityResourcePath(

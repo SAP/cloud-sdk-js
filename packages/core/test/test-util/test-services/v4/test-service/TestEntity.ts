@@ -15,9 +15,8 @@ import {
   BigNumberField,
   BooleanField,
   CollectionField,
-  CustomFieldV4, DateTimeDefault,
+  CustomFieldV4,
   DateField,
-  DateTime,
   DurationField,
   EntityBuilderType,
   EntityV4,
@@ -34,7 +33,7 @@ import {
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity<DateTimeT extends DateTime = DateTimeDefault> extends EntityV4<DateTimeT> implements TestEntityType {
+export class TestEntity extends EntityV4 implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */

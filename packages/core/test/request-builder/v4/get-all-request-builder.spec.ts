@@ -18,7 +18,8 @@ import {
   createTestEntityTemporal,
   createTestEntityV4
 } from '../../test-util/test-data';
-import { dataTimeTemporal } from '../../../src';
+import { customDTMiddleware, defaultDTMiddleware } from '../../../src';
+import nock from 'nock';
 
 describe('GetAllRequestBuilderV4', () => {
   let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
@@ -87,21 +88,19 @@ describe('GetAllRequestBuilderV4', () => {
         TestEntity
       );
 
-      // generic type not working
-      // const req3 = await TestEntityTemporal.requestBuilder()
+
+      // const res1 = await TestEntityTemporal.requestBuilder()
       //   .getAll()
-      //   .transformV3(dataTimeTemporal, TestEntityTemporal)
-      //   .execute(defaultDestination);
-      //
-      // const d3 = req3[0].durationProperty;
-
-      const actual4 = await TestEntityTemporal.requestBuilder()
-        .getAllV2()
-        .transformV4(dataTimeTemporal)
-        .executeV4(defaultDestination);
-      const d4 = actual4[0].durationProperty;
-
-      expect(actual4).toEqual([createTestEntityTemporal(testEntity1)]);
+      //   .executeV2(defaultDestination);
+      // const res2 = await TestEntityTemporal.requestBuilder()
+      //   .getAll()
+      //   .transform(defaultDTMiddleware)
+      //   .executeV2(defaultDestination);
+      const res3 = await TestEntityTemporal.requestBuilder()
+        .getAll()
+        .transform(customDTMiddleware)
+        .executeV2(defaultDestination);
+      expect(res3).toEqual([createTestEntityTemporal(testEntity1)]);
     });
 
     it('top(1) returns the first entity', async () => {

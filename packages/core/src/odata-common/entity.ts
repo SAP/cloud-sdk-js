@@ -1,7 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
 import { equal, isNullish } from '@sap-cloud-sdk/util';
-import { DateTimeDefault, DateTime } from '../temporal-deserializers';
 import { EntityBuilder } from './entity-builder';
 import { Link, Field, Selectable, CustomFieldBase } from './selectable';
 import { RequestBuilder } from './request-builder';
@@ -39,7 +38,7 @@ export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
 /**
  * Super class for all representations of OData entity types.
  */
-export abstract class EntityBase<DateTimeT extends DateTime = DateTimeDefault> {
+export abstract class EntityBase {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;

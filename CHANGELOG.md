@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [openapi-generator] Remove the copyright comments from the generated package.json.
 
 
 # 1.36.1

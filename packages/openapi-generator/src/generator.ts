@@ -87,7 +87,8 @@ async function generateSDKSources(
         await getSdkVersion(),
         options.versionInPackageJson
       ),
-      true
+      true,
+      false
     );
   }
   if (options.generateJs) {

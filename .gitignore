@@ -2,6 +2,7 @@ node_modules
 !.github/actions/**/node_modules
 .vscode
 dist
+!/test-packages/test-services/openapi/**/dist
 .DS_Store
 coverage
 lerna-debug.log
@@ -14,8 +15,6 @@ documentation
 
 test-results.xml
 test-packages/type-tests/report.*.json
-
-packages/openapi-generator/generation-test
 
 tsconfig.tsbuildinfo
 junit.xml

@@ -2,8 +2,11 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "outDir":"myDist",
-    "lib": ["esnext"],
+    "outDir": "dist",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -13,6 +16,13 @@
     "inlineSources": false,
     "strict": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"]
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "dist/**/*",
+    "test/**/*",
+    "**/*.spec.ts",
+    "node_modules/**/*"
+  ]
 }

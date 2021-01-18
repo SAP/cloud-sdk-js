@@ -5,41 +5,18 @@ import { generate, getSdkVersion } from './generator';
 const { rmdir } = promises;
 
 describe('generator', () => {
-  const input = resolve(
+  const testServicePath = resolve(
     __dirname,
-    '../../../test-resources/openapi-service-specs/'
-  );
-  const outputDir = resolve(__dirname, '../generation-test');
-  const outputDir2 = resolve(__dirname, '../generation-test-2');
-
-  beforeAll(
-    () =>
-      generate({
-        input,
-        outputDir,
-        generateJs: true,
-        clearOutputDir: true,
-        generatePackageJson: true
-      }),
-    60000
-  );
-
-  afterAll(
-    () =>
-      rmdir(outputDir, { recursive: true }).then(() =>
-        rmdir(outputDir2, { recursive: true })
-      ),
-    60000
+    '../../../test-packages/test-services/openapi/test-service'
   );
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);
   });
 
-  it('should transpile the generated sourcs', () => {
+  it('should transpile the generated sources', () => {
     const jsApiFile = resolve(
-      outputDir,
-      'swagger-yaml-service',
+      testServicePath,
       'dist',
       'api.js'
     );
@@ -48,8 +25,7 @@ describe('generator', () => {
 
   it('should create package.json', () => {
     const packageJson = resolve(
-      outputDir,
-      'swagger-yaml-service',
+      testServicePath,
       'package.json'
     );
     expect(existsSync(packageJson)).toBe(true);
@@ -57,26 +33,9 @@ describe('generator', () => {
 
   it('should create tsconfig.json', () => {
     const tsconfig = resolve(
-      outputDir,
-      'swagger-yaml-service',
+      testServicePath,
       'tsconfig.json'
     );
     expect(existsSync(tsconfig)).toBe(true);
   });
-
-  it('fails on compilation due to a bad tsconfig.', async () => {
-    const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {
-      throw new Error('Transpilation Failed');
-    });
-    await expect(
-      generate({
-        input,
-        outputDir: outputDir2,
-        generateJs: true,
-        clearOutputDir: true,
-        generatePackageJson: true,
-        tsConfig: resolve(input, 'failing-tsconfig.json')
-      })
-    ).rejects.toThrowError('Transpilation Failed');
-  }, 60000);
 });

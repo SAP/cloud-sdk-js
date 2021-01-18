@@ -2,6 +2,8 @@ import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import { generate, getSdkVersion } from './generator';
 
+const { rmdir } = promises;
+
 describe('generator', () => {
   const input = resolve(
     __dirname,
@@ -24,9 +26,9 @@ describe('generator', () => {
 
   afterAll(
     () =>
-      promises
-        .rmdir(outputDir, { recursive: true })
-        .then(() => promises.rmdir(outputDir2, { recursive: true })),
+      rmdir(outputDir, { recursive: true }).then(() =>
+        rmdir(outputDir2, { recursive: true })
+      ),
     60000
   );
 
@@ -63,17 +65,18 @@ describe('generator', () => {
   });
 
   it('fails on compilation due to a bad tsconfig.', async () => {
-    // try {
-    //   await expect(generate({
-    //     input,
-    //     outputDir: outputDir2,
-    //     generateJs: true,
-    //     clearOutputDir: true,
-    //     generatePackageJson: true,
-    //     tsConfig: resolve(input, 'failing-tsconfig.json')
-    //   }))
-    // }catch (err) {
-    //   console.error(err)
-    // }
+    const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {
+      throw new Error('Transpilation Failed');
+    });
+    await expect(
+      generate({
+        input,
+        outputDir: outputDir2,
+        generateJs: true,
+        clearOutputDir: true,
+        generatePackageJson: true,
+        tsConfig: resolve(input, 'failing-tsconfig.json')
+      })
+    ).rejects.toThrowError('Transpilation Failed');
   }, 60000);
 });

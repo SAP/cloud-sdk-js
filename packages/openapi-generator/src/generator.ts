@@ -134,18 +134,24 @@ async function generateOpenApiService(
     });
     // throw new Error('Error test FRANK.');//This is logged ugly in github action
     if (response.stderr) {
-      console.error('Error in API generation of OPenApi lib stderr'+response.stderr)
+      console.error(
+        'Error in API generation of OPenApi lib stderr' + response.stderr
+      );
       throw new Error(response.stderr);
     }
     logger.info(
       `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
-    console.error('Error in API generation of OPenApi lib in Catch'+JSON.stringify(err))
-    let basicMessage = 'Could not generate the OpenApi client using the OpenApi generator CLI.'
-    //The execa creates sometimes strange exception without an message or stack.
-    if(!err.stack){
-      basicMessage = basicMessage + ' ' + err.message || err.stderr || err.shortMessage;
+    console.error(
+      'Error in API generation of OPenApi lib in Catch' + JSON.stringify(err)
+    );
+    let basicMessage =
+      'Could not generate the OpenApi client using the OpenApi generator CLI.';
+    // The execa creates sometimes strange exception without an message or stack.
+    if (!err.stack) {
+      basicMessage =
+        basicMessage + ' ' + err.message || err.stderr || err.shortMessage;
     }
     throw new ErrorWithCause(
       'Could not generate the OpenApi client using the OpenApi generator CLI.',

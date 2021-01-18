@@ -85,7 +85,7 @@ export function transpileDirectories(
   directories: Directory[]
 ): Promise<void[]> {
   return Promise.all(
-    directories.map(directory => transpileDirectory(directory))
+    directories.map(directory => transpileDirectory(directory.getPath()))
   );
 }
 

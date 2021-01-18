@@ -39,21 +39,14 @@ export function readJSON(path: PathLike): { [key: string]: any } {
 }
 
 export function transpileDirectory(
-  pathOrDir: string | Directory
+  path: string
 ): Promise<void> {
-  let path: string;
-  if (pathOrDir instanceof Directory) {
-    path = pathOrDir.getPath();
-  } else {
-    path = pathOrDir;
-  }
   logger.info(`Transpiling files in the directory: ${path} started.`);
   return execa('tsc', { cwd: path })
     .then(() => {
       logger.info(`Transpiling files in directory: ${path} finished.`);
     })
     .catch(err => {
-      // console.error('Error in transpiling catched' + JSON.stringify(err))
       logger.error(`Error: Failed to generate js files: ${err}`);
       process.exit(1);
     });

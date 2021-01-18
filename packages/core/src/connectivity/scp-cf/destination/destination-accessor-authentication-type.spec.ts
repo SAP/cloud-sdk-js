@@ -23,6 +23,8 @@ import {
   certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
+  oauthClientCredentialsMultipleResponse,
+  oauthClientCredentialsSingleResponse,
   oauthMultipleResponse,
   oauthSingleResponse,
   oauthUserTokenExchangeMultipleResponse,
@@ -179,6 +181,68 @@ describe('authentication types', () => {
       expect(actual).toMatchObject(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
+  });
+
+  describe('authentication type OAuth2ClientCredentials', () => {
+    it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, subscriber tenant', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthClientCredentialsMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthClientCredentialsSingleResponse,
+          200,
+          destinationName,
+          wrapJwtInHeader(subscriberServiceToken).headers
+        )
+      ];
+
+      const expected = parseDestination(oauthClientCredentialsSingleResponse);
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+  });
+
+  it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, provider tenant', async () => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+    mockUserApprovedServiceToken();
+
+    const httpMocks = [
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+      mockSubaccountDestinationsCall(
+        nock,
+        oauthClientCredentialsMultipleResponse,
+        200,
+        providerServiceToken
+      ),
+      mockSingleDestinationCall(
+        nock,
+        oauthClientCredentialsSingleResponse,
+        200,
+        destinationName,
+        wrapJwtInHeader(providerServiceToken).headers
+      )
+    ];
+
+    const expected = parseDestination(oauthClientCredentialsSingleResponse);
+    const actual = await getDestination(destinationName);
+    expect(actual).toMatchObject(expected);
+    httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 
   describe('authentication type OAuth2UserTokenExchange', () => {

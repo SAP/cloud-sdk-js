@@ -1,4 +1,4 @@
-import { GetAllRequestBuilderV4 } from '../../../src/odata-v4';
+import { any, GetAllRequestBuilderV4 } from '../../../src/odata-v4';
 import {
   defaultDestination,
   mockGetRequest,
@@ -18,8 +18,7 @@ import {
   createTestEntityTemporal,
   createTestEntityV4
 } from '../../test-util/test-data';
-import { customDTMiddleware, defaultDTMiddleware } from '../../../src';
-import nock from 'nock';
+import { customDTMiddleware } from '../../../src';
 
 describe('GetAllRequestBuilderV4', () => {
   let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
@@ -149,29 +148,29 @@ describe('GetAllRequestBuilderV4', () => {
       expect(actual).toEqual([createTestEntityV4(testEntity)]);
     });
 
-    // it('should resolve when multi-link is expanded with lambda expression filter', async () => {
-    //   const testEntity = createOriginalTestEntityDataWithLinks();
-    //   mockGetRequest(
-    //     {
-    //       query: {
-    //         $expand:
-    //           "to_SingleLink,to_MultiLink($filter=((to_MultiLink1/any(a0:(a0/StringProperty ne 'test')))))"
-    //       },
-    //       responseBody: { value: [testEntity] }
-    //     },
-    //     TestEntity
-    //   );
-    //   const actual = await requestBuilder
-    //     .expand(
-    //       TestEntity.TO_SINGLE_LINK,
-    //       TestEntity.TO_MULTI_LINK.filter(
-    //         TestEntityMultiLink.TO_MULTI_LINK_1.filter(
-    //           any(TestEntityLvl2MultiLink.STRING_PROPERTY.notEquals('test'))
-    //         )
-    //       )
-    //     )
-    //     .execute(defaultDestination);
-    //   expect(actual).toEqual([createTestEntityV4(testEntity)]);
-    // });
+    it('should resolve when multi-link is expanded with lambda expression filter', async () => {
+      const testEntity = createOriginalTestEntityDataWithLinks();
+      mockGetRequest(
+        {
+          query: {
+            $expand:
+              "to_SingleLink,to_MultiLink($filter=((to_MultiLink1/any(a0:(a0/StringProperty ne 'test')))))"
+          },
+          responseBody: { value: [testEntity] }
+        },
+        TestEntity
+      );
+      const actual = await requestBuilder
+        .expand(
+          TestEntity.TO_SINGLE_LINK,
+          TestEntity.TO_MULTI_LINK.filter(
+            TestEntityMultiLink.TO_MULTI_LINK_1.filter(
+              any(TestEntityLvl2MultiLink.STRING_PROPERTY.notEquals('test'))
+            )
+          )
+        )
+        .execute(defaultDestination);
+      expect(actual).toEqual([createTestEntityV4(testEntity)]);
+    });
   });
 });

@@ -51,20 +51,9 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    // const customizeDeserializer = temporalDeserializersNs.all;
-    // const testEntities = await TestEntityTemporal.requestBuilder()
-    //   .getAll()
-    //   .transform(customizeDeserializer)
-    //   .execute(destination);
-    // expect(testEntities[0]!.dateProperty!.toString()).toEqual('2020-05-19');
-    // expect(
-    //   testEntities[0]!.durationProperty!.total({ unit: 'millisecond' })
-    // ).toEqual(86400000);
-    //
-    //
-    // const tV3 = TestEntityTemporal.requestBuilder()
-    //   .getAll()
-    //   .transformV3(dataTimeTemporal);
+    const request = TestEntity.requestBuilder().getAll().execute(destination);
+
+    await expect(request).resolves.not.toThrow();
   });
 
   it('should resolve for getByKey request', async () => {
@@ -86,7 +75,7 @@ describe('Request Builder', () => {
       })
       .reply(200, response);
 
-    const request = await TestEntity.requestBuilder()
+    const request = TestEntity.requestBuilder()
       .create(
         TestEntity.builder()
           .stringProperty('someProperty')

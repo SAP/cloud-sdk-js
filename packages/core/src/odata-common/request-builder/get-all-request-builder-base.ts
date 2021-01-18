@@ -13,7 +13,7 @@ import { MethodRequestBuilderBase } from '../request-builder/request-builder-bas
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { EdmTypeMappingAll } from '../payload-value-converter';
-import { DTMiddlewareInterface } from '../../datetime-middleware';
+import { defaultDTMiddleware, DTMiddlewareInterface } from '../../datetime-middleware';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
@@ -114,7 +114,8 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT[]> {
-    this.entityDeserializer.customDeserializer = this.dateTimeMiddleware.deserializers;
+    this.entityDeserializer.customDeserializer =
+      this.dateTimeMiddleware.deserializers || defaultDTMiddleware;
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>

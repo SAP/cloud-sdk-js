@@ -224,7 +224,7 @@ async function getAuthenticationRelatedHeaders(
     case 'OAuth2UserTokenExchange':
     case 'OAuth2ClientCredentials':
       return headerFromTokens(
-        destination.authentication as any,
+        destination.authentication,
         destination.authTokens
       );
     case 'BasicAuthentication':

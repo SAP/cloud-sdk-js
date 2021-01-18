@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
-import { generate, getSdkVersion } from './generator';
+import { getSdkVersion } from './generator';
 
 const { rmdir } = promises;
 
@@ -15,27 +15,17 @@ describe('generator', () => {
   });
 
   it('should transpile the generated sources', () => {
-    const jsApiFile = resolve(
-      testServicePath,
-      'dist',
-      'api.js'
-    );
+    const jsApiFile = resolve(testServicePath, 'dist', 'api.js');
     expect(existsSync(jsApiFile)).toBe(true);
   });
 
   it('should create package.json', () => {
-    const packageJson = resolve(
-      testServicePath,
-      'package.json'
-    );
+    const packageJson = resolve(testServicePath, 'package.json');
     expect(existsSync(packageJson)).toBe(true);
   });
 
   it('should create tsconfig.json', () => {
-    const tsconfig = resolve(
-      testServicePath,
-      'tsconfig.json'
-    );
+    const tsconfig = resolve(testServicePath, 'tsconfig.json');
     expect(existsSync(tsconfig)).toBe(true);
   });
 });

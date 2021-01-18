@@ -92,7 +92,13 @@ async function generateSDKSources(
     );
   }
   if (options.generateJs) {
-    await createFile(serviceDir, 'tsconfig.json', tsconfigJson(options), true);
+    await createFile(
+      serviceDir,
+      'tsconfig.json',
+      tsconfigJson(options),
+      true,
+      false
+    );
     await transpileDirectory(serviceDir);
   }
 }

@@ -1,6 +1,5 @@
 import { existsSync, PathLike, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import { Directory } from 'ts-morph';
 import execa from 'execa';
 import { createLogger } from './logger';
 
@@ -38,9 +37,7 @@ export function readJSON(path: PathLike): { [key: string]: any } {
   return {};
 }
 
-export function transpileDirectory(
-  path: string
-): Promise<void> {
+export function transpileDirectory(path: string): Promise<void> {
   logger.info(`Transpiling files in the directory: ${path} started.`);
   return execa('tsc', { cwd: path })
     .then(() => {

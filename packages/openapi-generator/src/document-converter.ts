@@ -3,7 +3,13 @@ import { parse } from 'path';
 import { OpenAPIV3 } from 'openapi-types';
 import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import {
+  ErrorWithCause,
+  partition,
+  pascalCase,
+  UniqueNameGenerator
+} from '@sap-cloud-sdk/util';
+import { Method, methods } from './openapi-types';
 const { readFile } = promises;
 
 /**
@@ -16,7 +22,7 @@ export async function convertOpenApiSpec(
 ): Promise<OpenAPIV3.Document> {
   const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
-  return convertDocToGlobalTag(openApiDocument);
+  return convertDocToGlobalTag(convertDocToUniqueOperationIds(openApiDocument));
 }
 
 /**
@@ -73,13 +79,168 @@ export function convertDocToGlobalTag(
   const tag = 'default';
   openApiDocument.tags = [{ name: tag }];
 
-  Object.values(openApiDocument.paths).forEach(
-    (pathDefinition: Record<string, any>) => {
-      Object.values(pathDefinition).forEach(methodDefinition => {
-        methodDefinition.tags = [tag];
-      });
+  executeForAllOperationObjects(openApiDocument, operation => {
+    operation.tags = [tag];
+  });
+
+  return openApiDocument;
+}
+
+/**
+ * Modify each operation to contain a unique `operationId`.
+ * @param openApiDocument OpenAPI JSON document.
+ * @returns The modified document.
+ */
+export function convertDocToUniqueOperationIds(
+  openApiDocument: OpenAPIV3.Document
+): OpenAPIV3.Document {
+  const {
+    namedOperations,
+    unnamedOperationsWithAdditionalInfo
+  } = partitionOperationsToNamedAndUnnamed(openApiDocument);
+
+  const {
+    uniqueOperationNames,
+    operationsWithDuplicateNames
+  } = partitionNamedOperationsToUniqueAndDuplicate(namedOperations);
+
+  const nameGenerator = new UniqueNameGenerator('_', uniqueOperationNames);
+
+  operationsWithDuplicateNames.forEach(operation => {
+    setUniqueOperationName(operation, operation.operationId!, nameGenerator);
+  });
+
+  unnamedOperationsWithAdditionalInfo.forEach(
+    ({ operation, pathPattern, method }) => {
+      setUniqueOperationName(
+        operation,
+        getOperationNameFromPatternAndMethod(pathPattern, method),
+        nameGenerator
+      );
     }
   );
 
   return openApiDocument;
 }
+
+interface OperationWithAdditionalInfo {
+  operation: OpenAPIV3.OperationObject;
+  pathPattern: string;
+  method: Method;
+}
+
+function partitionNamedOperationsToUniqueAndDuplicate(
+  namedOperations: OpenAPIV3.OperationObject[]
+): {
+  uniqueOperationNames: string[];
+  operationsWithDuplicateNames: OpenAPIV3.OperationObject[];
+} {
+  return namedOperations.reduce(
+    (
+      partitionedOperations: {
+        uniqueOperationNames: string[];
+        operationsWithDuplicateNames: OpenAPIV3.OperationObject[];
+      },
+      operation
+    ) => {
+      if (
+        partitionedOperations.uniqueOperationNames.includes(
+          operation.operationId!
+        )
+      ) {
+        partitionedOperations.operationsWithDuplicateNames.push(operation);
+      } else {
+        partitionedOperations.uniqueOperationNames.push(operation.operationId!);
+      }
+      return partitionedOperations;
+    },
+    { uniqueOperationNames: [], operationsWithDuplicateNames: [] }
+  );
+}
+
+function partitionOperationsToNamedAndUnnamed(
+  openApiDocument: OpenAPIV3.Document
+): {
+  namedOperations: OpenAPIV3.OperationObject[];
+  unnamedOperationsWithAdditionalInfo: OperationWithAdditionalInfo[];
+} {
+  const namedOperations: OpenAPIV3.OperationObject[] = [];
+  const unnamedOperationsWithAdditionalInfo: OperationWithAdditionalInfo[] = [];
+  executeForAllOperationObjects(
+    openApiDocument,
+    (operation, pathPattern, method) => {
+      if (operation.operationId) {
+        namedOperations.push(operation);
+      } else {
+        unnamedOperationsWithAdditionalInfo.push({
+          operation,
+          pathPattern,
+          method
+        });
+      }
+    }
+  );
+
+  return {
+    namedOperations,
+    unnamedOperationsWithAdditionalInfo
+  };
+}
+
+function setUniqueOperationName(
+  operation: OpenAPIV3.OperationObject,
+  name: string,
+  nameGenerator: UniqueNameGenerator
+) {
+  operation.operationId = nameGenerator.generateAndSaveUniqueName(name);
+}
+
+function executeForAllOperationObjects(
+  openApiDocument: OpenAPIV3.Document,
+  callback: (
+    operation: OpenAPIV3.OperationObject,
+    pathPattern: string,
+    method: Method
+  ) => any
+): void {
+  return Object.entries(openApiDocument.paths).forEach(
+    ([pathPattern, pathDefinition]: [string, OpenAPIV3.PathItemObject]) => {
+      methods.forEach(method => {
+        if (pathDefinition[method]) {
+          callback(pathDefinition[method]!, pathPattern, method);
+        }
+      });
+    }
+  );
+}
+
+export function getOperationNameFromPatternAndMethod(
+  pattern: string,
+  method: Method
+): string {
+  const [placeholders, pathParts] = partition(pattern.split('/'), part =>
+    /^\{.*\}$/.test(part)
+  );
+  const prefix = getSpeakingNameForMethod(method).toLowerCase();
+  const base = pathParts.map(part => pascalCase(part)).join('');
+  const suffix = placeholders.length
+    ? 'By' + placeholders.map(part => pascalCase(part)).join('And')
+    : '';
+
+  return prefix + base + suffix;
+}
+
+function getSpeakingNameForMethod(method: Method): string {
+  return nameMapping[method];
+}
+
+const nameMapping = {
+  get: 'get',
+  post: 'create',
+  patch: 'update',
+  put: 'update',
+  delete: 'delete',
+  head: 'getHeadersFor',
+  options: 'getOptionsFor',
+  trace: 'trace'
+} as const;

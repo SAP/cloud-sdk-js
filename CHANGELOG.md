@@ -22,12 +22,12 @@
 
 ## Improvements
 
--
+- [openapi-generator] Fix generation for duplicate operation names.
 
 ## Fixed Issues
 
 - [openapi-generator] Remove the copyright comments from the generated package.json.
-
+- [util] Don't fail on undefined template arguments when using `codeBlock`.
 
 # 1.36.1
 

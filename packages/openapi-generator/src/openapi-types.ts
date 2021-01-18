@@ -31,7 +31,8 @@ const supportedMethods = {
   patch: 'patch',
   delete: 'delete',
   head: 'head',
-  options: 'options'
+  options: 'options',
+  trace: 'trace'
 } as const;
 
 /**
@@ -45,9 +46,7 @@ export type Method = typeof supportedMethods[keyof typeof supportedMethods];
  * Get supported methods.
  * @returns Methods supported by OpenApi and SAP Cloud SDK.
  */
-export function methods(): Method[] {
-  return Object.values(supportedMethods);
-}
+export const methods: Method[] = Object.values(supportedMethods);
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.

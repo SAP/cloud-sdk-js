@@ -454,6 +454,54 @@
           "default"
         ]
       }
+    },
+    "/test-cases/no-operation-id": {
+      "get": {
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "operationId": "getTestCasesNoOperationId",
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/test-cases/duplicate-operation-ids": {
+      "get": {
+        "operationId": "duplicateOperationId",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      },
+      "post": {
+        "operationId": "duplicateOperationId_2",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      },
+      "put": {
+        "operationId": "duplicateOperationId_1",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      }
     }
   },
   "components": {

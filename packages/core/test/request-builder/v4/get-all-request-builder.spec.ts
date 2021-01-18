@@ -18,7 +18,7 @@ import {
   createTestEntityTemporal,
   createTestEntityV4
 } from '../../test-util/test-data';
-import { customDTMiddleware } from '../../../src';
+import { customDTMiddleware, customDTMiddleware2, defaultDTMiddleware } from '../../../src';
 
 describe('GetAllRequestBuilderV4', () => {
   let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
@@ -76,10 +76,26 @@ describe('GetAllRequestBuilderV4', () => {
       ]);
     });
 
-    it('returns all entities Temporal', async () => {
-      const testEntity1 = createOriginalTestEntityTemporalData1();
-      const t = createTestEntityTemporal(testEntity1);
+    it('type tests', async () => {
+      const res1 = await TestEntityTemporal.requestBuilder()
+        .getAll()
+        .executeV2(defaultDestination);
+      const res2 = await TestEntityTemporal.requestBuilder()
+        .getAll()
+        .transform(defaultDTMiddleware)
+        .executeV2(defaultDestination);
+      const res3 = await TestEntityTemporal.requestBuilder()
+        .getAll()
+        .transform(customDTMiddleware)
+        .executeV2(defaultDestination);
+      const res4 = await TestEntityTemporal.requestBuilder()
+        .getAll()
+        .transform(customDTMiddleware2)
+        .executeV2(defaultDestination);
+    });
 
+    it('returns all entities with custom middleware', async () => {
+      const testEntity1 = createOriginalTestEntityTemporalData1();
       mockGetRequest(
         {
           responseBody: { value: [testEntity1] }
@@ -87,19 +103,11 @@ describe('GetAllRequestBuilderV4', () => {
         TestEntity
       );
 
-
-      // const res1 = await TestEntityTemporal.requestBuilder()
-      //   .getAll()
-      //   .executeV2(defaultDestination);
-      // const res2 = await TestEntityTemporal.requestBuilder()
-      //   .getAll()
-      //   .transform(defaultDTMiddleware)
-      //   .executeV2(defaultDestination);
-      const res3 = await TestEntityTemporal.requestBuilder()
+      const res = await TestEntityTemporal.requestBuilder()
         .getAll()
-        .transform(customDTMiddleware)
+        .transform(customDTMiddleware2)
         .executeV2(defaultDestination);
-      expect(res3).toEqual([createTestEntityTemporal(testEntity1)]);
+      expect(res).toEqual([createTestEntityTemporal(testEntity1)]);
     });
 
     it('top(1) returns the first entity', async () => {

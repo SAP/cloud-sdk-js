@@ -1,11 +1,11 @@
 export interface DTMiddlewareInterface<T1 = string, T2 = number> {
-  deserializers: {
-    'Edm.String': (ori: string) => T1;
-    'Edm.Int32': (ori: string) => T2;
+  deserializers?: {
+    'Edm.String'?: (ori: string) => T1;
+    'Edm.Int32'?: (ori: string) => T2;
   };
-  serializers: {
-    'Edm.String': (val: T1) => string;
-    'Edm.Int32': (val: T2) => string;
+  serializers?: {
+    'Edm.String'?: (val: T1) => string;
+    'Edm.Int32'?: (val: T2) => string;
   };
 }
 
@@ -28,5 +28,11 @@ export const customDTMiddleware: DTMiddlewareInterface<string, string> = {
   serializers: {
     'Edm.String': (val: string) => val,
     'Edm.Int32': (val: string) => val
+  }
+};
+
+export const customDTMiddleware2: DTMiddlewareInterface<string, string> = {
+  deserializers: {
+    'Edm.Int32': (ori: string) => ori
   }
 };

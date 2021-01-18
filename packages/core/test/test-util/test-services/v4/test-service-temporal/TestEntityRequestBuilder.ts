@@ -36,9 +36,4 @@ export class TestEntityGetAllRequestBuilder<
     res.dateTimeMiddleware = middleware as any;
     return res as unknown as TestEntityGetAllRequestBuilder<TestEntity<newT1, newT2>, newT1, newT2>;
   }
-
-  async executeV2(destination: Destination | DestinationNameAndJwt, options?: DestinationOptions): Promise<TestEntity<T1, T2>[]> {
-    const res =  super.execute(destination, options);
-    return res as unknown as Promise<TestEntity<T1, T2>[]>;
-  }
 }

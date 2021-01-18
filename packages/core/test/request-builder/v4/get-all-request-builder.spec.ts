@@ -79,19 +79,19 @@ describe('GetAllRequestBuilderV4', () => {
     it('type tests', async () => {
       const res1 = await TestEntityTemporal.requestBuilder()
         .getAll()
-        .executeV2(defaultDestination);
+        .execute(defaultDestination);
       const res2 = await TestEntityTemporal.requestBuilder()
         .getAll()
         .transform(defaultDTMiddleware)
-        .executeV2(defaultDestination);
+        .execute(defaultDestination);
       const res3 = await TestEntityTemporal.requestBuilder()
         .getAll()
         .transform(customDTMiddleware)
-        .executeV2(defaultDestination);
+        .execute(defaultDestination);
       const res4 = await TestEntityTemporal.requestBuilder()
         .getAll()
         .transform(customDTMiddleware2)
-        .executeV2(defaultDestination);
+        .execute(defaultDestination);
     });
 
     it('returns all entities with custom middleware', async () => {
@@ -106,7 +106,7 @@ describe('GetAllRequestBuilderV4', () => {
       const res = await TestEntityTemporal.requestBuilder()
         .getAll()
         .transform(customDTMiddleware2)
-        .executeV2(defaultDestination);
+        .execute(defaultDestination);
       expect(res).toEqual([createTestEntityTemporal(testEntity1)]);
     });
 

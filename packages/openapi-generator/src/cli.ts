@@ -63,7 +63,7 @@ export = class GenerateOpenApiClient extends Command {
     generateJs: flags.boolean({
       name: 'generateJs',
       description:
-        'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
+        'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When setting to false, the generator will only generate .ts files.',
       default: true,
       required: false
     }),

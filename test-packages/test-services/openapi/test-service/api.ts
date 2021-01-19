@@ -119,12 +119,16 @@ export const TestServiceApi = {
     DefaultApi,
     'duplicateOperationId'
   ),
-  duplicateOperationId_1: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId_1'>(
+  duplicateOperationId2: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId2'>(
     DefaultApi,
-    'duplicateOperationId_1'
+    'duplicateOperationId2'
   ),
-  duplicateOperationId_2: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId_2'>(
+  duplicateOperationId3: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId3'>(
     DefaultApi,
-    'duplicateOperationId_2'
+    'duplicateOperationId3'
+  ),
+  duplicateOperationId1: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId1'>(
+    DefaultApi,
+    'duplicateOperationId1'
   )
 };

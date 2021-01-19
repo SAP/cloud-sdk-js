@@ -237,7 +237,7 @@ describe('convertDocToUniqueOperationIds', () => {
         },
         '/pattern2': {
           get: {
-            operationId: 'getX_1'
+            operationId: 'getX1'
           }
         }
       }
@@ -249,12 +249,12 @@ describe('convertDocToUniqueOperationIds', () => {
           operationId: 'getX'
         },
         post: {
-          operationId: 'getX_2'
+          operationId: 'getX2'
         }
       },
       '/pattern2': {
         get: {
-          operationId: 'getX_1'
+          operationId: 'getX1'
         }
       }
     });
@@ -282,10 +282,10 @@ describe('convertDocToUniqueOperationIds', () => {
     expect(newSpec.paths).toEqual({
       '/x': {
         get: {
-          operationId: 'getX_1'
+          operationId: 'getX1'
         },
         post: {
-          operationId: 'createX_1'
+          operationId: 'createX1'
         }
       },
       '/pattern2': {

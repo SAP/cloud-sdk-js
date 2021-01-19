@@ -4,6 +4,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
 import {
+  camelCase,
   ErrorWithCause,
   partition,
   pascalCase,
@@ -104,7 +105,8 @@ export function convertDocToUniqueOperationIds(
     operationsWithDuplicateNames
   } = partitionNamedOperationsToUniqueAndDuplicate(namedOperations);
 
-  const nameGenerator = new UniqueNameGenerator('_', uniqueOperationNames);
+  // TODO: The name generator only uses '' as a separator to comply with the underlying OpenAPI generator. Change back to '_' once the generator is not used anymore.
+  const nameGenerator = new UniqueNameGenerator('', uniqueOperationNames);
 
   operationsWithDuplicateNames.forEach(operation => {
     setUniqueOperationName(operation, operation.operationId!, nameGenerator);
@@ -129,6 +131,11 @@ interface OperationWithAdditionalInfo {
   method: Method;
 }
 
+/**
+ * Partition operations into a list of unique names that do not need to be changed and a list of operations where the name is duplicate or subject to change and therefore potentially duplicate.
+ * @param namedOperations All operations that have an operationId
+ * @returns an object containing the unique operation names and operations with (potentially) duplicate names
+ */
 function partitionNamedOperationsToUniqueAndDuplicate(
   namedOperations: OpenAPIV3.OperationObject[]
 ): {
@@ -146,6 +153,12 @@ function partitionNamedOperationsToUniqueAndDuplicate(
       if (
         partitionedOperations.uniqueOperationNames.includes(
           operation.operationId!
+        ) ||
+        // TODO: The checks below are only necessary to comply with the underlying OpenAPI generator. Remove once the generator is not used anymore.
+        camelCase(operation.operationId!) !== operation.operationId ||
+        partitionedOperations.operationsWithDuplicateNames.find(
+          duplicateOperation =>
+            duplicateOperation.operationId === operation.operationId
         )
       ) {
         partitionedOperations.operationsWithDuplicateNames.push(operation);
@@ -192,7 +205,10 @@ function setUniqueOperationName(
   name: string,
   nameGenerator: UniqueNameGenerator
 ) {
-  operation.operationId = nameGenerator.generateAndSaveUniqueName(name);
+  // TODO: The transformation to camel case only exists to comply with the underlying OpenAPI generator. Remove once the generator is not used anymore.
+  operation.operationId = nameGenerator.generateAndSaveUniqueName(
+    camelCase(name)
+  );
 }
 
 function executeForAllOperationObjects(

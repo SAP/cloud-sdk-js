@@ -481,7 +481,7 @@
         ]
       },
       "post": {
-        "operationId": "duplicateOperationId_2",
+        "operationId": "duplicateOperationId3",
         "responses": {
           "201": {
             "description": "no content"
@@ -492,7 +492,18 @@
         ]
       },
       "put": {
-        "operationId": "duplicateOperationId_1",
+        "operationId": "duplicateOperationId2",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "tags": [
+          "default"
+        ]
+      },
+      "patch": {
+        "operationId": "duplicateOperationId1",
         "responses": {
           "201": {
             "description": "no content"

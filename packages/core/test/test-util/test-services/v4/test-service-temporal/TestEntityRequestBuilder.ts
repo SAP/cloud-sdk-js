@@ -6,7 +6,7 @@
 import {
   RequestBuilder,
   GetAllRequestBuilderV4,
-  EntityV4, Constructable, DestinationOptions, DestinationNameAndJwt, Destination, DeSerializationMiddlewareInterface
+  EntityV4, Constructable, DeSerializationMiddlewareInterface
 } from '../../../../../src';
 import { TestEntity as TestEntityTemporal, TestEntity } from './TestEntity';
 

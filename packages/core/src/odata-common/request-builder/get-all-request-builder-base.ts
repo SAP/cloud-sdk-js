@@ -12,10 +12,7 @@ import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { MethodRequestBuilderBase } from '../request-builder/request-builder-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import {
-  defaultMiddleware,
-  DeSerializationMiddlewareInterface
-} from '../../datetime-middleware';
+import { DeSerializationMiddlewareInterface } from '../../de-serialization-middleware';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]

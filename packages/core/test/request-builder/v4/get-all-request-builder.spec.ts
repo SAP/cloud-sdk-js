@@ -18,7 +18,11 @@ import {
   createTestEntityTemporal,
   createTestEntityV4
 } from '../../test-util/test-data';
-import { customMiddlewareFull, customMiddlewarePartial, defaultMiddleware } from '../../../src';
+import {
+  customMiddlewareFull,
+  customMiddlewarePartial,
+  defaultMiddleware
+} from '../../../src/de-serialization-middleware';
 
 describe('GetAllRequestBuilderV4', () => {
   let requestBuilder: GetAllRequestBuilderV4<TestEntity>;

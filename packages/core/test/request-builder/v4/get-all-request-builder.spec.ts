@@ -100,6 +100,12 @@ describe('GetAllRequestBuilderV4', () => {
         .getAll()
         .transform(customMiddlewarePartial)
         .execute(defaultDestination);
+
+      // TestEntityTemporal<string, number>
+      const entity1 = TestEntityTemporal.builder().build();
+      // TestEntityTemporal<string, string>
+      const entity2 = TestEntityTemporal.builder(customMiddlewareFull).build();
+
     });
 
     it('returns all entities with custom middleware', async () => {

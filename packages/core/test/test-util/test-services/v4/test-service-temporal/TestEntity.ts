@@ -13,7 +13,7 @@ import {
   BooleanField,
   CollectionField,
   CustomFieldV4,
-  DateField,
+  DateField, DeSerializationMiddlewareInterface,
   DurationField,
   EntityBuilderType,
   EntityV4,
@@ -49,12 +49,15 @@ export class TestEntity<T1 = string, T2 = number> extends EntityV4<T1, T2> imple
   keyPropertyString!: string;
   stringProperty?: T1;
   int32Property?: T2;
+
+  static builder<T1=string, T2=number>(): EntityBuilderType<TestEntity<T1, T2>, TestEntityType<T1, T2>>;
+  static builder<newT1, newT2>(middleware: DeSerializationMiddlewareInterface<newT1, newT2>): EntityBuilderType<TestEntity<newT1, newT2>, TestEntityType<newT1, newT2>>;
   /**
    * Returns an entity builder to construct instances of `TestEntity`.
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static builder<T1, T2>(): EntityBuilderType<TestEntity<T1, T2>, TestEntityType<T1, T2>> {
-    return EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<T1, T2>, TestEntityType<T1, T2>>;
+  static builder<T1, T2, newT1, newT2>(middleware?: DeSerializationMiddlewareInterface<newT1, newT2>){
+    return middleware? EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<newT1, newT2>, TestEntityType<newT1, newT2>> : EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<T1, T2>, TestEntityType<T1, T2>>;
   }
 
   /**

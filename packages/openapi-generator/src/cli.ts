@@ -77,7 +77,7 @@ export = class GenerateOpenApiClient extends Command {
     tsConfig: flags.string({
       name: 'tsConfig',
       description:
-        'tsconfig.json file to overwrite the default tsconfig.json.".',
+        'tsconfig.json file to overwrite the default "tsconfig.json.".',
       parse: input => resolve(input),
       required: false
     })

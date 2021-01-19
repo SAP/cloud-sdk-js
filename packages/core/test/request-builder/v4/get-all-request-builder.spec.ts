@@ -18,7 +18,7 @@ import {
   createTestEntityTemporal,
   createTestEntityV4
 } from '../../test-util/test-data';
-import { customDTMiddleware, customDTMiddleware2, defaultDTMiddleware } from '../../../src';
+import { customMiddlewareFull, customMiddlewarePartial, defaultMiddleware } from '../../../src';
 
 describe('GetAllRequestBuilderV4', () => {
   let requestBuilder: GetAllRequestBuilderV4<TestEntity>;
@@ -84,17 +84,17 @@ describe('GetAllRequestBuilderV4', () => {
       // TestEntityTemporal<string, number>[]
       const res2 = await TestEntityTemporal.requestBuilder()
         .getAll()
-        .transform(defaultDTMiddleware)
+        .transform(defaultMiddleware)
         .execute(defaultDestination);
       // TestEntityTemporal<string, string>[]
       const res3 = await TestEntityTemporal.requestBuilder()
         .getAll()
-        .transform(customDTMiddleware)
+        .transform(customMiddlewareFull)
         .execute(defaultDestination);
       // TestEntityTemporal<string, string>[]
       const res4 = await TestEntityTemporal.requestBuilder()
         .getAll()
-        .transform(customDTMiddleware2)
+        .transform(customMiddlewarePartial)
         .execute(defaultDestination);
     });
 
@@ -109,7 +109,7 @@ describe('GetAllRequestBuilderV4', () => {
 
       const res = await TestEntityTemporal.requestBuilder()
         .getAll()
-        .transform(customDTMiddleware2)
+        .transform(customMiddlewarePartial)
         .execute(defaultDestination);
       expect(res).toEqual([createTestEntityTemporal(testEntity1)]);
     });

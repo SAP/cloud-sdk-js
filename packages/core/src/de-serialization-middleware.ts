@@ -1,4 +1,4 @@
-export interface DTMiddlewareInterface<T1 = string, T2 = number> {
+export interface DeSerializationMiddlewareInterface<T1 = string, T2 = number> {
   deserializers?: {
     'Edm.String'?: (ori: string) => T1;
     'Edm.Int32'?: (ori: string) => T2;
@@ -9,7 +9,7 @@ export interface DTMiddlewareInterface<T1 = string, T2 = number> {
   };
 }
 
-export const defaultDTMiddleware: DTMiddlewareInterface = {
+export const defaultMiddleware: DeSerializationMiddlewareInterface = {
   deserializers: {
     'Edm.String': (ori: string) => ori,
     'Edm.Int32': (ori: string) => parseInt(ori)
@@ -20,7 +20,10 @@ export const defaultDTMiddleware: DTMiddlewareInterface = {
   }
 };
 
-export const customDTMiddleware: DTMiddlewareInterface<string, string> = {
+export const customMiddlewareFull: DeSerializationMiddlewareInterface<
+  string,
+  string
+> = {
   deserializers: {
     'Edm.String': (ori: string) => ori,
     'Edm.Int32': (ori: string) => ori
@@ -31,7 +34,10 @@ export const customDTMiddleware: DTMiddlewareInterface<string, string> = {
   }
 };
 
-export const customDTMiddleware2: DTMiddlewareInterface<string, string> = {
+export const customMiddlewarePartial: DeSerializationMiddlewareInterface<
+  string,
+  string
+> = {
   deserializers: {
     'Edm.Int32': (ori: string) => ori
   }

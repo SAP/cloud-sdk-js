@@ -13,8 +13,8 @@ import { MethodRequestBuilderBase } from '../request-builder/request-builder-bas
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import {
-  defaultDTMiddleware,
-  DTMiddlewareInterface
+  defaultMiddleware,
+  DeSerializationMiddlewareInterface
 } from '../../datetime-middleware';
 
 /**
@@ -26,7 +26,7 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
-  dateTimeMiddleware: DTMiddlewareInterface;
+  dateTimeMiddleware: DeSerializationMiddlewareInterface;
 
   /**
    * Creates an instance of GetAllRequestBuilder.

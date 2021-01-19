@@ -6,7 +6,7 @@
 import {
   RequestBuilder,
   GetAllRequestBuilderV4,
-  EntityV4, Constructable, DestinationOptions, DestinationNameAndJwt, Destination, DTMiddlewareInterface
+  EntityV4, Constructable, DestinationOptions, DestinationNameAndJwt, Destination, DeSerializationMiddlewareInterface
 } from '../../../../../src';
 import { TestEntity as TestEntityTemporal, TestEntity } from './TestEntity';
 
@@ -30,7 +30,7 @@ export class TestEntityGetAllRequestBuilder<
   }
 
   transform<newT1, newT2>(
-    middleware: DTMiddlewareInterface<newT1, newT2>
+    middleware: DeSerializationMiddlewareInterface<newT1, newT2>
   ): TestEntityGetAllRequestBuilder<TestEntity<newT1, newT2>, newT1, newT2> {
     const res = new TestEntityGetAllRequestBuilder(TestEntity);
     res.dateTimeMiddleware = middleware as any;

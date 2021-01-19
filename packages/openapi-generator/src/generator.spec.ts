@@ -1,14 +1,30 @@
 import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
-import { getSdkVersion } from './generator';
+import { getSdkVersion, generate } from './generator';
 
 const { rmdir } = promises;
 
 describe('generator', () => {
-  const testServicePath = resolve(
+  const input = resolve(
     __dirname,
-    '../../../test-packages/test-services/openapi/test-service'
+    '../../../test-resources/openapi-service-specs/'
   );
+  const outputDir = resolve(__dirname, '../generation-test');
+  const testServicePath = resolve(outputDir, 'test-service');
+
+  beforeAll(
+    () =>
+      generate({
+        input,
+        outputDir,
+        generateJs: true,
+        clearOutputDir: true,
+        generatePackageJson: true
+      }),
+    60000
+  );
+
+  afterAll(() => rmdir(outputDir, { recursive: true }), 60000);
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);

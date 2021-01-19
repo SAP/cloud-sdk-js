@@ -43,7 +43,7 @@ export function parseAllOperations(
   return Object.entries(document.paths).reduce(
     (allOperations, [pattern, pathDefinition]) => [
       ...allOperations,
-      ...methods()
+      ...methods
         .filter(method => pathDefinition?.[method])
         // Undefined path definitions have been filtered out in the line before
         .map(method => parseOperation(pattern, pathDefinition!, method, refs))

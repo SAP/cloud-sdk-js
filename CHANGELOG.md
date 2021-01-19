@@ -22,7 +22,7 @@
 
 ## Improvements
 
-- [openapi-generator] Fix generation for duplicate operation names.
+- [openapi-generator] Improve generation for duplicate operation names and non existing `operationId`s.
 
 ## Fixed Issues
 

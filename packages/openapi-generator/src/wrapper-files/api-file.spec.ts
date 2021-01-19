@@ -13,7 +13,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getFn',
+          operationId: 'getFn',
           method: 'get',
           parameters: [
             {
@@ -31,7 +31,7 @@ describe('api-file', () => {
           pattern: 'test/{id}'
         },
         {
-          operationName: 'deleteFn',
+          operationId: 'deleteFn',
           method: 'delete',
           parameters: [
             {
@@ -54,7 +54,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'createFn',
+          operationId: 'createFn',
           method: 'post',
           parameters: [],
           requestBody: {
@@ -69,7 +69,7 @@ describe('api-file', () => {
           pattern: 'test'
         },
         {
-          operationName: 'updateFn',
+          operationId: 'updateFn',
           method: 'patch',
           parameters: [
             {
@@ -102,7 +102,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getFn',
+          operationId: 'getFn',
           method: 'get',
           parameters: [],
           pattern: 'test'
@@ -118,7 +118,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'createFn',
+          operationId: 'createFn',
           method: 'post',
           parameters: [
             {
@@ -162,7 +162,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getFn',
+          operationId: 'getFn',
           method: 'get',
           parameters: [
             {

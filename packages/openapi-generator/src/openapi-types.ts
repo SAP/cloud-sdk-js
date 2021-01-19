@@ -17,7 +17,7 @@ export interface OpenApiDocument {
  * Representation of an operation.
  */
 export interface OpenApiOperation extends OpenAPIV3.OperationObject {
-  operationName: string;
+  operationId: string;
   method: string;
   pattern: string;
   requestBody?: OpenApiRequestBody;

@@ -21,7 +21,7 @@ export function parseOperation(
     method,
     requestBody,
     parameters,
-    operationName: operation.operationId!
+    operationId: operation.operationId!
   };
 }
 

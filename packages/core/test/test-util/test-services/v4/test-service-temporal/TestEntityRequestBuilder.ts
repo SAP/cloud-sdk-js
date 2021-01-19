@@ -34,6 +34,6 @@ export class TestEntityGetAllRequestBuilder<
   ): TestEntityGetAllRequestBuilder<TestEntity<newT1, newT2>, newT1, newT2> {
     const res = new TestEntityGetAllRequestBuilder(TestEntity);
     res.dateTimeMiddleware = middleware as any;
-    return res as unknown as TestEntityGetAllRequestBuilder<TestEntity<newT1, newT2>, newT1, newT2>;
+    return res as any;
   }
 }

@@ -77,17 +77,21 @@ describe('GetAllRequestBuilderV4', () => {
     });
 
     it('type tests', async () => {
+      // TestEntityTemporal<string, number>[]
       const res1 = await TestEntityTemporal.requestBuilder()
         .getAll()
         .execute(defaultDestination);
+      // TestEntityTemporal<string, number>[]
       const res2 = await TestEntityTemporal.requestBuilder()
         .getAll()
         .transform(defaultDTMiddleware)
         .execute(defaultDestination);
+      // TestEntityTemporal<string, string>[]
       const res3 = await TestEntityTemporal.requestBuilder()
         .getAll()
         .transform(customDTMiddleware)
         .execute(defaultDestination);
+      // TestEntityTemporal<string, string>[]
       const res4 = await TestEntityTemporal.requestBuilder()
         .getAll()
         .transform(customDTMiddleware2)

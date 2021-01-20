@@ -8,12 +8,12 @@ describe('generator', () => {
 
   it('getInputPaths returns an array of all file paths, including subdirectories', async () => {
     mock({
-      'path/to/fake/dir': {
-        'fake-service.txt': 'file content here',
+      'path/to/test/dir': {
+        'test-service.txt': 'file content here',
         'empty-dir': {},
-        'recursive-dir': {
-          'fake-service.txt': 'another fake service',
-          'recursive-service.txt': 'just to add some more'
+        'sub-dir': {
+          'test-service.txt': 'another fake service',
+          'sub-directory-service.txt': 'just to add some more'
         }
       }
     });

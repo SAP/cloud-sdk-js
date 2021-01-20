@@ -139,7 +139,6 @@ async function generateOpenApiService(
     const response = await execa('npx', generationArguments, {
       cwd: resolve(__dirname, '..')
     });
-    // throw new Error('Error test FRANK.');//This is logged ugly in github action
     if (response.stderr) {
       throw new Error(response.stderr);
     }
@@ -147,13 +146,10 @@ async function generateOpenApiService(
       `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
-    let errorMessage =
-      'Could not generate the OpenApi client using the OpenApi generator CLI.';
-    // The execa creates sometimes strange exception without an message or stack.
-    if (!err.stack) {
-      errorMessage =
-        errorMessage + ' ' + err.message || err.stderr || err.shortMessage;
-    }
+    // The npx creates strange error objects, hence we add the method here:
+    const errorMessage = `Could not generate the OpenApi client using the OpenApi generator CLI: ${
+      err.message || err.stderr || err.shortMessage
+    }`;
     throw new ErrorWithCause(errorMessage, err);
   }
 }

@@ -109,6 +109,9 @@ class DestinationFromServiceRetriever {
         destinationResult.origin
       );
     }
+    if (destination.authentication === 'OAuth2ClientCredentials') {
+      destination = await da.addOAuth2ClientCredentials();
+    }
     if (destination.authentication === 'ClientCertificateAuthentication') {
       destination = await da.addClientCertAuth();
     }
@@ -298,6 +301,18 @@ class DestinationFromServiceRetriever {
       destinationOrigin
     );
     return this.fetchDestinationByToken(token);
+  }
+
+  private async addOAuth2ClientCredentials(): Promise<Destination> {
+    const clientGrant = await serviceToken('destination', {
+      userJwt: this.options.userJwt || this.providerClientCredentialsToken
+    });
+
+    return fetchDestination(
+      this.destinationServiceCredentials.uri,
+      clientGrant,
+      this.name
+    );
   }
 
   private async addOAuthSamlAuth(

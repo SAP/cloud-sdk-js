@@ -83,12 +83,44 @@ export const oauthUserTokenExchangeMultipleResponse: DestinationConfiguration[] 
   }
 ];
 
+export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] = [
+  {
+    Name: 'FINAL-DESTINATION',
+    Type: 'HTTP',
+    URL: 'https://my.system.com/',
+    Authentication: 'OAuth2ClientCredentials' as AuthenticationType,
+    ProxyType: 'Internet',
+    audience: 'https://my.system.com',
+    clientKey: 'password',
+    scope: 'SOME_SCOPE',
+    tokenServiceUser: 'TOKEN_USER',
+    tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
+    userIdSource: 'email',
+    tokenServicePassword: 'password'
+  }
+];
+
 export const oauthUserTokenExchangeSingleResponse: DestinationJson = {
   owner: {
     SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     InstanceId: null
   },
   destinationConfiguration: oauthUserTokenExchangeMultipleResponse[0],
+  authTokens: [
+    {
+      type: 'Bearer',
+      value: 'token',
+      expires_in: '3600'
+    }
+  ]
+};
+
+export const oauthClientCredentialsSingleResponse: DestinationJson = {
+  owner: {
+    SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+    InstanceId: null
+  },
+  destinationConfiguration: oauthClientCredentialsMultipleResponse[0],
   authTokens: [
     {
       type: 'Bearer',

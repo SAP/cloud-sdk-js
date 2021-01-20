@@ -60,12 +60,14 @@ export class TestEntity<T1 = string, T2 = number> extends EntityV4<T1, T2> imple
     return middleware? EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<newT1, newT2>, TestEntityType<newT1, newT2>> : EntityV4.entityBuilder(TestEntity) as EntityBuilderType<TestEntity<T1, T2>, TestEntityType<T1, T2>>;
   }
 
+  static requestBuilder<T1=string, T2=number>(): TestEntityRequestBuilder;
+  static requestBuilder<newT1, newT2>(middleware: DeSerializationMiddlewareInterface<newT1, newT2>): TestEntityRequestBuilder<newT1, newT2>;
   /**
    * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
    * @returns A `TestEntity` request builder.
    */
-  static requestBuilder(): TestEntityRequestBuilder {
-    return new TestEntityRequestBuilder();
+  static requestBuilder<newT1, newT2>(middleware?: DeSerializationMiddlewareInterface<newT1, newT2>) {
+    return new TestEntityRequestBuilder(middleware);
   }
 
   /**

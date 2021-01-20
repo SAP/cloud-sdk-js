@@ -23,7 +23,7 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
   extends MethodRequestBuilderBase<ODataGetAllRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT> {
   readonly _entity: EntityT;
-  dateTimeMiddleware: DeSerializationMiddlewareInterface;
+  middleware: DeSerializationMiddlewareInterface;
 
   /**
    * Creates an instance of GetAllRequestBuilder.
@@ -113,7 +113,7 @@ export abstract class GetAllRequestBuilderBase<EntityT extends EntityBase>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT[]> {
-    this.entityDeserializer.customDeserializer = this.dateTimeMiddleware?.deserializers;
+    this.entityDeserializer.customDeserializer = this.middleware?.deserializers;
     return this.build(destination, options)
       .then(request => request.execute())
       .then(response =>

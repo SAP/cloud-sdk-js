@@ -14,9 +14,12 @@ import { TestEntity as TestEntityTemporal, TestEntity } from './TestEntity';
  * Request builder class for operations supported on the [[TestEntity]] entity.
  */
 export class TestEntityRequestBuilder<T1 = string, T2 = number> extends RequestBuilder<TestEntity<T1, T2>> {
-  // A new class is needed to solve the nested generic type
-  getAll(): TestEntityGetAllRequestBuilder<TestEntity> {
-    return new TestEntityGetAllRequestBuilder(TestEntity) as any;
+  constructor(public middleware?: DeSerializationMiddlewareInterface<T1, T2>) {
+    super();
+  }
+
+  getAll(): TestEntityGetAllRequestBuilder<TestEntity<T1, T2>, T1, T2> {
+    return new TestEntityGetAllRequestBuilder(TestEntity, this.middleware) as any;
   }
 }
 
@@ -25,15 +28,7 @@ export class TestEntityGetAllRequestBuilder<
   T1 = string,
   T2 = number
   > extends GetAllRequestBuilderV4<EntityT>{
-  constructor(entityConstructor: Constructable<EntityT>) {
+  constructor(entityConstructor: Constructable<EntityT>, middleware?: DeSerializationMiddlewareInterface<T1, T2>) {
     super(entityConstructor);
-  }
-
-  transform<newT1, newT2>(
-    middleware: DeSerializationMiddlewareInterface<newT1, newT2>
-  ): TestEntityGetAllRequestBuilder<TestEntity<newT1, newT2>, newT1, newT2> {
-    const res = new TestEntityGetAllRequestBuilder(TestEntity);
-    res.dateTimeMiddleware = middleware as any;
-    return res as any;
   }
 }

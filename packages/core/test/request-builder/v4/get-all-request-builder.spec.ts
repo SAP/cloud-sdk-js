@@ -86,26 +86,33 @@ describe('GetAllRequestBuilderV4', () => {
         .getAll()
         .execute(defaultDestination);
       // TestEntityTemporal<string, number>[]
-      const res2 = await TestEntityTemporal.requestBuilder()
+      const res2 = await TestEntityTemporal.requestBuilder(defaultMiddleware)
         .getAll()
-        .transform(defaultMiddleware)
         .execute(defaultDestination);
       // TestEntityTemporal<string, string>[]
-      const res3 = await TestEntityTemporal.requestBuilder()
+      const res3 = await TestEntityTemporal.requestBuilder(customMiddlewareFull)
         .getAll()
-        .transform(customMiddlewareFull)
         .execute(defaultDestination);
       // TestEntityTemporal<string, string>[]
-      const res4 = await TestEntityTemporal.requestBuilder()
+      const res4 = await TestEntityTemporal.requestBuilder(
+        customMiddlewarePartial
+      )
         .getAll()
-        .transform(customMiddlewarePartial)
         .execute(defaultDestination);
 
       // TestEntityTemporal<string, number>
-      const entity1 = TestEntityTemporal.builder().build();
+      const entity1 = TestEntityTemporal.builder().int32Property(1).build();
       // TestEntityTemporal<string, string>
-      const entity2 = TestEntityTemporal.builder(customMiddlewareFull).build();
+      const entity2 = TestEntityTemporal.builder(customMiddlewareFull)
+        .int32Property('1')
+        .build();
 
+      // TestEntityGetAllRequestBuilder<TestEntityTemporal<string, number>, string, number>
+      const requestBuilder1 = await TestEntityTemporal.requestBuilder().getAll();
+      // TestEntityGetAllRequestBuilder<TestEntityTemporal<string, string>, string, string>
+      const requestBuilder2 = await TestEntityTemporal.requestBuilder(
+        customMiddlewareFull
+      ).getAll();
     });
 
     it('returns all entities with custom middleware', async () => {
@@ -117,9 +124,10 @@ describe('GetAllRequestBuilderV4', () => {
         TestEntity
       );
 
-      const res = await TestEntityTemporal.requestBuilder()
+      const res = await TestEntityTemporal.requestBuilder(
+        customMiddlewarePartial
+      )
         .getAll()
-        .transform(customMiddlewarePartial)
         .execute(defaultDestination);
       expect(res).toEqual([createTestEntityTemporal(testEntity1)]);
     });

@@ -18,6 +18,6 @@ describe('generator', () => {
       }
     });
 
-    expect((await getInputFilePaths('path/to/fake/dir')).length).toBe(3);
+    expect((await getInputFilePaths('path/to/test/dir')).length).toBe(3);
   });
 });

@@ -154,10 +154,7 @@ async function generateOpenApiService(
       errorMessage =
         errorMessage + ' ' + err.message || err.stderr || err.shortMessage;
     }
-    throw new ErrorWithCause(
-      errorMessage,
-      err
-    );
+    throw new ErrorWithCause(errorMessage, err);
   }
 }
 

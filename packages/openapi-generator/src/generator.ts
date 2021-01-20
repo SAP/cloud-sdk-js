@@ -155,7 +155,7 @@ async function generateOpenApiService(
         errorMessage + ' ' + err.message || err.stderr || err.shortMessage;
     }
     throw new ErrorWithCause(
-      'Could not generate the OpenApi client using the OpenApi generator CLI.',
+      errorMessage,
       err
     );
   }

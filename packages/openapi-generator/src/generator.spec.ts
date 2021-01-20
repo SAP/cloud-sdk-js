@@ -18,6 +18,10 @@ describe('generator', () => {
       }
     });
 
-    expect((await getInputFilePaths('path/to/test/dir')).length).toBe(3);
+    expect(await getInputFilePaths('path/to/test/dir')).toEqual([
+      'path/to/test/dir/test-service.txt',
+      'path/to/test/dir/sub-dir/test-service.txt',
+      'path/to/test/dir/sub-dir/sub-directory-service.txt'
+    ]);
   });
 });

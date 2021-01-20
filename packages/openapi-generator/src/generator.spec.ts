@@ -8,7 +8,7 @@ describe('generator', () => {
 
   it('getInputPaths returns an array of all file paths, including subdirectories', async () => {
     mock({
-      'path/to/test/dir': {
+      '/path/to/test/dir': {
         'test-service.txt': 'file content here',
         'empty-dir': {},
         'sub-dir': {
@@ -18,10 +18,12 @@ describe('generator', () => {
       }
     });
 
-    expect(await getInputFilePaths('path/to/test/dir')).toEqual([
-      'path/to/test/dir/test-service.txt',
-      'path/to/test/dir/sub-dir/test-service.txt',
-      'path/to/test/dir/sub-dir/sub-directory-service.txt'
-    ]);
+    expect((await getInputFilePaths('/path/to/test/dir')).sort()).toEqual(
+      [
+        '/path/to/test/dir/test-service.txt',
+        '/path/to/test/dir/sub-dir/test-service.txt',
+        '/path/to/test/dir/sub-dir/sub-directory-service.txt'
+      ].sort()
+    );
   });
 });

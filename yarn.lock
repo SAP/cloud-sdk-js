@@ -7785,6 +7785,11 @@ mkdirp@*, mkdirp@1.0.4, mkdirp@1.x, mkdirp@^1.0.4:
   dependencies:
     minimist "^1.2.5"
 
+mock-fs@^4.13.0:
+  version "4.13.0"
+  resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-4.13.0.tgz#31c02263673ec3789f90eb7b6963676aa407a598"
+  integrity sha512-DD0vOdofJdoaRNtnWcrXe6RQbpHkPPmtqGq14uRX0F8ZKJ5nv89CVTYl/BZdppDxBDaV0hl75htg3abpEWlPZA==
+
 mock-json-schema@^1.0.7:
   version "1.0.8"
   resolved "https://registry.npmjs.org/mock-json-schema/-/mock-json-schema-1.0.8.tgz#4ad2537f06352e69ae179c3bf2a38d8733fc1d86"

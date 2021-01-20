@@ -21,7 +21,7 @@ describe('generator', () => {
         clearOutputDir: true,
         generatePackageJson: true
       }),
-    120000//test
+    120000
   );
 
   afterAll(() => rmdir(outputDir, { recursive: true }), 60000);

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [OpenApi Generator] Support the transpilation of TypeScript client to Javascript with the new flags: `generateJs` and `tsConfig`.
+- [openApi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
 
 ## Improvements
 

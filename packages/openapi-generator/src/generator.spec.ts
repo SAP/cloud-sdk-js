@@ -18,12 +18,10 @@ describe('generator', () => {
       }
     });
 
-    expect((await getInputFilePaths('/path/to/test/dir')).sort()).toEqual(
-      [
-        '/path/to/test/dir/test-service.txt',
-        '/path/to/test/dir/sub-dir/test-service.txt',
-        '/path/to/test/dir/sub-dir/sub-directory-service.txt'
-      ].sort()
-    );
+    expect(await getInputFilePaths('/path/to/test/dir')).toEqual([
+      '/path/to/test/dir/sub-dir/sub-directory-service.txt',
+      '/path/to/test/dir/sub-dir/test-service.txt',
+      '/path/to/test/dir/test-service.txt'
+    ]);
   });
 });

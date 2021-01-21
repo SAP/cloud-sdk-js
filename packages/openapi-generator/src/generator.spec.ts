@@ -1,17 +1,14 @@
-import mock from 'mock-fs';
-import { getSdkVersion, getInputFilePaths } from './generator';
 import { resolve } from 'path';
-import { existsSync, promises } from 'fs';
+import { existsSync } from 'fs';
+import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
-import { getSdkVersion } from './generator';
-
+import { getSdkVersion, getInputFilePaths } from './generator';
 
 describe('generator', () => {
   const testServicePath = resolve(
     __dirname,
     '../../../test-packages/test-services/openapi/test-service'
   );
-
 
   it('getSdkVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);

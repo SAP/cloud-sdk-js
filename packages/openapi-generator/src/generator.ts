@@ -201,16 +201,16 @@ async function generateFromFile(
  * @param input the path to the input directory.
  * @returns all file paths as a string array.
  */
-async function getInputFilePaths(input: string): Promise<string[]> {
+export async function getInputFilePaths(input: string): Promise<string[]> {
   if ((await lstat(input)).isFile()) {
     return [input];
   }
 
-  const directoryContents = await readdir(input, { withFileTypes: true });
+  const directoryContents = await readdir(input);
   const inputFilePaths = directoryContents.reduce(
     async (paths: Promise<string[]>, directoryContent) => [
       ...(await paths),
-      ...(await getInputFilePaths(resolve(input, directoryContent.name)))
+      ...(await getInputFilePaths(resolve(input, directoryContent)))
     ],
     Promise.resolve([])
   );

@@ -6,7 +6,7 @@ describe('generator', () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);
   });
 
-  it('getInputPaths returns an array of all file paths, including subdirectories', async () => {
+  it('getInputFilePaths returns an array of all file paths, including subdirectories', async () => {
     mock({
       '/path/to/test/dir': {
         'test-service.txt': 'file content here',

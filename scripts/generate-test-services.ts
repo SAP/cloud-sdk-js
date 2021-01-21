@@ -14,7 +14,10 @@ const [readFile, readdir, writeFile] = [
 ].map((fsModule: fsTypes) => util.promisify(fsModule));
 
 const odataServiceSpecsDir = path.join('test-resources', 'odata-service-specs');
-const openApiServiceSpecsDir = path.join('test-resources', 'openapi-service-specs');
+const openApiServiceSpecsDir = path.join(
+  'test-resources',
+  'openapi-service-specs'
+);
 const packageOutputDir = path.resolve('test-packages', 'test-services');
 const coreUnitTestOutputDir = path.resolve(
   'packages',

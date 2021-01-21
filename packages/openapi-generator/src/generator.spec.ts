@@ -23,7 +23,7 @@ describe('generator', () => {
       '/path/to/test/dir/sub-dir/test-service.txt',
       '/path/to/test/dir/test-service.txt'
     ]);
-  });
 
-  mock.restore();
+    mock.restore();
+  });
 });

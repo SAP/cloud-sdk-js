@@ -4,6 +4,7 @@ import util from 'util';
 import { generate as generateOdata } from '../packages/generator/src';
 import { generate as generateOpenApi } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
 const [readFile, readdir, writeFile] = [
@@ -36,6 +37,8 @@ const generatorConfig = {
   sdkAfterVersionScript: false,
   s4hanaCloud: false
 };
+
+const logger = createLogger('generate-test-service')
 
 function generateTestServicesPackage(outputDir: string, version: ODataVersion) {
   generateOdata({
@@ -104,43 +107,50 @@ async function generateTestServicesWithLocalCoreModules(
   }
 }
 
-const arg = process.argv[2];
-if (arg === 'v2' || arg === 'odata' || arg === 'all') {
-  generateTestServicesPackage(packageOutputDir, 'v2');
-  generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
-}
+try {
+  const arg = process.argv[2];
+  if (arg === 'v2' || arg === 'odata' || arg === 'all') {
+    generateTestServicesPackage(packageOutputDir, 'v2');
+    generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
+  }
 
-if (arg === 'v4' || arg === 'odata' || arg === 'all') {
-  generateTestServicesPackage(packageOutputDir, 'v4');
-  generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
-}
+  if (arg === 'v4' || arg === 'odata' || arg === 'all') {
+    generateTestServicesPackage(packageOutputDir, 'v4');
+    generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
+  }
 
-if (arg === 'e2e' || arg === 'all') {
-  generateOdata({
-    ...generatorConfig,
-    inputDir: path.resolve('test-resources', 'odata-service-specs-e2e', 'v4'),
-    outputDir: path.resolve('test-packages', 'test-services-e2e', 'v4'),
-    generateJs: true
-  });
+  if (arg === 'e2e' || arg === 'all') {
+    generateOdata({
+      ...generatorConfig,
+      inputDir: path.resolve('test-resources', 'odata-service-specs-e2e', 'v4'),
+      outputDir: path.resolve('test-packages', 'test-services-e2e', 'v4'),
+      generateJs: true
+    });
 
-  generateOdata({
-    ...generatorConfig,
-    inputDir: path.resolve(
-      'test-resources',
-      'odata-service-specs-e2e',
-      'TripPin'
-    ),
-    outputDir: path.resolve('test-packages', 'test-services-e2e', 'TripPin'),
-    generateJs: true
-  });
-}
+    generateOdata({
+      ...generatorConfig,
+      inputDir: path.resolve(
+        'test-resources',
+        'odata-service-specs-e2e',
+        'TripPin'
+      ),
+      outputDir: path.resolve('test-packages', 'test-services-e2e', 'TripPin'),
+      generateJs: true
+    });
+  }
 
-if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
-  generateOpenApi({
-    input: path.resolve('test-resources', 'openapi-service-specs'),
-    outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
-    clearOutputDir: true,
-    generateJs: false,
-    generatePackageJson: false
-  });
+  if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
+    generateOpenApi({
+      input: path.resolve('test-resources', 'openapi-service-specs'),
+      outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
+      clearOutputDir: true,
+      generateJs: true,
+      generatePackageJson: true,
+      versionInPackageJson: '1.2.3'
+    });
+  }
+}catch (err) {
+  logger.error('Something went wrong in the generation of the test services')
+  logger.error(err)
+  process.exit(1)
 }

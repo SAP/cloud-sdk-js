@@ -10,7 +10,6 @@ export function tsconfigJson(options: GeneratorOptions): string {
     compilerOptions: {
       target: 'es5',
       module: 'commonjs',
-      outDir: 'dist',
       lib: ['esnext', 'dom'],
       declaration: true,
       declarationMap: true,
@@ -22,7 +21,7 @@ export function tsconfigJson(options: GeneratorOptions): string {
       strict: true
     },
     include: ['**/*.ts'],
-    exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
+    exclude: ['dist/**/*', 'node_modules/**/*']
   };
   if (options.tsConfig) {
     tsConfig = readJSON(options.tsConfig) as any;

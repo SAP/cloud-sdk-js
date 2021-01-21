@@ -1,46 +1,38 @@
 import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
-import { getSdkVersion, generate } from './generator';
+import { readJSON } from '@sap-cloud-sdk/util';
+import { getSdkVersion } from './generator';
 
 const { rmdir } = promises;
 
-xdescribe('generator', () => {
-  const input = resolve(
+describe('generator', () => {
+  const testServicePath = resolve(
     __dirname,
-    '../../../test-resources/openapi-service-specs/'
+    '../../../test-packages/test-services/openapi/test-service'
   );
-  const outputDir = resolve(__dirname, '../generation-test');
-  const testServicePath = resolve(outputDir, 'test-service');
-
-  beforeAll(
-    () =>
-      generate({
-        input,
-        outputDir,
-        generateJs: true,
-        clearOutputDir: true,
-        generatePackageJson: true
-      }),
-    120000
-  );
-
-  afterAll(() => rmdir(outputDir, { recursive: true }), 60000);
 
   it('getSDKVersion returns a valid stable version', async () => {
     expect((await getSdkVersion()).split('.').length).toBe(3);
   });
 
   it('should transpile the generated sources', () => {
-    const jsApiFile = resolve(testServicePath, 'dist', 'api.js');
+    const jsApiFile = resolve(testServicePath, 'api.js');
     expect(existsSync(jsApiFile)).toBe(true);
   });
 
-  it('should create package.json', () => {
+  it('should create a package.json', () => {
     const packageJson = resolve(testServicePath, 'package.json');
     expect(existsSync(packageJson)).toBe(true);
   });
 
-  it('should create tsconfig.json', () => {
+  it('should create a package.json with the provided version', async () => {
+    const packageJson = await readJSON(
+      resolve(testServicePath, 'package.json')
+    );
+    expect(packageJson.version).toBe('1.2.3');
+  });
+
+  it('should create a tsconfig.json', () => {
     const tsconfig = resolve(testServicePath, 'tsconfig.json');
     expect(existsSync(tsconfig)).toBe(true);
   });

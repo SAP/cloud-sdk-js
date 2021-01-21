@@ -9,7 +9,8 @@
     "./packages/test-util/**/*"
   ],
   "exclude": [
-    "./packages/core/test/test-util/test-services"
+    "./packages/core/test/test-util/test-services",
+    "**/*.spec.ts"
   ],
   "references": [
     {

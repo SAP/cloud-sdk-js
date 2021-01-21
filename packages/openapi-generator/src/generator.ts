@@ -183,7 +183,7 @@ async function generateFromFile(
   try {
     openApiDocument = await convertOpenApiSpec(filePath);
   } catch (err) {
-    await logger.error(
+    logger.error(
       `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
     );
     return;

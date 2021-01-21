@@ -141,6 +141,6 @@ if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
     outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
     clearOutputDir: true,
     generateJs: false,
-    generatePackageJson: true
+    generatePackageJson: false
   });
 }

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises as promisesFs, existsSync } from 'fs';
+import { promises as promisesFs } from 'fs';
 import { resolve, parse } from 'path';
 import {
   createLogger,
@@ -32,22 +32,20 @@ const logger = createLogger('openapi-generator');
  * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
  * @param options Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void[]> {
+export async function generate(options: GeneratorOptions): Promise<void> {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.input.toString(), 'service-mapping.json');
 
   if (options.clearOutputDir) {
-    if (existsSync(options.outputDir)) {
-      await rmdir(options.outputDir, { recursive: true });
-    }
+    await rmdir(options.outputDir, { recursive: true });
   }
 
   const vdmMapping = readServiceMapping(options);
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
 
-  const promises = inputFilePaths.map(async inputFilePath => {
+  const promises = inputFilePaths.map(inputFilePath => {
     const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
       parseServiceName(inputFilePath)
     );
@@ -59,7 +57,7 @@ export async function generate(options: GeneratorOptions): Promise<void[]> {
       uniqueServiceName
     );
   });
-  return Promise.all(promises);
+  return Promise.all(promises).then(() => undefined);
 }
 
 /**
@@ -146,7 +144,7 @@ async function generateOpenApiService(
       `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
-    // The npx creates strange error objects, hence we add the method here:
+    // The generator execution creates strange error objects, hence we add the method here:
     const errorMessage = `Could not generate the OpenApi client using the OpenApi generator CLI: ${
       err.message || err.stderr || err.shortMessage
     }`;

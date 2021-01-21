@@ -1661,9 +1661,9 @@
     "@types/node" ">= 8"
 
 "@openapitools/openapi-generator-cli@^2.1.4":
-  version "2.1.17"
-  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.17.tgz#01db731b5d9ea088ef874cc52e81ada212800338"
-  integrity sha512-y6UhhYsvJ/Y8z60i5BlCXXtLaz342O3nf25f1VARZvmdjMWIzAI2rimyT5VuIm2GO73hahUrNv6mGt8MGH3oVA==
+  version "2.1.18"
+  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.18.tgz#105dbef9a0aac41464c3e4398027faec77c4cc66"
+  integrity sha512-EXlE+aqNgZIuLb3w5r7fVNz+qCNNg8QhCQlwEbygLmKcYKd2qInH9iJD2G6vDLZGa+Aap8KUeMLO7CKcO4ryQQ==
   dependencies:
     "@nestjs/common" "7.6.5"
     "@nestjs/core" "7.6.5"
@@ -1673,7 +1673,7 @@
     compare-versions "3.6.0"
     concurrently "5.3.0"
     console.table "0.10.0"
-    fs-extra "9.0.1"
+    fs-extra "9.1.0"
     glob "7.1.6"
     inquirer "7.3.3"
     lodash "4.17.20"
@@ -1784,9 +1784,9 @@
     sax "^1.2.4"
 
 "@sap/cds-dk@^3.3.3":
-  version "3.3.4"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.3.4.tgz#bcd6b4de462b13604ce115ee5e61c4b167b671ca"
-  integrity sha512-/mlTc5bK7003oUYCDFJepej0lt1amx6IeR1+SaYP8f3aGBlUfu2DMCKPx4EL0OM2f66gyZPl1SwoPn40455vfg==
+  version "3.3.5"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.3.5.tgz#6695dd10e660c1d318056132ae97f23267ebae68"
+  integrity sha512-RV7F0GtHpi6LrJoLHXnDoOqF05NinG09LmalhySzClrT9oLnY0crQEilTeQ1DIYR9YcIOT5sLWVFi4bbos2ZWg==
   dependencies:
     "@sap/cds" "^4.4.9"
     "@sap/cds-foss" "^2"
@@ -1838,9 +1838,9 @@
     got "10.7.0"
 
 "@sap/cds@^4.4.7", "@sap/cds@^4.4.9":
-  version "4.4.9"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.4.9.tgz#4243c0752d951b7c4f910dda5feac7c643517be1"
-  integrity sha512-5lEJM435KbJjDejLuptoWUbC+CSUmXDphlfUH7zF5tGIAYO4QXSmFAP4FVRti0FC3ravEk80w20mBjJ21sVLkA==
+  version "4.4.10"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.4.10.tgz#7f7450b8d8776b6c643985c3708e228bd2c83da4"
+  integrity sha512-///MjL7hiytePdWyZJHaRnJQz1iXS6uK9Igae7IbyR9BdTQbQOVgLMMvl69Zx3fBSGEeNOJNLwHM+/0zGDQ7Dw==
   dependencies:
     "@sap/cds-compiler" "^1.43.1"
     "@sap/cds-foss" "^2"
@@ -2056,10 +2056,10 @@
   resolved "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/node@*", "@types/node@>= 8", "@types/node@^12.12.29":
-  version "12.19.14"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.14.tgz#59e5029a3c2aea34f68b717955381692fd47cafb"
-  integrity sha512-2U9uLN46+7dv9PiS8VQJcHhuoOjiDPZOLAt0WuA1EanEknIMae+2QbMhayF7cgGqjvRVIfNpt+6jLPczJZFiRw==
+"@types/node@*", "@types/node@>= 8", "@types/node@^12.0.0", "@types/node@^12.12.29":
+  version "12.19.15"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.19.15.tgz#0de7e978fb43db62da369db18ea088a63673c182"
+  integrity sha512-lowukE3GUI+VSYSu6VcBXl14d61Rp5hA1D+61r16qnwC0lYNSqdxcvRh0pswejorHfS+HgwBasM8jLXz0/aOsw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -5232,6 +5232,16 @@ fs-extra@9.0.1:
     jsonfile "^6.0.1"
     universalify "^1.0.0"
 
+fs-extra@9.1.0, fs-extra@^9.0.0, fs-extra@^9.0.1:
+  version "9.1.0"
+  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
+  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
@@ -5258,16 +5268,6 @@ fs-extra@^8.1, fs-extra@^8.1.0:
     graceful-fs "^4.2.0"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
-
-fs-extra@^9.0.0, fs-extra@^9.0.1:
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
-  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
 
 fs-minipass@^1.2.5:
   version "1.2.7"
@@ -8034,9 +8034,9 @@ nice-try@^1.0.4:
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
 nock@^13.0.2, nock@^13.0.3:
-  version "13.0.5"
-  resolved "https://registry.npmjs.org/nock/-/nock-13.0.5.tgz#a618c6f86372cb79fac04ca9a2d1e4baccdb2414"
-  integrity sha512-1ILZl0zfFm2G4TIeJFW0iHknxr2NyA+aGCMTjDVUsBY4CkMRispF1pfIYkTRdAR/3Bg+UzdEuK0B6HczMQZcCg==
+  version "13.0.6"
+  resolved "https://registry.npmjs.org/nock/-/nock-13.0.6.tgz#9f90573ea6e84883b94eeac374d1c73460afed56"
+  integrity sha512-W81UZ1Tv21SWDZcA8Lu9LXYVl2gO9ADY5GadC6gFV9690h4TXz0oCkEoMckN/sPMHkDA79Ka9dXga9Mt1+j+Sg==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"

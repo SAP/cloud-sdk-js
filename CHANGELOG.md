@@ -22,6 +22,21 @@
 
 ## Improvements
 
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.37.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.37.0<br>
+Blog: TBD<br>
+
+## Improvements
+
 - [openapi-generator] Improve generation for duplicate operation names and non existing `operationId`s.
 
 ## Fixed Issues

@@ -24,4 +24,6 @@ describe('generator', () => {
       '/path/to/test/dir/test-service.txt'
     ]);
   });
+
+  mock.restore();
 });

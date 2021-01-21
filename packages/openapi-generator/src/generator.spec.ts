@@ -4,7 +4,7 @@ import { getSdkVersion, generate } from './generator';
 
 const { rmdir } = promises;
 
-describe('generator', () => {
+xdescribe('generator', () => {
   const input = resolve(
     __dirname,
     '../../../test-resources/openapi-service-specs/'

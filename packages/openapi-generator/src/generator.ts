@@ -221,14 +221,13 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   }
 
   const directoryContents = await readdir(input);
-  const inputFilePaths = directoryContents.reduce(
+  return directoryContents.reduce(
     async (paths: Promise<string[]>, directoryContent) => [
       ...(await paths),
       ...(await getInputFilePaths(resolve(input, directoryContent)))
     ],
     Promise.resolve([])
   );
-  return inputFilePaths;
 }
 
 /**

@@ -1,20 +1,22 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises } from 'fs';
-import { resolve, parse } from 'path';
+import { resolve, parse, basename } from 'path';
 import {
   createLogger,
   ErrorWithCause,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
+import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
   indexFile,
   createFile,
   packageJson,
-  genericDescription
+  genericDescription,
+  copyFile
 } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
@@ -72,6 +74,8 @@ async function generateSDKSources(
   await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
   await createFile(serviceDir, 'index.ts', indexFile(), true);
   if (options.generatePackageJson) {
+    logger.info(`Generating package.json in ${serviceDir}.`);
+
     await createFile(
       serviceDir,
       'package.json',
@@ -83,6 +87,18 @@ async function generateSDKSources(
       ),
       true,
       false
+    );
+  }
+  if (options.additionalFiles) {
+    logger.info(
+      `Copying additional files matching ${options.additionalFiles} into ${serviceDir}.`
+    );
+
+    await Promise.all(
+      new GlobSync(options.additionalFiles).found.map(filePath => {
+        logger.info(filePath);
+        return copyFile(filePath, basename(filePath), serviceDir, true);
+      })
     );
   }
 }
@@ -181,7 +197,7 @@ async function generateFromFile(
 
   if (!parsedOpenApiDocument.operations.length) {
     logger.warn(
-      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
+      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${filePath}`
     );
     return;
   }

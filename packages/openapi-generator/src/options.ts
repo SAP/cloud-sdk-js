@@ -5,4 +5,6 @@ export interface GeneratorOptions {
   versionInPackageJson?: string;
   generatePackageJson?: boolean;
   serviceMapping?: string;
+  additionalFiles?: string;
+  writeReadme?: boolean;
 }

@@ -1,5 +1,5 @@
-import { promises } from 'fs';
-import { join } from 'path';
+import { promises, readFileSync } from 'fs';
+import { join, resolve } from 'path';
 import { codeBlock } from '@sap-cloud-sdk/util';
 const { writeFile } = promises;
 
@@ -40,4 +40,22 @@ function wrapContent(content: string): string {
 ${content}
 ` + '\n'
   );
+}
+
+/**
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ * Copy a file from a given path.
+ * @param fromPath Path of the original file to be copied.
+ * @param toFileName File name of the new file.
+ * @param toDirectoryPath Path of the directory to write to.
+ * @param overwrite Whether or not existing files should be overwritten.
+ */
+export async function copyFile(
+  fromPath: string,
+  toFileName: string,
+  toDirectoryPath: string,
+  overwrite: boolean
+): Promise<void> {
+  const fileContent = readFileSync(resolve(fromPath), { encoding: 'utf8' });
+  return createFile(toDirectoryPath, toFileName, fileContent, overwrite, false);
 }

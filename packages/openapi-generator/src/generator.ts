@@ -57,7 +57,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       uniqueServiceName
     );
   });
-  return Promise.all(promises).then(() => undefined);
+  await Promise.all(promises)
 }
 
 /**

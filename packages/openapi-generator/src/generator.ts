@@ -57,7 +57,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       uniqueServiceName
     );
   });
-  await Promise.all(promises)
+  await Promise.all(promises);
 }
 
 /**

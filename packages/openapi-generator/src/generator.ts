@@ -1,10 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { promises } from 'fs';
+import { promises as promisesFs } from 'fs';
 import { resolve, parse } from 'path';
 import {
   createLogger,
   ErrorWithCause,
+  transpileDirectory,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
@@ -20,8 +21,9 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
+import { tsconfigJson } from './wrapper-files/tsconfig-json';
 
-const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promises;
+const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -42,18 +44,20 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   const vdmMapping = readServiceMapping(options);
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
-  inputFilePaths.forEach(async inputFilePath => {
+
+  const promises = inputFilePaths.map(inputFilePath => {
     const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
       parseServiceName(inputFilePath)
     );
 
-    await generateFromFile(
+    return generateFromFile(
       inputFilePath,
       options,
       vdmMapping,
       uniqueServiceName
     );
   });
+  await Promise.all(promises);
 }
 
 /**
@@ -84,6 +88,16 @@ async function generateSDKSources(
       true,
       false
     );
+  }
+  if (options.generateJs) {
+    await createFile(
+      serviceDir,
+      'tsconfig.json',
+      tsconfigJson(options),
+      true,
+      false
+    );
+    await transpileDirectory(serviceDir);
   }
 }
 
@@ -130,10 +144,11 @@ async function generateOpenApiService(
       `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
     );
   } catch (err) {
-    throw new ErrorWithCause(
-      'Could not generate the OpenApi client using the OpenApi generator CLI.',
-      err
-    );
+    // The generator execution creates strange error objects, hence we add the method here:
+    const errorMessage = `Could not generate the OpenApi client using the OpenApi generator CLI: ${
+      err.message || err.stderr || err.shortMessage
+    }`;
+    throw new ErrorWithCause(errorMessage, err);
   }
 }
 
@@ -191,7 +206,6 @@ async function generateFromFile(
     convertedInputFilePath,
     JSON.stringify(openApiDocument, null, 2)
   );
-
   await generateOpenApiService(convertedInputFilePath, serviceDir);
   await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
 }
@@ -207,14 +221,13 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   }
 
   const directoryContents = await readdir(input);
-  const inputFilePaths = directoryContents.reduce(
+  return directoryContents.reduce(
     async (paths: Promise<string[]>, directoryContent) => [
       ...(await paths),
       ...(await getInputFilePaths(resolve(input, directoryContent)))
     ],
     Promise.resolve([])
   );
-  return inputFilePaths;
 }
 
 /**

@@ -17,7 +17,8 @@ import {
   createFile,
   packageJson,
   genericDescription,
-  copyFile
+  copyFile,
+  readme
 } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
@@ -106,16 +107,11 @@ async function generateSDKSources(
   }
 
   if (options.additionalFiles) {
-    logger.info(
-      `Copying additional files matching ${options.additionalFiles} into ${serviceDir}.`
-    );
+    await generateAdditionalFiles(options.additionalFiles, serviceDir);
+  }
 
-    await Promise.all(
-      new GlobSync(options.additionalFiles).found.map(filePath => {
-        logger.info(filePath);
-        return copyFile(filePath, basename(filePath), serviceDir, true);
-      })
-    );
+  if (options.writeReadme) {
+    await generateReadme(serviceDir, openApiDocument);
   }
 }
 
@@ -256,4 +252,35 @@ export async function getSdkVersion(): Promise<string> {
   return JSON.parse(
     await readFile(resolve(__dirname, '../package.json'), 'utf8')
   ).version;
+}
+
+function generateAdditionalFiles(
+  additionalFiles: string,
+  serviceDir: string
+): Promise<void[]> {
+  logger.info(
+    `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
+  );
+
+  return Promise.all(
+    new GlobSync(additionalFiles!).found.map(filePath => {
+      logger.info(filePath);
+      return copyFile(filePath, basename(filePath), serviceDir, true);
+    })
+  );
+}
+
+function generateReadme(
+  serviceDir: string,
+  openApiDocument: OpenApiDocument
+): Promise<void> {
+  logger.info(`Generating readme in ${serviceDir}.`);
+
+  return createFile(
+    serviceDir,
+    'README.md',
+    readme(openApiDocument),
+    true,
+    false
+  );
 }

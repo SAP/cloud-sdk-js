@@ -1,12 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-<<<<<<< HEAD
-import { promises } from 'fs';
-import { resolve, parse, basename } from 'path';
-=======
 import { promises as promisesFs } from 'fs';
-import { resolve, parse } from 'path';
->>>>>>> main
+import { resolve, parse, basename } from 'path';
 import {
   createLogger,
   ErrorWithCause,
@@ -98,7 +93,7 @@ async function generateSDKSources(
       false
     );
   }
-  
+
   if (options.generateJs) {
     await createFile(
       serviceDir,

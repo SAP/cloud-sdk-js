@@ -56,4 +56,11 @@ describe('generator', () => {
     const tsconfig = resolve(testServicePath, 'tsconfig.json');
     expect(existsSync(tsconfig)).toBe(true);
   });
+
+  it('should create changelog and license files', () => {
+    const changelog = resolve(testServicePath, 'CHANGELOG.md');
+    const license = resolve(testServicePath, 'test-license');
+    expect(existsSync(changelog)).toBe(true);
+    expect(existsSync(license)).toBe(true);
+  });
 });

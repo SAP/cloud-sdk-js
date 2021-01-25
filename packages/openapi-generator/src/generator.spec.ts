@@ -63,4 +63,9 @@ describe('generator', () => {
     expect(existsSync(changelog)).toBe(true);
     expect(existsSync(license)).toBe(true);
   });
+
+  it('should create a readme', () => {
+    const readme = resolve(testServicePath, 'README.md');
+    expect(existsSync(readme)).toBe(true);
+  });
 });

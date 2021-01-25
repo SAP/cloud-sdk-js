@@ -1,3 +1,4 @@
+import { codeBlock } from '@sap-cloud-sdk/util';
 import { OpenApiDocument } from '../openapi-types';
 
 /**
@@ -7,14 +8,13 @@ import { OpenApiDocument } from '../openapi-types';
  * @returns The readme contents.
  */
 export function readme(openApiDocument: OpenApiDocument): string {
-  return [
-    `# ${openApiDocument.npmPackageName}`,
-    '',
-    `This package contains the OpenAPI VDM for the ${openApiDocument.apiName}.`,
-    '',
-    ...helpfulLinksSection(),
-    ''
-  ].join('/n');
+  return codeBlock`# ${openApiDocument.npmPackageName}
+
+This package contains the OpenAPI VDM for the ${openApiDocument.apiName}.
+
+${helpfulLinksSection().join('\n')}
+    
+`;
 }
 // todo
 export function helpfulLinksSection(): string[] {

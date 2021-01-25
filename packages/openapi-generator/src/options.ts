@@ -4,7 +4,9 @@ export interface GeneratorOptions {
   clearOutputDir?: boolean;
   versionInPackageJson?: string;
   generatePackageJson?: boolean;
+  generateJs?: boolean;
   serviceMapping?: string;
+  tsConfig?: string;
   additionalFiles?: string;
   writeReadme?: boolean;
 }

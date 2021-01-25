@@ -60,10 +60,24 @@ export = class GenerateOpenApiClient extends Command {
       default: true,
       required: false
     }),
+    generateJs: flags.boolean({
+      name: 'generateJs',
+      description:
+        'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When setting to false, the generator will only generate .ts files.',
+      default: true,
+      required: false
+    }),
     serviceMapping: flags.string({
       name: 'serviceMapping',
       description:
         'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. By default it will be read from the input directory as "service-mapping.json".',
+      parse: input => resolve(input),
+      required: false
+    }),
+    tsConfig: flags.string({
+      name: 'tsConfig',
+      description:
+        'tsconfig.json file to overwrite the default "tsconfig.json".',
       parse: input => resolve(input),
       required: false
     }),

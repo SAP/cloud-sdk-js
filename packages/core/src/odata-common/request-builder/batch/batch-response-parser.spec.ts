@@ -8,6 +8,7 @@ import {
   splitBatchResponse,
   splitChangeSetResponse
 } from './batch-response-parser';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 describe('batch response parser', () => {
   describe('detectNewLineSymbol', () => {
@@ -242,6 +243,24 @@ describe('batch response parser', () => {
         httpCode: 204,
         body: {}
       });
+    });
+
+    it('parses no content response1', () => {
+      const logger = createLogger({
+        messageContext: 'batch-response-parser'
+      });
+      const errorSpy = jest.spyOn(logger, 'error');
+      const response = [
+        firstHeader,
+        'HTTP/1.1 204 No Content',
+        'odata-version: 4.0'
+      ].join('\r\n');
+
+      expect(parseResponseData(response)).toEqual({
+        httpCode: 204,
+        body: {}
+      });
+      expect(errorSpy).toHaveBeenCalledTimes(0);
     });
 
     it('parses create response', () => {

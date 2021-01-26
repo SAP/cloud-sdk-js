@@ -127,8 +127,7 @@ async function generateOpenApiService(
     '--model-package',
     'model',
     '--additional-properties',
-    'withSeparateModelsAndApi=true',
-    '--skip-validate-spec'
+    'withSeparateModelsAndApi=true'
   ];
 
   logger.debug(`OpenAPI generator CLI arguments: ${generationArguments}`);

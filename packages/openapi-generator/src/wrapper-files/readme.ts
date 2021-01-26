@@ -10,7 +10,7 @@ import { OpenApiDocument } from '../openapi-types';
 export function readme(openApiDocument: OpenApiDocument): string {
   return codeBlock`# ${openApiDocument.npmPackageName}
 
-This package contains the OpenAPI VDM for the ${openApiDocument.apiName}.
+This package contains the OpenAPI client for the ${openApiDocument.apiName}.
 
 ${helpfulLinksSection().join('\n')}
     

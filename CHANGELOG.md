@@ -19,7 +19,7 @@
 ## New Functionality
 
 - [openapi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
-- [openapi-generator] Add options `writeReadme` for generating readme files.
+- [openapi-generator] Add option `writeReadme` for generating readme files.
 - [openapi-generator] Support copying files from given paths via a new option `additionalFiles`.
 
 ## Improvements

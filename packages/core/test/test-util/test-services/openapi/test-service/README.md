@@ -1,6 +1,6 @@
 # test-service
 
-This package contains the OpenAPI VDM for the TestServiceApi.
+This package contains the OpenAPI client for the TestServiceApi.
 
 ### Helpful Links
 

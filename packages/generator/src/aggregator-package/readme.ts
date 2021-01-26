@@ -1,4 +1,4 @@
-import { helpfulLinksSection } from '../service';
+import { helpfulLinksSection } from '@sap-cloud-sdk/util';
 import { VdmServiceMetadata } from '../vdm-types';
 
 export function readme(

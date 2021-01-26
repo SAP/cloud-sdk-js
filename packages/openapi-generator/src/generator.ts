@@ -107,7 +107,7 @@ async function generateSDKSources(
   }
 
   if (options.additionalFiles) {
-    await generateAdditionalFiles(options.additionalFiles, serviceDir);
+    await copyAdditionalFiles(options.additionalFiles, serviceDir);
   }
 
   if (options.writeReadme) {
@@ -254,7 +254,7 @@ export async function getSdkVersion(): Promise<string> {
   ).version;
 }
 
-function generateAdditionalFiles(
+function copyAdditionalFiles(
   additionalFiles: string,
   serviceDir: string
 ): Promise<void[]> {

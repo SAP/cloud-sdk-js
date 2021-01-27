@@ -14,6 +14,7 @@ documentation
 
 test-results.xml
 test-packages/type-tests/report.*.json
+test-resources/cli/test-output
 
 tsconfig.tsbuildinfo
 junit.xml

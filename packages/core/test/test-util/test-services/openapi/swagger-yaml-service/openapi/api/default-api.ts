@@ -47,6 +47,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
+
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
@@ -55,18 +56,23 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            const query = new URLSearchParams(localVarUrlObj.search);
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
+                queryParameters.set(key, localVarQueryParameter[key]);
             }
             for (const key in options.query) {
-                query.set(key, options.query[key]);
+                queryParameters.set(key, options.query[key]);
             }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof testEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(testEntity !== undefined ? testEntity : {}) : (testEntity || "");
+            const nonString = typeof testEntity !== 'string';
+            const needsSerialization = nonString && configuration && configuration.isJsonMime
+                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                : nonString;
+            localVarRequestOptions.data =  needsSerialization
+                ? JSON.stringify(testEntity !== undefined ? testEntity : {})
+                : (testEntity || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -94,6 +100,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
+
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
@@ -104,14 +111,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            const query = new URLSearchParams(localVarUrlObj.search);
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
+                queryParameters.set(key, localVarQueryParameter[key]);
             }
             for (const key in options.query) {
-                query.set(key, options.query[key]);
+                queryParameters.set(key, options.query[key]);
             }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -140,7 +147,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         async patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).patchEntity(pathParam, testEntity, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -155,7 +162,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         async postEntity(pathParam: string, queryParam?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestEntity>>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).postEntity(pathParam, queryParam, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },

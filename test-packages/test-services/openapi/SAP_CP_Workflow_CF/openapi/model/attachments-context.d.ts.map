@@ -1,0 +1,1 @@
+{"version":3,"file":"attachments-context.d.ts","sourceRoot":"","sources":["attachments-context.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;GAUG;AAGH,OAAO,EAAE,wBAAwB,EAAE,MAAM,8BAA8B,CAAC;AAExE;;;;GAIG;AACH,MAAM,WAAW,kBAAkB;IAC/B;;;;OAIG;IACH,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB;;;;OAIG;IACH,MAAM,CAAC,EAAE;QAAE,CAAC,GAAG,EAAE,MAAM,GAAG,wBAAwB,CAAC;KAAE,CAAC;CACzD"}

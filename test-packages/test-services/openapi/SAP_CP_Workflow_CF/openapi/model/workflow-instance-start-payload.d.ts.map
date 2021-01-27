@@ -1,0 +1,1 @@
+{"version":3,"file":"workflow-instance-start-payload.d.ts","sourceRoot":"","sources":["workflow-instance-start-payload.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;GAUG;AAGH,OAAO,EAAE,kBAAkB,EAAE,MAAM,uBAAuB,CAAC;AAE3D;;;;GAIG;AACH,MAAM,WAAW,4BAA4B;IACzC;;;;OAIG;IACH,YAAY,EAAE,MAAM,CAAC;IACrB;;;;OAIG;IACH,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB;;;;OAIG;IACH,WAAW,CAAC,EAAE,kBAAkB,CAAC;CACpC"}

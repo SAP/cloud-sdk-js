@@ -1,0 +1,1 @@
+{"version":3,"file":"task-definition-attribute.d.ts","sourceRoot":"","sources":["task-definition-attribute.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;GAUG;AAIH;;;;GAIG;AACH,MAAM,WAAW,uBAAuB;IACpC;;;;OAIG;IACH,EAAE,CAAC,EAAE,MAAM,CAAC;IACZ;;;;OAIG;IACH,KAAK,CAAC,EAAE,MAAM,CAAC;IACf;;;;OAIG;IACH,IAAI,CAAC,EAAE,+BAA+B,CAAC;CAC1C;AAED;;;MAGM;AACN,oBAAY,+BAA+B;IACvC,MAAM,WAAW;CACpB"}

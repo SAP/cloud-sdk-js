@@ -1,14 +1,16 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { createLogger } from '@sap-cloud-sdk/util';
+import { HttpResponse } from '../../../http-client';
 import {
   detectNewLineSymbol,
   getResponseBody,
+  parseBatchResponse,
   parseHttpCode,
   parseResponseData,
   splitBatchResponse,
   splitChangeSetResponse
 } from './batch-response-parser';
-import { createLogger } from '@sap-cloud-sdk/util';
 
 describe('batch response parser', () => {
   describe('detectNewLineSymbol', () => {
@@ -245,15 +247,40 @@ describe('batch response parser', () => {
       });
     });
 
-    it('parses no content response1', () => {
+    it('reproduce the error from internal e2e test response', () => {
       const logger = createLogger({
         messageContext: 'batch-response-parser'
       });
       const errorSpy = jest.spyOn(logger, 'error');
       const response = [
-        firstHeader,
+        'content-type: application/http',
+        'content-transfer-encoding: binary',
+        'content-id: ~00',
+        '',
         'HTTP/1.1 204 No Content',
         'odata-version: 4.0'
+      ].join('\r\n');
+
+      expect(parseResponseData(response)).toEqual({
+        httpCode: 204,
+        body: {}
+      });
+      expect(errorSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it('reproduce the error from public issue', () => {
+      const logger = createLogger({
+        messageContext: 'batch-response-parser'
+      });
+      const errorSpy = jest.spyOn(logger, 'error');
+      const response = [
+        'content-type: application/http',
+        'Content-Length: 71',
+        'content-transfer-encoding: binary',
+        '',
+        'HTTP/1.1 204 No Content',
+        'Content-Length: 0',
+        'dataserviceversion: 2.0'
       ].join('\r\n');
 
       expect(parseResponseData(response)).toEqual({
@@ -275,6 +302,51 @@ describe('batch response parser', () => {
         httpCode: 201,
         body
       });
+    });
+  });
+
+  describe('parseBatchResponse', () => {
+    it('reproduce the error from public issue', () => {
+      const data = [
+        '--3B17E95920A7FAF8BCB7495D043515000',
+        'Content-Type: multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515001',
+        'Content-Length:      2427',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515001',
+        'Content-Type: application/http',
+        'Content-Length: 71,',
+        'content-transfer-encoding: binary',
+        '',
+        'HTTP/1.1 204 No Content',
+        'Content-Length: 0',
+        'dataserviceversion: 2.0',
+        '',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515001',
+        'Content-Type: application/http',
+        'Content-Length: 71',
+        'content-transfer-encoding: binary',
+        '',
+        'HTTP/1.1 204 No Content',
+        'Content-Length: 0',
+        'dataserviceversion: 2.0',
+        '',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515001--',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515000--'
+      ].join('\r\n');
+      const batchResponse: HttpResponse = {
+        data,
+        status: 200,
+        headers: { 'content-type': 'multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515000' }
+      };
+      const logger = createLogger({
+        messageContext: 'batch-response-parser'
+      });
+      const errorSpy = jest.spyOn(logger, 'error');
+      parseBatchResponse(batchResponse);
+      expect(errorSpy).toHaveBeenCalledTimes(0);
     });
   });
 });

@@ -53,11 +53,13 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
    * @returns A promise resolving to an AxiosResponse.
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt
+    destination: Destination | DestinationNameAndJwt,
+    customOptions?: Record<string, string>
   ): Promise<FunctionReturnType<ApiT, FnT>> {
-    const requestConfig = await buildAxiosRequestConfig(destination, {
+    let requestConfig = await buildAxiosRequestConfig(destination, {
       headers: this.customHeaders
     });
+    requestConfig = { ...requestConfig, ...customOptions };
 
     const api = new this.apiConstructor(requestConfig);
     const fn = api[this.fn];

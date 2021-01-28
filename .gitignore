@@ -7,6 +7,7 @@ coverage
 lerna-debug.log
 *.tgz
 **credentials.json
+!packages/cli/src/templates/init/credentials.json
 .idea
 .nyc_output
 documentation
@@ -31,3 +32,4 @@ sqlite.db-journal
 test-packages/integration-tests/test/auth-flows/vcap-services.json
 test-packages/integration-tests/test/auth-flows/user-access-token.json
 test-packages/integration-tests/test/auth-flows/systems.json
+

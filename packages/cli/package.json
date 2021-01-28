@@ -30,7 +30,7 @@
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
     "test": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck . --ignores=@oclif/plugin-*"
   },
   "dependencies": {
     "@oclif/command": "^1.5.19",
@@ -41,39 +41,24 @@
     "@oclif/plugin-not-found": "^1.2.3",
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "cli-ux": "^5.4.5",
-    "eslint": "^7.12.0",
     "execa": "^4.0.0",
     "fast-glob": "^3.2.2",
     "handlebars": "^4.7.3",
     "js-yaml": "^3.13.1",
     "listr": "^0.14.3",
     "rimraf": "^3.0.2",
-    "tslib": "^2.0.0",
     "yargs": "16.1.0"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.22.2",
     "@types/fs-extra": "^9.0.1",
-    "@types/jest": "^26.0.15",
     "@types/js-yaml": "^3.12.3",
     "@types/listr": "^0.14.2",
     "@types/node": ">=13.9.8",
     "@types/rimraf": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-plugin-header": "^3.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-unused-imports": "^1.0.0",
     "fs-extra": "^9.0.0",
-    "globby": "^11.0.0",
     "jest": "^26.6.1",
-    "jest-circus": "^26.6.1",
     "jest-extended": "^0.11.5",
-    "prettier": "^2.0.2",
     "ts-jest": "^26.4.3",
-    "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   },
   "oclif": {

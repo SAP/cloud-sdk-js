@@ -2,7 +2,7 @@
 
 jest.mock('@sap-cloud-sdk/cli/src/utils/warnings');
 
-import {resolve} from 'path';
+import { resolve } from 'path';
 import execa = require('execa');
 import fs from 'fs-extra';
 import Init from '@sap-cloud-sdk/cli/src/commands/init';
@@ -23,7 +23,7 @@ describe('Init', () => {
   }, TimeThresholds.EXTRA_LONG);
 
   test(
-    '[E2E] should create a new project with the necessary files when adding cds',
+    'should create a new project with the necessary files when adding cds',
     async () => {
       const projectDir = await getCleanProjectDir(
         testOutputDir,

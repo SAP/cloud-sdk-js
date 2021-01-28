@@ -17,7 +17,7 @@ describe('Scaffold Utils', () => {
   }, TimeThresholds.LONG);
 
   test(
-    '[E2E] should build the scaffold',
+    'should build the scaffold',
     async () => {
       const projectDir = await getCleanProjectDir(
         testOutputDir,

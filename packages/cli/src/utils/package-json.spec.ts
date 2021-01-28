@@ -8,12 +8,12 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '../../test/test-utils';
+import { testDir } from '../../../../test-resources/cli';
 import {
   installDependencies,
   modifyPackageJson,
   parsePackageJson
 } from './package-json';
-import { testDir } from '../../../../test-resources/cli';
 
 jest.mock('execa', () => jest.fn().mockResolvedValue('1.0.0'));
 

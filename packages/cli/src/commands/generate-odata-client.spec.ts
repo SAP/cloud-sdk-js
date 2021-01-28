@@ -1,14 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
-import { testDir } from '../../../../test-resources/cli';
-
 const execa = jest
   .fn()
   .mockRejectedValueOnce({ exitCode: 1 })
   .mockResolvedValueOnce('installed')
   .mockResolvedValueOnce('generated');
 jest.mock('execa', () => execa);
-jest.mock('cli-ux', ()=>({confirm: jest.fn().mockResolvedValue(true)}));
+jest.mock('cli-ux', () => ({ confirm: jest.fn().mockResolvedValue(true) }));
 
 jest.retryTimes(3);
 
@@ -20,6 +17,7 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '../../test/test-utils';
+import { testDir } from '../../../../test-resources/cli';
 import GenerateODataClient from './generate-odata-client';
 
 describe('generate-odata-client', () => {

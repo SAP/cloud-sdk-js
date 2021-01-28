@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 jest.mock('@sap-cloud-sdk/cli/src/utils/warnings');
 
-import {resolve} from 'path';
+import { resolve } from 'path';
 import execa = require('execa');
 import fs from 'fs-extra';
 import Init from '@sap-cloud-sdk/cli/src/commands/init';
@@ -22,7 +22,7 @@ describe('Init', () => {
   }, TimeThresholds.EXTRA_LONG);
 
   test(
-    '[E2E] should create a new project with the necessary files',
+    'should create a new project with the necessary files',
     async () => {
       const projectDir = await getCleanProjectDir(testOutputDir, 'full-init');
       await Init.run([
@@ -52,11 +52,7 @@ describe('Init', () => {
         stdio: 'inherit'
       });
 
-      const reportsPath = resolve(
-        projectDir,
-        's4hana_pipeline',
-        'reports'
-      );
+      const reportsPath = resolve(projectDir, 's4hana_pipeline', 'reports');
       const backendUtil = fs.readdir(resolve(reportsPath, 'backend-unit'));
       const backendUtilCoverage = fs.readdir(
         resolve(reportsPath, 'coverage-reports', 'backend-unit')

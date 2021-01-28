@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import {readFileSync,writeFileSync} from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { recordWarning } from './warnings';
 
 export function getJestConfig(isUnitTests: boolean) {
@@ -37,10 +37,7 @@ export function modifyJestConfig(jestConfigPath: string, data: any) {
       ...data
     };
 
-    writeFileSync(
-      jestConfigPath,
-      JSON.stringify(adjustedJestConfig, null, 2)
-    );
+    writeFileSync(jestConfigPath, JSON.stringify(adjustedJestConfig, null, 2));
   } catch (error) {
     recordWarning(
       `Could not edit your Jest config at "${jestConfigPath}".`,

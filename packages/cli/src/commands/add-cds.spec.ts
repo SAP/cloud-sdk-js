@@ -1,14 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
-import { testDir } from '../../../../test-resources/cli';
-
 const prompt = jest.fn().mockResolvedValue('mock-project');
 jest.mock('cli-ux', () => {
   // Mocking needs to happen before the command is imported
   const cli = jest.requireActual('cli-ux');
   return {
     ...cli,
-      prompt
+    prompt
   };
 });
 
@@ -20,6 +17,7 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '../../test/test-utils';
+import { testDir } from '../../../../test-resources/cli';
 import AddCds from './add-cds';
 
 describe('Add CDS', () => {

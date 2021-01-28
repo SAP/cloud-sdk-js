@@ -1,11 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { testDir } from '../../../../test-resources/cli';
-
 jest.mock('../utils/message-formatter');
 
-import {resolve} from 'path';
+import { resolve } from 'path';
 import fs from 'fs-extra';
+import { testDir } from '../../../../test-resources/cli';
 import { boxMessage } from '../utils';
 import {
   deleteAsync,
@@ -36,9 +35,7 @@ describe('Package', () => {
       await fs.copy(nestAppDir, projectDir, { recursive: true });
       await Package.run([projectDir]);
 
-      const copiedFiles = await fs.readdir(
-        resolve(projectDir, 'deployment')
-      );
+      const copiedFiles = await fs.readdir(resolve(projectDir, 'deployment'));
       expect(copiedFiles).toIncludeAllMembers([
         'package.json',
         'package-lock.json'

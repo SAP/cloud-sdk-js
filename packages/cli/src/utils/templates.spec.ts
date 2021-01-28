@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {resolve,relative,sep} from 'path';
+import { resolve, relative, sep } from 'path';
 import fs from 'fs-extra';
 import {
   deleteAsync,

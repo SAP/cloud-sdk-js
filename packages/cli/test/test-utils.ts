@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { existsSync, mkdirSync, rmdir } from 'fs';
-import { resolve, basename } from 'path';
+import { resolve as resolvePath, basename } from 'path';
 import rm from 'rimraf';
 import { ErrnoException } from 'fast-glob/out/types';
 import { testOutputRootDir } from '../../../test-resources/cli';
@@ -8,14 +8,14 @@ import { testOutputRootDir } from '../../../test-resources/cli';
 export function getTestOutputDir(file: string): string {
   const outputDirName = basename(file, '.ts').split('.').join('-');
 
-  return resolve(testOutputRootDir,  outputDirName);
+  return resolvePath(testOutputRootDir, outputDirName);
 }
 
 export async function getCleanProjectDir(
   pathPrefix: string,
   name: string
 ): Promise<string> {
-  const projectDir = resolve(pathPrefix, name);
+  const projectDir = resolvePath(pathPrefix, name);
   if (existsSync(projectDir)) {
     await deleteAsync(projectDir, 3);
   }

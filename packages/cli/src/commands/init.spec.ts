@@ -1,6 +1,4 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { testDir } from '../../../../test-resources/cli';
-
 jest.mock('../utils/warnings');
 
 import * as path from 'path';
@@ -12,6 +10,7 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '../../test/test-utils';
+import { testDir } from '../../../../test-resources/cli';
 import Init from './init';
 
 const testOutputDir = getTestOutputDir(__filename);

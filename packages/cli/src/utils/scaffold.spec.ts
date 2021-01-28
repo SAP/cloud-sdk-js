@@ -1,6 +1,4 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { testDir } from '../../../../test-resources/cli';
-
 const confirm = jest.fn().mockResolvedValue(true);
 jest.mock('cli-ux', () => {
   // Mocking needs to happen before the command is imported
@@ -15,6 +13,7 @@ jest.retryTimes(3);
 
 import { resolve } from 'path';
 import fs from 'fs-extra';
+import { testDir } from '../../../../test-resources/cli';
 import {
   deleteAsync,
   getCleanProjectDir,

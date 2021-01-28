@@ -1,5 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import {resolve} from 'path';
+import { resolve } from 'path';
 import fs from 'fs-extra';
 import {
   deleteAsync,
@@ -7,8 +7,8 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '../../test/test-utils';
-import { getJestConfig, modifyJestConfig } from './jest-config';
 import { testDir } from '../../../../test-resources/cli';
+import { getJestConfig, modifyJestConfig } from './jest-config';
 
 const testOutputDir = getTestOutputDir(__filename);
 

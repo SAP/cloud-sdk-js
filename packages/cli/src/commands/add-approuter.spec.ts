@@ -1,16 +1,14 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
-import { testDir } from '../../../../test-resources/cli';
-
 const prompt = jest.fn().mockResolvedValue('mock-project');
 jest.mock('cli-ux', () => {
   const cli = jest.requireActual('cli-ux');
   return {
     ...cli,
-      prompt
+    prompt
   };
 });
-import {resolve} from 'path';
+
+import { resolve } from 'path';
 import fs from 'fs-extra';
 import {
   deleteAsync,
@@ -18,6 +16,7 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '../../test/test-utils';
+import { testDir } from '../../../../test-resources/cli';
 import AddApprouter from './add-approuter';
 
 describe('Add Approuter', () => {
@@ -95,9 +94,7 @@ describe('Add Approuter', () => {
         recursive: true
       });
       await fs.mkdir(resolve(projectDir, 'approuter'));
-      await fs.createFile(
-        resolve(projectDir, 'approuter', 'xs-security.json')
-      );
+      await fs.createFile(resolve(projectDir, 'approuter', 'xs-security.json'));
       await fs.writeFile(
         resolve(projectDir, 'approuter', 'xs-security.json'),
         JSON.stringify({ 'tenant-mode': 'shared' }),

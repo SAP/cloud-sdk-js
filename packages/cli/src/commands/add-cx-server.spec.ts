@@ -8,8 +8,8 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '../../test/test-utils';
-import AddCxServer from './add-cx-server';
 import { testDir } from '../../../../test-resources/cli';
+import AddCxServer from './add-cx-server';
 
 describe('Add CX Server', () => {
   const testOutputDir = getTestOutputDir(__filename);

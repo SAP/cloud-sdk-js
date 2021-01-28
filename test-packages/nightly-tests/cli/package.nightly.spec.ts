@@ -1,10 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
-import { testDir } from '../../../test-resources/cli';
-
 jest.mock('@sap-cloud-sdk/cli/src/utils/message-formatter');
 
-import {resolve} from 'path';
+import { resolve } from 'path';
 import fs from 'fs-extra';
 import Package from '@sap-cloud-sdk/cli/src/commands/package';
 import {
@@ -13,6 +10,7 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '@sap-cloud-sdk/cli/test/test-utils';
+import { testDir } from '../../../test-resources/cli';
 
 const testOutputDir = getTestOutputDir(__filename);
 const nestAppDir = resolve(testDir, 'nest');
@@ -29,7 +27,7 @@ describe('Package', () => {
   }, TimeThresholds.SHORT);
 
   test(
-    '[E2E] should copy dependencies when --ci is set',
+    'should copy dependencies when --ci is set',
     async () => {
       const projectDir = await getCleanProjectDir(
         testOutputDir,

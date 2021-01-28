@@ -9,6 +9,8 @@ jest.mock('cli-ux', () => {
   };
 });
 
+import { resolve } from 'path';
+import fs from 'fs-extra';
 import {
   deleteAsync,
   getCleanProjectDir,
@@ -16,10 +18,6 @@ import {
   TimeThresholds
 } from '../../test/test-utils';
 import { usageAnalytics } from './usage-analytics';
-
-
-import { resolve } from 'path';
-import fs from 'fs-extra';
 
 const testOutputDir = getTestOutputDir(__filename);
 

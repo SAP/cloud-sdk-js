@@ -1,13 +1,10 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
-import { testDir } from '../../../test-resources/cli';
-
 jest.mock('cli-ux', () => ({
-      confirm: jest.fn().mockResolvedValue(true)
+  confirm: jest.fn().mockResolvedValue(true)
 }));
 jest.retryTimes(3);
 
-import {resolve} from 'path';
+import { resolve } from 'path';
 import fs from 'fs-extra';
 import GenerateODataClient from '@sap-cloud-sdk/cli/src/commands/generate-odata-client';
 import {
@@ -15,6 +12,7 @@ import {
   getTestOutputDir,
   TimeThresholds
 } from '@sap-cloud-sdk/cli/test/test-utils';
+import { testDir } from '../../../test-resources/cli';
 
 describe('generate-odata-client', () => {
   const pathForTests = getTestOutputDir(__filename);
@@ -30,7 +28,7 @@ describe('generate-odata-client', () => {
   }, TimeThresholds.LONG);
 
   test(
-    '[E2E] should generate a OData client',
+    'should generate a OData client',
     async () => {
       const result = await GenerateODataClient.run([
         '-i',

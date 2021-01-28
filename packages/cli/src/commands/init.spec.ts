@@ -53,7 +53,7 @@ describe('Init', () => {
         expect(e.message).toMatch(/no such file or directory.*test/);
       }
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(
@@ -81,7 +81,7 @@ describe('Init', () => {
           .map(filePath => fs.access(filePath))
       );
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(
@@ -105,7 +105,7 @@ describe('Init', () => {
         expect(e.message).toMatch(/A file with the name .* already exists\./);
       }
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(
@@ -138,7 +138,7 @@ describe('Init', () => {
       ]);
       expect(gitignoreEntries.length).toBeGreaterThan(29);
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(
@@ -174,7 +174,7 @@ describe('Init', () => {
       );
       expect(getWarnings).toHaveBeenCalled();
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(
@@ -221,7 +221,7 @@ describe('Init', () => {
           ]);
         });
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(
@@ -254,7 +254,7 @@ describe('Init', () => {
         salt: 'SAPCLOUDSDK4LIFE'
       });
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(
@@ -278,6 +278,6 @@ describe('Init', () => {
         .readFile(`${projectDir}/sap-cloud-sdk-analytics.json`, 'utf8')
         .then(file => expect(JSON.parse(file)).toEqual({ enabled: false }));
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 });

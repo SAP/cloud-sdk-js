@@ -137,7 +137,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).patchEntity(pathParam, testEntity, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -176,7 +176,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): AxiosPromise<void> {
+        patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): AxiosPromise<string> {
             return DefaultApiFp(configuration).patchEntity(pathParam, testEntity, options).then((request) => request(axios, basePath));
         },
         /**

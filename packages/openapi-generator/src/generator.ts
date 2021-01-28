@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename } from 'path';
+import { resolve, parse, basename, join } from 'path';
 import {
   createLogger,
   ErrorWithCause,
@@ -254,7 +254,7 @@ export async function getSdkVersion(): Promise<string> {
   ).version;
 }
 
-function copyAdditionalFiles(
+async function copyAdditionalFiles(
   additionalFiles: string,
   serviceDir: string
 ): Promise<void[]> {
@@ -263,10 +263,9 @@ function copyAdditionalFiles(
   );
 
   return Promise.all(
-    new GlobSync(additionalFiles!).found.map(filePath => {
-      logger.info(filePath);
-      return copyFile(filePath, basename(filePath), serviceDir, true);
-    })
+    new GlobSync(additionalFiles!).found.map(filePath =>
+      copyFile(resolve(filePath), join(serviceDir, basename(filePath)), true)
+    )
   );
 }
 

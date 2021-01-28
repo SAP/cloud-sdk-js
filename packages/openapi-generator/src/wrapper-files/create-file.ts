@@ -1,6 +1,6 @@
-import { promises, readFileSync } from 'fs';
-import { join, resolve } from 'path';
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { promises, copyFile as fsCopyFile, existsSync } from 'fs';
+import { join } from 'path';
+import { codeBlock, ErrorWithCause } from '@sap-cloud-sdk/util';
 const { writeFile } = promises;
 
 /**
@@ -45,17 +45,24 @@ ${content}
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Copy a file from a given path.
- * @param fromPath Path of the original file to be copied.
- * @param toFileName File name of the new file.
- * @param toDirectoryPath Path of the directory to write to.
+ * @param src Path to the source file.
+ * @param dest Path to the destination file
  * @param overwrite Whether or not existing files should be overwritten.
  */
 export async function copyFile(
-  fromPath: string,
-  toFileName: string,
-  toDirectoryPath: string,
+  src: string,
+  dest: string,
   overwrite: boolean
 ): Promise<void> {
-  const fileContent = readFileSync(resolve(fromPath), { encoding: 'utf8' });
-  return createFile(toDirectoryPath, toFileName, fileContent, overwrite, false);
+  if (!overwrite && (await existsSync(dest))) {
+    return;
+  }
+  fsCopyFile(src, dest, err => {
+    if (err) {
+      throw new ErrorWithCause(
+        `Failed to copy file from ${src} to ${dest}.`,
+        err!
+      );
+    }
+  });
 }

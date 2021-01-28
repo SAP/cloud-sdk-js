@@ -77,16 +77,16 @@ const b = TestEntity.builder(serializers).int32Property('test').build();
 // Transformed create request
 TestEntity.requestBuilder(serializers).create(b).execute();
 ```
-The middleware has a structure like below to define (de)serializers for some edm types.
+The middleware has a structure like below to define (de)serializers for some edm types. In this example, only two edm types are considered.
 ```ts
-interface DeSerializationMiddlewareInterface<T1>{
+interface DeSerializationMiddlewareInterface<T1, T2>{
   'Edm.String'?: {
     serializer: (val: T1) => string;
     deserializer: (ori: string) => T1;
   };
   'Edm.Int32'?: {
-     serializer: (val: T1) => string;
-     deserializer: (ori: string) => T1;
+     serializer: (val: T2) => string;
+     deserializer: (ori: string) => T2;
   };
 
 }
@@ -96,7 +96,10 @@ interface DeSerializationMiddlewareInterface<T1>{
 With the api design above, when applying it for replacing the moment lib, we will introduce multiple generic types for `Entity`, `RequestBuilder`, `TestEntity` and `TestEntityRequestBuilder`, which makes our code more complicated, but the users should not be affected.
 The number of generic types depends on the number of related edm types. 
 For example, for `ODataV4`, 4 edm types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.Duration` and `Edm.TimeOfDay`) are relevant, which means it will introduce 4 generic types for all the classes mentioned above.
-In the PoC example, the string/number example looks like below, where only two generic types are used:
+In the PoC example, the string/number example looks like below, where only two generic types are used for two edm types (`Edm.String` and `Edm.Int32`):
+```ts
+export class TestEntityTemporal<T1 = string, T2 = number> extends EntityV4<T1, T2> implements TestEntityType<T1, T2> {}
+```
 
 ### Assumption
 - Request builders has the same complexity.
@@ -106,6 +109,7 @@ In the PoC example, the string/number example looks like below, where only two g
 - Advanced data type like Complex/Collection type can be handled like the basic edm type.
 
 ### Scope
+As mentioned above, the PoC example only has two generic types for mapping `Edm.String` and `Edm.Int32`.
 - Type tests of the entity created by the entity builder with/without the middleware.
 ```ts
        // TestEntityTemporal<string, number>
@@ -146,6 +150,15 @@ In the PoC example, the string/number example looks like below, where only two g
          .execute(defaultDestination);
 ```
 - Implementation with unit tests about how custom deserializer affects the return value of the `GetAllRequestBuilder`.
+
+### How to get rid of moment lib
+#### Prerequisites
+- The middleware pattern is implemented so the SDK supports custom (de)serializer middleware in addition to the default one.
+- The temporal lib (or other alternatives) is ready to replace moment as the default (de)serialzier.
+
+#### Steps
+1. Switch the default (de)seralizer from moment to e.g., temporal, so our sdk core will not have moment as a dependency but temporal. (breaking change)
+2. Realease a new package which contains a prebuild consts as a (de)serializer middleware, using moment as a dependency, so a user can switch the (de)serializer on demand. This allows you to use latest sdk core with moment instead of the default (de)serializer.
 
 ### Next steps
 - Refactor the middleware structure to align with the design mentioned above

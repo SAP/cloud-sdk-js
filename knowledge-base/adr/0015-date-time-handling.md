@@ -151,14 +151,14 @@ As mentioned above, the PoC example only has two generic types for mapping `Edm.
 ```
 - Implementation with unit tests about how custom deserializer affects the return value of the `GetAllRequestBuilder`.
 
-### How to get rid of moment lib
+### How to get rid of `moment` lib
 #### Prerequisites
 - The middleware pattern is implemented so the SDK supports custom (de)serializer middleware in addition to the default one.
-- The temporal lib (or other alternatives) is ready to replace moment as the default (de)serialzier.
+- The `temporal` lib (or other alternatives) is ready to replace `moment` as the default (de)serialzier.
 
 #### Steps
-1. Switch the default (de)seralizer from moment to e.g., temporal, so our sdk core will not have moment as a dependency but temporal. (breaking change)
-2. Realease a new package which contains a prebuild consts as a (de)serializer middleware, using moment as a dependency, so a user can switch the (de)serializer on demand. This allows you to use latest sdk core with moment instead of the default (de)serializer.
+1. Switch the default (de)seralizer from `moment` to e.g., `temporal`, so our sdk core will not have `moment` as a dependency but `temporal`. (breaking change)
+2. Realease a new package which contains a prebuild consts as a moment (de)serializer middleware, using `moment` as a dependency, so a user can switch the (de)serializer on demand. This allows you to use latest sdk core with `moment` instead of the default (de)serializer.
 
 ### Next steps
 - Refactor the middleware structure to align with the design mentioned above

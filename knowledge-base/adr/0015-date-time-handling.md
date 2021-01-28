@@ -102,6 +102,7 @@ For example, for `ODataV4`, 4 edm types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.
 - Serializer has the same complexity as the Deserializer.
 - The URL converter uses the serialiser, so it might not be part of the middleware.
 - OData V2 has the same complexity as the OData V4.
+- Advanced data type like Complex/Collection type can be handled like the basic edm type.
 
 ### Scope
 - Type tests of the entity created by the entity builder with/without the middleware.

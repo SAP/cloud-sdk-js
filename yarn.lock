@@ -1855,9 +1855,9 @@
     "@sap-cloud-sdk/core" "^1.30.0"
 
 "@sap/edm-converters@^1.0.21", "@sap/edm-converters@^1.0.27":
-  version "1.0.39"
-  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.39.tgz#a9643b43f952c32f5f839a26de6f4b99a8ce7158"
-  integrity sha512-GxBKb3yRletzXWY/mUzYpXwxFXNC0TDVs31ZpIbX+394zGN2M4lEhYniLUu7CdWuk/owFFZFcLXTAtsUvgKw4g==
+  version "1.0.40"
+  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.40.tgz#70232e1eb3cb40ddf8f8d8fb9478e85b093a9ac4"
+  integrity sha512-g97d9pb2xPCBb64qs6l+mw6zDJZBjz/uWuXB7tGZiRJW6M5LhrYHiSlRWd99eU6X6LibLTNPdXdtCcrAlAxuJQ==
   dependencies:
     commander "=2.19.0"
     multimap "1.1.0"

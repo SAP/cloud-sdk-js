@@ -96,6 +96,7 @@ interface DeSerializationMiddlewareInterface<T1>{
 With the api design above, when applying it for replacing the moment lib, we will introduce multiple generic types for `Entity`, `RequestBuilder`, `TestEntity` and `TestEntityRequestBuilder`, which makes our code more complicated, but the users should not be affected.
 The number of generic types depends on the number of related edm types. 
 For example, for `ODataV4`, 4 edm types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.Duration` and `Edm.TimeOfDay`) are relevant, which means it will introduce 4 generic types for all the classes mentioned above.
+In the PoC example, the string/number example looks like below, where only two generic types are used:
 
 ### Assumption
 - Request builders has the same complexity.

@@ -165,4 +165,5 @@ As mentioned above, the PoC example only has two generic types for mapping `Edm.
 - In addition to the `GetAllRequestBuilder`, handle all kinds of the request builders.
 - In addition to `deserialzer`, handle `serializer` and `uri-converter`.
 - In addition to `ODataV4`, handle `ODataV2`.
+- In addition to basic edm types, handle advances types like collection and complex types
 - Release a new package (`@sap-cloud-sdk/date-time-temporal`/`@sap-cloud-sdk/date-time-moment`) as a middleware component, so users can consume directly.

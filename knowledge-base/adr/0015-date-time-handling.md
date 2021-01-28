@@ -100,6 +100,7 @@ For example, for `ODataV4`, 4 edm types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.
 ### Assumption
 - Request builders has the same complexity.
 - Serializer has the same complexity as the Deserializer.
+- The URL converter uses the serialiser, so it might not be part of the middleware.
 - OData V2 has the same complexity as the OData V4.
 
 ### Scope

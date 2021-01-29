@@ -98,7 +98,11 @@ The number of generic types depends on the number of related edm types.
 For example, for `ODataV4`, 4 edm types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.Duration` and `Edm.TimeOfDay`) are relevant, which means it will introduce 4 generic types for all the classes mentioned above.
 In the PoC example, the string/number example looks like below, where only two generic types are used for two edm types (`Edm.String` and `Edm.Int32`):
 ```ts
-export class TestEntityTemporal<T1 = string, T2 = number> extends EntityV4<T1, T2> implements TestEntityType<T1, T2> {}
+export class TestEntityTemporal<T1 = string, T2 = number> extends EntityV4<T1, T2> implements TestEntityType<T1, T2> {
+  stringProperty?: T1;
+  int32Property?: T2;
+  ...
+}
 ```
 
 ### Assumption

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import axios, { AxiosRequestConfig } from 'axios';
 import { SAPCPWorkflowCFApi } from '../test/test-util/test-services/openapi/SAP_CP_Workflow_CF';
 import { Destination } from './connectivity/scp-cf/destination';
 
@@ -20,25 +21,24 @@ describe('export', () => {
       expect(res1.status).toEqual(200);
       expect(res1.data).toEqual([]);
 
-      // raw axios test
-      // const axiosConfig: AxiosRequestConfig = {
-      //   method: 'get',
-      //   url: endpoint,
-      //   headers: authHeader,
-      //   responseType: 'arraybuffer'
-      // };
-      // const axiosRes = await axios.request(axiosConfig);
-      // fs.writeFileSync('./e0.zip', axiosRes.data);
+      // vanilla axios test
+      const axiosConfig: AxiosRequestConfig = {
+        method: 'get',
+        url: endpoint,
+        headers: authHeader,
+        responseType: 'arraybuffer'
+      };
+      const axiosRes = await axios.request(axiosConfig);
+      fs.writeFileSync('./e0.zip', axiosRes.data);
 
-      //
+      // get export test
       const res2 = await SAPCPWorkflowCFApi.getV1Export()
         .addCustomHeaders(authHeader)
         .executeRaw(dest, { responseType: 'arraybuffer' });
-      console.log(res2.status);
-      console.log(res2.data);
+      // console.log(res2.status);
+      // console.log(res2.data);
 
       fs.writeFileSync('./e1.zip', res2.data);
-
     } catch (err) {
       console.error(err);
     }

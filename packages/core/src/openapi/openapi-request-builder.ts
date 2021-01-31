@@ -59,7 +59,7 @@ export class OpenApiRequestBuilder<ApiT, FnT extends keyof ApiT> {
       headers: this.customHeaders
     });
 
-    const api = new this.apiConstructor(requestConfig);
+    const api = new this.apiConstructor(requestConfig, requestConfig.baseURL);
     const fn = api[this.fn];
 
     if (typeof fn === 'function') {

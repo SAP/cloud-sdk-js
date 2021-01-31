@@ -6,7 +6,7 @@ import { destination } from './test-util';
 
 // TODO: How do I handle paths in rest requests?
 // TODO: Transpilation needed + tsconfig needs dom typings
-const restDestination = { ...destination, url: destination.url + 'openapi' };
+const restDestination = { url: destination.url + 'openapi' };
 describe('openapi request builder', () => {
   it('executes getAll request', async () => {
     const request = TestServiceApi.getAllEntities();

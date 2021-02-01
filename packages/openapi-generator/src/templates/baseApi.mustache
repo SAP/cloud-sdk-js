@@ -5,7 +5,7 @@
 import { Configuration } from "./configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 
 export const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
 
@@ -37,12 +37,11 @@ export interface RequestArgs {
  */
 export class BaseAPI {
     protected configuration: Configuration | undefined;
-    protected basePath: string | undefined = BASE_PATH;
-    protected axios: AxiosInstance = globalAxios;
-
-    constructor(requestConfig: AxiosRequestConfig) {
-      this.configuration = { baseOptions: requestConfig };
-      this.basePath = requestConfig.baseURL;
+    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected axios: AxiosInstance = globalAxios) {
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = configuration.basePath || this.basePath;
+        }
     }
 };
 

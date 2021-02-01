@@ -17,13 +17,10 @@
     "access": "private"
   },
   "files": [
-    "v4.d.ts",
-    "v4.js",
     "dist/**/*.js",
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
-    "dist/**/*.d.ts.map",
-    "usage-analytics.js"
+    "dist/**/*.d.ts.map"
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {

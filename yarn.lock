@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@apidevtools/json-schema-ref-parser@^9.0.6":
-  version "9.0.6"
-  resolved "https://registry.npmjs.org/@apidevtools/json-schema-ref-parser/-/json-schema-ref-parser-9.0.6.tgz#5d9000a3ac1fd25404da886da6b266adcd99cf1c"
-  integrity sha512-M3YgsLjI0lZxvrpeGVk9Ap032W6TPQkH6pRAZz81Ac3WUNF79VQooAFnp8umjvVzUmD93NkogxEwbSce7qMsUg==
+"@apidevtools/json-schema-ref-parser@^9.0.6", "@apidevtools/json-schema-ref-parser@^9.0.7":
+  version "9.0.7"
+  resolved "https://registry.npmjs.org/@apidevtools/json-schema-ref-parser/-/json-schema-ref-parser-9.0.7.tgz#64aa7f5b34e43d74ea9e408b90ddfba02050dde3"
+  integrity sha512-QdwOGF1+eeyFh+17v2Tz626WX0nucd1iKOm6JUTUvCZdbolblCOOQCxGrQPY0f7jEhn36PiAWqZnsC2r5vmUWg==
   dependencies:
     "@jsdevtools/ono" "^7.1.3"
     call-me-maybe "^1.0.1"
@@ -21,7 +21,7 @@
   resolved "https://registry.npmjs.org/@apidevtools/swagger-methods/-/swagger-methods-3.0.2.tgz#b789a362e055b0340d04712eafe7027ddc1ac267"
   integrity sha512-QAkD5kK2b1WfjDS/UQn/qQkbwF31uqRjPTrsCs5ZG9BQGAkjwvqGFjjPqAuzac/IYzpPtRzjCP1WrTuAIjMrXg==
 
-"@apidevtools/swagger-parser@10.0.2", "@apidevtools/swagger-parser@^10.0.2":
+"@apidevtools/swagger-parser@^10.0.2":
   version "10.0.2"
   resolved "https://registry.npmjs.org/@apidevtools/swagger-parser/-/swagger-parser-10.0.2.tgz#f4145afb7c3a3bafe0376f003b5c3bdeae17a952"
   integrity sha512-JFxcEyp8RlNHgBCE98nwuTkZT6eNFPc1aosWV6wPcQph72TSEEu1k3baJD4/x1qznU+JiDdz8F5pTwabZh+Dhg==
@@ -8512,10 +8512,11 @@ ono@^4.0.11:
     format-util "^1.0.3"
 
 openapi-backend@^3.6.3:
-  version "3.7.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.7.0.tgz#a908573c6f286d7652da1849317e594a91d86c12"
-  integrity sha512-qo+oTlPlpzBvCycT1AsHyOw+2wKhHuY8zDe6j/xx5F+9ZvHoeGiszFXd9tlI/5VExqRi0bxheoQY/Sgdl8pY0g==
+  version "3.8.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.8.0.tgz#d2bce3d723df92c26ada4ba6727e2bf864d58061"
+  integrity sha512-pjm40ent6Ad85fxmWmitxxe5kvh8wzgpZsOCkSwFfb0mtFoAABqF+/yonOuGotUM5HlwnYXNarVlSWxRPWmo+A==
   dependencies:
+    "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^6.10.0"
     bath-es5 "^3.0.3"
     cookie "^0.4.0"
@@ -8524,7 +8525,6 @@ openapi-backend@^3.6.3:
     openapi-schema-validator "^7.0.1"
     openapi-types "^7.0.1"
     qs "^6.9.3"
-    swagger-parser "^10.0.2"
 
 openapi-schema-validator@^7.0.1:
   version "7.0.1"
@@ -10799,13 +10799,6 @@ supports-hyperlinks@^2.0.0, supports-hyperlinks@^2.1.0:
   dependencies:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
-
-swagger-parser@^10.0.2:
-  version "10.0.2"
-  resolved "https://registry.npmjs.org/swagger-parser/-/swagger-parser-10.0.2.tgz#d7f18faa09c9c145e938977c9bd6c3435998b667"
-  integrity sha512-9jHkHM+QXyLGFLk1DkXBwV+4HyNm0Za3b8/zk/+mjr8jgOSiqm3FOTHBSDsBjtn9scdL+8eWcHdupp2NLM8tDw==
-  dependencies:
-    "@apidevtools/swagger-parser" "10.0.2"
 
 swagger-schema-official@2.0.0-bab6bed:
   version "2.0.0-bab6bed"

@@ -224,6 +224,11 @@
           <NavigationPropertyBinding Path="to_OtherMultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
         </EntitySet>
+        <EntitySet Name="A_TestEntitySharesEntityType" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityMultiLink"/>
+          <NavigationPropertyBinding Path="to_OtherMultiLink" Target="A_TestEntityMultiLink"/>
+          <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
+        </EntitySet>
         <EntitySet Name="A_TestEntityMultiLink" EntityType="API_TEST_SRV.A_TestEntityMultiLinkType" sap:content-version="1">
           <NavigationPropertyBinding Path="to_MultiLink1" Target="A_TestEntityLvl2MultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntityLvl2SingleLink"/>

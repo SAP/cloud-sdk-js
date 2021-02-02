@@ -85,12 +85,14 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then(files =>
-      files.forEach(file =>
-        readServiceFile(serviceDirectory, file).then(data => {
-          replaceWithLocalModules(serviceDirectory, file, data);
-        })
-      )
+    readServiceDirectory(serviceDirectory).then(dirents =>
+      dirents
+        .filter(dirent => dirent.isFile())
+        .forEach(dirent =>
+          readServiceFile(serviceDirectory, dirent.name).then(data => {
+            replaceWithLocalModules(serviceDirectory, dirent.name, data);
+          })
+        )
     )
   );
 
@@ -101,11 +103,11 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   function readServiceDirectory(serviceDirectory) {
-    return readdir(path.resolve(outputDir, serviceDirectory)).catch(
-      serviceDirErr => {
-        throw Error(`Reading test service directory failed: ${serviceDirErr}`);
-      }
-    );
+    return readdir(path.resolve(outputDir, serviceDirectory), {
+      withFileTypes: true
+    }).catch(serviceDirErr => {
+      throw Error(`Reading test service directory failed: ${serviceDirErr}`);
+    });
   }
 
   function readServiceFile(serviceDirectory, file) {
@@ -132,6 +134,11 @@ async function generateTestServicesWithLocalCoreModules(
 }
 
 async function generateAll(): Promise<void> {
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error(`Unhandled rejection at: ${reason}`);
+    process.exit(1);
+  });
+
   const arg = process.argv[2];
   if (arg === 'v2' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v2');

@@ -50,11 +50,15 @@ exports.COLLECTION_FORMATS = {
  * @class BaseAPI
  */
 var BaseAPI = /** @class */ (function () {
-    function BaseAPI(requestConfig) {
-        this.basePath = exports.BASE_PATH;
-        this.axios = axios_1.default;
-        this.configuration = { baseOptions: requestConfig };
-        this.basePath = requestConfig.baseURL;
+    function BaseAPI(configuration, basePath, axios) {
+        if (basePath === void 0) { basePath = exports.BASE_PATH; }
+        if (axios === void 0) { axios = axios_1.default; }
+        this.basePath = basePath;
+        this.axios = axios;
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = configuration.basePath || this.basePath;
+        }
     }
     return BaseAPI;
 }());

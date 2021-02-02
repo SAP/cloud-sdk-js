@@ -36,11 +36,8 @@ describe('Package', () => {
       await Package.run([projectDir]);
 
       const copiedFiles = await fs.readdir(resolve(projectDir, 'deployment'));
-      expect(copiedFiles).toIncludeAllMembers([
-        'package.json',
-        'package-lock.json'
-      ]);
-      expect(copiedFiles).toHaveLength(2);
+      expect(copiedFiles).toIncludeAllMembers(['package.json']);
+      expect(copiedFiles).toHaveLength(1);
     },
     TimeThresholds.SHORT
   );

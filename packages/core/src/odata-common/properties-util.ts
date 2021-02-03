@@ -1,4 +1,4 @@
-import { Entity } from './entity';
+import type { Entity } from './entity';
 import { toStaticPropertyFormat } from './name-converter';
 
 export const nonEnumerable = (target: any, propertyKey: string) => {

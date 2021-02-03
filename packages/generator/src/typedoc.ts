@@ -1,4 +1,4 @@
-import { toTitleFormat } from '@sap-cloud-sdk/core';
+import { titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot } from './generator-utils';
 import {
   VdmComplexType,
@@ -51,7 +51,7 @@ export function getPropertyDescription(
 ): string {
   return addConstraints(
     property.description ||
-      endWithDot(toTitleFormat(property.instancePropertyName).trim()),
+      endWithDot(titleFormat(property.instancePropertyName).trim()),
     constraints
   );
 }

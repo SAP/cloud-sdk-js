@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Templates Utils should return information which files to copy where 1`] = `
+Array [
+  Array [
+    ".pipeline",
+    "config.yml",
+  ],
+  Array [
+    "Jenkinsfile",
+  ],
+  Array [
+    "credentials.json",
+  ],
+  Array [
+    "deployment",
+    ".gitkeep",
+  ],
+  Array [
+    "manifest.yml",
+  ],
+  Array [
+    "s4hana_pipeline",
+    "reports",
+    "backend-integration",
+    ".gitkeep",
+  ],
+  Array [
+    "s4hana_pipeline",
+    "reports",
+    "backend-unit",
+    ".gitkeep",
+  ],
+  Array [
+    "s4hana_pipeline",
+    "reports",
+    "coverage-reports",
+    "backend-integration",
+    ".gitkeep",
+  ],
+  Array [
+    "s4hana_pipeline",
+    "reports",
+    "coverage-reports",
+    "backend-unit",
+    ".gitkeep",
+  ],
+  Array [
+    "systems.json",
+  ],
+]
+`;
+
+exports[`Templates Utils should return information which files to copy where 2`] = `
+Array [
+  Array [
+    "approuter",
+    "manifest.yml",
+  ],
+  Array [
+    "approuter",
+    "package.json",
+  ],
+  Array [
+    "approuter",
+    "xs-app.json",
+  ],
+  Array [
+    "approuter",
+    "xs-security.json",
+  ],
+]
+`;

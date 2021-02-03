@@ -1,18 +1,17 @@
-import { propertyExists } from '@sap-cloud-sdk/util';
+import { propertyExists, UniqueNameGenerator } from '@sap-cloud-sdk/util';
 import { ServiceMapping, VdmMapping } from './service-mapping';
-import { UniqueNameFinder } from './unique-name-finder';
 
 export class GlobalNameFormatter {
-  private directoryNameFinder: UniqueNameFinder = new UniqueNameFinder('-');
-  private npmPackageNameFinder: UniqueNameFinder = new UniqueNameFinder('-');
+  private directoryNameGenerator = new UniqueNameGenerator('-');
+  private npmPackageNameGenerator = new UniqueNameGenerator('-');
   private vdmMapping: VdmMapping;
 
   constructor(vdmMapping: VdmMapping | undefined) {
     this.vdmMapping = vdmMapping || {};
-    this.directoryNameFinder.addToUsedNames(
+    this.directoryNameGenerator.addToUsedNames(
       ...Object.entries(this.vdmMapping).map(([k, v]) => v.directoryName)
     );
-    this.npmPackageNameFinder.addToUsedNames(
+    this.npmPackageNameGenerator.addToUsedNames(
       ...Object.entries(this.vdmMapping).map(([k, v]) => v.npmPackageName)
     );
   }
@@ -38,15 +37,13 @@ export class GlobalNameFormatter {
   }
 
   private transformAndCacheDirectoryName(directoryName: string): string {
-    const newName = this.directoryNameFinder.findUniqueName(directoryName);
-    this.directoryNameFinder.addToUsedNames(newName);
-    return newName;
+    return this.directoryNameGenerator.generateAndSaveUniqueName(directoryName);
   }
 
   private transformAndCacheNpmPackageName(npmPackageName: string): string {
-    const newName = this.npmPackageNameFinder.findUniqueName(npmPackageName);
-    this.npmPackageNameFinder.addToUsedNames(newName);
-    return newName;
+    return this.npmPackageNameGenerator.generateAndSaveUniqueName(
+      npmPackageName
+    );
   }
 
   private directoryNameFromMapping(

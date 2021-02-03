@@ -1,6 +1,15 @@
 const path = require('path');
 const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
 
+function updateRootPackageJson() {
+  transformFile(path.resolve('package.json'), packageJson =>
+    jsonStringify({
+      ...JSON.parse(packageJson),
+      version: `${version}`
+    })
+  );
+}
+
 function updateDocumentationMd() {
   transformFile(path.resolve('DOCUMENTATION.md'), documentation =>
     documentation
@@ -13,12 +22,16 @@ function updateDocumentationMd() {
 }
 
 function updateTypeDocConfig() {
-  transformFile('typedoc.json', config =>
-    jsonStringify({
-      ...JSON.parse(config),
-      out: `${path.relative(path.resolve(), apiDocsDir)}/${version}`
-    })
-  );
+  transformFile('tsconfig.typedoc.json', config => {
+    const parsedConfig = JSON.parse(config);
+    return jsonStringify({
+      ...parsedConfig,
+      typedocOptions: {
+        ...parsedConfig.typedocOptions,
+        out: `${path.relative(path.resolve(), apiDocsDir)}/${version}`
+      }
+    });
+  });
 }
 
 function updateDocsVersions() {
@@ -81,6 +94,7 @@ function updateChangelog() {
 }
 
 function afterBump() {
+  updateRootPackageJson();
   updateDocumentationMd();
   updateTypeDocConfig();
   updateDocsVersions();

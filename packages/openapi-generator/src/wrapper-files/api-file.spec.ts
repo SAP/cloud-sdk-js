@@ -1,13 +1,19 @@
 import { OpenApiDocument, OpenApiRequestBody } from '../openapi-types';
 import { apiFile } from './api-file';
 
+const openApiDocumentBase = {
+  npmPackageName: 'package',
+  directoryName: 'dir',
+  originalFileName: 'file'
+};
+
 describe('api-file', () => {
   it('creates api file content for operations with parameters and no request bodies', () => {
     const openApiDocument: OpenApiDocument = {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getFn',
+          operationId: 'getFn',
           method: 'get',
           parameters: [
             {
@@ -25,7 +31,7 @@ describe('api-file', () => {
           pattern: 'test/{id}'
         },
         {
-          operationName: 'deleteFn',
+          operationId: 'deleteFn',
           method: 'delete',
           parameters: [
             {
@@ -37,7 +43,8 @@ describe('api-file', () => {
           ],
           pattern: 'test/{id}'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -47,7 +54,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'createFn',
+          operationId: 'createFn',
           method: 'post',
           parameters: [],
           requestBody: {
@@ -62,7 +69,7 @@ describe('api-file', () => {
           pattern: 'test'
         },
         {
-          operationName: 'updateFn',
+          operationId: 'updateFn',
           method: 'patch',
           parameters: [
             {
@@ -84,7 +91,8 @@ describe('api-file', () => {
           } as OpenApiRequestBody,
           pattern: 'test/{id}'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -94,12 +102,13 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getFn',
+          operationId: 'getFn',
           method: 'get',
           parameters: [],
           pattern: 'test'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -109,7 +118,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'createFn',
+          operationId: 'createFn',
           method: 'post',
           parameters: [
             {
@@ -142,7 +151,8 @@ describe('api-file', () => {
           } as OpenApiRequestBody,
           pattern: 'test'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });
@@ -152,7 +162,7 @@ describe('api-file', () => {
       apiName: 'TestApi',
       operations: [
         {
-          operationName: 'getFn',
+          operationId: 'getFn',
           method: 'get',
           parameters: [
             {
@@ -163,7 +173,8 @@ describe('api-file', () => {
           ],
           pattern: 'test'
         }
-      ]
+      ],
+      ...openApiDocumentBase
     };
     expect(apiFile(openApiDocument)).toMatchSnapshot();
   });

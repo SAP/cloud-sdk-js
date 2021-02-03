@@ -3,11 +3,9 @@ import {
   createLogger,
   pickIgnoreCase,
   toSanitizedObject,
-  encodeBase64,
-  ErrorWithCause
+  encodeBase64
 } from '@sap-cloud-sdk/util';
 import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
-import { getOAuth2ClientCredentialsToken } from './client-credentials-token';
 import {
   AuthenticationType,
   Destination,
@@ -109,7 +107,6 @@ function headerFromTokens(
       `AuthenticationType is ${authenticationType}, but no AuthTokens could be fetched from the destination service!`
     );
   }
-
   const usableTokens = authTokens.filter(
     (token: DestinationAuthToken) => !token.error
   );
@@ -125,20 +122,6 @@ function headerFromTokens(
   }
   const authToken = usableTokens[0];
   return toAuthorizationHeader(authToken.http_header.value);
-}
-
-async function headerFromOAuth2ClientCredentialsDestination(
-  destination: Destination
-): Promise<Record<string, string>> {
-  const response = await getOAuth2ClientCredentialsToken(destination).catch(
-    error => {
-      throw new ErrorWithCause(
-        'Request for "OAuth2ClientCredentials" authentication access token failed or denied.',
-        error
-      );
-    }
-  );
-  return toAuthorizationHeader(`Bearer ${response.access_token}`);
 }
 
 function headerFromBasicAuthDestination(
@@ -226,6 +209,7 @@ async function getAuthenticationRelatedHeaders(
   logger.debug(
     `Getting authentication related headers for authentication type: ${destination.authentication}`
   );
+
   switch (destination.authentication) {
     case null:
     case undefined:
@@ -238,12 +222,11 @@ async function getAuthenticationRelatedHeaders(
       return {};
     case 'OAuth2SAMLBearerAssertion':
     case 'OAuth2UserTokenExchange':
+    case 'OAuth2ClientCredentials':
       return headerFromTokens(
         destination.authentication,
         destination.authTokens
       );
-    case 'OAuth2ClientCredentials':
-      return headerFromOAuth2ClientCredentialsDestination(destination);
     case 'BasicAuthentication':
       return headerFromBasicAuthDestination(destination);
     case 'PrincipalPropagation':

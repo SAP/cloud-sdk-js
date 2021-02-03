@@ -1,3 +1,9 @@
+/**
+ * [[include:core/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/core
+ */
+
 export * from './connectivity';
 export * from './header-util';
 export * from './http-client';

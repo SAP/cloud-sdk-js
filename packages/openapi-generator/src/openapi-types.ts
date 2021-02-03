@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -6,6 +6,9 @@ import { OpenAPIV3 } from 'openapi-types';
  */
 export interface OpenApiDocument {
   apiName: string;
+  npmPackageName: string;
+  directoryName: string;
+  originalFileName: string;
   operations: OpenApiOperation[];
 }
 
@@ -14,7 +17,7 @@ export interface OpenApiDocument {
  * Representation of an operation.
  */
 export interface OpenApiOperation extends OpenAPIV3.OperationObject {
-  operationName: string;
+  operationId: string;
   method: string;
   pattern: string;
   requestBody?: OpenApiRequestBody;
@@ -28,7 +31,8 @@ const supportedMethods = {
   patch: 'patch',
   delete: 'delete',
   head: 'head',
-  options: 'options'
+  options: 'options',
+  trace: 'trace'
 } as const;
 
 /**
@@ -42,9 +46,7 @@ export type Method = typeof supportedMethods[keyof typeof supportedMethods];
  * Get supported methods.
  * @returns Methods supported by OpenApi and SAP Cloud SDK.
  */
-export function methods(): Method[] {
-  return Object.values(supportedMethods);
-}
+export const methods: Method[] = Object.values(supportedMethods);
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.

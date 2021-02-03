@@ -73,7 +73,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
   ) {}
 
   /**
-   * Creates a selection on a linked entity. Has the same behavior as [[GetAllRequestBuilderV2.select]] and [[GetByKeyRequestBuilderV4.select]] but for linked entities.
+   * Creates a selection on a linked entity. Has the same behavior as [[GetAllRequestBuilder.select | GetAllRequestBuilderV2.select]] and [[GetByKeyRequestBuilderV4.select]] but for linked entities.
    *
    * See also, [[Selectable]]
    *

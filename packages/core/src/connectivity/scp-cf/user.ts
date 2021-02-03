@@ -1,6 +1,5 @@
 import {
   checkMandatoryValue,
-  customAttributes,
   DecodedJWT,
   JwtKeyMapping,
   readPropertyWithWarn
@@ -21,6 +20,23 @@ export interface UserData {
 
 export interface User extends UserData {
   hasScope: (scope: Scope) => boolean;
+}
+
+/**
+ * Extracts the custom attributes in the JWT
+ * @param decodedToken - Token to read the custom attributes
+ * @returns custom attributes added by the xsuaa to the issued JWT.
+ */
+export function customAttributes(
+  decodedToken: DecodedJWT
+): Map<string, string[]> {
+  if (decodedToken[mappingUserFields.customAttributes.keyInJwt]) {
+    return readPropertyWithWarn(
+      decodedToken,
+      mappingUserFields.customAttributes.keyInJwt
+    ) as Map<string, string[]>;
+  }
+  return new Map<string, string[]>();
 }
 
 /**

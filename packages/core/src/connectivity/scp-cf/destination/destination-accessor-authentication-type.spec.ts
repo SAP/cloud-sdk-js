@@ -23,6 +23,8 @@ import {
   certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
+  oauthClientCredentialsMultipleResponse,
+  oauthClientCredentialsSingleResponse,
   oauthMultipleResponse,
   oauthSingleResponse,
   oauthUserTokenExchangeMultipleResponse,
@@ -33,7 +35,6 @@ import { wrapJwtInHeader } from '../jwt';
 import { parseDestination } from './destination';
 import { getDestination } from './destination-accessor';
 import { destinationCache } from './destination-cache';
-import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   alwaysProvider,
   alwaysSubscriber
@@ -180,6 +181,68 @@ describe('authentication types', () => {
       expect(actual).toMatchObject(expected);
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
+  });
+
+  describe('authentication type OAuth2ClientCredentials', () => {
+    it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, subscriber tenant', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockUserApprovedServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthClientCredentialsMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthClientCredentialsSingleResponse,
+          200,
+          destinationName,
+          wrapJwtInHeader(subscriberServiceToken).headers
+        )
+      ];
+
+      const expected = parseDestination(oauthClientCredentialsSingleResponse);
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+    });
+  });
+
+  it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, provider tenant', async () => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+    mockUserApprovedServiceToken();
+
+    const httpMocks = [
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+      mockSubaccountDestinationsCall(
+        nock,
+        oauthClientCredentialsMultipleResponse,
+        200,
+        providerServiceToken
+      ),
+      mockSingleDestinationCall(
+        nock,
+        oauthClientCredentialsSingleResponse,
+        200,
+        destinationName,
+        wrapJwtInHeader(providerServiceToken).headers
+      )
+    ];
+
+    const expected = parseDestination(oauthClientCredentialsSingleResponse);
+    const actual = await getDestination(destinationName);
+    expect(actual).toMatchObject(expected);
+    httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 
   describe('authentication type OAuth2UserTokenExchange', () => {
@@ -377,59 +440,6 @@ describe('authentication types', () => {
       });
       expect(actual).toMatchObject(expected);
       expect(serviceTokenSpy).toHaveBeenCalled();
-    });
-
-    it('retrieves destination without specifying userJwt', async () => {
-      mockServiceBindings();
-      mockServiceToken();
-
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        providerServiceToken
-      );
-
-      const actual = await getDestination(destinationName, {
-        cacheVerificationKeys: false
-      });
-      const expected = parseDestination(basicMultipleResponse[0]);
-      expect(actual).toMatchObject(expected);
-    });
-
-    // Test for ONEmds specific feature
-    it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
-      mockServiceBindings();
-      mockServiceToken();
-
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        certificateMultipleResponse,
-        200,
-        subscriberServiceToken
-      );
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
-
-      mockSingleDestinationCall(
-        nock,
-        certificateSingleResponse,
-        200,
-        'ERNIE-UND-CERT',
-        wrapJwtInHeader(subscriberServiceToken).headers
-      );
-
-      const expected = parseDestination(certificateSingleResponse);
-      const actual = await getDestinationFromDestinationService(
-        'ERNIE-UND-CERT',
-        {
-          iss: 'https://subscriber.example.com',
-          cacheVerificationKeys: false
-        }
-      );
-      expect(actual).toMatchObject(expected);
     });
   });
 });

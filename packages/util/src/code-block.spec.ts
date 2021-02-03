@@ -39,4 +39,8 @@ C
     A ${nested}
 `).toMatchInlineSnapshot('"    A 1"');
   });
+
+  it('does not throw on undefined values', () => {
+    expect(() => codeBlock`A + ${undefined} + B`).not.toThrow();
+  });
 });

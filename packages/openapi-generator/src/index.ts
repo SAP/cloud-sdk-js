@@ -1,3 +1,7 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
+/**
+ * [[include:openapi-generator/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/openapi-generator
+ */
 
 export { generate } from './generator';

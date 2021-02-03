@@ -1,5 +1,4 @@
-import { existsSync, PathLike, readFileSync } from 'fs';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';
@@ -20,13 +19,6 @@ export interface ServiceMapping {
   directoryName: string;
   servicePath: string;
   npmPackageName: string;
-}
-
-function readJSON(path: PathLike): { [key: string]: any } {
-  if (existsSync(path)) {
-    return JSON.parse(readFileSync(path, 'utf8'));
-  }
-  return {};
 }
 
 export function readServiceMapping(options: GeneratorOptions): VdmMapping {

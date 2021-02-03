@@ -3,10 +3,12 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "target": "es2017"
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "target": "es2017",
+    "composite": true
   },
   "include": [
-    "src/**/*.ts", "test/emptyApiDefinition.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "dist/**/*",

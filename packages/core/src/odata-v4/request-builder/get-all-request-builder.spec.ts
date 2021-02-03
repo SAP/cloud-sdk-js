@@ -6,7 +6,8 @@ import {
 import {
   TestEntity,
   TestEntityLvl2MultiLink,
-  TestEntityMultiLink
+  TestEntityMultiLink,
+  TestEntitySingleLink
 } from '../../../test/test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
@@ -50,6 +51,17 @@ describe('GetAllRequestBuilder', () => {
         .url(defaultDestination);
       expect(actual).toBe(expected);
     });
+  });
+
+  it('is built correctly for selects inside of an expand.', async () => {
+    const expected =
+      '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_SingleLink($select=BooleanProperty)';
+    const actual = await requestBuilder
+      .expand(
+        TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY)
+      )
+      .url(defaultDestination);
+    expect(actual).toBe(expected);
   });
 
   describe('execute', () => {

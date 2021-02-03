@@ -25,10 +25,11 @@ export = class GenerateOpenApiClient extends Command {
   ).version;
 
   static flags = {
-    inputDir: flags.string({
-      name: 'inputDir',
+    input: flags.string({
+      name: 'input',
       char: 'i',
-      description: 'Input directory for the OpenApi service definitions.',
+      description:
+        'Input directory or file for the OpenApi service definitions.',
       parse: input => resolve(input),
       required: true
     }),
@@ -41,8 +42,43 @@ export = class GenerateOpenApiClient extends Command {
     }),
     clearOutputDir: flags.boolean({
       name: 'clearOutputDir',
-      description: 'Remove all files in the ouput directory before generation.',
+      description:
+        'Remove all files in the output directory before generation.',
       default: false,
+      required: false
+    }),
+    versionInPackageJson: flags.string({
+      name: 'versionInPackageJson',
+      description:
+        'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
+      required: false
+    }),
+    generatePackageJson: flags.boolean({
+      name: 'generatePackageJson',
+      description:
+        'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
+      default: true,
+      required: false
+    }),
+    generateJs: flags.boolean({
+      name: 'generateJs',
+      description:
+        'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When setting to false, the generator will only generate .ts files.',
+      default: true,
+      required: false
+    }),
+    serviceMapping: flags.string({
+      name: 'serviceMapping',
+      description:
+        'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. By default it will be read from the input directory as "service-mapping.json".',
+      parse: input => resolve(input),
+      required: false
+    }),
+    tsConfig: flags.string({
+      name: 'tsConfig',
+      description:
+        'tsconfig.json file to overwrite the default "tsconfig.json".',
+      parse: input => resolve(input),
       required: false
     })
   };

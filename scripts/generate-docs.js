@@ -24,7 +24,7 @@ const readDir = inputDir =>
   )(inputDir);
 
 const isHtmlFile = fileName => path.extname(fileName) === '.html';
-const isSearchJson = fileName => path.basename(fileName) === 'search.json';
+const isSearchJs = fileName => path.basename(fileName) === 'search.js';
 const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
 
 /**
@@ -50,7 +50,7 @@ function adjustForGitHubPages() {
 }
 
 function adjustSearchJs(paths) {
-  const filtered = paths.filter(isSearchJson);
+  const filtered = paths.filter(isSearchJs);
   if (filtered.length !== 1) {
     throw Error(`Expected one 'search.json', but found: ${filtered.length}.`);
   }
@@ -139,7 +139,7 @@ function validateLogs(generationLogs) {
 }
 
 function generateDocs() {
-  const generationLogs = execSync('npx typedoc .', {
+  const generationLogs = execSync('typedoc --tsconfig tsconfig.typedoc.json', {
     cwd: path.resolve(),
     encoding: 'utf8'
   });

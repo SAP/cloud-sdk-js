@@ -1,4 +1,4 @@
-import { toTitleFormat } from '@sap-cloud-sdk/core';
+import { titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot, ensureString } from '../generator-utils';
 import {
   EdmxDocumented,
@@ -55,7 +55,7 @@ export function parameterDescription(
   parameter: EdmxParameter,
   swaggerParameter?: SwaggerPathParameter
 ): string {
-  const short = endWithDot(toTitleFormat(parameter.Name));
+  const short = endWithDot(titleFormat(parameter.Name));
   const long = longDescription(parameter, swaggerParameter);
   return endWithDot((long || short).trim());
 }
@@ -64,7 +64,7 @@ export function functionImportDescription(
   swaggerDefinition: SwaggerPath | undefined,
   originalName: string
 ): string {
-  return endWithDot(swaggerDefinition?.summary || toTitleFormat(originalName));
+  return endWithDot(swaggerDefinition?.summary || titleFormat(originalName));
 }
 
 export function actionImportDescription(
@@ -80,6 +80,6 @@ export function entityDescription(
   return (
     entity.entityType['sap:label'] ||
     entity.swaggerDefinition?.title ||
-    toTitleFormat(className)
+    titleFormat(className)
   );
 }

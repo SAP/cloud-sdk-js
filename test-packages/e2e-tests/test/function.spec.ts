@@ -1,6 +1,6 @@
 import {
   returnSapCloudSdk,
-  concatStrings
+  concatStrings, getByKey
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/function-imports';
 
 const url = 'http://localhost:4004/';
@@ -36,4 +36,14 @@ describe('functions', () => {
       expect(await request.execute(destination)).toBe('teststring');
     });
   });
+
+  // describe('entity type as response', () => {
+  //   const request = getByKey({
+  //     param: 123
+  //   });
+  //
+  //   it('should execute request', async () => {
+  //     expect((await request.execute(destination)).keyTestEntity).toBe(123);
+  //   }, 60000);
+  // });
 });

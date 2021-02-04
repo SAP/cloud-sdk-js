@@ -37,13 +37,13 @@ describe('functions', () => {
     });
   });
 
-  // describe('entity type as response', () => {
-  //   const request = getByKey({
-  //     param: 123
-  //   });
-  //
-  //   it('should execute request', async () => {
-  //     expect((await request.execute(destination)).keyTestEntity).toBe(123);
-  //   }, 60000);
-  // });
+  describe('entity type as response', () => {
+    const request = getByKey({
+      param: 101
+    });
+
+    it('should execute request', async () => {
+      expect((await request.execute(destination)).keyTestEntity).toBe(101);
+    });
+  });
 });

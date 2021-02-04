@@ -1,4 +1,4 @@
-import { TestEntitySharesEntityTypeRequestBuilder } from './TestEntitySharesEntityTypeRequestBuilder';
+import { TestEntitySharesEntityType1RequestBuilder } from './TestEntitySharesEntityType1RequestBuilder';
 import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
@@ -6,11 +6,11 @@ import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
 import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 /**
- * This class represents the entity "A_TestEntitySharesEntityType" of service "API_TEST_SRV".
+ * This class represents the entity "A_TestEntitySharesEntityType1" of service "API_TEST_SRV".
  */
-export declare class TestEntitySharesEntityType extends EntityV4 implements TestEntitySharesEntityTypeType {
+export declare class TestEntitySharesEntityType1 extends EntityV4 implements TestEntitySharesEntityType1Type {
     /**
-     * Technical entity name for TestEntitySharesEntityType.
+     * Technical entity name for TestEntitySharesEntityType1.
      */
     static _entityName: string;
     /**
@@ -148,21 +148,21 @@ export declare class TestEntitySharesEntityType extends EntityV4 implements Test
      */
     enumCollectionProperty?: TestEnumType[];
     /**
-     * Returns an entity builder to construct instances of `TestEntitySharesEntityType`.
-     * @returns A builder that constructs instances of entity type `TestEntitySharesEntityType`.
+     * Returns an entity builder to construct instances of `TestEntitySharesEntityType1`.
+     * @returns A builder that constructs instances of entity type `TestEntitySharesEntityType1`.
      */
-    static builder(): EntityBuilderType<TestEntitySharesEntityType, TestEntitySharesEntityTypeType>;
+    static builder(): EntityBuilderType<TestEntitySharesEntityType1, TestEntitySharesEntityType1Type>;
     /**
-     * Returns a request builder to construct requests for operations on the `TestEntitySharesEntityType` entity type.
-     * @returns A `TestEntitySharesEntityType` request builder.
+     * Returns a request builder to construct requests for operations on the `TestEntitySharesEntityType1` entity type.
+     * @returns A `TestEntitySharesEntityType1` request builder.
      */
-    static requestBuilder(): TestEntitySharesEntityTypeRequestBuilder;
+    static requestBuilder(): TestEntitySharesEntityType1RequestBuilder;
     /**
-     * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntitySharesEntityType`.
+     * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntitySharesEntityType1`.
      * @param fieldName Name of the custom field to select
-     * @returns A builder that constructs instances of entity type `TestEntitySharesEntityType`.
+     * @returns A builder that constructs instances of entity type `TestEntitySharesEntityType1`.
      */
-    static customField(fieldName: string): CustomFieldV4<TestEntitySharesEntityType>;
+    static customField(fieldName: string): CustomFieldV4<TestEntitySharesEntityType1>;
     /**
      * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
      * @returns An object containing all instance variables + custom fields.
@@ -171,7 +171,7 @@ export declare class TestEntitySharesEntityType extends EntityV4 implements Test
         [key: string]: any;
     };
 }
-export interface TestEntitySharesEntityTypeType {
+export interface TestEntitySharesEntityType1Type {
     keyPropertyGuid: string;
     keyPropertyString: string;
     stringProperty?: string | null;
@@ -199,154 +199,154 @@ export interface TestEntitySharesEntityTypeType {
     enumPropertyWithOneMember?: TestEnumTypeWithOneMember | null;
     enumCollectionProperty?: TestEnumType[] | null;
 }
-export declare namespace TestEntitySharesEntityType {
+export declare namespace TestEntitySharesEntityType1 {
     /**
      * Static representation of the [[keyPropertyGuid]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const KEY_PROPERTY_GUID: StringField<TestEntitySharesEntityType>;
+    const KEY_PROPERTY_GUID: StringField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[keyPropertyString]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const KEY_PROPERTY_STRING: StringField<TestEntitySharesEntityType>;
+    const KEY_PROPERTY_STRING: StringField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const STRING_PROPERTY: StringField<TestEntitySharesEntityType>;
+    const STRING_PROPERTY: StringField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const BOOLEAN_PROPERTY: BooleanField<TestEntitySharesEntityType>;
+    const BOOLEAN_PROPERTY: BooleanField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const GUID_PROPERTY: StringField<TestEntitySharesEntityType>;
+    const GUID_PROPERTY: StringField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[int16Property]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const INT_16_PROPERTY: NumberField<TestEntitySharesEntityType>;
+    const INT_16_PROPERTY: NumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[int32Property]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const INT_32_PROPERTY: NumberField<TestEntitySharesEntityType>;
+    const INT_32_PROPERTY: NumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[int64Property]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const INT_64_PROPERTY: BigNumberField<TestEntitySharesEntityType>;
+    const INT_64_PROPERTY: BigNumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[decimalProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const DECIMAL_PROPERTY: BigNumberField<TestEntitySharesEntityType>;
+    const DECIMAL_PROPERTY: BigNumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[singleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const SINGLE_PROPERTY: NumberField<TestEntitySharesEntityType>;
+    const SINGLE_PROPERTY: NumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[doubleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const DOUBLE_PROPERTY: NumberField<TestEntitySharesEntityType>;
+    const DOUBLE_PROPERTY: NumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[floatProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const FLOAT_PROPERTY: NumberField<TestEntitySharesEntityType>;
+    const FLOAT_PROPERTY: NumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const TIME_OF_DAY_PROPERTY: TimeField<TestEntitySharesEntityType>;
+    const TIME_OF_DAY_PROPERTY: TimeField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const DATE_PROPERTY: DateField<TestEntitySharesEntityType>;
+    const DATE_PROPERTY: DateField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntitySharesEntityType>;
+    const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[durationProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const DURATION_PROPERTY: DurationField<TestEntitySharesEntityType>;
+    const DURATION_PROPERTY: DurationField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const BYTE_PROPERTY: NumberField<TestEntitySharesEntityType>;
+    const BYTE_PROPERTY: NumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[sByteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const S_BYTE_PROPERTY: NumberField<TestEntitySharesEntityType>;
+    const S_BYTE_PROPERTY: NumberField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[geographyPointProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const GEOGRAPHY_POINT_PROPERTY: AnyField<TestEntitySharesEntityType>;
+    const GEOGRAPHY_POINT_PROPERTY: AnyField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntitySharesEntityType>;
+    const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[collectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const COLLECTION_PROPERTY: CollectionField<TestEntitySharesEntityType, 'Edm.String'>;
+    const COLLECTION_PROPERTY: CollectionField<TestEntitySharesEntityType1, 'Edm.String'>;
     /**
      * Static representation of the [[complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntitySharesEntityType>;
+    const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntitySharesEntityType, TestComplexType>;
+    const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<TestEntitySharesEntityType1, TestComplexType>;
     /**
      * Static representation of the [[enumProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const ENUM_PROPERTY: EnumField<TestEntitySharesEntityType>;
+    const ENUM_PROPERTY: EnumField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const ENUM_PROPERTY_WITH_ONE_MEMBER: EnumField<TestEntitySharesEntityType>;
+    const ENUM_PROPERTY_WITH_ONE_MEMBER: EnumField<TestEntitySharesEntityType1>;
     /**
      * Static representation of the [[enumCollectionProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntitySharesEntityType, 'Edm.Enum'>;
+    const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntitySharesEntityType1, 'Edm.Enum'>;
     /**
-     * All fields of the TestEntitySharesEntityType entity.
+     * All fields of the TestEntitySharesEntityType1 entity.
      */
-    const _allFields: Array<StringField<TestEntitySharesEntityType> | BooleanField<TestEntitySharesEntityType> | NumberField<TestEntitySharesEntityType> | BigNumberField<TestEntitySharesEntityType> | TimeField<TestEntitySharesEntityType> | DateField<TestEntitySharesEntityType> | DurationField<TestEntitySharesEntityType> | AnyField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, 'Edm.String'> | TestComplexTypeField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, TestComplexType> | EnumField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, 'Edm.Enum'>>;
+    const _allFields: Array<StringField<TestEntitySharesEntityType1> | BooleanField<TestEntitySharesEntityType1> | NumberField<TestEntitySharesEntityType1> | BigNumberField<TestEntitySharesEntityType1> | TimeField<TestEntitySharesEntityType1> | DateField<TestEntitySharesEntityType1> | DurationField<TestEntitySharesEntityType1> | AnyField<TestEntitySharesEntityType1> | CollectionField<TestEntitySharesEntityType1, 'Edm.String'> | TestComplexTypeField<TestEntitySharesEntityType1> | CollectionField<TestEntitySharesEntityType1, TestComplexType> | EnumField<TestEntitySharesEntityType1> | CollectionField<TestEntitySharesEntityType1, 'Edm.Enum'>>;
     /**
      * All fields selector.
      */
-    const ALL_FIELDS: AllFields<TestEntitySharesEntityType>;
+    const ALL_FIELDS: AllFields<TestEntitySharesEntityType1>;
     /**
-     * All key fields of the TestEntitySharesEntityType entity.
+     * All key fields of the TestEntitySharesEntityType1 entity.
      */
-    const _keyFields: Array<Field<TestEntitySharesEntityType>>;
+    const _keyFields: Array<Field<TestEntitySharesEntityType1>>;
     /**
-     * Mapping of all key field names to the respective static field property TestEntitySharesEntityType.
+     * Mapping of all key field names to the respective static field property TestEntitySharesEntityType1.
      */
     const _keys: {
-        [keys: string]: Field<TestEntitySharesEntityType>;
+        [keys: string]: Field<TestEntitySharesEntityType1>;
     };
 }
-//# sourceMappingURL=TestEntitySharesEntityType.d.ts.map
+//# sourceMappingURL=TestEntitySharesEntityType1.d.ts.map

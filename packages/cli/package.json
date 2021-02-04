@@ -24,7 +24,8 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "compile": "yarn tsc -b && oclif-dev readme",
+    "compile": "yarn tsc -b",
+    "readme": "oclif-dev readme",
     "prepare": "yarn compile",
     "test": "yarn jest --coverage",
     "check:dependencies": "depcheck . --ignores=@oclif/plugin-*"

@@ -38,8 +38,9 @@
     ]
   },
   "scripts": {
-    "compile": "yarn tsc -b && oclif-dev readme && cp -r -f src/templates dist",
+    "compile": "yarn tsc -b && cp -r -f src/templates dist",
     "prepare": "yarn compile",
+    "readme": "oclif-dev readme",
     "test": "yarn jest --coverage ",
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",

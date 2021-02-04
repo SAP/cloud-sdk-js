@@ -18,12 +18,22 @@ module.exports = async srv => {
     oRequest.reply(param);
   });
 
+  srv.on('returnCollection', async oRequest => {
+    const param = oRequest.data.param;
+    oRequest.reply([param]);
+  });
+
   srv.on('getByKey', async oRequest => {
     const param = oRequest.data.param;
     const entity = await SELECT.one
       .from(TestEntity)
       .where({ KeyTestEntity: param });
     oRequest.reply(entity);
+  });
+
+  srv.on('getAll', async oRequest => {
+    const entities = await SELECT.from(TestEntity);
+    oRequest.reply(entities);
   });
 
   srv.on('createTestEntity', async oRequest => {

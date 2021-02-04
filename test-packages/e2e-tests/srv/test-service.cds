@@ -7,7 +7,9 @@ service TestService {
   function returnSapCloudSdk() returns String;
   function concatStrings(Str1 : String, Str2 : String) returns String;
   function returnInt(param : Integer) returns Integer;
+  function returnCollection(param : Integer) returns array of Integer;
   function getByKey(param : Integer) returns TestEntity;
+  function getAll() returns array of TestEntity;
   action createTestEntity(id : Integer) returns TestEntity;
   action createTestEntityReturnId(id : Integer) returns Integer;
 }

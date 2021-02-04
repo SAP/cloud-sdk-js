@@ -9,7 +9,7 @@ import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
-import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, OneToManyLink, OneToOneLink, StringField, Time, TimeField } from '../../../../../src';
+import { AllFields, AnyField, BigNumberField, BooleanField, CollectionField, CustomFieldV4, DateField, DurationField, EntityBuilderType, EntityV4, EnumField, Field, NumberField, StringField, Time, TimeField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntitySharesEntityType" of service "API_TEST_SRV".
@@ -153,18 +153,6 @@ export class TestEntitySharesEntityType extends EntityV4 implements TestEntitySh
    * @nullable
    */
   enumCollectionProperty?: TestEnumType[];
-  /**
-   * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
-   */
-  toMultiLink!: TestEntityMultiLink[];
-  /**
-   * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
-   */
-  toOtherMultiLink!: TestEntityMultiLink[];
-  /**
-   * One-to-one navigation property to the [[TestEntitySingleLink]] entity.
-   */
-  toSingleLink!: TestEntitySingleLink;
 
   /**
    * Returns an entity builder to construct instances of `TestEntitySharesEntityType`.
@@ -200,9 +188,6 @@ export class TestEntitySharesEntityType extends EntityV4 implements TestEntitySh
   }
 }
 
-import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
-import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
-
 export interface TestEntitySharesEntityTypeType {
   keyPropertyGuid: string;
   keyPropertyString: string;
@@ -230,9 +215,6 @@ export interface TestEntitySharesEntityTypeType {
   enumProperty?: TestEnumType | null;
   enumPropertyWithOneMember?: TestEnumTypeWithOneMember | null;
   enumCollectionProperty?: TestEnumType[] | null;
-  toMultiLink: TestEntityMultiLinkType[];
-  toOtherMultiLink: TestEntityMultiLinkType[];
-  toSingleLink: TestEntitySingleLinkType;
 }
 
 export namespace TestEntitySharesEntityType {
@@ -367,24 +349,9 @@ export namespace TestEntitySharesEntityType {
    */
   export const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntitySharesEntityType, 'Edm.Enum'> = new CollectionField('EnumCollectionProperty', TestEntitySharesEntityType, 'Edm.Enum');
   /**
-   * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const TO_MULTI_LINK: OneToManyLink<TestEntitySharesEntityType, TestEntityMultiLink> = new OneToManyLink('to_MultiLink', TestEntitySharesEntityType, TestEntityMultiLink);
-  /**
-   * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const TO_OTHER_MULTI_LINK: OneToManyLink<TestEntitySharesEntityType, TestEntityMultiLink> = new OneToManyLink('to_OtherMultiLink', TestEntitySharesEntityType, TestEntityMultiLink);
-  /**
-   * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const TO_SINGLE_LINK: OneToOneLink<TestEntitySharesEntityType, TestEntitySingleLink> = new OneToOneLink('to_SingleLink', TestEntitySharesEntityType, TestEntitySingleLink);
-  /**
    * All fields of the TestEntitySharesEntityType entity.
    */
-  export const _allFields: Array<StringField<TestEntitySharesEntityType> | BooleanField<TestEntitySharesEntityType> | NumberField<TestEntitySharesEntityType> | BigNumberField<TestEntitySharesEntityType> | TimeField<TestEntitySharesEntityType> | DateField<TestEntitySharesEntityType> | DurationField<TestEntitySharesEntityType> | AnyField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, 'Edm.String'> | TestComplexTypeField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, TestComplexType> | EnumField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, 'Edm.Enum'> | OneToManyLink<TestEntitySharesEntityType, TestEntityMultiLink> | OneToOneLink<TestEntitySharesEntityType, TestEntitySingleLink>> = [
+  export const _allFields: Array<StringField<TestEntitySharesEntityType> | BooleanField<TestEntitySharesEntityType> | NumberField<TestEntitySharesEntityType> | BigNumberField<TestEntitySharesEntityType> | TimeField<TestEntitySharesEntityType> | DateField<TestEntitySharesEntityType> | DurationField<TestEntitySharesEntityType> | AnyField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, 'Edm.String'> | TestComplexTypeField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, TestComplexType> | EnumField<TestEntitySharesEntityType> | CollectionField<TestEntitySharesEntityType, 'Edm.Enum'>> = [
     TestEntitySharesEntityType.KEY_PROPERTY_GUID,
     TestEntitySharesEntityType.KEY_PROPERTY_STRING,
     TestEntitySharesEntityType.STRING_PROPERTY,
@@ -410,10 +377,7 @@ export namespace TestEntitySharesEntityType {
     TestEntitySharesEntityType.COMPLEX_TYPE_COLLECTION_PROPERTY,
     TestEntitySharesEntityType.ENUM_PROPERTY,
     TestEntitySharesEntityType.ENUM_PROPERTY_WITH_ONE_MEMBER,
-    TestEntitySharesEntityType.ENUM_COLLECTION_PROPERTY,
-    TestEntitySharesEntityType.TO_MULTI_LINK,
-    TestEntitySharesEntityType.TO_OTHER_MULTI_LINK,
-    TestEntitySharesEntityType.TO_SINGLE_LINK
+    TestEntitySharesEntityType.ENUM_COLLECTION_PROPERTY
   ];
   /**
    * All fields selector.

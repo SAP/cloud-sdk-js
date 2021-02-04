@@ -81,8 +81,6 @@ var TestEntitySharesEntityType = /** @class */ (function (_super) {
     return TestEntitySharesEntityType;
 }(core_1.EntityV4));
 exports.TestEntitySharesEntityType = TestEntitySharesEntityType;
-var TestEntityMultiLink_1 = require("./TestEntityMultiLink");
-var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
 (function (TestEntitySharesEntityType) {
     /**
      * Static representation of the [[keyPropertyGuid]] property for query construction.
@@ -215,21 +213,6 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
      */
     TestEntitySharesEntityType.ENUM_COLLECTION_PROPERTY = new core_1.CollectionField('EnumCollectionProperty', TestEntitySharesEntityType, 'Edm.Enum');
     /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TestEntitySharesEntityType.TO_MULTI_LINK = new core_1.OneToManyLink('to_MultiLink', TestEntitySharesEntityType, TestEntityMultiLink_1.TestEntityMultiLink);
-    /**
-     * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TestEntitySharesEntityType.TO_OTHER_MULTI_LINK = new core_1.OneToManyLink('to_OtherMultiLink', TestEntitySharesEntityType, TestEntityMultiLink_1.TestEntityMultiLink);
-    /**
-     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TestEntitySharesEntityType.TO_SINGLE_LINK = new core_1.OneToOneLink('to_SingleLink', TestEntitySharesEntityType, TestEntitySingleLink_1.TestEntitySingleLink);
-    /**
      * All fields of the TestEntitySharesEntityType entity.
      */
     TestEntitySharesEntityType._allFields = [
@@ -258,10 +241,7 @@ var TestEntitySingleLink_1 = require("./TestEntitySingleLink");
         TestEntitySharesEntityType.COMPLEX_TYPE_COLLECTION_PROPERTY,
         TestEntitySharesEntityType.ENUM_PROPERTY,
         TestEntitySharesEntityType.ENUM_PROPERTY_WITH_ONE_MEMBER,
-        TestEntitySharesEntityType.ENUM_COLLECTION_PROPERTY,
-        TestEntitySharesEntityType.TO_MULTI_LINK,
-        TestEntitySharesEntityType.TO_OTHER_MULTI_LINK,
-        TestEntitySharesEntityType.TO_SINGLE_LINK
+        TestEntitySharesEntityType.ENUM_COLLECTION_PROPERTY
     ];
     /**
      * All fields selector.

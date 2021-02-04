@@ -1,17 +1,18 @@
-## SAP Cloud SDK OpenAPI Client Generator (Beta)
+<a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 
-Generate custom JavaScript/TypeScript clients for services with OpenAPI specifications.
+# @sap-cloud-sdk/openapi-generator (Beta)
+
+This packages contains the generator to create your own service module using a OpenAPI specification.
 This generator is based on the [OpenAPI Tools generator](https://openapi-generator.tech/) for OpenAPI and adds some additional code for convenience to better integrate with the SAP Cloud SDK.
 
-## Prerequisites
+## Installation
 
 The official OpenAPI generator is Java based, therefore you need to have a Java runtime installed to use the SAP Cloud SDK OpenAPI generator.
 
-# Installation
 ```bash
 $ npm install @sap-cloud-sdk/openapi-generator
 ```
-# Usage (CLI)
+## Usage (CLI)
 <!-- commands -->
 * [`generate-openapi-client autocomplete [SHELL]`](#generate-openapi-client-autocomplete-shell)
 * [`generate-openapi-client help [COMMAND]`](#generate-openapi-client-help-command)
@@ -72,18 +73,6 @@ const options: GeneratorOptions = {
 await generate(options);
 ```
 
-### Documentation
-[Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
-[API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts)
+For more detailed overview visit our [generator documentation](https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client).
 
-### Helpful Links
-
-- [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk/)
-- [Tutorials on developers.sap.com](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:javascript)
-- [SAP Cloud SDK on StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest)
-- [SAP Cloud SDK on answers.sap.com](https://answers.sap.com/tags/73555000100800000895)
-- [Release notes on help.sap.com](https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html)
-- [Release notes on Github](https://github.com/SAP/cloud-sdk-js/releases)
-- [All versions of this documentation](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
-- [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
-- [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
+XXX I copy the generic part from the core readme here after review

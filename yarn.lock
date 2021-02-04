@@ -1527,19 +1527,6 @@
     chalk "^2.4.2"
     tslib "^1.9.3"
 
-"@oclif/plugin-autocomplete@^0.2.0":
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/@oclif/plugin-autocomplete/-/plugin-autocomplete-0.2.1.tgz#169cd9a88c0c60d8ecf59887ca9bfdd3b1a755ac"
-  integrity sha512-EOcoh1x3auFg1a7NNVTT+hJ1PPih7Kg1it7WtG8oBgYKe+YD/bvHnX2QlXqi9S7H0XsQQMUb8hxbLP+XwQY/8Q==
-  dependencies:
-    "@oclif/command" "^1.5.13"
-    "@oclif/config" "^1.13.0"
-    chalk "^2.4.1"
-    cli-ux "^5.2.1"
-    debug "^4.0.0"
-    fs-extra "^9.0.1"
-    moment "^2.22.1"
-
 "@oclif/plugin-autocomplete@^0.3.0":
   version "0.3.0"
   resolved "https://registry.npmjs.org/@oclif/plugin-autocomplete/-/plugin-autocomplete-0.3.0.tgz#eec788596a88a4ca5170a9103b6c2835119a8fbd"

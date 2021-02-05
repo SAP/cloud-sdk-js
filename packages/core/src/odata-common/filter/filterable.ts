@@ -27,7 +27,7 @@ export type Filterable<EntityT extends Entity> =
  *  .filter(and(filterExp1, filterExp2));
  * ```
  *
- * Note that the [[GetAllRequestBuilderV2.filter]]  and [[GetAllRequestBuilderV4.filter]] method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
+ * Note that the [[GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter]]  and [[GetAllRequestBuilderV4.filter]] method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
  * ```ts
  * Entity.requestBuilder()
  *  .getAll()

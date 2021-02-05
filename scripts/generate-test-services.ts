@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
 import { generate as generateOpenApi } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
@@ -12,7 +13,11 @@ const [readFile, readdir, writeFile] = [
   fs.writeFile
 ].map((fsModule: fsTypes) => util.promisify(fsModule));
 
-const serviceSpecsDir = path.join('test-resources', 'odata-service-specs');
+const odataServiceSpecsDir = path.join('test-resources', 'odata-service-specs');
+const openApiServiceSpecsDir = path.join(
+  'test-resources',
+  'openapi-service-specs'
+);
 const packageOutputDir = path.resolve('test-packages', 'test-services');
 const coreUnitTestOutputDir = path.resolve(
   'packages',
@@ -22,7 +27,7 @@ const coreUnitTestOutputDir = path.resolve(
   'test-services'
 );
 
-const generatorConfig = {
+const generatorConfigOData = {
   forceOverwrite: true,
   generateJs: false,
   useSwagger: false,
@@ -37,10 +42,24 @@ const generatorConfig = {
   s4hanaCloud: false
 };
 
-function generateTestServicesPackage(outputDir: string, version: ODataVersion) {
-  generateOdata({
-    ...generatorConfig,
-    inputDir: path.join(serviceSpecsDir, version),
+const generatorConfigOpenApi = {
+  input: path.resolve('test-resources', 'openapi-service-specs'),
+  outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
+  clearOutputDir: true,
+  generateJs: true,
+  generatePackageJson: true,
+  versionInPackageJson: '1.2.3'
+};
+
+const logger = createLogger('generate-test-service');
+
+function generateTestServicesPackage(
+  outputDir: string,
+  version: ODataVersion
+): Promise<void> {
+  return generateOdata({
+    ...generatorConfigOData,
+    inputDir: path.join(odataServiceSpecsDir, version),
     outputDir: `${outputDir}/${version}`,
     generateJs: true
   });
@@ -48,22 +67,32 @@ function generateTestServicesPackage(outputDir: string, version: ODataVersion) {
 
 async function generateTestServicesWithLocalCoreModules(
   outputDirBase,
-  version: ODataVersion
-) {
+  version: ODataVersion | 'openapi'
+): Promise<void> {
   const outputDir = path.resolve(outputDirBase, version);
-  await generateOdata({
-    ...generatorConfig,
-    inputDir: path.join(serviceSpecsDir, version),
-    outputDir
-  });
+  if (version !== 'openapi') {
+    await generateOdata({
+      ...generatorConfigOData,
+      inputDir: path.join(odataServiceSpecsDir, version),
+      outputDir
+    });
+  } else {
+    await generateOpenApi({
+      ...generatorConfigOpenApi,
+      input: openApiServiceSpecsDir,
+      outputDir
+    });
+  }
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then(files =>
-      files.forEach(file =>
-        readServiceFile(serviceDirectory, file).then(data => {
-          replaceWithLocalModules(serviceDirectory, file, data);
-        })
-      )
+    readServiceDirectory(serviceDirectory).then((dirents: fs.Dirent[]) =>
+      dirents
+        .filter(dirent => dirent.isFile())
+        .forEach(dirent =>
+          readServiceFile(serviceDirectory, dirent.name).then(data => {
+            replaceWithLocalModules(serviceDirectory, dirent.name, data);
+          })
+        )
     )
   );
 
@@ -73,12 +102,12 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function readServiceDirectory(serviceDirectory) {
-    return readdir(path.resolve(outputDir, serviceDirectory)).catch(
-      serviceDirErr => {
-        throw Error(`Reading test service directory failed: ${serviceDirErr}`);
-      }
-    );
+  function readServiceDirectory(serviceDirectory): Promise<fs.Dirent[]> {
+    return readdir(path.resolve(outputDir, serviceDirectory), {
+      withFileTypes: true
+    }).catch(serviceDirErr => {
+      throw Error(`Reading test service directory failed: ${serviceDirErr}`);
+    });
   }
 
   function readServiceFile(serviceDirectory, file) {
@@ -104,41 +133,49 @@ async function generateTestServicesWithLocalCoreModules(
   }
 }
 
-const arg = process.argv[2];
-if (arg === 'v2' || arg === 'odata' || arg === 'all') {
-  generateTestServicesPackage(packageOutputDir, 'v2');
-  generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
-}
-
-if (arg === 'v4' || arg === 'odata' || arg === 'all') {
-  generateTestServicesPackage(packageOutputDir, 'v4');
-  generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
-}
-
-if (arg === 'e2e' || arg === 'all') {
-  generateOdata({
-    ...generatorConfig,
-    inputDir: path.resolve('test-resources', 'odata-service-specs-e2e', 'v4'),
-    outputDir: path.resolve('test-packages', 'test-services-e2e', 'v4'),
-    generateJs: true
+async function generateAll(): Promise<void> {
+  // Promise.catch() won't work when error happens in the nested forEach loop. When updating to node 15, we can remove it.
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error(`Unhandled rejection at: ${reason}`);
+    process.exit(1);
   });
 
-  generateOdata({
-    ...generatorConfig,
-    inputDir: path.resolve(
-      'test-resources',
-      'odata-service-specs-e2e',
-      'TripPin'
-    ),
-    outputDir: path.resolve('test-packages', 'test-services-e2e', 'TripPin'),
-    generateJs: true
-  });
-}
+  const arg = process.argv[2];
+  if (arg === 'v2' || arg === 'odata' || arg === 'all') {
+    await generateTestServicesPackage(packageOutputDir, 'v2');
+    await generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
+  }
 
-if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
-  generateOpenApi({
-    inputDir: path.resolve('test-resources', 'openapi-service-specs'),
-    outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
-    clearOutputDir: true
-  });
+  if (arg === 'v4' || arg === 'odata' || arg === 'all') {
+    await generateTestServicesPackage(packageOutputDir, 'v4');
+    await generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
+  }
+
+  if (arg === 'e2e' || arg === 'all') {
+    await generateOdata({
+      ...generatorConfigOData,
+      inputDir: path.resolve('test-resources', 'odata-service-specs-e2e', 'v4'),
+      outputDir: path.resolve('test-packages', 'test-services-e2e', 'v4'),
+      generateJs: true
+    });
+
+    await generateOdata({
+      ...generatorConfigOData,
+      inputDir: path.resolve(
+        'test-resources',
+        'odata-service-specs-e2e',
+        'TripPin'
+      ),
+      outputDir: path.resolve('test-packages', 'test-services-e2e', 'TripPin'),
+      generateJs: true
+    });
+  }
+
+  if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
+    await generateOpenApi(generatorConfigOpenApi);
+    await generateTestServicesWithLocalCoreModules(
+      coreUnitTestOutputDir,
+      'openapi'
+    );
+  }
 }

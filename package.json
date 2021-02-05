@@ -1,5 +1,6 @@
 {
   "name": "sap-cloud-sdk",
+  "version": "1.37.0",
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
@@ -14,11 +15,13 @@
   "workspaces": [
     "packages/analytics",
     "packages/core",
+    "packages/cli",
     "packages/generator",
     "packages/test-util",
     "packages/util",
     "packages/openapi-generator",
     "test-packages/integration-tests",
+    "test-packages/nightly-tests",
     "test-packages/e2e-tests",
     "test-packages/test-services",
     "test-packages/test-services-e2e",
@@ -27,10 +30,11 @@
   "scripts": {
     "postinstall": "yarn compile",
     "test": "yarn workspaces run test",
-    "test:unit": "yarn lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\"",
+    "test:unit": "yarn lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\" --ignore \"@sap-cloud-sdk/nightly-tests\"",
     "test:integration": "yarn integration-tests test",
     "test:type": "yarn type-tests test",
     "test:e2e": "yarn e2e-tests test",
+    "test:nightly": "yarn nightly-tests test",
     "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:openapi": "yarn generate openapi && yarn lint:fix && yarn --frozen-lockfile",
@@ -43,9 +47,9 @@
     "lint": "yarn eslint --ext .ts .",
     "lint:fix": "yarn lint --fix",
     "lint:fix-cached": "yarn lint:fix --cache",
-    "check:circular": "yarn madge --circular ./packages/core",
+    "check:circular": "yarn madge --extensions ts --circular ./packages --exclude 'test-services|environment-accessor|\\.d\\.ts'",
     "check:dependencies": "yarn workspaces run check:dependencies",
-    "check:license": "node scripts/check-licenses.js",
+    "check:license": "ts-node scripts/check-licenses.ts",
     "check:vulnerability": "yarn audit-ci -h",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
     "analytics": "yarn workspace @sap-cloud-sdk/analytics",
@@ -55,12 +59,15 @@
     "test-util": "yarn workspace @sap-cloud-sdk/test-util",
     "util": "yarn workspace @sap-cloud-sdk/util",
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
+    "nightly-tests": "yarn workspace @sap-cloud-sdk/nightly-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
     "@types/jest": "^26.0.7",
     "@types/jsonwebtoken": "^8.3.8",
+    "@types/license-checker": "^25.0.1",
+    "@types/mock-fs": "^4.13.0",
     "@types/uuid": "^8.0.0",
     "@types/voca": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
@@ -84,14 +91,14 @@
     "prettier": "^2.0.2",
     "ts-jest": "^26.4.1",
     "ts-node": "^9.0.0",
-    "typedoc": "^0.20.0",
-    "typedoc-plugin-lerna-packages": "0.3.0",
+    "typedoc": "^0.20.13",
     "typescript": "~4.1.2"
   },
   "dependencies": {},
   "resolutions": {
     "agent-base": "^6.0.2",
     "@types/node": "^12.0.0",
-    "dot-prop": "^5.1.1"
+    "dot-prop": "^5.1.1",
+    "axios": "^0.21.1"
   }
 }

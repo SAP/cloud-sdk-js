@@ -2,7 +2,7 @@ import { getOrderBy, Orderable } from '../../odata-common';
 import { Entity } from '../entity';
 
 /**
- * @deprecated Since v1.21.0. Use [[oDataUri.getOrderBy]] instead.
+ * @deprecated Since v1.21.0. Use [[ODataUri.getOrderBy]] instead.
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.
  *
  * @typeparam EntityT - Type of the entity to order

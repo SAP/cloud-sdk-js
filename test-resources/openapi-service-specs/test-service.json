@@ -443,6 +443,49 @@
           }
         }
       }
+    },
+    "/test-cases/no-operation-id": {
+      "get": {
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/duplicate-operation-ids": {
+      "get": {
+        "operationId": "duplicateOperationId",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "operationId": "duplicateOperationId",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "put": {
+        "operationId": "duplicateOperationId_1",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "duplicateOperationId1",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
     }
   },
   "components": {

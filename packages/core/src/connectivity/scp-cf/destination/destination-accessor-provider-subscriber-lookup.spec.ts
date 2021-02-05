@@ -1,6 +1,7 @@
 import nock from 'nock';
 import {
   mockInstanceDestinationsCall,
+  mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../test/test-util/destination-service-mocks';
@@ -12,8 +13,15 @@ import {
 } from '../../../../test/test-util/mocked-access-tokens';
 import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
 import { mockServiceToken } from '../../../../test/test-util/token-accessor-mocks';
+import {
+  basicMultipleResponse,
+  certificateMultipleResponse,
+  certificateSingleResponse,
+  destinationName
+} from '../../../../test/test-util/example-destination-service-responses';
+import { wrapJwtInHeader } from '../jwt';
 import * as destinationService from './destination-service';
-import { DestinationConfiguration } from './destination';
+import { DestinationConfiguration, parseDestination } from './destination';
 import {
   alwaysProvider,
   alwaysSubscriber,
@@ -22,6 +30,7 @@ import {
 } from './destination-selection-strategies';
 import { Destination } from './destination-service-types';
 import { DestinationOptions, getDestination } from './destination-accessor';
+import { getDestinationFromDestinationService } from './destination-from-service';
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {
@@ -202,6 +211,58 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
   });
 
   describe('no UserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
+    it('retrieves destination without specifying userJwt', async () => {
+      mockServiceBindings();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        basicMultipleResponse,
+        200,
+        providerServiceToken
+      );
+
+      const actual = await getDestination(destinationName, {
+        cacheVerificationKeys: false
+      });
+      const expected = parseDestination(basicMultipleResponse[0]);
+      expect(actual).toMatchObject(expected);
+    });
+
+    it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
+      mockServiceBindings();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        certificateMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+
+      mockSingleDestinationCall(
+        nock,
+        certificateSingleResponse,
+        200,
+        'ERNIE-UND-CERT',
+        wrapJwtInHeader(subscriberServiceToken).headers
+      );
+
+      const expected = parseDestination(certificateSingleResponse);
+      const actual = await getDestinationFromDestinationService(
+        'ERNIE-UND-CERT',
+        {
+          iss: 'https://subscriber.example.com',
+          cacheVerificationKeys: false
+        }
+      );
+      expect(actual).toMatchObject(expected);
+    });
+
     it('noUserToken && alwaysSubscriber: should return null since the token does not match subscriber', async () => {
       const mocks = mockThingsForCombinations();
 

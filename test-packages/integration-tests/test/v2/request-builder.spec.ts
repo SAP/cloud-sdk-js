@@ -4,9 +4,10 @@ import {
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/core';
+import { basicHeader, wrapJwtInHeader } from '@sap-cloud-sdk/core';
 import {
   mockInstanceDestinationsCall,
+  mockSingleDestinationCall,
   mockSubaccountDestinationsCall
 } from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
 import {
@@ -18,6 +19,7 @@ import {
 import { privateKey } from '@sap-cloud-sdk/core/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/core/test/test-util/xsuaa-service-mocks';
 import { mockCsrfTokenRequest } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
+import { destinationName } from '@sap-cloud-sdk/core/test/test-util/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
@@ -30,9 +32,13 @@ const url = 'https://example.com';
 
 const getAllResponse = testEntityCollectionResponse();
 
-const providerToken = jwt.sign({ zid: 'provider_token' }, privateKey(), {
-  algorithm: 'RS512'
-});
+const providerToken = jwt.sign(
+  { zid: 'provider_token', iss: providerXsuaaUrl },
+  privateKey(),
+  {
+    algorithm: 'RS512'
+  }
+);
 
 let destination;
 
@@ -529,7 +535,18 @@ describe('Request Builder', () => {
       ProxyType: 'Internet',
       sapclient: null,
       URL: url,
-      authTokens: [],
+      authTokens: [
+        {
+          type: 'Bearer',
+          value: 'some.token',
+          expires_in: '3600',
+          error: null,
+          http_header: {
+            key: 'Authorization',
+            value: 'Bearer some.token'
+          }
+        }
+      ],
       Authentication: 'OAuth2ClientCredentials',
       tokenServiceURL: 'https://token.example.com/some/token/endpoint',
       clientId: 'TokenClientId',
@@ -549,29 +566,23 @@ describe('Request Builder', () => {
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
     mockSubaccountDestinationsCall(nock, [], 200, providerToken);
 
-    nock('https://token.example.com', {
-      reqheaders: {
-        authorization: basicHeader(
-          destination.clientId,
-          destination.clientSecret
-        )
-      }
-    })
-      .post(
-        '/some/token/endpoint',
-        'grant_type=client_credentials&client_id=TokenClientId&client_secret=TokenClientSecret'
-      )
-      .reply(200, { access_token: fakeOAuthToken });
+    mockSingleDestinationCall(
+      nock,
+      destination,
+      200,
+      destinationName,
+      wrapJwtInHeader(providerToken).headers
+    );
 
     nock(destination.URL, {
       reqheaders: {
-        authorization: `Bearer ${fakeOAuthToken}`,
+        authorization: 'Bearer some.token',
         accept: 'application/json',
         'content-type': 'application/json'
       }
     })
       .get(`${servicePath}/${entityName}?$format=json`)
-      .reply(200, getAllResponse);
+      .reply(200, {});
 
     const request = TestEntity.requestBuilder().getAll().execute({
       destinationName: 'FINAL-DESTINATION'

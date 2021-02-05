@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Jest Config Utils returns jest config object for tests 1`] = `
+Object {
+  "collectCoverage": true,
+  "coverageDirectory": "../s4hana_pipeline/reports/coverage-reports/backend-unit",
+  "coverageReporters": Array [
+    "text",
+    "cobertura",
+  ],
+  "reporters": Array [
+    "default",
+    Array [
+      "jest-junit",
+      Object {
+        "outputDirectory": "./s4hana_pipeline/reports/backend-unit",
+        "suiteName": "backend unit tests",
+      },
+    ],
+  ],
+}
+`;
+
+exports[`Jest Config Utils returns jest config object for tests 2`] = `
+Object {
+  "collectCoverage": true,
+  "coverageDirectory": "../s4hana_pipeline/reports/coverage-reports/backend-integration",
+  "coverageReporters": Array [
+    "text",
+    "cobertura",
+  ],
+  "reporters": Array [
+    "default",
+    Array [
+      "jest-junit",
+      Object {
+        "outputDirectory": "./s4hana_pipeline/reports/backend-integration",
+        "suiteName": "backend unit tests",
+      },
+    ],
+  ],
+}
+`;

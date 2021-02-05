@@ -1,0 +1,54 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "./packages/util/**/*",
+    "./packages/analytics/**/*",
+    "./packages/core/**/*",
+    "./packages/generator/**/*",
+    "./packages/openapi-generator/**/*",
+    "./packages/test-util/**/*"
+  ],
+  "exclude": [
+    "./packages/core/test/test-util/test-services",
+    "**/*.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "./packages/util"
+    },
+    {
+      "path": "./packages/analytics"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/generator"
+    },
+    {
+      "path": "./packages/openapi-generator"
+    },
+    {
+      "path": "./packages/test-util"
+    }
+  ],
+  "typedocOptions": {
+    "out": "docs/api/1.37.0",
+    "entryPoints": [
+      "packages/util/src/index.ts",
+      "packages/analytics/src/index.ts",
+      "packages/core/src/index.ts",
+      "packages/generator/src/index.ts",
+      "packages/openapi-generator/src/index.ts",
+      "packages/test-util/src/index.ts"
+    ],
+    "name": "SAP Cloud SDK for JavaScript / TypeScript",
+    "readme": "DOCUMENTATION.md",
+    "theme": "default",
+    "includeVersion": true,
+    "hideGenerator": true,
+    "listInvalidSymbolLinks": true,
+    "excludePrivate": true,
+    "includes": "packages"
+  }
+}

@@ -6,8 +6,8 @@ import jwt from 'jsonwebtoken';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
-import { mappingTenantFields, RegisteredJWTClaimsTenant } from './tenant';
-import { RegisteredJWTClaimsUser, mappingUserFields } from './user';
+import type { RegisteredJWTClaimsTenant } from './tenant';
+import type { RegisteredJWTClaimsUser } from './user';
 import { Cache } from './cache';
 import { fetchVerificationKeys } from './xsuaa-service';
 
@@ -240,45 +240,12 @@ function sanitizeVerificationKey(key: string) {
 }
 
 /**
- * Compare two decoded JWTs based on their tenantIds.
- * @param decodedUserToken - User JWT
- * @param decodedProviderToken - Provider JWT
- * @returns Whether the tenant is identical.
- */
-export function isIdenticalTenant(
-  decodedUserToken: DecodedJWT,
-  decodedProviderToken: DecodedJWT
-): boolean {
-  return (
-    readPropertyWithWarn(decodedUserToken, mappingTenantFields.id.keyInJwt) ===
-    readPropertyWithWarn(decodedProviderToken, mappingTenantFields.id.keyInJwt)
-  );
-}
-
-/**
  * Get the issuer url of a decoded JWT.
  * @param decodedToken - Token to read the issuer url from.
  * @returns The issuer url if available.
  */
 export function issuerUrl(decodedToken: DecodedJWT): string | undefined {
   return readPropertyWithWarn(decodedToken, 'iss');
-}
-
-/**
- * Extracts the custom attributes in the JWT
- * @param decodedToken - Token to read the custom attributes
- * @returns custom attributes added by the xsuaa to the issued JWT.
- */
-export function customAttributes(
-  decodedToken: DecodedJWT
-): Map<string, string[]> {
-  if (decodedToken[mappingUserFields.customAttributes.keyInJwt]) {
-    return readPropertyWithWarn(
-      decodedToken,
-      mappingUserFields.customAttributes.keyInJwt
-    ) as Map<string, string[]>;
-  }
-  return new Map<string, string[]>();
 }
 
 /**

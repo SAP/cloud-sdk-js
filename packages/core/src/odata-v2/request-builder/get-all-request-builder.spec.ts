@@ -9,7 +9,10 @@ import {
   createOriginalTestEntityData2,
   createTestEntity
 } from '../../../test/test-util/test-data';
-import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
+import {
+  TestEntity,
+  TestEntitySingleLink
+} from '../../../test/test-util/test-services/v2/test-service';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {
@@ -36,6 +39,19 @@ describe('GetAllRequestBuilder', () => {
         "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$filter=(StringProperty eq '%C3%A4%20%C3%B6%2B%20''c')";
       const actual = await requestBuilder
         .filter(TestEntity.STRING_PROPERTY.equals("ä ö+ 'c"))
+        .url(defaultDestination);
+      expect(actual).toBe(expected);
+    });
+
+    it('adds expand for nested selects', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
+      const actual = await requestBuilder
+        .select(
+          TestEntity.TO_SINGLE_LINK.select(
+            TestEntitySingleLink.BOOLEAN_PROPERTY
+          )
+        )
         .url(defaultDestination);
       expect(actual).toBe(expected);
     });

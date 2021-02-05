@@ -61,3 +61,113 @@ Declined, as we are planning to release a version 2 of the SDK in the first half
 
 ### Implement SDK Date wrapper that abstracts different libraries
 Declined, because this would probably mean quite high implementation effort and is not flexible enough.
+
+## Summary of the [PoC](https://github.com/SAP/cloud-sdk-js/pull/921)
+### New Api design
+Instead of the original idea of creating a new function `transform`, the middleware will be passed via the existing functions as optional parameter when building an `entity` or a `requestBuilder`.
+See examples below:
+```ts
+// Default entity builder usage
+const a = TestEntity.builder().int32Property(1).build();
+// Default create request
+TestEntity.requestBuilder().create(a).execute();
+
+// Transformed entity builder usage
+const b = TestEntity.builder(serializers).int32Property('test').build();
+// Transformed create request
+TestEntity.requestBuilder(serializers).create(b).execute();
+```
+The middleware has a structure like below to define (de)serializers for some edm types. In this example, only two edm types are considered.
+```ts
+interface DeSerializationMiddlewareInterface<T1, T2>{
+  'Edm.String'?: {
+    serializer: (val: T1) => string;
+    deserializer: (ori: string) => T1;
+  };
+  'Edm.Int32'?: {
+     serializer: (val: T2) => string;
+     deserializer: (ori: string) => T2;
+  };
+
+}
+```
+**Please note**
+
+With the api design above, when applying it for replacing the moment lib, we will introduce multiple generic types for `Entity`, `RequestBuilder`, `TestEntity` and `TestEntityRequestBuilder`, which makes our code more complicated, but the users should not be affected.
+The number of generic types depends on the number of related edm types. 
+For example, for `ODataV4`, 4 edm types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.Duration` and `Edm.TimeOfDay`) are relevant, which means it will introduce 4 generic types for all the classes mentioned above.
+In the PoC example, the string/number example looks like below, where only two generic types are used for two edm types (`Edm.String` and `Edm.Int32`):
+```ts
+export class TestEntityTemporal<T1 = string, T2 = number> extends EntityV4<T1, T2> implements TestEntityType<T1, T2> {
+  stringProperty?: T1;
+  int32Property?: T2;
+  ...
+}
+```
+
+### Assumption
+- Request builders has the same complexity.
+- Serializer has the same complexity as the Deserializer.
+- The URL converter uses the serialiser, so it might not be part of the middleware.
+- OData V2 has the same complexity as the OData V4.
+- Advanced data type like Complex/Collection type can be handled like the basic edm type.
+
+### Scope
+As mentioned above, the PoC example only has two generic types for mapping `Edm.String` and `Edm.Int32`.
+- Type tests of the entity created by the entity builder with/without the middleware.
+```ts
+       // TestEntityTemporal<string, number>
+       const entity1 = TestEntityTemporal.builder().int32Property(1).build();
+       // TestEntityTemporal<string, string>
+       const entity2 = TestEntityTemporal.builder(customMiddlewareFull)
+         .int32Property('1')
+         .build();
+```
+- Type tests of the `GetAllRequestBuilder` with/without the middleware.
+```ts
+       // TestEntityGetAllRequestBuilder<TestEntityTemporal<string, number>, string, number>
+       const requestBuilder1 = await TestEntityTemporal.requestBuilder().getAll();
+       // TestEntityGetAllRequestBuilder<TestEntityTemporal<string, string>, string, string>
+       const requestBuilder2 = await TestEntityTemporal.requestBuilder(
+         customMiddlewareFull
+       ).getAll();
+```
+- Type tests of the return value when executing a `GetAllRequestBuilder` with/without the middleware.
+```ts
+       // TestEntityTemporal<string, number>[]
+       const res1 = await TestEntityTemporal.requestBuilder()
+         .getAll()
+         .execute(defaultDestination);
+       // TestEntityTemporal<string, number>[]
+       const res2 = await TestEntityTemporal.requestBuilder(defaultMiddleware)
+         .getAll()
+         .execute(defaultDestination);
+       // TestEntityTemporal<string, string>[]
+       const res3 = await TestEntityTemporal.requestBuilder(customMiddlewareFull)
+         .getAll()
+         .execute(defaultDestination);
+       // TestEntityTemporal<string, string>[]
+       const res4 = await TestEntityTemporal.requestBuilder(
+         customMiddlewarePartial
+       )
+         .getAll()
+         .execute(defaultDestination);
+```
+- Implementation with unit tests about how custom deserializer affects the return value of the `GetAllRequestBuilder`.
+
+### How to get rid of `moment` lib
+#### Prerequisites
+- The middleware pattern is implemented so the SDK supports custom (de)serializer middleware in addition to the default one.
+- The `temporal` lib (or other alternatives) is ready to replace `moment` as the default (de)serialzier.
+
+#### Steps
+1. Switch the default (de)seralizer from `moment` to e.g., `temporal`, so our sdk core will not have `moment` as a dependency but `temporal`. (breaking change)
+2. Realease a new package which contains a prebuild consts as a moment (de)serializer middleware, using `moment` as a dependency, so a user can switch the (de)serializer on demand. This allows you to use latest sdk core with `moment` instead of the default (de)serializer.
+
+### Next steps
+- Refactor the middleware structure to align with the design mentioned above
+- In addition to the `GetAllRequestBuilder`, handle all kinds of the request builders.
+- In addition to `deserialzer`, handle `serializer` and `uri-converter`.
+- In addition to `ODataV4`, handle `ODataV2`.
+- In addition to basic edm types, handle advances types like collection and complex types
+- Release a new package (`@sap-cloud-sdk/date-time-temporal`/`@sap-cloud-sdk/date-time-moment`) as a middleware component, so users can consume directly.

@@ -27,8 +27,7 @@ export function codeBlock(
     return !indentation.trim() ? indentation : '';
   });
   const post = args.map((arg, i) =>
-    arg
-      .toString()
+    ('' + arg)
       .split('\n')
       .map(subArg => indents[i] + subArg)
       .join('\n')

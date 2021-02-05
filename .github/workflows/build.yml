@@ -56,7 +56,11 @@ jobs:
       - run: yarn check:test-service
         name: Test Service Version Check
       - run: yarn check:dependencies
-        name: Undeclared dependency check
+        name: Undeclared dependency Check
+      - run: yarn check:circular
+        name: Circular dependency Check
+      - run: yarn doc
+        name: API Doc Check
       - run: yarn check:vulnerability
         name: Dependency Vulnerability Check
       - run: yarn check:license

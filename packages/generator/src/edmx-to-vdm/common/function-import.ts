@@ -1,4 +1,4 @@
-import { toTypeNameFormat } from '@sap-cloud-sdk/core';
+import { pascalCase } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmFunctionImportBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser/swagger-types';
@@ -7,11 +7,6 @@ import { EdmxParameter } from '../../edmx-parser/common';
 import { EdmxFunctionImport as EdmxFunctionImportV2 } from '../../edmx-parser/v2';
 import { EdmxFunctionImport as EdmxFunctionImportV4 } from '../../edmx-parser/v4';
 import { getFunctionImportParameters } from './action-function-parameters';
-
-// const logger = createLogger({
-//   package: 'generator',
-//   messageContext: 'function-import'
-// });
 
 export function transformFunctionImportBase(
   edmxFunctionImport: EdmxFunctionImportV2 | EdmxFunctionImportV4,
@@ -23,7 +18,7 @@ export function transformFunctionImportBase(
   const functionImport = {
     originalName: edmxFunctionImport.Name,
     name,
-    parametersTypeName: toTypeNameFormat(`${name}Parameters`)
+    parametersTypeName: pascalCase(`${name}Parameters`)
   };
 
   const parameters = getFunctionImportParameters(

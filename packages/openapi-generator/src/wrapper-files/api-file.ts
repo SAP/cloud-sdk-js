@@ -75,15 +75,15 @@ function getOperation(operation: OpenApiOperation): string {
     : '';
   const requestBuilderParams = [
     'DefaultApi',
-    `'${operation.operationName}'`,
+    `'${operation.operationId}'`,
     ...params.map(param => `args${argsQuestionMark}.${param.name}`)
   ];
 
   return codeBlock`
 ${
-  operation.operationName
+  operation.operationId
 }: (${paramsArg}) => new OpenApiRequestBuilder<DefaultApi, '${
-    operation.operationName
+    operation.operationId
   }'>(
   ${requestBuilderParams.join(',\n')}
 )`;

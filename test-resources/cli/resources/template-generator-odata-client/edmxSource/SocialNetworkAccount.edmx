@@ -1,0 +1,36 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://my300098.s4hana.ondemand.com:443/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://my300098.s4hana.ondemand.com:443/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="YY1_SOCIALNETWORKACCOUNT_CDS" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="YY1_SOCIALNETWORKACCOUNTType" sap:label="Social Network Account" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="SAP_UUID"/>
+                </Key>
+                <Property Name="SAP_UUID" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:quickinfo="16 Byte UUID in 16 Bytes (Raw Format)"/>
+                <Property Name="ID" Type="Edm.String" MaxLength="20" sap:label="ID"/>
+                <Property Name="Provider" Type="Edm.String" MaxLength="20" sap:label="Provider"/>
+                <Property Name="Account" Type="Edm.String" MaxLength="20" sap:label="Account"/>
+            </EntityType>
+            <EntityContainer Name="YY1_SOCIALNETWORKACCOUNT_CDS_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="YY1_SOCIALNETWORKACCOUNT" EntityType="YY1_SOCIALNETWORKACCOUNT_CDS.YY1_SOCIALNETWORKACCOUNTType" sap:searchable="true" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="YY1_SOCIALNETWORKACCOUNT_CDS.YY1_SOCIALNETWORKACCOUNTType/ID">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="YY1_SOCIALNETWORKACCOUNT_CDS.YY1_SOCIALNETWORKACCOUNTType">
+                <Annotation Term="Common.SemanticKey">
+                    <Collection>
+                        <PropertyPath>ID</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="https://my300098.s4hana.ondemand.com:443/sap/opu/odata/sap/YY1_SOCIALNETWORKACCOUNT_CDS/$metadata"/>
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="https://my300098.s4hana.ondemand.com:443/sap/opu/odata/sap/YY1_SOCIALNETWORKACCOUNT_CDS/$metadata"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

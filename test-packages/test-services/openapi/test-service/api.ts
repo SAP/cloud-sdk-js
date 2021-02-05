@@ -110,5 +110,25 @@ export const TestServiceApi = {
     'testCaseGetDuplicateParameters',
     args.duplicateParam,
     args.duplicateParam2
+  ),
+  getTestCasesNoOperationId: () => new OpenApiRequestBuilder<DefaultApi, 'getTestCasesNoOperationId'>(
+    DefaultApi,
+    'getTestCasesNoOperationId'
+  ),
+  duplicateOperationId: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId'>(
+    DefaultApi,
+    'duplicateOperationId'
+  ),
+  duplicateOperationId2: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId2'>(
+    DefaultApi,
+    'duplicateOperationId2'
+  ),
+  duplicateOperationId3: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId3'>(
+    DefaultApi,
+    'duplicateOperationId3'
+  ),
+  duplicateOperationId1: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId1'>(
+    DefaultApi,
+    'duplicateOperationId1'
   )
 };

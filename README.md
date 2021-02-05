@@ -30,7 +30,7 @@ To use the SDK in your project, we recommend using our [commandline interface](#
 The core is the heart of the SAP Cloud SDK and contains the functionality that is essential to every project powered by the SDK. Any OData client built by the SAP Cloud SDK, be it the VDM or clients built by the generator are using the core. We recommend to install this in addition to your clients.
 
 To install the SAP Cloud SDK core in your project, run:
-```sh-session
+```bash
 $ npm install @sap-cloud-sdk/core
 ```
 
@@ -38,7 +38,7 @@ $ npm install @sap-cloud-sdk/core
 The SAP Cloud SDK generator is a command line interface (CLI) that allows you to create clients for your own OData services or other SAP systems besides SAP S/4HANA based on their service specifications.
 
 To install the SAP Cloud SDK generator in your project, run:
-```sh-session
+```bash
 $ npm install @sap-cloud-sdk/generator
 ```
 
@@ -46,7 +46,7 @@ $ npm install @sap-cloud-sdk/generator
 The test-util package makes writing tests for your SAP Cloud Platform application more convenient.
 
 To install the SAP Cloud SDK test-util as development dependencies in your project, run:
-```sh-session
+```bash
 $ npm install -D @sap-cloud-sdk/test-util
 ```
 
@@ -64,7 +64,7 @@ In addition to the Open Source parts of this project, we also publish the SAP Cl
 
 To install an OData client for an SAP S/4HANA service run:
 
-```sh-session
+```bash
 $ npm install @sap/cloud-sdk-vdm-<service name>-service
 ```
 In the example above, `service name` is the name of the service you want to use, e. g. for the business partner service, run: `npm install @sap/cloud-sdk-vdm-business-partner-service`.
@@ -73,8 +73,6 @@ Continuous delivery is a method to develop software with short feedback cycles.
 It is applicable to projects both for SAP Cloud Platform and SAP on-premise platforms.
 SAP implements tooling for continuous delivery in the open-source [project "Piper"](https://sap.github.io/jenkins-library/).
 The goal of project "Piper" is to substantially ease setting up continuous delivery in your project using SAP technologies.
-
-Part of project "Piper" is the [SAP Cloud SDK Pipeline](https://sap.github.io/jenkins-library/pipelines/cloud-sdk/introduction/) which is tailor-made to deliver high-quality applications on SAP Cloud Platform using the SAP Cloud SDK for Java and for JavaScript.
 
 ## Feedback
 Feel free to leave your feedback in form of GitHub issues for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.

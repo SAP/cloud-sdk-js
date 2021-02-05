@@ -44,7 +44,7 @@
     "js-yaml": "^4.0.0",
     "listr": "^0.14.3",
     "rimraf": "^3.0.2",
-    "yargs": "16.1.0"
+    "yargs": "16.2.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",

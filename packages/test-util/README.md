@@ -42,7 +42,7 @@ and `credentials.json`:
 }
 ```
 
-<!-- This block is inserted by the scripts/copy-generic-readme.ts --> 
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block --> 
 <!--genericPart-->
 ## Support
 

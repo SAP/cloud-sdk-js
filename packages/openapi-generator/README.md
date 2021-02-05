@@ -75,7 +75,7 @@ await generate(options);
 
 For more detailed overview visit our [generator documentation](https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client).
 
-<!-- This block is inserted by the scripts/copy-generic-readme.ts --> 
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block --> 
 <!--genericPart-->
 ## Support
 

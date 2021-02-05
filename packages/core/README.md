@@ -35,7 +35,7 @@ BusinessPartner.requestBuilder()
 
 For more detailed overview visit our [OData client documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript).
 
-<!-- This block is inserted by the scripts/copy-generic-readme.ts --> 
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block --> 
 <!--genericPart-->
 ## Support
 

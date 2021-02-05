@@ -18,7 +18,7 @@ import { setLogLevel } from '@sap-cloud-sdk/util';
 setLogLevel('debug', 'destination-accessor');
 ```
 
-<!-- This block is inserted by the scripts/copy-generic-readme.ts --> 
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block --> 
 <!--genericPart-->
 ## Support
 

@@ -293,7 +293,7 @@ EXAMPLES
 _See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.37.0/src/commands/package.ts)_
 <!-- commandsstop -->
 
-<!-- This block is inserted by the scripts/copy-generic-readme.ts --> 
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block --> 
 <!--genericPart-->
 ## Support
 

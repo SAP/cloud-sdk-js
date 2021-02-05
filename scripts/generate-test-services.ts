@@ -85,7 +85,7 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then(dirents =>
+    readServiceDirectory(serviceDirectory).then((dirents: fs.Dirent[]) =>
       dirents
         .filter(dirent => dirent.isFile())
         .forEach(dirent =>
@@ -102,7 +102,7 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function readServiceDirectory(serviceDirectory) {
+  function readServiceDirectory(serviceDirectory): Promise<fs.Dirent[]> {
     return readdir(path.resolve(outputDir, serviceDirectory), {
       withFileTypes: true
     }).catch(serviceDirErr => {
@@ -134,6 +134,7 @@ async function generateTestServicesWithLocalCoreModules(
 }
 
 async function generateAll(): Promise<void> {
+  // Promise.catch() won't work when error happens in the nested forEach loop. When updating to node 15, we can remove it.
   process.on('unhandledRejection', (reason, promise) => {
     logger.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);
@@ -178,9 +179,3 @@ async function generateAll(): Promise<void> {
     );
   }
 }
-
-generateAll().catch(err => {
-  logger.error('Something went wrong in the generation');
-  logger.error(err);
-  process.exit(1);
-});

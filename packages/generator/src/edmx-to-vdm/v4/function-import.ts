@@ -59,7 +59,7 @@ function joinFunctionImportData(
     },
     []
   );
-
+//todo
   if (functionImportsWithoutFunctions) {
     logger.warn(
       `Could not find functions referenced by the following function imports. Skipping code generation: ${functionImportsWithoutFunctions

@@ -29,6 +29,27 @@ export function transformReturnValueForEntity<ReturnT extends Entity>(
   ).setOrInitializeRemoteState() as ReturnT;
 }
 
+export function transformReturnValueForUnknownEntity(
+  data: any,
+  entityToConstructor: Record<string, Constructable<Entity>>
+): Entity {
+  const entityName = getEntityNameFromODataContext(data);
+  if (!entityName) {
+    // TODO 1677 ask the user to use executeRaw instead of execute
+    throw new Error(
+      `The value of the key "@odata.context" in the response is ${data['@odata.context']}, which is invalid, making the deserialization impossible.`
+    );
+  }
+  return transformReturnValueForEntity(data, entityToConstructor[entityName]);
+}
+
+export function getEntityNameFromODataContext(data: any): string | undefined {
+  const context: string | undefined = data['@odata.context'];
+  return context && context.includes('$metadata#')
+    ? context.split('$metadata#')[1]
+    : undefined;
+}
+
 export { transformReturnValueForEntity as transformReturnValueForEntityV4 };
 
 /**

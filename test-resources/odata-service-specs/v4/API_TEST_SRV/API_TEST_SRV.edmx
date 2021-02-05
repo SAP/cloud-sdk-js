@@ -307,6 +307,12 @@
         <FunctionImport Name="TestFunctionImportEntityReturnTypeCollection" Function="API_TEST_SRV.TestFunctionImportEntityReturnTypeCollection" EntitySet="A_TestEntity">
         </FunctionImport>
 
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnType" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnType" EntitySet="A_TestEntitySharesEntityType1">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnTypeCollection" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnTypeCollection" EntitySet="A_TestEntitySharesEntityType1">
+        </FunctionImport>
+
         <FunctionImport Name="TestFunctionImportComplexReturnType" Function="API_TEST_SRV.TestFunctionImportComplexReturnType">
         </FunctionImport>
 

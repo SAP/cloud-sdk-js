@@ -1,5 +1,6 @@
 import { FunctionImportRequestBuilderV4 } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
+import { TestEntitySharesEntityType1 } from './TestEntitySharesEntityType1';
 import { TestComplexType } from './TestComplexType';
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
@@ -49,6 +50,30 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 export declare function testFunctionImportEntityReturnTypeCollection(parameters: TestFunctionImportEntityReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>;
+/**
+ * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnType]].
+ */
+export interface TestFunctionImportSharedEntityReturnTypeParameters {
+}
+/**
+ * Test Function Import Shared Entity Return Type.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export declare function testFunctionImportSharedEntityReturnType(parameters: TestFunctionImportSharedEntityReturnTypeParameters): FunctionImportRequestBuilderV4<TestFunctionImportSharedEntityReturnTypeParameters, TestEntitySharesEntityType1>;
+/**
+ * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnTypeCollection]].
+ */
+export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {
+}
+/**
+ * Test Function Import Shared Entity Return Type Collection.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export declare function testFunctionImportSharedEntityReturnTypeCollection(parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportSharedEntityReturnTypeCollectionParameters, TestEntitySharesEntityType1[]>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
  */
@@ -118,6 +143,8 @@ export declare const functionImports: {
     testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;
     testFunctionImportEntityReturnType: typeof testFunctionImportEntityReturnType;
     testFunctionImportEntityReturnTypeCollection: typeof testFunctionImportEntityReturnTypeCollection;
+    testFunctionImportSharedEntityReturnType: typeof testFunctionImportSharedEntityReturnType;
+    testFunctionImportSharedEntityReturnTypeCollection: typeof testFunctionImportSharedEntityReturnTypeCollection;
     testFunctionImportComplexReturnType: typeof testFunctionImportComplexReturnType;
     testFunctionImportComplexReturnTypeCollection: typeof testFunctionImportComplexReturnTypeCollection;
     testFunctionImportMultipleParams: typeof testFunctionImportMultipleParams;

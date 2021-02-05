@@ -91,7 +91,7 @@ export function getCopyDescriptors(
 export async function findConflicts(
   copyDescriptors: CopyDescriptor[],
   force = false
-) {
+): Promise<void> {
   const conflicts = copyDescriptors.filter(copyDescriptor =>
     existsSync(copyDescriptor.fileName)
   );
@@ -113,7 +113,7 @@ export async function findConflicts(
 export async function copyFiles(
   copyDescriptors: CopyDescriptor[],
   options: { [key: string]: any }
-) {
+): Promise<void[]> {
   return Promise.all(
     copyDescriptors.map(({ sourcePath, fileName }) =>
       sourcePath instanceof URL

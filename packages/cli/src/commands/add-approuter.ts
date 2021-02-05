@@ -35,7 +35,7 @@ export default class AddApprouter extends Command {
     }
   ];
 
-  async run() {
+  async run(): Promise<void> {
     const parsed = this.parse(AddApprouter);
     const projectDir = parsed.args.projectDir || '.';
 

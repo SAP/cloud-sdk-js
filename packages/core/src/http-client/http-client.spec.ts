@@ -24,6 +24,8 @@ describe('generic http client', () => {
     sapClient: '001'
   };
 
+  const proxyAuthorization = 'youmaypass';
+
   const proxyDestination: Destination = {
     name: 'proxyDestination',
     url: 'http://example.com',
@@ -34,7 +36,7 @@ describe('generic http client', () => {
     sapClient: '001',
     proxyConfiguration: {
       headers: {
-        'Proxy-Authorization': 'youmaypass'
+        'Proxy-Authorization': proxyAuthorization
       },
       host: 'proxy.host',
       port: 1234,
@@ -62,8 +64,7 @@ describe('generic http client', () => {
         headers: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001',
-          'Proxy-Authorization':
-            proxyDestination.proxyConfiguration.headers['Proxy-Authorization']
+          'Proxy-Authorization': proxyAuthorization
         }
       };
 

@@ -1,4 +1,4 @@
-const { version, openFile } = require('./util');
+const { version, openFile } = require('./dist/util');
 
 module.exports = {
   getChangelog(v = version) {

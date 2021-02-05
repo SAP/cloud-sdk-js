@@ -1,5 +1,5 @@
 const path = require('path');
-const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
+const { transformFile, version, jsonStringify, apiDocsDir } = require('./dist/util');
 
 function updateRootPackageJson() {
   transformFile(path.resolve('package.json'), packageJson =>

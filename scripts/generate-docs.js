@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const compareVersions = require('compare-versions');
-const { jsonStringify, transformFile } = require('./util');
+const { jsonStringify, transformFile } = require('./dist/util');
 
 const apiDocPath = path.resolve('docs', 'api');
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import util from 'util';
+import util from 'scripts/util';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
 import { generate as generateOpenApi } from '../packages/openapi-generator/src';

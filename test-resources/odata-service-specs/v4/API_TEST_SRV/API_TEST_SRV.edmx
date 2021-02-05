@@ -307,10 +307,16 @@
         <FunctionImport Name="TestFunctionImportEntityReturnTypeCollection" Function="API_TEST_SRV.TestFunctionImportEntityReturnTypeCollection" EntitySet="A_TestEntity">
         </FunctionImport>
 
-        <FunctionImport Name="TestFunctionImportSharedEntityReturnType" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnType" EntitySet="A_TestEntitySharesEntityType1">
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnTypeWithEntitySetInfo" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnType" EntitySet="A_TestEntitySharesEntityType1">
         </FunctionImport>
 
-        <FunctionImport Name="TestFunctionImportSharedEntityReturnTypeCollection" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnTypeCollection" EntitySet="A_TestEntitySharesEntityType1">
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnType">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnTypeCollection" EntitySet="A_TestEntitySharesEntityType1">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo" Function="API_TEST_SRV.TestFunctionImportSharedEntityReturnTypeCollection">
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportComplexReturnType" Function="API_TEST_SRV.TestFunctionImportComplexReturnType">

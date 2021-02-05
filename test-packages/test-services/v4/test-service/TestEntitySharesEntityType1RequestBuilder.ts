@@ -12,15 +12,11 @@ import { TestEntitySharesEntityType1 } from './TestEntitySharesEntityType1';
 export class TestEntitySharesEntityType1RequestBuilder extends RequestBuilder<TestEntitySharesEntityType1> {
   /**
    * Returns a request builder for retrieving one `TestEntitySharesEntityType1` entity based on its keys.
-   * @param keyPropertyGuid Key property. See [[TestEntitySharesEntityType1.keyPropertyGuid]].
    * @param keyPropertyString Key property. See [[TestEntitySharesEntityType1.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `TestEntitySharesEntityType1` entity based on its keys.
    */
-  getByKey(keyPropertyGuid: string, keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntitySharesEntityType1> {
-    return new GetByKeyRequestBuilderV4(TestEntitySharesEntityType1, {
-      KeyPropertyGuid: keyPropertyGuid,
-      KeyPropertyString: keyPropertyString
-    });
+  getByKey(keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntitySharesEntityType1> {
+    return new GetByKeyRequestBuilderV4(TestEntitySharesEntityType1, { KeyPropertyString: keyPropertyString });
   }
 
   /**
@@ -51,21 +47,17 @@ export class TestEntitySharesEntityType1RequestBuilder extends RequestBuilder<Te
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntitySharesEntityType1`.
-   * @param keyPropertyGuid Key property. See [[TestEntitySharesEntityType1.keyPropertyGuid]].
    * @param keyPropertyString Key property. See [[TestEntitySharesEntityType1.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySharesEntityType1`.
    */
-  delete(keyPropertyGuid: string, keyPropertyString: string): DeleteRequestBuilderV4<TestEntitySharesEntityType1>;
+  delete(keyPropertyString: string): DeleteRequestBuilderV4<TestEntitySharesEntityType1>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntitySharesEntityType1`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySharesEntityType1` by taking the entity as a parameter.
    */
   delete(entity: TestEntitySharesEntityType1): DeleteRequestBuilderV4<TestEntitySharesEntityType1>;
-  delete(keyPropertyGuidOrEntity: any, keyPropertyString?: string): DeleteRequestBuilderV4<TestEntitySharesEntityType1> {
-    return new DeleteRequestBuilderV4(TestEntitySharesEntityType1, keyPropertyGuidOrEntity instanceof TestEntitySharesEntityType1 ? keyPropertyGuidOrEntity : {
-      KeyPropertyGuid: keyPropertyGuidOrEntity!,
-      KeyPropertyString: keyPropertyString!
-    });
+  delete(keyPropertyStringOrEntity: any): DeleteRequestBuilderV4<TestEntitySharesEntityType1> {
+    return new DeleteRequestBuilderV4(TestEntitySharesEntityType1, keyPropertyStringOrEntity instanceof TestEntitySharesEntityType1 ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity! });
   }
 }

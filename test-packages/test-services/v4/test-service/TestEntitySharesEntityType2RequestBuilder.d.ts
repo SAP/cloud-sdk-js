@@ -6,11 +6,10 @@ import { TestEntitySharesEntityType2 } from './TestEntitySharesEntityType2';
 export declare class TestEntitySharesEntityType2RequestBuilder extends RequestBuilder<TestEntitySharesEntityType2> {
     /**
      * Returns a request builder for retrieving one `TestEntitySharesEntityType2` entity based on its keys.
-     * @param keyPropertyGuid Key property. See [[TestEntitySharesEntityType2.keyPropertyGuid]].
      * @param keyPropertyString Key property. See [[TestEntitySharesEntityType2.keyPropertyString]].
      * @returns A request builder for creating requests to retrieve one `TestEntitySharesEntityType2` entity based on its keys.
      */
-    getByKey(keyPropertyGuid: string, keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntitySharesEntityType2>;
+    getByKey(keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntitySharesEntityType2>;
     /**
      * Returns a request builder for querying all `TestEntitySharesEntityType2` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntitySharesEntityType2` entities.
@@ -30,11 +29,10 @@ export declare class TestEntitySharesEntityType2RequestBuilder extends RequestBu
     update(entity: TestEntitySharesEntityType2): UpdateRequestBuilderV4<TestEntitySharesEntityType2>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntitySharesEntityType2`.
-     * @param keyPropertyGuid Key property. See [[TestEntitySharesEntityType2.keyPropertyGuid]].
      * @param keyPropertyString Key property. See [[TestEntitySharesEntityType2.keyPropertyString]].
      * @returns A request builder for creating requests that delete an entity of type `TestEntitySharesEntityType2`.
      */
-    delete(keyPropertyGuid: string, keyPropertyString: string): DeleteRequestBuilderV4<TestEntitySharesEntityType2>;
+    delete(keyPropertyString: string): DeleteRequestBuilderV4<TestEntitySharesEntityType2>;
     /**
      * Returns a request builder for deleting an entity of type `TestEntitySharesEntityType2`.
      * @param entity Pass the entity to be deleted.

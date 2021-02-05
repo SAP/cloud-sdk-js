@@ -31,15 +31,11 @@ var TestEntitySharesEntityType1RequestBuilder = /** @class */ (function (_super)
     }
     /**
      * Returns a request builder for retrieving one `TestEntitySharesEntityType1` entity based on its keys.
-     * @param keyPropertyGuid Key property. See [[TestEntitySharesEntityType1.keyPropertyGuid]].
      * @param keyPropertyString Key property. See [[TestEntitySharesEntityType1.keyPropertyString]].
      * @returns A request builder for creating requests to retrieve one `TestEntitySharesEntityType1` entity based on its keys.
      */
-    TestEntitySharesEntityType1RequestBuilder.prototype.getByKey = function (keyPropertyGuid, keyPropertyString) {
-        return new core_1.GetByKeyRequestBuilderV4(TestEntitySharesEntityType1_1.TestEntitySharesEntityType1, {
-            KeyPropertyGuid: keyPropertyGuid,
-            KeyPropertyString: keyPropertyString
-        });
+    TestEntitySharesEntityType1RequestBuilder.prototype.getByKey = function (keyPropertyString) {
+        return new core_1.GetByKeyRequestBuilderV4(TestEntitySharesEntityType1_1.TestEntitySharesEntityType1, { KeyPropertyString: keyPropertyString });
     };
     /**
      * Returns a request builder for querying all `TestEntitySharesEntityType1` entities.
@@ -64,11 +60,8 @@ var TestEntitySharesEntityType1RequestBuilder = /** @class */ (function (_super)
     TestEntitySharesEntityType1RequestBuilder.prototype.update = function (entity) {
         return new core_1.UpdateRequestBuilderV4(TestEntitySharesEntityType1_1.TestEntitySharesEntityType1, entity);
     };
-    TestEntitySharesEntityType1RequestBuilder.prototype.delete = function (keyPropertyGuidOrEntity, keyPropertyString) {
-        return new core_1.DeleteRequestBuilderV4(TestEntitySharesEntityType1_1.TestEntitySharesEntityType1, keyPropertyGuidOrEntity instanceof TestEntitySharesEntityType1_1.TestEntitySharesEntityType1 ? keyPropertyGuidOrEntity : {
-            KeyPropertyGuid: keyPropertyGuidOrEntity,
-            KeyPropertyString: keyPropertyString
-        });
+    TestEntitySharesEntityType1RequestBuilder.prototype.delete = function (keyPropertyStringOrEntity) {
+        return new core_1.DeleteRequestBuilderV4(TestEntitySharesEntityType1_1.TestEntitySharesEntityType1, keyPropertyStringOrEntity instanceof TestEntitySharesEntityType1_1.TestEntitySharesEntityType1 ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity });
     };
     return TestEntitySharesEntityType1RequestBuilder;
 }(core_1.RequestBuilder));

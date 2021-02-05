@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/eslint-config",
-  "version": "1.33.0",
+  "version": "1.37.0",
   "description": "eslint config for the SAP Cloud SDK",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -12,7 +12,7 @@
     "cloud-sdk",
     "sap-cloud-platform"
   ],
-  "main": "./dist/index.js",
+  "main": "./index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -20,12 +20,15 @@
     "index.js"
   ],
   "repository": "github:SAP/cloud-sdk-js",
-  "scripts": {},
-  "dependencies": {},
+  "scripts": {
+    "check:dependencies": "depcheck ."
+  },
+  "dependencies": {
+    "eslint-config-prettier": "^7.1.0"
+  },
   "devDependencies": {},
   "peerDependencies": {
     "eslint": "^7.5.0",
-    "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-unused-imports": "^1.0.0"
   }

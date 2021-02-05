@@ -39,10 +39,10 @@
     "@oclif/plugin-not-found": "^1.2.3",
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "cli-ux": "^5.4.5",
-    "execa": "^4.0.0",
+    "execa": "^5.0.0",
     "fast-glob": "^3.2.2",
     "handlebars": "^4.7.3",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^4.0.0",
     "listr": "^0.14.3",
     "rimraf": "^3.0.2",
     "yargs": "16.1.0"

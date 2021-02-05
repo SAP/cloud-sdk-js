@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.testFunctionImportWithDifferentName = exports.testFunctionImportMultipleParams = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo = exports.testFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo = exports.testFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo = exports.testFunctionImportSharedEntityReturnTypeWithEntitySetInfo = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = void 0;
+exports.functionImports = exports.testFunctionImportWithDifferentName = exports.testFunctionImportMultipleParams = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -8,7 +8,6 @@ exports.functionImports = exports.testFunctionImportWithDifferentName = exports.
  */
 var core_1 = require("@sap-cloud-sdk/core");
 var TestEntity_1 = require("./TestEntity");
-var TestEntitySharesEntityType1_1 = require("./TestEntitySharesEntityType1");
 var TestComplexType_1 = require("./TestComplexType");
 /**
  * Test Function Import Edm Return Type.
@@ -43,61 +42,6 @@ function testFunctionImportEntityReturnType(parameters) {
     return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity_1.TestEntity); }, params);
 }
 exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
-/**
- * Test Function Import Entity Return Type Collection.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportEntityReturnTypeCollection(parameters) {
-    var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', function (data) { return core_1.transformReturnValueForEntityListV4(data, TestEntity_1.TestEntity); }, params);
-}
-exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
-/**
- * Test Function Import Shared Entity Return Type With Entity Set Info.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportSharedEntityReturnTypeWithEntitySetInfo(parameters) {
-    var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeWithEntitySetInfo', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntitySharesEntityType1_1.TestEntitySharesEntityType1); }, params);
-}
-exports.testFunctionImportSharedEntityReturnTypeWithEntitySetInfo = testFunctionImportSharedEntityReturnTypeWithEntitySetInfo;
-/**
- * Test Function Import Shared Entity Return Type Without Entity Set Info.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo(parameters) {
-    var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntitySharesEntityType1_1.TestEntitySharesEntityType1); }, params);
-}
-exports.testFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo = testFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo;
-/**
- * Test Function Import Shared Entity Return Type Collection With Entity Set Info.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo(parameters) {
-    var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo', function (data) { return core_1.transformReturnValueForEntityListV4(data, TestEntitySharesEntityType1_1.TestEntitySharesEntityType1); }, params);
-}
-exports.testFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo = testFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo;
-/**
- * Test Function Import Shared Entity Return Type Collection Without Entity Set Info.
- *
- * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
- */
-function testFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo(parameters) {
-    var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo', function (data) { return core_1.transformReturnValueForEntityListV4(data, TestEntitySharesEntityType1_1.TestEntitySharesEntityType1); }, params);
-}
-exports.testFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo = testFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo;
 /**
  * Test Function Import Complex Return Type.
  *
@@ -151,11 +95,6 @@ exports.functionImports = {
     testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
     testFunctionImportEdmReturnTypeCollection: testFunctionImportEdmReturnTypeCollection,
     testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
-    testFunctionImportEntityReturnTypeCollection: testFunctionImportEntityReturnTypeCollection,
-    testFunctionImportSharedEntityReturnTypeWithEntitySetInfo: testFunctionImportSharedEntityReturnTypeWithEntitySetInfo,
-    testFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo: testFunctionImportSharedEntityReturnTypeWithoutEntitySetInfo,
-    testFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo: testFunctionImportSharedEntityReturnTypeCollectionWithEntitySetInfo,
-    testFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo: testFunctionImportSharedEntityReturnTypeCollectionWithoutEntitySetInfo,
     testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
     testFunctionImportComplexReturnTypeCollection: testFunctionImportComplexReturnTypeCollection,
     testFunctionImportMultipleParams: testFunctionImportMultipleParams,

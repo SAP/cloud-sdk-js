@@ -5,7 +5,9 @@
  */
 import { transformReturnValueForEdmTypeV4, transformReturnValueForEdmTypeListV4, transformReturnValueForEntityV4, transformReturnValueForEntityListV4, transformReturnValueForComplexTypeV4, transformReturnValueForComplexTypeListV4, transformReturnValueForUndefinedV4, edmToTsV4, deserializeComplexTypeV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '../../../../../src';
 import { TestEntity } from './TestEntity';
+import { TestEntitySharesEntityType1 } from './TestEntitySharesEntityType1';
 import { TestComplexType } from './TestComplexType';
+import { throwErrorWhenReturnTypeIsUnionType } from '../../../../../src/odata-common/response-transformer';
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
@@ -85,6 +87,46 @@ export function testFunctionImportEntityReturnTypeCollection(parameters: TestFun
   }
 
   return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityListV4(data, TestEntity), params);
+}
+
+/**
+ * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnType]].
+ */
+export interface TestFunctionImportSharedEntityReturnTypeParameters {
+}
+
+/**
+ * Test Function Import Shared Entity Return Type.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function testFunctionImportSharedEntityReturnType(parameters: TestFunctionImportSharedEntityReturnTypeParameters): FunctionImportRequestBuilderV4<TestFunctionImportSharedEntityReturnTypeParameters, any> {
+  const params = {
+
+  }
+
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnType', (data) => throwErrorWhenReturnTypeIsUnionType('TestFunctionImportSharedEntityReturnType'), params);
+}
+
+/**
+ * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnTypeCollection]].
+ */
+export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {
+}
+
+/**
+ * Test Function Import Shared Entity Return Type Collection.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function testFunctionImportSharedEntityReturnTypeCollection(parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportSharedEntityReturnTypeCollectionParameters, any> {
+  const params = {
+
+  }
+
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollection', (data) => throwErrorWhenReturnTypeIsUnionType('TestFunctionImportSharedEntityReturnTypeCollection'), params);
 }
 
 /**
@@ -191,6 +233,8 @@ export const functionImports = {
   testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection,
+  testFunctionImportSharedEntityReturnType,
+  testFunctionImportSharedEntityReturnTypeCollection,
   testFunctionImportComplexReturnType,
   testFunctionImportComplexReturnTypeCollection,
   testFunctionImportMultipleParams,

@@ -1,4 +1,6 @@
 export * from './TestEntity';
+export * from './TestEntitySharesEntityType1';
+export * from './TestEntitySharesEntityType2';
 export * from './TestEntityMultiLink';
 export * from './TestEntityOtherMultiLink';
 export * from './TestEntityLvl2MultiLink';
@@ -10,6 +12,8 @@ export * from './TestEntityCircularLinkChild';
 export * from './TestEntityEndsWith';
 export * from './TestEntityEndsWithSomethingElse';
 export * from './TestEntityRequestBuilder';
+export * from './TestEntitySharesEntityType1RequestBuilder';
+export * from './TestEntitySharesEntityType2RequestBuilder';
 export * from './TestEntityMultiLinkRequestBuilder';
 export * from './TestEntityOtherMultiLinkRequestBuilder';
 export * from './TestEntityLvl2MultiLinkRequestBuilder';

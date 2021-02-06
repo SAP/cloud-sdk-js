@@ -60,7 +60,7 @@ function joinFunctionImportData(
     []
   );
 
-  if (functionImportsWithoutFunctions) {
+  if (functionImportsWithoutFunctions.length) {
     logger.warn(
       `Could not find functions referenced by the following function imports. Skipping code generation: ${functionImportsWithoutFunctions
         .map(f => `${f.Name} => ${f.Function}`)

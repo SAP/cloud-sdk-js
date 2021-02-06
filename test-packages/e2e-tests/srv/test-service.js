@@ -36,6 +36,12 @@ module.exports = async srv => {
     oRequest.reply(entities);
   });
 
+  srv.on('returnKey', async oRequest => {
+    // const key = oRequest.data.param.KeyTestEntity;
+    // oRequest.reply(key);
+    oRequest.reply(1);
+  });
+
   srv.on('createTestEntity', async oRequest => {
     const id = oRequest.data.id;
     await INSERT.into(TestEntity).columns('KeyTestEntity').values(id);

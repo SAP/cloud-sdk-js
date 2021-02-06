@@ -10,6 +10,7 @@ service TestService {
   function returnCollection(param : Integer) returns array of Integer;
   function getByKey(param : Integer) returns TestEntity;
   function getAll() returns array of TestEntity;
+  function returnKey(param : TestEntity) returns Integer;
   action createTestEntity(id : Integer) returns TestEntity;
   action createTestEntityReturnId(id : Integer) returns Integer;
 }

@@ -226,6 +226,11 @@
         <ReturnType Type="Edm.Boolean"/>
       </Function>
 
+      <Function Name="TestFunctionImportEntityParam">
+        <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityTypeToBeShared"/>
+        <ReturnType Type="Edm.Boolean"/>
+      </Function>
+
       <EntityContainer Name="API_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
         <EntitySet Name="A_TestEntity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
           <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityMultiLink"/>

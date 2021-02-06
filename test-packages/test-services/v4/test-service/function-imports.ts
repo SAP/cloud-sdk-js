@@ -6,6 +6,8 @@
 import { transformReturnValueForEdmTypeV4, transformReturnValueForEdmTypeListV4, transformReturnValueForEntityV4, transformReturnValueForComplexTypeV4, transformReturnValueForComplexTypeListV4, transformReturnValueForUndefinedV4, edmToTsV4, deserializeComplexTypeV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
+import { TestEntitySharesEntityType1 } from './TestEntitySharesEntityType1';
+import { TestEntitySharesEntityType2 } from './TestEntitySharesEntityType2';
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
@@ -105,6 +107,19 @@ export function testFunctionImportComplexReturnTypeCollection(parameters: TestFu
   }
 
   return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', (data) => transformReturnValueForComplexTypeListV4(data, (data) => deserializeComplexTypeV4(data, TestComplexType)), params);
+}
+
+export interface TestFunctionImportEntityParamParameters {
+  entityParam: TestEntitySharesEntityType1 | TestEntitySharesEntityType2;
+}
+
+export function testFunctionImportEntityParam(parameters: TestFunctionImportEntityParamParameters): FunctionImportRequestBuilderV4<TestFunctionImportEntityParamParameters, boolean> {
+  const params = {
+    // todo edm type
+    entityParam: new FunctionImportParameter('EntityParam', 'Edm.String', parameters.entityParam)
+  }
+
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityParam', (data) => transformReturnValueForEdmTypeV4(data, (val) => edmToTsV4(val.value, 'Edm.Boolean')), params);
 }
 
 /**

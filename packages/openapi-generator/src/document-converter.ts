@@ -23,7 +23,7 @@ export async function convertOpenApiSpec(
 ): Promise<OpenAPIV3.Document> {
   const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
-  return convertDocToGlobalTag(convertDocToUniqueOperationIds(openApiDocument));
+  return convertDocToUniqueOperationIds(openApiDocument);
 }
 
 /**

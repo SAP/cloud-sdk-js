@@ -23,6 +23,8 @@ exports.TestServiceApi = {
     duplicateOperationId: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'duplicateOperationId'); },
     duplicateOperationId2: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'duplicateOperationId2'); },
     duplicateOperationId3: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'duplicateOperationId3'); },
-    duplicateOperationId1: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'duplicateOperationId1'); }
+    duplicateOperationId1: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'duplicateOperationId1'); },
+    noTag: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'noTag'); },
+    defaultTag: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'defaultTag'); }
 };
 //# sourceMappingURL=api.js.map

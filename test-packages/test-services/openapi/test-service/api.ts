@@ -130,5 +130,13 @@ export const TestServiceApi = {
   duplicateOperationId1: () => new OpenApiRequestBuilder<DefaultApi, 'duplicateOperationId1'>(
     DefaultApi,
     'duplicateOperationId1'
+  ),
+  noTag: () => new OpenApiRequestBuilder<DefaultApi, 'noTag'>(
+    DefaultApi,
+    'noTag'
+  ),
+  defaultTag: () => new OpenApiRequestBuilder<DefaultApi, 'defaultTag'>(
+    DefaultApi,
+    'defaultTag'
   )
 };

@@ -53,5 +53,7 @@ export declare const TestServiceApi: {
     duplicateOperationId2: () => OpenApiRequestBuilder<DefaultApi, "duplicateOperationId2">;
     duplicateOperationId3: () => OpenApiRequestBuilder<DefaultApi, "duplicateOperationId3">;
     duplicateOperationId1: () => OpenApiRequestBuilder<DefaultApi, "duplicateOperationId1">;
+    noTag: () => OpenApiRequestBuilder<DefaultApi, "noTag">;
+    defaultTag: () => OpenApiRequestBuilder<DefaultApi, "defaultTag">;
 };
 //# sourceMappingURL=api.d.ts.map

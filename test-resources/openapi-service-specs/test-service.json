@@ -11,15 +11,23 @@
   },
   "tags": [
     {
-      "name": "someTag",
-      "description": "Some test tag"
+      "name": "entity",
+      "description": "entity tag"
+    },
+    {
+      "name": "test case",
+      "description": "test case tag"
+    },
+    {
+      "name": "default",
+      "description": "default tag"
     }
   ],
   "paths": {
     "/entities": {
       "get": {
         "tags": [
-          "someTag"
+          "entity"
         ],
         "summary": "Get entities",
         "description": "Get all entities",
@@ -150,7 +158,7 @@
       },
       "post": {
         "tags": [
-          "someTag"
+          "entity"
         ],
         "summary": "Create entity",
         "description": "Create entity",
@@ -179,7 +187,7 @@
       },
       "patch": {
         "tags": [
-          "someTag"
+          "entity"
         ],
         "operationId": "updateEntity",
         "requestBody": {
@@ -199,7 +207,7 @@
       },
       "delete": {
         "tags": [
-          "someTag"
+          "entity"
         ],
         "operationId": "deleteEntity",
         "requestBody": {
@@ -222,7 +230,7 @@
       },
       "put": {
         "tags": [
-          "someTag"
+          "entity"
         ],
         "operationId": "updateEntityWithPut",
         "requestBody": {
@@ -247,7 +255,7 @@
     "/entities/{entityId}": {
       "get": {
         "tags": [
-          "someTag"
+          "entity"
         ],
         "summary": "Get entity by id",
         "description": "Get entity by id",
@@ -287,6 +295,9 @@
     },
     "/entities/count": {
       "get": {
+        "tags": [
+          "entity"
+        ],
         "summary": "Count entities",
         "description": "Count entities",
         "operationId": "countEntities",
@@ -336,6 +347,9 @@
         }
       ],
       "get": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCaseGetRequiredParameters",
         "parameters": [
           {
@@ -380,6 +394,9 @@
         }
       },
       "post": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCasePostRequiredParameters",
         "requestBody": {
           "required": true,
@@ -418,6 +435,9 @@
     },
     "/test-cases/parameters/{duplicateParam}": {
       "get": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCaseGetDuplicateParameters",
         "parameters": [
           {
@@ -446,6 +466,9 @@
     },
     "/test-cases/no-operation-id": {
       "get": {
+        "tags": [
+          "test case"
+        ],
         "responses": {
           "201": {
             "description": "no content"
@@ -455,6 +478,9 @@
     },
     "/test-cases/duplicate-operation-ids": {
       "get": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId",
         "responses": {
           "201": {
@@ -463,6 +489,9 @@
         }
       },
       "post": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId",
         "responses": {
           "201": {
@@ -471,6 +500,9 @@
         }
       },
       "put": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId_1",
         "responses": {
           "201": {
@@ -479,7 +511,31 @@
         }
       },
       "patch": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId1",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/default-tag": {
+      "get": {
+        "operationId": "noTag",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "operationId": "defaultTag",
         "responses": {
           "201": {
             "description": "no content"

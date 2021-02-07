@@ -3,6 +3,8 @@
 .openapi-generator-ignore
 api.ts
 api/default-api.ts
+api/entity-api.ts
+api/test-case-api.ts
 base.ts
 configuration.ts
 git_push.sh

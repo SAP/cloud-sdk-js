@@ -179,3 +179,5 @@ async function generateAll(): Promise<void> {
     );
   }
 }
+
+generateAll();

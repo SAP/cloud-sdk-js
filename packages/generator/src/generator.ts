@@ -2,8 +2,7 @@ import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 import {
   createLogger,
-  splitInChunks,
-  transpileDirectory
+  splitInChunks
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
@@ -31,7 +30,8 @@ import {
 import {
   cloudSdkVdmHack,
   hasEntities,
-  npmCompliantName
+  npmCompliantName,
+  transpileDirectory
 } from './generator-utils';
 import {
   genericDescription,

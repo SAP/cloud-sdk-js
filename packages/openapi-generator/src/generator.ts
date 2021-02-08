@@ -5,7 +5,6 @@ import { resolve, parse } from 'path';
 import {
   createLogger,
   ErrorWithCause,
-  transpileDirectory,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
@@ -22,6 +21,7 @@ import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
 import { tsconfigJson } from './wrapper-files/tsconfig-json';
+import { transpileDirectory } from './generator-utils';
 
 const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');

@@ -1,5 +1,6 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/core';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
+import execa from 'execa';
 import {
   VdmNavigationProperty,
   VdmProperty,
@@ -315,4 +316,19 @@ const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
 export function hasEntities(service: VdmServiceMetadata): boolean {
   return !!service.entities?.length;
+}
+
+// TODO: The following is duplicate in the openapi generator
+/**
+ * Executes the type script compiler for the given directory.
+ * A valid tsconfig.json needs to be present in the directory.
+ * @param path - Directory to be compiled
+ */
+export async function transpileDirectory(path: string): Promise<void> {
+  logger.debug(`Transpiling files in the directory: ${path} started.`);
+  await execa('tsc', { cwd: path }).catch(err => {
+    logger.error(`Error: Failed to generate js files: ${err}`);
+    process.exit(1);
+  });
+  logger.debug(`Transpiling files in directory: ${path} finished.`);
 }

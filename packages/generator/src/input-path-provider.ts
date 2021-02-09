@@ -1,5 +1,5 @@
-import { lstatSync, PathLike, readdirSync } from 'fs';
-import { join, extname } from 'path';
+import { lstatSync, PathLike, readdirSync, existsSync } from 'fs';
+import { join, extname, parse } from 'path';
 
 const validFileExtensions = ['.edmx', '.xml'];
 
@@ -30,9 +30,12 @@ export function inputPaths(
   });
 }
 
-export function swaggerPathForEdmx(edmxPath: PathLike): PathLike {
-  const extension = new RegExp(`${extname(edmxPath.toString())}\$`);
-  return edmxPath.toString().replace(extension, '.json');
+export function swaggerPathForEdmx(edmxPath: PathLike): PathLike | undefined {
+  const { dir, name } = parse(edmxPath.toString());
+  const validSwaggerExtensions = ['.json', '.JSON'];
+  return validSwaggerExtensions
+    .map(ext => join(dir, `${name}${ext}`))
+    .find(swaggerPath => existsSync(swaggerPath.toString()));
 }
 
 function hasEdmxFileExtension(fileName: string): boolean {

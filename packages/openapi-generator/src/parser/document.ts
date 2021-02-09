@@ -16,6 +16,7 @@ export async function parseOpenApiDocument(
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
   const operations = parseAllOperations(document, refs);
+  const tags = collectTags(document, operations);
   const originalFileName = basename(filePath).split('.')[0];
   return {
     operations,
@@ -26,7 +27,8 @@ export async function parseOpenApiDocument(
     directoryName: vdmMapping[originalFileName]
       ? vdmMapping[originalFileName].directoryName
       : originalFileName,
-    originalFileName
+    originalFileName,
+    tags
   };
 }
 
@@ -41,13 +43,24 @@ export function parseAllOperations(
   refs: $Refs
 ): OpenApiOperation[] {
   return Object.entries(document.paths).reduce(
-    (allOperations, [pattern, pathDefinition]) => [
+    (allOperations, [path, pathDefinition]) => [
       ...allOperations,
       ...methods
         .filter(method => pathDefinition?.[method])
         // Undefined path definitions have been filtered out in the line before
-        .map(method => parseOperation(pattern, pathDefinition!, method, refs))
+        .map(method => parseOperation(path, pathDefinition!, method, refs))
     ],
     []
   );
+}
+
+export function collectTags(
+  document: OpenAPIV3.Document,
+  operations: OpenApiOperation[]
+): string[] {
+  const tags = document.tags ? document.tags.map(t => t.name) : [];
+  operations.forEach(o => {
+    o.tags?.forEach(tag => tags.push(tag));
+  });
+  return tags;
 }

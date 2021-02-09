@@ -5,7 +5,7 @@ import { parseRequestBody } from './request-body';
 import { parseParameters } from './parameters';
 
 export function parseOperation(
-  pattern: string,
+  path: string,
   pathItem: OpenAPIV3.PathItemObject,
   method: Method,
   refs: $Refs
@@ -17,7 +17,7 @@ export function parseOperation(
 
   return {
     ...operation,
-    pattern,
+    path,
     method,
     requestBody,
     parameters,

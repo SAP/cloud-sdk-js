@@ -9,6 +9,7 @@ export interface OpenApiDocument {
   npmPackageName: string;
   directoryName: string;
   originalFileName: string;
+  tags: string[];
   operations: OpenApiOperation[];
 }
 
@@ -19,7 +20,7 @@ export interface OpenApiDocument {
 export interface OpenApiOperation extends OpenAPIV3.OperationObject {
   operationId: string;
   method: string;
-  pattern: string;
+  path: string;
   requestBody?: OpenApiRequestBody;
   parameters: OpenApiParameter[];
 }

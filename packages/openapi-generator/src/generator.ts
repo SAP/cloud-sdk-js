@@ -196,7 +196,7 @@ async function generateFromFile(
 
   if (!parsedOpenApiDocument.operations.length) {
     logger.warn(
-      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
+      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${filePath}`
     );
     return;
   }

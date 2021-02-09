@@ -1,6 +1,10 @@
 import { createRefs, emptyApiDefinition } from '../../test/test-util';
-import { OpenApiDocument } from '../openapi-types';
-import { parseAllOperations, parseOpenApiDocument } from './document';
+import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
+import {
+  collectTags,
+  parseAllOperations,
+  parseOpenApiDocument
+} from './document';
 
 describe('parseOpenApiDocument', () => {
   it('does not modify input service specification', () => {
@@ -97,5 +101,55 @@ describe('parseAllOperations', () => {
     expect(
       parseAllOperations(apiDefinition, await createRefs()).length
     ).toEqual(5);
+  });
+});
+
+describe('collectTags', () => {
+  it('should collect tags from root and operations', async () => {
+    const apiDefinition = {
+      ...emptyApiDefinition,
+      tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag3' }]
+    };
+    const operations: OpenApiOperation[] = [
+      {
+        tags: ['tag3'],
+        operationId: '',
+        method: 'get',
+        path: '/entity',
+        parameters: []
+      },
+      {
+        tags: ['tag4'],
+        operationId: '',
+        method: 'put',
+        path: '/entity',
+        parameters: []
+      }
+    ];
+    expect(collectTags(apiDefinition, operations).length).toEqual(4);
+  });
+
+  it('should collect tags from operations, when root has no tags', async () => {
+    const apiDefinition = {
+      ...emptyApiDefinition
+    };
+    const operations: OpenApiOperation[] = [
+      {
+        tags: ['tag1'],
+        operationId: '',
+        method: 'get',
+        path: '/entity',
+        parameters: []
+      }
+    ];
+    expect(collectTags(apiDefinition, operations).length).toEqual(1);
+  });
+
+  it('should collect tags from root, when no tags are used in the operations', async () => {
+    const apiDefinition = {
+      ...emptyApiDefinition,
+      tags: [{ name: 'tag1' }, { name: 'tag2' }]
+    };
+    expect(collectTags(apiDefinition, []).length).toEqual(2);
   });
 });

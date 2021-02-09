@@ -1,12 +1,12 @@
 import { lstatSync, PathLike, readdirSync } from 'fs';
-import path from 'path';
+import { join, extname } from 'path';
 
 const validFileExtensions = ['.edmx', '.xml'];
 
 export function edmxPaths(input: PathLike): PathLike[] {
   if (lstatSync(input).isDirectory()) {
     return readdirSync(input)
-      .map(f => edmxPaths(path.join(input.toString(), f)))
+      .map(f => edmxPaths(join(input.toString(), f)))
       .reduce((prev, curr) => {
         prev.push(...curr);
         return prev;
@@ -30,12 +30,13 @@ export function inputPaths(
   });
 }
 
-function swaggerPathForEdmx(edmxPath: PathLike): PathLike {
-  return edmxPath.toString().replace(/\.edmx$/, '.json');
+export function swaggerPathForEdmx(edmxPath: PathLike): PathLike {
+  const extension = new RegExp(`${extname(edmxPath.toString())}\$`);
+  return edmxPath.toString().replace(extension, '.json');
 }
 
 function hasEdmxFileExtension(fileName: string): boolean {
-  return validFileExtensions.includes(path.extname(fileName.toLowerCase()));
+  return validFileExtensions.includes(extname(fileName.toLowerCase()));
 }
 
 export interface ServiceDefinitionPaths {

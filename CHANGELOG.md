@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [generator] Allow enhanced generation with OpenAPI files for all valid OData specification file endings (including e. g. .xml and .EDMX).
 
 
 # 1.37.0

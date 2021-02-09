@@ -50,6 +50,7 @@
     "yargs": "^16.0.3"
   },
   "devDependencies": {
-    "@types/yargs": "^16.0.0"
+    "@types/yargs": "^16.0.0",
+    "mock-fs": "^4.13.0"
   }
 }

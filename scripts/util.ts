@@ -28,7 +28,7 @@ export async function getAllLernaModules(): Promise<LernaModule[]> {
 }
 
 export async function getNonTestLernaModules(): Promise<LernaModule[]> {
-  return  (await getAllLernaModules()).filter(
+  return (await getAllLernaModules()).filter(
     module => !module.location.includes('test-packages')
   );
 }

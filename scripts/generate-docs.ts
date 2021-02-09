@@ -1,8 +1,14 @@
-import  { execSync }from 'child_process';
-import {lstatSync,readdirSync,renameSync,readFileSync,writeFileSync} from 'fs'
-import {resolve,basename,extname} from 'path'
-import { jsonStringify, transformFile } from './util';
+import { execSync } from 'child_process';
+import {
+  lstatSync,
+  readdirSync,
+  renameSync,
+  readFileSync,
+  writeFileSync
+} from 'fs';
+import { resolve, basename, extname } from 'path';
 import compareVersions from 'compare-versions';
+import { jsonStringify, transformFile } from './util';
 
 const apiDocPath = resolve('docs', 'api');
 
@@ -32,9 +38,7 @@ const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
  * https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not
  */
 function adjustForGitHubPages() {
-  const documentationFiles = flatten(
-    readDir(resolve(apiDocPath, version))
-  );
+  const documentationFiles = flatten(readDir(resolve(apiDocPath, version)));
   const htmlPaths = documentationFiles.filter(isHtmlFile);
   adjustSearchJs(documentationFiles);
   htmlPaths.forEach(filePath =>
@@ -106,9 +110,7 @@ const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
 
 function getSortedApiVersions() {
   return readdirSync(apiDocPath)
-    .filter(entry =>
-      lstatSync(resolve(apiDocPath, entry)).isDirectory()
-    )
+    .filter(entry => lstatSync(resolve(apiDocPath, entry)).isDirectory())
     .sort(compareVersions)
     .reverse();
 }

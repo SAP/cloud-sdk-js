@@ -1,6 +1,6 @@
 import { resolve, relative } from 'path';
 import { apiDocsDir, jsonStringify, transformFile, version } from './util';
-//dummy
+
 function updateRootPackageJson() {
   transformFile(resolve('package.json'), packageJson =>
     jsonStringify({

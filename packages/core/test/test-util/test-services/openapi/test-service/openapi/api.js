@@ -24,4 +24,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./api/default-api"), exports);
+__exportStar(require("./api/entity-api"), exports);
+__exportStar(require("./api/test-case-api"), exports);
 //# sourceMappingURL=api.js.map

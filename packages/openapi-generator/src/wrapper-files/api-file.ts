@@ -2,46 +2,48 @@ import {
   codeBlock,
   createLogger,
   partition,
+  pascalCase,
   unique
 } from '@sap-cloud-sdk/util';
-import {
-  OpenApiDocument,
-  OpenApiOperation,
-  SchemaMetadata
-} from '../openapi-types';
+import { OpenApiOperation, SchemaMetadata } from '../openapi-types';
 const logger = createLogger('openapi-generator');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Get the content of the SAP Cloud SDK API wrapper.
- * @param openApiDocument Parsed service.
+ * Get the content of the SAP Cloud SDK API wrapper for a specific Api.
+ * @param serviceName The service name.
+ * @param apiName The name of the Api.
+ * @param operations All operations belong to this Api.
  * @returns The generated code for the SDK API wrapper.
  */
-export function apiFile(openApiDocument: OpenApiDocument): string {
-  const requestBodyTypes = getRequestBodyReferenceTypes(openApiDocument);
+export function apiFile(
+  serviceName: string,
+  apiName: string,
+  operations: OpenApiOperation[]
+): string {
+  const apiNamePascal = pascalCase(apiName);
+  const requestBodyTypes = getRequestBodyReferenceTypes(operations);
   return codeBlock`
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
+import { ${apiNamePascal}Api } from './openapi/api';
 ${
   requestBodyTypes
     ? `import { ${requestBodyTypes} } from './openapi/model';`
     : ''
 }
 
-export const ${openApiDocument.apiName} = {
-  ${getOperations(openApiDocument)}
+export const ${serviceName}${apiNamePascal}Api = {
+  ${getOperations(operations, apiNamePascal)}
 };
 `;
 }
 
 /**
- * Get the reference types for all request body types in the given service.
- * @param openApiDocument Parsed service metadata.
+ * Get the reference types for all request body types in the given operation list.
+ * @param operations The given operation list.
  * @returns The list of body types as a string.
  */
-function getRequestBodyReferenceTypes(
-  openApiDocument: OpenApiDocument
-): string {
-  const bodyTypes = openApiDocument.operations
+function getRequestBodyReferenceTypes(operations: OpenApiOperation[]): string {
+  const bodyTypes = operations
     .map(operation => operation.requestBody?.parameterType)
     .filter(requestBody => typeof requestBody !== 'undefined')
     .filter(requestBody => requestBody?.isInnerTypeReferenceType)
@@ -51,22 +53,30 @@ function getRequestBodyReferenceTypes(
 }
 
 /**
- * Get all operation representations for the given service.
- * @param openApiDocument Parsed service.
+ * Get all operation representations for the given operations that belong to a specific Api.
+ * @param operations The given operation list.
+ * @param apiNamePascal The Api that holds the operations.
  * @returns All operations as a string.
  */
-function getOperations(openApiDocument: OpenApiDocument): string {
-  return openApiDocument.operations
-    .map(operation => getOperation(operation))
+function getOperations(
+  operations: OpenApiOperation[],
+  apiNamePascal: string
+): string {
+  return operations
+    .map(operation => getOperation(operation, apiNamePascal))
     .join(',\n');
 }
 
 /**
  * Get the string representation of one operation.
  * @param operation Operation to serialize.
+ * @param apiNamePascal The Api that holds the operations.
  * @returns The operation as a string.
  */
-function getOperation(operation: OpenApiOperation): string {
+function getOperation(
+  operation: OpenApiOperation,
+  apiNamePascal: string
+): string {
   const params = getParams(operation);
   const argsQuestionMark = params.every(param => !param.required) ? '?' : '';
   const paramsArg = params.length
@@ -77,7 +87,7 @@ function getOperation(operation: OpenApiOperation): string {
 }`
     : '';
   const requestBuilderParams = [
-    'DefaultApi',
+    `${apiNamePascal}Api`,
     `'${operation.operationId}'`,
     ...params.map(param => `args${argsQuestionMark}.${param.name}`)
   ];
@@ -85,7 +95,7 @@ function getOperation(operation: OpenApiOperation): string {
   return codeBlock`
 ${
   operation.operationId
-}: (${paramsArg}) => new OpenApiRequestBuilder<DefaultApi, '${
+}: (${paramsArg}) => new OpenApiRequestBuilder<${apiNamePascal}Api, '${
     operation.operationId
   }'>(
   ${requestBuilderParams.join(',\n')}

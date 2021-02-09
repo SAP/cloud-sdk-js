@@ -1,7 +1,7 @@
 import { basename } from 'path';
 import { parse, resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { pascalCase } from '@sap-cloud-sdk/util';
+import { pascalCase, unique } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, OpenApiDocument, methods } from '../openapi-types';
 import { VdmMapping } from '../service-mapping';
 import { parseOperation } from './operation';
@@ -16,11 +16,10 @@ export async function parseOpenApiDocument(
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
   const operations = parseAllOperations(document, refs);
-  const tags = collectTags(document, operations);
   const originalFileName = basename(filePath).split('.')[0];
   return {
     operations,
-    apiName: pascalCase(serviceName) + 'Api',
+    serviceName: pascalCase(serviceName),
     npmPackageName: vdmMapping[originalFileName]
       ? vdmMapping[originalFileName].npmPackageName
       : originalFileName,
@@ -28,7 +27,7 @@ export async function parseOpenApiDocument(
       ? vdmMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    tags
+    tags: collectTags(operations)
   };
 }
 
@@ -54,13 +53,16 @@ export function parseAllOperations(
   );
 }
 
-export function collectTags(
-  document: OpenAPIV3.Document,
-  operations: OpenApiOperation[]
-): string[] {
-  const tags = document.tags ? document.tags.map(t => t.name) : [];
+/**
+ * Collect all the tags used by given operations.
+ * @param operations The given operations.
+ * @returns An array that holds the unique tags.
+ */
+export function collectTags(operations: OpenApiOperation[]): string[] {
+  const tags: string[] = [];
   operations.forEach(o => {
-    o.tags?.forEach(tag => tags.push(tag));
+    const tagsOfOperation = o.tags?.length ? o.tags : ['default'];
+    tagsOfOperation.forEach(tag => tags.push(tag));
   });
-  return tags;
+  return unique(tags);
 }

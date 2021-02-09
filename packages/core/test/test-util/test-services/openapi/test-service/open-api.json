@@ -11,14 +11,23 @@
   },
   "tags": [
     {
-      "name": "default"
+      "name": "entity",
+      "description": "entity tag"
+    },
+    {
+      "name": "test case",
+      "description": "test case tag"
+    },
+    {
+      "name": "default",
+      "description": "default tag"
     }
   ],
   "paths": {
     "/entities": {
       "get": {
         "tags": [
-          "default"
+          "entity"
         ],
         "summary": "Get entities",
         "description": "Get all entities",
@@ -149,7 +158,7 @@
       },
       "post": {
         "tags": [
-          "default"
+          "entity"
         ],
         "summary": "Create entity",
         "description": "Create entity",
@@ -178,7 +187,7 @@
       },
       "patch": {
         "tags": [
-          "default"
+          "entity"
         ],
         "operationId": "updateEntity",
         "requestBody": {
@@ -198,7 +207,7 @@
       },
       "delete": {
         "tags": [
-          "default"
+          "entity"
         ],
         "operationId": "deleteEntity",
         "requestBody": {
@@ -221,7 +230,7 @@
       },
       "put": {
         "tags": [
-          "default"
+          "entity"
         ],
         "operationId": "updateEntityWithPut",
         "requestBody": {
@@ -246,7 +255,7 @@
     "/entities/{entityId}": {
       "get": {
         "tags": [
-          "default"
+          "entity"
         ],
         "summary": "Get entity by id",
         "description": "Get entity by id",
@@ -286,6 +295,9 @@
     },
     "/entities/count": {
       "get": {
+        "tags": [
+          "entity"
+        ],
         "summary": "Count entities",
         "description": "Count entities",
         "operationId": "countEntities",
@@ -304,10 +316,7 @@
           "400": {
             "description": "bad input parameter"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       }
     },
     "/test-cases/parameters/required-parameters/{requiredPathItemPathParam}": {
@@ -338,6 +347,9 @@
         }
       ],
       "get": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCaseGetRequiredParameters",
         "parameters": [
           {
@@ -379,12 +391,12 @@
           "201": {
             "description": "no content"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       },
       "post": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCasePostRequiredParameters",
         "requestBody": {
           "required": true,
@@ -418,14 +430,14 @@
           "201": {
             "description": "no content"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       }
     },
     "/test-cases/parameters/{duplicateParam}": {
       "get": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCaseGetDuplicateParameters",
         "parameters": [
           {
@@ -449,69 +461,87 @@
           "201": {
             "description": "no content"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       }
     },
     "/test-cases/no-operation-id": {
       "get": {
+        "tags": [
+          "test case"
+        ],
         "responses": {
           "201": {
             "description": "no content"
           }
         },
-        "operationId": "getTestCasesNoOperationId",
-        "tags": [
-          "default"
-        ]
+        "operationId": "getTestCasesNoOperationId"
       }
     },
     "/test-cases/duplicate-operation-ids": {
       "get": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId",
         "responses": {
           "201": {
             "description": "no content"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       },
       "post": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId3",
         "responses": {
           "201": {
             "description": "no content"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       },
       "put": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId2",
         "responses": {
           "201": {
             "description": "no content"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       },
       "patch": {
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId1",
         "responses": {
           "201": {
             "description": "no content"
           }
-        },
+        }
+      }
+    },
+    "/test-cases/default-tag": {
+      "get": {
+        "operationId": "noTag",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
         "tags": [
           "default"
-        ]
+        ],
+        "operationId": "defaultTag",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
       }
     }
   },

@@ -9,6 +9,7 @@ import {
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
+import voca from 'voca';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
@@ -73,8 +74,8 @@ async function generateSDKSources(
 ): Promise<void> {
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
-  await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
-  await createFile(serviceDir, 'index.ts', indexFile(), true);
+  const apis = await createApis(serviceDir, openApiDocument);
+  await createFile(serviceDir, 'index.ts', indexFile(apis), true);
   if (options.generatePackageJson) {
     await createFile(
       serviceDir,
@@ -99,6 +100,26 @@ async function generateSDKSources(
     );
     await transpileDirectory(serviceDir);
   }
+}
+
+async function createApis(
+  serviceDir: string,
+  openApiDocument: OpenApiDocument
+) {
+  return openApiDocument.tags.map(tag => {
+    const matchedOperations = openApiDocument.operations.filter(o =>
+      o.tags?.includes(tag)
+    );
+    const fileName = `${voca.kebabCase(tag + 'Api')}.ts`;
+
+    createFile(
+      serviceDir,
+      fileName,
+      apiFile(openApiDocument.serviceName, tag, matchedOperations),
+      true
+    );
+    return fileName;
+  });
 }
 
 /**

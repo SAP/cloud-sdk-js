@@ -105,34 +105,7 @@ describe('parseAllOperations', () => {
 });
 
 describe('collectTags', () => {
-  it('should collect tags from root and operations', async () => {
-    const apiDefinition = {
-      ...emptyApiDefinition,
-      tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag3' }]
-    };
-    const operations: OpenApiOperation[] = [
-      {
-        tags: ['tag3'],
-        operationId: '',
-        method: 'get',
-        path: '/entity',
-        parameters: []
-      },
-      {
-        tags: ['tag4'],
-        operationId: '',
-        method: 'put',
-        path: '/entity',
-        parameters: []
-      }
-    ];
-    expect(collectTags(apiDefinition, operations).length).toEqual(4);
-  });
-
-  it('should collect tags from operations, when root has no tags', async () => {
-    const apiDefinition = {
-      ...emptyApiDefinition
-    };
+  it('should collect tags from all operations', async () => {
     const operations: OpenApiOperation[] = [
       {
         tags: ['tag1'],
@@ -140,16 +113,54 @@ describe('collectTags', () => {
         method: 'get',
         path: '/entity',
         parameters: []
+      },
+      {
+        tags: ['tag2'],
+        operationId: '',
+        method: 'put',
+        path: '/entity',
+        parameters: []
+      },
+      {
+        tags: ['tag2'],
+        operationId: '',
+        method: 'delete',
+        path: '/entity',
+        parameters: []
+      },
+      {
+        tags: [],
+        operationId: '',
+        method: 'patch',
+        path: '/entity',
+        parameters: []
       }
     ];
-    expect(collectTags(apiDefinition, operations).length).toEqual(1);
+    expect(collectTags(operations)).toEqual(['tag1', 'tag2', 'default']);
   });
 
-  it('should collect tags from root, when no tags are used in the operations', async () => {
-    const apiDefinition = {
-      ...emptyApiDefinition,
-      tags: [{ name: 'tag1' }, { name: 'tag2' }]
-    };
-    expect(collectTags(apiDefinition, []).length).toEqual(2);
+  it('should use default tag when no tags are used', async () => {
+    const operations: OpenApiOperation[] = [
+      {
+        operationId: '',
+        method: 'get',
+        path: '/entity',
+        parameters: []
+      }
+    ];
+    expect(collectTags(operations)).toEqual(['default']);
+  });
+
+  it('should no use default tag when all tags are provided', async () => {
+    const operations: OpenApiOperation[] = [
+      {
+        tags: ['tag'],
+        operationId: '',
+        method: 'get',
+        path: '/entity',
+        parameters: []
+      }
+    ];
+    expect(collectTags(operations)).toEqual(['tag']);
   });
 });

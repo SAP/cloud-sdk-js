@@ -5,7 +5,7 @@ import type { OpenAPIV3 } from 'openapi-types';
  * Representation of a parsed OpenApi Service.
  */
 export interface OpenApiDocument {
-  apiName: string;
+  serviceName: string;
   npmPackageName: string;
   directoryName: string;
   originalFileName: string;

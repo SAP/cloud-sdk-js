@@ -36,8 +36,12 @@ describe('generator', () => {
   });
 
   it('should transpile the generated sources', () => {
-    const jsApiFile = resolve(testServicePath, 'api.js');
-    expect(existsSync(jsApiFile)).toBe(true);
+    const defaultApi = resolve(testServicePath, 'default-api.js');
+    expect(existsSync(defaultApi)).toBe(true);
+    const entityApi = resolve(testServicePath, 'entity-api.js');
+    expect(existsSync(entityApi)).toBe(true);
+    const testCaseApi = resolve(testServicePath, 'test-case-api.js');
+    expect(existsSync(testCaseApi)).toBe(true);
   });
 
   it('should create a package.json', () => {

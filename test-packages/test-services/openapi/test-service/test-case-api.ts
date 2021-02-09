@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { TestCaseApi } from './openapi';
+import { TestCaseApi } from './openapi/api';
 import { SimpleTestEntity } from './openapi/model';
 
 export const TestServiceTestCaseApi = {

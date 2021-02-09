@@ -2,7 +2,7 @@
   "name": "get-changelog",
   "version": "1.0.0",
   "description": "Gets the current changelog",
-  "main": "index.ts",
+  "main": "transpiled/.github/actions/get-changelog/index.js",
   "license": "Apache 2.0",
   "scripts": {
     "compile": "rm -rf transpiled && tsc -p tsconfig.json"

@@ -28,10 +28,7 @@ export async function getAllLernaModules(): Promise<LernaModule[]> {
 }
 
 export async function getNonTestLernaModules(): Promise<LernaModule[]> {
-  const response = await execa('lerna', ['list', '--json', '-a'], {
-    cwd: resolve(__dirname, '../')
-  });
-  return (JSON.parse(response.stdout) as LernaModule[]).filter(
+  return  (await getAllLernaModules()).filter(
     module => !module.location.includes('test-packages')
   );
 }

@@ -1,9 +1,6 @@
 import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
-import {
-  createLogger,
-  splitInChunks
-} from '@sap-cloud-sdk/util';
+import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,

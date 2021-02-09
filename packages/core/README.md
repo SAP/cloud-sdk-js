@@ -4,8 +4,6 @@
 
 This package contains the core functionality of the SAP Cloud SDK as well as the Cloud Platform abstractions.
 
-
-
 ## Installation
 ```
 $ npm install @sap-cloud-sdk/core
@@ -65,5 +63,4 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 
 The SAP Cloud SDK is released under the  [Apache License Version 2.0.](http://www.apache.org/licenses/)
 <!--genericPartStop-->
-
 

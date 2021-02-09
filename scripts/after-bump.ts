@@ -1,8 +1,9 @@
-const path = require('path');
-const { transformFile, version, jsonStringify, apiDocsDir } = require('./util');
+import { apiDocsDir, jsonStringify, transformFile, version } from './util';
+import {resolve,relative} from 'path'
+
 
 function updateRootPackageJson() {
-  transformFile(path.resolve('package.json'), packageJson =>
+  transformFile(resolve('package.json'), packageJson =>
     jsonStringify({
       ...JSON.parse(packageJson),
       version: `${version}`
@@ -11,7 +12,7 @@ function updateRootPackageJson() {
 }
 
 function updateDocumentationMd() {
-  transformFile(path.resolve('DOCUMENTATION.md'), documentation =>
+  transformFile(resolve('DOCUMENTATION.md'), documentation =>
     documentation
       .split('\n')
       .map(line =>
@@ -28,14 +29,14 @@ function updateTypeDocConfig() {
       ...parsedConfig,
       typedocOptions: {
         ...parsedConfig.typedocOptions,
-        out: `${path.relative(path.resolve(), apiDocsDir)}/${version}`
+        out: `${relative(resolve(), apiDocsDir)}/${version}`
       }
     });
   });
 }
 
 function updateDocsVersions() {
-  transformFile(path.resolve('docs', 'api', 'versions.json'), versionsJson => {
+  transformFile(resolve('docs', 'api', 'versions.json'), versionsJson => {
     const versions = JSON.parse(versionsJson);
     return versions.includes(version)
       ? versionsJson
@@ -88,7 +89,7 @@ function transformChangeLog(changelog) {
 }
 
 function updateChangelog() {
-  transformFile(path.resolve('CHANGELOG.md'), changelog =>
+  transformFile(resolve('CHANGELOG.md'), changelog =>
     transformChangeLog(changelog)
   );
 }

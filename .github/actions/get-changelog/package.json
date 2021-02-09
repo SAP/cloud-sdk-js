@@ -2,8 +2,11 @@
   "name": "get-changelog",
   "version": "1.0.0",
   "description": "Gets the current changelog",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "Apache 2.0",
+  "scripts": {
+    "compile": "rm -rf transpiled && tsc -p tsconfig.json"
+  },
   "dependencies": {
     "@actions/core": "^1.2.6"
   }

@@ -9,7 +9,7 @@ import {
 import { resolve, basename, extname } from 'path';
 import compareVersions from 'compare-versions';
 import { jsonStringify, transformFile } from './util';
-
+//dummy
 const apiDocPath = resolve('docs', 'api');
 
 const isDirectory = entryPath => lstatSync(entryPath).isDirectory();

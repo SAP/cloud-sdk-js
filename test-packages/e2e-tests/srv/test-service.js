@@ -37,7 +37,7 @@ module.exports = async srv => {
   });
 
   srv.on('returnKey', async oRequest => {
-    const query = oRequest.query;
+    const query = oRequest._.req.query;
     const p = query['@p'];
     const key = p.KeyTestEntity;
     oRequest.reply(key);

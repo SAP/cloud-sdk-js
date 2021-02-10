@@ -43,7 +43,7 @@
     "generate": "yarn workspace @sap-cloud-sdk/generator run compile && yarn ts-node scripts/generate-test-services.ts",
     "compile": "yarn lerna run compile",
     "doc": "node scripts/generate-docs.js",
-    "version": "node scripts/after-bump.js && generate:test-services && yarn doc && git add .",
+    "version": "node scripts/after-bump.js && yarn generate:test-services && yarn doc && git add .",
     "lint": "yarn eslint --ext .ts .",
     "lint:fix": "yarn lint --fix",
     "lint:fix-cached": "yarn lint:fix --cache",

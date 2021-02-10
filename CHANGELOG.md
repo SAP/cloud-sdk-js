@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [openapi-generator] Use `tags` information for splitting the generated clients.
 
 ## Improvements
 
@@ -37,7 +37,7 @@ Blog: TBD<br>
 
 ## New Functionality
 
-- [openApi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
+- [openapi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
 
 ## Fixed Issues
 

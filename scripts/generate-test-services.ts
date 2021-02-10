@@ -90,12 +90,14 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then(files =>
-      files.forEach(file =>
-        readServiceFile(serviceDirectory, file).then(data => {
-          replaceWithLocalModules(serviceDirectory, file, data);
-        })
-      )
+    readServiceDirectory(serviceDirectory).then((dirents: fs.Dirent[]) =>
+      dirents
+        .filter(dirent => dirent.isFile())
+        .forEach(dirent =>
+          readServiceFile(serviceDirectory, dirent.name).then(data => {
+            replaceWithLocalModules(serviceDirectory, dirent.name, data);
+          })
+        )
     )
   );
 
@@ -105,12 +107,12 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function readServiceDirectory(serviceDirectory) {
-    return readdir(path.resolve(outputDir, serviceDirectory)).catch(
-      serviceDirErr => {
-        throw Error(`Reading test service directory failed: ${serviceDirErr}`);
-      }
-    );
+  function readServiceDirectory(serviceDirectory): Promise<fs.Dirent[]> {
+    return readdir(path.resolve(outputDir, serviceDirectory), {
+      withFileTypes: true
+    }).catch(serviceDirErr => {
+      throw Error(`Reading test service directory failed: ${serviceDirErr}`);
+    });
   }
 
   function readServiceFile(serviceDirectory, file) {
@@ -137,6 +139,12 @@ async function generateTestServicesWithLocalCoreModules(
 }
 
 async function generateAll(): Promise<void> {
+  // Promise.catch() won't work when error happens in the nested forEach loop. When updating to node 15, we can remove it.
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error(`Unhandled rejection at: ${reason}`);
+    process.exit(1);
+  });
+
   const arg = process.argv[2];
   if (arg === 'v2' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v2');
@@ -177,8 +185,4 @@ async function generateAll(): Promise<void> {
   }
 }
 
-generateAll().catch(err => {
-  logger.error('Something went wrong in the generation');
-  logger.error(err);
-  process.exit(1);
-});
+generateAll();

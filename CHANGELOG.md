@@ -18,7 +18,6 @@
 
 ## New Functionality
 
-- [openapi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
 - [openapi-generator] Add option `writeReadme` for generating readme files.
 - [openapi-generator] Support copying files from given paths via a new option `additionalFiles`.
 
@@ -30,6 +29,20 @@
 
 -
 
+
+# 1.37.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.37.1<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [openApi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
+
+## Fixed Issues
+
+- [generator] Allow enhanced generation with OpenAPI files for all valid OData specification file endings (including e. g. .xml and .EDMX).
 
 # 1.37.0
 

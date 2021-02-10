@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import { Configuration } from "./configuration";
-import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosInstance } from 'axios';
 export declare const BASE_PATH: string;
 /**
  *
@@ -37,10 +37,10 @@ export interface RequestArgs {
  * @class BaseAPI
  */
 export declare class BaseAPI {
-    protected configuration: Configuration | undefined;
-    protected basePath: string | undefined;
+    protected basePath: string;
     protected axios: AxiosInstance;
-    constructor(requestConfig: AxiosRequestConfig);
+    protected configuration: Configuration | undefined;
+    constructor(configuration?: Configuration, basePath?: string, axios?: AxiosInstance);
 }
 /**
  *

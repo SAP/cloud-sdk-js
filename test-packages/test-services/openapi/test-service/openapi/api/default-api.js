@@ -97,7 +97,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         countEntities: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     localVarPath = "/entities/count";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -107,14 +107,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -134,7 +134,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         createEntity: function (testEntity, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions, needsSerialization;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions, nonString, needsSerialization;
                 return __generator(this, function (_a) {
                     localVarPath = "/entities";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -145,18 +145,23 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
                     localVarHeaderParameter['Content-Type'] = 'application/json';
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-                    needsSerialization = (typeof testEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-                    localVarRequestOptions.data = needsSerialization ? JSON.stringify(testEntity !== undefined ? testEntity : {}) : (testEntity || "");
+                    nonString = typeof testEntity !== 'string';
+                    needsSerialization = nonString && configuration && configuration.isJsonMime
+                        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                        : nonString;
+                    localVarRequestOptions.data = needsSerialization
+                        ? JSON.stringify(testEntity !== undefined ? testEntity : {})
+                        : (testEntity || "");
                     return [2 /*return*/, {
                             url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
                             options: localVarRequestOptions,
@@ -173,7 +178,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         deleteEntity: function (requestBody, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions, needsSerialization;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions, nonString, needsSerialization;
                 return __generator(this, function (_a) {
                     localVarPath = "/entities";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -184,18 +189,23 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
                     localVarHeaderParameter['Content-Type'] = 'application/json';
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-                    needsSerialization = (typeof requestBody !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-                    localVarRequestOptions.data = needsSerialization ? JSON.stringify(requestBody !== undefined ? requestBody : {}) : (requestBody || "");
+                    nonString = typeof requestBody !== 'string';
+                    needsSerialization = nonString && configuration && configuration.isJsonMime
+                        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                        : nonString;
+                    localVarRequestOptions.data = needsSerialization
+                        ? JSON.stringify(requestBody !== undefined ? requestBody : {})
+                        : (requestBody || "");
                     return [2 /*return*/, {
                             url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
                             options: localVarRequestOptions,
@@ -211,7 +221,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         duplicateOperationId: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     localVarPath = "/test-cases/duplicate-operation-ids";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -221,14 +231,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -246,7 +256,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         duplicateOperationId1: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     localVarPath = "/test-cases/duplicate-operation-ids";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -256,14 +266,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarRequestOptions = __assign(__assign({ method: 'PATCH' }, baseOptions), options);
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -281,7 +291,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         duplicateOperationId2: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     localVarPath = "/test-cases/duplicate-operation-ids";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -291,14 +301,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarRequestOptions = __assign(__assign({ method: 'PUT' }, baseOptions), options);
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -316,7 +326,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         duplicateOperationId3: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     localVarPath = "/test-cases/duplicate-operation-ids";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -326,14 +336,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -360,7 +370,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         getAllEntities: function (stringParameter, integerParameter, $dollarParameter, dotParameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     localVarPath = "/entities";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -394,14 +404,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     if (enumBooleanParameter !== undefined) {
                         localVarQueryParameter['enumBooleanParameter'] = enumBooleanParameter;
                     }
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -421,7 +431,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         getEntityByKey: function (entityId, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     // verify required parameter 'entityId' is not null or undefined
                     if (entityId === null || entityId === undefined) {
@@ -436,14 +446,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -461,7 +471,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         getTestCasesNoOperationId: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     localVarPath = "/test-cases/no-operation-id";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -471,14 +481,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -498,7 +508,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         testCaseGetDuplicateParameters: function (duplicateParam, duplicateParam2, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
                 return __generator(this, function (_a) {
                     // verify required parameter 'duplicateParam' is not null or undefined
                     if (duplicateParam === null || duplicateParam === undefined) {
@@ -520,14 +530,14 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     if (duplicateParam !== undefined) {
                         localVarQueryParameter['duplicateParam'] = duplicateParam;
                     }
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
                     return [2 /*return*/, {
@@ -551,7 +561,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         testCaseGetRequiredParameters: function (requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, optionalQueryParam, optionalPathItemQueryParam, simpleTestEntity, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions, needsSerialization;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions, nonString, needsSerialization;
                 return __generator(this, function (_a) {
                     // verify required parameter 'requiredPathItemQueryParam' is not null or undefined
                     if (requiredPathItemQueryParam === null || requiredPathItemQueryParam === undefined) {
@@ -587,18 +597,23 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                         localVarQueryParameter['optionalPathItemQueryParam'] = optionalPathItemQueryParam;
                     }
                     localVarHeaderParameter['Content-Type'] = 'application/json';
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-                    needsSerialization = (typeof simpleTestEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-                    localVarRequestOptions.data = needsSerialization ? JSON.stringify(simpleTestEntity !== undefined ? simpleTestEntity : {}) : (simpleTestEntity || "");
+                    nonString = typeof simpleTestEntity !== 'string';
+                    needsSerialization = nonString && configuration && configuration.isJsonMime
+                        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                        : nonString;
+                    localVarRequestOptions.data = needsSerialization
+                        ? JSON.stringify(simpleTestEntity !== undefined ? simpleTestEntity : {})
+                        : (simpleTestEntity || "");
                     return [2 /*return*/, {
                             url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
                             options: localVarRequestOptions,
@@ -620,7 +635,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         testCasePostRequiredParameters: function (requiredPathItemQueryParam, requiredPathItemPathParam, requiredQueryParam, simpleTestEntity, optionalPathItemQueryParam, optionalQueryParam, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions, needsSerialization;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions, nonString, needsSerialization;
                 return __generator(this, function (_a) {
                     // verify required parameter 'requiredPathItemQueryParam' is not null or undefined
                     if (requiredPathItemQueryParam === null || requiredPathItemQueryParam === undefined) {
@@ -660,18 +675,23 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                         localVarQueryParameter['requiredQueryParam'] = requiredQueryParam;
                     }
                     localVarHeaderParameter['Content-Type'] = 'application/json';
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-                    needsSerialization = (typeof simpleTestEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-                    localVarRequestOptions.data = needsSerialization ? JSON.stringify(simpleTestEntity !== undefined ? simpleTestEntity : {}) : (simpleTestEntity || "");
+                    nonString = typeof simpleTestEntity !== 'string';
+                    needsSerialization = nonString && configuration && configuration.isJsonMime
+                        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                        : nonString;
+                    localVarRequestOptions.data = needsSerialization
+                        ? JSON.stringify(simpleTestEntity !== undefined ? simpleTestEntity : {})
+                        : (simpleTestEntity || "");
                     return [2 /*return*/, {
                             url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
                             options: localVarRequestOptions,
@@ -688,7 +708,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         updateEntity: function (body, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions, needsSerialization;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions, nonString, needsSerialization;
                 return __generator(this, function (_a) {
                     localVarPath = "/entities";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -699,18 +719,23 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
                     localVarHeaderParameter['Content-Type'] = 'application/json';
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-                    needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-                    localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                    nonString = typeof body !== 'string';
+                    needsSerialization = nonString && configuration && configuration.isJsonMime
+                        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                        : nonString;
+                    localVarRequestOptions.data = needsSerialization
+                        ? JSON.stringify(body !== undefined ? body : {})
+                        : (body || "");
                     return [2 /*return*/, {
                             url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
                             options: localVarRequestOptions,
@@ -727,7 +752,7 @@ var DefaultApiAxiosParamCreator = function (configuration) {
         updateEntityWithPut: function (testEntity, options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
-                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, query, key, key, headersFromBaseOptions, needsSerialization;
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions, nonString, needsSerialization;
                 return __generator(this, function (_a) {
                     localVarPath = "/entities";
                     localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -738,18 +763,23 @@ var DefaultApiAxiosParamCreator = function (configuration) {
                     localVarHeaderParameter = {};
                     localVarQueryParameter = {};
                     localVarHeaderParameter['Content-Type'] = 'application/json';
-                    query = new URLSearchParams(localVarUrlObj.search);
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
                     for (key in localVarQueryParameter) {
-                        query.set(key, localVarQueryParameter[key]);
+                        queryParameters.set(key, localVarQueryParameter[key]);
                     }
                     for (key in options.query) {
-                        query.set(key, options.query[key]);
+                        queryParameters.set(key, options.query[key]);
                     }
-                    localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
                     headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
                     localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-                    needsSerialization = (typeof testEntity !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-                    localVarRequestOptions.data = needsSerialization ? JSON.stringify(testEntity !== undefined ? testEntity : {}) : (testEntity || "");
+                    nonString = typeof testEntity !== 'string';
+                    needsSerialization = nonString && configuration && configuration.isJsonMime
+                        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                        : nonString;
+                    localVarRequestOptions.data = needsSerialization
+                        ? JSON.stringify(testEntity !== undefined ? testEntity : {})
+                        : (testEntity || "");
                     return [2 /*return*/, {
                             url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
                             options: localVarRequestOptions,
@@ -783,7 +813,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -808,7 +838,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -832,7 +862,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -855,7 +885,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -878,7 +908,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -901,7 +931,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -924,7 +954,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -956,7 +986,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -981,7 +1011,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -1004,7 +1034,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -1029,7 +1059,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -1058,7 +1088,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -1087,7 +1117,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -1111,7 +1141,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }
@@ -1135,7 +1165,7 @@ var DefaultApiFp = function (configuration) {
                             return [2 /*return*/, function (axios, basePath) {
                                     if (axios === void 0) { axios = axios_1.default; }
                                     if (basePath === void 0) { basePath = base_1.BASE_PATH; }
-                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
                                     return axios.request(axiosRequestArgs);
                                 }];
                     }

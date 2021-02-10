@@ -41,7 +41,8 @@ paths:
       responses:
         '200':
           description: Success
-          type: string
+          schema:
+            type: string
 definitions:
   TestEntity:
     type: object

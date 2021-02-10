@@ -17,7 +17,7 @@ ${helpfulLinksSection().join('\n')}
 `;
 }
 
-// todo 1728 move to a new package for reduce code duplication.
+// TODO 1728 move to a new package for reduce code duplication.
 /**
  * Build the helpful links section of the readme file.
  * @returns The content of the section.

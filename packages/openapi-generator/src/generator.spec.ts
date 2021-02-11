@@ -59,9 +59,9 @@ describe('generator', () => {
 
   it('should create changelog and license files', () => {
     const changelog = resolve(testServicePath, 'CHANGELOG.md');
-    const license = resolve(testServicePath, 'test-license');
+    const testMarkdown = resolve(testServicePath, 'some-test-markdown.md');
     expect(existsSync(changelog)).toBe(true);
-    expect(existsSync(license)).toBe(true);
+    expect(existsSync(testMarkdown)).toBe(true);
   });
 
   it('should create a readme', () => {

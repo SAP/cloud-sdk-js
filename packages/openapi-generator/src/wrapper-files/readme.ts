@@ -1,4 +1,3 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
 import { OpenApiDocument } from '../openapi-types';
 
 /**
@@ -8,7 +7,7 @@ import { OpenApiDocument } from '../openapi-types';
  * @returns The readme contents.
  */
 export function readme(openApiDocument: OpenApiDocument): string {
-  return codeBlock`# ${openApiDocument.npmPackageName}
+  return `# ${openApiDocument.npmPackageName}
 
 This package contains the OpenAPI client for the ${openApiDocument.apiName}.
 

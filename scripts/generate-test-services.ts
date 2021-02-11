@@ -52,7 +52,7 @@ const generatorConfigOpenApi: GeneratorOptions = {
   generateJs: true,
   generatePackageJson: true,
   versionInPackageJson: '1.2.3',
-  additionalFiles: 'scripts/{CHANGELOG.md,test-license}',
+  additionalFiles: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
   writeReadme: true
 };
 

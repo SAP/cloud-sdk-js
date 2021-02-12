@@ -9,6 +9,7 @@ exports.TestServiceDefaultApi = void 0;
 var core_1 = require("@sap-cloud-sdk/core");
 var api_1 = require("./openapi/api");
 exports.TestServiceDefaultApi = {
+    noTag: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'noTag'); },
     defaultTag: function () { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'defaultTag'); }
 };
 //# sourceMappingURL=default-api.js.map

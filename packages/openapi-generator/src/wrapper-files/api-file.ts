@@ -92,7 +92,7 @@ function getOperation(operation: OpenApiOperation, apiName: string): string {
   return codeBlock`
 ${
   operation.operationId
-}: (${paramsArg}) => new OpenApiRequestBuilder<${apiNamePascal}Api, '${
+}: (${paramsArg}) => new OpenApiRequestBuilder<${apiName}Api, '${
     operation.operationId
   }'>(
   ${requestBuilderParams.join(',\n')}

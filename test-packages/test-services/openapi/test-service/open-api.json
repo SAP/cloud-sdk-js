@@ -530,7 +530,10 @@
           "201": {
             "description": "no content"
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       },
       "post": {
         "tags": [

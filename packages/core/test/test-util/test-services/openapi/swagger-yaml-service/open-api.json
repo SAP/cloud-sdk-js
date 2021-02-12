@@ -45,7 +45,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       },
       "patch": {
         "summary": "Test PATCH",
@@ -70,7 +73,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "default"
+        ]
       }
     }
   },
@@ -90,5 +96,10 @@
         }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ]
 }

@@ -1,4 +1,4 @@
-import { codeBlock, first } from '@sap-cloud-sdk/util';
+import { codeBlock } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { OpenApiDocument } from '../openapi-types';
 

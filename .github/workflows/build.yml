@@ -18,7 +18,7 @@ jobs:
         node-version: [10.x, 12.x]
         exclude:
           - os: macos-latest
-            node: 10.x
+            node-version: 10.x
     steps:
       - uses: actions/checkout@v1
       - name: Get yarn cache directory path

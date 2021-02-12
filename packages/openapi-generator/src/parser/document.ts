@@ -59,6 +59,5 @@ export function parseAllOperations(
  * @returns An array that holds the unique tags.
  */
 export function collectTags(operations: OpenApiOperation[]): string[] {
-  // the tags should not be optional because default tag is added
-  return unique(flatten(operations.map(operation => operation.tags!)));
+  return unique(flatten(operations.map(operation => operation.tags)));
 }

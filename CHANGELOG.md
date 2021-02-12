@@ -18,7 +18,6 @@
 
 ## New Functionality
 
-- [openApi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
 - [eslint-config] Release a recommended, shareable `eslint` configuration based on the SAP Cloud SDKs internal configuration as `@sap-cloud-sdk/eslint-config`. Follow the [official guide](https://eslint.org/docs/developer-guide/shareable-configs#using-a-shareable-config) for information how to use the config.
 
 ## Improvements
@@ -28,6 +27,21 @@
 ## Fixed Issues
 
 -
+
+
+# 1.37.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.37.1<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [openApi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
+
+## Fixed Issues
+
+- [generator] Allow enhanced generation with OpenAPI files for all valid OData specification file endings (including e. g. .xml and .EDMX).
 
 # 1.37.0
 

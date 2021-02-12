@@ -522,6 +522,31 @@
         }
       }
     },
+
+    "/test-cases/special-tag": {
+      "get": {
+        "operationId": "tag with dot",
+        "tags": [
+          "tag.dot"
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "operationId": "tag with space",
+        "tags": [
+          "tag space"
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
     "/test-cases/default-tag": {
       "get": {
         "operationId": "noTag",

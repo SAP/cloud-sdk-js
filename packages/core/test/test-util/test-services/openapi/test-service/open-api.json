@@ -523,6 +523,30 @@
         }
       }
     },
+    "/test-cases/special-tag": {
+      "get": {
+        "operationId": "tagWithDot",
+        "tags": [
+          "tag.dot"
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "operationId": "tagWithSpace",
+        "tags": [
+          "tag space"
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
     "/test-cases/default-tag": {
       "get": {
         "operationId": "noTag",

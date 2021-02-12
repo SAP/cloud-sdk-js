@@ -18,5 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./openapi/model"), exports);
 __exportStar(require("./entity-api"), exports);
 __exportStar(require("./test-case-api"), exports);
+__exportStar(require("./tag-dot-api"), exports);
+__exportStar(require("./tag-space-api"), exports);
 __exportStar(require("./default-api"), exports);
 //# sourceMappingURL=index.js.map

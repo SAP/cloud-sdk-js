@@ -4,6 +4,8 @@
 api.ts
 api/default-api.ts
 api/entity-api.ts
+api/tag-dot-api.ts
+api/tag-space-api.ts
 api/test-case-api.ts
 base.ts
 configuration.ts

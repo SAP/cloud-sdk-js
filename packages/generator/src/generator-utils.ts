@@ -318,7 +318,7 @@ export function hasEntities(service: VdmServiceMetadata): boolean {
   return !!service.entities?.length;
 }
 
-// TODO: The following is duplicate in the openapi generator
+// TODO 1728: The following is duplicate in the openapi generator
 /**
  * Executes the type script compiler for the given directory.
  * A valid tsconfig.json needs to be present in the directory.

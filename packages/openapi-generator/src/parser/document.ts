@@ -1,7 +1,7 @@
 import { basename } from 'path';
 import { parse, resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { pascalCase, unique } from '@sap-cloud-sdk/util';
+import { flatten, pascalCase, unique } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, OpenApiDocument, methods } from '../openapi-types';
 import { VdmMapping } from '../service-mapping';
 import { parseOperation } from './operation';
@@ -59,10 +59,6 @@ export function parseAllOperations(
  * @returns An array that holds the unique tags.
  */
 export function collectTags(operations: OpenApiOperation[]): string[] {
-  const tags: string[] = [];
-  operations.forEach(o => {
-    const tagsOfOperation = o.tags?.length ? o.tags : ['default'];
-    tagsOfOperation.forEach(tag => tags.push(tag));
-  });
-  return unique(tags);
+  // the tags should not be optional because default tag is added
+  return unique(flatten(operations.map(operation => operation.tags!)));
 }

@@ -126,7 +126,10 @@ function findOperationsWithTag(
   openApiDocument: OpenApiDocument,
   tag: string
 ): OpenApiOperation[] {
-  return openApiDocument.operations.filter(operation => operation.tags?.includes(tag));
+  return openApiDocument.operations.filter(operation =>
+    // the tags should not be optional because default tag is added
+    operation.tags!.includes(tag)
+  );
 }
 
 function buildApiFileName(apiName: string) {

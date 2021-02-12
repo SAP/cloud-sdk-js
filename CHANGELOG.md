@@ -1,5 +1,5 @@
-[//]: # "Please don't delete the following comments and keep them in the beginning of this document. Also, keep the first line empty."
 
+[//]: # "Please don't delete the following comments and keep them in the beginning of this document. Also, keep the first line empty."
 [//]: # (Example known issue: Making OData requests using a proxy defined in the environment variables is not possible \(see improvements\).)
 [//]: # (Example compatibility note: [core] Rename `entityConstructor`, `linkedEntity`, `fieldName` [properties]\(https://help.sap.com/doc/7f30fcdb8c424be9b1d4ecbfd7dd972f/1.0/en-US/classes/_sap_cloud_sdk_core.entity.html\) in generated entities to `_entityConstructor`, `_linkedEntity`, `_fieldName`.)
 [//]: # (Example new functionality: [generator] Support the generation of clients for services using nested complex types.)
@@ -19,7 +19,7 @@
 ## New Functionality
 
 - [openApi-generator] Support the generation of transpiled JavaScript OpenAPI clients with the new flags: `generateJs` and `tsConfig`.
-- [eslint-config] A recommended `eslint` configuration based on the SAP Cloud SDKs internal configuration is now available on npm as `@sap-cloud-sdk/eslint-config`. For information how to use the config, follow the [official guide](https://eslint.org/docs/developer-guide/shareable-configs#using-a-shareable-config).
+- [eslint-config] Release a recommended, shareable `eslint` configuration based on the SAP Cloud SDKs internal configuration as `@sap-cloud-sdk/eslint-config`. Follow the [official guide](https://eslint.org/docs/developer-guide/shareable-configs#using-a-shareable-config) for information how to use the config.
 
 ## Improvements
 

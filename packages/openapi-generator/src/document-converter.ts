@@ -81,7 +81,10 @@ export function convertDocWithDefaultTag(
   const tag = 'default';
 
   executeForAllOperationObjects(openApiDocument, operation => {
-    operation.tags = addGlobalTagToOperationWhenNoTagsAreUsed(operation.tags, tag);
+    operation.tags = addGlobalTagToOperationWhenNoTagsAreUsed(
+      operation.tags,
+      tag
+    );
   });
 
   const detectGlobalTag = !!Object.entries(

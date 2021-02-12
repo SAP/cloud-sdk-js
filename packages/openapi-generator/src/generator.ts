@@ -79,7 +79,7 @@ async function generateSDKSources(
   await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
   await createFile(serviceDir, 'index.ts', indexFile(), true);
   if (options.generatePackageJson) {
-    logger.info(`Generating package.json in ${serviceDir}.`);
+    logger.debug(`Generating package.json in ${serviceDir}.`);
 
     await createFile(
       serviceDir,
@@ -254,6 +254,7 @@ export async function getSdkVersion(): Promise<string> {
   ).version;
 }
 
+// TODO 1728 move to a new package for reduce code duplication.
 async function copyAdditionalFiles(
   additionalFiles: string,
   serviceDir: string

@@ -42,7 +42,7 @@
     "generate:test-services": "yarn generate all && yarn lint:fix && yarn --frozen-lockfile",
     "generate": "yarn workspace @sap-cloud-sdk/generator run compile && yarn ts-node scripts/generate-test-services.ts",
     "compile": "yarn lerna run compile",
-    "doc": "ts-node scripts/generate-docs.js",
+    "doc": "ts-node scripts/generate-docs.ts",
     "version": "node scripts/after-bump.js && yarn generate:test-services && yarn doc && git add .",
     "readme": "ts-node scripts/copy-generic-readme.ts && yarn lerna run readme",
     "lint": "yarn eslint --ext .ts .",

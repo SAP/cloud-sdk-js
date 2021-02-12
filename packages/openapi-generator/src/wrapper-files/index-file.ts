@@ -12,7 +12,7 @@ export function indexFile(openApiDocument: OpenApiDocument): string {
   return codeBlock`
 export * from './openapi/model';
 ${getApiFilesForIndex(openApiDocument)
-  .map(api => exportAll(first(api.split('.ts'))!))
+  .map(api => exportAll(api))
   .join('\n')}
 `;
 }

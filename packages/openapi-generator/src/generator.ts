@@ -17,7 +17,7 @@ import {
   packageJson,
   genericDescription
 } from './wrapper-files';
-import { OpenApiDocument } from './openapi-types';
+import { OpenApiDocument, OpenApiOperation } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
@@ -74,8 +74,8 @@ async function generateSDKSources(
 ): Promise<void> {
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
-  const apis = await createApis(serviceDir, openApiDocument);
-  await createFile(serviceDir, 'index.ts', indexFile(apis), true);
+  await createApis(serviceDir, openApiDocument);
+  await createFile(serviceDir, 'index.ts', indexFile(openApiDocument), true);
   if (options.generatePackageJson) {
     await createFile(
       serviceDir,
@@ -105,21 +105,32 @@ async function generateSDKSources(
 async function createApis(
   serviceDir: string,
   openApiDocument: OpenApiDocument
-) {
-  return openApiDocument.tags.map(tag => {
-    const matchedOperations = openApiDocument.operations.filter(o =>
-      o.tags?.includes(tag)
-    );
-    const fileName = `${voca.kebabCase(tag + 'Api')}.ts`;
+): Promise<void> {
+  await Promise.all(
+    openApiDocument.tags.map(tag =>
+      createFile(
+        serviceDir,
+        buildApiFileName(tag),
+        apiFile(
+          openApiDocument.serviceName,
+          tag,
+          findOperationsWithTag(openApiDocument, tag)
+        ),
+        true
+      )
+    )
+  );
+}
 
-    createFile(
-      serviceDir,
-      fileName,
-      apiFile(openApiDocument.serviceName, tag, matchedOperations),
-      true
-    );
-    return fileName;
-  });
+function findOperationsWithTag(
+  openApiDocument: OpenApiDocument,
+  tag: string
+): OpenApiOperation[] {
+  return openApiDocument.operations.filter(operation => operation.tags?.includes(tag));
+}
+
+function buildApiFileName(apiName: string) {
+  return `${voca.kebabCase(apiName + 'Api')}.ts`;
 }
 
 /**

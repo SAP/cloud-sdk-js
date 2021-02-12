@@ -9,10 +9,10 @@ import { OpenApiOperation, SchemaMetadata } from '../openapi-types';
 const logger = createLogger('openapi-generator');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Get the content of the SAP Cloud SDK API wrapper for a specific Api.
- * @param serviceName The service name.
- * @param apiName The name of the Api.
- * @param operations All operations belong to this Api.
+ * Get the file contents for an API wrapper file.
+ * @param serviceName The name of the service.
+ * @param apiName The name of the API.
+ * @param operations All operations, that belong to the given API.
  * @returns The generated code for the SDK API wrapper.
  */
 export function apiFile(
@@ -53,30 +53,27 @@ function getRequestBodyReferenceTypes(operations: OpenApiOperation[]): string {
 }
 
 /**
- * Get all operation representations for the given operations that belong to a specific Api.
- * @param operations The given operation list.
- * @param apiNamePascal The Api that holds the operations.
+ * Get all operation representations for the given operations that belong to a specific API.
+ * @param operations All operations that belong to the given API.
+ * @param apiName The name of the API.
  * @returns All operations as a string.
  */
 function getOperations(
   operations: OpenApiOperation[],
-  apiNamePascal: string
+  apiName: string
 ): string {
   return operations
-    .map(operation => getOperation(operation, apiNamePascal))
+    .map(operation => getOperation(operation, apiName))
     .join(',\n');
 }
 
 /**
  * Get the string representation of one operation.
  * @param operation Operation to serialize.
- * @param apiNamePascal The Api that holds the operations.
+ * @param apiName The name of the API.
  * @returns The operation as a string.
  */
-function getOperation(
-  operation: OpenApiOperation,
-  apiNamePascal: string
-): string {
+function getOperation(operation: OpenApiOperation, apiName: string): string {
   const params = getParams(operation);
   const argsQuestionMark = params.every(param => !param.required) ? '?' : '';
   const paramsArg = params.length
@@ -87,7 +84,7 @@ function getOperation(
 }`
     : '';
   const requestBuilderParams = [
-    `${apiNamePascal}Api`,
+    `${apiName}Api`,
     `'${operation.operationId}'`,
     ...params.map(param => `args${argsQuestionMark}.${param.name}`)
   ];

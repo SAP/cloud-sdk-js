@@ -1,16 +1,17 @@
 import { codeBlock, first } from '@sap-cloud-sdk/util';
+import voca from 'voca';
+import { OpenApiDocument } from '../openapi-types';
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Generate the index file to expose the SAP Cloud SDK API and models.
- * @param apis The generated api files.
+ * @param openApiDocument Parsed service.
  * @returns The index file contents.
  */
-export function indexFile(apis: string[]): string {
+export function indexFile(openApiDocument: OpenApiDocument): string {
   return codeBlock`
 export * from './openapi/model';
-${apis
-  .filter(api => api.endsWith('.ts'))
+${getApiFilesForIndex(openApiDocument)
   .map(api => exportAll(first(api.split('.ts'))!))
   .join('\n')}
 `;
@@ -18,4 +19,12 @@ ${apis
 
 function exportAll(file: string) {
   return `export * from './${file}';`;
+}
+
+function getApiFilesForIndex(openApiDocument: OpenApiDocument): string[] {
+  return openApiDocument.tags.map(tag => buildApiFileNameUsedByIndexFile(tag));
+}
+
+function buildApiFileNameUsedByIndexFile(apiName: string) {
+  return `${voca.kebabCase(apiName + 'Api')}`;
 }

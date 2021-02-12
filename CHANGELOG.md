@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [openapi-generator] Use `tags` information for splitting the generated clients.
+- [openapi-generator] Generate multiple API objects based on tags instead of one API per API specification.
 
 ## Improvements
 

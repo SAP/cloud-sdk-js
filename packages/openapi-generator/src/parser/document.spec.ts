@@ -108,34 +108,18 @@ describe('collectTags', () => {
   it('should collect tags from all operations', async () => {
     const operations: OpenApiOperation[] = [
       {
-        tags: ['tag1'],
-        operationId: '',
-        method: 'get',
-        path: '/entity',
-        parameters: []
+        tags: ['tag1']
       },
       {
-        tags: ['tag2'],
-        operationId: '',
-        method: 'put',
-        path: '/entity',
-        parameters: []
+        tags: ['tag2']
       },
       {
-        tags: ['tag2'],
-        operationId: '',
-        method: 'delete',
-        path: '/entity',
-        parameters: []
+        tags: ['tag2']
       },
       {
-        tags: [],
-        operationId: '',
-        method: 'patch',
-        path: '/entity',
-        parameters: []
+        tags: []
       }
-    ];
+    ] as OpenApiOperation[];
     expect(collectTags(operations)).toEqual(['tag1', 'tag2', 'default']);
   });
 
@@ -151,7 +135,7 @@ describe('collectTags', () => {
     expect(collectTags(operations)).toEqual(['default']);
   });
 
-  it('should no use default tag when all tags are provided', async () => {
+  it('should not use default tag when all tags are provided', async () => {
     const operations: OpenApiOperation[] = [
       {
         tags: ['tag'],

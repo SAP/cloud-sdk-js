@@ -1,5 +1,5 @@
 
-[//]: # "Please don't delete the following comments and keep them in the beginning of this document. Also, keep the first line empty."
+[//]: # (Please don't delete the following comments and keep them in the beginning of this document. Also, keep the first line empty.)
 [//]: # (Example known issue: Making OData requests using a proxy defined in the environment variables is not possible \(see improvements\).)
 [//]: # (Example compatibility note: [core] Rename `entityConstructor`, `linkedEntity`, `fieldName` [properties]\(https://help.sap.com/doc/7f30fcdb8c424be9b1d4ecbfd7dd972f/1.0/en-US/classes/_sap_cloud_sdk_core.entity.html\) in generated entities to `_entityConstructor`, `_linkedEntity`, `_fieldName`.)
 [//]: # (Example new functionality: [generator] Support the generation of clients for services using nested complex types.)

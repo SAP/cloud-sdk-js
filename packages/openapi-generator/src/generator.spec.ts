@@ -57,10 +57,13 @@ describe('generator', () => {
     expect(existsSync(tsconfig)).toBe(true);
   });
 
-  it('should create changelog and license files', () => {
+  it('should create changelog', () => {
     const changelog = resolve(testServicePath, 'CHANGELOG.md');
-    const testMarkdown = resolve(testServicePath, 'some-test-markdown.md');
     expect(existsSync(changelog)).toBe(true);
+  });
+
+  it('should create the second markdown md', () => {
+    const testMarkdown = resolve(testServicePath, 'some-test-markdown.md');
     expect(existsSync(testMarkdown)).toBe(true);
   });
 

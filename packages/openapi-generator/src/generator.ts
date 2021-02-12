@@ -13,10 +13,8 @@ import { GeneratorOptions } from './options';
 import {
   apiFile,
   indexFile,
-  createFile,
   packageJson,
   genericDescription,
-  copyFile,
   readme
 } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
@@ -25,6 +23,8 @@ import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
 import { tsconfigJson } from './wrapper-files/tsconfig-json';
 import { transpileDirectory } from './generator-utils';
+import { createFile } from './wrapper-files/create-file';
+import { copyFile } from './wrapper-files/copy-file';
 
 const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');

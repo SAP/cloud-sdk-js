@@ -1,8 +1,7 @@
-import { promises, existsSync } from 'fs';
+import { promises } from 'fs';
 import { join } from 'path';
 import { codeBlock } from '@sap-cloud-sdk/util';
 const { writeFile } = promises;
-const fsCopyFile = promises.copyFile;
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -41,22 +40,4 @@ function wrapContent(content: string): string {
 ${content}
 ` + '\n'
   );
-}
-
-/**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Copy a file from a given path.
- * @param src Path to the source file.
- * @param dest Path to the destination file
- * @param overwrite Whether or not existing files should be overwritten.
- */
-export async function copyFile(
-  src: string,
-  dest: string,
-  overwrite: boolean
-): Promise<void> {
-  if (!overwrite && (await existsSync(dest))) {
-    return;
-  }
-  return fsCopyFile(src, dest);
 }

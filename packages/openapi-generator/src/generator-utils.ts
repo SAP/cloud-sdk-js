@@ -6,7 +6,7 @@ const logger = createLogger({
   messageContext: 'generator-utils'
 });
 
-// TODO: The following is duplicate in the OData generator
+// TODO 1728: The following is duplicate in the OData generator
 /**
  * Executes the type script compiler for the given directory.
  * A valid tsconfig.json needs to be present in the directory.

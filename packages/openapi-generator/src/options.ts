@@ -7,4 +7,6 @@ export interface GeneratorOptions {
   generateJs?: boolean;
   serviceMapping?: string;
   tsConfig?: string;
+  additionalFiles?: string;
+  writeReadme?: boolean;
 }

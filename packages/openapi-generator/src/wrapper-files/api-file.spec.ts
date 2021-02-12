@@ -1,4 +1,4 @@
-import { OpenApiRequestBody } from '../openapi-types';
+import { OpenApiOperation, OpenApiRequestBody } from '../openapi-types';
 import { apiFile } from './api-file';
 
 describe('api-file', () => {
@@ -35,7 +35,7 @@ describe('api-file', () => {
         ],
         path: 'test/{id}'
       }
-    ];
+    ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
   });
 
@@ -79,19 +79,19 @@ describe('api-file', () => {
         } as OpenApiRequestBody,
         path: 'test/{id}'
       }
-    ];
+    ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
   });
 
   it('creates api file content for operation with no parameters or request body', () => {
-    const operations = [
+    const operations = ([
       {
         operationId: 'getFn',
         method: 'get',
         parameters: [],
         path: 'test'
       }
-    ];
+    ] as unknown) as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
   });
 
@@ -131,7 +131,7 @@ describe('api-file', () => {
         } as OpenApiRequestBody,
         path: 'test'
       }
-    ];
+    ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
   });
 
@@ -149,7 +149,7 @@ describe('api-file', () => {
         ],
         path: 'test'
       }
-    ];
+    ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
   });
 });

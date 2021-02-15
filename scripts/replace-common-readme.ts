@@ -1,15 +1,15 @@
-import { resolve  } from 'path';
+import { resolve } from 'path';
 import { promises, readFileSync } from 'fs';
+import { EOL } from 'os';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getNonTestLernaModules } from './util';
-import {EOL} from 'os'
 
 const startTagCommonReadme = '<!--sapCloudSdkCommonReadme-->';
 const endTagCommonReadme = '<!--sapCloudSdkCommonReadmeStop-->';
 const startTagLogo = '<!--sapCloudSdkLogo-->';
-const endTagLogo = '<!--sapCloudSdkLogoStop-->'
+const endTagLogo = '<!--sapCloudSdkLogoStop-->';
 
-const logoContent = `<a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>${EOL}`
+const logoContent = `<a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>${EOL}`;
 
 const logger = createLogger('check-licenses');
 
@@ -19,14 +19,30 @@ function insertCommonContent(oldFileContent: string): string {
     { encoding: 'utf8' }
   );
 
-  let newFileContent = replaceContentUsingTags(startTagCommonReadme,endTagCommonReadme,genericContent,oldFileContent)
-  return replaceContentUsingTags(startTagLogo,endTagLogo,logoContent,newFileContent)
-
+  const newFileContent = replaceContentUsingTags(
+    startTagCommonReadme,
+    endTagCommonReadme,
+    genericContent,
+    oldFileContent
+  );
+  return replaceContentUsingTags(
+    startTagLogo,
+    endTagLogo,
+    logoContent,
+    newFileContent
+  );
 }
 
-function replaceContentUsingTags(startTag:string,endTag:string,replacement:string,fileContent:string){
-  return fileContent.replace(new RegExp(`${startTag}(.|\n)*${endTag}`),
-    `${startTag}\n${replacement}${endTag}`)
+function replaceContentUsingTags(
+  startTag: string,
+  endTag: string,
+  replacement: string,
+  fileContent: string
+) {
+  return fileContent.replace(
+    new RegExp(`${startTag}(.|\n)*${endTag}`),
+    `${startTag}\n${replacement}${endTag}`
+  );
 }
 
 async function updateReadmeFile(pathModule: string) {

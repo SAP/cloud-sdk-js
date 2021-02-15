@@ -61,6 +61,7 @@
     "@types/js-yaml": "^4.0.0",
     "cli-ux": "^5.4.5",
     "execa": "^5.0.0",
+    "glob": "^7.1.6",
     "js-yaml": "^4.0.0",
     "openapi-types": "^7.0.1",
     "swagger2openapi": "^7.0.4"

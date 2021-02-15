@@ -369,6 +369,7 @@ function getGeneratorVersion(): string {
     .version;
 }
 
+// TODO 1728 move to a new package for reduce code duplication.
 function copyAdditionalFiles(
   toDirectory: Directory,
   options: GeneratorOptions

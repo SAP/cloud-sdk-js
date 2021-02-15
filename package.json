@@ -28,7 +28,7 @@
     "test-packages/type-tests"
   ],
   "scripts": {
-    "postinstall": "yarn compile",
+    "postinstall": "yarn compile && yarn run readme",
     "test": "yarn workspaces run test",
     "test:unit": "yarn lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\" --ignore \"@sap-cloud-sdk/nightly-tests\"",
     "test:integration": "yarn integration-tests test",
@@ -44,7 +44,7 @@
     "compile": "yarn lerna run compile",
     "doc": "ts-node scripts/generate-docs.ts",
     "version": "node scripts/after-bump.js && yarn generate:test-services && yarn doc && git add .",
-    "readme": "ts-node scripts/copy-generic-readme.ts && yarn lerna run readme",
+    "readme": "ts-node scripts/replace-common-readme.ts && yarn lerna run readme",
     "lint": "yarn eslint --ext .ts .",
     "lint:fix": "yarn lint --fix",
     "lint:fix-cached": "yarn lint:fix --cache",

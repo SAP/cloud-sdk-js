@@ -1,4 +1,7 @@
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. --> 
+<!--sapCloudSdkLogo-->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
+<!--sapCloudSdkLogoStop-->
 
 # @sap-cloud-sdk/core
 
@@ -33,8 +36,8 @@ BusinessPartner.requestBuilder()
 
 For more detailed overview visit our [OData client documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript).
 
-<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block --> 
-<!--genericPart-->
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. --> 
+<!--sapCloudSdkCommonReadme-->
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).
@@ -62,5 +65,5 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 ## Licence
 
 The SAP Cloud SDK is released under the  [Apache License Version 2.0.](http://www.apache.org/licenses/)
-<!--genericPartStop-->
+<!--sapCloudSdkCommonReadmeStop-->
 

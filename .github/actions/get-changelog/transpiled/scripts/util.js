@@ -75,15 +75,10 @@ function getAllLernaModules() {
 exports.getAllLernaModules = getAllLernaModules;
 function getNonTestLernaModules() {
     return __awaiter(this, void 0, void 0, function () {
-        var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, execa('lerna', ['list', '--json', '-a'], {
-                        cwd: path_1.resolve(__dirname, '../')
-                    })];
-                case 1:
-                    response = _a.sent();
-                    return [2 /*return*/, JSON.parse(response.stdout).filter(function (module) { return !module.location.includes('test-packages'); })];
+                case 0: return [4 /*yield*/, getAllLernaModules()];
+                case 1: return [2 /*return*/, (_a.sent()).filter(function (module) { return !module.location.includes('test-packages'); })];
             }
         });
     });

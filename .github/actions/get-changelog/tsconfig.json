@@ -3,7 +3,9 @@
     "rootDir": "../../../",
     "outDir": "./transpiled",
     "tsBuildInfoFile": "./transpiled/.tsbuildinfo",
-    "composite": true,
+    "composite": false,
+    "incremental": true,
+    "declaration": false,
     "esModuleInterop": true
   },
   "files": [

@@ -10,4 +10,3 @@ function getChangelog(v) {
     return logs.slice(logs.indexOf('\n##') + 1);
 }
 exports.getChangelog = getChangelog;
-;

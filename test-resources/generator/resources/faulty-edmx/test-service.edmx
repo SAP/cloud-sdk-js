@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="API_TEST_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="A_TestEntityType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyGuid"/>
+          <PropertyRef Name="KeyPropertyString"/>
+        </Key>
+        <Property Name="KeyPropertyGuid" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+        <Property Name="GuidProperty" Type="Edm.Guid"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+        <Property Name="Int32Property" Type="Edm.Int32" sap:unicode="false"/>
+        <Property Name="Int64Property" Type="Edm.Int64" sap:unicode="false"/>
+        <Property Name="DecimalProperty" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="SingleProperty" Type="Edm.Single"/>
+        <Property Name="DoubleProperty" Type="Edm.Double"/>
+        <Property Name="FloatProperty" Type="Edm.Float"/>
+        <Property Name="TimeProperty" Type="Edm.Time" Precision="0"/>
+        <Property Name="DateTimeProperty" Type="Edm.DateTime" Precision="0" sap:display-format="Date"/>
+        <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="ByteProperty" Type="Edm.Byte"/>
+        <Property Name="SByteProperty" Type="Edm.SByte"/>
+        <Property Name="SomethingTheSDKDoesNotSupport" Type="Edm.SomethingTheSDKDoesNotSupport"/>
+
+        <Property Name="ComplexTypeProperty" Type="API_TEST_SRV.A_TestComplexTypeMISTAKE"/>
+
+        <NavigationProperty Name="to_MultiLink" Relationship="API_TEST_SRV.assoc_TestEntityToMultiLink" FromRole="FromRole_assoc_TestEntityToMultiLink" ToRole="ToRole_assoc_TestEntityToMultiLink"/>
+        <NavigationProperty Name="to_OtherMultiLink" Relationship="API_TEST_SRV.assoc_TestEntityToOtherMultiLink" FromRole="FromRole_assoc_TestEntityToOtherMultiLink" ToRole="ToRole_assoc_TestEntityToOtherMultiLink"/>
+        <NavigationProperty Name="to_SingleLink" Relationship="API_TEST_SRV.assoc_TestEntityToSingleLink" FromRole="FromRole_assoc_TestEntityToSingleLink" ToRole="ToRole_assoc_TestEntityToSingleLink"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntityMultiLinkType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+        <Property Name="GuidProperty" Type="Edm.Guid"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+
+        <NavigationProperty Name="to_MultiLink" Relationship="API_TEST_SRV.assoc_TestEntityMultiLinkToMultiLink" FromRole="FromRole_assoc_TestEntityMultiLinkToMultiLink" ToRole="ToRole_assoc_TestEntityMultiLinkToMultiLink"/>
+        <NavigationProperty Name="to_SingleLink" Relationship="API_TEST_SRV.assoc_TestEntityMultiLinkToSingleLink" FromRole="FromRole_assoc_TestEntityMultiLinkToSingleLink" ToRole="ToRole_assoc_TestEntityMultiLinkToSingleLink"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntityLvl2MultiLinkType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+        <Property Name="GuidProperty" Type="Edm.Guid"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntityOtherMultiLinkType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntitySingleLinkType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+        <Property Name="GuidProperty" Type="Edm.Guid"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+
+        <NavigationProperty Name="to_MultiLink" Relationship="API_TEST_SRV.assoc_TestEntitySingleLinkToMultiLink" FromRole="FromRole_assoc_TestEntitySingleLinkToMultiLink" ToRole="ToRole_assoc_TestEntitySingleLinkToMultiLink"/>
+        <NavigationProperty Name="to_SingleLink" Relationship="API_TEST_SRV.assoc_TestEntitySingleLinkToSingleLink" FromRole="FromRole_assoc_TestEntitySingleLinkToSingleLink" ToRole="ToRole_assoc_TestEntitySingleLinkToSingleLink"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntityLvl2SingleLinkType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+        <Property Name="GuidProperty" Type="Edm.Guid"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+      </EntityType>
+
+      <!-- circular_links -->
+      <EntityType Name="A_TestEntityCircularLinkParentType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
+
+        <NavigationProperty Name="to_Child" Relationship="API_TEST_SRV.assoc_TestEntityCircularLink" FromRole="FromRole_assoc_TestEntityCircularLink" ToRole="ToRole_assoc_TestEntityCircularLink"/>
+      </EntityType>
+
+      <!-- circular_links -->
+      <EntityType Name="A_TestEntityCircularLinkChildType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
+
+        <NavigationProperty Name="to_Parent" Relationship="API_TEST_SRV.assoc_TestEntityCircularLink" FromRole="FromRole_assoc_TestEntityCircularLink" ToRole="ToRole_assoc_TestEntityCircularLink"/>
+      </EntityType>
+
+      <!-- collection_suffix -->
+      <EntityType Name="Unrelated" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+
+      <!-- unused
+        Should be ignored when parsing the service, because it is not used in any entity set.
+      -->
+      <EntityType Name="Unused" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+
+      <ComplexType Name="A_TestComplexType">
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+        <Property Name="GuidProperty" Type="Edm.Guid"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+        <Property Name="Int32Property" Type="Edm.Int32" sap:unicode="false"/>
+        <Property Name="Int64Property" Type="Edm.Int64" sap:unicode="false"/>
+        <Property Name="DecimalProperty" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="SingleProperty" Type="Edm.Single"/>
+        <Property Name="DoubleProperty" Type="Edm.Double"/>
+        <Property Name="FloatProperty" Type="Edm.Float"/>
+        <Property Name="TimeProperty" Type="Edm.Time" Precision="0"/>
+        <Property Name="DateTimeProperty" Type="Edm.DateTime" Precision="0" sap:display-format="Date"/>
+        <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="ByteProperty" Type="Edm.Byte"/>
+        <Property Name="SByteProperty" Type="Edm.SByte"/>
+        <Property Name="SomethingTheSDKDoesNotSupport" Type="Edm.SomethingTheSDKDoesNotSupport"/>
+        <Property CollectionKind="List" Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexType"/>
+      </ComplexType>
+
+      <ComplexType Name="A_TestNestedComplexType">
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestLvl2NestedComplexType"/>
+      </ComplexType>
+
+      <ComplexType Name="A_TestLvl2NestedComplexType">
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+      </ComplexType>
+
+      <Association Name="assoc_TestEntityToMultiLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityType" Multiplicity="1" Role="FromRole_assoc_TestEntityToMultiLink"/>
+        <End Type="API_TEST_SRV.A_TestEntityMultiLinkType" Multiplicity="*" Role="ToRole_assoc_TestEntityToMultiLink"/>
+      </Association>
+
+      <Association Name="assoc_TestEntityToOtherMultiLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityType" Multiplicity="1" Role="FromRole_assoc_TestEntityToOtherMultiLink"/>
+        <End Type="API_TEST_SRV.A_TestEntityOtherMultiLinkType" Multiplicity="*" Role="ToRole_assoc_TestEntityToOtherMultiLink"/>
+      </Association>
+
+      <Association Name="assoc_TestEntityToSingleLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityType" Multiplicity="1" Role="FromRole_assoc_TestEntityToSingleLink"/>
+        <End Type="API_TEST_SRV.A_TestEntitySingleLinkType" Multiplicity="0..1" Role="ToRole_assoc_TestEntityToSingleLink"/>
+      </Association>
+
+      <Association Name="assoc_TestEntityMultiLinkToMultiLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityMultiLinkType" Multiplicity="1" Role="FromRole_assoc_TestEntityMultiLinkToMultiLink"/>
+        <End Type="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" Multiplicity="*" Role="ToRole_assoc_TestEntityMultiLinkToMultiLink"/>
+      </Association>
+
+      <Association Name="assoc_TestEntityMultiLinkToSingleLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityMultiLinkType" Multiplicity="1" Role="FromRole_assoc_TestEntityMultiLinkToSingleLink"/>
+        <End Type="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" Multiplicity="0..1" Role="ToRole_assoc_TestEntityMultiLinkToSingleLink"/>
+      </Association>
+
+      <Association Name="assoc_TestEntitySingleLinkToMultiLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityMultiLinkType" Multiplicity="1" Role="FromRole_assoc_TestEntitySingleLinkToMultiLink"/>
+        <End Type="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" Multiplicity="*" Role="ToRole_assoc_TestEntitySingleLinkToMultiLink"/>
+      </Association>
+
+      <Association Name="assoc_TestEntitySingleLinkToSingleLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityMultiLinkType" Multiplicity="1" Role="FromRole_assoc_TestEntitySingleLinkToSingleLink"/>
+        <End Type="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" Multiplicity="0..1" Role="ToRole_assoc_TestEntitySingleLinkToSingleLink"/>
+      </Association>
+
+      <!-- circular_links -->
+      <Association Name="assoc_TestEntityCircularLink" sap:content-version="1">
+        <End Type="API_TEST_SRV.A_TestEntityCircularLinkParent" Multiplicity="1" Role="FromRole_assoc_TestEntityCircularLink"/>
+        <End Type="API_TEST_SRV.A_TestEntityCircularLinkChild" Multiplicity="*" Role="ToRole_assoc_TestEntityCircularLink"/>
+      </Association>
+
+      <EntityContainer Name="API_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+        <EntitySet Name="A_TestEntity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityMultiLink" EntityType="API_TEST_SRV.A_TestEntityMultiLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityOtherMultiLink" EntityType="API_TEST_SRV.A_TestEntityOtherMultiLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityLvl2MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntitySingleLink" EntityType="API_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityLvl2SingleLink" EntityType="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" sap:content-version="1"/>
+
+        <!-- circular_links
+          Due to circular linking, we had a bug, where one of the links was undefined. Note, that there is only one association.
+        -->
+        <EntitySet Name="A_TestEntityCircularLinkParent" EntityType="API_TEST_SRV.A_TestEntityCircularLinkParentType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityCircularLinkChild" EntityType="API_TEST_SRV.A_TestEntityCircularLinkChildType" sap:content-version="1"/>
+
+        <!-- collection_suffix
+          In some C4C APIs there are entity sets, whose type is unrelated to the entity set name. Entity set names ending with collection should have class names without the collection suffix,
+        -->
+        <EntitySet Name="A_TestEntityEndsWithCollection" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityEndsWithSomethingElse" EntityType="API_TEST_SRV.Unrelated" sap:content-version="1"/>
+
+        <!-- duplicate_entity_name
+          In some C4C APIs there are entity sets, that have the same with different casing.
+        -->
+        <EntitySet Name="A_Testentity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
+
+        <AssociationSet Name="assoc_TestEntityToMultiLink" Association="API_TEST_SRV.assoc_TestEntityToMultiLink" sap:content-version="1">
+          <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToMultiLink"/>
+          <End EntitySet="A_TestEntityMultiLink" Role="ToRole_assoc_TestEntityToMultiLink"/>
+        </AssociationSet>
+
+        <AssociationSet Name="assoc_TestEntityToOtherMultiLink" Association="API_TEST_SRV.assoc_TestEntityToOtherMultiLink" sap:content-version="1">
+          <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToOtherMultiLink"/>
+          <End EntitySet="A_TestEntityOtherMultiLink" Role="ToRole_assoc_TestEntityToOtherMultiLink"/>
+        </AssociationSet>
+
+        <AssociationSet Name="assoc_TestEntityToSingleLink" Association="API_TEST_SRV.assoc_TestEntityToSingleLink" sap:content-version="1">
+          <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToSingleLink"/>
+          <End EntitySet="A_TestEntitySingleLink" Role="ToRole_assoc_TestEntityToSingleLink"/>
+        </AssociationSet>
+
+        <AssociationSet Name="assoc_TestEntityMultiLinkToMultiLink" Association="API_TEST_SRV.assoc_TestEntityMultiLinkToMultiLink" sap:content-version="1">
+          <End EntitySet="A_TestEntityMultiLink" Role="FromRole_assoc_TestEntityMultiLinkToMultiLink"/>
+          <End EntitySet="A_TestEntityLvl2MultiLink" Role="ToRole_assoc_TestEntityMultiLinkToMultiLink"/>
+        </AssociationSet>
+
+        <AssociationSet Name="assoc_TestEntityMultiLinkToSingleLink" Association="API_TEST_SRV.assoc_TestEntityMultiLinkToSingleLink" sap:content-version="1">
+          <End EntitySet="A_TestEntityMultiLink" Role="FromRole_assoc_TestEntityMultiLinkToSingleLink"/>
+          <End EntitySet="A_TestEntityLvl2SingleLink" Role="ToRole_assoc_TestEntityMultiLinkToSingleLink"/>
+        </AssociationSet>
+
+        <AssociationSet Name="assoc_TestEntitySingleLinkToMultiLink" Association="API_TEST_SRV.assoc_TestEntitySingleLinkToMultiLink" sap:content-version="1">
+          <End EntitySet="A_TestEntityMultiLink" Role="FromRole_assoc_TestEntitySingleLinkToMultiLink"/>
+          <End EntitySet="A_TestEntityLvl2MultiLink" Role="ToRole_assoc_TestEntitySingleLinkToMultiLink"/>
+        </AssociationSet>
+
+        <AssociationSet Name="assoc_TestEntitySingleLinkToSingleLink" Association="API_TEST_SRV.assoc_TestEntitySingleLinkToSingleLink" sap:content-version="1">
+          <End EntitySet="A_TestEntityMultiLink" Role="FromRole_assoc_TestEntitySingleLinkToSingleLink"/>
+          <End EntitySet="A_TestEntityLvl2SingleLink" Role="ToRole_assoc_TestEntitySingleLinkToSingleLink"/>
+        </AssociationSet>
+
+        <!-- circular_links -->
+        <AssociationSet Name="assoc_TestEntityCircularLink" Association="API_TEST_SRV.assoc_TestEntityCircularLink" sap:content-version="1">
+          <End EntitySet="A_TestEntityCircularLinkParent" Role="FromRole_assoc_TestEntityCircularLink"/>
+          <End EntitySet="A_TestEntityCircularLinkChild" Role="ToRole_assoc_TestEntityCircularLink"/>
+        </AssociationSet>
+
+        <FunctionImport Name="TestFunctionImportNoReturnType" m:HttpMethod="POST">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportEdmReturnType" ReturnType="Edm.Boolean" m:HttpMethod="GET">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportEdmReturnTypeCollection" ReturnType="Collection(Edm.String)" m:HttpMethod="GET">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportEntityReturnType" ReturnType="API_TEST_SRV.A_TestEntityType" m:HttpMethod="GET" sap:action-for="API_TEST_SRV.A_TestEntityReturnType">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportEntityReturnTypeCollection" ReturnType="Collection(API_TEST_SRV.A_TestEntityType)" m:HttpMethod="GET" sap:action-for="API_TEST_SRV.A_TestEntityReturnType">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportComplexReturnType" ReturnType="API_TEST_SRV.A_TestComplexType" m:HttpMethod="GET">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportUnsupportedEdmTypes" ReturnType="Edm.SomethingTheSDKDoesNotSupport" m:HttpMethod="GET">
+            <Parameter Name="SimpleParam" Type="Edm.SomethingTheSDKDoesNotSupport" Mode="In"/>
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportComplexReturnTypeCollection" ReturnType="Collection(API_TEST_SRV.A_TestComplexType)" m:HttpMethod="GET">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportGET" ReturnType="Edm.Boolean" m:HttpMethod="GET">
+          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In"/>
+          <!-- <Parameter Name="ComplexTypeParam" Type="API_TEST_SRV.A_TestComplexType" Mode="In"/>
+          <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityType" Mode="In"/> -->
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportPOST" ReturnType="Edm.Boolean" m:HttpMethod="POST">
+          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In"/>
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportMultipleParams" ReturnType="Edm.Boolean" m:HttpMethod="GET">
+          <Parameter Name="StringParam" Type="Edm.String" Mode="In"/>
+          <Parameter Name="BooleanParam" Type="Edm.Boolean" Mode="In"/>
+        </FunctionImport>
+
+        <!-- clash_complex_type_factory_fn_import
+          If there is a complex type CT, a factory function createCT is generated. If in addition to that there is a function import called createCT, there was a name clash.
+        -->
+        <FunctionImport Name="CreateTestComplexType" ReturnType="API_TEST_SRV.A_TestComplexType" m:HttpMethod="GET">
+        </FunctionImport>
+
+        <!-- clash_fn_import_reserved_js_key_words
+          If there is a complex type CT, a factory function createCT is generated. If in addition to that there is a function import called createCT, there was a name clash.
+        -->
+        <FunctionImport Name="Continue" ReturnType="Edm.Boolean" m:HttpMethod="GET">
+        </FunctionImport>
+
+      </EntityContainer>
+      <Annotations Target="API_TEST_SRV.API_TEST_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Aggregation.ApplySupported">
+          <Record>
+            <PropertyValue Property="Transformations">
+              <Collection>
+                <String>aggregate</String>
+                <String>groupby</String>
+                <String>filter</String>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Rollup" EnumMember="None"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <atom:link rel="self" href="https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+      <atom:link rel="latest-version" href="https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { resolve, dirname } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { readFileSync } from 'fs-extra';
 import yargs from 'yargs';
 import { generate } from './generator';
@@ -14,9 +14,14 @@ const logger = createLogger({
 
 logger.info('Parsing args...');
 
-generate(parseCmdArgs()).then(() =>
-  logger.info('Generation of services finished successfully.')
-);
+generate(parseCmdArgs())
+  .then(() => logger.info('Generation of services finished successfully.'))
+  .catch(err => {
+    // TODO discuss why winston does not show stack -> local.ts has stack : true
+    logger.error(new ErrorWithCause('Error object with stack.', err));
+    logger.error(err);
+    process.exit(1);
+  });
 
 export function parseCmdArgs(): GeneratorOptions {
   const command = yargs.command(

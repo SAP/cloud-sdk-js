@@ -35,7 +35,7 @@
     "@oclif/config": "^1.14.0",
     "@oclif/parser": "^3.8.4",
     "@oclif/plugin-autocomplete": "^0.3.0",
-    "@oclif/plugin-help": "^3.1.0",
+    "@oclif/plugin-help": "^3.2.2",
     "@oclif/plugin-not-found": "^1.2.3",
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "cli-ux": "^5.4.5",
@@ -48,7 +48,7 @@
     "yargs": "16.2.0"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.22.2",
+    "@oclif/dev-cli": "^1.26.0",
     "@types/fs-extra": "^9.0.1",
     "@types/js-yaml": "^3.12.3",
     "@types/listr": "^0.14.2",

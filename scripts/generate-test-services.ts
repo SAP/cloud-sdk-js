@@ -140,7 +140,7 @@ async function generateTestServicesWithLocalCoreModules(
 
 async function generateAll(): Promise<void> {
   // Promise.catch() won't work when error happens in the nested forEach loop. When updating to node 15, we can remove it.
-  process.on('unhandledRejection', (reason, promise) => {
+  process.on('unhandledRejection', reason => {
     logger.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);
   });

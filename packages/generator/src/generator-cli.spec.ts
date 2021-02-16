@@ -4,8 +4,7 @@ import * as fs from 'fs-extra';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(__dirname, 'generator-cli.ts');
-  const inputDir =
-    '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx';
+  const inputDir = '../../test-resources/odata-service-specs/v2/API_TEST_SRV/';
   const outputDir = path.resolve(__dirname, '../test/generator-test-output');
 
   beforeEach(() => {
@@ -18,6 +17,7 @@ describe('generator-cli', () => {
     fs.removeSync(outputDir);
   });
 
+  // TODO move these tests to the nightly tests
   it('should fail if mandatory parameters are not there', async () => {
     try {
       await execa('npx', ['ts-node', pathToGenerator]);

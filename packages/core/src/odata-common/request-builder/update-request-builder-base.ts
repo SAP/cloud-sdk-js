@@ -225,8 +225,7 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   protected getPayload(): Record<string, any> {
     const serializedBody = this.entitySerializer.serializeEntity(
       this._entity,
-      this._entityConstructor,
-      true
+      this._entityConstructor
     );
 
     if (this.requestConfig.method === 'patch') {
@@ -277,7 +276,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
     return {
       ...this.entitySerializer.serializeEntity(
         this._entity,
-        this._entityConstructor
+        this._entityConstructor,
+        true
       )
     };
   }

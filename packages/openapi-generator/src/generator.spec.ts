@@ -56,4 +56,19 @@ describe('generator', () => {
     const tsconfig = resolve(testServicePath, 'tsconfig.json');
     expect(existsSync(tsconfig)).toBe(true);
   });
+
+  it('should create changelog', () => {
+    const changelog = resolve(testServicePath, 'CHANGELOG.md');
+    expect(existsSync(changelog)).toBe(true);
+  });
+
+  it('should create the second markdown md', () => {
+    const testMarkdown = resolve(testServicePath, 'some-test-markdown.md');
+    expect(existsSync(testMarkdown)).toBe(true);
+  });
+
+  it('should create a readme', () => {
+    const readme = resolve(testServicePath, 'README.md');
+    expect(existsSync(readme)).toBe(true);
+  });
 });

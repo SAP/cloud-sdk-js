@@ -18,6 +18,8 @@
 
 ## New Functionality
 
+- [openapi-generator] Add option `writeReadme` for generating readme files.
+- [openapi-generator] Support copying files from given paths via a new option `additionalFiles`.
 - [eslint-config] Release a recommended, shareable `eslint` configuration based on the SAP Cloud SDK's internal configuration as `@sap-cloud-sdk/eslint-config`. Follow the [official guide](https://eslint.org/docs/developer-guide/shareable-configs#using-a-shareable-config) for information how to use the config.
 
 ## Improvements

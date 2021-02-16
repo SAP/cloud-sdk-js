@@ -1,20 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse } from 'path';
+import { resolve, parse, basename, join } from 'path';
 import {
   createLogger,
   ErrorWithCause,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
+import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
   indexFile,
-  createFile,
   packageJson,
-  genericDescription
+  genericDescription,
+  readme
 } from './wrapper-files';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
@@ -22,6 +23,8 @@ import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
 import { tsconfigJson } from './wrapper-files/tsconfig-json';
 import { transpileDirectory } from './generator-utils';
+import { createFile } from './wrapper-files/create-file';
+import { copyFile } from './wrapper-files/copy-file';
 
 const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -76,6 +79,8 @@ async function generateSDKSources(
   await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
   await createFile(serviceDir, 'index.ts', indexFile(), true);
   if (options.generatePackageJson) {
+    logger.debug(`Generating package.json in ${serviceDir}.`);
+
     await createFile(
       serviceDir,
       'package.json',
@@ -89,6 +94,7 @@ async function generateSDKSources(
       false
     );
   }
+
   if (options.generateJs) {
     await createFile(
       serviceDir,
@@ -98,6 +104,14 @@ async function generateSDKSources(
       false
     );
     await transpileDirectory(serviceDir);
+  }
+
+  if (options.additionalFiles) {
+    await copyAdditionalFiles(options.additionalFiles, serviceDir);
+  }
+
+  if (options.writeReadme) {
+    await generateReadme(serviceDir, openApiDocument);
   }
 }
 
@@ -196,7 +210,7 @@ async function generateFromFile(
 
   if (!parsedOpenApiDocument.operations.length) {
     logger.warn(
-      `The given OpenApi specificaton does not contain any operations. Skipping generation for input file: ${filePath}`
+      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${filePath}`
     );
     return;
   }
@@ -238,4 +252,35 @@ export async function getSdkVersion(): Promise<string> {
   return JSON.parse(
     await readFile(resolve(__dirname, '../package.json'), 'utf8')
   ).version;
+}
+
+// TODO 1728 move to a new package for reduce code duplication.
+async function copyAdditionalFiles(
+  additionalFiles: string,
+  serviceDir: string
+): Promise<void[]> {
+  logger.info(
+    `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
+  );
+
+  return Promise.all(
+    new GlobSync(additionalFiles!).found.map(filePath =>
+      copyFile(resolve(filePath), join(serviceDir, basename(filePath)), true)
+    )
+  );
+}
+
+function generateReadme(
+  serviceDir: string,
+  openApiDocument: OpenApiDocument
+): Promise<void> {
+  logger.info(`Generating readme in ${serviceDir}.`);
+
+  return createFile(
+    serviceDir,
+    'README.md',
+    readme(openApiDocument),
+    true,
+    false
+  );
 }

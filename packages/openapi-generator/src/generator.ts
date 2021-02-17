@@ -8,6 +8,7 @@ import {
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
+import voca from 'voca';
 import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
 import {
@@ -17,7 +18,7 @@ import {
   genericDescription,
   readme
 } from './wrapper-files';
-import { OpenApiDocument } from './openapi-types';
+import { OpenApiDocument, OpenApiOperation } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
@@ -76,8 +77,8 @@ async function generateSDKSources(
 ): Promise<void> {
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
-  await createFile(serviceDir, 'api.ts', apiFile(openApiDocument), true);
-  await createFile(serviceDir, 'index.ts', indexFile(), true);
+  await createApis(serviceDir, openApiDocument);
+  await createFile(serviceDir, 'index.ts', indexFile(openApiDocument), true);
   if (options.generatePackageJson) {
     logger.debug(`Generating package.json in ${serviceDir}.`);
 
@@ -113,6 +114,39 @@ async function generateSDKSources(
   if (options.writeReadme) {
     await generateReadme(serviceDir, openApiDocument);
   }
+}
+
+async function createApis(
+  serviceDir: string,
+  openApiDocument: OpenApiDocument
+): Promise<void> {
+  await Promise.all(
+    openApiDocument.tags.map(tag =>
+      createFile(
+        serviceDir,
+        buildApiFileName(tag),
+        apiFile(
+          openApiDocument.serviceName,
+          tag,
+          findOperationsWithTag(openApiDocument, tag)
+        ),
+        true
+      )
+    )
+  );
+}
+
+function findOperationsWithTag(
+  openApiDocument: OpenApiDocument,
+  tag: string
+): OpenApiOperation[] {
+  return openApiDocument.operations.filter(operation =>
+    operation.tags.includes(tag)
+  );
+}
+
+function buildApiFileName(apiName: string) {
+  return `${voca.kebabCase(apiName + 'Api')}.ts`;
 }
 
 /**

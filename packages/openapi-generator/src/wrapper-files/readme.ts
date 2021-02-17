@@ -9,7 +9,7 @@ import { OpenApiDocument } from '../openapi-types';
 export function readme(openApiDocument: OpenApiDocument): string {
   return `# ${openApiDocument.npmPackageName}
 
-This package contains the OpenAPI client for the ${openApiDocument.apiName}.
+This package contains the OpenAPI client for the ${openApiDocument.serviceName}.
 
 ${helpfulLinksSection().join('\n')}
     

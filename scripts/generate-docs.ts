@@ -1,30 +1,34 @@
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const compareVersions = require('compare-versions');
-const { jsonStringify, transformFile } = require('./util');
+import { execSync } from 'child_process';
+import {
+  lstatSync,
+  readdirSync,
+  renameSync,
+  readFileSync,
+  writeFileSync
+} from 'fs';
+import { resolve, basename, extname } from 'path';
+import compareVersions from 'compare-versions';
+import { jsonStringify, transformFile } from './util';
+const apiDocPath = resolve('docs', 'api');
 
-const apiDocPath = path.resolve('docs', 'api');
-
-const isDirectory = entryPath => fs.lstatSync(entryPath).isDirectory();
+const isDirectory = entryPath => lstatSync(entryPath).isDirectory();
 const flatten = arr =>
   arr.reduce(
     (prev, curr) =>
       curr instanceof Array ? [...prev, ...flatten(curr)] : [...prev, curr],
     []
   );
-const inputDirAbsPath = inputDir => path.resolve(__dirname, inputDir);
+const inputDirAbsPath = inputDir => resolve(__dirname, inputDir);
 
 const readDir = inputDir =>
   pipe(inputDirAbsPath, absPath =>
-    fs
-      .readdirSync(absPath)
-      .map(file => path.resolve(absPath, file))
+    readdirSync(absPath)
+      .map(file => resolve(absPath, file))
       .map(file => (isDirectory(file) ? readDir(file) : file))
   )(inputDir);
 
-const isHtmlFile = fileName => path.extname(fileName) === '.html';
-const isSearchJs = fileName => path.basename(fileName) === 'search.js';
+const isHtmlFile = fileName => extname(fileName) === '.html';
+const isSearchJs = fileName => basename(fileName) === 'search.js';
 const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
 
 /**
@@ -33,9 +37,7 @@ const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
  * https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not
  */
 function adjustForGitHubPages() {
-  const documentationFiles = flatten(
-    readDir(path.resolve(apiDocPath, version))
-  );
+  const documentationFiles = flatten(readDir(resolve(apiDocPath, version)));
   const htmlPaths = documentationFiles.filter(isHtmlFile);
   adjustSearchJs(documentationFiles);
   htmlPaths.forEach(filePath =>
@@ -74,11 +76,11 @@ function removeUnderlinePrefixFromFileName(filePath) {
   const newPath = filePath.replace(/_.*.html/gi, function (x) {
     return x.substring(1);
   });
-  fs.renameSync(filePath, newPath);
+  renameSync(filePath, newPath);
 }
 
 function insertCopyrightAndTracking() {
-  const filePaths = flatten(readDir(path.resolve(apiDocPath, version))).filter(
+  const filePaths = flatten(readDir(resolve(apiDocPath, version))).filter(
     isHtmlFile
   );
   filePaths.forEach(filePath => {
@@ -103,27 +105,24 @@ function insertCopyrightAndTracking() {
   });
 }
 
-const version = JSON.parse(fs.readFileSync('lerna.json', 'utf8')).version;
+const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
 
 function getSortedApiVersions() {
-  return fs
-    .readdirSync(apiDocPath)
-    .filter(entry =>
-      fs.lstatSync(path.resolve(apiDocPath, entry)).isDirectory()
-    )
+  return readdirSync(apiDocPath)
+    .filter(entry => lstatSync(resolve(apiDocPath, entry)).isDirectory())
     .sort(compareVersions)
     .reverse();
 }
 
 function writeVersions() {
   const apiVersions = getSortedApiVersions();
-  fs.writeFileSync(
-    path.resolve('docs', 'api', 'versions.js'),
+  writeFileSync(
+    resolve('docs', 'api', 'versions.js'),
     `export default ${jsonStringify(apiVersions)}`,
     'utf8'
   );
-  fs.writeFileSync(
-    path.resolve('docs', 'api', 'versions.json'),
+  writeFileSync(
+    resolve('docs', 'api', 'versions.json'),
     `${jsonStringify(apiVersions)}`,
     'utf8'
   );
@@ -140,7 +139,7 @@ function validateLogs(generationLogs) {
 
 function generateDocs() {
   const generationLogs = execSync('typedoc --tsconfig tsconfig.typedoc.json', {
-    cwd: path.resolve(),
+    cwd: resolve(),
     encoding: 'utf8'
   });
   validateLogs(generationLogs);

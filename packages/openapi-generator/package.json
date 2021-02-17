@@ -38,8 +38,9 @@
     ]
   },
   "scripts": {
-    "compile": "yarn tsc -b && oclif-dev readme && cp -r -f src/templates dist",
+    "compile": "yarn tsc -b && cp -r -f src/templates dist",
     "prepare": "yarn compile",
+    "readme": "oclif-dev readme",
     "test": "yarn jest --coverage ",
     "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
@@ -52,7 +53,7 @@
     "@oclif/config": "^1.14.0",
     "@oclif/parser": "^3.8.4",
     "@oclif/plugin-autocomplete": "^0.3.0",
-    "@oclif/plugin-help": "^3.1.0",
+    "@oclif/plugin-help": "^3.2.2",
     "@oclif/plugin-not-found": "^1.2.3",
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "@openapitools/openapi-generator-cli": "^2.1.4",

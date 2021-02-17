@@ -1470,7 +1470,7 @@
     is-wsl "^2.1.1"
     tslib "^2.0.0"
 
-"@oclif/dev-cli@^1.22.2":
+"@oclif/dev-cli@^1.22.2", "@oclif/dev-cli@^1.26.0":
   version "1.26.0"
   resolved "https://registry.npmjs.org/@oclif/dev-cli/-/dev-cli-1.26.0.tgz#e3ec294b362c010ffc8948003d3770955c7951fd"
   integrity sha512-272udZP+bG4qahoAcpWcMTJKiA+V42kRMqQM7n4tgW35brYb2UP5kK+p08PpF8sgSfRTV8MoJVJG9ax5kY82PA==
@@ -1528,7 +1528,7 @@
     fs-extra "^9.0.1"
     moment "^2.22.1"
 
-"@oclif/plugin-help@^3", "@oclif/plugin-help@^3.1.0", "@oclif/plugin-help@^3.2.0":
+"@oclif/plugin-help@^3", "@oclif/plugin-help@^3.2.0", "@oclif/plugin-help@^3.2.2":
   version "3.2.2"
   resolved "https://registry.npmjs.org/@oclif/plugin-help/-/plugin-help-3.2.2.tgz#063ee08cee556573a5198fbdfdaa32796deba0ed"
   integrity sha512-SPZ8U8PBYK0n4srFjCLedk0jWU4QlxgEYLCXIBShJgOwPhTTQknkUlsEwaMIevvCU4iCQZhfMX+D8Pz5GZjFgA==

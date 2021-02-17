@@ -1,6 +1,5 @@
-import fs from 'fs';
+import { promises, Dirent } from 'fs';
 import path from 'path';
-import util from 'util';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
 import {
@@ -9,13 +8,7 @@ import {
 } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
 
-type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
-const [readFile, readdir, writeFile] = [
-  fs.readFile,
-  fs.readdir,
-  fs.writeFile
-].map((fsModule: fsTypes) => util.promisify(fsModule));
-
+const { readFile, readdir, writeFile } = promises;
 const odataServiceSpecsDir = path.join('test-resources', 'odata-service-specs');
 const openApiServiceSpecsDir = path.join(
   'test-resources',
@@ -90,7 +83,7 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then((dirents: fs.Dirent[]) =>
+    readServiceDirectory(serviceDirectory).then((dirents: Dirent[]) =>
       dirents
         .filter(dirent => dirent.isFile())
         .forEach(dirent =>
@@ -107,7 +100,7 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function readServiceDirectory(serviceDirectory): Promise<fs.Dirent[]> {
+  function readServiceDirectory(serviceDirectory): Promise<Dirent[]> {
     return readdir(path.resolve(outputDir, serviceDirectory), {
       withFileTypes: true
     }).catch(serviceDirErr => {

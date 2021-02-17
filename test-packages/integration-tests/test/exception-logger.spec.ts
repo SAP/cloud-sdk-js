@@ -1,13 +1,15 @@
-import {resolve} from 'path'
+import { resolve } from 'path';
 import execa from 'execa';
-import { cloudSdkExceptionLogger, createLogger, kibana, local } from '@sap-cloud-sdk/util';
+import { createLogger, kibana, local } from '@sap-cloud-sdk/util';
 import { Logger } from 'winston';
 
 describe('exception logger', () => {
   let logger: Logger;
 
   beforeEach(() => {
-    if (logger) logger.close();
+    if (logger) {
+      logger.close();
+    }
   });
 
   it('should log exception with stack if they fly locally', async () => {
@@ -28,13 +30,13 @@ describe('exception logger', () => {
     delete process.env.VCAP_SERVICES;
   }, 10000);
 
-  it('should not log the stack twice',async ()=>{
+  it('should not log the stack twice', async () => {
     await expect(
-        execa('ts-node', [
-          resolve(__dirname, 'throw-exception-with-logger-script.ts')
-        ])
+      execa('ts-node', [
+        resolve(__dirname, 'throw-exception-with-logger-script.ts')
+      ])
     ).rejects.toThrowErrorMatchingSnapshot();
-  },10000)
+  }, 10000);
 
   it('logs stack trace of exception locally', () => {
     const tranformerSpy = jest.spyOn(local, 'transform');

@@ -33,6 +33,7 @@ export const local = combine(
 );
 /**
  * @param info - object to be transformed.
+ * @returns the message string to be used.
  * @hidden
  */
 export function getMessageOrStack(info: TransformableInfo): string {

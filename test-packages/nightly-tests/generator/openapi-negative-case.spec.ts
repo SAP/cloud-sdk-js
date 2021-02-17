@@ -27,6 +27,7 @@ describe('openapi negative tests', () => {
         ],
         { cwd: __dirname }
       )
+      // In the spec file the http method is broken
     ).rejects.toThrowError('set failed method');
   }, 120000);
 
@@ -50,6 +51,7 @@ describe('openapi negative tests', () => {
         ],
         { cwd: __dirname }
       )
+      // In the faulty tsconfig.json file the dom lib has been removed which leads to this compile error
     ).rejects.toThrowError("Cannot find name 'URL'");
   }, 120000);
 });

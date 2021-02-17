@@ -8,7 +8,7 @@ servers:
     description: Optional server description, e.g. Main (production) server
 paths:
   /users:
-    get:
+    getMistake:
       summary: Returns a list of users.
       responsesMistake:
         '200':    # status code

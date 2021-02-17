@@ -2,6 +2,7 @@ node_modules
 !.github/actions/**/node_modules
 .vscode
 dist
+!.github/actions/**/dist
 .DS_Store
 coverage
 lerna-debug.log

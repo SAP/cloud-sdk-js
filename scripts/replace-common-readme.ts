@@ -2,14 +2,16 @@ import { resolve } from 'path';
 import { promises, readFileSync } from 'fs';
 import { EOL } from 'os';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { getNonTestLernaModules } from './util';
+import { getProductiveLernaModules } from './util';
 
-const startTagCommonReadme = '<!--sapCloudSdkCommonReadme-->';
-const endTagCommonReadme = '<!--sapCloudSdkCommonReadmeStop-->';
-const startTagLogo = '<!--sapCloudSdkLogo-->';
-const endTagLogo = '<!--sapCloudSdkLogoStop-->';
+const startTagCommonReadme = '<!-- sap-cloud-sdk-common-readme -->';
+const endTagCommonReadme = '<!-- sap-cloud-sdk-common-readme-stop -->';
+const startTagLogo = '<!-- sap-cloud-sdk-logo -->';
+const endTagLogo = '<!-- sap-cloud-sdk-logo-stop -->';
 
 const logoContent = `<a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>${EOL}`;
+const infoNoManualEdit =
+  '<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. -->';
 
 const logger = createLogger('check-licenses');
 
@@ -41,7 +43,7 @@ function replaceContentUsingTags(
 ) {
   return fileContent.replace(
     new RegExp(`${startTag}(.|\n)*${endTag}`),
-    `${startTag}\n${replacement}${endTag}`
+    `${startTag}\n${infoNoManualEdit}\n${replacement}${endTag}`
   );
 }
 
@@ -57,7 +59,7 @@ async function updateReadmeFile(pathModule: string) {
 
 async function updateReadmeFiles() {
   logger.info('Generic content is added to README.md files in packages.');
-  const packages = await getNonTestLernaModules();
+  const packages = await getProductiveLernaModules();
   await Promise.all(packages.map(module => updateReadmeFile(module.location)));
 }
 

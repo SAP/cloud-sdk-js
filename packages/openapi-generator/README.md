@@ -1,7 +1,7 @@
-<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. --> 
-<!--sapCloudSdkLogo-->
+<!-- sap-cloud-sdk-logo -->
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
-<!--sapCloudSdkLogoStop-->
+<!-- sap-cloud-sdk-logo-stop -->
 
 # @sap-cloud-sdk/openapi-generator (Beta)
 
@@ -78,8 +78,8 @@ await generate(options);
 
 For more detailed overview visit our [generator documentation](https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client).
 
-<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. --> 
-<!--sapCloudSdkCommonReadme-->
+<!-- sap-cloud-sdk-common-readme -->
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).
@@ -107,4 +107,4 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 ## Licence
 
 The SAP Cloud SDK is released under the  [Apache License Version 2.0.](http://www.apache.org/licenses/)
-<!--sapCloudSdkCommonReadmeStop-->
+<!-- sap-cloud-sdk-common-readme-stop -->

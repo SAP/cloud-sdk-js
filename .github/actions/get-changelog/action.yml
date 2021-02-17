@@ -5,4 +5,4 @@ outputs:
     description: 'The current changelog'
 runs:
   using: 'node12'
-  main: 'transpiled/.github/actions/get-changelog/index.js'
+  main: 'dist/.github/actions/get-changelog/index.js'

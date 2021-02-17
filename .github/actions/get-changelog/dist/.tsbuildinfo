@@ -157,8 +157,8 @@
         "affectsGlobalScope": true
       },
       "../../../../scripts/util.ts": {
-        "version": "44abc99cb9410463454ec64ca84c32a346d7b6120b34e96f24d209617e2ffb78",
-        "signature": "43f255935e6f230fa7cdc1c376f9216cc229d4506bdc06b8433741a66ba7fc59",
+        "version": "7840dab61a5437f410b10d8656e545da5712d0d8d58787585f1a92cdce190fa3",
+        "signature": "91613c04d490337d8a3a18699cc188db1d16e7347df2116851f8032d388091dc",
         "affectsGlobalScope": false
       },
       "../../../../scripts/get-changelog.ts": {

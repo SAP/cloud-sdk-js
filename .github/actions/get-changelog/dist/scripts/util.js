@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getNonTestLernaModules = exports.getAllLernaModules = exports.openFile = exports.jsonStringify = exports.transformFile = exports.apiDocsDir = exports.docsDir = exports.version = void 0;
+exports.getProductiveLernaModules = exports.getAllLernaModules = exports.openFile = exports.jsonStringify = exports.transformFile = exports.apiDocsDir = exports.docsDir = exports.version = void 0;
 var fs_1 = require("fs");
 var path_1 = require("path");
 var execa = require("execa");
@@ -73,7 +73,7 @@ function getAllLernaModules() {
     });
 }
 exports.getAllLernaModules = getAllLernaModules;
-function getNonTestLernaModules() {
+function getProductiveLernaModules() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -83,4 +83,4 @@ function getNonTestLernaModules() {
         });
     });
 }
-exports.getNonTestLernaModules = getNonTestLernaModules;
+exports.getProductiveLernaModules = getProductiveLernaModules;

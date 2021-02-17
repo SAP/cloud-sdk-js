@@ -24,7 +24,7 @@ describe('odata negative tests', () => {
     ).rejects.toThrowError(
       'No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE'
     );
-  },10000);
+  }, 10000);
 
   it('should fail on faulty typescript files.', async () => {
     await expect(

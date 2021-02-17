@@ -134,7 +134,7 @@ describe('Cloud SDK Logger', () => {
       expect(
         getMessageOrStack({ level: 'error', message: 'msg', stack: 'stack' })
       ).toBe('stack');
-      expect(getMessageOrStack({ level: 'error', message: 'msg' })).toBe('msd');
+      expect(getMessageOrStack({ level: 'error', message: 'msg' })).toBe('msg');
     });
 
     it('uses message for non error cases', () => {

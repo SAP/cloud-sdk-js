@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`exception logger should not log the stack twice 1`] = `
+"Command failed: ts-node /Users/d068544/WebstormProjects/cloud-sdk-second-checkout/test-packages/integration-tests/test/throw-exception-with-logger-script.ts
+
+[90m[2021-02-17T16:23:39.116Z][39m [32mINFO[39m     [34m(throw-exception-with-logger)[39m: Some log statement.
+[90m[2021-02-17T16:23:39.159Z][39m [7m[31mERROR[39m[27m    Error: Test Exception Logger
+    at Object.<anonymous> (/Users/d068544/WebstormProjects/cloud-sdk-second-checkout/test-packages/integration-tests/test/throw-exception-with-logger-script.ts:5:7)
+    at Module._compile (internal/modules/cjs/loader.js:1123:30)
+    at Module.m._compile (/Users/d068544/WebstormProjects/cloud-sdk-second-checkout/node_modules/ts-node/src/index.ts:1056:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1143:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/d068544/WebstormProjects/cloud-sdk-second-checkout/node_modules/ts-node/src/index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:972:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:872:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:71:12)
+    at main (/Users/d068544/WebstormProjects/cloud-sdk-second-checkout/node_modules/ts-node/src/bin.ts:198:14)
+    at Object.<anonymous> (/Users/d068544/WebstormProjects/cloud-sdk-second-checkout/node_modules/ts-node/src/bin.ts:288:3)
+"
+`;

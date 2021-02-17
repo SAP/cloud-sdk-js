@@ -24,6 +24,7 @@
     "@sap/cloud-sdk-vdm-business-partner-service": "^1.23.0",
     "bignumber.js": "^9.0.0",
     "jsonwebtoken": "^8.5.1",
-    "nock": "^13.0.3"
+    "nock": "^13.0.3",
+    "winston": "^3.3.3"
   }
 }

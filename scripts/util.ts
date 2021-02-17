@@ -27,7 +27,7 @@ export async function getAllLernaModules(): Promise<LernaModule[]> {
   return JSON.parse(response.stdout) as LernaModule[];
 }
 
-export async function getNonTestLernaModules(): Promise<LernaModule[]> {
+export async function getProductiveLernaModules(): Promise<LernaModule[]> {
   return (await getAllLernaModules()).filter(
     module => !module.location.includes('test-packages')
   );

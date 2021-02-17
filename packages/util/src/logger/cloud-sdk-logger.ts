@@ -50,6 +50,7 @@ export function unmuteLoggers() {
 export const cloudSdkExceptionLogger = container.get(exceptionLoggerId, {
   defaultMeta: { logger: loggerReference, test: 'exception' },
   format,
+  transports: [new transports.Console()],
   exceptionHandlers: [exceptionTransport]
 });
 

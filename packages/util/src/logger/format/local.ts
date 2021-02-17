@@ -12,10 +12,15 @@ const errors = format.errors || require('logform/errors');
 export const local = combine(
   errors({ stack: true }),
   timestamp(),
-  format(info => ({
-    ...info,
-    level: info.level.toUpperCase()
-  }))(),
+  format(info => {
+    const adjusted = { ...info, level: info.level.toUpperCase() };
+
+    if (info.level === 'error' && info.stack) {
+      adjusted.message = info.stack;//the stack contains the message\nstack content
+    }
+
+    return adjusted;
+  })(),
   cli(),
   printf(info => {
     const messageContext =

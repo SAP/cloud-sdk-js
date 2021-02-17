@@ -128,6 +128,66 @@ describe('Cloud SDK Logger', () => {
       enableExceptionLogger();
       expect(cloudSdkExceptionLogger.exceptions.catcher).toBeTruthy();
     });
+
+    it('logs stack trace of exception', () => {
+      const spyStd = jest
+        .spyOn(process.stdout, 'write')
+        .mockImplementation(function () {
+          return true;
+        });
+
+      logger = createLogger('stack-logger');
+      function level1() {
+        level2();
+      }
+
+      function level2() {
+        throw new Error('Error thrown in function level 2');
+      }
+
+      try {
+        level1();
+      } catch (err) {
+        logger.error(err);
+        expect(spyStd).toHaveBeenCalledWith(
+          expect.stringMatching(
+            /Error: Error thrown in function level 2\n\s*at level2.*\n\s*at level1/
+          )
+        );
+        spyStd.mockRestore();
+        return;
+      }
+      throw new Error('This point should not be reached.');
+    });
+    it('check also for kibanan',()=>{
+      throw new Error('do it')
+    })
+
+    it('logs stack trace of exception with the exception logger', () => {
+      const spyStd = jest
+        .spyOn(process.stdout, 'write')
+        .mockImplementation(function () {
+          return true;
+        });
+      logger = createLogger('stack-logger');
+      function level1() {
+        throw new Error('Error thrown in function level 1');
+      }
+
+      try {
+        level1();
+      } catch (err) {
+        cloudSdkExceptionLogger.error(err);
+        expect(spyStd).toHaveBeenCalledWith(
+          expect.stringMatching(
+            /Error: Error thrown in function level 1\n\s*at level1/
+          )
+        );
+        spyStd.mockRestore();
+        return;
+      }
+      throw new Error('This point should not be reached.');
+    });
   });
 
   describe('get logger', () => {

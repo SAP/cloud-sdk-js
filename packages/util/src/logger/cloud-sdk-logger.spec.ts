@@ -144,7 +144,7 @@ describe('Cloud SDK Logger', () => {
           message: 'msg',
           stack: 'stack'
         })
-      ).toBe('msd');
+      ).toBe('msg');
     });
   });
 

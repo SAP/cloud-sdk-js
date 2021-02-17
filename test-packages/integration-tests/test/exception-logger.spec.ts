@@ -30,12 +30,14 @@ describe('exception logger', () => {
     delete process.env.VCAP_SERVICES;
   }, 10000);
 
-  it('should not log the stack twice', async () => {
-    await expect(
-      execa('ts-node', [
+  it('should not log the stack multiple times', async () => {
+    try {
+      await execa('ts-node', [
         resolve(__dirname, 'throw-exception-with-logger-script.ts')
-      ])
-    ).rejects.toThrowErrorMatchingSnapshot();
+      ]);
+    } catch (err) {
+      expect(err.message.match(/Test Exception Logger/g).length).toBe(1);
+    }
   }, 10000);
 
   it('logs stack trace of exception locally', () => {

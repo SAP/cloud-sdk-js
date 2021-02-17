@@ -19,7 +19,7 @@ generate(parseCmdArgs())
   .catch(err => {
     logger.error('Generation of services failed.');
     logger.error(err);
-    // TODO enable once stack is correctly loged
+    // TODO enable once stack is correctly logged
     // logger.error(new ErrorWithCause('Generation of services failed.', err));
     process.exit(1);
   });

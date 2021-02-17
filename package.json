@@ -63,7 +63,10 @@
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "nightly-tests": "yarn workspace @sap-cloud-sdk/nightly-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
-    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
+    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
+    "root:tsc": "cd $INIT_CWD && tsc",
+    "root:jest": "cd $INIT_CWD && jest",
+    "root:depcheck": "cd $INIT_CWD && depcheck"
   },
   "devDependencies": {
     "@types/jest": "^26.0.7",

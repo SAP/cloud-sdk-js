@@ -8,7 +8,7 @@
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "test": "yarn jest",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "root:depcheck ."
   },
   "devDependencies": {
     "@sap-cloud-sdk/cli": "^1.37.1",

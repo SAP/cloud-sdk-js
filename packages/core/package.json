@@ -26,15 +26,15 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "compile": "yarn tsc -b",
+    "compile": "yarn root:tsc -b",
     "prepare": "yarn compile",
     "postinstall": "node usage-analytics.js",
-    "test": "yarn jest --coverage",
-    "test:local": "yarn jest",
+    "test": "yarn root:jest --coverage",
+    "test:local": "yarn root:jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
     "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --runInBand --testNamePattern=\"$PATTERN\"",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "root:depcheck ."
   },
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.37.1",

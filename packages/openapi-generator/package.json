@@ -38,14 +38,14 @@
     ]
   },
   "scripts": {
-    "compile": "yarn tsc -b && cp -r -f src/templates dist",
+    "compile": "yarn root:tsc -b && cp -r -f src/templates dist",
     "prepare": "yarn compile",
     "readme": "oclif-dev readme",
-    "test": "yarn jest --coverage ",
-    "test:local": "yarn jest",
+    "test": "yarn root:jest --coverage ",
+    "test:local": "yarn root:jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
-    "check:dependencies": "depcheck . --ignore-bin-package=true --ignores=@oclif/plugin-*"
+    "check:dependencies": "root:depcheck . --ignore-bin-package=true --ignores=@oclif/plugin-*"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",

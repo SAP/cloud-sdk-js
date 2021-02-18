@@ -1,9 +1,11 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import {
   TestEntity,
+  TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../test/test-util/test-services/v2/test-service';
+} from '../../test/test-util/test-services/v4/test-service';
 import { EntityBuilder } from './entity-builder';
 
 describe('EntityBuilder', () => {
@@ -38,40 +40,145 @@ describe('EntityBuilder', () => {
     ).toEqual(expected);
   });
 
-  it('should build an entity from json', () => {
-    const builder = TestEntity.builder();
-    const linkedEntity = TestEntitySingleLink.builder()
-      .stringProperty('someString')
-      .withCustomFields({ linkedCustomField: 'someLinkedValue' })
-      .build();
-
-    const entityJson: Partial<TestEntity> = {
-      stringProperty: 'someValue',
-      toSingleLink: linkedEntity
-    };
-    entityJson['_customFields'] = { additionalField: 'someAdditionalValue' };
-    const actual = builder.fromJson(entityJson);
-    expect(actual.stringProperty).toBe(entityJson.stringProperty);
-    expect(actual.getCustomFields()).toEqual(entityJson['_customFields']);
-    expect(actual.toSingleLink.stringProperty).toBe(
-      linkedEntity.stringProperty
-    );
-    expect(actual.toSingleLink.getCustomFields()).toEqual(
-      linkedEntity.getCustomFields()
-    );
-  });
-
   it('should build an entity with non-primitive JS types (moment, BigNumber etc.)', () => {
     const expected: TestEntity = new TestEntity();
 
-    expected.dateTimeProperty = moment();
+    expected.dateProperty = moment();
     expected.decimalProperty = new BigNumber(10);
 
     const actual = TestEntity.builder()
-      .dateTimeProperty(expected.dateTimeProperty)
+      .dateProperty(expected.dateProperty)
       .decimalProperty(expected.decimalProperty)
       .build();
 
     expect(expected).toEqual(actual);
+  });
+
+  describe('fromJson', () => {
+    it('should build an entity from json', () => {
+      const singleLinkStringProperty = 'singleLinkedValue';
+      const multiLinkStringProperty = 'singleLinkedValue';
+      const entityJson = {
+        stringProperty: 'someValue',
+        toSingleLink: {
+          stringProperty: singleLinkStringProperty
+        },
+        toMultiLink: [
+          {
+            stringProperty: multiLinkStringProperty
+          }
+        ]
+      };
+      const entity = TestEntity.builder().fromJson(entityJson);
+      const expectedEntity = TestEntity.builder()
+        .stringProperty(entityJson.stringProperty)
+        .toSingleLink(
+          TestEntitySingleLink.builder()
+            .stringProperty(singleLinkStringProperty)
+            .build()
+        )
+        .toMultiLink([
+          TestEntityMultiLink.builder()
+            .stringProperty(multiLinkStringProperty)
+            .build()
+        ])
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
+
+    it('should build an entity from json with custom fields', () => {
+      const entityJson = {
+        customField: 'customField'
+      };
+      const entity = TestEntity.builder().fromJson(entityJson);
+      const expectedEntity = TestEntity.builder()
+        .withCustomFields({
+          customField: entityJson.customField
+        })
+        .build();
+      expect(entity.getCustomFields()).toEqual(
+        expectedEntity.getCustomFields()
+      );
+    });
+
+    it('should build an entity from json with complex type fields', () => {
+      const entityJson = {
+        complexTypeProperty: { stringProperty: 'complexTypeValue' }
+      };
+      const entity = TestEntity.builder().fromJson(entityJson);
+      const expectedEntity = TestEntity.builder()
+        .complexTypeProperty(entityJson.complexTypeProperty)
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
+
+    it('should build an entity from json with collection fields', () => {
+      const entityJson = {
+        collectionProperty: ['collectionValue']
+      };
+      const entity = TestEntity.builder().fromJson(entityJson);
+      const expectedEntity = TestEntity.builder()
+        .collectionProperty(entityJson.collectionProperty)
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
+
+    it('should build an entity from json with empty collection field', () => {
+      const entityJson = {
+        collectionProperty: []
+      };
+      const entity = TestEntity.builder().fromJson(entityJson);
+      const expectedEntity = TestEntity.builder()
+        .collectionProperty(entityJson.collectionProperty)
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
+
+    it('should build an entity from json with legacy _customFileds', () => {
+      const logger = createLogger('entity-builder');
+      const warnSpy = jest.spyOn(logger, 'warn');
+      const entityJson = {
+        _customFields: {
+          customField: 'customField'
+        }
+      };
+      const entity = TestEntity.builder().fromJson(entityJson);
+      const expectedEntity = TestEntity.builder()
+        .withCustomFields(entityJson._customFields)
+        .build();
+      expect(entity.getCustomFields()).toEqual(
+        expectedEntity.getCustomFields()
+      );
+      expect(warnSpy).toHaveBeenCalled();
+    });
+
+    it('should build an entity from json with existing entities as navigation properties', () => {
+      const expectedEntity = TestEntity.builder()
+        .stringProperty('someValue')
+        .toSingleLink(
+          TestEntitySingleLink.builder()
+            .stringProperty('singleLinkedValue')
+            .withCustomFields({ customField: 'customField' })
+            .build()
+        )
+        .toMultiLink([
+          TestEntityMultiLink.builder()
+            .stringProperty('singleLinkedValue')
+            .build()
+        ])
+        .build();
+
+      const entityJson = {
+        stringProperty: expectedEntity.stringProperty,
+        toSingleLink: expectedEntity.toSingleLink,
+        toMultiLink: expectedEntity.toMultiLink
+      };
+      const entity = TestEntity.builder().fromJson(entityJson);
+
+      expect(entity).toStrictEqual(expectedEntity);
+      expect(entity.toSingleLink.getCustomFields()).toEqual(
+        expectedEntity.toSingleLink.getCustomFields()
+      );
+    });
   });
 });

@@ -29,7 +29,7 @@
 
 ## Fixed Issues
 
--[odata-generator] In cases of generator error the exit code of the node process is set to 1.
+-[odata-generator] The exit code of the node process is set to 1 in cases of a generator error.
 
 
 # 1.37.1

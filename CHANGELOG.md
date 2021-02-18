@@ -25,7 +25,7 @@
 
 ## Improvements
 
--
+- [logger] The stack is included in the logs if `logger.error` is called with an error object.
 
 ## Fixed Issues
 

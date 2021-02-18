@@ -30,7 +30,7 @@
   ],
   "scripts": {
     "postinstall": "yarn compile && yarn run readme",
-    "test": "yarn workspaces run test",
+    "test": "yarn workspaces foreach -v run test",
     "test:unit": "yarn lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\" --ignore \"@sap-cloud-sdk/nightly-tests\"",
     "test:integration": "yarn integration-tests test",
     "test:type": "yarn type-tests test",

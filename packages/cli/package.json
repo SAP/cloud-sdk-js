@@ -28,7 +28,7 @@
     "readme": "oclif-dev readme",
     "prepare": "yarn compile",
     "test": "yarn jest --coverage",
-    "check:dependencies": "depcheck . --ignores=@oclif/plugin-*"
+    "check:dependencies": "root:depcheck . --ignores=@oclif/plugin-*"
   },
   "dependencies": {
     "@oclif/command": "^1.5.19",

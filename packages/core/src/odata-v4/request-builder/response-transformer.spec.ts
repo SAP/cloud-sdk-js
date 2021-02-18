@@ -5,7 +5,6 @@ import {
 } from '../../../test/test-util/test-data';
 import { edmToTs } from '../payload-value-converter';
 import {
-  getEntityNameFromODataContext,
   transformReturnValueForEdmType,
   transformReturnValueForEntity
 } from './response-transformers';
@@ -27,22 +26,5 @@ describe('Response transformer', () => {
       edmToTs(val.value, 'Edm.Int32')
     );
     expect(actual).toEqual(singleNumber);
-  });
-});
-
-describe('getEntityNameFromODataContext', () => {
-  it('should get entity type', () => {
-    const entityName = 'TestEntity';
-    const data = { '@odata.context': `$metadata#${entityName}` };
-    expect(getEntityNameFromODataContext(data)).toEqual(entityName);
-  });
-
-  it('returns undefined for invalid context', () => {
-    const data = { '@odata.context': 'invalid' };
-    expect(getEntityNameFromODataContext(data)).toEqual(undefined);
-  });
-
-  it('returns undefined when no context is provided', () => {
-    expect(getEntityNameFromODataContext({})).toEqual(undefined);
   });
 });

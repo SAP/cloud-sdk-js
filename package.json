@@ -50,7 +50,7 @@
     "lint:fix": "yarn lint --fix",
     "lint:fix-cached": "yarn lint:fix --cache",
     "check:circular": "yarn madge --extensions ts --circular ./packages --exclude 'test-services|environment-accessor|\\.d\\.ts'",
-    "check:dependencies": "yarn workspaces run check:dependencies",
+    "check:dependencies": "yarn workspaces foreach -v run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
     "check:vulnerability": "yarn audit-ci -h",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",

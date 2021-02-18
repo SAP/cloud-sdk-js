@@ -34,7 +34,7 @@
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
     "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --runInBand --testNamePattern=\"$PATTERN\"",
-    "check:dependencies": "root:depcheck ."
+    "check:dependencies": "yarn root:depcheck ."
   },
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.37.1",

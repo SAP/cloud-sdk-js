@@ -28,7 +28,7 @@
     "test": "yarn root:jest --coverage --runInBand",
     "test:local": "yarn root:jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
-    "check:dependencies": "root:depcheck ."
+    "check:dependencies": "yarn root:depcheck ."
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.37.1",

@@ -11,8 +11,8 @@
     "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/cli": "^1.37.1",
     "@sap-cloud-sdk/openapi-generator": "^1.37.1",
+    "@sap-cloud-sdk/generator": "^1.37.1",
     "execa": "^5.0.0",
     "fs-extra": "^9.0.0",
     "jest": "^26.6.1",

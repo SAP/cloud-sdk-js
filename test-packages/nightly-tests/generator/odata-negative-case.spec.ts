@@ -24,14 +24,13 @@ describe('odata negative tests', () => {
     ).rejects.toThrowError(
       'No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE'
     );
-  }, 10000);
+  }, 15000);
 
   it('should fail on faulty typescript files.', async () => {
     await expect(
       execa(
         'npx',
         [
-          'sap-cloud-sdk',
           'generate-odata-client',
           '-i',
           resolve(testDir, '../odata-service-specs/v2/API_TEST_SRV'),

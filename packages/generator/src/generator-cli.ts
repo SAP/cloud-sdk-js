@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { resolve, dirname } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { readFileSync } from 'fs-extra';
 import yargs from 'yargs';
 import { generate } from './generator';
@@ -17,10 +17,7 @@ logger.info('Parsing args...');
 generate(parseCmdArgs())
   .then(() => logger.info('Generation of services finished successfully.'))
   .catch(err => {
-    logger.error('Generation of services failed.');
-    logger.error(err);
-    // TODO enable once stack is correctly logged
-    // logger.error(new ErrorWithCause('Generation of services failed.', err));
+    logger.error(new ErrorWithCause('Generation of services failed.', err));
     process.exit(1);
   });
 

@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { format } from 'winston';
+import { TransformableInfo } from 'logform';
 
 const { combine, timestamp, cli, printf } = format;
 
@@ -12,10 +13,7 @@ const errors = format.errors || require('logform/errors');
 export const local = combine(
   errors({ stack: true }),
   timestamp(),
-  format(info => ({
-    ...info,
-    level: info.level.toUpperCase()
-  }))(),
+  format(localTransformer)(),
   cli(),
   printf(info => {
     const messageContext =
@@ -33,3 +31,19 @@ export const local = combine(
     } ${messageContext.padStart(paddingLength, ' ')}${trimmedMessage}`;
   })
 );
+/**
+ * @param info - object to be transformed.
+ * @returns the message string to be used.
+ * @hidden
+ */
+export function getMessageOrStack(info: TransformableInfo): string {
+  return info.stack && info.level === 'error' ? info.stack : info.message;
+}
+
+function localTransformer(info: TransformableInfo): TransformableInfo {
+  return {
+    ...info,
+    level: info.level.toUpperCase(),
+    message: getMessageOrStack(info)
+  };
+}

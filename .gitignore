@@ -34,5 +34,3 @@ sqlite.db-journal
 test-packages/integration-tests/test/auth-flows/vcap-services.json
 test-packages/integration-tests/test/auth-flows/user-access-token.json
 test-packages/integration-tests/test/auth-flows/systems.json
-
-

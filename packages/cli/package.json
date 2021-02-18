@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/cli",
-  "version": "1.37.1",
+  "version": "1.38.0",
   "description": "SAP Cloud SDK for JavaScript cli",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",

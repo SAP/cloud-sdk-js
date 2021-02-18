@@ -18,6 +18,25 @@
 
 ## New Functionality
 
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.38.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.38.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
 - [openapi-generator] Generate multiple API objects based on tags instead of one API per API specification.
 - [openapi-generator] Add option `writeReadme` for generating readme files.
 - [openapi-generator] Support copying files from given paths via a new option `additionalFiles`.
@@ -26,11 +45,6 @@
 ## Improvements
 
 - [logger] The stack is included in the logs if `logger.error` is called with an error object.
-
-## Fixed Issues
-
--
-
 
 # 1.37.1
 

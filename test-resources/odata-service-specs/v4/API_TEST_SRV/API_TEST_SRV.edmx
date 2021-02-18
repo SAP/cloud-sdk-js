@@ -41,14 +41,6 @@
         <NavigationProperty Name="to_SingleLink" Type="API_TEST_SRV.A_TestEntitySingleLinkType"/>
       </EntityType>
 
-      <EntityType Name="A_TestEntityTypeToBeShared" sap:content-version="1">
-        <Key>
-          <PropertyRef Name="KeyPropertyString"/>
-        </Key>
-        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
-        <Property Name="Int32Property" Type="Edm.Int32" sap:unicode="false"/>
-      </EntityType>
-
       <EntityType Name="A_TestEntityBaseType">
         <Key>
           <PropertyRef Name="KeyProperty"/>
@@ -226,20 +218,11 @@
         <ReturnType Type="Edm.Boolean"/>
       </Function>
 
-      <Function Name="TestFunctionImportEntityParam">
-        <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityTypeToBeShared"/>
-        <ReturnType Type="Edm.Boolean"/>
-      </Function>
-
       <EntityContainer Name="API_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
         <EntitySet Name="A_TestEntity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
           <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_OtherMultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
-        </EntitySet>
-        <EntitySet Name="A_TestEntitySharesEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
-        </EntitySet>
-        <EntitySet Name="A_TestEntitySharesEntityType2" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
         </EntitySet>
         <EntitySet Name="A_TestEntityMultiLink" EntityType="API_TEST_SRV.A_TestEntityMultiLinkType" sap:content-version="1">
           <NavigationPropertyBinding Path="to_MultiLink1" Target="A_TestEntityLvl2MultiLink"/>

@@ -16,8 +16,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 __exportStar(require("./TestEntity"), exports);
-__exportStar(require("./TestEntitySharesEntityType1"), exports);
-__exportStar(require("./TestEntitySharesEntityType2"), exports);
 __exportStar(require("./TestEntityMultiLink"), exports);
 __exportStar(require("./TestEntityOtherMultiLink"), exports);
 __exportStar(require("./TestEntityLvl2MultiLink"), exports);
@@ -29,8 +27,6 @@ __exportStar(require("./TestEntityCircularLinkChild"), exports);
 __exportStar(require("./TestEntityEndsWith"), exports);
 __exportStar(require("./TestEntityEndsWithSomethingElse"), exports);
 __exportStar(require("./TestEntityRequestBuilder"), exports);
-__exportStar(require("./TestEntitySharesEntityType1RequestBuilder"), exports);
-__exportStar(require("./TestEntitySharesEntityType2RequestBuilder"), exports);
 __exportStar(require("./TestEntityMultiLinkRequestBuilder"), exports);
 __exportStar(require("./TestEntityOtherMultiLinkRequestBuilder"), exports);
 __exportStar(require("./TestEntityLvl2MultiLinkRequestBuilder"), exports);

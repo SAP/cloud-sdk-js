@@ -1811,10 +1811,10 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sap/cds-compiler@^1.49.0":
-  version "1.49.0"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.49.0.tgz#24ea2879c1ab5362ee5ab427fb5587ef3755ebe3"
-  integrity sha512-aU9Oi1AJp0pWV4lw46W856tGnxUSzVex1a929JOCoX3iWBEhVCUmbqQw5jRb9KlFkjmv2X/j2AdhfARiv1RsAA==
+"@sap/cds-compiler@~1.49.0":
+  version "1.49.2"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.49.2.tgz#ec211d3c23eef2bbb01e74afe6ce8b123e7fa16c"
+  integrity sha512-u3WNGw7mVvix15Ylrr44K3jAGUhPqWfnh0wmNJgFsUXAz0YaKWtb/6sx3EQUo7BelYrMj0zQNDZeCEYpa/z80A==
   dependencies:
     antlr4 "4.8.0"
     resolve "1.8.1"
@@ -1870,11 +1870,11 @@
     got "10.7.0"
 
 "@sap/cds@^4.2.2", "@sap/cds@^4.4.7":
-  version "4.5.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.5.1.tgz#168fbb73913c8dfd536e946ce459474201f785be"
-  integrity sha512-EgzgfhOP86NRcykL+WpGd77eXGFPvjVWsBZ0ogTEf/71TZEJPncD8UzdQ5kxwVWoaI2hDs1/gY6LDY5A7PqvtQ==
+  version "4.5.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.5.2.tgz#7655f5724f49d4e3519ebcc78808de086ce87fa5"
+  integrity sha512-c+z+IIbufC94Tn4EZUKzr4fclSnmohY+QCnDUORnL8ud+E+yoxBaYzXGngPUSWMEdqXhxj0D+uqCu1Ibc94AXw==
   dependencies:
-    "@sap/cds-compiler" "^1.49.0"
+    "@sap/cds-compiler" "~1.49.0"
     "@sap/cds-foss" "^2"
     "@sap/cds-runtime" "~2.8.0"
 

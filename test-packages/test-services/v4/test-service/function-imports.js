@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.testFunctionImportWithDifferentName = exports.testFunctionImportMultipleParams = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = void 0;
+exports.functionImports = exports.testFunctionImportWithDifferentName = exports.testFunctionImportMultipleParams = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -42,6 +42,17 @@ function testFunctionImportEntityReturnType(parameters) {
     return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity_1.TestEntity); }, params);
 }
 exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
+/**
+ * Test Function Import Entity Return Type Collection.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+function testFunctionImportEntityReturnTypeCollection(parameters) {
+    var params = {};
+    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', function (data) { return core_1.transformReturnValueForEntityListV4(data, TestEntity_1.TestEntity); }, params);
+}
+exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
 /**
  * Test Function Import Complex Return Type.
  *
@@ -95,6 +106,7 @@ exports.functionImports = {
     testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
     testFunctionImportEdmReturnTypeCollection: testFunctionImportEdmReturnTypeCollection,
     testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
+    testFunctionImportEntityReturnTypeCollection: testFunctionImportEntityReturnTypeCollection,
     testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
     testFunctionImportComplexReturnTypeCollection: testFunctionImportComplexReturnTypeCollection,
     testFunctionImportMultipleParams: testFunctionImportMultipleParams,

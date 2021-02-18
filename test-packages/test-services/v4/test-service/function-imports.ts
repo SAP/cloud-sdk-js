@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForEdmTypeV4, transformReturnValueForEdmTypeListV4, transformReturnValueForEntityV4, transformReturnValueForComplexTypeV4, transformReturnValueForComplexTypeListV4, transformReturnValueForUndefinedV4, edmToTsV4, deserializeComplexTypeV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForEdmTypeV4, transformReturnValueForEdmTypeListV4, transformReturnValueForEntityV4, transformReturnValueForEntityListV4, transformReturnValueForComplexTypeV4, transformReturnValueForComplexTypeListV4, transformReturnValueForUndefinedV4, edmToTsV4, deserializeComplexTypeV4, FunctionImportRequestBuilderV4, FunctionImportParameter } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 
@@ -65,6 +65,26 @@ export function testFunctionImportEntityReturnType(parameters: TestFunctionImpor
   }
 
   return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
+}
+
+/**
+ * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
+ */
+export interface TestFunctionImportEntityReturnTypeCollectionParameters {
+}
+
+/**
+ * Test Function Import Entity Return Type Collection.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ */
+export function testFunctionImportEntityReturnTypeCollection(parameters: TestFunctionImportEntityReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]> {
+  const params = {
+
+  }
+
+  return new FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityListV4(data, TestEntity), params);
 }
 
 /**
@@ -170,6 +190,7 @@ export const functionImports = {
   testFunctionImportEdmReturnType,
   testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType,
+  testFunctionImportEntityReturnTypeCollection,
   testFunctionImportComplexReturnType,
   testFunctionImportComplexReturnTypeCollection,
   testFunctionImportMultipleParams,

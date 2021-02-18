@@ -27,7 +27,7 @@ export class ODataFunctionImportRequestConfig<
   ) {
     super(method, defaultServicePath, functionImportName, parameters, oDataUri);
   }
-//todo
+
   resourcePath(): string {
     return `${this.functionImportName}(${Object.values(this.parameters)
       .map(

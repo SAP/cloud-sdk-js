@@ -284,6 +284,9 @@
         <FunctionImport Name="TestFunctionImportEntityReturnType" Function="API_TEST_SRV.TestFunctionImportEntityReturnType" EntitySet="A_TestEntity">
         </FunctionImport>
 
+        <FunctionImport Name="TestFunctionImportEntityReturnTypeCollection" Function="API_TEST_SRV.TestFunctionImportEntityReturnTypeCollection" EntitySet="A_TestEntity">
+        </FunctionImport>
+
         <FunctionImport Name="TestFunctionImportComplexReturnType" Function="API_TEST_SRV.TestFunctionImportComplexReturnType">
         </FunctionImport>
 

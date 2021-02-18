@@ -198,7 +198,7 @@ export function navigationPropertyBase(
     propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName)
   };
 }
-// todo
+
 export function createEntityClassNames(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>[],
   formatter: ServiceNameFormatter

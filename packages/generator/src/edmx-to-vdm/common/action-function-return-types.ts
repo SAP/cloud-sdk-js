@@ -65,7 +65,7 @@ function parseReturnTypes(
       oDataVersion
     );
   }
-  //todo
+
   const entity = findEntityType(returnType, entities);
   if (entity) {
     return getEntityReturnType(isCollection, entity);

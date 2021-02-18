@@ -5,6 +5,13 @@ module.exports = async srv => {
   const db = await cds.connect.to('db');
   const { TestEntity } = db.entities;
 
+  srv.on('getStringProperty', 'TestEntity', async oRequest => {
+    const entity = await cds
+      .transaction(oRequest)
+      .run(SELECT.one.from(oRequest.query.SELECT.from));
+    oRequest.reply(entity.StringProperty);
+  });
+
   srv.on('returnSapCloudSdk', async oRequest => {
     oRequest.reply('SapCloudSdk');
   });

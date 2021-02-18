@@ -2,7 +2,10 @@ using {cloudsdk.test as cloudsdk} from '../db/schema';
 
 @path : 'test-service'
 service TestService {
-  entity TestEntity     as projection on cloudsdk.TestEntity;
+  entity TestEntity     as projection on cloudsdk.TestEntity
+    actions {
+      function getStringProperty() returns String;
+    }
   entity TestEntityLink as projection on cloudsdk.TestEntityLink;
   function returnSapCloudSdk() returns String;
   function concatStrings(Str1 : String, Str2 : String) returns String;

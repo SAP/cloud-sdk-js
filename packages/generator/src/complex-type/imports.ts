@@ -29,8 +29,7 @@ export function importDeclarations(
         `Entity${versionInCaps}`,
         'FieldType',
         'PropertyMetadata'
-      ].sort(),
-      oDataVersion
+      ].sort()
     )
   ];
 }

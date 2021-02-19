@@ -29,7 +29,7 @@ export class UniqueNameGenerator {
    * Adds the name(s) to the already used names.
    * @param names Names to be added
    */
-  public addToUsedNames(...names: string[]) {
+  public addToUsedNames(...names: string[]): void {
     this.usedNames.push(...names);
   }
 

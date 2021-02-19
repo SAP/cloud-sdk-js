@@ -49,7 +49,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
    * @deprecated Since v1.21.0. Use [[_selects]] directly.
    * List of selectables on the linked entity.
    */
-  get selects() {
+  get selects(): Selectable<LinkedEntityT>[] {
     return this._selects;
   }
 

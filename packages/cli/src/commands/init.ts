@@ -96,7 +96,7 @@ export default class Init extends Command {
     }
   ];
 
-  async run() {
+  async run(): Promise<void> {
     const parsed = this.parse(Init);
     const projectDir = parsed.args.projectDir || '.';
 

@@ -53,7 +53,7 @@ export default class AddCds extends Command {
     }
   ];
 
-  async run() {
+  async run(): Promise<void> {
     const parsed = this.parse(AddCds);
     const projectDir = parsed.args.projectDir || '.';
 

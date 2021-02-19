@@ -88,9 +88,7 @@ xdescribe('Request builder', () => {
       }
     ];
 
-    const created = await People.requestBuilder()
-      .create(entity)
-      .execute(destination);
+    await People.requestBuilder().create(entity).execute(destination);
 
     const expected = await People.requestBuilder()
       .getByKey(myKey)
@@ -114,9 +112,7 @@ xdescribe('Request builder', () => {
     const entity = createPeople(keyRoot);
     entity.friends = [createPeople(keyChild1), createPeople(keyChild2)];
 
-    const created = await People.requestBuilder()
-      .create(entity)
-      .execute(destination);
+    await People.requestBuilder().create(entity).execute(destination);
 
     const expected = await People.requestBuilder()
       .getByKey(keyRoot)

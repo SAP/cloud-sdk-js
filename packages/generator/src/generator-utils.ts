@@ -16,31 +16,31 @@ function hasCapability(object: any, capability: string) {
   return !(capability in object) || object[capability] === 'true';
 }
 
-export function isDeletable(entity: any) {
+export function isDeletable(entity: any): boolean {
   return hasCapability(entity, 'sap:deletable');
 }
 
-export function isUpdatable(entity: any) {
+export function isUpdatable(entity: any): boolean {
   return hasCapability(entity, 'sap:updatable');
 }
 
-export function isCreatable(entity: any) {
+export function isCreatable(entity: any): boolean {
   return hasCapability(entity, 'sap:creatable');
 }
 
-export function isSortable(property: any) {
+export function isSortable(property: any): boolean {
   return hasCapability(property, 'sap:sortable');
 }
 
-export function isFilterable(property: any) {
+export function isFilterable(property: any): boolean {
   return hasCapability(property, 'sap:filterable');
 }
 
-export function isNullableProperty(property: any) {
+export function isNullableProperty(property: any): boolean {
   return hasCapability(property, 'Nullable');
 }
 
-export function isNullableParameter(parameter: any) {
+export function isNullableParameter(parameter: any): boolean {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
 
@@ -210,7 +210,7 @@ export function getGenericParameters(
 export function createPropertyFieldInitializer(
   property: VdmProperty,
   entityClassName: string
-) {
+): string {
   const edmOrComplexTypeOrEnumType =
     property.isComplex || property.isEnum
       ? property.jsType
@@ -300,7 +300,7 @@ const splitAtFirstOccurrence = (str: string, separator: string) => [
 
 const lowerCase = (str: string): string => str.toLowerCase();
 const stripLeadingDotsAndUnderscores = (str: string): string =>
-  str.replace(/^[\._]*/g, '');
+  str.replace(/^[._]*/g, '');
 const replaceNonNpmPackageCharacters = (str: string): string =>
   str.replace(/[^a-z0-9-~._]/g, '');
 

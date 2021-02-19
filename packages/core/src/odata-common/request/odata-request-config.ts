@@ -28,7 +28,7 @@ export abstract class ODataRequestConfig {
   /**
    * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
    */
-  get contentType() {
+  get contentType(): any {
     return this.defaultHeaders['content-type'];
   }
 

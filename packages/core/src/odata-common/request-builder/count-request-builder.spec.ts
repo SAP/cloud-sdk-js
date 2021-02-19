@@ -63,7 +63,7 @@ describe('CountRequestBuilderV2', () => {
         messageContext: 'count-request-config'
       });
       const warnSpy = jest.spyOn(logger, 'warn');
-      const actual = await TestEntityV4.requestBuilder()
+      await TestEntityV4.requestBuilder()
         .getAll()
         .top(1)
         .count()

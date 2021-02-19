@@ -199,7 +199,7 @@ const addHost = (groups: any) => (
 export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
-  const regex = /(?<protocolWithDelimiter>(?<protocol>^.+)\:\/\/)?(?<userPwdWithDelimeter>(?<user>.+)\:(?<pwd>.+)\@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
+  const regex = /(?<protocolWithDelimiter>(?<protocol>^.+):\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
   const parsed = regex.exec(proxyEnvValue);
 
   if (parsed?.groups) {
@@ -234,7 +234,7 @@ export function parseProxyEnv(
  * @param destination - to which the proxy configuration is added.
  * @returns Destination containing the configuration for web proxy.
  */
-export function addProxyConfigurationInternet(destination): Destination {
+export function addProxyConfigurationInternet(destination: any): Destination {
   const proxyEnvValue = getProxyEnvValue(getProtocolOrDefault(destination));
   if (proxyEnvValue) {
     const proxyConfiguration = parseProxyEnv(proxyEnvValue);

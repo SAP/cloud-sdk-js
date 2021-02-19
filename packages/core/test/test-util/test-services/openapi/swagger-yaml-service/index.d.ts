@@ -1,3 +1,3 @@
 export * from './openapi/model';
-export * from './api';
+export * from './default-api';
 //# sourceMappingURL=index.d.ts.map

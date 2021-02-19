@@ -8,7 +8,8 @@ import {
   setGlobalLogLevel,
   getGlobalLogLevel,
   muteLoggers,
-  unmuteLoggers
+  unmuteLoggers,
+  getMessageOrStack
 } from '../../src';
 
 describe('Cloud SDK Logger', () => {
@@ -127,6 +128,23 @@ describe('Cloud SDK Logger', () => {
       enableExceptionLogger();
       enableExceptionLogger();
       expect(cloudSdkExceptionLogger.exceptions.catcher).toBeTruthy();
+    });
+
+    it('uses stack if possible for errors', () => {
+      expect(
+        getMessageOrStack({ level: 'error', message: 'msg', stack: 'stack' })
+      ).toBe('stack');
+      expect(getMessageOrStack({ level: 'error', message: 'msg' })).toBe('msg');
+    });
+
+    it('uses message for non error cases', () => {
+      expect(
+        getMessageOrStack({
+          level: 'not-error',
+          message: 'msg',
+          stack: 'stack'
+        })
+      ).toBe('msg');
     });
   });
 

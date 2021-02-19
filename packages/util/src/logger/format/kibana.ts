@@ -1,4 +1,6 @@
 import { format } from 'winston';
+import { TransformableInfo } from 'logform';
+import { getMessageOrStack } from './local';
 
 const { combine, timestamp, json } = format;
 
@@ -12,11 +14,15 @@ const errors = format.errors || require('logform/errors');
 export const kibana = combine(
   errors({ stack: true }),
   timestamp(),
-  format(info => ({
-    ...info,
-    msg: info.message,
-    written_ts: new Date(info.timestamp).getTime(),
-    written_at: info.timestamp
-  }))(),
+  format(kibanaTransformer)(),
   json()
 );
+
+function kibanaTransformer(info: TransformableInfo): TransformableInfo {
+  return {
+    ...info,
+    msg: getMessageOrStack(info),
+    written_ts: new Date(info.timestamp).getTime(),
+    written_at: info.timestamp
+  };
+}

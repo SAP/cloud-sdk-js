@@ -17,5 +17,5 @@ builder.int64Property(undefined);
 // $ExpectType TestEntity
 builder.fromJson({ stringProperty: '1' });
 
-// $ExpectError
+// $ExpectType TestEntity
 builder.fromJson({ unknownProperty: '1' });

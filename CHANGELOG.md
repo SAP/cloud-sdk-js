@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [core] Deprecated `_customFields` in the `fromJson` method of the entity builders. Instead, add custom fields to the JSON objects directly.
 
 ## New Functionality
 
@@ -26,8 +26,7 @@
 
 ## Fixed Issues
 
--
-
+- [core] Fix building of entities using `fromJson` with navigation properties.
 
 # 1.38.0
 

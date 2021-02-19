@@ -117,13 +117,17 @@ function toClassName(entityName: string) {
   return entityName.substr(entityName.indexOf('_') + 1);
 }
 
-function buildNavigationPropertyFromJson<EntityT extends Entity>(
+function buildNavigationPropertyFromJson<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity
+>(
   key: string,
   value: FromJsonType<unknown>,
   entityConstructor: Constructable<EntityT>
-) {
+): LinkedEntityT | LinkedEntityT[] {
   const field = entityConstructor[upperCaseSnakeCase(key)];
-  const linkedEntityConstructor = field._linkedEntity;
+  const linkedEntityConstructor: Constructable<LinkedEntityT> =
+    field._linkedEntity;
   return Array.isArray(value)
     ? value.map(item =>
         buildSingleEntityFromJson(item, linkedEntityConstructor)

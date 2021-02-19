@@ -1,4 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, isNullish } from '@sap-cloud-sdk/util';
 import { Entity, Constructable } from '../entity';
 import { FieldType, Field } from '../selectable';
 import { UriConverter } from '../uri-conversion';
@@ -77,7 +77,7 @@ export function createGetResourcePathForKeys(
 
   function getNullishKeys(keys: Record<string, FieldType>): string[] {
     return Object.entries(keys)
-      .filter(([, value]) => typeof value === 'undefined' || value === null)
+      .filter(([, value]) => isNullish(value))
       .map(([key]) => key);
   }
 

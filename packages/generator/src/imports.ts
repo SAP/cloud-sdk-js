@@ -39,8 +39,7 @@ export function externalImportDeclaration(
 }
 
 export function coreImportDeclaration(
-  namedImports: string[],
-  oDataVersion?: ODataVersion
+  namedImports: string[]
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,

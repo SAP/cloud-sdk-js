@@ -113,8 +113,8 @@ export async function findConflicts(
 export async function copyFiles(
   copyDescriptors: CopyDescriptor[],
   options: { [key: string]: any }
-): Promise<void[]> {
-  return Promise.all(
+): Promise<void> {
+  await Promise.all(
     copyDescriptors.map(({ sourcePath, fileName }) =>
       sourcePath instanceof URL
         ? copyRemote(sourcePath, fileName)

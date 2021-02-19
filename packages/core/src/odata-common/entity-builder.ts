@@ -3,7 +3,7 @@ import {
   partition,
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
-import { Constructable, Entity } from './entity';
+import type { Constructable, Entity } from './entity';
 import { isNavigationProperty } from './properties-util';
 
 const logger = createLogger({

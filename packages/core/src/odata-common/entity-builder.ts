@@ -78,7 +78,7 @@ export class EntityBuilder<EntityT extends Entity, JsonT> {
         : value;
 
       entityBuilder[key](propertyValue);
-    }, entityBuilder);
+    });
 
     const customFields = customEntries.reduce(
       (customFieldsObj, [key, value]) => {

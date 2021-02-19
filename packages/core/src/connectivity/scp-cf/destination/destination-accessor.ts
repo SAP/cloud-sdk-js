@@ -11,11 +11,6 @@ import { searchServiceBindingForDestination } from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { DestinationAccessorOptions } from './destination-accessor-types';
 
-// const logger = createLogger({
-//   package: 'core',
-//   messageContext: 'destination-accessor'
-// });
-
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
  * from the Cloud Foundry destination service).

@@ -5,8 +5,6 @@ import {
   SchemaMetadata
 } from '../openapi-types';
 
-// const logger = createLogger('openapi-generator');
-
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Get the content of the SAP Cloud SDK API wrapper.

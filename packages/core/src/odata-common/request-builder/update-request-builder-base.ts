@@ -7,11 +7,6 @@ import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
 import { MethodRequestBuilder } from './request-builder-base';
 
-// const logger = createLogger({
-//   package: 'core',
-//   messageContext: 'update-request-builder-v2'
-// });
-
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
  *

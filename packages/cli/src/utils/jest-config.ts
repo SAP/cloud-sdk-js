@@ -3,7 +3,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { recordWarning } from './warnings';
 
-export function getJestConfig(isUnitTests: boolean): any {
+export function getJestConfig(isUnitTests: boolean): Record<string, any> {
   return {
     reporters: [
       'default',

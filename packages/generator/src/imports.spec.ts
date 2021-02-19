@@ -51,10 +51,6 @@ const oneToOneLink = {
   isCollection: false
 } as VdmNavigationProperty;
 
-// const service = {
-//   oDataVersion: 'v2'
-// } as VdmServiceMetadata;
-
 describe('imports', () => {
   describe('external import declarations', () => {
     it('are empty when properties do not have external types', () => {

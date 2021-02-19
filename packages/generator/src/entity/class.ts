@@ -221,7 +221,7 @@ function customField(
   };
 }
 
-function toJSON(/* entity: VdmEntity */): MethodDeclarationStructure {
+function toJSON(): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'toJSON',

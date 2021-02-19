@@ -6,11 +6,6 @@ import { forceArray } from '../generator-utils';
 import { SwaggerMetadata } from '../swagger-parser/swagger-types';
 import { getMergedPropertyWithNamespace } from './common';
 
-// const logger = createLogger({
-//   package: 'generator',
-//   messageContext: 'edmx-edmx-parser'
-// });
-
 export interface EdmxMetadata {
   path: PathLike;
   oDataVersion: ODataVersion;

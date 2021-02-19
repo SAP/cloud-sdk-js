@@ -1,6 +1,10 @@
 import { createRefs, emptyApiDefinition } from '../../test/test-util';
-import { OpenApiDocument } from '../openapi-types';
-import { parseAllOperations, parseOpenApiDocument } from './document';
+import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
+import {
+  collectTags,
+  parseAllOperations,
+  parseOpenApiDocument
+} from './document';
 
 describe('parseOpenApiDocument', () => {
   it('does not modify input service specification', () => {
@@ -97,5 +101,22 @@ describe('parseAllOperations', () => {
     expect(
       parseAllOperations(apiDefinition, await createRefs()).length
     ).toEqual(5);
+  });
+});
+
+describe('collectTags', () => {
+  it('should collect tags from all operations', async () => {
+    const operations: OpenApiOperation[] = [
+      {
+        tags: ['tag']
+      },
+      {
+        tags: ['default']
+      },
+      {
+        tags: ['default']
+      }
+    ] as OpenApiOperation[];
+    expect(collectTags(operations)).toEqual(['tag', 'default']);
   });
 });

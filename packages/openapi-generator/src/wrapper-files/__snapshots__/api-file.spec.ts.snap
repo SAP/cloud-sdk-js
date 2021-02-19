@@ -2,12 +2,12 @@
 
 exports[`api-file creates api file content for operation with no parameters or request body 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
+import { TagApi } from './openapi/api';
 
 
-export const TestApi = {
-  getFn: () => new OpenApiRequestBuilder<DefaultApi, 'getFn'>(
-    DefaultApi,
+export const TestServiceTagApi = {
+  getFn: () => new OpenApiRequestBuilder<TagApi, 'getFn'>(
+    TagApi,
     'getFn'
   )
 };"
@@ -15,14 +15,14 @@ export const TestApi = {
 
 exports[`api-file creates api file content for operation with only optional parameters 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
+import { TagApi } from './openapi/api';
 
 
-export const TestApi = {
+export const TestServiceTagApi = {
   getFn: (args?: {
     optionalQueryParam?: number
-  }) => new OpenApiRequestBuilder<DefaultApi, 'getFn'>(
-    DefaultApi,
+  }) => new OpenApiRequestBuilder<TagApi, 'getFn'>(
+    TagApi,
     'getFn',
     args?.optionalQueryParam
   )
@@ -31,22 +31,22 @@ export const TestApi = {
 
 exports[`api-file creates api file content for operation with request body 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
+import { TagApi } from './openapi/api';
 import { TestEntity } from './openapi/model';
 
-export const TestApi = {
+export const TestServiceTagApi = {
   createFn: (args: {
     body: TestEntity
-  }) => new OpenApiRequestBuilder<DefaultApi, 'createFn'>(
-    DefaultApi,
+  }) => new OpenApiRequestBuilder<TagApi, 'createFn'>(
+    TagApi,
     'createFn',
     args.body
   ),
   updateFn: (args: {
     id: string,
     body: string[]
-  }) => new OpenApiRequestBuilder<DefaultApi, 'updateFn'>(
-    DefaultApi,
+  }) => new OpenApiRequestBuilder<TagApi, 'updateFn'>(
+    TagApi,
     'updateFn',
     args.id,
     args.body
@@ -56,17 +56,17 @@ export const TestApi = {
 
 exports[`api-file creates api file content for operation with required parameters defined after optional parameters 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
+import { TagApi } from './openapi/api';
 import { TestEntity } from './openapi/model';
 
-export const TestApi = {
+export const TestServiceTagApi = {
   createFn: (args: {
     requiredQueryParam: number,
     requiredPathParam: number,
     body: TestEntity[][],
     optionalQueryParam?: number
-  }) => new OpenApiRequestBuilder<DefaultApi, 'createFn'>(
-    DefaultApi,
+  }) => new OpenApiRequestBuilder<TagApi, 'createFn'>(
+    TagApi,
     'createFn',
     args.requiredQueryParam,
     args.requiredPathParam,
@@ -78,23 +78,23 @@ export const TestApi = {
 
 exports[`api-file creates api file content for operations with parameters and no request bodies 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
+import { TagApi } from './openapi/api';
 
 
-export const TestApi = {
+export const TestServiceTagApi = {
   getFn: (args: {
     id: string,
     limit?: number
-  }) => new OpenApiRequestBuilder<DefaultApi, 'getFn'>(
-    DefaultApi,
+  }) => new OpenApiRequestBuilder<TagApi, 'getFn'>(
+    TagApi,
     'getFn',
     args.id,
     args.limit
   ),
   deleteFn: (args: {
     id: string
-  }) => new OpenApiRequestBuilder<DefaultApi, 'deleteFn'>(
-    DefaultApi,
+  }) => new OpenApiRequestBuilder<TagApi, 'deleteFn'>(
+    TagApi,
     'deleteFn',
     args.id
   )

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "rootDir": "../../../",
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "composite": false,
+    "incremental": true,
+    "declaration": false,
+    "esModuleInterop": true
+  },
+  "files": [
+    "index.ts","../../../scripts/get-changelog.ts","../../../scripts/util.ts"
+  ],
+  "exclude": []
+}

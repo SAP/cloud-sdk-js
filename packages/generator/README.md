@@ -1,8 +1,11 @@
+<!-- sap-cloud-sdk-logo -->
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
+<!-- sap-cloud-sdk-logo-stop -->
 
 # @sap-cloud-sdk/generator
 
-Generate your own service module using a service specification (.edmx file).
+This packages contains the generator to create your own service module using a service specification (.edmx file).
 
 ## Installation
 
@@ -24,34 +27,45 @@ Run `generate-odata-client --help` for further options.
 You can also use the generator programmatically. You will have to provide the options anyways.
 
 ```ts
-import { generateProject } from '@sap-cloud-sdk/generator';
+import { generate } from '@sap-cloud-sdk/generator';
 
 // initialize generator options based on what you want to do
 const options: GeneratorOptions = initializeOptions();
 
-// creates a Project datastructure with all sourcefiles based on your options
-const project = generateProject(options);
-
-// here you can modify you project if you need to
-
-// save the files at the specified location
-project.save();
-
-// alternatively you can generate and save the project in one step with: generate(options)
+// generate the client using the provided options
+generate(options)
 ```
 
-### Documentation
-[Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
-[API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts)
+For more detailed overview visit our [generator documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client).
 
-### Helpful Links
+<!-- sap-cloud-sdk-common-readme -->
+<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+## Support
 
+The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).
+Select the issue category `Bug`, `Feature` or `Question` depending on the nature of your request.
+We try to provide fixes, features and answers as soon as possible.
+
+We also monitor questions on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest) and [ansers.sap.com](https://answers.sap.com/tags/73555000100800000895) but prefer issues on github.
+
+## Contribute
+
+If you would like to contribute to the SAP Cloud SDK, please make yourself familiar with our [contributing guidelines](https://github.com/SAP/cloud-sdk-js/blob/main/CONTRIBUTING.md) and follow the given instructions.
+
+## Links
+
+- [Github](https://github.com/SAP/cloud-sdk-js)
+- [Github - Releases](https://github.com/SAP/cloud-sdk-js/releases)
+<br><br>
 - [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk/)
-- [Tutorials on developers.sap.com](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:javascript)
-- [SAP Cloud SDK on StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest)
-- [SAP Cloud SDK on answers.sap.com](https://answers.sap.com/tags/73555000100800000895)
-- [Release notes on help.sap.com](https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html)
-- [Release notes on Github](https://github.com/SAP/cloud-sdk-js/releases)
-- [All versions of this documentation](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
-- [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
-- [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
+- [SAP Cloud SDK Documentation portal - Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
+- [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts)
+<br><br>
+- [developers.sap.com - Product Overview](https://developers.sap.com/topics/cloud-sdk.html)
+- [developers.sap.com - Tutorials](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:javascript)
+
+## Licence
+
+The SAP Cloud SDK is released under the  [Apache License Version 2.0.](http://www.apache.org/licenses/)
+<!-- sap-cloud-sdk-common-readme-stop -->
+

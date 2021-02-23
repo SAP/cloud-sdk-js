@@ -5,7 +5,7 @@ import {
   convertDocToOpenApiV3,
   getOperationNameFromPatternAndMethod,
   parseFileAsJson,
-  convertDocWithDefaultTag
+  convertDocWithApiNameTag
 } from './document-converter';
 
 const jsonContent = { test: 'test' };
@@ -23,8 +23,62 @@ jest.mock('fs', () => ({
   }
 }));
 
-describe('convertDocToGlobalTag', () => {
-  it('does not change the spec when tags are provided', () => {
+describe('convertDocWithApiNameTag', () => {
+  it('should use api name extensions when provided', () => {
+    const originalSpec = {
+      ...emptyApiDefinition,
+      tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag' }],
+      paths: {
+        '/pattern1': {
+          'x-sap-cloud-sdk-api-name': 'api1',
+          get: {
+            tags: []
+          },
+          post: {
+            tags: ['tag']
+          }
+        },
+        '/pattern1/pattern2': {
+          'x-sap-cloud-sdk-api-name': 'api2',
+          get: {},
+          post: {
+            tags: ['tag']
+          }
+        }
+      }
+    };
+    const newSpec = convertDocWithApiNameTag(originalSpec);
+
+    expect(newSpec).toEqual({
+      ...emptyApiDefinition,
+      tags: [
+        { name: 'api1' },
+        { name: 'api2' }
+      ],
+      paths: {
+        '/pattern1': {
+          'x-sap-cloud-sdk-api-name': 'api1',
+          get: {
+            tags: ['api1']
+          },
+          post: {
+            tags: ['api1']
+          }
+        },
+        '/pattern1/pattern2': {
+          'x-sap-cloud-sdk-api-name': 'api2',
+          get: {
+            tags: ['api2']
+          },
+          post: {
+            tags: ['api2']
+          }
+        }
+      }
+    });
+  });
+
+  it('does not change the spec when tags are provided but api name extensions are missing', () => {
     const originalSpec = {
       ...emptyApiDefinition,
       tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag' }],
@@ -45,12 +99,12 @@ describe('convertDocToGlobalTag', () => {
       }
     };
     const oldSpec = JSON.parse(JSON.stringify(originalSpec));
-    const newSpec = convertDocWithDefaultTag(originalSpec);
+    const newSpec = convertDocWithApiNameTag(originalSpec);
 
     expect(newSpec).toEqual(oldSpec);
   });
 
-  it('should use default tag when tag is not defined', () => {
+  it('should use default tag as fallback', () => {
     const originalSpec = {
       ...emptyApiDefinition,
       tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag' }],
@@ -71,15 +125,13 @@ describe('convertDocToGlobalTag', () => {
         }
       }
     };
-    const newSpec = convertDocWithDefaultTag(originalSpec);
+    const newSpec = convertDocWithApiNameTag(originalSpec);
 
     expect(newSpec).toEqual({
       ...emptyApiDefinition,
       tags: [
-        { name: 'tag1' },
-        { name: 'tag2' },
-        { name: 'tag' },
-        { name: 'default' }
+        { name: 'default' },
+        { name: 'tag' }
       ],
       paths: {
         '/pattern1': {

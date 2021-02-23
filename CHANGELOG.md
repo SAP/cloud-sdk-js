@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [openapi-generator] Support custom API names and operation names by using OpenAPI extensions `x-sap-cloud-sdk-api-name` and `x-sap-cloud-sdk-operation-name`.
 
 ## Improvements
 

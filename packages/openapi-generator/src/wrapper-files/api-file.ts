@@ -85,7 +85,7 @@ function getOperation(operation: OpenApiOperation, apiName: string): string {
 
   return codeBlock`
 ${
-  operation.operationId
+  operation['x-sap-cloud-sdk-operation-name'] || operation.operationId
 }: (${paramsArg}) => new OpenApiRequestBuilder<${apiName}Api, '${
     operation.operationId
   }'>(

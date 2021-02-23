@@ -5,9 +5,9 @@ import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
 import {
   camelCase,
-  ErrorWithCause,
+  ErrorWithCause, flatten,
   partition,
-  pascalCase,
+  pascalCase, unique,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import { Method, methods } from './openapi-types';
@@ -23,7 +23,7 @@ export async function convertOpenApiSpec(
 ): Promise<OpenAPIV3.Document> {
   const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
-  return convertDocWithDefaultTag(
+  return convertDocWithApiNameTag(
     convertDocToUniqueOperationIds(openApiDocument)
   );
 }
@@ -75,47 +75,32 @@ export async function convertDocToOpenApiV3(
  * @param openApiDocument OpenAPI JSON document.
  * @returns The modified document.
  */
-export function convertDocWithDefaultTag(
+export function convertDocWithApiNameTag(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
-  const tag = 'default';
+  const defaultTag = 'default';
 
-  executeForAllOperationObjects(openApiDocument, operation => {
-    operation.tags = addGlobalTagToOperationWhenNoTagsAreUsed(
+  executeForAllOperationObjects(openApiDocument, (operation,path, method, extensionApiName) => {
+    operation.tags = extensionApiName? [extensionApiName]:addGlobalTagToOperationWhenNoTagsAreUsed(
       operation.tags,
-      tag
+      defaultTag
     );
   });
 
-  const detectGlobalTag = !!Object.entries(
-    openApiDocument.paths
-  ).find(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
-    hasTag(pathDefinition, tag)
-  );
-
-  if (detectGlobalTag) {
-    openApiDocument.tags = addGlobalTagToRootTags(openApiDocument.tags, tag);
-  }
+  openApiDocument.tags = collectTag(openApiDocument).map(tag => ({ name: tag }));
 
   return openApiDocument;
 }
 
-function hasTag(
-  pathDefinition: OpenAPIV3.PathItemObject,
-  tag: string
-): boolean {
-  return !!methods.find(method => pathDefinition[method]?.tags!.includes(tag));
-}
-
-function addGlobalTagToRootTags(
-  tags: OpenAPIV3.TagObject[] | undefined,
-  globalTag: string
-): OpenAPIV3.TagObject[] {
-  return tags?.find(tag => tag.name === globalTag)
-    ? tags
-    : tags?.length
-    ? tags.concat({ name: globalTag })
-    : [{ name: globalTag }];
+function collectTag(
+  openApiDocument: OpenAPIV3.Document
+): string[] {
+  return unique(flatten(Object.entries(
+    openApiDocument.paths
+  ).map(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
+    methods
+      .map(method => pathDefinition[method]?.tags)
+  ))).filter(tag => !!tag);
 }
 
 function addGlobalTagToOperationWhenNoTagsAreUsed(
@@ -254,14 +239,15 @@ function executeForAllOperationObjects(
   callback: (
     operation: OpenAPIV3.OperationObject,
     path: string,
-    method: Method
+    method: Method,
+    extensionApiName: string | undefined
   ) => any
 ): void {
   return Object.entries(openApiDocument.paths).forEach(
-    ([path, pathDefinition]: [string, OpenAPIV3.PathItemObject]) => {
+    ([path, pathDefinition]: [string, OpenApiPathItemObject]) => {
       methods.forEach(method => {
         if (pathDefinition[method]) {
-          callback(pathDefinition[method]!, path, method);
+          callback(pathDefinition[method]!, path, method, pathDefinition['x-sap-cloud-sdk-api-name']);
         }
       });
     }
@@ -298,3 +284,8 @@ const nameMapping = {
   options: 'getOptionsFor',
   trace: 'trace'
 } as const;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+interface OpenApiPathItemObject<T extends {} = {}> extends OpenAPIV3.PathItemObject<T>{
+  'x-sap-cloud-sdk-api-name'?: string;
+}

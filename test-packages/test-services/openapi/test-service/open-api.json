@@ -11,16 +11,22 @@
   },
   "tags": [
     {
-      "name": "entity",
-      "description": "entity tag"
+      "name": "entity"
     },
     {
-      "name": "test case",
-      "description": "test case tag"
+      "name": "test case"
     },
     {
-      "name": "default",
-      "description": "default tag"
+      "name": "tag.dot"
+    },
+    {
+      "name": "tag space"
+    },
+    {
+      "name": "default"
+    },
+    {
+      "name": "extension"
     }
   ],
   "paths": {
@@ -564,6 +570,32 @@
           "default"
         ],
         "operationId": "defaultTag",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/extension": {
+      "x-sap-cloud-sdk-api-name": "extension",
+      "get": {
+        "x-sap-cloud-sdk-operation-name": "niceGetFunction",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        },
+        "operationId": "getTestCasesExtension",
+        "tags": [
+          "extension"
+        ]
+      },
+      "post": {
+        "tags": [
+          "extension"
+        ],
+        "operationId": "testCasesExtensionPost",
         "responses": {
           "201": {
             "description": "no content"

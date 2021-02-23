@@ -11,10 +11,12 @@ import {
   filterDuplicates,
   filterDuplicatesRight
 } from './array';
+import { ErrorWithCause } from './error-with-cause';
 
 describe('array', () => {
   describe('flat', () => {
     it('flattens a nested array of numbers', () => {
+      throw new ErrorWithCause('my bar',new Error('my foo'))
       expect(flat([[1], [2], [3]])).toStrictEqual([1, 2, 3]);
     });
 

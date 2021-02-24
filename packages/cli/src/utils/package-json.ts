@@ -65,7 +65,7 @@ const existingProjectPackageJson: PackageJsonChange = {
   dependencies: ['@sap-cloud-sdk/core']
 };
 
-export async function parsePackageJson(projectDir: string) {
+export async function parsePackageJson(projectDir: string): Promise<Record<string,any>> {
   try {
     return JSON.parse(
       readFileSync(resolve(projectDir, 'package.json'), {
@@ -144,19 +144,21 @@ function mergePackageJson(originalPackageJson: any, changes: any) {
   return adjustedPackageJson;
 }
 
+interface ModifyConfig {
+  projectDir: string;
+  isScaffold?: boolean;
+  frontendScripts?: boolean;
+  force?: boolean;
+  addCds?: boolean;
+}
+
 export async function modifyPackageJson({
   projectDir,
   isScaffold = false,
   frontendScripts = false,
   force = false,
   addCds = false
-}: {
-  projectDir: string;
-  isScaffold?: boolean;
-  frontendScripts?: boolean;
-  force?: boolean;
-  addCds?: boolean;
-}) {
+}: ModifyConfig): Promise<void> {
   const originalPackageJson = await parsePackageJson(projectDir);
   const changes = await getPackageJsonChanges(
     isScaffold,
@@ -221,7 +223,7 @@ async function getVersionOfDependency(dependency: string): Promise<string> {
 export async function installDependencies(
   projectDir: string,
   verbose: boolean
-) {
+): Promise<execa.ExecaReturnValue<string>> {
   return execa('npm', ['install'], {
     cwd: projectDir,
     stdio: verbose ? 'inherit' : 'ignore'

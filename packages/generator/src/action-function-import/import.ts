@@ -22,18 +22,15 @@ function actionFunctionImportDeclarations(
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(parameters),
-    coreImportDeclaration(
-      [
-        ...corePropertyTypeImportNames(parameters),
-        ...returnTypes.map(returnType =>
-          responseTransformerFunctionName(returnType, oDataVersion)
-        ),
-        ...edmRelatedImports(returnTypes, oDataVersion),
-        ...complexTypeRelatedImports(returnTypes, oDataVersion),
-        ...additionalImports
-      ],
-      oDataVersion
-    ),
+    coreImportDeclaration([
+      ...corePropertyTypeImportNames(parameters),
+      ...returnTypes.map(returnType =>
+        responseTransformerFunctionName(returnType, oDataVersion)
+      ),
+      ...edmRelatedImports(returnTypes, oDataVersion),
+      ...complexTypeRelatedImports(returnTypes, oDataVersion),
+      ...additionalImports
+    ]),
     ...returnTypeImports(returnTypes)
   ];
 }

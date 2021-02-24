@@ -58,10 +58,8 @@ function isSapDependency(dependency) {
 async function checkLicenses() {
   const licenses = await getLicenses();
   const notAllowedDependencies = Object.entries(licenses)
-    .filter(
-      ([packageName, licenseInfo]) => !isAllowedLicense(licenseInfo.licenses)
-    )
-    .filter(([packageName, licenseInfo]) => !isSapDependency(packageName));
+    .filter(([, licenseInfo]) => !isAllowedLicense(licenseInfo.licenses))
+    .filter(([packageName]) => !isSapDependency(packageName));
 
   if (notAllowedDependencies.length) {
     notAllowedDependencies.forEach(notAllowedDependency => {

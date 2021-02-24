@@ -116,7 +116,7 @@ export function getService(service: string): Service | undefined {
  * @returns Destination service
  * @throws Error in case no destination service is found in the VCAP variables
  */
-export function getDestinationService() {
+export function getDestinationService(): Service {
   const destinationService = getService('destination');
 
   if (!destinationService) {
@@ -319,8 +319,7 @@ function matchingAudience(
 }
 
 function takeFirstAndWarn(
-  xsuaaInstances: Record<string, any>[],
-  token?: DecodedJWT
+  xsuaaInstances: Record<string, any>[]
 ): Record<string, any>[] {
   logger.warn(
     `Unable to match a specific XSUAA service instance to the given JWT. The following XSUAA instances are bound: ${xsuaaInstances.map(

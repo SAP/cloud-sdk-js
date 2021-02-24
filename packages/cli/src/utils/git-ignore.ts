@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { recordWarning } from '../utils';
 
-export function modifyGitIgnore(projectDir: string, addCds: boolean) {
+export function modifyGitIgnore(projectDir: string, addCds: boolean): void {
   const pathToGitignore = path.resolve(projectDir, '.gitignore');
   const pathsToIgnore = ['credentials.json', '/s4hana_pipeline', '/deployment'];
   if (addCds) {

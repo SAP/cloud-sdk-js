@@ -60,7 +60,7 @@ export default class Package extends Command {
     }
   ];
 
-  async run() {
+  async run(): Promise<void> {
     const parsed = this.parse(Package);
     const projectDir = parsed.args.projectDir || '.';
     const outputDir = path.resolve(projectDir, parsed.flags.output);

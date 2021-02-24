@@ -12,7 +12,10 @@ import { trim, trimRight } from './string';
  * @param args Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;
  * @returns A string formatted as code block.
  */
-export function codeBlock(strings: TemplateStringsArray, ...args: any[]) {
+export function codeBlock(
+  strings: TemplateStringsArray,
+  ...args: any[]
+): string {
   const pre = strings.slice(0, -1).map(string => {
     const trimmed = trimRight(string);
     return trimmed.length === string.length ? string : trimmed + '\n';

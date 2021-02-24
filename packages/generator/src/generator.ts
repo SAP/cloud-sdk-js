@@ -13,7 +13,6 @@ import {
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
-import execa = require('execa');
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';

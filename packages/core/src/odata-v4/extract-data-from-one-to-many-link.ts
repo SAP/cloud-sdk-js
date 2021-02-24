@@ -6,6 +6,6 @@ import { getLinkedCollectionResult } from './request-builder/response-data-acces
  * @param data - One to many link response data
  * @returns The content of the one to many link
  */
-export function extractDataFromOneToManyLink(data): any[] | undefined {
+export function extractDataFromOneToManyLink(data: any): any[] | undefined {
   return getLinkedCollectionResult(data);
 }

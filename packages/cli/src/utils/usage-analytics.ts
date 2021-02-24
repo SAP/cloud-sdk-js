@@ -8,7 +8,7 @@ export async function usageAnalytics(
   projectDir: string,
   agreeToAnalytics: boolean | undefined,
   salt?: string
-) {
+): Promise<void> {
   const analyticsFilePath = path.resolve(
     projectDir,
     'sap-cloud-sdk-analytics.json'

@@ -59,7 +59,7 @@ export async function buildScaffold(
   projectDir: string,
   verbose: boolean,
   addCds: boolean
-) {
+): Promise<void> {
   cli.action.start('Building application scaffold');
   const options: execa.Options = {
     cwd: projectDir,
@@ -149,7 +149,7 @@ function modifyTsconfigJson(pathToTsconfigJson: string) {
   }
 }
 
-export function addCatalogueModule(pathToAppModuleTs: string) {
+export function addCatalogueModule(pathToAppModuleTs: string): void {
   const appModuleTs = readFileSync(pathToAppModuleTs, { encoding: 'utf8' });
   const moduleName = 'CatalogueModule';
   const importToAdd = `import { ${moduleName} } from './catalogue/catalogue.module';`;

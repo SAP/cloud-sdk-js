@@ -48,7 +48,10 @@ export const assocSome = <T>(key: string, value?: any) => (obj: T): T => {
  * @param b - The object which to merge into a.
  * @returns A copy of the merge(a, b) or a if b is undefined or null.
  */
-export const mergeSome = (a: Record<string, any>, b?: Record<string, any>) => {
+export const mergeSome = (
+  a: Record<string, any>,
+  b?: Record<string, any>
+): Record<string, any> => {
   if (typeof b !== 'undefined' && b !== null) {
     return { ...a, ...b };
   }
@@ -104,7 +107,11 @@ export const pick = <T>(keys: string[], obj: T): Partial<T> => {
  * @param obj - object the key value pair is added to.
  * @returns the object with the key value pair added
  */
-export const assoc = <T>(key: string, value: any, obj: T) => ({
+export const assoc = <T>(
+  key: string,
+  value: any,
+  obj: T
+): T & { [key: string]: any } => ({
   ...obj,
   [key]: value
 });

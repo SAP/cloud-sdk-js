@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import {
   TestEntity,
+  TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../../test/test-util/test-services/v4/test-service';
@@ -56,10 +57,11 @@ describe('EntityBuilder', () => {
 
   describe('fromJson', () => {
     it('should build an entity from json', () => {
+      const stringProperty = 'stringProperty';
       const singleLinkStringProperty = 'singleLinkedValue';
-      const multiLinkStringProperty = 'singleLinkedValue';
-      const entityJson = {
-        stringProperty: 'someValue',
+      const multiLinkStringProperty = 'multiLinkedValue';
+      const entity = TestEntity.builder().fromJson({
+        stringProperty,
         toSingleLink: {
           stringProperty: singleLinkStringProperty
         },
@@ -68,10 +70,9 @@ describe('EntityBuilder', () => {
             stringProperty: multiLinkStringProperty
           }
         ]
-      };
-      const entity = TestEntity.builder().fromJson(entityJson);
+      });
       const expectedEntity = TestEntity.builder()
-        .stringProperty(entityJson.stringProperty)
+        .stringProperty(stringProperty)
         .toSingleLink(
           TestEntitySingleLink.builder()
             .stringProperty(singleLinkStringProperty)
@@ -82,6 +83,34 @@ describe('EntityBuilder', () => {
             .stringProperty(multiLinkStringProperty)
             .build()
         ])
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
+
+    it('should build an entity with nested navigation properties from json', () => {
+      const singleLinkStringProperty = 'singleLinkedValue';
+      const nestedSingleLinkStringProperty = 'nestedSingleLinkedValue';
+      const entity = TestEntity.builder().fromJson({
+        stringProperty: 'someValue',
+        toSingleLink: {
+          stringProperty: singleLinkStringProperty,
+          toSingleLink: {
+            stringProperty: nestedSingleLinkStringProperty
+          }
+        }
+      });
+      const expectedEntity = TestEntity.builder()
+        .stringProperty(singleLinkStringProperty)
+        .toSingleLink(
+          TestEntitySingleLink.builder()
+            .stringProperty(singleLinkStringProperty)
+            .toSingleLink(
+              TestEntityLvl2SingleLink.builder()
+                .stringProperty(nestedSingleLinkStringProperty)
+                .build()
+            )
+            .build()
+        )
         .build();
       expect(entity).toStrictEqual(expectedEntity);
     });

@@ -2228,17 +2228,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sap-cloud-sdk/analytics@^1.37.1, @sap-cloud-sdk/analytics@workspace:packages/analytics":
+"@sap-cloud-sdk/analytics@^1.38.0, @sap-cloud-sdk/analytics@workspace:packages/analytics":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/analytics@workspace:packages/analytics"
   dependencies:
-    "@sap-cloud-sdk/util": ^1.37.1
+    "@sap-cloud-sdk/util": ^1.38.0
     axios: ^0.21.1
     nock: ^13.0.2
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/cli@^1.37.1, @sap-cloud-sdk/cli@workspace:packages/cli":
+"@sap-cloud-sdk/cli@^1.38.0, @sap-cloud-sdk/cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/cli@workspace:packages/cli"
   dependencies:
@@ -2261,6 +2261,7 @@ __metadata:
     fs-extra: ^9.0.0
     handlebars: ^4.7.3
     jest: ^26.6.1
+    jest-circus: ^26.6.1
     jest-extended: ^0.11.5
     js-yaml: ^4.0.0
     listr: ^0.14.3
@@ -2268,16 +2269,18 @@ __metadata:
     ts-jest: ^26.4.3
     typescript: ^4.0.3
     yargs: 16.2.0
+  bin:
+    sap-cloud-sdk: ./bin/run
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/core@^1.18.1, @sap-cloud-sdk/core@^1.30.0, @sap-cloud-sdk/core@^1.37.1, @sap-cloud-sdk/core@workspace:packages/core":
+"@sap-cloud-sdk/core@^1.18.1, @sap-cloud-sdk/core@^1.30.0, @sap-cloud-sdk/core@^1.38.0, @sap-cloud-sdk/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/core@workspace:packages/core"
   dependencies:
-    "@sap-cloud-sdk/analytics": ^1.37.1
-    "@sap-cloud-sdk/test-util": ^1.37.1
-    "@sap-cloud-sdk/util": ^1.37.1
+    "@sap-cloud-sdk/analytics": ^1.38.0
+    "@sap-cloud-sdk/test-util": ^1.38.0
+    "@sap-cloud-sdk/util": ^1.38.0
     "@sap/xsenv": ^3.0.0
     axios: ^0.21.1
     bignumber.js: ^9.0.0
@@ -2297,9 +2300,9 @@ __metadata:
   resolution: "@sap-cloud-sdk/e2e-tests@workspace:test-packages/e2e-tests"
   dependencies:
     "@apidevtools/swagger-parser": ^10.0.2
-    "@sap-cloud-sdk/core": ^1.37.1
-    "@sap-cloud-sdk/test-services": ^1.37.1
-    "@sap-cloud-sdk/test-services-e2e": ^1.37.1
+    "@sap-cloud-sdk/core": ^1.38.0
+    "@sap-cloud-sdk/test-services": ^1.38.0
+    "@sap-cloud-sdk/test-services-e2e": ^1.38.0
     "@sap/cds": ^4.4.7
     "@sap/cds-dk": ^3.3.3
     express: ^4.17.1
@@ -2315,7 +2318,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/eslint-config@workspace:packages/eslint-config"
   dependencies:
-    eslint-config-prettier: ^7.1.0
+    eslint-config-prettier: ^8.0.0
   peerDependencies:
     eslint: ^7.5.0
     eslint-plugin-import: ^2.20.2
@@ -2323,12 +2326,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/generator@workspace:packages/generator":
+"@sap-cloud-sdk/generator@^1.38.0, @sap-cloud-sdk/generator@workspace:packages/generator":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/generator@workspace:packages/generator"
   dependencies:
-    "@sap-cloud-sdk/core": ^1.37.1
-    "@sap-cloud-sdk/util": ^1.37.1
+    "@sap-cloud-sdk/core": ^1.38.0
+    "@sap-cloud-sdk/util": ^1.38.0
     "@sap/edm-converters": ^1.0.21
     "@types/fs-extra": ^9.0.1
     "@types/glob": ^7.1.2
@@ -2351,15 +2354,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/integration-tests@workspace:test-packages/integration-tests"
   dependencies:
-    "@sap-cloud-sdk/analytics": ^1.37.1
-    "@sap-cloud-sdk/core": ^1.37.1
-    "@sap-cloud-sdk/test-services": ^1.37.1
-    "@sap-cloud-sdk/test-util": ^1.37.1
-    "@sap-cloud-sdk/util": ^1.37.1
+    "@sap-cloud-sdk/analytics": ^1.38.0
+    "@sap-cloud-sdk/core": ^1.38.0
+    "@sap-cloud-sdk/test-services": ^1.38.0
+    "@sap-cloud-sdk/test-util": ^1.38.0
+    "@sap-cloud-sdk/util": ^1.38.0
     "@sap/cloud-sdk-vdm-business-partner-service": ^1.23.0
     bignumber.js: ^9.0.0
+    execa: ^5.0.0
     jsonwebtoken: ^8.5.1
     nock: ^13.0.3
+    winston: ^3.3.3
   languageName: unknown
   linkType: soft
 
@@ -2367,16 +2372,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/nightly-tests@workspace:test-packages/nightly-tests"
   dependencies:
-    "@sap-cloud-sdk/cli": ^1.37.1
+    "@sap-cloud-sdk/cli": ^1.38.0
+    "@sap-cloud-sdk/generator": ^1.38.0
+    "@sap-cloud-sdk/openapi-generator": ^1.38.0
     execa: ^5.0.0
     fs-extra: ^9.0.0
     jest: ^26.6.1
+    jest-circus: ^26.6.1
     jest-extended: ^0.11.5
     ts-jest: ^26.4.3
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/openapi-generator@workspace:packages/openapi-generator":
+"@sap-cloud-sdk/openapi-generator@^1.38.0, @sap-cloud-sdk/openapi-generator@workspace:packages/openapi-generator":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/openapi-generator@workspace:packages/openapi-generator"
   dependencies:
@@ -2390,7 +2398,7 @@ __metadata:
     "@oclif/plugin-not-found": ^1.2.3
     "@oclif/plugin-warn-if-update-available": ^1.7.0
     "@openapitools/openapi-generator-cli": ^2.1.4
-    "@sap-cloud-sdk/util": ^1.37.1
+    "@sap-cloud-sdk/util": ^1.38.0
     "@types/js-yaml": ^4.0.0
     cli-ux: ^5.4.5
     execa: ^5.0.0
@@ -2406,32 +2414,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/test-services-e2e@^1.37.1, @sap-cloud-sdk/test-services-e2e@workspace:test-packages/test-services-e2e":
+"@sap-cloud-sdk/test-services-e2e@^1.38.0, @sap-cloud-sdk/test-services-e2e@workspace:test-packages/test-services-e2e":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/test-services-e2e@workspace:test-packages/test-services-e2e"
   dependencies:
-    "@sap-cloud-sdk/core": ^1.37.1
+    "@sap-cloud-sdk/core": ^1.38.0
     bignumber.js: ^9.0.1
     moment: ^2.29.0
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/test-services@^1.37.1, @sap-cloud-sdk/test-services@workspace:test-packages/test-services":
+"@sap-cloud-sdk/test-services@^1.38.0, @sap-cloud-sdk/test-services@workspace:test-packages/test-services":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/test-services@workspace:test-packages/test-services"
   dependencies:
-    "@sap-cloud-sdk/core": ^1.37.1
+    "@sap-cloud-sdk/core": ^1.38.0
     bignumber.js: ^9.0.1
     moment: ^2.29.0
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/test-util@^1.37.1, @sap-cloud-sdk/test-util@workspace:packages/test-util":
+"@sap-cloud-sdk/test-util@^1.38.0, @sap-cloud-sdk/test-util@workspace:packages/test-util":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/test-util@workspace:packages/test-util"
   dependencies:
-    "@sap-cloud-sdk/core": ^1.37.1
-    "@sap-cloud-sdk/util": ^1.37.1
+    "@sap-cloud-sdk/core": ^1.38.0
+    "@sap-cloud-sdk/util": ^1.38.0
   languageName: unknown
   linkType: soft
 
@@ -2439,13 +2447,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/type-tests@workspace:test-packages/type-tests"
   dependencies:
-    "@sap-cloud-sdk/core": ^1.37.1
-    "@sap-cloud-sdk/test-services": ^1.37.1
+    "@sap-cloud-sdk/core": ^1.38.0
+    "@sap-cloud-sdk/test-services": ^1.38.0
     dtslint: ^4.0.0
   languageName: unknown
   linkType: soft
 
-"@sap-cloud-sdk/util@^1.18.1, @sap-cloud-sdk/util@^1.37.1, @sap-cloud-sdk/util@workspace:packages/util":
+"@sap-cloud-sdk/util@^1.18.1, @sap-cloud-sdk/util@^1.38.0, @sap-cloud-sdk/util@workspace:packages/util":
   version: 0.0.0-use.local
   resolution: "@sap-cloud-sdk/util@workspace:packages/util"
   dependencies:
@@ -6105,14 +6113,14 @@ dts-critic@latest:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^7.1.0":
-  version: 7.2.0
-  resolution: "eslint-config-prettier@npm:7.2.0"
+"eslint-config-prettier@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "eslint-config-prettier@npm:8.0.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: 6812150ea49703cd64035527205b4905bc1edcd34646e71f71665e1acff9ab4648f872598389bdb209964093ad73993830a2c821ba12642764a5293513b92a58
+  checksum: 4f7eb2885af2e2647bc0da210b3bed613a376e74a9f7ae4b069204a4aae335735093323d21bf95eb814d3f0f5116f76cb00a7e0f1b5895fcced184e25a560d52
   languageName: node
   linkType: hard
 
@@ -8790,6 +8798,35 @@ dts-critic@latest:
     execa: ^4.0.0
     throat: ^5.0.0
   checksum: b15a1c524b32b16694aaa4b2823266b89b54dddbb7c37ed0fdea605ea79ee784ce1003dc6163aa041d47453dfa32e21a4ade56b464d58459cdaa8e2291c83d12
+  languageName: node
+  linkType: hard
+
+"jest-circus@npm:^26.6.1":
+  version: 26.6.3
+  resolution: "jest-circus@npm:26.6.3"
+  dependencies:
+    "@babel/traverse": ^7.1.0
+    "@jest/environment": ^26.6.2
+    "@jest/test-result": ^26.6.2
+    "@jest/types": ^26.6.2
+    "@types/babel__traverse": ^7.0.4
+    "@types/node": "*"
+    chalk: ^4.0.0
+    co: ^4.6.0
+    dedent: ^0.7.0
+    expect: ^26.6.2
+    is-generator-fn: ^2.0.0
+    jest-each: ^26.6.2
+    jest-matcher-utils: ^26.6.2
+    jest-message-util: ^26.6.2
+    jest-runner: ^26.6.3
+    jest-runtime: ^26.6.3
+    jest-snapshot: ^26.6.2
+    jest-util: ^26.6.2
+    pretty-format: ^26.6.2
+    stack-utils: ^2.0.2
+    throat: ^5.0.0
+  checksum: 8ef70b1ccd0837d19131889fcf4e7ed4d6f051a9140be71eb3536dd98d80ab4ab31dd5d445300f08f6e8d0bd6588e77159d53ea4fda808c5e55eb464755d1837
   languageName: node
   linkType: hard
 
@@ -13571,7 +13608,7 @@ resolve@1.8.1:
     compare-versions: ^3.6.0
     depcheck: ^1.0.0
     eslint: ^7.5.0
-    eslint-config-prettier: ^7.1.0
+    eslint-config-prettier: ^8.0.0
     eslint-plugin-header: ^3.0.0
     eslint-plugin-import: ^2.20.2
     eslint-plugin-jest: ^24.1.3

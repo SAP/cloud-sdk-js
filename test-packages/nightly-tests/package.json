@@ -12,8 +12,8 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/cli": "^1.38.0",
-    "@sap-cloud-sdk/openapi-generator": "^1.38.0",
     "@sap-cloud-sdk/generator": "^1.38.0",
+    "@sap-cloud-sdk/openapi-generator": "^1.38.0",
     "execa": "^5.0.0",
     "fs-extra": "^9.0.0",
     "jest": "^26.6.1",

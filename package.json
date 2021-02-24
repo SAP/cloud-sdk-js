@@ -66,7 +66,8 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
     "root:tsc": "cd $INIT_CWD && tsc",
     "root:jest": "cd $INIT_CWD && jest",
-    "root:depcheck": "cd $INIT_CWD && depcheck"
+    "root:depcheck": "cd $INIT_CWD && depcheck",
+    "root:ts-node": "cd $INIT_CWD && ts-node"
   },
   "devDependencies": {
     "@types/jest": "^26.0.7",

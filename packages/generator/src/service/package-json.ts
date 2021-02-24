@@ -30,7 +30,7 @@ export function packageJson(
         },
         scripts: {
           compile: 'yarn tsc',
-          doc: 'yar  typedoc',
+          doc: 'yarn typedoc',
           ...(sdkAfterVersionScript
             ? { version: 'node ../../../after-version-update.js' }
             : {})

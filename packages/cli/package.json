@@ -14,7 +14,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "publishConfig": {
-    "access": "private"
+    "access": "restricted"
   },
   "files": [
     "dist/**/*.js",

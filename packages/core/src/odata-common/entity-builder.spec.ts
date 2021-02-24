@@ -88,10 +88,11 @@ describe('EntityBuilder', () => {
     });
 
     it('should build an entity with nested navigation properties from json', () => {
+      const stringProperty = 'stringProperty';
       const singleLinkStringProperty = 'singleLinkedValue';
       const nestedSingleLinkStringProperty = 'nestedSingleLinkedValue';
       const entity = TestEntity.builder().fromJson({
-        stringProperty: 'someValue',
+        stringProperty,
         toSingleLink: {
           stringProperty: singleLinkStringProperty,
           toSingleLink: {
@@ -100,7 +101,7 @@ describe('EntityBuilder', () => {
         }
       });
       const expectedEntity = TestEntity.builder()
-        .stringProperty(singleLinkStringProperty)
+        .stringProperty(stringProperty)
         .toSingleLink(
           TestEntitySingleLink.builder()
             .stringProperty(singleLinkStringProperty)

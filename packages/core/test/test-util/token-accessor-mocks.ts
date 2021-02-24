@@ -31,7 +31,7 @@ export function mockServiceToken() {
 export function mockUserApprovedServiceToken() {
   return jest
     .spyOn(tokenAccessor, 'userApprovedServiceToken')
-    .mockImplementation((userJwt, service, options) => {
+    .mockImplementation(userJwt => {
       if (decodeJwt(userJwt).zid === TestTenants.SUBSCRIBER) {
         return Promise.resolve(userApprovedSubscriberServiceToken);
       }

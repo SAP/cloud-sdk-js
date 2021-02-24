@@ -15,7 +15,7 @@ export type Filterable<EntityT extends Entity> =
   | Filter<EntityT, FieldType | FieldType[]>
   | FilterLink<EntityT>
   | FilterList<EntityT>
-  | FilterLambdaExpression<EntityT, FieldType>;
+  | FilterLambdaExpression<EntityT>;
 
 /**
  * Create a [[FilterList]] by combining [[Filterable]]s with logical `and`.

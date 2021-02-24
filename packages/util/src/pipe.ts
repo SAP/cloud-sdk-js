@@ -7,7 +7,9 @@
  * @param start - start value for the first function in the list
  * @returns the reponse of the last function in the list.
  */
-export const asyncPipe = (...fns) => (start: any): Promise<any> =>
+export const asyncPipe = (...fns: CallableFunction[]) => (
+  start: any
+): Promise<any> =>
   fns.reduce(
     (state: Promise<any>, fn) => state.then(x => fn(x)),
     Promise.resolve(start)

@@ -18,10 +18,7 @@
 
 ## New Functionality
 
-- [openapi-generator] Generate multiple API objects based on tags instead of one API per API specification.
-- [openapi-generator] Add option `writeReadme` for generating readme files.
-- [openapi-generator] Support copying files from given paths via a new option `additionalFiles`.
-- [eslint-config] Release a recommended, shareable `eslint` configuration based on the SAP Cloud SDK's internal configuration as `@sap-cloud-sdk/eslint-config`. Follow the [official guide](https://eslint.org/docs/developer-guide/shareable-configs#using-a-shareable-config) for information how to use the config.
+-
 
 ## Improvements
 
@@ -29,8 +26,25 @@
 
 ## Fixed Issues
 
--
+-[odata-generator] The exit code of the node process is set to 1 in cases of a generator error.
 
+
+# 1.38.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.38.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [openapi-generator] Generate multiple API objects based on tags instead of one API per API specification.
+- [openapi-generator] Add option `writeReadme` for generating readme files.
+- [openapi-generator] Support copying files from given paths via a new option `additionalFiles`.
+- [eslint-config] Release a recommended, shareable `eslint` configuration based on the SAP Cloud SDK's internal configuration as `@sap-cloud-sdk/eslint-config`. Follow the [official guide](https://eslint.org/docs/developer-guide/shareable-configs#using-a-shareable-config) for information how to use the config.
+
+## Improvements
+
+- [logger] The stack is included in the logs if `logger.error` is called with an error object.
 
 # 1.37.1
 

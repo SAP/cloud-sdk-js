@@ -92,17 +92,6 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     return getDestination(destName, options);
   }
 
-  // The same destination name is used for provider and subscriber but the URL is different to distinguish which destination was fetched in the end.
-  function mockProviderAndSubscriber(
-    subscriberEmpty: boolean,
-    providerEmpty: boolean
-  ): mocks {
-    return {
-      subscriberMocks: mockSubscriber(subscriberEmpty),
-      providerMocks: mockProvider(providerEmpty)
-    };
-  }
-
   function mockThingsForCombinations(
     subscriberEmpty = false,
     providerEmpty = false

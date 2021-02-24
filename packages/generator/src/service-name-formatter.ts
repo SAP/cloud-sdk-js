@@ -140,14 +140,14 @@ export class ServiceNameFormatter {
     return this.originalToComplexTypeName(str);
   }
 
-  typeNameToFactoryName(str: string);
+  typeNameToFactoryName(str: string): string;
   /**
    * @deprecated since version 1.25.0. In the refactored version of the generator the reserved names are obsolete.
    * @param str
    * @param reservedNames
    */
   /* eslint-disable-next-line  @typescript-eslint/unified-signatures */
-  typeNameToFactoryName(str: string, reservedNames: Set<string>);
+  typeNameToFactoryName(str: string, reservedNames: Set<string>): string;
   typeNameToFactoryName(str: string, reservedNames?: Set<string>): string {
     let factoryName = `create${str}`;
     if (reservedNames) {
@@ -223,7 +223,7 @@ function stripAPIUnderscore(name: string) {
   return name.startsWith('API_') ? name.substring(4, name.length) : name;
 }
 
-export function stripCollection(name: string) {
+export function stripCollection(name: string): string {
   return name.endsWith('Collection')
     ? name.substring(0, name.length - 10)
     : name;

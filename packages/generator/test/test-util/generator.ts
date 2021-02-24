@@ -1,6 +1,6 @@
 import { ClassDeclaration, FunctionDeclaration, SourceFile } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
-import { generateProject, GeneratorOptions } from '../../src';
+import { generateProject } from '../../src';
 import { createOptions } from './create-generator-options';
 
 export function checkStaticProperties(entityClass: ClassDeclaration): void {
@@ -19,8 +19,7 @@ export function checkStaticProperties(entityClass: ClassDeclaration): void {
 }
 
 export async function getGeneratedFiles(
-  oDataVersion: ODataVersion,
-  generatorOptionsX?: GeneratorOptions
+  oDataVersion: ODataVersion
 ): Promise<SourceFile[]> {
   const project = await generateProject(
     createOptions({

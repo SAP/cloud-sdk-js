@@ -6,17 +6,20 @@ export const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
 export const docsDir = resolve('docs');
 export const apiDocsDir = resolve(docsDir, 'api');
 
-export function transformFile(filePath, tranformFn) {
+export function transformFile(
+  filePath: string,
+  tranformFn: CallableFunction
+): void {
   const file = readFileSync(filePath, { encoding: 'utf8' });
   const transformedFile = tranformFn(file);
   writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
 }
 
-export function jsonStringify(json) {
+export function jsonStringify(json: any): string {
   return JSON.stringify(json, null, 2) + '\n';
 }
 
-export function openFile(filePath) {
+export function openFile(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8' });
 }
 

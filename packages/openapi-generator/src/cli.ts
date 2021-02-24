@@ -99,7 +99,7 @@ export = class GenerateOpenApiClient extends Command {
     })
   };
 
-  async run() {
+  async run(): Promise<void> {
     try {
       const parsed = this.parse(GenerateOpenApiClient);
       await validateJavaRuntime();

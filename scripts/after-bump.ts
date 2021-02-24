@@ -62,7 +62,7 @@ function transformChangeLog(changelog) {
     latestVersionSection,
     ...previousVersionSections
   ] = versionSections.split('\n# ');
-  const [_, ...changelogCategories] = latestVersionSection.split('\n## ');
+  const [, ...changelogCategories] = latestVersionSection.split('\n## ');
   const usedCategories = changelogCategories
     .map(category => {
       const [title, ...logLines] = category.split('\n');

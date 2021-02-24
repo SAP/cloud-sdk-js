@@ -161,7 +161,7 @@ describe('caching destination integraion tests', () => {
     });
 
     it('retrieved  provider destinations are cached using only destination name in "NoIsolation" type', async () => {
-      const result = await getDestination('ProviderDest', {
+      await getDestination('ProviderDest', {
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.No_Isolation,

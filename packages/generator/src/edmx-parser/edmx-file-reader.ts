@@ -1,15 +1,10 @@
 import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
 import { parse } from 'fast-xml-parser';
-import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
 import { SwaggerMetadata } from '../swagger-parser/swagger-types';
 import { getMergedPropertyWithNamespace } from './common';
-
-const logger = createLogger({
-  package: 'generator',
-  messageContext: 'edmx-edmx-parser'
-});
 
 export interface EdmxMetadata {
   path: PathLike;
@@ -21,7 +16,7 @@ export interface EdmxMetadata {
 }
 
 function parseMetadata(
-  root,
+  root: any,
   oDataVersion: ODataVersion,
   edmxPath: PathLike
 ): EdmxMetadata {

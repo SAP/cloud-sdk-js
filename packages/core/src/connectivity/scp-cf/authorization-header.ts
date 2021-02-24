@@ -173,7 +173,7 @@ function legacyNoAuthOnPremiseProxy(
   destination: Destination
 ): Record<string, any> {
   logger.warn(
-    `You are using \'NoAuthentication\' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up \'PrincipalPropagation\' so please change the destination property to the desired authentication scheme.`
+    `You are using 'NoAuthentication' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up 'PrincipalPropagation' so please change the destination property to the desired authentication scheme.`
   );
 
   let principalPropagationHeader;

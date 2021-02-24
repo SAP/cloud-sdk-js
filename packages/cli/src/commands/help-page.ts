@@ -7,7 +7,7 @@ export default class HelpPage extends Command {
   static description =
     'Display the product page, which contains tutorials and links to all relevant resources';
 
-  async run() {
+  async run(): Promise<void> {
     this.log('Visit us at:');
     this.log('  https://community.sap.com/topics/cloud-sdk');
     this.log('  https://developers.sap.com/topics/cloud-sdk.html');

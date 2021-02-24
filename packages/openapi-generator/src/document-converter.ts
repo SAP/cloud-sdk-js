@@ -89,7 +89,7 @@ export function convertDocWithDefaultTag(
 
   const detectGlobalTag = !!Object.entries(
     openApiDocument.paths
-  ).find(([path, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
+  ).find(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
     hasTag(pathDefinition, tag)
   );
 

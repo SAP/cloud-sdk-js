@@ -38,7 +38,7 @@
     "test:nightly": "yarn nightly-tests test",
     "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --immutable",
     "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --immutable",
-    "generate:test-services:openapi": "yarn generate openapi",
+    "generate:test-services:openapi": "yarn generate openapi && yarn lint:fix && yarn --immutable",
     "generate:test-services:e2e": "yarn generate e2e && yarn lint:fix && yarn --immutable",
     "generate:test-services": "yarn generate all && yarn lint:fix && yarn --immutable",
     "generate": "yarn workspace @sap-cloud-sdk/generator run compile && yarn ts-node scripts/generate-test-services.ts",

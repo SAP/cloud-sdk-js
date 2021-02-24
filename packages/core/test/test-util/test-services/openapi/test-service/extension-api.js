@@ -10,6 +10,6 @@ var core_1 = require("../../../../../src");
 var api_1 = require("./openapi/api");
 exports.TestServiceExtensionApi = {
     niceGetFunction: function () { return new core_1.OpenApiRequestBuilder(api_1.ExtensionApi, 'getTestCasesExtension'); },
-    testCasesExtensionPost: function () { return new core_1.OpenApiRequestBuilder(api_1.ExtensionApi, 'testCasesExtensionPost'); }
+    nicePostFunction: function () { return new core_1.OpenApiRequestBuilder(api_1.ExtensionApi, 'testCasesExtensionPost'); }
 };
 //# sourceMappingURL=extension-api.js.map

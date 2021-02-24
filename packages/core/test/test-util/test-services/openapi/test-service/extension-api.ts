@@ -12,7 +12,7 @@ export const TestServiceExtensionApi = {
     ExtensionApi,
     'getTestCasesExtension'
   ),
-  testCasesExtensionPost: () => new OpenApiRequestBuilder<ExtensionApi, 'testCasesExtensionPost'>(
+  nicePostFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'testCasesExtensionPost'>(
     ExtensionApi,
     'testCasesExtensionPost'
   )

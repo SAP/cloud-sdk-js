@@ -578,6 +578,7 @@
         }
       },
       "post": {
+        "x-sap-cloud-sdk-operation-name": "nicePostFunction",
         "tags": [
           "default"
         ],

@@ -36,8 +36,12 @@ describe('generator', () => {
   });
 
   it('should transpile the generated sources', () => {
-    const jsApiFile = resolve(testServicePath, 'api.js');
-    expect(existsSync(jsApiFile)).toBe(true);
+    const defaultApi = resolve(testServicePath, 'default-api.js');
+    expect(existsSync(defaultApi)).toBe(true);
+    const entityApi = resolve(testServicePath, 'entity-api.js');
+    expect(existsSync(entityApi)).toBe(true);
+    const testCaseApi = resolve(testServicePath, 'test-case-api.js');
+    expect(existsSync(testCaseApi)).toBe(true);
   });
 
   it('should create a package.json', () => {
@@ -55,5 +59,20 @@ describe('generator', () => {
   it('should create a tsconfig.json', () => {
     const tsconfig = resolve(testServicePath, 'tsconfig.json');
     expect(existsSync(tsconfig)).toBe(true);
+  });
+
+  it('should create changelog', () => {
+    const changelog = resolve(testServicePath, 'CHANGELOG.md');
+    expect(existsSync(changelog)).toBe(true);
+  });
+
+  it('should create the second markdown md', () => {
+    const testMarkdown = resolve(testServicePath, 'some-test-markdown.md');
+    expect(existsSync(testMarkdown)).toBe(true);
+  });
+
+  it('should create a readme', () => {
+    const readme = resolve(testServicePath, 'README.md');
+    expect(existsSync(readme)).toBe(true);
   });
 });

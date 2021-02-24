@@ -2,11 +2,13 @@ node_modules
 !.github/actions/**/node_modules
 .vscode
 dist
+!.github/actions/**/dist
 .DS_Store
 coverage
 lerna-debug.log
 *.tgz
 **credentials.json
+!packages/cli/src/templates/init/credentials.json
 .idea
 .nyc_output
 documentation
@@ -14,6 +16,8 @@ documentation
 
 test-results.xml
 test-packages/type-tests/report.*.json
+test-resources/cli/test-output
+test-resources/generator/test-output
 
 tsconfig.tsbuildinfo
 junit.xml

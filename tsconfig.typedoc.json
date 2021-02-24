@@ -33,7 +33,7 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/1.37.0",
+    "out": "docs/api/1.38.0",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/analytics/src/index.ts",

@@ -15,7 +15,7 @@ const { readFile } = promises;
 
 /**
  * Convert an OpenAPI document to ensure smooth parsing and generation thereafter.
- * Documents are expected to be formatted as JSON, OpenAPI version 3 and only have one "default" tag.
+ * Documents are expected to be formatted as JSON and compliant with OpenAPI version 3.
  * @param filePath File content of the original spec.
  */
 export async function convertOpenApiSpec(
@@ -23,7 +23,9 @@ export async function convertOpenApiSpec(
 ): Promise<OpenAPIV3.Document> {
   const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
-  return convertDocToGlobalTag(convertDocToUniqueOperationIds(openApiDocument));
+  return convertDocWithDefaultTag(
+    convertDocToUniqueOperationIds(openApiDocument)
+  );
 }
 
 /**
@@ -69,22 +71,58 @@ export async function convertDocToOpenApiV3(
 }
 
 /**
- * Workaround for OpenAPI generation to build one and only one API for all tags.
- * Modify spec to contain only one 'default' tag.
+ * Modify spec to contain the 'default' tag when no tags are defined.
  * @param openApiDocument OpenAPI JSON document.
  * @returns The modified document.
  */
-export function convertDocToGlobalTag(
+export function convertDocWithDefaultTag(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
   const tag = 'default';
-  openApiDocument.tags = [{ name: tag }];
 
   executeForAllOperationObjects(openApiDocument, operation => {
-    operation.tags = [tag];
+    operation.tags = addGlobalTagToOperationWhenNoTagsAreUsed(
+      operation.tags,
+      tag
+    );
   });
 
+  const detectGlobalTag = !!Object.entries(
+    openApiDocument.paths
+  ).find(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
+    hasTag(pathDefinition, tag)
+  );
+
+  if (detectGlobalTag) {
+    openApiDocument.tags = addGlobalTagToRootTags(openApiDocument.tags, tag);
+  }
+
   return openApiDocument;
+}
+
+function hasTag(
+  pathDefinition: OpenAPIV3.PathItemObject,
+  tag: string
+): boolean {
+  return !!methods.find(method => pathDefinition[method]?.tags!.includes(tag));
+}
+
+function addGlobalTagToRootTags(
+  tags: OpenAPIV3.TagObject[] | undefined,
+  globalTag: string
+): OpenAPIV3.TagObject[] {
+  return tags?.find(tag => tag.name === globalTag)
+    ? tags
+    : tags?.length
+    ? tags.concat({ name: globalTag })
+    : [{ name: globalTag }];
+}
+
+function addGlobalTagToOperationWhenNoTagsAreUsed(
+  tags: string[] | undefined,
+  globalTag: string
+): string[] {
+  return tags?.length ? tags : [globalTag];
 }
 
 /**
@@ -215,15 +253,15 @@ function executeForAllOperationObjects(
   openApiDocument: OpenAPIV3.Document,
   callback: (
     operation: OpenAPIV3.OperationObject,
-    pathPattern: string,
+    path: string,
     method: Method
   ) => any
 ): void {
   return Object.entries(openApiDocument.paths).forEach(
-    ([pathPattern, pathDefinition]: [string, OpenAPIV3.PathItemObject]) => {
+    ([path, pathDefinition]: [string, OpenAPIV3.PathItemObject]) => {
       methods.forEach(method => {
         if (pathDefinition[method]) {
-          callback(pathDefinition[method]!, pathPattern, method);
+          callback(pathDefinition[method]!, path, method);
         }
       });
     }

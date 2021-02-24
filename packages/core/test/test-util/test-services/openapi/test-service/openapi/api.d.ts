@@ -10,4 +10,8 @@
  * Do not edit the class manually.
  */
 export * from './api/default-api';
+export * from './api/entity-api';
+export * from './api/tag-dot-api';
+export * from './api/tag-space-api';
+export * from './api/test-case-api';
 //# sourceMappingURL=api.d.ts.map

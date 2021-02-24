@@ -32,6 +32,11 @@ function businessDocumentationLine(service: VdmServiceMetadata): string[] {
     : [];
 }
 
+// TODO 1728 move to a new package for reduce code duplication.
+/**
+ * Build the helpful links section of the readme file.
+ * @returns The content of the section.
+ */
 export function helpfulLinksSection(): string[] {
   return [
     '### Helpful Links',

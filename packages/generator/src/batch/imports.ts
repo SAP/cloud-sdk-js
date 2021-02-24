@@ -8,18 +8,15 @@ export function importBatchDeclarations(
 ): ImportDeclarationStructure[] {
   const versionInCaps = caps(service.oDataVersion);
   return [
-    coreImportDeclaration(
-      [
-        `CreateRequestBuilder${versionInCaps}`,
-        `DeleteRequestBuilder${versionInCaps}`,
-        `GetAllRequestBuilder${versionInCaps}`,
-        `GetByKeyRequestBuilder${versionInCaps}`,
-        `ODataBatchChangeSet${versionInCaps}`,
-        `ODataBatchRequestBuilder${versionInCaps}`,
-        `UpdateRequestBuilder${versionInCaps}`
-      ],
-      service.oDataVersion
-    ),
+    coreImportDeclaration([
+      `CreateRequestBuilder${versionInCaps}`,
+      `DeleteRequestBuilder${versionInCaps}`,
+      `GetAllRequestBuilder${versionInCaps}`,
+      `GetByKeyRequestBuilder${versionInCaps}`,
+      `ODataBatchChangeSet${versionInCaps}`,
+      `ODataBatchRequestBuilder${versionInCaps}`,
+      `UpdateRequestBuilder${versionInCaps}`
+    ]),
     {
       kind: StructureKind.ImportDeclaration,
       moduleSpecifier: '@sap-cloud-sdk/util',

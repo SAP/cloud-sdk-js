@@ -67,7 +67,7 @@ function edmDateTimeOffsetToMoment(dateTime: string): moment.Moment {
 }
 
 function edmDurationToMoment(value: string): moment.Duration {
-  const durationPattern = /([\+,\-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
+  const durationPattern = /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
   const captured = durationPattern.exec(value);
   if (!captured || captured[0] !== value) {
     throw new Error(

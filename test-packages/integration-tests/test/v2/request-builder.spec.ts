@@ -553,8 +553,6 @@ describe('Request Builder', () => {
       clientSecret: 'TokenClientSecret'
     };
 
-    const fakeOAuthToken = 'FakeOAuth2ClientCredentialsToken';
-
     mockClientCredentialsGrantCall(
       providerXsuaaUrl,
       { access_token: providerToken },

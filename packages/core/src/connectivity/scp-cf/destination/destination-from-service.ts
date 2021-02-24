@@ -134,6 +134,7 @@ class DestinationFromServiceRetriever {
   private static async getProviderClientCredentialsToken(
     options: DestinationOptions
   ): Promise<string> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userJwt, ...optionsWithoutJwt } = options;
     return serviceToken('destination', optionsWithoutJwt);
   }

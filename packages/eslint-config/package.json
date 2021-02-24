@@ -24,7 +24,7 @@
     "check:dependencies": "echo dependencies are not checked for this package"
   },
   "dependencies": {
-    "eslint-config-prettier": "^7.1.0"
+    "eslint-config-prettier": "^8.0.0"
   },
   "peerDependencies": {
     "eslint": "^7.5.0",

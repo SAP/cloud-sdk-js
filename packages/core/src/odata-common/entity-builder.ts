@@ -11,16 +11,22 @@ const logger = createLogger({
   messageContext: 'entity-builder'
 });
 
-type FromJsonType<T> = {
+/**
+ * Type to describe possible inputs for `.fromJson`.
+ * This is based on the JSON type of an entity and allows all properties to be optional recursively.
+ * It also allows setting unknown properties, which will be treated as custom fields.
+ * @typeparam JsonT JSON type of the entity
+ */
+type FromJsonType<JsonT> = {
   [key: string]: any;
 } & {
-  [P in keyof T]?: T[P] extends (infer U)[]
+  [P in keyof JsonT]?: JsonT[P] extends (infer U)[]
     ? U extends Record<string, any>
       ? FromJsonType<U>[]
-      : T[P]
-    : T[P] extends Record<string, any>
-    ? FromJsonType<T[P]>
-    : T[P];
+      : JsonT[P]
+    : JsonT[P] extends Record<string, any>
+    ? FromJsonType<JsonT[P]>
+    : JsonT[P];
 };
 
 /**

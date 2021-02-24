@@ -10056,13 +10056,6 @@ dts-critic@latest:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.17":
-  version: 4.17.17
-  resolution: "lodash@npm:4.17.17"
-  checksum: 875f66e67ed0f7833029cefab14a1d6c08491782b53fe09aa542fe091710a78208abe6e7e5951db770b5a9009faffec3563908fbbf47401eb513bc88d6e06905
-  languageName: node
-  linkType: hard
-
 "lodash@npm:4.17.20, lodash@npm:4.x, lodash@npm:^4.17.11, lodash@npm:^4.17.12, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.20, lodash@npm:^4.17.4, lodash@npm:^4.2.1":
   version: 4.17.20
   resolution: "lodash@npm:4.17.20"
@@ -13589,7 +13582,6 @@ resolve@1.8.1:
     jest-junit: ^12.0.0
     lerna: ^3.22.1
     license-checker: ^25.0.1
-    lodash: 4.17.17
     madge: ^4.0.0
     prettier: ^2.0.2
     ts-jest: ^26.4.1

@@ -29,8 +29,8 @@ export function packageJson(
           url: ''
         },
         scripts: {
-          compile: 'npx tsc',
-          doc: 'npx typedoc',
+          compile: 'yarn tsc',
+          doc: 'yar  typedoc',
           ...(sdkAfterVersionScript
             ? { version: 'node ../../../after-version-update.js' }
             : {})

@@ -20,7 +20,7 @@ describe('generator-cli', () => {
 
   it('should fail if mandatory parameters are not there', async () => {
     try {
-      await execa('npx', ['ts-node', pathToGenerator]);
+      await execa('yarn', ['ts-node', pathToGenerator]);
     } catch (err) {
       expect(err.stderr).toContain(
         'Missing required arguments: inputDir, outputDir'
@@ -29,7 +29,7 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should generate VDM if all arguments are there', async () => {
-    await execa('npx', [
+    await execa('yarn', [
       'ts-node',
       pathToGenerator,
       '-i',
@@ -45,7 +45,7 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should generate VDM if there is a valid config file', async () => {
-    await execa('npx', [
+    await execa('yarn', [
       'ts-node',
       pathToGenerator,
       '-c',

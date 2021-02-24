@@ -52,7 +52,7 @@
     "check:circular": "yarn madge --extensions ts --circular ./packages --exclude 'test-services|environment-accessor|\\.d\\.ts'",
     "check:dependencies": "yarn workspaces foreach -v run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
-    "check:vulnerability": "yarn npm audit --all --severity high",
+    "check:vulnerability": "yarn npm audit --all --severity low",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
     "analytics": "yarn workspace @sap-cloud-sdk/analytics",
     "core": "yarn workspace @sap-cloud-sdk/core",

@@ -5,6 +5,8 @@ service TestService {
   entity TestEntity     as projection on cloudsdk.TestEntity
     actions {
       function getStringProperty() returns String;
+
+      action deleteEntity() returns Integer;
     }
   entity TestEntityLink as projection on cloudsdk.TestEntityLink;
 
@@ -16,6 +18,7 @@ service TestService {
   function getAll() returns array of TestEntity;
   function returnKey(param : TestEntity) returns Integer;
 
-  action createTestEntity(id : Integer) returns TestEntity;
-  action createTestEntityReturnId(id : Integer) returns Integer;
+  action createTestEntityById(id : Integer) returns TestEntity;
+  action createTestEntityByIdReturnId(id : Integer) returns Integer;
+  action createTestEntityReturnId(param : TestEntity) returns Integer;
 }

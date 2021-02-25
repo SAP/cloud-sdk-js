@@ -1,7 +1,7 @@
 import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
 import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
 /**
- * This class represents the entity "TestEntityLink" of service "AdminService".
+ * This class represents the entity "TestEntityLink" of service "TestService".
  */
 export declare class TestEntityLink extends EntityV4 implements TestEntityLinkType {
     /**

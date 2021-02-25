@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { EdmxParameter, EdmxProperty } from '../../edmx-parser/common';
 import {
   EdmxAction,
@@ -13,13 +14,17 @@ import { generateComplexTypesV4 } from './complex-type';
 import { createEntityType, getComplexType, getFormatter } from './entity.spec';
 
 describe('action-import', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('transforms action imports', () => {
     const formatter = getFormatter();
     const service = createServiceWithActions();
-    const entites = generateEntitiesV4(service, [], [], formatter);
+    const entities = generateEntitiesV4(service, [], [], formatter);
     const actionImport = generateActionImportsV4(
       service,
-      entites,
+      entities,
       [],
       formatter
     );
@@ -105,6 +110,37 @@ describe('action-import', () => {
       getFormatter()
     );
     expect(actionImports.length).toBe(2);
+  });
+
+  it('should log with warning message, when actions referenced by action imports are not found', () => {
+    const logger = createLogger('action-import');
+    const warnSpy = jest.spyOn(logger, 'warn');
+
+    const formatter = getFormatter();
+    const service = createServiceMetadataWithActionImportLinksToUndefinedAction();
+    generateActionImportsV4(
+      service,
+      [],
+      [],
+      formatter
+    );
+    expect(warnSpy).toBeCalledWith(expect.stringContaining('Could not find actions referenced by the following action imports.'));
+  });
+
+  it('should not log with warning message, when all actions referenced by action imports are found', () => {
+    const logger = createLogger('action-import');
+    const warnSpy = jest.spyOn(logger, 'warn');
+
+    const formatter = getFormatter();
+    const service = createServiceWithActions();
+    const entities = generateEntitiesV4(service, [], [], formatter);
+    generateActionImportsV4(
+      service,
+      entities,
+      [],
+      formatter
+    );
+    expect(warnSpy).not.toBeCalled();
   });
 });
 
@@ -230,10 +266,23 @@ function createServiceWithActions(): ServiceMetadata {
     'TestEntityType',
     [{ Name: 'StringPara', Type: 'Edm.String' }]
   );
-  const service = createTestServiceData([entityType], [entitySet], undefined, [
+  return createTestServiceData([entityType], [entitySet], undefined, [
     actionNoReturnNoParameter,
     actionWithReturnWithParameter
   ]);
+}
 
-  return service;
+function createServiceMetadataWithActionImportLinksToUndefinedAction() {
+  return {
+    edmx: {
+      root: {
+        EntityContainer: {
+          ActionImport: {
+            Name: 'actionNotDefined',
+            Action: 'namespace.actionNotDefined'
+          }
+        }
+      }
+    }
+  } as ServiceMetadata;
 }

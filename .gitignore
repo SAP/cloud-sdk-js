@@ -23,13 +23,7 @@ tsconfig.tsbuildinfo
 junit.xml
 .env
 
-# Jetty mock server
-packages/**/*.jar
-*.jar
 local-docs/_site
-
-# openapi generator
-!**/5.0.0.jar
 
 sqlite.db
 sqlite.db-journal

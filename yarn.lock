@@ -1690,9 +1690,9 @@
     "@octokit/openapi-types" "^5.1.0"
 
 "@openapitools/openapi-generator-cli@^2.1.4":
-  version "2.1.25"
-  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.25.tgz#3225ce16e52c77ca88b2ee06585f7369e603c44e"
-  integrity sha512-UCNtkgoaUBrdWoUJmz3AzTlhxcwVSls9Ke3t/JpqfHjwI/xIC1cqpF284ePu6mXYBttu6Q2CJSZKFCnekYZGyQ==
+  version "2.1.26"
+  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.26.tgz#69108458c0c1a0a3964d9b3e2f0360b195c8ea5f"
+  integrity sha512-wr4LHQCoZCvLhf0/UY/9AZYTVi3nWvvOT+/JFjZYWDA/TIqC4eWxPjzM5tnSzGed6gBTuNHEh8gUonDz6WOZDw==
   dependencies:
     "@nestjs/common" "7.6.13"
     "@nestjs/core" "7.6.13"
@@ -1707,8 +1707,8 @@
     inquirer "7.3.3"
     lodash "4.17.21"
     reflect-metadata "0.1.13"
-    rxjs "6.6.3"
-    tslib "2.0.3"
+    rxjs "6.6.6"
+    tslib "1.13.0"
 
 "@opencensus/core@0.0.9":
   version "0.0.9"
@@ -10504,10 +10504,10 @@ run-series@^1.1.8:
   resolved "https://registry.npmjs.org/run-series/-/run-series-1.1.9.tgz#15ba9cb90e6a6c054e67c98e1dc063df0ecc113a"
   integrity sha512-Arc4hUN896vjkqCYrUXquBFtRZdv1PfLbTYP71efP6butxyQ0kWpiNJyAgsxscmQg1cqvHY32/UCBzXedTpU2g==
 
-rxjs@6.6.3, rxjs@^6.3.3, rxjs@^6.4.0, rxjs@^6.5.1, rxjs@^6.5.2, rxjs@^6.6.0:
-  version "6.6.3"
-  resolved "https://registry.npmjs.org/rxjs/-/rxjs-6.6.3.tgz#8ca84635c4daa900c0d3967a6ee7ac60271ee552"
-  integrity sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ==
+rxjs@6.6.6, rxjs@^6.3.3, rxjs@^6.4.0, rxjs@^6.5.1, rxjs@^6.5.2, rxjs@^6.6.0:
+  version "6.6.6"
+  resolved "https://registry.npmjs.org/rxjs/-/rxjs-6.6.6.tgz#14d8417aa5a07c5e633995b525e1e3c0dec03b70"
+  integrity sha512-/oTwee4N4iWzAMAL9xdGKjkEHmIwupR3oXbQjCKywF1BeFohswF3vZdogbmEF6pZkOsXTzWkrZszrWpQTByYVg==
   dependencies:
     tslib "^1.9.0"
 
@@ -11760,15 +11760,15 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
+tslib@1.13.0:
+  version "1.13.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
+  integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+
 tslib@1.9.3:
   version "1.9.3"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
-
-tslib@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
-  integrity sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
 
 tslib@2.1.0, tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3:
   version "2.1.0"

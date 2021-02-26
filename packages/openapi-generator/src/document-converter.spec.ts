@@ -385,6 +385,36 @@ describe('convertDocToUniqueOperationIds', () => {
       }
     });
   });
+
+  it('use extensions when provided', () => {
+    const newSpec = convertDocToUniqueOperationIds({
+      ...emptyApiDefinition,
+      paths: {
+        '/url': {
+          get: {
+            'x-sap-cloud-sdk-operation-name': 'niceGetName',
+            operationId: 'id'
+          },
+          post: {
+            'x-sap-cloud-sdk-operation-name': 'nicePostName',
+          }
+        }
+      }
+    } as OpenAPIV3.Document);
+
+    expect(newSpec.paths).toEqual({
+      '/url': {
+        get: {
+          operationId: 'niceGetName',
+          'x-sap-cloud-sdk-operation-name': 'niceGetName'
+        },
+        post: {
+          operationId: 'nicePostName',
+          'x-sap-cloud-sdk-operation-name': 'nicePostName'
+        }
+      }
+    });
+  });
 });
 
 describe('getOperationNameFromPatternAndMethod', () => {

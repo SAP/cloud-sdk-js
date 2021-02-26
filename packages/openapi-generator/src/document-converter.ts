@@ -80,11 +80,8 @@ export function convertDocWithApiNameTag(
 ): OpenAPIV3.Document {
   const defaultTag = 'default';
 
-  executeForAllOperationObjects(openApiDocument, (operation,path, method, extensionApiName) => {
-    operation.tags = extensionApiName? [extensionApiName]:addGlobalTagToOperationWhenNoTagsAreUsed(
-      operation.tags,
-      defaultTag
-    );
+  executeForAllOperationObjects(openApiDocument, (param: ExecuteForAllOperationObjectsParam) => {
+    param.operation.tags = getTags(param.extensionApiName, param.operation.tags, defaultTag);
   });
 
   openApiDocument.tags = collectTag(openApiDocument).map(tag => ({ name: tag }));
@@ -103,11 +100,14 @@ function collectTag(
   ))).filter(tag => !!tag);
 }
 
-function addGlobalTagToOperationWhenNoTagsAreUsed(
-  tags: string[] | undefined,
+function getTags(
+  extensionApiName: string | undefined,
+  originalTags: string[] | undefined,
   globalTag: string
 ): string[] {
-  return tags?.length ? tags : [globalTag];
+  return extensionApiName ? [extensionApiName]
+    : originalTags?.length ? originalTags
+      : [globalTag];
 }
 
 /**
@@ -118,6 +118,8 @@ function addGlobalTagToOperationWhenNoTagsAreUsed(
 export function convertDocToUniqueOperationIds(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
+  overwriteOperationIdByUsingExtensions(openApiDocument);
+
   const {
     namedOperations,
     unnamedOperationsWithAdditionalInfo
@@ -136,10 +138,10 @@ export function convertDocToUniqueOperationIds(
   });
 
   unnamedOperationsWithAdditionalInfo.forEach(
-    ({ operation, pathPattern, method }) => {
+    ({ operation, path, method }) => {
       setUniqueOperationName(
         operation,
-        getOperationNameFromPatternAndMethod(pathPattern, method),
+        getOperationNameFromPatternAndMethod(path, method),
         nameGenerator
       );
     }
@@ -150,7 +152,7 @@ export function convertDocToUniqueOperationIds(
 
 interface OperationWithAdditionalInfo {
   operation: OpenAPIV3.OperationObject;
-  pathPattern: string;
+  path: string;
   method: Method;
 }
 
@@ -204,14 +206,14 @@ function partitionOperationsToNamedAndUnnamed(
   const unnamedOperationsWithAdditionalInfo: OperationWithAdditionalInfo[] = [];
   executeForAllOperationObjects(
     openApiDocument,
-    (operation, pathPattern, method) => {
-      if (operation.operationId) {
-        namedOperations.push(operation);
+    (param: ExecuteForAllOperationObjectsParam) => {
+      if (param.operation.operationId) {
+        namedOperations.push(param.operation);
       } else {
         unnamedOperationsWithAdditionalInfo.push({
-          operation,
-          pathPattern,
-          method
+          operation: param.operation,
+          path: param.path,
+          method: param.method
         });
       }
     }
@@ -237,17 +239,19 @@ function setUniqueOperationName(
 function executeForAllOperationObjects(
   openApiDocument: OpenAPIV3.Document,
   callback: (
-    operation: OpenAPIV3.OperationObject,
-    path: string,
-    method: Method,
-    extensionApiName: string | undefined
+    param: ExecuteForAllOperationObjectsParam
   ) => any
 ): void {
   return Object.entries(openApiDocument.paths).forEach(
     ([path, pathDefinition]: [string, OpenApiPathItemObject]) => {
       methods.forEach(method => {
         if (pathDefinition[method]) {
-          callback(pathDefinition[method]!, path, method, pathDefinition['x-sap-cloud-sdk-api-name']);
+          callback({
+            operation: pathDefinition[method]!,
+            path,
+            method,
+            extensionApiName: pathDefinition['x-sap-cloud-sdk-api-name']
+          });
         }
       });
     }
@@ -288,4 +292,17 @@ const nameMapping = {
 // eslint-disable-next-line @typescript-eslint/ban-types
 interface OpenApiPathItemObject<T extends {} = {}> extends OpenAPIV3.PathItemObject<T>{
   'x-sap-cloud-sdk-api-name'?: string;
+}
+
+function overwriteOperationIdByUsingExtensions(openApiDocument: OpenAPIV3.Document){
+  executeForAllOperationObjects(openApiDocument, (param: ExecuteForAllOperationObjectsParam) => {
+    param.operation.operationId = param.operation['x-sap-cloud-sdk-operation-name'] || param.operation.operationId;
+  });
+}
+
+interface ExecuteForAllOperationObjectsParam {
+  operation: OpenAPIV3.OperationObject;
+  path: string;
+  method: Method;
+  extensionApiName?: string;
 }

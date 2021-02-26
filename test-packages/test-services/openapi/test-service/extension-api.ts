@@ -8,12 +8,12 @@ import { ExtensionApi } from './openapi/api';
 
 
 export const TestServiceExtensionApi = {
-  niceGetFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'getTestCasesExtension'>(
+  niceGetFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'niceGetFunction'>(
     ExtensionApi,
-    'getTestCasesExtension'
+    'niceGetFunction'
   ),
-  nicePostFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'testCasesExtensionPost'>(
+  nicePostFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'nicePostFunction'>(
     ExtensionApi,
-    'testCasesExtensionPost'
+    'nicePostFunction'
   )
 };

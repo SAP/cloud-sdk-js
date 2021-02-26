@@ -29,7 +29,7 @@ export const ExtensionApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTestCasesExtension: async (options: any = {}): Promise<RequestArgs> => {
+        niceGetFunction: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/test-cases/extension`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -65,7 +65,7 @@ export const ExtensionApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCasesExtensionPost: async (options: any = {}): Promise<RequestArgs> => {
+        nicePostFunction: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/test-cases/extension`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -110,8 +110,8 @@ export const ExtensionApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTestCasesExtension(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await ExtensionApiAxiosParamCreator(configuration).getTestCasesExtension(options);
+        async niceGetFunction(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await ExtensionApiAxiosParamCreator(configuration).niceGetFunction(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -122,8 +122,8 @@ export const ExtensionApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async testCasesExtensionPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await ExtensionApiAxiosParamCreator(configuration).testCasesExtensionPost(options);
+        async nicePostFunction(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await ExtensionApiAxiosParamCreator(configuration).nicePostFunction(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: (configuration?.basePath || basePath) + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -143,16 +143,16 @@ export const ExtensionApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTestCasesExtension(options?: any): AxiosPromise<void> {
-            return ExtensionApiFp(configuration).getTestCasesExtension(options).then((request) => request(axios, basePath));
+        niceGetFunction(options?: any): AxiosPromise<void> {
+            return ExtensionApiFp(configuration).niceGetFunction(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCasesExtensionPost(options?: any): AxiosPromise<void> {
-            return ExtensionApiFp(configuration).testCasesExtensionPost(options).then((request) => request(axios, basePath));
+        nicePostFunction(options?: any): AxiosPromise<void> {
+            return ExtensionApiFp(configuration).nicePostFunction(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -170,8 +170,8 @@ export class ExtensionApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExtensionApi
      */
-    public getTestCasesExtension(options?: any) {
-        return ExtensionApiFp(this.configuration).getTestCasesExtension(options).then((request) => request(this.axios, this.basePath));
+    public niceGetFunction(options?: any) {
+        return ExtensionApiFp(this.configuration).niceGetFunction(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -180,7 +180,7 @@ export class ExtensionApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExtensionApi
      */
-    public testCasesExtensionPost(options?: any) {
-        return ExtensionApiFp(this.configuration).testCasesExtensionPost(options).then((request) => request(this.axios, this.basePath));
+    public nicePostFunction(options?: any) {
+        return ExtensionApiFp(this.configuration).nicePostFunction(options).then((request) => request(this.axios, this.basePath));
     }
 }

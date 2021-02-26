@@ -24,7 +24,6 @@ export interface OpenApiOperation extends OpenAPIV3.OperationObject {
   path: string;
   requestBody?: OpenApiRequestBody;
   parameters: OpenApiParameter[];
-  'x-sap-cloud-sdk-operation-name'?: string;
 }
 
 const supportedMethods = {

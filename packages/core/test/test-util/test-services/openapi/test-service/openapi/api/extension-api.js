@@ -93,7 +93,7 @@ var ExtensionApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTestCasesExtension: function (options) {
+        niceGetFunction: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
                 var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
@@ -128,7 +128,7 @@ var ExtensionApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCasesExtensionPost: function (options) {
+        nicePostFunction: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
                 var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
@@ -172,12 +172,12 @@ var ExtensionApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTestCasesExtension: function (options) {
+        niceGetFunction: function (options) {
             return __awaiter(this, void 0, void 0, function () {
                 var localVarAxiosArgs;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, exports.ExtensionApiAxiosParamCreator(configuration).getTestCasesExtension(options)];
+                        case 0: return [4 /*yield*/, exports.ExtensionApiAxiosParamCreator(configuration).niceGetFunction(options)];
                         case 1:
                             localVarAxiosArgs = _a.sent();
                             return [2 /*return*/, function (axios, basePath) {
@@ -195,12 +195,12 @@ var ExtensionApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCasesExtensionPost: function (options) {
+        nicePostFunction: function (options) {
             return __awaiter(this, void 0, void 0, function () {
                 var localVarAxiosArgs;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, exports.ExtensionApiAxiosParamCreator(configuration).testCasesExtensionPost(options)];
+                        case 0: return [4 /*yield*/, exports.ExtensionApiAxiosParamCreator(configuration).nicePostFunction(options)];
                         case 1:
                             localVarAxiosArgs = _a.sent();
                             return [2 /*return*/, function (axios, basePath) {
@@ -227,16 +227,16 @@ var ExtensionApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTestCasesExtension: function (options) {
-            return exports.ExtensionApiFp(configuration).getTestCasesExtension(options).then(function (request) { return request(axios, basePath); });
+        niceGetFunction: function (options) {
+            return exports.ExtensionApiFp(configuration).niceGetFunction(options).then(function (request) { return request(axios, basePath); });
         },
         /**
          *
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCasesExtensionPost: function (options) {
-            return exports.ExtensionApiFp(configuration).testCasesExtensionPost(options).then(function (request) { return request(axios, basePath); });
+        nicePostFunction: function (options) {
+            return exports.ExtensionApiFp(configuration).nicePostFunction(options).then(function (request) { return request(axios, basePath); });
         },
     };
 };
@@ -258,9 +258,9 @@ var ExtensionApi = /** @class */ (function (_super) {
      * @throws {RequiredError}
      * @memberof ExtensionApi
      */
-    ExtensionApi.prototype.getTestCasesExtension = function (options) {
+    ExtensionApi.prototype.niceGetFunction = function (options) {
         var _this = this;
-        return exports.ExtensionApiFp(this.configuration).getTestCasesExtension(options).then(function (request) { return request(_this.axios, _this.basePath); });
+        return exports.ExtensionApiFp(this.configuration).niceGetFunction(options).then(function (request) { return request(_this.axios, _this.basePath); });
     };
     /**
      *
@@ -268,9 +268,9 @@ var ExtensionApi = /** @class */ (function (_super) {
      * @throws {RequiredError}
      * @memberof ExtensionApi
      */
-    ExtensionApi.prototype.testCasesExtensionPost = function (options) {
+    ExtensionApi.prototype.nicePostFunction = function (options) {
         var _this = this;
-        return exports.ExtensionApiFp(this.configuration).testCasesExtensionPost(options).then(function (request) { return request(_this.axios, _this.basePath); });
+        return exports.ExtensionApiFp(this.configuration).nicePostFunction(options).then(function (request) { return request(_this.axios, _this.basePath); });
     };
     return ExtensionApi;
 }(base_1.BaseAPI));

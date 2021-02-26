@@ -586,7 +586,7 @@
             "description": "no content"
           }
         },
-        "operationId": "getTestCasesExtension",
+        "operationId": "niceGetFunction",
         "tags": [
           "extension"
         ]
@@ -596,7 +596,7 @@
         "tags": [
           "extension"
         ],
-        "operationId": "testCasesExtensionPost",
+        "operationId": "nicePostFunction",
         "responses": {
           "201": {
             "description": "no content"

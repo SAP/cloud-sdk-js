@@ -9,7 +9,7 @@ exports.TestServiceExtensionApi = void 0;
 var core_1 = require("../../../../../src");
 var api_1 = require("./openapi/api");
 exports.TestServiceExtensionApi = {
-    niceGetFunction: function () { return new core_1.OpenApiRequestBuilder(api_1.ExtensionApi, 'getTestCasesExtension'); },
-    nicePostFunction: function () { return new core_1.OpenApiRequestBuilder(api_1.ExtensionApi, 'testCasesExtensionPost'); }
+    niceGetFunction: function () { return new core_1.OpenApiRequestBuilder(api_1.ExtensionApi, 'niceGetFunction'); },
+    nicePostFunction: function () { return new core_1.OpenApiRequestBuilder(api_1.ExtensionApi, 'nicePostFunction'); }
 };
 //# sourceMappingURL=extension-api.js.map

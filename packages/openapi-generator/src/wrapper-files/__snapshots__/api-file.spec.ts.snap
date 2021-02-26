@@ -100,20 +100,3 @@ export const TestServiceTagApi = {
   )
 };"
 `;
-
-exports[`api-file creates api file contest for operation with operation name extension 1`] = `
-"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { TagApi } from './openapi/api';
-
-
-export const TestServiceTagApi = {
-  niceGetFunctionName: () => new OpenApiRequestBuilder<TagApi, 'getFn'>(
-    TagApi,
-    'getFn'
-  ),
-  nicePostFunctionName: () => new OpenApiRequestBuilder<TagApi, 'postFn'>(
-    TagApi,
-    'postFn'
-  )
-};"
-`;

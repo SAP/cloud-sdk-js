@@ -22,13 +22,13 @@ export declare const ExtensionApiAxiosParamCreator: (configuration?: Configurati
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getTestCasesExtension: (options?: any) => Promise<RequestArgs>;
+    niceGetFunction: (options?: any) => Promise<RequestArgs>;
     /**
      *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    testCasesExtensionPost: (options?: any) => Promise<RequestArgs>;
+    nicePostFunction: (options?: any) => Promise<RequestArgs>;
 };
 /**
  * ExtensionApi - functional programming interface
@@ -40,13 +40,13 @@ export declare const ExtensionApiFp: (configuration?: Configuration | undefined)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getTestCasesExtension(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    niceGetFunction(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     /**
      *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    testCasesExtensionPost(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    nicePostFunction(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
 };
 /**
  * ExtensionApi - factory interface
@@ -58,13 +58,13 @@ export declare const ExtensionApiFactory: (configuration?: Configuration | undef
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getTestCasesExtension(options?: any): AxiosPromise<void>;
+    niceGetFunction(options?: any): AxiosPromise<void>;
     /**
      *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    testCasesExtensionPost(options?: any): AxiosPromise<void>;
+    nicePostFunction(options?: any): AxiosPromise<void>;
 };
 /**
  * ExtensionApi - object-oriented interface
@@ -79,13 +79,13 @@ export declare class ExtensionApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExtensionApi
      */
-    getTestCasesExtension(options?: any): Promise<import("axios").AxiosResponse<void>>;
+    niceGetFunction(options?: any): Promise<import("axios").AxiosResponse<void>>;
     /**
      *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ExtensionApi
      */
-    testCasesExtensionPost(options?: any): Promise<import("axios").AxiosResponse<void>>;
+    nicePostFunction(options?: any): Promise<import("axios").AxiosResponse<void>>;
 }
 //# sourceMappingURL=extension-api.d.ts.map

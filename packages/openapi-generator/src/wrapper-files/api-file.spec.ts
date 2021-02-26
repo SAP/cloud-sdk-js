@@ -152,24 +152,4 @@ describe('api-file', () => {
     ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
   });
-
-  it('creates api file contest for operation with operation name extension', () => {
-    const operations = ([
-      {
-        'x-sap-cloud-sdk-operation-name':'niceGetFunctionName',
-        operationId: 'getFn',
-        method: 'get',
-        parameters: [],
-        path: '/test'
-      },
-      {
-        'x-sap-cloud-sdk-operation-name':'nicePostFunctionName',
-        operationId: 'postFn',
-        method: 'post',
-        parameters: [],
-        path: '/test'
-      }
-    ] as unknown) as OpenApiOperation[];
-    expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
-  });
 });

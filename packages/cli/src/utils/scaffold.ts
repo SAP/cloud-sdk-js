@@ -67,7 +67,7 @@ export async function buildScaffold(
   };
 
   await execa(
-    'yarn',
+    'npx',
     [
       '-p',
       '@nestjs/cli',

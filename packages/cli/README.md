@@ -49,7 +49,7 @@ EXAMPLE
   $ sap-cloud-sdk add-approuter
 ```
 
-_See code: [dist/commands/add-approuter.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/dist/commands/add-approuter.ts)_
+_See code: [src/commands/add-approuter.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/add-approuter.ts)_
 
 ## `sap-cloud-sdk add-cds [PROJECTDIR]`
 
@@ -71,7 +71,7 @@ EXAMPLE
   $ sap-cloud-sdk add-cds
 ```
 
-_See code: [dist/commands/add-cds.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/dist/commands/add-cds.ts)_
+_See code: [src/commands/add-cds.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/add-cds.ts)_
 
 ## `sap-cloud-sdk add-cx-server [PROJECTDIR]`
 
@@ -92,7 +92,7 @@ EXAMPLE
   $ sap-cloud-sdk add-cx-server
 ```
 
-_See code: [dist/commands/add-cx-server.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/dist/commands/add-cx-server.ts)_
+_See code: [src/commands/add-cx-server.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/add-cx-server.ts)_
 
 ## `sap-cloud-sdk autocomplete [SHELL]`
 
@@ -202,7 +202,7 @@ EXAMPLES
   $ sap-cloud-sdk generate-odata-client --help
 ```
 
-_See code: [dist/commands/generate-odata-client.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/dist/commands/generate-odata-client.ts)_
+_See code: [src/commands/generate-odata-client.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/generate-odata-client.ts)_
 
 ## `sap-cloud-sdk help [COMMAND]`
 
@@ -230,7 +230,7 @@ USAGE
   $ sap-cloud-sdk help-page
 ```
 
-_See code: [dist/commands/help-page.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/dist/commands/help-page.ts)_
+_See code: [src/commands/help-page.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/help-page.ts)_
 
 ## `sap-cloud-sdk init [PROJECTDIR]`
 
@@ -261,7 +261,7 @@ EXAMPLES
   $ sap-cloud-sdk init --help
 ```
 
-_See code: [dist/commands/init.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/dist/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/init.ts)_
 
 ## `sap-cloud-sdk package [PROJECTDIR]`
 
@@ -278,7 +278,7 @@ OPTIONS
   -e, --exclude=exclude  Comma separated list of files or globs to exclude
   -h, --help             Show help for the package command.
 
-  -i, --include=include  [default: package.json,package-lock.json,index.js,dist/**/*] Comma seperated list of files or
+  -i, --include=include  [default: package.json,package-lock.json,index.js,src/**/*] Comma seperated list of files or
                          globs to include
 
   -o, --output=output    [default: deployment] Output and deployment folder
@@ -290,10 +290,10 @@ OPTIONS
 EXAMPLES
   $ sap-cloud-sdk package
   $ sap-cloud-sdk package -i="index.html"
-  $ sap-cloud-sdk package --include="package.json,package-lock.json,index.js,dist/**/*" --exclude="**/*.java"
+  $ sap-cloud-sdk package --include="package.json,package-lock.json,index.js,src/**/*" --exclude="**/*.java"
 ```
 
-_See code: [dist/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/dist/commands/package.ts)_
+_See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/package.ts)_
 <!-- commandsstop -->
 
 <!-- sap-cloud-sdk-common-readme -->

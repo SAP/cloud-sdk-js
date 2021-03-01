@@ -278,7 +278,7 @@ OPTIONS
   -e, --exclude=exclude  Comma separated list of files or globs to exclude
   -h, --help             Show help for the package command.
 
-  -i, --include=include  [default: package.json,package-lock.json,index.js,src/**/*] Comma seperated list of files or
+  -i, --include=include  [default: package.json,package-lock.json,index.js,dist/**/*] Comma seperated list of files or
                          globs to include
 
   -o, --output=output    [default: deployment] Output and deployment folder
@@ -290,7 +290,7 @@ OPTIONS
 EXAMPLES
   $ sap-cloud-sdk package
   $ sap-cloud-sdk package -i="index.html"
-  $ sap-cloud-sdk package --include="package.json,package-lock.json,index.js,src/**/*" --exclude="**/*.java"
+  $ sap-cloud-sdk package --include="package.json,package-lock.json,index.js,dist/**/*" --exclude="**/*.java"
 ```
 
 _See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/package.ts)_

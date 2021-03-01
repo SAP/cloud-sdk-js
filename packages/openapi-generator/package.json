@@ -20,7 +20,8 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "bin/openapi-jar"
   ],
   "oclif": {
     "bin": "generate-openapi-client",

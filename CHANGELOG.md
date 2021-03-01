@@ -26,7 +26,8 @@
 
 ## Fixed Issues
 
--[odata-generator] The exit code of the node process is set to 1 in cases of a generator error.
+- [odata-generator] The exit code of the node process is set to 1 in cases of a generator error.
+- [odata-generator] Fix the false-positive warning message, when functions/actions are not used by any function/action imports.
 
 
 # 1.38.0

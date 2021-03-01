@@ -23,9 +23,6 @@ tsconfig.tsbuildinfo
 junit.xml
 .env
 
-# Jetty mock server
-packages/**/*.jar
-*.jar
 local-docs/_site
 
 sqlite.db

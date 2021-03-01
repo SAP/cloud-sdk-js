@@ -258,7 +258,8 @@ describe('batch response parser', () => {
         'content-id: ~00',
         '',
         'HTTP/1.1 204 No Content',
-        'odata-version: 4.0'
+        'odata-version: 4.0',
+        ''
       ].join('\r\n');
 
       expect(parseResponseData(response)).toEqual({
@@ -280,7 +281,8 @@ describe('batch response parser', () => {
         '',
         'HTTP/1.1 204 No Content',
         'Content-Length: 0',
-        'dataserviceversion: 2.0'
+        'dataserviceversion: 2.0',
+        ''
       ].join('\r\n');
 
       expect(parseResponseData(response)).toEqual({
@@ -339,7 +341,10 @@ describe('batch response parser', () => {
       const batchResponse: HttpResponse = {
         data,
         status: 200,
-        headers: { 'content-type': 'multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515000' }
+        headers: {
+          'content-type':
+            'multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515000'
+        }
       };
       const logger = createLogger({
         messageContext: 'batch-response-parser'

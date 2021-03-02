@@ -15,12 +15,12 @@ const infoNoManualEdit =
 
 const logger = createLogger('check-licenses');
 
-function insertCommonContent(oldFileContent: string): string {
-  const genericContent = readFileSync(
-    resolve(__dirname, 'COMMON-README-PART.md'),
-    { encoding: 'utf8' }
-  );
+const genericContent = readFileSync(
+  resolve(__dirname, 'COMMON-README-PART.md'),
+  { encoding: 'utf8' }
+);
 
+function insertCommonContent(oldFileContent: string): string {
   const newFileContent = replaceContentUsingTags(
     startTagCommonReadme,
     endTagCommonReadme,
@@ -42,7 +42,7 @@ function replaceContentUsingTags(
   fileContent: string
 ) {
   return fileContent.replace(
-    new RegExp(`${startTag}[.\n]*${endTag}`),
+    new RegExp(`${startTag}(?:.|\n)*${endTag}`),
     `${startTag}\n${infoNoManualEdit}\n${replacement}${endTag}`
   );
 }

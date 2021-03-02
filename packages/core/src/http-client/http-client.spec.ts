@@ -11,7 +11,7 @@ import {
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest, executeRawHttpRequest
+  executeHttpRequest, executeHttpRequestReturnRequestAndResponse
 } from './http-client';
 
 describe('generic http client', () => {
@@ -335,7 +335,7 @@ describe('generic http client', () => {
         }
       };
 
-      const reqRes = await executeRawHttpRequest(httpsDestination, config);
+      const reqRes = await executeHttpRequestReturnRequestAndResponse(httpsDestination, config);
       expect(reqRes.response.data.res).toBe('ult');
       expect(reqRes.response.status).toBe(200);
       expect(reqRes.response.headers).toMatchObject({ sharp: 'header' });

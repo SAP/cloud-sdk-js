@@ -126,7 +126,7 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  */
 export const executeHttpRequest = execute(executeWithAxios);
 
-export const executeRawHttpRequest = execute(executeRawWithAxios);
+export const executeHttpRequestReturnRequestAndResponse = execute(executeWithAxiosReturnRequestAndResponse);
 
 function buildDestinationHttpRequestConfig(
   destination: Destination,
@@ -189,7 +189,7 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return axios.request({ ...getAxiosConfigWithDefaults(), ...request });
 }
 
-function executeRawWithAxios(request: HttpRequest): Promise<HttpRequestAndResponse> {
+function executeWithAxiosReturnRequestAndResponse(request: HttpRequest): Promise<HttpRequestAndResponse> {
   const merged: HttpRequest = { ...getAxiosConfigWithDefaults(), ...request };
   return axios.request(merged).then(
     res => ({ request: merged, response: res })

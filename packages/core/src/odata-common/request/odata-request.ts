@@ -17,7 +17,12 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '../remove-slashes';
-import { HttpResponse, executeHttpRequest, executeRawHttpRequest, HttpRequestAndResponse } from '../../http-client';
+import {
+  HttpResponse,
+  executeHttpRequest,
+  HttpRequestAndResponse,
+  executeHttpRequestReturnRequestAndResponse
+} from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 
@@ -250,7 +255,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeRawHttpRequest(destination, {
+    return executeHttpRequestReturnRequestAndResponse(destination, {
       headers: await this.headers(),
       url: this.relativeUrl(),
       method: this.config.method,

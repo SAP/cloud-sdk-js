@@ -11,7 +11,7 @@ import {
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest
+  executeHttpRequest, executeRawHttpRequest
 } from './http-client';
 
 describe('generic http client', () => {
@@ -304,6 +304,43 @@ describe('generic http client', () => {
           }
         })
       ).rejects.toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('executeRawHttpRequest', () => {
+    beforeAll(() => {
+      nock.cleanAll();
+    });
+
+    it('takes a generic HTTP request and executes it', async () => {
+      nock('https://example.com', {
+        reqheaders: {
+          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
+          'sap-client': '001'
+        }
+      })
+        .get('/api/entity')
+        .query({
+          a: 'a',
+          b: 'b'
+        })
+        .reply(200, { res: 'ult' }, { sharp: 'header' });
+
+      const config = {
+        method: HttpMethod.GET,
+        url: '/api/entity',
+        params: {
+          a: 'a',
+          b: 'b'
+        }
+      };
+
+      const reqRes = await executeRawHttpRequest(httpsDestination, config);
+      expect(reqRes.response.data.res).toBe('ult');
+      expect(reqRes.response.status).toBe(200);
+      expect(reqRes.response.headers).toMatchObject({ sharp: 'header' });
+      expect(reqRes.request.method).toBe(HttpMethod.GET);
+      expect(reqRes.request.baseURL).toBe('https://example.com');
     });
   });
 });

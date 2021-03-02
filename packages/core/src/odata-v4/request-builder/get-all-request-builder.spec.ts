@@ -38,6 +38,7 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('is built correctly for nested expands', async () => {
+      requestBuilder.
       const expected =
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_MultiLink($expand=to_MultiLink1($expand=to_MultiLink2))';
       const actual = await requestBuilder

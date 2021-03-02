@@ -12,6 +12,7 @@ import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { GetRequestBuilder } from './get-request-builder-base';
+import { HttpRequestAndResponse } from '../../http-client';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
@@ -109,19 +110,26 @@ export abstract class GetAllRequestBuilder<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT[]> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(response =>
+    return this.executeRaw(destination, options)
+      .then(rawResponse =>
         this.dataAccessor
-          .getCollectionResult(response.data)
+          .getCollectionResult(rawResponse.response.data)
           .map(json =>
             this.entityDeserializer.deserializeEntity(
               json,
               this._entityConstructor,
-              response.headers
+              rawResponse.response.headers
             )
           )
       );
+  }
+
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 }
 

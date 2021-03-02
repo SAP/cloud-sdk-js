@@ -13,7 +13,7 @@ import { getAgentConfig } from './http-agent';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
-  HttpRequest,
+  HttpRequest, HttpRequestAndResponse,
   HttpRequestConfig,
   HttpResponse
 } from './http-client-types';
@@ -81,11 +81,11 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  * @param executeFn - A function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
  */
-export function execute(executeFn: ExecuteHttpRequestFn) {
+export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfig>(
     destination: Destination | DestinationNameAndJwt,
     requestConfig: T
-  ): Promise<HttpResponse> {
+  ): Promise<ReturnT> {
     const destinationRequestConfig = await buildHttpRequest(
       destination,
       requestConfig.headers
@@ -125,6 +125,8 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  * @returns An [[HttpResponse]].
  */
 export const executeHttpRequest = execute(executeWithAxios);
+
+export const executeRawHttpRequest = execute(executeRawWithAxios);
 
 function buildDestinationHttpRequestConfig(
   destination: Destination,
@@ -185,6 +187,13 @@ function merge<T extends HttpRequestConfig>(
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return axios.request({ ...getAxiosConfigWithDefaults(), ...request });
+}
+
+function executeRawWithAxios(request: HttpRequest): Promise<HttpRequestAndResponse> {
+  const merged: HttpRequest = { ...getAxiosConfigWithDefaults(), ...request };
+  return axios.request(merged).then(
+    res => ({ request: merged, response: res })
+  );
 }
 
 /**

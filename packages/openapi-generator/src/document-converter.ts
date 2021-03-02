@@ -84,12 +84,12 @@ export function convertDocWithApiNameTag(
     param.operation.tags = getTags(param.extensionApiName, param.operation.tags, defaultTag);
   });
 
-  openApiDocument.tags = collectTag(openApiDocument).map(tag => ({ name: tag }));
+  openApiDocument.tags = collectTags(openApiDocument).map(tag => ({ name: tag }));
 
   return openApiDocument;
 }
 
-function collectTag(
+function collectTags(
   openApiDocument: OpenAPIV3.Document
 ): string[] {
   return unique(flatten(Object.entries(

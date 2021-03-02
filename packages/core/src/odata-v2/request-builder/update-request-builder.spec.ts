@@ -289,7 +289,7 @@ describe('UpdateRequestBuilder', () => {
     expect(actual['remoteState']).toEqual(entity);
   });
 
-  it('warns if navigaton properties are sent', async () => {
+  it('warns if navigation properties are sent', async () => {
     const entity = createTestEntity();
     entity.toMultiLink = [
       TestEntityMultiLink.builder().keyProperty('someKey').build()
@@ -314,5 +314,17 @@ describe('UpdateRequestBuilder', () => {
         'Update of navigation properties is not supported and will be ignored.'
       )
     );
+  });
+
+  describe('executeRaw', () => {
+    it('returns undefined when only keys have been modified', async () => {
+      const entity = createTestEntity().setOrInitializeRemoteState();
+      entity.keyPropertyGuid = uuid();
+      entity.keyPropertyString = 'UPDATED!';
+      const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
+        defaultDestination
+      );
+      await expect(actual).toEqual(undefined);
+    });
   });
 });

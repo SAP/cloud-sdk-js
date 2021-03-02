@@ -111,19 +111,26 @@ export abstract class GetAllRequestBuilder<
     options?: DestinationOptions
   ): Promise<EntityT[]> {
     return this.executeRaw(destination, options)
-      .then(rawResponse =>
+      .then(requestResponse =>
         this.dataAccessor
-          .getCollectionResult(rawResponse.response.data)
+          .getCollectionResult(requestResponse.response.data)
           .map(json =>
             this.entityDeserializer.deserializeEntity(
               json,
               this._entityConstructor,
-              rawResponse.response.headers
+              requestResponse.response.headers
             )
           )
       );
   }
 
+  /**
+   * Execute request and return the request and the raw response.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions

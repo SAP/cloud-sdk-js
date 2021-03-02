@@ -11,6 +11,7 @@ import { FieldType, Selectable } from '../selectable';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { GetRequestBuilder } from './get-request-builder-base';
+import { HttpRequestAndResponse } from '../../http-client';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  *
@@ -68,18 +69,32 @@ export abstract class GetByKeyRequestBuilder<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(response =>
+    return this.executeRaw(destination, options)
+      .then(requestResponse =>
         this.entityDeserializer.deserializeEntity(
-          this.dataAccessor.getSingleResult(response.data),
+          this.dataAccessor.getSingleResult(requestResponse.response.data),
           this._entityConstructor,
-          response.headers
+          requestResponse.response.headers
         )
       )
       .catch(error => {
         throw new ErrorWithCause('OData get by key request failed!', error);
       });
+  }
+
+  /**
+   * Execute request and return the request and the raw response.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   */
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 }
 

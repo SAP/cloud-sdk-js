@@ -126,6 +126,14 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  */
 export const executeHttpRequest = execute(executeWithAxios);
 
+/**
+ * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
+ * and executes it (using Axios). The request is also included in the object returned.
+ *
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ * @returns An [[HttpRequestAndResponse]].
+ */
 export const executeHttpRequestReturnRequestAndResponse = execute(executeWithAxiosReturnRequestAndResponse);
 
 function buildDestinationHttpRequestConfig(

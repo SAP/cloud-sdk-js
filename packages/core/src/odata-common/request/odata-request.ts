@@ -249,6 +249,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     });
   }
 
+  /**
+   * Execute the given request and return the request and the raw response.
+   *
+   * @returns Promise resolving to an [[HttpRequestAndResponse]].
+   */
   async executeRaw(): Promise<HttpRequestAndResponse> {
     const destination = this.destination;
     if (!destination) {

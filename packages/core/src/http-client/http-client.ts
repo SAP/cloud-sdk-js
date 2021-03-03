@@ -193,12 +193,16 @@ function merge<T extends HttpRequestConfig>(
   };
 }
 
+function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest{
+  return { ...getAxiosConfigWithDefaults(), ...request };
+}
+
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  return axios.request({ ...getAxiosConfigWithDefaults(), ...request });
+  return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
 function executeWithAxiosReturnRequestAndResponse(request: HttpRequest): Promise<HttpRequestAndResponse> {
-  const merged: HttpRequest = { ...getAxiosConfigWithDefaults(), ...request };
+  const merged = mergeRequestWithAxiosDefaults(request);
   return axios.request(merged).then(
     res => ({ request: merged, response: res })
   );

@@ -327,7 +327,7 @@ describe('UpdateRequestBuilder', () => {
       await expect(actual).toEqual(undefined);
     });
 
-    it('update request sends only non-key properties111', async () => {
+    it('returns request and raw response when sending non-key properties', async () => {
       const entity = createTestEntity();
       entity.booleanProperty = false;
       const requestBody = {

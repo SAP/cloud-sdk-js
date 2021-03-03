@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [core] Deprecated `_customFields` in the `fromJson` method of the entity builders. Instead, add custom fields to the JSON objects directly.
 
 ## New Functionality
 
@@ -26,6 +26,7 @@
 
 ## Fixed Issues
 
+- [core] Fix building of entities using `fromJson` with navigation properties.
 - [odata-generator] The exit code of the node process is set to 1 in cases of a generator error.
 - [odata-generator] Fix the false-positive warning message, when functions/actions are not used by any function/action imports.
 

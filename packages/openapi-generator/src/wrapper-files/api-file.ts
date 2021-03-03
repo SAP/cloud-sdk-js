@@ -1,12 +1,6 @@
-import {
-  codeBlock,
-  createLogger,
-  partition,
-  pascalCase,
-  unique
-} from '@sap-cloud-sdk/util';
+import { codeBlock, partition, pascalCase, unique } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, SchemaMetadata } from '../openapi-types';
-const logger = createLogger('openapi-generator');
+
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Get the file contents for an API wrapper file.
@@ -91,7 +85,7 @@ function getOperation(operation: OpenApiOperation, apiName: string): string {
 
   return codeBlock`
 ${
-  operation.operationId
+    operation.operationId
 }: (${paramsArg}) => new OpenApiRequestBuilder<${apiName}Api, '${
     operation.operationId
   }'>(

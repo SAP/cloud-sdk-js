@@ -1,19 +1,22 @@
-<edmx:Edmx
-    xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
     <edmx:DataServices>
-        <Schema
-            xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="AdminService">
+        <Schema Namespace="TestService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
             <EntityContainer Name="EntityContainer">
-                <EntitySet Name="TestEntity" EntityType="AdminService.TestEntity">
+                <EntitySet Name="TestEntity" EntityType="TestService.TestEntity">
                     <NavigationPropertyBinding Path="ToMultiLink" Target="TestEntityLink"/>
                 </EntitySet>
-                <EntitySet Name="TestEntityLink" EntityType="AdminService.TestEntityLink"/>
-                <ActionImport Name="createTestEntity" Action="AdminService.createTestEntity" EntitySet="TestEntity"/>
-                <ActionImport Name="createTestEntityReturnId" Action="AdminService.createTestEntityReturnId"/>
-                <FunctionImport Name="getByKey" Function="AdminService.getByKey" EntitySet="TestEntity"/>
-                <FunctionImport Name="returnInt" Function="AdminService.returnInt"/>
-                <FunctionImport Name="returnSapCloudSdk" Function="AdminService.returnSapCloudSdk"/>
-                <FunctionImport Name="concatStrings" Function="AdminService.concatStrings"/>
+                <EntitySet Name="TestEntityLink" EntityType="TestService.TestEntityLink"/>
+                <FunctionImport Name="concatStrings" Function="TestService.concatStrings"/>
+                <ActionImport Name="createTestEntityById" Action="TestService.createTestEntityById" EntitySet="TestEntity"/>
+                <ActionImport Name="createTestEntityByIdReturnId" Action="TestService.createTestEntityByIdReturnId"/>
+                <ActionImport Name="createTestEntityReturnId" Action="TestService.createTestEntityReturnId"/>
+                <FunctionImport Name="getAll" Function="TestService.getAll" EntitySet="TestEntity"/>
+                <FunctionImport Name="getByKey" Function="TestService.getByKey" EntitySet="TestEntity"/>
+                <FunctionImport Name="returnCollection" Function="TestService.returnCollection"/>
+                <FunctionImport Name="returnInt" Function="TestService.returnInt"/>
+                <FunctionImport Name="returnKey" Function="TestService.returnKey"/>
+                <FunctionImport Name="returnSapCloudSdk" Function="TestService.returnSapCloudSdk"/>
             </EntityContainer>
             <EntityType Name="TestEntity">
                 <Key>
@@ -30,7 +33,7 @@
                 <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay"/>
                 <Property Name="DataTimeOffsetDataTimeProperty" Type="Edm.DateTimeOffset"/>
                 <Property Name="DataTimeOffsetTimestampProperty" Type="Edm.DateTimeOffset" Precision="7"/>
-                <NavigationProperty Name="ToMultiLink" Type="Collection(AdminService.TestEntityLink)">
+                <NavigationProperty Name="ToMultiLink" Type="Collection(TestService.TestEntityLink)">
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
             </EntityType>
@@ -43,28 +46,51 @@
                 <Property Name="KeyToTestEntity" Type="Edm.Int32" Nullable="false"/>
                 <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
             </EntityType>
-            <Action Name="createTestEntity" IsBound="false">
-                <Parameter Name="id" Type="Edm.Int32"/>
-                <ReturnType Type="AdminService.TestEntity"/>
+            <Function Name="getStringProperty" IsBound="true" IsComposable="false">
+                <Parameter Name="in" Type="TestService.TestEntity"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Action Name="deleteEntity" IsBound="true">
+                <Parameter Name="in" Type="TestService.TestEntity"/>
+                <ReturnType Type="Edm.Int32"/>
             </Action>
-            <Action Name="createTestEntityReturnId" IsBound="false">
+            <Function Name="concatStrings" IsBound="false" IsComposable="false">
+                <Parameter Name="Str1" Type="Edm.String"/>
+                <Parameter Name="Str2" Type="Edm.String"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Action Name="createTestEntityById" IsBound="false">
+                <Parameter Name="id" Type="Edm.Int32"/>
+                <ReturnType Type="TestService.TestEntity"/>
+            </Action>
+            <Action Name="createTestEntityByIdReturnId" IsBound="false">
                 <Parameter Name="id" Type="Edm.Int32"/>
                 <ReturnType Type="Edm.Int32"/>
             </Action>
+            <Action Name="createTestEntityReturnId" IsBound="false">
+                <Parameter Name="param" Type="TestService.TestEntity"/>
+                <ReturnType Type="Edm.Int32"/>
+            </Action>
+            <Function Name="getAll" IsBound="false" IsComposable="false">
+                <ReturnType Type="Collection(TestService.TestEntity)" Nullable="false"/>
+            </Function>
             <Function Name="getByKey" IsBound="false" IsComposable="false">
                 <Parameter Name="param" Type="Edm.Int32"/>
-                <ReturnType Type="AdminService.TestEntity"/>
+                <ReturnType Type="TestService.TestEntity"/>
+            </Function>
+            <Function Name="returnCollection" IsBound="false" IsComposable="false">
+                <Parameter Name="param" Type="Edm.Int32"/>
+                <ReturnType Type="Collection(Edm.Int32)" Nullable="false"/>
             </Function>
             <Function Name="returnInt" IsBound="false" IsComposable="false">
                 <Parameter Name="param" Type="Edm.Int32"/>
                 <ReturnType Type="Edm.Int32"/>
             </Function>
-            <Function Name="returnSapCloudSdk" IsBound="false" IsComposable="false">
-                <ReturnType Type="Edm.String"/>
+            <Function Name="returnKey" IsBound="false" IsComposable="false">
+                <Parameter Name="param" Type="TestService.TestEntity"/>
+                <ReturnType Type="Edm.Int32"/>
             </Function>
-            <Function Name="concatStrings" IsBound="false" IsComposable="false">
-                <Parameter Name="Str1" Type="Edm.String" MaxLength="111"/>
-                <Parameter Name="Str2" Type="Edm.String" MaxLength="111"/>
+            <Function Name="returnSapCloudSdk" IsBound="false" IsComposable="false">
                 <ReturnType Type="Edm.String"/>
             </Function>
         </Schema>

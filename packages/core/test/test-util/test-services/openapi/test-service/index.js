@@ -21,4 +21,5 @@ __exportStar(require("./test-case-api"), exports);
 __exportStar(require("./tag-dot-api"), exports);
 __exportStar(require("./tag-space-api"), exports);
 __exportStar(require("./default-api"), exports);
+__exportStar(require("./extension-api"), exports);
 //# sourceMappingURL=index.js.map

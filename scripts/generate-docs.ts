@@ -131,7 +131,7 @@ function writeVersions() {
 function validateLogs(generationLogs) {
   const invalidLinksMessage =
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
-  const [_, invalidLinks] = generationLogs.split(invalidLinksMessage);
+  const [, invalidLinks] = generationLogs.split(invalidLinksMessage);
   if (invalidLinks) {
     throw Error(`Error: ${invalidLinksMessage}\n${invalidLinks}`);
   }

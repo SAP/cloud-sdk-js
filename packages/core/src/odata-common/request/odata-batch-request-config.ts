@@ -13,7 +13,7 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
   /**
    * @deprecated Since v1.30.0. Use [[boundary]] instead.
    */
-  get batchId() {
+  get batchId(): string {
     return this.boundary;
   }
 
@@ -33,7 +33,7 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
     });
   }
 
-  withSubRequestPathType(subRequestPathType: BatchSubRequestPathType) {
+  withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): void {
     this.subRequestPathType = subRequestPathType;
   }
 

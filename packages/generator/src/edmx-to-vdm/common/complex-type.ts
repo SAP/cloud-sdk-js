@@ -1,4 +1,3 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   edmToComplexPropertyType,
   edmToTsType,
@@ -22,11 +21,6 @@ import {
 } from '../edmx-to-vdm-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import { enumTypeForName } from './entity';
-
-const logger = createLogger({
-  package: 'generator',
-  messageContext: 'complex-type'
-});
 
 // TODO: this should be removed once the deprecated complex type factory is removed
 export function includeFactoryName(

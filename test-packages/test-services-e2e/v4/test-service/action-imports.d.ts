@@ -1,39 +1,39 @@
 import { ActionImportRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntity } from './TestEntity';
 /**
- * Type of the parameters to be passed to [[createTestEntity]].
+ * Type of the parameters to be passed to [[createTestEntityById]].
  */
-export interface CreateTestEntityParameters {
+export interface CreateTestEntityByIdParameters {
     /**
      * Id.
      */
     id: number;
 }
 /**
- * Create Test Entity.
+ * Create Test Entity By Id.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function createTestEntity(parameters: CreateTestEntityParameters): ActionImportRequestBuilder<CreateTestEntityParameters, TestEntity>;
+export declare function createTestEntityById(parameters: CreateTestEntityByIdParameters): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity>;
 /**
- * Type of the parameters to be passed to [[createTestEntityReturnId]].
+ * Type of the parameters to be passed to [[createTestEntityByIdReturnId]].
  */
-export interface CreateTestEntityReturnIdParameters {
+export interface CreateTestEntityByIdReturnIdParameters {
     /**
      * Id.
      */
     id: number;
 }
 /**
- * Create Test Entity Return Id.
+ * Create Test Entity By Id Return Id.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function createTestEntityReturnId(parameters: CreateTestEntityReturnIdParameters): ActionImportRequestBuilder<CreateTestEntityReturnIdParameters, number>;
+export declare function createTestEntityByIdReturnId(parameters: CreateTestEntityByIdReturnIdParameters): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number>;
 export declare const actionImports: {
-    createTestEntity: typeof createTestEntity;
-    createTestEntityReturnId: typeof createTestEntityReturnId;
+    createTestEntityById: typeof createTestEntityById;
+    createTestEntityByIdReturnId: typeof createTestEntityByIdReturnId;
 };
 //# sourceMappingURL=action-imports.d.ts.map

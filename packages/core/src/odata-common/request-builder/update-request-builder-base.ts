@@ -1,8 +1,4 @@
-import {
-  createLogger,
-  ErrorWithCause,
-  variadicArgumentToArray
-} from '@sap-cloud-sdk/util';
+import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataRequest, ODataUpdateRequestConfig } from '../request';
 import { ODataUri } from '../uri-conversion';
@@ -11,10 +7,6 @@ import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
 import { MethodRequestBuilder } from './request-builder-base';
 
-const logger = createLogger({
-  package: 'core',
-  messageContext: 'update-request-builder-v2'
-});
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
  *
@@ -287,16 +279,13 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   private removeKeyFields(body: Record<string, any>): Record<string, any> {
     return removePropertyOnCondition(
-      ([key, val]) => this.getKeyFieldNames().includes(key),
+      ([key]) => this.getKeyFieldNames().includes(key),
       body
     );
   }
 
   private removeIgnoredFields(body: Record<string, any>): Record<string, any> {
-    return removePropertyOnCondition(
-      ([key, val]) => this.ignored.has(key),
-      body
-    );
+    return removePropertyOnCondition(([key]) => this.ignored.has(key), body);
   }
 }
 

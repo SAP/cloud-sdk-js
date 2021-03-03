@@ -23,7 +23,7 @@ export function batchSourceFile(
 
 function mappingInitializer(service: VdmServiceMetadata): string {
   const mapBody = service.entities
-    .map(e => `\'${e.entitySetName}\' : ${e.className}`)
+    .map(e => `'${e.entitySetName}' : ${e.className}`)
     .join(', ');
   return `{${mapBody}}`;
 }

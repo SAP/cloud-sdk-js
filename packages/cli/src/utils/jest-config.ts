@@ -3,7 +3,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { recordWarning } from './warnings';
 
-export function getJestConfig(isUnitTests: boolean) {
+export function getJestConfig(isUnitTests: boolean): Record<string, any> {
   return {
     reporters: [
       'default',
@@ -25,7 +25,7 @@ export function getJestConfig(isUnitTests: boolean) {
   };
 }
 
-export function modifyJestConfig(jestConfigPath: string, data: any) {
+export function modifyJestConfig(jestConfigPath: string, data: any): void {
   try {
     const jestConfig = JSON.parse(
       readFileSync(jestConfigPath, {

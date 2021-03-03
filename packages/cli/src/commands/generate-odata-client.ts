@@ -55,7 +55,7 @@ export default class GenerateODataClient extends Command {
     projectDir: toStringFlag(generatorOptionCli.projectDir)
   };
 
-  async run() {
+  async run(): Promise<execa.ExecaChildProcess<string>> {
     const { flags } = this.parse(GenerateODataClient);
 
     const yargsFlags = Object.entries(flags)

@@ -17,14 +17,12 @@ documentation
 test-results.xml
 test-packages/type-tests/report.*.json
 test-resources/cli/test-output
+test-resources/generator/test-output
 
 tsconfig.tsbuildinfo
 junit.xml
 .env
 
-# Jetty mock server
-packages/**/*.jar
-*.jar
 local-docs/_site
 
 sqlite.db
@@ -33,4 +31,3 @@ sqlite.db-journal
 test-packages/integration-tests/test/auth-flows/vcap-services.json
 test-packages/integration-tests/test/auth-flows/user-access-token.json
 test-packages/integration-tests/test/auth-flows/systems.json
-

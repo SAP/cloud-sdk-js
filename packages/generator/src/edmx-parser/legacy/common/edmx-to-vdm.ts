@@ -187,7 +187,8 @@ const propertyFieldType = (type: string): string | undefined =>
 const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
 
-export const complexTypeName = (type: string) => last(type.split('.'));
+export const complexTypeName = (type: string): string | undefined =>
+  last(type.split('.'));
 
 const findComplexType = (
   name: string,

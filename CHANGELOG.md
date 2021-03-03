@@ -10,7 +10,7 @@
 
 ## Known Issues
 
--
+- 
 
 ## Compatibility Notes
 
@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [http-agent] Fix client certificate authentication in conjunction with proxies - depends on [this PR](https://github.com/TooTallNate/node-https-proxy-agent/pull/111).
 
 ## Fixed Issues
 

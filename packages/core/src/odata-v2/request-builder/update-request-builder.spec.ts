@@ -326,5 +326,31 @@ describe('UpdateRequestBuilder', () => {
       );
       await expect(actual).toEqual(undefined);
     });
+
+    it('update request sends only non-key properties111', async () => {
+      const entity = createTestEntity();
+      entity.booleanProperty = false;
+      const requestBody = {
+        Int32Property: entity.int32Property,
+        BooleanProperty: false
+      };
+      const response = { d: requestBody };
+
+      mockUpdateRequest({
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        ),
+        responseBody: response
+      });
+
+      const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
+        defaultDestination
+      );
+      expect(actual!.response.data).toEqual(response);
+      expect(actual!.request.method).toEqual('patch');
+      expect(actual!.request.baseURL).toEqual(defaultDestination.url);
+    });
   });
 });

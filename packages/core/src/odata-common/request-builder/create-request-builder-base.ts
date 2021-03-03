@@ -11,8 +11,8 @@ import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import type { Link } from '../selectable';
-import { MethodRequestBuilder } from './request-builder-base';
 import { HttpRequestAndResponse } from '../../http-client';
+import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.

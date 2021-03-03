@@ -11,8 +11,8 @@ import {
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { GetRequestBuilder } from './get-request-builder-base';
 import { HttpRequestAndResponse } from '../../http-client';
+import { GetRequestBuilder } from './get-request-builder-base';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]

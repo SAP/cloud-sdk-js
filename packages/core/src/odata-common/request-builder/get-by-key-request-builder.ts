@@ -10,8 +10,8 @@ import { ODataUri } from '../uri-conversion';
 import { FieldType, Selectable } from '../selectable';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { GetRequestBuilder } from './get-request-builder-base';
 import { HttpRequestAndResponse } from '../../http-client';
+import { GetRequestBuilder } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  *
